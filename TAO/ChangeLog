@@ -1,3 +1,8 @@
+Wed Oct 31 10:31:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+          VxWorks updates
+
 Wed Oct 31 08:46:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted change below

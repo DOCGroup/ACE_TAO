@@ -20,7 +20,7 @@
 
 ACE_RCSID(MT_Cubit, client, "$Id$")
 
-#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
 u_int ctx = 0;
 u_int ct = 0;
 
@@ -62,7 +62,7 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
 
   return 0;
 }
-#endif /* ACE_VXWORKS && !__RTP__ && !ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_VXTHREADS */
 
 // Constructor.
 
@@ -151,7 +151,7 @@ Client_i::run (void)
     this->do_thread_per_rate_test ();
 }
 
-#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
 void
 Client_i::output_taskinfo (void)
 {
@@ -177,7 +177,7 @@ Client_i::output_taskinfo (void)
 
   ACE_OS::fclose (file_handle);
 }
-#endif /* ACE_VXWORKS && !__RTP__ && !ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_VXTHREADS */
 
 void
 Client_i::get_context_switches (void)
@@ -196,14 +196,14 @@ Client_i::get_context_switches (void)
     }
 #endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
 
-#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   if (this->ts_->context_switch_test_ == 1)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Adding the context switch hook!\n"));
       taskSwitchHookAdd ((FUNCPTR) &switchHook);
     }
-#endif /* ACE_VXWORKS && !__RTP__ */
+#endif /* ACE_HAS_VXTHREADS */
 }
 
 void
@@ -323,12 +323,12 @@ Client_i::activate_high_client (void)
                           0),
                   -1);
 
-#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   // Set a task_id string starting with "@", so we are able to
   // accurately count the number of context switches.
   ACE_OS::strcpy (this->task_id_,
                   "@High");
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
 
   this->high_priority_ =
     this->priority_.get_high_priority ();
@@ -388,7 +388,7 @@ Client_i::activate_low_client (void)
                               this->argv_,
                               i),
                       -1);
-#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
       // Pace the connection establishment on VxWorks.
       const ACE_Time_Value delay (0L, 500000L);
       ACE_OS::sleep (delay);
@@ -398,7 +398,7 @@ Client_i::activate_low_client (void)
       ACE_OS::sprintf (this->task_id_,
                        "@Low%u",
                        i);
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
       ACE_DEBUG ((LM_DEBUG,
                   "Creating client with thread ID %d and priority %d\n",
                   i,
@@ -501,7 +501,7 @@ Client_i:: print_context_stats (void)
                   "Voluntary context switches=%d, Involuntary context switches=%d\n",
                   this->usage.ru_nvcsw,
                   this->usage.ru_nivcsw));
-#elif defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
+#elif defined (ACE_HAS_VXTHREADS)
       taskSwitchHookDelete ((FUNCPTR) &switchHook);
       ACE_DEBUG ((LM_DEBUG,
                   "Context switches=%d\n",
@@ -636,12 +636,12 @@ int
 Client_i::do_priority_inversion_test (void)
 {
   this->timer_.start ();
-#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   ctx = 0;
   ACE_NEW_RETURN (this->task_id_,
                   char[TASK_ID_LEN],
                   -1);
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) <<<<<<< starting test on %D\n"));
   GLOBALS::instance ()->num_of_objs = 1;
