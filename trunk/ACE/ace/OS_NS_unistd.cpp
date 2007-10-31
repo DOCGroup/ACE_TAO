@@ -212,8 +212,7 @@ ACE_OS::fork (const ACE_TCHAR *program_name)
     ::fork ();
 #endif /* ACE_HAS_STHREADS */
 
-#if !defined (ACE_HAS_MINIMAL_ACE_OS)
-#if !defined (ACE_HAS_THREADS)
+#if !defined (ACE_HAS_MINIMAL_ACE_OS) && !defined (ACE_HAS_THREADS)
 
   // ACE_Base_Thread_Adapter::sync_log_msg() is used to update the
   // program name and process id in ACE's log framework.  However, we
@@ -226,11 +225,15 @@ ACE_OS::fork (const ACE_TCHAR *program_name)
   // process will undoubtedly call async signal unsafe functions too.
   // So it doesn't really matter that the program name and process id
   // will not be updated.
-  
+
   if (pid == 0)
     ACE_Base_Thread_Adapter::sync_log_msg (program_name);
-#endif /* ! ACE_HAS_THREADS */
-#endif /* ! ACE_HAS_MINIMAL_ACE_OS */
+
+#else
+
+  ACE_UNUSED_ARG (program_name);
+
+#endif /* ! ACE_HAS_MINIMAL_ACE_OS && !ACE_HAS_THREADS */
 
   return pid;
 # endif /* ACE_WIN32 */
