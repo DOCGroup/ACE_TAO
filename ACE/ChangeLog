@@ -1,3 +1,11 @@
+Thu Nov  1 14:40:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Systems with ACE_HAS_BROKEN_THREAD_KEYFREE requires some
+          cleanup within ACE_OS::thr_keyfree_native() otherwise they
+          can crash at thread_exit if ACE is dynamically loaded.
+
 Thu Nov  1 11:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_T.h:
