@@ -153,7 +153,7 @@ initialize (MALLOC *allocator)
   *temp = 5.0;
   allocator->free (temp);
 
-  void *ptr;
+  void *ptr = 0;
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         0);
@@ -285,7 +285,7 @@ parent (Test_Data *data)
 static int
 child (void)
 {
-  void *bar;
+  void *bar = 0;
   // Perform "busy waiting" here until the parent stores data under a
   // new name called "bar" in <ACE_Malloc>.  This isn't a good design
   // -- it's just to test that synchronization is working across
