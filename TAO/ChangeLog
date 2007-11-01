@@ -1,3 +1,56 @@
+Thu Nov  1 10:49:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI.mpc:
+          Added include guard so that we prevent users from including any
+          generated file, they need to include PI.h
+
+        * tao/PI/ClientRequestDetails.h:
+        * tao/PI/ClientRequestInfo.h:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+        * tao/PI/Interceptor_List_T.cpp:
+        * tao/PI/ORBInitInfo.h:
+        * tao/PI/PI.h:
+        * tao/PI/PI_ORBInitializer.h:
+        * tao/PI/PI_PolicyFactory.h:
+        * tao/PI/PICurrent.h:
+        * tao/PI/PICurrent_Impl.h:
+        * tao/PI/ProcessingModePolicy.h:
+          Updated includes to use PI_includeC.h
+
+        * tao/PI_Server.mpc:
+          Added include guard so that we prevent users from including any
+          generated file, they need to include PI_Server.h
+
+        * tao/PI_Server/PI_Server.cpp:
+          Layout change
+
+        * tao/PI_Server/PortableServer_ORBInitializer.h:
+        * tao/PI_Server/ServerInterceptorAdapter.h:
+        * tao/PI_Server/ServerRequestDetails.h:
+        * tao/PI_Server/ServerRequestInfo.h:
+          Updated includes to use PI_Server_includeC.h
+
+        * tao/PI_Server/ServerRequestInfo.pidl:
+        * tao/PI_Server/ServerRequestInterceptor.pidl:
+          Include PI_include.pidl
+
+        * tao/PI_Server/ServerRequestInterceptorC.h:
+          Updated
+
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/RTScheduling/RTScheduler_Manager.h:
+          Layout change
+
+        * tao/RTScheduling/Request_Interceptor.h:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/RTScheduling/RTScheduler_Initializer.h:
+        * tao/RTScheduling/RTScheduler_Loader.cpp:
+        * tao/RTScheduling/RTScheduler_Loader.h:
+          Updated includes
+
+        * tao/Transport_Cache_Manager.cpp:
+          Layout and const changes
+
 Thu Nov  1 10:24:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Hello/Hello.mpc:

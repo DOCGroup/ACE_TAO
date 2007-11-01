@@ -29,7 +29,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI_Server/ServerRequestInterceptorC.h"
+#include "tao/PI_Server/PI_Server_includeC.h"
 
 #include "tao/PI/Interceptor_List_T.h"
 #include "tao/ServerRequestInterceptor_Adapter.h"

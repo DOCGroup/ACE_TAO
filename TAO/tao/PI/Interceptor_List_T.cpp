@@ -1,7 +1,6 @@
 // $Id$
 
-#include "tao/PI/ORBInitInfoC.h"
-#include "tao/PI/InterceptorC.h"
+#include "tao/PI/PI_includeC.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 
