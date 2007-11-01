@@ -5,6 +5,7 @@ project {
   exename   = FaCENOACE
   requires += wince
   macros   += NO_ACE
+  lit_libs += aygshell
 
   Source_Files {
     FaCE.cpp
