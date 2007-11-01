@@ -1,3 +1,16 @@
+Thu Nov  1 04:36:27 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Change wait_interval_for_process_creation from 10 to 12 seconds
+          on NetBSD systems.  Many TAO unit tests take at least 5 seconds
+          to initialize on NetBSD/i386 systems as they calibrate the high
+          resolution timer.  Often this doesn't leave enough time to
+          complete initialization within the timeout.
+
+          Since there was a special case for LynxOS, I just extended it
+          for NetBSD.
+
 Wed Oct 31 13:54:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Win32.pm:
