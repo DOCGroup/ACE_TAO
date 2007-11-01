@@ -1,3 +1,10 @@
+Thu Nov  1 10:23:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Malloc_Test.cpp:
+          Initialise some pointers with 0 to fix gcc 4.2 warnings. Thanks
+          to Robert Iakobashvili <coroberti at gmail dot com> for reporting
+          this
+
 Thu Nov  1 09:27:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process.h:
