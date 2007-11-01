@@ -6,7 +6,6 @@
 #include "test_i.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
-#include "tao/PI/PIForwardRequestC.h"
 
 Forward_Test_i::Forward_Test_i (CORBA::ORB_ptr orb)
 	: orb_ (CORBA::ORB::_duplicate (orb))
