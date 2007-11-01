@@ -91,8 +91,8 @@ namespace TAO
     if (TAO_debug_level > 0)
        {
          ACE_DEBUG ((LM_INFO,
-            ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::bind_i: ")
-            ACE_TEXT ("Transport[%d] ;hash %d\n"),
+            ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::bind_i, ")
+            ACE_TEXT ("Transport[%d]; hash %d\n"),
             int_id.transport ()->id (),
             ext_id.hash ()
             ));
@@ -212,8 +212,7 @@ namespace TAO
                                *this->cache_lock_,
                                -1));
 
-    int const status =  this->find_i (key,
-                                      value);
+    int const status =  this->find_i (key, value);
 
     if (status == 0)
       {
@@ -243,14 +242,12 @@ namespace TAO
         this->wait_for_connection (tmp_key);
 
         // Look for an entry in the map
-        retval = this->cache_map_.find (tmp_key,
-                                        entry);
+        retval = this->cache_map_.find (tmp_key, entry);
 
         // We have an entry in the map, check whether it is idle.
         if (entry)
           {
-            CORBA::Boolean idle =
-              this->is_entry_idle (entry);
+            CORBA::Boolean const idle = this->is_entry_idle (entry);
 
             if (idle)
               {
@@ -328,7 +325,7 @@ namespace TAO
 
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                               guard,
-                            *this->cache_lock_, -1));
+                              *this->cache_lock_, -1));
 
     if (entry == 0)
       return -1;
@@ -376,7 +373,7 @@ namespace TAO
       {
         // Get the transport to fill its associated connection's
         // handler.
-        bool retval =
+        bool const retval =
           (*iter).int_id_.transport ()->provide_blockable_handler (h);
 
         // Do not mark the entry as closed if we don't have a

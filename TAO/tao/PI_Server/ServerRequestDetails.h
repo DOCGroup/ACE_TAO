@@ -30,7 +30,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI/ProcessingModePolicyC.h"
+#include "tao/PI/PI_includeC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

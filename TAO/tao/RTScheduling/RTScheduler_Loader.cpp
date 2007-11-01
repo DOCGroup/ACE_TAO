@@ -18,8 +18,7 @@ TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader (void)
 }
 
 int
-TAO_RTScheduler_Loader::init (int,
-                              ACE_TCHAR* [])
+TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_RTScheduler_Loader::init");
 
@@ -27,13 +26,13 @@ TAO_RTScheduler_Loader::init (int,
     ACE_DEBUG ((LM_DEBUG,
                 "In RTScheduler_Loader::init\n"));
 
-  static int initialized = 0;
+  static bool initialized = false;
 
   // Only allow initialization once.
   if (initialized)
     return 0;
 
-  initialized = 1;
+  initialized = true;
 
   // Register the ORB initializer.
   try
@@ -53,8 +52,7 @@ TAO_RTScheduler_Loader::init (int,
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                    );
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
   catch (const ::CORBA::Exception& ex)
     {

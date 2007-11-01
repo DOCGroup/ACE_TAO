@@ -23,7 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PI/PI.h"
 #include "tao/Versioned_Namespace.h"
 
 #include "ace/Service_Object.h"
@@ -34,13 +33,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTScheduler_Export TAO_RTScheduler_Loader : public ACE_Service_Object
 {
 public:
-
   /// Destructor.
   virtual ~TAO_RTScheduler_Loader (void);
 
   /// Initialize the RTScheduler loader hooks.
-  virtual int init (int argc,
-                    ACE_TCHAR* []);
+  virtual int init (int argc, ACE_TCHAR* []);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

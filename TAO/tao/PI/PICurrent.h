@@ -25,7 +25,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI/PICurrentC.h"
+#include "tao/PI/PI_includeC.h"
 
 #include "tao/LocalObject.h"
 #include "ace/Array_Base.h"

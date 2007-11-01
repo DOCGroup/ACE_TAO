@@ -11,7 +11,6 @@
 #include "tao/RTScheduling/Current.h"
 #include "tao/LocalObject.h"
 
-#include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -25,14 +24,11 @@ class TAO_RTScheduler_Export Client_Interceptor:
 public:
 
   //  Client_Interceptor (RTScheduling::Current_ptr current);
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-                             );
+  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
-                          );
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
-                              );
+  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
 

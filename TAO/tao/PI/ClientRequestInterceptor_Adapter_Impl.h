@@ -31,7 +31,7 @@
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "tao/PI/Interceptor_List_T.h"
-#include "tao/PI/ClientRequestInterceptorC.h"
+#include "tao/PI/PI_includeC.h"
 #include "tao/PI/ClientRequestDetails.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 

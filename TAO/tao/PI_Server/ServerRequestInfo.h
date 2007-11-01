@@ -28,8 +28,8 @@
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/PI_Server/ServerRequestInfoC.h"
-#include "tao/PI/PIForwardRequestC.h"
+#include "tao/PI_Server/PI_Server_includeC.h"
+#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 #include "tao/OctetSeqC.h"
 #include "tao/TAO_Server_Request.h"

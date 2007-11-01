@@ -46,8 +46,10 @@
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
 
+#define TAO_PI_SAFE_INCLUDE
 #include "tao/PI/InterceptorC.h"
 #include "tao/PI/PIForwardRequestC.h"
+#undef TAO_PI_SAFE_INCLUDE
 #include "tao/OctetSeqC.h"
 
 #if defined (TAO_EXPORT_MACRO)

@@ -51,10 +51,7 @@ public:
 
   // the static operations
   static TAO_RTScheduler_Manager_ptr _duplicate (TAO_RTScheduler_Manager_ptr obj);
-  static TAO_RTScheduler_Manager_ptr _narrow (
-      CORBA::Object_ptr obj
-      );
-
+  static TAO_RTScheduler_Manager_ptr _narrow (CORBA::Object_ptr obj);
   static TAO_RTScheduler_Manager_ptr _nil (void)
     {
       return (TAO_RTScheduler_Manager_ptr)0;

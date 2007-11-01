@@ -11,9 +11,12 @@ ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 #include "tao/RTScheduling/Current.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 
+#include "tao/PI_Server/PI_Server.h"
+
+#include "tao/PI/ORBInitInfo.h"
+
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
-#include "tao/PI/ORBInitInfo.h"
 #include "tao/debug.h"
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
@@ -66,8 +69,7 @@ void
 
   this->current_->init (tao_info->orb_core ());
 
-  CORBA::Object_var current_obj = RTScheduling::Current::_narrow (this->current_
-                                                                 );
+  CORBA::Object_var current_obj = RTScheduling::Current::_narrow (this->current_);
 
   info->register_initial_reference ("RTScheduler_Current", current_obj.in ());
 
