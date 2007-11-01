@@ -374,7 +374,7 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
 }
 
 
-ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
+ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
                                         size_t size,
                                         int signum)
   : ACE_Service_Gestalt (size, false, ignore_static_svcs)

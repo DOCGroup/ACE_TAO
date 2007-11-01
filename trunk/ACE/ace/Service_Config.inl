@@ -152,10 +152,9 @@ ACE_Service_Config::process_directives (void)
 
 ACE_INLINE int
 ACE_Service_Config::process_directive (const ACE_Static_Svc_Descriptor &ssd,
-                                       int force_replace)
+                                       bool force_replace)
 {
-  return ACE_Service_Config::current ()->process_directive (ssd,
-                                                            force_replace);
+  return ACE_Service_Config::current ()->process_directive (ssd, force_replace);
 }
 
 
