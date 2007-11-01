@@ -1,3 +1,19 @@
+Thu Nov  1 11:11:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Removed the patch for bugzilla 2980, this results in a memory
+          leak of 10Kb for each thread that uses the ACE_Service_Config_Guard.
+          This memory leak is documented in bugzilla 3108. For bugzilla 2980
+          we need to have a different patch without reintroducing the
+          memory leak.
+
+        * ace/Service_Config.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Config.inl:
+        * ace/Service_Gestalt.cpp:
+        * ace/Service_Gestalt.h:
+          Bool changes
+
 Thu Nov  1 10:23:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Malloc_Test.cpp:

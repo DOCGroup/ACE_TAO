@@ -195,7 +195,7 @@ public:
    * @return Returns -1 if the service cannot be 'loaded'.
    */
   int process_directive (const ACE_Static_Svc_Descriptor &ssd,
-                         int force_replace = 0);
+                         bool force_replace = false);
 
   /// Process a file containing a list of service configuration
   /// directives.
@@ -353,7 +353,7 @@ protected:
   /// the global table. This avoids multiple additions when processing
   /// directives in non-global gestalts.
   int process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
-                           int force_replace = 0);
+                           bool force_replace = false);
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
   /// This is the implementation function that process_directives()
