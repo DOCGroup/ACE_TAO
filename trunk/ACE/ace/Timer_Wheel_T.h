@@ -144,10 +144,10 @@ public:
   /// the number of timers canceled.
   virtual int expire (void);
 
-  // Run the <functor> for all timers whose values are <= <cur_time>.
+  // Run the <functor> for all timers whose values are <= @a current_time.
   // This does not account for <timer_skew>.  Returns the number of
   // timers canceled.
-  int expire (const ACE_Time_Value&);
+  int expire (const ACE_Time_Value& current_time);
 
   /// Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.
   virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>& iter (void);

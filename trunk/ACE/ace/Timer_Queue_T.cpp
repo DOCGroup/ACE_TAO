@@ -265,8 +265,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
 
   ACE_Timer_Node_Dispatch_Info_T<TYPE> info;
 
-  while ((result = this->dispatch_info_i (cur_time,
-                                          info)) != 0)
+  while ((result = this->dispatch_info_i (cur_time, info)) != 0)
     {
       const void *upcall_act = 0;
 
