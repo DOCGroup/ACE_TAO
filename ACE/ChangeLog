@@ -1,3 +1,10 @@
+Thu Nov  1 19:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the change below, it seems to cause problems with msvc 71.
+
+        Thu Nov  1 11:11:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * ace/Service_Config.h:
+
 Thu Nov  1 16:57:11 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * contrib/FaCE/FaCE.mpc:
