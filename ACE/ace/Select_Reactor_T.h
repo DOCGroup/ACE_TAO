@@ -373,7 +373,7 @@ public:
 
   /**
    * Cancel all <event_handlers> that match the address of
-   * <event_handler>.  If <dont_call_handle_close> is 0 then the
+   * <event_handler>.  If @a dont_call_handle_close is 0 then the
    * <handle_close> method of <event_handler> will be invoked.
    * Returns number of handler's cancelled.
    */
@@ -386,7 +386,7 @@ public:
    * non-NULL then it will be set to point to the ``magic cookie''
    * argument passed in when the <Event_Handler> was registered.  This
    * makes it possible to free up the memory and avoid memory leaks.
-   * If <dont_call_handle_close> is 0 then the <handle_close> method
+   * If @a dont_call_handle_close is 0 then the <handle_close> method
    * of <event_handler> will be invoked.  Returns 1 if cancellation
    * succeeded and 0 if the @a timer_id wasn't found.
    */

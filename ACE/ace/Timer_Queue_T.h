@@ -263,7 +263,7 @@ public:
 
   /**
    * Cancel all timer associated with @a type.  If
-   * <dont_call_handle_close> is 0 then the <functor> will be invoked,
+   * @a dont_call_handle_close is 0 then the <functor> will be invoked,
    * which typically invokes the <handle_close> hook.  Returns number
    * of timers cancelled.
    */
@@ -276,7 +276,7 @@ public:
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If
-   * <dont_call_handle_close> is 0 then the <functor> will be invoked,
+   * @a dont_call_handle_close is 0 then the <functor> will be invoked,
    * which typically calls the <handle_close> hook.  Returns 1 if
    * cancellation succeeded and 0 if the @a timer_id wasn't found.
    */
@@ -285,16 +285,16 @@ public:
                       int dont_call_handle_close = 1) = 0;
 
   /**
-   * Run the <functor> for all timers whose values are <= <cur_time>.
+   * Run the <functor> for all timers whose values are <= @a current_time.
    * This does not account for <timer_skew>.  Returns the number of
    * timers canceled.
    */
   virtual int expire (const ACE_Time_Value &current_time);
 
   /**
-   * Get the dispatch information for a timer whose value is <= <cur_time>.
+   * Get the dispatch information for a timer whose value is <= @a current_time.
    * This does not account for <timer_skew>. Returns 1 if
-   * there is a node whose value <= <cur_time> else returns a 0.
+   * there is a node whose value <= @a current_time else returns a 0.
    *
    */
   virtual int dispatch_info (const ACE_Time_Value &current_time,
