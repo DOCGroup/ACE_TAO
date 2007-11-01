@@ -83,7 +83,7 @@ public:
 
 protected:
   // = Register timers/handles with Tk.
-  /// Register a single <handler>.
+  /// Register a single @a handler.
   virtual int register_handler_i (ACE_HANDLE handle,
                                   ACE_Event_Handler *handler,
                                   ACE_Reactor_Mask mask);
@@ -93,7 +93,7 @@ protected:
                                   ACE_Event_Handler *handler,
                                   ACE_Reactor_Mask mask);
 
-  /// Remove the <handler> associated with this @a handle.
+  /// Remove the @a handler associated with this @a handle.
   virtual int remove_handler_i (ACE_HANDLE handle,
                                 ACE_Reactor_Mask mask);
 

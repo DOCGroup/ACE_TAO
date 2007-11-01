@@ -66,8 +66,8 @@ public:
 protected:
   // = Default settings not part of public Interface.
   //
-  // @todo These sizes should be taken from the appropriate
-  // POSIX/system header files and/or defined dynamically.
+  /// @todo These sizes should be taken from the appropriate
+  /// POSIX/system header files and/or defined dynamically.
   enum
   {
     MAX_COMMAND_LINE_OPTIONS = 128,
