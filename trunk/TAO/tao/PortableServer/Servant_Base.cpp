@@ -162,8 +162,7 @@ TAO_ServantBase::_create_stub (void)
         poa_current_impl->poa ()->key_to_stub (
             poa_current_impl->object_key (),
             this->_interface_repository_id (),
-            poa_current_impl->priority ()
-          );
+            poa_current_impl->priority ());
     }
   else
     {

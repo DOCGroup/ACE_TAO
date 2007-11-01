@@ -27,7 +27,7 @@
 #define _SERVER_REQUEST_INTERCEPTOR_IDL_
 
 #include "tao/PI/Interceptor.pidl"
-#include "tao/PI/PIForwardRequest.pidl"
+#include "tao/PI/PI_include.pidl"
 #include "tao/OctetSeq.pidl"
 
 module PortableInterceptor {

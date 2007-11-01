@@ -32,8 +32,7 @@
 #endif /* _MSC_VER */
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/PI/ClientRequestInfoC.h"
-#include "tao/PI/PIForwardRequestC.h"
+#include "tao/PI/PI_includeC.h"
 #include "tao/PI/PICurrent_Impl.h"
 #include "tao/CORBA_methods.h"
 #include "tao/ORB_Constants.h"

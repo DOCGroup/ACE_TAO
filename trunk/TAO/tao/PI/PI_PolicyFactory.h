@@ -26,7 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "tao/PI/PolicyFactoryC.h"
+#include "tao/PI/PI_includeC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

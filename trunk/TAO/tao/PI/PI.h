@@ -57,6 +57,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/PI/ClientRequestInfoC.h"
 #include "tao/PI/ClientRequestInterceptorC.h"
 #include "tao/PI/PICurrentC.h"
+#include "tao/PI/ProcessingModePolicyC.h"
 #undef TAO_PI_SAFE_INCLUDE
 
 #endif  /* TAO_PI_H */

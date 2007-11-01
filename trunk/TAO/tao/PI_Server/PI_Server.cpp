@@ -6,7 +6,6 @@ ACE_RCSID (PI_Server,
            PI_Server,
            "$Id$")
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
