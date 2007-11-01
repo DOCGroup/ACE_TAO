@@ -420,7 +420,7 @@ public:
   /**
    * Check to see if <handle> is associated with a valid Event_Handler
    * bound to @a mask.  Return the <event_handler> associated with this
-   * <handler> if <event_handler> != 0.
+   * @a handler if <event_handler> != 0.
    */
   int handler (ACE_HANDLE handle,
                ACE_Reactor_Mask mask,
@@ -1082,7 +1082,7 @@ public:
   /**
    * Check to see if <handle> is associated with a valid Event_Handler
    * bound to @a mask.  Return the <event_handler> associated with this
-   * <handler> if <event_handler> != 0.
+   * @a handler if <event_handler> != 0.
    */
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
@@ -1091,7 +1091,7 @@ public:
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the <event_handler> associated with
-   * this <handler> if <event_handler> != 0.
+   * this @a handler if <event_handler> != 0.
    */
   virtual int handler (int signum,
                        ACE_Event_Handler ** = 0);

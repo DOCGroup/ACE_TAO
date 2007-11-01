@@ -70,7 +70,7 @@ public:
    * Initialize a passive-mode BSD-style acceptor socket (no QoS).
    * @a local_sap is the address that we're going to listen for
    * connections on.  If @a reuse_addr is 1 then we'll use the
-   * <SO_REUSEADDR> to reuse this address.  Returns 0 on success and
+   * @c SO_REUSEADDR to reuse this address.  Returns 0 on success and
    * -1 on failure.
    */
   int open (const ACE_Addr &local_sap,
@@ -116,7 +116,7 @@ public:
   /**
    * Accept a new ACE_SOCK_Stream connection using the QoS
    * information in @a qos_params.  A @a timeout of 0 means block
-   * forever, a @a timeout of {0, 0} means poll.  <restart> == 1 means
+   * forever, a @a timeout of {0, 0} means poll.  @a restart == 1 means
    * "restart if interrupted," i.e., if errno == EINTR.  Note that
    * @a new_stream inherits the "blocking mode" of @c this
    * ACE_SOCK_Acceptor, i.e., if @c this acceptor factory is in

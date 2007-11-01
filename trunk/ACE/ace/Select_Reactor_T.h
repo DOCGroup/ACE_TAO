@@ -507,7 +507,7 @@ public:
 
   /**
    * Check to see if <handle> is associated with a valid Event_Handler
-   * bound to @a mask.  Return the <eh> associated with this <handler>
+   * bound to @a mask.  Return the @a eh associated with this @a handler
    * if <eh> != 0.
    */
   virtual int handler (ACE_HANDLE handle,
@@ -517,7 +517,7 @@ public:
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the <eh> associated with this
-   * <handler> if <eh> != 0.
+   * handler if <eh> != 0.
    */
   virtual int handler (int signum,
                        ACE_Event_Handler ** = 0);
@@ -580,15 +580,15 @@ protected:
   /// Resume the <Event_Handler> associated with <handle>
   virtual int resume_i (ACE_HANDLE handle);
 
-  /// Implement the public <handler> method.
+  /// Implement the public handler method.
   virtual ACE_Event_Handler *find_handler_i (ACE_HANDLE handle);
 
-  /// Implement the public <handler> method.
+  /// Implement the public handler method.
   virtual int handler_i (ACE_HANDLE handle,
                          ACE_Reactor_Mask,
                          ACE_Event_Handler ** = 0);
 
-  /// Implement the public <handler> method.
+  /// Implement the public handler method.
   virtual int handler_i (int signum, ACE_Event_Handler ** = 0);
 
   /**
