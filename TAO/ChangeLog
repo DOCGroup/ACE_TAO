@@ -1,3 +1,8 @@
+Thu Nov  1 10:24:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Hello/Hello.mpc:
+          Use -Sp to get smaller footprint
+
 Wed Oct 31 14:44:23 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Bug_2417_Regression/publisher_impl.cpp:
