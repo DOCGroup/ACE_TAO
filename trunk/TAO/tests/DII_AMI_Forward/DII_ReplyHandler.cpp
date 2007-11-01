@@ -34,7 +34,9 @@ DII_ReplyHandler::handle_response (TAO_InputCDR &incoming)
     }
   catch (CORBA::SystemException &ex)
     {
-      ACE_ERROR ((LM_ERROR,"ERROR: Response is not a string!\n"));
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: DII_ReplyHandler::handle_response caught %s\n",
+                  ex._name()));
     }
   catch (...)
     {
