@@ -34,7 +34,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * Do not instantiate this class.
  *
  * This class provides functions that are common to all of the
- * <ACE_SOCK_*> classes. <ACE_SOCK> provides the ability to get
+ * <ACE_SOCK_*> classes. ACE_SOCK provides the ability to get
  * and set socket options, get the local and remote addresses,
  * and open and close a socket handle.
  */
@@ -69,7 +69,7 @@ public:
 
   /**
    * Return the address of the remotely connected peer (if there is
-   * one), in the referenced <ACE_Addr>. Returns 0 if successful, else
+   * one), in the referenced ACE_Addr. Returns 0 if successful, else
    * -1.
    */
   int get_remote_addr (ACE_Addr &) const;
@@ -80,13 +80,13 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  /// Wrapper around the BSD-style <socket> system call (no QoS).
+  /// Wrapper around the BSD-style @c socket system call (no QoS).
   int open (int type,
             int protocol_family,
             int protocol,
             int reuse_addr);
 
-  /// Wrapper around the QoS-enabled <WSASocket> function.
+  /// Wrapper around the QoS-enabled @c WSASocket function.
   int open (int type,
             int protocol_family,
             int protocol,
@@ -97,14 +97,14 @@ public:
 
 protected:
 
-  /// Constructor with arguments to call the BSD-style <socket> system
+  /// Constructor with arguments to call the BSD-style @c socket system
   /// call (no QoS).
   ACE_SOCK (int type,
             int protocol_family,
             int protocol = 0,
             int reuse_addr = 0);
 
-  /// Constructor with arguments to call the QoS-enabled <WSASocket>
+  /// Constructor with arguments to call the QoS-enabled @c WSASocket
   /// function.
   ACE_SOCK (int type,
             int protocol_family,

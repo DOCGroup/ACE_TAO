@@ -159,7 +159,7 @@ public:
   /**
    * Initializes the factory with information which will be used with
    * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * <ACE_Handler::handle> will be called on the @a handler to get the
    * correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -312,7 +312,7 @@ protected:
  *
  *     Once <open> is called, multiple asynchronous <read>s can
  *     started using this class.  An ACE_Asynch_Read_Stream::Result
- *     will be passed back to the <handler> when the asynchronous
+ *     will be passed back to the @a handler when the asynchronous
  *     reads completes through the <ACE_Handler::handle_read_stream>
  *     callback.
  */
@@ -352,7 +352,7 @@ public:
   /**
    * Initializes the factory with information which will be used with
    * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * <ACE_Handler::handle> will be called on the @a handler to get the
    * correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -491,7 +491,7 @@ protected:
  *
  *     Once <open> is called, multiple asynchronous <writes>s can
  *     started using this class.  A ACE_Asynch_Write_Stream::Result
- *     will be passed back to the <handler> when the asynchronous
+ *     will be passed back to the @a handler when the asynchronous
  *     write completes through the
  *     <ACE_Handler::handle_write_stream> callback.
  */
@@ -531,7 +531,7 @@ public:
   /**
    * Initializes the factory with information which will be used with
    * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * <ACE_Handler::handle> will be called on the @a handler to get the
    * correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -661,7 +661,7 @@ protected:
  *
  *     Once <open> is called, multiple asynchronous <read>s can
  *     started using this class.  A ACE_Asynch_Read_File::Result
- *     will be passed back to the <handler> when the asynchronous
+ *     will be passed back to the @a handler when the asynchronous
  *     reads completes through the <ACE_Handler::handle_read_file>
  *     callback.
  *
@@ -715,7 +715,7 @@ public:
   /**
    * Initializes the factory with information which will be used with
    * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * <ACE_Handler::handle> will be called on the @a handler to get the
    * correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -763,12 +763,12 @@ private:
  *      ACE_Asynch_Write_File_Result for WIN32 platforms.
  *
  *     This class has all the information necessary for the
- *     <handler> to uniquiely identify the completion of the
+ *     @a handler to uniquiely identify the completion of the
  *     asynchronous write.
  *
  *     This class differs slightly from
  *     ACE_Asynch_Write_Stream::Result as it calls back
- *     <ACE_Handler::handle_write_file> on the <handler> instead
+ *     <ACE_Handler::handle_write_file> on the @a handler instead
  *     of <ACE_Handler::handle_write_stream>.  No additional state
  *     is required by this class as ACE_Asynch_Result can store
  *     the @a offset.
@@ -872,7 +872,7 @@ protected:
  *
  *     Once <open> is called, multiple asynchronous <write>s can be
  *     started using this class.  A ACE_Asynch_Write_File::Result
- *     will be passed back to the <handler> when the asynchronous
+ *     will be passed back to the @a handler when the asynchronous
  *     writes completes through the <ACE_Handler::handle_write_file>
  *     callback.
  */
@@ -921,7 +921,7 @@ public:
   /**
    * Initializes the factory with information which will be used with
    * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * <ACE_Handler::handle> will be called on the @a handler to get the
    * correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -969,7 +969,7 @@ private:
  *     platform.
  *
  *     This class has all the information necessary for the
- *     <handler> to uniquiely identify the completion of the
+ *     @a handler to uniquiely identify the completion of the
  *     asynchronous accept.
  */
 class ACE_Export ACE_WIN32_Asynch_Accept_Result : public virtual ACE_Asynch_Accept_Result_Impl,
@@ -1079,7 +1079,7 @@ protected:
  *
  *     Once <open> is called, multiple asynchronous <accept>s can
  *     started using this class.  A ACE_Asynch_Accept::Result will
- *     be passed back to the <handler> when the asynchronous accept
+ *     be passed back to the @a handler when the asynchronous accept
  *     completes through the <ACE_Handler::handle_accept>
  *     callback.
  */
@@ -1093,7 +1093,7 @@ public:
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
-   * <handler>.  Upto @a bytes_to_read will be read and stored in the
+   * @a handler.  Upto @a bytes_to_read will be read and stored in the
    * @a message_block.  The <accept_handle> will be used for the
    * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
    * handle will be created.
@@ -1119,7 +1119,7 @@ public:
   /**
    * Initializes the factory with information which will be used with
    * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * <ACE_Handler::handle> will be called on the @a handler to get the
    * correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -1353,7 +1353,7 @@ private:
  *     WIN32 platforms.
  *
  *     This class has all the information necessary for the
- *     <handler> to uniquiely identify the completion of the
+ *     @a handler to uniquiely identify the completion of the
  *     asynchronous transmit file.
  */
 class ACE_Export ACE_WIN32_Asynch_Transmit_File_Result : public virtual ACE_Asynch_Transmit_File_Result_Impl,
@@ -1483,7 +1483,7 @@ protected:
  *     Once <open> is called, multiple asynchronous <transmit_file>s
  *     can started using this class.  A
  *     ACE_Asynch_Transmit_File::Result will be passed back to the
- *     <handler> when the asynchronous transmit file completes
+ *     @a handler when the asynchronous transmit file completes
  *     through the <ACE_Handler::handle_transmit_file> callback.
  *
  *     The transmit_file function transmits file data over a
@@ -1532,7 +1532,7 @@ public:
   /**
    * Initializes the factory with information which will be used with
    * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * <ACE_Handler::handle> will be called on the @a handler to get the
    * correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -1675,7 +1675,7 @@ protected:
  *
  *     Once <open> is called, multiple asynchronous <read>s can be
  *     started using this class.  An ACE_Asynch_Read_Dgram::Result
- *     will be passed back to the <handler> when the asynchronous
+ *     will be passed back to the @a handler when the asynchronous
  *     reads completes through the <ACE_Handler::handle_read_stream>
  *     callback.
  *
@@ -1722,7 +1722,7 @@ public:
   /**
    * Initializes the factory with information which will be used with
    * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * <ACE_Handler::handle> will be called on the @a handler to get the
    * correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -1860,7 +1860,7 @@ protected:
  *
  *     Once <open> is called, multiple asynchronous <writes>s can
  *     started using this class.  A ACE_Asynch_Write_Stream::Result
- *     will be passed back to the <handler> when the asynchronous
+ *     will be passed back to the @a handler when the asynchronous
  *     write completes through the
  *     <ACE_Handler::handle_write_stream> callback.
  */
@@ -1907,7 +1907,7 @@ public:
   /**
    * Initializes the factory with information which will be used with
    * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * <ACE_Handler::handle> will be called on the @a handler to get the
    * correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
