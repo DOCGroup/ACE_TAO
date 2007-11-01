@@ -723,7 +723,7 @@ ACE_Service_Gestalt::resume (const ACE_TCHAR svc_name[])
 
 int
 ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
-                                        int force_replace)
+                                        bool force_replace)
 {
   int const result = process_directive_i (ssd, force_replace);
   if (result == 0)
@@ -735,7 +735,7 @@ ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
 
 int
 ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
-                                          int force_replace)
+                                          bool force_replace)
 {
   if (this->repo_ == 0)
     return -1;
