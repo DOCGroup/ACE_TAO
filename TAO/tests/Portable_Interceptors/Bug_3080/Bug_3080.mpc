@@ -23,11 +23,10 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoclient, valuetype, pi, pi_server, interceptors {
+project(*Client): taoclient, valuetype, pi, interceptors {
   after += *idl
 
   Source_Files {
-    testC.cpp
     Client_ORBInitializer.cpp
     Client_Request_Interceptor.cpp
     client.cpp
