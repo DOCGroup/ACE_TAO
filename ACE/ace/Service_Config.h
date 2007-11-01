@@ -135,6 +135,40 @@ public:
 
 #define ACE_Component_Config ACE_Service_Config
 
+/// This specialization enures ACE_TSS will _not_ perform a delete on
+/// (ACE_Service_Gestalt*) p upon thread exit, when TSS is cleaned
+/// up. Note that the tss_ member will be destroyed with the
+/// ACE_Object_Manager's ACE_Service_Config singleton, so no leaks
+/// will be introduced.
+/// We need this non-ownership ACE_TSS because the SC instance is
+/// really owned by the Object Manager and only it must do the cleanup.
+///
+/// Naturally, things would be simpler, if we could
+/// avoid using the TSS altogether but we need the ability to
+/// temporarily designate a different SC instance as the "default."
+/// So, the solution is a hybrid, or non-owner ACE_TSS.  See bugzila
+/// 2980 for a description of a test case where ACE_TSS::cleanup() is
+/// called before ~ACE_Object_Manager.
+
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+// Since ACE_TSS<>::cleanup() is only defined in
+// multithreaded builds ...
+template<> inline void
+ACE_TSS<ACE_Service_Gestalt>::cleanup (void*ptr)
+{
+  // Borland C++ 2007 *needs* the parameter
+  // name, but it is not clear why ...
+  ACE_UNUSED_ARG (ptr);
+}
+# else
+template<> inline
+ACE_TSS<ACE_Service_Gestalt>::~ACE_TSS (void)
+{
+  // Without threads, the ACE_TSS cleanup is done by ~ACE_TSS()
+}
+# endif /* ACE_MT_SAFE */
+
+
 /**
  * @class ACE_Service_Config
  *
