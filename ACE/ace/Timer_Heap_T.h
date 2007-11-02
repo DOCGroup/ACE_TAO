@@ -142,8 +142,8 @@ public:
                               const ACE_Time_Value &interval);
 
   /**
-   * Cancel all timers associated with @a type.  If <dont_call> is 0
-   * then the <functor> will be invoked.  Returns number of timers
+   * Cancel all timers associated with @a type.  If @a dont_call_handle_close
+   * is 0then the <functor> will be invoked.  Returns number of timers
    * cancelled.
    */
   virtual int cancel (const TYPE &type,
@@ -154,8 +154,8 @@ public:
    * was returned from the <schedule> method).  If act is non-NULL
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
-   * to free up the memory and avoid memory leaks.  If <dont_call> is
-   * 0 then the <functor> will be invoked.  Returns 1 if cancellation
+   * to free up the memory and avoid memory leaks. If @a dont_call_handle_close
+   * is 0 then the <functor> will be invoked.  Returns 1 if cancellation
    * succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
@@ -258,7 +258,7 @@ private:
   /// Pops and returns a new timer id from the freelist.
   long pop_freelist (void);
 
-  /// Pushes <old_id> onto the freelist.
+  /// Pushes @a old_id onto the freelist.
   void push_freelist (long old_id);
 
   /// Maximum size of the heap.
