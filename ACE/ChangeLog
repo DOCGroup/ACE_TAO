@@ -1,3 +1,15 @@
+Fri Nov  2 07:48:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.{h,cpp}:
+          Removed the patch for bugzilla 2980, this results in a memory
+          leak of 10Kb for each thread that uses the ACE_Service_Config_Guard.
+          This memory leak is documented in bugzilla 3108. For bugzilla 2980
+          we need to have a different patch without reintroducing the
+          memory leak.
+
+        * ace/Timer_Heap_T.h:
+          Doxygen changes
+
 Thu Nov  1 19:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the change below, it seems to cause problems with msvc 71.

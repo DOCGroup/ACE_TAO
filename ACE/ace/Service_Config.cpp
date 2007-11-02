@@ -378,9 +378,9 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
                                         size_t size,
                                         int signum)
   : ACE_Service_Gestalt (size, false, ignore_static_svcs)
-  , tss_ (this)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
+  this->tss_.ts_object (this);
   ACE_Service_Config::signum_ = signum;
 }
 
@@ -445,10 +445,10 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
 ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
                                         const ACE_TCHAR *logger_key)
   : ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false)
-  , tss_ (this)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
+  this->tss_.ts_object (this);
   if (this->open (program_name,
                   logger_key) == -1 && errno != ENOENT)
     {
@@ -552,6 +552,10 @@ ACE_Service_Config::fini_svcs (void)
 ACE_Service_Config::~ACE_Service_Config (void)
 {
   ACE_TRACE ("ACE_Service_Config::~ACE_Service_Config");
+
+  // We do not want ~ACE_TSS<> to delete this again (single-thread
+  // builds)
+  this->tss_.ts_object (0);
 }
 
 // ************************************************************
