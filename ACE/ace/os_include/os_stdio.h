@@ -53,8 +53,12 @@ extern "C"
 # elif defined (ACE_WIN32)
 #   define ACE_MAX_USERID 32
 # else
-#  define ACE_MAX_USERID L_cuserid
-#endif /* INTEGRITY */
+#  if defined (_POSIX_SOURCE) && defined (L_cuserid)
+#   define ACE_MAX_USERID L_cuserid
+#  else
+#   define ACE_MAX_USERID 9
+#  endif
+# endif /* INTEGRITY */
 
 #if defined (BUFSIZ)
 #  define ACE_STREAMBUF_SIZE BUFSIZ
