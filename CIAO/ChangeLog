@@ -1,3 +1,12 @@
+Fri Nov  2 16:41:48 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/Simple/descriptors/Plan.cdp:
+
+          Reverted what seems to be an accidental commit made at:
+          Mon Oct 29 16:40:08 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+          The changes causes the tutorial to not work (plan launcher fails).      
+
 Mon Oct 29 19:10:34 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Display/NavDisPlayGUI/NavDisplayGUI.mpc:
