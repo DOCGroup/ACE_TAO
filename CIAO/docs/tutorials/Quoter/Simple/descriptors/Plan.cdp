@@ -24,7 +24,7 @@
     <node>Broker</node>
     <source/>
     <implementation>_7205655C-4CBD-42BE-A0F1-870705A77D77</implementation>
-    <Configproperty>
+    <configProperty>
       <name>ComponentIOR</name>
       <value>
         <type>
