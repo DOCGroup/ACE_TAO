@@ -1,8 +1,14 @@
+Sat Nov  3 06:24:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Fixed a bug introduced by my VxWorks changes, thanks to JT
+          for finding this
+
 Fri Nov  2 22:31:36 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/os_include/os_stdio.h:
         * ace/config-macosx-leopard.h:
-        
+
          Preliminary compatibility for Mac OS X 10.5
 
 Fri Nov  2 07:48:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>

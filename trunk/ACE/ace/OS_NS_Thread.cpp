@@ -3872,6 +3872,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
 # endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
+  ACE_thread_t tmp_thr;
+  if (thr_id == 0)
+    thr_id = &tmp_thr;
+
   ACE_hthread_t tmp_handle;
   if (thr_handle == 0)
     thr_handle = &tmp_handle;
