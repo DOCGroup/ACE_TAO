@@ -1,5 +1,5 @@
 Welcome to the latest release of The ACE ORB (TAO).  TAO is a freely
-available, open-source implementation of a CORBA 2.x-compliant ORB
+available, open-source implementation of a CORBA 3.x-compliant ORB
 that supports real-time extensions.  Please see
 www.dre.vanderbilt.edu/TAO for more information on TAO
 features, services, and the status of current work.  In addition,
