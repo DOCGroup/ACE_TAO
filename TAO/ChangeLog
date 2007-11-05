@@ -1,3 +1,10 @@
+Mon Nov  5 10:26:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+          Updated for VxWorks thread id changes
+
 Mon Nov  5 03:05:06 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
