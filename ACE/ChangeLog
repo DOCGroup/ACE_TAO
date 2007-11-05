@@ -1,3 +1,17 @@
+Mon Nov  5 11:40:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Reverted the change of Thu Nov  1 14:40:00 UTC 2007 at the
+          request of Buildczar to test for memory leaks within this
+          area of the build. If this shows improved memory usage then
+          TAO is missusing keyfree and this needs to be investigated.
+          keyfree should NOT be responciable for the tidy-up of TSS
+          and it should NOT be calling destructors for the registered
+          keys it is being used to deactivate. (See the documentaion
+          for pthread_key_delete() and thr_keydelete() which our keyfree
+          call wraps.)
+
 Sat Nov  3 06:24:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
