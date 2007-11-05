@@ -94,8 +94,8 @@ argv = force_argv;
 #define THREAD_PER_RATE_OBJS 4
 // Number of cubit objects in the thread per rate test.
 
-#define TASK_ID_LEN 32
-// length of the task id ,used in vxworks.
+#define TASK_HANDLE_LEN 32
+// length of the task handle ,used in vxworks.
 
 #define TASKNAME_LEN 14
 // Length of the task name in the task control block for vxworks.
