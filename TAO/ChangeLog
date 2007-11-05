@@ -1,3 +1,16 @@
+Mon Nov  5 03:05:06 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated for PI.mpc & PI_Server.mpc changes.
+
+        * tao/tao.mpc:
+
+          Fix Header_Files section where Objref_VarOut_T.h and
+          Object_Reference_Traits_Base_T.h were listed on the same line.
+          This was interpreted as a single filename with embedded spaces
+          in the automake build's Makefile.am generation.
+
 Thu Nov  1 14:13:36 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DII_AMI_Forward/DII_ReplyHandler.cpp:
