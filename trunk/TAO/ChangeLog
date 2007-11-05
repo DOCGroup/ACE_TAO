@@ -1,3 +1,16 @@
+Mon Nov  5 14:33:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * README:
+          TAO is implementing a lot of the 3.x CORBA features
+
+Mon Nov  5 12:17:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_3080/client.cpp:
+        * tests/Portable_Interceptors/Bug_3080/Client_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Bug_3080/Client_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Bug_3080/Client_Request_Interceptor.h:
+          Improved this test
+
 Mon Nov  5 10:26:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
