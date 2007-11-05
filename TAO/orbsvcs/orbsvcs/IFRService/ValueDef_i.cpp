@@ -621,7 +621,7 @@ TAO_ValueDef_i::is_abstract (CORBA::Boolean is_abstract)
 
   this->update_key ();
 
-  this->is_abstract (is_abstract);
+  this->is_abstract_i (is_abstract);
 }
 
 void
