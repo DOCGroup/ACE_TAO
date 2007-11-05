@@ -1,0 +1,35 @@
+USER VISIBLE CHANGES AND CAPABILITIES ADDED TO FOCUS:
+=====================================================
+
+. Support for specialization of ACE Reactor Framework
+  -- Specialization of ACE_Select_Reactor both st and mt
+  -- Specialization of ACE_TP_Reactor 
+
+. Support for specialization of Pluggable Messaging in TAO
+  -- Specialization of Pluggable Messaging Interface based on GIOP 
+
+. Support for specializing the Pluggable Protocol framework in TAO
+  -- Specialization for IIOP protocol implementation in TAO
+
+FUTURE CAPABILITIES and PLANNED CHANGES
+========================================
+ACE+TAO component specialization related capabilities
+-----------------------------------------------------
+. Support for specialization of the Messaging Framework based on GIOP_Lite
+. Support for specialization of Wait Strategy including Leader_Follower wait strategy
+. Support for specialization of Flushing Strategy components
+
+FOCUS Specialization Language Enhancements
+------------------------------------------ 
+. Support for multi line search and replace capabilities
+. Support for ensuring source files are not corrupted when multiple 
+  specializations are grouped together when the specializations are 
+  added.
+
+FOCUS Transformation Related Enhancements
+----------------------------------------
+. Support for undo feature for the transformations. This is going to be 
+  really hard. I am not sure if this is doable
+. Specifying dependencies between the different specializations. If one 
+  is incompatible with the other, then this needs to be detected before
+  the specializations are executed.

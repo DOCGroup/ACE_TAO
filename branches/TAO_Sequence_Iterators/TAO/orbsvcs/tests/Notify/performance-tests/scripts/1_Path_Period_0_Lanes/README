@@ -1,0 +1,37 @@
+## $Id$
+
+1 Path : Load vs Throughput experiment with period=0
+====================================================
+
+In this test we setup a Path (In a Path, a single supplier sends
+events to a consumer and only that consumer) at High Priority.
+
+The consumer performs CPU work according to the load supplied to it.
+
+We increase the load and measure the throughput recorded.
+
+
+Running the experiment:
+======================
+
+Run the "run_all.pl" script in this directory to run the test using RT-Notification.
+as "run_all.pl --rt"
+
+If you want to generate results using the CosNotification, run as
+"run_all.pl --cos"
+
+To generate the data for both cases run as "run_all.pl --all"
+
+The RT-Notification results are generated in the Load_X/rt_output directory.
+The CosNotification results are generated in the Load_X/cos_output directory.
+
+e.g., Load_0/rt_output/c_high.dat would contain the statistics
+recorded for the consumer when the Load is 0.
+
+
+Expected Results:
+================
+
+As the load increases the throughput for the consumer should fall.
+This helps us determine the load at which the system is operating at
+full capacity.
