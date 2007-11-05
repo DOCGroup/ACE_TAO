@@ -21,23 +21,9 @@ Client_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 void
 Client_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
-  CORBA::String_var orb_id = info->orb_id ();
-
-  CORBA::StringSeq_var args = info->arguments ();
-
-  CORBA::String_var forward_str;
-
-  // Extract the last forward reference from the argument list.
-  CORBA::ULong args_len = args->length ();
-  for (CORBA::ULong i = 0; i < args_len; ++i)
-    if (ACE_OS::strcmp ("-s", args[i]) == 0
-        && i < (args_len - 1))
-      forward_str = args[i + 1];
-
   // Install the client request interceptor.
   ACE_NEW_THROW_EX (client_interceptor_,
-                    Client_Request_Interceptor (orb_id.in (),
-                                                forward_str.in ()),
+                    Client_Request_Interceptor,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,

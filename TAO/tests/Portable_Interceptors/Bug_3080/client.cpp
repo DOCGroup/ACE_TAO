@@ -95,6 +95,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              "Error, send request interceptor not called\n"),
                             1);
         }
+
+      if (temp_initializer->client_interceptor_->receive_exception_count () != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error, receive exception interceptor not called\n"),
+                            1);
+        }
     }
   catch (const CORBA::Exception& ex)
     {
