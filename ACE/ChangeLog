@@ -1,3 +1,9 @@
+Mon Nov  5 20:00:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
+        * apps/Gateway/Peer/Peer.cpp:
+          Fixed GCC 4.2.1 warnings
+
 Mon Nov  5 14:06:54 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/PerlACE/Run_Test.pm:
