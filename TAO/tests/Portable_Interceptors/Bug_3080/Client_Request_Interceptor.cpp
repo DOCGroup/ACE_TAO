@@ -8,14 +8,16 @@ ACE_RCSID (Redirection,
            Client_Request_Interceptor,
            "$Id$")
 
-Client_Request_Interceptor::Client_Request_Interceptor (
-  const char *orb_id,
-  const char *forward_str)
-  : orb_id_ (CORBA::string_dup (orb_id)),
-    orb_ (),
-    request_count_ (0),
-    forward_str_ (CORBA::string_dup (forward_str))
+Client_Request_Interceptor::Client_Request_Interceptor (void)
+  : request_count_ (0),
+    receive_exception_count_ (0)
 {
+}
+
+CORBA::ULong
+Client_Request_Interceptor::receive_exception_count (void) const
+{
+  return this->receive_exception_count_;
 }
 
 CORBA::ULong
@@ -58,20 +60,7 @@ void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr)
 {
-  ACE_DEBUG ((LM_DEBUG, "RECEIVED EXCEPTION\n"));
-  if (CORBA::is_nil (this->orb_.in ()))
-  {
-    int argc = 0;
-    this->orb_ = CORBA::ORB_init (argc,
-                                  0,
-                                  this->orb_id_.in ());
-  }
-
-  CORBA::Object_var forward =
-  this->orb_->string_to_object (this->forward_str_.in ());
-
-  // Notice that this is not a permanent forward.
-  throw PortableInterceptor::ForwardRequest (forward.in ());
+  ++this->receive_exception_count_;
 }
 
 void

@@ -31,8 +31,7 @@ class Client_Request_Interceptor
 public:
 
   /// Constructor.
-  Client_Request_Interceptor (const char *orb_id,
-                              const char *forward_str);
+  Client_Request_Interceptor (void);
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -66,20 +65,13 @@ public:
 
   CORBA::ULong request_count (void) const;
 
+  CORBA::ULong receive_exception_count (void) const;
+
 private:
-
-  ///The ID of the ORB this interceptor is registered with.
-  CORBA::String_var orb_id_;
-
-  /// Pseudo-reference to the ORB this interceptor is registered
-  /// with.
-  CORBA::ORB_var orb_;
-
   /// The number of requests intercepted by this interceptor.
   CORBA::ULong request_count_;
 
-  CORBA::String_var forward_str_;
-
+  CORBA::ULong receive_exception_count_;
 };
 
 #if defined(_MSC_VER)
