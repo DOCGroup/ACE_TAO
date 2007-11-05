@@ -1,3 +1,19 @@
+Mon Nov  5 14:06:54 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Change wait_interval_for_process_creation from 10/12 to 15
+          seconds on non-VxWorks systems.
+
+          My change of Thu Nov 1 04:36:27 UTC 2007 improved results of the
+          NetBSD scoreboard, but was still not enough time to ensure tests
+          started.  I've increased the wait for all OS's instead of NetBSD
+          only, since this is likely to be a problem on all OS's that need
+          to calibrate the high res timer.  This extra delay shouldn't
+          slow the testsuite execution on faster systems, as the existence
+          of the sentinal file is polled by PerlACE::waitforfile_timed()
+          which returns as soon as the file exists.
+
 Mon Nov  5 11:40:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * ace/OS_NS_Thread.cpp:
