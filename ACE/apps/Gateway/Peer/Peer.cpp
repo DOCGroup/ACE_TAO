@@ -423,8 +423,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       if (errno == EWOULDBLOCK)
         // This might happen if only the header came through.
         return -1;
-      else
-        /* FALLTHROUGH */;
+      /* FALLTHROUGH */;
 
     case 0: // Premature EOF.
       if (data_bytes_left_to_read)

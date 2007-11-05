@@ -80,7 +80,7 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
       this->handle_close ();
       return -1;
     }
-  else if (errno == EWOULDBLOCK) 
+  else if (errno == EWOULDBLOCK)
     {
       // We didn't manage to send everything, so we need to queue
       // things up.
@@ -107,7 +107,7 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
                           -1);
       return 0;
     }
-  else 
+  else
     return n;
 }
 
@@ -416,8 +416,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
       if (errno == EWOULDBLOCK)
         // This might happen if only the header came through.
         return -1;
-      else
-        /* FALLTHROUGH */;
+      /* FALLTHROUGH */;
 
     case 0: // Premature EOF.
       if (data_bytes_left_to_read)
