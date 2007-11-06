@@ -4964,6 +4964,15 @@ ACE_OS::thr_keyfree_native (ACE_OS_thread_key_t key)
 {
   ACE_OS_TRACE ("ACE_OS::thr_keyfree_native");
 # if defined (ACE_HAS_THREADS)
+#   if defined (ACE_HAS_BROKEN_THREAD_KEYFREE) || defined (ACE_HAS_THR_KEYDELETE)
+    // For some systems, e.g. LynxOS, we need to ensure that
+    // any registered thread destructor action for this slot
+    // is now disabled. Otherwise in the event of a dynamic library
+    // unload of libACE, by a program not linked with libACE,
+    // ACE_TSS_cleanup will be invoked again at the thread exit
+    // after libACE has been actually been unmapped from memory.
+    (void) ACE_OS::thr_setspecific (key, 0);
+#   endif /* ACE_HAS_BROKEN_THREAD_KEYFREE */
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_UNUSED_ARG (key);
     ACE_NOTSUP_RETURN (-1);
