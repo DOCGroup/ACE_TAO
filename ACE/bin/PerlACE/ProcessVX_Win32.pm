@@ -89,8 +89,6 @@ sub Normalize_Executable_Name
       $executable = $dirname.$basename.$self->{EXE_EXT};
     }
 
-    $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
-
     return $executable;
 }
 
@@ -110,7 +108,6 @@ sub Executable
     }
     else {
       $executable = $executable.$self->{EXE_EXT};
-      $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
     }
 
     return $executable;
@@ -229,6 +226,7 @@ sub Spawn ()
     else {
         $cwdrel = File::Spec->abs2rel( $cwdrel, $ENV{"ACE_ROOT"} );
     }
+    $cwdrel =~ s/\\/\//g;
     $program = basename($program, $self->{EXE_EXT});
 
     unlink "run_vx.pl";
