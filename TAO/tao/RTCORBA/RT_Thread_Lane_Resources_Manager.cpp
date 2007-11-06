@@ -64,11 +64,11 @@ TAO_RT_Thread_Lane_Resources_Manager::open_default_resources (void)
 void
 TAO_RT_Thread_Lane_Resources_Manager::finalize (void)
 {
-  // Finalize default resources.
-  this->default_lane_resources_->finalize ();
-
   // Finalize resources managed by the thread-pool manager.
   this->tp_manager_->finalize ();
+
+  // Finalize default resources.
+  this->default_lane_resources_->finalize ();
 }
 
 void
