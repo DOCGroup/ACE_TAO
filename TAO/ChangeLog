@@ -1,3 +1,8 @@
+Tue Nov  6 15:59:43 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
+          Fixed a memory leak with improper order of cleanup.
+
 Tue Nov  6 15:51:01 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * examples/RTCORBA/Activity/Job.idl:
