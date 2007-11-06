@@ -1,3 +1,14 @@
+Tue Nov  6 15:51:01 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * examples/RTCORBA/Activity/Job.idl:
+        * examples/RTCORBA/Activity/Activity.h:
+        * examples/RTCORBA/Activity/POA_Holder.cpp:
+        * examples/RTCORBA/Activity/POA_Holder.h:
+        * examples/RTCORBA/Activity/Builder.cpp:
+        * examples/RTCORBA/Activity/Activity.cpp:
+        * examples/RTCORBA/Activity/run_test.pl:
+          Fixed a lot of memory leaks in this example.
+
 Mon Nov  5 16:30:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:

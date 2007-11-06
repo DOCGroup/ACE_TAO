@@ -62,7 +62,7 @@ if ($status != 0)
     print STDERR "ERROR: Client Activity returned $status\n";
   }
 
-$Activity_Server->Kill ();
+$Activity_Server->WaitKill (10);
 $Naming->Kill ();
 
 exit $status;
