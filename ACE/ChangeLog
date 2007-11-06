@@ -1,3 +1,12 @@
+Tue Nov  6 11:30:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Re-instated the change of Thu Nov  1 14:40:00 UTC 2007.
+          Valgrind tests prove this is not causing the memory leaks
+          just exposing some existing ones. The whole area of TSS use
+          with singletons/statics needs to be investigated.
+
 Tue Nov  6 10:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Win32.pm:
