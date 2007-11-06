@@ -38,6 +38,9 @@ class activity_Export POA_Holder
   void activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa);
 
  protected:
+  /// Cleanup.
+  PortableServer::POA_var poa_;
+
   /// = POA create options.
   ACE_CString POA_name_;
   RTCORBA::PriorityModel priority_model_;
