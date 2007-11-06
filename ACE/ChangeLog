@@ -1,3 +1,8 @@
+Tue Nov  6 10:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Fixed dirname setting
+
 Mon Nov  5 20:00:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
