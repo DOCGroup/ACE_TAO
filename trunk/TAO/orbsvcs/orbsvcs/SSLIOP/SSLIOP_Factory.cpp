@@ -345,17 +345,17 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
     {
       if( -1 == ssl_ctx->seed_file (path, -1))
       {
-        errors++;
+        ++errors;
 
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Failed to load ")
                       ACE_TEXT ("more entropy from <%s>: %m\n"), path));
       }
       else
       {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_ERROR,
+            ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) Loaded ")
                         ACE_TEXT ("more entropy from <%s>\n"), path));
       }
@@ -374,7 +374,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
       if (ssl_ctx->load_trusted_ca (ca_file, ca_dir) != 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) Unable to load ")
                         ACE_TEXT ("CA certs from %s%s%s\n"),
                         ((ca_file != 0) ? ca_file : ACE_TEXT ("a file pointed to by ")
@@ -427,7 +427,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
               // a dh parameter file and we were unable to actually find it
               // and load from it.
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_ERROR,
+                ACE_ERROR ((LM_ERROR,
                             ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
                             ACE_TEXT ("unable to set ")
                             ACE_TEXT ("DH parameters <%s>\n"),
@@ -467,7 +467,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
                                 certificate_type) != 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) Unable to set ")
                         ACE_TEXT ("SSL certificate <%s> ")
                         ACE_TEXT ("in SSLIOP factory.\n"),
@@ -492,7 +492,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_ERROR,
+              ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) Unable to set ")
                           ACE_TEXT ("SSL private key ")
                           ACE_TEXT ("<%s> in SSLIOP factory.\n"),
