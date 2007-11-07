@@ -66,7 +66,7 @@ MT_Server::read_ior (char *filename)
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for reading: %p\n",
+                       "Unable to open %s for reading\n",
                        filename),
                       -1);
 

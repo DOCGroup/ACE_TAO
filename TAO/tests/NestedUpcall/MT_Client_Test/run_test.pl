@@ -9,7 +9,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$ior1file = PerlACE::LocalFile ("server1.ior");
+$ior1filebase = "server1.ior";
+$ior1file = PerlACE::LocalFile ("$ior1filebase");
 $ior2file = PerlACE::LocalFile ("server2.ior");
 
 # Make sure the files are gone
@@ -17,7 +18,7 @@ unlink $ior1file;
 unlink $ior2file;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV1 = new PerlACE::ProcessVX ("server", "-o server1.ior");
+    $SV1 = new PerlACE::ProcessVX ("server", "-o $ior1filebase");
 }
 else {
     $SV1 = new PerlACE::Process ("server", "-o $ior1file");

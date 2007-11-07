@@ -1,3 +1,26 @@
+Wed Nov  7 14:58:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Mobility_Service:
+          Removed, empty
+
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+          Layout change
+
+        * tests/NestedUpcall/MT_Client_Test/client.cpp:
+        * tests/NestedUpcall/MT_Client_Test/local_server.cpp:
+          Fixed incorrect ACE_ERROR_RETURN statements. This test is now
+          failing on svn head, it doesn't do a correct cleanup and should
+          be improved much more
+
+        * tests/NestedUpcall/MT_Client_Test/run_test.pl:
+          Simplified
+
+        * tests/POA/Default_Servant2/client.cpp:
+          Layout change
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+          Use ACE_ERROR for errors, prefix increment
+
 Tue Nov  6 15:59:43 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:

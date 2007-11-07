@@ -65,7 +65,7 @@ MT_Client::read_ior (char *filename)
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for reading: %p\n",
+                       "Unable to open %s for reading\n",
                        filename),
                       -1);
 
@@ -105,7 +105,7 @@ MT_Client::parse_args (void)
           // read IOR for MT Object
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to read ior from %s : %p\n",
+                               "Unable to read ior from %s\n",
                                get_opts.opt_arg ()),
                               -1);
         }
@@ -117,7 +117,7 @@ MT_Client::parse_args (void)
           // read IOR for Object A
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to read ior from %s : %p\n",
+                               "Unable to read ior from %s\n",
                                get_opts.opt_arg ()),
                               -1);
         }
@@ -217,7 +217,6 @@ MT_Client::init (int argc, char **argv,
                              "The IOR is nil, not able to get the object.\n"),
                             -1);
 
-
       CORBA::Object_var object_var =
         this->orb_var_->string_to_object (this->object_key_);
 
@@ -269,6 +268,8 @@ MT_Client::init (int argc, char **argv,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  int result = 0;
+  
   try
     {
       TAO_ORB_Manager orb_manager;
@@ -319,7 +320,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "MT_Client_Task.\n"),
                      -1);  // @@ Memory leak!
 
-      int result = ACE_Thread_Manager::instance ()->wait ();
+      result = ACE_Thread_Manager::instance ()->wait ();
 
       for (i = 0; i < threads; i++)
         delete clients[i];
@@ -331,12 +332,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       delete server;
 
-      return result;
+      orb_manager.fini ();
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("main");
     }
 
-  return 1;
+  return result;
 }
