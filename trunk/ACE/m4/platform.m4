@@ -350,7 +350,7 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
 esac
 
 ACE_FUNC_IOCTL_ARGTYPES
-
+ACE_CHECK_HAS_NONCONST_FD_ISSET
 ACE_CHECK_FORMAT_SPECIFIERS
 ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING
 
@@ -486,4 +486,25 @@ if test "$ace_cv_var_timezone" = yes; then
   AC_DEFINE([ACE_HAS_TIMEZONE], 1,
 	    [Define to 1 if platform has global timezone variable])
 fi
+])
+
+
+# ACE_HAS_NONCONST_FD_ISSET
+#
+# Checks if system has a nonconst FD_ISSET macro.
+#
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_CHECK_HAS_NONCONST_FD_ISSET],
+[dnl
+    AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM([#include <sys/time.h>],
+                [
+                //const fd_set* temp = new fd_set();
+                //FD_ISSET(0, const_cast< fd_set* >( temp ) );
+                const fd_set* temp = new fd_set();
+                FD_ISSET(0, temp );
+                ])
+        ],[],[AC_DEFINE([ACE_HAS_NONCONST_FD_ISSET], 1,
+                [Define to 1 if system has nonconst FD_ISSET() macro.])]
+    )
 ])
