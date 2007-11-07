@@ -1,3 +1,8 @@
+Wed Nov  7 18:53:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_2133 regression
+
 Wed Nov  7 04:33:02 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
