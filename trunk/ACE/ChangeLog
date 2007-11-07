@@ -20,6 +20,7 @@ Tue Nov  6 11:30:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
           Valgrind tests prove this is not causing the memory leaks
           just exposing some existing ones. The whole area of TSS use
           with singletons/statics needs to be investigated.
+          (See Bugzilla 3128 for details.)
 
 Tue Nov  6 10:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
