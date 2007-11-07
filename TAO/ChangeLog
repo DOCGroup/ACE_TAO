@@ -1,7 +1,20 @@
+Wed Nov  7 18:48:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_2133/*:
+          New regression test for bug 2133, thanks to Simon McQueen for
+          creating this test
+
+        * testsPortable_Interceptors/Bug_3080/server.cpp:
+          Fixed memory leak in this test
+
+        * tests/Blocking_Sync_None/run_test.pl:
+          Added support for -debug which adds -ORBDebugLevel 10 to the
+          executables
+
 Wed Nov  7 15:40:23 UTC 2007  Jaiganesh B <jai@shiva.dre.vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_3079/Client_Request_Interceptor.cpp:
-        
+
           Modified the ACE_DEBUG statements to use the word "exception"
           instead of the word "EXCEPTION" which is interpreted by the
           autobuilds as a test failure.
