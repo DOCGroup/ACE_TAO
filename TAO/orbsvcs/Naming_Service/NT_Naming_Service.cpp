@@ -161,8 +161,7 @@ TAO_NT_Naming_Service::svc (void)
 {
   TAO_Naming_Service naming_service;
 
-  if (naming_service.init (argc_,
-                           argv_) == -1)
+  if (naming_service.init (argc_, argv_) == -1)
     return -1;
 
   try
