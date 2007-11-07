@@ -212,16 +212,14 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::set_property (
     TAO_IOP::TAO_IOR_Property_ptr prop,
-    CORBA::Object_ptr group
-    )
+    CORBA::Object_ptr group)
 {
   // make sure we have some profiles
   if (group->_stubobj ()->base_profiles ().profile_count () == 0)
     throw TAO_IOP::Invalid_IOR ();
 
   // Call the implementation object to
-  return prop->set_property (group
-                            );
+  return prop->set_property (group);
 }
 
 //@@ note awkward argument order
@@ -229,8 +227,7 @@ CORBA::Boolean
 TAO_IOR_Manipulation_impl::set_primary (
     TAO_IOP::TAO_IOR_Property_ptr prop,
     CORBA::Object_ptr new_primary,
-    CORBA::Object_ptr group
-    )
+    CORBA::Object_ptr group)
 {
   // make sure we have some profiles in GROUP
   if (group->_stubobj ()->base_profiles ().profile_count () == 0)
@@ -242,17 +239,13 @@ TAO_IOR_Manipulation_impl::set_primary (
     throw TAO_IOP::MultiProfileList ();*/
 
   // Call the callback object to do the rest of the processing.
-  return prop->set_primary (new_primary,
-                            group
-                           );
+  return prop->set_primary (new_primary, group);
 }
 
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::get_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr group
-
-    )
+      CORBA::Object_ptr group)
 {
   // make sure we have some profiles in IOR
   if (group->_stubobj ()->base_profiles ().profile_count () == 0)
@@ -262,8 +255,7 @@ TAO_IOR_Manipulation_impl::get_primary (
   // run-time (if it does not crash).  Any idea about what is going on
   // here?
 
-  return prop->get_primary (group
-                           );
+  return prop->get_primary (group);
 }
 
 CORBA::Boolean
@@ -285,11 +277,10 @@ TAO_IOR_Manipulation_impl:: remove_primary_tag (
 CORBA::ULong
 TAO_IOR_Manipulation_impl::is_in_ior (
     CORBA::Object_ptr ior1,
-    CORBA::Object_ptr ior2
-    )
+    CORBA::Object_ptr ior2)
 {
   CORBA::ULong count = 0;
-  TAO_Profile *pfile1, *pfile2;
+  TAO_Profile *pfile1 = 0, *pfile2 = 0;
   auto_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
   auto_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
 
@@ -300,7 +291,7 @@ TAO_IOR_Manipulation_impl::is_in_ior (
       while ((pfile2 = tmp_pfiles2->get_next ()) > 0)
         {
           if (pfile1->is_equivalent (pfile2))
-            count++;
+            ++count;
         }
     }
 
