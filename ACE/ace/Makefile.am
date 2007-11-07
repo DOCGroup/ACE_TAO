@@ -19,6 +19,7 @@ SUBDIRS = \
 	QoS \
         SSL
 
+DEFAULT_INCLUDES =
 CLEANFILES =
 lib_LTLIBRARIES =
 pkgconfig_DATA =
