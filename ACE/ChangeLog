@@ -1,3 +1,16 @@
+Thu Nov  8 04:02:21 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_stdio.inl:
+
+          Changed wide character version of ACE_OS::vsnprintf()'s to match
+          ACE_OS::snprintf() as like prior to Sun Oct 28 21:11:57 UTC 2007.
+          This fixes a error reporting in buffer overflow conditions.
+
+          At that time all the ACE_OS::*printf() functions were changed to
+          call ACE_OS::v*printf().  The intent was to reduce the chance of
+          bugs being introduced because of largly parallel implementations.
+          What I didn't expect was that such a bug was already present.
+
 Thu Nov  8 02:09:02 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Codeset_Registry_db.cpp:
