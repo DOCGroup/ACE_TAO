@@ -1017,6 +1017,40 @@ ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
   return ::vsprintf (buffer, format, argptr);
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
+{
+# if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
+     (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
+      defined (ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
+      defined (ACE_HAS_VSWPRINTF) || \
+     (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE) && \
+      _MSC_FULL_VER > 140050000)
+
+  // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
+  // maxlen argument. Since this method doesn't supply one, pass in
+  // a length that works (ULONG_MAX doesn't on all platform since some check
+  // to see if the operation will remain in bounds). If this isn't ok, use
+  // ACE_OS::snprintf().
+  return vswprintf (buffer, 4096, format, argptr);
+
+# elif defined (ACE_WIN32)
+  // Windows has vswprintf, but the pre-VC8 signature is from the older
+  // ISO C standard. Also see ACE_OS::snprintf() for more info on this.
+
+  return vswprintf (buffer, format, argptr);
+
+# else
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (format);
+  ACE_UNUSED_ARG (argptr);
+  ACE_NOTSUP_RETURN (-1);
+
+# endif /* XPG5 || ACE_HAS_DINKUM_STL */
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE int
 ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 {
@@ -1064,40 +1098,6 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
-ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
-{
-# if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
-     (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-      defined (ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
-      defined (ACE_HAS_VSWPRINTF) || \
-     (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE) && \
-      _MSC_FULL_VER > 140050000)
-
-  // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
-  // maxlen argument. Since this method doesn't supply one, pass in
-  // a length that works (ULONG_MAX doesn't on all platform since some check
-  // to see if the operation will remain in bounds). If this isn't ok, use
-  // ACE_OS::snprintf().
-  return vswprintf (buffer, 4096, format, argptr);
-
-# elif defined (ACE_WIN32)
-  // Windows has vswprintf, but the pre-VC8 signature is from the older
-  // ISO C standard. Also see ACE_OS::snprintf() for more info on this.
-
-  return vswprintf (buffer, format, argptr);
-
-# else
-  ACE_UNUSED_ARG (buffer);
-  ACE_UNUSED_ARG (format);
-  ACE_UNUSED_ARG (argptr);
-  ACE_NOTSUP_RETURN (-1);
-
-# endif /* XPG5 || ACE_HAS_DINKUM_STL */
-}
-#endif /* ACE_HAS_WCHAR */
-
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE int
 ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_list ap)
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
@@ -1105,24 +1105,34 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
      (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__)) || \
       defined (ACE_HAS_VSWPRINTF)
 
-  return vswprintf (buffer, maxlen, format, ap);
+  int result;
 
-# elif defined (ACE_HAS_TR24731_2005_CRT)
+# if defined (ACE_WIN32)
+  // Microsoft's vswprintf() doesn't have the maxlen argument that
+  // XPG4/UNIX98 define. They do, however, recommend use of _vsnwprintf()
+  // as a substitute, which does have the same signature as the UNIX98 one.
+  result = ::_vsnwprintf (buffer, maxlen, format, ap);
 
-  return _vsnwprintf_s (buffer, maxlen, _TRUNCATE, format, ap);
-
-# elif defined (ACE_WIN32)
-
-  int result = ::_vsnwprintf (buffer, maxlen, format, ap);
-
-  // Win32 doesn't regard a full buffer with no 0-terminate as an
-// overrun.
+  // Win32 doesn't regard a full buffer with no 0-terminate as an overrun.
   if (result == static_cast<int> (maxlen))
-    result = -1;
+    buffer[maxlen-1] = '\0';
 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
   if (result == -1)
     buffer[maxlen-1] = '\0';
+# else
+  result = vswprintf (buffer, maxlen, format, ap);
+#endif
+
+  // In out-of-range conditions, C99 defines vsnprintf() to return the number
+  // of characters that would have been written if enough space was available.
+  // Earlier variants of the vsnprintf() (e.g. UNIX98) defined it to return
+  // -1. This method follows the C99 standard, but needs to guess at the
+  // value; uses maxlen + 1.
+  if (result == -1)
+    {
+      result = static_cast <int> (maxlen + 1);
+    }
 
   return result;
 
