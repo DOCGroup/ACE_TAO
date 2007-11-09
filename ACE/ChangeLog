@@ -1,3 +1,9 @@
+Fri Nov  9 02:16:24 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Asynch_IO.h: Disallow copying and assignment for
+          ACE_Handler.  Thanks to Juraj Ivancic <juraj dot ivancic at
+          gmail dot com> for this suggestion.
+
 Fri Nov  9 11:46:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-tandem-nsk-mips-v3.h:
