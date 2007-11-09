@@ -591,23 +591,6 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_hthread_t thr_handle;
 
-#if defined (ACE_HAS_VXTHREADS)
-  if (t_handle != 0)
-    {
-      thr_handle = *t_handle;
-    }
-  else
-    {
-      ACE_NEW_RETURN (thr_handle,
-                      char[16],
-                      -1);
-      // Mark the thread ID to show that the ACE_Thread_Manager
-      // allocated it.
-      thr_handle[0] = ACE_THR_ID_ALLOCATED;
-      thr_handle[1] = '\0';
-    }
-#endif  /* !ACE_HAS_VXTHREADS */
-
   ACE_thread_t thr_id;
   if (t_id == 0)
     t_id = &thr_id;
@@ -923,14 +906,6 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 
   td->tm_ = 0;
   this->thr_list_.remove (td);
-
-#if defined (ACE_HAS_VXTHREADS)
-  // Delete the thread ID, if the ACE_Thread_Manager allocated it.
-  if (td->thr_handle_ && td->thr_handle_[0] == ACE_THR_ID_ALLOCATED)
-    {
-      delete [] td->thr_handle_;
-    }
-#endif /* ACE_HAS_VXTHREADS */
 
 #if defined (ACE_WIN32)
   if (close_handler != 0)

@@ -617,7 +617,7 @@ spawn_threads (ACCEPTOR *acceptor,
 {
   int status = 0;
 
-#if defined (ACE_HAS_VXTHREADS)
+#if 0
   // Assign thread (VxWorks task) names to test that feature.
   ACE_hthread_t *server_name = 0;
   ACE_NEW_RETURN (server_name,
@@ -660,7 +660,7 @@ spawn_threads (ACCEPTOR *acceptor,
        , ACE_DEFAULT_THREAD_PRIORITY
        , -1
        , 0
-#if defined (ACE_HAS_VXTHREADS)
+#if 0
        , server_name
 #if 0 /* Don't support setting of stack, because it doesn't seem to work. */
        , (void **) stack
@@ -680,7 +680,7 @@ spawn_threads (ACCEPTOR *acceptor,
        (void *) server_addr,
        THR_NEW_LWP,
        0
-#if defined (ACE_HAS_VXTHREADS)
+#if 0
        , &client_name
 #endif /* ACE_HAS_VXTHREADS */
        ) == -1)
@@ -705,7 +705,7 @@ spawn_threads (ACCEPTOR *acceptor,
       status = -1;
     }
 
-#if defined (ACE_HAS_VXTHREADS)
+#if 0
   for (i = 0; i < n_servers; ++i)
     {
       delete [] server_name[i];

@@ -89,7 +89,7 @@ handler (int /* signum */)
 static void *
 worker (int iterations)
 {
-#if defined (ACE_HAS_VXTHREADS)
+#if 0
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) %s: stack size is %u\n"),
               ACE_OS::thr_self (),
               ACE_OS::thr_min_stack ()));
@@ -323,7 +323,7 @@ run_main (int, ACE_TCHAR *[])
                   THR_BOUND
                   , ACE_DEFAULT_THREAD_PRIORITY
                   , -1
-#if defined (ACE_HAS_VXTHREADS)
+#if 0
                   , 0
                   , thread_name
                   , 0
@@ -442,7 +442,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) main thread finished\n")));
 
-#if defined (ACE_HAS_VXTHREADS)
+#if 0
   for (i = 0; i < n_threads - 1; ++i)
     {
       delete [] thread_name[i];
