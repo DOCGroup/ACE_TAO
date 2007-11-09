@@ -47,7 +47,7 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) Service_Config_Guard:<ctor=%@>")
+                ACE_TEXT ("ACE (%P|%t) SCG:<ctor=%@>")
                 ACE_TEXT (" - config=%@ repo=%@ superceded by repo=%@\n"),
                 this,
                 this->saved_,
@@ -65,7 +65,7 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) Service_Config_Guard:<dtor=%@>")
+                ACE_TEXT ("ACE (%P|%t) SCG:<dtor=%@>")
                 ACE_TEXT (" - new repo=%@\n"),
                 this,
                 this->saved_->repo_));
@@ -179,7 +179,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) SC::open_i - this=%@, opened=%d, ")
+                ACE_TEXT ("ACE (%P|%t) SC::open_i - this=%@, opened=%d, ")
                 ACE_TEXT ("loadstatics=%d\n"),
                 this, this->is_opened_, this->no_static_svcs_));
 
@@ -326,7 +326,7 @@ ACE_Service_Config::static_svcs (void)
   return ACE_Service_Config::instance ();
 }
 
-/// Return the global configuration instance. Allways returns the same
+/// Return the global configuration instance. Always returns the same
 /// instance
 ACE_Service_Config *
 ACE_Service_Config::global (void)
@@ -380,6 +380,9 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
   : ACE_Service_Gestalt (size, false, ignore_static_svcs)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
+#if defined (ACE_HAS_TSS_EMULATION)
+  ACE_Object_Manager::init_tss ();
+#endif
   this->tss_.ts_object (this);
   ACE_Service_Config::signum_ = signum;
 }
@@ -447,7 +450,9 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
   : ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
-
+#if defined (ACE_HAS_TSS_EMULATION)
+  ACE_Object_Manager::init_tss ();
+#endif
   this->tss_.ts_object (this);
   if (this->open (program_name,
                   logger_key) == -1 && errno != ENOENT)

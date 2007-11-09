@@ -236,7 +236,11 @@ ACE_Object_Manager::init (void)
 
 #     if defined (ACE_HAS_TSS_EMULATION)
           // Initialize the main thread's TS storage.
-          ACE_TSS_Emulation::tss_open (ts_storage_);
+          if (!ts_storage_initialized_)
+            {
+              ACE_TSS_Emulation::tss_open (ts_storage_);
+              ts_storage_initialized_ = true;
+            }
 #     endif /* ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && \
@@ -279,6 +283,30 @@ ACE_Object_Manager::init (void)
     }
 }
 
+#if defined (ACE_HAS_TSS_EMULATION)
+int
+ACE_Object_Manager::init_tss (void)
+{
+  return ACE_Object_Manager::instance ()->init_tss_i ();
+}
+
+int
+ACE_Object_Manager::init_tss_i (void)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+    *instance_->internal_lock_, -1));
+
+  if (!ts_storage_initialized_)
+    {
+      ACE_TSS_Emulation::tss_open (ts_storage_);
+      ts_storage_initialized_ = true;
+    }
+
+  return 0;
+}
+
+#endif
+
 ACE_Object_Manager::ACE_Object_Manager (void)
   // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call to
   // ACE_OS::tss_open () in the function body.
@@ -290,7 +318,10 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   , singleton_null_lock_ (0)
   , singleton_recursive_lock_ (0)
-# endif /* ACE_MT_SAFE */
+#endif /* ACE_MT_SAFE */
+#if defined (ACE_HAS_TSS_EMULATION)
+  , ts_storage_initialized_ (false)
+#endif
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_NEW (internal_lock_, ACE_Recursive_Thread_Mutex);

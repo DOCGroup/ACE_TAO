@@ -109,7 +109,7 @@ ACE_TSS_Emulation::tss_destructor_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX]
 
 #  if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 
-int ACE_TSS_Emulation::key_created_ = 0;
+bool ACE_TSS_Emulation::key_created_ = false;
 
 ACE_OS_thread_key_t ACE_TSS_Emulation::native_tss_key_;
 
@@ -139,12 +139,12 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
   // TSS Singleton implementation.
 
   // Create the one native TSS key, if necessary.
-  if (key_created_ == 0)
+  if (!key_created_)
     {
       // Double-checked lock . . .
       ACE_TSS_BASE_GUARD
 
-      if (key_created_ == 0)
+      if (!key_created_)
         {
           ACE_NO_HEAP_CHECK;
           if (ACE_OS::thr_keycreate_native (&native_tss_key_,
@@ -153,7 +153,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
               ACE_ASSERT (0);
               return 0; // Major problems, this should *never* happen!
             }
-          key_created_ = 1;
+          key_created_ = true;
         }
     }
 
@@ -5491,6 +5491,9 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
                                argc,                    // first argument to main ()
                                (int) argv,              // second argument to main ()
                                0, 0, 0, 0, 0, 0, 0);
+
+  if (ret == ERROR)
+    return 255;
 
   while( ret > 0 && ::taskIdVerify (ret) != ERROR )
     ::taskDelay (3 * ::sysClkRateGet ());

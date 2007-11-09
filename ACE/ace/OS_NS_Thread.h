@@ -867,7 +867,7 @@ private:
   static ACE_OS_thread_key_t native_tss_key_;
 
   // Used to indicate if native tss key has been allocated
-  static int key_created_;
+  static bool key_created_;
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 };
 # endif /* ACE_HAS_TSS_EMULATION */
