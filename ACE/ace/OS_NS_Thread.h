@@ -225,7 +225,7 @@ typedef struct
 } ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
 typedef int ACE_thread_t;
-typedef char * ACE_hthread_t;
+typedef int ACE_hthread_t;
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
 // use u_int, so the ACE TSS emulation is compatible with them.)
@@ -239,10 +239,6 @@ typedef u_int ACE_OS_thread_key_t;
 #   endif /* ! ACE_HAS_TSS_EMULATION */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-      // Marker for ACE_Thread_Manager to indicate that it allocated
-      // an ACE_thread_t.  It is placed at the beginning of the ID.
-#     define ACE_THR_ID_ALLOCATED '\022'
 
 #   elif defined (ACE_HAS_WTHREADS)
 

@@ -1,3 +1,18 @@
+Fri Nov  9 09:37:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.{h,cpp,inl}:
+        * ace/Thread_Manager.cpp:
+          Changed ACE_hthread_t to an int for VxWorks. This makes the core of
+          ACE cleaner and more stable on VxWorks. At this moment you can't give
+          a Task a name, but we will extend the thread creation functions
+          with an additional char* in a next iteration. That way you can use
+          task names also when using pthread on vxworks. See also bugzilla 3131
+
+        * tests/Conn_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+          Disable task name setting, will be enabled again when the spawn
+          methods are extended
+
 Fri Nov  9 08:58:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.inl:
