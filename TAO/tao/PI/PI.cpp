@@ -39,7 +39,6 @@ TAO_PI_Init::Initializer (void)
   try
     {
       /// Register the PI ORBInitializer.
-
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_PI_ORBInitializer,
                         CORBA::NO_MEMORY (
@@ -50,8 +49,7 @@ TAO_PI_Init::Initializer (void)
 
       orb_initializer = temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                    );
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
   catch (const ::CORBA::Exception& ex)
     {
