@@ -76,6 +76,15 @@
   #endif
 #endif
 
+#if !defined __RTP__
+# if defined (TOOL) && (TOOL == gnu)
+#  if defined (CPU) && (CPU == PPC85XX || CPU == PPC604 || CPU == PPC603)
+// These PPC's do lack log2 in kernel mode
+#   define ACE_LACKS_LOG2
+#  endif
+# endif
+#endif
+
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_3_PARAM_READDIR_R
