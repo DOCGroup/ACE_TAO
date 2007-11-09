@@ -8,7 +8,7 @@
 # pragma intrinsic (_byteswap_ushort, _byteswap_ulong, _byteswap_uint64)
 #endif  /* ACE_HAS_INTRINSIC_BYTESWAP */
 
-#if defined (ACE_HAS_BSWAP_16) || defined (ACE_HAS_BSWAP_32) || defined (ACE_HAS_BSWAP_32)
+#if defined (ACE_HAS_BSWAP_16) || defined (ACE_HAS_BSWAP_32) || defined (ACE_HAS_BSWAP_64)
 # include "ace/os_include/os_byteswap.h"
 #endif
 

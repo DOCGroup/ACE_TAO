@@ -1,3 +1,38 @@
+Fri Nov  9 08:58:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.inl:
+          Fixed incorrect define. This fixes bugzilla 3139. Thanks to
+          Thomas Girard <thomas dot g dot girard at free dot fr>
+
+        * ace/Dynamic_Service_Base.{h,cpp}:
+          Reduced number of methods by using default argument values
+
+        * ace/Object_Manager.{h,cpp}:
+        * ace/Service_Config.cpp:
+          The Service Configurator depends on the availability of TSS. When
+          TSS emulation is enabled, that emulation needs to be initialized
+          within the Object Manager. The Object Manager also depends on the SG,
+          so added a new init_tss() method that just initializes TSS
+          which is then called from the SG constructor. This fixes
+          problems with TAO VxWorks 6.x kernel mode. Thanks to Iliyan for
+          giving insights how SG/SC should work.
+
+        * ace/OS_NS_Thread.h:
+          Changed key_create_ to bool and check the return value of taskSpawn
+
+        * ace/Reactor.h:
+        * ace/Service_Config.inl:
+          Doxygen change
+
+        * ace/Service_Config.cpp:
+          Updated some debug statements
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added ACE_RUN_ACE_DEBUG and ACE_RUN_TAO_DEBUG_LEVEL, if set then
+          ACE_DEBUG/TAO_DEBUG_LEVEL are set as environment variabled on the
+          target
+
 Thu Nov  8 04:02:21 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_stdio.inl:

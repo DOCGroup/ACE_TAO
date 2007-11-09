@@ -616,8 +616,8 @@ public:
 
   // = High-level Event_Handler scheduling operations
 
-  /// Add @a masks_to_be_added to the <event_handler>'s entry.
-  /// <event_handler> must already have been registered.
+  /// Add @a masks_to_be_added to the @a event_handler's entry.
+  /// @a event_handler must already have been registered.
   /// Note that this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
@@ -693,7 +693,7 @@ public:
 
   /**
    * Set the maximum number of times that ACE_Reactor will
-   * iterate and dispatch the <ACE_Event_Handlers> that are passed in
+   * iterate and dispatch the ACE_Event_Handlers that are passed in
    * via the notify queue before breaking out of its
    * <ACE_Message_Queue::dequeue> loop.  By default, this is set to
    * -1, which means "iterate until the queue is empty."  Setting this
