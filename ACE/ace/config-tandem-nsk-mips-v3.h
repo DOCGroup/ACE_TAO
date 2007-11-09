@@ -244,6 +244,23 @@ typedef enum CMA_T_SCHED_POLICY {
 // Size of a wchar
 #define ACE_SIZEOF_WCHAR 2
 
+// Platform lacks time typedefs
+#define ACE_LACKS_SUSECONDS_T
+#define ACE_LACKS_USECONDS_T
+
+// Platform lacks setegid() and seteuid()
+#define ACE_LACKS_SETEGID
+#define ACE_LACKS_SETEUID
+
+// Platform lacks vsnprintf()
+#define ACE_LACKS_VSNPRINTF
+
+// Platform lacks log2()
+#define ACE_LACKS_LOG2
+
+// Platform lacks alphasort()
+#define ACE_LACKS_ALPHASORT
+
 
 //=========================================================================
 // Threads specific parts
@@ -303,6 +320,9 @@ extern int cma_sigwait  (sigset_t *);
 
 // Platform lacks pthread_attr_setstackaddr
 #define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
+
+// Platform lacks pthread_attr_setstack
+#define ACE_LACKS_PTHREAD_ATTR_SETSTACK
 
 // Defining ACE_HAS_UCONTEXT_T since G06.21 version of spthreads has
 // a definition for it.
@@ -364,12 +384,15 @@ extern int cma_sigwait  (sigset_t *);
 // Platform lacks <poll.h>
 #define ACE_LACKS_POLL_H
 
+// Platform lacks <sys/sysctl.h>
+#define ACE_LACKS_SYS_SYSCTL_H
+
 //=========================================================================
 // Compiler specific parts
 //=========================================================================
 
 // Compiler supports C++ exception handling
-#define ACE_HAS_EXCEPTIONS
+#define ACE_HAS_EXCEPTIONS 1
 
 // Compiler/platform has correctly prototyped header files
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -410,6 +433,9 @@ extern int cma_sigwait  (sigset_t *);
 
 // Compiler can handle any operators in namespace
 #define ACE_ANY_OPS_USE_NAMESPACE
+
+// Platform lacks intptr_t typedef
+#define ACE_LACKS_INTPTR_T
 
 //=========================================================================
 // C++ version3 import/export macros

@@ -1,3 +1,12 @@
+Fri Nov  9 11:46:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/os_include/sys/os_types.h:
+        * ace/Task.cpp:
+        * ace/Truncate.h:
+          Improved NSK support, thanks to Gary Maxey <gary dot maxey at hp dot com>
+          for delivering the patches. This fixes bugzilla 3124
+
 Fri Nov  9 11:25:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:

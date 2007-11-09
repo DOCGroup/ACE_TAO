@@ -46,7 +46,7 @@ namespace ACE_Utils
   template<> struct Sign_Check<unsigned short> { ACE_STATIC_CONSTANT (bool, is_signed = 0); };
   template<> struct Sign_Check<unsigned int>   { ACE_STATIC_CONSTANT (bool, is_signed = 0); };
   template<> struct Sign_Check<unsigned long>  { ACE_STATIC_CONSTANT (bool, is_signed = 0); };
-#ifndef ACE_LACKS_LONGLONG_T
+#if !(defined(ACE_LACKS_LONGLONG_T) || defined(ACE_LACKS_UNSIGNEDLONGLONG_T))
 # ifdef __GNUC__
   // Silence g++ "-pedantic" warnings regarding use of "long long"
   // type.
@@ -114,7 +114,7 @@ namespace ACE_Utils
     unsigned_type operator() (unsigned_type x) { return x; }
   };
 
-#ifndef ACE_LACKS_LONGLONG_T
+#if !(defined(ACE_LACKS_LONGLONG_T) || defined(ACE_LACKS_UNSIGNEDLONGLONG_T))
 # ifdef __GNUC__
   // Silence g++ "-pedantic" warnings regarding use of "long long"
   // type.
@@ -187,7 +187,7 @@ namespace ACE_Utils
     }
   };
 
-#ifndef ACE_LACKS_LONGLONG_T
+#if !(defined(ACE_LACKS_LONGLONG_T) || defined(ACE_LACKS_UNSIGNEDLONGLONG_T))
 # ifdef __GNUC__
   // Silence g++ "-pedantic" warnings regarding use of "long long"
   // type.
