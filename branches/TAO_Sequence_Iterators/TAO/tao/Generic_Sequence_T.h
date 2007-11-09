@@ -68,11 +68,37 @@ namespace TAO
 namespace details
 {
 
+// Forward declare the iterators
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+class Generic_Sequence_Iterator;
+
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+class Const_Generic_Sequence_Iterator;
+
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+class Generic_Sequence_Reverse_Iterator;
+
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+class Const_Generic_Sequence_Reverse_Iterator;
+
 template<typename T,
          class ALLOCATION_TRAITS,
          class ELEMENT_TRAITS>
 class generic_sequence
 {
+  friend class Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>;
+  friend class Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>;
+  friend class Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>;
+  friend class Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>;
+
 public:
   typedef T value_type;
   typedef ALLOCATION_TRAITS allocation_traits;
@@ -317,6 +343,88 @@ public:
     allocation_traits::freebuf(buffer);
   }
 
+  ///
+  /// Additions to support iterator semantics for TAO sequences.
+  ///
+
+  // = Traits and factory methods that create iterators.
+  typedef Generic_Sequence_Iterator<T,
+                                    ALLOCATION_TRAITS,
+                                    ELEMENT_TRAITS> iterator;
+  typedef Const_Generic_Sequence_Iterator<T,
+                                          ALLOCATION_TRAITS,
+                                          ELEMENT_TRAITS> const_iterator;
+  typedef Generic_Sequence_Reverse_Iterator<T,
+                                            ALLOCATION_TRAITS,
+                                            ELEMENT_TRAITS> reverse_iterator;
+  typedef Const_Generic_Sequence_Reverse_Iterator<T,
+                                                  ALLOCATION_TRAITS,
+                                                  ELEMENT_TRAITS> const_reverse_iterator;
+
+  // Get an iterator that points to the beginning of the sequence.
+  iterator begin (void)
+  {
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::iterator (*this);
+  }
+
+  // Get a const iterator that points to the beginning of the sequence.
+  const_iterator begin (void) const
+  {
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_iterator (*this);
+  }
+
+  // Get an iterator that points to the end of the sequence.
+  iterator end (void)
+  {
+    // Specify being past the "real" end with a flag.
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::iterator (*this,
+       this->length_);
+  }
+
+  // Get a const iterator that points to the end of the sequence.
+  const_iterator end (void) const
+  {
+    // Specify being past the "real" end with a flag.
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_iterator (*this,
+             this->length_);
+  }
+
+  // Get a reverse iterator that points to the end of the sequence.
+  reverse_iterator rbegin (void)
+  {
+    // Here we need to be at the last element - not one past.
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (*this,
+              this->length_);
+  }
+
+  // Get a const reverse iterator that points to the end of the sequence.
+  const_reverse_iterator rbegin (void) const
+  {
+    // Here we need to be at the last element - not one past.
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_reverse_iterator (*this,
+                    this->length_);
+  }
+
+  // Get a reverse iterator that points to one before the
+  // beginning of the sequence.
+  reverse_iterator rend (void)
+  {
+    // Here we need to be at one before the first element - not the first.
+    // Specify being before the "real" beginning with a flag.
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (*this,
+              -1);
+  }
+
+  // Get a const reverse iterator that points to one before the
+  // beginning of the sequence.
+  const_reverse_iterator rend (void) const
+  {
+    // Here we need to be at one before the first element - not the first.
+    // Specify being before the "real" beginning with a flag.
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (*this,
+              -1);
+  }
+
 private:
   /// The maximum number of elements the buffer can contain.
   CORBA::ULong maximum_;
@@ -328,6 +436,804 @@ private:
   /// destroyed.
   mutable CORBA::Boolean release_;
 };
+
+
+/**
+ * @class Generic_Sequence_Iterator
+ * @brief Implements a random access iterator for generic sequence type classes.
+ */
+template <typename T,
+          class ALLOCATION_TRAITS,
+          class ELEMENT_TRAITS>
+class Generic_Sequence_Iterator 
+{
+public:
+  // = Necessary traits
+  typedef std::random_access_iterator_tag iterator_category;
+  typedef T value_type;
+  typedef T *pointer;
+  typedef T &reference;
+  typedef int difference_type;
+
+  /// Construct a Generic_Sequence_Iterator at position pos with past_end flag.
+  Generic_Sequence_Iterator (generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &sequence, size_t pos = 0)
+    : sequence_ (sequence),
+    pos_ (pos),
+    past_end_ (pos >= sequence.length_)
+      {
+      }
+
+  /// Dereference operator returns a reference to the item contained
+  /// at the current position
+  T& operator* (void)
+    {
+      // Access the underlying element in the sequence.
+      return this->sequence_[this->pos_];
+    }
+
+  /// Returns a const reference to the item contained at the current position
+  const T& operator* (void) const
+    {
+      // Access the underlying element in the sequence.
+      return this->sequence_[this->pos_];
+    }
+
+  /// Preincrement operator
+  Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator++ (void)
+    {
+      // Increment the position.
+      // We also need to check if we're now past the end.
+      ++this->pos_;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Postincrement operator
+  Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator++ (int)
+    {
+      // Create a temporary to return so that it's not modified.
+      Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> temp_iter (this->sequence_, this->pos_);
+      // Increment the position.
+      // We also need to check if we're now past the end.
+      ++this->pos_;
+      this->check_position ();
+      return temp_iter;
+    }
+
+  /// Predecrement operator
+  Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator-- (void)
+    {
+      --this->pos_;
+      return *this;
+    }
+
+  /// Postdecrement operator
+  Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator-- (int)
+    {
+      // Create a temporary to return so that it's not modified.
+      Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> temp_iter (this->sequence_, this->pos_);
+      --this->pos_;
+      return temp_iter;
+    }
+
+  /// Iterator addition
+  Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator+= (difference_type n)
+    {
+      // Move ahead n elements.
+      this->pos_ += n;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Iterator addition
+  Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator+ (difference_type n)
+    {
+      // Create a temporary to return and move it ahead n elements.
+      return Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (this->sequence_, this->pos_ + n);
+    }
+
+  /// Iterator subtraction
+  Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator-= (difference_type n)
+    {
+      // Move back n elements.
+      this->pos_ -= n;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Iterator subtraction
+  Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator- (difference_type n)
+    {
+      // Create a temporary to return and move it back n elements.
+      return Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (this->sequence_, this->pos_ - n);
+    }
+
+  /// Difference
+  difference_type operator- (const Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & rhs)
+    {
+      // I think order is important here (i.e., rhs before this).
+      return rhs.pos_ - this->pos_;
+    }
+
+  /// Element operator/assignment
+  T& operator[] (difference_type n)
+    {
+      // Return the element at position n
+      return this->sequence_[n];
+    }
+
+  /// Less than
+  bool operator< (const Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & rhs)
+    {
+      // Return if this iterator is less than the passed in iterator.
+      return this->pos_ < rhs.pos_;
+    }
+
+  /// Equality operator
+  bool operator== (const Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &rhs) const
+  {
+    // Compare all the data members for equality.
+    return &this->sequence_ == &rhs.sequence_
+           && this->pos_ == rhs.pos_
+           && this->past_end_ == rhs.past_end_;
+  }
+
+  /// Nonequality operator
+  bool operator!= (const Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &rhs) const
+  {
+    return !(*this == rhs);
+  }
+
+private:
+  /// Check the length of the sequence to see if we're past the end.
+  void check_position (void)
+  {
+    if (this->pos_ >= this->length)
+      {
+        this->past_end_ = true;
+      }
+    else
+      {
+        // We add this here to allow iterators to
+        // "come back from the dead" (i.e., come back from
+        // being at an invalid/undefined position).
+        this->past_end_ = false;
+      }
+  }
+
+  /// the array we are dealing with
+  generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &sequence_;
+
+  /// Our current position in the sequence.
+  mutable difference_type pos_;
+
+  /// Designate if the iterator is past the end of the sequence.
+  mutable bool past_end_;
+};
+
+
+/// Iterator addition with the difference_type being the first argument.
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+ Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>
+  operator+ (typename Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::difference_type n,
+             const Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & iter)
+   {
+     // Create an iter and move it ahead n elements.
+     return Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (iter.sequence_, iter.pos_ + n);
+   }
+
+/// Iterator subtraction with the difference_type being the first argument.
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+ Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator-
+   (typename Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::difference_type n,
+    Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> iter)
+   {
+     // Create an iter and move it back n elements.
+     return Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (iter.sequence_, iter.pos_ - n);
+   }
+
+
+/**
+ * @class Const_Generic_Sequence_Iterator
+ * @brief Implements a random access iterator for generic sequence type classes.
+ *
+ * Note:  Having a const Iterator does not guarantee that the current
+ * *position* that it points to will not change, it only guarantees that
+ * you cannot change the underlying array!
+ */
+template <typename T,
+          class ALLOCATION_TRAITS,
+          class ELEMENT_TRAITS>
+class Const_Generic_Sequence_Iterator 
+{
+public:
+  // = Necessary traits
+  typedef std::random_access_iterator_tag iterator_category;
+  typedef T value_type;
+  typedef T *pointer;
+  typedef T &reference;
+  typedef int difference_type;
+
+  /// Construct a Const_Generic_Sequence_Iterator at position pos with past_end flag.
+  Const_Generic_Sequence_Iterator (generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &sequence, size_t pos = 0)
+    : sequence_ (sequence),
+    pos_ (pos),
+    past_end_ (pos >= sequence.length_)
+      {
+      }
+
+  /// Dereference operator returns a reference to the item contained
+  /// at the current position
+  const T& operator* (void) const
+    {
+      // Access the underlying element in the sequence.
+      return this->sequence_[this->pos_];
+    }
+
+  /// Preincrement operator
+  Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator++ (void) const
+    {
+      // Increment the position.
+      // We also need to check if we're now past the end.
+      ++this->pos_;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Postincrement operator
+  Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator++ (int) const
+    {
+      // Create a temporary to return so that it's not modified.
+      Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> temp_iter (this->sequence_, this->pos_);
+      // Increment the position.
+      // We also need to check if we're now past the end.
+      ++this->pos_;
+      this->check_position ();
+      return temp_iter;
+    }
+
+  /// Predecrement operator
+  Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator-- (void) const
+    {
+      --this->pos_;
+      return *this;
+    }
+
+  /// Postdecrement operator
+  Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator-- (int) const
+    {
+      // Create a temporary to return so that it's not modified.
+      Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> temp_iter (this->sequence_, this->pos_);
+      --this->pos_;
+      return temp_iter;
+    }
+
+  /// Iterator addition
+  Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator+= (difference_type n) const
+    {
+      // Move ahead n elements.
+      this->pos_ += n;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Iterator addition
+  Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator+ (difference_type n) const
+    {
+      // Create a temporary to return and move it ahead n elements.
+      return Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (this->sequence_, this->pos_ + n);
+    }
+
+  /// Iterator subtraction
+  Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator-= (difference_type n) const
+    {
+      // Move back n elements.
+      this->pos_ -= n;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Iterator subtraction
+  Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator- (difference_type n) const
+    {
+      // Create a temporary to return and move it back n elements.
+      return Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (this->sequence_, this->pos_ - n);
+    }
+
+  /// Difference
+  difference_type operator- (const Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & rhs) const
+    {
+      // I think the order is important here (i.e., rhs before this).
+      return rhs.pos - this->pos_;
+    }
+
+  /// Element operator/assignment
+  const T& operator[] (difference_type n) const
+    {
+      // Return the element at position n
+      return this->sequence_[n];
+    }
+
+  /// Less than
+  bool operator< (const Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & rhs) const
+    {
+      // Return if this iterator is less than the passed in iterator.
+      return this->pos_ < rhs.pos_;
+    }
+
+  /// Equality operator
+  bool operator== (const Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &rhs) const
+  {
+    // Compare all the data members for equality.
+    return &this->sequence_ == &rhs.sequence_
+           && this->pos_ == rhs.pos_
+           && this->past_end_ == rhs.past_end_;
+  }
+
+  /// Nonequality operator
+  bool operator!= (const Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &rhs) const
+  {
+    return !(*this == rhs);
+  }
+
+private:
+  /// Check the length of the sequence to see if we're past the end.
+  void check_position (void)
+  {
+    if (this->pos_ >= this->length)
+      {
+        this->past_end_ = true;
+      }
+    else
+      {
+        // We add this here to allow iterators to
+        // "come back from the dead" (i.e., come back from
+        // being at an invalid/undefined position).
+        this->past_end_ = false;
+      }
+  }
+
+  /// the array we are dealing with
+  generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &sequence_;
+
+  /// Our current position in the sequence.
+  mutable difference_type pos_;
+
+  /// Designate if the iterator is past the end of the sequence.
+  mutable bool past_end_;
+};
+
+/// Iterator addition with the difference_type being the first argument.
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+ Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator+
+   (typename Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::difference_type n,
+    Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> iter)
+   {
+     // Create an iter and move it ahead n elements.
+     return Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (iter.sequence_, iter.pos_ + n);
+   }
+
+/// Iterator subtraction with the difference_type being the first argument.
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+ Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator-
+   (typename Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::difference_type n,
+    Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> iter)
+   {
+     // Create an iter and move it back n elements.
+     return Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (iter.sequence_, iter.pos_ - n);
+   }
+
+
+/**
+ * @class Generic_Sequence_Reverse_Iterator
+ * @brief Implements a random access iterator for generic sequence type classes.
+ */
+template <typename T,
+          class ALLOCATION_TRAITS,
+          class ELEMENT_TRAITS>
+class Generic_Sequence_Reverse_Iterator 
+{
+public:
+  // = Necessary traits
+  typedef std::random_access_iterator_tag iterator_category;
+  typedef T value_type;
+  typedef T *pointer;
+  typedef T &reference;
+  typedef int difference_type;
+
+  /// Construct a Generic_Sequence_Reverse_Iterator at position pos with before_start flag.
+  Generic_Sequence_Reverse_Iterator (generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &sequence, size_t pos)
+    : sequence_ (sequence),
+    pos_ (pos),
+    before_start_ (pos < 0)
+      {
+      }
+
+  /// Dereference operator returns a reference to the item contained
+  /// at the current position
+  T& operator* (void)
+    {
+      // Access the underlying element in the sequence.
+      return this->sequence_[this->pos_];
+    }
+
+  /// Returns a const reference to the item contained at the current position
+  const T& operator* (void) const
+    {
+      // Access the underlying element in the sequence.
+      return this->sequence_[this->pos_];
+    }
+
+  /// Preincrement operator
+  Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator++ (void)
+    {
+      // Decrement the position for reverse iterators.
+      // We also need to check if we're now before the start.
+      --this->pos_;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Postincrement operator
+  Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator++ (int)
+    {
+      // Create a temporary to return so that it's not modified.
+      Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> temp_iter (this->sequence_, this->pos_);
+      // Decrement the position for reverse iterators.
+      // We also need to check if we're now past the end.
+      --this->pos_;
+      this->check_position ();
+      return temp_iter;
+    }
+
+  /// Predecrement operator
+  Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator-- (void)
+    {
+      // Increment the position for reverse iterators.
+      ++this->pos_;
+      return *this;
+    }
+
+  /// Postdecrement operator
+  Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator-- (int)
+    {
+      // Create a temporary to return so that it's not modified.
+      Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> temp_iter (this->sequence_, this->pos_);
+      // Increment the position for reverse iterators.
+      ++this->pos_;
+      return temp_iter;
+    }
+
+  /// Iterator addition
+  Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator+= (difference_type n)
+    {
+      // Move back n elements for reverse iterators.
+      this->pos_ -= n;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Iterator addition
+  Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator+ (difference_type n)
+    {
+      // Create a temporary to return and move it back n elements for
+      // reverse iterators.
+      return Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (this->sequence_, this->pos_ - n);
+    }
+
+  /// Iterator subtraction
+  Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator-= (difference_type n)
+    {
+      // Move ahead n elements for reverse iterators.
+      this->pos_ += n;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Iterator subtraction
+  Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator- (difference_type n)
+    {
+      // Create a temporary to return and move it ahead n elements for
+      // reverse iterators.
+      return Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (this->sequence_, this->pos_ + n);
+    }
+
+  /// Difference
+  difference_type operator- (const Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & rhs)
+    {
+      // I think order is important here (i.e., rhs before this).
+      return rhs.pos_ - this->pos_;
+    }
+
+  /// Element operator/assignment
+  T& operator[] (difference_type n)
+    {
+      // Return the element at position n
+      return this->sequence_[n];
+    }
+
+  /// Less than
+  bool operator< (const Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & rhs)
+    {
+      // Return if this iterator is less than the passed in iterator.
+      // For reverse iterators reverse the logic.
+      return this->pos_ > rhs.pos_;
+    }
+
+  /// Equality operator
+  bool operator== (const Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &rhs) const
+  {
+    // Compare all the data members for equality.
+    return &this->sequence_ == &rhs.sequence_
+           && this->pos_ == rhs.pos_
+           && this->before_start_ == rhs.before_start_;
+  }
+
+  /// Nonequality operator
+  bool operator!= (const Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &rhs) const
+  {
+    return !(*this == rhs);
+  }
+
+private:
+  /// Check the length of the sequence to see if we're past the end.
+  void check_position (void)
+  {
+    if (this->pos_ < 0)
+      {
+        this->before_start_ = true;
+      }
+    else
+      {
+        // We add this here to allow iterators to
+        // "come back from the dead" (i.e., come back from
+        // being at an invalid/undefined position).
+        this->before_start_ = false;
+      }
+  }
+
+  /// The sequence with which we are dealing
+  generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &sequence_;
+
+  /// Our current position in the sequence.
+  mutable difference_type pos_;
+
+  /// Designate if the iterator is before the start of the sequence.
+  mutable bool before_start_;
+};
+
+/// Iterator addition with the difference_type being the first argument.
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+ Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator+
+   (typename Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::difference_type n,
+    Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> iter)
+   {
+     // Create an iter and move it back n elements for reverse iterators.
+     return Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (iter.sequence_, iter.pos_ - n);
+   }
+
+/// Iterator subtraction with the difference_type being the first argument.
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+ Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator-
+   (typename Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::difference_type n,
+    Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> iter)
+   {
+     // Create an iter and move it ahead n elements for reverse iterators.
+     return Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (iter.sequence_, iter.pos_ + n);
+   }
+
+
+/**
+ * @class Const_Generic_Sequence_Reverse_Iterator
+ * @brief Implements a random access iterator for generic sequence type classes.
+ *
+ * Note:  Having a const Iterator does not guarantee that the current
+ * *position* that it points to will not change, it only guarantees that
+ * you cannot change the underlying array!
+ */
+template <typename T,
+          class ALLOCATION_TRAITS,
+          class ELEMENT_TRAITS>
+class Const_Generic_Sequence_Reverse_Iterator 
+{
+public:
+  // = Necessary traits
+  typedef std::random_access_iterator_tag iterator_category;
+  typedef T value_type;
+  typedef T *pointer;
+  typedef T &reference;
+  typedef int difference_type;
+
+  /// Construct a Const_Generic_Sequence_Reverse_Iterator at position pos with before_start flag.
+  Const_Generic_Sequence_Reverse_Iterator (generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &sequence, size_t pos)
+    : sequence_ (sequence),
+    pos_ (pos),
+    before_start_ (pos < 0)
+      {
+      }
+
+  /// Dereference operator returns a reference to the item contained
+  /// at the current position
+  const T& operator* (void) const
+    {
+      // Access the underlying element in the sequence.
+      return this->sequence_[this->pos_];
+    }
+
+  /// Preincrement operator
+  Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator++ (void) const
+    {
+      // Decrement the position for reveres iterators.
+      // We also need to check if we're now before the start.
+      --this->pos_;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Postincrement operator
+  Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator++ (int) const
+    {
+      // Create a temporary to return so that it's not modified.
+      Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> temp_iter (this->sequence_, this->pos_);
+      // Decrement the position for reverse iterators.
+      // We also need to check if we're now before the start.
+      --this->pos_;
+      this->check_position ();
+      return temp_iter;
+    }
+
+  /// Predecrement operator
+  Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator-- (void) const
+    {
+      // Increment the position for reverse iterators.
+      ++this->pos_;
+      return *this;
+    }
+
+  /// Postdecrement operator
+  Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator-- (int) const
+    {
+      // Create a temporary to return so that it's not modified.
+      Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> temp_iter (this->sequence_, this->pos_);
+      // Increment the position for reverse iterators.
+      ++this->pos_;
+      return temp_iter;
+    }
+
+  /// Iterator addition
+  Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator+= (difference_type n) const
+    {
+      // Move back n elements for reverse iterators.
+      this->pos_ -= n;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Iterator addition
+  Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator+ (difference_type n) const
+    {
+      // Create a temporary to return and move it back n elements for
+      // reverse iterators.
+      return Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (this->sequence_, this->pos_ - n);
+    }
+
+  /// Iterator subtraction
+  Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &operator-= (difference_type n) const
+    {
+      // Move ahead n elements for reverse iterators.
+      this->pos_ += n;
+      this->check_position ();
+      return *this;
+    }
+
+  /// Iterator subtraction
+  Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator- (difference_type n) const
+    {
+      // Create a temporary to return and move it ahead n elements for
+      // reverse iterators.
+      return Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (this->sequence_, this->pos_ + n);
+    }
+
+  /// Difference
+  difference_type operator- (const Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & rhs) const
+    {
+      // I think order is important here (i.e., rhs before this).
+      return rhs.pos_ - this->pos_;
+    }
+
+  /// Element operator/assignment
+  const T& operator[] (difference_type n) const
+    {
+      // Return the element at position n
+      return this->sequence_[n];
+    }
+
+  /// Less than
+  bool operator< (const Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & rhs) const
+    {
+      // Return if this iterator is less than the passed in iterator.
+      // For reverse iterators reverse the logic.
+      return this->pos_ > rhs.pos_;
+    }
+
+  /// Equality operator
+  bool operator== (const Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &rhs) const
+  {
+    // Compare all the data members for equality.
+    return &this->sequence_ == &rhs.sequence_
+           && this->pos_ == rhs.pos_
+           && this->before_start_ == rhs.before_start_;
+  }
+
+  /// Nonequality operator
+  bool operator!= (const Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &rhs) const
+  {
+    return !(*this == rhs);
+  }
+
+private:
+  /// Check the length of the sequence to see if we're past the end.
+  void check_position (void)
+  {
+    if (this->pos_ < 0)
+      {
+        this->before_start_ = true;
+      }
+    else
+      {
+        // We add this here to allow iterators to
+        // "come back from the dead" (i.e., come back from
+        // being at an invalid/undefined position).
+        this->before_start_ = false;
+      }
+  }
+
+  /// the array we are dealing with
+  generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &sequence_;
+
+  /// Our current position in the sequence.
+  mutable difference_type pos_;
+
+  /// Designate if the iterator is past the end of the sequence.
+  mutable bool before_start_;
+};
+
+/// Iterator addition with the difference_type being the first argument.
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+ Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator+
+   (typename Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::difference_type n,
+    Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> iter)
+   {
+     // Create an iter and move it back n elements for reverse iterators.
+     return Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (iter.sequence_, iter.pos_ - n);
+   }
+
+/// Iterator subtraction with the difference_type being the first argument.
+template<typename T,
+         class ALLOCATION_TRAITS,
+         class ELEMENT_TRAITS>
+ Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> operator-
+   (typename Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::difference_type n,
+    Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> iter)
+   {
+     // Create an iter and move it ahead n elements for reverse iterators.
+     return Const_Generic_Sequence_Reverse_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> (iter.sequence_, iter.pos_ + n);
+   }
+
 
 } // namespace details
 } // namespace TAO
