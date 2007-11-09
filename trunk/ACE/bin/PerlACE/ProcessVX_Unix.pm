@@ -260,6 +260,14 @@ sub Spawn ()
         @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'C putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
+        if (defined $ENV{'ACE_RUN_ACE_DEBUG'}) {
+            @cmds[$cmdnr++] = 'putenv("ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"} . '")';
+        }
+
+        if (defined $ENV{'ACE_RUN_TAO_DEBUG_LEVEL'}) {
+            @cmds[$cmdnr++] = 'putenv("TAO_DEBUG_LEVEL=' . $ENV{"ACE_RUN_TAO_DEBUG_LEVEL"} . '")';
+        }
+
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
             @cmds[$cmdnr++] = 'C memShow()';
         }
@@ -275,6 +283,14 @@ sub Spawn ()
 
         @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
+
+        if (defined $ENV{'ACE_RUN_ACE_DEBUG'}) {
+            @cmds[$cmdnr++] = 'putenv("ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"} . '")';
+        }
+
+        if (defined $ENV{'ACE_RUN_TAO_DEBUG_LEVEL'}) {
+            @cmds[$cmdnr++] = 'putenv("TAO_DEBUG_LEVEL=' . $ENV{"ACE_RUN_TAO_DEBUG_LEVEL"} . '")';
+        }
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
             @cmds[$cmdnr++] = 'memShow()';
