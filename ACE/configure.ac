@@ -57,7 +57,7 @@ dnl Check what platform we are running on.
 AC_CANONICAL_TARGET([])
 
 dnl Initialize GNU Automake, and require Automake 1.9.6 or better.
-AM_INIT_AUTOMAKE([1.9.6 foreign no-define])
+AM_INIT_AUTOMAKE([1.9.6 foreign no-define nostdinc])
 
 dnl Add maintainer mode option to the option list.
 dnl AM_MAINTAINER_MODE
