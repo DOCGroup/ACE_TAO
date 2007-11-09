@@ -1,3 +1,18 @@
+Fri Nov  9 09:04:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Singleton_Manager.cpp:
+          dynamically_allocated is a bool
+
+        * tao/PI/PI.cpp:
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.{h,cpp}:
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.cpp:
+          Layout changes
+
+        * tao/ORBInitializer_Registry.cpp:
+          With VxWorks and TSS emulation enabled we do need to search the
+          global registry because the loader which creates the global registry
+          is a different thread then the thread that executes main
+
 Wed Nov  7 18:48:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_2133/*:

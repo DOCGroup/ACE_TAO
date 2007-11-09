@@ -61,7 +61,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 ACE_STATIC_SVC_DECLARE (ORT_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_ORT, ORT_Adapter_Factory_Impl)
 
-
 #define TAO_OBJREF_TEMPLATE_SAFE_INCLUDE
 #include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
 #undef TAO_OBJREF_TEMPLATE_SAFE_INCLUDE
