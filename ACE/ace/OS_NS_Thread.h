@@ -1508,9 +1508,9 @@ namespace ACE_OS {
 
   /*
    * Creates a new thread having @a flags attributes and running @a func
-   * with <args> (if <thread_adapter> is non-0 then @a func and <args>
-   * are ignored and are obtained from <thread_adapter>).  <thr_id>
-   * and <t_handle> are set to the thread's ID and handle (?),
+   * with @a args (if @a thread_adapter is non-0 then @a func and @a args
+   * are ignored and are obtained from @a thread_adapter).  @a thr_id
+   * and @a t_handle are set to the thread's ID and handle (?),
    * respectively.  The thread runs at @a priority priority (see
    * below).
    *
@@ -1525,15 +1525,15 @@ namespace ACE_OS {
    *
    * By default, or if @a priority is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
-   * the given scheduling policy (specified in <flags}>, e.g.,
-   * <THR_SCHED_DEFAULT>) is used.  This value is calculated
+   * the given scheduling policy (specified in @a flags, e.g.,
+   * @c THR_SCHED_DEFAULT) is used.  This value is calculated
    * dynamically, and is the median value between the minimum and
    * maximum priority values for the given policy.  If an explicit
    * value is given, it is used.  Note that actual priority values are
    * EXTREMEMLY implementation-dependent, and are probably best
    * avoided.
    *
-   * Note that <thread_adapter> is always deleted by <thr_create>,
+   * Note that @a thread_adapter is always deleted by @c thr_create,
    * therefore it must be allocated with global operator new.
    */
   extern ACE_Export

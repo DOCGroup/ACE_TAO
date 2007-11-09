@@ -1,3 +1,8 @@
+Fri Nov  9 11:25:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Doxygen improvements
+
 Fri Nov  9 11:06:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
