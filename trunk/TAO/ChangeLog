@@ -1,3 +1,16 @@
+Fri Nov  9 11:29:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+          Removed msvc6 workaround and layout changes
+
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
+          Layout changes
+
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+          Fixed GCC 4.2 warnings
+
 Fri Nov  9 09:04:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Singleton_Manager.cpp:

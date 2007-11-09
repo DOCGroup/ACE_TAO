@@ -3,16 +3,6 @@
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 #include "ace/OS_NS_stdio.h"
 
-// The following #pragma is needed to disable a warning that occurs
-// in MSVC 6 due to the overly long debugging symbols generated for
-// the ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_...> > template
-// instance used by some of the methods in this file.
-#ifdef _MSC_VER
-#  pragma warning(disable: 4786)  /* identifier was truncated to '255'
-                                     characters in the browser
-                                     information */
-#endif  /* _MSC_VER */
-
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (Naming,
@@ -67,9 +57,7 @@ TAO_Persistent_Bindings_Map::find (const char *id,
   TAO_Persistent_ExtId name (id, kind);
   TAO_Persistent_IntId entry;
 
-  if (this->map_->find (name,
-                        entry,
-                        this->allocator_) != 0)
+  if (this->map_->find (name, entry, this->allocator_) != 0)
     return -1;
   else
     {
@@ -117,8 +105,7 @@ TAO_Persistent_Bindings_Map::current_size (void)
 }
 
 int
-TAO_Persistent_Bindings_Map::open (size_t hash_table_size,
-                                   ACE_Allocator *alloc)
+TAO_Persistent_Bindings_Map::open (size_t hash_table_size, ACE_Allocator *alloc)
 {
   allocator_ = alloc;
 
@@ -147,8 +134,7 @@ TAO_Persistent_Bindings_Map::open_helper (size_t hash_table_size,
 }
 
 void
-TAO_Persistent_Bindings_Map::set (HASH_MAP *map,
-                                  ACE_Allocator *alloc)
+TAO_Persistent_Bindings_Map::set (HASH_MAP *map, ACE_Allocator *alloc)
 {
   allocator_ = alloc;
   map_ = map;

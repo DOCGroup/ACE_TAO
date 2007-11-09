@@ -31,8 +31,7 @@ public:
 
   /// Construct a statistic object.  The name and type of the statistic
   /// will never change once the object is created.
-  TAO_Statistic (const char* name,
-                 Information_Type type);
+  TAO_Statistic (const char* name, Information_Type type);
 
   /// Clean up any memory allocated by this object
   virtual ~TAO_Statistic (void);
