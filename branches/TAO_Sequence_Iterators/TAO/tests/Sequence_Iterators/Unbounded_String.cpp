@@ -1,15 +1,15 @@
 /**
- * @file
+ * @file Unbounded_String.cpp
  *
- * @brief Smoke test (basically just compile) the unbounded sequences
- *        for strings.
+ * @brief test for STL iterator behaviour of CORBA unbounded string sequence
  *
  * $Id$
  *
- * @author Carlos O'Ryan
+ * @author Friedhelm Wolf (fwolf@dre.vanderbilt.edu)
  */
 #include "tao/Unbounded_Basic_String_Sequence_T.h"
 #include "tao/CORBA_String.h"
+#include "ace/Log_Msg.h"
 
 typedef TAO::unbounded_basic_string_sequence<char> s_sequence;
 
