@@ -1,3 +1,10 @@
+Fri Nov  9 09:46:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Some PPC's don't have log2 in kernel mode
+
 Fri Nov  9 09:37:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.{h,cpp,inl}:
