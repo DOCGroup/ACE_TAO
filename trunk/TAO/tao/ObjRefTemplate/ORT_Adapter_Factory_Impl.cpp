@@ -33,12 +33,10 @@ namespace TAO
   int
   ORT_Adapter_Factory_Impl::Initializer (void)
   {
-    TAO_Root_POA::ort_adapter_factory_name ("Concrete_ORT_Adapter_Factory"
-      );
+    TAO_Root_POA::ort_adapter_factory_name ("Concrete_ORT_Adapter_Factory");
 
     return ACE_Service_Config::process_directive (
-          ace_svc_desc_ORT_Adapter_Factory_Impl
-        );
+          ace_svc_desc_ORT_Adapter_Factory_Impl);
   }
 }
 

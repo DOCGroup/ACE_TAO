@@ -72,7 +72,7 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
 
 TAO_Singleton_Manager::~TAO_Singleton_Manager (void)
 {
-  this->dynamically_allocated_ = 0;   // Don't delete this again in fini()
+  this->dynamically_allocated_ = false;   // Don't delete this again in fini()
   (void) this->fini ();
 }
 
@@ -113,7 +113,7 @@ TAO_Singleton_Manager::instance (void)
                       0);
       ACE_ASSERT (instance_pointer == the_instance);
 
-      instance_pointer->dynamically_allocated_ = 1;
+      instance_pointer->dynamically_allocated_ = true;
 
       return instance_pointer;
     }
