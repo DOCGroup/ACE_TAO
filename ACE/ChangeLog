@@ -1,3 +1,10 @@
+Fri Nov  9 11:06:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Newer glibc versions don't need ACE_HAS_NONCONST_SETRLIMIT anymore.
+          Thanks to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this. This fixes bugzilla 3136
+
 Fri Nov  9 09:46:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
