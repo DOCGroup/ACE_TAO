@@ -283,7 +283,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-#if defined (ACE_HAS_VXTHREADS)
+#if defined (0)
   // Assign thread (VxWorks task) names to test that feature.
   ACE_hthread_t *thread_name = 0;
   ACE_NEW_RETURN (thread_name,
