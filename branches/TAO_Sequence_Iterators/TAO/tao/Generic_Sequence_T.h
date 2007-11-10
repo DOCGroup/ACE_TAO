@@ -453,7 +453,7 @@ public:
   typedef T value_type;
   typedef T *pointer;
   typedef T &reference;
-  typedef int difference_type;
+  typedef CORBA::Long difference_type;
 
   /// Construct a Generic_Sequence_Iterator at position pos with past_end flag.
   Generic_Sequence_Iterator (generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &sequence, size_t pos = 0)
@@ -588,7 +588,7 @@ private:
   /// Check the length of the sequence to see if we're past the end.
   void check_position (void)
   {
-    if (this->pos_ >= this->length)
+    if (this->pos_ >= static_cast<CORBA::Long> (this->sequence_.length_))
       {
         this->past_end_ = true;
       }
@@ -601,7 +601,7 @@ private:
       }
   }
 
-  /// the array we are dealing with
+  /// the array with which we are dealing
   generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> &sequence_;
 
   /// Our current position in the sequence.
@@ -784,7 +784,7 @@ private:
   /// Check the length of the sequence to see if we're past the end.
   void check_position (void)
   {
-    if (this->pos_ >= this->length)
+    if (this->pos_ >= static_cast<CORBA::Long> (this->sequence_.length_))
       {
         this->past_end_ = true;
       }
