@@ -552,11 +552,11 @@ public:
   difference_type operator- (const Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & rhs)
     {
       // I think order is important here (i.e., rhs before this).
-      return rhs.pos_ - this->pos_;
+      return this->pos_ - rhs.pos_;
     }
 
   /// Element operator/assignment
-  T& operator[] (difference_type n)
+  value_type & operator[] (difference_type n)
     {
       // Return the element at position n
       return this->sequence_[n];
@@ -748,11 +748,11 @@ public:
   difference_type operator- (const Const_Generic_Sequence_Iterator<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> & rhs) const
     {
       // I think the order is important here (i.e., rhs before this).
-      return rhs.pos - this->pos_;
+      return this->pos_ - rhs.pos_;
     }
 
   /// Element operator/assignment
-  const T& operator[] (difference_type n) const
+  const value_type & operator[] (difference_type n) const
     {
       // Return the element at position n
       return this->sequence_[n];
@@ -954,7 +954,7 @@ public:
     }
 
   /// Element operator/assignment
-  T& operator[] (difference_type n)
+  value_type & operator[] (difference_type n)
     {
       // Return the element at position n
       return this->sequence_[n];
@@ -1154,7 +1154,7 @@ public:
     }
 
   /// Element operator/assignment
-  const T& operator[] (difference_type n) const
+  const value_type & operator[] (difference_type n) const
     {
       // Return the element at position n
       return this->sequence_[n];
