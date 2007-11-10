@@ -10,8 +10,16 @@
 #include "tao/StringSeqC.h"
 #include "ace/Log_Msg.h"
 
+#include <iostream>
+#include <iterator>
+
 int main(int,char*[])
 {
+  // Questions:
+  // Should assignment of iterators be allowed? g++ seems to allow this.
+  //  I'm not sure if it makes sense.
+  // What should happen to iterators when the containers are modified?
+
   ::CORBA::StringSeq a;
 
   // test for correct behaviour for empty sequence
@@ -24,14 +32,53 @@ int main(int,char*[])
       return 1;
     }
 
-  ::CORBA::StringSeq::value_type elem0 = CORBA::string_dup ("elem0");
-  ::CORBA::StringSeq::value_type elem1 = CORBA::string_dup ("elem1");
-  ::CORBA::StringSeq::value_type elem2 = CORBA::string_dup ("elem2");
+  const char * elem0_cstr = "elem0";
+  const char * elem1_cstr = "elem1";
+  const char * elem2_cstr = "elem2";
+  const char * elem3_cstr = "elem3";
+  ::CORBA::StringSeq::value_type elem0 = CORBA::string_dup (elem0_cstr);
+  ::CORBA::StringSeq::value_type elem1 = CORBA::string_dup (elem1_cstr);
+  ::CORBA::StringSeq::value_type elem2 = CORBA::string_dup (elem2_cstr);
+  ::CORBA::StringSeq::value_type elem3 = CORBA::string_dup (elem3_cstr);
 
-  a.length (3);
+  a.length (4);
   a[0] = elem0;
   a[1] = elem1;
-  a[3] = elem2;
+  a[2] = elem2;
+  a[3] = elem3;
+
+  /// Testing - using ostream_iterator
+  std::cout << "Output should be: " << std::endl
+            << elem0_cstr << std::endl
+            << elem1_cstr << std::endl
+            << elem2_cstr << std::endl
+            << elem3_cstr << std::endl
+            << "End of expected output" << std::endl;
+
+  std::copy (a.begin (),
+             a.end (),
+             std::ostream_iterator<CORBA::StringSeq::value_type> (std::cout,
+                                                                  "\n"));
+  ::CORBA::StringSeq test;
+  test.length (a.length ());
+
+  std::copy (a.begin (),
+             a.end (),
+             test.begin ());
+
+  /*
+  ::CORBA::StringSeq::iterator copytest_iter = test.begin ();
+  for (::CORBA::StringSeq::iterator copya_iter = a.begin ();
+       copya_iter != a.end ();
+       ++copya_iter, ++copytest_iter)
+    {
+      if (ACE_OS::strcmp (*copya_iter, *copytest_iter) != 0)
+        {
+          ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Failed at %N:%l\n")));
+          return 1;
+        }
+    }
+  */
 
   // test dereferencing
 
