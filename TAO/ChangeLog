@@ -1,3 +1,14 @@
+Sun Nov 11 20:15:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Recursive_ORBInitializer/Client_ORBInitializer.cpp:
+          Layout change
+
+        * tests/Servant_To_Reference_Test/run_test.pl:
+          Improved for VxWorks
+
+        * tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
+          Corrected for VxWorks
+
 Sun Nov 11 19:55:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2174_Regression/run_test.pl

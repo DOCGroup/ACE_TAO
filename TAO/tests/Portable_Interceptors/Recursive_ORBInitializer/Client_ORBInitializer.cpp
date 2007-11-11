@@ -18,8 +18,7 @@ Client_ORBInitializer::Client_ORBInitializer (Client_ORBInitializer *second) :
 }
 
 void
-Client_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr)
+Client_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
   ++pre_init_called;
 
@@ -34,8 +33,7 @@ Client_ORBInitializer::pre_init (
 }
 
 void
-Client_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr)
+Client_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr)
 {
   ++post_init_called;
 }
