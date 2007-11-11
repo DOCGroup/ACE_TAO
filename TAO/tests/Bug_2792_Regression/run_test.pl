@@ -10,9 +10,11 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$CL = new PerlACE::Process ("client", "");
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$CL = new $class ("client");
 
-$client = $CL->SpawnWaitKill (150);
+$client = $CL->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

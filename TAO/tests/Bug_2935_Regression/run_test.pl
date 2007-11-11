@@ -21,9 +21,11 @@ sub count_matching_lines {
 } 
 
 $status = 0;
-$sinkiorfile = PerlACE::LocalFile ("sink.ior");
+$sinkiorfilebase = "sink.ior";
+$sinkiorfile = PerlACE::LocalFile ("$sinkiorfilebase");
 $middleiorfile = PerlACE::LocalFile ("middle.ior");
-$sinklogfile = PerlACE::LocalFile ("sink.log");
+$sinklogfilebase = "sink.log";
+$sinklogfile = PerlACE::LocalFile ("$sinklogfilebase");
 $middlelogfile = PerlACE::LocalFile ("middle.log");
 $sourcelogfile = PerlACE::LocalFile ("source.log");
 
@@ -33,7 +35,12 @@ unlink $sinklogfile;
 unlink $middlelogfile;
 unlink $sourcelogfile;
 
+if (PerlACE::is_vxworks_test()) {
+$SV = new PerlACE::ProcessVX ("sink", "-o $sinkiorfilebase -orblogfile $sinklogfilebase -orbdebuglevel 9");
+}
+else {
 $SV = new PerlACE::Process ("sink", "-o $sinkiorfile -orblogfile $sinklogfile  -orbdebuglevel 9");
+}
 $MD = new PerlACE::Process ("middle", "-o $middleiorfile -f $sinkiorfile -ORBSvcConf middle.conf -orblogfile $middlelogfile  -orbdebuglevel 9");
 $CL = new PerlACE::Process ("source", "-f $middleiorfile -orblogfile $sourcelogfile  -orbdebuglevel 9");
 
