@@ -17,9 +17,14 @@ foreach $i (@ARGV) {
     }
 }
 
+if (PerlACE::is_vxworks_test()) {
+$SV = new PerlACE::ProcessVX ("server", "");
+}
+else {
 $SV = new PerlACE::Process ("server", "");
+}
 
-$server = $SV->SpawnWaitKill (30);
+$server = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
