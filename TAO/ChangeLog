@@ -1,6 +1,11 @@
+Sun Nov 11 19:15:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IORManipulation/filter/run_test.pl:
+          Added support for VxWorks cross platform testing
+
 Sun Nov 11 19:08:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/Bug_809_Regression/run_test.pl:
+        * tests/Bug_2809_Regression/run_test.pl:
           Added support for VxWorks cross platform testing
 
 Sun Nov 11 19:06:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
