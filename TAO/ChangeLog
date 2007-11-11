@@ -1,3 +1,8 @@
+Sun Nov 11 19:01:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2134_Regression/run_test.pl:
+          Added support for VxWorks cross platform testing
+
 Fri Nov  9 11:29:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
