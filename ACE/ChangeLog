@@ -1,13 +1,19 @@
+Sun Nov 11 18:31:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Replaces ACE_RUN_TAO_DEBUG_LEVEL with TAO_RUN_TAO_ORB_DEBUG
+
 Fri Nov  9 23:45:48 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
-        
+
           Remove DEFAULT_INCLUDES= added on Wed Nov 7 04:33:02 UTC 2007.
           Automake's nostdinc option performs the same function, but in
           a documented, supported, manner.
 
-        * configure.ac: 
-        
+        * configure.ac:
+
           Use nostdinc option to AM_INIT_AUTOMAKE.  This instructs
           automake not to add -I options for the current directory.
 

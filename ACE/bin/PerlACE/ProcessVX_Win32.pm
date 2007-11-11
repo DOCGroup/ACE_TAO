@@ -255,8 +255,8 @@ sub Spawn ()
             @cmds[$cmdnr++] = 'putenv("ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"} . '")';
         }
 
-        if (defined $ENV{'ACE_RUN_TAO_DEBUG_LEVEL'}) {
-            @cmds[$cmdnr++] = 'putenv("TAO_DEBUG_LEVEL=' . $ENV{"ACE_RUN_TAO_DEBUG_LEVEL"} . '")';
+        if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
+            @cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
         }
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
@@ -283,8 +283,8 @@ sub Spawn ()
             @cmds[$cmdnr++] = 'putenv("ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"} . '")';
         }
 
-        if (defined $ENV{'ACE_RUN_TAO_DEBUG_LEVEL'}) {
-            @cmds[$cmdnr++] = 'putenv("TAO_DEBUG_LEVEL=' . $ENV{"ACE_RUN_TAO_DEBUG_LEVEL"} . '")';
+        if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
+            @cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
         }
 
         @cmds[$cmdnr++] = 'ld <'. $program . $self->{EXE_EXT};
