@@ -4115,6 +4115,8 @@ ACE_CHECK_LACKS_FUNCS(unlink)
 
 ACE_CHECK_HAS_FUNCS(vasprintf vaswprintf vfwprintf vswprintf)
 
+ACE_CHECK_HAS_FUNCS(wcsnlen)
+
 ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
 
 if test "$ac_cv_func_wcstok" = yes; then

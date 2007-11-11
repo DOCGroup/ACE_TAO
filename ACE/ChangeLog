@@ -1,3 +1,10 @@
+Sun Nov 11 18:41:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added check for wcsnlen.
+          Thanks to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this. This fixes bugzilla 3146
+
 Sun Nov 11 18:31:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
