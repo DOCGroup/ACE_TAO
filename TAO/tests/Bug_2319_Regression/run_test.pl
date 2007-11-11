@@ -10,12 +10,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-if (PerlACE::is_vxworks_test()) {
-  $AMH = new PerlACE::ProcessVX ("server", "");
-}
-else {
-  $AMH = new PerlACE::Process ("server", "");
-}
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$AMH = new $class ("server");
 
 # Run the AMH server.
 $AMH->Spawn ();
