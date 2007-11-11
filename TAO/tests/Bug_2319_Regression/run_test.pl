@@ -10,12 +10,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$AMH = new PerlACE::Process ("server", "");
+if (PerlACE::is_vxworks_test()) {
+  $AMH = new PerlACE::ProcessVX ("server", "");
+}
+else {
+  $AMH = new PerlACE::Process ("server", "");
+}
 
 # Run the AMH server.
 $AMH->Spawn ();
 
-$amhserver= $AMH->WaitKill (60);
+$amhserver= $AMH->WaitKill ($PerlACE::wait_interval_for_process_creation);
 if ($amhserver != 0) {
     print STDERR "ERROR: AMH Server returned $amhserver\n";
     $status = 1;
