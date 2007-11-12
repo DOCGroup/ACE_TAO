@@ -1,3 +1,9 @@
+Mon Nov 12 17:54:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/LongUpcalls/run_test.pl:
+        * tests/Multiple/run_test.pl:
+          Improved for VxWorks
+
 Mon Nov 12 17:44:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CodeSets/simple/run_test.pl:
