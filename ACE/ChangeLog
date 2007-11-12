@@ -1,3 +1,10 @@
+Mon Nov 12 06:36:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disable bug 2494 regression for vxworks, it hangs our target.
+          When this test has been analyzed in detail we will enable
+          it again
+
 Mon Nov 12 06:31:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
