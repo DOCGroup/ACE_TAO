@@ -156,7 +156,7 @@ TAO/tests/No_Server_MT_Connect_Test/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !
 TAO/tests/Connect_Strategy_Test/run_test.pl:
 # DISABLED TAO/tests/Client_Leaks/run_test.pl: !VxWorks !ST !Tru64
 TAO/tests/Server_Leaks/run_test.pl
-TAO/tests/Smart_Proxies/Policy/run_test.pl: !VxWorks
+TAO/tests/Smart_Proxies/Policy/run_test.pl:
 TAO/tests/Smart_Proxies/run_test.pl:
 TAO/tests/Smart_Proxies/dtor/run_test.pl:
 TAO/tests/Stack_Recursion/run_test.pl: !ST !DISABLE_ToFix_LynxOS_PPC
@@ -280,7 +280,7 @@ TAO/tests/Portable_Interceptors/Bug_3079/run_test.pl: !MINIMUM !CORBA_E_COMPACT 
 TAO/tests/Portable_Interceptors/Bug_3080/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/Bug_2133/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/tests/ORT/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
-TAO/tests/Object_Loader/run_test.pl: !VxWorks !STATIC
+TAO/tests/Object_Loader/run_test.pl: !STATIC
 TAO/tests/Two_Objects/run_test.pl: !ST
 TAO/tests/TransportCurrent/Framework/run_test.pl -dynamic: !DISABLE_TRANSPORT_CURRENT !STATIC !DISABLE_INTERCEPTORS !MINIMUM
 TAO/tests/TransportCurrent/Framework/run_test.pl -static: !DISABLE_TRANSPORT_CURRENT STATIC !DISABLE_INTERCEPTORS !MINIMUM
