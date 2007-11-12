@@ -16,7 +16,7 @@ unlink $server_ior_file;
 
 # The client and server processes
 if (PerlACE::is_vxworks_test()) {
-    $SERVER = new PerlACE::ProcessVX ("server", "-o server.ior");
+    $SERVER = new PerlACE::ProcessVX ("server", "-o $plain_server_ior_file");
 }
 else {
     $SERVER = new PerlACE::Process ("server", "-o $server_ior_file");

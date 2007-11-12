@@ -13,12 +13,9 @@ $file = PerlACE::LocalFile ("test.ior");
 
 unlink $file;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("bug2936", "");
-}
-else {
-    $SV = new PerlACE::Process ("bug2936", "");
-}
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$SV = new $class ("bug2936");
 
 print STDERR "\n\n==== Running bug 2936 regression test\n";
 
