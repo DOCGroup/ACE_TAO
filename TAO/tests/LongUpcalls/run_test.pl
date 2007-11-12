@@ -87,7 +87,7 @@ print STDERR "==== AMI Client, Server upcall waits for operations on other threa
 unlink $iorfile;
 $BSV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 30) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $BSV->Kill ();
     exit 1;

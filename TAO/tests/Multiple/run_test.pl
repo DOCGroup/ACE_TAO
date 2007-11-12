@@ -19,13 +19,9 @@ $iorfile = "s.ior";
 
 unlink $iorfile;
 
-if (PerlACE::is_vxworks_test()) {
-$SV = new PerlACE::ProcessVX ("server");
-}
-else {
-$SV = new PerlACE::Process ("server");
-}
-
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$SV = new $class ("server");
 $CL = new PerlACE::Process ("client");
 
 #
