@@ -68,8 +68,7 @@ namespace TAO
     void init_target_spec (TAO_Target_Specification &spec);
 
     /// Write the GIOP header into the stream.
-    void write_header (TAO_Target_Specification &spec,
-                       TAO_OutputCDR &out_stream);
+    void write_header (TAO_OutputCDR &out_stream);
 
     /// Marshal the arguments into the stream.
     void marshal_data (TAO_OutputCDR &cdr);

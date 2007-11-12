@@ -17,6 +17,8 @@
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
+#include "tao/Transport.h"
+#include "tao/GIOP_Message_Base.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -81,6 +83,15 @@ namespace TAO
   DII_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
   {
     return Synch_Twoway_Invocation::remote_twoway (max_wait_time);
+  }
+
+  void
+  DII_Invocation::transport_resolved (void)
+  {
+    Synch_Twoway_Invocation::transport_resolved ();
+
+    this->resolver_.transport ()->messaging_object ()->out_stream ().reset_byte_order (
+        host_->_tao_byte_order ());
   }
 
   Invocation_Status
@@ -207,9 +218,18 @@ namespace TAO
   Invocation_Status
   DII_Deferred_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
   {
+    return Asynch_Remote_Invocation::remote_invocation (max_wait_time);
+  }
+
+  void
+  DII_Deferred_Invocation::transport_resolved (void)
+  {
+    Asynch_Remote_Invocation::transport_resolved ();
+
     this->safe_rd_->transport (this->resolver_.transport ());
 
-    return Asynch_Remote_Invocation::remote_invocation (max_wait_time);
+    this->resolver_.transport ()->messaging_object ()->out_stream ().reset_byte_order (
+        host_->_tao_byte_order ());
   }
 }
 

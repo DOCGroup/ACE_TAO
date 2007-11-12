@@ -9,7 +9,6 @@
 #include "tao/debug.h"
 #include "tao/Collocated_Invocation.h"
 #include "tao/Transport.h"
-#include "tao/Transport_Mux_Strategy.h"
 #include "tao/Collocation_Proxy_Broker.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/TAOC.h"
@@ -67,8 +66,7 @@ namespace TAO
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
 
-    while (status == TAO_INVOKE_START ||
-           status == TAO_INVOKE_RESTART)
+    while (status == TAO_INVOKE_START || status == TAO_INVOKE_RESTART)
       {
         // Default we go to remote
         Collocation_Strategy strat = TAO_CS_REMOTE_STRATEGY;
@@ -232,7 +230,7 @@ namespace TAO
 
     (void) this->set_response_flags (stub, details);
 
-    CORBA::Octet rflags = details.response_flags ();
+    CORBA::Octet const rflags = details.response_flags ();
     bool const block_connect =
       rflags != static_cast<CORBA::Octet> (Messaging::SYNC_NONE)
       && rflags != static_cast<CORBA::Octet> (TAO::SYNC_DELAYED_BUFFERING);
@@ -244,35 +242,24 @@ namespace TAO
       stub,
       block_connect);
 
-    resolver.resolve (max_wait_time);
-
-    if (TAO_debug_level)
+    switch (this->type_)
       {
-        if (is_timeout && *max_wait_time == ACE_Time_Value::zero)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t)Invocation_Adapter::invoke_remote_i: ")
-                      ACE_TEXT ("max wait time consumed during transport resolution\n")));
+        case TAO_ONEWAY_INVOCATION:
+          {
+            return this->invoke_oneway (details,
+                                        effective_target,
+                                        resolver,
+                                        max_wait_time);
+          }
+        case TAO_TWOWAY_INVOCATION:
+          {
+            return this->invoke_twoway (details,
+                                        effective_target,
+                                        resolver,
+                                        max_wait_time);
+
+          }
       }
-
-
-    // Update the request id now that we have a transport
-    details.request_id (resolver.transport ()->tms ()->request_id ());
-
-    if (this->type_ == TAO_ONEWAY_INVOCATION)
-      {
-        return this->invoke_oneway (details,
-                                    effective_target,
-                                    resolver,
-                                    max_wait_time);
-      }
-    else if (this->type_ == TAO_TWOWAY_INVOCATION)
-      {
-        return this->invoke_twoway (details,
-                                    effective_target,
-                                    resolver,
-                                    max_wait_time);
-      }
-
     return TAO_INVOKE_FAILURE;
   }
 
@@ -370,8 +357,6 @@ namespace TAO
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
           errno),
         CORBA::COMPLETED_NO);
-
-    return;
   }
 } // End namespace TAO
 
