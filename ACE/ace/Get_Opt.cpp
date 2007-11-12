@@ -167,7 +167,7 @@ ACE_Get_Opt::~ACE_Get_Opt (void)
   ACE_Get_Opt_Long_Option *option = 0;
   for (i = 0; i < size; ++i)
     {
-     int retval = this->long_opts_.get (option, i);
+      int retval = this->long_opts_.get (option, i);
       if (retval != 0)
         {
           // Should never happen.

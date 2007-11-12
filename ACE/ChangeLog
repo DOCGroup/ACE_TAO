@@ -1,3 +1,11 @@
+Mon Nov 12 06:31:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          The ACE_HAS_RUSAGE_WHO_ENUM and ACE_HAS_RLIMIT_RESOURCE_ENUM
+          are not needed anymore with glibc 2.3 and newer
+          Thanks to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this. This fixes bugzilla 3143
+
 Sun Nov 11 18:59:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
