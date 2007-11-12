@@ -8,13 +8,14 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorfilebase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 unlink $iorfile;
 
 # Test A: object exists (_non_existent() returns false)
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
@@ -46,7 +47,7 @@ if ($client != 2) {
 # Test B: object does not exist (_non_existent() returns true)
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -r");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase -r");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile -r");
