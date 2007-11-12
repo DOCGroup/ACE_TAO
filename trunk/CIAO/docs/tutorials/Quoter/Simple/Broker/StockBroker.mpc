@@ -119,6 +119,7 @@ project(Stock_Base_StockBroker_svnt) : ciao_servant_dnc {
 }
 
 project (Stock_Base_StockBrokerDriver) : ciao_client_dnc, valuetype {
+  avoids += ace_for_tao
   exename = StockBrokerDriver
   after += Stock_Base_StockBroker_stub
   libs  += StockBroker_stub Stock_Base_stub

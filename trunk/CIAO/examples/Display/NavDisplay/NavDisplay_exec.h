@@ -23,16 +23,16 @@ namespace MyImpl
    *
    * RateGen executor implementation class.
    */
-  class NAVDISPLAY_EXEC_Export NavDisplay_exec_impl :
-    public virtual CIDL_NavDisplay_Impl::NavDisplay_exec,
-    public virtual TAO_Local_RefCounted_Object
+  class NAVDISPLAY_EXEC_Export NavDisplay_exec_impl
+    : public virtual CIDL_NavDisplay_Impl::NavDisplay_exec,
+      public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default constructor.
-    NavDisplay_exec_impl ();
+    NavDisplay_exec_impl (void);
 
     /// Default destructor.
-    ~NavDisplay_exec_impl ();
+    ~NavDisplay_exec_impl (void);
 
     // Operations from HUDisplay::NavDisplay
 
@@ -45,18 +45,18 @@ namespace MyImpl
     set_session_context (Components::SessionContext_ptr ctx);
 
     virtual void
-    ciao_preactivate ();
+    ciao_preactivate (void);
     virtual void
-    ccm_activate ();
+    ccm_activate (void);
 
     virtual void
-    ciao_postactivate ();
+    ciao_postactivate (void);
 
     virtual void
-    ccm_passivate ();
+    ccm_passivate (void);
 
     virtual void
-    ccm_remove ();
+    ccm_remove (void);
   protected:
     /// Copmponent specific context
     HUDisplay::CCM_NavDisplay_Context_var context_;
@@ -67,23 +67,23 @@ namespace MyImpl
    *
    * NavDisplay home executor implementation class.
    */
-  class NAVDISPLAY_EXEC_Export NavDisplayHome_exec_impl :
-    public virtual HUDisplay::CCM_NavDisplayHome,
-    public virtual TAO_Local_RefCounted_Object
+  class NAVDISPLAY_EXEC_Export NavDisplayHome_exec_impl
+    : public virtual HUDisplay::CCM_NavDisplayHome,
+      public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default ctor.
-    NavDisplayHome_exec_impl ();
+    NavDisplayHome_exec_impl (void);
 
     /// Default dtor.
-    ~NavDisplayHome_exec_impl ();
+    ~NavDisplayHome_exec_impl (void);
 
     // Explicit home operations.
 
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ();
+    create (void);
   };
 
 }
