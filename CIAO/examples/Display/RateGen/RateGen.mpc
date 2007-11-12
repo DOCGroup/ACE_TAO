@@ -119,6 +119,7 @@ project(Display_RateGen_svnt) : ciao_servant_dnc {
 }
 
 project (Display_controller) : ciao_client_dnc, valuetype {
+  avoids += ace_for_tao
   exename = controller
   after += Display_RateGen_stub
   libs  += RateGen_stub Display_Base_stub

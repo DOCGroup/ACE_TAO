@@ -123,6 +123,7 @@ project(Benchmark_RoundTrip_svnt) : ciao_servant_dnc {
 }
 
 project (RoundTrip_client) : ciao_client_dnc, valuetype, strategies {
+  avoids += ace_for_tao
   exename = client
   after += Benchmark_RoundTrip_stub
   libs  += RoundTrip_stub Benchmark_stub
