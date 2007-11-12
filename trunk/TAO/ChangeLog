@@ -1,3 +1,9 @@
+Mon Nov 12 09:25:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2734_Regression/*:
+          Build client/server here instead of using them from a different test.
+          Fixes issues on VxWorks
+
 Mon Nov 12 08:54:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           Changed the way how portable interceptors relate to connection
