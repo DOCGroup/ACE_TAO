@@ -1,3 +1,8 @@
+Mon Nov 12 09:48:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2869_Regression/run_test.pl:
+          Simplified this file
+
 Mon Nov 12 09:25:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2734_Regression/*:
