@@ -47,6 +47,28 @@ int main(int,char*[])
   a[2] = elem2;
   a[3] = elem3;
 
+
+  ::CORBA::StringSeq test;
+  test.length (a.length ());
+
+  // Memory is leaked here from
+  // TAO::details::string_traits_base<char>::default_initializer()
+  std::copy (a.begin (),
+             a.end (),
+             test.begin ());
+
+  ::CORBA::StringSeq::iterator copytest_iter = test.begin ();
+  for (::CORBA::StringSeq::iterator copya_iter = a.begin ();
+       copya_iter != a.end ();
+       ++copya_iter, ++copytest_iter)
+    {
+      if (ACE_OS::strcmp (*copya_iter, *copytest_iter) != 0)
+        {
+          ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Failed at %N:%l\n")));
+          return 1;
+        }
+    }
+
   /// Testing - using ostream_iterator
   std::cout << "Output should be: " << std::endl
             << elem0_cstr << std::endl
@@ -59,27 +81,6 @@ int main(int,char*[])
              a.end (),
              std::ostream_iterator<CORBA::StringSeq::value_type> (std::cout,
                                                                   "\n"));
-  ::CORBA::StringSeq test;
-  test.length (a.length ());
-
-  std::copy (a.begin (),
-             a.end (),
-             test.begin ());
-
-  /*
-  ::CORBA::StringSeq::iterator copytest_iter = test.begin ();
-  for (::CORBA::StringSeq::iterator copya_iter = a.begin ();
-       copya_iter != a.end ();
-       ++copya_iter, ++copytest_iter)
-    {
-      if (ACE_OS::strcmp (*copya_iter, *copytest_iter) != 0)
-        {
-          ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Failed at %N:%l\n")));
-          return 1;
-        }
-    }
-  */
-
   // test dereferencing
 
   ::CORBA::StringSeq::iterator a_it2 = a.begin ();
