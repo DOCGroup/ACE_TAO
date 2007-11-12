@@ -17,10 +17,12 @@ unlink $client_ior_file;
 
 # The client and server processes
 if (PerlACE::is_vxworks_test()) {
-    $SERVER     = new PerlACE::ProcessVX("server");
+  $SERVER     = new PerlACE::ProcessVX("server");
+  $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
 }
 else {
-    $SERVER     = new PerlACE::Process("server");
+  $SERVER     = new PerlACE::Process("server");
+  $TARGETHOSTNAME = "127.0.0.1";
 }
 $CLIENT     = new PerlACE::Process("client");
 
@@ -45,7 +47,7 @@ if (PerlACE::waitforfile_timed ($server_ior_file, $PerlACE::wait_interval_for_pr
    exit 1;
 }
 
-$CLIENT->Arguments("-k corbaloc::127.0.0.1:$port/collocated_ior_bound_in_remote_iortable -ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa");
+$CLIENT->Arguments("-k corbaloc::$TARGETHOSTNAME:$port/collocated_ior_bound_in_remote_iortable -ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa");
 if ($CLIENT->SpawnWaitKill (60) != 0)
 {
    print STDERR "ERROR: Bug 2289 Regression failed. Non zero result from client.\n";
@@ -54,7 +56,7 @@ if ($CLIENT->SpawnWaitKill (60) != 0)
 }
 
 # Clean up and return
-$SERVER->TerminateWaitKill (5);
+$SERVER->TerminateWaitKill (15);
 unlink $server_ior_file;
 unlink $client_ior_file;
 exit 0;
