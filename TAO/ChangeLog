@@ -1,3 +1,17 @@
+Mon Nov 12 08:12:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2234_Regression/run_test.pl:
+          Extended timeout for VxWorks
+
+        * tests/Leader_Followers/run_test.pl:
+        * tests/Leader_Followers/select_mt.conf:
+        * tests/Leader_Followers/tp.conf:
+          Updated for VxWorks
+
+        * testsCollocationLockup/CollocationLockup.cpp:
+          Wait explicitly on the thread manager and shutdown the ORB to
+          fix some memory leaks
+
 Sun Nov 11 20:15:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Recursive_ORBInitializer/Client_ORBInitializer.cpp:
