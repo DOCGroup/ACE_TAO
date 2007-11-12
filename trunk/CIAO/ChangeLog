@@ -1,3 +1,26 @@
+Mon Nov 12 19:10:36 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        
+          Fixed incorrect path to generated executor stub in
+          source file list.
+
+Mon Nov 12 18:54:48 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * examples/Hello/Sender/Sender.mpc:
+        * examples/Display/RateGen/RateGen.mpc:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc:
+        * docs/tutorials/Quoter/Simple/Broker/StockDistributor.mpc:
+        
+          Added line 'avoids += ace_tao_tao' in driver/client projects.
+          
+        * examples/Display/NavDisplay/NavDisplay_exec.cpp:
+        * examples/Display/NavDisplay/NavDisplay_exec.h:
+        
+          Cosmetic changes (line lengths, ACE style guidelines).
+
 Fri Nov  9 15:06:04 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config.ciaocidldefaults.mpb:
