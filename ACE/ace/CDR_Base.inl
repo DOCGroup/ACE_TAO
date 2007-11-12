@@ -70,9 +70,12 @@ ACE_CDR::swap_2 (const char *orig, char* target)
   // function.
   *reinterpret_cast<unsigned short *> (target) =
     _byteswap_ushort (*reinterpret_cast<unsigned short const *> (orig));
+#elif defined (ACE_HAS_BSWAP16)
+  *reinterpret_cast<uint16_t *> (target) =
+    bswap16 (*reinterpret_cast<uint16_t const *> (orig));
 #elif defined (ACE_HAS_BSWAP_16)
-  *reinterpret_cast<unsigned short *> (target) =
-    bswap_16 (*reinterpret_cast<unsigned short const *> (orig));
+  *reinterpret_cast<uint16_t *> (target) =
+    bswap_16 (*reinterpret_cast<uint16_t const *> (orig));
 #elif defined(ACE_HAS_INTEL_ASSEMBLY)
   unsigned short a =
     *reinterpret_cast<const unsigned short*> (orig);
@@ -101,9 +104,12 @@ ACE_CDR::swap_4 (const char* orig, char* target)
   // function.
   *reinterpret_cast<unsigned long *> (target) =
     _byteswap_ulong (*reinterpret_cast<unsigned long const *> (orig));
+#elif defined (ACE_HAS_BSWAP32)
+  *reinterpret_cast<uint32_t *> (target) =
+    bswap32 (*reinterpret_cast<uint32_t const *> (orig));
 #elif defined (ACE_HAS_BSWAP_32)
-  *reinterpret_cast<unsigned int *> (target) =
-    bswap_32 (*reinterpret_cast<unsigned int const *> (orig));
+  *reinterpret_cast<uint32_t *> (target) =
+    bswap_32 (*reinterpret_cast<uint32_t const *> (orig));
 #elif defined(ACE_HAS_INTEL_ASSEMBLY)
   // We have ACE_HAS_PENTIUM, so we know the sizeof's.
   register unsigned int j =
@@ -133,9 +139,12 @@ ACE_CDR::swap_8 (const char* orig, char* target)
   // function.
   *reinterpret_cast<unsigned __int64 *> (target) =
     _byteswap_uint64 (*reinterpret_cast<unsigned __int64 const *> (orig));
+#elif defined (ACE_HAS_BSWAP64)
+  *reinterpret_cast<uint64_t *> (target) =
+    bswap64 (*reinterpret_cast<uint64_t const *> (orig));
 #elif defined (ACE_HAS_BSWAP_64)
-  *reinterpret_cast<unsigned long long *> (target) =
-    bswap_64 (*reinterpret_cast<unsigned long long const *> (orig));
+  *reinterpret_cast<uint64_t *> (target) =
+    bswap_64 (*reinterpret_cast<uint64_t const *> (orig));
 #elif (defined (__amd64__) || defined (__x86_64__)) && defined(__GNUG__)
   register unsigned long x =
     * reinterpret_cast<const unsigned long*> (orig);
