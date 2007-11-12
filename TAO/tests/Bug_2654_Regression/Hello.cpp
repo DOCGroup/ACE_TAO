@@ -43,7 +43,7 @@ Hello::method (CORBA::Short count)
 {
   if (++this->count_ > 10)
     {
-      ACE_DEBUG ((LM_DEBUG, "{%P| %t) supplied count = %d\n", count));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) supplied count = %d\n", count));
       PortableServer::POA_var poa = this->_default_POA();
       PortableServer::POAManager_var mgr = poa->the_POAManager();
       mgr->hold_requests(false);
