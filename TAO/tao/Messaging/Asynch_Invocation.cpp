@@ -41,12 +41,6 @@ namespace TAO
   Invocation_Status
   Asynch_Remote_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
   {
-    TAO_Target_Specification tspec;
-    this->init_target_spec (tspec);
-
-    TAO_OutputCDR & cdr =
-      this->resolver_.transport ()->messaging_object ()->out_stream ();
-
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -61,6 +55,38 @@ namespace TAO
     try
       {
 #endif /* TAO_HAS_INTERCEPTORS */
+        bool const is_timeout = max_wait_time && (*max_wait_time != ACE_Time_Value::zero);
+
+        this->resolver_.resolve (max_wait_time);
+
+        if (TAO_debug_level)
+          {
+            if (is_timeout && max_wait_time && *max_wait_time == ACE_Time_Value::zero)
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) Asynch_Remote_Invocation::remote_invocation: ")
+                          ACE_TEXT ("max wait time consumed during transport resolution\n")));
+          }
+
+        // Callback that the transport has been resolved. Derived classes
+        // can now use the transport if they need to
+        this->transport_resolved ();
+
+        TAO_Transport* const transport = this->resolver_.transport ();
+
+        if (this->safe_rd_.get ())
+          {
+            this->safe_rd_->transport (transport);
+            // AMI Timeout Handling Begin
+            ACE_Time_Value tmp;
+
+            if (is_timeout)
+              {
+                this->safe_rd_->schedule_timer (this->details_.request_id (), *max_wait_time);
+              }
+          }
+
+        TAO_OutputCDR & cdr =
+          this->resolver_.transport ()->messaging_object ()->out_stream ();
 
         // Oneway semantics.  See comments for below send_message()
         // call.
@@ -69,7 +95,7 @@ namespace TAO
                                 TAO_Transport::TAO_ONEWAY_REQUEST,
                                 max_wait_time);
 
-        this->write_header (tspec, cdr);
+        this->write_header (cdr);
 
         this->marshal_data (cdr);
 
@@ -78,7 +104,7 @@ namespace TAO
         TAO_Bind_Dispatcher_Guard dispatch_guard (
           this->details_.request_id (),
           this->safe_rd_.get (),
-          this->resolver_.transport ()->tms ());
+          transport->tms ());
 
         // Now that we have bound the reply dispatcher to the map, just
         // loose ownership of the reply dispatcher.
@@ -132,7 +158,7 @@ namespace TAO
 
         // NOTE: Not sure how things are handles with exclusive muxed
         // strategy.
-        if (this->resolver_.transport ()->idle_after_send ())
+        if (transport->idle_after_send ())
           (void) this->resolver_.transport_released ();
 
 #if TAO_HAS_INTERCEPTORS == 1

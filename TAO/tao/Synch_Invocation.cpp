@@ -15,6 +15,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/SystemException.h"
+#include "tao/Transport_Mux_Strategy.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -58,9 +59,6 @@ namespace TAO
     TAO_Synch_Reply_Dispatcher rd (this->resolver_.stub ()->orb_core (),
                                    this->details_.reply_service_info ());
 
-    TAO_Target_Specification tspec;
-    this->init_target_spec (tspec);
-
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -76,15 +74,32 @@ namespace TAO
     try
       {
 #endif /*TAO_HAS_INTERCEPTORS */
+        bool const is_timeout = max_wait_time && (*max_wait_time != ACE_Time_Value::zero);
 
-        TAO_OutputCDR &cdr = this->resolver_.transport ()->out_stream ();
+        this->resolver_.resolve (max_wait_time);
+
+        if (TAO_debug_level)
+          {
+            if (is_timeout && max_wait_time && *max_wait_time == ACE_Time_Value::zero)
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) Synch_Oneway_Invocation::remote_twoway: ")
+                          ACE_TEXT ("max wait time consumed during transport resolution\n")));
+          }
+
+        // Callback that the transport has been resolved. Derived classes
+        // can now use the transport if they need to
+        this->transport_resolved ();
+
+        TAO_Transport* const transport = this->resolver_.transport ();
+
+        TAO_OutputCDR &cdr = transport->out_stream ();
 
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time);
 
-        this->write_header (tspec, cdr);
+        this->write_header (cdr);
 
         this->marshal_data (cdr);
 
@@ -93,13 +108,13 @@ namespace TAO
         TAO_Bind_Dispatcher_Guard dispatch_guard (
           this->details_.request_id (),
           &rd,
-          this->resolver_.transport ()->tms ());
+          transport->tms ());
 
         if (dispatch_guard.status () != 0)
           {
             // @@ What is the right way to handle this error? Why should
             // we close the connection?
-            this->resolver_.transport ()->close_connection ();
+            transport->close_connection ();
 
             throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
           }
@@ -132,7 +147,7 @@ namespace TAO
         // For some strategies one may want to release the transport
         // back to  cache. If the idling is successfull let the
         // resolver about that.
-        if (this->resolver_.transport ()->idle_after_send ())
+        if (transport->idle_after_send ())
           this->resolver_.transport_released ();
 
         // @@ In all MT environments, there's a cancellation point lurking
@@ -175,7 +190,7 @@ namespace TAO
 
         // For some strategies one may want to release the transport
         // back to  cache after receiving the reply.
-        if (this->resolver_.transport ()->idle_after_reply ())
+        if (transport->idle_after_reply ())
           this->resolver_.transport_released ();
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -238,7 +253,7 @@ namespace TAO
     int const reply_error =
       this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);
 
-    if (TAO_debug_level > 0 && max_wait_time != 0)
+    if (TAO_debug_level > 0 && max_wait_time)
       {
         CORBA::ULong const msecs = max_wait_time->msec ();
 
@@ -595,6 +610,12 @@ namespace TAO
     return TAO_INVOKE_SYSTEM_EXCEPTION;
   }
 
+  void Synch_Twoway_Invocation::transport_resolved (void)
+  {
+    // Update the request id now that we have a transport
+    this->details_.request_id (this->resolver_.transport ()->tms ()->request_id ());
+  }
+
   // =========================================================================
 
   Synch_Oneway_Invocation::Synch_Oneway_Invocation (
@@ -622,9 +643,6 @@ namespace TAO
         return s;
       }
 
-    TAO_Target_Specification tspec;
-    this->init_target_spec (tspec);
-
 #if TAO_HAS_INTERCEPTORS == 1
     s = this->send_request_interception ();
 
@@ -634,6 +652,21 @@ namespace TAO
     try
       {
 #endif /*TAO_HAS_INTERCEPTORS */
+        bool const is_timeout = max_wait_time && (*max_wait_time != ACE_Time_Value::zero);
+
+        this->resolver_.resolve (max_wait_time);
+
+        if (TAO_debug_level)
+          {
+            if (is_timeout && max_wait_time && *max_wait_time == ACE_Time_Value::zero)
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) Synch_Oneway_Invocation::remote_oneway: ")
+                          ACE_TEXT ("max wait time consumed during transport resolution\n")));
+          }
+
+        // Callback that the transport has been resolved. Derived classes
+        // can now use the transport if they need to
+        this->transport_resolved ();
 
         TAO_Transport* const transport = this->resolver_.transport ();
 
@@ -644,7 +677,7 @@ namespace TAO
                                 TAO_Transport::TAO_ONEWAY_REQUEST,
                                 max_wait_time);
 
-        this->write_header (tspec, cdr);
+        this->write_header (cdr);
 
         this->marshal_data (cdr);
 

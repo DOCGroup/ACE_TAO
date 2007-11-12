@@ -1,3 +1,71 @@
+Mon Nov 12 08:54:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Changed the way how portable interceptors relate to connection
+          establishment. A few years ago the connection was setup after the
+          send_request client interceptor call, this was changed with some
+          refactoring. The send_request was now called after the connection
+          establishment, as a result, if the connection establishment failed,
+          the receive_exception method on the client request interceptor
+          wasn't called. With this behaviour it is not possible to implement
+          a FT app with just interceptors, you need a TAO specific endpoint
+          selector. The change I made is to move the connection establishment
+          after the send_request. As a result in the send_request it can
+          happen that there is no transport selected, at that moment
+          retrieving transport current (which is TAO specific) will give a
+          NoContext exception.
+
+          This fixes bugzilla 2133, 3079, and 3080. Thanks to Simon McQueen
+          and Jaiganesh Balasubramanian for reporting these issues.
+
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.h:
+        * tao/Messaging/Asynch_Invocation.cpp:
+          Moved the resolve on the profile_transport_resolver to after the
+          send_request. At the moment a transport has been selected the
+          virtual method transport_resolved() is called so that derived
+          classes can set additional values on the transport.
+
+        * tao/Remote_Invocation.{h,cpp} (write_header):
+          Setup TAO_Target_Specification within this method, no need to
+          pass it in as argument
+
+        * tao/DynamicInterface/DII_Invocation.{h,cpp}:
+          Use the new transport_resolved to set the transport in the safe_rd and
+          reset the byter order, at the moment the remote_invocation is called
+          it is possible that the transport is not resolved yet
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+          Don't reset the byte order here, do that in DII_Invocation
+
+        * tao/Invocation_Adapter.cpp:
+          Const changes, layout changes and don't resolve the transport here,
+          do that in the Remote_Invocation derived classes
+
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+          Don't schedule the timer here, but in the Async_Invocation because we
+          maybe haven't resolved the transport.
+
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+          When we have no transport or no connection handler return a NoContext
+          instead of No_Implement
+
+        * tao/Object.cpp:
+          Fixed typo in comment
+
+        * tests/TransportCurrent/Framework/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.h:
+          Updated for the fact that send_request could throw NoContext
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
+          Layout changes
+
+        * tao/Utils/ORB_Manager.cpp:
+          Destroy the ORB in the destructor
+
+        * tests/Portable_Interceptors/Bug_3079/run_test.pl:
+          Small updates
+
 Mon Nov 12 08:12:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2234_Regression/run_test.pl:

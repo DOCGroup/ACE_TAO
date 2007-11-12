@@ -30,11 +30,11 @@ namespace TAO
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       const TAO_Transport* t = this->transport ();
       if (t == 0)
-        throw ::CORBA::NO_IMPLEMENT ();
+        throw NoContext ();
 
       TAO_Connection_Handler *ch = const_cast<TAO_Transport*>(t)->connection_handler ();
       if (ch == 0)
-        throw ::CORBA::NO_IMPLEMENT ();
+        throw NoContext ();
 
       return dynamic_cast <TAO_IIOP_Connection_Handler*> (ch);
 #else
