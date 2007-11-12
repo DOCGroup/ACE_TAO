@@ -3,6 +3,6 @@
 
 project(*Unbounded_String) : taoexe {
   Source_Files {
-    Unbounded_String.cpp
+    StringSeq.cpp
   }
 }
