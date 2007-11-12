@@ -119,6 +119,7 @@ project(Hello_Sender_svnt) : ciao_servant_dnc {
 }
 
 project (Hello_starter) : ciao_client_dnc, valuetype {
+  avoids += ace_for_tao
   exename = starter
   after += Hello_Sender_stub
   libs  += Hello_Sender_stub Hello_Base_stub

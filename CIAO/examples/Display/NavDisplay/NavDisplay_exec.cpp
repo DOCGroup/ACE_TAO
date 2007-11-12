@@ -4,12 +4,12 @@
 #include "NavDisplay_exec.h"
 
 /// Default constructor.
-MyImpl::NavDisplay_exec_impl::NavDisplay_exec_impl ()
+MyImpl::NavDisplay_exec_impl::NavDisplay_exec_impl (void)
 {
 }
 
 /// Default destructor.
-MyImpl::NavDisplay_exec_impl::~NavDisplay_exec_impl ()
+MyImpl::NavDisplay_exec_impl::~NavDisplay_exec_impl (void)
 {
 }
 
@@ -36,7 +36,8 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev)
 
   CORBA::Long y = loc->posy () % 300;
 
-  ACE_DEBUG ((LM_DEBUG, "NAVDISPLAY: Current Location is: (%d, %d)\n",
+  ACE_DEBUG ((LM_DEBUG,
+              "NAVDISPLAY: Current Location is: (%d, %d)\n",
               x,
               y));
 }
@@ -44,8 +45,7 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev)
 // Operations from Components::SessionComponent
 void
 MyImpl::NavDisplay_exec_impl::set_session_context (
-    Components::SessionContext_ptr ctx
-  )
+  Components::SessionContext_ptr ctx)
 {
   if (CIAO::debug_level () > 0)
     {
@@ -64,13 +64,12 @@ MyImpl::NavDisplay_exec_impl::set_session_context (
 }
 
 void
-MyImpl::NavDisplay_exec_impl::ciao_preactivate (
-  )
+MyImpl::NavDisplay_exec_impl::ciao_preactivate (void)
 {
 }
 
 void
-MyImpl::NavDisplay_exec_impl::ccm_activate ()
+MyImpl::NavDisplay_exec_impl::ccm_activate (void)
 {
   if (CIAO::debug_level () > 0)
     {
@@ -80,13 +79,12 @@ MyImpl::NavDisplay_exec_impl::ccm_activate ()
 }
 
 void
-MyImpl::NavDisplay_exec_impl::ciao_postactivate (
-  )
+MyImpl::NavDisplay_exec_impl::ciao_postactivate (void)
 {
 }
 
 void
-MyImpl::NavDisplay_exec_impl::ccm_passivate ()
+MyImpl::NavDisplay_exec_impl::ccm_passivate (void)
 {
   if (CIAO::debug_level () > 0)
     {
@@ -96,7 +94,7 @@ MyImpl::NavDisplay_exec_impl::ccm_passivate ()
 }
 
 void
-MyImpl::NavDisplay_exec_impl::ccm_remove ()
+MyImpl::NavDisplay_exec_impl::ccm_remove (void)
 {
   if (CIAO::debug_level () > 0)
     {
@@ -106,12 +104,12 @@ MyImpl::NavDisplay_exec_impl::ccm_remove ()
 }
 
 /// Default ctor.
-MyImpl::NavDisplayHome_exec_impl::NavDisplayHome_exec_impl ()
+MyImpl::NavDisplayHome_exec_impl::NavDisplayHome_exec_impl (void)
 {
 }
 
 /// Default dtor.
-MyImpl::NavDisplayHome_exec_impl::~NavDisplayHome_exec_impl ()
+MyImpl::NavDisplayHome_exec_impl::~NavDisplayHome_exec_impl (void)
 {
 }
 
@@ -120,7 +118,7 @@ MyImpl::NavDisplayHome_exec_impl::~NavDisplayHome_exec_impl ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::NavDisplayHome_exec_impl::create ()
+MyImpl::NavDisplayHome_exec_impl::create (void)
 {
   return new MyImpl::NavDisplay_exec_impl;
 }
