@@ -17,7 +17,8 @@ if ($#ARGV >= 0 && $ARGV[0] eq '-q') {
 }
 
 # Test parameters.
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorfilebase = "test.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 $data_file = PerlACE::LocalFile ("test_run.data");
 
 $debug_level = 1;
@@ -58,7 +59,7 @@ $client_args =
     ."-a $priority1 -b $priority2 -e 1413566210 -f 0 -n $iterations";
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o test.ior $server_args");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase $server_args");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");
