@@ -110,7 +110,7 @@ ACE_Log_Msg::trace_depth (int depth)
 }
 
 ACE_INLINE
-int
+bool
 ACE_Log_Msg::trace_active (void) const
 {
   return this->trace_active_;
@@ -118,7 +118,7 @@ ACE_Log_Msg::trace_active (void) const
 
 ACE_INLINE
 void
-ACE_Log_Msg::trace_active (int value)
+ACE_Log_Msg::trace_active (bool value)
 {
   this->trace_active_ = value;
 }
@@ -135,7 +135,7 @@ ACE_INLINE
 void
 ACE_Log_Msg::start_tracing (void)
 {
-  this->tracing_enabled_ = 1;
+  this->tracing_enabled_ = true;
 }
 
 /// Disable the tracing facility on a per-thread basis.
@@ -143,11 +143,11 @@ ACE_INLINE
 void
 ACE_Log_Msg::stop_tracing (void)
 {
-  this->tracing_enabled_ = 0;
+  this->tracing_enabled_ = false;
 }
 
 ACE_INLINE
-int
+bool
 ACE_Log_Msg::tracing_enabled (void) const
 {
   return this->tracing_enabled_;
