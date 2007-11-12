@@ -1,3 +1,30 @@
+Mon Nov 12 13:04:11 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/CDR_Base.inl:
+
+          Take advantage of bswap16, bswap32, and bswap64 macros when
+          ACE_HAS_BSWAPXX is defined as we do for bswap_16, bswap_32,
+          and bswap_64 when ACE_HAS_BSWAP_XX is defined.
+
+        * configure.ac:
+
+          Changed checks for bswap_16, bswap_32, and bswap_64 to use
+          ACE_CHECK_HAS_DEFINES.  Thanks to Thomas Girard <thomas dot g
+          dot girard at free dot fr> for reporting the ACE_HAS_BSWAP_XX
+          feature test macros were not being defined because bswap_16,
+          bswap_32, and bswap_64 are implemented as macros.  This fixes
+          bugzilla 3134.
+
+          Added check for bswap16, bswap32, and bswap64.  These are the
+          *BSD, Darwin, etc. equivalents of the bswap_XX macros.
+
+        * m4/ace_defines.m4:
+
+          New file, new autoconf macros ACE_CHECK_DEFINE,
+          ACE_CHECK_HAS_DEFINES, and ACE_CHECK_LACKS_DEFINES.  These are
+          used like ACE_CHECK_HAS_FUNCS and ACE_CHECK_LACKS_FUNCS, where
+          the tested feature is implemented as a macro and not a function.
+
 Mon Nov 12 10:25:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * bin/PerlACE/ConfigList.pm:
@@ -3664,7 +3691,7 @@ Sat Jul 28 18:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:
           Added checks for byteswap.h, intrin.h, ia32intrin.h, and
-          ia64intrin.h, part of buzilla 2905.
+          ia64intrin.h, part of bugzilla 2905.
 
 Fri Jul 27 06:50:14 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -3468,7 +3468,18 @@ ACE_CHECK_LACKS_FUNCS(alarm)
 
 ACE_CHECK_LACKS_FUNCS(bsearch)
 
-ACE_CHECK_HAS_FUNCS(bswap_16 bswap_32 bswap_64)
+ACE_CHECK_HAS_DEFINES([bswap16])
+if test "$ace_cv_defined_bswap16" = no; then
+  ACE_CHECK_HAS_DEFINES([bswap_16])
+fi
+ACE_CHECK_HAS_DEFINES([bswap32])
+if test "$ace_cv_defined_bswap32" = no; then
+  ACE_CHECK_HAS_DEFINES([bswap_32])
+fi
+ACE_CHECK_HAS_DEFINES([bswap64])
+if test "$ace_cv_defined_bswap64" = no; then
+  ACE_CHECK_HAS_DEFINES([bswap_64])
+fi
 
 ACE_CHECK_LACKS_FUNCS(chdir)
 
