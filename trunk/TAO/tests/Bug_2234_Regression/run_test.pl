@@ -47,7 +47,7 @@ if ($CLIENT->SpawnWaitKill( 30 ) != 0)
 }
 unlink $server_ior_file;
 
-if ($SERVER->WaitKill( 1 ) != 0)
+if ($SERVER->WaitKill( 15 ) != 0)
 {
    print STDERR "ERROR: Bug #2234 Regression test failed: server not exiting.\n";
    exit 1;

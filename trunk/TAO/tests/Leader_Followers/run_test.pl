@@ -10,16 +10,22 @@ use PerlACE::Run_Test;
 
 $status = 0;
 $iorfile = PerlACE::LocalFile ("lf.ior");
-$tpool_reactor_directive = "-ORBsvcconfdirective \"static Advanced_Resource_Factory '-ORBreactortype tp'\"";
-$select_reactor_directive = "-ORBsvcconfdirective \"static Advanced_Resource_Factory '-ORBreactortype select_mt'\"";
+$tp_conf_base = "tp$PerlACE::svcconf_ext";
+$select_mt_conf_base = "select_mt$PerlACE::svcconf_ext";
+$tp_conf = PerlACE::LocalFile ("$tp_conf_base");
+$select_mt_conf = PerlACE::LocalFile ("$select_mt_conf_base");
 
 if (PerlACE::is_vxworks_test()) {
     $sv_iorfile = "lf.ior";
     $SV = new PerlACE::ProcessVX ("server");
+    $tpool_reactor_directive = "-ORBsvcconf $tp_conf_base";
+    $select_reactor_directive = "-ORBsvcconf $select_mt_conf_base";
 }
 else {
     $sv_iorfile = $iorfile;
     $SV = new PerlACE::Process ("server");
+    $tpool_reactor_directive = "-ORBsvcconf $tp_conf";
+    $select_reactor_directive = "-ORBsvcconf $select_mt_conf";
 }
 $CL = new PerlACE::Process ("client");
 
