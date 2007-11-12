@@ -9,11 +9,12 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use POSIX "sys_wait_h";
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorfilebase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
@@ -24,7 +25,7 @@ $CL = new PerlACE::Process ("client", "-k file://$iorfile -t $threads");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 250) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
@@ -35,7 +36,7 @@ local $max_running_time = 360;
 local $elapsed = time() - $start_time;
 my $p = $SV->{'PROCESS'};
 
-while (($elapsed < $max_running_time) ) 
+while (($elapsed < $max_running_time) )
 {
  # Start all clients in parallel
   $client = $CL->Spawn ();
@@ -43,15 +44,15 @@ while (($elapsed < $max_running_time) )
   $CL->WaitKill(60) unless $client < 0;
 
   print STDERR "checking server alive\n";
-  
+
   my $pid = waitpid ($SV->{PROCESS}, &WNOHANG);
-  
-  if ($pid != 0 && $? != -1) 
+
+  if ($pid != 0 && $? != -1)
   {
     $SV->check_return_value ($?);
     $server_died = 1;
     last;
-  }            
+  }
 
   $elapsed = time() - $start_time;
   sleep (1);
