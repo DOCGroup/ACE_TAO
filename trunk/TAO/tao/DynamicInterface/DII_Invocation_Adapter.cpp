@@ -9,8 +9,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Transport.h"
-#include "tao/Transport.h"
-#include "tao/GIOP_Message_Base.h"
 #include "tao/SystemException.h"
 #include "tao/operation_details.h"
 
@@ -87,15 +85,11 @@ namespace TAO
           CORBA::COMPLETED_NO);
       }
 
-    r.transport ()->messaging_object ()->out_stream ().reset_byte_order (
-        request_->_tao_byte_order ());
-
     TAO::DII_Invocation synch (this->target_,
                                r,
                                op,
                                this->exception_list_,
                                this->request_);
-
 
     Invocation_Status status = synch.remote_invocation (max_wait_time);
 
@@ -194,15 +188,12 @@ namespace TAO
           CORBA::COMPLETED_NO);
       }
 
-    r.transport ()->messaging_object ()->out_stream ().reset_byte_order (request_->_tao_byte_order ());
     TAO::DII_Deferred_Invocation synch (
         this->target_,
         r,
         op,
         this->rd_,
         this->request_);
-
-    r.transport ()->messaging_object ()->out_stream ().reset_byte_order (request_->_tao_byte_order ());
 
     Invocation_Status status = synch.remote_invocation (max_wait_time);
 

@@ -60,8 +60,7 @@ namespace TAO
   CORBA::Object_ptr
   ObjectReferenceTemplate::make_object (
       const char *,
-      const PortableInterceptor::ObjectId &
-      )
+      const PortableInterceptor::ObjectId &)
   {
     if (CORBA::is_nil (this->poa_.in ()))
       throw ::CORBA::BAD_INV_ORDER ();

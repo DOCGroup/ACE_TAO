@@ -30,10 +30,11 @@ Current_Test_Impl::self_test (void)
 void
 Current_Test_Impl::test_transport_current (void)
 {
-  if (TAO_debug_level > 2) {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) server - Testing access to Transport Current ...\n")));
-  }
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) server - Testing access to Transport Current ...\n")));
+    }
 
   CORBA::Object_var tcobject =
     orb_->resolve_initial_references ("TAO::Transport::Current");
@@ -62,10 +63,11 @@ Current_Test_Impl::test_transport_current (void)
                   (ACE_UINT64)rr));
     }
 
-  if (TAO_debug_level > 2) {
-    ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) server - Successfully accessed Transport Current\n")));
-  }
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) server - Successfully accessed Transport Current\n")));
+    }
 }
 
 void

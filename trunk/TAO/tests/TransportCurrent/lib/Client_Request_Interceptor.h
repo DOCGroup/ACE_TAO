@@ -78,7 +78,6 @@ namespace Test
 
     virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-
     virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
 
     virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
