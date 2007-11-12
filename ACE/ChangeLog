@@ -1,3 +1,9 @@
+Mon Nov 12 14:12:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disable Bug_2953_Regression for the moment on VxWorks, it hangs out
+          target
+
 Mon Nov 12 13:04:11 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/CDR_Base.inl:
