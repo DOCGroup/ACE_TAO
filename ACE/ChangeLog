@@ -1,3 +1,8 @@
+Mon Nov 12 14:16:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.{h,cpp,inl}:
+          Use bool for several flags
+
 Mon Nov 12 14:12:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
