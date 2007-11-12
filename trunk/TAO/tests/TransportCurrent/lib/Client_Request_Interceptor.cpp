@@ -10,7 +10,7 @@ ACE_RCSID (ForwardRequest,
 #include "Client_Request_Interceptor.h"
 #include "Client_ORBInitializer.h"
 #include "Client_ORBInitializer.h"
-#include "tao/TransportCurrent/TC_IIOPC.h"
+#include "tao/TransportCurrent/TCC.h"
 
 namespace Test
 {
