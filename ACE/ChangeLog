@@ -1,3 +1,17 @@
+Tue Nov 13 06:48:16 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_time.inl:
+
+          Changed the inline assembly implementation of gethrtime() for
+          the amd64/x86_64 architecture to recognize that the timestamp is
+          read into the %eax and %edx registers, and thus must be combined
+          into a 64 bit value. Thanks to Nathan Ernst <Nathan dot Ernst at
+          citadelgroup dot com > for reporting this bug.
+
+        * THANKS:
+
+          Add Nathan Ernst <Nathan dot Ernst at citadelgroup dot com>.
+
 Tue Nov 13 06:01:33 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_stdio.inl:
