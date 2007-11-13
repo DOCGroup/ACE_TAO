@@ -119,10 +119,10 @@ public:
   ///
 
   // = Traits and factory methods that create iterators.
-  typedef details::Generic_Sequence_Iterator<value_type, allocation_traits, element_traits> iterator;
-  typedef details::Const_Generic_Sequence_Iterator<value_type, allocation_traits, element_traits> const_iterator;
-  typedef details::Generic_Sequence_Reverse_Iterator<value_type, allocation_traits, element_traits> reverse_iterator;
-  typedef details::Const_Generic_Sequence_Reverse_Iterator<value_type, allocation_traits, element_traits> const_reverse_iterator;
+  typedef details::Generic_Sequence_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > iterator;
+  typedef details::Const_Generic_Sequence_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > const_iterator;
+  typedef details::Generic_Sequence_Reverse_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > reverse_iterator;
+  typedef details::Const_Generic_Sequence_Reverse_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > const_reverse_iterator;
 
   // Get an iterator that points to the beginning of the sequence.
   iterator begin (void)
@@ -177,6 +177,38 @@ public:
 private:
   implementation_type impl_;
 };
+
+/*
+// Generic_Sequence_Iterator template specializations for
+// Unbounded_Basic_String_Sequence. These are needed since
+// Unbounded_Basic_String_Sequence does some memory management with
+// the strings. Without these specialization we leak memory.
+
+/// Dereference operator returns a reference to the item contained
+/// at the current position. This dereference implies string
+/// memory management.
+// template<typename charT>
+   unbounded_basic_string_sequence<char>::element_type&
+     details::Generic_Sequence_Iterator<unbounded_basic_string_sequence<char> >::operator* (void)
+     {
+       // Access the underlying element in the sequence.
+       //return element_type (impl_[i], release());
+       return element_type (this->sequence_[this->pos_],
+                            this->sequence_.release());
+     }
+
+ /// Returns a const reference to the item contained at the current position
+   // template<typename charT>
+   unbounded_basic_string_sequence<char>::const_element_type&
+   details::Generic_Sequence_Iterator<unbounded_basic_string_sequence<char> >::operator* (void) const
+ {
+   // Access the underlying element in the sequence.
+   //return const_element_type (impl_[i], release());
+   return const_element_type (this->sequence_[this->pos_],
+                              this->sequence_.release ());
+ }
+*/
+
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
