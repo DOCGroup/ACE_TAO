@@ -1103,7 +1103,8 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
      (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__)) || \
-      defined (ACE_HAS_VSWPRINTF)
+      defined (ACE_HAS_VSWPRINTF) || \
+      defined (ACE_WIN32)
 
   int result;
 

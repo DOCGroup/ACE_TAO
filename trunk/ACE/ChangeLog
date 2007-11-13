@@ -1,3 +1,11 @@
+Tue Nov 13 06:01:33 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_stdio.inl:
+
+          Change of Thu Nov  8 04:02:21 UTC 2007 was missing ACE_WIN32
+          in conditional.  Thanks to Johnny Willemsen for pointing out
+          resulting scoreboard failures.
+
 Mon Nov 12 20:05:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
