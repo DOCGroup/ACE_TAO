@@ -7053,7 +7053,8 @@ ACE_CACHE_CHECK([if running on an Alpha],
        dnl We only define ACE_HAS_ALPHA_TIMER if we are running Linux
        dnl on an Alpha and are using GNU C++!
        if test "$GXX" = yes; then
-         AC_DEFINE([ACE_HAS_ALPHA_TIMER])
+         AC_DEFINE([ACE_HAS_ALPHA_TIMER], 1,
+		   [Define to 1 if system should use Alpha's cycle counter])
        fi
        ;;
    esac
@@ -7079,7 +7080,8 @@ ACE_CACHE_CHECK([if running on a Power PC],
      *)
        dnl Only define ACE_HAS_POWERPC_TIMER when using GNU C++!
        if test "$GXX" = yes; then
-         AC_DEFINE([ACE_HAS_POWERPC_TIMER])
+         AC_DEFINE([ACE_HAS_POWERPC_TIMER], 1,
+		   [Define to 1 if system should use PowerPC's cycle counter])
        fi
        ;;
    esac
@@ -7104,7 +7106,8 @@ dnl since gethrtime.cpp uses assembler code specific to that compiler.
     esac
   ],
   [
-   AC_DEFINE([ACE_HAS_PENTIUM])
+   AC_DEFINE([ACE_HAS_PENTIUM], 1,
+	     [Define to 1 if system is using Intel Pentium(tm) processor])
   ],)
 AM_CONDITIONAL([ACE_ON_PENTIUM], [test X$ace_cv_feature_pentium = Xyes])
 
