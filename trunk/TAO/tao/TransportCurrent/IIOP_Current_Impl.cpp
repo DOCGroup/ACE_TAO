@@ -20,7 +20,7 @@ namespace TAO
 
 
     /// Obtains the IIOP_Connection_Handler associated with the
-    /// Transport. Will throw NO_IMPLEMENT if the (selected) transport
+    /// Transport. Will throw NoContext if the (selected) transport
     /// () == 0, or if transport->connection_handler () == 0. Will
     /// throw NoContext, if no transport has been selected yet.
 
