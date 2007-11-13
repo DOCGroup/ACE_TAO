@@ -95,10 +95,10 @@ public:
   ///
 
   // = Traits and factory methods that create iterators.
-  typedef details::Generic_Sequence_Iterator<value_type, allocation_traits, element_traits> iterator;
-  typedef details::Const_Generic_Sequence_Iterator<value_type, allocation_traits, element_traits> const_iterator;
-  typedef details::Generic_Sequence_Reverse_Iterator<value_type, allocation_traits, element_traits> reverse_iterator;
-  typedef details::Const_Generic_Sequence_Reverse_Iterator<value_type, allocation_traits, element_traits> const_reverse_iterator;
+  typedef details::Generic_Sequence_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > iterator;
+  typedef details::Const_Generic_Sequence_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > const_iterator;
+  typedef details::Generic_Sequence_Reverse_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > reverse_iterator;
+  typedef details::Const_Generic_Sequence_Reverse_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > const_reverse_iterator;
 
   // Get an iterator that points to the beginning of the sequence.
   iterator begin (void)
