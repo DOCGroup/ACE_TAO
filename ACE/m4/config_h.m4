@@ -273,9 +273,6 @@ AH_TEMPLATE([ACE_HAS_ALLOCA],[Compiler/platform supports alloca().])
 
 AH_TEMPLATE([ACE_HAS_ALLOCA_H],[Compiler/platform has <alloca.h>])
 
-AH_TEMPLATE([ACE_HAS_ALPHA_TIMER],
-[CPU is an Alpha, with the rpcc instruction to read the tick timer.])
-
 AH_TEMPLATE([ACE_HAS_AUTOMATIC_INIT_FINI],
 [Compiler/platform correctly calls init()/fini() for shared libraries.])
 
@@ -498,8 +495,6 @@ AH_TEMPLATE([ACE_HAS_OPTIMIZED_MESSAGE_QUEUE],
 AH_TEMPLATE([ACE_HAS_OSF_TIMOD_H],
 [Platform supports the OSF TLI timod STREAMS module])
 
-AH_TEMPLATE([ACE_HAS_PENTIUM],[Platform is an Intel Pentium microprocessor.])
-
 AH_TEMPLATE([ACE_HAS_POLL],[Platform contains <poll.h>])
 
 AH_TEMPLATE([ACE_HAS_POSITION_INDEPENDENT_POINTERS],
@@ -531,9 +526,6 @@ AH_TEMPLATE([ACE_HAS_POSIX_TIME],
 AH_TEMPLATE([ACE_HAS_PROC_FS],
 [Platform supports the /proc file system and defines tid_t
    in <sys/procfs.h>])
-
-AH_TEMPLATE([ACE_HAS_POWERPC_TIMER],
-[Platform supports PowerPC time-base register.])
 
 AH_TEMPLATE([ACE_HAS_PRUSAGE_T],[Platform supports the prusage_t struct])
 
