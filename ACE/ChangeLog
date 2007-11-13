@@ -1,3 +1,9 @@
+Tue Nov 13 07:45:25 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_HAS_INTEL_ASSEMBLY feature test.
+
 Tue Nov 13 06:48:16 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_time.inl:

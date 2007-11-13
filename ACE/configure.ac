@@ -7108,6 +7108,22 @@ dnl since gethrtime.cpp uses assembler code specific to that compiler.
   ],)
 AM_CONDITIONAL([ACE_ON_PENTIUM], [test X$ace_cv_feature_pentium = Xyes])
 
+case "$host" in
+  i386-* | i486-* | i586-* | i686-* | x86_64-*)
+    if test "$GXX" = yes; then
+      ace_cv_has_intel_assembly=yes
+    else
+      ace_cv_has_intel_assembly=no
+    fi
+    ;;
+  *)
+    ace_cv_has_intel_assembly=no
+    ;;
+esac
+if test "$ace_cv_has_intel_assembly" != "no"; then
+  AC_DEFINE([ACE_HAS_INTEL_ASSEMBLY], 1,
+            [Define to 1 if the system supports x86/x86_64 inline assembly])
+fi
 
 dnl
 dnl SECTION 14: checks for aggregated features
