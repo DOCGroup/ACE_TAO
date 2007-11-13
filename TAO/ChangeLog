@@ -1,3 +1,11 @@
+Tue Nov 13 22:27:17 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/TransportCurrent/IIOP_Current_Impl.h:
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+
+        Updated comments to reflect the implementation changes in:
+        Mon Nov 12 08:54:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Mon Nov 12 17:54:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/LongUpcalls/run_test.pl:
