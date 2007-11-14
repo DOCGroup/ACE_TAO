@@ -122,11 +122,6 @@ dnl OSF/1 and Digital Unix specific configuration parameters
 AH_TEMPLATE([DEC_CXX],[])
 AH_TEMPLATE([DIGITAL_UNIX],[Configure for use on Digital Unix])
 
-dnl pSOS specific configuration parameters
-AH_TEMPLATE([ACE_PSOS],[Configure for use on pSoS])
-AH_TEMPLATE([ACE_PSOSIM],[])
-AH_TEMPLATE([ACE_PSOSTBD],[])
-
 dnl SCO specific configuration parameters
 AH_TEMPLATE([SCO],[])
 
