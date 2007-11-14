@@ -9,8 +9,6 @@ ACE_RCSID (ForwardRequest,
 #include "Current_TestC.h"
 #include "Client_Request_Interceptor.h"
 #include "Client_ORBInitializer.h"
-#include "Client_ORBInitializer.h"
-#include "tao/TransportCurrent/TCC.h"
 
 namespace Test
 {
@@ -67,16 +65,8 @@ namespace Test
   void
   Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   {
-    // Test TC, first invocation doesn't have a TC
-    try
-      {
-        test_transport_current ("send_request");
-      }
-    catch (const TAO::Transport::NoContext&)
-      {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("CRI    (%P|%t) Got no context\n")));
-        // ignore
-      }
+    // Test TC
+    test_transport_current ("send_request");
 
     CORBA::Boolean const response_expected =
       ri->response_expected ();
