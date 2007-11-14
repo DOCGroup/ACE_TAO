@@ -1,3 +1,16 @@
+Wed Nov 14 07:23:07 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/platform.m4:
+
+          Update autoheader templates for ACE_INT64_FORMAT_SPECIFIER and
+          ACE_UINT64_FORMAT_SPECIFIER to clarify that they're the printf
+          format specifiers for the ACE_INT64 and ACE_UINT64 types.
+
+          This can be an important distinction for platforms with
+          compilers that validate literal format strings (where passing
+          "long long" for "%ld", or "long" for "%lld" will result in an
+          warning/error even when both are 64 bit integers).
+
 Wed Nov 14 07:18:21 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/platform.m4:

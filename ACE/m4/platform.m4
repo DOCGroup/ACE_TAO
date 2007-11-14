@@ -365,9 +365,9 @@ AH_TEMPLATE([ACE_SIZE_T_FORMAT_SPECIFIER],
 AH_TEMPLATE([ACE_SSIZE_T_FORMAT_SPECIFIER],
 [Define to the *printf format specifier  (e.g. "%d") for ssize_t])dnl
 AH_TEMPLATE([ACE_INT64_FORMAT_SPECIFIER],
-[Define to the *printf format specifier (e.g. "%lld") for the 64 bit signed integer type])dnl
+[Define to the *printf format specifier (e.g. "%lld") for ACE_INT64])dnl
 AH_TEMPLATE([ACE_UINT64_FORMAT_SPECIFIER],
-[Define to the *printf format specifier (e.g. "%llu") for the 64 bit signed integer type])dnl
+[Define to the *printf format specifier (e.g. "%llu") for ACE_UINT64])dnl
 
 case "$host_os" in
 darwin*)
