@@ -1,3 +1,12 @@
+Wed Nov 14 18:52:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TransportCurrent/lib/Client_Request_Interceptor.cpp:
+          Don't try to catch NoContext, TC is broken at this moment after the change
+          of Mon Nov 12 08:54:21 UTC 2007. Will work on a revised change
+          which also should make the change to this test not needed. The
+          test will then fail on the scoreboard until the change is in
+          the repo.
+
 Wed Nov 14 12:42:08 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
