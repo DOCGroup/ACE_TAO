@@ -1,9 +1,16 @@
+Wed Nov 14 07:47:28 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+
+          Removed PTHREAD_STACK_MAX autoheader template as this feature
+          test macro is not used.
+
 Wed Nov 14 07:46:43 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
         * m4/platform.m4:
 
-          Remove autoheader templates and platform support for the DG/UX
+          Remove autoheader template and platform support for the DG/UX
           platforms.  Support was removed from ACE some time ago.
 
 Wed Nov 14 07:23:07 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
