@@ -1,3 +1,8 @@
+Wed Nov 14 16:16:49 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * ace/Service_Config.cpp:
+          Check the reactor instance before using it.
+
 Wed Nov 14 14:34:26 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
