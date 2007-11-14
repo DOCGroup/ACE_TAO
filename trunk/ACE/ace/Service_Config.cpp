@@ -263,8 +263,9 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
         {
           ACE_Sig_Set ss;
           ss.sig_add (ACE_Service_Config::signum_);
-          if (ACE_Reactor::instance ()->register_handler
-              (ss, ACE_Service_Config::signal_handler_) == -1)
+          if ((ACE_Reactor::instance () != 0) &&
+              (ACE_Reactor::instance ()->register_handler
+               (ss, ACE_Service_Config::signal_handler_) == -1))
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("can't register signal handler\n")));
         }
