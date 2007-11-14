@@ -91,9 +91,6 @@ dnl /* results from checks for system services */
 dnl AIX specific configuration parameters
 AH_TEMPLATE([AIX],[Configure for use on AIX])
 
-dnl DG/UX specific configuration parameters
-AH_TEMPLATE([ACE_DGUX],[])
-
 dnl FreeBSD specific configuration parameters
 dnl Nothing yet
 
