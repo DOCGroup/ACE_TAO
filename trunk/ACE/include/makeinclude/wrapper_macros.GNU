@@ -91,6 +91,9 @@
 #  wfmo             Build with wfmo support (Win32 only)
 #  winregistry      Build with windows registry support (Win32 only)
 #  winnt            Build WinNT-specific projects (Win32 only)
+#  link_groups      This indicates that statically linked executable library
+#                   names will be surrounded by -Wl,--start-group and
+#                   -Wl,--end-group for the GNU compiler only.
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -299,6 +302,7 @@ versioned_so ?= 1
 use_dep_libs ?= 1
 threads ?= 1
 symlinks ?= relative
+link_groups ?= 0
 
 SOVERSION ?=
 SONAME ?=
