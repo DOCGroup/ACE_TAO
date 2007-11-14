@@ -1,3 +1,21 @@
+Wed Nov 14 19:12:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          When link_groups is defined to 1 we group the LDLIBS within
+          -Wl,--start-group and -Wl,--end-group. This way the user can
+          manually enable this through the platform_macros.GNU file and
+          doesn't need to regenerate all makefiles. Also removed the
+          check for the compiler name, with VxWorks we also can use this
+          and there we have different compilers (ccppc, ccpentium, etc)
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Set link_groups to 0 by default, the user has to explicitly enable
+          it
+
+        * bin/MakeProjectCreator/docs/templates/gnu.txt:
+          Removed link_groups, that is now enabled through platform_macros.GNU,
+          not through MPC
+
 Wed Nov 14 16:16:49 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * ace/Service_Config.cpp:
