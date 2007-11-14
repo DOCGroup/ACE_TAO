@@ -34,6 +34,9 @@ ifeq (10.0,$(findstring 10.0,$(CXX_VERSION)))
   CFLAGS += -wd1684
   no_hidden_visibility ?= 1
 endif
+ifeq (10.1,$(findstring 10.1,$(CXX_VERSION)))
+  CFLAGS += -wd1684
+endif
 
 no_hidden_visibility ?= 1
 
