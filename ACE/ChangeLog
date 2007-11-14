@@ -1,3 +1,11 @@
+Wed Nov 14 14:34:26 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * m4/platform.m4:
+
+          Remove autoheader template and platform support for the pSOS
+          platform.  Support was removed from ACE some time ago.
+
 Wed Nov 14 11:00:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
