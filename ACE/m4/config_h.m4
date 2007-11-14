@@ -116,10 +116,6 @@ dnl Nothing yet */
 dnl LynxOS specific configuration parameters
 AH_TEMPLATE([__NO_INCLUDE_WARN__],[])
 
-dnl M88K specific configuration parameters
-AH_TEMPLATE([m88k],[])
-AH_TEMPLATE([__m88k__],[])
-
 dnl MVS specific configuration parameters
 dnl Nothing yet
 
