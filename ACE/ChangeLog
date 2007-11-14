@@ -1,3 +1,8 @@
+Wed Nov 14 11:00:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Added support for Intel C++ 10.1
+
 Wed Nov 14 07:47:28 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
