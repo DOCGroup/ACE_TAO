@@ -1,3 +1,9 @@
+Wed Nov 14 12:42:08 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Fixed 2 memory leaks that was happening because the value
+          returned by activate_server_i(...) was ignored.
+
 Tue Nov 13 22:27:17 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * tao/TransportCurrent/IIOP_Current_Impl.h:

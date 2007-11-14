@@ -459,7 +459,8 @@ ImR_Locator_i::activate_server (const char* server)
 
   // This is the version called by tao_imr to activate the server, manually
   // starting it if necessary.
-  activate_server_by_name (server, true);
+  CORBA::String_var cleanup =
+    activate_server_by_name (server, true);
 }
 
 char*
@@ -1217,7 +1218,8 @@ ImR_Locator_i::auto_start_servers (void)
           if (info->activation_mode == ImplementationRepository::AUTO_START
               && info->cmdline.length () > 0)
             {
-              this->activate_server_i (*info, true);
+              CORBA::String_var cleanup =
+                this->activate_server_i (*info, true);
             }
         }
       catch (const CORBA::Exception& ex)
