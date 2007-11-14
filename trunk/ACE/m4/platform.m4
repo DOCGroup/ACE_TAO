@@ -182,12 +182,6 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE([ACE_HAS_LYNXOS_SIGNALS])
     AC_DEFINE([ACE_TIMER_SKEW], [(1000 * 10)])
     ;;
-  *m88k*)
-    AC_DEFINE([m88k])
-    AC_DEFINE([__m88k__])
-    AC_DEFINE([IP_ADD_MEMBERSHIP], [0x13])
-    AC_DEFINE([IP_DROP_MEMBERSHIP], [0x14])
-    ;;
   *mvs*)
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_ALL_SOURCE"
     ;;

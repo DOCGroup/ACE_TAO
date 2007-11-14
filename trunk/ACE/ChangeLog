@@ -1,3 +1,12 @@
+Wed Nov 14 07:12:03 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * m4/platform.m4:
+
+          Remove autoheader templates and platform support for the "m88k"
+          platform. Support was remove from ACE and the GNUACE build some
+          time ago.
+
 Tue Nov 13 14:34:17 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
