@@ -10,6 +10,7 @@
 #include "ace/Task.h"
 #include "ace/ARGV.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Barrier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,6 +47,8 @@ private:
     CORBA::ORB_var orb_;
     ACE_TString ior_output_;
     bool use_name_svc_;
+    ACE_Barrier startup_barrier_;
+    ACE_TString mc_orb_name_;
   };
 
   bool run_;

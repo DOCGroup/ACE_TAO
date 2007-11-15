@@ -64,8 +64,9 @@ TAO_MonitorManager::fini (void)
   if (!CORBA::is_nil (this->task_.orb_.in ()))
     {
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
-      if (!CORBA::is_nil (this->task_.orb_.in ()))
+      if (!CORBA::is_nil (this->task_.orb_.in ())) {
         this->task_.orb_->shutdown (true);
+      }
     }
   this->task_.wait ();
   return 0;
@@ -74,14 +75,37 @@ TAO_MonitorManager::fini (void)
 int
 TAO_MonitorManager::run (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
-  if (!this->run_)
-    {
-      this->run_ = true;
-      return this->task_.activate ();
-    }
+  bool activate = false;
 
-  return 0;
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
+
+    // Work around for bug 3108. Need to create MC ORB in main thread
+    // so any libs are loaded in the parent thread.
+    // Initialize the ORB
+    int argc = task_.argv_.argc ();
+    task_.orb_ = CORBA::ORB_init (argc, task_.argv_.argv ()
+                                  , task_.mc_orb_name_.c_str());
+
+    if (!this->run_) {
+      this->run_ = true;
+      activate = true;
+    }
+  }
+
+  int status = 0;
+  if (activate) {
+    status = this->task_.activate ();
+    if (status == 0) {
+      //cj: Wait till the child thread has initialized completely
+      // It still leaves a tiny race window open, but hopefully not much.
+      // The race condition R1 is in ORBTask::svc
+
+      this->task_.startup_barrier_.wait ();
+    }
+  }
+
+  return status;
 }
 
 int
@@ -102,6 +126,8 @@ TAO_MonitorManager::shutdown (void)
 
 TAO_MonitorManager::ORBTask::ORBTask (void)
  : use_name_svc_ (true)
+   , startup_barrier_ (2) // synch the parent with the single child thread
+   , mc_orb_name_ ("TAO_MonitorAndControl")
 {
 }
 
@@ -110,25 +136,15 @@ TAO_MonitorManager::ORBTask::svc (void)
 {
   try
     {
+      if (CORBA::is_nil (this->orb_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) TAO_MonitorManager: Unable to "
+                           "initialize the ORB\n"),
+                          1);
+
       PortableServer::POA_var poa;
       {
-        static const char* monitor_name = "TAO_MonitorAndControl";
-
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
-        // Initialize the ORB
-        int argc = this->argv_.argc ();
-        char orbid[256];
-        ACE_OS::sprintf (orbid,
-                         "%s_%d",
-                         monitor_name,
-                         (size_t)ACE_OS::thr_self ());
-        this->orb_ = CORBA::ORB_init (argc, this->argv_.argv (), orbid);
-
-        if (CORBA::is_nil (this->orb_.in ()))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) TAO_MonitorManager: Unable to "
-                             "initialize the ORB\n"),
-                            1);
 
         CORBA::Object_var obj =
           this->orb_->resolve_initial_references ("RootPOA");
@@ -162,7 +178,7 @@ TAO_MonitorManager::ORBTask::svc (void)
                              "(%P|%t) TAO_MonitorManager: Unable to "
                              "resolve the IORTable\n"),
                             1);
-        iortable->bind(monitor_name, ior.in ());
+        iortable->bind(mc_orb_name_.c_str(), ior.in ());
 
         if (this->use_name_svc_)
           {
@@ -170,7 +186,7 @@ TAO_MonitorManager::ORBTask::svc (void)
             nc.init (this->orb_.in ());
             CosNaming::Name name (1);
             name.length (1);
-            name[0].id = CORBA::string_dup (monitor_name);
+            name[0].id = CORBA::string_dup (mc_orb_name_.c_str());
             nc->rebind (name, monitor.in ());
           }
 
@@ -191,11 +207,11 @@ TAO_MonitorManager::ORBTask::svc (void)
           }
       }
 
-      // Run the ORB event loop
-      // NOTE: There is a race condition here.  If
+      // R1: race condition (partially fixed):
       // TAO_MonitorManager::fini() is called directly after
       // TAO_MonitorManager::run(), the shutdown call on the ORB could
       // happen but the ORB::run() loop won't exit.
+      startup_barrier_.wait ();
       this->orb_->run ();
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
