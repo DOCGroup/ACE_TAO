@@ -30,12 +30,16 @@ int main(int,char*[])
 
   ::CORBA::StringSeq a;
 
+  // test equality operator
+  FAIL_RETURN_IF (!(a.begin () == a.begin ()));
+
+  // test non-equality operator
+  FAIL_RETURN_IF (a.end () != a.end ());
+
   // test for correct behaviour for empty sequence
 
-  ::CORBA::StringSeq::iterator a_it = a.begin ();
-
-  FAIL_RETURN_IF (a_it != a.end ());
-
+  FAIL_RETURN_IF (a.begin() != a.end ());
+  
   // setup of an example sequence
 
   const char * elem0_cstr = "elem0";
@@ -54,29 +58,80 @@ int main(int,char*[])
   a[2] = elem2;
   a[3] = elem3;
 
-  // test dereferencing
+  // test iterator copy constructor
+  ::CORBA::StringSeq::iterator a_it (a.begin ());
+  FAIL_RETURN_IF (a_it != a.begin ());
 
-  ::CORBA::StringSeq::iterator a_it2 = a.begin ();
-  
-  FAIL_RETURN_IF (ACE_OS::strcmp (*a_it2, elem0) != 0);
+  // test assignment operator
+  a_it = a.begin ();
+  FAIL_RETURN_IF (a_it != a.begin ());
+
+  // test non const dereferencing
+  char* value0 = *a_it;
+  FAIL_RETURN_IF (ACE_OS::strcmp (value0, elem0) != 0);
+
+  // test const dereferencing
+  const char* const value1 = *a_it;
+  FAIL_RETURN_IF (ACE_OS::strcmp (value1, elem0) != 0);
 
   // test increment operation
+  a_it++;
+  FAIL_RETURN_IF (a_it == a.begin());
+  FAIL_RETURN_IF (ACE_OS::strcmp (*a_it, elem1) != 0);
 
-  a_it2++;
+  // test < operator
+  FAIL_RETURN_IF (!(a.begin () < a_it));
+  FAIL_RETURN_IF (a_it < a.begin ());
 
-  FAIL_RETURN_IF (a_it2 == a.begin());
+  // test difference type
+  ::CORBA::StringSeq::iterator::difference_type a_diff =
+      a_it - a.begin ();
+  FAIL_RETURN_IF (a_diff != 1);
 
-  FAIL_RETURN_IF (ACE_OS::strcmp (*a_it2, elem1) != 0);
+  // test copy constructor 
+  ::CORBA::StringSeq::iterator a_it1 (a_it);
+  FAIL_RETURN_IF (a_it1 != a_it);
 
-  // test pre-increment operator
+  // test preincrement operator
+  ++a_it1;
+  FAIL_RETURN_IF ((a_it1 - a_it) != 1);
 
-  ::CORBA::StringSeq::iterator a_it3 = a.begin ();
-  ::CORBA::StringSeq::iterator a_it31 = a.begin ();
+  // test = and += operator
+  ::CORBA::StringSeq::iterator a_it2 = a_it += 3;
+  FAIL_RETURN_IF (a_it2 != a_it);
+  FAIL_RETURN_IF ((a_it - a_it1) != 1);
 
-  a_it3++;
-  ++a_it31;
+  // test + operator
+  a_it2 = a_it1 + 3;
+  FAIL_RETURN_IF ((a_it2 - a_it1) != 3);
 
-  FAIL_RETURN_IF (a_it3 != a_it31);
+  // test post-decrement operation
+  a_it = a.end ();
+  a_it--;
+  FAIL_RETURN_IF (a_it == a.end ());
+  FAIL_RETURN_IF ((a.end () - a_it) != 1);
+  FAIL_RETURN_IF (ACE_OS::strcmp (*a_it, elem3) != 0);
+
+  // test pre-decrement operator
+  a_it1 = a_it;
+  FAIL_RETURN_IF ((a_it - --a_it1) != 1);
+
+  // test -= operator
+  a_it -= 3;
+  FAIL_RETURN_IF ((a_it1 - a_it) != 1);
+
+  // test - operator
+  a_it2 = a_it1 - 2;
+  FAIL_RETURN_IF ((a_it1 - a_it2) != 2);
+
+  // test operator[] read
+  a_it = a.begin ();
+  FAIL_RETURN_IF (ACE_OS::strcmp (a_it[0],a[0]) != 0);
+  FAIL_RETURN_IF (ACE_OS::strcmp (a_it[1],a[1]) != 0);
+
+  // test operator[] write
+  a_it[2] = elem0;
+  FAIL_RETURN_IF (ACE_OS::strcmp (a[2],elem0_cstr) != 0);
 
   // test for loop behaviour
   ::CORBA::StringSeq b = a;
