@@ -99,7 +99,7 @@ int main(int,char*[])
   // test = and += operator
   ::CORBA::StringSeq::iterator a_it2 = a_it += 3;
   FAIL_RETURN_IF (a_it2 != a_it);
-  FAIL_RETURN_IF ((a_it - a_it1) != 1);
+  FAIL_RETURN_IF ((a_it - a_it1) != 2);
 
   // test + operator
   a_it2 = a_it1 + 3;
@@ -118,7 +118,7 @@ int main(int,char*[])
 
   // test -= operator
   a_it -= 3;
-  FAIL_RETURN_IF ((a_it1 - a_it) != 1);
+  FAIL_RETURN_IF ((a_it1 - a_it) != 2);
 
   // test - operator
   a_it2 = a_it1 - 2;
@@ -130,6 +130,7 @@ int main(int,char*[])
   FAIL_RETURN_IF (ACE_OS::strcmp (a_it[1],a[1]) != 0);
 
   // test operator[] write
+  // NOTE: This now changes the sequence a.
   a_it[2] = elem0;
   FAIL_RETURN_IF (ACE_OS::strcmp (a[2],elem0_cstr) != 0);
 
@@ -173,7 +174,7 @@ int main(int,char*[])
 								  "\n"));
 
   FAIL_RETURN_IF (
-     ostream.str ().compare ("elem0\nelem1\nelem2\nelem3\n") != 0);
+     ostream.str ().compare ("elem0\nelem1\nelem0\nelem3\n") != 0);
 
   return 0;
 }
