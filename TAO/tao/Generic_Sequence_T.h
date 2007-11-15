@@ -348,7 +348,7 @@ public:
   // Get an iterator that points to the beginning of the sequence.
   iterator begin (void)
   {
-    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::iterator (*this);
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::iterator (this);
   }
 
   // Get a const iterator that points to the beginning of the sequence.
@@ -361,7 +361,7 @@ public:
   iterator end (void)
   {
     // Specify being past the "real" end with a flag.
-    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::iterator (*this,
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::iterator (this,
        this->length_);
   }
 
@@ -369,7 +369,7 @@ public:
   const_iterator end (void) const
   {
     // Specify being past the "real" end with a flag.
-    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_iterator (*this,
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_iterator (this,
              this->length_);
   }
 
@@ -377,7 +377,7 @@ public:
   reverse_iterator rbegin (void)
   {
     // Here we need to be at the last element - not one past.
-    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (*this,
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (this,
                this->length_);
   }
 
@@ -385,7 +385,7 @@ public:
   const_reverse_iterator rbegin (void) const
   {
     // Here we need to be at the last element - not one past.
-    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_reverse_iterator (*this,
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_reverse_iterator (this,
                      this->length_);
   }
 
@@ -395,7 +395,7 @@ public:
   {
     // Here we need to be at one before the first element - not the first.
     // Specify being before the "real" beginning with a flag.
-    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (*this,
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (this,
                -1);
   }
 
@@ -405,7 +405,7 @@ public:
   {
     // Here we need to be at one before the first element - not the first.
     // Specify being before the "real" beginning with a flag.
-    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (*this,
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (this,
                -1);
   }
 
@@ -440,26 +440,55 @@ public:
   typedef CORBA::Long difference_type;
 
   /// Construct a Generic_Sequence_Iterator at position pos with past_end flag.
-  Generic_Sequence_Iterator (generic_sequence<value_type, allocation_traits, element_traits> &sequence, size_t pos = 0)
+  Generic_Sequence_Iterator (generic_sequence<value_type, 
+			                      allocation_traits, 
+			                      element_traits> *sequence, 
+			     size_t pos = 0)
     : sequence_ (sequence),
     pos_ (pos),
-    past_end_ (pos >= sequence.length_)
+    past_end_ (pos >= sequence->length_)
       {
       }
+
+  /// Copy constructor
+  Generic_Sequence_Iterator (Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
+    : sequence_ (rhs.sequence_),
+    pos_ (rhs.pos_),
+    past_end_ (rhs.pos_ >= static_cast<difference_type> (rhs.sequence_->length_))
+      {
+      }
+  
+  /// Assignment operator
+  Generic_Sequence_Iterator & operator= (
+          Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
+    {
+      Generic_Sequence_Iterator tmp(rhs);
+      swap (tmp);
+      return * this;
+    }
+
+  /// swaps all members  
+  void swap(Generic_Sequence_Iterator<SEQUENCE_T> & rhs) 
+    throw()
+    {
+      std::swap (sequence_, rhs.sequence_);
+      std::swap (pos_, rhs.pos_);
+      std::swap (past_end_, rhs.past_end_);
+    }
 
   /// Dereference operator returns a reference to the item contained
   /// at the current position
   value_type & operator* (void)
     {
       // Access the underlying element in the sequence.
-      return this->sequence_[this->pos_];
+      return (*(this->sequence_))[this->pos_];
     }
 
   /// Returns a const reference to the item contained at the current position
   const value_type & operator* (void) const
     {
       // Access the underlying element in the sequence.
-      return this->sequence_[this->pos_];
+      return *(this->sequence_)[this->pos_];
     }
 
   /// Preincrement operator
@@ -543,7 +572,7 @@ public:
   value_type & operator[] (difference_type n)
     {
       // Return the element at position n
-      return this->sequence_[n];
+      return (*(this->sequence_))[n];
     }
 
   /// Less than
@@ -557,7 +586,7 @@ public:
   bool operator== (const Generic_Sequence_Iterator<SEQUENCE_T> &rhs) const
   {
     // Compare all the data members for equality.
-    return &this->sequence_ == &rhs.sequence_
+    return this->sequence_ == rhs.sequence_
            && this->pos_ == rhs.pos_
            && this->past_end_ == rhs.past_end_;
   }
@@ -572,7 +601,7 @@ private:
   /// Check the length of the sequence to see if we're past the end.
   void check_position (void)
   {
-    if (this->pos_ >= static_cast<CORBA::Long> (this->sequence_.length_))
+    if (this->pos_ >= static_cast<CORBA::Long> (this->sequence_->length_))
       {
         this->past_end_ = true;
       }
@@ -586,7 +615,7 @@ private:
   }
 
   /// the array with which we are dealing
-  generic_sequence<value_type, allocation_traits, element_traits> &sequence_;
+  generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
@@ -640,19 +669,50 @@ public:
 
   /// Construct a Const_Generic_Sequence_Iterator at position pos.
   /// From the position passed in calculate the past_end_ flag.
-  Const_Generic_Sequence_Iterator (generic_sequence<value_type, allocation_traits, element_traits> &sequence, size_t pos = 0)
+  Const_Generic_Sequence_Iterator (generic_sequence<value_type, 
+				                    allocation_traits, 
+				                    element_traits> *sequence,
+				   size_t pos = 0)
     : sequence_ (sequence),
     pos_ (pos),
     past_end_ (pos >= sequence.length_)
       {
       }
 
+
+  /// Copy constructor
+  Const_Generic_Sequence_Iterator (
+		Const_Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
+    : sequence_ (rhs.sequence_),
+    pos_ (rhs.pos_),
+    past_end_ (rhs.pos_ >= rhs.sequence_->length_)
+      {
+      }
+  
+  /// Assignment operator
+  Const_Generic_Sequence_Iterator & operator= (
+                Const_Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
+    {
+      Const_Generic_Sequence_Iterator tmp(rhs);
+      swap (tmp);
+      return * this;
+    }
+
+  /// swaps all members  
+  void swap(Const_Generic_Sequence_Iterator<SEQUENCE_T> & rhs) 
+    throw()
+    {
+      std::swap (sequence_, rhs.sequence_);
+      std::swap (pos_, rhs.pos_);
+      std::swap (past_end_, rhs.past_end_);
+    }
+
   /// Dereference operator returns a reference to the item contained
   /// at the current position
   const value_type & operator* (void) const
     {
       // Access the underlying element in the sequence.
-      return this->sequence_[this->pos_];
+      return *(this->sequence_)[this->pos_];
     }
 
   /// Preincrement operator
@@ -736,7 +796,7 @@ public:
   const value_type & operator[] (difference_type n) const
     {
       // Return the element at position n
-      return this->sequence_[n];
+      return *(this->sequence_)[n];
     }
 
   /// Less than
@@ -750,7 +810,7 @@ public:
   bool operator== (const Const_Generic_Sequence_Iterator<SEQUENCE_T> &rhs) const
   {
     // Compare all the data members for equality.
-    return &this->sequence_ == &rhs.sequence_
+    return this->sequence_ == rhs.sequence_
            && this->pos_ == rhs.pos_
            && this->past_end_ == rhs.past_end_;
   }
@@ -765,7 +825,7 @@ private:
   /// Check the length of the sequence to see if we're past the end.
   void check_position (void)
   {
-    if (this->pos_ >= static_cast<CORBA::Long> (this->sequence_.length_))
+    if (this->pos_ >= static_cast<CORBA::Long> (this->sequence_->length_))
       {
         this->past_end_ = true;
       }
@@ -779,7 +839,7 @@ private:
   }
 
   /// the array we are dealing with
-  generic_sequence<value_type, allocation_traits, element_traits> &sequence_;
+  generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
@@ -827,26 +887,56 @@ public:
   typedef int difference_type;
 
   /// Construct a Generic_Sequence_Reverse_Iterator at position pos with before_start flag.
-  Generic_Sequence_Reverse_Iterator (generic_sequence<value_type, allocation_traits, element_traits> &sequence, size_t pos)
+  Generic_Sequence_Reverse_Iterator (generic_sequence<value_type, 
+				                      allocation_traits, 
+				                      element_traits> *sequence, 
+				     size_t pos)
     : sequence_ (sequence),
     pos_ (pos),
     before_start_ (pos < 0)
       {
       }
 
+  /// Copy constructor
+  Generic_Sequence_Reverse_Iterator (
+	Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+    : sequence_ (rhs.sequence_),
+    pos_ (rhs.pos_),
+    before_start_ (rhs.pos_ < 0)
+      {
+      }
+  
+  /// Assignment operator
+  Generic_Sequence_Reverse_Iterator & operator= (
+	Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+    {
+      Generic_Sequence_Reverse_Iterator tmp(rhs);
+      swap (tmp);
+      return * this;
+    }
+
+  /// swaps all members
+  void swap(Generic_Sequence_Reverse_Iterator<SEQUENCE_T> & rhs) 
+    throw()
+    {
+      std::swap (sequence_, rhs.sequence_);
+      std::swap (pos_, rhs.pos_);
+      std::swap (before_start_, rhs.before_start_);
+    }
+
   /// Dereference operator returns a reference to the item contained
   /// at the current position
   value_type & operator* (void)
     {
       // Access the underlying element in the sequence.
-      return this->sequence_[this->pos_];
+      return *(this->sequence_)[this->pos_];
     }
 
   /// Returns a const reference to the item contained at the current position
   const value_type& operator* (void) const
     {
       // Access the underlying element in the sequence.
-      return this->sequence_[this->pos_];
+      return *(this->sequence_)[this->pos_];
     }
 
   /// Preincrement operator
@@ -934,7 +1024,7 @@ public:
   value_type & operator[] (difference_type n)
     {
       // Return the element at position n
-      return this->sequence_[n];
+      return *(this->sequence_)[n];
     }
 
   /// Less than
@@ -949,7 +1039,7 @@ public:
   bool operator== (const Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &rhs) const
   {
     // Compare all the data members for equality.
-    return &this->sequence_ == &rhs.sequence_
+    return this->sequence_ == rhs.sequence_
            && this->pos_ == rhs.pos_
            && this->before_start_ == rhs.before_start_;
   }
@@ -978,7 +1068,7 @@ private:
   }
 
   /// The sequence with which we are dealing
-  generic_sequence<value_type, allocation_traits, element_traits> &sequence_;
+  generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
@@ -1030,19 +1120,49 @@ public:
   typedef int difference_type;
 
   /// Construct a Const_Generic_Sequence_Reverse_Iterator at position pos with before_start flag.
-  Const_Generic_Sequence_Reverse_Iterator (generic_sequence<value_type, allocation_traits, element_traits> &sequence, size_t pos)
+  Const_Generic_Sequence_Reverse_Iterator (generic_sequence<value_type, 
+					                    allocation_traits, 
+					                    element_traits> *sequence, 
+					   size_t pos)
     : sequence_ (sequence),
     pos_ (pos),
     before_start_ (pos < 0)
       {
       }
 
+  /// Copy constructor
+  Const_Generic_Sequence_Reverse_Iterator (
+	Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+    : sequence_ (rhs.sequence_),
+    pos_ (rhs.pos_),
+    before_start_ (rhs.pos_ < 0)
+      {
+      }
+  
+  /// Assignment operator
+  Const_Generic_Sequence_Reverse_Iterator & operator= (
+	Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+    {
+      Const_Generic_Sequence_Reverse_Iterator tmp(rhs);
+      swap (tmp);
+      return * this;
+    }
+
+  /// swaps all members
+  void swap(Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> & rhs) 
+    throw()
+    {
+      std::swap (sequence_, rhs.sequence_);
+      std::swap (pos_, rhs.pos_);
+      std::swap (before_start_, rhs.before_start_);
+    }
+
   /// Dereference operator returns a reference to the item contained
   /// at the current position
   const value_type& operator* (void) const
     {
       // Access the underlying element in the sequence.
-      return this->sequence_[this->pos_];
+      return (*this->sequence_)[this->pos_];
     }
 
   /// Preincrement operator
@@ -1130,7 +1250,7 @@ public:
   const value_type & operator[] (difference_type n) const
     {
       // Return the element at position n
-      return this->sequence_[n];
+      return *(this->sequence_)[n];
     }
 
   /// Less than
@@ -1145,7 +1265,7 @@ public:
   bool operator== (const Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &rhs) const
   {
     // Compare all the data members for equality.
-    return &this->sequence_ == &rhs.sequence_
+    return this->sequence_ == rhs.sequence_
            && this->pos_ == rhs.pos_
            && this->before_start_ == rhs.before_start_;
   }
@@ -1174,7 +1294,7 @@ private:
   }
 
   /// the array we are dealing with
-  generic_sequence<value_type, allocation_traits, element_traits> &sequence_;
+  generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
