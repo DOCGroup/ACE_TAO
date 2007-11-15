@@ -9,10 +9,40 @@ include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 ifeq ($(insure),0)
   CC  ?= gcc
   CXX ?= g++
+  CXX_FOR_VERSION_TEST ?= $(CXX)
+else
+  CXX_FOR_VERSION_TEST ?= g++
 endif
 
 # fix this
 pipes ?= 1
+
+ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
+  ifeq (7.10, $(findstring 7.10,$(LSB_RELEASE_RELEASE)))
+    no_hidden_visibility ?= 1
+  endif
+  ifeq (7.04, $(findstring 7.04,$(LSB_RELEASE_RELEASE)))
+    no_hidden_visibility ?= 1
+  endif
+endif
+
+CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
+ifeq (Red Hat 4.1.1-51,$(findstring Red Hat 4.1.1-51,$(CXX_FULL_VERSION)))
+  ifeq (FedoraCore, $(findstring FedoraCore,$(LSB_RELEASE_ID)))
+    ifeq (6, $(findstring 6,$(LSB_RELEASE_RELEASE)))
+      gcc_template_instantiation_visibility ?= 1
+    endif
+  endif
+endif
+ifeq (Red Hat 4.1.1-52,$(findstring Red Hat 4.1.1-52,$(CXX_FULL_VERSION)))
+  gcc_template_instantiation_visibility ?= 1
+endif
+ifeq (Red Hat 4.1.1-30,$(findstring Red Hat 4.1.1-30,$(CXX_FULL_VERSION)))
+  gcc_template_instantiation_visibility ?= 1
+endif
+ifeq (Red Hat 4.1.2-12,$(findstring Red Hat 4.1.2-12,$(CXX_FULL_VERSION)))
+  gcc_template_instantiation_visibility ?= 1
+endif
 
 CFLAGS  += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)

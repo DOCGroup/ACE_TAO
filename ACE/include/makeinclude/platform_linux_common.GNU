@@ -85,6 +85,9 @@ ifeq ($(nptl),1)
   CPPFLAGS += -DACE_HAS_LINUX_NPTL
 endif
 
+LSB_RELEASE_ID := $(shell lsb_release -i)
+LSB_RELEASE_RELEASE := $(shell lsb_release -r)
+
 ssl ?= 0
 ifeq ($(ssl),1)
   # Some Linux OpenSSL installations compile in Kerberos support.  Add
