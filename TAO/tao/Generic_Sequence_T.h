@@ -378,7 +378,7 @@ public:
   {
     // Here we need to be at the last element - not one past.
     return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (this,
-               this->length_);
+               this->length_ - 1);
   }
 
   // Get a const reverse iterator that points to the end of the sequence.
@@ -386,7 +386,7 @@ public:
   {
     // Here we need to be at the last element - not one past.
     return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_reverse_iterator (this,
-                     this->length_);
+                     this->length_ - 1);
   }
 
   // Get a reverse iterator that points to one before the
@@ -445,16 +445,14 @@ public:
 			                      element_traits> *sequence, 
 			     size_t pos = 0)
     : sequence_ (sequence),
-    pos_ (pos),
-    past_end_ (pos >= sequence->length_)
+    pos_ (pos)
       {
       }
 
   /// Copy constructor
   Generic_Sequence_Iterator (Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
-    pos_ (rhs.pos_),
-    past_end_ (rhs.pos_ >= static_cast<difference_type> (rhs.sequence_->length_))
+    pos_ (rhs.pos_)
       {
       }
   
@@ -472,8 +470,7 @@ public:
     throw()
     {
       std::swap (sequence_, rhs.sequence_);
-      std::swap (pos_, rhs.pos_);
-      std::swap (past_end_, rhs.past_end_);
+      std::swap (this->pos_, rhs.pos_);
     }
 
   /// Dereference operator returns a reference to the item contained
@@ -488,7 +485,7 @@ public:
   const value_type & operator* (void) const
     {
       // Access the underlying element in the sequence.
-      return *(this->sequence_)[this->pos_];
+      return (*(this->sequence_))[this->pos_];
     }
 
   /// Preincrement operator
@@ -497,7 +494,6 @@ public:
       // Increment the position.
       // We also need to check if we're now past the end.
       ++this->pos_;
-      this->check_position ();
       return *this;
     }
 
@@ -509,7 +505,6 @@ public:
       // Increment the position.
       // We also need to check if we're now past the end.
       ++this->pos_;
-      this->check_position ();
       return temp_iter;
     }
 
@@ -534,7 +529,6 @@ public:
     {
       // Move ahead n elements.
       this->pos_ += n;
-      this->check_position ();
       return *this;
     }
 
@@ -550,7 +544,6 @@ public:
     {
       // Move back n elements.
       this->pos_ -= n;
-      this->check_position ();
       return *this;
     }
 
@@ -572,7 +565,7 @@ public:
   value_type & operator[] (difference_type n)
     {
       // Return the element at position n
-      return (*(this->sequence_))[n];
+      return (*(this->sequence_))[this->pos_ + n];
     }
 
   /// Less than
@@ -587,8 +580,7 @@ public:
   {
     // Compare all the data members for equality.
     return this->sequence_ == rhs.sequence_
-           && this->pos_ == rhs.pos_
-           && this->past_end_ == rhs.past_end_;
+        && this->pos_ == rhs.pos_;
   }
 
   /// Nonequality operator
@@ -598,30 +590,11 @@ public:
   }
 
 private:
-  /// Check the length of the sequence to see if we're past the end.
-  void check_position (void)
-  {
-    if (this->pos_ >= static_cast<CORBA::Long> (this->sequence_->length_))
-      {
-        this->past_end_ = true;
-      }
-    else
-      {
-        // We add this here to allow iterators to
-        // "come back from the dead" (i.e., come back from
-        // being at an invalid/undefined position).
-        this->past_end_ = false;
-      }
-  }
-
   /// the array with which we are dealing
   generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
-
-  /// Designate if the iterator is past the end of the sequence.
-  mutable bool past_end_;
 };
 
 
@@ -674,8 +647,7 @@ public:
 				                    element_traits> *sequence,
 				   size_t pos = 0)
     : sequence_ (sequence),
-    pos_ (pos),
-    past_end_ (pos >= sequence.length_)
+    pos_ (pos)
       {
       }
 
@@ -684,8 +656,7 @@ public:
   Const_Generic_Sequence_Iterator (
 		Const_Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
-    pos_ (rhs.pos_),
-    past_end_ (rhs.pos_ >= rhs.sequence_->length_)
+    pos_ (rhs.pos_)
       {
       }
   
@@ -703,8 +674,7 @@ public:
     throw()
     {
       std::swap (sequence_, rhs.sequence_);
-      std::swap (pos_, rhs.pos_);
-      std::swap (past_end_, rhs.past_end_);
+      std::swap (this->pos_, rhs.pos_);
     }
 
   /// Dereference operator returns a reference to the item contained
@@ -712,7 +682,7 @@ public:
   const value_type & operator* (void) const
     {
       // Access the underlying element in the sequence.
-      return *(this->sequence_)[this->pos_];
+      return (*(this->sequence_))[this->pos_];
     }
 
   /// Preincrement operator
@@ -796,7 +766,7 @@ public:
   const value_type & operator[] (difference_type n) const
     {
       // Return the element at position n
-      return *(this->sequence_)[n];
+      return (*(this->sequence_))[this->pos_ + n];
     }
 
   /// Less than
@@ -811,8 +781,7 @@ public:
   {
     // Compare all the data members for equality.
     return this->sequence_ == rhs.sequence_
-           && this->pos_ == rhs.pos_
-           && this->past_end_ == rhs.past_end_;
+        && this->pos_ == rhs.pos_;
   }
 
   /// Nonequality operator
@@ -822,30 +791,11 @@ public:
   }
 
 private:
-  /// Check the length of the sequence to see if we're past the end.
-  void check_position (void)
-  {
-    if (this->pos_ >= static_cast<CORBA::Long> (this->sequence_->length_))
-      {
-        this->past_end_ = true;
-      }
-    else
-      {
-        // We add this here to allow iterators to
-        // "come back from the dead" (i.e., come back from
-        // being at an invalid/undefined position).
-        this->past_end_ = false;
-      }
-  }
-
   /// the array we are dealing with
   generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
-
-  /// Designate if the iterator is past the end of the sequence.
-  mutable bool past_end_;
 };
 
 /// Iterator addition with the difference_type being the first argument.
@@ -892,8 +842,7 @@ public:
 				                      element_traits> *sequence, 
 				     size_t pos)
     : sequence_ (sequence),
-    pos_ (pos),
-    before_start_ (pos < 0)
+    pos_ (pos)
       {
       }
 
@@ -901,8 +850,7 @@ public:
   Generic_Sequence_Reverse_Iterator (
 	Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
-    pos_ (rhs.pos_),
-    before_start_ (rhs.pos_ < 0)
+    pos_ (rhs.pos_)
       {
       }
   
@@ -920,8 +868,7 @@ public:
     throw()
     {
       std::swap (sequence_, rhs.sequence_);
-      std::swap (pos_, rhs.pos_);
-      std::swap (before_start_, rhs.before_start_);
+      std::swap (this->pos_, rhs.pos_);
     }
 
   /// Dereference operator returns a reference to the item contained
@@ -929,14 +876,14 @@ public:
   value_type & operator* (void)
     {
       // Access the underlying element in the sequence.
-      return *(this->sequence_)[this->pos_];
+      return (*(this->sequence_))[this->pos_];
     }
 
   /// Returns a const reference to the item contained at the current position
   const value_type& operator* (void) const
     {
       // Access the underlying element in the sequence.
-      return *(this->sequence_)[this->pos_];
+      return (*(this->sequence_))[this->pos_];
     }
 
   /// Preincrement operator
@@ -945,7 +892,6 @@ public:
       // Decrement the position for reverse iterators.
       // We also need to check if we're now before the start.
       --this->pos_;
-      this->check_position ();
       return *this;
     }
 
@@ -957,7 +903,6 @@ public:
       // Decrement the position for reverse iterators.
       // We also need to check if we're now past the end.
       --this->pos_;
-      this->check_position ();
       return temp_iter;
     }
 
@@ -984,7 +929,6 @@ public:
     {
       // Move back n elements for reverse iterators.
       this->pos_ -= n;
-      this->check_position ();
       return *this;
     }
 
@@ -1001,7 +945,6 @@ public:
     {
       // Move ahead n elements for reverse iterators.
       this->pos_ += n;
-      this->check_position ();
       return *this;
     }
 
@@ -1024,7 +967,7 @@ public:
   value_type & operator[] (difference_type n)
     {
       // Return the element at position n
-      return *(this->sequence_)[n];
+      return (*(this->sequence_))[this->pos_ - n];
     }
 
   /// Less than
@@ -1040,8 +983,7 @@ public:
   {
     // Compare all the data members for equality.
     return this->sequence_ == rhs.sequence_
-           && this->pos_ == rhs.pos_
-           && this->before_start_ == rhs.before_start_;
+           && this->pos_ == rhs.pos_;
   }
 
   /// Nonequality operator
@@ -1051,30 +993,11 @@ public:
   }
 
 private:
-  /// Check the length of the sequence to see if we're past the end.
-  void check_position (void)
-  {
-    if (this->pos_ < 0)
-      {
-        this->before_start_ = true;
-      }
-    else
-      {
-        // We add this here to allow iterators to
-        // "come back from the dead" (i.e., come back from
-        // being at an invalid/undefined position).
-        this->before_start_ = false;
-      }
-  }
-
   /// The sequence with which we are dealing
   generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
-
-  /// Designate if the iterator is before the start of the sequence.
-  mutable bool before_start_;
 };
 
 /// Iterator addition with the difference_type being the first argument.
@@ -1125,8 +1048,7 @@ public:
 					                    element_traits> *sequence, 
 					   size_t pos)
     : sequence_ (sequence),
-    pos_ (pos),
-    before_start_ (pos < 0)
+    pos_ (pos)
       {
       }
 
@@ -1134,8 +1056,7 @@ public:
   Const_Generic_Sequence_Reverse_Iterator (
 	Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
-    pos_ (rhs.pos_),
-    before_start_ (rhs.pos_ < 0)
+    pos_ (rhs.pos_)
       {
       }
   
@@ -1153,8 +1074,7 @@ public:
     throw()
     {
       std::swap (sequence_, rhs.sequence_);
-      std::swap (pos_, rhs.pos_);
-      std::swap (before_start_, rhs.before_start_);
+      std::swap (this->pos_, rhs.pos_);
     }
 
   /// Dereference operator returns a reference to the item contained
@@ -1250,7 +1170,7 @@ public:
   const value_type & operator[] (difference_type n) const
     {
       // Return the element at position n
-      return *(this->sequence_)[n];
+      return (*(this->sequence_))[this->pos_ - n];
     }
 
   /// Less than
@@ -1277,30 +1197,11 @@ public:
   }
 
 private:
-  /// Check the length of the sequence to see if we're past the end.
-  void check_position (void)
-  {
-    if (this->pos_ < 0)
-      {
-        this->before_start_ = true;
-      }
-    else
-      {
-        // We add this here to allow iterators to
-        // "come back from the dead" (i.e., come back from
-        // being at an invalid/undefined position).
-        this->before_start_ = false;
-      }
-  }
-
   /// the array we are dealing with
   generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
-
-  /// Designate if the iterator is past the end of the sequence.
-  mutable bool before_start_;
 };
 
 /// Iterator addition with the difference_type being the first argument.

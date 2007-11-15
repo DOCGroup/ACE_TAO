@@ -164,7 +164,7 @@ public:
   // of the sequence.
   reverse_iterator rend (void)
   {
-    return impl_.end ();
+    return impl_.rend ();
   }
 
   // Get a const reverse iterator that points to one before the
