@@ -1,3 +1,18 @@
+Thu Nov 15 19:44:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_common.GNU:
+          Retrieve distribution and release number using lsb_release
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Moved RedHat/FC checks to platform_linux.GNU, this only needs
+          to be done when using GCC on Linux, not when using GCC on
+          other platforms
+
+        * include/makeinclude/platform_linux.GNU:
+          With Ubuntu 7.04 and 7.10 we can't use visibilit, we get
+          unresolved externals when using it. We are now using
+          lsb_release to detect the distribution
+
 Thu Nov 15 08:41:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_limits.h:
