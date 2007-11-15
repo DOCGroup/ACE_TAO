@@ -41,7 +41,7 @@ my @testsNoBoost = qw(
 #               Unbounded_Octet
 #               Unbounded_Simple_Types
 #               Bounded_Simple_Types
-               Unbounded_String
+                StringSeq
 #               Bounded_String
               );
 
