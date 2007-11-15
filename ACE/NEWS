@@ -12,6 +12,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 
 . Added support for Sun Studio 12
 
+. Added support for Intel C++ 10.1
+
+. Fixed runtime problems with VxWorks 6.x in kernel mode
+
+. Added support for VxWorks 6.5 kernel mode
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6 and ACE-5.6.1
 ====================================================
 
