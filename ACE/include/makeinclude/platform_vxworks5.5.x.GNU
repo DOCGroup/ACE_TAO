@@ -93,6 +93,7 @@ endif
 
 ifeq ($(findstring PPC, $(CPU)), PPC)
   CCFLAGS += -mlongcall
+  CFLAGS += -mlongcall
 endif
 
 ifeq ($(shared_libs),1)

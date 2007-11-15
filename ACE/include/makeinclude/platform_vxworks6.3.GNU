@@ -109,6 +109,7 @@ endif
 ifeq ($(rtp),0)
   ifeq ($(findstring PPC, $(CPU)), PPC)
     CCFLAGS += -mlongcall
+    CFLAGS += -mlongcall
   endif
   PRJ_TYPE = vxApp
 endif
