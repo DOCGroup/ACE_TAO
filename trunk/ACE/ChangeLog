@@ -1,3 +1,13 @@
+Fri Nov 16 09:37:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_common.GNU:
+        * ace/config-linux-common.h:
+        * m4/platform.m4:
+          Changed ACE_HAS_LINUX_NPTL to ACE_LACKS_LINUX_NPTL. All recent
+          linux distributions do have NPTL, only older versions lack this
+          support. By changing HAS to LACKS it makes it easier to use ACE
+          with their own makefile scheme. This fixes bugzilla 3084
+
 Thu Nov 15 19:44:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_common.GNU:
