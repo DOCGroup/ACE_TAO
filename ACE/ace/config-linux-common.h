@@ -25,7 +25,7 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
-#if defined (ACE_HAS_LINUX_NPTL)
+#if !defined (ACE_LACKS_LINUX_NPTL)
 
 # include "ace/config-posix.h"
 
@@ -48,7 +48,7 @@
 #     define ACE_HAS_POSIX_SEM_TIMEOUT
 #   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && (((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600)) */
 # endif /* ACE_HAS_POSIX_SEM */
-#endif /* ACE_HAS_LINUX_NPTL */
+#endif /* !ACE_LACKS_LINUX_NPTL */
 
 // First the machine specific part
 
