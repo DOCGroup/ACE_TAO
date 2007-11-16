@@ -1,3 +1,9 @@
+Fri Nov 16 04:12:20 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Service_Configurator/Misc/main.cpp (ACE_TMAIN): Added a
+          space between "-f" and "svc.conf".  This fixes a bug.  Thanks
+          to Kun Niu <haoniukun at gmail dot com> for this fix.
+
 Fri Nov 16 09:37:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_common.GNU:
