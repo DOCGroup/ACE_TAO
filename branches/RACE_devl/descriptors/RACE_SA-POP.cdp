@@ -35,8 +35,8 @@
     <artifact>_643F26E1-75A9-4E55-B1C0-547F9C55B81D</artifact>
   </implementation>
 
-  <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component">
-    <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component</name>
+  <instance id="RACE_SA_POP.ComponentImplementations.RACE.RACE.DAnCE_OA_Component">
+    <name>RACE_SA_POP.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</name>
     <node>RACE_Node</node>
     <source/>
     <implementation>_C172F928-5E78-4A07-B779-7B0788E26A07</implementation>
@@ -53,8 +53,8 @@
     </configProperty>
   </instance>
 
-  <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component">
-    <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component</name>
+  <instance id="RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_Component">
+    <name>RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</name>
     <node>RACE_Node</node>
     <source/>
     <implementation>_906BBE3F-8014-40DE-A26D-E7753D38BBC7</implementation>
@@ -71,8 +71,8 @@
     </configProperty>
   </instance>
 
-  <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Data_Base_Component">
-    <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Data_Base_Component</name>
+  <instance id="RACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component">
+    <name>RACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component</name>
     <node>RACE_Node</node>
     <source/>
     <implementation>_C2184658-1565-47F6-BC7F-5680794D193B</implementation>
@@ -89,31 +89,63 @@
     </configProperty>
   </instance>
 
+  <instance id="RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_Component">
+    <name>RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_Component</name>
+    <node>RACE_Node</node>
+    <source/>
+    <implementation>_CD107C67-F5D0-4221-8409-9D11FECC5E5E</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SA_POP_Component.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <connection>
-    <name>DB_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Data_Base_Component</name>
+    <name>DB_adminRACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component</name>
     <internalEndpoint>
       <portName>DB</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component</instance>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>admin</portName>
       <kind>Facet</kind>
-      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Data_Base_Component</instance>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>OA_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component</name>
+    <name>OA_adminRACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</name>
     <internalEndpoint>
       <portName>OA</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component</instance>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>admin</portName>
       <kind>Facet</kind>
-      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component</instance>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>DB_queryRACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_ComponentRACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component</name>
+    <internalEndpoint>
+      <portName>DB</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>query</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component</instance>
     </internalEndpoint>
   </connection>
 

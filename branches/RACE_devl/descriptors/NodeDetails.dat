@@ -1,1 +1,2 @@
 RACE_Node      corbaloc:iiop:localhost:50000/NodeManager
+HelloNode      corbaloc:iiop:localhost:60000/NodeManager

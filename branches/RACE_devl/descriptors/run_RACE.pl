@@ -8,14 +8,18 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::Run_Test;
 
-$DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
+$DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
+$daemons_running = 0;
+$em_running = 0;
 $ns_running = 0;
+$daemons = 2;
+@ports = ( 50000, 60000 );
+@iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
 $status = 0;
 $dat_file = "NodeDetails.dat";
 $cdp_file = "RACE.cdp";
-
 $nsior = PerlACE::LocalFile ("ns.ior");
 
 unlink $nsior;
@@ -33,6 +37,60 @@ sub delete_ior_files {
     unlink PerlACE::LocalFile ("Sender.ior");
     unlink PerlACE::LocalFile ("DAM.ior");
     unlink PerlACE::LocalFile ("ns.ior");
+}
+
+sub kill_node_daemons {
+  for ($i = 0; $i < $daemons; ++$i) {
+    $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+  }
+}
+
+sub kill_open_processes {
+  if ($daemons_running == 1) {
+    kill_node_daemons ();
+  }
+
+  if ($em_running == 1) {
+    $EM->Kill ();
+    $EM->TimedWait (1);
+  }
+
+  if ($ns_running == 1) {
+    $NS->Kill ();
+    $NS->TimedWait (1);
+  }
+
+}
+
+
+
+sub run_node_daemons {
+  for ($i = 0; $i < $daemons; ++$i)
+  {
+      $iorfile = $iorfiles[$i];
+      $port = $ports[$i];
+
+      $iiop = "iiop://localhost:$port";
+      $node_app = "$CIAO_ROOT/bin/NodeApplication";
+
+      $d_cmd = "$CIAO_ROOT/bin/NodeManager";
+      $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -d 30";
+
+      $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
+      $result = $Daemons[$i]->Spawn ();
+      push(@processes, $Daemons[$i]);
+
+      if (PerlACE::waitforfile_timed ($iorfile,
+                          $PerlACE::wait_interval_for_process_creation) == -1) {
+          print STDERR
+            "ERROR: The ior file of node daemon $i could not be found\n";
+          for (; $i >= 0; --$i) {
+            $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
+          }
+          return -1;
+      }
+  }
+  return 0;
 }
 
 delete_ior_files ();
@@ -53,19 +111,23 @@ $NS->Spawn ();
      exit 1;
  }
 
+$ns_running = 1;
+
 # Set up NamingService environment
 $ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:40000/NameService";
 
-$ns_running = 1;
 
-$iiop = "iiop://localhost:50000";
-$node_app = "$CIAO_ROOT/bin/NodeApplication";
-$d_cmd = "$CIAO_ROOT/bin/NodeManager";
-$iorfile = "RACE.ior";
-$d_param = "-n -ORBEndpoint $iiop -s $node_app -o $iorfile -d 60";
-$space = new PerlACE::Process ($d_cmd, $d_param);
-$space->Spawn ();
+# Invoke node daemons.
+print "Invoking node daemons\n";
+$status = run_node_daemons ();
 
+if ($status != 0) {
+  print STDERR "ERROR: Unable to execute the node daemons\n";
+  kill_open_processes ();
+  exit 1;
+}
+
+$daemons_running = 1;
 
 # Invoke execution manager.
 print "Invoking execution manager\n";

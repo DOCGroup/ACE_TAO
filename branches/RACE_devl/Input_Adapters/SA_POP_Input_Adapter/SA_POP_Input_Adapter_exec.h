@@ -4,6 +4,7 @@
 #include "SA_POP_Input_Adapter_svnt.h"
 #include "SA_POP_Input_Adapter_exec_export.h"
 #include "tao/LocalObject.h"
+#include "Logger.h"
 
 namespace CIAO
 {
@@ -22,9 +23,9 @@ namespace CIAO
 
           virtual ~SA_POP_IA_Component_exec_i (void);
 
-          virtual ::CORBA::Boolean deploy_string (const char * uri);
+          virtual ::CORBA::Boolean deploy_plan (const char * uri);
 
-          virtual ::CORBA::Boolean redeploy_string (const char * uri);
+          virtual ::CORBA::Boolean redeploy_plan (const char * uri);
 
           virtual ::CIAO::RACE::SA_POP_IA::CCM_Admin_ptr
           get_admin ();
@@ -45,6 +46,9 @@ namespace CIAO
 
           protected:
           SA_POP_IA_Component_Context *context_;
+
+		private:
+			Logger logger_;
         };
 
         class SA_POP_INPUT_ADAPTER_EXEC_Export SA_POP_IA_Component_Home_exec_i

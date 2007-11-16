@@ -80,12 +80,12 @@ main (int argc, char *argv[])
       {
         if (redeploy)
           {
-            test->redeploy_string (filename);
+            test->redeploy_plan (filename);
           }
 
         else
           {
-            test->deploy_string (filename);
+            test->deploy_plan (filename);
           }
 
       }

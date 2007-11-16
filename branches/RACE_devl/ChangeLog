@@ -1,3 +1,41 @@
+Fri Nov 16 22:18:28 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
+        * Input_Adapters/SA_POP_Input_Adapter/tester.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+        * RACE.mwc:
+
+        Updated these files to use new logger.
+
+        * descriptors/NodeDetails.dat:
+        * descriptors/RACE.cdp:
+        * descriptors/run_RACE.pl:
+
+        Updated these files.
+
+        * descriptors/RACE_SA-POP.cdp:
+
+        Created a separate CDP for RACE+SA_POP.
+
+        * utils:
+        * utils/Logger.h:
+        * utils/Logger.cpp:
+        * utils/Logger_export.h:
+        * utils/RACE_utils.h:
+        * utils/RACE_utils.cpp:
+        * utils/RACE_utils.mpc:
+
+        Added the initial version of RACE logger.
+
 Wed Oct  3 06:17:20 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * descriptors/NodeDetails_Space1Demo.dat:
