@@ -153,8 +153,8 @@ dnl  */
     AC_DEFINE([ACE_TIMER_SKEW], [(1000 * 10)])
     dnl Does this box have NPTL?
     NPTL=`getconf GNU_LIBPTHREAD_VERSION | $AWK '{print [$][1]}' -`
-    if test "$NPTL" = NPTL; then
-      ACE_CPPFLAGS="$ACE_CPPFLAGS -DACE_HAS_LINUX_NPTL"
+    if test "$NPTL" != NPTL; then
+      ACE_CPPFLAGS="$ACE_CPPFLAGS -DACE_LACKS_LINUX_NPTL"
     fi
     ;;
   *lynxos*)
