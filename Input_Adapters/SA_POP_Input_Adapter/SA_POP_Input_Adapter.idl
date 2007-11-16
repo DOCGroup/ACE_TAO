@@ -16,9 +16,9 @@ module CIAO
     {
       interface Test
       {
-        boolean deploy_string (in string uri);
+        boolean deploy_plan (in string uri);
 
-        boolean redeploy_string (in string uri);
+        boolean redeploy_plan (in string uri);
 
       };
 
@@ -53,7 +53,6 @@ module CIAO
 
       };
 
-      //    component Interactive_Input_Adapter : Input_Adapter
       component SA_POP_IA_Component  supports Test
       {
         provides Admin admin;

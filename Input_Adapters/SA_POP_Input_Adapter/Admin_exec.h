@@ -4,6 +4,7 @@
 #include "SA_POP_Input_Adapter_svnt.h"
 #include "SA_POP_Input_Adapter_exec_export.h"
 #include "tao/LocalObject.h"
+#include "Logger.h"
 
 namespace CIAO
 {
@@ -18,7 +19,8 @@ namespace CIAO
             public virtual TAO_Local_RefCounted_Object
         {
           public:
-          Admin_exec_i (SA_POP_IA_Component_Context *context);
+          Admin_exec_i (SA_POP_IA_Component_Context *context,
+						Logger &logger);
 
           virtual ~Admin_exec_i (void);
 
@@ -52,6 +54,8 @@ namespace CIAO
 
           /// Object reference of the DAnCE output adapter admin object.
           DAnCE_OA::Admin_var OA_;
+
+		  Logger &logger_;
         };
       }
     }
