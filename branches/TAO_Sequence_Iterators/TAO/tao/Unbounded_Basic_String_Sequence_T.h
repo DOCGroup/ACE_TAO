@@ -193,8 +193,8 @@ private:
      {
        // Access the underlying element in the sequence.
        //return element_type (impl_[i], release());
-       return element_type (this->sequence_[this->pos_],
-                            this->sequence_.release());
+       return element_type ((*(this->sequence_))[this->pos_],
+                            this->sequence_->release());
      }
 
  /// Returns a const reference to the item contained at the current position
@@ -204,8 +204,8 @@ private:
  {
    // Access the underlying element in the sequence.
    //return const_element_type (impl_[i], release());
-   return const_element_type (this->sequence_[this->pos_],
-                              this->sequence_.release ());
+   return const_element_type ((*(this->sequence_))[this->pos_],
+                              this->sequence_->release ());
  }
 */
 
