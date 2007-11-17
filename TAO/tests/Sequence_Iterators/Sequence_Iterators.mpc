@@ -4,5 +4,6 @@
 project(*Unbounded_String) : taoexe {
   Source_Files {
     StringSeq.cpp
+    Bounded_String.cpp
   }
 }
