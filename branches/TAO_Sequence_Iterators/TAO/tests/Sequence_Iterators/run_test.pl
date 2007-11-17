@@ -42,7 +42,7 @@ my @testsNoBoost = qw(
 #               Unbounded_Simple_Types
 #               Bounded_Simple_Types
                 StringSeq
-#               Bounded_String
+                Bounded_String
               );
 
 my @testsToRun = qw();
