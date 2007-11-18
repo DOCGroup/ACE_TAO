@@ -1,3 +1,10 @@
+Sun Nov 18 06:25:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Fixed ACE_HAS_POSIX_SEM_TIMEOUT check, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this.
+          This fixes bugzilla 3153
+
 Fri Nov 16 04:12:20 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Service_Configurator/Misc/main.cpp (ACE_TMAIN): Added a
