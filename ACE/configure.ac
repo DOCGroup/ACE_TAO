@@ -4441,7 +4441,8 @@ main ()
           dnl action if cross-compiling
           ace_cv_sem_timedwait_works=yes
          ])
-       ],,)
+       ],
+        [AC_DEFINE([ACE_HAS_POSIX_SEM_TIMEOUT])],)
 fi
 
 
