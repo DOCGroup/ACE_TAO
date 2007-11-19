@@ -1,9 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Unbounded_String) : taoexe {
+project(StringSeq) : taoexe {
   Source_Files {
     StringSeq.cpp
+  }
+}
+
+project(Bounded_String) : taoexe {
+  Source_Files {
     Bounded_String.cpp
   }
 }

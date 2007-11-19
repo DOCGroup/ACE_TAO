@@ -427,8 +427,10 @@ private:
  * @brief Implements a random access iterator for generic sequence type classes.
  */
 template <typename SEQUENCE_T>
-class Generic_Sequence_Iterator 
+  class Generic_Sequence_Iterator
 {
+  friend class Const_Generic_Sequence_Iterator<SEQUENCE_T>;
+
 public:
   // = Necessary traits
   typedef std::random_access_iterator_tag iterator_category;
@@ -472,6 +474,12 @@ public:
       std::swap (sequence_, rhs.sequence_);
       std::swap (this->pos_, rhs.pos_);
     }
+
+  /// typecast operator to Const_Generic_Sequence_Iterator
+  operator Const_Generic_Sequence_Iterator<SEQUENCE_T> ()
+  {
+    return Const_Generic_Sequence_Iterator<SEQUENCE_T> (*this);
+  }
 
   /// Dereference operator returns a reference to the item contained
   /// at the current position
@@ -561,6 +569,14 @@ public:
       return this->pos_ - rhs.pos_;
     }
 
+  /// Difference
+  difference_type operator- (const Const_Generic_Sequence_Iterator<SEQUENCE_T> & rhs)
+    {
+      // I think order is important here (i.e., rhs before this).
+      return this->pos_ - rhs.pos_;
+    }
+
+
   /// Element operator/assignment
   value_type & operator[] (difference_type n)
     {
@@ -574,6 +590,14 @@ public:
       // Return if this iterator is less than the passed in iterator.
       return this->pos_ < rhs.pos_;
     }
+
+  /// Less than
+  bool operator< (const Const_Generic_Sequence_Iterator<SEQUENCE_T> & rhs)
+    {
+      // Return if this iterator is less than the passed in iterator.
+      return this->pos_ < rhs.pos_;
+    }
+
 
   /// Equality operator
   bool operator== (const Generic_Sequence_Iterator<SEQUENCE_T> &rhs) const
@@ -630,6 +654,8 @@ template<typename SEQUENCE_T>
 template <typename SEQUENCE_T>
 class Const_Generic_Sequence_Iterator 
 {
+  friend class Generic_Sequence_Iterator<SEQUENCE_T>;
+
 public:
   // = Necessary traits
   typedef std::random_access_iterator_tag iterator_category;
@@ -651,10 +677,21 @@ public:
       {
       }
 
+  virtual ~Const_Generic_Sequence_Iterator ()
+    {
+    }
 
   /// Copy constructor
   Const_Generic_Sequence_Iterator (
 		Const_Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
+    : sequence_ (rhs.sequence_),
+    pos_ (rhs.pos_)
+      {
+      }
+
+  /// Copy constructor initializing by a Generic_Sequence_Iterator
+  Const_Generic_Sequence_Iterator (
+		Generic_Sequence_Iterator<SEQUENCE_T> const & rhs)
     : sequence_ (rhs.sequence_),
     pos_ (rhs.pos_)
       {
@@ -686,13 +723,12 @@ public:
     }
 
   /// Preincrement operator
-  Const_Generic_Sequence_Iterator<SEQUENCE_T> &operator++ (void) const
+  const Const_Generic_Sequence_Iterator<SEQUENCE_T> &operator++ (void) const
     {
       // Increment the position.
       // We also need to check if we're now past the end.
       ++this->pos_;
-      this->check_position ();
-      return *this;
+      return * this;
     }
 
   /// Postincrement operator
@@ -703,15 +739,14 @@ public:
       // Increment the position.
       // We also need to check if we're now past the end.
       ++this->pos_;
-      this->check_position ();
       return temp_iter;
     }
 
   /// Predecrement operator
-  Const_Generic_Sequence_Iterator<SEQUENCE_T> &operator-- (void) const
+  const Const_Generic_Sequence_Iterator<SEQUENCE_T> &operator-- (void) const
     {
       --this->pos_;
-      return *this;
+      return * this;
     }
 
   /// Postdecrement operator
@@ -724,12 +759,11 @@ public:
     }
 
   /// Iterator addition
-  Const_Generic_Sequence_Iterator<SEQUENCE_T> &operator+= (difference_type n) const
+  const Const_Generic_Sequence_Iterator<SEQUENCE_T> &operator+= (difference_type n) const
     {
       // Move ahead n elements.
       this->pos_ += n;
-      this->check_position ();
-      return *this;
+      return * this;
     }
 
   /// Iterator addition
@@ -740,12 +774,11 @@ public:
     }
 
   /// Iterator subtraction
-  Const_Generic_Sequence_Iterator<SEQUENCE_T> &operator-= (difference_type n) const
+  const Const_Generic_Sequence_Iterator<SEQUENCE_T> &operator-= (difference_type n) const
     {
       // Move back n elements.
       this->pos_ -= n;
-      this->check_position ();
-      return *this;
+      return * this;
     }
 
   /// Iterator subtraction
@@ -770,7 +803,7 @@ public:
     }
 
   /// Less than
-  bool operator< (const Const_Generic_Sequence_Iterator<SEQUENCE_T> & rhs) const
+  virtual bool operator< (const Const_Generic_Sequence_Iterator<SEQUENCE_T> & rhs) const
     {
       // Return if this iterator is less than the passed in iterator.
       return this->pos_ < rhs.pos_;
@@ -826,6 +859,8 @@ template<typename SEQUENCE_T>
 template <typename SEQUENCE_T>
 class Generic_Sequence_Reverse_Iterator 
 {
+  friend class Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T>;
+
 public:
   // = Necessary traits
   typedef std::random_access_iterator_tag iterator_category;
@@ -963,6 +998,14 @@ public:
       return rhs.pos_ - this->pos_;
     }
 
+  /// Difference
+  difference_type operator- (const Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> & rhs)
+    {
+      // I think order is important here (i.e., rhs before this).
+      return rhs.pos_ - this->pos_;
+    }
+
+
   /// Element operator/assignment
   value_type & operator[] (difference_type n)
     {
@@ -978,6 +1021,15 @@ public:
       return this->pos_ > rhs.pos_;
     }
 
+  /// Less than
+  bool operator< (const Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> & rhs)
+    {
+      // Return if this iterator is less than the passed in iterator.
+      // For reverse iterators reverse the logic.
+      return this->pos_ > rhs.pos_;
+    }
+
+
   /// Equality operator
   bool operator== (const Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &rhs) const
   {
@@ -986,8 +1038,22 @@ public:
            && this->pos_ == rhs.pos_;
   }
 
+  /// Equality operator
+  bool operator== (const Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &rhs) const
+  {
+    // Compare all the data members for equality.
+    return this->sequence_ == rhs.sequence_
+           && this->pos_ == rhs.pos_;
+  }
+
   /// Nonequality operator
   bool operator!= (const Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &rhs) const
+  {
+    return !(*this == rhs);
+  }
+
+  /// Nonequality operator
+  bool operator!= (const Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &rhs) const
   {
     return !(*this == rhs);
   }
@@ -1032,6 +1098,8 @@ template<typename SEQUENCE_T>
 template <typename SEQUENCE_T>
 class Const_Generic_Sequence_Reverse_Iterator 
 {
+  friend class Generic_Sequence_Reverse_Iterator<SEQUENCE_T>;
+
 public:
   // = Necessary traits
   typedef std::random_access_iterator_tag iterator_category;
@@ -1059,6 +1127,14 @@ public:
     pos_ (rhs.pos_)
       {
       }
+
+  /// Copy constructor
+  Const_Generic_Sequence_Reverse_Iterator (
+	Generic_Sequence_Reverse_Iterator<SEQUENCE_T> const & rhs)
+    : sequence_ (rhs.sequence_),
+    pos_ (rhs.pos_)
+      {
+      }
   
   /// Assignment operator
   Const_Generic_Sequence_Reverse_Iterator & operator= (
@@ -1077,6 +1153,8 @@ public:
       std::swap (this->pos_, rhs.pos_);
     }
 
+  /// typecast operator to Generic_Sequence_Reverse_Iterator
+
   /// Dereference operator returns a reference to the item contained
   /// at the current position
   const value_type& operator* (void) const
@@ -1086,12 +1164,11 @@ public:
     }
 
   /// Preincrement operator
-  Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &operator++ (void) const
+  const Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &operator++ (void) const
     {
       // Decrement the position for reveres iterators.
       // We also need to check if we're now before the start.
       --this->pos_;
-      this->check_position ();
       return *this;
     }
 
@@ -1103,12 +1180,11 @@ public:
       // Decrement the position for reverse iterators.
       // We also need to check if we're now before the start.
       --this->pos_;
-      this->check_position ();
       return temp_iter;
     }
 
   /// Predecrement operator
-  Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &operator-- (void) const
+  const Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &operator-- (void) const
     {
       // Increment the position for reverse iterators.
       ++this->pos_;
@@ -1126,11 +1202,10 @@ public:
     }
 
   /// Iterator addition
-  Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &operator+= (difference_type n) const
+  const Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &operator+= (difference_type n) const
     {
       // Move back n elements for reverse iterators.
       this->pos_ -= n;
-      this->check_position ();
       return *this;
     }
 
@@ -1143,11 +1218,10 @@ public:
     }
 
   /// Iterator subtraction
-  Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &operator-= (difference_type n) const
+  const Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> &operator-= (difference_type n) const
     {
       // Move ahead n elements for reverse iterators.
       this->pos_ += n;
-      this->check_position ();
       return *this;
     }
 
@@ -1186,8 +1260,7 @@ public:
   {
     // Compare all the data members for equality.
     return this->sequence_ == rhs.sequence_
-           && this->pos_ == rhs.pos_
-           && this->before_start_ == rhs.before_start_;
+        && this->pos_ == rhs.pos_;
   }
 
   /// Nonequality operator

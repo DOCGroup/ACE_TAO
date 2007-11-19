@@ -124,14 +124,6 @@ int test_sequence ()
   a_it += 2;
   FAIL_RETURN_IF (ACE_OS::strcmp (a_it[0],a[2]) != 0);
 
-  // test operator[] write
-  // NOTE: This now changes the sequence a.
-  a_it[0] = CORBA::string_dup (elem0_cstr);
-  FAIL_RETURN_IF (ACE_OS::strcmp (a[2],elem0_cstr) != 0);
-
-  // reset content of sequence a
-  a[2] = CORBA::string_dup (elem2_cstr);
-
   // test for loop behaviour
   ::CORBA::StringSeq b = a;
   ITERATOR_T b_it = b.begin ();
@@ -154,7 +146,7 @@ int test_sequence ()
              test.begin ());
 
   FAIL_RETURN_IF (test.length () != a.length ());
-
+  
   ITERATOR_T copytest_iter = test.begin ();
   for (ITERATOR_T copya_iter = a.begin ();
        copya_iter != a.end ();
@@ -283,11 +275,13 @@ int test_sequence_reverse ()
 
   // test operator[] write
   // NOTE: This now changes the sequence a.
-  a_it[0] = CORBA::string_dup (elem0_cstr);
-  FAIL_RETURN_IF (ACE_OS::strcmp (a[1],elem0_cstr) != 0);
+  // this is not possible for const_iterators
+
+  // a_it[0] = CORBA::string_dup (elem0_cstr);
+  // FAIL_RETURN_IF (ACE_OS::strcmp (a[1],elem0_cstr) != 0);
 
   // reset content of sequence a
-  a[1] = CORBA::string_dup (elem1_cstr);
+  // a[1] = CORBA::string_dup (elem1_cstr);
 
   // test for loop behaviour
   ::CORBA::StringSeq b = a;
@@ -349,7 +343,7 @@ int main(int,char*[])
   status += test_sequence_reverse< ::CORBA::StringSeq::reverse_iterator> ();
 
   // test Const_Generic_Sequence_Reverse_Iterator
-  status += test_sequence_reverse< ::CORBA::StringSeq::reverse_iterator> ();
+  status += test_sequence_reverse< ::CORBA::StringSeq::const_reverse_iterator> ();
 
   return status;
 }
