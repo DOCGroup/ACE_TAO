@@ -1,3 +1,4 @@
+// $Id:$
 #include "SystemSnapshot.h"
 
 namespace CIAO

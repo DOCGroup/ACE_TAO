@@ -1,3 +1,4 @@
+// $Id:$
 #ifndef SYSTEMSNAPSHOT_H
 #define SYSTEMSNAPSHOT_H
 
