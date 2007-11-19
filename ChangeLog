@@ -1,3 +1,23 @@
+Mon Nov 19 21:51:41 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * TM_Proxy:
+        * TM_Proxy/ResourceManager.h:
+        * TM_Proxy/ResourceManager.cpp:
+        * TM_Proxy/SystemSnapshot.h:
+        * TM_Proxy/SystemSnapshot.cpp:
+        * TM_Proxy/TM_Proxy.cidl:
+        * TM_Proxy/TM_Proxy.idl:
+        * TM_Proxy/TM_Proxy.mpc:
+        * TM_Proxy/TM_Proxy_exec.h:
+        * TM_Proxy/TM_Proxy_exec.cpp:
+        * TM_Proxy/TM_Proxy_exec_export.h:
+        * TM_Proxy/TM_Proxy_stub_export.h:
+        * TM_Proxy/TM_Proxy_svnt_export.h:
+        * TM_Proxy/Utility.h:
+        * TM_Proxy/Utility.cpp:
+
+        Adding the initial implementation of the TM_Proxy component.
+
 Fri Nov 16 22:18:28 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:

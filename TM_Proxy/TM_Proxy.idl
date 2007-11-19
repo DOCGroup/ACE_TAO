@@ -1,0 +1,49 @@
+// $Id$
+
+/**
+ * @file TM_Proxy.idl
+ * @brief Interface definition of TM_Proxy component.
+ *
+ * @author Nishanth Shankaran <nshankar@nospam.com>
+ */
+
+#ifndef TM_PROXY_IDL
+#define TM_PROXY_IDL
+
+#include "ciao/Components.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    module TM_Proxy
+    {
+      interface SystemSnapshot
+      {};
+
+      interface Utility
+      {};
+
+      interface ResourceManager
+      {};
+
+      component TM_Proxy_Component
+      {
+        provides SystemSnapshot snapshot;
+
+        provides Utility utils;
+
+        provides ResourceManager manager;
+
+        attribute string TM_Name;
+      };
+
+      home TM_Proxy_Component_Home manages TM_Proxy_Component
+      {
+      };
+    };
+  };
+};
+
+
+#endif /* TM_PROXY_IDL */
