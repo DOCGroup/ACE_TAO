@@ -1,3 +1,16 @@
+Mon Nov 19 21:55:53 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * TM_Proxy/ResourceManager.h:
+        * TM_Proxy/ResourceManager.cpp:
+        * TM_Proxy/SystemSnapshot.h:
+        * TM_Proxy/SystemSnapshot.cpp:
+        * TM_Proxy/TM_Proxy_exec.h:
+        * TM_Proxy/TM_Proxy_exec.cpp:
+        * TM_Proxy/Utility.h:
+        * TM_Proxy/Utility.cpp:
+
+        Made cosmetic modifications.
+
 Mon Nov 19 21:51:41 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * TM_Proxy:
