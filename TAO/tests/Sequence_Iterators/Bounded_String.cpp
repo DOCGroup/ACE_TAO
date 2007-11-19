@@ -8,7 +8,7 @@
  * @author Friedhelm Wolf (fwolf@dre.vanderbilt.edu)
  */
 
-#include <tao/Unbounded_Basic_String_Sequence_T.h>
+#include <tao/Bounded_Basic_String_Sequence_T.h>
 #include <tao/CORBA_String.h>
 #include "ace/Log_Msg.h"
 
@@ -16,7 +16,7 @@
 #include <iterator>
 #include <sstream>
 
-typedef TAO::unbounded_basic_string_sequence<char> s_sequence;
+typedef TAO::bounded_basic_string_sequence<char, 4> s_sequence;
 
 #define FAIL_RETURN_IF(CONDITION) \
           ACE_DEBUG ((LM_INFO, ACE_TEXT ("in %N:%l\n"))); \
@@ -29,7 +29,7 @@ typedef TAO::unbounded_basic_string_sequence<char> s_sequence;
 template <typename ITERATOR_T>
 int test_sequence ()
 {
-  s_sequence a(4);
+  s_sequence a;
 
   // test equality operator
   FAIL_RETURN_IF (!(a.begin () == a.begin ()));
@@ -42,6 +42,7 @@ int test_sequence ()
   FAIL_RETURN_IF (a.begin() != a.end ());
   
   // setup of an example sequence
+  a.length (4);
 
   const char * elem0_cstr = "elem0";
   const char * elem1_cstr = "elem1";
@@ -129,11 +130,12 @@ int test_sequence ()
 
   // test operator[] write
   // NOTE: This now changes the sequence a.
-  a_it[0] = CORBA::string_dup (elem0_cstr);
-  FAIL_RETURN_IF (ACE_OS::strcmp (a[2],elem0_cstr) != 0);
+  // NOTE: This does not work for const_iterators
+  // a_it[0] = CORBA::string_dup (elem0_cstr);
+  // FAIL_RETURN_IF (ACE_OS::strcmp (a[2],elem0_cstr) != 0);
 
   // reset content of sequence a
-  a[2] = CORBA::string_dup (elem2_cstr);
+  //a[2] = CORBA::string_dup (elem2_cstr);
 
   // test for loop behaviour
   s_sequence b = a;
@@ -146,7 +148,8 @@ int test_sequence ()
       FAIL_RETURN_IF (ACE_OS::strcmp (*a_it, *b_it) != 0);
     }
 
-  s_sequence test(a.length ());
+  s_sequence test;
+  test.length (4);
 
   // Memory is leaked here from
   // TAO::details::string_traits_base<char>::default_initializer()
@@ -184,7 +187,7 @@ int test_sequence ()
 template <typename REVERSE_ITERATOR_T>
 int test_sequence_reverse ()
 {
-  s_sequence a(4);
+  s_sequence a;
 
   // test equality operator
   FAIL_RETURN_IF (!(a.begin () == a.begin ()));
@@ -197,6 +200,7 @@ int test_sequence_reverse ()
   FAIL_RETURN_IF (a.begin() != a.end ());
   
   // setup of an example sequence
+  a.length (4);
 
   const char * elem0_cstr = "elem0";
   const char * elem1_cstr = "elem1";
@@ -285,11 +289,12 @@ int test_sequence_reverse ()
 
   // test operator[] write
   // NOTE: This now changes the sequence a.
-  a_it[0] = CORBA::string_dup (elem0_cstr);
-  FAIL_RETURN_IF (ACE_OS::strcmp (a[1],elem0_cstr) != 0);
+  // this is not possible for const iterators
+  // a_it[0] = CORBA::string_dup (elem0_cstr);
+  // FAIL_RETURN_IF (ACE_OS::strcmp (a[1],elem0_cstr) != 0);
 
   // reset content of sequence a
-  a[1] = CORBA::string_dup (elem1_cstr);
+  //a[1] = CORBA::string_dup (elem1_cstr);
 
   // test for loop behaviour
   s_sequence b = a;
@@ -302,7 +307,8 @@ int test_sequence_reverse ()
       FAIL_RETURN_IF (ACE_OS::strcmp (*a_it, *b_it) != 0);
     }
 
-  s_sequence test (a.length ());
+  s_sequence test;
+  test.length (a.length ());
 
   // Memory is leaked here from
   // TAO::details::string_traits_base<char>::default_initializer()
@@ -341,6 +347,15 @@ int main(int,char*[])
 
   // test Generic_Sequence_Iterator
   status += test_sequence< s_sequence::iterator> ();
+
+  // test Const_Generic_Sequence_Iterator
+  status += test_sequence< s_sequence::const_iterator> ();
+
+  // test Generic_Sequence_Reverse_Iterator
+  status += test_sequence_reverse< s_sequence::reverse_iterator> ();
+
+  // test Const_Generic_Sequence_Reverse_Iterator
+  status += test_sequence_reverse< s_sequence::const_reverse_iterator> ();
 
   return status;
 }
