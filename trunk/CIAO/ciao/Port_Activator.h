@@ -81,6 +81,10 @@ namespace CIAO
   };
 }
 
+#if defined (__ACE_INLINE__)
+# include "Port_Activator.inl"
+#endif /* __ACE_INLINE__ */
+
 #include /**/ "ace/post.h"
 
 #endif /*CIAO_PORT_ACTIVATOR_H*/
