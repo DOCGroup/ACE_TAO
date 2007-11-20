@@ -35,6 +35,14 @@
     <artifact>_643F26E1-75A9-4E55-B1C0-547F9C55B81D</artifact>
   </implementation>
 
+  <implementation id="_DCB8F176-9B71-4F91-AA1D-D62EE352C4BF">
+    <name>RACE_SA_POP.ComponentImplementations.TM_Proxy_ComponentImplementation.TM_Proxy_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_D4BF8F02-1215-423C-8C7E-30A77F404238</artifact>
+    <artifact>_EC30A64A-F1F0-492A-B72E-6603EC849929</artifact>
+    <artifact>_D5A3684D-0446-47AE-9C52-C2DAFA133697</artifact>
+  </implementation>
+
   <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component">
     <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component</name>
     <node>RACE_Node</node>
@@ -84,6 +92,35 @@
         </type>
         <value>
           <string>Data_Base_Component.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.TM_Proxy_Component">
+    <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.TM_Proxy_Component</name>
+    <node>RACE_Node</node>
+    <source/>
+    <implementation>_DCB8F176-9B71-4F91-AA1D-D62EE352C4BF</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TM_Proxy_Component.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>TM_Name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CIAO_TM_Daemon</string>
         </value>
       </value>
     </configProperty>
@@ -284,6 +321,49 @@
         </type>
         <value>
           <string>create_CIAO_RACE_SA_POP_SA_POP_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_D4BF8F02-1215-423C-8C7E-30A77F404238">
+    <name>RACE_SA_POP.ImplementationArtifacts.TM_Proxy_ComponentArtifacts.TM_Proxy_Component_stub</name>
+    <source/>
+    <node/>
+    <location>TM_Proxy_Component_stub</location>
+  </artifact>
+
+  <artifact id="_EC30A64A-F1F0-492A-B72E-6603EC849929">
+    <name>RACE_SA_POP.ImplementationArtifacts.TM_Proxy_ComponentArtifacts.TM_Proxy_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>TM_Proxy_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_TM_Proxy_TM_Proxy_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_D5A3684D-0446-47AE-9C52-C2DAFA133697">
+    <name>RACE_SA_POP.ImplementationArtifacts.TM_Proxy_ComponentArtifacts.TM_Proxy_Component_exec</name>
+    <source/>
+    <node/>
+    <location>TM_Proxy_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_TM_Proxy_TM_Proxy_Component_Home_Impl</string>
         </value>
       </value>
     </execParameter>
