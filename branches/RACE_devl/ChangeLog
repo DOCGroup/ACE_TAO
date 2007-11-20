@@ -1,3 +1,16 @@
+Tue Nov 20 22:57:32 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * TM_Proxy/TM_Proxy.mpc:
+        * TM_Proxy/TM_Proxy_exec.h:
+        * TM_Proxy/TM_Proxy_exec.cpp:
+
+        Added support to contact the Naming Service and obtaining the
+        object reference of the TM_Daemon.
+
+        * descriptors/RACE.cdp:
+
+        Added the TM_Proxy component.
+
 Mon Nov 19 21:55:53 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * TM_Proxy/ResourceManager.h:

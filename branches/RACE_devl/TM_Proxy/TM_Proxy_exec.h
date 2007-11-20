@@ -1,11 +1,11 @@
-// $Id:$
+// $Id$
 #ifndef CIAO_TM_PROXY_EXEC_H
 #define CIAO_TM_PROXY_EXEC_H
 
 #include /**/ "ace/pre.h"
 
-#include "TM_ProxyEC.h"
-
+// #include "TM_ProxyEC.h"
+#include "TM_Proxy_svnt.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -15,6 +15,8 @@
 #include "Utility.h"
 #include "ResourceManager.h"
 #include "SystemSnapshot.h"
+#include "DAnCE/Deployment/Deployment_TargetManagerC.h"
+#include "Logger.h"
 
 namespace CIAO
 {
@@ -67,7 +69,15 @@ namespace CIAO
           virtual void ccm_remove ();
 
           private:
-          ::CIAO::RACE::TM_Proxy::CCM_TM_Proxy_Component_Context_var context_;
+          TM_Proxy_Component_Context *context_;
+
+          ::Deployment::TargetManager_var TM_Daemon_;
+
+          ::CORBA::String_var TM_Name_;
+
+          Logger logger_;
+
+
         };
 
         class TM_PROXY_EXEC_Export TM_Proxy_Component_Home_exec_i

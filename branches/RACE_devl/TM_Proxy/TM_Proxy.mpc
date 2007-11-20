@@ -1,46 +1,17 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl TM_Proxy"
+project(TM_Proxy_stub) : ciao_client_dnc, ciao_deployment_stub {
+  sharedname = TM_Proxy_Component_stub
+  dynamicflags   = TM_PROXY_STUB_BUILD_DLL
 
-project(TM_Proxy_idl_gen) : taoidldefaults, anytypecode {
-  avoids += ace_for_tao
-  custom_only = 1
-  idlflags += -Wb,stub_export_macro=TM_PROXY_STUB_Export \
+  idlflags -= -GT
+  idlflags += -St \
+              -Wb,stub_export_macro=TM_PROXY_STUB_Export \
               -Wb,stub_export_include=TM_Proxy_stub_export.h \
               -Wb,skel_export_macro=TM_PROXY_SVNT_Export \
               -Wb,skel_export_include=TM_Proxy_svnt_export.h
 
   IDL_Files {
     TM_Proxy.idl
-  }
-}
-
-project(TM_Proxy_cidl_gen) : ciaocidldefaults, taoidldefaults {
-  avoids += ace_for_tao
-  custom_only = 1
-  cidlflags += --svnt-export-macro TM_PROXY_SVNT_Export \
-               --svnt-export-include TM_Proxy_svnt_export.h
-  idlflags += -Wb,export_macro=TM_PROXY_EXEC_Export \
-              -Wb,export_include=TM_Proxy_exec_export.h \
-              -SS
-
-  CIDL_Files {
-    TM_Proxy.cidl
-  }
-
-  IDL_Files {
-    TM_ProxyE.idl
-  }
-}
-
-project(TM_Proxy_stub) : ciao_client_dnc {
-  avoids += ace_for_tao
-  after += TM_Proxy_idl_gen
-  libs  +=
-
-  sharedname = TM_Proxy_stub
-  dynamicflags   = TM_PROXY_STUB_BUILD_DLL
-
-  IDL_Files {
   }
 
   Source_Files {
@@ -57,11 +28,52 @@ project(TM_Proxy_stub) : ciao_client_dnc {
   }
 }
 
+project(TM_Proxy_svnt) : ciao_servant_dnc {
+  after      += TM_Proxy_stub
+  sharedname  = TM_Proxy_Component_svnt
+  libs       += TM_Proxy_Component_stub
+
+  dynamicflags = TM_PROXY_SVNT_BUILD_DLL
+  idlflags -= -GT
+  idlflags += -St -SS \
+              -Wb,export_macro=TM_PROXY_SVNT_Export \
+              -Wb,export_include=TM_Proxy_svnt_export.h
+
+
+  CIDL_Files {
+    TM_Proxy.cidl
+  }
+
+  IDL_Files {
+    TM_ProxyE.idl
+  }
+
+  Source_Files {
+    TM_ProxyEC.cpp
+    TM_ProxyS.cpp
+    TM_Proxy_svnt.cpp
+  }
+
+  Header_Files {
+    TM_ProxyEC.h
+    TM_ProxyS.h
+    TM_Proxy_svnt.h
+    TM_Proxy_svnt_export.h
+  }
+
+  Inline_Files {
+    TM_ProxyEC.inl
+    TM_ProxyS.inl
+  }
+}
+
 project(TM_Proxy_exec) : ciao_component_dnc {
-  avoids += ace_for_tao
-  after   += TM_Proxy_cidl_gen TM_Proxy_stub
-  sharedname = TM_Proxy_exec
-  libs += TM_Proxy_stub
+  after   +=  TM_Proxy_svnt
+  sharedname = TM_Proxy_Component_exec
+  libs += TM_Proxy_Component_stub \
+     	  RACE_utils \
+          TM_Proxy_Component_svnt
+ includes += $(CIAO_ROOT)/RACE/utils
 
   dynamicflags   = TM_PROXY_EXEC_BUILD_DLL
 
@@ -69,7 +81,6 @@ project(TM_Proxy_exec) : ciao_component_dnc {
   }
 
   Source_Files {
-    TM_ProxyEC.cpp
     TM_Proxy_exec.cpp
     Utility.cpp
     SystemSnapshot.cpp
@@ -77,47 +88,10 @@ project(TM_Proxy_exec) : ciao_component_dnc {
   }
 
   Header_Files {
-    TM_ProxyEC.h
     TM_Proxy_exec.h
     TM_Proxy_exec_export.h
     Utility.h
     SystemSnapshot.h
     ResourceManager.h
-  }
-
-  Inline_Files {
-    TM_ProxyEC.inl
-  }
-}
-
-
-project(TM_Proxy_svnt) : ciao_servant_dnc {
-  avoids += ace_for_tao
-  after      +=  TM_Proxy_exec
-  sharedname  = TM_Proxy_svnt
-  libs       += TM_Proxy_exec \
-                TM_Proxy_stub
-
-  dynamicflags = TM_PROXY_SVNT_BUILD_DLL
-
-  CIDL_Files {
-  }
-
-  IDL_Files {
-  }
-
-  Source_Files {
-    TM_ProxyS.cpp
-    TM_Proxy_svnt.cpp
-  }
-
-  Header_Files {
-    TM_ProxyS.h
-    TM_Proxy_svnt.h
-    TM_Proxy_svnt_export.h
-  }
-
-  Inline_Files {
-    TM_ProxyS.inl
   }
 }
