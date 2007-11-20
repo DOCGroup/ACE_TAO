@@ -316,7 +316,7 @@ Mon Oct 22 18:54:03 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           - Modified *_exec.{h, cpp} files and MPC files to reverse
             the exec->svnt dependency. Also moved generated
-            <IDL file>EC.{h, inl, cpp} files from svnt buidl to
+            <IDL file>EC.{h, inl, cpp} files from svnt build to
             exec build.
 
           - Added file names to MPC projects so that all build files
