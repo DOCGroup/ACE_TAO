@@ -1,3 +1,8 @@
+Wed Nov 21 16:14:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_utsname.cpp (name):
+          Extended VxWorks implementation
+
 Wed Nov 21 16:06:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
