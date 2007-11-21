@@ -12,7 +12,8 @@
 //     This is a simple test of the ACE_Vector class and its iterators.
 //
 // = AUTHOR
-//    Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com>
+//    Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> and
+//    Karl-Heinz Wind <wind@itq.de>
 //
 // ============================================================================
 
@@ -36,6 +37,9 @@ typedef ACE_Vector<DATA>::Iterator ITERATOR;
 const size_t TOP = 100;
 const size_t LEFT = 10;
 const size_t RESIZE = 20;
+
+const size_t FILLER1 = 1;
+const size_t FILLER2 = 2;
 
 int run_main (int, ACE_TCHAR *[])
 {
@@ -107,8 +111,8 @@ int run_main (int, ACE_TCHAR *[])
           ACE_ASSERT (vector[i] == 0);
         }
       ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("vector[%d]:%d\n"),
-              i, vector[i]));
+                  ACE_TEXT ("vector[%d]:%d\n"),
+                  i, vector[i]));
     }
 
   vector.clear ();
@@ -116,6 +120,37 @@ int run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Size: %d\n"),
               vector.size ()));
+
+  // test resize (shrink and enlarge with buffer realloc)
+  VECTOR vector2;
+  
+  // should be around 32
+  size_t boundary = vector2.capacity ();
+  
+  // we fill everything up with 1
+  // 1, 1, 1, 1, 1, 1, 1, 1,
+  // 1, 1, 1, 1, 1, 1, 1, 1,
+  // 1, 1, 1, 1, 1, 1, 1, 1,
+  // 1, 1, 1, 1, 1, 1, 1, 1,
+  for (i = 0; i < boundary; ++i)
+    vector2.push_back (FILLER1);
+  
+  // we throw almost everything away.
+  vector2.resize (1, 0);
+
+  // we fill up with another pattern
+  // 1, 2, 2, 2, 2, 2, 2, 2,
+  // 2, 2, 2, 2, 2, 2, 2, 2,
+  // 2, 2, 2, 2, 2, 2, 2, 2,
+  // 2, 2, 2, 2, 2, 2, 2, 2,
+  // 2,
+  for (i = 0; i < boundary; ++i)
+    vector2.push_back (FILLER2);  
+
+  // now we check the result
+  ACE_ASSERT (vector2[0] == FILLER1);
+  for (i = 0; i < boundary; ++i)
+    ACE_ASSERT (vector2[i+1] == FILLER2);
 
   VECTOR v1;
   VECTOR v2;
@@ -140,4 +175,5 @@ int run_main (int, ACE_TCHAR *[])
 
   return 0;
 }
+
 

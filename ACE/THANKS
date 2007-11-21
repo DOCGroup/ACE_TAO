@@ -70,6 +70,7 @@ Emre Turkay <turkaye at dre dot vanderbilt dot edu>
 Nanbor Wang <nanbor at cs dot wustl dot edu>
 Seth Widoff <sbw1 at cs dot wustl dot edu>
 Jules White <jules at dre dot vanderbilt dot edu>
+Friedhelm Wolf <fwolf at dre dot vanderbilt dot edu>
 Torben Worm <tworm at cs dot wustl dot edu>
 Ming Xiong <xiongm at isis dot vanderbilt dot edu>
 
@@ -2007,7 +2008,6 @@ Steven T. Hatton <hattons at globalsymmetry dot com>
 Yevgen Galchenko <yevgeng at softcomputer dot com>
 Timothy Wayne Gomez <gomezt at saic dot com>
 Ventimiglia Chere <Ventimiglia_Chere at emc dot com>
-Friedhelm Wolf <fwolf at dre dot vanderbilt dot edu>
 Frederick Heckel <fwph at cse dot wustl dot edu>
 Ian Zagorskih <ianzag at megasignal dot com>
 Olivier Guérin <guerin35 at hotmail dot com>
@@ -2228,6 +2228,7 @@ Alex Solan <alex dot solan at gmail dot com>
 Venkat Sidhabathuni <venkats at idengines dot com>
 Nathan Ernst <Nathan dot Ernst at citadelgroup dot com> 
 Kun Niu <haoniukun at gmail dot com>
+Karl-Heinz Wind <wind at itq dot de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

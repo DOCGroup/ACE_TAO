@@ -9,10 +9,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
 ACE_Vector<T, DEFAULT_SIZE>::ACE_Vector (const size_t init_size,
                                          ACE_Allocator* alloc)
-  : ACE_Array<T> (init_size == 0 ? DEFAULT_SIZE : init_size, alloc)
+  : ACE_Array<T> (init_size == 0 ? DEFAULT_SIZE : init_size, alloc),
+    length_ (0),
+    curr_max_size_ (max_size ());
 {
-  length_ = 0;
-  curr_max_size_ = this->max_size ();
 }
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
@@ -42,7 +42,10 @@ template <class T, size_t DEFAULT_SIZE> ACE_INLINE
 void ACE_Vector<T, DEFAULT_SIZE>::pop_back (void)
 {
   if (length_ > 0)
-    --length_;
+    {
+      --length_;
+      ACE_Array<T>::size (length_);
+    }
 }
 
 // Compare this vector with <s> for inequality.
@@ -60,7 +63,6 @@ ACE_Vector<T, DEFAULT_SIZE>::swap (ACE_Vector &rhs)
   std::swap (this->length_, rhs.length_);
   std::swap (this->curr_max_size_, rhs.curr_max_size_);
 }
-
 
 // ****************************************************************
 
@@ -89,10 +91,8 @@ ACE_Vector_Iterator<T, DEFAULT_SIZE>::advance (void)
       return 1;
     }
   else
-    {
-      // Already finished iterating.
-      return 0;
-    }
+    // Already finished iterating.
+    return 0;
 }
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE int
@@ -104,3 +104,4 @@ ACE_Vector_Iterator<T, DEFAULT_SIZE>::done (void) const
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
