@@ -1,3 +1,12 @@
+Wed Nov 21 19:37:29 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Reactor/Ntalker/ntalker.cpp (ACE_TMAIN): 
+        
+          Use ACE_SOCK_Dgram_Mcast::leave() instead of deprecated
+          ...::unsubscribe() to leave the multicast group.  Thanks to
+          Stefan Naewe <stefan dot naewe at atlas-elektronik dot com> for
+          reporting this.
+
 Wed Nov 21 16:14:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_utsname.cpp (name):

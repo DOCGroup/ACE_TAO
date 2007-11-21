@@ -46,6 +46,9 @@ public:
 private:
   ACE_SOCK_Dgram_Mcast mcast_;
   // Multicast wrapper.
+
+  ACE_INET_Addr sockmc_addr_;
+  // Address to multicast to.
 };
 
 ACE_HANDLE
@@ -134,29 +137,28 @@ Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
 
 Handler::~Handler (void)
 {
-  if (this->mcast_.unsubscribe () == -1)
+  if (this->mcast_.leave (sockmc_addr_) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
-                "unsubscribe fails"));
+                "leave fails"));
 }
 
 Handler::Handler (u_short udp_port,
 		  const char *ip_addr,
-        const ACE_TCHAR *a_interface,
+                  const ACE_TCHAR *a_interface,
 		  ACE_Reactor &reactor)
 {
   // Create multicast address to listen on.
 
-  ACE_INET_Addr sockmc_addr (udp_port, ip_addr);
+  this->sockmc_addr_ = ACE_INET_Addr (udp_port, ip_addr);
 
   // subscribe to multicast group.
 
-  if (this->mcast_.subscribe (sockmc_addr, 1, a_interface) == -1)
-  {
-  	  ACE_ERROR ((LM_ERROR,
+  if (this->mcast_.subscribe (sockmc_addr_, 1, a_interface) == -1)
+    ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "can't subscribe to multicast group"));
-  }
+
   // Disable loopbacks.
   // if (this->mcast_.set_option (IP_MULTICAST_LOOP, 0) == -1 )
   //   ACE_OS::perror (" can't disable loopbacks " ), ACE_OS::exit (1);
@@ -170,11 +172,11 @@ Handler::Handler (u_short udp_port,
                 "can't register with Reactor\n"));
   // Register the STDIN handler.
   else if (ACE_Event_Handler::register_stdin_handler (this,
-                                        		ACE_Reactor::instance (),
-                                        		ACE_Thread_Manager::instance ()) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "register_stdin_handler"));
+                                                      ACE_Reactor::instance (),
+                                                      ACE_Thread_Manager::instance ()) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "register_stdin_handler"));
 }
 
 static void
