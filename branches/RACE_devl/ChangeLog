@@ -1,3 +1,42 @@
+Wed Nov 21 20:00:29 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Conductor:
+        * Conductor/Admin_exec.h:
+        * Conductor/Admin_exec.cpp:
+        * Conductor/Conductor.cidl:
+        * Conductor/Conductor.idl:
+        * Conductor/Conductor.mpc:
+        * Conductor/Conductor_exec.h:
+        * Conductor/Conductor_exec.cpp:
+        * Conductor/Conductor_exec_export.h:
+        * Conductor/Conductor_stub_export.h:
+        * Conductor/Conductor_svnt_export.h:
+
+        Added the initial implementation of the Conductor.
+
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
+
+        Modified the SA_POP_IA to use the Conductor.
+
+        * Tester:
+        * Tester/tester.cpp:
+        * Tester/tester.mpc:
+
+        Added a tester client.
+
+        * descriptors/RACE.cdp:
+
+        Updated this file to include the Conductor.
+
+        * Input_Adapters/SA_POP_Input_Adapter/tester.cpp:
+
+          Removed this file.
+
 Tue Nov 20 22:57:32 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * TM_Proxy/TM_Proxy.mpc:

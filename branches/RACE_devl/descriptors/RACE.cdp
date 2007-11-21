@@ -43,6 +43,14 @@
     <artifact>_D5A3684D-0446-47AE-9C52-C2DAFA133697</artifact>
   </implementation>
 
+  <implementation id="_94517386-A8E0-47D6-A33A-92AF69C44B1F">
+    <name>RACE_SA_POP.ComponentImplementations.Conductor_ComponentImplementation.Conductor_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_C9FB46F5-9FC9-4EC1-BE9A-FDDCA27AD679</artifact>
+    <artifact>_AE0A5094-E076-4077-8E65-8F204C67A505</artifact>
+    <artifact>_8CB69919-57AC-4588-A578-89F5DB8D2FFA</artifact>
+  </implementation>
+
   <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component">
     <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component</name>
     <node>RACE_Node</node>
@@ -126,12 +134,44 @@
     </configProperty>
   </instance>
 
+  <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component">
+    <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</name>
+    <node>RACE_Node</node>
+    <source/>
+    <implementation>_94517386-A8E0-47D6-A33A-92AF69C44B1F</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Conductor_Component.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <connection>
-    <name>DB_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Data_Base_Component</name>
+    <name>conductor_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</name>
+    <internalEndpoint>
+      <portName>conductor</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>admin</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>DB_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Data_Base_Component</name>
     <internalEndpoint>
       <portName>DB</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component</instance>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>admin</portName>
@@ -141,11 +181,11 @@
   </connection>
 
   <connection>
-    <name>OA_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component</name>
+    <name>OA_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component</name>
     <internalEndpoint>
       <portName>OA</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component</instance>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>admin</portName>
@@ -364,6 +404,49 @@
         </type>
         <value>
           <string>create_CIAO_RACE_TM_Proxy_TM_Proxy_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_C9FB46F5-9FC9-4EC1-BE9A-FDDCA27AD679">
+    <name>RACE_SA_POP.ImplementationArtifacts.Conductor_ComponentArtifacts.Conductor_Component_stub</name>
+    <source/>
+    <node/>
+    <location>Conductor_Component_stub</location>
+  </artifact>
+
+  <artifact id="_AE0A5094-E076-4077-8E65-8F204C67A505">
+    <name>RACE_SA_POP.ImplementationArtifacts.Conductor_ComponentArtifacts.Conductor_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Conductor_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Conductor_Conductor_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_8CB69919-57AC-4588-A578-89F5DB8D2FFA">
+    <name>RACE_SA_POP.ImplementationArtifacts.Conductor_ComponentArtifacts.Conductor_Component_exec</name>
+    <source/>
+    <node/>
+    <location>Conductor_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Conductor_Conductor_Component_Home_Impl</string>
         </value>
       </value>
     </execParameter>

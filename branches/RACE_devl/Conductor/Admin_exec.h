@@ -1,8 +1,8 @@
 #ifndef ADMIN_EXEC_H
 #define ADMIN_EXEC_H
 
-#include "SA_POP_Input_Adapter_svnt.h"
-#include "SA_POP_Input_Adapter_exec_export.h"
+#include "ConductorEC.h"
+#include "Conductor_exec_export.h"
 #include "tao/LocalObject.h"
 #include "Logger.h"
 
@@ -10,17 +10,19 @@ namespace CIAO
 {
   namespace RACE
   {
-    namespace SA_POP_IA
+    namespace Conductor
     {
-      namespace CIDL_SA_POP_IA_Component_Impl
+      namespace CIDL_Conductor_Component_Impl
       {
-        class SA_POP_INPUT_ADAPTER_EXEC_Export Admin_exec_i
-          : public virtual ::CIAO::RACE::SA_POP_IA::CCM_Admin,
+        class CONDUCTOR_EXEC_Export Admin_exec_i
+          : public virtual ::CIAO::RACE::Conductor::CCM_Admin,
             public virtual TAO_Local_RefCounted_Object
         {
           public:
-          Admin_exec_i (SA_POP_IA_Component_Context *context,
-                        Logger &logger);
+          Admin_exec_i
+            (::CIAO::RACE::Conductor::CCM_Conductor_Component_Context_ptr
+             context,
+             Logger &logger);
 
           virtual ~Admin_exec_i (void);
 
@@ -50,11 +52,10 @@ namespace CIAO
 
           private:
           /// Object reference of the data base admin object.
-          //          Data_Base::Admin_var DB_;
+          Data_Base::Admin_var DB_;
 
           /// Object reference of the DAnCE output adapter admin object.
-          //          DAnCE_OA::Admin_var OA_;
-          Conductor::Admin_var conductor_;
+          DAnCE_OA::Admin_var OA_;
 
           Logger &logger_;
         };

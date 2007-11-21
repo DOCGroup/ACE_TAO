@@ -1,0 +1,22 @@
+project (Tester) : ciao_client_dnc, valuetype, ciao_deployment_stub {
+  avoids += ace_for_tao
+  exename = tester
+  after += Conductor_stub
+  libs += Conductor_Component_stub \
+          OpString_stub \
+          RACE_common_stub
+
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    tester.cpp
+  }
+
+  Header_Files {
+  }
+
+  Inline_Files {
+  }
+}
