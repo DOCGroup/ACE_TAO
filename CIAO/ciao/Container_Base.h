@@ -153,6 +153,10 @@ namespace CIAO
     CORBA::add_ref (factory);  \
   }
 
+#if defined (__ACE_INLINE__)
+# include "Container_Base.inl"
+#endif /* __ACE_INLINE__ */
+
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_CONTAINER_BASE_H */
