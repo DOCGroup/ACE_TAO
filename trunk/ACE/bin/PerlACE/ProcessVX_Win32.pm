@@ -208,7 +208,7 @@ sub Spawn ()
             if (defined $ENV{'ACE_TEST_VERBOSE'}) {
               print "iBoot is currently: $text\n";
             }
-            close $boot;
+            close $iboot;
           }
           else {
             print "ERROR: FAILED to execute 'reboot' command!\n";
@@ -220,7 +220,7 @@ sub Spawn ()
             if (defined $ENV{'ACE_TEST_VERBOSE'}) {
               print "iBoot is currently: $text\n";
             }
-            close $boot;
+            close $iboot;
           }
           else {
             print "ERROR: FAILED to execute 'reboot' command!\n";
