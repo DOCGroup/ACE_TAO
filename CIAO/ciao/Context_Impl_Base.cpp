@@ -3,10 +3,18 @@
 #include "Context_Impl_Base.h"
 #include "Container_Base.h"
 
+#if !defined (__ACE_INLINE__)
+# include "Context_Impl_Base.inl"
+#endif /* __ACE_INLINE__ */
+
 namespace CIAO
 {
   Context_Impl_Base::Context_Impl_Base (void)
   {
+    // This constructor is here to keep MSVC happy and should
+    // not be used at all. This constructor should be removed 
+    // in the future. Until then, we have the ACE_ASSERT
+    // below to detect a runtime call to this constructor.
     ACE_ASSERT (0);
   }
 
@@ -63,25 +71,5 @@ namespace CIAO
   Context_Impl_Base::resolve_service_reference(const char *)
   {
     throw CORBA::NO_IMPLEMENT ();
-  }
-
-  // CIAO-specific.
-
-  CIAO::Session_Container *
-  Context_Impl_Base::_ciao_the_Container (void) const
-  {
-    return this->container_;
-  }
-
-  const char *
-  Context_Impl_Base::_ciao_instance_id (void) const
-  {
-    return this->ciao_instance_id_.in ();
-  }
-
-  void
-  Context_Impl_Base::_ciao_instance_id (const char *instance_id)
-  {
-    this->ciao_instance_id_ = instance_id;
   }
 }
