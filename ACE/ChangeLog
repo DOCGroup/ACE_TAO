@@ -1,3 +1,9 @@
+Wed Nov 21 16:06:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added support for iBoot
+
 Sun Nov 18 06:25:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:
