@@ -1,20 +1,27 @@
-#ifndef RACE_SA_POP_INPUT_ADAPTER_IDL
-#define RACE_SA_POP_INPUT_ADAPTER_IDL
+#ifndef RACE_CONDUCTOR_IDL
+#define RACE_CONDUCTOR_IDL
 
 #include <Components.idl>
 #include "RACE/common/OpString.idl"
 #include "RACE/common/RACE_common.idl"
 
-#include "RACE/Conductor/Conductor.idl"
-//#include "RACE/Data_Base/Data_Base.idl"
-//#include "RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl"
+#include "RACE/Data_Base/Data_Base.idl"
+#include "RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl"
 
 module CIAO
 {
   module RACE
   {
-    module SA_POP_IA
+    module Conductor
     {
+      interface Test
+      {
+        boolean deploy_plan (in string uri);
+
+        boolean redeploy_plan (in string uri);
+
+      };
+
       interface Admin
       {
         /// "Schedule" a string for future deployment.
@@ -46,15 +53,16 @@ module CIAO
 
       };
 
-      component SA_POP_IA_Component
+      component Conductor_Component  supports Test
       {
         provides Admin admin;
 
-        uses Conductor::Admin conductor;
+        uses Data_Base::Admin DB;
 
+        uses DAnCE_OA::Admin OA;
       };
 
-      home SA_POP_IA_Component_Home manages SA_POP_IA_Component
+      home Conductor_Component_Home manages Conductor_Component
       {
       };
     };
@@ -62,4 +70,4 @@ module CIAO
 
 };
 
-#endif /* RACE_SA_POP_INPUT_ADAPTER_IDL */
+#endif /* RACE_CONDUCTOR_IDL */

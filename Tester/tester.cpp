@@ -1,7 +1,7 @@
-#include "SA_POP_Input_AdapterC.h"
+#include "RACE/Conductor/ConductorC.h"
 #include "ace/Get_Opt.h"
 
-// IOR file of the SA_POP_IA.
+// IOR file of the Conductor.
 const char * ior = 0;
 const char * filename = 0;
 bool redeploy = false;
@@ -32,7 +32,8 @@ parse_args (int argc, char *argv[])
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Usage:  %s"
-                             "-k <SA_POP_IA IOR> (default is file://SA_POP_IA_Component.ior)\n",
+                             "-k <Conductor IOR> "
+                             "(default is file://Conductor_Component.ior)\n",
                              "-f <Deployment plan filename>\n",
                              "-r <redeploy>\n",
                             argv [0]),
@@ -43,7 +44,7 @@ parse_args (int argc, char *argv[])
 
   if (ior  == 0)
     {
-      ior = "file://SA_POP_IA_Component.ior";
+      ior = "file://Conductor_Component.ior";
     }
 
   return 0;
@@ -66,13 +67,13 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->string_to_object (ior);
 
-      ::CIAO::RACE::SA_POP_IA::Test_var test =
-        ::CIAO::RACE::SA_POP_IA::Test::_narrow (obj.in ());
+      ::CIAO::RACE::Conductor::Test_var test =
+        ::CIAO::RACE::Conductor::Test::_narrow (obj.in ());
 
       if (CORBA::is_nil (test.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to acquire SA_POP_IA's objref\n"),
+                             "Unable to acquire Conductor's objref\n"),
                             -1);
         }
 
