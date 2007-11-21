@@ -3,7 +3,7 @@ Wed Nov 21 21:43:54 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         * ace/Vector_T.inl (advance): 
         * ace/Vector_T.cpp: Fixed the push_back() and pop_back() methods
           so they work properly after resizing.  Thanks to Karl-Heinz Wind
-          <wind at itq dot de> for these fixes.
+          <wind at itq dot de> for these fixes.  This fixes bugid 3152.
 
 Wed Nov 21 21:36:27 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
