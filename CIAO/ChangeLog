@@ -1,8 +1,20 @@
+Wed Nov 21 16:36:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ciao/Container_Base.inl:
+
+          New file. Inlined short methods to comply with ACE/TAO/CIAO
+          coding standards.
+
+        * ciao/Container_Base.h:
+        * ciao/Container_Base.cpp:
+
+          Minor changes necessary for the new inline file mentioned above.
+
 Tue Nov 20 15:43:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ciao/Port_Activator.inl:
 
-          New file. Inlined short methods to comply with ACE/TAO/CIAO 
+          New file. Inlined short methods to comply with ACE/TAO/CIAO
           coding standards.
 
         * ciao/Port_Activator.h:
