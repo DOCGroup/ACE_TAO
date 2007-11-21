@@ -38,6 +38,9 @@ void ACE_Vector<T, DEFAULT_SIZE>::push_back (const T& elem)
       ACE_Array<T>::size (curr_max_size_ * 2);
       curr_max_size_ = this->max_size ();
     }
+  else
+    ACE_Array<T>::size (length_ + 1);
+  
   ++length_;
   (*this)[length_-1] = elem;
 }
@@ -82,29 +85,20 @@ int compare(const ACE_Vector<T>& v1,
   size_t last1 = v1.size () - 1;
   size_t last2 = v2.size () - 1;
   if (last1 < from_ndx || last1 < to_ndx)
-    {
-      return false;
-    }
+    return false;
   if (last2 < from_ndx || last2 < to_ndx)
-    {
-      return false;
-    }
+    return false;
   if (last1 != last2)
-    {
-      return false;
-    }
+    return false;
 
   //  cout<<"compare() <================="<<endl;
   for (size_t i = from_ndx; i <= to_ndx; ++i)
-    {
-      //     cout<<"V1["<<i<<"]="<<v1[i];
-      //     cout<<", V2["<<i<<"]="<<v2[i];
-      //     cout<<": NOT EQUAL == "<<(v1[i]!=v2[i])<<endl;
-      if (v1[i] != v2[i])
-        {
-          return false;
-        }
-    }
+    //     cout<<"V1["<<i<<"]="<<v1[i];
+    //     cout<<", V2["<<i<<"]="<<v2[i];
+    //     cout<<": NOT EQUAL == "<<(v1[i]!=v2[i])<<endl;
+    if (v1[i] != v2[i])
+      return false;
+
   //  cout<<"compare() ====================>"<<endl;
   return true;
 }
@@ -117,25 +111,20 @@ int partial_compare(const ACE_Vector<T>& v1,
 {
   size_t last1 = v1.size () - 1;
   size_t last2 = v2.size () - 1;
+
   if (last1 < from_ndx || last1 < to_ndx)
-    {
-      return false;
-    }
+    return false;
   if (last2 < from_ndx || last2 < to_ndx)
-    {
-      return false;
-    }
+    return false;
+
   //  cout<<"partial_compare() <================="<<endl;
   for (size_t i = from_ndx; i <= to_ndx; ++i)
-    {
-      //     cout<<"V1["<<i<<"]="<<v1[i];
-      //     cout<<", V2["<<i<<"]="<<v2[i];
-      //     cout<<": NOT EQUAL == "<<(v1[i]!=v2[i])<<endl;
-      if (v1[i] != v2[i])
-        {
-          return false;
-        }
-    }
+    //     cout<<"V1["<<i<<"]="<<v1[i];
+    //     cout<<", V2["<<i<<"]="<<v2[i];
+    //     cout<<": NOT EQUAL == "<<(v1[i]!=v2[i])<<endl;
+    if (v1[i] != v2[i])
+      return false;
+
   //  cout<<"partial_compare() ====================>"<<endl;
   return true;
 }
