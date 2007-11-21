@@ -184,6 +184,8 @@ sub Spawn ()
 
     my $t;
     my $ok;
+    my $iboot;
+    my $text;
 
     ##
     ## initialize VxWorks kernel (reboot!) if needed
@@ -193,6 +195,36 @@ sub Spawn ()
                 print "Calling: $ENV{'ACE_RUN_VX_REBOOT_TOOL'}\n";
             }
             system ($ENV{'ACE_RUN_VX_REBOOT_TOOL'});
+        }
+        else {
+        if (defined $ENV{'ACE_RUN_VX_IBOOT'}) {
+          if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            print "Using iBoot: $ENV{'ACE_RUN_VX_IBOOT'}\n";
+          }
+          $iboot = IO::Socket::INET->new ("$ENV{'ACE_RUN_VX_IBOOT'}");
+          if  ($iboot) {
+            $iboot->send ("\ePASS\ef\r");
+            $iboot->recv ($text,128);
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+              print "iBoot is currently: $text\n";
+            }
+            close $boot;
+          }
+          else {
+            print "ERROR: FAILED to execute 'reboot' command!\n";
+          }
+          $iboot = IO::Socket::INET->new ("$ENV{'ACE_RUN_VX_IBOOT'}");
+          if  ($iboot) {
+            $iboot->send ("\ePASS\en\r");
+            $iboot->recv ($text,128);
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+              print "iBoot is currently: $text\n";
+            }
+            close $boot;
+          }
+          else {
+            print "ERROR: FAILED to execute 'reboot' command!\n";
+          }
         }
         else {
             if (defined $ENV{'ACE_TEST_VERBOSE'}) {
