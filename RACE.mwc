@@ -4,4 +4,6 @@ workspace {
   Input_Adapters/SA_POP_Input_Adapter
   Data_Base
   utils
+  Conductor
+  Tester
 }
