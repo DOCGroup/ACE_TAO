@@ -1,3 +1,24 @@
+Wed Nov 21 17:41:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ciao/Context_Impl_Base.inl:
+
+          New file. Inlined short methods to comply with ACE/TAO/CIAO
+          coding standards.
+
+        * ciao/Context_Impl_Base.h:
+        * ciao/Context_Impl_Base.cpp:
+
+          Minor changes necessary for the new inline file mentioned above.
+
+        * ciao/Context_Impl_Base.cpp:
+        * ciao/Dynamic_Component_Servant_Base.cpp:
+
+          Added a comment on why we have unecessary default constructor.
+          The default constructor is here to keep MSVC happy and should
+          not be used at all. The default constructor should be removed
+          in the future. Until then, ACE_ASSERT is used in the default
+          constructor to detect a runtime call to the default constructor.
+
 Wed Nov 21 16:36:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ciao/Container_Base.inl:

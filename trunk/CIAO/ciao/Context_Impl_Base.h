@@ -95,6 +95,10 @@ namespace CIAO
   };
 }
 
+#if defined (__ACE_INLINE__)
+# include "Context_Impl_Base.inl"
+#endif /* __ACE_INLINE__ */
+
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_CONTEXT_IMPL_BASE_H */
