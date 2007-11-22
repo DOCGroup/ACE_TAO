@@ -1,3 +1,10 @@
+Thu Nov 22 04:54:58 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Add conditionals needed to add ZLIB/ZZIP libraries for
+          TAO_CosNotification_Persist library iff used by build.
+
 Thu Nov 15 20:37:24 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
@@ -156,7 +163,7 @@ Mon Nov 12 08:12:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Leader_Followers/tp.conf:
           Updated for VxWorks
 
-        * testsCollocationLockup/CollocationLockup.cpp:
+        * tests/CollocationLockup/CollocationLockup.cpp:
           Wait explicitly on the thread manager and shutdown the ORB to
           fix some memory leaks
 
