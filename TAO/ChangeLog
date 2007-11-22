@@ -1,3 +1,15 @@
+Thu Nov 22 05:32:24 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Bug_1551_Regression/server.cpp:
+        * tests/Bug_2503_Regression/server.cpp:
+
+          Fetch the high res timer's global scale factor to ensure it is
+          calibrated (if necessary on this platform) at the beginning of
+          the test.  While the timer would otherwise be calibrated on
+          first use, this introduces delay in the middle of the test's
+          execution.  This leads to failures due to timing assumptions
+          (timeouts, etc.) within the test itself.
+
 Thu Nov 22 04:54:58 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
