@@ -5,10 +5,13 @@ ACE_RCSID (ciao,
            Dynamic_Component_Activator,
            "$Id$")
 
+#if !defined (__ACE_INLINE__)
+# include "Dynamic_Component_Activator.inl"
+#endif /* __ACE_INLINE__ */
+
 namespace CIAO
 {
-  Dynamic_Component_Activator::Dynamic_Component_Activator (
-    CORBA::ORB_ptr o)
+  Dynamic_Component_Activator::Dynamic_Component_Activator (CORBA::ORB_ptr o)
     : orb_ (CORBA::ORB::_duplicate (o))
   {
   }
@@ -35,28 +38,10 @@ namespace CIAO
   void
   Dynamic_Component_Activator::etherealize (
     const PortableServer::ObjectId &,
-    PortableServer::POA_ptr ,
-    PortableServer::Servant ,
-    CORBA::Boolean ,
+    PortableServer::POA_ptr,
+    PortableServer::Servant,
+    CORBA::Boolean,
     CORBA::Boolean)
   {
-  }
-
-  void Dynamic_Component_Activator::add_servant_to_map
-    (PortableServer::ObjectId &oid,
-     Dynamic_Component_Servant_Base* servant)
-  {
-    this->servant_map_.bind (oid, servant);
-  }
-
-  void Dynamic_Component_Activator::delete_servant_from_map
-    (PortableServer::ObjectId &oid)
-  {
-    Dynamic_Component_Servant_Base* servant = 0;
-    
-    if (this->servant_map_.unbind (oid, servant) != 0)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Invalid object reference\n"));
-      }
   }
 }
