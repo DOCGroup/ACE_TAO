@@ -1,3 +1,21 @@
+Thu Nov 22 15:41:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ciao/Dynamic_Component_Activator.inl:
+
+          New file. Inlined short methods to comply with ACE/TAO/CIAO
+          coding standards.
+
+        * ciao/Dynamic_Component_Activator.h:
+        * ciao/Dynamic_Component_Activator.cpp:
+
+          Minor changes necessary for the new inline file mentioned above.
+
+        * ciao/Dynamic_Component_Activator.h:
+
+          The incarnate and etherealize (inherited from PortableServer::ServantActivator)
+          were implicitly virtual, made those methods explicitly virtual by using the virtual
+          key word. This is a cosmetic change to comply with ACE/TAO/CIAO coding standards.
+
 Wed Nov 21 17:41:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ciao/Context_Impl_Base.inl:

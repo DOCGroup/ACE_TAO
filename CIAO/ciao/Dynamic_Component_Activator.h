@@ -47,8 +47,8 @@ namespace CIAO
    *
    */
   class CIAO_SERVER_Export Dynamic_Component_Activator
-    : public virtual PortableServer::ServantActivator
-    , public virtual TAO_Local_RefCounted_Object
+    : public virtual PortableServer::ServantActivator,
+      public virtual TAO_Local_RefCounted_Object
   {
   public:
     Dynamic_Component_Activator (CORBA::ORB_ptr o);
@@ -61,15 +61,16 @@ namespace CIAO
      * methods, please PortableServer documentation. This is probably
      * not the place to document what these mean.
      */
-    PortableServer::Servant incarnate (
+    virtual PortableServer::Servant incarnate (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa);
 
-    void etherealize (const PortableServer::ObjectId &oid,
-                      PortableServer::POA_ptr adapter,
-                      PortableServer::Servant servant,
-                      CORBA::Boolean cleanup_in_progress,
-                      CORBA::Boolean remaining_activations);
+    virtual void etherealize (
+      const PortableServer::ObjectId &oid,
+      PortableServer::POA_ptr adapter,
+      PortableServer::Servant servant,
+      CORBA::Boolean cleanup_in_progress,
+      CORBA::Boolean remaining_activations);
 
     void add_servant_to_map (PortableServer::ObjectId &oid,
                              Dynamic_Component_Servant_Base* servant);
@@ -92,6 +93,10 @@ namespace CIAO
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__ACE_INLINE__)
+# include "Dynamic_Component_Activator.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
