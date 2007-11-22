@@ -1,3 +1,15 @@
+Thu Nov 22 13:47:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+        * ace/QoS/qos.mpc:
+        * bin/MakeProjectCreator/config/ace_fl.mpb:
+        * bin/MakeProjectCreator/config/ace_gl.mpb:
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+        * bin/MakeProjectCreator/config/ace_x11.mpb:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/ipv6.mpb:
+          Added support for vc9
+
 Thu Nov 22 12:44:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Vector_T.inl:

@@ -19,7 +19,7 @@ project: ipv6, vc8_warnings {
     libpaths -= $(ACE_ROOT)/lib
   }
 
-  specific(vc8) {
+  specific(vc8,vc9) {
     // Enable structured exception handling
     ExceptionHandling = 2
   }
