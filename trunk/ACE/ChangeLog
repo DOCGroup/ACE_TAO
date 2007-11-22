@@ -1,6 +1,15 @@
+Thu Nov 22 12:44:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Vector_T.inl:
+          Fixed compile error
+
+        * bin/msvc_mpc_auto_compile.pl:
+        * bin/msvc_static_compile.pl:
+          Added vc9 as option
+
 Wed Nov 21 21:43:54 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * ace/Vector_T.inl (advance): 
+        * ace/Vector_T.inl (advance):
         * ace/Vector_T.cpp: Fixed the push_back() and pop_back() methods
           so they work properly after resizing.  Thanks to Karl-Heinz Wind
           <wind at itq dot de> for these fixes.  This fixes bugid 3152.
@@ -14,8 +23,8 @@ Wed Nov 21 21:36:27 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
 Wed Nov 21 19:37:29 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * examples/Reactor/Ntalker/ntalker.cpp (ACE_TMAIN): 
-        
+        * examples/Reactor/Ntalker/ntalker.cpp (ACE_TMAIN):
+
           Use ACE_SOCK_Dgram_Mcast::leave() instead of deprecated
           ...::unsubscribe() to leave the multicast group.  Thanks to
           Stefan Naewe <stefan dot naewe at atlas-elektronik dot com> for
