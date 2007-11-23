@@ -1,3 +1,9 @@
+Fri Nov 23 20:32:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+          Corrected debug statements
+
 Fri Nov 23 19:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
