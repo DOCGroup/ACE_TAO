@@ -1,18 +1,35 @@
-Fri Nov 23 19:56:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ASNMP/asnmp/wpdu.cpp:
-          Layout change
-
-        * bin/MakeProjectCreator/config/vc9.features:
-        * bin/MakeProjectCreator/config/vc9nmake.mpb:
-          New file
+Fri Nov 23 19:38:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc8_warnings.mpb:
         * bin/MakeProjectCreator/config/vc_warnings.mpb:
-          Renamed to vc_, it is also for vc9 now
+          Renamed vc8 to vc because this file is now also used for vc9
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Updated base project because of rename above
+
+        * bin/MakeProjectCreator/config/vc9.features:
+          New file
+
+        * bin/MakeProjectCreator/config/vc9nmake.mpb:
+          New file
+
+        * contrib/minizip/minizip.mpc:
+          Updated for vc9
+
+        * examples/Service_Configurator/Misc/Timer_Service.cpp:
+          Layout change
+
+        * examples/Connection/non_blocking/CPP-connector.cpp:
+          Just not name an argument instead of using ACE_UNUSED_ARG
+
+        * examples/APG/Reactor/HAStatus-AC.cpp:
+          Initialise some pointers with 0
 
         * bin/make_release.py:
-          Added vc9
+          Added generation for vc9
+
+        * ASNMP/asnmp/wpdu.cpp:
+          Layout change
 
         * ACE-install.sh:
           Removed, ancient
