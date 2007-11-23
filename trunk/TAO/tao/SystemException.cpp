@@ -676,7 +676,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   if (minor_code == 0)
     return "*unknown description*";
 
-  minor_code--;  // Adjust to match table offset.
+  --minor_code;  // Adjust to match table offset.
 
   CORBA::UNKNOWN const * unknown_exception =
     dynamic_cast <const CORBA::UNKNOWN *> (&exc);
