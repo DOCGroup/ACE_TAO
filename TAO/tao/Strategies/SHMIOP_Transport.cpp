@@ -96,7 +96,7 @@ TAO_SHMIOP_Transport::recv (char *buf,
       if (TAO_debug_level > 3 && errno != ETIME)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - %p \n"),
+                      ACE_TEXT ("TAO (%P|%t) -  SHMIOP_Transport::recv, %p \n"),
                       ACE_TEXT ("TAO - read message failure ")
                       ACE_TEXT ("recv_i () \n")));
         }
@@ -315,7 +315,7 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %p\n"),
+                    ACE_TEXT ("TAO (%P|%t) closing transport %d after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 
