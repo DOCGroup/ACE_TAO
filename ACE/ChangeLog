@@ -1,6 +1,23 @@
+Fri Nov 23 19:56:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * ASNMP/asnmp/wpdu.cpp:
+          Layout change
 
-Fri Nov 23 19:19:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * bin/MakeProjectCreator/config/vc9.features:
+        * bin/MakeProjectCreator/config/vc9nmake.mpb:
+          New file
+
+        * bin/MakeProjectCreator/config/vc8_warnings.mpb:
+        * bin/MakeProjectCreator/config/vc_warnings.mpb:
+          Renamed to vc_, it is also for vc9 now
+
+        * bin/make_release.py:
+          Added vc9
+
+        * ACE-install.sh:
+          Removed, ancient
+
+Fri Nov 23 19:38:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_Dgram_Mcast.cpp:
           Use join instead of subscribe
