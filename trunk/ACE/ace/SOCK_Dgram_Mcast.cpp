@@ -347,9 +347,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
           if (if_cnt < 2)
             {
-              if (this->subscribe (mcast_addr,
-                                   reuse_addr,
-                                   ACE_TEXT ("0.0.0.0")) == 0)
+              if (this->join (mcast_addr,
+                              reuse_addr,
+                              ACE_TEXT ("0.0.0.0")) == 0)
                 ++nr_subscribed;
             }
           else
@@ -363,9 +363,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                   // Convert to 0-based for indexing, next loop check.
                   if (if_addrs[if_cnt].get_type () != AF_INET || if_addrs[if_cnt].is_loopback ())
                     continue;
-                  if (this->subscribe (mcast_addr,
-                                       reuse_addr,
-                                       ACE_TEXT_CHAR_TO_TCHAR
+                  if (this->join (mcast_addr,
+                                  reuse_addr,
+                                  ACE_TEXT_CHAR_TO_TCHAR
                                    (if_addrs[if_cnt].get_host_addr ())) == 0)
                     ++nr_subscribed;
                 }
@@ -398,9 +398,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
       if (if_cnt < 2)
         {
-          if (this->subscribe (mcast_addr,
-                               reuse_addr,
-                               ACE_TEXT ("0.0.0.0")) == 0)
+          if (this->join (mcast_addr,
+                          reuse_addr,
+                          ACE_TEXT ("0.0.0.0")) == 0)
             ++nr_subscribed;
         }
       else
@@ -414,9 +414,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
               // Convert to 0-based for indexing, next loop check.
               if (if_addrs[if_cnt].is_loopback ())
                 continue;
-              if (this->subscribe (mcast_addr,
-                                   reuse_addr,
-                                   ACE_TEXT_CHAR_TO_TCHAR
+              if (this->join (mcast_addr,
+                              reuse_addr,
+                              ACE_TEXT_CHAR_TO_TCHAR
                                      (if_addrs[if_cnt].get_host_addr ())) == 0)
                 ++nr_subscribed;
             }
@@ -534,7 +534,7 @@ ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
     }
 
   // Attempt subscription.
-  int  result = this->subscribe_i (subscribe_addr, reuse_addr, net_if);
+  int result = this->subscribe_i (subscribe_addr, reuse_addr, net_if);
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
   if (result == 0)
@@ -963,7 +963,7 @@ int
 ACE_SOCK_Dgram_Mcast::clear_subs_list (void)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::clear_subs_list");
-  int  result = 0;
+  int result = 0;
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
   ACE_MT (ACE_GUARD_RETURN (ACE_SDM_LOCK, guard,
