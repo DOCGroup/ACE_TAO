@@ -97,8 +97,7 @@ namespace CIAO
 
       PortableServer::ObjectId_var oid;
 
-      this->container_->uninstall_component (ccmobjref.in (),
-                                             oid.out ());
+      this->container_->uninstall_component (ccmobjref.in (), oid.out ());
 
       this->home_servant_->update_component_map (oid);
     }

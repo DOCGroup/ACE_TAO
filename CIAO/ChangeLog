@@ -1,3 +1,13 @@
+Fri Nov 23 19:29:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servant_Impl_Base.cpp:
+          Layout change
+
+        * MPC/config/ciao_client_dnc.mpb:
+        * MPC/config/ciao_vc8warnings.mpb:
+        * MPC/config/ciao_vcwarnings.mpb:
+          Renamed vc8warnings to vcwarnings, this file is also for vc9 from now
+
 Thu Nov 22 15:41:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ciao/Dynamic_Component_Activator.inl:
