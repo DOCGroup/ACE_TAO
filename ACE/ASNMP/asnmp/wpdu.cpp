@@ -102,7 +102,8 @@ wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
                             (unsigned char *)iovec_.iov_base,
                             (int *) &iovec_.iov_len,
                             target.get_version(),
-                            comm_str.data(), comm_str.length());
+                            comm_str.data(),
+                            comm_str.length());
    if ( status != 0) {
      valid_flag_ = SNMP_ERROR_WRONG_ENCODING;
      cmu_snmp::free_pdu( raw_pdu);

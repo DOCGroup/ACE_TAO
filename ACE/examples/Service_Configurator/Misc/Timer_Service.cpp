@@ -35,7 +35,7 @@ Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
       interval = ACE_OS::atoi (argv[1]);
 
       if (interval == 0)
-	interval = Timer_Service_1::TIMEOUT;
+        interval = Timer_Service_1::TIMEOUT;
     }
 
   if (argc > 2)
@@ -45,7 +45,7 @@ Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
       this->max_timeouts_ = ACE_OS::atoi (argv[2]);
 
       if (this->max_timeouts_ == 0)
-	this->max_timeouts_ = Timer_Service_1::MAX_TIMEOUTS;
+        this->max_timeouts_ = Timer_Service_1::MAX_TIMEOUTS;
     }
 
   this->cur_timeouts_ = 0;
