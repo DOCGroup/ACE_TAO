@@ -94,7 +94,7 @@ TAO::SSLIOP::Transport::recv (char *buf,
       && errno != ETIME)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
+                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport::recv, %p \n"),
                   ACE_TEXT ("TAO - read message failure ")
                   ACE_TEXT ("recv_i () \n")));
     }

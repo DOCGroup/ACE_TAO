@@ -188,7 +188,7 @@ TAO_Naming_Server::parse_args (int argc,
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o': // outputs the naming service ior to a file.
         this->ior_file_name_ = get_opts.opt_arg ();

@@ -1,3 +1,23 @@
+Fri Nov 23 19:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+          Prefix increment
+
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+          Updated for vc9
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          Corrected debug statement
+
+        * tao/SystemException.cpp:
+          Prefix decrement
+
+        * tests/CodeSets/simple/client.cpp:
+          No need to pass an empty orb name
+
+        * tests/Param_Test/server.cpp:
+          Layout change
+
 Thu Nov 22 05:32:24 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Bug_1551_Regression/server.cpp:
