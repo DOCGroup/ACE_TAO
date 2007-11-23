@@ -1,3 +1,8 @@
+Fri Nov 23 06:50:01 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * tests/run_test.lst:
+          Do not run Signal_Test on LynxOS.
+
 Thu Nov 22 13:47:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_for_tao.mpc:
