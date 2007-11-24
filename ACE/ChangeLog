@@ -1,3 +1,9 @@
+Sat Nov 24 00:23:34 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h: Clarified the workings of the optional hook function
+          that can be passed to event loop methods. Thanks to Andre Kostur
+          for this idea.
+
 Fri Nov 23 19:38:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc8_warnings.mpb:
