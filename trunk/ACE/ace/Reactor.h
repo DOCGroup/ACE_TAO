@@ -75,11 +75,14 @@ public:
   };
 
   /**
-   * You can add a hook to various run_event methods and the hook will
-   * be called after handling every reactor event.  If this function
-   * returns 0, <run_reactor_event_loop> will check for the return
-   * value of <handle_event>.  If it is -1, the
-   * <run_reactor_event_loop> will return (pre-maturely.)
+   * You can specify a hook function to event-handling methods that will
+   * be called after each iteration of event handling.  If the hook function
+   * returns a non-zero value, the event loop will immediately resume
+   * waiting for the next event(s) to process without checking the error
+   * status of the just-completed iteration of event handling or the
+   * end-of-loop indication. If the hook function returns 0, the event
+   * handling error status and the end-of-loop indication will be checked
+   * as normal, just as if there is no hook function specified.
    */
   typedef int (*REACTOR_EVENT_HOOK)(ACE_Reactor *);
 
