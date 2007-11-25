@@ -1,3 +1,8 @@
+Sun Nov 25 09:18:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl (vsprintf):
+          Updated for msvc9
+
 Sun Nov 25 09:15:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc9.h:
