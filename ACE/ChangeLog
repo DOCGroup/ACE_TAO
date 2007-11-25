@@ -1,3 +1,8 @@
+Sun Nov 25 09:15:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc9.h:
+          Disabled warning 4250 with this compiler
+
 Sat Nov 24 00:23:34 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Reactor.h: Clarified the workings of the optional hook function
