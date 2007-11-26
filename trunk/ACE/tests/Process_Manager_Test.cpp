@@ -154,7 +154,7 @@ public:
                   my_child,
                   exitcode));
     char tmp[10];
-    order + =ACE_OS::itoa (sleep_time_, tmp, 10);
+    order += ACE_OS::itoa (sleep_time_, tmp, 10);
     return 0;
   }
 
