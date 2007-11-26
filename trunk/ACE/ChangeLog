@@ -1,6 +1,8 @@
-Mon Nov 26 14:25:13 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+Mon Nov 26 15:10:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/Process_Manager_Test.cpp: Fixed a dumb typo.
+        * include/makeinclude/platform_vxworks6.6.GNU:
+        * ace/config-vxworks6.6.h:
+          New files for VxWorks 6.6
 
 Mon Nov 26 12:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -205,6 +207,10 @@ Wed Nov 14 19:12:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           manually enable this through the platform_macros.GNU file and
           doesn't need to regenerate all makefiles. Also removed the
           check for the compiler name, with VxWorks we also can use this
+          and there we have different compilers (ccppc, ccpentium, etc)
+
+        * include/makeinclude/wrapper_macros.GNU:
+ also can use this
           and there we have different compilers (ccppc, ccpentium, etc)
 
         * include/makeinclude/wrapper_macros.GNU:
