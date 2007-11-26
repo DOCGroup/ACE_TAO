@@ -75,7 +75,7 @@ TAO/tests/Bug_2349_Regression/run_test.pl
 TAO/tests/Bug_2356_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_2417_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/Bug_2429_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/tests/Bug_2494_Regression/run_test.pl: !ST !VxWorks
+TAO/tests/Bug_2494_Regression/run_test.pl: !ST
 TAO/tests/Bug_2503_Regression/run_test.pl: !NO_MESSAGING !ST !CORBA_E_MICRO
 TAO/tests/Bug_2542_Regression/run_test.pl: !CORBA_E_MICRO
 TAO/tests/Bug_2560_Regression/run_test.pl: !ST !CORBA_E_MICRO
@@ -100,7 +100,7 @@ TAO/tests/Bug_2844_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_2909_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_2935_Regression/run_test.pl:
 TAO/tests/Bug_2936_Regression/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
-TAO/tests/Bug_2953_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !VxWorks
+TAO/tests/Bug_2953_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/Bug_2966_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_3000_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_3042_Regression/run_test.pl:
@@ -251,7 +251,7 @@ TAO/tests/Oneways_Invoking_Twoways/run_test.pl: !ST
 TAO/tests/Queued_Message_Test/run_test.pl:
 TAO/tests/DLL_ORB/run_test.pl: !STATIC
 TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/tests/Multiple/run_test.pl: !VxWorks !SUNCC5_1
+TAO/tests/Multiple/run_test.pl: !SUNCC5_1
 TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !ACE_FOR_TAO
 TAO/tests/Portable_Interceptors/Bug_1559/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ST
@@ -293,7 +293,7 @@ TAO/tests/Sequence_Unit_Tests/run_test.pl -noboost:
 TAO/tests/Sequence_Unit_Tests/run_test.pl -boost: BOOST
 TAO/tests/Typedef_String_Array/run_test.pl:
 TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl: !CORBA_E_MICRO
-TAO/tests/CodeSets/simple/run_test.pl: !VxWorks !GIOP10 !STATIC
+TAO/tests/CodeSets/simple/run_test.pl: !GIOP10 !STATIC
 TAO/tests/Hang_Shutdown/run_test.pl: !ST !ACE_FOR_TAO
 TAO/tests/Any/Recursive/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl: !ST !VxWorks !CORBA_E_MICRO
