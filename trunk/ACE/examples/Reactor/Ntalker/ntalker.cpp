@@ -154,7 +154,7 @@ Handler::Handler (u_short udp_port,
 
   // subscribe to multicast group.
 
-  if (this->mcast_.subscribe (sockmc_addr_, 1, a_interface) == -1)
+  if (this->mcast_.join (sockmc_addr_, 1, a_interface) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "can't subscribe to multicast group"));

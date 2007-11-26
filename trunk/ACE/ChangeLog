@@ -1,3 +1,8 @@
+Mon Nov 26 19:41:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Ntalker/ntalker.cpp:
+          Don't use the deprecated ACE_SOCK_Dgram_Mcast methods
+
 Mon Nov 26 15:10:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.6.GNU:
