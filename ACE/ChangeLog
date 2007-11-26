@@ -1,3 +1,8 @@
+Mon Nov 26 11:04:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabed several tests for VxWorks
+
 Mon Nov 26 03:29:21 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Process_Manager.cpp: Fixed a problem where spawning a
