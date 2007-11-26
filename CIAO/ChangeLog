@@ -1,3 +1,15 @@
+Mon Nov 26 16:57:33 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ciao/Servant_Activator.h:
+
+          The incarnate and etherealize (inherited from PortableServer::ServantActivator)
+          were implicitly virtual, made those methods explicitly virtual by using the virtual
+          key word. This is a cosmetic change to comply with ACE/TAO/CIAO coding standards.
+
+        * ciao/Servant_Activator.cpp:
+
+          Minor cosmetic changes.
+
 Fri Nov 23 19:29:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servant_Impl_Base.cpp:

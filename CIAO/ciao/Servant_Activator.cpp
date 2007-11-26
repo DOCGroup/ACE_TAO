@@ -10,10 +10,10 @@ ACE_RCSID (ciao,
 namespace CIAO
 {
   Servant_Activator::Servant_Activator (CORBA::ORB_ptr o)
-    : orb_ (CORBA::ORB::_duplicate (o))
-    // @@ TODO, avoid this magic number
-    , pa_ (64)
-    , slot_index_ (0)
+    : orb_ (CORBA::ORB::_duplicate (o)),
+      // @@ TODO, avoid this magic number
+      pa_ (64),
+      slot_index_ (0)
   {
   }
 

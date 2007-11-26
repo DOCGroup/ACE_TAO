@@ -49,8 +49,8 @@ namespace CIAO
    * it which returns the servant for *that* port.
    */
   class CIAO_SERVER_Export Servant_Activator
-    : public virtual PortableServer::ServantActivator
-    , public virtual TAO_Local_RefCounted_Object
+    : public virtual PortableServer::ServantActivator,
+      public virtual TAO_Local_RefCounted_Object
   {
   public:
     Servant_Activator (CORBA::ORB_ptr o);
@@ -65,15 +65,16 @@ namespace CIAO
      * methods, please PortableServer documentation. This is probably
      * not the place to document what these mean.
      */
-    PortableServer::Servant incarnate (
+    virtual PortableServer::Servant incarnate (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa);
 
-    void etherealize (const PortableServer::ObjectId &oid,
-                      PortableServer::POA_ptr adapter,
-                      PortableServer::Servant servant,
-                      CORBA::Boolean cleanup_in_progress,
-                      CORBA::Boolean remaining_activations);
+    virtual void etherealize (
+      const PortableServer::ObjectId &oid,
+      PortableServer::POA_ptr adapter,
+      PortableServer::Servant servant,
+      CORBA::Boolean cleanup_in_progress,
+      CORBA::Boolean remaining_activations);
 
     /// Local helper methods
     bool register_port_activator (Port_Activator *pa);
