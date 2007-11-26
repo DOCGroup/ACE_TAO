@@ -1,3 +1,7 @@
+Mon Nov 26 14:25:13 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Process_Manager_Test.cpp: Fixed a dumb typo.
+
 Mon Nov 26 12:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.2.GNU:
