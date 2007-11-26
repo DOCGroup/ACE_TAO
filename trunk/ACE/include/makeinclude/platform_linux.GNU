@@ -17,6 +17,8 @@ endif
 # fix this
 pipes ?= 1
 
+CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
+
 ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
   ifeq (7.10, $(findstring 7.10,$(LSB_RELEASE_RELEASE)))
     no_hidden_visibility ?= 1
@@ -25,23 +27,15 @@ ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
     no_hidden_visibility ?= 1
   endif
 endif
-
-CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
-ifeq (Red Hat 4.1.1-51,$(findstring Red Hat 4.1.1-51,$(CXX_FULL_VERSION)))
-  ifeq (FedoraCore, $(findstring FedoraCore,$(LSB_RELEASE_ID)))
-    ifeq (6, $(findstring 6,$(LSB_RELEASE_RELEASE)))
-      gcc_template_instantiation_visibility ?= 1
-    endif
+ifeq (FedoraCore, $(findstring FedoraCore,$(LSB_RELEASE_ID)))
+  ifeq (6, $(findstring 6,$(LSB_RELEASE_RELEASE)))
+    gcc_template_instantiation_visibility ?= 1
   endif
 endif
-ifeq (Red Hat 4.1.1-52,$(findstring Red Hat 4.1.1-52,$(CXX_FULL_VERSION)))
-  gcc_template_instantiation_visibility ?= 1
-endif
-ifeq (Red Hat 4.1.1-30,$(findstring Red Hat 4.1.1-30,$(CXX_FULL_VERSION)))
-  gcc_template_instantiation_visibility ?= 1
-endif
-ifeq (Red Hat 4.1.2-12,$(findstring Red Hat 4.1.2-12,$(CXX_FULL_VERSION)))
-  gcc_template_instantiation_visibility ?= 1
+ifeq (RedHatEnterpriseServer, $(findstring RedHatEnterpriseServer,$(LSB_RELEASE_ID)))
+  ifeq (5, $(findstring 5,$(LSB_RELEASE_RELEASE)))
+    gcc_template_instantiation_visibility ?= 1
+  endif
 endif
 
 CFLAGS  += -W -Wall -Wpointer-arith
