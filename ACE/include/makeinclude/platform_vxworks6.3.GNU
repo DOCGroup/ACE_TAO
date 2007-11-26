@@ -107,9 +107,8 @@ ifeq ("$(TOOL_FAMILY)","gnu")
 endif
 
 ifeq ($(rtp),0)
-  ifeq ($(findstring PPC, $(CPU)), PPC)
-    CCFLAGS += -mlongcall
-    CFLAGS += -mlongcall
+  ifeq ($(findstring PPC,$(CPU)),PPC)
+    CPPFLAGS += -mlongcall
   endif
   PRJ_TYPE = vxApp
 endif
