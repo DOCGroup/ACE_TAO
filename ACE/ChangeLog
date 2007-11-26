@@ -1,3 +1,10 @@
+Mon Nov 26 20:41:03 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Process_Manager_Test.cpp: Changed the use of
+          ACE_Thread_Mutex to ACE_SYNCH_MUTEX so that the test compilees
+          properly on single-threaded builds.  Thanks to Johnny for
+          reporting this.
+
 Mon Nov 26 19:41:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Ntalker/ntalker.cpp:
