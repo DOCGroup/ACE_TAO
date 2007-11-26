@@ -26,6 +26,9 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/SString.h"
+#include "ace/Atomic_Op.h"
+#include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Process_Manager.h"
@@ -103,8 +106,72 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   return result;
 }
 
+ACE_CString order;
+
+ACE_Atomic_Op<ACE_Thread_Mutex, int> running_tasks = 0;
+
+class Process_Task : public ACE_Task<ACE_MT_SYNCH>
+{
+public:
+  Process_Task (const ACE_TCHAR *argv0,
+                ACE_Process_Manager &mgr,
+                int sleep_time)
+    : argv0_ (argv0),
+      mgr_ (mgr),
+      sleep_time_ (sleep_time) { }
+
+  int open (void*)
+  {
+    char tmp[10];
+    order += ACE_OS::itoa (sleep_time_, tmp, 10);
+    running_tasks++;
+    activate ();
+    return 0;
+  }
+
+  int svc (void)
+  {
+    int result = 0;
+    ACE_exitcode exitcode;
+    pid_t my_child = spawn_child (argv0_,
+                                  mgr_,
+                                  sleep_time_);
+    result = mgr_.wait (my_child,
+                        &exitcode);
+    if (result != my_child)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P) Error: expected to reap child (%d); got %d\n"),
+                    my_child,
+                    result));
+        if (result == ACE_INVALID_PID)
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+        //test_status = 1;
+      }
+    else
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) reaped child, pid %d: %d\n"),
+                  my_child,
+                  exitcode));
+    char tmp[10];
+    order + =ACE_OS::itoa (sleep_time_, tmp, 10);
+    return 0;
+  }
+
+  int close (u_long)
+  {
+    running_tasks--;
+    return 0;
+  }
+
+private:
+  const ACE_TCHAR *argv0_;
+  ACE_Process_Manager &mgr_;
+  int sleep_time_;
+};
+
 static int
-command_line_test ()
+command_line_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing for last character of command line\n")));
@@ -351,6 +418,31 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
     }
 
+  Process_Task task1 (argv[0], mgr, 3);
+  Process_Task task2 (argv[0], mgr, 2);
+  Process_Task task3 (argv[0], mgr, 1);
+  task1.open (0);
+  task2.open (0);
+  task3.open (0);
+
+  while (running_tasks!=0)
+    {
+      ACE_OS::sleep (1);
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) still running tasks\n")));
+    }
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ACE_TEXT ("(%P) result: '%s'\n"), 
+              order.c_str ()));
+
+  if (order != "321123")
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P) wrong order of spawns ('%s', should be '321123')\n"),
+                  order.c_str ()));
+      test_status = 1;
+    }
+
 #if !defined (ACE_OPENVMS)
   // --------------------------------------------------
   // Finally, try the reactor stuff...
@@ -379,8 +471,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P) %d processes left in manager\n"),
                 nr_procs));
-
-#endif
+#endif /* !defined (ACE_OPENVMS) */
   ACE_END_TEST;
   return test_status;
 }
