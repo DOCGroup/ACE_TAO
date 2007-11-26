@@ -40,9 +40,9 @@ ACE_Process_Manager::cleanup (void *, void *)
   ACE_Process_Manager::close_singleton ();
 }
 
-// This function acts as a signal handler for SIGCHLD. We don't really want
-// to do anything with the signal - it's just needed to interrupt a sleep.
-// See wait() for more info.
+// This function acts as a signal handler for SIGCHLD. We don't really
+// want to do anything with the signal - it's just needed to interrupt
+// a sleep.  See wait() for more info.
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
 static void
 sigchld_nop (int, siginfo_t *, ucontext_t *)
@@ -676,9 +676,7 @@ ACE_Process_Manager::set_scheduler_all (const ACE_Sched_Params & params)
         return -1;
     }
   return 0;
-
 }
-
 
 // Locate the index in the table associated with <pid>.  Must be
 // called with the lock held.
@@ -785,21 +783,25 @@ ACE_Process_Manager::wait (pid_t pid,
   ssize_t idx = -1;
   ACE_Process *proc = 0;
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  {
+    // fake context after which the lock is released
+    ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  if (pid != 0)
-    {
-      idx = this->find_proc (pid);
-      if (idx == -1)
-        return ACE_INVALID_PID;
-      else
-        proc = process_table_[idx].process_;
-    }
-
+    if (pid != 0)
+      {
+        idx = this->find_proc (pid);
+        if (idx == -1)
+          return ACE_INVALID_PID;
+        else
+          proc = process_table_[idx].process_;
+      }
+    // release the lock.
+  }
   if (proc != 0)
     pid = proc->wait (timeout, status);
   else
     {
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
       // Wait for any Process spawned by this Process_Manager.
 #if defined (ACE_WIN32)
       HANDLE *handles = 0;
@@ -827,10 +829,10 @@ ACE_Process_Manager::wait (pid_t pid,
         pid = 0;
       else
         {
-          // Green Hills produces a warning that result >= WAIT_OBJECT_0 is
-          // a pointless comparison because WAIT_OBJECT_0 is zero and DWORD is
-          // unsigned long, so this test is skipped for Green Hills.
-          // Same for mingw.
+          // Green Hills produces a warning that result >=
+          // WAIT_OBJECT_0 is a pointless comparison because
+          // WAIT_OBJECT_0 is zero and DWORD is unsigned long, so this
+          // test is skipped for Green Hills.  Same for mingw.
 # if defined (ghs) || defined (__MINGW32__) || (defined (_MSC_VER) && _MSC_VER >= 1300)
           ACE_ASSERT (result < WAIT_OBJECT_0 + this->current_count_);
 # else
@@ -867,13 +869,9 @@ ACE_Process_Manager::wait (pid_t pid,
       delete [] handles;
 #else /* !defined(ACE_WIN32) */
       if (timeout == ACE_Time_Value::max_time)
-        {
-          pid = ACE_OS::waitpid (-1, status, 0);
-        }
+        pid = ACE_OS::waitpid (-1, status, 0);
       else if (timeout == ACE_Time_Value::zero)
-        {
-          pid = ACE_OS::waitpid (-1, status, WNOHANG);
-        }
+        pid = ACE_OS::waitpid (-1, status, WNOHANG);
       else
         {
 # if defined (ACE_LACKS_UNIX_SIGNALS)
@@ -912,9 +910,9 @@ ACE_Process_Manager::wait (pid_t pid,
 #   if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600)
               if (pid > 0 || (pid == ACE_INVALID_PID && errno != EINTR))
 #   else
-              if (pid > 0 || pid == ACE_INVALID_PID)
+                if (pid > 0 || pid == ACE_INVALID_PID)
 #   endif
-                break;          // Got a child or an error - all done
+                  break;          // Got a child or an error - all done
 
               // pid 0, nothing is ready yet, so wait.
               // Do a sleep (only this thread sleeps) til something
@@ -930,31 +928,28 @@ ACE_Process_Manager::wait (pid_t pid,
 
           // Restore the previous SIGCHLD action if it was changed.
           if (this->reactor () == 0)
-            {
-              old_action.register_action (SIGCHLD);
-            }
+            old_action.register_action (SIGCHLD);
 # endif /* !ACE_LACKS_UNIX_SIGNALS */
         }
 #endif /* !defined (ACE_WIN32) */
     }
 
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
   if (pid != ACE_INVALID_PID && pid != 0)
     {
-      if (proc == 0)
+      //we always need to get our id, because we could have been moved in the table meanwhile
+      idx = this->find_proc (pid);
+      if (idx == -1)
         {
-          idx = this->find_proc (pid);
-          if (idx == -1)
-            {
-              // oops, reaped an unmanaged process!
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) oops, reaped unmanaged %d\n"),
-                          pid));
-              return pid;
-            }
-          else
-            proc = process_table_[idx].process_;
+          // oops, reaped an unmanaged process!
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) oops, reaped unmanaged %d\n"),
+                      pid));
+          return pid;
         }
       else
+        proc = process_table_[idx].process_;
+      if (proc != 0)
         ACE_ASSERT (pid == proc->getpid ());
 
       this->notify_proc_handler (idx,

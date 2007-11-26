@@ -1,3 +1,13 @@
+Mon Nov 26 03:29:21 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Process_Manager.cpp: Fixed a problem where spawning a
+          process with ACE_Process_Manager resulted in deadlock while
+          waiting for the end of another process.  Thanks to Oliver Spang
+          <oliver dot spang at nsn dot com> for these fixes.
+
+        * tests/Process_Manager_Test.cpp: Added a regression test for
+          Oliver's patches.  Thanks again to oliver Spang for this code.
+
 Sun Nov 25 09:18:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.inl (vsprintf):
