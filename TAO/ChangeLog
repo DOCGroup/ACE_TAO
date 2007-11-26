@@ -1,3 +1,8 @@
+Mon Nov 26 19:31:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+          Don't use the deprecated ACE_SOCK_Dgram_Mcast methods
+
 Fri Nov 23 20:32:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SHMIOP_Transport.cpp:
