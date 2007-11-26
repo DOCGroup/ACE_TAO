@@ -18,6 +18,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 
 . Added support for VxWorks 6.5 kernel mode
 
+. Added support for MacOS 10.5
+
+. Added support for OpenSuSE 10.3
+
+. Added support for Microsoft Visual Studio 2008
+
 . With Ubuntu 7.04 and 7.10 we can't use visibility, that results in
   unresolved externals when building some tests. With lsb_release we
   now detect Ubuntu 7.04 and 7.10 automatically and then we disable
