@@ -1,3 +1,8 @@
+Tue Nov 27 06:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+          Don't use the deprecated ACE_SOCK_Dgram_Mcast methods
+
 Mon Nov 26 20:41:03 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Process_Manager_Test.cpp: Changed the use of
