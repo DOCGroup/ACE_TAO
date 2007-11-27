@@ -75,7 +75,7 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send, ")
-                      ACE_TEXT ("send failure - %m (errno: %d)\n"),
+                      ACE_TEXT ("send failure (errno: %d) - %m\n"),
                       this->id (), errno));
         }
     }
@@ -174,11 +174,8 @@ TAO_IIOP_Transport::recv (char *buf,
 
   // Do not print the error message if it is a timeout, which could
   // occur in thread-per-connection.
-  if (n == -1 &&
-      TAO_debug_level > 4 &&
-      errno != ETIME)
+  if (n == -1 && TAO_debug_level > 4 && errno != ETIME)
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv, ")
                   ACE_TEXT ("read failure - %m errno %d\n"),
@@ -214,9 +211,7 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
                                   int message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
-  if (this->ws_->sending_request (orb_core,
-                                  message_semantics) == -1)
-
+  if (this->ws_->sending_request (orb_core, message_semantics) == -1)
     return -1;
 
   if (this->send_message (stream,
@@ -415,8 +410,7 @@ TAO_IIOP_Transport::get_listen_point (
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
 
-  if (this->connection_handler_->peer ().get_local_addr (local_addr)
-      == -1)
+  if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
