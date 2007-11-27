@@ -22,12 +22,16 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 
 . Added support for OpenSuSE 10.3
 
+. Added support for RedHat 5.1
+
 . Added support for Microsoft Visual Studio 2008
 
 . With Ubuntu 7.04 and 7.10 we can't use visibility, that results in
   unresolved externals when building some tests. With lsb_release we
   now detect Ubuntu 7.04 and 7.10 automatically and then we disable
   visibility
+
+. Removed deprecated (un)subscribe methods from ACE_SOCK_Dgram_Mcast
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6 and ACE-5.6.1
 ====================================================
