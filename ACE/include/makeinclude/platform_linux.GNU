@@ -27,11 +27,14 @@ ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
     no_hidden_visibility ?= 1
   endif
 endif
-ifeq (FedoraCore, $(findstring FedoraCore,$(LSB_RELEASE_ID)))
+ifeq (Fedora, $(findstring Fedora,$(LSB_RELEASE_ID)))
   ifeq (6, $(findstring 6,$(LSB_RELEASE_RELEASE)))
     gcc_template_instantiation_visibility ?= 1
   endif
   ifeq (7, $(findstring 7,$(LSB_RELEASE_RELEASE)))
+    gcc_template_instantiation_visibility ?= 1
+  endif
+  ifeq (8, $(findstring 8,$(LSB_RELEASE_RELEASE)))
     gcc_template_instantiation_visibility ?= 1
   endif
 endif
