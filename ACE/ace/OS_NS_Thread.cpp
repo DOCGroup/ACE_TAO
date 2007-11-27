@@ -4169,7 +4169,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   if defined (ACE_HAS_PTHREAD_ATTR_SETNAME)
   if (thr_name && *thr_name)
     {
-      if (ACE_ADAPT_RETVAL(::pthread_attr_setname (&attr, *thr_name), result) != 0)
+      if (ACE_ADAPT_RETVAL(::pthread_attr_setname (&attr, const_cast<char*>(*thr_name)), result) != 0)
         {
 #       if defined (ACE_HAS_PTHREADS_DRAFT4)
           ::pthread_attr_delete (&attr);
