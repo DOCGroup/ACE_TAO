@@ -1,7 +1,23 @@
+Tue Nov 27 15:56:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp:
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+          Layout changes
+
+        * tao/IIOP_Transport.cpp:
+        * tao/Transport.cpp:
+          Layout changes and improved some debug messages
+
+        * tao/Thread_Per_Connection_Handler.cpp:
+        * tao/Thread_Per_Connection_Handler.h:
+          No need to use ACE_Task<>, just use ACE_Task_Base, we don't need
+          the message queue. Also removed the activate method, just use the
+          method from the base
+
 Tue Nov 27 14:55:14 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/AMI/FL_Callback/FL_Callback.mpc:
-        
+
           Added explicit lists of header and inline files to the project.
 
 Tue Nov 27 11:20:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>

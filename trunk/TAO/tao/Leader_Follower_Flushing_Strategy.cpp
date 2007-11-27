@@ -22,8 +22,7 @@ TAO_Leader_Follower_Flushing_Strategy::schedule_output (TAO_Transport *transport
 
 int
 TAO_Leader_Follower_Flushing_Strategy::cancel_output (
-    TAO_Transport *transport
-  )
+    TAO_Transport *transport)
 {
   return transport->cancel_output_i ();
 }
@@ -32,8 +31,7 @@ int
 TAO_Leader_Follower_Flushing_Strategy::flush_message (
     TAO_Transport *transport,
     TAO_Queued_Message *msg,
-    ACE_Time_Value *max_wait_time
-  )
+    ACE_Time_Value *max_wait_time)
 {
   TAO_Leader_Follower &leader_follower =
     transport->orb_core ()->leader_follower ();
@@ -42,8 +40,7 @@ TAO_Leader_Follower_Flushing_Strategy::flush_message (
 
 int
 TAO_Leader_Follower_Flushing_Strategy::flush_transport (
-    TAO_Transport *transport
-  )
+    TAO_Transport *transport)
 {
   // @todo This is not the right way to do this....
 
