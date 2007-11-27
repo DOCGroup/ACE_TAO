@@ -22,7 +22,8 @@ ACE_Thread::spawn_n (size_t n,
                      long priority,
                      void *stack[],
                      size_t stack_size[],
-                     ACE_Thread_Adapter *thread_adapter)
+                     ACE_Thread_Adapter *thread_adapter,
+                     const char* thr_name[])
 {
   ACE_TRACE ("ACE_Thread::spawn_n");
   ACE_thread_t t_id;
@@ -38,7 +39,8 @@ ACE_Thread::spawn_n (size_t n,
                             priority,
                             stack == 0 ? 0 : stack[i],
                             stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
-                            thread_adapter) != 0)
+                            thread_adapter,
+                            thr_name == 0 ? 0 : &thr_name[i]) != 0)
       break;
 
   return i;
@@ -54,17 +56,18 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
                      void *stack[],
                      size_t stack_size[],
                      ACE_hthread_t thread_handles[],
-                     ACE_Thread_Adapter *thread_adapter)
+                     ACE_Thread_Adapter *thread_adapter,
+                     const char* thr_name[])
 {
   ACE_TRACE ("ACE_Thread::spawn_n");
-  size_t i;
+  size_t i = 0;
 
   for (i = 0; i < n; i++)
     {
       ACE_thread_t t_id;
       ACE_hthread_t t_handle;
 
-      int result =
+      int const result =
         ACE_OS::thr_create (func,
                             arg,
                             flags,
@@ -73,7 +76,8 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
                             priority,
                             stack == 0 ? 0 : stack[i],
                             stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
-                            thread_adapter);
+                            thread_adapter,
+                            thr_name == 0 ? 0 : &thr_name[i]);
 
       if (result == 0)
         {

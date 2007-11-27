@@ -1535,6 +1535,10 @@ namespace ACE_OS {
    *
    * Note that @a thread_adapter is always deleted by @c thr_create,
    * therefore it must be allocated with global operator new.
+   *
+   * At the moment for @a thr_name a valid string is passed then this
+   * will be used on VxWorks to set the task name. If we just pass a pointer
+   * the name of the task is returned
    */
   extern ACE_Export
   int thr_create (ACE_THR_FUNC func,
@@ -1545,7 +1549,8 @@ namespace ACE_OS {
                   long priority = ACE_DEFAULT_THREAD_PRIORITY,
                   void *stack = 0,
                   size_t stacksize = ACE_DEFAULT_THREAD_STACKSIZE,
-                  ACE_Base_Thread_Adapter *thread_adapter = 0);
+                  ACE_Base_Thread_Adapter *thread_adapter = 0,
+                  const char** thr_name = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_equal (ACE_thread_t t1,
@@ -1669,7 +1674,7 @@ namespace ACE_OS {
 # endif /* ACE_HAS_THR_C_DEST */
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  /// @internal  applications should call thr_keyfree instead
+  /// @internal Applications should call thr_keyfree instead
   extern ACE_Export
   int thr_keyfree_native (ACE_OS_thread_key_t key);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
@@ -1689,6 +1694,9 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void thr_self (ACE_hthread_t &);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  const char* thr_name (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setcancelstate (int new_state,
