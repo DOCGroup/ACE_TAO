@@ -1,3 +1,8 @@
+Tue Nov 27 16:02:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          Layout changes and improved some debug messages
+
 Tue Nov 27 15:56:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.cpp:
