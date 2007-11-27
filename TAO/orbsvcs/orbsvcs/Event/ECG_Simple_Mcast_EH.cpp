@@ -37,10 +37,10 @@ TAO_ECG_Simple_Mcast_EH::open (const char * mcast_addr,
                        mcast_addr),
                       -1);
 
-  if (this->dgram_.subscribe (mcast_group, 1, net_if) != 0)
+  if (this->dgram_.join (mcast_group, 1, net_if) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                       "Unable to open mcast handler: error "
-                      "subscribing to %s\n",
+                      "joining to %s\n",
                        mcast_addr),
                       -1);
 
