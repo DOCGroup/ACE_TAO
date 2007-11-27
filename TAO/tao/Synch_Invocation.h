@@ -107,9 +107,6 @@ namespace TAO
                                       TAO_Synch_Reply_Dispatcher &rd,
                                       TAO_Bind_Dispatcher_Guard &bd);
 
-    /// Callback when the transport resolver has resolved a transport
-    virtual void transport_resolved (void);
-
   private:
 
     /// Helper method that checks the reply status of the

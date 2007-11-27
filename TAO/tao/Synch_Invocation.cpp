@@ -15,7 +15,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/SystemException.h"
-#include "tao/Transport_Mux_Strategy.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -74,23 +73,15 @@ namespace TAO
     try
       {
 #endif /*TAO_HAS_INTERCEPTORS */
-        bool const is_timeout = max_wait_time && (*max_wait_time != ACE_Time_Value::zero);
-
-        this->resolver_.resolve (max_wait_time);
-
-        if (TAO_debug_level)
-          {
-            if (is_timeout && max_wait_time && *max_wait_time == ACE_Time_Value::zero)
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) Synch_Oneway_Invocation::remote_twoway: ")
-                          ACE_TEXT ("max wait time consumed during transport resolution\n")));
-          }
-
-        // Callback that the transport has been resolved. Derived classes
-        // can now use the transport if they need to
-        this->transport_resolved ();
-
         TAO_Transport* const transport = this->resolver_.transport ();
+
+        if (!transport)
+          {
+            // Way back, we failed to find a profile we could connect to.
+            // We've come this far only so we reach the interception points
+            // in case they can fix things. Time to bail....
+            throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+          }
 
         TAO_OutputCDR &cdr = transport->out_stream ();
 
@@ -610,12 +601,6 @@ namespace TAO
     return TAO_INVOKE_SYSTEM_EXCEPTION;
   }
 
-  void Synch_Twoway_Invocation::transport_resolved (void)
-  {
-    // Update the request id now that we have a transport
-    this->details_.request_id (this->resolver_.transport ()->tms ()->request_id ());
-  }
-
   // =========================================================================
 
   Synch_Oneway_Invocation::Synch_Oneway_Invocation (
@@ -652,23 +637,15 @@ namespace TAO
     try
       {
 #endif /*TAO_HAS_INTERCEPTORS */
-        bool const is_timeout = max_wait_time && (*max_wait_time != ACE_Time_Value::zero);
-
-        this->resolver_.resolve (max_wait_time);
-
-        if (TAO_debug_level)
-          {
-            if (is_timeout && max_wait_time && *max_wait_time == ACE_Time_Value::zero)
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) Synch_Oneway_Invocation::remote_oneway: ")
-                          ACE_TEXT ("max wait time consumed during transport resolution\n")));
-          }
-
-        // Callback that the transport has been resolved. Derived classes
-        // can now use the transport if they need to
-        this->transport_resolved ();
-
         TAO_Transport* const transport = this->resolver_.transport ();
+
+        if (!transport)
+          {
+            // Way back, we failed to find a profile we could connect to.
+            // We've come this far only so we reach the interception points
+            // in case they can fix things. Time to bail....
+            throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+          }
 
         TAO_OutputCDR &cdr = transport->out_stream ();
 
