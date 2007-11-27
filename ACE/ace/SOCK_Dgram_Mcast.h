@@ -250,18 +250,9 @@ public:
    * Note that the optional @a reuse_addr parameter does not apply to
    * subscriptions; it is only used if <open> is implicitly invoked (see above).
    *
-   * @deprecated This method has been deprecated, please use join() instead.
-   * In addition, the following parameters have also been deprecated:
-   * @a protocol_family and @a protocol have no effect.
+   * Uses the mcast_addr to determine protocol_family, and protocol which
+   * we always pass as 0 anyway.
    */
-  int subscribe (const ACE_INET_Addr &mcast_addr,
-                 int reuse_addr = 1,               // (see above)
-                 const ACE_TCHAR *net_if = 0,
-                 int protocol_family = PF_INET,
-                 int protocol = 0);
-
-  /// join() replaces subscribe() and uses the mcast_addr to determine
-  /// protocol_family, and protocol which we always pass as 0 anyway.
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,               // (see above)
             const ACE_TCHAR *net_if = 0);
@@ -281,34 +272,11 @@ public:
    * implemented in this environment (_even if_ the <subscribe> specifies a
    * non- NULL <net_if>).
    *
-   * @deprecated This method has been deprecated.  Please use leave() instead.
-   * In addition, @a protocol_family and @a protocol have no effect.
+   * leave() replaces unsubscribe() and uses mcast_addr to determine
+   * protocol_family, and protocol which we always pass as 0 anyway.
    */
-  int unsubscribe (const ACE_INET_Addr &mcast_addr,
-                   const ACE_TCHAR *net_if = 0,
-                   int protocol_family = PF_INET,
-                   int protocol = 0);
-
-  /// leave() replaces unsubscribe() and uses mcast_addr to determine
-  /// protocol_family, and protocol which we always pass as 0 anyway.
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = 0);
-
-  /// Unsubscribe all current subscriptions.
-  /**
-   * Unsubscribe all active group/interface subscriptions (if any).
-   *
-   * Returns -1 if any unsubscribe failed, 0 if there are no errors or no
-   * current subscriptions.
-   *
-   * @deprecated This method has been deprecated.  Since a list of groups is
-   * not maintained (except when ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined),
-   * it isn't possible to unsubscribe to all the groups without closing
-   * the socket.  Therefore, if applications wish to unsubscribe to all
-   * groups without closing the socket, they much keep track of the
-   * subscriptions and call the above unsubscribe () for each.
-   */
-  int unsubscribe (void);
 
   // = Data transfer routines.
 

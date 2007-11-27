@@ -1,3 +1,17 @@
+Tue Nov 27 08:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.{h,cpp,inl}:
+        * ace/Task.{h,cpp}:
+        * ace/Thread.{h,cpp,inl}:
+        * ace/Thread_Manager.{h,cpp}:
+          Added a const char* argument to all methods that create a thread
+          so that we can pass in an optional thread name which is used at
+          this moment only on VxWorks. Added ACE_OS::thr_name() to retrieve
+          the name of the current thread.
+
+        * ace/SOCK_Dgram_Mcast.{h,cpp}:
+          Removed deprecated subscribe/unsubscribe methods
+
 Tue Nov 27 06:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Multicast/Log_Wrapper.cpp:
