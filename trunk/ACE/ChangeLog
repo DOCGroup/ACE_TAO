@@ -1,3 +1,12 @@
+Tue Nov 27 14:03:17 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Process_Manager_Test.cpp: Added
+        
+          #include "ace/Synch_Traits.h"
+          
+          so the ACE_MT_SYNCH macro is visible.  Thanks to Johnny for
+          reporting this.
+
 Tue Nov 27 13:14:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:

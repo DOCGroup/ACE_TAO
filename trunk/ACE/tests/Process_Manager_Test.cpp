@@ -32,6 +32,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Process_Manager.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread.h"
 #include "ace/Reactor.h"
