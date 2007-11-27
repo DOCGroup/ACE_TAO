@@ -672,12 +672,10 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
   // Dont clone now.. We could be sent in one shot!
   TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
-  synch_message.push_back (this->head_,
-                           this->tail_);
+  synch_message.push_back (this->head_, this->tail_);
 
   int const n =
-    this->send_synch_message_helper_i (synch_message,
-                                       max_wait_time);
+    this->send_synch_message_helper_i (synch_message, max_wait_time);
 
   if (n == -1 || n == 1)
     {
@@ -724,7 +722,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
       typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
       TAO_REVERSE_LOCK reverse (*this->handler_lock_);
       ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
-      (void) flushing_strategy->flush_message(this, msg, 0);
+      (void) flushing_strategy->flush_message (this, msg, 0);
     }
 
   return 1;
@@ -774,11 +772,10 @@ TAO_Transport::schedule_output_i (void)
   // Check to see if our event handler is still registered with the
   // reactor.  It's possible for another thread to have run close_connection()
   // since we last used the event handler.
-
   ACE_Event_Handler * const found = reactor->find_handler (eh->get_handle ());
   if (found)
     {
-      found->remove_reference ();      
+      found->remove_reference ();
 
       if (found != eh)
         {
@@ -929,8 +926,8 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
         {
           ACE_DEBUG ((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_helper, ")
-             ACE_TEXT ("error during %p\n"),
-             this->id (), ACE_TEXT ("send()")));
+             ACE_TEXT ("error during send (errno: %d) - %m\n"),
+             this->id (), errno));
         }
 
       if (errno == EWOULDBLOCK || errno == EAGAIN)
@@ -1010,8 +1007,7 @@ TAO_Transport::drain_queue_i (void)
       // IOV_MAX elements ...
       if (iovcnt == ACE_IOV_MAX)
         {
-          int const retval =
-            this->drain_queue_helper (iovcnt, iov);
+          int const retval = this->drain_queue_helper (iovcnt, iov);
 
           now = ACE_High_Res_Timer::gettimeofday_hr ();
 
@@ -1254,13 +1250,11 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   switch (message_semantics)
     {
       case TAO_Transport::TAO_TWOWAY_REQUEST:
-        ret = this->send_synchronous_message_i (message_block,
-                                                max_wait_time);
+        ret = this->send_synchronous_message_i (message_block, max_wait_time);
         break;
 
       case TAO_Transport::TAO_REPLY:
-        ret = this->send_reply_message_i (message_block,
-                                          max_wait_time);
+        ret = this->send_reply_message_i (message_block, max_wait_time);
         break;
 
       case TAO_Transport::TAO_ONEWAY_REQUEST:
@@ -1726,7 +1720,6 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
   ssize_t const n = this->recv (q_data->msg_block ()->wr_ptr(),
                                 recv_size,
                                 max_wait_time);
-
 
   if (n <= 0)
     {

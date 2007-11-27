@@ -136,9 +136,7 @@ TAO_Connection_Handler::svc_i (void)
       // Let the transport know that it is used
       (void) this->transport ()->update_transport ();
 
-      result =
-        this->transport ()->handle_input (rh,
-                                          max_wait_time);
+      result = this->transport ()->handle_input (rh, max_wait_time);
 
       if (result == -1 && errno == ETIME)
         {
