@@ -1,3 +1,9 @@
+Tue Nov 27 14:55:14 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/AMI/FL_Callback/FL_Callback.mpc:
+        
+          Added explicit lists of header and inline files to the project.
+
 Tue Nov 27 11:20:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/DII_Invocation.cpp:

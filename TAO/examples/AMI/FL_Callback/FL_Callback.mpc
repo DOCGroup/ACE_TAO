@@ -5,6 +5,7 @@ project(*idl): taoexe, messaging, ami {
   IDL_Files {
     test.idl
   }
+  
   custom_only = 1
 }
 
@@ -18,6 +19,18 @@ project(*progress): taoexe, messaging, ami, portableserver, tao_flresource {
     testS.cpp
     testC.cpp
   }
+  
+  Header_Files {
+    Progress_i.h
+    testC.h
+    testS.h
+  }
+  
+  Inline_Files {
+    testC.inl
+    testS.inl
+  }
+  
   IDL_Files {
   }
 }
@@ -32,6 +45,18 @@ project(*peer): taoexe, strategies, messaging, ami, portableserver {
     testS.cpp
     testC.cpp
   }
+  
+  Header_Files {
+    Peer_i.h
+    testC.h
+    testS.h
+  }
+  
+  Inline_Files {
+    testC.inl
+    testS.inl
+  }
+  
   IDL_Files {
   }
 }
