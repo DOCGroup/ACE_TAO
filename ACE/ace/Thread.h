@@ -89,7 +89,8 @@ public:
                     long priority = ACE_DEFAULT_THREAD_PRIORITY,
                     void *stack = 0,
                     size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE,
-                    ACE_Thread_Adapter *thread_adapter = 0);
+                    ACE_Thread_Adapter *thread_adapter = 0,
+                    const char** thr_name = 0);
 
   /**
    * Spawn N new threads, which execute @a func with argument @a arg (if
@@ -112,12 +113,13 @@ public:
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
                          void *stack[] = 0,
                          size_t stack_size[] = 0,
-                         ACE_Thread_Adapter *thread_adapter = 0);
+                         ACE_Thread_Adapter *thread_adapter = 0,
+                         const char* thr_name[] = 0);
 
   /**
-   * Spawn @a n new threads, which execute @a func with argument <arg>
-   * (if <thread_adapter> is non-0 then @a func and <args> are ignored
-   * and are obtained from <thread_adapter>).  The thread_ids of
+   * Spawn @a n new threads, which execute @a func with argument @a arg
+   * (if @a thread_adapter is non-0 then @a func and @a args are ignored
+   * and are obtained from @a thread_adapter).  The thread_ids of
    * successfully spawned threads will be placed into the <thread_ids>
    * buffer (which must be the same size as @a n).  If @a stack != 0 it
    * is assumed to be an array of @a n pointers to the base of the
@@ -141,7 +143,8 @@ public:
                          void *stack[] = 0,
                          size_t stack_size[] = 0,
                          ACE_hthread_t thread_handles[] = 0,
-                         ACE_Thread_Adapter *thread_adapter = 0);
+                         ACE_Thread_Adapter *thread_adapter = 0,
+                         const char* thr_name[] = 0);
 
   /**
    * Wait for one or more threads to exit and reap their exit status.

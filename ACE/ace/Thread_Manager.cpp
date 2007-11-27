@@ -550,7 +550,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                              int grp_id,
                              void *stack,
                              size_t stack_size,
-                             ACE_Task_Base *task)
+                             ACE_Task_Base *task,
+                             const char** thr_name)
 {
   // First, threads created by Thread Manager should not be daemon threads.
   // Using assertion is probably a bit too strong.  However, it helps
@@ -608,7 +609,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                         priority,
                                         stack,
                                         stack_size,
-                                        thread_args);
+                                        thread_args,
+                                        thr_name);
 
   if (result != 0)
     {
@@ -663,7 +665,8 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
                            long priority,
                            int grp_id,
                            void *stack,
-                           size_t stack_size)
+                           size_t stack_size,
+                           const char** thr_name)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn");
 
@@ -684,7 +687,8 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
                      grp_id,
                      stack,
                      stack_size,
-                     0) == -1)
+                     0,
+                     thr_name) == -1)
     return -1;
 
   return grp_id;
@@ -702,7 +706,8 @@ ACE_Thread_Manager::spawn_n (size_t n,
                              ACE_Task_Base *task,
                              ACE_hthread_t thread_handles[],
                              void *stack[],
-                             size_t stack_size[])
+                             size_t stack_size[],
+                             const char* thr_name[])
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -723,7 +728,8 @@ ACE_Thread_Manager::spawn_n (size_t n,
                          grp_id,
                          stack == 0 ? 0 : stack[i],
                          stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
-                         task) == -1)
+                         task,
+                         thr_name == 0 ? 0 : &thr_name [i]) == -1)
         return -1;
     }
 
@@ -743,7 +749,8 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
                              void *stack[],
                              size_t stack_size[],
                              ACE_hthread_t thread_handles[],
-                             ACE_Task_Base *task)
+                             ACE_Task_Base *task,
+                             const char* thr_name[])
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -764,7 +771,8 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
                          grp_id,
                          stack == 0 ? 0 : stack[i],
                          stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
-                         task) == -1)
+                         task,
+                         thr_name == 0 ? 0 : &thr_name [i]) == -1)
         return -1;
     }
 
@@ -1540,13 +1548,13 @@ ACE_Thread_Manager::wait_grp (int grp_id)
 // slot.
 
 ACE_THR_FUNC_RETURN
-ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
+ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, bool do_thread_exit)
 {
   ACE_TRACE ("ACE_Thread_Manager::exit");
 #if defined (ACE_WIN32)
   // Remove detached thread handle.
 
-  if (do_thr_exit)
+  if (do_thread_exit)
     {
 #if 0
       // @@ This callback is now taken care of by TSS_Cleanup.  Do we
@@ -1570,7 +1578,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
 
     // Find the thread id, but don't use the cache.  It might have been
     // deleted already.
-    ACE_thread_t id = ACE_OS::thr_self ();
+    ACE_thread_t const id = ACE_OS::thr_self ();
     ACE_Thread_Descriptor* td = this->find_thread (id);
     if (td != 0)
      {
@@ -1580,7 +1588,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
      }
   }
 
-  if (do_thr_exit)
+  if (do_thread_exit)
     {
       ACE_Thread::exit (status);
       // On reasonable systems <ACE_Thread::exit> should not return.

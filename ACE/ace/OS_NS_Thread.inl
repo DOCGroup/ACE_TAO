@@ -3077,6 +3077,20 @@ ACE_OS::thr_self (void)
 #endif /* ACE_HAS_THREADS */
 }
 
+ACE_INLINE const char*
+ACE_OS::thr_name (void)
+{
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_VXTHREADS)
+  return ::taskName (ACE_OS::thr_self ());
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif
+}
+
 ACE_INLINE void
 ACE_OS::thr_self (ACE_hthread_t &self)
 {
@@ -3118,7 +3132,7 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
 #   else /* this is draft 7 or std */
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setcancelstate (new_state,
-                                                                 old_state),
+                                                               old_state),
                                        result),
                      int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
@@ -3161,7 +3175,7 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 #   else /* this is draft 7 or std */
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setcanceltype (new_type,
-                                                                old_type),
+                                                              old_type),
                                        result),
                      int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
@@ -3242,8 +3256,8 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
   param.sched_priority = priority;
 
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setschedparam (ht_id,
-                                                                policy,
-                                                                &param),
+                                                              policy,
+                                                              &param),
                                        result),
                      int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */

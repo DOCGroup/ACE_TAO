@@ -1152,8 +1152,7 @@ ACE_OS::cleanup_tss (const u_int main_thread)
 // @@ The following functions could be inlined if i could figure where
 // to put it among the #ifdefs!
 int
-ACE_OS::condattr_init (ACE_condattr_t &attributes,
-                       int type)
+ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
 {
   attributes.type = type;
   return 0;
@@ -3821,7 +3820,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                     long priority,
                     void *stack,
                     size_t stacksize,
-                    ACE_Base_Thread_Adapter *thread_adapter)
+                    ACE_Base_Thread_Adapter *thread_adapter,
+                    const char** thr_name)
 {
   ACE_OS_TRACE ("ACE_OS::thr_create");
 
@@ -3836,7 +3836,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 # define  ACE_THREAD_FUNCTION  thread_args->entry_point ()
 # define  ACE_THREAD_ARGUMENT  thread_args
 #endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
-
 
   ACE_Base_Thread_Adapter *thread_args = 0;
   if (thread_adapter == 0)
@@ -3881,7 +3880,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     thr_handle = &tmp_handle;
 
 # if defined (ACE_HAS_PTHREADS)
-
   int result;
 # if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
   /* Tests show that VxWorks 6.x pthread lib does not only
@@ -4167,6 +4165,24 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       ACE_UNUSED_ARG (priority);
 #   endif /* ACE_LACKS_SETSCHED */
 
+  // *** Set pthread name
+#   if defined (ACE_HAS_PTHREAD_ATTR_SETNAME)
+  if (thr_name && *thr_name)
+    {
+      if (ACE_ADAPT_RETVAL(::pthread_attr_setname (&attr, *thr_name), result) != 0)
+        {
+#       if defined (ACE_HAS_PTHREADS_DRAFT4)
+          ::pthread_attr_delete (&attr);
+#       else /* ACE_HAS_PTHREADS_DRAFT4 */
+          ::pthread_attr_destroy (&attr);
+#       endif /* ACE_HAS_PTHREADS_DRAFT4 */
+          return -1;
+        }
+    }
+#else
+  ACE_UNUSED_ARG (thr_name);
+#   endif
+
       // *** Set Scope
 #   if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
       if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
@@ -4396,6 +4412,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   auto_thread_args.release ();
   return result;
 # elif defined (ACE_HAS_WTHREADS)
+  ACE_UNUSED_ARG (thr_name);
   ACE_UNUSED_ARG (stack);
 #   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
@@ -4501,7 +4518,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // The call below to ::taskSpawn () causes VxWorks to assign a
       // unique task name of the form: "t" + an integer, because the
       // first argument is 0.
-      tid = ::taskSpawn (0,
+      tid = ::taskSpawn (thr_name && *thr_name ? const_cast <char*> (*thr_name) : 0,
                          priority,
                          (int) flags,
                          (int) stacksize,
@@ -4521,7 +4538,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       // The TID is defined to be the address of the TCB.
       int status = ::taskInit (tcb,
-                               thr_id_provided  ?  *thr_id  :  0,
+                               thr_name && *thr_name ? const_cast <char*>(*thr_name) : 0,
                                priority,
                                (int) flags,
                                (char *) stack + sizeof (WIND_TCB),
@@ -4550,6 +4567,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (thr_handle)
         *thr_handle = tid;
 
+      if (thr_name && !(*thr_name))
+        *thr_name = ::taskName (tid);
+
       auto_thread_args.release ();
       return 0;
     }
@@ -4564,6 +4584,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ACE_UNUSED_ARG (priority);
   ACE_UNUSED_ARG (stack);
   ACE_UNUSED_ARG (stacksize);
+  ACE_UNUSED_ARG (thr_name);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
