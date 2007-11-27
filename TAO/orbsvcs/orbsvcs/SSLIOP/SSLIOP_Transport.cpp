@@ -54,8 +54,7 @@ TAO::SSLIOP::Transport::handle_input (TAO_Resume_Handle &rh,
   int result = 0;
 
   // Set up the SSLIOP::Current object.
-  TAO::SSLIOP::State_Guard ssl_state_guard (this->connection_handler_,
-                                            result);
+  TAO::SSLIOP::State_Guard ssl_state_guard (this->connection_handler_, result);
 
   if (result == -1)
     return -1;
@@ -89,14 +88,13 @@ TAO::SSLIOP::Transport::recv (char *buf,
 
   // Most of the errors handling is common for
   // Now the message has been read
-  if (n == -1
-      && TAO_debug_level > 4
-      && errno != ETIME)
+  if (n == -1 && TAO_debug_level > 4 && errno != ETIME)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport::recv, %p \n"),
-                  ACE_TEXT ("TAO - read message failure ")
-                  ACE_TEXT ("recv_i () \n")));
+                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport[%d]::recv, ")
+                  ACE_TEXT ("read failure - %m errno %d\n"),
+                  this->id (),
+                  errno));
     }
 
   // Error handling
@@ -201,9 +199,7 @@ TAO::SSLIOP::Transport::generate_request_header (
 
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
-  return TAO_Transport::generate_request_header (opdetails,
-                                                 spec,
-                                                 msg);
+  return TAO_Transport::generate_request_header (opdetails, spec, msg);
 }
 
 int
@@ -270,8 +266,7 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
     return;
 
   // Add this info in to the svc_list
-  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
-                                                    cdr);
+  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
   return;
 }
 
