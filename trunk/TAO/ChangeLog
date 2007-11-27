@@ -1,3 +1,18 @@
+Tue Nov 27 11:20:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.h:
+          Reworked the fix for bug 2133/3079/3080 in such a way that the
+          Transport Current code is working again (see bug 3127)
+
 Tue Nov 27 06:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV/UDP.cpp:

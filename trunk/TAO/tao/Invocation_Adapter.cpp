@@ -9,6 +9,7 @@
 #include "tao/debug.h"
 #include "tao/Collocated_Invocation.h"
 #include "tao/Transport.h"
+#include "tao/Transport_Mux_Strategy.h"
 #include "tao/Collocation_Proxy_Broker.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/TAOC.h"
@@ -241,6 +242,22 @@ namespace TAO
       effective_target.in (),
       stub,
       block_connect);
+
+    resolver.resolve (max_wait_time);
+
+    if (TAO_debug_level)
+      {
+        if (is_timeout && *max_wait_time == ACE_Time_Value::zero)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t)Invocation_Adapter::invoke_remote_i: ")
+                      ACE_TEXT ("max wait time consumed during transport resolution\n")));
+      }
+
+    // Update the request id now that we have a transport
+    if (resolver.transport ())
+      {
+        details.request_id (resolver.transport ()->tms ()->request_id ());
+      }
 
     switch (this->type_)
       {

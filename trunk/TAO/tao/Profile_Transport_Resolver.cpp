@@ -89,7 +89,10 @@ namespace TAO
 
     if (this->transport_.get () == 0)
       {
-        throw ::CORBA::INTERNAL ();
+        // No useable endpoint could be found. We will not
+        // be able to send the message. Wait to throw an exception until
+        // after the send_request interception point has been called.
+        return;
       }
 
     TAO_GIOP_Message_Version const & version = this->profile_->version ();
