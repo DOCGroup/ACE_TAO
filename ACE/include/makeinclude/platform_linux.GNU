@@ -31,6 +31,9 @@ ifeq (FedoraCore, $(findstring FedoraCore,$(LSB_RELEASE_ID)))
   ifeq (6, $(findstring 6,$(LSB_RELEASE_RELEASE)))
     gcc_template_instantiation_visibility ?= 1
   endif
+  ifeq (7, $(findstring 7,$(LSB_RELEASE_RELEASE)))
+    gcc_template_instantiation_visibility ?= 1
+  endif
 endif
 ifeq (RedHatEnterpriseServer, $(findstring RedHatEnterpriseServer,$(LSB_RELEASE_ID)))
   ifeq (5, $(findstring 5,$(LSB_RELEASE_RELEASE)))
