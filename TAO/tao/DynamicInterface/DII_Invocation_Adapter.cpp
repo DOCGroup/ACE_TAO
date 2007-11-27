@@ -9,6 +9,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Transport.h"
+#include "tao/GIOP_Message_Base.h"
 #include "tao/SystemException.h"
 #include "tao/operation_details.h"
 
@@ -85,11 +86,25 @@ namespace TAO
           CORBA::COMPLETED_NO);
       }
 
+    TAO_Transport* const transport = r.transport ();
+
+    if (!transport)
+      {
+        // Way back, we failed to find a profile we could connect to.
+        // We've come this far only so we reach the interception points
+        // in case they can fix things. Time to bail....
+        throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+      }
+
+    transport->messaging_object ()->out_stream ().reset_byte_order (
+        request_->_tao_byte_order ());
+
     TAO::DII_Invocation synch (this->target_,
                                r,
                                op,
                                this->exception_list_,
                                this->request_);
+
 
     Invocation_Status status = synch.remote_invocation (max_wait_time);
 
@@ -187,6 +202,19 @@ namespace TAO
             EINVAL),
           CORBA::COMPLETED_NO);
       }
+
+    TAO_Transport* const transport = r.transport ();
+
+    if (!transport)
+      {
+        // Way back, we failed to find a profile we could connect to.
+        // We've come this far only so we reach the interception points
+        // in case they can fix things. Time to bail....
+        throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+      }
+
+    transport->messaging_object ()->out_stream ().reset_byte_order (
+      request_->_tao_byte_order ());
 
     TAO::DII_Deferred_Invocation synch (
         this->target_,

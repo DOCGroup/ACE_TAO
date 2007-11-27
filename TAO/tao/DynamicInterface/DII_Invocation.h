@@ -61,11 +61,7 @@ namespace TAO
 
     virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr);
 
-  protected:
-    virtual void transport_resolved (void);
-
   private:
-
     CORBA::ExceptionList *excp_list_;
 
     /// Back pointer to the DII request that created us.
@@ -91,9 +87,6 @@ namespace TAO
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
     Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time);
-
-  protected:
-    virtual void transport_resolved (void);
 
   private:
     /// Back pointer to the DII request that created us.

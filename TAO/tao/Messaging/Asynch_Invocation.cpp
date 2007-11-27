@@ -55,34 +55,14 @@ namespace TAO
     try
       {
 #endif /* TAO_HAS_INTERCEPTORS */
-        bool const is_timeout = max_wait_time && (*max_wait_time != ACE_Time_Value::zero);
-
-        this->resolver_.resolve (max_wait_time);
-
-        if (TAO_debug_level)
-          {
-            if (is_timeout && max_wait_time && *max_wait_time == ACE_Time_Value::zero)
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) Asynch_Remote_Invocation::remote_invocation: ")
-                          ACE_TEXT ("max wait time consumed during transport resolution\n")));
-          }
-
-        // Callback that the transport has been resolved. Derived classes
-        // can now use the transport if they need to
-        this->transport_resolved ();
-
         TAO_Transport* const transport = this->resolver_.transport ();
 
-        if (this->safe_rd_.get ())
+        if (!transport)
           {
-            this->safe_rd_->transport (transport);
-            // AMI Timeout Handling Begin
-            ACE_Time_Value tmp;
-
-            if (is_timeout)
-              {
-                this->safe_rd_->schedule_timer (this->details_.request_id (), *max_wait_time);
-              }
+            // Way back, we failed to find a profile we could connect to.
+            // We've come this far only so we reach the interception points
+            // in case they can fix things. Time to bail....
+            throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
           }
 
         TAO_OutputCDR & cdr =

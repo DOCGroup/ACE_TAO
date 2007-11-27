@@ -170,6 +170,18 @@ namespace TAO
           CORBA::COMPLETED_NO);
       }
 
+    if (this->safe_rd_.get ())
+      {
+        this->safe_rd_->transport (r.transport ());
+        // AMI Timeout Handling Begin
+        ACE_Time_Value tmp;
+
+        if (this->get_timeout (r.stub (), tmp))
+          {
+            this->safe_rd_->schedule_timer (op.request_id (), *max_wait_time);
+          }
+      }
+
     // Loose ownership of the reply dispatcher
     TAO::Asynch_Remote_Invocation asynch (
        effective_target.in (),
