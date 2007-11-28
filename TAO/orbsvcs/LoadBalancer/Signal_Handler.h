@@ -66,7 +66,8 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t thread_ids[] = 0);
+                        ACE_thread_t thread_ids[] = 0,
+                        const char* thr_name[] = 0);
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
