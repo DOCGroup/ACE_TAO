@@ -1,3 +1,10 @@
+Wed Nov 28 12:59:33 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3154_Regression/orbsvcs/CosNotification.idl:
+        * tests/Bug_3154_Regression/test.idl:
+        * tests/Bug_3154_Regression/run_test.pl:
+          Added $Id$ to these files to make fuzz check happy.
+
 Wed Nov 28 10:42:20 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3154_Regression/orbsvcs/CosNotification.idl:
