@@ -1,3 +1,8 @@
+Wed Nov 28 13:08:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_types.h:
+          Updated for VxWorks 6.6
+
 Wed Nov 28 10:56:29 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:
