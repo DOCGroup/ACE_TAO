@@ -1,3 +1,8 @@
+Wed Nov 28 13:24:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task.cpp:
+          Updated for VxWorks 6.6
+
 Wed Nov 28 13:18:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_arpa_inet.cpp:
