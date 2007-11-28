@@ -216,11 +216,16 @@ endif
 
 ifeq ($(SHARED_LIBS), 1)
 ifeq ("$(TOOL_FAMILY)","gnu")
-  PIC = -fpic
-  SOFLAGS += -fpic -shared
+  ifeq ($(rtp),1)
+    PIC = -fpic
+    SOFLAGS += -fpic
+  endif
+  SOFLAGS += -shared
   LDFLAGS += -non-static
 else
-  PIC = -Xpic
+  ifeq ($(rtp),1)
+    PIC = -Xpic
+  endif
   SOFLAGS += -Xshared
   LDFLAGS += -Xdynamic
 endif
