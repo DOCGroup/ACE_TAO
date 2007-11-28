@@ -300,7 +300,8 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
                                               ACE_hthread_t [],
                                               void *stack[],
                                               size_t stack_size[],
-                                              ACE_thread_t thread_names[])
+                                              ACE_thread_t thread_ids[],
+                                              const char* thr_name[] = 0)
 {
   // Make sure to set this flag in case we were deactivated earlier.
   this->active_ = true;
@@ -308,7 +309,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
   // Make sure that we only allow a single thread to be spawned for
   // our adapter.  Otherwise, too many weird things can happen.
   return ACE_Task_Base::activate (flags, 1, 0, priority, grp_id, task, 0,
-                                  stack, stack_size, thread_names);
+                                  stack, stack_size, thread_ids, thr_name);
 }
 
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
