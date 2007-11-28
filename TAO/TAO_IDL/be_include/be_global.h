@@ -574,6 +574,10 @@ public:
   void gen_local_iface_anyops (bool val);
   // Accessors for the member gen_local_iface_anyops_.
 
+  bool gen_custom_ending (void) const;
+  void gen_custom_ending (bool val);
+  // Accessors for the member gen_custom_ending_.
+
   ACE_CString spawn_options (void);
   // Command line passed to ACE_Process::spawn. Different
   // implementations in IDL and IFR backends.
@@ -818,6 +822,11 @@ private:
   bool gen_ostream_operators_;
   // Generate ostream operators for each type declaration, for
   // debuggin or logging.
+
+  bool gen_custom_ending_;
+  // True by default, but a command line option can turn this off so
+  // custom ending will not be applied to files in $TAO_ROOT/,
+  // $TAO_ROOT/tao, $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao.
 };
 
 #endif /* _BE_GLOBAL_H */

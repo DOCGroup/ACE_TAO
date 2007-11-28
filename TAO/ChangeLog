@@ -1,3 +1,18 @@
+Wed Nov 28 10:42:20 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3154_Regression/orbsvcs/CosNotification.idl:
+        * tests/Bug_3154_Regression/test.idl:
+        * tests/Bug_3154_Regression/run_test.pl:
+        * tests/Bug_3154_Regression/README:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+          Added a test and implementation of the feature described
+          by Bug#3154.
+
 Wed Nov 28 07:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/LoadBalancer/Signal_Handler.{h,cpp}:

@@ -111,7 +111,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_local_iface_anyops_ (true),
     use_clonable_in_args_ (false),
     gen_template_export_ (false),
-    gen_ostream_operators_ (false)
+    gen_ostream_operators_ (false),
+    gen_custom_ending_ (true)
 {
 }
 
@@ -253,6 +254,9 @@ BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
   ACE_CString fn (idl_file_name->get_string ());
   ACE_CString fn_ext = fn.substr (fn.length () - 5);
   bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+  if (!orb_file && !be_global->gen_custom_ending () &&
+      idl_global->validate_orb_include (idl_file_name))
+    orb_file = true;
 
   return be_change_idl_file_extension (idl_file_name,
                                        orb_file
@@ -285,6 +289,9 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
   ACE_CString fn (idl_file_name->get_string ());
   ACE_CString fn_ext = fn.substr (fn.length () - 5);
   bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+  if (!orb_file && !be_global->gen_custom_ending () &&
+      idl_global->validate_orb_include (idl_file_name))
+    orb_file = true;
 
   return be_change_idl_file_extension (idl_file_name,
                                        orb_file
@@ -1598,6 +1605,18 @@ BE_GlobalData::gen_local_iface_anyops (bool val)
   this->gen_local_iface_anyops_ = val;
 }
 
+bool
+BE_GlobalData::gen_custom_ending (void) const
+{
+  return this->gen_custom_ending_;
+}
+
+void
+BE_GlobalData::gen_custom_ending (bool val)
+{
+  this->gen_custom_ending_ = val;
+}
+
 ACE_CString
 BE_GlobalData::spawn_options (void)
 {
@@ -2321,6 +2340,12 @@ BE_GlobalData::parse_args (long &i, char **av)
                   ));
               }
           }
+        else if (av[i][2] == 'e')
+          {
+            // disable custom file endings for included idl/pidl
+            // files from TAO specific include paths.
+            be_global->gen_custom_ending (false);
+          }
         else
           {
             ACE_ERROR ((
@@ -2879,6 +2904,15 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Sorb\t\t\tsuppress generating include of ORB.h")
       ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Se\t\t\tdisable custom file ending for included")
+      ACE_TEXT (" idl/pidl files\n\t\t\t")
+      ACE_TEXT ("that are found in TAO specific includes directories,\n\t\t\t")
+      ACE_TEXT ("(i.e. $TAO_ROOT, $TAO_ROOT/tao, $TAO_ROOT/orbsvcs,\n\t\t\t")
+      ACE_TEXT ("$TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao)")
+      ACE_TEXT (" (enabled by default)\n")
     ));
 }
 
