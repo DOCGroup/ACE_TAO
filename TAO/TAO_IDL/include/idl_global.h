@@ -621,6 +621,9 @@ public:
   static char* translateName(const char* name, char *name_buf);
 #endif
 
+  bool validate_orb_include (UTL_String *);
+  // Check if included file is in TAO specific include dirs.
+
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack
