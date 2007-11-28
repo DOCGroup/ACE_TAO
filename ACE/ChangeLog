@@ -1,3 +1,8 @@
+Wed Nov 28 13:18:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_arpa_inet.cpp:
+          Updated for VxWorks 6.6
+
 Wed Nov 28 13:08:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_types.h:
