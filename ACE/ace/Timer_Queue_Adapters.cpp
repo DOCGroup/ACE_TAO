@@ -301,7 +301,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
                                               void *stack[],
                                               size_t stack_size[],
                                               ACE_thread_t thread_ids[],
-                                              const char* thr_name[] = 0)
+                                              const char* thr_name[])
 {
   // Make sure to set this flag in case we were deactivated earlier.
   this->active_ = true;
