@@ -58,7 +58,8 @@ TAO_LB_Signal_Handler::activate (long flags,
                                  ACE_hthread_t thread_handles[],
                                  void *stack[],
                                  size_t stack_size[],
-                                 ACE_thread_t thread_ids[])
+                                 ACE_thread_t thread_ids[],
+                                 const char* thr_name[])
 {
   // sigwait() is not implemented on MS Windows.  Handle signals
   // asynchronously through the ORB's reactor in that case instead.
@@ -74,7 +75,8 @@ TAO_LB_Signal_Handler::activate (long flags,
                                         thread_handles,
                                         stack,
                                         stack_size,
-                                        thread_ids);
+                                        thread_ids,
+                                        thr_name);
 #else
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (n_threads);
@@ -86,6 +88,7 @@ TAO_LB_Signal_Handler::activate (long flags,
   ACE_UNUSED_ARG (stack);
   ACE_UNUSED_ARG (stack_size);
   ACE_UNUSED_ARG (thread_ids);
+  ACE_UNUSED_ARG (thr_name);
 
   return
     this->orb_->orb_core ()->reactor ()->register_handler (this->sigset_,

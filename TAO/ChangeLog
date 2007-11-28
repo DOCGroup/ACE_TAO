@@ -1,3 +1,9 @@
+Wed Nov 28 07:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/LoadBalancer/Signal_Handler.{h,cpp}:
+          Updated activate method because of new argument in the base
+          class
+
 Tue Nov 27 16:02:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
