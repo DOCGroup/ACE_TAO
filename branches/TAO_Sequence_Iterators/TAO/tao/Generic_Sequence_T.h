@@ -360,17 +360,15 @@ public:
   // Get an iterator that points to the end of the sequence.
   iterator end (void)
   {
-    // Specify being past the "real" end with a flag.
     return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::iterator (this,
-       this->length_);
+      this->length_);
   }
 
   // Get a const iterator that points to the end of the sequence.
   const_iterator end (void) const
   {
-    // Specify being past the "real" end with a flag.
     return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_iterator (this,
-             this->length_);
+            this->length_);
   }
 
   // Get a reverse iterator that points to the end of the sequence.
@@ -378,7 +376,7 @@ public:
   {
     // Here we need to be at the last element - not one past.
     return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (this,
-               this->length_ - 1);
+              this->length_ - 1);
   }
 
   // Get a const reverse iterator that points to the end of the sequence.
@@ -394,9 +392,8 @@ public:
   reverse_iterator rend (void)
   {
     // Here we need to be at one before the first element - not the first.
-    // Specify being before the "real" beginning with a flag.
     return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (this,
-               -1);
+              -1);
   }
 
   // Get a const reverse iterator that points to one before the
@@ -404,9 +401,8 @@ public:
   const_reverse_iterator rend (void) const
   {
     // Here we need to be at one before the first element - not the first.
-    // Specify being before the "real" beginning with a flag.
-    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::reverse_iterator (this,
-               -1);
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_reverse_iterator (this,
+              -1);
   }
 
 private:
@@ -1110,10 +1106,11 @@ public:
   typedef typename SEQUENCE_T::element_traits element_traits;
   typedef int difference_type;
 
-  /// Construct a Const_Generic_Sequence_Reverse_Iterator at position pos with before_start flag.
-  Const_Generic_Sequence_Reverse_Iterator (generic_sequence<value_type, 
-					                    allocation_traits, 
-					                    element_traits> *sequence, 
+  /// Construct a Const_Generic_Sequence_Reverse_Iterator at position pos
+  /// using a const sequence.
+  Const_Generic_Sequence_Reverse_Iterator (const generic_sequence<value_type, 
+					                          allocation_traits, 
+					                          element_traits> *sequence, 
 					   size_t pos)
     : sequence_ (sequence),
     pos_ (pos)
@@ -1271,7 +1268,7 @@ public:
 
 private:
   /// the array we are dealing with
-  generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
+  const generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
