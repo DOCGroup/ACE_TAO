@@ -111,7 +111,7 @@ ACE_CString order;
 
 ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> running_tasks = 0;
 
-class Process_Task : public ACE_Task<ACE_MT_SYNCH>
+class Process_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   Process_Task (const ACE_TCHAR *argv0,
