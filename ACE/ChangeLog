@@ -1,3 +1,11 @@
+Thu Nov 29 18:10:27 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/ARGV.h:
+        
+          #include "ace/Global_Macros.h".  This is included implicitly on
+          platforms where ACE_TEMPLATES_REQUIRE_SOURCE, but is needed for
+          those that don't.
+
 Wed Nov 28 13:37:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
