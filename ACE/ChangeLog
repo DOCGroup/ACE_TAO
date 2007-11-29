@@ -1,3 +1,8 @@
+Thu Nov 29 19:49:23 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Process_Manager_Test.cpp: Changed ACE_MT_SYNCH to ACE_SYNCH so 
+          this works on single-threaded builds.  Thanks to Johnny for reporting this.
+
 Thu Nov 29 18:10:27 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/ARGV.h:
