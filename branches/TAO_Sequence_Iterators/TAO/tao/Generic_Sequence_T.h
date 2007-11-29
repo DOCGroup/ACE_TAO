@@ -354,7 +354,7 @@ public:
   // Get a const iterator that points to the beginning of the sequence.
   const_iterator begin (void) const
   {
-    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_iterator (*this);
+    return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_iterator (this);
   }
 
   // Get an iterator that points to the end of the sequence.
@@ -441,7 +441,7 @@ public:
   typedef typename SEQUENCE_T::element_traits element_traits;
   typedef CORBA::Long difference_type;
 
-  /// Construct a Generic_Sequence_Iterator at position pos with past_end flag.
+  /// Construct a Generic_Sequence_Iterator at position pos.
   Generic_Sequence_Iterator (generic_sequence<value_type, 
 			                      allocation_traits, 
 			                      element_traits> *sequence, 
@@ -666,11 +666,11 @@ public:
   typedef typename SEQUENCE_T::element_traits element_traits;
   typedef int difference_type;
 
-  /// Construct a Const_Generic_Sequence_Iterator at position pos.
-  /// From the position passed in calculate the past_end_ flag.
-  Const_Generic_Sequence_Iterator (generic_sequence<value_type, 
-				                    allocation_traits, 
-				                    element_traits> *sequence,
+  /// Construct a Const_Generic_Sequence_Iterator at position pos from
+  /// a const sequence.
+  Const_Generic_Sequence_Iterator (const generic_sequence<value_type, 
+                                                          allocation_traits, 
+                                                          element_traits> *sequence,
 				   size_t pos = 0)
     : sequence_ (sequence),
     pos_ (pos)
@@ -825,7 +825,7 @@ public:
 
 private:
   /// the array we are dealing with
-  generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
+  const generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
