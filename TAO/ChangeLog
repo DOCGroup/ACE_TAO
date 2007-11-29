@@ -1,3 +1,10 @@
+Thu Nov 29 14:46:49 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Root_POA.cpp:
+          Fixed a memory leak described by Bug#3151. However, it's
+          difficult to provide an automated test for this bug since
+          it lies in refcounting of root POA.
+
 Thu Nov 29 04:23:58 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DSI_AMH/Roundtrip.cpp:
@@ -10,7 +17,7 @@ Wed Nov 28 12:59:33 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
         * tests/Bug_3154_Regression/orbsvcs/CosNotification.idl:
         * tests/Bug_3154_Regression/test.idl:
         * tests/Bug_3154_Regression/run_test.pl:
-          Added $Id$ to these files to make fuzz check happy.
+          Added Id to these files to make fuzz check happy.
 
 Wed Nov 28 10:42:20 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 

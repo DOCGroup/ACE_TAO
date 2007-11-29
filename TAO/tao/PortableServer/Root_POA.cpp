@@ -319,8 +319,36 @@ TAO_Root_POA::~TAO_Root_POA (void)
 void
 TAO_Root_POA::complete_destruction_i (void)
 {
+  bool doing_complete_destruction =
+    this->waiting_destruction_ != 0;
+
   // No longer awaiting destruction.
   this->waiting_destruction_ = 0;
+
+  PortableServer::POA_var poa;
+  TAO::ORT_Array my_array_obj_ref_template;
+  TAO::ORT_Adapter *ort_adapter;
+  if (doing_complete_destruction)
+    {
+      ort_adapter =
+        this->ORT_adapter_i ();
+
+      // In case no ORT library is linked we get zero.
+      if (ort_adapter != 0)
+        {
+          // Get the ObjectReferenceTemplate.
+          PortableInterceptor::ObjectReferenceTemplate * const ort =
+            ort_adapter->get_adapter_template ();
+
+          // Add it to the sequence of object reference templates, we
+          // just notify for ourselves that we are now non_existent,
+          // our childs will do it for themselves.
+          my_array_obj_ref_template.size (1);
+          my_array_obj_ref_template[0] = ort;
+        }
+
+      poa = PortableServer::POA::_duplicate (this);
+    }
 
   // Remove POA from the POAManager.
   int result = this->poa_manager_.remove_poa (this);
@@ -361,6 +389,26 @@ TAO_Root_POA::complete_destruction_i (void)
   }
 
   ::CORBA::release (this);
+
+  if (doing_complete_destruction)
+    {
+      this->adapter_state_ = PortableInterceptor::NON_EXISTENT;
+
+      this->adapter_state_changed (my_array_obj_ref_template,
+                                   this->adapter_state_);
+
+      if (ort_adapter != 0)
+        {
+          ort_adapter->release (my_array_obj_ref_template[0]);
+
+          TAO::ORT_Adapter_Factory *ort_factory =
+            this->ORT_adapter_factory ();
+
+          ort_factory->destroy (ort_adapter);
+
+          this->ort_adapter_ = 0;
+        }
+    }
 }
 
 #if ! defined (CORBA_E_MICRO)
