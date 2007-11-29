@@ -1,3 +1,13 @@
+Thu Nov 29 16:58:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_3155_Regression/Bug_3155_Regression.mpc:
+        * tests/Bug_3155_Regression/ReadMe.txt:
+        * tests/Bug_3155_Regression/run_test.pl:
+        * tests/Bug_3155_Regression/test.idl:
+        * tests/Bug_3155_Regression/test_idl.cpp:
+        
+          Create new regression test.
+
 Thu Nov 29 14:58:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:
