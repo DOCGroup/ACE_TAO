@@ -1,3 +1,15 @@
+Thu Nov 29 23:58:21 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
+        
+          Fixed bug in storing parent information in the IFR for types
+          with a single parent (valuetypes and components). Thanks to
+          Simon Massey <simon dot massey at prismtech dot com> for reporting
+          the problem with valuetypes.
+
 Thu Nov 29 16:58:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/Bug_3155_Regression/Bug_3155_Regression.mpc:
