@@ -1,21 +1,49 @@
 // $Id$
 
 # include "Collocation_Tester.h"
+#include "ace/Get_Opt.h"
 
 ACE_RCSID (tests, client, "$Id$")
 
+const char *ior = "file://test.ior";
+
+int
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "k:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'k':
+        ior = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-k <ior> "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
+
 int main (int argc, char *argv[])
 {
-
   try
     {
       // ORB Initialization
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO");
 
-      CORBA::Object_var object;
+      if (parse_args (argc, argv) != 0)
+        return 1;
 
-      // Get The IOR from a file
-      object = orb->string_to_object ("file://s.ior");
+      CORBA::Object_var object = orb->string_to_object (ior);
 
       if (CORBA::is_nil (object.in ()))
         {

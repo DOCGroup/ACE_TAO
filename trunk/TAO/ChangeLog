@@ -1,3 +1,10 @@
+Fri Nov 30 20:23:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Multiple/client.cpp:
+        * tests/Multiple/run_test.pl:
+        * tests/Multiple/server.cpp:
+          Pass IOR filename through the commandline
+
 Fri Nov 30 14:10:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/run_test.pl:

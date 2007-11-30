@@ -10,19 +10,25 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$direct_colloc = "-ORBCollocationStrategy direct";
-$no_colloc = "-ORBCollocation no";
-
-# @todo Test should take -o and -k options to specify iorfile
-# Hard coded in test.
-$iorfile = "s.ior";
+$iorbase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorbase");
 
 unlink $iorfile;
 
 my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
                                           'PerlACE::Process');
-$SV = new $class ("server");
-$CL = new PerlACE::Process ("client");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorbase");
+    $direct_colloc = "-ORBCollocationStrategy direct -o $iorbase";
+    $no_colloc = "-ORBCollocation no -o $iorbase";
+
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
+    $direct_colloc = "-ORBCollocationStrategy direct -o $iorfile";
+    $no_colloc = "-ORBCollocation no -o $iorfile";
+}
+$CL = new PerlACE::Process ("client", "-k file://$iorfile");
 
 #
 # Test using ThruPOA collocation.
