@@ -1,3 +1,8 @@
+Fri Nov 30 11:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          add TAO/orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/run_test.pl
+
 Thu Nov 29 19:49:23 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Process_Manager_Test.cpp: Changed ACE_MT_SYNCH to ACE_SYNCH so 
