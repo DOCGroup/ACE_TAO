@@ -39,7 +39,7 @@ if ($server != 0) {
 
 if (PerlACE::waitforfile_timed ($iorfileA,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    print STDERR "ERROR: cannot find file <$iorfileA>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 } 

@@ -1,3 +1,9 @@
+Fri Nov 30 06:42:17 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Bug_2953_Regression/run_test.pl:
+
+          Fix typo in error message.
+
 Fri Nov 30 00:38:11 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * TAO_IDL/be/be_visitor_template_export.cpp:
@@ -8,35 +14,35 @@ Fri Nov 30 00:38:11 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
         * tests/Bug_2735_Regression/server.cpp:
         * tests/Bug_2936_Regression/bug2936.cpp:
         * tests/Param_Test/options.cpp:
-        
+
           Add #include "ace/Log_Msg.h".
-        
+
         * tao/AnyTypeCode/Struct_TypeCode.cpp:
         * tao/PolicyC.cpp:
-        
+
           Add #include "tao/SystemException.h"
-        
+
         * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
         * tao/DynamicInterface/DII_Arguments_Converter_Impl.cpp:
         * tao/IORManipulation/IORManip_IIOP_Filter.cpp:
         * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
         * tao/Messaging/ExceptionHolder_i.cpp:
-        
+
           Add #include "tao/CDR.h"
-        
+
         * tao/DynamicAny/DynUnion_i.cpp:
-        
+
           Add #include "tao/DynEnum_i.h"
-        
+
         * tao/GIOP_Message_Base.h:
         * tao/Invocation_Base.h:
         * tao/Messaging/AMH_Response_Handler.h:
         * tao/operation_details.h:
-        
+
           Add #include "tao/Exception.h"
-        
+
         * tao/Request_Dispatcher.h:
-        
+
           Add #include "tao/TAO_Export.h"
 
         * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
@@ -52,18 +58,18 @@ Fri Nov 30 00:38:11 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
         * tests/Param_Test/anyop.cpp:
 
           Add #include "tao/Stub.h"
-        
+
         These headers are included implicitly by template *.cpp files on
         platforms where ACE_TEMPLATES_REQUIRE_SOURCE, but are needed for
         those that don't.
-        
+
 Thu Nov 29 23:58:21 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
-        
+
           Fixed bug in storing parent information in the IFR for types
           with a single parent (valuetypes and components). Thanks to
           Simon Massey <simon dot massey at prismtech dot com> for reporting
@@ -76,7 +82,7 @@ Thu Nov 29 16:58:00 UTC 2007  Simon Massey  <sma@prismtech.com>
         * tests/Bug_3155_Regression/run_test.pl:
         * tests/Bug_3155_Regression/test.idl:
         * tests/Bug_3155_Regression/test_idl.cpp:
-        
+
           Create new regression test.
 
 Thu Nov 29 14:58:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
