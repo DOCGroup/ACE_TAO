@@ -7,8 +7,8 @@ NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
                                 PortableServer::POA_ptr p,
                                 Deployment::NodeApplicationManager_ptr s,
                                 const Deployment::Properties &properties,
-                                ACE_Condition<ACE_SYNCH_MUTEX> &wait,
-                                ACE_SYNCH_MUTEX& mutex)
+                                ACE_Condition<TAO_SYNCH_MUTEX> &wait,
+                                TAO_SYNCH_MUTEX& mutex)
   : is_callback_completed_ (false),
     orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),

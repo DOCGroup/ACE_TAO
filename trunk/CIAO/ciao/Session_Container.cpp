@@ -16,7 +16,7 @@ namespace CIAO
 {
   ///////////////////////////////////////////////////////////////
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long>
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long>
     Session_Container::serial_number_ (0);
 
   Session_Container::Session_Container (CORBA::ORB_ptr o,

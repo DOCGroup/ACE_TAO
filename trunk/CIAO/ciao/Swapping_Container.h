@@ -77,7 +77,7 @@ namespace CIAO
 
     /// Static variable to store the highest number we have given out until
     /// now
-    static ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long> serial_number_;
+    static ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
 
     Dynamic_Component_Activator *dsa_;
   };
