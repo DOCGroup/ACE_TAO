@@ -215,7 +215,7 @@ void
 CIAO::MonitorController::terminate ()
 {
   // make the terminate flag false
-  ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
              lock_);
 
@@ -225,7 +225,7 @@ CIAO::MonitorController::terminate ()
 bool
 CIAO::MonitorController::terminating ()
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     lock_,
                     0);

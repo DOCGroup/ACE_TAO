@@ -169,7 +169,7 @@ namespace CIAO
 
     /// Static variable to store the highest number we have given out until
     /// now
-    static ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long> serial_number_;
+    static ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
 
     const bool static_config_flag_;
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;

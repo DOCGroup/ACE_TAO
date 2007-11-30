@@ -51,7 +51,7 @@
 
 namespace Impl
 {
-  typedef ACE_SYNCH_MUTEX TMutex;
+  typedef TAO_SYNCH_MUTEX TMutex;
 
   class TSEC_CheckPoint_exec_i;
 

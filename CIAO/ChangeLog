@@ -1,3 +1,26 @@
+Fri Nov 30 19:06:05 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/Deployment/NodeApp_CB_Impl.h:
+        * DAnCE/Deployment/NodeApp_CB_Impl.cpp:
+        * DAnCE/DomainApplicationManager/Reply_Handler_i.h:
+        * DAnCE/DomainApplicationManager/Reply_Handler_i.cpp:
+        * DAnCE/NodeManager/MonitorController.h:
+        * DAnCE/NodeManager/MonitorController.cpp:
+        * ciao/Dynamic_Component_Activator.h:
+        * ciao/Dynamic_Component_Servant_T.h:
+        * ciao/Home_Servant_Impl_T.h:
+        * ciao/Servant_Activator.h:
+        * ciao/Session_Container.h:
+        * ciao/Session_Container.cpp:
+        * ciao/Swapping_Container.h:
+        * ciao/Swapping_Container.cpp:
+        * ciao/Swapping_Servant_Home_Impl_T.h:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.h:
+
+          Parts of CIAO use TAO_SYNCH_MUTEX while other parts use ACE_SYNCH_MUTEX. 
+          All occurrences of ACE_SYNCH_MUTEX were replaced with TAO_SYNCH_MUTEX for
+          consistency.
+
 Mon Nov 26 16:57:33 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ciao/Servant_Activator.h:

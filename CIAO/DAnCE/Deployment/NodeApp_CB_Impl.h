@@ -42,8 +42,8 @@ namespace CIAO
                                    PortableServer::POA_ptr p,
                                    Deployment::NodeApplicationManager_ptr s,
                                    const Deployment::Properties &properties,
-                                   ACE_Condition<ACE_SYNCH_MUTEX> &wait,
-                                   ACE_SYNCH_MUTEX& mutex);
+                                   ACE_Condition<TAO_SYNCH_MUTEX> &wait,
+                                   TAO_SYNCH_MUTEX& mutex);
 
     /// Get the containing POA.  This operation does *not* increase
     /// the reference count of the POA.
@@ -76,9 +76,9 @@ namespace CIAO
 
     Deployment::Properties_var properties_;
 
-    ACE_Condition<ACE_SYNCH_MUTEX> &waitCond_;
+    ACE_Condition<TAO_SYNCH_MUTEX> &waitCond_;
 
-    ACE_SYNCH_MUTEX &mutex_;
+    TAO_SYNCH_MUTEX &mutex_;
   };
 }
 

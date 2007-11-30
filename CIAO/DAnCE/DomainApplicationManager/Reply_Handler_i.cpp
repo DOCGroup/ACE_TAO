@@ -28,7 +28,7 @@ void Deployment_AMI_NodeApplicationManagerHandler_i::startLaunch (
                "CIAO (%P|%t): Reply_Handler_i.cpp::AMI startLaunch() returned\n"));
 
   // Add your implementation here
-  ACE_Guard<ACE_SYNCH_MUTEX> guard (lock_);
+  ACE_Guard<TAO_SYNCH_MUTEX> guard (lock_);
 
   CIAO::DomainApplicationManager_AMI_Impl * ami_dam = 
     static_cast<CIAO::DomainApplicationManager_AMI_Impl*> (dam_);

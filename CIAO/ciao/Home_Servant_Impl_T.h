@@ -86,7 +86,7 @@ namespace CIAO
                                     Components::CCMObject_var,
                                     TAO_ObjectId_Hash,
                                     ACE_Equal_To<PortableServer::ObjectId>,
-                                    ACE_SYNCH_MUTEX>
+                                    TAO_SYNCH_MUTEX>
       OBJREF_MAP;
 
     typedef OBJREF_MAP::iterator OBJ_ITERATOR;

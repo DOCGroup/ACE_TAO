@@ -77,7 +77,7 @@ private:
 
   ::Deployment::Connections retn_connections_;
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 
   ::CIAO::DomainApplicationManager_AMH_Impl * dam_;
 };

@@ -94,7 +94,7 @@ namespace CIAO
     size_t slot_index_;
 
     /// Mutex that synchronizes access to the array.
-    ACE_SYNCH_MUTEX  mutex_;
+    TAO_SYNCH_MUTEX  mutex_;
   };
 }
 
