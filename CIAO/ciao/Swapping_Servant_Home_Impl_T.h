@@ -90,14 +90,14 @@ namespace CIAO
                             COMP_SVNT *,
                             TAO_ObjectId_Hash,
                             ACE_Equal_To<PortableServer::ObjectId>,
-                            ACE_SYNCH_MUTEX>
+                            TAO_SYNCH_MUTEX>
       component_map_;
 
     typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
                             Dynamic_Component_Servant_Base *,
                             TAO_ObjectId_Hash,
                             ACE_Equal_To<PortableServer::ObjectId>,
-                            ACE_SYNCH_MUTEX> DYNAMIC_SERVANT_MAP;
+                            TAO_SYNCH_MUTEX> DYNAMIC_SERVANT_MAP;
 
     typedef DYNAMIC_SERVANT_MAP::iterator DYNAMIC_SERVANT_MAP_ITERATOR;
     DYNAMIC_SERVANT_MAP dynamic_servant_map_;

@@ -64,7 +64,7 @@ namespace CIAO
                             COMP_SVNT *,
                             TAO_ObjectId_Hash,
                             ACE_Equal_To<PortableServer::ObjectId>,
-                            ACE_SYNCH_MUTEX>
+                            TAO_SYNCH_MUTEX>
       servant_map_;
 
     // @@ Jai, please explain what this flag means?

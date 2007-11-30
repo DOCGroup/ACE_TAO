@@ -85,7 +85,7 @@ namespace CIAO
                             Dynamic_Component_Servant_Base *,
                             TAO_ObjectId_Hash,
                             ACE_Equal_To<PortableServer::ObjectId>,
-                            ACE_SYNCH_MUTEX>
+                            TAO_SYNCH_MUTEX>
       servant_map_;
   };
 }

@@ -99,7 +99,7 @@ namespace CIAO
       bool terminate_flag_;
 
       /// Thread Mutex for synchronizing call
-      ACE_SYNCH_MUTEX lock_;
+      TAO_SYNCH_MUTEX lock_;
 
       /// the ORB pointer ..
       /// @todo Make this a _var
