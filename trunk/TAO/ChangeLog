@@ -1,3 +1,13 @@
+Fri Nov 30 11:43:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_3155_Regression/Bug_3155_Regression.mpc:
+        * tests/Bug_3155_Regression/ReadMe.txt:
+        * tests/Bug_3155_Regression/run_test.pl:
+        * tests/Bug_3155_Regression/test.idl:
+        * tests/Bug_3155_Regression/test_idl.cpp:
+
+          Removed new regression test (wrong place)
+
 Fri Nov 30 06:42:17 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Bug_2953_Regression/run_test.pl:
