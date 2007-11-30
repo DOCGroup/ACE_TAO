@@ -44,9 +44,13 @@ struct CDR_Test_Types
   const ACE_CDR::Char *str;
   const ACE_CDR::WChar *wstr;
   ACE_CDR::Double d;
+  ACE_CDR::Short reps;
+  ACE_CDR::Long repl;
 
   int test_put (ACE_OutputCDR& cdr);
   int test_get (ACE_InputCDR& cdr) const;
+  int test_put_placeholder (ACE_OutputCDR& cdr);
+  int test_get_placeholder (ACE_InputCDR& cdr) const;
 
   enum
   {
@@ -62,7 +66,9 @@ CDR_Test_Types::CDR_Test_Types (void)
     l (4),
     str ("abc"),
     wstr (0),
-    d (8)
+    d (8),
+    reps (-123),
+    repl (-65800L)
 {
   for (int i = 0;
        i < CDR_Test_Types::ARRAY_SIZE;
@@ -440,6 +446,72 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
 }
 
 int
+CDR_Test_Types::test_put_placeholder (ACE_OutputCDR &cdr)
+{
+  // Write a placeholder then a bunch of other stuff, then replace.
+  char *pos = cdr.write_long_placeholder ();
+  if (test_put (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_put (long placeholder) failed\n")),
+                      1);
+  if (!cdr.replace (this->repl, pos))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replace(long) failed\n")),
+                      1);
+
+  pos = cdr.write_short_placeholder ();
+  if (test_put (cdr) != 0)
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("test_put (short placeholder) failed\n")),
+                     1);
+  if (!cdr.replace (this->reps, pos))
+   ACE_ERROR_RETURN ((LM_ERROR,
+                      ACE_TEXT ("replace(short) failed\n")),
+                     1);
+
+  return 0;
+}
+
+int
+CDR_Test_Types::test_get_placeholder (ACE_InputCDR &cdr) const
+{
+  ACE_CDR::Short xs;
+  ACE_CDR::Long xl;
+
+  if (cdr.read_long (xl) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_long failed\n")),
+                      1);
+  if (xl != this->repl)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced long differs\n")),
+                      1);
+
+  // The bunch of stuff written after the placeholder by test_put_placeholder
+  // should still be valid; check that it is.
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (long) failed\n")),
+                      1);
+
+  if (cdr.read_short (xs) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("read_short failed\n")), 1);
+  if (xs != this->reps)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("replaced short differs\n")),
+                      1);
+
+  if (test_get (cdr) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("test_get (short) failed\n")),
+                      1);
+
+  return 0;
+}
+
+
+int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("CDR_Test"));
@@ -597,7 +669,33 @@ run_main (int argc, ACE_TCHAR *argv[])
     return 1;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Consolidation - no errors\n\n")));
+              ACE_TEXT ("Consolidation - no errors\n\n")
+              ACE_TEXT ("Testing placeholder/replace\n\n")));
+
+  output.reset();
+  if (test_types.test_put_placeholder (output) != 0)
+    return 1;
+
+  input = ACE_InputCDR(output);
+  if (debug > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Output CDR: \n")));
+      ACE_HEX_DUMP ((LM_DEBUG,
+                     input.rd_ptr(),
+                     64));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Input CDR: \n")));
+      ACE_HEX_DUMP ((LM_DEBUG,
+                     input.rd_ptr(),
+                     64));
+    }
+
+  if (test_types.test_get_placeholder (input) != 0)
+    return 1;
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Placeholder/Replace - no errors\n\n")));
 
   ACE_END_TEST;
   return 0;
