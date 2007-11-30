@@ -1,3 +1,8 @@
+Fri Nov 30 21:53:15 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Reactor_Notify_Test.cpp: Added a test to verify that a quiet
+          (e.g., no I/O occurring) event loop will be awoken by a notify().
+
 Fri Nov 30 16:58:00 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/CDR_Stream.{h cpp}:

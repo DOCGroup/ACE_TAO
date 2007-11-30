@@ -38,6 +38,82 @@ ACE_RCSID(tests, Reactor_Notify_Test, "$Id$")
 static const time_t LONG_TIMEOUT = 10;
 static const time_t SHORT_TIMEOUT = 2;
 
+// A class to run a quiet event loop in one thread, and a plain notify()
+// from the main thread to make sure a simple notify will wake up a quiet
+// reactor.
+class Quiet_Notify_Tester : public ACE_Task<ACE_NULL_SYNCH>
+{
+public:
+  Quiet_Notify_Tester (void) : result_ (0) {}
+  ~Quiet_Notify_Tester (void) { this->wait (); }
+
+  //FUZZ: disable check_for_lack_ACE_OS
+  virtual int open (void * = 0);
+  // Start the reactor event thread.
+
+  // Run the reactor event loop.
+  virtual int svc (void);
+
+  // Return the test result, 0 ok, -1 fail
+  int result (void) const { return this->result_; }
+
+private:
+  ACE_Reactor r_;
+  int result_;
+};
+
+int
+Quiet_Notify_Tester::open (void *)
+{
+  this->reactor (&this->r_);
+  return this->activate ();
+}
+
+int
+Quiet_Notify_Tester::svc (void)
+{
+  // Count on the main thread doing a notify in less than LONG_TIMEOUT
+  // seconds. If we don't get it, report a failure.
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting quiet event loop\n")));
+  this->r_.owner (ACE_Thread::self ());
+  ACE_Time_Value tmo (LONG_TIMEOUT);
+  int status = this->r_.handle_events (&tmo);
+  time_t remain = tmo.sec ();
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) event loop status %d, %: secs remain\n"),
+              status, remain));
+  if (remain == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) Notify did not wake quiet event loop\n")));
+      this->result_ = -1;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Notify woke quiet event loop\n")));
+    }
+  return 0;
+}
+
+static int
+run_quiet_notify_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) Starting quiet notify test\n"));
+  Quiet_Notify_Tester t;
+  if (t.open () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("Quiet notify activate")),
+                      -1);
+  // Now sleep a bit, then do a simple, reactor wake-up
+  ACE_OS::sleep (SHORT_TIMEOUT);
+  t.reactor ()->notify ();
+  t.wait ();
+  ACE_DEBUG ((LM_DEBUG, "(%t) Quiet notify test done\n"));
+  return t.result ();
+}
+
+
 class Supplier_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
@@ -458,12 +534,20 @@ run_main (int, ACE_TCHAR *[])
 
   int test_result = 0;       // Innocent until proven guilty
 
-  test_result = run_notify_purge_test ();
-  if (test_result == 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("purge_pending_notifications test OK\n")));
+  if (0 != run_quiet_notify_test ())
+    test_result = 1;
+
+  if (0 == run_notify_purge_test ())
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("purge_pending_notifications test OK\n")));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("purge_pending_notifications test FAIL\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("purge_pending_notifications test FAIL\n")));
+      test_result = 1;
+    }
 
 #if defined (ACE_HAS_THREADS)
   ACE_Time_Value timeout (SHORT_TIMEOUT);
@@ -495,4 +579,3 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return test_result;
 }
-
