@@ -1,3 +1,13 @@
+Fri Nov 30 11:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/Bug_3155_Regression.mpc:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/ReadMe.txt:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/test.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/test_idl.cpp:
+
+          Removed new regression test (wrong place)
+
 Fri Nov 30 11:43:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/Bug_3155_Regression/Bug_3155_Regression.mpc:
