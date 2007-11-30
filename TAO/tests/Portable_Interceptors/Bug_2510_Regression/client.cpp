@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
+#include "ace/Thread.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"

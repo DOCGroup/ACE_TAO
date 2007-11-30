@@ -19,6 +19,7 @@
 #include "be_extern.h"
 #include "be_helper.h"
 #include "be_predefined_type.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (be,
            be_visitor_template_export,
