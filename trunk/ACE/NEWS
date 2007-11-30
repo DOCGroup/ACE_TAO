@@ -33,6 +33,13 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 
 . Removed deprecated (un)subscribe methods from ACE_SOCK_Dgram_Mcast
 
+. Added an additional replace() method to ACE_OuptutCDR for replacing a
+  ACE_CDR::Short value. Also added write_long_placeholder() and
+  write_short_placeholder() to properly align the stream's write pointer,
+  write a placeholder value and return the placeholder's pointer. The pointer
+  can later be used in a call to replace() to replace the placeholder with a
+  different value.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6 and ACE-5.6.1
 ====================================================
 

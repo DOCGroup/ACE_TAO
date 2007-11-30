@@ -1,3 +1,23 @@
+Fri Nov 30 16:58:00 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/CDR_Stream.{h cpp}:
+          Added replace (ACE_CDR::Short, char *), analogous to the existing
+          replace (ACE_CDR::Long, char *); replaces a previous place in the
+          stream with a short.
+          To make the replace() methods more convenient and easier to use
+          correctly, added the following methods:
+            char* write_long_placeholder (void);
+            char* write_short_placeholder (void);
+          These methods align the stream's write pointer properly then write
+          a 0-valued placeholder in the stream. The pointer to the placeholder
+          is returned; that pointer can later be passed to replace().
+
+        * tests/CDR_Test.cpp: Added tests for placeholder and replace ops.
+
+          Thank you to Howard Finer for contributing these additions.
+
+        * NEWS: Added note about these additions.
+
 Fri Nov 30 11:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_other_tests.lst:
@@ -6,7 +26,8 @@ Fri Nov 30 11:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 Thu Nov 29 19:49:23 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Process_Manager_Test.cpp: Changed ACE_MT_SYNCH to ACE_SYNCH so 
-          this works on single-threaded builds.  Thanks to Johnny for reporting this.
+          this works on single-threaded builds.  Thanks to Johnny for
+          reporting this.
 
 Thu Nov 29 18:10:27 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
