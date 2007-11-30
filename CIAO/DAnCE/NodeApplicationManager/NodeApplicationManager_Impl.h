@@ -234,8 +234,8 @@ namespace CIAO
     pid_t process_id_;
 
     /// For synchronization between multiple threads
-    ACE_Condition<ACE_Thread_Mutex> waitCond_;
-    ACE_Thread_Mutex mutex_;
+    ACE_Condition<TAO_SYNCH_MUTEX> waitCond_;
+    TAO_SYNCH_MUTEX mutex_;
   };
 
 
