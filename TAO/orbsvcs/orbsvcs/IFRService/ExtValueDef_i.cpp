@@ -688,6 +688,14 @@ TAO_ExtValueDef_i::describe_ext_value_i (
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "base_value",
                                             holder);
+  ACE_Configuration_Section_Key base_key;
+  this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                       holder,
+                                       base_key,
+                                       0);
+  this->repo_->config ()->get_string_value (base_key,
+                                            "id",
+                                            holder);
   fv_desc->base_value = holder.fast_rep ();
   fv_desc->type = this->type_i ();
 

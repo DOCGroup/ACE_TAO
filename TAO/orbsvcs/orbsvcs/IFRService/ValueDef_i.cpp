@@ -402,22 +402,19 @@ TAO_ValueDef_i::base_value (void)
 CORBA::ValueDef_ptr
 TAO_ValueDef_i::base_value_i (void)
 {
-  ACE_TString holder;
+  ACE_TString base_path;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
                                               "base_value",
-                                              holder);
+                                              base_path);
 
   if (status != 0)
     {
       return CORBA::ValueDef::_nil ();
     }
 
-  this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
-                                            holder.fast_rep (),
-                                            holder);
   CORBA::Object_var obj =
-    TAO_IFR_Service_Utils::path_to_ir_object (holder,
+    TAO_IFR_Service_Utils::path_to_ir_object (base_path,
                                               this->repo_);
 
   return CORBA::ValueDef::_narrow (obj.in ());
@@ -463,7 +460,7 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
   this->repo_->config ()->set_string_value (
                               this->section_key_,
                               "base_value",
-                              base_value->_interface_repository_id ()
+                              base_path
                             );
 }
 
