@@ -1,3 +1,10 @@
+Fri Nov 30 22:11:41 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+
+          Replaced ACE_Thread_Mutex with TAO_SYNCH_MUTEX to allow this code
+          to work in single-threaded builds.
+
 Fri Nov 30 19:06:05 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/Deployment/NodeApp_CB_Impl.h:
@@ -17,7 +24,7 @@ Fri Nov 30 19:06:05 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * ciao/Swapping_Servant_Home_Impl_T.h:
         * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.h:
 
-          Parts of CIAO use TAO_SYNCH_MUTEX while other parts use ACE_SYNCH_MUTEX. 
+          Parts of CIAO use TAO_SYNCH_MUTEX while other parts use ACE_SYNCH_MUTEX.
           All occurrences of ACE_SYNCH_MUTEX were replaced with TAO_SYNCH_MUTEX for
           consistency.
 
