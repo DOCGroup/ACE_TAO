@@ -1,14 +1,43 @@
 // $Id$
 
 #include "Multiple_Impl.h"
+#include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (tests, server, "$Id$")
 
-int main (int argc, char *argv[])
+const char *ior_output_file = "test.ior";
+
+int
+parse_args (int argc, char *argv[])
 {
+  ACE_Get_Opt get_opts (argc, argv, "o:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = get_opts.opt_arg ();
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-o <iorfile>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
 
 
+int
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+{
   try
     {
       // Orb Initialization
@@ -19,9 +48,11 @@ int main (int argc, char *argv[])
 
       PortableServer::POA_var poa = PortableServer::POA::_narrow(object.in());
 
-
       // Get the POAManager
       PortableServer::POAManager_var poa_manager = poa->the_POAManager();
+
+      if (parse_args (argc, argv) != 0)
+        return 1;
 
       // Create the servant.
       Bottom_Impl servant (orb.in ());
@@ -50,11 +81,12 @@ int main (int argc, char *argv[])
 
       // If the ior_output_file exists, output the ior to it
 
-      FILE *output_file= ACE_OS::fopen ("s.ior", "w");
+      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
 
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s"),
+                           "Cannot open output file for writing IOR: %s",
+                           ior_output_file),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
