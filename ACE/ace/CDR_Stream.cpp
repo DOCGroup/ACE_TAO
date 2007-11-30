@@ -651,6 +651,46 @@ ACE_OutputCDR::write_array (const void *x,
 
 
 ACE_CDR::Boolean
+ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
+                                    ACE_CDR::ULong length)
+{
+  // It is hard to optimize this, the spec requires that on the wire
+  // booleans be represented as a byte with value 0 or 1, but in
+  // memory it is possible (though very unlikely) that a boolean has
+  // a non-zero value (different from 1).
+  // We resort to a simple loop.
+  ACE_CDR::Boolean const * const end = x + length;
+
+  for (ACE_CDR::Boolean const * i = x;
+       i != end && this->good_bit ();
+       ++i)
+    (void) this->write_boolean (*i);
+
+  return this->good_bit ();
+}
+
+ 
+char *
+ACE_OutputCDR::write_long_placeholder (void)
+{
+  this->align_write_ptr (ACE_CDR::LONG_SIZE);
+  char *pos = this->current_->wr_ptr ();
+  this->write_long (0);
+  return pos;
+}
+
+
+char *
+ACE_OutputCDR::write_short_placeholder (void)
+{
+  this->align_write_ptr (ACE_CDR::SHORT_SIZE);
+  char *pos = this->current_->wr_ptr();
+  this->write_short (0);
+  return pos;
+}
+
+
+ACE_CDR::Boolean
 ACE_OutputCDR::replace (ACE_CDR::Long x, char* loc)
 {
   if (this->find (loc) == 0)
@@ -674,22 +714,25 @@ ACE_OutputCDR::replace (ACE_CDR::Long x, char* loc)
 
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
-                                    ACE_CDR::ULong length)
+ACE_OutputCDR::replace (ACE_CDR::Short x, char* loc)
 {
-  // It is hard to optimize this, the spec requires that on the wire
-  // booleans be represented as a byte with value 0 or 1, but in
-  // memory it is possible (though very unlikely) that a boolean has
-  // a non-zero value (different from 1).
-  // We resort to a simple loop.
-  ACE_CDR::Boolean const * const end = x + length;
+  if (this->find (loc) == 0)
+    return false;
 
-  for (ACE_CDR::Boolean const * i = x;
-       i != end && this->good_bit ();
-       ++i)
-    (void) this->write_boolean (*i);
+#if !defined (ACE_ENABLE_SWAP_ON_WRITE)
+  *reinterpret_cast<ACE_CDR::Short*> (loc) = x;
+#else
+  if (!this->do_byte_swap_)
+  {
+    *reinterpret_cast<ACE_CDR::Short *> (loc) = x;
+  }
+  else
+  {
+    ACE_CDR::swap_2 (reinterpret_cast<const char*> (&x), loc);
+  }
+#endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
-  return this->good_bit ();
+  return true;
 }
 
 
