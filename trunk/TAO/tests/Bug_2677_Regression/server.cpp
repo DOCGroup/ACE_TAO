@@ -1,6 +1,7 @@
 // $Id$
 #include "ace/OS.h"
 #include "ace/Service_Config.h"
+#include "ace/Log_Msg.h"
 
 int
 ACE_TMAIN(int, ACE_TCHAR *[])

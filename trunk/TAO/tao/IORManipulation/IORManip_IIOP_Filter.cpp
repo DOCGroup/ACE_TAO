@@ -7,6 +7,7 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (IORManip_IIOP_Filter, IORManip_IIOP_Filter, "$Id$")
 

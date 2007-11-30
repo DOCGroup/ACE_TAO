@@ -25,6 +25,7 @@
 #include "tao/Invocation_Utils.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
+#include "tao/Exception.h"
 #include "tao/PI_ForwardC.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

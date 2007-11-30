@@ -5,6 +5,7 @@
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/operation_details.h"
 #include "tao/SystemException.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (DynamicInterface,
            DII_Arguments_Converter_Impl,
