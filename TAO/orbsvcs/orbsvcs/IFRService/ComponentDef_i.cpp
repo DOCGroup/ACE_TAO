@@ -160,6 +160,14 @@ TAO_ComponentDef_i::describe_i (void)
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "base_component",
                                             holder);
+  ACE_Configuration_Section_Key base_key;
+  this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                       holder,
+                                       base_key,
+                                       0);
+  this->repo_->config ()->get_string_value (base_key,
+                                            "id",
+                                            holder);
   cd.base_component = holder.fast_rep ();
 
   CORBA::ULong count = 0;
@@ -425,18 +433,20 @@ TAO_ComponentDef_i::base_component (void)
 CORBA::ComponentIR::ComponentDef_ptr
 TAO_ComponentDef_i::base_component_i (void)
 {
-  ACE_TString base_id;
+  ACE_TString base_path;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
                                               "base_component",
-                                              base_id);
+                                              base_path);
 
   if (status != 0)
     {
       return CORBA::ComponentIR::ComponentDef::_nil ();
     }
 
-  CORBA::Contained_var obj = this->repo_->lookup_id (base_id.fast_rep ());
+  CORBA::Object_var obj =
+    TAO_IFR_Service_Utils::path_to_ir_object (base_path,
+                                              this->repo_);
 
   return CORBA::ComponentIR::ComponentDef::_narrow (obj.in ());
 }
@@ -485,7 +495,7 @@ TAO_ComponentDef_i::base_component_i (
   this->repo_->config ()->set_string_value (
                               this->section_key_,
                               "base_component",
-                              base_component->_interface_repository_id ()
+                              base_path
                             );
 }
 
