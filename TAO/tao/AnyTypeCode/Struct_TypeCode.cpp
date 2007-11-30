@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 
 #ifndef __ACE_INLINE__

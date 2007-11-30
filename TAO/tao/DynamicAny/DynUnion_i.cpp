@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/DynamicAny/DynUnion_i.h"
+#include "tao/DynamicAny/DynEnum_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/DynamicAny/DynAnyUtils_T.h"
 

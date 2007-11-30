@@ -1,5 +1,6 @@
 // $Id$
 #include "orbsvcs/Notify/MonitorControl/Statistic.h"
+#include "ace/Log_Msg.h"
 
 void
 error(const char* msg)

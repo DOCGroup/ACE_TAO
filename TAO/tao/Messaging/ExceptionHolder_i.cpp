@@ -9,6 +9,7 @@ ACE_RCSID (Messaging,
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/Exception_Data.h"
+#include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -24,8 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Export.h"
 #include "tao/Pseudo_VarOut_T.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

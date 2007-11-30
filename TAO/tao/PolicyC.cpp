@@ -31,6 +31,7 @@
 
 #include "tao/PolicyC.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/Basic_Arguments.h"

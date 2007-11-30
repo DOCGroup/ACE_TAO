@@ -20,6 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Exception.h"
 #include "tao/TimeBaseC.h"
 #include "tao/target_specification.h"
 
