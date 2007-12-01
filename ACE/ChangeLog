@@ -6,7 +6,7 @@ Fri Nov 30 23:59:41 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
          
           check_for_ACE_SYNCH_MUTEX:
           This test checks for the use of ACE_SYNCH_MUTEX in TAO/CIAO,
-          TAO_SYNCH should be used instead for consistency.
+          TAO_SYNCH_MUTEX should be used instead for consistency.
 
           check_for_ACE_Thread_Mutex:
           This test checks for the use of ACE_Thread_Mutex in TAO/CIAO,
