@@ -1,9 +1,16 @@
+Sat Dec  1 17:06:32 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+          Fixed the checks of ACE_SYNCH_MUTEX and ACE_Thread_Mutex to exclude
+          checking for those key words in ACE. We only want to detect the usage
+          of those words in TAO and CIAO.
+
 Fri Nov 30 23:59:41 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
 
           Added the following checks:
-         
+
           check_for_ACE_SYNCH_MUTEX:
           This test checks for the use of ACE_SYNCH_MUTEX in TAO/CIAO,
           TAO_SYNCH_MUTEX should be used instead for consistency.
