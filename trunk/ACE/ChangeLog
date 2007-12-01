@@ -1,3 +1,20 @@
+Fri Nov 30 23:59:41 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Added the following checks:
+         
+          check_for_ACE_SYNCH_MUTEX:
+          This test checks for the use of ACE_SYNCH_MUTEX in TAO/CIAO,
+          TAO_SYNCH should be used instead for consistency.
+
+          check_for_ACE_Thread_Mutex:
+          This test checks for the use of ACE_Thread_Mutex in TAO/CIAO,
+          TAO_SYNCH_MUTEX should be used instead to make the code buid
+          in single-threaded builds.
+
+          I will fix the resulting fuzz errors over the weekend.
+
 Fri Nov 30 22:11:32 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/WFMO_Reactor.h: Clarify that only the owner thread can expire
@@ -35,14 +52,14 @@ Fri Nov 30 11:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
 Thu Nov 29 19:49:23 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * tests/Process_Manager_Test.cpp: Changed ACE_MT_SYNCH to ACE_SYNCH so 
+        * tests/Process_Manager_Test.cpp: Changed ACE_MT_SYNCH to ACE_SYNCH so
           this works on single-threaded builds.  Thanks to Johnny for
           reporting this.
 
 Thu Nov 29 18:10:27 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/ARGV.h:
-        
+
           #include "ace/Global_Macros.h".  This is included implicitly on
           platforms where ACE_TEMPLATES_REQUIRE_SOURCE, but is needed for
           those that don't.

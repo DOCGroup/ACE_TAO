@@ -287,6 +287,79 @@ sub check_for_noncvs_files ()
     }
 }
 
+# This test checks for the use of ACE_SYNCH_MUTEX in TAO/CIAO, 
+# TAO_SYNCH_MUTEX should used instead.
+
+sub check_for_ACE_SYNCH_MUTEX ()
+{
+    print "Running ACE_SYNCH_MUTEX check\n";
+    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                ++$line;
+                if (/FUZZ\: disable check_for_ACE_SYNCH_MUTEX/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_ACE_SYNCH_MUTEX/) {
+                    $disable = 0;
+                }
+                if ($disable == 0 and /ACE_SYNCH_MUTEX/) {
+                    # It is okay to use ACE_SYNCH_MUTEX in ACE
+                    # so don't check the ACE directory
+                    if (($file =~ /ACE/)) {
+                      next ITERATION;
+                    }
+                    
+                    print_error ("$file:$.: found ACE_SYNCH_MUTEX, use TAO_SYNCH_MUTEX instead");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+# This test checks for the use of ACE_Thread_Mutex in TAO/CIAO, 
+# TAO_SYNCH_MUTEX should used instead to make the code build
+# in single-threaded builds.
+
+sub check_for_ACE_Thread_Mutex ()
+{
+    print "Running ACE_Thread_Mutex check\n";
+    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                ++$line;
+                if (/FUZZ\: disable check_for_ACE_Thread_Mutex/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_ACE_Thread_Mutex/) {
+                    $disable = 0;
+                }
+                if ($disable == 0 and /ACE_Thread_Mutex/) {
+                    # It is okay to use ACE_Thread_Mutex in ACE
+                    # so don't check the ACE directory
+                    if (($file =~ /ACE/)) {
+                      next ITERATION;
+                    }
+                    
+                    print_error ("$file:$.: found ACE_Thread_Mutex, use TAO_SYNCH_MUTEX instead to allow the code to work in single-threaded builds");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 # This test checks for the use of tabs, spaces should be used instead of tabs
 sub check_for_tab ()
 {
@@ -1681,6 +1754,8 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_inline_in_cpp
            check_for_id_string
            check_for_newline
+           check_for_ACE_SYNCH_MUTEX
+           check_for_ACE_Thread_Mutex
            check_for_tab
            check_for_exception_spec
            check_for_NULL
@@ -1742,6 +1817,8 @@ check_for_makefile_variable () if ($opt_l >= 1);
 check_for_inline_in_cpp () if ($opt_l >= 2);
 check_for_id_string () if ($opt_l >= 1);
 check_for_newline () if ($opt_l >= 1);
+check_for_ACE_Thread_Mutex () if ($opt_l >= 1);
+check_for_ACE_SYNCH_MUTEX () if ($opt_l >= 1);
 check_for_tab () if ($opt_l >= 1);
 check_for_lack_ACE_OS () if ($opt_l >= 10);
 check_for_exception_spec () if ($opt_l >= 1);
