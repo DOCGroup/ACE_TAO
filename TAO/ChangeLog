@@ -1,3 +1,9 @@
+Sat Dec  1 17:41:00 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tao/orbconf.h:
+          Disable fuzz check for ACE_SYNCH_MUTEX in a section of the code
+          were we define TAO_SYNCH_MUTEX in terms of ACE_SYNCH_MUTEX.
+
 Fri Nov 30 20:23:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Multiple/client.cpp:
