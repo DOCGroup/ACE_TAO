@@ -307,8 +307,9 @@ sub check_for_ACE_SYNCH_MUTEX ()
                 }
                 if ($disable == 0 and /ACE_SYNCH_MUTEX/) {
                     # It is okay to use ACE_SYNCH_MUTEX in ACE
-                    # so don't check the ACE directory
-                    if (($file =~ /ACE/)) {
+                    # so don't check the ACE directory. The below
+                    # will check it for TAO and CIAO.
+                    if (($file !~ /.*TAO.*/)) {
                       next ITERATION;
                     }
                     
@@ -344,8 +345,9 @@ sub check_for_ACE_Thread_Mutex ()
                 }
                 if ($disable == 0 and /ACE_Thread_Mutex/) {
                     # It is okay to use ACE_Thread_Mutex in ACE
-                    # so don't check the ACE directory
-                    if (($file =~ /ACE/)) {
+                    # so don't check the ACE directory. The below
+                    # will check it for TAO and CIAO.
+                    if (($file !~ /.*TAO.*/)) {
                       next ITERATION;
                     }
                     
