@@ -41,10 +41,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T< ACE_Reactor_Token_T<ACE_Noop_Token> >
 #endif /* TAO_NULL_LOCK_REACTOR */
 
+//FUZZ: disable check_for_ACE_SYNCH_MUTEX
 // Define this to modify the default mutex type used throughout TAO.
 #if !defined (TAO_SYNCH_MUTEX)
 #define TAO_SYNCH_MUTEX ACE_SYNCH_MUTEX
 #endif /* TAO_SYNCH_MUTEX */
+//FUZZ: enable check_for_ACE_SYNCH_MUTEX
 
 #if !defined (TAO_SYNCH_RECURSIVE_MUTEX)
 #define TAO_SYNCH_RECURSIVE_MUTEX ACE_SYNCH_RECURSIVE_MUTEX
