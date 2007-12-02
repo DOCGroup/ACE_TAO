@@ -327,7 +327,7 @@ TAO_Root_POA::complete_destruction_i (void)
 
   PortableServer::POA_var poa;
   TAO::ORT_Array my_array_obj_ref_template;
-  TAO::ORT_Adapter *ort_adapter;
+  TAO::ORT_Adapter *ort_adapter = 0;
   if (doing_complete_destruction)
     {
       ort_adapter =
