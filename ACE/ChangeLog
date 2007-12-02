@@ -1,3 +1,11 @@
+Sun Dec  2 17:41:01 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_stdlib.cpp:
+
+          Change initial program name returned by the emulated version of
+          ACE_OS::getprogname() to be the empty string rather than a null
+          pointer.
+
 Sun Dec  2 06:47:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/gperf/tests/test.cpp:
