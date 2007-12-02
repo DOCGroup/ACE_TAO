@@ -2490,7 +2490,16 @@ ACE_CACHE_CHECK([if const char * can be rvalue in conditional operator],
   ],,[AC_DEFINE([ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS])])
 
 dnl Check if templates require source on platform
-dnl FIXME:  This test may be broken.
+dnl
+dnl FIXME: This test may be broken.
+dnl
+dnl FIXME: This test contains vestigial bits of tests for explicit
+dnl template instantiation feature macros, even though support for
+dnl the same has been removed. 
+dnl 
+dnl A rewrite to test only whether ACE_TEMPLATES_REQUIRE_SOURCE or
+dnl ACE_TEMPLATES_REQUIRE_PRAGMA is clearly needed.
+dnl
 ACE_CACHE_CHECK([if templates require source],
   [ace_cv_feature_templates_require_source],
   [
@@ -2951,40 +2960,6 @@ dnl END OUTER REQUIRE PRAGMA #########################################
      ],
      [
       dnl Do nothing.
-     ])
-  ])
-
-ACE_CACHE_CHECK([if explicit template instantiation is needed],
-  [ace_cv_feature_explicit_template_instantiation],
-  [
-   AC_MSG_ERROR([
-Bug in configure script, check for need of explicit template
-instantiation should have occurred during check for need of template
-source.  Please e-mail the maintainer of this configure script:
-  $ACE_CONFIGURE_MAINTAINER
-this message.
-    ])
-  ],
-  [
-   AC_DEFINE([ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION])
-  ],
-  [
-   ACE_CACHE_CHECK([if pragma template instantiation is needed],
-     [ace_cv_feature_pragma_template_instantiation],
-     [
-      AC_MSG_FAILURE([
-Bug in configure script, check for need of pragma template
-instantiation should have occurred during check for need of template
-source.  Please e-mail the maintainer of this configure script:
-  $ACE_CONFIGURE_MAINTAINER
-this message.
-        ])
-     ],
-     [
-      AC_DEFINE([ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA])
-     ],
-     [
-      dnl Do nothing
      ])
   ])
 

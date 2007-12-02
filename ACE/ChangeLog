@@ -1,3 +1,17 @@
+Sun Dec  2 17:47:13 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Remove code which defined ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
+          and ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION feature test macros.
+          There are vestigial bits of the tests which still remain -- the
+          entire platform template capability tests need to be rewritten.
+
+        * m4/config_h.m4:
+
+          Remove templates for ACE_HAS_TEMPLATE_INSTANTATION_PRAGMA and
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION.
+
 Sun Dec  2 17:43:27 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/README:
