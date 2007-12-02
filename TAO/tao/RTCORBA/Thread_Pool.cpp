@@ -166,7 +166,7 @@ TAO_Thread_Lane::new_dynamic_thread (void)
   if (this->dynamic_threads_.thr_count () >= this->dynamic_threads_number_)
     return false;
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
                     this->lock_,
                     false);
@@ -209,7 +209,7 @@ TAO_Thread_Lane::new_dynamic_thread (void)
 void
 TAO_Thread_Lane::shutting_down (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_GUARD (TAO_SYNCH_MUTEX,
              mon,
              this->lock_);
 
@@ -350,7 +350,7 @@ TAO_Thread_Lane::is_collocated (const TAO_MProfile &mprofile)
 CORBA::ULong
 TAO_Thread_Lane::current_threads (void) const
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
                     this->lock_,
                     0);
@@ -363,7 +363,7 @@ TAO_Thread_Lane::current_threads (void) const
 int
 TAO_Thread_Lane::create_static_threads (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
                     this->lock_,
                     0);
@@ -377,7 +377,7 @@ TAO_Thread_Lane::create_static_threads (void)
 int
 TAO_Thread_Lane::create_dynamic_threads (CORBA::ULong number_of_threads)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
                     this->lock_,
                     0);
@@ -628,7 +628,7 @@ TAO_Thread_Pool::create_static_threads (void)
 
 #define TAO_THREAD_POOL_MANAGER_GUARD \
   ACE_GUARD_THROW_EX ( \
-    ACE_SYNCH_MUTEX, \
+    TAO_SYNCH_MUTEX, \
     mon, \
     this->lock_, \
     CORBA::INTERNAL ( \

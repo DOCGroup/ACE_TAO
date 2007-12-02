@@ -237,7 +237,7 @@ private:
   ACE_Time_Value const dynamic_thread_idle_timeout_;
 
   /// Lock to guard all members of the lane
-  mutable ACE_SYNCH_MUTEX lock_;
+  mutable TAO_SYNCH_MUTEX lock_;
 };
 
 class TAO_Thread_Pool_Manager;
@@ -445,7 +445,7 @@ private:
 
   THREAD_POOLS thread_pools_;
   RTCORBA::ThreadpoolId thread_pool_id_counter_;
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
