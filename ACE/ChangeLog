@@ -1,3 +1,10 @@
+Sun Dec  2 17:43:27 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/README:
+
+          Remove description of ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION.
+          This feature test macro was removed some time ago.
+
 Sun Dec  2 17:41:01 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_stdlib.cpp:
