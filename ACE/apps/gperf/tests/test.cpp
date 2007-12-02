@@ -23,7 +23,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   while (ACE_OS::fgets (buf, sizeof buf, stdin) != 0)
     {
-      int len = ACE_OS::strlen (buf) - 1;
+      size_t len = ACE_OS::strlen (buf) - 1;
       buf[len] = '\0';
       if (in_word_set (buf, len) && verbose)
         ACE_OS::printf ("in word set %s\n", buf);
