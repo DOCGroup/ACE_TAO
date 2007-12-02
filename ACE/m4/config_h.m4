@@ -1008,18 +1008,8 @@ AH_TEMPLATE([ACE_TEMPLATES_REQUIRE_SOURCE],
 [Compiler's template mechanim must see source code (i.e., .cpp
    files).  This is used for GNU G++.])
 
-AH_TEMPLATE([ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION],
-[Compiler's template instantiation mechanism supports the use of
-   explicit C++ specializations for all used templates. This is also
-   used for GNU G++ if you don't use the "repo" patches.])
-
 AH_TEMPLATE([ACE_HAS_ICMP_SUPPORT],
 [Defined to 1 if platform supports ICMP over raw sockets])
-
-AH_TEMPLATE([ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA],
-[Compiler's template instantiation mechanism supports the use of
-   "#pragma instantiate".  Edison Design Group compilers, e.g., SGI
-   C++ and Green Hills 1.8.8 and later, support this.])
 
 AH_TEMPLATE([ACE_NEEDS_FUNC_DEFINITIONS],
 [Compiler requires a definition for a "hidden" function, e.g., a
