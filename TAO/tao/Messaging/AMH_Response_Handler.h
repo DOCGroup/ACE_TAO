@@ -183,7 +183,7 @@ private:
   //    The lighter-weight form (using a state variable
 
   /// Mutex to ensure the AMH-RH method call is thread-safe.
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 
   /// Allocator used to allocate this object. If zero then we are allocated
   /// from the heap

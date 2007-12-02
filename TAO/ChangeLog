@@ -1,3 +1,19 @@
+Sun Dec  2 16:10:32 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h:
+        * tao/CSD_ThreadPool/CSD_TP_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Servant_State.h:
+        * tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.h:
+        * tao/CSD_ThreadPool/CSD_TP_Synch_Helper.h:
+        * tao/MMAP_Allocator.h:
+        * tao/Messaging/AMH_Response_Handler.h:
+        * tao/RTCORBA/Thread_Pool.h:
+        * tao/RTCORBA/Thread_Pool.cpp:
+
+          Parts of TAO use TAO_SYNCH_MUTEX while other parts use ACE_SYNCH_MUTEX.
+          All occurrences of ACE_SYNCH_MUTEX were replaced with TAO_SYNCH_MUTEX for
+          consistency.
+
 Sat Dec  1 17:41:00 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tao/orbconf.h:
