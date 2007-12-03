@@ -89,7 +89,7 @@ class TAO_ESF_Copy_On_Write_Write_Guard
 public:
   /// Constructor
   typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
-  TAO_ESF_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &mutex,
+  TAO_ESF_Copy_On_Write_Write_Guard (TAO_SYNCH_MUTEX_T &mutex,
                                      ACE_SYNCH_CONDITION_T &cond,
                                      int &pending_writes,
                                      int &writing_flag,
@@ -101,7 +101,7 @@ public:
   Collection *copy;
 
 private:
-  ACE_SYNCH_MUTEX_T &mutex;
+  TAO_SYNCH_MUTEX_T &mutex;
   ACE_SYNCH_CONDITION_T &cond;
   int &pending_writes;
   int &writing_flag;
@@ -124,7 +124,7 @@ class TAO_ESF_Copy_On_Write : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
   /// Constructor
-  typedef TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_SYNCH_MUTEX_T> Read_Guard;
+  typedef TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,TAO_SYNCH_MUTEX_T> Read_Guard;
   typedef TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE> Write_Guard;
   TAO_ESF_Copy_On_Write (void);
 
@@ -142,7 +142,7 @@ private:
   typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
 
   /// A mutex to serialize access to the collection pointer.
-  ACE_SYNCH_MUTEX_T mutex_;
+  TAO_SYNCH_MUTEX_T mutex_;
 
   /// Number of pending writes
   int pending_writes_;

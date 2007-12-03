@@ -1,3 +1,16 @@
+Mon Dec  3 18:05:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
+
+          Parts of TAO use TAO_SYNCH_MUTEX while other parts use ACE_SYNCH_MUTEX.
+          All occurrences of ACE_SYNCH_MUTEX were replaced with TAO_SYNCH_MUTEX for
+          consistency.
+
 Mon Dec  3 16:23:58 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/CSD_Strategy/ThreadPool/OrbShutdownTask.h:

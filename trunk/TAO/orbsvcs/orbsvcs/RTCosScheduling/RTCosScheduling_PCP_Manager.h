@@ -126,7 +126,7 @@ class CosSchedulingLockList
    */
   CosSchedulingLockList(CosSchedulingLockNode *lock_array,
                         const int size,
-                        ACE_SYNCH_MUTEX *mutex);
+                        TAO_SYNCH_MUTEX *mutex);
 
   /**
    * Calls ACE_Thread::remove() on all conditions in the list;
@@ -158,7 +158,7 @@ class CosSchedulingLockList
    * @param mutex The mutex that guards the locks.
    */
   int defer_lock(const CosSchedulingLockNode& L,
-    ACE_SYNCH_MUTEX &mutex);
+    TAO_SYNCH_MUTEX &mutex);
 
   /**
    * Removes a node from the granted lock list whose threadID_
@@ -224,7 +224,7 @@ public:
    * @param mutex The mutex to guard the locks.
    */
   PCP_Manager(CosSchedulingLockList *locks,
-              ACE_SYNCH_MUTEX *mutex,
+              TAO_SYNCH_MUTEX *mutex,
               const RTCORBA::Current_var current);
 
   /**
@@ -249,7 +249,7 @@ public:
   private:
   int                   threadID_;  /// ID of thread owning this object
   CosSchedulingLockList *locks_;     /// combined list of locks
-  ACE_SYNCH_MUTEX       *mutex_;     /// Mutex to guard lock list
+  TAO_SYNCH_MUTEX       *mutex_;     /// Mutex to guard lock list
   RTCORBA::Current_var  current_; /// reference to set local priority
 
 };
@@ -283,7 +283,7 @@ public:
 
   private:
   CosSchedulingLockList *locks_;      /// lists of granted and pending locks
-  ACE_SYNCH_MUTEX       mutex_;       /// The mutex for locking the lock list
+  TAO_SYNCH_MUTEX       mutex_;       /// The mutex for locking the lock list
   ACE_Shared_Memory_MM  mem_;         /// shared memory space
   char                  *shm_key_;    /// Key for shared memory
   CosSchedulingLockNode *lock_array_; /// The lock list
