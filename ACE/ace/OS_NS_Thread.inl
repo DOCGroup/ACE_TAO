@@ -2561,16 +2561,9 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
   int result;
-#     ifdef pthread_cancel
-        // If it's a macro we can't say "pthread_cancel"...
-        ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cancel (thr_id),
-                                             result),
-                           int, -1);
-#     else
-        ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cancel (thr_id),
-                                             result),
-                           int, -1);
-#     endif /* pthread_cancel */
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cancel (thr_id),
+                                        result),
+                      int, -1);
 # elif defined (ACE_HAS_VXTHREADS)
   ACE_OSCALL_RETURN (::taskDelete (thr_id), int, -1);
 # else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
