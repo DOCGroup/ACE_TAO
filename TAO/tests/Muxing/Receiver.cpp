@@ -15,7 +15,7 @@ Receiver::Receiver (CORBA::ORB_ptr orb)
 void
 Receiver::dump_results ()
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   ACE_DEBUG ((LM_DEBUG,
               "Total messages = %d\n"
               "Total bytes = %d\n",
@@ -26,7 +26,7 @@ Receiver::dump_results ()
 void
 Receiver::receive_data (const Test::Payload &payload)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->message_count_++;
   this->byte_count_ += payload.length ();
 }
@@ -34,7 +34,7 @@ Receiver::receive_data (const Test::Payload &payload)
 CORBA::Long
 Receiver::get_event_count (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->message_count_;
 }
 

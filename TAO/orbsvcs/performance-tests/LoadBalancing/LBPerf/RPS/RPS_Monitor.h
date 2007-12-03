@@ -80,7 +80,7 @@ private:
 
   ACE_Time_Value last_time_;
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 };
 
 #include /**/ "ace/post.h"

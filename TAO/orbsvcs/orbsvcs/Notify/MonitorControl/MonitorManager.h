@@ -42,7 +42,7 @@ private:
     ORBTask (void);
     virtual int svc (void);
 
-    ACE_SYNCH_MUTEX mutex_;
+    TAO_SYNCH_MUTEX mutex_;
     ACE_ARGV_T<char> argv_;
     CORBA::ORB_var orb_;
     ACE_TString ior_output_;

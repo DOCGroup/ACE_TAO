@@ -35,7 +35,7 @@ ACE_OFF_T
 Random_File::size() const
 {
   Random_File * const mutable_this = const_cast<Random_File *> (this);
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   ACE_OFF_T original_pos = mutable_this->tell ();
   mutable_this->ACE_FILE::seek(0, SEEK_END);
   ACE_OFF_T cursize = mutable_this->tell();
@@ -50,7 +50,7 @@ Random_File::size() const
 bool
 Random_File::open(const ACE_TCHAR* filename, size_t block_size)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
   this->block_size_ = block_size;
   bool result = (this->close() == 0);
 
@@ -87,7 +87,7 @@ Random_File::open(const ACE_TCHAR* filename, size_t block_size)
 bool
 Random_File::write(const size_t block_number, void* buf, bool atomic)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Write block %d %c\n"),
     static_cast<int> (block_number),
@@ -122,7 +122,7 @@ Random_File::write(const size_t block_number, void* buf, bool atomic)
 bool
 Random_File::read(const size_t block_number, void* buf)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Read block %d\n"),
     static_cast<int> (block_number)

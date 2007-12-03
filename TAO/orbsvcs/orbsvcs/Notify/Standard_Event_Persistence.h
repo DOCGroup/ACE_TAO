@@ -86,7 +86,7 @@ namespace TAO_Notify
     Routing_Slip_Persistence_Manager & root();
 
   public:
-    ACE_SYNCH_MUTEX lock;
+    TAO_SYNCH_MUTEX lock;
 
   private:
     Persistent_File_Allocator allocator_;
