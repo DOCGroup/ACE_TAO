@@ -1,0 +1,40 @@
+// -*- MPC -*-
+// $Id$
+
+project(*IDL): taoidldefaults {
+  idlflags -= -St
+  IDL_Files {
+    Event_Types.idl
+  }
+  custom_only = 1
+}
+
+project(*server): taoserver, utils, valuetype, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = server
+  after += *IDL
+  Source_Files {
+    Event_TypesS.cpp
+    Event_TypesC.cpp
+    Server_i.cpp
+    Event_Types_impl.cpp
+    ../Simple_util.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*client): taoserver, utils, valuetype, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = client
+  after += *IDL
+  Source_Files {
+    Event_TypesS.cpp
+    Event_TypesC.cpp
+    Client_i.cpp
+    Event_Types_impl.cpp
+    ../Simple_util.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}
