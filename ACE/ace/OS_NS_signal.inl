@@ -26,18 +26,18 @@ kill (pid_t pid, int signum)
 ACE_INLINE int
 pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
-#if defined (ACE_HAS_PTHREADS_STD) && !defined (ACE_LACKS_PTHREAD_SIGMASK)
+#if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_SIGMASK)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsp, osp),
                                        result),
                      int,
                      -1);
-#else /* !ACE_HAS_PTHREADS_STD && !ACE_LACKS_PTHREAD_SIGMASK */
+#else /* !ACE_HAS_PTHREADS && !ACE_LACKS_PTHREAD_SIGMASK */
   ACE_UNUSED_ARG (how);
   ACE_UNUSED_ARG (nsp);
   ACE_UNUSED_ARG (osp);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_PTHREADS_STD && !ACE_LACKS_PTHREAD_SIGMASK */
+#endif /* ACE_HAS_PTHREADS && !ACE_LACKS_PTHREAD_SIGMASK */
 }
 
 ACE_INLINE int

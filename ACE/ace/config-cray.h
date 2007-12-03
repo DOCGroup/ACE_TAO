@@ -53,22 +53,6 @@
 
 #define ACE_HAS_PTHREADS
 
-// UNICOS 10 and UNICOS/mk implement a small subset of POSIX Threads,
-// but the prototypes follow the POSIX.1c-1995 definitions.  Earlier
-// UNICOS versions sport Draft 7 threads.
-
-#if _UNICOS > 9
-# define ACE_HAS_PTHREADS_STD
-#else
-# define ACE_HAS_PTHREADS_DRAFT7
-# define ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE
-# define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
-  // UNICOS 9 doesn't have this, nor sched.h
-# define SCHED_OTHER 0
-# define SCHED_FIFO 1
-# define SCHED_RR 2
-#endif
-
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 #define ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP

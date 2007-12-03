@@ -425,8 +425,6 @@
 // features (lacks thread priority inheritance and protection), so
 // config-posix.h doesn't get this one...
 #  define ACE_HAS_PTHREADS
-
-#  define ACE_HAS_PTHREADS_STD
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #  define ACE_HAS_PTHREAD_CONTINUE
 #  define ACE_HAS_PTHREAD_RESUME_NP

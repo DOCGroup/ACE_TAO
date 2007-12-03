@@ -181,8 +181,6 @@
 #   define ACE_HAS_PTHREAD_CONTINUE 1
 #   define ACE_HAS_PTHREAD_SUSPEND 1
 
-// ... and the final standard even!
-#  define ACE_HAS_PTHREADS_STD
 #  define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
 // Cygwin (see pthread.h): Not supported or implemented.
 #  define ACE_LACKS_SETSCHED

@@ -1,3 +1,84 @@
+Mon Dec  3 10:02:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-aix-5.x.h:
+        * ace/config-cray.h:
+        * ace/config-cygwin32.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-integritySCA.h:
+        * ace/config-irix6.x-common.h:
+        * ace/config-linux.h:
+        * ace/config-macosx-leopard.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-posix.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-rtems.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+        * ace/config-win32-interix.h:
+          Removed ACE_HAS_PTHREADS_STD, we only support the official pthread
+          standard, not any draft
+
+        * ace/config-cray.h:
+          Removed support for Unicos 9 and earlier. So far as I can find on the web
+          unicos 9 is from 1997
+
+        * ace/config-mvs.h:
+          Removed draft6, according to references on the web the std
+          pthread is supported now
+
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+          Newer NSK versions to support pthread std
+
+        * ace/config-tru64.h:
+          Removed support for ancient tru64 versions
+
+        * ace/os_include/os_limits.h:
+          Updated for VxWorks 6.6.
+
+        * ace/os_include/os_pthread.h:
+          Removed support for the draft pthread mappings
+
+        * ace/os_include/os_time.h:
+          Use ACE_HAS_PTHREADS
+
+        * ace/os_include/sys/os_msg.h:
+          Removed not needed workaround for osf1
+
+        * ace/OS_NS_pwd.inl:
+        * ace/OS_NS_signal.inl:
+          Use ACE_HAS_PTHREADS
+
+        * ace/OS_NS_string.cpp:
+          Initialise pointer with 0
+
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.inl:
+        * ace/Thread_Manager.cpp:
+          Removed support for pthread draft 4, 6, & 7
+
+        * ace/Recursive_Thread_Mutex.cpp:
+          get_nesting_level is only not support with VxWorks tasks
+
+        * ace/Select_Reactor_Base.cpp:
+          Layout change
+
+        * ace/Token.h:
+          Only with VxWorks tasks use semaphores
+
+        * ace/WIN32_Asynch_IO.cpp
+
 Sun Dec  2 17:47:13 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
