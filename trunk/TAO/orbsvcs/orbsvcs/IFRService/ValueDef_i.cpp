@@ -723,7 +723,7 @@ TAO_ValueDef_i::is_a_i (const char *id)
 {
   if (ACE_OS::strcmp (id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
     {
-      return 1;
+      return true;
     }
 
   ACE_TString holder;
@@ -734,21 +734,34 @@ TAO_ValueDef_i::is_a_i (const char *id)
   // Is it our type?
   if (ACE_OS::strcmp (holder.fast_rep (), id) == 0)
     {
-      return 1;
+      return true;
     }
 
-  this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_value",
+  int status =
+    this->repo_->config ()->get_string_value (this->section_key_,
+                                              "base_value",
+                                              holder);
+                                            
+  if (status == 0)
+    {
+      ACE_Configuration_Section_Key base_key;
+      this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                           holder,
+                                           base_key,
+                                           0);
+      this->repo_->config ()->get_string_value (base_key,
+                                                "id",
                                             holder);
 
-  // Is it our concrete base type?
-  if (ACE_OS::strcmp (holder.fast_rep (), id) == 0)
-    {
-      return 1;
+      // Is it our concrete base type?
+      if (ACE_OS::strcmp (holder.fast_rep (), id) == 0)
+        {
+          return true;
+        }
     }
 
   ACE_Configuration_Section_Key bases_key;
-  int status =
+  status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "abstract_bases",
                                           0,
@@ -756,7 +769,7 @@ TAO_ValueDef_i::is_a_i (const char *id)
 
   if (status != 0)
     {
-      return 0;
+      return false;
     }
 
   CORBA::ULong count = 0;
@@ -786,11 +799,11 @@ TAO_ValueDef_i::is_a_i (const char *id)
 
       if (success)
         {
-          return 1;
+          return true;
         }
     }
 
-  return 0;
+  return false;
 }
 
 CORBA::ValueDef::FullValueDescription *
@@ -1260,9 +1273,23 @@ TAO_ValueDef_i::describe_value_i (void)
                                              "is_truncatable",
                                              val);
   fv_desc->is_truncatable = static_cast<CORBA::Boolean> (val);
-  this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_value",
+  status = this->repo_->config ()->get_string_value (this->section_key_,
+                                                     "base_value",
+                                                     holder);
+                                                     
+  if (status == 0)
+    {
+      ACE_Configuration_Section_Key base_key;
+      this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                           holder,
+                                           base_key,
+                                           0);
+      this->repo_->config ()->get_string_value (base_key,
+                                                "id",
                                             holder);
+    }
+  
+  // If status isn't 0, then holder will contain empty string anyway.  
   fv_desc->base_value = holder.fast_rep ();
   fv_desc->type = this->type_i ();
 
@@ -1661,9 +1688,24 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc)
   tmp = this->is_truncatable_i ();
   desc.is_truncatable = static_cast<CORBA::Boolean> (tmp);
 
-  this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_value",
-                                            holder);
+  int status =
+    this->repo_->config ()->get_string_value (this->section_key_,
+                                              "base_value",
+                                              holder);
+                                              
+  if (status == 0)
+    {
+      ACE_Configuration_Section_Key base_key;
+      this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                           holder,
+                                           base_key,
+                                           0);
+      this->repo_->config ()->get_string_value (base_key,
+                                                "id",
+                                                holder);
+    }
+    
+  // If status isn't 0, then holder will be empty anyway.  
   desc.base_value = holder.fast_rep ();
 }
 
