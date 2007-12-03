@@ -1,11 +1,19 @@
+Mon Dec  3 16:30:11 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/templates/CIAO_Glue_Session_Template.h:
+
+          Parts of CIAO use TAO_SYNCH_MUTEX while other parts use ACE_SYNCH_MUTEX.
+          All occurrences of ACE_SYNCH_MUTEX were replaced with TAO_SYNCH_MUTEX for
+          consistency.
+
 Mon Dec  3 16:07:59 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/Simple/03.html:
 
-          Fixed image links that were borken due to directory name case sensitivity, 
+          Fixed image links that were borken due to directory name case sensitivity,
           this caused the images not to display in non-windows operating systems.
           Thanks to Ashley Sterritt (sterrita at cs dot tc dot ie) for pointing
-          out the problem. 
+          out the problem.
 
 Fri Nov 30 22:11:41 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
