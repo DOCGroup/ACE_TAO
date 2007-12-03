@@ -1412,12 +1412,6 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
 # endif /* ! _AIX */
             return -1;
 
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-          // Must explicitly detach threads.  Threads without THR_DETACHED
-          // were detached in ACE_OS::thr_create ().
-          ::pthread_detach (&tdb->thr_handle_);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
-
           delete tdb;
           return 0;
           // return immediately if we've found the thread we want to join.
@@ -1458,12 +1452,6 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
 # endif /* ! _AIX */
     return -1;
 
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-  // Must explicitly detach threads.  Threads without THR_DETACHED
-  // were detached in ACE_OS::thr_create ().
-
-  ::pthread_detach (&tdb.thr_handle_);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
   return 0;
 }
 
@@ -1531,12 +1519,6 @@ ACE_Thread_Manager::wait_grp (int grp_id)
     {
       if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
         result = -1;
-
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-      // Must explicitly detach threads.  Threads without THR_DETACHED
-      // were detached in ACE_OS::thr_create ().
-      ::pthread_detach (&copy_table[i].thr_handle_);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
     }
 
   delete [] copy_table;
@@ -1683,11 +1665,6 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
           // Detached handles shouldn't reached here.
           (void) ACE_Thread::join (item->thr_handle_);
 
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-        // Must explicitly detach threads.  Threads without
-        // THR_DETACHED were detached in ACE_OS::thr_create ().
-        ::pthread_detach (&item->thr_handle_);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
         delete item;
       }
 
@@ -1800,12 +1777,6 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     {
       if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
         result = -1;
-
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-      // Must explicitly detach threads.  Threads without THR_DETACHED
-      // were detached in ACE_OS::thr_create ().
-      ::pthread_detach (&copy_table[i].thr_handle_);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
     }
 
   delete [] copy_table;

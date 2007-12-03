@@ -282,7 +282,6 @@
 // It is possible to enable pthread support with VxWorks, when the user decides
 // to use this, we need some more defines
 #if defined ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 # if !defined __RTP__
 #  define ACE_LACKS_PTHREAD_ATTR_SETSTACK

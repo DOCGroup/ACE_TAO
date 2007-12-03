@@ -250,19 +250,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // ACE_HAS_... thing for extensions.
 #define ACE_HAS_PTHREADS
 
-// Platform's 'Pthreads' is .4a draft 4
-#ifndef ACE_TANDEM_T1248_PTHREADS
-#  define ACE_HAS_PTHREADS_DRAFT4
-#  define ACE_LACKS_CONST_TIMESPEC_PTR
-extern int cma_sigwait  (sigset_t *);
-#endif
-
-// Platform supports POSIX.1c-1995 threads
-// (This is the final standard Pthreads).
-#ifdef ACE_TANDEM_T1248_PTHREADS
-#define ACE_HAS_PTHREADS_STD
-#endif
-
 // Standard pthreads supports only SCHED_FIFO
 #define ACE_HAS_ONLY_SCHED_FIFO
 

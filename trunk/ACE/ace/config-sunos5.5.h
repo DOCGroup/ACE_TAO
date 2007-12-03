@@ -322,7 +322,6 @@
 # endif /* ! _POSIX_PTHREAD_SEMANTICS */
 
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
   // . . . but only supports SCHED_OTHER scheduling policy
 # define ACE_HAS_ONLY_SCHED_OTHER
 # define ACE_HAS_SIGWAIT
