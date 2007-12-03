@@ -530,7 +530,7 @@ namespace CIAO_GLUE
                              [component name]_Servant*,
                              TAO_ObjectId_Hash,
                              ACE_Equal_To<PortableServer::ObjectId>,
-                             ACE_SYNCH_MUTEX> component_map_;
+                             TAO_SYNCH_MUTEX> component_map_;
   };
 
 }
