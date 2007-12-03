@@ -1,3 +1,12 @@
+Mon Dec  3 16:07:59 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/Simple/03.html:
+
+          Fixed image links were borken due to directory name case sensitivity, 
+          this caused the images not to display in non-windows operating systems.
+          Thanks to Ashley Sterritt (sterrita at cs dot tc dot ie) for pointing
+          out the problem. 
+
 Fri Nov 30 22:11:41 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
