@@ -1,3 +1,16 @@
+Mon Dec  3 20:36:42 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
+        
+          Changes required to handling of base component and base valuetype
+          storage in the IFR resulting from changes in
+          
+          Thu Nov 29 23:58:21 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Mon Dec  3 19:39:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3163_Regression/*:

@@ -92,13 +92,13 @@ TAO_ComponentContainer_i::create_component_i (
                                           CORBA::dk_Component);
 
       // Store the id for this - that's what ComponentDescription takes.
-      ACE_TString base_id;
-      this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
-                                                "id",
-                                                base_id);
+//      ACE_TString base_id;
+//      this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
+//                                                "id",
+//                                                base_id);
       this->repo_->config ()->set_string_value (new_key,
                                                 "base_component",
-                                                base_id);
+                                                base_path);
     }
 
   CORBA::ULong count = supports_interfaces.length ();
@@ -350,14 +350,9 @@ TAO_ComponentContainer_i::create_event_i (
                                           this->repo_,
                                           CORBA::dk_Value);
 
-      ACE_TString base_value_id;
-      this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
-                                                "id",
-                                                base_value_id);
-
       this->repo_->config ()->set_string_value (new_key,
                                                 "base_value",
-                                                base_value_id);
+                                                base_path);
     }
 
   CORBA::ULong length = abstract_base_values.length ();
