@@ -1,3 +1,16 @@
+Mon Dec  3 17:10:04 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+
+        * docs/templates:
+        * docs/templates/CIAO_Glue_Session_Template.h:
+        * docs/templates/CIAO_Glue_Session_Template.inl:
+        * docs/templates/CIAO_Glue_Session_Template.cpp:
+        * docs/templates/Executor.idl:
+        * docs/templates/cidl_template.cidl:
+
+          Removed these files. They are outdated and we don't need them anymore
+          since we now have a fully functinoal CIDLC compiler.
+
 Mon Dec  3 16:30:11 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/templates/CIAO_Glue_Session_Template.h:
