@@ -619,6 +619,16 @@ ACE_Name_Handler::lists_entries (void)
   return 0;
 }
 
+ACE_Name_Handler::naming_context (void)
+{ 
+  return naming_context_; 
+}
+
+ACE_Name_Acceptor::naming_context (void)
+{ 
+  return &naming_context_;
+}
+
 ACE_Name_Handler::~ACE_Name_Handler (void)
 {
   ACE_TRACE (ACE_TEXT ("ACE_Name_Handler::~ACE_Name_Handler"));
