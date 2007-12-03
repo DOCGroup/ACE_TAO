@@ -1,3 +1,10 @@
+Mon Dec  3 14:21:20 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * netsvcs/lib/Name_Handler.{h,cpp}: Check the return value from
+          this->parse_args (argc, argv) and allow use all range config
+          options for ACE_Name_Acceptor::init.  Thanks to Vladislav Zverev
+          vladislav at gtss dot spb dot ru> for these patches.
+
 Mon Dec  3 10:06:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.inl:

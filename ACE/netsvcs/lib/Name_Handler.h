@@ -28,24 +28,8 @@
 #include "ace/Naming_Context.h"
 #include "ace/Name_Request_Reply.h"
 #include "ace/Null_Mutex.h"
-#include "ace/Singleton.h"
 #include "ace/svc_export.h"
 
-/**
- * @class Naming_Context
- *
- * @brief This helper class adds the correct default constructor to the
- * <ACE_Naming_Context> class so that we can use it in
- * <ACE_Singleton>.
- */
-class Naming_Context : public ACE_Naming_Context
-{
-public:
-  Naming_Context (void)
-    : ACE_Naming_Context (ACE_Naming_Context::NET_LOCAL) {}
-};
-
-typedef ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX> NAMING_CONTEXT;
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
@@ -159,6 +143,11 @@ private:
   /// Address of client we are connected with.
   ACE_INET_Addr addr_;
 
+  ///  Naming Context
+  ACE_Naming_Context* naming_context_;
+  
+  ACE_Naming_Context*  naming_context() { return naming_context_; }
+  
   /// Handle binds.
   int bind (void);
 
@@ -206,11 +195,18 @@ public:
   /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
+  /// Naming context for acceptor /for the listening port/
+  virtual ACE_Naming_Context* naming_context() { return &naming_context_;}
+
 private:
   /// The scheduling strategy is designed for Reactive services.
   ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler> scheduling_strategy_;
+
+  //The Naming Context
+  ACE_Naming_Context naming_context_;
 };
 
 ACE_SVC_FACTORY_DECLARE (ACE_Name_Acceptor)
+
 
 #endif /* ACE_NAME_HANDLER_H */
