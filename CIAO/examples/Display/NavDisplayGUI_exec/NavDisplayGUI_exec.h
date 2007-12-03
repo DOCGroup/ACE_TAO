@@ -68,7 +68,7 @@ namespace MyImpl
     Worker *worker_;
     NavUnit unit_;
     UnitLocation loc_;
-    ACE_Thread_Mutex mutex_;
+    TAO_SYNCH_MUTEX mutex_;
   };
 
   /**
