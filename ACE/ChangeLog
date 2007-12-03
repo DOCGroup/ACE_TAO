@@ -1,3 +1,7 @@
+Mon Dec  3 19:00:57 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * netsvcs/lib/Name_Handler.cpp (naming_context): Fixed typos.
+
 Mon Dec  3 14:57:36 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * netsvcs/lib/Name_Handler.h: Moved the inline methods to the
