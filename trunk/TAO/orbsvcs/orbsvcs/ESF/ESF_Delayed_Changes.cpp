@@ -63,7 +63,7 @@ template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> int
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     busy (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX_T, ace_mon, this->busy_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_, -1);
 
   while (this->busy_count_ >= this->busy_hwm_
          || this->write_delay_count_ >= this->max_write_delay_)
@@ -77,7 +77,7 @@ template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> int
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     idle (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX_T, ace_mon, this->busy_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_, -1);
 
   --this->busy_count_;
   if (this->busy_count_ == 0)
@@ -109,7 +109,7 @@ template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     connected (PROXY *proxy)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
+  ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());
 
   proxy->_incr_refcnt ();
@@ -133,7 +133,7 @@ template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     reconnected (PROXY *proxy)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
+  ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());
 
   proxy->_incr_refcnt ();
@@ -157,7 +157,7 @@ template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     disconnected (PROXY *proxy)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
+  ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());
 
   if (this->busy_count_ == 0)
@@ -179,7 +179,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
 template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::shutdown (void)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
+  ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());
 
   if (this->busy_count_ == 0)
