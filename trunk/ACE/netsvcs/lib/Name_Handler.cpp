@@ -619,11 +619,13 @@ ACE_Name_Handler::lists_entries (void)
   return 0;
 }
 
+ACE_Naming_Context *
 ACE_Name_Handler::naming_context (void)
 { 
   return naming_context_; 
 }
 
+ACE_Naming_Context *
 ACE_Name_Acceptor::naming_context (void)
 { 
   return &naming_context_;
