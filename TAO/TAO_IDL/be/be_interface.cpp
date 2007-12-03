@@ -1701,7 +1701,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   if (ACE_OS::fclose (tao_cg->gperf_input_stream ()->file ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p:File close failed on temp gperf's input file\n",
+                         "Error:%p:File close failed on temp gperf's input file\n",
                          "fclose"),
                         -1);
     }
@@ -1723,7 +1723,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   if (input == ACE_INVALID_HANDLE)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p:File open failed on gperf's temp input file\n",
+                         "Error:%p:File open failed on gperf's temp input file\n",
                          "open_temp_file"),
                         -1);
     }
@@ -1764,7 +1764,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
     {
       ACE_OS::close (input);
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p:File open failed on server skeleton file\n",
+                         "Error:%p:File open failed on server skeleton file\n",
                          "open"),
                         -1);
     }
@@ -1858,25 +1858,29 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
   if (result != -1)
     {
+      result = process.spawn (process_options);
+      
       // Spawn a process for gperf.
-      if (process.spawn (process_options) == -1)
+      if (result == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Error:%p:Couldnt spawn a process for gperf program\n",
-                      "process.spawn"));
-
-          result = -1;
+                      "Error:%p:Couldn't spawn a "
+                      "process for gperf program\n"));
         }
 
       // Wait for gperf to complete.
-      else if (process.wait () == -1)
+      else
         {
-          ACE_ERROR ((LM_ERROR,
-                      "Error:%p:Error on waiting for "
-                      "completion of gperf program.\n",
-                      "process.wait"));
-
-          result = -1;
+          ACE_exitcode exitcode;
+          result = process.wait (&exitcode);
+          
+          if (result == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Error:%p:gperf program "
+                          "returned exit code %d.\n",
+                          exitcode));
+            }
         }
 
       // Adjust the file offset to the EOF for the server skeleton
