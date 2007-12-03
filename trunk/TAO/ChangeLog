@@ -1,3 +1,15 @@
+Mon Dec  3 21:25:15 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp(gen_gperf_lookup_methods):
+        
+          - Added "Error:" prefix to error messages where it was missing,
+            so autobuilds can pick it up. Thanks to Will Otte
+            <wotte at dre dot vanderbilt dot edu> for the suggestion.
+            
+          - Added the exit code of the spawned gperf process to the error
+            message seen if ACE_Process::wait() returns unsuccessfully
+            after spawning gperf to generate the interface's operation table.
+
 Mon Dec  3 20:36:42 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
