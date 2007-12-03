@@ -685,17 +685,24 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                                              "is_truncatable",
                                              val);
   fv_desc->is_truncatable = static_cast<CORBA::Boolean> (val);
-  this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_value",
-                                            holder);
-  ACE_Configuration_Section_Key base_key;
-  this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                       holder,
-                                       base_key,
-                                       0);
-  this->repo_->config ()->get_string_value (base_key,
-                                            "id",
-                                            holder);
+  status =
+    this->repo_->config ()->get_string_value (this->section_key_,
+                                              "base_value",
+                                              holder);
+                                              
+  if (status == 0)
+    {
+      ACE_Configuration_Section_Key base_key;
+      this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                           holder,
+                                           base_key,
+                                           0);
+      this->repo_->config ()->get_string_value (base_key,
+                                                "id",    
+                                                holder);
+    }
+    
+  // If status isn't 0, then holder will be empty anyway.  
   fv_desc->base_value = holder.fast_rep ();
   fv_desc->type = this->type_i ();
 
