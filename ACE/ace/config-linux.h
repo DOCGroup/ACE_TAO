@@ -26,8 +26,6 @@
 #define ACE_HAS_THREADS
 // And they're even POSIX pthreads (LinuxThreads implementation)
 #define ACE_HAS_PTHREADS
-// ... and the final standard even!
-#define ACE_HAS_PTHREADS_STD
 
 // On linux this is part of pthreads
 #  if (defined _POSIX_C_SOURCE && (_POSIX_C_SOURCE - 0) >= 199309L)

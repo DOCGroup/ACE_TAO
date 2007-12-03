@@ -72,19 +72,6 @@ extern "C" pthread_t pthread_self (void);
 #  define ACE_SCHED_FIFO SCHED_FIFO
 #  define ACE_SCHED_RR SCHED_RR
 
-// Definitions for mapping POSIX pthreads draft 6 into 1003.1c names
-
-#  if defined (ACE_HAS_PTHREADS_DRAFT6)
-#    define PTHREAD_SCOPE_PROCESS           PTHREAD_SCOPE_LOCAL
-#    define PTHREAD_SCOPE_SYSTEM            PTHREAD_SCOPE_GLOBAL
-#    define PTHREAD_CREATE_UNDETACHED       0
-#    define PTHREAD_CREATE_DETACHED         1
-#    define PTHREAD_CREATE_JOINABLE         0
-#    define PTHREAD_EXPLICIT_SCHED          0
-#    define PTHREAD_MIN_PRIORITY            0
-#    define PTHREAD_MAX_PRIORITY            126
-#  endif /* ACE_HAS_PTHREADS_DRAFT6 */
-
 // Definitions for THREAD- and PROCESS-LEVEL priorities...some
 // implementations define these while others don't.  In order to
 // further complicate matters, we don't redefine the default (*_DEF)
@@ -300,35 +287,6 @@ extern "C" pthread_t pthread_self (void);
 #      define PTHREAD_PROCESS_SHARED 1
 #    endif /* PTHREAD_MUTEXTYPE_FAST */
 #  endif /* PTHREAD_PROCESS_SHARED */
-
-#  if defined (ACE_HAS_PTHREADS_DRAFT4)
-#    if defined (PTHREAD_PROCESS_PRIVATE)
-#      if !defined (USYNC_THREAD)
-#        define USYNC_THREAD    PTHREAD_PROCESS_PRIVATE
-#      endif /* ! USYNC_THREAD */
-#    else
-#      if !defined (USYNC_THREAD)
-#        define USYNC_THREAD    MUTEX_NONRECURSIVE_NP
-#      endif /* ! USYNC_THREAD */
-#    endif /* PTHREAD_PROCESS_PRIVATE */
-
-#    if defined (PTHREAD_PROCESS_SHARED)
-#      if !defined (USYNC_PROCESS)
-#        define USYNC_PROCESS   PTHREAD_PROCESS_SHARED
-#      endif /* ! USYNC_PROCESS */
-#    else
-#      if !defined (USYNC_PROCESS)
-#        define USYNC_PROCESS   MUTEX_NONRECURSIVE_NP
-#      endif /* ! USYNC_PROCESS */
-#    endif /* PTHREAD_PROCESS_SHARED */
-#  elif !defined (ACE_HAS_STHREADS)
-#    if !defined (USYNC_THREAD)
-#      define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
-#    endif /* ! USYNC_THREAD */
-#      if !defined (USYNC_PROCESS)
-#        define USYNC_PROCESS PTHREAD_PROCESS_SHARED
-#      endif /* ! USYNC_PROCESS */
-#  endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
    /* MM-Graz:  prevent warnings */
 #  if !defined (UNIXWARE_7_1)

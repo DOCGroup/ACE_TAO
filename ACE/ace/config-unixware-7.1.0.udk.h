@@ -198,9 +198,6 @@
 /* Platform supports POSIX Threads */
 #define ACE_HAS_PTHREADS
 
-/* Platform supports POSIX.1c-1995 threads */
-#define ACE_HAS_PTHREADS_STD
-
 /* pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
    PTHREAD_PROCESS_SHARED values */
 #define ACE_HAS_PTHREAD_PROCESS_ENUM
