@@ -99,5 +99,5 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Task_Stats, ACE_Thread_Mutex> *ACE_Singleton<Task_Stats, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX> *ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

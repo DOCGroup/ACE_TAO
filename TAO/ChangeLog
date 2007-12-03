@@ -1,3 +1,24 @@
+Mon Dec  3 16:23:58 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/CSD_Strategy/ThreadPool/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool2/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool3/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool4/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool5/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool6/OrbShutdownTask.h:
+        * examples/RTCORBA/Activity/Task_Stats.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+        * examples/RTScheduling/Task_Stats.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp:
+        * orbsvcs/tests/Notify/lib/LookupManager.cpp:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+        * tests/Bug_2417_Regression/publisher_impl.cpp:
+
+          Replaced ACE_Thread_Mutex with TAO_SYNCH_MUTEX to comply with TAO
+          coding standards and to silence fuzz warnings.
+
 Mon Dec  3 13:49:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/CSD_Strategy/ThreadPool2/FooServantList.h:
