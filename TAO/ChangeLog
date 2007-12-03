@@ -1,3 +1,11 @@
+Mon Dec  3 19:39:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3163_Regression/*:
+          New regression test, reworked version as provided by
+          Andre Kostur <akostur at incognito dot com> It runs perfect
+          on my Windows system, let the scoreboard show what happens
+          on other platforms
+
 Mon Dec  3 18:53:48 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h:
