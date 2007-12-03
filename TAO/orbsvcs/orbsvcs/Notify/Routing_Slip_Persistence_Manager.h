@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 #include "ace/Message_Block.h"
 #include "ace/Synch_T.h"
 #include "ace/Containers_T.h"
@@ -238,7 +239,7 @@ private:
   void remove_from_dllist();
 
 private:
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   bool removed_;
   ACE_UINT64 serial_number_;
   Persistent_File_Allocator* allocator_;

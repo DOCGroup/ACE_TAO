@@ -55,7 +55,7 @@ TAO_Notify_Buffering_Strategy::update_qos_properties
 void
 TAO_Notify_Buffering_Strategy::shutdown (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_);
 
   if (this->shutdown_)
   {
@@ -75,7 +75,7 @@ TAO_Notify_Buffering_Strategy::oldest_event (void)
   ACE_Time_Value tv (ACE_Time_Value::max_time);
   ACE_Message_Block* mb = 0;
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, tv);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, tv);
   TAO_Notify_Message_Queue::ITERATOR itr (this->msg_queue_);
   while(itr.next (mb))
     {
@@ -96,7 +96,7 @@ TAO_Notify_Buffering_Strategy::oldest_event (void)
 int
 TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* method_request)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
   if (this->shutdown_)
     return -1;
@@ -168,7 +168,7 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &me
 {
   ACE_Message_Block *mb;
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
   if ( this->shutdown_ )
     return -1;

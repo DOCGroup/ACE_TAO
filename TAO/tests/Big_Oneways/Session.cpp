@@ -68,7 +68,7 @@ Session::svc (void)
         }
 
       {
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
         this->active_thread_count_--;
         if (this->more_work ())
           {
@@ -119,7 +119,7 @@ Session::start (const Test::Session_List &other_sessions)
     throw Test::No_Peers ();
 
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (this->running_)
       throw Test::Already_Running ();
 
@@ -183,7 +183,7 @@ Session::receive_payload (const Test::Payload &the_payload)
     }
 
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     --this->expected_messages_;
 
 #if 0

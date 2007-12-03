@@ -161,7 +161,7 @@ Persistent_File_Allocator::allocate()
 {
   Persistent_Storage_Block* result = 0;
   size_t block_number = 0;
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   if (!this->allocate_block(block_number))
   {
     //@@todo: this should never happen
@@ -207,7 +207,7 @@ Persistent_File_Allocator::allocate_nowrite()
 void
 Persistent_File_Allocator::used(size_t block_number)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->free_blocks_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->free_blocks_lock_);
   if (DEBUG_LEVEL > 0) ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Persistent_File_Allocator::used: %d\n"),
     static_cast<int> (block_number)
@@ -242,7 +242,7 @@ Persistent_File_Allocator::read(Persistent_Storage_Block* psb)
   {
     Persistent_Storage_Block** psbtemp = 0;
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->queue_lock_, false);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_, false);
       size_t queue_size = this->block_queue_.size();
       for (size_t idx = 0; !cached && (idx < queue_size); ++idx)
       {
@@ -284,7 +284,7 @@ Persistent_File_Allocator::write(Persistent_Storage_Block* psb)
       ACE_NEW_RETURN(ourpsb, Persistent_Storage_Block(*psb), false);
       ourpsb->set_allocator_owns(true);
     }
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->queue_lock_, false);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_, false);
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Queueing PSB to write block %d\n")
       , static_cast<int> (psb->block_number ())
@@ -298,7 +298,7 @@ Persistent_File_Allocator::write(Persistent_Storage_Block* psb)
 void
 Persistent_File_Allocator::free_block(const size_t block_number)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->free_blocks_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->free_blocks_lock_);
   ACE_ASSERT (this->free_blocks_.is_set (block_number));
   this->free_blocks_.set_bit(block_number, false);
 }
@@ -306,7 +306,7 @@ Persistent_File_Allocator::free_block(const size_t block_number)
 bool
 Persistent_File_Allocator::allocate_block(size_t& block_number)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->free_blocks_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->free_blocks_lock_, 0);
   block_number = this->free_blocks_.find_first_bit(false);
   return true;
 }
@@ -331,7 +331,7 @@ Persistent_File_Allocator::shutdown_thread()
   if (this->thread_active_)
   {
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->queue_lock_);
+      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
       this->terminate_thread_ = true;
       this->wake_up_thread_.signal();
     }
@@ -352,7 +352,7 @@ Persistent_File_Allocator::run()
     do_more_work = false;
     Persistent_Storage_Block * blk = 0;
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->queue_lock_);
+      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
       while (this->block_queue_.is_empty() && !terminate_thread_)
       {
         this->wake_up_thread_.wait();
@@ -374,7 +374,7 @@ Persistent_File_Allocator::run()
       }
       {
         Persistent_Storage_Block * blk2 = 0;
-        ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->queue_lock_);
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
         this->block_queue_.dequeue_head (blk2);
         // if this triggers, someone pushed onto the head of the queue
         // or removed the head from the queue without telling ME.

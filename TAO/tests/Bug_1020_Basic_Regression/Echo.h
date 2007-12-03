@@ -25,7 +25,7 @@ private:
 
   int abort_counter_;
 
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 };
 
 #endif /* BUG_1020_BASIC_REGRESSION_ECHO_H*/

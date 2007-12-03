@@ -40,7 +40,7 @@ public:
   virtual void set_state_excep (::Messaging::ExceptionHolder * excep_holder);
 private:
   ACE_Auto_Event& evt_;
-  ACE_Atomic_Op< ACE_SYNCH_MUTEX, int > num_backups_;
+  ACE_Atomic_Op< TAO_SYNCH_MUTEX, int > num_backups_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

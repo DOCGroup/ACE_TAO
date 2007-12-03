@@ -37,7 +37,7 @@ namespace TAO
 
     // Would be nice to have runtime option.
     ACE_NEW (this->lock_,
-             ACE_Lock_Adapter<ACE_SYNCH_MUTEX>);
+             ACE_Lock_Adapter<TAO_SYNCH_MUTEX>);
 
   }
 

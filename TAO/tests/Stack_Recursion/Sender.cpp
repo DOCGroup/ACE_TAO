@@ -18,7 +18,7 @@ Sender::Sender (CORBA::ORB_ptr orb)
 void
 Sender::dump_results (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   ACE_DEBUG ((LM_DEBUG,
               "Total messages = %d\n"
               "Total bytes = %d\n",
@@ -36,7 +36,7 @@ CORBA::Boolean
 Sender::get_data (CORBA::ULong size,
                   Test::Payload_out payload)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
                     this->mutex_,
                     0);
@@ -53,7 +53,7 @@ Sender::get_data (CORBA::ULong size,
 CORBA::Long
 Sender::get_event_count (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
                     this->mutex_,
                     0);
@@ -72,7 +72,7 @@ Sender::shutdown (void)
 {
   if (this->is_done_ == false)
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX,
+      ACE_GUARD (TAO_SYNCH_MUTEX,
                  ace_mon,
                  this->mutex_);
 

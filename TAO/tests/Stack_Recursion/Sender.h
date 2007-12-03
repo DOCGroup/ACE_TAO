@@ -36,7 +36,7 @@ public:
   virtual void shutdown (void);
 
 private:
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
   CORBA::ULong message_count_;
   CORBA::ULong byte_count_;
   CORBA::ORB_var orb_;

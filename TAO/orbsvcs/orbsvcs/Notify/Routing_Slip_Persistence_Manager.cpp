@@ -43,7 +43,7 @@ Routing_Slip_Persistence_Manager::~Routing_Slip_Persistence_Manager()
 void
 Routing_Slip_Persistence_Manager::set_callback(Persistent_Callback* callback)
 {
-  ACE_GUARD(ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD(TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->callback_ = callback;
 }
 
@@ -73,7 +73,7 @@ Routing_Slip_Persistence_Manager::store_root()
   versioninfo.wr_ptr()[0] = 1; // Major version number
   versioninfo.wr_ptr()[1] = 0; // Minor version number
   versioninfo.wr_ptr(2);
-  ACE_GUARD_RETURN(ACE_SYNCH_MUTEX, ace_mon, this->lock_, result);
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   result = this->build_chain(this->first_routing_slip_block_,
     this->routing_slip_header_, this->allocated_routing_slip_blocks_,
     versioninfo);
@@ -204,7 +204,7 @@ Routing_Slip_Persistence_Manager::store(const ACE_Message_Block& event,
   const ACE_Message_Block& routing_slip)
 {
   bool result = false;
-  ACE_GUARD_RETURN(ACE_SYNCH_MUTEX, ace_mon, this->lock_, result);
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   if (!this->removed_)
   {
     result = store_i(event, routing_slip);
@@ -216,7 +216,7 @@ bool
 Routing_Slip_Persistence_Manager::update(const ACE_Message_Block& routing_slip)
 {
   bool result = false;
-  ACE_GUARD_RETURN(ACE_SYNCH_MUTEX, ace_mon, this->lock_, result);
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   // If we have not gotten the event yet or we have no allocator, fail
   if (!this->removed_)
   {
@@ -232,7 +232,7 @@ bool
 Routing_Slip_Persistence_Manager::remove()
 {
   bool result = false;
-  ACE_GUARD_RETURN(ACE_SYNCH_MUTEX, ace_mon, this->lock_, result);
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   // Assert that this is in the dllist
   ACE_ASSERT(this->prev_manager_ != this);
   ACE_ASSERT(this->persisted());
@@ -702,7 +702,7 @@ Routing_Slip_Persistence_Manager::update_next_manager(
   Routing_Slip_Persistence_Manager* next)
 {
   bool result = false;
-  ACE_GUARD_RETURN(ACE_SYNCH_MUTEX, ace_mon, this->lock_, result);
+  ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
   ACE_ASSERT(this->persisted());
   if (!this->removed_)
   {

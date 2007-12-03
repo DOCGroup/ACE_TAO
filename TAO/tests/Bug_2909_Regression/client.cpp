@@ -27,7 +27,7 @@ const char *ior = "file://test.ior";
 int nthreads = 1;
 int niterations = 2;
 int debug = 0;
-ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> number_of_replies = 0;
+ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> number_of_replies = 0;
 
 int invalid_exception = 0;
 

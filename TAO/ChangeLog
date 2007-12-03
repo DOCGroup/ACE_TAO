@@ -1,3 +1,72 @@
+Mon Dec  3 13:49:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/CSD_Strategy/ThreadPool2/FooServantList.h:
+        * examples/CSD_Strategy/ThreadPool4/Foo_i.cpp:
+        * examples/CSD_Strategy/ThreadPool5/FooServantList.h:
+        * examples/CSD_Strategy/ThreadPool5/Foo_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/examples/LoadBalancing/RPS_Monitor.h:
+        * orbsvcs/examples/LoadBalancing/RPS_Monitor.cpp:
+        * orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Update_Manager.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Update_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.h:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.h:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/RPS_Monitor.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/RPS_Monitor.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * performance-tests/CSD_Strategy/TestInf/AppShutdown.h:
+        * performance-tests/CSD_Strategy/TestInf/ClientEngine.h:
+        * performance-tests/CSD_Strategy/TestInf/ClientTask.h:
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+        * tests/Big_Oneways/Session_Control.h:
+        * tests/Big_Oneways/Session_Control.cpp:
+        * tests/Big_Twoways/Session.h:
+        * tests/Big_Twoways/Session.cpp:
+        * tests/Big_Twoways/Session_Control.h:
+        * tests/Big_Twoways/Session_Control.cpp:
+        * tests/Bug_1020_Basic_Regression/Echo.h:
+        * tests/Bug_1020_Basic_Regression/Echo.cpp:
+        * tests/Bug_1361_Regression/Echo.h:
+        * tests/Bug_2805_Regression/client.cpp:
+        * tests/Bug_2909_Regression/client.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/AppShutdown.h:
+        * tests/CSD_Strategy_Tests/TP_Common/ClientEngine.h:
+        * tests/CSD_Strategy_Tests/TP_Common/ClientTask.h:
+        * tests/MT_BiDir/Receiver_i.cpp:
+        * tests/MT_BiDir/Sender_i.cpp:
+        * tests/Muxed_GIOP_Versions/server.cpp:
+        * tests/Muxing/Receiver.h:
+        * tests/Muxing/Receiver.cpp:
+        * tests/Stack_Recursion/Sender.h:
+        * tests/Stack_Recursion/Sender.cpp:
+
+          Parts of TAO use TAO_SYNCH_MUTEX while other parts use ACE_SYNCH_MUTEX.
+          All occurrences of ACE_SYNCH_MUTEX were replaced with TAO_SYNCH_MUTEX for
+          consistency.
+
 Sun Dec  2 16:10:32 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h:
