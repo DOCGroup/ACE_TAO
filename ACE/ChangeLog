@@ -1,3 +1,8 @@
+Mon Dec  3 19:41:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added bug 3163 regression
+
 Mon Dec  3 19:00:57 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * netsvcs/lib/Name_Handler.cpp (naming_context): Fixed typos.
