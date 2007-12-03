@@ -144,9 +144,9 @@ private:
   ACE_INET_Addr addr_;
 
   ///  Naming Context
-  ACE_Naming_Context* naming_context_;
+  ACE_Naming_Context *naming_context_;
   
-  ACE_Naming_Context*  naming_context() { return naming_context_; }
+  ACE_Naming_Context *naming_context (void);
   
   /// Handle binds.
   int bind (void);
@@ -196,13 +196,13 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Naming context for acceptor /for the listening port/
-  virtual ACE_Naming_Context* naming_context() { return &naming_context_;}
+  ACE_Naming_Context *naming_context (void);
 
 private:
   /// The scheduling strategy is designed for Reactive services.
   ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler> scheduling_strategy_;
 
-  //The Naming Context
+  /// The Naming Context
   ACE_Naming_Context naming_context_;
 };
 
