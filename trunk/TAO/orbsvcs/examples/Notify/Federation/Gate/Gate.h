@@ -75,7 +75,7 @@ private:
   ACE_RMCast::Socket socket_;
   CORBA::String_var id_;
 
-  typedef ACE_SYNCH_MUTEX Mutex;
+  typedef TAO_SYNCH_MUTEX Mutex;
   typedef ACE_Guard<Mutex> Lock;
 
   bool stop_;

@@ -41,7 +41,7 @@ public:
   };
 
   typedef auto_ptr<Info> Info_ptr;
-  friend class ACE_Singleton<GroupInfoPublisherBase, ACE_SYNCH_MUTEX>;
+  friend class ACE_Singleton<GroupInfoPublisherBase, TAO_SYNCH_MUTEX>;
 
   void subscribe(TAO_FTEC_Become_Primary_Listener* listener);
   void set_naming_context(CosNaming::NamingContext_var naming_context);
@@ -75,7 +75,7 @@ private:
   Info_ptr info_;
 };
 
-typedef ACE_Singleton<GroupInfoPublisherBase, ACE_SYNCH_MUTEX> GroupInfoPublisher;
+typedef ACE_Singleton<GroupInfoPublisherBase, TAO_SYNCH_MUTEX> GroupInfoPublisher;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

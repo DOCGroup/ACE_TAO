@@ -56,7 +56,7 @@ struct Synchronizers
   {
   }
 
-  ACE_SYNCH_MUTEX worker_lock_;
+  TAO_SYNCH_MUTEX worker_lock_;
   ACE_Event workers_;
   CORBA::ULong workers_ready_;
   CORBA::ULong number_of_workers_;
@@ -253,7 +253,7 @@ start_synchronization (test_ptr test,
     }
 
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       mon,
                       synchronizers.worker_lock_,
                       -1);
@@ -297,7 +297,7 @@ int
 end_synchronization (Synchronizers &synchronizers)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       mon,
                       synchronizers.worker_lock_,
                       -1);
@@ -497,7 +497,7 @@ Paced_Worker::deadline_for_current_call (CORBA::ULong i)
 void
 Paced_Worker::print_stats (ACE_hrtime_t test_end)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_GUARD (TAO_SYNCH_MUTEX,
              mon,
              this->synchronizers_.worker_lock_);
 
@@ -737,7 +737,7 @@ void
 Continuous_Worker::print_stats (ACE_Sample_History &history,
                                 ACE_hrtime_t test_end)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_GUARD (TAO_SYNCH_MUTEX,
              mon,
              this->synchronizers_.worker_lock_);
 

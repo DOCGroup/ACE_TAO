@@ -53,7 +53,7 @@ RPS_Monitor::loads (void)
   ACE_Time_Value elapsed_time;
 
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, monitor, this->lock_, 0);
 
     elapsed_time = current_time - this->last_time_;
     this->last_time_ = current_time;

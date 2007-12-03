@@ -28,6 +28,8 @@
 #include "ace/streams.h"
 #include "ace/Synch_T.h"
 
+#include "tao/orbconf.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
@@ -83,7 +85,7 @@ private:
 
 private:
   size_t block_size_;
-  mutable ACE_SYNCH_MUTEX lock_;
+  mutable TAO_SYNCH_MUTEX lock_;
 };
 
 } /* namespace TAO_Notify */

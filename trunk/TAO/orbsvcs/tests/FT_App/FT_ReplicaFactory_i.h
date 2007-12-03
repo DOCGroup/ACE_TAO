@@ -160,8 +160,8 @@ private:
    * Implementation methods should assume the mutex is
    * locked if necessary.
    */
-  ACE_SYNCH_MUTEX internals_;
-  typedef ACE_Guard<ACE_SYNCH_MUTEX> InternalGuard;
+  TAO_SYNCH_MUTEX internals_;
+  typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
 
   /**
    * The orb

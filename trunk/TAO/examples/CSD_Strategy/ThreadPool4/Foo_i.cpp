@@ -227,7 +227,7 @@ Foo_i::test_callback (
 void
 Foo_i::done(void)
 {
-  static ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned> num_clients = 2;
+  static ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> num_clients = 2;
 
   num_clients --;
 

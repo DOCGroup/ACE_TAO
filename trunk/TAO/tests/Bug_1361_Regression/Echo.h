@@ -28,7 +28,7 @@ public:
 private:
   CORBA::ORB_var orb_;
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> abort_counter_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> abort_counter_;
 };
 
 #endif /* TAO_TESTS_BUG1270_ECHO_H*/

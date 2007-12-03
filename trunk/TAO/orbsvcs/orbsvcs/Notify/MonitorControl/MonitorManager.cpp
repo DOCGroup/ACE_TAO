@@ -19,7 +19,7 @@ TAO_MonitorManager::TAO_MonitorManager (void)
 int
 TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
   this->task_.argv_.add ("fake_process_name");
 
   ACE_Get_Opt opts (argc, argv, ACE_TEXT ("o:"), 0, 0,
@@ -63,7 +63,7 @@ TAO_MonitorManager::fini (void)
 {
   if (!CORBA::is_nil (this->task_.orb_.in ()))
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
       if (!CORBA::is_nil (this->task_.orb_.in ())) {
         this->task_.orb_->shutdown (true);
       }
@@ -78,7 +78,7 @@ TAO_MonitorManager::run (void)
   bool activate = false;
 
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
 
     // Work around for bug 3108. Need to create MC ORB in main thread
     // so any libs are loaded in the parent thread.
@@ -144,7 +144,7 @@ TAO_MonitorManager::ORBTask::svc (void)
 
       PortableServer::POA_var poa;
       {
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
 
         CORBA::Object_var obj =
           this->orb_->resolve_initial_references ("RootPOA");
@@ -214,7 +214,7 @@ TAO_MonitorManager::ORBTask::svc (void)
       startup_barrier_.wait ();
       this->orb_->run ();
 
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
 
       // Destroy the POA and ORB
       if (!CORBA::is_nil (poa.in ()))
