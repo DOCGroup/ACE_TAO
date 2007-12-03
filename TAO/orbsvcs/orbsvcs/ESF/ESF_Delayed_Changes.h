@@ -119,7 +119,7 @@ private:
 
   Busy_Lock lock_;
 
-  ACE_SYNCH_MUTEX_T busy_lock_;
+  TAO_SYNCH_MUTEX_T busy_lock_;
 
   ACE_SYNCH_CONDITION_T busy_cond_;
 
