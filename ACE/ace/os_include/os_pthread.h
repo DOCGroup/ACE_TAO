@@ -288,6 +288,15 @@ extern "C" pthread_t pthread_self (void);
 #    endif /* PTHREAD_MUTEXTYPE_FAST */
 #  endif /* PTHREAD_PROCESS_SHARED */
 
+#  if !defined (ACE_HAS_STHREADS)
+#    if !defined (USYNC_THREAD)
+#      define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
+#    endif /* ! USYNC_THREAD */
+#      if !defined (USYNC_PROCESS)
+#        define USYNC_PROCESS PTHREAD_PROCESS_SHARED
+#      endif /* ! USYNC_PROCESS */
+#  endif /* ACE_HAS_STHREADS */
+
    /* MM-Graz:  prevent warnings */
 #  if !defined (UNIXWARE_7_1)
 #    undef THR_BOUND
