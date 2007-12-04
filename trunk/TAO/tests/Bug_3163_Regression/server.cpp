@@ -46,10 +46,10 @@ public:
 
     data->length(size);
 
-    for (size_t i = 0; i < data->length(); ++i)
-          {
-      data[i] = (rand() % 26) + 'A';
-    }
+    for (CORBA::ULong i = 0; i < data->length(); ++i)
+      {
+        data[i] = (rand() % 26) + 'A';
+      }
 
     return 0;
   }
@@ -59,7 +59,7 @@ public:
   }
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 };

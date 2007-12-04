@@ -284,6 +284,61 @@ main(
        ACE_DEBUG( (LM_INFO, "OK\n") );
 
     //-----------------------------------------------------------------------
+    {
+      Test::MyArray arr_a;
+      arr_a[0].length (1);
+      arr_a[0][0] = 9;
+      arr_a[1].length (1);
+      arr_a[1][0] = 23;
+
+      Test::MyArray_var arr_b;
+
+      Test::MyArray arr_c;
+      arr_c[0].length (1);
+      arr_c[0][0] = 23;
+      arr_c[1].length (1);
+      arr_c[1][0] = 9;
+ 
+      ACE_DEBUG( (LM_INFO, ". MyArray()     ") );
+      Test::MyArray_var arr_ret = foo->TestArray (arr_a, arr_b.out (), arr_c);
+
+      if (arr_c[0].length () != 1 || arr_c[0][0] != 24)
+        {
+          ACE_DEBUG( (LM_ERROR, "arr_c[0] is wrong\n") ); testFailed = 1;
+        }
+      else if (arr_c[1].length () != 1 || arr_c[1][0] != 10)
+        {
+          ACE_DEBUG( (LM_ERROR, "arr_c[1] is wrong\n") ); testFailed = 1;
+        }
+      else if (arr_b[0].length () != 1 || arr_b[0][0] != 8)
+        {
+          ACE_DEBUG( (LM_ERROR, "arr_b[0] is wrong\n") ); testFailed = 1;
+        }
+      else if (arr_b[1].length () != 1 || arr_b[1][0] != 22)
+        {
+          ACE_DEBUG( (LM_ERROR, "arr_b[1] is wrong\n") ); testFailed = 1;
+        }
+      else if (arr_ret[0].length () != 1 || arr_ret[0][0] != 7)
+        {
+          ACE_DEBUG( (LM_ERROR, "arr_ret[0] is wrong\n") ); testFailed = 1;
+        }
+      else if (arr_ret[1].length () != 1 || arr_ret[1][0] != 21)
+        {
+          ACE_DEBUG( (LM_ERROR, "arr_ret[1] is wrong\n") ); testFailed = 1;
+        }
+      else
+        ACE_DEBUG( (LM_INFO, "OK\n") );
+    }
+
+    //-----------------------------------------------------------------------
+    {
+      CORBA::Object_var a = CORBA::Object::_duplicate (foo);
+      CORBA::Object_var b;
+      CORBA::Object_var c = CORBA::Object::_duplicate (a);
+      CORBA::Object_var ret = foo->TestObject (a.in (), b.out (), c.inout ());
+    }
+
+    //-----------------------------------------------------------------------
     foo->ShutdownServer( );
 
     //-----------------------------------------------------------------------

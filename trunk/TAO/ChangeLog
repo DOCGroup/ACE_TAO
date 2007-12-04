@@ -1,3 +1,17 @@
+Tue Dec  4 14:54:02 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_2234_Regression/Test.idl:
+        * tests/Bug_2234_Regression/client.cpp:
+        * tests/Bug_2234_Regression/server.cpp:
+
+          Extended this test to also pass arrays (of variable-length elements)
+          and object references to ensure that the interceptors don't cause a
+          crash.  This was fixed in bug 2852.
+
+        * tests/Bug_3163_Regression/server.cpp:
+
+          Use CORBA::ULong to index sequences, for 64-bit compatibility.
+
 Tue Dec  4 10:59:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Asynch_Invocation_Adapter.cpp:
