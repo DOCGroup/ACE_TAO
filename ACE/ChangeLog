@@ -1,3 +1,11 @@
+Tue Dec  4 20:20:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+          Removed some not needed ACE_UNUSED_ARG
+
+        * OS_NS_netdb.inl (gethostbyaddr_r):
+          Fixed VxWorks implementation
+
 Tue Dec  4 19:28:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

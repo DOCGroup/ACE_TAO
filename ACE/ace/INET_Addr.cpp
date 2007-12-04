@@ -464,7 +464,6 @@ ACE_INET_Addr::set (const char port_name[],
   int const port_number = get_port_number_from_name (port_name, protocol);
   if (port_number == -1)
     {
-      ACE_UNUSED_ARG (host_name);
       ACE_NOTSUP_RETURN (-1);
     }
 
@@ -491,7 +490,6 @@ ACE_INET_Addr::set (const char port_name[],
   int const port_number = get_port_number_from_name (port_name, protocol);
   if (port_number == -1)
     {
-      ACE_UNUSED_ARG (inet_address);
       ACE_NOTSUP_RETURN (-1);
     }
 
