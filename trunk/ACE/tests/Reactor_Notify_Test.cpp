@@ -534,9 +534,6 @@ run_main (int, ACE_TCHAR *[])
 
   int test_result = 0;       // Innocent until proven guilty
 
-  if (0 != run_quiet_notify_test ())
-    test_result = 1;
-
   if (0 == run_notify_purge_test ())
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -550,6 +547,9 @@ run_main (int, ACE_TCHAR *[])
     }
 
 #if defined (ACE_HAS_THREADS)
+  if (0 != run_quiet_notify_test ())
+    test_result = 1;
+
   ACE_Time_Value timeout (SHORT_TIMEOUT);
 
   ACE_DEBUG ((LM_DEBUG,
