@@ -199,7 +199,7 @@ private:
 
 
 // Define typedefs for our version of the stock database.
-typedef ACE_Singleton<Stock_Database<StockDistributor_i>, ACE_Thread_Mutex> Stock_Database_Singleton;
+typedef ACE_Singleton<Stock_Database<StockDistributor_i>, TAO_SYNCH_MUTEX> Stock_Database_Singleton;
 #define STOCK_DATABASE Stock_Database_Singleton::instance()
 
 #endif /* DISTRIBUTORI_H_  */
