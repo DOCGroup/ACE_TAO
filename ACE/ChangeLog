@@ -1,3 +1,15 @@
+Tue Dec  4 15:03:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.h:
+          Changed ACE_IMPLEMENT_WITH_NATIVE_LONGDOUBLE to
+          ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE which has to be defined to
+          1. This makes this file easier to maintain
+
+        * ace/config-linux-common.h:
+        * aceconfig-vxworks5.x.h:
+          Added ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE defined as 1. This fixes
+          also the LongDouble issues with VxWorks 6.x
+
 Tue Dec  4 13:50:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Name_Handler.cpp (parse_args):
