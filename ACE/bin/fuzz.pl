@@ -304,12 +304,19 @@ sub check_for_ACE_SYNCH_MUTEX ()
                 }
                 if (/FUZZ\: enable check_for_ACE_SYNCH_MUTEX/) {
                     $disable = 0;
+                    next ITERATION;
                 }
                 if ($disable == 0 and /ACE_SYNCH_MUTEX/) {
                     # It is okay to use ACE_SYNCH_MUTEX in ACE
                     # so don't check the ACE directory. The below
                     # will check it for TAO and CIAO.
                     if (($file !~ /.*TAO.*/)) {
+                      next ITERATION;
+                    }
+
+                    # Disable the check in the ESF directory for the 
+                    # time being until we fix the issues there.
+                    if(($file =~ /.*TAO\/orbsvcs\/orbsvcs\/ESF.*/)) {
                       next ITERATION;
                     }
                     
@@ -342,6 +349,7 @@ sub check_for_ACE_Thread_Mutex ()
                 }
                 if (/FUZZ\: enable check_for_ACE_Thread_Mutex/) {
                     $disable = 0;
+                    next ITERATION;
                 }
                 if ($disable == 0 and /ACE_Thread_Mutex/) {
                     # It is okay to use ACE_Thread_Mutex in ACE
