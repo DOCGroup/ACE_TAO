@@ -1,3 +1,8 @@
+Tue Dec  4 13:50:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Name_Handler.cpp (parse_args):
+          Fixed unicode build
+
 Mon Dec  3 19:41:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
