@@ -280,14 +280,14 @@ public:
        // with Windows, Solaris, AIX, MacOS X and HP-UX (and probably others)
        // long double format (8 or 16 bytes).  If you need 32-bit Linux to
        // inter-operate with 64-bit Linux you will want to define this
-       // macro so that "long double" is used.  Otherwise, do not define
+       // macro to 0 so that "long double" is used.  Otherwise, do not define
        // this macro.
-#      if defined (ACE_IMPLEMENT_WITH_NATIVE_LONGDOUBLE) || \
-          (!defined (linux) && !defined (VXWORKS))
-         typedef long double NativeImpl;
-#      else
+#      if defined (ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE) && \
+          (ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE == 1)
          typedef double NativeImpl;
-#      endif /* ACE_IMPLEMENT_WITH_NATIVE_LONGDOUBLE || (!linux && !VXWORKS) */
+#      else
+         typedef long double NativeImpl;
+#      endif /* ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE==1 */
 
          char ld[16];
 
