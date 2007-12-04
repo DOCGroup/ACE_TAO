@@ -1,11 +1,16 @@
+Tue Dec  4 10:59:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+          Only set the safe_rd when we have a transport
+
 Mon Dec  3 21:25:15 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp(gen_gperf_lookup_methods):
-        
+
           - Added "Error:" prefix to error messages where it was missing,
             so autobuilds can pick it up. Thanks to Will Otte
             <wotte at dre dot vanderbilt dot edu> for the suggestion.
-            
+
           - Added the exit code of the spawned gperf process to the error
             message seen if ACE_Process::wait() returns unsuccessfully
             after spawning gperf to generate the interface's operation table.
@@ -17,10 +22,10 @@ Mon Dec  3 20:36:42 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
-        
+
           Changes required to handling of base component and base valuetype
           storage in the IFR resulting from changes in
-          
+
           Thu Nov 29 23:58:21 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Dec  3 19:39:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>

@@ -170,7 +170,7 @@ namespace TAO
           CORBA::COMPLETED_NO);
       }
 
-    if (this->safe_rd_.get ())
+    if (this->safe_rd_.get () && r.transport ())
       {
         this->safe_rd_->transport (r.transport ());
         // AMI Timeout Handling Begin
