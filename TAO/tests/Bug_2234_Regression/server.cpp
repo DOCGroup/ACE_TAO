@@ -419,6 +419,86 @@ public:
 
   //-----------------------------------------------------------
 
+  Test::MyArray_slice *TestArray(
+    const Test::MyArray a,
+    Test::MyArray_out b,
+    Test::MyArray c)
+  {
+    ACE_DEBUG( (LM_INFO, ". in TestArray\n") );
+    if (a[0].length () != 1)
+      {
+        ACE_DEBUG( (LM_INFO, "* Incorrect length of parameter a[0]\n") );
+        throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
+      }
+    if (a[0][0] != 9)
+      {
+        ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a[0]\n") );
+        throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
+      }
+    if (a[1].length () != 1)
+      {
+        ACE_DEBUG( (LM_INFO, "* Incorrect length of parameter a[1]\n") );
+        throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
+      }
+    if (a[1][0] != 23)
+      {
+        ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a[1]\n") );
+        throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
+      }
+
+    if (c[0].length () != 1)
+      {
+        ACE_DEBUG( (LM_INFO, "* Incorrect length of parameter c[0]\n") );
+        throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
+      }
+    if (c[0][0]++ != 23)
+      {
+        ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c[0]\n") );
+        throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
+      }
+    if (c[1].length () != 1)
+      {
+        ACE_DEBUG( (LM_INFO, "* Incorrect length of parameter c[1]\n") );
+        throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
+      }
+    if (c[1][0]++ != 9)
+      {
+        ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c[1]\n") );
+        throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
+      }
+
+    b = Test::MyArray_alloc ();
+    CORBA::ULong idx (0);
+    b[idx].length (1);
+    b[idx][0] = 8;
+    ++idx;
+    b[idx].length (1);
+    b[idx][0] = 22;
+
+    Test::MyArray_var ret = new Test::MyArray;
+    idx = 0;
+    ret[idx].length (1);
+    ret[idx][0] = 7;
+    ++idx;
+    ret[idx].length (1);
+    ret[idx][0] = 21;
+    return ret._retn ();
+  }
+
+  //-----------------------------------------------------------
+
+  CORBA::Object_ptr TestObject(
+    CORBA::Object_ptr a,
+    CORBA::Object_out b,
+    CORBA::Object_ptr &c
+    )
+  {
+    b = CORBA::Object::_duplicate (a);
+    return CORBA::Object::_duplicate (c);
+  }
+
+  //-----------------------------------------------------------
+
   void ShutdownServer(
  )
   {
@@ -459,6 +539,8 @@ public:
     const Test::MyVarUnion     *vU;
     const Test::MyNonVarUnion  *fU;
     const Test::MySeqOfLong    *sL;
+    Test::MyArray_forany       arr;
+    CORBA::Object_var          obj;
 
     if (arg >>= vS)
     {
@@ -554,6 +636,19 @@ public:
       else
         ACE_DEBUG( (LM_INFO, "*Null*") );
     }
+    else if (arg >>= arr)
+    {
+      ACE_DEBUG( (LM_INFO, "MyArray (") );
+      for (CORBA::ULong a_idx = 0; a_idx < 2; ++a_idx)
+        {
+          CORBA::ULong length = arr[a_idx].length ();
+          ACE_DEBUG( (LM_INFO, "[%u].length () == %u  ", a_idx, length));
+        }
+    }
+    else if (arg >>= CORBA::Any::to_object(obj))
+    {
+      ACE_DEBUG( (LM_INFO, "CORBA::Object (") );
+    } 
     else
       ACE_DEBUG( (LM_INFO, "Unknown (") );
     ACE_DEBUG( (LM_INFO, ") parameter\n") );
