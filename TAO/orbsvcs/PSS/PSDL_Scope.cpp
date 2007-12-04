@@ -924,5 +924,5 @@ TAO_PSDL_Scope::scope_map (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template TAO_Singleton<TAO_PSDL_Scope, ACE_Thread_Mutex> *TAO_Singleton<TAO_PSDL_Scope, ACE_Thread_Mutex>::singleton_;
+template TAO_Singleton<TAO_PSDL_Scope, TAO_SYNCH_MUTEX> *TAO_Singleton<TAO_PSDL_Scope, TAO_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
