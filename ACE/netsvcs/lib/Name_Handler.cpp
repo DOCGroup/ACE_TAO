@@ -33,10 +33,10 @@ ACE_Name_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
   service_port = this->naming_context()->name_options()->nameserver_port();
 
   // dont allow to connect to another name serever
-  if(this->naming_context()->name_options()->context() == ACE_Naming_Context::NET_LOCAL )
-        this->naming_context()->name_options()->nameserver_host("localhost");
-  
-  if (this->naming_context()->open( this->naming_context()->name_options()->context() ) ==-1 ) 
+  if(this->naming_context()->name_options()->context() == ACE_Naming_Context::NET_LOCAL)
+        this->naming_context()->name_options()->nameserver_host(ACE_TEXT ("localhost"));
+
+  if (this->naming_context()->open( this->naming_context()->name_options()->context() ) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("%n:\n open naming context failed.\n")),
                            -1);
@@ -152,8 +152,8 @@ ACE_Name_Handler::open (void * v)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),
                       -1);
-  
-  ACE_Name_Acceptor* acceptor_ = static_cast<ACE_Name_Acceptor*>(v);    
+
+  ACE_Name_Acceptor* acceptor_ = static_cast<ACE_Name_Acceptor*>(v);
   naming_context_ = acceptor_->naming_context();
 
   return 0;
