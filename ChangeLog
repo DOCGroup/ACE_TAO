@@ -1,3 +1,23 @@
+Tue Dec  4 20:45:34 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/EUCON:
+        * Controller/EUCON/Domain.h:
+        * Controller/EUCON/Subtask.h:
+        * Controller/EUCON/Task.h:
+
+        Added a new directory and necessary files to for the EUCON
+        controller.
+
+        * Controller/FMUF:
+
+        Added a new directory for the FMUF controller.
+
+        * Controller/Base/Domain.h:
+        * Controller/Base/Subtask.h:
+        * Controller/Base/Task.h:
+
+        Removed these files.
+
 Wed Nov 21 20:03:34 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * RACE.mwc:
