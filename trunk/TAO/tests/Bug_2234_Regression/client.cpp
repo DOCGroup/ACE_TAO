@@ -301,7 +301,7 @@ main(
  
       ACE_DEBUG( (LM_INFO, ". MyArray()     ") );
       Test::MyArray_var arr_ret = foo->TestArray (arr_a, arr_b.out (), arr_c);
-
+      CORBA::ULong zero (0), one (1); //Use ULong to avoid ambiguity
       if (arr_c[0].length () != 1 || arr_c[0][0] != 24)
         {
           ACE_DEBUG( (LM_ERROR, "arr_c[0] is wrong\n") ); testFailed = 1;
@@ -310,19 +310,19 @@ main(
         {
           ACE_DEBUG( (LM_ERROR, "arr_c[1] is wrong\n") ); testFailed = 1;
         }
-      else if (arr_b[0].length () != 1 || arr_b[0][0] != 8)
+      else if (arr_b[zero].length () != 1 || arr_b[zero][0] != 8)
         {
           ACE_DEBUG( (LM_ERROR, "arr_b[0] is wrong\n") ); testFailed = 1;
         }
-      else if (arr_b[1].length () != 1 || arr_b[1][0] != 22)
+      else if (arr_b[one].length () != 1 || arr_b[one][0] != 22)
         {
           ACE_DEBUG( (LM_ERROR, "arr_b[1] is wrong\n") ); testFailed = 1;
         }
-      else if (arr_ret[0].length () != 1 || arr_ret[0][0] != 7)
+      else if (arr_ret[zero].length () != 1 || arr_ret[zero][0] != 7)
         {
           ACE_DEBUG( (LM_ERROR, "arr_ret[0] is wrong\n") ); testFailed = 1;
         }
-      else if (arr_ret[1].length () != 1 || arr_ret[1][0] != 21)
+      else if (arr_ret[one].length () != 1 || arr_ret[one][0] != 21)
         {
           ACE_DEBUG( (LM_ERROR, "arr_ret[1] is wrong\n") ); testFailed = 1;
         }
