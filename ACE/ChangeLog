@@ -1,8 +1,13 @@
+Tue Dec  4 19:28:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Run all csd tests on VxWorks
+
 Tue Dec  4 18:07:59 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
 
-          Temporarily exclude $TAO_ROOT/orbsvcs/orbsvcs/ESF from the 
+          Temporarily exclude $TAO_ROOT/orbsvcs/orbsvcs/ESF from the
           ACE_SYNCH_MUTEX check to eliminate fuzz warnings.
 
 Tue Dec  4 16:30:19 UTC 2007  Steve Huston  <shuston@riverace.com>

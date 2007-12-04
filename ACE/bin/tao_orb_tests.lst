@@ -298,33 +298,33 @@ TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl: !CORBA_E_MICRO
 TAO/tests/CodeSets/simple/run_test.pl: !GIOP10 !STATIC
 TAO/tests/Hang_Shutdown/run_test.pl: !ST !ACE_FOR_TAO
 TAO/tests/Any/Recursive/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl collocated: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_orbthreads: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_servants: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_csdthreads: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_big: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl big: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl collocated: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_orbthreads: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_servants: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_csdthreads: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_big: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl big: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl collocated: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_orbthreads: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_servants: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_csdthreads: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_big: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl big: !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl: !STATIC !ST !VxWorks !CORBA_E_MICRO
-TAO/tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl: !ST !VxWorks !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl collocated: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_orbthreads: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_servants: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_csdthreads: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_big: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl big: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl collocated: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_orbthreads: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_servants: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_csdthreads: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_big: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl big: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl collocated: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_orbthreads: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_servants: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_csdthreads: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_big: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl big: !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl: !STATIC !ST !CORBA_E_MICRO
+TAO/tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl: !ST !CORBA_E_MICRO
 TAO/tests/Permanent_Forward/run_test.pl:
 TAO/tests/Parallel_Connect_Strategy/run_test.pl:
 TAO/tests/DII_Collocation_Tests/oneway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
