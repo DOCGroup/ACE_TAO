@@ -256,7 +256,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
 # elif defined (__hpux)
 
-  void *value;
+  void *value = 0;
   int status;
   shl_t _handle = handle;
   ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
