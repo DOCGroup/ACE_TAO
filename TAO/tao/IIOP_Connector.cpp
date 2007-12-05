@@ -168,7 +168,7 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
        if (TAO_debug_level > 0)
          {
            ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                       ACE_TEXT ("TAO (%P|%t) - IIOP connection failed.\n")
                        ACE_TEXT ("     This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
                        ACE_TEXT ("failure.\n")));
@@ -682,20 +682,18 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
 
   static const char *protocol[] = { "iiop", "iioploc" };
 
-  const size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t const slot = ACE_OS::strchr (endpoint, ':') - endpoint;
   if (slot == 0) // an empty string is valid for corbaloc.
     return 0;
 
-  const size_t len0 = ACE_OS::strlen (protocol[0]);
-  const size_t len1 = ACE_OS::strlen (protocol[1]);
+  size_t const len0 = ACE_OS::strlen (protocol[0]);
+  size_t const len1 = ACE_OS::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
-  if (slot == len0
-      && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
+  if (slot == len0 && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
     return 0;
-  else if (slot == len1
-           && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
+  else if (slot == len1 && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
     return 0;
 
   return -1;
