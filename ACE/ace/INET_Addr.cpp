@@ -731,7 +731,7 @@ ACE_INET_Addr::get_host_name (char hostname[],
   int result;
   if (len > 1)
     {
-      result = get_host_name_i (hostname,len);
+      result = this->get_host_name_i (hostname,len);
       if (result < 0)
         {
           if (result == -2)

@@ -130,7 +130,7 @@ ACE_OS::gethostbyname (const char *name)
   if (0 == name || '\0' == name[0])
     return 0;
 
-  ACE_OSCALL (::hostGetByName ((char *) name), int, -1, first_addr);
+  ACE_OSCALL (::hostGetByName (const_cast <char *> (name)), int, -1, first_addr);
   if (first_addr == -1)
     return 0;
 
@@ -167,7 +167,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   else
     {
       int addr;
-      ACE_OSCALL (::hostGetByName ((char *) name), int, -1, addr);
+      ACE_OSCALL (::hostGetByName (const_cast <char *> (name)), int, -1, addr);
 
       if (addr == -1)
         {

@@ -1,3 +1,14 @@
+Wed Dec  5 14:46:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+          Use this-> to comply with coding standards
+
+        * ace/OS_NS_dlfcn.inl:
+          Initialise pointer with 0
+
+        * ace/OS_NS_netdb.cpp:
+          Use C++ const_cast instead of c-style cast
+
 Tue Dec  4 20:20:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/INET_Addr.cpp:
