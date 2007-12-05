@@ -1,8 +1,14 @@
+Wed Dec  5 14:49:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+          Layout and const changes
+
 Tue Dec  4 18:53:08 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_2234_Regression/client.cpp:
 
-          Used CORBA::ULong instead of integer literals to 
+          Used CORBA::ULong instead of integer literals to
           index into IDL array vars.
 
 Tue Dec  4 15:41:37 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
