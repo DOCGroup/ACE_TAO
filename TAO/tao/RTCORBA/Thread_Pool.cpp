@@ -140,8 +140,7 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
                                   CORBA::Short lane_priority,
                                   CORBA::ULong static_threads,
                                   CORBA::ULong dynamic_threads,
-                                  ACE_Time_Value const &dynamic_thread_idle_timeout
-                                  )
+                                  ACE_Time_Value const &dynamic_thread_idle_timeout)
   : pool_ (pool),
     id_ (id),
     lane_priority_ (lane_priority),
@@ -451,8 +450,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                                   CORBA::Boolean allow_request_buffering,
                                   CORBA::ULong max_buffered_requests,
                                   CORBA::ULong max_request_buffer_size,
-                                  ACE_Time_Value const &dynamic_thread_idle_timeout
-                                  )
+                                  ACE_Time_Value const &dynamic_thread_idle_timeout)
   : manager_ (manager),
     id_ (id),
     stack_size_ (stack_size),
@@ -710,8 +708,7 @@ TAO_Thread_Pool_Manager::create_threadpool (CORBA::ULong stacksize,
                                             CORBA::Boolean allow_request_buffering,
                                             CORBA::ULong max_buffered_requests,
                                             CORBA::ULong max_request_buffer_size,
-                                            ACE_Time_Value const &dynamic_thread_idle_timeout
-                                            )
+                                            ACE_Time_Value const &dynamic_thread_idle_timeout)
 {
   TAO_THREAD_POOL_MANAGER_GUARD;
 
