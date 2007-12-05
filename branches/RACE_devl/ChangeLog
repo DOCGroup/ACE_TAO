@@ -1,3 +1,38 @@
+Wed Dec  5 22:10:47 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/Base/Controller.idl:
+
+        Added the IDL of the base controller.
+
+        * Controller/EUCON/EUCON.mpc:
+        * Controller/EUCON/MPC_Controller.h:
+        * Controller/EUCON/MPC_Controller.cpp:
+        * Controller/EUCON/Task.h:
+        * Controller/EUCON/constant.h:
+        * Controller/EUCON/e2esimu.cpp:
+
+        Checking in an initial implementation of the EUCON controller.
+
+        * extern:
+        * extern/MATLAB:
+
+        * extern/MATLAB/bin:
+        * extern/MATLAB/bin/liblsq.ctf:
+        * extern/MATLAB/bin/liblsq.dll:
+
+        * extern/MATLAB/include:
+        * extern/MATLAB/include/liblsq.h:
+        * extern/MATLAB/include/liblsq.cpp:
+
+        * extern/MATLAB/lib:
+        * extern/MATLAB/lib/liblsq.lib
+        * extern/MATLAB/lib/liblsq.exp
+
+        * extern/MATLAB/lsqlin_simple2.m:
+        * extern/MATLAB/readme.txt:
+
+        Checking in MATLAB related files required by the EUCON controller.
+
 Tue Dec  4 20:45:34 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/EUCON:

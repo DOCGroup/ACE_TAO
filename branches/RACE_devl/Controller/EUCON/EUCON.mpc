@@ -1,0 +1,23 @@
+project(EUCON) {
+
+  includes += "C:/Program Files/MATLAB/R2007b/extern/include"
+  includes += $(CIAO_ROOT)/RACE/extern/MATLAB/include
+  libpaths += "C:/Program Files/MATLAB/R2007b/extern/lib/win32/microsoft"
+  libpaths += $(CIAO_ROOT)/RACE/extern/MATLAB/lib
+  libs += liblsq mclmcr
+  exename = EUCON
+
+  Header_Files {
+    constant.h
+    Domain.h
+    liblsq.h
+    MPC_Controller.h
+    Task.h
+    Subtask.h
+  }
+
+  Source_Files {
+    e2esimu.cpp
+    MPC_Controller.cpp
+  }
+}

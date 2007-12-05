@@ -18,6 +18,8 @@ namespace CIAO
       /// Logical name.
       std::string label;
 
+	  //Change rate fields to double, Yingming Chen. 3.23.2007
+
       /// Minimum execution rate (in Hz).
       double min_rate;
 
@@ -27,8 +29,9 @@ namespace CIAO
       /// Current execution rate (in Hz).
       double curr_rate;
 
-      /// Controller recommended modification to the rate.
-      double delta_rate;
+      // Rate change after EUCON, new rate = curr_rate +
+      // delta_rate. Yingming Chen. 3.23.2007
+	  double delta_rate;
 
       /// Current RT-CORBA priority.
       size_t priority;
@@ -42,6 +45,8 @@ namespace CIAO
       /// Subtaks of this task.
       std::vector <Subtask> subtasks;
     };
+
+
   }
 }
 
