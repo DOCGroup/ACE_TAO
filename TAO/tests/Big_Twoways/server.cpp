@@ -131,7 +131,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Building session list . . . "));
 
-      Session_Control *session_control_impl;
+      Session_Control *session_control_impl = 0;
       ACE_NEW_RETURN (session_control_impl,
                       Session_Control (peer_count),
                       1);
@@ -170,7 +170,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
 
           session_list[j]->start (other_sessions);
-
         }
 
       ACE_DEBUG ((LM_DEBUG, "done.\n"));

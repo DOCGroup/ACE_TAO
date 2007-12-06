@@ -23,23 +23,21 @@ if (defined $opt_i) {
 if (defined $opt_b) {
     $server_args .= " -b ".$opt_b;
 }
-
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorfilebase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 
 $status = 0;
 unlink $iorfile;
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior $server_args -ORBDottedDecimalAddresses 1");
-    $CL1 = new PerlACE::Process ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
-    $CL2 = new PerlACE::Process ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
-    $CL3 = new PerlACE::Process ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase $server_args");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");
-    $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
-    $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
-    $CL3 = new PerlACE::Process ("client", " -k file://$iorfile");
 }
+
+$CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
+$CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
+$CL3 = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $server = $SV->Spawn ();
 
