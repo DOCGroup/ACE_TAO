@@ -18,7 +18,7 @@ namespace CCF
 
 namespace
 {
-  char* labels[] = {"entity", "process", "service", "session" };
+  const char* labels[] = {"entity", "process", "service", "session" };
 }
 
 std::ostream&

@@ -1,6 +1,6 @@
 // file      : CIDLC/CxxNamePrinter.cpp
 // author    : Boris Kolpackov <boris@codesynthesis.com>
-// cvs-id    : $Id: Collectors.hpp 55138 2004-01-05 07:53:05Z parsons $
+// cvs-id    : $Id$
 
 #include "CIDLC/CxxNamePrinter.hpp"
 
@@ -11,7 +11,7 @@ namespace
 {
   // Sorted C++ keywords.
   //
-  char* keywords[] = {
+  const char* keywords[] = {
     "and",
     "asm",
     "auto",
