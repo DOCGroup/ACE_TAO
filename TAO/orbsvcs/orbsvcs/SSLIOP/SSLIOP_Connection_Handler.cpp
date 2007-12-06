@@ -100,13 +100,11 @@ TAO::SSLIOP::Connection_Handler::open (void *)
         {
           if (this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE)
             {
-              tph->client_protocol_properties_at_orb_level (
-                protocol_properties);
+              tph->client_protocol_properties_at_orb_level (protocol_properties);
             }
           else
             {
-              tph->server_protocol_properties_at_orb_level (
-                protocol_properties);
+              tph->server_protocol_properties_at_orb_level (protocol_properties);
             }
         }
       catch (const CORBA::Exception&)
