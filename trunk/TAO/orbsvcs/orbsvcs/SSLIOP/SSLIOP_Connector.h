@@ -73,9 +73,7 @@ namespace TAO
 
       virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
       virtual int check_prefix (const char *endpoint);
-      virtual TAO_Profile * corbaloc_scan (const char *ior,
-                                           size_t &len);
-
+      virtual TAO_Profile * corbaloc_scan (const char *ior, size_t &len);
       //@}
 
     protected:

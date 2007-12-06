@@ -284,12 +284,10 @@ TAO::SSLIOP::Transport::get_listen_point (
 
   // Get the array of IIOP (not SSLIOP!) endpoints serviced by the
   // SSLIOP_Acceptor.
-  const ACE_INET_Addr *endpoint_addr =
-    ssliop_acceptor->endpoints ();
+  const ACE_INET_Addr *endpoint_addr = ssliop_acceptor->endpoints ();
 
   // Get the count
-  const size_t count =
-    ssliop_acceptor->endpoint_count ();
+  size_t const count = ssliop_acceptor->endpoint_count ();
 
   // The SSL port is stored in the SSLIOP::SSL component associated
   // with the SSLIOP_Acceptor.
@@ -305,7 +303,7 @@ TAO::SSLIOP::Transport::get_listen_point (
                            ACE_TEXT ("(%P|%t) Could not resolve local host")
                            ACE_TEXT (" address in get_listen_point()\n")),
                         -1);
-    }
+      }
 
   }
 
@@ -346,7 +344,7 @@ TAO::SSLIOP::Transport::get_listen_point (
       if (local_addr == endpoint_addr[index])
         {
           // Get the count of the number of elements
-          const CORBA::ULong len = listen_point_list.length ();
+          CORBA::ULong const len = listen_point_list.length ();
 
           // Increase the length by 1
           listen_point_list.length (len + 1);
