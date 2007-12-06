@@ -1,3 +1,8 @@
+Thu Dec  6 15:22:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_SOCK_Stream.cpp:
+          Layout and const changes
+
 Wed Dec  5 14:46:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/INET_Addr.cpp:
