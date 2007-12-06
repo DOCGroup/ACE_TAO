@@ -66,7 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Big_Reply_i *big_reply_gen;
+      Big_Reply_i *big_reply_gen = 0;
 
       ACE_NEW_RETURN (big_reply_gen,
                       Big_Reply_i (orb.in (),

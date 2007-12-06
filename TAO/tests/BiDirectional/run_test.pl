@@ -20,7 +20,7 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile -i 100");
 }
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -ORBDottedDecimalAddresses 1");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile");
 
 # print $SV->CommandLine ()."\n";
 $SV->Spawn ();
