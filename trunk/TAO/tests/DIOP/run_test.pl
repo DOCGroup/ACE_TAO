@@ -1,4 +1,4 @@
-eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+pereval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
@@ -22,13 +22,13 @@ $iorfile = PerlACE::LocalFile ($iorbase);
 
 if (PerlACE::is_vxworks_test()) {
   $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
-  $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint diop://$TARGETHOSTNAME:8888 -o $iorbase -ORBdebuglevel $ORBdebuglevel -ORBDottedDecimalAddresses 1");
-  $CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10 -ORBdebuglevel $ORBdebuglevel -ORBDottedDecimalAddresses 1");
+  $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint diop://$TARGETHOSTNAME:8888 -o $iorbase -ORBdebuglevel $ORBdebuglevel");
 }
 else {
   $SV = new PerlACE::Process ("server", "-ORBEndpoint diop://:8888 -o $iorfile -ORBdebuglevel $ORBdebuglevel");
-  $CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10 -ORBdebuglevel $ORBdebuglevel");
 }
+
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10 -ORBdebuglevel $ORBdebuglevel");
 
 $SV->Spawn ();
 

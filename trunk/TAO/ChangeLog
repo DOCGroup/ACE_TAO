@@ -1,3 +1,28 @@
+Thu Dec  6 15:10:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional/run_test.pl
+        * tests/Big_Oneways/run_test.pl
+        * tests/DIOP/run_test.pl
+        * tests/DIOP/run_test_ipv6.pl
+        * tests/MT_BiDir/run_test.pl
+        * tests/Nested_Event_Loop/run_test.pl
+          Don't use ORBDottedDecimalAddresses 1 on VxWorks, it is a workaround
+          for a DNS issue in the network stack
+
+        * tests/Big_Oneways/run_test.pl
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+          Layout change
+
+        * tests/Big_Reply/server.cpp:
+        * tests/Big_Twoways/server.cpp:
+          Initialise pointer with 0
+
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+          Added vc9
+
+        * tests/Smart_Proxies/Policy/run_test.pl:
+          Increased timeouts for VxWorks
+
 Wed Dec  5 14:49:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp:

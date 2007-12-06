@@ -76,7 +76,6 @@ Client_Task::svc (void)
       CORBA::Any scope_as_any;
       scope_as_any <<= this->sync_scope_;
 
-
       CORBA::PolicyList policy_list (1);
       policy_list.length (1);
       policy_list[0] =
