@@ -18,7 +18,7 @@ namespace CCF
 
 namespace
 {
-  char* labels[] = {"in", "out", "inout"};
+  const char* labels[] = {"in", "out", "inout"};
 }
 
 std::ostream&
