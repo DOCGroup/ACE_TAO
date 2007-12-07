@@ -1,0 +1,21 @@
+project (DDSTopicBase) : dcps {
+
+  idlflags += -Wb,export_macro=DDSTopic_Export
+  idlflags += -Wb,export_include=DDSTopic_Export.h
+  dcps_ts_flags += --export=DDSTopic_Export
+  dynamicflags = DDSTOPIC_BUILD_DLL
+
+  TypeSupport_Files {
+    DDSTopic.idl >> DDSTopicTypeSupport.idl DDSTopicTypeSupportImpl.h DDSTopicTypeSupportImpl.cpp
+  }
+
+  IDL_Files {
+    gendir = .
+    DDSTopic.idl
+    DDSTopicTypeSupport.idl
+  }
+
+  Source_Files {
+    DDSTopicTypeSupportImpl.cpp
+  }
+}

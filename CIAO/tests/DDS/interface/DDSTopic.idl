@@ -1,0 +1,15 @@
+
+#ifndef DDSTOPIC_IDL
+#define DDSTOPIC_IDL
+
+#pragma DCPS_DATA_TYPE "DDSTopic"
+#pragma DCPS_DATA_KEY "DDSTopic id"
+
+struct DDSTopic
+{
+  long sequence_number;
+  string id;
+};
+
+#endif // DDSTOPIC_IDL
+

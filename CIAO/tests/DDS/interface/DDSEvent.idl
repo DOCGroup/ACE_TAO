@@ -1,0 +1,17 @@
+
+#ifndef DDSEVENT_IDL
+#define DDSEVENT_IDL
+
+#include <Components.idl>
+
+module DDSTest
+{
+  eventtype DDSTopic_event
+  {
+    public long sequence_number;
+    public string id;
+  };
+};
+
+#endif // DDSEVENT_IDL
+
