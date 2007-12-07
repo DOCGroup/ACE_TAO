@@ -1,3 +1,11 @@
+Fri Dec  7 06:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/gperf.mpc:
+        * bin/PerlACE/perlace.mpc:
+          With vc9 set ConfigurationType to 10 to disable the creation
+          of the manifest file which fails because these projects don't
+          have source code
+
 Thu Dec  6 15:22:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_SOCK_Stream.cpp:

@@ -2,8 +2,10 @@
 // $Id$
 
 project (gperf_docs) : man {
-
   Man_Files {
     gperf.1
+  }
+  specific(vc9) {
+    ConfigurationType = 10
   }
 }
