@@ -1,0 +1,22 @@
+
+#ifndef DDSRECEIVER_IDL
+#define DDSRECEIVER_IDL
+
+#include <Components.idl>
+#include "DDSEvent.idl"
+
+module DDSTest
+{
+  component DDSReceiver
+  {
+    consumes DDSTest::DDSTopic_event dds_input;
+  };
+  
+  home DDSReceiverHome
+    manages DDSReceiver
+  {
+  };
+};
+
+#endif // DDSRECEIVER_IDL
+

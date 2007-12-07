@@ -1,0 +1,60 @@
+project (DDSReceiver_stub): ciao_client_dnc {
+  sharedname =DDSReceiver_stub
+  idlflags += -Wb,stub_export_macro=DDSRECEIVER_STUB_Export -Wb,stub_export_include=DDSReceiver_stub_export.h -Wb,skel_export_macro=DDSRECEIVER_SVNT_Export -Wb,skel_export_include=DDSReceiver_svnt_export.h
+  idlflags += -I../interface
+  dynamicflags = DDSRECEIVER_STUB_BUILD_DLL
+  IDL_Files {
+    gendir = .
+    ../interface/DDSEvent.idl
+    ../interface/DDSReceiver.idl
+  }
+  Source_Files {
+    DDSReceiverC.cpp
+    DDSEventC.cpp
+  }
+
+}
+project (DDSReceiver_svnt): ciao_servant_dnc {
+  after += DDSReceiver_stub
+  sharedname =DDSReceiver_svnt
+  idlflags += -Wb,export_macro=DDSRECEIVER_SVNT_Export -Wb,export_include=DDSReceiver_svnt_export.h 
+  idlflags += -I../interface
+  cidlflags += -I../interface
+
+  libs += DDSReceiver_stub
+  dynamicflags = DDSRECEIVER_SVNT_BUILD_DLL
+  CIDL_Files {
+    gendir = .
+    ../interface/DDSReceiver.cidl
+  }
+
+  IDL_Files {
+    gendir = .
+    DDSReceiverE.idl
+  }
+  Source_Files {
+    DDSReceiverEC.cpp
+    DDSReceiverS.cpp
+    DDSEventS.cpp
+    DDSReceiver_svnt.cpp
+  }
+
+}
+
+project (DDSReceiver_exec): ciao_component_dnc, dcpsexe {
+  after += DDSReceiver_svnt DDSTopicBase
+  sharedname = DDSReceiver_exec
+  idlflags += -Wb,export_macro=DDSRECEIVER_EXEC_Export -Wb,export_include=DDSReceiver_exec_export.h 
+  idlflags += -I../interface
+  dynamicflags += DDSRECEIVER_EXEC_BUILD_DLL DDSTOPIC_HAS_DLL
+  includes += ../Base
+
+  libs += DDSReceiver_svnt DDSReceiver_stub DDSTopicBase
+
+  Source_Files {
+    DDSReceiver_exec.cpp
+    Receiver_Task.cpp
+    DDSTopicDataReaderListenerImpl.cpp
+  }
+
+}

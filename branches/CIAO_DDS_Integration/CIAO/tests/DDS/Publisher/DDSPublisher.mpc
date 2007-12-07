@@ -1,0 +1,15 @@
+project (DDSPublisher) : dcpsexe, svc_utils {
+
+  after += DDSTopicBase
+  exename = publisher
+
+  libpaths += .
+  libs += DDSTopicBase
+  dynamicflags += DDSTOPIC_HAS_DLL
+  includes += ../Base
+
+  Source_Files {
+    publisher.cpp
+  }
+
+}

@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+
+<project guid="{D416A58F-C11C-42B8-9CA8-9EAF3FB80054}" cdate="Mon Dec 03 09:47:20 2007" mdate="Mon Dec 03 09:47:20 2007" version="" metaguid="{70F2AB91-4543-4DE3-BF70-DB055CF97F64}" metaversion="" metaname="PICML">
+	<name>DDSComponent</name>
+	<comment></comment>
+	<author></author>
+	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0xa" kind="RootFolder" guid="{AAE7A700-1946-43e2-B88D-6909FB7C6C23}">
+		<name>DDSComponent</name>
+		<folder id="id-006a-00000002" relid="0x1" childrelidcntr="0x1" kind="ImplementationArtifacts" guid="{4A09727E-FF35-46ab-8F45-74D4EEAA7524}">
+			<name>ImplementationArtifacts</name>
+			<model id="id-0065-00000001" kind="ArtifactContainer" guid="{72CA9701-22E9-40d2-A2A3-11FA67A9D3DA}" relid="0x1" childrelidcntr="0xf">
+				<name>DDSReceiverArtifacts</name>
+				<model id="id-0065-00000002" kind="Property" role="Property" guid="{0B8D0663-5917-47a9-BD19-4322C3A4E700}" relid="0xb" childrelidcntr="0x1">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>440,223</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>create_DDSTest_DDSReceiverHome_Impl</value>
+					</attribute>
+					<reference id="id-0067-00000015" kind="DataType" role="DataType" guid="{64297C87-333C-4b33-8F9B-69A981652E7A}" relid="0x1" referred="id-0066-00000009">
+						<name>String</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>303,163</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<model id="id-0065-00000003" kind="Property" role="Property" guid="{8DE11174-FC83-4e77-A084-29D380B2730D}" relid="0xc" childrelidcntr="0x1">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>265,118</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>create_DDSTest_DDSReceiverHome_Servant</value>
+					</attribute>
+					<reference id="id-0067-00000016" kind="DataType" role="DataType" guid="{3D34776C-B74E-43d3-A956-973E7B6D7698}" relid="0x1" referred="id-0066-00000009">
+						<name>String</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>499,156</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-00000001" kind="ImplementationArtifact" role="ImplementationArtifact" guid="{15411967-483B-49ce-AB4A-2053F9F824F7}" relid="0x1">
+					<name>DDSReceiver_stub</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>111,118</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>0AAAEE60-682B-4C30-B609-ABEAB08A7306</value>
+					</attribute>
+					<attribute kind="architecture" status="meta">
+						<value>x86</value>
+					</attribute>
+					<attribute kind="artifactVersion" status="meta">
+						<value>0.0.0.0</value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value>Release</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>DDSReceiver_stub</value>
+					</attribute>
+					<attribute kind="operatingSystem" status="meta">
+						<value>Linux</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000002" kind="ImplementationArtifact" role="ImplementationArtifact" guid="{A8E7355D-00B9-42f6-AEF7-FDDAE7366917}" relid="0x2">
+					<name>DDSReceiver_svnt</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>265,230</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>6261D847-FC88-4944-901D-1E3E01CEA838</value>
+					</attribute>
+					<attribute kind="architecture" status="meta">
+						<value>x86</value>
+					</attribute>
+					<attribute kind="artifactVersion" status="meta">
+						<value>0.0.0.0</value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value>Release</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>DDSReceiver_svnt</value>
+					</attribute>
+					<attribute kind="operatingSystem" status="meta">
+						<value>Linux</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000003" kind="ImplementationArtifact" role="ImplementationArtifact" guid="{A549695C-794B-40d2-A2C9-054A3A476440}" relid="0x3">
+					<name>DDSReceiver_exec</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>440,314</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>CB007241-052C-43F7-B2A0-1609B79A9338</value>
+					</attribute>
+					<attribute kind="architecture" status="meta">
+						<value>x86</value>
+					</attribute>
+					<attribute kind="artifactVersion" status="meta">
+						<value>0.0.0.0</value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value>Release</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>DDSReceiver_exec</value>
+					</attribute>
+					<attribute kind="operatingSystem" status="meta">
+						<value>Linux</value>
+					</attribute>
+				</atom>
+				<connection id="id-0068-00000001" kind="ArtifactDependency" role="ArtifactDependency" guid="{B4D17C06-4C69-41bf-8907-D0ADA077DEA2}" relid="0x9">
+					<name>ArtifactDependency</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ws</value>
+					</regnode>
+					<connpoint role="dst" target="id-0066-00000001"/>
+					<connpoint role="src" target="id-0066-00000002"/>
+				</connection>
+				<connection id="id-0068-00000002" kind="ArtifactDependency" role="ArtifactDependency" guid="{E31F46E2-361A-4a5a-A122-F15912C3DDC8}" relid="0xa">
+					<name>ArtifactDependency</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ws</value>
+					</regnode>
+					<connpoint role="dst" target="id-0066-00000002"/>
+					<connpoint role="src" target="id-0066-00000003"/>
+				</connection>
+				<connection id="id-0068-00000003" kind="ArtifactExecParameter" role="ArtifactExecParameter" guid="{4B2A588A-CE78-4b32-ABF4-0AEF60F5D6F6}" relid="0xe">
+					<name>ArtifactExecParameter</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ns</value>
+					</regnode>
+					<connpoint role="dst" target="id-0065-00000003"/>
+					<connpoint role="src" target="id-0066-00000002"/>
+				</connection>
+				<connection id="id-0068-00000004" kind="ArtifactExecParameter" role="ArtifactExecParameter" guid="{9D25D68A-3FC0-455f-8733-93D27BDBA05A}" relid="0xf">
+					<name>ArtifactExecParameter</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ns</value>
+					</regnode>
+					<connpoint role="dst" target="id-0065-00000002"/>
+					<connpoint role="src" target="id-0066-00000003"/>
+				</connection>
+			</model>
+		</folder>
+		<folder id="id-006a-00000003" relid="0x2" childrelidcntr="0x4" kind="ComponentImplementations" guid="{B24D6CAE-1591-48bc-8B20-692B7F07DA7B}">
+			<name>ComponentImplementations</name>
+			<model id="id-0065-00000004" kind="ComponentImplementationContainer" guid="{9A8A4A3D-C6CA-463c-8CEE-91CCE8A73487}" relid="0x1" childrelidcntr="0xc">
+				<name>DDSReceiver</name>
+				<model id="id-0065-00000005" kind="Property" role="Property" guid="{D90DA588-CC1E-407d-9588-AAA8E6EFF406}" relid="0xb" childrelidcntr="0x1">
+					<name>ComponentIOR</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>153,160</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>DDSReceiver.ior</value>
+					</attribute>
+					<reference id="id-0067-00000017" kind="DataType" role="DataType" guid="{BA3C4409-44F7-4007-93F9-0104CD53C20E}" relid="0x1" referred="id-0066-00000009">
+						<name>String</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>380,128</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-00000004" kind="MonolithicImplementation" role="MonolithicImplementation" guid="{9CBD9481-9609-455e-9237-56D604265B82}" relid="0x2">
+					<name>DDSReceiverImpl</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>363,160</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>C70BC55F-5046-483D-AD6C-3F7E59B65412</value>
+					</attribute>
+					<attribute kind="defaultVersion" status="meta">
+						<value>0.0.0.0</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-00000001" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" guid="{EAE31DC1-A9A6-420c-A913-7A9F059C7135}" relid="0x3" referred="id-0066-00000002">
+					<name>DDSReceiver_svnt</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>363,293</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000002" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" guid="{7E4E6C08-FC48-49f7-9AC0-9BCB7D9D1508}" relid="0x4" referred="id-0066-00000003">
+					<name>DDSReceiver_exec</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>503,293</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000003" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" guid="{93620BC4-A447-44b7-BAFE-39829CC2926B}" relid="0x5" referred="id-0066-00000001">
+					<name>DDSReceiver_stub</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>209,300</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000018" kind="ComponentRef" role="ComponentRef" guid="{A66416C3-A92A-4cfa-9E73-4DD646AA1429}" relid="0x1" referred="id-0065-00000012">
+					<name>DDSReceiver</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>642,138</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000005" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" guid="{9B972554-4776-4b07-92D2-8721B437CD7B}" relid="0x6">
+					<name>MonolithprimaryArtifact</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Sn</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000004"/>
+					<connpoint role="dst" target="id-0067-00000003"/>
+				</connection>
+				<connection id="id-0068-00000006" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" guid="{A5CE4846-1B4F-4c9f-B659-E2065A98BFF3}" relid="0x7">
+					<name>MonolithprimaryArtifact</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Sn</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000004"/>
+					<connpoint role="dst" target="id-0067-00000001"/>
+				</connection>
+				<connection id="id-0068-00000007" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" guid="{C308477B-D1D8-4540-A398-C241942294B6}" relid="0x8">
+					<name>MonolithprimaryArtifact</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Sn</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000004"/>
+					<connpoint role="dst" target="id-0067-00000002"/>
+				</connection>
+				<connection id="id-0068-00000008" kind="Implements" role="Implements" guid="{1C115EDE-95EB-4d0e-A3D8-8A5EA2BFF2A2}" relid="0x9">
+					<name>Implements</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000004"/>
+					<connpoint role="dst" target="id-0067-00000018"/>
+				</connection>
+				<connection id="id-0068-00000009" kind="ConfigProperty" role="ConfigProperty" guid="{FB695212-375A-4e6f-B573-BAB352920E87}" relid="0xc">
+					<name>ConfigProperty</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>We</value>
+					</regnode>
+					<connpoint role="dst" target="id-0065-00000005"/>
+					<connpoint role="src" target="id-0066-00000004"/>
+				</connection>
+			</model>
+			<model id="id-0065-0000002e" kind="ComponentImplementationContainer" guid="{6C2E3CA8-BCF5-450d-9FB7-C40FAA4C6C72}" relid="0x4" childrelidcntr="0x1">
+				<name>DDSReceiverAssembly</name>
+				<model id="id-0065-0000002f" kind="ComponentAssembly" role="ComponentAssembly" guid="{464F078B-7B70-481c-A7E9-632D4CDA57A6}" relid="0x1" childrelidcntr="0x1">
+					<name>DDSReceiverAssembly</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>366,121</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>40F07BB7-7E01-4487-B353-F0A207E97C54</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000030" kind="Component" role="Component" guid="{E8BEEB33-7E43-451c-954D-1CC831A1D89C}" derivedfrom="id-0065-00000012" isinstance="yes" isprimary="yes" relid="0x1" childrelidcntr="0x0">
+						<name>DDSReceiver</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>453,131</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="UUID">
+							<value>5D4C3D7C-D174-4204-8844-D391152EAB29</value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="label" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-0000005f" kind="InEventPort" role="InEventPort" guid="{520A9B96-41A5-4319-81AD-8118887A4709}" derivedfrom="id-0067-00000005" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>dds_input</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="inherited">
+								<value>false</value>
+							</attribute>
+						</reference>
+					</model>
+				</model>
+			</model>
+		</folder>
+		<folder id="id-006a-00000004" relid="0x3" childrelidcntr="0x3" kind="InterfaceDefinitions" guid="{00332052-BB25-4eee-A8B9-733E9FE15985}">
+			<name>InterfaceDefinitions</name>
+			<model id="id-0065-0000000a" kind="File" guid="{0CBB59A2-A970-4821-AB1F-7097B8ECAE1E}" relid="0x1" childrelidcntr="0x2">
+				<name>DDSEvent</name>
+				<attribute kind="PrefixTag" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="path" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-0000000b" kind="Package" role="Package" guid="{58D4B2EE-3011-4c64-BD1B-1AF60DED5341}" relid="0x1" childrelidcntr="0x9">
+					<name>DDSTest</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>121,177</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="PrefixTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-0000000c" kind="Event" role="Event" guid="{76115C7C-D963-49ea-B8CE-B3BCEF3709DE}" relid="0x1" childrelidcntr="0x6">
+						<name>DDSTopic_event</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>174,48</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="PrefixTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="abstract" status="meta">
+							<value>false</value>
+						</attribute>
+						<reference id="id-0067-00000062" kind="Member" role="Member" guid="{5A4A1141-DDCB-4cf0-91A4-E8A43BAC08AE}" relid="0x6" referred="id-0065-00000032">
+							<name>DDSTopic</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="InterfaceDefinition" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>177,23</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+				</model>
+				<reference id="id-0067-00000063" kind="FileRef" role="FileRef" guid="{419863C1-68A9-42e5-984F-51BD4DF939D6}" relid="0x2" referred="id-0065-00000031">
+					<name>FileRef</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>121,93</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000010" kind="File" guid="{73655CEB-22F4-4562-A934-93981B2BF3E9}" relid="0x2" childrelidcntr="0x4">
+				<name>DDSReceiver</name>
+				<attribute kind="PrefixTag" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="path" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000011" kind="Package" role="Package" guid="{A03FF192-64B7-4aa5-883F-B87042EE3411}" relid="0x2" childrelidcntr="0x5">
+					<name>DDSTest</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>275,51</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="PrefixTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000012" kind="Component" role="Component" guid="{32CAFA7E-A34F-4cdb-AB55-94799497CA59}" relid="0x4" childrelidcntr="0x8">
+						<name>DDSReceiver</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>341,173</value>
+								</regnode>
+							</regnode>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>551,61</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="UUID">
+							<value>22001825-8B05-4205-8C67-7AD023C00D47</value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="label" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000005" kind="InEventPort" role="InEventPort" guid="{39C6FC5C-91E7-4d74-A8DF-DD9AAE19713A}" relid="0x2" referred="id-0065-0000000c">
+							<name>dds_input</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>93,184</value>
+									</regnode>
+								</regnode>
+								<regnode name="InterfaceDefinition" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>76,118</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional">
+								<value>false</value>
+							</attribute>
+						</reference>
+					</model>
+					<model id="id-0065-00000014" kind="ComponentFactory" role="ComponentFactory" guid="{0376DE1E-AB1A-40f3-9324-315D53FCBB0C}" relid="0x2" childrelidcntr="0x0">
+						<name>DDSReceiverHome</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>76,195</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</model>
+					<connection id="id-0068-00000012" kind="ManagesComponent" role="ManagesComponent" guid="{7B20E0D7-DA16-43e8-B84E-B4FD28CC0356}" relid="0x5">
+						<name>ManagesComponent</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>Ew</value>
+						</regnode>
+						<connpoint role="dst" target="id-0065-00000012"/>
+						<connpoint role="src" target="id-0065-00000014"/>
+					</connection>
+				</model>
+				<reference id="id-0067-0000000b" kind="FileRef" role="FileRef" guid="{6A7F3BAA-53A4-47f1-9854-A8B4B2218CC0}" relid="0x1" referred="id-0065-0000000a">
+					<name>FileRef</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>93,51</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000031" kind="File" guid="{DEDBED6F-33E7-4dcc-8C60-6DDE8E13CBDC}" relid="0x3" childrelidcntr="0x3">
+				<name>DDSTopic</name>
+				<attribute kind="PrefixTag" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="path" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000032" kind="Aggregate" role="Aggregate" guid="{EAFA44D7-B288-42d6-917E-6C442625267F}" relid="0x3" childrelidcntr="0x2">
+					<name>DDSTopic</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>261,72</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<reference id="id-0067-0000005c" kind="Member" role="Member" guid="{70472279-9588-4dd9-80E8-ED386E509ECF}" relid="0x1" referred="id-0066-0000000a">
+						<name>sequence_number</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>221,109</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+					<reference id="id-0067-0000005d" kind="Member" role="Member" guid="{41A78954-F20B-47c4-A856-A276C4E82E56}" relid="0x2" referred="id-0066-00000009">
+						<name>id</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>109,109</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<reference id="id-0067-00000060" kind="Constant" role="Constant" guid="{E2BF6920-0F8D-4e9b-A18E-BE9E8909CC4C}" relid="0x1" referred="id-0066-00000009">
+					<name>DCPS_DATA_TYPE</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>135,65</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="value">
+						<value>&quot;DDSTopic&quot;</value>
+					</attribute>
+				</reference>
+				<reference id="id-0067-00000061" kind="Constant" role="Constant" guid="{6D6AB113-7E80-43af-9168-F5D95BD31528}" relid="0x2" referred="id-0066-00000009">
+					<name>DCPS_DATA_KEY</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>135,149</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="value">
+						<value>&quot;DDSTopic 1&quot;</value>
+					</attribute>
+				</reference>
+			</model>
+		</folder>
+		<folder id="id-006a-00000005" relid="0x4" childrelidcntr="0x1" kind="ComponentTypes" guid="{F94297EF-1E33-4837-8ED2-01D3D21969C2}">
+			<name>ComponentTypes</name>
+			<model id="id-0065-00000015" kind="ComponentContainer" guid="{3A8B4E34-1151-4c81-8382-0C46B773C37F}" relid="0x1" childrelidcntr="0x2">
+				<name>DDSReceiver</name>
+				<reference id="id-0067-0000000c" kind="ComponentRef" role="ComponentRef" guid="{928AF96F-B33D-42fb-B4BC-285262769432}" relid="0x2" referred="id-0065-00000012">
+					<name>DDSReceiver</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>705,96</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+		</folder>
+		<folder id="id-006a-00000006" relid="0x5" childrelidcntr="0x2" kind="Targets" guid="{1D1A186B-D5EC-4e5d-8204-D5BC990C0FD0}">
+			<name>Targets</name>
+			<model id="id-0065-00000016" kind="Domain" guid="{100F5DBC-1BD7-48c5-83B8-8E06B30D1BFB}" relid="0x1" childrelidcntr="0x1">
+				<name>OneNode</name>
+				<attribute kind="UUID">
+					<value>F55AEA8A-9CC2-4EB8-9154-F7883F6F1B22</value>
+				</attribute>
+				<attribute kind="label" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000017" kind="Node" role="Node" guid="{72224E8B-B567-4cb6-8698-84B6B0F3B464}" relid="0x1" childrelidcntr="0x0">
+					<name>CCMNode</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Target" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>429,177</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</model>
+			</model>
+		</folder>
+		<folder id="id-006a-00000007" relid="0x6" childrelidcntr="0x1" kind="ComponentBuild" guid="{2AF49F84-F0F5-4f6e-B003-890ACFCCAA23}">
+			<name>ComponentBuild</name>
+			<model id="id-0065-0000001b" kind="MPC" guid="{05B83C99-BD86-4341-8FA7-16C4FBE62805}" relid="0x1" childrelidcntr="0x6">
+				<name>ProjectDescription</name>
+				<model id="id-0065-0000001c" kind="Project" role="Project" guid="{22EF66D5-25FC-4eac-AE95-0A8C899A6707}" relid="0x5" childrelidcntr="0x5">
+					<name>Transmitter</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Workspace" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>303,205</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<model id="id-0065-0000001d" kind="ExecutorProject" role="ExecutorProject" guid="{55A043FE-235D-4149-A48C-D95D72AC83B6}" relid="0x5" childrelidcntr="0x1">
+						<name>TransmitterExecutor</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="ComponentLibraries" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>265,99</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="ORBServices" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="libraryexport" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="sharedname" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-0000000d" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" guid="{B48B2306-722A-41e4-AE89-590FB13EF78E}" relid="0x1" referred="id-0066-00000003">
+							<name>ExecutorArtifact</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="LibraryArtifact" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>275,121</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-0000001e" kind="StubProject" role="StubProject" guid="{62A89BCB-CB08-44f8-9434-588C24F6D8BF}" relid="0x2" childrelidcntr="0x2">
+						<name>TransmitterStub</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="ComponentLibraries" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>433,106</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="ORBServices" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="libraryexport" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="sharedname" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-0000000e" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" guid="{7D3A8A01-A946-4065-99E5-794F3825244A}" relid="0x1" referred="id-0066-00000001">
+							<name>StubArtifact</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="LibraryArtifact" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>191,121</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-0000000f" kind="FileRef" role="FileRef" guid="{2AF73591-8DF4-432b-9C97-E7520E6A6EDB}" relid="0x2" referred="id-0065-00000010">
+							<name>FileRef</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="LibraryArtifact" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>307,125</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-0000001f" kind="ServantProject" role="ServantProject" guid="{881C3F8F-0DD0-40e2-980D-B9A0B127A558}" relid="0x4" childrelidcntr="0x1">
+						<name>TransmitterServant</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="ComponentLibraries" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>566,106</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="ORBServices" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="libraryexport" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="sharedname" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000010" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" guid="{2FE352B3-4566-4c96-81A2-37D7C2D6D28E}" relid="0x1" referred="id-0066-00000002">
+							<name>ServantArtifact</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="LibraryArtifact" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>142,114</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+				</model>
+				<set id="id-0069-00000001" kind="Workspaces" role="Workspaces" guid="{56B83183-E456-4740-B762-389CE86E1924}" relid="0x1">
+					<name>Transmitter</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Workspace" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>310,79</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</set>
+			</model>
+		</folder>
+		<folder id="id-006a-00000008" relid="0x8" childrelidcntr="0x2" kind="DeploymentPlans" guid="{0CF77A88-691E-4466-A64F-0BC943F1F142}">
+			<name>DeploymentPlans</name>
+			<model id="id-0065-00000021" kind="DeploymentPlan" guid="{F76FF888-6707-4b20-AEF0-30856A86BDEC}" relid="0x2" childrelidcntr="0x9">
+				<name>Deployment</name>
+				<attribute kind="UUID">
+					<value>C7335AE9-0193-4D17-93E3-0DA18DB23CD0</value>
+				</attribute>
+				<attribute kind="label" status="meta">
+					<value></value>
+				</attribute>
+				<reference id="id-0067-00000014" kind="NodeReference" role="NodeReference" guid="{683AA038-DF92-403e-80DF-D57500033A79}" relid="0x4" referred="id-0065-00000017">
+					<name>CCMNode</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="NodeMapping" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>207,151</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000005e" kind="ComponentRef" role="ComponentRef" guid="{A8445733-5206-4357-A532-B89120138854}" relid="0x9" referred="id-0065-00000030">
+					<name>DDSReceiver</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="NodeMapping" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>348,124</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000016" kind="InstanceMapping" role="InstanceMapping" guid="{70290BAA-9A81-444a-B8B1-54C2383B5985}" relid="0x8">
+					<name>InstanceMapping</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-00000014"/>
+					<connpoint role="src" target="id-0069-00000005"/>
+				</connection>
+				<set id="id-0069-00000005" kind="CollocationGroup" role="CollocationGroup" guid="{114D7853-31D7-448c-8EFD-3FC901162705}" relid="0x2" members="id-0067-0000005e">
+					<name>ReceiverProcess</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="NodeMapping" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>90,153</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</set>
+			</model>
+		</folder>
+		<folder id="id-006a-0000000a" relid="0xa" childrelidcntr="0x4" kind="PredefinedTypes" guid="{95B911B1-2731-41ae-A8B6-612A596C0F58}">
+			<name>Datatypes</name>
+			<atom id="id-0066-00000008" kind="GenericValue" guid="{518ECBE8-78AF-41d9-9621-6C3571A08FBB}" relid="0x1">
+				<name>Any</name>
+			</atom>
+			<atom id="id-0066-00000009" kind="String" guid="{457A7830-7E93-40cf-9E1D-13227D958F8B}" relid="0x2">
+				<name>String</name>
+			</atom>
+			<atom id="id-0066-0000000a" kind="LongInteger" guid="{B992D2C9-ED85-4601-AE35-38D7F37F510D}" relid="0x3">
+				<name>long</name>
+			</atom>
+		</folder>
+		<regnode name="__OutputDir__" status="undefined">
+			<value></value>
+			<regnode name="CIDL" isopaque="yes">
+				<value>Z:\DOC\CCMandDDS\DDSComponent\generated</value>
+			</regnode>
+		</regnode>
+	</folder>
+</project>
