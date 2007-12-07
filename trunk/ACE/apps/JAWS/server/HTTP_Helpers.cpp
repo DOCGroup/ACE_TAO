@@ -56,9 +56,9 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   // rfc850-date    = weekday "," SP dd-month-yy SP hh:mm:ss SP "GMT"
   // asctime-date   = wkday SP month dd SP hh:mm:ss SP yyyy
 
-  static const char rfc1123_date[] = "%3s,;%2d;%3s;%4d;%2d:%2d:%2d;GMT";
-  static const char rfc850_date[]  = "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT";
-  static const char asctime_date[] = "%3s;%3s;%2d;%2d:%2d:%2d;%4d";
+  // static const char rfc1123_date[] = "%3s,;%2d;%3s;%4d;%2d:%2d:%2d;GMT";
+  // static const char rfc850_date[]  = "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT";
+  // static const char asctime_date[] = "%3s;%3s;%2d;%2d:%2d:%2d;%4d";
 
   // Should also support other versions (such as from NNTP and SMTP)
   // for robustness, but it should be clear how to extend this.
@@ -67,7 +67,7 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   char month[4];
   char weekday[10];
 
-  if (::sscanf(buf, rfc1123_date,
+  if (::sscanf(buf, "%3s,;%2d;%3s;%4d;%2d:%2d:%2d;GMT", // RFC-1123 date format
                weekday,
                &tms.tm_mday,
 	       month,
@@ -76,14 +76,14 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
 	       &tms.tm_min,
 	       &tms.tm_sec) == 7)
     ;
-  else if (::sscanf(buf, rfc850_date,
+  else if (::sscanf(buf, "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT", // RFC-850 date format
                     weekday,
                     &tms.tm_mday, month, &tms.tm_year,
                     &tms.tm_hour, &tms.tm_min, &tms.tm_sec) == 7)
     {
       weekday[3] = '\0';
     }
-  else if (::sscanf(buf, asctime_date,
+  else if (::sscanf(buf, "%3s;%3s;%2d;%2d:%2d:%2d;%4d", // ASCTIME date format.
                     weekday,
                     month, &tms.tm_mday,
                     &tms.tm_hour, &tms.tm_min, &tms.tm_sec,
