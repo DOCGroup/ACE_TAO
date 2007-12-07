@@ -1,3 +1,8 @@
+Fri Dec  7 18:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.h:
+          Make sure we initialise the resolvLib with VxWorks RTP
+
 Fri Dec  7 06:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/gperf/gperf.mpc:
