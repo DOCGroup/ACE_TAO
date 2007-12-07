@@ -1,11 +1,18 @@
+Fri Dec  7 06:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlCIAO/perlciao.mpc:
+          With vc9 set ConfigurationType to 10 to disable the creation
+          of the manifest file which fails because these projects don't
+          have source code
+
 Thu Dec  6 17:56:35 UTC 2007  Will Otte  <otte_w@dre.Vanderbilt.Edu>
 
         * CCF/CCF/CIDL/SemanticAction/Composition.cpp:
         * CCF/CCF/IDL2/SemanticAction/Operation.cpp:
         * CIDLC/CxxNamePrinter.cpp:
-        
+
           Fixed warnings manifesting on Debian Etch.
-        
+
 Mon Dec  3 17:42:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:

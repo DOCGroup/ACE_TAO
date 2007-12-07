@@ -6,4 +6,7 @@ project(PerlCIAO) : script {
     TestUtils.pm
     TestUtils_Base.pm
   }
+  specific(vc9) {
+    ConfigurationType = 10
+  }
 }
