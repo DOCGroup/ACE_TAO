@@ -31,6 +31,7 @@
 
 #include "DDSReceiver_exec_export.h"
 #include "tao/LocalObject.h"
+#include "Receiver_Task.h"
 
 namespace CIDL_DDSReceiverImpl
 {
@@ -70,6 +71,8 @@ namespace CIDL_DDSReceiverImpl
 
     protected:
     DDSReceiver_Context *context_;
+
+    Receiver_Task task_;
   };
 
   class DDSRECEIVER_EXEC_Export DDSReceiverHome_exec_i
