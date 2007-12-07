@@ -29,6 +29,10 @@
 extern char* rtems_progname;
 # endif /* ACE_HAS_RTEMS */
 
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640) && defined (__RTP__)
+#  include <resolvLib.h>
+#endif
+
 # if !defined (ACE_MAIN)
 #   define ACE_MAIN main
 # endif /* ! ACE_MAIN */
@@ -102,6 +106,22 @@ ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
     rtems_progname = argv[0]; \
   else \
     rtems_progname = "RTEMS"; \
+  return ace_os_main_i (argc, argv); /* what the user calls "main" */ \
+} \
+int \
+ace_main_i
+
+#   elif defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640) && defined (__RTP__)
+
+#     define main \
+ACE_MAIN (int, char *[]); /* forward decl to gobble up the 'int' if there is one */ \
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
+int ace_os_main_i (int, char *[]); \
+ACE_END_VERSIONED_NAMESPACE_DECL \
+int \
+ACE_MAIN (int argc, char *argv[])    /* user's entry point, e.g., main */ \
+{ \
+  resolvInit(); \
   return ace_os_main_i (argc, argv); /* what the user calls "main" */ \
 } \
 int \
