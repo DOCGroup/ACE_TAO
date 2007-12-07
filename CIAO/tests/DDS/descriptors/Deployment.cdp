@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>C7335AE9-0193-4D17-93E3-0DA18DB23CD0</UUID>
+
+  <implementation id="_C70BC55F-5046-483D-AD6C-3F7E59B65412">
+    <name>DDSComponent.ComponentImplementations.DDSReceiver.DDSReceiverImpl</name>
+    <source/>
+    <artifact>_0AAAEE60-682B-4C30-B609-ABEAB08A7306</artifact>
+    <artifact>_6261D847-FC88-4944-901D-1E3E01CEA838</artifact>
+    <artifact>_CB007241-052C-43F7-B2A0-1609B79A9338</artifact>
+  </implementation>
+
+  <instance id="DDSComponent.ComponentImplementations.DDSReceiverAssembly.DDSReceiverAssembly.DDSReceiver">
+    <name>DDSComponent.ComponentImplementations.DDSReceiverAssembly.DDSReceiverAssembly.DDSReceiver</name>
+    <node>CCMNode</node>
+    <source/>
+    <implementation>_C70BC55F-5046-483D-AD6C-3F7E59B65412</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>DDSReceiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <artifact id="_0AAAEE60-682B-4C30-B609-ABEAB08A7306">
+    <name>DDSComponent.ImplementationArtifacts.DDSReceiverArtifacts.DDSReceiver_stub</name>
+    <source/>
+    <node/>
+    <location>DDSReceiver_stub</location>
+  </artifact>
+
+  <artifact id="_6261D847-FC88-4944-901D-1E3E01CEA838">
+    <name>DDSComponent.ImplementationArtifacts.DDSReceiverArtifacts.DDSReceiver_svnt</name>
+    <source/>
+    <node/>
+    <location>DDSReceiver_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_DDSTest_DDSReceiverHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_CB007241-052C-43F7-B2A0-1609B79A9338">
+    <name>DDSComponent.ImplementationArtifacts.DDSReceiverArtifacts.DDSReceiver_exec</name>
+    <source/>
+    <node/>
+    <location>DDSReceiver_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_DDSTest_DDSReceiverHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:deploymentPlan>

@@ -15,6 +15,8 @@
 #define _DDS_TEST_RECEIVER_TASK_H_
 
 #include "DDSReceiver_svnt.h"
+#include <dds/DCPS/Service_Participant.h>
+
 #include <ace/Task.h>
 #include <string>
 #include <map>
@@ -45,6 +47,12 @@ namespace CIDL_DDSReceiverImpl
   private:
     /// flag for thread cancellation
     bool stopped_;
+
+    /// domain participant factory
+    DDS::DomainParticipantFactory_var dp_factory_;
+
+    /// domain participant
+    DDS::DomainParticipant_var participant_;
 
     /// component context
     DDSReceiver_Context* context_;

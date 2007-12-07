@@ -14,10 +14,10 @@
 #include "Receiver_Task.h"
 #include "DDSTopicDataReaderListenerImpl.h"
 #include "DDSTopicTypeSupportImpl.h"
-#include <dds/DCPS/Service_Participant.h>
 #include <dds/DCPS/Marked_Default_Qos.h>
 #include <dds/DCPS/SubscriberImpl.h>
 #include <dds/DCPS/transport/framework/TheTransportFactory.h>
+#include <ace/ARGV.h>
 
 namespace CIDL_DDSReceiverImpl
 {
@@ -27,8 +27,8 @@ namespace CIDL_DDSReceiverImpl
 const OpenDDS::DCPS::TransportIdType TRANSPORT_IMPL_ID = 1;
 
 DDS::DomainId_t DDSTOPIC_DOMAIN_ID = 467;
-const char* DDSTOPIC_TYPE = "DDS Test";
-const char* DDSTEST_TOPIC = "DDSTopic";
+const char* DDSTOPIC_TYPE = "DDSTopic";
+const char* DDSTEST_TOPIC = "DDSTopic Data";
 
 //-----------------------------------------------------------------------------
 
@@ -49,22 +49,19 @@ const char* DDSTEST_TOPIC = "DDSTopic";
   int
   Receiver_Task::svc ()
   {
-    DDS::DomainParticipantFactory_var dpf = 
-      DDS::DomainParticipantFactory::_nil();
-    DDS::DomainParticipant_var participant = 
-      DDS::DomainParticipant::_nil();
-
     try {
       // Initialize, and create a DomainParticipant
-
-      dpf = TheParticipantFactory;
-
-      participant = dpf->create_participant(
-					    DDSTOPIC_DOMAIN_ID,
-					    PARTICIPANT_QOS_DEFAULT,
-					    DDS::DomainParticipantListener::_nil());
+      ACE_ARGV args ("-ORBSvcConf ../descriptors/tcp.conf -DCPSConfigFile ../descriptors/dds_tcp_conf.ini");
       
-      if (CORBA::is_nil (participant.in ())) {
+      int argc = args.argc ();
+      dp_factory_ = TheParticipantFactoryWithArgs (argc, args.argv ());
+
+      participant_ = dp_factory_->create_participant(
+					     DDSTOPIC_DOMAIN_ID,
+					     PARTICIPANT_QOS_DEFAULT,
+					     DDS::DomainParticipantListener::_nil());
+      
+      if (CORBA::is_nil (participant_.in ())) {
 	cerr << "create_participant failed." << endl;
 	return 1;
       }
@@ -72,8 +69,8 @@ const char* DDSTEST_TOPIC = "DDSTopic";
       // Create a subscriber for the two topics
       // (SUBSCRIBER_QOS_DEFAULT is defined in Marked_Default_Qos.h)
       DDS::Subscriber_var sub =
-	participant->create_subscriber(SUBSCRIBER_QOS_DEFAULT,
-                                     DDS::SubscriberListener::_nil());
+	participant_->create_subscriber(SUBSCRIBER_QOS_DEFAULT,
+					DDS::SubscriberListener::_nil());
       if (CORBA::is_nil (sub.in ())) {
 	cerr << "create_subscriber failed." << endl;
 	return 1;
@@ -119,7 +116,7 @@ const char* DDSTEST_TOPIC = "DDSTopic";
 
       // Register the Ddstopic type
       DDSTopicTypeSupport_var ddstopic_servant = new DDSTopicTypeSupportImpl();
-      if (DDS::RETCODE_OK != ddstopic_servant->register_type(participant.in (),
+      if (DDS::RETCODE_OK != ddstopic_servant->register_type(participant_.in (),
 							     DDSTOPIC_TYPE)) {
 	cerr << "register_type for " << DDSTOPIC_TYPE << " failed." << endl;
 	return 1;
@@ -127,7 +124,7 @@ const char* DDSTEST_TOPIC = "DDSTopic";
       
       // Create a topic for the Ddstopic type...
       DDS::Topic_var ddstopic_topic =
-	participant->create_topic (DDSTEST_TOPIC,
+	participant_->create_topic (DDSTEST_TOPIC,
 				   DDSTOPIC_TYPE,
 				   TOPIC_QOS_DEFAULT,
 				   DDS::TopicListener::_nil());
@@ -155,9 +152,10 @@ const char* DDSTEST_TOPIC = "DDSTopic";
 			       ddstopic_listener.in ());
       
       // Wait for events from the Publisher; shut down when "close" received
+      ACE_Time_Value quartersecond (0, 250000); // 250 ms
+
       while ( !this->stopped_ ) {
-	cout << "DDSTopic Reveicer  sleeping for 1 sec..." << endl;
-	ACE_OS::sleep(1);
+      	ACE_OS::sleep(quartersecond);
       }
 
     } 
@@ -169,11 +167,11 @@ const char* DDSTEST_TOPIC = "DDSTopic";
 
     // Cleanup
     try {
-      if (!CORBA::is_nil (participant.in ())) {
-	participant->delete_contained_entities();
+      if (!CORBA::is_nil (participant_.in ())) {
+	participant_->delete_contained_entities();
       }
-      if (!CORBA::is_nil (dpf.in ())) {
-	dpf->delete_participant(participant.in ());
+      if (!CORBA::is_nil (dp_factory_.in ())) {
+	dp_factory_->delete_participant(participant_.in ());
       }
     } catch (CORBA::Exception& e) {
       cerr << "Exception caught in cleanup." << endl << e << endl;
@@ -181,6 +179,7 @@ const char* DDSTEST_TOPIC = "DDSTopic";
     }
     TheTransportFactory->release();
     TheServiceParticipant->shutdown ();
+
     return 0;
   }
   

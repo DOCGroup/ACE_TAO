@@ -19,8 +19,8 @@ const OpenDDS::DCPS::TransportIdType TRANSPORT_IMPL_ID = 1;
 
 // constants for Stock Ddstopicr domain Id, types, and topic
 DDS::DomainId_t DDSTOPIC_DOMAIN_ID = 467;
-const char* DDSTOPIC_TYPE = "DDS Test";
-const char* DDSTEST_TOPIC = "DDSTopic";
+const char* DDSTOPIC_TYPE = "DDSTopic";
+const char* DDSTEST_TOPIC = "DDSTopic Data";
 
 int main (int argc, char *argv[]) {
 
@@ -131,20 +131,22 @@ int main (int argc, char *argv[]) {
     // Publish...
 
     ACE_Time_Value wait_time( 1, 0 );
-    for ( int i = 0; i < 8; ++i ) {
-      DDSTopic ddstopic;
-      ddstopic.id = CORBA::string_dup("Asynch Message");
-      ddstopic.sequence_number = i;
+    long i = 0;
+    while(true)
+      {
+	DDSTopic ddstopic;
+	ddstopic.id = CORBA::string_dup("Asynch Message");
+	ddstopic.sequence_number = i++;
+	
+	cout << "Writing DDSTopic [" << i << "]" << endl;
 
-      cout << "Writing Ddstopicr, count " << i << endl;
+	DDS::ReturnCode_t ret = ddstopic_dw->write(ddstopic, topic_handle);
+	if (ret != DDS::RETCODE_OK) {
+	  ACE_ERROR ((LM_ERROR, ACE_TEXT("(%P|%t)ERROR: topic write returned %d.\n"), ret));
+	}
 
-      DDS::ReturnCode_t ret = ddstopic_dw->write(ddstopic, topic_handle);
-      if (ret != DDS::RETCODE_OK) {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT("(%P|%t)ERROR: topic write returned %d.\n"), ret));
+	ACE_OS::sleep( wait_time );
       }
-
-      ACE_OS::sleep( wait_time );
-    }
 
   } catch (CORBA::Exception& e) {
     cerr << "Exception caught in main.cpp:" << endl

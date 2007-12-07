@@ -78,19 +78,19 @@ namespace CIDL_DDSReceiverImpl
   void
   DDSReceiver_exec_i::ccm_activate ()
   {
-    // Your code here.
+    task_.activate ();
   }
 
   void
   DDSReceiver_exec_i::ccm_passivate ()
   {
-    // Your code here.
+    task_.stop ();
   }
 
   void
   DDSReceiver_exec_i::ccm_remove ()
   {
-    // Your code here.
+    task_.wait ();
   }
 
   //==================================================================
