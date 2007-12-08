@@ -1,3 +1,13 @@
+Sat Dec  8 14:35:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/Thread_Pool.cpp:
+          Use orb->run() for the dynamic threads that have an idle timeout, the
+          work_pending/perform_work loop causes signifant additional CPU load. We
+          do run the ORB for the specified idle timeout
+
+        * tao/RTCORBA/Thread_Pool.h:
+          Layout changes
+
 Thu Dec  6 15:26:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
