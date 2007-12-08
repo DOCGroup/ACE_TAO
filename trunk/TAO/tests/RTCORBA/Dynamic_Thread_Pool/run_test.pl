@@ -59,7 +59,6 @@ else {
 if ($continuous) {
   $SV->Arguments ("-ORBSvcConf continuous$PerlACE::svcconf_ext");
 }
-  $SV->Arguments ("-ORBDebugLevel 10 -ORBLogFile server.log");
 
 $SV->Spawn ();
 

@@ -13,14 +13,14 @@ $orbport = 10000 + PerlACE::uniqueid ();
 unlink $iorfile;
 $status = 0;
 
-$endpoint = "-ORBEndpoint iiop://localhost:$orbport";
-$clientarg = "-h localhost -p $orbport";
 if (PerlACE::is_vxworks_test()) {
 $endpoint = "-ORBEndpoint iiop://".$ENV{'ACE_RUN_VX_TGTHOST'}.":$orbport";
 $clientarg = "-h ".$ENV{'ACE_RUN_VX_TGTHOST'}." -p $orbport";
 $SV = new PerlACE::ProcessVX ("server", "$endpoint");
 }
 else {
+$endpoint = "-ORBEndpoint iiop://localhost:$orbport";
+$clientarg = "-h localhost -p $orbport";
 $SV = new PerlACE::Process ("server", "$endpoint");
 }
 
