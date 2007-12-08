@@ -118,7 +118,11 @@ TAO_Dynamic_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
       ACE_Time_Value tv (this->lane_.dynamic_thread_idle_timeout ());
       while (!orb_core.has_shutdown () && orb->work_pending (tv))
         {
-          orb->perform_work ();
+          // Run the ORB for the specified timeout, this prevents looping
+          // between work_pending/handle_events
+          tv = this->lane_.dynamic_thread_idle_timeout ();
+          orb->run (tv);
+          // Reset the idle timeout
           tv = this->lane_.dynamic_thread_idle_timeout ();
         }
 

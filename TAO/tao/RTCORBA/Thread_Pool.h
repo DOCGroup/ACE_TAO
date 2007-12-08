@@ -390,12 +390,10 @@ public:
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
                                 CORBA::ULong max_request_buffer_size,
-                                ACE_Time_Value const &dynamic_thread_idle_timeout
-                                );
+                                ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   /// Destroy a threadpool.
-  void destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                           );
+  void destroy_threadpool (RTCORBA::ThreadpoolId threadpool);
 
   TAO_Thread_Pool *get_threadpool (RTCORBA::ThreadpoolId thread_pool_id);
 
@@ -404,9 +402,7 @@ public:
 
   /// @name Accessors
   // @{
-
   TAO_ORB_Core &orb_core (void) const;
-
   // @}
 
 private:
@@ -431,8 +427,7 @@ private:
                                   CORBA::Boolean allow_request_buffering,
                                   CORBA::ULong max_buffered_requests,
                                   CORBA::ULong max_request_buffer_size,
-                                  ACE_Time_Value const &dynamic_thread_idle_timeout
-                                  );
+                                  ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   RTCORBA::ThreadpoolId
   create_threadpool_helper (TAO_Thread_Pool *thread_pool);
