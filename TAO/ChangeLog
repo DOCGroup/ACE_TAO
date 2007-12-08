@@ -1,3 +1,11 @@
+Sat Dec  8 14:53:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Dynamic_Thread_Pool/run_test.pl:
+          No need to create a logfile on disk
+
+        * tests/Server_Connection_Purging/run_test.pl:
+          Simplified this file
+
 Sat Dec  8 14:35:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/Thread_Pool.cpp:
