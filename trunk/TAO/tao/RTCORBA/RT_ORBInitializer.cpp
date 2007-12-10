@@ -51,13 +51,15 @@ TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
                                               int ace_sched_policy,
                                               long sched_policy,
                                               long scope_policy,
-                                              ACE_Time_Value const &dynamic_thread_idle_timeout)
+                                              TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                                              ACE_Time_Value const &dynamic_thread_time)
   : priority_mapping_type_ (priority_mapping_type),
     network_priority_mapping_type_ (network_priority_mapping_type),
     ace_sched_policy_ (ace_sched_policy),
     sched_policy_ (sched_policy),
     scope_policy_ (scope_policy),
-    dynamic_thread_idle_timeout_ (dynamic_thread_idle_timeout)
+    lifespan_ (lifespan),
+    dynamic_thread_time_ (dynamic_thread_time)
 {
 }
 
@@ -175,7 +177,8 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   CORBA::Object_ptr rt_orb = CORBA::Object::_nil ();
   ACE_NEW_THROW_EX (rt_orb,
                     TAO_RT_ORB (tao_info->orb_core (),
-                    dynamic_thread_idle_timeout_),
+                    lifespan_,
+                    dynamic_thread_time_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,

@@ -21,11 +21,13 @@ ACE_RCSID(RTCORBA,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
-                        ACE_Time_Value const &dynamic_thread_idle_timeout)
+                        TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                        ACE_Time_Value const &dynamic_thread_time)
   : orb_core_ (orb_core),
     mutex_mgr_ (),
     tp_manager_ (0),
-    dynamic_thread_idle_timeout_ (dynamic_thread_idle_timeout)
+    lifespan_ (lifespan),
+    dynamic_thread_time_ (dynamic_thread_time)
 {
   TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager =
     &this->orb_core_->thread_lane_resources_manager ();
@@ -330,8 +332,8 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
                                                allow_request_buffering,
                                                max_buffered_requests,
                                                max_request_buffer_size,
-                                               this->dynamic_thread_idle_timeout_
-                                              );
+                                               this->lifespan_,
+                                               this->dynamic_thread_time_);
 }
 
 RTCORBA::ThreadpoolId
@@ -340,8 +342,7 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                           CORBA::Boolean allow_borrowing,
                                           CORBA::Boolean allow_request_buffering,
                                           CORBA::ULong max_buffered_requests,
-                                          CORBA::ULong max_request_buffer_size
-                                          )
+                                          CORBA::ULong max_request_buffer_size)
 {
   return this->tp_manager_->create_threadpool_with_lanes (stacksize,
                                                           lanes,
@@ -349,8 +350,8 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                                           allow_request_buffering,
                                                           max_buffered_requests,
                                                           max_request_buffer_size,
-                                                          this->dynamic_thread_idle_timeout_
-                                                         );
+                                                          this->lifespan_,
+                                                          this->dynamic_thread_time_);
 }
 
 void
@@ -361,8 +362,7 @@ TAO_RT_ORB::destroy_threadpool (RTCORBA::ThreadpoolId threadpool)
 
 RTCORBA::PriorityModelPolicy_ptr
 TAO_RT_ORB::create_priority_model_policy (RTCORBA::PriorityModel priority_model,
-                                          RTCORBA::Priority server_priority
-                                          )
+                                          RTCORBA::Priority server_priority)
 {
   TAO_PriorityModelPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -423,8 +423,7 @@ TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protoco
 }
 
 RTCORBA::ClientProtocolPolicy_ptr
-TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protocols
-                                           )
+TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protocols)
 {
   TAO_ClientProtocolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
