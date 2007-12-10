@@ -91,6 +91,5 @@ namespace CIAO
   }
 }
 
-#include /**/ "ace/post.h"
 
 #endif /* CIAO_DATA_BASE_EXEC_H */
