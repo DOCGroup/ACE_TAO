@@ -1,3 +1,13 @@
+Mon Dec 10 17:58:22 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/FMUF/FMUF_Controller_exec_export.h:
+
+        Checking in the export file.
+
+        * RACE.mwc:
+
+        Modified the project file to include RACE controllers.
+
 Mon Dec 10 17:49:35 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Conductor/Conductor.mpc:
