@@ -1,0 +1,39 @@
+#ifndef RACE_FMUF_CONTROLLER_IDL
+#define RACE_FMUF_CONTROLLER_IDL
+
+/**
+ * @file FMUF_Controller.idl
+ *
+ * @brief FMUF_Controller Component of RACE.
+ *
+ * This file declares a FMUF_Controller of the RACE framework.
+ *
+ * @author Nishanth Shankaran <nshankar@nospam.com>
+ */
+
+#include <Components.idl>
+#include "RACE/Controller/Base/Controller_Base.idl"
+
+
+module CIAO
+{
+  module RACE
+  {
+    module Controller
+    {
+      /**
+       * @component FMUF_Controller
+       * @brief The FMUF_Controller component of RACE.
+       */
+      component FMUF_Controller : Controller_Base
+      {
+      };
+
+      home FMUF_Controller_Home manages FMUF_Controller
+      {
+      };
+    };
+  };
+};
+
+#endif /* RACE_FMUF_CONTROLLER_IDL */

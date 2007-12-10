@@ -1,0 +1,75 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Controller_Base"
+
+project(Controller_Base_idl_gen) : taoidldefaults, anytypecode {
+  avoids += ace_for_tao
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=CONTROLLER_BASE_STUB_Export \
+              -Wb,stub_export_include=Controller_Base_stub_export.h \
+              -Wb,skel_export_macro=CONTROLLER_BASE_SVNT_Export \
+              -Wb,skel_export_include=Controller_Base_svnt_export.h
+
+  IDL_Files {
+    Controller_Base.idl
+  }
+}
+
+project(Controller_Base_stub) : ciao_client_dnc {
+  avoids += ace_for_tao
+  after += Controller_Base_idl_gen \
+           OpString_stub \
+           RACE_common_stub \
+           TM_Proxy_stub
+  libs  += OpString_stub \
+           RACE_common_stub \
+           TM_Proxy_Component_stub
+
+  sharedname = Controller_Base_stub
+  dynamicflags   = CONTROLLER_BASE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Controller_BaseC.cpp
+  }
+
+  Header_Files {
+    Controller_BaseC.h
+    Controller_Base_stub_export.h
+  }
+
+  Inline_Files {
+    Controller_BaseC.inl
+  }
+}
+
+project(Controller_Base_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
+  after      +=  Controller_Base_stub
+  sharedname  = Controller_Base_svnt
+  libs       += Controller_Base_stub \
+                OpString_stub \
+                RACE_common_stub \
+                TM_Proxy_Component_stub
+
+  dynamicflags = CONTROLLER_BASE_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Controller_BaseS.cpp
+  }
+
+  Header_Files {
+    Controller_BaseS.h
+  }
+
+  Inline_Files {
+    Controller_BaseS.inl
+  }
+}
