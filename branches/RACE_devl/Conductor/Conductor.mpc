@@ -38,7 +38,8 @@ project(Conductor_stub) : ciao_client_dnc {
   after += Conductor_idl_gen \
            OpString_stub \
            Data_Base_stub \
-           DAnCE_Output_Adapter_stub
+           DAnCE_Output_Adapter_stub \
+           RACE_common_stub
 
   libs += OpString_stub \
           Data_Base_Component_stub\

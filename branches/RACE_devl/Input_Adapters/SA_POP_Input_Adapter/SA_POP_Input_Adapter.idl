@@ -1,3 +1,4 @@
+// $Id$
 #ifndef RACE_SA_POP_INPUT_ADAPTER_IDL
 #define RACE_SA_POP_INPUT_ADAPTER_IDL
 
@@ -6,8 +7,6 @@
 #include "RACE/common/RACE_common.idl"
 
 #include "RACE/Conductor/Conductor.idl"
-//#include "RACE/Data_Base/Data_Base.idl"
-//#include "RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl"
 
 module CIAO
 {

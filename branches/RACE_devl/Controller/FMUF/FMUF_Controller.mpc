@@ -1,0 +1,127 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl FMUF_Controller"
+
+project(FMUF_Controller_idl_gen) : taoidldefaults, anytypecode {
+  after += Controller_Base_idl_gen
+  avoids += ace_for_tao
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=FMUF_CONTROLLER_STUB_Export \
+              -Wb,stub_export_include=FMUF_Controller_stub_export.h \
+              -Wb,skel_export_macro=FMUF_CONTROLLER_SVNT_Export \
+              -Wb,skel_export_include=FMUF_Controller_svnt_export.h
+
+  IDL_Files {
+    FMUF_Controller.idl
+  }
+}
+
+project(FMUF_Controller_cidl_gen) : ciaocidldefaults, taoidldefaults {
+  avoids += ace_for_tao
+  custom_only = 1
+  cidlflags += --svnt-export-macro FMUF_CONTROLLER_SVNT_Export \
+               --svnt-export-include FMUF_Controller_svnt_export.h
+
+  idlflags += -Wb,export_macro=FMUF_CONTROLLER_EXEC_Export \
+              -Wb,export_include=FMUF_Controller_exec_export.h \
+              -SS
+
+  CIDL_Files {
+    FMUF_Controller.cidl
+  }
+
+  IDL_Files {
+    FMUF_ControllerE.idl
+  }
+}
+
+project(FMUF_Controller_stub) : ciao_client_dnc {
+  avoids += ace_for_tao
+  after += FMUF_Controller_idl_gen \
+           Controller_Base_stub
+
+  libs  += Controller_Base_stub
+
+  sharedname = FMUF_Controller_stub
+  dynamicflags   = FMUF_CONTROLLER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FMUF_ControllerC.cpp
+  }
+
+  Header_Files {
+    FMUF_ControllerC.h
+    FMUF_Controller_stub_export.h
+  }
+
+  Inline_Files {
+    FMUF_ControllerC.inl
+  }
+}
+
+project(FMUF_Controller_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
+  after   += FMUF_Controller_cidl_gen FMUF_Controller_stub
+  sharedname = FMUF_Controller_exec
+  libs += FMUF_Controller_stub \
+          Controller_Base_stub
+
+  dynamicflags   = FMUF_CONTROLLER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FMUF_ControllerEC.cpp
+    FMUF_Controller_exec.cpp
+  }
+
+  Header_Files {
+    FMUF_ControllerEC.h
+    FMUF_Controller_exec.h
+    FMUF_Controller_exec_export.h
+  }
+
+  Inline_Files {
+    FMUF_ControllerEC.inl
+  }
+}
+
+
+project(FMUF_Controller_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
+  after      +=  FMUF_Controller_exec
+  sharedname  = FMUF_Controller_svnt
+  libs       += FMUF_Controller_exec \
+                FMUF_Controller_stub \
+                Controller_Base_svnt \
+                Controller_Base_stub \
+                OpString_stub \
+                RACE_common_stub \
+                TM_Proxy_Component_stub
+
+  dynamicflags = FMUF_CONTROLLER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FMUF_ControllerS.cpp
+    FMUF_Controller_svnt.cpp
+  }
+
+  Header_Files {
+    FMUF_ControllerS.h
+    FMUF_Controller_svnt.h
+    FMUF_Controller_svnt_export.h
+  }
+
+  Inline_Files {
+    FMUF_ControllerS.inl
+  }
+}

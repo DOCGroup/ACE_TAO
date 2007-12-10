@@ -1,3 +1,28 @@
+Mon Dec 10 17:49:35 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Conductor/Conductor.mpc:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
+
+        Made cosmetic changes.
+
+        * Controller/Base/Controller_Base.idl:
+        * Controller/Base/Controller_Base.mpc:
+        * Controller/Base/Controller_Base_stub_export.h:
+        * Controller/Base/Controller_Base_svnt_export.h:
+
+        Checking in the initial interface of the base controller.
+
+        * Controller/FMUF/FMUF_Controller.cidl:
+        * Controller/FMUF/FMUF_Controller.idl:
+        * Controller/FMUF/FMUF_Controller.mpc:
+        * Controller/FMUF/FMUF_Controller_exec.h:
+        * Controller/FMUF/FMUF_Controller_exec.cpp:
+        * Controller/FMUF/FMUF_Controller_stub_export.h:
+        * Controller/FMUF/FMUF_Controller_svnt_export.h:
+
+        Checking in the initial implementation of the FMUF controller.
+
+
 Wed Dec  5 22:10:47 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/Base/Controller.idl:
