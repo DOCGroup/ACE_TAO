@@ -65,6 +65,8 @@ TAO_Thread_Pool_Threads::svc (void)
       // No point propagating this exception.  Print it out.
       ACE_ERROR ((LM_ERROR,
                   "orb->run() raised exception for thread %t\n"));
+
+      ex._tao_print_exception ("");
     }
 
   return 0;
@@ -862,8 +864,7 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes_i (CORBA::ULong stacksize,
                                     ),
                     CORBA::NO_MEMORY ());
 
-  return this->create_threadpool_helper (thread_pool
-                                        );
+  return this->create_threadpool_helper (thread_pool);
 }
 
 RTCORBA::ThreadpoolId
