@@ -1,3 +1,9 @@
+Mon Dec 10 18:49:28 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Data_Base/Data_Base_exec.h:
+
+        Fixed VC8 compiler warnings.
+
 Mon Dec 10 17:58:22 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/FMUF/FMUF_Controller_exec_export.h:
