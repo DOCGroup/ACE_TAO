@@ -5,5 +5,8 @@ workspace {
   Data_Base
   utils
   Conductor
+  Controller/Base
+  Controller/FMUF
+  Controller/EUCON
   Tester
 }
