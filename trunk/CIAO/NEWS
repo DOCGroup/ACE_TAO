@@ -74,6 +74,16 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.1 and CIAO-0.6.2
 ======================================================
 
+. Removed 24 unnecessary builds from the CIAO_TAO_DAnCE.mwc
+  MPC workspace file
+  
+. Changes to the generate_component_mpc.pl Perl scrip, CIDL compiler
+  generation of empty executor implementation classes, and existing
+  tests and examples to make servant dependency on executor the
+  default, instead of vice versa as previously
+  
+. Made the processing of IDL and CIDL files into separate build steps
+  for tests, examples, and for DAnCE's TargetManager
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.6 and CIAO-0.6.1
 ====================================================
