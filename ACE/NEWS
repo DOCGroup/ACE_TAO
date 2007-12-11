@@ -61,6 +61,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 
 . Use bool in much more interfaces where this is possible
 
+. Added support for Debian Etch
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6 and ACE-5.6.1
 ====================================================
 
