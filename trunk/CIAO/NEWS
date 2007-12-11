@@ -71,6 +71,10 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.6.1 and CIAO-0.6.2
+======================================================
+
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.6 and CIAO-0.6.1
 ====================================================
 
