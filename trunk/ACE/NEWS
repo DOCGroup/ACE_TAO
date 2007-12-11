@@ -22,6 +22,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 
 . Added support for MacOS 10.5
 
+. Support for MacOS 10.4 is now deprecated. 
+
 . Added support for OpenSuSE 10.3
 
 . Added support for RedHat 5.1
