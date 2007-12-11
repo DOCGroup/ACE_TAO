@@ -1,7 +1,19 @@
-Tue Dec 11 20:31:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+Tue Dec 11 20:37:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/TransportCurrent/lib/Current_Test_Lib.mpc:
+        * tests/TransportCurrent/Framework/run_test.pl:
+        * tests/TransportCurrent/IIOP/run_test.pl:
+          Install the test lib in the regular ACE_ROOT/lib directory, that
+          simplifies the perl scripts and fixes the test failures on
+          VxWorks
+
+        * tests/LongDouble/run_test.pl:
+          Improved for VxWorks
+
+ Tue Dec 11 20:31:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_declarator.cpp:
-        
+
           Fixed bug in checking for illegal use of undefined forward
           declared structs and unions. Thanks to Simon Massey
           <Simon dot Massey at prismtech dot com> for reporting the
@@ -10,7 +22,6 @@ Tue Dec 11 20:31:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Dec 11 20:28:06 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
-        
           Added my checkins since the last beta.
 
 Tue Dec 11 20:13:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
