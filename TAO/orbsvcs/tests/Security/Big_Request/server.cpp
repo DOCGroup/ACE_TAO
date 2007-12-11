@@ -4,6 +4,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
+#include "ace/Task.h"
 
 ACE_RCSID (Big_Request,
            server,
@@ -12,10 +13,36 @@ ACE_RCSID (Big_Request,
 const char *ior_output_file = 0;
 const char *cert_file = "cacert.pem";
 
+class OrbTask : public ACE_Task_Base
+{
+public:
+  OrbTask(const CORBA::ORB_ptr orb)
+      : orb_(CORBA::ORB::_duplicate(orb))
+  {
+  }
+
+  virtual int svc()
+  {
+      try
+        {
+          this->orb_->run ();
+        }
+      catch (const CORBA::Exception&)
+        {
+        }
+      return 0;
+  }
+
+private:
+  CORBA::ORB_var orb_;
+};
+
+static int n_threads = 1;
+
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:t:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -24,11 +51,15 @@ parse_args (int argc, char *argv[])
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
+      case 't':
+        n_threads = ACE_OS::atoi(get_opts.opt_arg());
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
                            "-o <iorfile>"
+                           "-t <thread count>"
                            "\n",
                            argv [0]),
                           -1);
@@ -86,7 +117,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      orb->run ();
+      OrbTask task(orb.in());
+
+      if (task.activate (THR_NEW_LWP | THR_JOINABLE,
+                           n_threads) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot activate threads\n"),
+                          1);
+      task.wait();
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n"
