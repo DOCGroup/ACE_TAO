@@ -14,10 +14,10 @@ unlink $iorfile;
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o $baseiorfile -t 10 -l 100000");
+    $SV = new PerlACE::ProcessVX ("server", "-o $baseiorfile -l 100000");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile -t 10 0l 100000");
+    $SV = new PerlACE::Process ("server", "-o $iorfile -l 100000");
 }
 $CL = new PerlACE::Process ("client", " -r file://$iorfile");
 
@@ -37,7 +37,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (60);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
