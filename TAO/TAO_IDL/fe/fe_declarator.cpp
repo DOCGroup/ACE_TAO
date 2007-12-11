@@ -90,11 +90,22 @@ FE_Declarator::FE_Declarator (UTL_ScopedName *n,
 AST_Type *
 FE_Declarator::compose (AST_Decl *d)
 {
-  AST_Decl::NodeType nt = d->node_type ();
+  AST_Type *ct = AST_Type::narrow_from_decl (d);
 
-  if (nt == AST_Decl::NT_struct_fwd || nt == AST_Decl::NT_union_fwd)
+  if (ct == 0)
     {
-      if (! AST_Type::narrow_from_decl (d)->is_defined ())
+      idl_global->err ()->not_a_type (d);
+      return 0;
+    }
+
+  AST_Decl::NodeType nt = d->node_type ();
+  
+  if (nt == AST_Decl::NT_struct_fwd
+      || nt == AST_Decl::NT_union_fwd
+      || nt == AST_Decl::NT_struct
+      || nt == AST_Decl::NT_union)
+    {
+      if (! ct->is_defined ())
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_ADD,
                                       d);
@@ -103,16 +114,7 @@ FE_Declarator::compose (AST_Decl *d)
         }
     }
 
-  AST_Array  *arr = 0;
-  AST_Type *ct = 0;
-
-  ct = AST_Type::narrow_from_decl (d);
-
-  if (ct == 0)
-    {
-      idl_global->err ()->not_a_type (d);
-      return 0;
-    }
+  AST_Array *arr = 0;
 
   // All uses of forward declared types must
   // not have a different prefix from the place of declaration.
