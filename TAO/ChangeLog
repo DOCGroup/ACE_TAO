@@ -1,3 +1,15 @@
+Tue Dec 11 20:13:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Two_Objects/client.cpp:
+        * tests/Two_Objects/run_test.pl:
+        * tests/Two_Objects/Second_i.cpp:
+        * tests/Two_Objects/server.cpp:
+        * tests/Two_Objects/worker.cpp:
+        * tests/Two_Objects/worker.h:
+          Let the client shutdown the server instead of having a fixed time
+          to run the ORB. This fixes the failing of this test on VxWorks
+          and slower systems.
+
 Tue Dec 11 18:55:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
