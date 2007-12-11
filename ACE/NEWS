@@ -63,6 +63,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 
 . Added support for Debian Etch
 
+. Fixed ACE CDR LongDouble support on VxWorks 6.x
+
+. Added Microsoft Visual Studio 2008 project files to the release packages
+
+. Fixed a few bugs in the ACE_Vector template
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6 and ACE-5.6.1
 ====================================================
 
