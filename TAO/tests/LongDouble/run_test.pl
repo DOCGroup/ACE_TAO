@@ -16,12 +16,12 @@ foreach $i (@ARGV) {
         $debug_level = '10';
     } 
 }
-
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorfilebase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o $iorfilebase");
 }
 else {
     $SV = new PerlACE::Process ("server", "-ORBdebuglevel $debug_level -o $iorfile");
@@ -49,7 +49,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
