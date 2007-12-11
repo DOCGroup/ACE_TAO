@@ -1,3 +1,17 @@
+Tue Dec 11 18:55:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+          Layout change
+
+        * orbsvcs/tests/Security/Big_Request/client.cpp:
+          No need to pass in an empty ORB name
+
+        * orbsvcs/tests/Security/Big_Request/server.cpp:
+          Added -t argument to specify the number of threads used in the
+          server. We observed that when using multiple threads the performance
+          of SSLIOP drops with a factor of about 20 times. With this
+          change we can retest this performance drop on all platforms
+
 Mon Dec 10 08:13:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_ORB.cpp:
