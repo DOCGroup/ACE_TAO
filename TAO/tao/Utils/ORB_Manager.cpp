@@ -254,6 +254,10 @@ TAO_ORB_Manager::~TAO_ORB_Manager (void)
         {
           this->poa_->destroy (1,1);
         }
+      if (!CORBA::is_nil (this->orb_.in ()))
+        {
+          this->orb_->destroy ();
+        }
     }
   catch (const ::CORBA::Exception&)
     {
