@@ -85,6 +85,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.6.1 and CIAO-0.6.2
 . Made the processing of IDL and CIDL files into separate build steps
   for tests, examples, and for DAnCE's TargetManager
 
+. Added additional tests for CIAOEvents Integration, which executes 
+  several scenarios for components using Real-time EventChannels 
+  as event mechanism.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.6 and CIAO-0.6.1
 ====================================================
 
