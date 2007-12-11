@@ -84,6 +84,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Client : length of returned data is %d\n",
                      reply_seq->length() ));
 
+      second->shutdown ();
+
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)

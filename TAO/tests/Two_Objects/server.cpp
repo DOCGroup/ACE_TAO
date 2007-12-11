@@ -10,8 +10,6 @@ ACE_RCSID(Test, server, "$Id$")
 int msglen = 100; //default length of reply message is 100 bytes
 int nthreads = 2;
 const char *ior_output_file = "test.ior";
-int orb_timeout = 30; //default timeout for ORB is 30 sec
-
 
 int
 parse_args (int argc, char *argv[])
@@ -34,10 +32,6 @@ parse_args (int argc, char *argv[])
         nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
-      case 't':
-        orb_timeout = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -45,7 +39,6 @@ parse_args (int argc, char *argv[])
                            "-o <iorfile>"
                            " -n <#of  threads>"
                            " -l <size of message in bytes>"
-                           " -t <timeout for ORB in secs>"
                            "\n",
                            argv [0]),
                           -1);
@@ -85,11 +78,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       ACE_DEBUG(( LM_DEBUG, "ior file = %s\t#threads = %d\t"
-                  "msglen = %d\tORB timeout = %d sec\n",
-                  ior_output_file, nthreads, msglen, orb_timeout ));
+                  "msglen = %d\n",
+                  ior_output_file, nthreads, msglen));
 
       // Create the factory servant
-      Object_Factory_i *factory_impl;
+      Object_Factory_i *factory_impl = 0;
       ACE_NEW_THROW_EX (factory_impl,
                         Object_Factory_i (orb.in (), msglen),
                         CORBA::NO_MEMORY ());
@@ -125,7 +118,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Instantiate the specified # of worker threads
-      Worker worker (orb.in (), orb_timeout);
+      Worker worker (orb.in ());
 
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
