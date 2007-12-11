@@ -8,11 +8,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorfilebase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -ORBdotteddecimaladdresses 1");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase -ORBdotteddecimaladdresses 1");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile -ORBdotteddecimaladdresses 1");
@@ -44,7 +45,6 @@ $client1 = $CL1->Spawn ();
 $client2 = $CL2->Spawn ();
 $client3 = $CL3->Spawn ();
 
-
 sleep (30) if ($client1 == 0 && $client2 == 0 && $client3 == 0);
 
 $SV->WaitKill (3) unless $sv1 < 0;
@@ -71,7 +71,5 @@ $n = $n + 1;
 
 unlink $iorfile;
 }
-
-
 
 exit $status;
