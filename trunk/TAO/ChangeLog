@@ -1,3 +1,11 @@
+Tue Dec 11 21:11:16 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+        
+          Added bug fix in
+          
+          Tue Dec 11 20:31:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Tue Dec 11 20:37:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/TransportCurrent/lib/Current_Test_Lib.mpc:
