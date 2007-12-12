@@ -20,7 +20,7 @@ unlink $file2;
 unlink $file3;
 
 if (PerlACE::is_vxworks_test()) {
-$SV1 = new PerlACE::ProcessVX ("server", "-o $file1base -c 1 -n 1");
+$SV1 = new PerlACE::ProcessVX ("server", "-o $file1base -c 1 -n 1 -s 1");
 }
 else {
 $SV1 = new PerlACE::Process ("server", "-o $file1 -c 1 -n 1 -s 1");
