@@ -3,7 +3,7 @@
 
 #include <Components.idl>
 #include "RACE/common/OpString.idl"
-#include "RACE/common/Time.idl"
+#include "RACE/common/Utils.idl"
 
 module CIAO
 {
