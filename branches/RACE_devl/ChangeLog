@@ -1,3 +1,13 @@
+Wed Dec 12 20:11:50 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Data_Base/Data_Base.idl:
+
+        Fixed compilation errors.
+
+        * Controller/EUCON/EUCON.mpc:
+
+          Removed this file.
+
 Wed Dec 12 19:36:09 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/Base/Controller_Base.idl:
