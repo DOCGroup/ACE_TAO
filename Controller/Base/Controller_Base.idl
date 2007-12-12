@@ -25,6 +25,9 @@ module CIAO
 
       interface Admin
       {
+        /// Initialize the controller.
+        boolean init_controller ();
+
         /// Start the controller.
         boolean start_controller ();
 

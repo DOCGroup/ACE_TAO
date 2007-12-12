@@ -49,11 +49,7 @@ namespace CIAO
             throw (UnknownID);
 
           private:
-          /// Object reference of the data base admin object.
-          //          Data_Base::Admin_var DB_;
-
-          /// Object reference of the DAnCE output adapter admin object.
-          //          DAnCE_OA::Admin_var OA_;
+          /// Object reference of the conductor object.
           Conductor::Admin_var conductor_;
 
           Logger &logger_;

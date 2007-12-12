@@ -18,8 +18,6 @@ namespace CIAO
       /// Logical name.
       std::string label;
 
-	  //Change rate fields to double, Yingming Chen. 3.23.2007
-
       /// Minimum execution rate (in Hz).
       double min_rate;
 

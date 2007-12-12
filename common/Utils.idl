@@ -1,5 +1,5 @@
-#ifndef TIME_WINDOW_IDL
-#define TIME_WINDOW_IDL
+#ifndef RACE_UTILS_IDL
+#define RACE_UTILS_IDL
 
 module CIAO
 {
@@ -26,7 +26,18 @@ module CIAO
         TimeValue latest;
       };
 
+      struct ExecutionRate
+      {
+        /// Minimum execution rate (in Hz).
+        double minRate;
+
+        /// Maximum execution rate (in Hz).
+        double maxRate;
+
+        /// Current execution rate (in Hz).
+        double currRate;
+      };
   };
 };
 
-#endif /* TIME_WINDOW_IDL */
+#endif /* RACE_UTILS_IDL */
