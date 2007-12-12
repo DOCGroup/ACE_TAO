@@ -982,7 +982,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::is_suspended_i (ACE_HANDLE handl
 
   return this->suspend_set_.rd_mask_.is_set (handle) ||
          this->suspend_set_.wr_mask_.is_set (handle) ||
-         this->suspend_set_.ex_mask_.is_set (handle)    ;
+         this->suspend_set_.ex_mask_.is_set (handle);
 
 }
 
@@ -1073,7 +1073,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
 {
   ACE_TRACE ("ACE_Select_Reactor_T::wait_for_multiple_events");
   ACE_Time_Value timer_buf (0);
-  ACE_Time_Value *this_timeout;
+  ACE_Time_Value *this_timeout = 0;
 
   int number_of_active_handles = this->any_ready (dispatch_set);
 

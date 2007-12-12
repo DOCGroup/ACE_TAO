@@ -263,7 +263,7 @@ public:
    * but does not actually dispatch the event handlers.  By default,
    * don't block while checking this, i.e., "poll".
    */
-  int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero);
+  int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero);
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
