@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "Big_Reply_i.h"
 #include "ace/OS_NS_stdio.h"
-
+#include "ace/Task.h"
 
 ACE_RCSID(Big_Reply, server, "$Id$")
 
@@ -12,10 +12,36 @@ const char *ior_output_file = "test.ior";
 // We can change this value if wanted..
 const CORBA::ULong data_size = 4000000;
 
+class OrbTask : public ACE_Task_Base
+{
+public:
+  OrbTask(const CORBA::ORB_ptr orb)
+      : orb_(CORBA::ORB::_duplicate(orb))
+  {
+  }
+
+  virtual int svc()
+  {
+      try
+        {
+          this->orb_->run ();
+        }
+      catch (const CORBA::Exception&)
+        {
+        }
+      return 0;
+  }
+
+private:
+  CORBA::ORB_var orb_;
+};
+
+static int n_threads = 1;
+
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:s:");
+  ACE_Get_Opt get_opts (argc, argv, "o:s:t:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -23,6 +49,9 @@ parse_args (int argc, char *argv[])
       {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
+        break;
+      case 't':
+        n_threads = ACE_OS::atoi(get_opts.opt_arg());
         break;
       case '?':
       default:
@@ -99,7 +128,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      orb->run ();
+      OrbTask task(orb.in());
+
+      if (task.activate (THR_NEW_LWP | THR_JOINABLE,
+                           n_threads) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot activate threads\n"),
+                          1);
+      task.wait();
+
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1, 1);
