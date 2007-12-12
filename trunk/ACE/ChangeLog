@@ -1,3 +1,33 @@
+Wed Dec 12 13:15:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_socket.inl:
+          When ACE_HAS_SOCK_BUF_SIZE_MAX is defined, don't use
+          SSIZE_MAX but ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE as value
+          to check. That way we can limit the size of the packets
+          on OpenVMS.
+
+        * ace/config-openvms.h:
+          Added ACE_HAS_SOCK_BUF_SIZE_MAX and set
+          ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE to a value of 64k. This should
+          increase the test results on OpenVMS to a better level
+
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+          Set ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE to SSIZE_MAX to match
+          the old behaviour.
+
+        * ace/Reactor.h:
+          Layout change
+
+        * ace/Select_Reactor_T.cpp:
+          Layout change, initialise pointer to 0
+
+        * ace/SSL/SSL_SOCK_Stream.inl:
+          Const changes
+
+        * ace/TP_Reactor.cpp:
+          Layout change
+
 Fri Dec  7 18:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_main.h:

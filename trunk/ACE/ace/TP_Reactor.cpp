@@ -246,8 +246,7 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   if (event_count > 0)
     {
       // Handle socket events
-      result = this->handle_socket_events (event_count,
-                                           guard);
+      result = this->handle_socket_events (event_count, guard);
     }
 
   if (event_count != 0
