@@ -3,7 +3,7 @@
 
 #include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 #include "QoS.idl"
-#include "Time.idl"
+#include "Utils.idl"
 #include "Goal.idl"
 #include "RACE_common.idl"
 
@@ -24,6 +24,9 @@ module CIAO
         // Node to which instance is deployed.
         string node;
 
+        // Reference to the node on which this instance is deployed on-
+        // index into the Deployment::Nodes sequence in the Domain structure.
+        unsigned long nodeRef;
 
         // Reference to the concrete implementation used by this instance -
         // index into the Deployment::MonolithicDeploymentDescriptions of
@@ -47,6 +50,9 @@ module CIAO
 
         // Expected time range of instance finish.
         TimeWindow endWindow;
+
+        // Expected range of execution times (BCET/WCET).
+        TimeWindow executionTime;
       };
 
       typedef sequence <InstanceDescription> InstanceDescriptions;
@@ -117,9 +123,16 @@ module CIAO
         // Ordering links (between task instances) in opstring.
         OrderLinkDescriptions orderLink;
 
-        // Priority of this opstring.
+        // Importance of this opstring.
         // (Should be derived from expected utility of goal).
+        long importance;
+
+        // Priority of this opstring.
+        // (OS process/thread priority).
         long priority;
+
+        // E-2-E deadline of the opstring.
+        long deadline;
 
         // QoS requirements.
         QoSSpecifications QoSRequirement;
@@ -129,6 +142,9 @@ module CIAO
 
         // Expected time range for end of opstring execution.
         TimeWindow endWindow;
+
+        // Opstring execution rate.
+        ExecutionRate rate;
 
         // Properties for deployment of opstring.
         ::Deployment::Properties infoProperty;

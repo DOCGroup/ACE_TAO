@@ -1,17 +1,17 @@
 // $Id$
 
-#ifndef CIAO_FMUF_CONTROLLER_EXEC_H
-#define CIAO_FMUF_CONTROLLER_EXEC_H
+#ifndef CIAO_EUCON_CONTROLLER_EXEC_H
+#define CIAO_EUCON_CONTROLLER_EXEC_H
 
 #include /**/ "ace/pre.h"
 
-#include "FMUF_ControllerEC.h"
+#include "EUCON_ControllerEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "FMUF_Controller_exec_export.h"
+#include "EUCON_Controller_exec_export.h"
 #include "tao/LocalObject.h"
 #include "Controller.h"
 
@@ -21,16 +21,16 @@ namespace CIAO
   {
     namespace Controller
     {
-      namespace CIDL_FMUF_Controller_Impl
+      namespace CIDL_EUCON_Controller_Impl
       {
-        class FMUF_CONTROLLER_EXEC_Export FMUF_Controller_exec_i
-          : public virtual FMUF_Controller_Exec,
+        class EUCON_CONTROLLER_EXEC_Export EUCON_Controller_exec_i
+          : public virtual EUCON_Controller_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:
-          FMUF_Controller_exec_i (void);
+          EUCON_Controller_exec_i (void);
 
-          virtual ~FMUF_Controller_exec_i (void);
+          virtual ~EUCON_Controller_exec_i (void);
 
           // Supported or inherited operations.
 
@@ -68,28 +68,28 @@ namespace CIAO
 
           private:
 
-          ::CIAO::RACE::Controller::CCM_FMUF_Controller_Context_var context_;
+          ::CIAO::RACE::Controller::CCM_EUCON_Controller_Context_var context_;
 
           Controller *controller_;
 
           ::CORBA::Long sampling_period_;
         };
 
-        class FMUF_CONTROLLER_EXEC_Export FMUF_Controller_Home_exec_i
-          : public virtual FMUF_Controller_Home_Exec,
+        class EUCON_CONTROLLER_EXEC_Export EUCON_Controller_Home_exec_i
+          : public virtual EUCON_Controller_Home_Exec,
             public virtual TAO_Local_RefCounted_Object
         {
           public:
-          FMUF_Controller_Home_exec_i (void);
-          virtual ~FMUF_Controller_Home_exec_i (void);
+          EUCON_Controller_Home_exec_i (void);
+          virtual ~EUCON_Controller_Home_exec_i (void);
 
           virtual ::Components::EnterpriseComponent_ptr
           create ();
         };
 
-        extern "C" FMUF_CONTROLLER_EXEC_Export
+        extern "C" EUCON_CONTROLLER_EXEC_Export
         ::Components::HomeExecutorBase_ptr
-        create_CIAO_RACE_Controller_FMUF_Controller_Home_Impl (void);
+        create_CIAO_RACE_Controller_EUCON_Controller_Home_Impl (void);
       }
     }
   }
@@ -97,4 +97,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_FMUF_CONTROLLER_EXEC_H */
+#endif /* CIAO_EUCON_CONTROLLER_EXEC_H */

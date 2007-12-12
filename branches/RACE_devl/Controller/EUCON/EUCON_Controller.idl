@@ -1,0 +1,39 @@
+#ifndef RACE_EUCON_CONTROLLER_IDL
+#define RACE_EUCON_CONTROLLER_IDL
+
+/**
+ * @file EUCON_Controller.idl
+ *
+ * @brief EUCON_Controller Component of RACE.
+ *
+ * This file declares a EUCON_Controller of the RACE framework.
+ *
+ * @author Nishanth Shankaran <nshankar@nospam.com>
+ */
+
+#include <Components.idl>
+#include "RACE/Controller/Base/Controller_Base.idl"
+
+
+module CIAO
+{
+  module RACE
+  {
+    module Controller
+    {
+      /**
+       * @component EUCON_Controller
+       * @brief The EUCON_Controller component of RACE.
+       */
+      component EUCON_Controller : Controller_Base
+      {
+      };
+
+      home EUCON_Controller_Home manages EUCON_Controller
+      {
+      };
+    };
+  };
+};
+
+#endif /* RACE_EUCON_CONTROLLER_IDL */

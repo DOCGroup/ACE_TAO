@@ -16,7 +16,6 @@ namespace CIAO
           try
             {
               this->conductor_ = context->get_connection_conductor ();
-              //             this->OA_ = context->get_connection_OA ();
             }
           catch (CORBA::Exception &ex)
             {

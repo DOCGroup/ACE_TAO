@@ -21,7 +21,8 @@ namespace CIAO
         Admin_exec_i::add_string
         (const ::CIAO::RACE::OperationalString & opstring)
         {
-          int ret = this->db_executor_->data_base_.bind (opstring.ID.in (), opstring);
+          int ret = this->db_executor_->data_base_.bind
+                    (opstring.ID.in (), opstring);
 
           if (ret == 0)
             {
@@ -30,7 +31,8 @@ namespace CIAO
           else if (ret == 1)
             {
               ACE_ERROR ((LM_ERROR, "RACE::Data_Base::Admin_exec_i: "
-                          "A string with UUID: %s has been already registered! "
+                          "A string with UUID: %s has "
+                          "been already registered!"
                           "No modifications to the data base is being made.\n",
                           opstring.ID.in ()));
             }
@@ -47,15 +49,17 @@ namespace CIAO
             {
               UnknownID ex;
               ex.ID = ID;
-              ex.reason = "The given ID has not been registered with the data base.";
+              ex.reason = "The given ID has not been registered "
+                          "with the data base.";
               throw ex;
             }
 
         }
 
         void
-        Admin_exec_i::modify_string (const ::CIAO::RACE::OperationalString &opstring,
-                                     const char * ID)
+        Admin_exec_i::modify_string
+        (const ::CIAO::RACE::OperationalString &opstring,
+         const char * ID)
           throw (UnknownID)
         {
           int ret = this->db_executor_->data_base_.find (ID);
@@ -67,7 +71,8 @@ namespace CIAO
             {
               UnknownID ex;
               ex.ID = ID;
-              ex.reason = "The given ID has not been registered with the data base.";
+              ex.reason = "The given ID has not been registered "
+                          "with the data base.";
               throw ex;
             }
         }
@@ -89,7 +94,8 @@ namespace CIAO
             {
               UnknownID ex;
               ex.ID = ID;
-              ex.reason = "The given ID has not been registered with the data base.";
+              ex.reason = "The given ID has not been registered "
+                          "with the data base.";
               throw ex;
             }
         }
@@ -111,7 +117,8 @@ namespace CIAO
             {
               UnknownID ex;
               ex.ID = ID;
-              ex.reason = "The given ID has not been registered with the data base.";
+              ex.reason = "The given ID has not been registered "
+                          "with the data base.";
               throw ex;
             }
         }

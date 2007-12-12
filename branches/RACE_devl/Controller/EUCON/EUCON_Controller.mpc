@@ -1,0 +1,175 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl EUCON_Controller"
+
+project(EUCON_Controller_idl_gen) : taoidldefaults, anytypecode {
+  avoids += ace_for_tao
+  after += Controller_Base_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=EUCON_CONTROLLER_STUB_Export \
+              -Wb,stub_export_include=EUCON_Controller_stub_export.h \
+              -Wb,skel_export_macro=EUCON_CONTROLLER_SVNT_Export \
+              -Wb,skel_export_include=EUCON_Controller_svnt_export.h
+
+  IDL_Files {
+    EUCON_Controller.idl
+  }
+}
+
+project(EUCON_Controller_cidl_gen) : ciaocidldefaults, taoidldefaults {
+  avoids += ace_for_tao
+  custom_only = 1
+  cidlflags += --svnt-export-macro EUCON_CONTROLLER_SVNT_Export \
+               --svnt-export-include EUCON_Controller_svnt_export.h
+
+  idlflags += -Wb,export_macro=EUCON_CONTROLLER_EXEC_Export \
+              -Wb,export_include=EUCON_Controller_exec_export.h \
+              -SS
+
+  CIDL_Files {
+    EUCON_Controller.cidl
+  }
+
+  IDL_Files {
+    EUCON_ControllerE.idl
+  }
+}
+
+project(EUCON_Controller_stub) : ciao_client_dnc {
+  avoids += ace_for_tao
+  after += EUCON_Controller_idl_gen \
+           Controller_Base_stub
+  libs  += Controller_Base_stub
+
+  sharedname = EUCON_Controller_stub
+  dynamicflags   = EUCON_CONTROLLER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    EUCON_ControllerC.cpp
+  }
+
+  Header_Files {
+    EUCON_ControllerC.h
+    EUCON_Controller_stub_export.h
+  }
+
+  Inline_Files {
+    EUCON_ControllerC.inl
+  }
+}
+
+project(EUCON_Controller_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
+  after   += EUCON_Controller_cidl_gen EUCON_Controller_stub
+  sharedname = EUCON_Controller_exec
+  includes += "C:/Program Files/MATLAB/R2007b/extern/include"
+  includes += $(CIAO_ROOT)/RACE/extern/MATLAB/include
+  libpaths += "C:/Program Files/MATLAB/R2007b/extern/lib/win32/microsoft"
+  libpaths += $(CIAO_ROOT)/RACE/extern/MATLAB/lib
+  lit_libs += liblsq mclmcr
+  libs += EUCON_Controller_stub \
+          Controller_Base_stub \
+          RACE_utils \
+          OpString_stub \
+          RACE_common_stub \
+          TM_Proxy_Component_stub
+
+  includes += $(CIAO_ROOT)/RACE/utils
+
+  dynamicflags   = EUCON_CONTROLLER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    EUCON_ControllerEC.cpp
+    EUCON_Controller_exec.cpp
+    Operations_exec.cpp
+    Admin_exec.cpp
+    Controller.cpp
+    MPC_Controller.cpp
+  }
+
+  Header_Files {
+    EUCON_ControllerEC.h
+    EUCON_Controller_exec.h
+    EUCON_Controller_exec_export.h
+    Operations_exec.h
+    Admin_exec.h
+    Controller.h
+    constant.h
+    Domain.h
+    liblsq.h
+    MPC_Controller.h
+    Task.h
+    Subtask.h
+
+  }
+
+  Inline_Files {
+    EUCON_ControllerEC.inl
+  }
+}
+
+
+project(EUCON_Controller_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
+  after      +=  EUCON_Controller_exec
+  sharedname  = EUCON_Controller_svnt
+  libs       += EUCON_Controller_exec \
+                EUCON_Controller_stub \
+                Controller_Base_svnt \
+                Controller_Base_stub \
+                OpString_stub \
+                RACE_common_stub \
+                TM_Proxy_Component_stub
+
+
+  dynamicflags = EUCON_CONTROLLER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    EUCON_ControllerS.cpp
+    EUCON_Controller_svnt.cpp
+  }
+
+  Header_Files {
+    EUCON_ControllerS.h
+    EUCON_Controller_svnt.h
+    EUCON_Controller_svnt_export.h
+  }
+
+  Inline_Files {
+    EUCON_ControllerS.inl
+  }
+}
+
+project(EUCON_Tester) {
+  includes += "C:/Program Files/MATLAB/R2007b/extern/include"
+  includes += $(CIAO_ROOT)/RACE/extern/MATLAB/include
+  libpaths += "C:/Program Files/MATLAB/R2007b/extern/lib/win32/microsoft"
+  libpaths += $(CIAO_ROOT)/RACE/extern/MATLAB/lib
+  lit_libs += liblsq mclmcr
+  exename = EUCON
+
+  Header_Files {
+    constant.h
+    Domain.h
+    liblsq.h
+    MPC_Controller.h
+    Task.h
+    Subtask.h
+  }
+
+  Source_Files {
+    e2esimu.cpp
+    MPC_Controller.cpp
+  }
+}

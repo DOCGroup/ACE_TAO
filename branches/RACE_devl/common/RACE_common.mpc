@@ -39,27 +39,27 @@ IDL_Files {
     OpString.idl
     Goal.idl
     QoS.idl
-    Time.idl
+    Utils.idl
   }
 
   Header_Files {
     OpStringC.h
     GoalC.h
     QoSC.h
-    TimeC.h
+    UtilsC.h
   }
 
   Inline_Files {
     OpStringC.inl
     GoalC.inl
     QoSC.inl
-    TimeC.inl
+    UtilsC.inl
   }
 
   Source_Files {
     OpStringC.cpp
     GoalC.cpp
     QoSC.cpp
-    TimeC.cpp
+    UtilsC.cpp
   }
 }

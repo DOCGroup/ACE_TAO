@@ -1,3 +1,55 @@
+Wed Dec 12 19:36:09 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/Base/Controller_Base.idl:
+
+        Added a method to initialize the controller.
+
+        * Controller/EUCON/Admin_exec.h:
+        * Controller/EUCON/Admin_exec.cpp:
+        * Controller/EUCON/Controller.h:
+        * Controller/EUCON/Controller.cpp:
+        * Controller/EUCON/EUCON_Controller.cidl:
+        * Controller/EUCON/EUCON_Controller.idl:
+        * Controller/EUCON/EUCON_Controller.mpc:
+        * Controller/EUCON/EUCON_Controller_exec.h:
+        * Controller/EUCON/EUCON_Controller_exec.cpp:
+        * Controller/EUCON/EUCON_Controller_exec_export.h:
+        * Controller/EUCON/EUCON_Controller_stub_export.h:
+        * Controller/EUCON/EUCON_Controller_svnt_export.h:
+        * Controller/EUCON/Operations_exec.h:
+        * Controller/EUCON/Operations_exec.cpp:
+        * Controller/EUCON/Subtask.h:
+        * Controller/EUCON/Task.h:
+
+        Wrapped the EUCON controller in a component.
+
+        * Controller/FMUF/FMUF_Controller.mpc:
+        * Controller/FMUF/FMUF_Controller_exec.h:
+        * Controller/FMUF/FMUF_Controller_exec.cpp:
+
+        Added features to the FMUF controller.
+
+        * Data_Base/Admin_exec.cpp:
+
+        Made cosmetic changes.
+
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
+
+        Made cosmetic changes.
+
+        * common/Goal.idl:
+        * common/OpString.idl:
+        * common/RACE_common.mpc:
+        * common/Utils.idl:
+
+        Reorganized these IDL files.
+
+        * common/Time.idl:
+
+          Removed this file.
+
 Mon Dec 10 18:49:28 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Data_Base/Data_Base_exec.h:

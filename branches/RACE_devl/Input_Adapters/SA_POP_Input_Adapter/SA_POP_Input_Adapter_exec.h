@@ -23,10 +23,6 @@ namespace CIAO
 
           virtual ~SA_POP_IA_Component_exec_i (void);
 
-//           virtual ::CORBA::Boolean deploy_plan (const char * uri);
-
-//           virtual ::CORBA::Boolean redeploy_plan (const char * uri);
-
           virtual ::CIAO::RACE::SA_POP_IA::CCM_Admin_ptr
           get_admin ();
 

@@ -15,10 +15,10 @@ namespace CIAO
     struct time_val
     {
       /// Seconds.
-      size_t sec;
+      int sec;
 
       /// Microseconds.
-      size_t usec;
+      int usec;
     };
 
 
