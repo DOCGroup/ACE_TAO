@@ -16,6 +16,9 @@ $DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
 $irepo_running = 0;
 $IREPO = 0;
 
+$publisher_id = "Publisher 1";
+if (@ARGV[0]) {$publisher_id = @ARGV[0];}
+
 # DCPS info repository parameters
 $svcconf = "../descriptors/tcp.conf";
 $dcpsconf = "../descriptors/dds_tcp_conf.ini";
@@ -60,7 +63,7 @@ $irepo_running = 1;
 # invoke publisher
 print "Invoking DDS publisher\n";
 $pub = new PerlACE::Process ("../Publisher/publisher",
-			    "-ORBSvcConf $svcconf -DCPSConfigFile $dcpsconf");
+			    "-ORBSvcConf $svcconf -DCPSConfigFile $dcpsconf -i \"$publisher_id\"");
 $pub->Spawn ();
 
 print "\n*************************************************************************\n";
