@@ -141,12 +141,12 @@ public:
   ssize_t sendv (const iovec iov[],
                  int n) const;
 
-  /// Send an <iovec> of size @a n to the file.  Will block until all
+  /// Send an @c iovec of size @a n to the file.  Will block until all
   /// bytes are sent or an error occurs.
   ssize_t sendv_n (const iovec iov[],
                    int n) const;
 
-  /// Receive an <iovec> of size @a n to the file.
+  /// Receive an @c iovec of size @a n to the file.
   ssize_t recvv_n (iovec iov[],
                    int n) const;
 

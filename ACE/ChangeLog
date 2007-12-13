@@ -1,3 +1,16 @@
+Thu Dec 13 16:19:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_socket.h:
+          Set ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE to SSIZE_MAX when it is not
+          set yet
+
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+          No need to set ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE anymore
+
+        * ace/Pipe.h:
+          Doxygen changes
+
 Wed Dec 12 13:15:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_socket.inl:

@@ -229,7 +229,6 @@ typedef enum CMA_T_SCHED_POLICY {
 
 // Platform limits the maximum socket message size.
 #define ACE_HAS_SOCK_BUF_SIZE_MAX
-#define ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE SSIZE_MAX
 
 // hrtime_t is a basic type that doesn't require ACE_U64_TO_U32 conversion
 #define ACE_HRTIME_T_IS_BASIC_TYPE
