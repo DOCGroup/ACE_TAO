@@ -12,6 +12,7 @@
 #include <dds/DCPS/PublisherImpl.h>
 #include <dds/DCPS/transport/framework/TheTransportFactory.h>
 #include <ace/streams.h>
+#include <ace/Get_Opt.h>
 
 // constant used by this publisher for transport; 
 // must match transport id in config file
@@ -22,6 +23,33 @@ DDS::DomainId_t DDSTOPIC_DOMAIN_ID = 467;
 const char* DDSTOPIC_TYPE = "DDSTopic";
 const char* DDSTEST_TOPIC = "DDSTopic Data";
 
+static char* option_id = "Publisher Message";
+
+static int parse_args(int argc, char* argv[])
+{
+  ACE_Get_Opt args (argc, argv, "i:");
+
+  int c = 0;
+  while ((c = args ()) != EOF)
+    {
+      switch (c)
+	{
+	case 'i' :
+	  {
+	    option_id = args.opt_arg ();
+	    break;
+	  }
+	default:
+	  {
+	    std::cerr << "usage: publisher [-i topic_id]" << std::endl;
+	    return 1;
+	  }
+	}
+    }
+
+  return 0;
+}
+
 int main (int argc, char *argv[]) {
 
   DDS::DomainParticipantFactory_var dpf = DDS::DomainParticipantFactory::_nil();
@@ -31,6 +59,11 @@ int main (int argc, char *argv[]) {
     // Initialize, and create a DomainParticipant
 
     dpf = TheParticipantFactoryWithArgs(argc, argv);
+
+    if (parse_args (argc, argv) != 0)
+      {
+	return 1;
+      }
 
     participant = dpf->create_participant(
       DDSTOPIC_DOMAIN_ID,
@@ -135,10 +168,10 @@ int main (int argc, char *argv[]) {
     while(true)
       {
 	DDSTopic ddstopic;
-	ddstopic.id = CORBA::string_dup("Asynch Message");
+	ddstopic.id = CORBA::string_dup(option_id);
 	ddstopic.sequence_number = i++;
 	
-	cout << "Writing DDSTopic [" << i << "]" << endl;
+	cout << "Writing DDSTopic [" << i << ", " << ddstopic.id << "]" << endl;
 
 	DDS::ReturnCode_t ret = ddstopic_dw->write(ddstopic, topic_handle);
 	if (ret != DDS::RETCODE_OK) {
