@@ -8,12 +8,19 @@
 #include "Config_Handlers/DnC_Dump.h"
 #include "Client_Task.h"
 
+#include <vector>
+#include <string>
+
+using namespace std;
+
 namespace CIAO
 {
   namespace TM_Daemon
   {
     const char *ior_output_file = "daemon.ior";
-    const char *deploymentplan_file = 0;
+//    const char *deploymentplan_file = 0;
+    vector<string> plans;
+    string aplan;
     const char *domain_file = 0;
     const char *mapping_file = 0;
     size_t threads = 2;
@@ -37,9 +44,10 @@ namespace CIAO
               break;
 
             case 'k':
-              deploymentplan_file = get_opts.opt_arg ();
-              ACE_DEBUG ((LM_DEBUG, "deploymentplan_file is %s.\n", deploymentplan_file));
-
+//              deploymentplan_file = get_opts.opt_arg ();
+//              ACE_DEBUG ((LM_DEBUG, "deploymentplan_file is %s.\n", deploymentplan_file));
+	      aplan = get_opts.opt_arg ();	
+	      plans.push_back (aplan);
               break;
 
             case 'd':
@@ -64,7 +72,7 @@ namespace CIAO
                                 -1);
           }
 
-      if (deploymentplan_file != 0 && domain_file != 0 && mapping_file != 0)
+      if (plans.size () != 0 && domain_file != 0 && mapping_file != 0)
         {
           // Indicates sucessful parsing of the command line
           return 0;
@@ -100,7 +108,8 @@ namespace CIAO
           Daemon_impl *daemon_impl = 0;
           ACE_NEW_RETURN (daemon_impl,
                           Daemon_impl (orb,
-                                       deploymentplan_file,
+                   //                    deploymentplan_file,
+				       plans,
                                        mapping_file,
                                        domain_file,
                                        root_poa,

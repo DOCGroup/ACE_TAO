@@ -6,6 +6,7 @@
 #include "ciao/CIAO_common.h"
 #include <orbsvcs/CosNamingC.h>
 #include "utils/Exceptions.h"
+#include "Config_Handlers/XML_File_Intf.h"
 
 
 namespace CIAO
@@ -13,12 +14,13 @@ namespace CIAO
     DomainDataManager::DomainDataManager (CORBA::ORB_ptr orb,
                                           const char *dat_file,
                                           const char *domain_file,
-                                          ::Deployment::DeploymentPlan& plan)
-
+//                                          ::Deployment::DeploymentPlan& plan)
+	    				  vector<string> plans)
       : orb_ (CORBA::ORB::_duplicate (orb)),
         deployment_config_ (orb_.in()),
-        delay_ (utils::Timer ("delay")),
-        plan_ (plan),
+        //        delay_ (utils::Timer ("delay")),
+//        plan_ (plan),
+	plans_ (plans),
         dat_file_ (dat_file),
         condition_ (condition_mutex_)
 
@@ -29,11 +31,13 @@ namespace CIAO
       initial_domain_ = current_domain_;
 
       // set up the profile timers for each node
+      /*
       for (CORBA::ULong i = 0; i < this->current_domain_.node.length (); ++i)
         {
           this->node_timers_ [this->current_domain_.node[i].name.in ()] =
             new utils::Timer (this->current_domain_.node[i].name.in ());
         }
+      */
       if (this->call_all_node_managers () != 0)
         {
 
@@ -149,7 +153,7 @@ namespace CIAO
     DomainDataManager::update_dynamic (const ::Deployment::Domain &domainSubset)
     {
       this->node_info_map_ [domainSubset.node[0].name.in ()] = domainSubset.node[0];
-      this->node_timers_[domainSubset.node[0].name.in ()]->stop ();
+      //      this->node_timers_[domainSubset.node[0].name.in ()]->stop ();
 
       // Acquire the mutex before making any modifications as multiple
       // threads might try to do this simultaneously.
@@ -161,10 +165,10 @@ namespace CIAO
       if (temp_count == 0)
         {
           // all responses have come in .... now timestamp the event
-          this->delay_.stop ();
-          this->delay_.dump ();
+          //  this->delay_.stop ();
+          //          this->delay_.dump ();
           this->condition_.signal ();
-
+          /*
           for (std::map<std::string, utils::Timer*>::iterator itr = this->node_timers_.begin ();
                itr != this->node_timers_.end ();
                itr++)
@@ -172,6 +176,7 @@ namespace CIAO
               (*itr).second->dump ();
 
             }
+          */
         }
 
       //       CORBA::Double load;
@@ -268,13 +273,16 @@ namespace CIAO
   (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler)
     {
       this->response_count_ = this->current_domain_.node.length ();
-      this->delay_.start ();
+      //      this->delay_.start ();
 
       for (CORBA::ULong i = 0; i < this->node_monitors_.size (); ++i)
         {
 
-          this->node_timers_[this->current_domain_.node[i].name.in ()]->start ();
+          //          this->node_timers_[this->current_domain_.node[i].name.in ()]->start ();
           this->node_monitors_[i]->sendc_get_resource_data (handler);
+
+          // for synchronous calls 
+//          this->node_monitors_[i]->get_resource_data ();
         }
       this->condition_.wait ();
       return this->node_info_map_;
@@ -286,12 +294,24 @@ namespace CIAO
     CIAO::DomainDataManager::
     start_monitor_qos (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler)
     {
+
+      Onl_Monitor::Plan_Seq plans;
+      plans.length (plans_.size ());
+
+      // form the plans and send them over
+      for (int i =0;i < plans_.size ();i++)      
+      {
+        CIAO::Config_Handlers::XML_File_Intf intf (plans_[i].c_str ());
+        ::Deployment::DeploymentPlan_var plan = intf.get_plan ();
+	plans[i] = plan;
+      }      
+      
+
       for (CORBA::ULong i = 0; i < this->node_monitors_.size (); ++i)
         {
           this->node_monitors_[i]->sendc_monitor_app_QoS (handler,
-                                                          this->plan_);
+                                                          plans);
         }
       return 0;
-
     }
   }
