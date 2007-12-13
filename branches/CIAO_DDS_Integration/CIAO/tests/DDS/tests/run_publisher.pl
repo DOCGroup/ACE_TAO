@@ -16,8 +16,8 @@ $DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
 $irepo_running = 0;
 $IREPO = 0;
 
-$publisher_id = "Publisher 1";
-if (@ARGV[0]) {$publisher_id = @ARGV[0];}
+$publisher_count = 1;
+if (@ARGV[0]) {$publisher_count = @ARGV[0];}
 
 # DCPS info repository parameters
 $svcconf = "../descriptors/tcp.conf";
@@ -60,11 +60,15 @@ if (PerlACE::waitforfile_timed ($repoior, $PerlACE::wait_interval_for_process_cr
 
 $irepo_running = 1;
 
-# invoke publisher
-print "Invoking DDS publisher\n";
-$pub = new PerlACE::Process ("../Publisher/publisher",
-			    "-ORBSvcConf $svcconf -DCPSConfigFile $dcpsconf -i \"$publisher_id\"");
-$pub->Spawn ();
+# invoke publishers
+$pubs; # list of publisher processes
+for $pub_num ( 1 .. $publisher_count) {
+    print "Invoking DDS publisher $pub_num\n";
+    $pubs[$pub_num] = new PerlACE::Process ("../Publisher/publisher",
+				 "-ORBSvcConf $svcconf -DCPSConfigFile " .
+					   "$dcpsconf -i \"Publisher No $pub_num\"");
+    $pubs[$pub_num]->Spawn ();
+}
 
 print "\n*************************************************************************\n";
 print "* Press any key to shutdown the test ...\n";
@@ -72,9 +76,11 @@ print "*************************************************************************
 $confirmation = <STDIN>;
 
 # Invoke executor - stop the application -.
-print "killing the publisher\n";
-$pub->Kill ();
-$pub->TimedWait (1);
+for $pub_num ( 1 .. $publisher_count) {
+    print "killing the publisher $pub_num\n";
+    $pubs[$pub_num]->Kill ();
+    $pubs[$pub_num]->TimedWait (1);
+}
 
 kill_open_processes ();
 delete_output_files ();
