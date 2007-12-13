@@ -213,6 +213,10 @@ extern "C"
 #  define ACE_PROTOCOL_FAMILY_INET PF_INET
 #endif /* ACE_HAS_IPV6 */
 
+#if !defined (ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE)
+#define ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE SSIZE_MAX
+#endif /* ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE */
+
 #if defined (ACE_HAS_SOCKLEN_T)
 #  if defined (__hpux)
   /*
