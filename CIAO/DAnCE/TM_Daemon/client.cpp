@@ -81,12 +81,15 @@ namespace CIAO
           utils::Timer latency (output);
           for (size_t i = 0; i < iterations; ++i)
             {
-              ACE_DEBUG ((LM_DEBUG, "%d Invoking get_snapshot ... ", i));
-              latency.start ();
-              ::Deployment::Domain_var domain = daemon->get_snapshot ();
-              latency.stop ();
-              latency.dump ();
-              ACE_DEBUG ((LM_DEBUG, "done!\n"));
+              for (size_t j = 0; j < 100; ++j)
+                {
+//                  ACE_DEBUG ((LM_DEBUG, "%d Invoking get_snapshot ... ", i));
+                  latency.start ();
+                  ::Deployment::Domain_var domain = daemon->get_snapshot ();
+                  latency.stop ();
+                  latency.dump ();
+//                  ACE_DEBUG ((LM_DEBUG, "done!\n"));
+                }
               sleep (duration);
             }
           orb->destroy ();

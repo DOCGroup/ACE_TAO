@@ -9,7 +9,8 @@ namespace CIAO
 
 
     Daemon_impl::Daemon_impl (CORBA::ORB_ptr orb,
-                              const char *deployment_plan,
+//                              const char *deployment_plan,
+			      vector<string> deployment_plans,
                               const char *mapping,
                               const char *domain,
                               ::PortableServer::POA_ptr poa,
@@ -20,12 +21,10 @@ namespace CIAO
     {
 
       //      ACE_DEBUG ((LM_DEBUG, "Making call to intf \n"));
-      CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan);
-      ::Deployment::DeploymentPlan_var plan = intf.get_plan ();
       //      ACE_DEBUG ((LM_DEBUG, "After call to get plan \n"));
 
       // Now create the manager.
-      this->manager_ = new DomainDataManager (orb, mapping, domain, plan);
+      this->manager_ = new DomainDataManager (orb, mapping, domain, deployment_plans);
 
       // Create the AMI handler providing it with the object reference of
       // the manager.

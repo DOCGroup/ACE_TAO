@@ -28,6 +28,8 @@
 
 using namespace ::CIAO::TM_Daemon;
 
+using namespace std;
+
 /**
  * @namespace CIAO
  *
@@ -60,7 +62,9 @@ namespace CIAO
       DomainDataManager (CORBA::ORB_ptr orb,
                          const char *dat_file,
                          const char *domain_file,
-                         ::Deployment::DeploymentPlan& plan);
+//                         ::Deployment::DeploymentPlan& plan);
+			vector<string> plans);
+
 
       ~DomainDataManager ();
 
@@ -141,20 +145,23 @@ namespace CIAO
       int response_count_;
 
       /// Stores the time taken to obtain the snapshot of the entire domain.
-      utils::Timer delay_;
+      //      utils::Timer delay_;
 
       /// Exception occured
       bool ex_occur_;
 
       /// Timers for each node to measure data collection delay latency for
       /// each node
-      std::map<std::string, utils::Timer*> node_timers_;
+      //      std::map<std::string, utils::Timer*> node_timers_;
 
       /// Map used to store "dynamic information" of each node.
       std::map<std::string, ::Deployment::Node> node_info_map_;
 
       /// Deployment plan.
       ::Deployment::DeploymentPlan plan_;
+
+      // name of the plans 
+      vector<string> plans_;
 
       /// the Data file which contains the Node Manager references
       std::string dat_file_;
