@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 #ifndef UTILITY_H
 #define UTILITY_H
 
@@ -13,6 +13,9 @@
 #include "TM_Proxy_exec_export.h"
 #include "tao/LocalObject.h"
 
+#include "TM_DaemonC.h"
+#include "Logger.h"
+
 namespace CIAO
 {
   namespace RACE
@@ -26,9 +29,16 @@ namespace CIAO
             public virtual TAO_Local_RefCounted_Object
         {
           public:
-          Utility_exec_i (void);
+          Utility_exec_i (::CIAO::TM_Daemon::Daemon_ptr TM, Logger &logger);
 
           virtual ~Utility_exec_i (void);
+
+          virtual ::Deployment::Domain* getInitialDomain ();
+
+        private:
+          ::CIAO::TM_Daemon::Daemon_var TM_Daemon_;
+
+          Logger &logger_;
 
         };
       }

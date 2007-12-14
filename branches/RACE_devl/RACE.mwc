@@ -9,4 +9,5 @@ workspace {
   Controller/FMUF
   Controller/EUCON
   Tester
+  TM_Proxy
 }

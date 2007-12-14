@@ -3,6 +3,7 @@
 
 #include "Controller.h"
 #include <string>
+#include <sstream>
 
 namespace CIAO
 {
@@ -20,6 +21,9 @@ namespace CIAO
         initialized_ (false),
         logger_ ("EUCON_Controller.log")
       {
+        std::stringstream msg;
+        msg << "Successfully created the controller object.\n";                     
+        this->logger_.log (msg.str());
       }
 
       Controller::~Controller ()
@@ -30,27 +34,34 @@ namespace CIAO
       {
         if (!this->initialized_)
         {
-          std::string msg = "Trying to initializing the controller.\n";                     
+          std::stringstream msg;
+          msg << "Trying to initializing the controller.\n";                     
           try
           {
             this->system_monitor_ = 
               ::CIAO::RACE::TM_Proxy::SystemSnapshot::_duplicate (
               this->context_->get_connection_system_monitor());
 
-            // @@ NOTE: We need to initialize the domain by obtaining the system domain info from the 
-            // Target Manager before we return.
+            this->system_utility_ = 
+              ::CIAO::RACE::TM_Proxy::Utility::_duplicate (
+              this->context_->get_connection_system_utils ());
+
+            // Now we populate info regarding the initial domain.
+            ::Deployment::Domain_var domain = this->system_utility_->getInitialDomain ();
+            //this->populate_domain_info (domain.in());
 
             this->initialized_ = true;
-            msg += "Successfully initialized the controller.\n";                          
+            msg << "Successfully initialized the controller.\n";                          
           }
           catch (::CORBA::Exception &ex)
           {
-            msg += "Exception caught in Controller::"
-              "init_controller.\nUnable to get the system_monitor object reference!";
-            msg += ex._info ().c_str();            
+            msg << "Exception caught in Controller::"
+                <<  "init_controller.\nUnable to get the system_monitor object reference!"
+                << ex._info ().c_str();            
+
             this->initialized_ = false;
           }
-          this->logger_.log (msg);
+          this->logger_.log (msg.str());
         }
 
         return this->initialized_;
@@ -59,7 +70,8 @@ namespace CIAO
       bool
         Controller::start_controller ()
       {
-        std::string msg = "Trying to start the controller.\n";
+        std::stringstream msg;
+        msg << "Trying to start the controller.\n";
         if (!this->active_)
         {
           if (this->initialized_)
@@ -70,33 +82,34 @@ namespace CIAO
             this->controller_.init (this->tasks_);
             if (this->activate () != 0)
             {
-              msg += "Could not initialize the periodic task!\n";
+              msg << "Could not initialize the periodic task!\n";
               this->active_ = false;              
             }
-            msg += "Successfully started the controller.\n";              
+            msg << "Successfully started the controller.\n";              
             this->active_ = true;
           }
           else
           {
-            msg += "Oops! The controller can not be started until is has been initialized!\n";
+            msg << "Oops! The controller can not be started until is has been initialized!\n";
           }
         }
         else
         {
-          msg += "Oops! The controller has already running!... Nothing more to do... so bailing out\n";
+          msg << "Oops! The controller has already running!... Nothing more to do... so bailing out\n";
         }
-        this->logger_.log (msg);
+        this->logger_.log (msg.str());
         return this->active_;
       }
 
       bool
         Controller::stop_controller ()
       {
-        std::string msg = "Trying to stop the controller.\n";            
+        std::stringstream msg;
+        msg << "Trying to stop the controller.... ";            
         this->active_ = false;
         ACE_Thread_Manager::instance ()->wait ();
-        msg += "Successfully stoped the controller.\n";              
-        this->logger_.log (msg);
+        msg << "done!\n";              
+        this->logger_.log (msg.str());
         return true;
       }
 
@@ -107,7 +120,8 @@ namespace CIAO
         const ::CIAO::RACE::OperationalString & opstring,
         ::CORBA::String_out ID)
       {
-        std::string msg = "Trying to register string\n";
+        std::stringstream msg;
+        msg << "Trying to register string... ";
         if (!this->active_)
         {
           ID = ::CORBA::string_dup (opstring.ID.in ());
@@ -133,16 +147,14 @@ namespace CIAO
           }
 
           this->tasks_.push_back (task);
-          msg += "Successfully registered string with ID:";
-          msg += opstring.ID.in ();
-          msg += "\n";
+          msg << "done!\nSuccessfully registered string with ID:" << opstring.ID.in () << "\n";
         }
         else
         {
-          msg += "Can not register an opsting while the controller is active.\n";
-          msg += "First deactive the controller, and then try registering a string.\n";
+          msg << "\nCan not register an opsting while the controller is active.\n";
+          msg << "First deactive the controller, and then try registering a string.\n";
         }
-        this->logger_.log (msg);
+        this->logger_.log (msg.str());
         return true;
       }
 
@@ -151,7 +163,8 @@ namespace CIAO
       {
         while (this->active_)
         {
-          // @@ Before the invoke the controller, we need to obtain the current system snapshot.
+          ::Deployment::Domain_var domain = this->system_monitor_->getSnapshot ();
+            this->populate_domain_info (domain.in());          
           this->tasks_ = 
             this->controller_.control_period(this->domain_,this->tasks_);
           //ACE_OS::sleep (this->interval_);
@@ -159,6 +172,77 @@ namespace CIAO
         return 0;
       }
 
+      bool
+        Controller::populate_domain_info 
+        (const ::Deployment::Domain& domain)
+      {
+        std::stringstream msg; 
+        msg << "Entering populate_doamin_info.\n";
+        ::CIAO::RACE::Domain temp_domain;
+
+        // First obtain the nodes in the domain.
+        ::Deployment::Nodes nodes = domain.node;
+        ::CIAO::RACE::Node node;
+
+        // For each node in the system domain, populate RACE::Domain info.
+        msg << "Obtaining resource info for each node in the domain.\n";
+
+        for (::CORBA::ULong i = 0; i < nodes.length(); ++i)
+        {
+          msg << "Workin on node: " << nodes [i].name.in() << "...\n";
+          node.UUID = nodes [i].name.in();
+          node.label = nodes [i].label.in();          
+
+          // Obtian info regarding every resource in the domain.
+          ::CIAO::RACE::Resource resource;
+          ::Deployment::Resources resources = nodes [i].resource;
+          for (::CORBA::ULong j = 0; i < resources.length(); ++j)
+          {
+            msg << "Trying to obtain curr utilization and utilization set points for resource"
+                << resources [j].name.in() << "\n";
+
+            resource.UUID = resources [j].name.in();
+
+            // We need to parse the properties associated 
+            // with individual resources to obtain its current 
+            // resource utilization and utilization setpoint.
+
+            ::Deployment::SatisfierProperties props = resources [j].property;
+            for (::CORBA::ULong k = 0; k < props.length(); ++k)
+            {          
+              if (ACE_OS::strcmp (props [k].name.in (), "Setpoint") == 0)
+              {
+                CORBA::Any value = props [k].value;
+                CORBA::TypeCode_var tc = value.type ();
+                if (tc->kind () == CORBA::tk_double)
+                {
+                  value >>= resource.set_point;
+                  msg << "Obtained set point! Value is: " << resource.set_point << "\n";
+                }
+              }
+              else if (ACE_OS::strcmp (props [k].name.in (), "Current") == 0)
+              {
+                CORBA::Any value = props [k].value;
+                CORBA::TypeCode_var tc = value.type ();
+                if (tc->kind () == CORBA::tk_double)
+                {
+                  value >>= resource.util;                           
+                  msg << "Obtained curr util! Value is: " << resource.util << "\n";
+                }
+              }
+            }
+            // Now that we have populated the resource info, we add it to the node.
+            node.resources.push_back (resource);
+            msg << "Added resource: " << resources [j].name.in() << "to the node structure.\n";
+          }
+          // Now that the node structure has been fully populated, we add it to the doamin.
+          temp_domain.nodes.push_back (node);
+          msg << "Added node: " << nodes [i].name.in() << "to the doamin structure.\n";
+        }
+        this->logger_.log (msg.str());
+        this->domain_ = temp_domain;
+        return true;
+      } 
     }
   }
 }

@@ -22,8 +22,8 @@ namespace CIAO
          ::CORBA::Boolean
         Admin_exec_i::init_controller ()
         {
-          return false;
-          //return this->controller_->init_controller ();
+          //return false;
+          return this->controller_->init_controller ();
 
         }
 

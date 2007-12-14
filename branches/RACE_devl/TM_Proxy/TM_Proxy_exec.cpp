@@ -3,7 +3,10 @@
 #include "ciao/CIAO_common.h"
 #include "tao/ORB_Core.h"
 #include "orbsvcs/CosNamingC.h"
-#include <string>
+#include <sstream>
+#include "Utility.h"
+#include "SystemSnapshot.h"
+
 
 namespace CIAO
 {
@@ -40,14 +43,14 @@ namespace CIAO
           TM_Proxy_Component_exec_i::get_snapshot ()
         {
           // Your code here.
-          return ::CIAO::RACE::TM_Proxy::CCM_SystemSnapshot::_nil ();
+          return new SystemSnapshot_exec_i (this->TM_Daemon_.in (), this->logger_);             
         }
 
         ::CIAO::RACE::TM_Proxy::CCM_Utility_ptr
           TM_Proxy_Component_exec_i::get_utils ()
         {
           // Your code here.
-          return ::CIAO::RACE::TM_Proxy::CCM_Utility::_nil ();
+          return new Utility_exec_i (this->TM_Daemon_.in(), this->logger_);
         }
 
         ::CIAO::RACE::TM_Proxy::CCM_ResourceManager_ptr
@@ -80,8 +83,10 @@ namespace CIAO
         void
           TM_Proxy_Component_exec_i::ciao_postactivate ()
         {
-          std::string msg = "TM_Proxy_Component_exec_i::"
-                            "ciao_postactivate (): ";
+          std::stringstream msg;
+          msg << "TM_Proxy_Component_exec_i::"
+                 "ciao_postactivate (): Trying to obtain "
+                 "the object reference of the TM\n";
           try
           {
             ::CORBA::ORB_ptr orb =
@@ -92,8 +97,8 @@ namespace CIAO
               orb->resolve_initial_references ("NameService");
             if (CORBA::is_nil (naming_obj.in ()))
             {
-              msg += "Unable to resolve the Name Service.";
-              this->logger_.log (msg);
+              msg << "Unable to resolve the Name Service.\n";
+              this->logger_.log (msg.str());
               return;
             }
 
@@ -103,24 +108,23 @@ namespace CIAO
             name.length (1);
             name[0].id = CORBA::string_dup (this->TM_Name_.in ());
             CORBA::Object_var TM = namingContext->resolve (name);
-
+            msg << "Now trying to resolve: " << this->TM_Name_.in () << "from the naming service...";
             this->TM_Daemon_ =
-              ::Deployment::TargetManager::_narrow (TM.in ());
+              ::CIAO::TM_Daemon::Daemon::_narrow (TM.in ());
 
             if (CORBA::is_nil (this->TM_Daemon_.in ()))
             {
-              msg += "Object reference of TM_Daemon is nil!";
-              this->logger_.log (msg);
+              msg << "\nObject reference of TM_Daemon is nil!\n";
+
             }
+            msg << "... done!\nSuccessfully obtained the object reference of the TM\n";
           }
           catch (CORBA::Exception &ex)
           {
-            msg += "Exception caught\n";
-            msg += ex._info ().c_str();
-            msg += "\nUnable to resolve reference to ";
-            msg += this->TM_Name_.in ();
-            this->logger_.log (msg);
+            msg <<  "Exception caught\n" << ex._info ().c_str();
+            msg <<  "\nUnable to resolve reference to " << this->TM_Name_.in () << "\n";
           }
+          this->logger_.log (msg.str());
           return;
         }
 

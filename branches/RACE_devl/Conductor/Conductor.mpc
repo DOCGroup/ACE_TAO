@@ -39,12 +39,14 @@ project(Conductor_stub) : ciao_client_dnc {
            OpString_stub \
            Data_Base_stub \
            DAnCE_Output_Adapter_stub \
-           RACE_common_stub
+           RACE_common_stub \
+           Controller_Base_stub
 
   libs += OpString_stub \
           Data_Base_Component_stub\
           DAnCE_OA_Component_stub \
-          RACE_common_stub
+          RACE_common_stub \
+          Controller_Base_stub
 
   sharedname = Conductor_Component_stub
   dynamicflags   = CONDUCTOR_STUB_BUILD_DLL
@@ -75,7 +77,8 @@ project(Conductor_exec) : ciao_component_dnc, ciao_config_handlers {
            OpString_stub \
            Data_Base_Component_stub \
            DAnCE_OA_Component_stub \
-           RACE_common_stub
+           RACE_common_stub \
+           Controller_Base_stub
 
   includes += $(CIAO_ROOT)/RACE/utils
   dynamicflags   = CONDUCTOR_EXEC_BUILD_DLL
@@ -111,7 +114,8 @@ project(Conductor_svnt) : ciao_servant_dnc {
 	  DAnCE_OA_Component_stub \
 	  RACE_common_stub \
           Conductor_Component_exec \
-          Conductor_Component_stub
+          Conductor_Component_stub \
+          Controller_Base_stub
 
   sharedname  = Conductor_Component_svnt
   dynamicflags = CONDUCTOR_SVNT_BUILD_DLL

@@ -51,6 +51,22 @@
     <artifact>_8CB69919-57AC-4588-A578-89F5DB8D2FFA</artifact>
   </implementation>
 
+  <implementation id="_4806564A-0A28-497C-8F29-ED7A19D802C4">
+    <name>RACE_SA_POP.ComponentImplementations.Controller_BaseImplementation.Controller_BaseMonolithicImpl</name>
+    <source/>
+    <artifact>_E1BDA52D-3089-4C55-A6FB-6F28DE916BD4</artifact>
+    <artifact>_1A4E3CDC-174B-4249-B7F3-DFBA7700F141</artifact>
+    <artifact>_5C7761EC-2536-4D40-99F1-0E963B8822D6</artifact>
+  </implementation>
+
+  <implementation id="_6385717E-5F1C-4378-8C0A-E6C561729EE6">
+    <name>RACE_SA_POP.ComponentImplementations.EUCON_ControllerImplementation.EUCON_ControllerMonolithicImpl</name>
+    <source/>
+    <artifact>_68CD9F41-8460-4EA3-815D-6E9CD006CF93</artifact>
+    <artifact>_33A18B64-F016-4EAF-9666-57D8B0B40359</artifact>
+    <artifact>_D3814401-7A87-40B5-B136-6B9315304BDD</artifact>
+  </implementation>
+
   <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component">
     <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component</name>
     <node>RACE_Node</node>
@@ -152,6 +168,35 @@
     </configProperty>
   </instance>
 
+  <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.EUCON_Controller">
+    <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.EUCON_Controller</name>
+    <node>RACE_Node</node>
+    <source/>
+    <implementation>_6385717E-5F1C-4378-8C0A-E6C561729EE6</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>EUCON_Controller.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>sampling_period</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>10</long>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <connection>
     <name>conductor_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</name>
     <internalEndpoint>
@@ -191,6 +236,62 @@
       <portName>admin</portName>
       <kind>Facet</kind>
       <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.DAnCE_OA_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>controlOperations_operationsRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.EUCON_Controller</name>
+    <internalEndpoint>
+      <portName>controlOperations</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>operations</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.EUCON_Controller</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>controllerAdmin_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.EUCON_Controller</name>
+    <internalEndpoint>
+      <portName>controllerAdmin</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>admin</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.EUCON_Controller</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>system_monitor_snapshotRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.EUCON_ControllerRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.TM_Proxy_Component</name>
+    <internalEndpoint>
+      <portName>system_monitor</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.EUCON_Controller</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>snapshot</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.TM_Proxy_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>system_utils_utilsRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.EUCON_ControllerRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.TM_Proxy_Component</name>
+    <internalEndpoint>
+      <portName>system_utils</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.EUCON_Controller</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>utils</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.TM_Proxy_Component</instance>
     </internalEndpoint>
   </connection>
 
@@ -447,6 +548,92 @@
         </type>
         <value>
           <string>create_CIAO_RACE_Conductor_Conductor_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_E1BDA52D-3089-4C55-A6FB-6F28DE916BD4">
+    <name>RACE_SA_POP.ImplementationArtifacts.Controller_BaseArtifacts.Controller_Base_stub</name>
+    <source/>
+    <node/>
+    <location>Controller_Base_stub</location>
+  </artifact>
+
+  <artifact id="_1A4E3CDC-174B-4249-B7F3-DFBA7700F141">
+    <name>RACE_SA_POP.ImplementationArtifacts.Controller_BaseArtifacts.Controller_Base_svnt</name>
+    <source/>
+    <node/>
+    <location>Controller_Base_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Controller_Controller_BaseHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_5C7761EC-2536-4D40-99F1-0E963B8822D6">
+    <name>RACE_SA_POP.ImplementationArtifacts.Controller_BaseArtifacts.Controller_Base_exec</name>
+    <source/>
+    <node/>
+    <location>Controller_Base_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Controller_Controller_BaseHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_68CD9F41-8460-4EA3-815D-6E9CD006CF93">
+    <name>RACE_SA_POP.ImplementationArtifacts.EUCON_ControllerArtifacts.EUCON_Controller_stub</name>
+    <source/>
+    <node/>
+    <location>EUCON_Controller_stub</location>
+  </artifact>
+
+  <artifact id="_33A18B64-F016-4EAF-9666-57D8B0B40359">
+    <name>RACE_SA_POP.ImplementationArtifacts.EUCON_ControllerArtifacts.EUCON_Controller_svnt</name>
+    <source/>
+    <node/>
+    <location>EUCON_Controller_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Controller_EUCON_Controller_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_D3814401-7A87-40B5-B136-6B9315304BDD">
+    <name>RACE_SA_POP.ImplementationArtifacts.EUCON_ControllerArtifacts.EUCON_Controller_exec</name>
+    <source/>
+    <node/>
+    <location>EUCON_Controller_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Controller_EUCON_Controller_Home_Impl</string>
         </value>
       </value>
     </execParameter>

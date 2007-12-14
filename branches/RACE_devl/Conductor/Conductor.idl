@@ -7,6 +7,7 @@
 
 #include "RACE/Data_Base/Data_Base.idl"
 #include "RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl"
+#include "RACE/Controller/Base/Controller_Base.idl"
 
 module CIAO
 {
@@ -60,6 +61,10 @@ module CIAO
         uses Data_Base::Admin DB;
 
         uses DAnCE_OA::Admin OA;
+
+        uses Controller::Admin controllerAdmin;
+
+        uses Controller::Control_Operations controlOperations;
       };
 
       home Conductor_Component_Home manages Conductor_Component

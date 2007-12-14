@@ -1,3 +1,45 @@
+Fri Dec 14 23:05:11 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Conductor/Conductor.idl:
+        * Conductor/Conductor.mpc:
+        * Conductor/Conductor_exec.cpp:
+
+        Integrated the conductor with the controller.
+
+        * Controller/EUCON/Admin_exec.cpp:
+        * Controller/EUCON/Controller.h:
+        * Controller/EUCON/Controller.cpp:
+
+        Added features to the EUCON controller in order to talk to the
+        TM_Porxy component to obtain system resource utilization.
+
+        * RACE.mwc:
+
+        Included the TM_Proxy component in the project.
+
+        * TM_Proxy/SystemSnapshot.h:
+        * TM_Proxy/SystemSnapshot.cpp:
+        * TM_Proxy/TM_Proxy.idl:
+        * TM_Proxy/TM_Proxy.mpc:
+        * TM_Proxy/TM_Proxy_exec.h:
+        * TM_Proxy/TM_Proxy_exec.cpp:
+        * TM_Proxy/Utility.h:
+        * TM_Proxy/Utility.cpp:
+
+        Integrated the TM_Proxy component and the TM_Daemon. The TM_Proxy
+        successfully forwards requests to the TM_Daemon, thereby acting as
+        a proxy.
+
+        * descriptors/RACE.cdp:
+        * descriptors/run_NS.pl:
+        * descriptors/run_RACE.pl:
+
+        Updated the scripts.
+
+        * utils/Logger.cpp:
+
+        Updated the logger.
+
 Wed Dec 12 20:11:50 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Data_Base/Data_Base.idl:

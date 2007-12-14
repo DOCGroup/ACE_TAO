@@ -5,7 +5,7 @@
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Config_Handlers/Package_Handlers/PCD_Handler.h"
 #include "Config_Handlers/Common.h"
-#include <string>
+#include <sstream>
 
 namespace CIAO
 {
@@ -28,9 +28,8 @@ namespace CIAO
         Conductor_Component_exec_i::deploy_plan (const char * uri)
         {
 
-          std::string msg = "Conductor_Component_exec_i::"
-                            "Entering deploy_plan.";
-          this->logger_.log (msg);
+          std::stringstream msg;
+          msg << "Conductor_Component_exec_i:: Entering deploy_plan.\n";          
           auto_ptr < ::Deployment::DeploymentPlan > dp;
           Config_Handlers::XML_File_Intf xfi (uri);
           dp.reset (xfi.get_plan ());
@@ -38,16 +37,25 @@ namespace CIAO
             {
               DAnCE_OA::Admin_var OA = this->context_->get_connection_OA ();
               OA->deploy_plan (*dp);
-              msg = "Conductor_Component_exec_i::Leaving deploy_plan.";
-              this->logger_.log (msg);
+
+              msg << "Trying to initialize the controller.\n";
+              if (this->context_->get_connection_controllerAdmin()->init_controller())
+              {
+                msg << "Successfully initialized the controller.\n";
+              }
+              else
+              {
+                msg << "Error while initializing the controller.\n";
+              }
+              msg << "Conductor_Component_exec_i::Leaving deploy_plan.";
+              this->logger_.log (msg.str());
               return true;
             }
           catch (CORBA::Exception &ex)
             {
-              msg = "Exception caught::Conductor_Component_exec_i::"
-                    "deploy_plan.";
-              msg += ex._info ().c_str();
-              this->logger_.log (msg);
+              msg << "Exception caught::Conductor_Component_exec_i::deploy_plan.";
+              msg << ex._info ().c_str();
+              this->logger_.log (msg.str());
               return false;
             }
         }

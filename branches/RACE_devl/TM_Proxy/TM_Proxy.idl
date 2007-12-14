@@ -11,7 +11,7 @@
 #define TM_PROXY_IDL
 
 #include "ciao/Components.idl"
-
+#include "DAnCE/Deployment/Deployment_TargetData.idl"
 module CIAO
 {
   module RACE
@@ -19,10 +19,14 @@ module CIAO
     module TM_Proxy
     {
       interface SystemSnapshot
-      {};
+      {
+        ::Deployment::Domain getSnapshot ();
+      };
 
       interface Utility
-      {};
+      {
+        ::Deployment::Domain getInitialDomain ();
+      };
 
       interface ResourceManager
       {};

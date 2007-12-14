@@ -32,7 +32,7 @@ namespace CIAO
 		{
 			if (this->log_file_ != 0)
 			{
-				ACE_OS::fprintf (this->log_file_, "%s\n", msg.c_str());
+				ACE_OS::fprintf (this->log_file_, "%s", msg.c_str());
 				ACE_OS::fflush (this->log_file_);
 			}
 

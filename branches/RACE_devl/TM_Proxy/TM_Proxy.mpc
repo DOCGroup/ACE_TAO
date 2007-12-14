@@ -68,12 +68,18 @@ project(TM_Proxy_svnt) : ciao_servant_dnc {
 }
 
 project(TM_Proxy_exec) : ciao_component_dnc {
-  after   +=  TM_Proxy_svnt
+  after   +=  TM_Proxy_svnt \
+              TM_Daemon_stub
+
   sharedname = TM_Proxy_Component_exec
+
   libs += TM_Proxy_Component_stub \
      	  RACE_utils \
-          TM_Proxy_Component_svnt
- includes += $(CIAO_ROOT)/RACE/utils
+          TM_Proxy_Component_svnt \
+          TM_Daemon_stub
+
+ includes += $(CIAO_ROOT)/RACE/utils \
+             $(CIAO_ROOT)/DAnCE/TM_Daemon
 
   dynamicflags   = TM_PROXY_EXEC_BUILD_DLL
 
