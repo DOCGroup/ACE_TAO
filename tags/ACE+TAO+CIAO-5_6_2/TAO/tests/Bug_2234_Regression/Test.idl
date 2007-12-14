@@ -1,0 +1,45 @@
+// $Id$
+
+module Test
+{
+    struct MyNonVarStruct {
+        long val;
+    };
+
+    struct MyVarStruct {
+        string val;
+    };
+
+    union MyNonVarUnion switch(short) {
+    case 1:
+        long   valLong;
+    case 2:
+        short  valShort;
+    };
+
+    union MyVarUnion switch(short) {
+    case 1:
+        long   valLong;
+    case 2:
+        string valString;
+    };
+
+    typedef sequence< long > MySeqOfLong;
+
+    typedef MySeqOfLong MyArray[2];
+
+    interface Foo
+    {
+       long TestLong( in long a, out long b, inout long c );
+       string TestString( in string a, out string b, inout string c );
+       MyNonVarStruct TestNonVarStruct( in MyNonVarStruct a, out MyNonVarStruct b, inout MyNonVarStruct c );
+       MyVarStruct TestVarStruct( in MyVarStruct a, out MyVarStruct b, inout MyVarStruct c );
+       MyNonVarUnion TestNonVarUnion( in MyNonVarUnion a, out MyNonVarUnion b, inout MyNonVarUnion c );
+       MyVarUnion TestVarUnion( in MyVarUnion a, out MyVarUnion b, inout MyVarUnion c );
+       MySeqOfLong TestSeqOfLong( in MySeqOfLong a, out MySeqOfLong b, inout MySeqOfLong c );
+       any TestAny( in any a, out any b, inout any c );
+       MyArray TestArray( in MyArray a, out MyArray b, inout MyArray c );
+       Object TestObject( in Object a, out Object b, inout Object c);
+       oneway void ShutdownServer();
+    };
+};

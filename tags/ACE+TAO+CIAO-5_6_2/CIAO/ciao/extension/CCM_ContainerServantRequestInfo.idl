@@ -1,0 +1,25 @@
+// $Id$
+
+#if !defined (CCM_CONTAINERSERVANTREQUESTINFO_IDL)
+#define CCM_CONTAINERSERVANTREQUESTINFO_IDL
+
+#include "ciao/CCM_ContainerRequestInfo.idl"
+#include "ciao/CCM_EnterpriseComponent.idl"
+#include "tao/AnyTypeCode/Dynamic.pidl"
+
+module Components
+{
+  module ContainerPortableInterceptor
+  {
+    local interface ContainerServantRequestInfo : ContainerRequestInfo
+    {
+      attribute Dynamic::ParameterList arguments;
+      readonly attribute string operation;
+      attribute any result;
+      attribute Components::EnterpriseComponent target;
+      attribute any the_exception;
+    };
+  };
+};
+
+#endif /* CCM_CONTAINERSERVANTREQUESTINFO_IDL */

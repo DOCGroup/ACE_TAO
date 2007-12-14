@@ -1,0 +1,33 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl) : taoidldefaults, anytypecode {
+  IDL_Files {
+    Quoter.idl
+  }
+  custom_only = 1
+}
+
+project(*client) : orbsvcsexe, portableserver, event, event_skel, naming {
+  after += *idl
+  source_files {
+    client.cpp
+    Stock_Consumer.cpp
+    QuoterC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*server) : orbsvcsexe, portableserver, event, event_skel, naming {
+  after += *idl
+  source_files {
+    server.cpp
+    Stock_Factory_i.cpp
+    Stock_i.cpp
+    QuoterS.cpp
+    QuoterC.cpp
+  }
+  IDL_Files {
+  }
+}

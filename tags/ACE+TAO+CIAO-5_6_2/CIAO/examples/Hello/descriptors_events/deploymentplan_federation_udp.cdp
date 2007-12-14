@@ -1,0 +1,246 @@
+<Deployment:deploymentPlan
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <label>Hello-DeploymentPlan</label>
+  <UUID>Hello_Plan_UUID_0001</UUID>
+  <!-- Could be ZERO  -->
+  <realizes>
+    <label>BasicSP-realizes-cid</label>
+    <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
+    <specificType><!-- @@ What does here? --></specificType>
+    <supportedType>IDL:BasicSP/EC:1.0</supportedType> 
+    <port>
+      <name>read_message</name>
+      <specificType>IDL:Hello/ReadMessage:1.0</specificType>
+      <supportedType>IDL:Hello/ReadMessage:1.0</supportedType>
+      <provider>false</provider>
+      <exclusiveProvider>false</exclusiveProvider>
+      <exclusiveUser>true</exclusiveUser>
+      <optional>false</optional>
+      <kind>SimplexReceptacle</kind>
+    </port>
+  </realizes>
+  
+  <implementation id="Hello-Sender-mdd">
+    <name>Hello-Sender-mdd</name>
+    <source><!-- @@ Don't know what goes here --></source>
+    <artifact>Hello-Sender_exec</artifact>
+    <artifact>Hello-Sender_svnt</artifact>
+    <!--
+    <execParameter></execParameter>
+    <deployRequirement></deployRequirement>
+    -->
+  </implementation>
+
+  <implementation id="Hello-Receiver-mdd">
+    <name>Hello-Receiver-mdd</name>
+    <source><!-- @@ Don't know what goes here --></source>
+    <artifact>Hello-Receiver_exec</artifact>
+    <artifact>Hello-Receiver_svnt</artifact>
+    <!--
+    <execParameter></execParameter>
+    <deployRequirement></deployRequirement>
+    -->
+  </implementation>
+
+
+  <instance id="Hello-Sender-idd">
+    <name>Hello-Sender-idd</name>
+    <node>SenderNode</node>
+    <source><!-- @@ What goes here --></source>
+    <implementation>Hello-Sender-mdd</implementation>
+
+    <!-- Add this property if you want to write component reference to IOR -->
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
+
+    <!-- Add this property if you want to initialize component attribute -->
+    <configProperty>
+      <name>local_message</name>
+      <value>
+        <type>
+         <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>This is a test message passed in through XML.</string>
+        </value>
+      </value> 
+    </configProperty>
+        
+    <!-- This attribute initializes an enumerated value -->
+    <configProperty>
+      <name>color</name>
+      <value>
+        <type>
+          <kind>tk_enum</kind>
+          <enum>
+            <name>COLOR_SELECTION</name>
+            <typeId>IDL:Hello/COLOR_SELECTION:1.0</typeId>
+            <member>empty</member>
+            <member>white</member>
+            <member>red</member>
+            <member>yellow</member>
+          </enum>
+        </type>
+        <value>
+          <enum>yellow</enum>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  
+  <instance id="Hello-Receiver-idd">
+    <name>Hello-Receiver-idd</name>
+    <node>ReceiverNode</node>
+    <source><!-- @@ What goes here --></source>
+    <implementation>Hello-Receiver-mdd</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>hello_facet_connection</name>
+    <internalEndpoint>
+      <portName>push_message</portName>
+      <kind>Facet</kind>
+      <instance>Hello-Sender-idd</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>read_message</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Hello-Receiver-idd</instance>
+    </internalEndpoint>
+  </connection>
+
+  <!-- The Sender Component connects to "ES_01" -->
+  <connection>
+    <name>hello_event_ec_publisher_connection</name>
+    <internalEndpoint>
+      <portName>click_out</portName>
+      <kind>EventPublisher</kind>
+      <instance>Hello-Sender-idd</instance>
+    </internalEndpoint>
+    <externalReference>
+      <location>ES_01</location>
+    </externalReference>
+  </connection>
+  
+  <!-- The Receiver Component connects to "ES_02" -->    
+  <connection>
+    <name>hello_event_ec_consumer_connection</name>
+    <internalEndpoint>
+      <portName>click_in</portName>
+      <kind>EventConsumer</kind>
+      <instance>Hello-Receiver-idd</instance>
+    </internalEndpoint>
+    <externalReference>
+      <location>ES_02</location>
+    </externalReference>
+  </connection> 
+
+  <!-- @@ Runtime library name must match exactly in "location" tag -->
+  <artifact id="Hello-Sender_exec">
+    <name>Sender_exec</name>
+    <source><!-- @@ Not sure about this--></source>
+    <node><!-- blank --></node>
+    <location>Hello_Sender_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_SenderHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  
+  <artifact id="Hello-Sender_svnt">
+    <name>Hello_Sender_svnt</name>
+    <source><!-- @@ Not sure --></source>
+    <node><!-- blank --></node>
+    <location>Hello_Sender_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_SenderHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  
+  <artifact id="Hello-Receiver_exec">
+    <name>Hello_Receiver_exec</name>
+    <source><!-- @@ Not sure about this--></source>
+    <node><!-- blank --></node>
+    <location>Hello_Receiver_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_ReceiverHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  
+  <artifact id="Hello-Receiver_svnt">
+    <name>Hello_Receiver_svnt</name>
+    <source><!-- @@ Not sure --></source>
+    <node><!-- blank --></node>
+    <location>Hello_Receiver_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_ReceiverHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  
+  <infoProperty>
+    <name>CIAOEvents</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>ciao-events-federation-udp.ced</string>
+      </value>
+    </value>
+  </infoProperty>  
+</Deployment:deploymentPlan>  
