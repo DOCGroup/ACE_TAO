@@ -44,9 +44,11 @@ namespace CIAO
 
         virtual int svc ();
 
+      protected:
+
+        bool populate_domain_info (const ::Deployment::Domain& domain);
+
       private:
-
-
 
         std::vector<::CIAO::RACE::Task> tasks_;
 
@@ -59,6 +61,9 @@ namespace CIAO
 
         /// System monitor object reference.
         ::CIAO::RACE::TM_Proxy::SystemSnapshot_var system_monitor_;
+
+        /// System utility object reference.
+        ::CIAO::RACE::TM_Proxy::Utility_var system_utility_;
 
         /// Sampling period.
         ACE_Time_Value interval_;

@@ -13,7 +13,7 @@ $TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
 $daemons_running = 0;
 $em_running = 0;
-$ns_running = 0;
+# $ns_running = 0;
 $daemons = 2;
 @ports = ( 50000, 60000 );
 @iorfiles = ( "NodeApp1.ior", "NodeApp2.ior" );
@@ -22,7 +22,7 @@ $dat_file = "NodeDetails.dat";
 $cdp_file = "RACE.cdp";
 $nsior = PerlACE::LocalFile ("ns.ior");
 
-unlink $nsior;
+#unlink $nsior;
 
 $E = 0;
 $EM = 0;
@@ -36,7 +36,7 @@ sub delete_ior_files {
     unlink PerlACE::LocalFile ("Receiver.ior");
     unlink PerlACE::LocalFile ("Sender.ior");
     unlink PerlACE::LocalFile ("DAM.ior");
-    unlink PerlACE::LocalFile ("ns.ior");
+    #unlink PerlACE::LocalFile ("ns.ior");
 }
 
 sub kill_node_daemons {
@@ -55,10 +55,10 @@ sub kill_open_processes {
     $EM->TimedWait (1);
   }
 
-  if ($ns_running == 1) {
-    $NS->Kill ();
-    $NS->TimedWait (1);
-  }
+#   if ($ns_running == 1) {
+#     $NS->Kill ();
+#     $NS->TimedWait (1);
+#   }
 
 }
 
@@ -98,23 +98,25 @@ delete_ior_files ();
 
 # Invoke naming service
 
-$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:40000 -o ns.ior");
+#$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:40000 -o ns.ior");
+#$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://roon.dre.vanderbilt.edu:40000 -o ns.ior");
 
-$NS->Spawn ();
+#$NS->Spawn ();
 
- print STDERR "Starting Naming Service\n";
+#  print STDERR "Starting Naming Service\n";
 
- if (PerlACE::waitforfile_timed ($nsior, 10) == -1)
- {
-     print STDERR "ERROR: cannot find naming service IOR file\n";
-     $NS->Kill ();
-     exit 1;
- }
+#  if (PerlACE::waitforfile_timed ($nsior, 10) == -1)
+#  {
+#      print STDERR "ERROR: cannot find naming service IOR file\n";
+#      $NS->Kill ();
+#      exit 1;
+#  }
 
-$ns_running = 1;
+#$ns_running = 1;
 
 # Set up NamingService environment
-$ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:40000/NameService";
+#$ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:40000/NameService";
+$ENV{"NameServiceIOR"} = "corbaloc:iiop:roon.dre.vanderbilt.edu:40000/NameService";
 
 
 # Invoke node daemons.

@@ -12,11 +12,16 @@
 
 #include "TM_Proxy_exec_export.h"
 #include "tao/LocalObject.h"
+
+#include "TM_DaemonC.h"
+
+#include "Logger.h"
+
 #include "Utility.h"
 #include "ResourceManager.h"
 #include "SystemSnapshot.h"
-#include "DAnCE/Deployment/Deployment_TargetManagerC.h"
-#include "Logger.h"
+
+
 
 namespace CIAO
 {
@@ -71,7 +76,7 @@ namespace CIAO
           private:
           TM_Proxy_Component_Context *context_;
 
-          ::Deployment::TargetManager_var TM_Daemon_;
+          ::CIAO::TM_Daemon::Daemon_var TM_Daemon_;
 
           ::CORBA::String_var TM_Name_;
 
