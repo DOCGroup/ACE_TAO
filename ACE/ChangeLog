@@ -1,3 +1,20 @@
+Sat Dec 15 14:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Object_Manager.cpp:
+          Disable the critical error boxes when  ACE_DISABLE_WIN32_ERROR_WINDOWS
+          is defined. This fixes bugzilla 3170. Thanks to Adrian Tulloch
+          <my-ace-sub at reyes-tulloch dot com> for suggesting this
+
+        * ace/Svc_Conf.h:
+          Fixed compile error when DEBUGGING is defined
+
+        * ace/Token.cpp:
+          Renamed DEBUGGING to ACE_TOKEN_DEBUGGING, DEBUGGING is used on
+          more places like as a member in an enum. Also const, bool changes.
+
+        * ace/TP_Reactor.cpp:
+          Layout and const changes
+
 Sat Dec 15 14:36:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bzcar/bczar.html:
