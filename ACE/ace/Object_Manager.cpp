@@ -251,6 +251,9 @@ ACE_Object_Manager::init (void)
           _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDERR );
 #endif /* _DEBUG && _MSC_VER || __INTEL_COMPILER */
 
+          // The system does not display the critical-error-handler message box
+          SetErrorMode(SEM_FAILCRITICALERRORS);
+
           // And this will catch all unhandled exceptions.
           SetUnhandledExceptionFilter (&ACE_UnhandledExceptionFilter);
 #endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS && ACE_WIN32 && !ACE_HAS_WINCE */
