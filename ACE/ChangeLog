@@ -1,3 +1,9 @@
+Sat Dec 15 15:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/gperf.mpc:
+        * bin/PerlACE/perlace.mpc:
+          Use custom_only=1 for these MPC files
+
 Sat Dec 15 14:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Object_Manager.cpp:
