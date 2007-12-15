@@ -9,7 +9,5 @@ project(PerlACE) : script {
     Process_Win32.pm
     Run_Test.pm
   }
-  specific(vc9) {
-    ConfigurationType = 10
-  }
+  custom_only=1
 }
