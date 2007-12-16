@@ -20,14 +20,14 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_ANTI_TCHAR *name,
 }
 
 template <class TYPE> ACE_INLINE TYPE *
-ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* repo,
+ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt_Auto_Ptr repo,
                                      const ACE_ANTI_TCHAR *name)
 {
   return instance (repo, ACE_TEXT_CHAR_TO_TCHAR (name),false);
 }
 
 template <class TYPE> ACE_INLINE TYPE *
-ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* repo,
+ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt_Auto_Ptr repo,
                                      const ACE_ANTI_TCHAR *name,
                                      bool no_global)
 {

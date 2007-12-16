@@ -46,9 +46,9 @@ public:
   static TYPE* instance (const ACE_TCHAR *name);
   static TYPE* instance (const ACE_TCHAR *name, bool no_global);
 
-  static TYPE* instance (const ACE_Service_Gestalt* repo,
+  static TYPE* instance (const ACE_Service_Gestalt_Auto_Ptr repo,
                          const ACE_TCHAR *name);
-  static TYPE* instance (const ACE_Service_Gestalt* repo,
+  static TYPE* instance (const ACE_Service_Gestalt_Auto_Ptr repo,
                          const ACE_TCHAR *name, bool no_global);
 
 #if defined (ACE_USES_WCHAR)
@@ -58,9 +58,9 @@ public:
 
   static TYPE* instance (const ACE_ANTI_TCHAR *name, bool no_global);
 
-  static TYPE* instance (const ACE_Service_Gestalt* repo,
+  static TYPE* instance (const ACE_Service_Gestalt_Auto_Ptr repo,
                          const ACE_ANTI_TCHAR *name);
-  static TYPE* instance (const ACE_Service_Gestalt* repo,
+  static TYPE* instance (const ACE_Service_Gestalt_Auto_Ptr repo,
                          const ACE_ANTI_TCHAR *name, bool no_global);
 #endif  // ACE_USES_WCHAR
 
