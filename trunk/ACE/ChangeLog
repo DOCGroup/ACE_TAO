@@ -1,3 +1,8 @@
+Sun Dec 16 07:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/common/AttributesImpl.h:
+          Doxygen improvements
+
 Sun Dec 16 06:49:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.5.h:
