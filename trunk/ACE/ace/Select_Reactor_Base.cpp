@@ -810,8 +810,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   // we've been passed.
   if (buffer.eh_ != 0)
     {
-      ACE_Event_Handler *event_handler =
-        buffer.eh_;
+      ACE_Event_Handler *event_handler = buffer.eh_;
 
       bool const requires_reference_counting =
         event_handler->reference_counting_policy ().value () ==
