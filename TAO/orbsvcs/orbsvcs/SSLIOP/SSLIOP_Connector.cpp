@@ -571,9 +571,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       else
         verify_mode = ACE_SSL_Context::instance ()->default_verify_mode ();
 
-      ::SSL_set_verify (svc_handler->peer ().ssl (),
-                        verify_mode,
-                        0);
+      ::SSL_set_verify (svc_handler->peer ().ssl (), verify_mode, 0);
 
       // The "eNULL" cipher disables encryption but still uses a
       // secure hash (e.g. SHA1 or MD5) to ensure integrity.  (Try the
