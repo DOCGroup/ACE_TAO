@@ -1,3 +1,19 @@
+Sun Dec 16 19:26:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.inl:
+          Extended this template, thanks to Hu Yi <huyi dot zg at gmail dot com>
+          for extending this template
+
+        * tests/Refcounted_Auto_Ptr_Test.cpp:
+          Extended
+
+        * tests/TSS_Test.cpp:
+          Removed pthread draft 4 code and fixed compile warnings with VxWorks 6.6
+
+        * ace/Pipe.cpp:
+          Const changes
+
 Sun Dec 16 07:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACEXML/common/AttributesImpl.h:

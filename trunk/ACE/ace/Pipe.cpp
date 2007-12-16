@@ -326,13 +326,13 @@ ACE_Pipe::recv (size_t n, ...) const
     }
 
 #if defined (ACE_WIN32)
-  ssize_t result = ACE::recvv (this->read_handle (),
-                               iovp,
-                               total_tuples);
+  ssize_t const result = ACE::recvv (this->read_handle (),
+                                     iovp,
+                                     total_tuples);
 #else
-  ssize_t result = ACE_OS::readv (this->read_handle (),
-                                  iovp,
-                                  total_tuples);
+  ssize_t const result = ACE_OS::readv (this->read_handle (),
+                                        iovp,
+                                        total_tuples);
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_HAS_ALLOCA)
