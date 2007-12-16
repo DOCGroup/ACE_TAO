@@ -27,6 +27,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /// Forward declaration
 class ACE_Service_Gestalt;
+template <class X> class ACE_Intrusive_Auto_Ptr;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -50,7 +51,7 @@ namespace TAO
      * @note This method should be called before the ORB Core is
      *       initialized, and before any ORBInitializers are invoked.
      */
-    int open_services (ACE_Service_Gestalt* cfg, int& argc, ACE_TCHAR** argv);
+    int open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> cfg, int& argc, ACE_TCHAR** argv);
 
     /**
      * The complement to @c open_services(), this will perform
@@ -62,7 +63,7 @@ namespace TAO
      * @return @c 0 if successful, @c -1 with @c errno set if
      *         failure.
      */
-    int close_services (ACE_Service_Gestalt* pcfg);
+    int close_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg);
 
     /**
      * Set default @c `svc.conf' content.

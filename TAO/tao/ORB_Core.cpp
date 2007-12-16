@@ -117,7 +117,7 @@ TAO_ORB_Core_Static_Resources::initialization_reference_ =
 TAO_ORB_Core_Static_Resources*
 TAO_ORB_Core_Static_Resources::instance (void)
 {
-  ACE_Service_Gestalt *current = ACE_Service_Config::current();
+  ACE_Service_Gestalt_Auto_Ptr current = ACE_Service_Config::current();
   TAO_ORB_Core_Static_Resources* tocsr =
     ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
     (current, "TAO_ORB_Core_Static_Resources", true);
@@ -133,7 +133,7 @@ TAO_ORB_Core_Static_Resources::instance (void)
       tocsr = ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
         (current, "TAO_ORB_Core_Static_Resources", true);
 
-      ACE_Service_Gestalt *global = ACE_Service_Config::global();
+      ACE_Service_Gestalt_Auto_Ptr global = ACE_Service_Config::global();
       if (current != global)
         {
           TAO_ORB_Core_Static_Resources* global_tocsr =
@@ -181,7 +181,7 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
 // ****************************************************************
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
-                            ACE_Service_Gestalt* gestalt)
+                            ACE_Service_Gestalt_Auto_Ptr gestalt)
   : protocols_hooks_ (0),
     network_priority_protocols_hooks_ (0),
 #if TAO_USE_LOCAL_MEMORY_POOL == 1
@@ -328,10 +328,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   // This will destroy the service repository for this core
   (void) TAO::ORB::close_services (this->config_);
 
-  if (this->config_ != ACE_Service_Config::global())
-    delete this->config_;
-
-  this->config_ = 0;
 }
 
 int
@@ -1583,7 +1579,7 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
 {
   // @todo The ORBInitializer_Registry is supposed to be a singleton.
 
-  ACE_Service_Gestalt * const config = this->configuration ();
+  ACE_Service_Gestalt_Auto_Ptr const config = this->configuration ();
 
   // If not, lookup it up.
   this->orbinitializer_registry_ =

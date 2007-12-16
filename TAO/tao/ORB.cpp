@@ -1210,23 +1210,24 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
   // else's configuration
 
   // By default use the process (application?) global configuration context
-  ACE_Service_Gestalt* gestalt = ACE_Service_Config::current ();
+  ACE_Service_Gestalt_Auto_Ptr gestalt = ACE_Service_Config::current ();
 
   // Use this string variable to hold the config identity
   ACE_CString orbconfig_string;
-  ACE_Auto_Ptr<ACE_Service_Gestalt> guard_gestalt(0);
 
   if (TAO::parse_orb_opt (command_line,
                          ACE_TEXT("-ORBGestalt"),
                          orbconfig_string))
     {
       const ACE_TCHAR *arg = ACE_TEXT_CHAR_TO_TCHAR(orbconfig_string.c_str ());
-      const ACE_TCHAR *local = ACE_TEXT("LOCAL");
+      const ACE_TCHAR *local = ACE_TEXT("GLOBAL");
+      const ACE_TCHAR *global = ACE_TEXT("LOCAL");
       const ACE_TCHAR *shared = ACE_TEXT("ORB:");
       // Need a local repo? Make one which typically should not be as
       // big as the default repository
-      if  (ACE_OS::strcasecmp (arg,local) == 0)
+      if  (ACE_OS::strcasecmp (arg, local) == 0)
         {
+      ACE_Service_Gestalt* g = 0;
           ACE_NEW_THROW_EX (gestalt,
                             ACE_Service_Gestalt
                             (ACE_Service_Gestalt::MAX_SERVICES / 4, true),
@@ -1234,7 +1235,11 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
                             (CORBA::SystemException::_tao_minor_code (0,
                                                                       ENOMEM),
                              CORBA::COMPLETED_NO));
-          guard_gestalt.reset(gestalt);
+          gestalt = g;
+        }
+      else if  (ACE_OS::strcasecmp (arg, global) == 0)
+        {
+          gestalt = ACE_Service_Config::global ();
         }
       else if (ACE_OS::strncmp (arg, shared, sizeof (shared) - 1) == 0)
         {
@@ -1291,10 +1296,6 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
   // to decrease the reference count on the ORB Core when it goes
   // out of scope.
   oc.reset (tmp);
-
-  // The ORB now owns its configuration and the auto pointer is not
-  // necessary anymore.
-  guard_gestalt.release ();
 
   // Having the ORB's default static services be shared among all ORBs
   // is tempting from the point of view of reducing the dynamic
