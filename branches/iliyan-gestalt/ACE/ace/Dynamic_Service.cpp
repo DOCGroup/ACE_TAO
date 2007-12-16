@@ -38,7 +38,7 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_TCHAR *name,
 }
 
 template <class TYPE> TYPE *
-ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* conf,
+ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt_Auto_Ptr conf,
                                      const ACE_TCHAR *name)
 {
   ACE_Service_Object * svc_obj =
@@ -48,7 +48,7 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* conf,
 }
 
 template <class TYPE> TYPE *
-ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* conf,
+ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt_Auto_Ptr conf,
                                      const ACE_TCHAR *name,
                                      bool no_global)
 {

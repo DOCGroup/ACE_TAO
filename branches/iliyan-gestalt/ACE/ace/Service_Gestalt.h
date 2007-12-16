@@ -29,6 +29,7 @@
 #include "ace/Singleton.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Synch_Traits.h"
+#include "ace/Atomic_Op.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,14 +64,14 @@ class ACE_Service_Gestalt;
  * may or may not be bounded by the lifetime of the gestalt, that owns
  * it. This feature is important for the derived classes and the
  * Service Config in particular.
-
+ *
  */
 class ACE_Export ACE_Service_Gestalt
 {
 private:
-  /**
-   * Not implemented to enforce no copying
-   */
+  ///
+  /// Not implemented to enforce no copying
+  //
   ACE_UNIMPLEMENTED_FUNC (ACE_Service_Gestalt(const ACE_Service_Gestalt&))
   ACE_UNIMPLEMENTED_FUNC (ACE_Service_Gestalt& operator=(const ACE_Service_Gestalt&))
 
@@ -401,6 +402,7 @@ protected:
 
   friend class ACE_Dynamic_Service_Base;
   friend class ACE_Service_Object;
+  friend class ACE_Service_Config;
   friend class ACE_Service_Config_Guard;
 
 protected:
@@ -446,6 +448,13 @@ protected:
   /// directive was called, but the service is not already a member of
   /// the static_svcs_ list.
   ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
+
+  /// Support for intrusive reference counting
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> refcnt_;
+
+ public:
+  static void intrusive_add_ref (ACE_Service_Gestalt*);
+  static void intrusive_remove_ref (ACE_Service_Gestalt*);
 
 }; /* class ACE_Service_Gestalt */
 

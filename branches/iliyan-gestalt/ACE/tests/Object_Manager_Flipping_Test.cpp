@@ -54,9 +54,8 @@ int run_main (int, ACE_TCHAR *[])
   // Causing the creation of a SC instance and the corresponding TSS
   // key.  It is not registered with the Object Manager, but beware -
   // OM finalization will destroy it too.
-  ACE_Service_Gestalt *p0 = ACE_Service_Config::instance ();
-
-  ACE_Service_Gestalt *p1 = 0;
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> p0 (ACE_Service_Config::instance ());
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> p1;
   u_int errors = 0;
 
   // ...
@@ -94,14 +93,12 @@ int run_main (int, ACE_TCHAR *[])
     ACE::fini ();
   }
 
-  p1 = ACE_Service_Config::instance ();
-
   // This is a legitimate test, but more importantly an
   // attemp to dereference p1 should succeed. If SC's TSS
   // was not cleaned correctly this will SEGV. As will the
   // following ACE::init, as it tries to use the SC instance.
 
-  if (p1->is_opened ())
+  if (ACE_Service_Config::instance ()->is_opened ())
       ++errors;
 
   // Not using ACE_ASSERT because ACE is not initialized yet.
@@ -110,7 +107,7 @@ int run_main (int, ACE_TCHAR *[])
     ACE::init();
     ACE_START_TEST (ACE_TEXT ("Object_Manager_Flipping_Test"));
 
-    ACE_Service_Gestalt *p2 = ACE_Service_Config::instance ();
+    ACE_Service_Gestalt_Auto_Ptr p2 (ACE_Service_Config::instance ());
 
     // ACE_ASSERT uses Log_Msg::instance() and needs to be done only
     // after ACE_START_TEST

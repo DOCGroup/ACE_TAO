@@ -196,8 +196,33 @@ ACE_Service_Gestalt::Processed_Static_Svc::~Processed_Static_Svc (void)
 
 // ----------------------------------------
 
+
+void
+ACE_Service_Gestalt::intrusive_add_ref (ACE_Service_Gestalt* g)
+{
+  if (g != 0)
+    {
+    ++g->refcnt_;
+    printf ("//++refcnt=%ld\n", g->refcnt_.value ());
+    }
+}
+
+void
+ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
+{
+  if (g != 0)
+    {
+      printf ("//refcnt--=%ld\n", g->refcnt_.value());
+      if (--g->refcnt_ == 0)
+        delete g;
+    }
+
+}
+
+
 ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 {
+
   if (this->svc_repo_is_owned_)
     delete this->repo_;
 
@@ -225,8 +250,14 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
           delete *pss;
         }
     }
+
   delete this->processed_static_svcs_;
   this->processed_static_svcs_ = 0;
+
+  delete this->svc_conf_file_queue_;
+  this->svc_conf_file_queue_ = 0;
+
+  ACE_DEBUG ((LM_STARTUP, "(%P|%t) ACE_Service_Gestalt::~ACE_Service_Gestalt\n"));
 }
 
 ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
@@ -243,6 +274,8 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , static_svcs_ (0)
   , processed_static_svcs_ (0)
 {
+  ACE_DEBUG ((LM_STARTUP, "(%P|%t) ACE_Service_Gestalt::ACE_Service_Gestalt\n"));
+
   (void)this->init_i ();
 
 #ifndef ACE_NLOGGING
@@ -809,7 +842,9 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
   // other static services registered. Thus this instance will own both the
   // DLL and those static services, which implies that their finalization
   // will be performed in the correct order, i.e. prior to finalizing the DLL
-  ACE_Service_Config_Guard guard (this);
+  ACE_Service_Gestalt_Auto_Ptr tmp (this);
+  ACE_Service_Config_Guard guard (tmp);
+  tmp.release();
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
@@ -990,7 +1025,6 @@ ACE_Service_Gestalt::init_svc_conf_file_queue (void)
       ACE_NEW_RETURN (tmp,
           ACE_SVC_QUEUE,
           -1);
-      delete this->svc_conf_file_queue_;
       this->svc_conf_file_queue_ = tmp;
     }
 

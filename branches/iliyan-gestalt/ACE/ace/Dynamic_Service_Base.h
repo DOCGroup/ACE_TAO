@@ -24,7 +24,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class ACE_Service_Gestalt;
+#include "ace/Service_Config.h"
+
 class ACE_Service_Type;
 
 /**
@@ -47,7 +48,7 @@ protected:
   /// repo.
   static void* instance (const ACE_TCHAR *name, bool no_global = false);
 
-  static void* instance (const ACE_Service_Gestalt* repo,
+  static void* instance (const ACE_Service_Gestalt_Auto_Ptr repo,
                          const ACE_TCHAR *name,
                          bool no_global = false);
 

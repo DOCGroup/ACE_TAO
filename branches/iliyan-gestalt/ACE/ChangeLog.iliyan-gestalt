@@ -1,0 +1,42 @@
+Sun Dec 16 20:48:39 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        Changed the Service Config to use the PIMPL pattern instead of
+        inheriting from Service Gestalt. This allowed the use of a
+        reference counting to manage the lifetime of a Gestalt. This
+        begins to solve the problem discussed in in bugzilla 2980, whereby
+        the root service configuration context (gestalt) may end up being
+        finalized either by the main thread, or by the thread specific
+        storage cleanup.
+
+        Added an intrusive auto pointer implementation. It is a reference
+        counted auto pointer that can be used for types with explicit
+        reference management implementations. Updated interfaces to use
+        the new ref-counted gestalt.
+
+        * ace/Dynamic_Service.h:
+        * ace/Dynamic_Service.inl:
+        * ace/Dynamic_Service.cpp:
+        * ace/Dynamic_Service_Base.h:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Dynamic_Service_Dependency.cpp:
+        * ace/Intrusive_Auto_Ptr.h:
+        * ace/Intrusive_Auto_Ptr.inl:
+        * ace/Intrusive_Auto_Ptr.cpp:
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.inl:
+        * ace/Service_Config.h:
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+        * ace/Thread_Adapter.cpp:
+        * ace/ace.mpc:
+
+        * tests/Intrusive_Auto_Ptr_Test.cpp:
+
+        Added a new test for the intrusive reference counted auto pointer.
+
+        * tests/Object_Manager_Flipping_Test.cpp:
+        * tests/tests.mpc:
+
+        Updated to use the intrusive auto pointer

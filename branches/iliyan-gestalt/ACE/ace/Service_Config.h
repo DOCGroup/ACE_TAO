@@ -19,6 +19,7 @@
 #include "ace/Default_Constants.h"
 #include "ace/Service_Gestalt.h"
 #include "ace/TSS_T.h"
+#include "ace/Intrusive_Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -133,7 +134,18 @@ public:
   bool operator!= (ACE_Static_Svc_Descriptor &) const;
 };
 
+
 #define ACE_Component_Config ACE_Service_Config
+
+typedef ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> ACE_Service_Gestalt_Auto_Ptr;
+
+/// A partial specialization for ACE_TSS::cleanup() which uses a
+/// reference-counted auto pointer to ensure safe deletion of the root
+/// SG from either the thread run-down, or the SC dtor (called from
+/// ACE::fini())
+
+template<> void
+ACE_TSS <ACE_Service_Gestalt>::cleanup (void*);
 
 /**
  * @class ACE_Service_Config
@@ -166,8 +178,13 @@ public:
  * not eliminated, by _not_ #defining
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER.
  */
-class ACE_Export ACE_Service_Config: public ACE_Service_Gestalt
+class ACE_Export ACE_Service_Config
 {
+
+  // The Instance, or the global (default) configuration context.
+  // The monostate would forward the calls to that instance. The TSS
+  // will point here
+  ACE_Service_Gestalt_Auto_Ptr instance_;
 
 public:
 
@@ -225,14 +242,20 @@ protected:
    * A Wrapper for the TSS-stored pointer to the "current"
    * configuration Gestalt. Static initializers from any DLL loaded
    * through the SC will find the SC instance through the TSS pointer,
-   * instead of the global singleton. This makes it possible to ensure
-   * that the new services are loaded in the correct Gestalt,
-   * independent of which thread is actually using the SC at the time
-   * to do so.
+   * instead of through the global singleton.
+   * When a thread is loading (a cascade of) DLLs that need to register
+   * services in a different gestalt instance, this mechanism ensures
+   * said gestalt will be used as the global one, on that thread.
    */
   ACE_TSS <ACE_Service_Gestalt> tss_;
 
   /// = Static interfaces
+  /**
+   * Returns the process-wide global singleton instance. It would
+   * have been created and will be managed by the Object Manager.
+   */
+  static ACE_Service_Config* singleton (void);
+
 
 public:
   /**
@@ -242,19 +265,10 @@ public:
    * considered global by any static initializer (especially those in
    * DLLs, loaded at run-time).
    */
-  static ACE_Service_Gestalt* current (ACE_Service_Gestalt*);
-
-  /**
-   * Returns a process-wide global singleton instance in contrast with
-   * current (), which may return a different instance at different
-   * times, dependent on the context. Use of this method is
-   * discouraged as it allows circumvention of the mechanism for
-   * dynamically loading services. Use with extreme caution!
-   */
-  static ACE_Service_Config* global (void);
+  static ACE_Service_Gestalt_Auto_Ptr current (ACE_Service_Gestalt_Auto_Ptr);
 
   /// Accessor for the "current" service gestalt
-  static ACE_Service_Gestalt* current (void);
+  static ACE_Service_Gestalt_Auto_Ptr current (void);
 
   /**
    * This is what the static service initializators are hard-wired to
@@ -265,7 +279,16 @@ public:
    * dynamic services, which can contain their own static services and
    * static initializers.
    */
-  static  ACE_Service_Gestalt* instance (void);
+  static ACE_Service_Gestalt_Auto_Ptr instance (void);
+
+  /**
+   * Returns a process-wide global singleton instance in contrast with
+   * current (), which may return a different instance at different
+   * times, dependent on the context. Use of this method is
+   * discouraged as it allows circumvention of the mechanism for
+   * dynamically loading services. Use with extreme caution!
+   */
+  static ACE_Service_Gestalt_Auto_Ptr global (void);
 
   /**
    * Performs an open without parsing command-line arguments.  The
@@ -352,13 +375,6 @@ public:
   /// configured services in the <Service_Repository>.
   static int fini_svcs (void);
 
-  /**
-   * Perform user-specified close hooks on all of the configured
-   * services in the Service_Repository, then delete the
-   * Service_Repository itself.  Returns 0.
-   */
-  static int close_svcs (void);
-
   /// True if reconfiguration occurred.
   static int reconfig_occurred (void);
 
@@ -388,7 +404,7 @@ public:
   /// idiom for registering static services:
   ///
   ///    ACE_Service_Config::static_svcs ()->insert (...);
-  static ACE_Service_Gestalt *static_svcs (void);
+  static ACE_Service_Gestalt_Auto_Ptr static_svcs (void);
 
   /// Insert a static service descriptor for processing on open_i(). The
   /// corresponding ACE_STATIC_SVC_* macros were chaged to use this method
@@ -585,7 +601,7 @@ private:
 class ACE_Export ACE_Service_Config_Guard
 {
 public:
-  ACE_Service_Config_Guard (ACE_Service_Gestalt * psg);
+  ACE_Service_Config_Guard (ACE_Service_Gestalt_Auto_Ptr psg);
   ~ACE_Service_Config_Guard (void);
 
 private:
@@ -594,7 +610,8 @@ private:
   ACE_Service_Config_Guard& operator= (const ACE_Service_Config_Guard&);
 
 private:
-  ACE_Service_Gestalt* saved_;
+  ACE_Service_Gestalt_Auto_Ptr saved_;
+
 };
 
 
