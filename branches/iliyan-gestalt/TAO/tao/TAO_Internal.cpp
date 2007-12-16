@@ -103,8 +103,8 @@ namespace
    *       reentrant meaning that it is really no longer necessary to
    *       do so.
    */
-  void register_global_services_i (ACE_Service_Gestalt * pcfg);
-  void register_additional_services_i (ACE_Service_Gestalt * pcfg);
+  void register_global_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg);
+  void register_additional_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg);
 
   /**
    * Parses the supplied command-line arguments to extract any
@@ -126,7 +126,7 @@ namespace
    * @return @c 0 if successful, @c -1 with @c errno set if failure.
    *
    */
-  int open_private_services_i (ACE_Service_Gestalt* pcfg,
+  int open_private_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg,
                                int & argc,
                                char ** argv,
                                bool skip_service_config_open = false,
@@ -194,7 +194,7 @@ private:
 #endif // ACE_HAS_THREADS
 
 int
-TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
+TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                          int &argc,
                          ACE_TCHAR **argv)
 {
@@ -274,7 +274,7 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
   // (global) Service Configurator instance.
   CORBA::StringSeq global_svc_config_argv;
 
-  ACE_Service_Gestalt * theone = ACE_Service_Config::global ();
+  ACE_Service_Gestalt_Auto_Ptr theone = ACE_Service_Config::global ();
 
   if (service_open_count == 1)
     {
@@ -417,7 +417,7 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
 }
 
 int
-TAO::ORB::close_services (ACE_Service_Gestalt* pcfg)
+TAO::ORB::close_services (ACE_Service_Gestalt_Auto_Ptr pcfg)
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                             guard,
@@ -427,6 +427,7 @@ TAO::ORB::close_services (ACE_Service_Gestalt* pcfg)
 
   if (pcfg == ACE_Service_Config::global())
     return 0;
+
   return pcfg->close ();
 }
 
@@ -448,7 +449,7 @@ namespace
   /// Open services, belonging to the gestalt instance.
 
   int
-  open_private_services_i (ACE_Service_Gestalt * pcfg,
+  open_private_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg,
                            int & argc,
                            char ** argv,
                            bool skip_service_config_open,
@@ -477,7 +478,7 @@ namespace
   /// @brief registers all process-wide (global) services, available
   /// to all ORBs
   void
-  register_global_services_i (ACE_Service_Gestalt * pcfg)
+  register_global_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg)
   {
     // This has to be done before intializing the resource
     // factory. Codesets is a special library since its configuration
@@ -572,7 +573,7 @@ namespace
   } /* register_global_services_i */
 
   void
-  register_additional_services_i (ACE_Service_Gestalt * pcfg)
+  register_additional_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg)
   {
     // @@ What the heck do these things do and do we need to avoid
     //    calling them if we're not invoking the svc.conf file?

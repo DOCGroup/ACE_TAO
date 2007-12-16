@@ -1,0 +1,28 @@
+Sun Dec 16 21:36:32 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ChangeLog.iliyan-gestalt:
+
+        Added a private changelog.
+
+        * tao/ORB.cpp:
+
+        Adding support for 'GLOBAL' value of the -ORBGestalt option which
+        will force any ORB in the same process to use the same service
+        configuration context (gestalt).
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+        * tao/TAO_Internal.h:
+        * tao/TAO_Internal.cpp:
+
+        Updating for the interface change due to the replacement of
+        Service Gestalt with a (intrusive) reference counted instances.
+
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * tests/ORB_Local_Config/Separation/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Shared/Test.cpp:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+
+        Updated for the changed interfaces.
