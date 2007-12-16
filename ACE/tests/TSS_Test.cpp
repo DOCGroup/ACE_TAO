@@ -72,15 +72,6 @@ static ACE_Thread_Mutex output_lock;
 extern "C" void
 cleanup (void *ptr)
 {
-#if defined (ACE_HAS_PTHREADS_DRAFT4)
-  // The intended use of this function doesn't apply with
-  // Draft 4 threads.  With Draft 4 threads, this function
-  // is called implicitly by pthread_setspecific whenever an
-  // old value is replaced.  This function is intended to be
-  // used with Draft 6 and later threads, where it is called
-  // on thread termination with the thread-specific value.
-  ACE_UNUSED_ARG (ptr);
-#else  /* ! ACE_HAS_PTHREADS_DRAFT4 */
   // Don't do this:  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in cleanup, ptr = %x\n"), ptr));
   // The Log_Msg buffer is a TSS object, too, and it may be gone!
   // if you must say something here try:
@@ -89,7 +80,6 @@ cleanup (void *ptr)
   //    operator delete (ptr);
   // is nonsense when applied to a void *! (even tho the compilers accept it????
   delete static_cast <int *> (ptr);
-#endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 }
 
 // This worker function is the entry point for each thread.
@@ -134,10 +124,10 @@ worker (void *c)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 1, ")
                             ACE_TEXT ("key = %d, ip = %x\n"),
                   key, ip));
-      
+
       // Needed to work around (possibly broken?) strict aliasing warning in GCC.
       void *v_ip (reinterpret_cast <void *> (ip));
-      
+
       if (ACE_Thread::setspecific (key, v_ip) == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::setspecific")));
@@ -150,20 +140,14 @@ worker (void *c)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::setspecific")));
 
-#if ! defined (ACE_HAS_PTHREADS_DRAFT4)
       // See comment in cleanup () above.
       delete ip;
-#endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 
-      // We don't do keyfree for ACE_HAS_PTHREADS_DRAFT4 (or 6) since it
-      // is not supported there, and will generate an error anyway. Unless
-      // ACE_HAS_TSS_EMULATION is turned on, then it should work.
-#if !(defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)) \
-    || defined (ACE_HAS_TSS_EMULATION)
+#if defined (ACE_HAS_TSS_EMULATION)
       if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::keyfree")));
-#endif /* !(PTHREADS_DRAFT4 or 6) || defined (ACE_HAS_TSS_EMULATION) */
+#endif /* ACE_HAS_TSS_EMULATION */
 
       // Cause an error.
       ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
@@ -219,11 +203,14 @@ worker (void *c)
                             ACE_TEXT ("key = %d, ip = %x\n"),
                   key, ip));
 
-      if (ACE_Thread::setspecific (key, (void *) ip) == -1)
+      // Needed to work around (possibly broken?) strict aliasing warning in GCC.
+      void *v_ip (reinterpret_cast <void *> (ip));
+
+      if (ACE_Thread::setspecific (key, v_ip) == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::setspecific")));
 
-      if (ACE_Thread::getspecific (key, (void **) &ip) == -1)
+      if (ACE_Thread::getspecific (key, &v_ip) == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::getspecific")));
 
@@ -231,21 +218,15 @@ worker (void *c)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::setspecific")));
 
-#  if !defined (ACE_HAS_PTHREADS_DRAFT4)
       // See comment in cleanup () above.
       delete ip;
-#  endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 
-      // We don't do keyfree for ACE_HAS_PTHREADS_DRAFT4 (or 6) since it
-      // is not supported there, and will generate an error anyway. Unless
       // ACE_HAS_TSS_EMULATION is turned on, then it should work.
-#  if !(defined (ACE_HAS_PTHREADS_DRAFT4) || \
-        defined (ACE_HAS_PTHREADS_DRAFT6)  ) \
-      || defined (ACE_HAS_TSS_EMULATION)
+#  if defined (ACE_HAS_TSS_EMULATION)
       if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::keyfree")));
-#  endif /* !(PTHREADS_DRAFT4 or 6) || defined (ACE_HAS_TSS_EMULATION) */
+#  endif /* defined (ACE_HAS_TSS_EMULATION) */
 #endif /* ACE_HAS_TSS_EMULATION */
     }
   return 0;
