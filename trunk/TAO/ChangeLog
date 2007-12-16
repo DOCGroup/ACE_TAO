@@ -1,3 +1,12 @@
+Sun Dec 16 19:49:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+          Always generate SystemException.h in the stub source file and
+          slightly changed the generated encode/decode operations.
+          This fixes bugzilla 3158, thanks to JT  Conklin for reporting
+          this
+
 Fri Dec 14 02:48:57 CST 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO version 1.6.2 released.
