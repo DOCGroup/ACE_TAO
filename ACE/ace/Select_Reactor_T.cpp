@@ -391,10 +391,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
                       ACE_Sig_Handler,
                       -1);
 
-      if (this->signal_handler_ == 0)
-        result = -1;
-      else
-        this->delete_signal_handler_ = 1;
+      this->delete_signal_handler_ = true;
     }
 
   // Allows the timer queue to be overridden.
@@ -404,10 +401,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
                       ACE_Timer_Heap,
                       -1);
 
-      if (this->timer_queue_ == 0)
-        result = -1;
-      else
-        this->delete_timer_queue_ = true;
+      this->delete_timer_queue_ = true;
     }
 
   // Allows the Notify_Handler to be overridden.
@@ -417,10 +411,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
                       ACE_Select_Reactor_Notify,
                       -1);
 
-      if (this->notify_handler_ == 0)
-        result = -1;
-      else
-        this->delete_notify_handler_ = true;
+      this->delete_notify_handler_ = true;
     }
 
   if (result != -1 && this->handler_rep_.open (size) == -1)

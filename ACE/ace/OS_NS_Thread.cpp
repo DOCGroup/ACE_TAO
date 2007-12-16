@@ -5096,7 +5096,7 @@ spa (FUNCPTR entry, ...)
 
   // The hard-coded options are what ::sp () uses, except for the
   // larger stack size (instead of ::sp ()'s 20000).
-  const int ret = ::taskSpawn (argv[0],    // task name
+  int const ret = ::taskSpawn (argv[0],    // task name
                                100,        // task priority
                                VX_FP_TASK, // task options
                                ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
@@ -5185,8 +5185,8 @@ add_to_argv (int& argc, char** argv, int max_args, char* string)
 int
 spae (FUNCPTR entry, ...)
 {
-  static const int WINDSH_ARGS = 10;
-  static const int ACE_MAX_ARGS    = 128;
+  static int const WINDSH_ARGS = 10;
+  static int const ACE_MAX_ARGS    = 128;
   static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
   va_list pvar;
   int argc = 1;
@@ -5211,7 +5211,7 @@ spae (FUNCPTR entry, ...)
 
   // The hard-coded options are what ::sp () uses, except for the
   // larger stack size (instead of ::sp ()'s 20000).
-  const int ret = ::taskSpawn (argv[0],    // task name
+  int const ret = ::taskSpawn (argv[0],    // task name
                                100,        // task priority
                                VX_FP_TASK, // task options
                                ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
@@ -5239,8 +5239,8 @@ spae (FUNCPTR entry, ...)
 int
 spaef (FUNCPTR entry, ...)
 {
-  static const int WINDSH_ARGS = 10;
-  static const int ACE_MAX_ARGS    = 128;
+  static int const WINDSH_ARGS = 10;
+  static int const ACE_MAX_ARGS    = 128;
   static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
   va_list pvar;
   int argc = 1;
@@ -5291,7 +5291,7 @@ _vx_call_entry(FUNCPTR entry, int argc, char* argv[])
 int
 vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
 {
-  static const int ACE_MAX_ARGS    = 128;
+  static int const ACE_MAX_ARGS    = 128;
   static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
   int argc = 1;
 
@@ -5307,7 +5307,7 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
 
   // The hard-coded options are what ::sp () uses, except for the
   // larger stack size (instead of ::sp ()'s 20000).
-  const int ret = ::taskSpawn (argv[0],    // task name
+  int const ret = ::taskSpawn (argv[0],    // task name
                                prio==0 ? 100 : prio,        // task priority
                                opt==0 ? VX_FP_TASK : opt, // task options
                                stacksz==0 ? ACE_NEEDS_HUGE_THREAD_STACKSIZE : stacksz, // stack size
