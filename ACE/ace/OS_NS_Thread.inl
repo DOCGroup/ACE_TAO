@@ -690,7 +690,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return ACE_OS::thread_mutex_lock (m);
 #else
-  ACE_thread_t t_id = ACE_OS::thr_self ();
+  ACE_thread_t const t_id = ACE_OS::thr_self ();
   int result = 0;
 
   // Acquire the guard.
@@ -3293,12 +3293,9 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
 # if defined (ACE_HAS_WTHREADS)
   ::DeleteCriticalSection (m);
   return 0;
-
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_VXWORKS)
+# else
   return ACE_OS::mutex_destroy (m);
-
-# endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
-
+# endif /* ACE_HAS_WTHREADS */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -3333,7 +3330,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   // Force the use of USYNC_THREAD!
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
   return mutex_init (m, lock_type, name, arg);
 
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
@@ -3376,12 +3373,9 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   // Force the use of USYNC_THREAD!
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
-
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
   return mutex_init (m, lock_type, name, arg);
-
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
-
 #else
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (lock_type);
@@ -3401,9 +3395,9 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
 # if defined (ACE_HAS_WTHREADS)
   ::EnterCriticalSection (m);
   return 0;
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_VXWORKS)
+# else
   return ACE_OS::mutex_lock (m);
-# endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS || VXWORKS */
+# endif /* ACE_HAS_WTHREADS */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -3425,9 +3419,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
   // Windows synchronization mechanism.
 
 #if defined (ACE_HAS_THREADS) && !defined (ACE_HAS_WTHREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_VXWORKS)
   return ACE_OS::mutex_lock (m, timeout);
-#endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS || VXWORKS */
 #else
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (timeout);
@@ -3482,9 +3474,9 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 # if defined (ACE_HAS_WTHREADS)
   ::LeaveCriticalSection (m);
   return 0;
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_VXWORKS)
+# else
   return ACE_OS::mutex_unlock (m);
-# endif /* Threads variety case */
+# endif /* ACE_HAS_WTHREADS */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);

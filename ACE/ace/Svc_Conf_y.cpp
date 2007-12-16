@@ -1,5 +1,5 @@
 /* A Bison parser, made by GNU Bison 2.0.  */
- 
+
 /* Skeleton parser for Yacc-like parsing with Bison,
    Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
 
@@ -1738,21 +1738,21 @@ ace_get_module (ACE_Service_Type const * sr,
   return const_cast<ACE_Module_Type *> (mt);
 }
 
-#if defined (DEBUGGING)
+#if defined (SVC_CONF_Y_DEBUGGING)
 // Main driver program.
 
 int
 main (int argc, char *argv[])
 {
-  ACE_Svc_Conf_Param param (stdin);
+  ACE_Svc_Conf_Param param (0, stdin);
 
   // Try to reopen any filename argument to use ACE_YYIN.
   if (argc > 1 && (ace_yyin = freopen (argv[1], "r", stdin)) == 0)
-    (void) ACE_OS::ACE_OS::fprintf (stderr, ACE_TEXT ("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
+    (void) ACE_OS::fprintf (stderr, ACE_TEXT ("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
 
   return ::ace_yyparse (&param);
 }
-#endif /* DEBUGGING */
+#endif /* SVC_CONF_Y_DEBUGGING */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

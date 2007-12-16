@@ -1,3 +1,30 @@
+Sun Dec 16 06:49:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Added ACE_HAS_SOCK_BUF_SIZE_MAX, thanks to Adam Mitz for pointing
+          out this is needed for Solaris
+
+        * ace/OS_NS_Thread.cpp:
+          Const changes
+
+        * ace/OS_NS_Thread.inl:
+          Simplified ifdef checks in multiple methods
+
+        * ace/Select_Reactor_Base.cpp:
+          Layout change
+
+        * ace/Select_Reactor_Base.inl:
+          Change for msvc9
+
+        * ace/Select_Reactor_T.cpp:
+          No need to check for 0 after ACE_NEW_RETURN
+
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp:
+          Changed DEBUGGING to SVC_CONF_Y_DEBUGGING and also fixed
+          the compile problems that exist in the code guarded by
+          this define
+
 Sat Dec 15 15:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/gperf/gperf.mpc:
