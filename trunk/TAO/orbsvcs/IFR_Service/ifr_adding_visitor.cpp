@@ -2022,31 +2022,45 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
             }
         }
 
-      AST_Expression::AST_ExprValue *ev = node->constant_value ()->ev ();
-      AST_Decl *td = node->constant_value ()->get_tdef ();
+      AST_Expression::ExprType et = node->et ();
+      AST_Expression *cv = node->constant_value ();
 
-      if (td != 0 && td->node_type () == AST_Decl::NT_typedef)
+      /// @@@ (JP 2007-12-12) I've removed code to check
+      /// for constants of typedefs. The CORBA document
+      /// formal/2004-03-12 (CORBA 3.0.3) says in section
+      /// 10.5.8.1 that the type of a constant in the IFR must be
+      /// 'one of the primitive types allowed in constant
+      /// declarations'. So for constants of typedefs we store
+      /// the underlying type in the IFR.
+
+      if (et == AST_Expression::EV_enum)
         {
-          // This constant's type is a typedef - look up the typedef to
-          // pass to create_constant().
+          // This constant's type is an enum - look up the enum member
+          // representing the value, then get the enclosing enum to pass
+          // to create_constant().
+          AST_Decl *enum_val =
+            node->defined_in ()->lookup_by_name (cv->n (), true);
+          AST_Decl *d = ScopeAsDecl (enum_val->defined_in ());
+                                                 
           CORBA::Contained_var contained =
-            be_global->repository ()->lookup_id (td->repoID ());
-
+            be_global->repository ()->lookup_id (d->repoID ());
+            
           this->ir_current_ = CORBA::IDLType::_narrow (contained.in ());
         }
       else
         {
-          CORBA::PrimitiveKind pkind = this->expr_type_to_pkind (ev->et);
+          // This constant's type is a primitive type - fetch it from the
+          // repo and pass it to create_constant().
+          CORBA::PrimitiveKind pkind = this->expr_type_to_pkind (et);
+          
           this->ir_current_ =
             be_global->repository ()->get_primitive (pkind);
         }
 
       CORBA::Any any;
-      this->load_any (ev,
-                      any);
+      this->load_any (cv->ev (), any);
 
-      CORBA::Container_ptr current_scope =
-        CORBA::Container::_nil ();
+      CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
 
       if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
@@ -2492,6 +2506,9 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
         delete wstr;
         break;
       }
+    case AST_Expression::EV_enum:
+      any <<= static_cast<CORBA::ULong> (ev->u.eval);
+      break;
     default:
       break;
     }
