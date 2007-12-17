@@ -3,7 +3,6 @@
 
 project(*test_idl): taoexe, ifr_client,dynamicany  {
   exename = test_idl
-  includes += $(TAO_ROOT)/include
 
   Source_Files {
     test_idl.cpp

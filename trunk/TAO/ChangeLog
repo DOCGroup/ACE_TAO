@@ -1,3 +1,9 @@
+Mon Dec 17 13:55:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/Bug_3174_Regression.mpc:
+
+          REMOVE the redundant include path!
+
 Mon Dec 17 13:40:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/Bug_3174_Regression.mpc:
