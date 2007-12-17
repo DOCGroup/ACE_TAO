@@ -99,7 +99,7 @@ namespace TAO
       virtual int register_handler (void);
 
       virtual int send_message_shared (TAO_Stub *stub,
-                                       int message_semantics,
+                                       TAO_Message_Semantics message_semantics,
                                        const ACE_Message_Block *message_block,
                                        ACE_Time_Value *max_wait_time);
 
@@ -110,12 +110,12 @@ namespace TAO
       virtual int send_request (TAO_Stub *stub,
                                 TAO_ORB_Core *orb_core,
                                 TAO_OutputCDR &stream,
-                                int message_semantics,
+                                TAO_Message_Semantics message_semantics,
                                 ACE_Time_Value *max_wait_time);
 
       virtual int send_message (TAO_OutputCDR &stream,
                                 TAO_Stub *stub = 0,
-                                int message_semantics =
+                                TAO_Message_Semantics message_semantics =
                                 Transport::TAO_TWOWAY_REQUEST,
                                 ACE_Time_Value *max_time_wait = 0);
 

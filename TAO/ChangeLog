@@ -1,3 +1,47 @@
+Mon Dec 17 20:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.h
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h
+        * tao/IIOP_Transport.cpp
+        * tao/IIOP_Transport.h
+        * tao/Strategies/COIOP_Transport.cpp
+        * tao/Strategies/COIOP_Transport.h
+        * tao/Strategies/DIOP_Transport.cpp
+        * tao/Strategies/DIOP_Transport.h
+        * tao/Strategies/SCIOP_Transport.cpp
+        * tao/Strategies/SCIOP_Transport.h
+        * tao/Strategies/SHMIOP_Transport.cpp
+        * tao/Strategies/SHMIOP_Transport.h
+        * tao/Strategies/UIOP_Transport.cpp
+        * tao/Strategies/UIOP_Transport.h
+        * tao/Transport.cpp
+        * tao/Transport.h
+          Changed message_semantics to a real enum, this fixes bugzilla
+          2992
+
+        * tao/Bind_Dispatcher_Guard.h:
+        * tao/Bind_Dispatcher_Guard.inl:
+          Changed status to TAO_Bind_Dispatcher_Status instead of int
+
+        * tao/IIOP_Connection_Handler.cpp:
+          Const changes
+
+        * tao/ORB.cpp:
+          Use true/false instead of 1/0
+
+        * tao/ORB.h:
+          Documentation change
+
+        * tao/ORB_Core.cpp:
+          Layout change
+
+        * tao/Resume_Handle.h:
+          Doxygen change
+
 Mon Dec 17 16:39:01 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
