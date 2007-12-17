@@ -315,7 +315,7 @@ namespace CIAO
     this->addr_serv_map_.bind (
       name,
       RtecUDPAdmin::AddrServer::_duplicate (addr_srv.in ()));
-      
+
     return true;
   }
 
@@ -329,7 +329,7 @@ namespace CIAO
     // We need a local socket to send the data, open it and check
     // that everything is OK:
     TAO_ECG_Refcounted_Endpoint endpoint(new TAO_ECG_UDP_Out_Endpoint);
-    
+
     if (endpoint->dgram ().open (ACE_Addr::sap_any) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -338,7 +338,7 @@ namespace CIAO
       }
 
     RtecUDPAdmin::AddrServer_var addr_srv;
-    
+
     if (this->addr_serv_map_.find (addr_serv_id, addr_srv) != 0)
       {
         return false;
@@ -381,7 +381,7 @@ namespace CIAO
     if (is_multicast)
       {
         TAO_ECG_UDP_Out_Endpoint endpoint;
-        
+
         if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1)
           {
             ACE_DEBUG ((LM_ERROR, "Cannot open send endpoint\n"));
@@ -392,10 +392,7 @@ namespace CIAO
         // If we don't clone our endpoint and
         // pass &endpoint, the receiver will
         // attempt to delete endpoint during shutdown.
-        TAO_ECG_UDP_Out_Endpoint* clone;
-        ACE_NEW_RETURN (clone,
-                        TAO_ECG_UDP_Out_Endpoint (endpoint),
-                        false);
+        TAO_ECG_Refcounted_Endpoint clone (new TAO_ECG_UDP_Out_Endpoint (endpoint));
 
         RtecUDPAdmin::AddrServer_var addr_srv;
 
@@ -410,7 +407,8 @@ namespace CIAO
       }
     else
       {
-        receiver->init (this->rt_event_channel_.in (), 0, 0);
+        TAO_ECG_Refcounted_Endpoint nil_endpoint;
+        receiver->init (this->rt_event_channel_.in (), nil_endpoint, 0);
       }
 
     // Setup the registration and connect to the event channel
@@ -442,7 +440,7 @@ namespace CIAO
         udp_eh->reactor (this->orb_->orb_core ()->reactor ());
 
         ACE_INET_Addr local_addr (listen_port);
-        
+
         if (udp_eh->open (local_addr) == -1)
           {
             ACE_ERROR ((LM_ERROR,
@@ -510,7 +508,7 @@ namespace CIAO
         ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized
 
         Components::EventBase * ev = 0;
-        
+
         try
         {
           TAO::Unknown_IDL_Type *unk =

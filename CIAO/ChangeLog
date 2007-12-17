@@ -1,3 +1,8 @@
+Mon Dec 17 08:17:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp:
+          Fixed compile error
+
 Sat Dec 15 15:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlCIAO/perlciao.mpc
