@@ -1,3 +1,8 @@
+Mon Dec 17 10:00:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Pipe.cpp:
+          Implemented fix for delays on OpenVMS when using socketpair() for Pipe.
+
 Sun Dec 16 19:26:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Refcounted_Auto_Ptr.h:
@@ -1840,7 +1845,7 @@ Thu Oct 11 12:22:57 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
 
-          Added Grégor Boirie <gregor dot boirie at free dot fr>
+          Added Grï¿½gor Boirie <gregor dot boirie at free dot fr>
 
 Wed Oct 10 11:33:40 UTC 2007  Steve Huston  <shuston@riverace.com>
 
