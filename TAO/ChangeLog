@@ -1,3 +1,28 @@
+Mon Dec 17 16:39:01 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+
+          Fixed a bug where the CSD ThreadPool would not get properly
+          re-initialized after destroying and re-initing the ORB.
+
+        * tests/CSD_Collocation:
+        * tests/CSD_Collocation/CSD_Collocation.mpc:
+        * tests/CSD_Collocation/Collocation.cpp:
+        * tests/CSD_Collocation/Collocation_Tester.h:
+        * tests/CSD_Collocation/Collocation_Tester.cpp:
+        * tests/CSD_Collocation/Diamond.idl:
+        * tests/CSD_Collocation/Diamond_i.h:
+        * tests/CSD_Collocation/Diamond_i.cpp:
+        * tests/CSD_Collocation/README:
+        * tests/CSD_Collocation/diamond_export.h:
+        * tests/CSD_Collocation/run_test.pl:
+        * tests/CSD_Collocation/stub_export.h:
+        * tests/CSD_Collocation/svc.conf:
+        * tests/CSD_Collocation/svc.conf.csd:
+        * tests/CSD_Collocation/svc.conf.xml:
+
+          Test case for this bug.
+
 Mon Dec 17 13:55:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/Bug_3174_Regression.mpc:
@@ -55,7 +80,7 @@ Sun Dec 16 19:49:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec 14 02:48:57 CST 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.6.2 released.
+        * TAO version 1.6.2 released.
 
 Wed Dec 12 14:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
