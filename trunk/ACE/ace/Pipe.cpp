@@ -180,6 +180,21 @@ ACE_Pipe::open (int buffer_size)
       return -1;
     }
 # endif /* ! ACE_LACKS_SOCKET_BUFSIZ */
+# if defined (ACE_OPENVMS) && !defined (ACE_LACKS_TCP_NODELAY)
+  int one = 1;
+  // OpenVMS implements socketpair(AF_UNIX...) by returning AF_INET sockets.
+  // Since these are plagued by Nagle as any other INET socket we need to set
+  // TCP_NODELAY on the write handle.
+  if (ACE_OS::setsockopt (this->handles_[1],
+                          ACE_IPPROTO_TCP,
+                          TCP_NODELAY,
+                          reinterpret_cast <const char *> (&one),
+                          sizeof (one)) == -1)
+    {
+      this->close ();
+      return -1;
+    }
+# endif /* ACE_OPENVMS && !ACE_LACKS_TCP_NODELAY */
 #endif  /* ! ACE_LACKS_SOCKETPAIR && ! ACE_HAS_STREAM_PIPES */
   // Point both the read and write HANDLES to the appropriate socket
   // HANDLEs.
