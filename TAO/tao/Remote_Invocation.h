@@ -75,7 +75,7 @@ namespace TAO
 
     /// Write the message onto the socket
     Invocation_Status send_message (TAO_OutputCDR &cdr,
-                                    short message_semantics,
+                                    TAO_Transport::Message_Semantics message_semantics,
                                     ACE_Time_Value *max_wait_time);
 
   protected:
