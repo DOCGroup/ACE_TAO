@@ -473,13 +473,14 @@ TAO::SSLIOP::Connector::ssliop_connect (
           return 0;
         }
 
-      ACE_Auto_Basic_Ptr<TAO::SSLIOP::Connection_Handler>
+      ACE_Event_Handler_var
         safe_handler (svc_handler);
       TAO::SSLIOP::OwnCredentials_var credentials =
         this->retrieve_credentials (resolver->stub (),
                                     svc_handler->peer ().ssl ());
 
-      svc_handler = safe_handler.release ();
+      safe_handler.release ();
+
       ssl_endpoint->set_sec_attrs (qop, trust, credentials.in());
     }
 
@@ -488,6 +489,23 @@ TAO::SSLIOP::Connector::ssliop_connect (
         desc,
         transport) == 0)
     {
+      // ...eliminate svc_handle memory leak...
+      // The make_svc_handler() method creates the service handler and
+      // bumps the #REFCOUNT# up one extra.  The extra reference count
+      // in TAO_Connect_Creation_Strategy::make_svc_handler() is
+      // needed in the case when connection completion is pending and
+      // we are going to wait on a variable in the handler to changes,
+      // signifying success or failure.  Note, that this increment
+      // cannot be done once the connect() returns since this might be
+      // too late if another thread pick up the completion and
+      // potentially deletes the handler before we get a chance to
+      // increment the reference count.
+      if (svc_handler)
+          svc_handler->remove_reference();
+
+      ACE_Event_Handler_var
+        safe_handler (svc_handler);
+
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
@@ -547,7 +565,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
           return 0;
         }
 
-      ACE_Auto_Basic_Ptr<TAO::SSLIOP::Connection_Handler>
+      ACE_Event_Handler_var
         safe_handler (svc_handler);
 
       // Setup the establishment of trust connection properties, if
@@ -592,7 +610,8 @@ TAO::SSLIOP::Connector::ssliop_connect (
           throw CORBA::INV_POLICY ();
         }
 
-      svc_handler = safe_handler.release ();
+      // svc_handler is never reset..it still has the value
+      (void)safe_handler.release ();
 
       // Get the right synch options
       ACE_Synch_Options synch_options;
