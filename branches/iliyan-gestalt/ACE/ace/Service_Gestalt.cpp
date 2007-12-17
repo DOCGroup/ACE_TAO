@@ -212,12 +212,26 @@ ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
 {
   if (g != 0)
     {
-      printf ("//refcnt--=%ld\n", g->refcnt_.value());
-      if (--g->refcnt_ == 0)
+      long tmp = --g->refcnt_;
+      printf ("//refcnt--=%ld\n", tmp);
+      if (tmp == 0)
         delete g;
     }
 
 }
+
+
+
+
+void
+ACE_Service_Gestalt::operator delete (void* p)
+{
+  ACE_TRACE ("ACE_Service_Gestalt::delete");
+  ACE_Service_Gestalt* tmp = reinterpret_cast<ACE_Service_Gestalt*> (p);
+  printf ("//delete: %ld\n", tmp->refcnt_.value ());
+
+}
+
 
 
 ACE_Service_Gestalt::~ACE_Service_Gestalt (void)

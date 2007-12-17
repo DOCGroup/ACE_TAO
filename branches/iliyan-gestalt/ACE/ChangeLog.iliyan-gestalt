@@ -1,3 +1,16 @@
+Mon Dec 17 16:03:22 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * .:
+
+        Started tracking the trunk with svnmerge.
+
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+        * ace/String_Base.cpp:
+
+        Working on the reference count mechanism
+
 Sun Dec 16 20:48:39 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         Changed the Service Config to use the PIMPL pattern instead of

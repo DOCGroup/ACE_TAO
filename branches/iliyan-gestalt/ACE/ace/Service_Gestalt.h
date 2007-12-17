@@ -91,6 +91,7 @@ public:
   /// Perform user-specified close activities and remove dynamic
   /// memory.
   virtual ~ACE_Service_Gestalt (void);
+  void operator delete (void*);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -449,8 +450,12 @@ protected:
   /// the static_svcs_ list.
   ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
 
+  //@DEBUG:
+ public:
+
   /// Support for intrusive reference counting
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> refcnt_;
+
 
  public:
   static void intrusive_add_ref (ACE_Service_Gestalt*);

@@ -371,12 +371,16 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
   ACE_Object_Manager::init_tss ();
 #endif
 
-  // IJ: Need to find a better way of instantiating the gestalt ...
+  // TODO: Need to find a more customizable way of instantiating the
+  // gestalt but perhaps we should leave this out untill such
+  // customizations are identified.
   ACE_Service_Gestalt* tmp = 0;
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (size, false, ignore_static_svcs));
 
-  //ACE_Service_Gestalt::intrusive_add_ref (tmp);
+  // The TSS owns its objects too, so we need to bump the SG reference
+  // count to avoid double deletions from TSS tear-down and SC::fini()
+  ACE_Service_Gestalt::intrusive_add_ref (tmp);
   this->tss_.ts_object (tmp);
 
   this->instance_ = tmp;
@@ -395,12 +399,16 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
   ACE_Object_Manager::init_tss ();
 #endif
 
-  // IJ: Need to find a better way of instantiating the gestalt ...
+  // TODO: Need to find a more customizable way of instantiating the
+  // gestalt but perhaps we should leave this out untill such
+  // customizations are identified.
   ACE_Service_Gestalt* tmp = 0;
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
 
-  //ACE_Service_Gestalt::intrusive_add_ref (tmp);
+  // The TSS owns its objects too, so we need to bump the SG reference
+  // count to avoid double deletions from TSS tear-down and SC::fini()
+  ACE_Service_Gestalt::intrusive_add_ref (tmp);
   this->tss_.ts_object (tmp);
 
   this->instance_ = tmp;
@@ -565,10 +573,10 @@ ACE_TSS <ACE_Service_Gestalt>::cleanup (void* p)
 {
   // Just decrement the reference count. This eliminates dependency
   // and ordering problems between TSS rundown and ACE::fini()
-  ACE_Service_Gestalt::intrusive_remove_ref (reinterpret_cast<ACE_Service_Gestalt*> (p));
+  ACE_Service_Gestalt* tmp = reinterpret_cast<ACE_Service_Gestalt*> (p);
+  printf ("//cleanup: %ld\n", tmp->refcnt_.value ());
+  ACE_Service_Gestalt::intrusive_remove_ref (tmp);
 }
-
-
 
 // Perform user-specified close activities and remove dynamic memory.
 
