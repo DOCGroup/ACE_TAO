@@ -1,4 +1,4 @@
-// "$Id$"
+  // "$Id$"
 
 #include "tao/ORB.h"
 
@@ -231,12 +231,12 @@ CORBA::ORB::work_pending (ACE_Time_Value &tv)
 
   int const result = this->orb_core_->reactor ()->work_pending (tv);
   if (result == 0 || (result == -1 && errno == ETIME))
-    return 0;
+    return false;
 
   if (result == -1)
     throw ::CORBA::INTERNAL ();
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -247,12 +247,12 @@ CORBA::ORB::work_pending (void)
 
   const int result = this->orb_core_->reactor ()->work_pending ();
   if (result == 0)
-    return 0;
+    return false;
 
   if (result == -1)
     throw ::CORBA::INTERNAL ();
 
-  return 1;
+  return true;
 }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)

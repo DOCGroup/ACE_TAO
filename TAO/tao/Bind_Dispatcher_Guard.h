@@ -37,7 +37,7 @@ public:
   int unbind_dispatcher (void);
 
   /// State information
-  enum
+  enum TAO_Bind_Dispatcher_Status
     {
       /// Unbind the dispatcher
       UNBIND = 0,
@@ -46,13 +46,13 @@ public:
     };
 
   /// Get status
-  int status (void) const;
+  TAO_Bind_Dispatcher_Status status (void) const;
 
   /// Set status
-  void status (int status);
+  void status (TAO_Bind_Dispatcher_Status status);
 
 private:
-  int                         status_;
+  TAO_Bind_Dispatcher_Status  status_;
   CORBA::ULong                request_id_;
   TAO_Reply_Dispatcher*       rd_;
   TAO_Transport_Mux_Strategy* tms_;
