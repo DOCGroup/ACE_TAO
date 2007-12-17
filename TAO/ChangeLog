@@ -1,3 +1,8 @@
+Mon Dec 17 08:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+          Fixed compile error
+
 Sun Dec 16 19:53:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
