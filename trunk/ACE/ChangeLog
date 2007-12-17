@@ -1,3 +1,9 @@
+Mon Dec 17 16:41:44 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added TAO/tests/CSD_Collocation.
+
 Mon Dec 17 12:35:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * bin/tao_other_tests.lst:
@@ -93,7 +99,7 @@ Fri Dec 14 13:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec 14 02:48:57 CST 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.6.2 released.
+        * ACE version 5.6.2 released.
 
 Thu Dec 13 16:19:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
