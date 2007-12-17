@@ -102,7 +102,7 @@ int
 TAO_UIOP_Transport::send_request (TAO_Stub *stub,
                                   TAO_ORB_Core *orb_core,
                                   TAO_OutputCDR &stream,
-                                  int message_semantics,
+                                  TAO_Message_Semantics message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core, message_semantics) == -1)
@@ -119,7 +119,7 @@ TAO_UIOP_Transport::send_request (TAO_Stub *stub,
 int
 TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
                                   TAO_Stub *stub,
-                                  int message_semantics,
+                                  TAO_Message_Semantics message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first

@@ -91,7 +91,7 @@ int
 TAO_COIOP_Transport::send_request (TAO_Stub *,
                                   TAO_ORB_Core *,
                                   TAO_OutputCDR &,
-                                  int,
+                                  TAO_Message_Semantics,
                                   ACE_Time_Value *)
 {
   return 0;
@@ -99,18 +99,18 @@ TAO_COIOP_Transport::send_request (TAO_Stub *,
 
 int
 TAO_COIOP_Transport::send_message (TAO_OutputCDR &,
-                                  TAO_Stub *,
-                                  int,
-                                  ACE_Time_Value *)
+                                   TAO_Stub *,
+                                   TAO_Message_Semantics,
+                                   ACE_Time_Value *)
 {
   return 1;
 }
 
 int
 TAO_COIOP_Transport::send_message_shared (TAO_Stub *,
-                                         int,
-                                         const ACE_Message_Block *,
-                                         ACE_Time_Value *)
+                                          TAO_Message_Semantics,
+                                          const ACE_Message_Block *,
+                                          ACE_Time_Value *)
 {
   return 1;
 }
