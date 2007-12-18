@@ -1,3 +1,9 @@
+Tue Dec 18 10:45:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3171_Regression/*:
+          New regression provided by Joe Seward <joseph dot f dot seward at saic dot com>
+          for providing this test. This bug is not fixed yet.
+
 Tue Dec 18 10:11:20 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/IFRService/Options.cpp:
