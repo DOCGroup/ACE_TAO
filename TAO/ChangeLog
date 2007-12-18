@@ -1,3 +1,9 @@
+Tue Dec 18 14:38:22 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/CSD_Collocation/CSD_Collocation.mpc:
+
+          Exclude this test from minimum CORBA.
+
 Tue Dec 18 12:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Queued_Message.{h,cpp,inl}:

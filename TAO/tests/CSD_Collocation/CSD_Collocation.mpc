@@ -43,7 +43,7 @@ project(*Diamond) : taolib_with_idl, portableserver {
   }
 }
 
-project(*Server) : taoserver, strategies, csd_threadpool, avoids_corba_e_micro, avoids_corba_e_compact {
+project(*Server) : taoserver, strategies, csd_threadpool, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
   after   += *Test_Stub *Diamond
   libs    += Collocation_Test_Stub Collocation_Diamond
   exename  = Collocation
