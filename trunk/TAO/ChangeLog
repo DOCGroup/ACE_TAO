@@ -1,3 +1,8 @@
+Tue Dec 18 12:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Queued_Message.{h,cpp,inl}:
+          Added new inline file
+
 Tue Dec 18 10:45:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3171_Regression/*:
