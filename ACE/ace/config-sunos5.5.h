@@ -407,5 +407,8 @@
 #  define ACE_HAS_3_PARAM_READDIR_R
 #endif
 
+// Sum of the iov_len values can't be larger then SSIZE_MAX
+#define ACE_HAS_SOCK_BUF_SIZE_MAX
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */
