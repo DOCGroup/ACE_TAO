@@ -2,10 +2,11 @@
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/DynamicAny/DynAnyUtils_T.h"
 
 #include "tao/DynamicAny/DynAny_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
+
+#include "tao/DynamicAny/DynAnyUtils_T.h"
 
 #include "tao/CDR.h"
 
