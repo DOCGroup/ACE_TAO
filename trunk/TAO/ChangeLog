@@ -1,3 +1,9 @@
+Tue Dec 18 10:11:20 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/IFRService/Options.cpp:
+          Fixed two memory leaks in Options::parse_args in handling
+          of string arguments.
+
 Tue Dec 18 07:53:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CDR.{h,cpp,inl}:
