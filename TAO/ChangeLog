@@ -1,3 +1,12 @@
+Tue Dec 18 20:21:05 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_interface_header (check_concrete_supported_inheritance):
+        
+          Fixed bug in the logic of this method, which checks
+          valuetypes that support a concrete interface to make sure
+          that, if the supported interface has ancestors, that all
+          its ancestors are supported by the valuetype's ancestors.
+
 Tue Dec 18 14:38:22 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * tests/CSD_Collocation/CSD_Collocation.mpc:

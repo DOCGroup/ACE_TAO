@@ -737,7 +737,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
             {
               this->pd_supports_concrete = iface;
 
-              if (this->check_concrete_supported_inheritance (iface) != 0)
+              if (!this->check_concrete_supported_inheritance (iface))
                 {
                   idl_global->err ()->concrete_supported_inheritance_error (
                                           this->name (),
@@ -759,6 +759,11 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 bool
 FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
 {
+  if (this->pd_n_inherits == 0)
+    {
+      return true;
+    }
+
   AST_ValueType *vt = 0;
   AST_Interface *concrete = 0;
   AST_Interface *ancestor = 0;
@@ -770,12 +775,12 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
 
       if (0 == concrete)
         {
-          return 0;
+          return true;
         }
 
       if (d == concrete)
         {
-          return 0;
+          return true;
         }
 
       for (long j = 0; j < d->n_inherits_flat (); ++j)
@@ -784,12 +789,12 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
 
           if (ancestor == concrete)
             {
-              return 0;
+              return true;
             }
         }
     }
 
-  return 1;
+  return false;
 }
 
 //************************************************************************
