@@ -596,7 +596,7 @@ public:
   virtual int handle_input (TAO_Resume_Handle &rh,
                             ACE_Time_Value *max_wait_time = 0);
 
-  enum
+  enum TAO_Message_Semantics
     {
       TAO_ONEWAY_REQUEST = 0,
       TAO_TWOWAY_REQUEST = 1,
@@ -632,7 +632,7 @@ public:
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
-                            int message_semantics,
+                            TAO_Message_Semantics message_semantics,
                             ACE_Time_Value *max_time_wait) = 0;
 
   /// This method formats the stream and then sends the message on the
@@ -646,7 +646,7 @@ public:
    */
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
-                            int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
+                            TAO_Message_Semantics message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0) = 0;
 
   /// Sent the contents of @a message_block
@@ -665,7 +665,7 @@ public:
    *             block, used in the implementation of timeouts.
    */
   virtual int send_message_shared (TAO_Stub *stub,
-                                   int message_semantics,
+                                   TAO_Message_Semantics message_semantics,
                                    const ACE_Message_Block *message_block,
                                    ACE_Time_Value *max_wait_time);
 
@@ -679,7 +679,7 @@ protected:
   /// Implement send_message_shared() assuming the handler_lock_ is
   /// held.
   int send_message_shared_i (TAO_Stub *stub,
-                             int message_semantics,
+                             TAO_Message_Semantics message_semantics,
                              const ACE_Message_Block *message_block,
                              ACE_Time_Value *max_wait_time);
 

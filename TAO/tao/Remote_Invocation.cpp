@@ -4,7 +4,6 @@
 #include "tao/Profile.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Stub.h"
-#include "tao/Transport.h"
 #include "tao/Connection_Handler.h"
 #include "tao/operation_details.h"
 #include "tao/ORB_Core.h"
@@ -128,7 +127,7 @@ namespace TAO
 
   Invocation_Status
   Remote_Invocation::send_message (TAO_OutputCDR &cdr,
-                                   short message_semantics,
+                                   TAO_Transport::TAO_Message_Semantics message_semantics,
                                    ACE_Time_Value *max_wait_time)
   {
     TAO_Protocols_Hooks *tph =

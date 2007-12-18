@@ -226,7 +226,7 @@ int
 TAO_DIOP_Transport::send_request (TAO_Stub *stub,
                                   TAO_ORB_Core *orb_core,
                                   TAO_OutputCDR &stream,
-                                  int message_semantics,
+                                  TAO_Message_Semantics message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core, message_semantics) == -1)
@@ -247,7 +247,7 @@ TAO_DIOP_Transport::send_request (TAO_Stub *stub,
 int
 TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
                                   TAO_Stub *stub,
-                                  int message_semantics,
+                                  TAO_Message_Semantics message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
@@ -281,7 +281,7 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
 
 int
 TAO_DIOP_Transport::send_message_shared (TAO_Stub *stub,
-                                         int message_semantics,
+                                         TAO_Message_Semantics message_semantics,
                                          const ACE_Message_Block *message_block,
                                          ACE_Time_Value *max_wait_time)
 {

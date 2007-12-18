@@ -273,7 +273,7 @@ int
 TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
                                     TAO_ORB_Core *orb_core,
                                     TAO_OutputCDR &stream,
-                                    int message_semantics,
+                                    TAO_Message_Semantics message_semantics,
                                     ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
@@ -293,9 +293,9 @@ TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
 
 int
 TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
-                                  TAO_Stub *stub,
-                                  int message_semantics,
-                                  ACE_Time_Value *max_wait_time)
+                                    TAO_Stub *stub,
+                                    TAO_Message_Semantics message_semantics,
+                                    ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
   if (this->messaging_object_->format_message (stream) != 0)

@@ -2100,15 +2100,11 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
       // Every time we perform an interation we have to become the
       // leader again, because it is possible that a client has
       // acquired the leader role...
-      TAO_Leader_Follower &leader_follower =
-        this->leader_follower ();
+      TAO_Leader_Follower &leader_follower = this->leader_follower ();
+      TAO_LF_Strategy &lf_strategy = this->lf_strategy ();
 
-      TAO_LF_Strategy &lf_strategy =
-        this->lf_strategy ();
+      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower, lf_strategy, tv);
 
-      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower,
-                                              lf_strategy,
-                                              tv);
       result = helper.event_loop_return ();
       if (result != 0)
         {

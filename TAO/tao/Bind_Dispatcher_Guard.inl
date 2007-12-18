@@ -19,12 +19,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-TAO_Bind_Dispatcher_Guard::status (int s)
+TAO_Bind_Dispatcher_Guard::status (TAO_Bind_Dispatcher_Status s)
 {
   this->status_ = s;
 }
 
-ACE_INLINE int
+ACE_INLINE TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Status
 TAO_Bind_Dispatcher_Guard::status (void) const
 {
   return this->status_;

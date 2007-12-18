@@ -53,9 +53,9 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/GIOP_Message_Version.h"
+#include "tao/Transport.h"
 
 #include "ace/CDR_Stream.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -183,7 +183,7 @@ public:
   /// Set fragmented message attributes.
   void message_attributes (CORBA::ULong request_id,
                            TAO_Stub * stub,
-                           int message_semantics,
+                           TAO_Transport::TAO_Message_Semantics message_semantics,
                            ACE_Time_Value * timeout);
 
   /// Fragmented message request ID.
@@ -193,7 +193,7 @@ public:
   TAO_Stub * stub (void) const;
 
   /// Message semantics (twoway, oneway, reply)
-  int message_semantics (void) const;
+  TAO_Transport::TAO_Message_Semantics message_semantics (void) const;
 
   /// Maximum time to wait for outgoing message to be sent.
   ACE_Time_Value * timeout (void) const;
@@ -231,7 +231,7 @@ private:
   /**
    * @see TAO_Transport
    */
-  int message_semantics_;
+  TAO_Transport::TAO_Message_Semantics message_semantics_;
 
   /// Request/reply send timeout.
   ACE_Time_Value * timeout_;
