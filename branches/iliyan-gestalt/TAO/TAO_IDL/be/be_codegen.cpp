@@ -175,13 +175,13 @@ TAO_CodeGen::start_client_header (const char *fname)
           "dds/DCPS/Serializer.h",
           this->client_header_
         );
-     
+
       // Generate the includes of tao version sequence header.
       this->client_header_->print ("\n#include \"tao/%s\"",
                                           fname);
 
       // Add #if 0 to disable TAO specific code
-      *this->client_header_ << be_nl << be_nl 
+      *this->client_header_ << be_nl << be_nl
         << "#if 0 // disable TAO specific code"
         << be_nl << be_nl;
     }
@@ -245,7 +245,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                         << "#endif /* ACE_LACKS_PRAGMA_ONCE */";
 
   *this->client_header_ << be_nl;
-  
+
   // So the ostream operator header will be visible in included ORB files.
   if (be_global->gen_ostream_operators ())
     {
@@ -255,7 +255,7 @@ TAO_CodeGen::start_client_header (const char *fname)
     }
 
   *this->client_header_ << be_nl;
-  
+
   // Other include files.
 
   if (be_global->stub_export_include () != 0)
@@ -293,10 +293,10 @@ TAO_CodeGen::start_client_header (const char *fname)
 
           if (be_global->gen_dcps_type_support ())
             {
-              // When -Gdcps is enabled, if the "tao/*Seq.pidl" is 
+              // When -Gdcps is enabled, if the "tao/*Seq.pidl" is
               // included in a DDS idl file then the generated code
               // will include the dds version idl generated code.
-              if (ACE_OS::strstr (idl_name, "tao/") == idl_name 
+              if (ACE_OS::strstr (idl_name, "tao/") == idl_name
                 && ACE_OS::strstr (idl_name, "Seq.pidl"))
                 {
                   idl_name[0] = 'd';
@@ -855,7 +855,7 @@ int
 TAO_CodeGen::start_anyop_header (const char *fname)
 {
   // We may want to generate the full file or generate an empty
-  // one, but this is the only condition under which we want to 
+  // one, but this is the only condition under which we want to
   // skip it completely.
   if (!be_global->gen_anyop_files () && !be_global->gen_empty_anyop_header ())
     {
@@ -886,9 +886,9 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                          "Error opening file\n"),
                         -1);
     }
-    
+
   // We want the empty file not only with -GX
-  // but also when -GA appears with -Sa or -St.  
+  // but also when -GA appears with -Sa or -St.
   bool gen_empty_file = be_global->gen_empty_anyop_header ()
                         || be_global->gen_anyop_files ()
                            && !be_global->any_support ();
@@ -1059,9 +1059,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                         -1);
     }
 
-  if (this->anyop_source_->open (fname,
-                                 TAO_OutStream::TAO_CLI_IMPL)
-       == -1)
+  if (this->anyop_source_->open (fname, TAO_OutStream::TAO_CLI_IMPL) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "TAO_CodeGen::start_anyop_source - "
@@ -1253,8 +1251,8 @@ TAO_CodeGen::end_client_header (void)
 
   if (be_global->gen_dcps_type_support_only ())
     {
-      *this->client_header_ << be_nl << be_nl  
-        << "#endif /* end of disabling TAO specific code */" 
+      *this->client_header_ << be_nl << be_nl
+        << "#endif /* end of disabling TAO specific code */"
         << be_nl << be_nl;
     }
 
@@ -1885,7 +1883,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // On some platforms, this include isn't needed if certain command
   // line options are present. Rather than try to sort that all out,
   // and to keep cross-compiling robust, we always generate this
-  // include if gen_ostream_operators_ is true. 
+  // include if gen_ostream_operators_ is true.
   if (be_global->gen_ostream_operators ())
     {
       this->gen_standard_include (this->client_header_,
@@ -1929,10 +1927,10 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
   if (be_global->gen_dcps_type_support_only ())
     {
-      *this->client_stubs_ << "\n\n#if 0 // disable TAO specific code " 
+      *this->client_stubs_ << "\n\n#if 0 // disable TAO specific code "
                            << be_nl << be_nl;
     }
-    
+
   // Always generated.
   this->gen_standard_include (this->client_stubs_,
                               "tao/CDR.h");
@@ -2002,11 +2000,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // The UserException::_tao_{en,de}code() methods can throw a
   // CORBA::MARSHAL exception so make sure that system exception is
   // fully declared/defined by including "tao/SystemException.h".
-  // However, only include "tao/SystemException.h" if a user exception
-  // was encountered and if we're not already including it in the stub
-  // header.
-  if (idl_global->exception_seen_
-      && !idl_global->operation_seen_)
+  if (idl_global->exception_seen_)
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/SystemException.h");
@@ -2035,7 +2029,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_standard_include (this->client_stubs_,
                                   "ace/OS_NS_string.h");
     }
-    
+
   if (be_global->gen_amh_classes ())
     {
       // Necessary for the AIX compiler.

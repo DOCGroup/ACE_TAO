@@ -17,6 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Invocation_Base.h"
+#include "tao/Transport.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -75,7 +76,7 @@ namespace TAO
 
     /// Write the message onto the socket
     Invocation_Status send_message (TAO_OutputCDR &cdr,
-                                    short message_semantics,
+                                    TAO_Transport::TAO_Message_Semantics message_semantics,
                                     ACE_Time_Value *max_wait_time);
 
   protected:

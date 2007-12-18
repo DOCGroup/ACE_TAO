@@ -79,7 +79,7 @@ protected:
                         const ACE_Time_Value *s = 0);
 
   virtual int send_message_shared (TAO_Stub *stub,
-                                   int message_semantics,
+                                   TAO_Message_Semantics message_semantics,
                                    const ACE_Message_Block *message_block,
                                    ACE_Time_Value *max_wait_time);
 
@@ -90,12 +90,12 @@ public:
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &association,
-                            int message_semantics,
+                            TAO_Message_Semantics message_semantics,
                             ACE_Time_Value *max_wait_time);
 
   virtual int send_message (TAO_OutputCDR &association,
                             TAO_Stub *stub = 0,
-                            int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
+                            TAO_Message_Semantics message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0);
 
   /*virtual int send_reply (TAO_OutputCDR &stream,

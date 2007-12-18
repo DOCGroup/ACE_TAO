@@ -290,7 +290,7 @@ TAO_Transport::tear_listen_point_list (TAO_InputCDR &)
 
 int
 TAO_Transport::send_message_shared (TAO_Stub *stub,
-                                    int message_semantics,
+                                    TAO_Message_Semantics message_semantics,
                                     const ACE_Message_Block *message_block,
                                     ACE_Time_Value *max_wait_time)
 {
@@ -1237,7 +1237,7 @@ TAO_Transport::send_connection_closed_notifications_i (void)
 
 int
 TAO_Transport::send_message_shared_i (TAO_Stub *stub,
-                                      int message_semantics,
+                                      TAO_Message_Semantics message_semantics,
                                       const ACE_Message_Block *message_block,
                                       ACE_Time_Value *max_wait_time)
 {

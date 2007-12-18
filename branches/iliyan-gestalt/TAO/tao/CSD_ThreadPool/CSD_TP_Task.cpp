@@ -292,6 +292,9 @@ TAO::CSD::TP_Task::close(u_long flag)
       // Cancel all requests.
       TP_Cancel_Visitor cancel_visitor;
       this->queue_.accept_visitor(cancel_visitor);
+
+      this->opened_ = false;
+      this->shutdown_initiated_ = false;
     }
 
   return 0;

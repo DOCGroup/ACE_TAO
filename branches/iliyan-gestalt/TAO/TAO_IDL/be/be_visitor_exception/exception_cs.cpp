@@ -245,12 +245,10 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     {
       *os << "TAO_OutputCDR &cdr) const" << be_nl
           << "{" << be_idt_nl
-          << "if (cdr << *this)" << be_idt_nl
+          << "if (!(cdr << *this))" << be_idt_nl
           << "{" << be_idt_nl
-          << "return;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
-
-      *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
+          << "throw ::CORBA::MARSHAL ();" << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl;
 
       *os << "}" << be_nl << be_nl;
     }
@@ -271,12 +269,10 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     {
       *os << "TAO_InputCDR &cdr)" << be_nl
           << "{" << be_idt_nl
-          << "if (cdr >> *this)" << be_idt_nl
+          << "if (!(cdr >> *this))" << be_idt_nl
           << "{" << be_idt_nl
-          << "return;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
-
-      *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
+          << "throw ::CORBA::MARSHAL ();" << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl;
 
       *os << "}" << be_nl << be_nl;
     }
