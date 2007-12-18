@@ -2,10 +2,13 @@
 
 #include "tao/Queued_Message.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/Queued_Message.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (tao,
            Queued_Message,
            "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -22,18 +25,6 @@ TAO_Queued_Message::TAO_Queued_Message (TAO_ORB_Core *oc,
 
 TAO_Queued_Message::~TAO_Queued_Message (void)
 {
-}
-
-TAO_Queued_Message *
-TAO_Queued_Message::next (void) const
-{
-  return this->next_;
-}
-
-TAO_Queued_Message *
-TAO_Queued_Message::prev (void) const
-{
-  return this->prev_;
 }
 
 void
