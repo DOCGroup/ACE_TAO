@@ -1,3 +1,16 @@
+Tue Dec 18 07:53:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CDR.{h,cpp,inl}:
+        * tao/Remote_Invocation.{h,cpp}:
+          Updated message_semantics
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+          Added needed include to fix GCC 4 errors
+
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+          Reordered includes
+
 Mon Dec 17 20:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp
