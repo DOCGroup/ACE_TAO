@@ -1,3 +1,68 @@
+Mon Dec 17 16:41:44 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added TAO/tests/CSD_Collocation.
+
+Mon Dec 17 12:35:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          added TAO/orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/run_test.pl
+          for bugzilla 3174.
+
+Mon Dec 17 10:00:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Pipe.cpp:
+          Implemented fix for delays on OpenVMS when using socketpair() for Pipe.
+
+Sun Dec 16 19:26:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.inl:
+          Extended this template, thanks to Hu Yi <huyi dot zg at gmail dot com>
+          for extending this template
+
+        * tests/Refcounted_Auto_Ptr_Test.cpp:
+          Extended
+
+        * tests/TSS_Test.cpp:
+          Removed pthread draft 4 code and fixed compile warnings with VxWorks 6.6
+
+        * ace/Pipe.cpp:
+          Const changes
+
+Sun Dec 16 07:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/common/AttributesImpl.h:
+          Doxygen improvements
+
+Sun Dec 16 06:49:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Added ACE_HAS_SOCK_BUF_SIZE_MAX, thanks to Adam Mitz for pointing
+          out this is needed for Solaris
+
+        * ace/OS_NS_Thread.cpp:
+          Const changes
+
+        * ace/OS_NS_Thread.inl:
+          Simplified ifdef checks in multiple methods
+
+        * ace/Select_Reactor_Base.cpp:
+          Layout change
+
+        * ace/Select_Reactor_Base.inl:
+          Change for msvc9
+
+        * ace/Select_Reactor_T.cpp:
+          No need to check for 0 after ACE_NEW_RETURN
+
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp:
+          Changed DEBUGGING to SVC_CONF_Y_DEBUGGING and also fixed
+          the compile problems that exist in the code guarded by
+          this define
+
 Sat Dec 15 15:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/gperf/gperf.mpc:
@@ -34,7 +99,7 @@ Fri Dec 14 13:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec 14 02:48:57 CST 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.6.2 released.
+        * ACE version 5.6.2 released.
 
 Thu Dec 13 16:19:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1792,7 +1857,7 @@ Thu Oct 11 12:22:57 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
 
-          Added Grégor Boirie <gregor dot boirie at free dot fr>
+          Added Grï¿½gor Boirie <gregor dot boirie at free dot fr>
 
 Wed Oct 10 11:33:40 UTC 2007  Steve Huston  <shuston@riverace.com>
 
