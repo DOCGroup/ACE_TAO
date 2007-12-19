@@ -54,11 +54,6 @@
 // Compiler supports the ssize_t typedef.
 #  define ACE_HAS_SSIZE_T
 
-// When using the preprocessor, Ignore info msg; invalid #pragma
-#  if defined (__IBMCPP__) && (__IBMCPP__ < 400)  // IBM C++ 3.6
-#    define ACE_CC_PREPROCESSOR_ARGS "-E -qflag=w:w"
-#  endif /* (__IBMCPP__) && (__IBMCPP__ < 400) */
-
    // Keep an eye on this as the compiler and standards converge...
 #  define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #  define ACE_LACKS_PRAGMA_ONCE
@@ -71,7 +66,7 @@
 #  endif
 
    // These are for Visual Age C++ only
-#  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#  if defined (__IBMCPP__) && (__IBMCPP__ >= 600)
 #    define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
      // When using -qtempinc, we don't need to see template implementation
      // source (though we do need a pragma to find the correct source file).
@@ -89,11 +84,8 @@
 
 #    undef WIFEXITED
 #    undef WEXITSTATUS
-
-#    if (__IBMCPP__ >= 500)  /* Visual Age C++ 5 */
-#      define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#    endif /* __IBMCPP__ >= 500 */
+#    define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#    define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
 #    if (__IBMCPP__ >= 600) /* Visual Age 6 and XL C/C++ 7 and up */
 #      define ACE_HAS_TEMPLATE_TYPEDEFS
