@@ -1,3 +1,10 @@
+Wed Dec 19 09:31:59 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/IFR_Service/IFR_Service.h:
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+          Fixed bug 3175.
+
 Tue Dec 18 20:21:05 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_interface_header (check_concrete_supported_inheritance):
