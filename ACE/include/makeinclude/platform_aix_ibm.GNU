@@ -1,10 +1,7 @@
 # $Id$
 
-# This file is for use with AIX 4.3 and up, using either of the IBM
-# compilers (IBM C/C++ 3.6.6 or Visual Age C++ 5 or 6 batch compiler).
-# If you wish to use the CSet++ compiler, please use platform_aix4_cset++.GNU.
-# Note that as of ACE 5.4, the only supported compilers from IBM are
-# Visual Age C++ 6 and up.
+# This file is for use with AIX 5.x and up, using either of the IBM
+# compilers (Visual Age C++ 6 or newer compiler).
 
 debug ?= 1
 distrib ?= 0
@@ -86,70 +83,56 @@ endif
 DCCFLAGS    += -g -qcheck=nobounds:div:null
 DCFLAGS     += -g
 
-# Now sort out the compiler differences here...
-ifeq ($(XLCVERSION),0x0306)
-  SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
-  TEMPINCDIR  = tempinc
-  CCFLAGS    += -qlanglvl=ansi -qflag=e:e -qonce -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_PRAGMA
-  SOFLAGS    += -p 0
-# ibmcxx_build turns on the extra step for instantiating and compiling
-# template instances in rules.lib.GNU.
-  ibmcxx_build = 1
-else    # Visual Age 5 and up
-  ifeq ($(XLCVERSION),0x0500)
-    SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
-    TEMPINCDIR  = tempinc
-    CCFLAGS    += -qflag=w:w -qonce -qtempinc=$(TEMPINCDIR)
+ifeq ($(XLCVERSION),0x0600)
+  # This is just for the workaround for aio, above. Without it, the
+  # compiler warns that __C99_RESTRICT is reserved. When that workaround
+  # is gone, this ifeq can be removed also. -qflag=w:w is what we want
+  # in the end.
+  CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE)
+  ifeq (502,$(AIX_VERS))
+    CCFLAGS    += -qflag=e:e
   else
-    ifeq ($(XLCVERSION),0x0600)
-      # This is just for the workaround for aio, above. Without it, the
-      # compiler warns that __C99_RESTRICT is reserved. When that workaround
-      # is gone, this ifeq can be removed also. -qflag=w:w is what we want
-      # in the end.
-      CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE)
-      ifeq (502,$(AIX_VERS))
-        CCFLAGS    += -qflag=e:e
-      else
-        CCFLAGS    += -qflag=w:w
-      endif
+    CCFLAGS    += -qflag=w:w
+   endif
+else
+  ifeq ($(XLCVERSION),0x0700)
+    CCFLAGS += -qflag=w:w
+    ifeq ($(templates),manual)
+      CCFLAGS += -qnotempinc -qnotemplateregistry
     else
-      ifeq ($(XLCVERSION),0x0700)
-        CCFLAGS += -qflag=w:w
-	ifeq ($(templates),manual)
-	  CCFLAGS += -qnotempinc -qnotemplateregistry
-        else
-          CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE)
-        endif
-	# According to documentation, default is -qeh, which is equivalent
-	# to -qeh=v5.  Apparently 6.0 fixed some problems with nested
-	# try-catch blocks.
-	ifeq ($(exceptions),1)
-	  CCFLAGS     += -qeh=v6
-	endif
-      else
-        CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
-      endif
+      CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE)
     endif
-  endif
-  DLD         = $(CXX) -qmkshrobj
-  SOFLAGS    += $(CCFLAGS) $(CPPFLAGS) $(INCLDIRS)
-  ifeq ($(buildbits),64)
-    DLD     += -q64
-    CFLAGS  += -q64 -qwarn64
-    CCFLAGS += -q64 -qwarn64
-    ARFLAGS := -X64 $(ARFLAGS)
-
-    # This option results in a crash of TAO when building 64bit with
-    # Visual Age 6. No idea why but don't use it when using Visual Age 6.
-    ifneq ($(XLCVERSION),0x0600)
-     # CCFLAGS += -qstaticinline
+    # According to documentation, default is -qeh, which is equivalent
+    # to -qeh=v5.  Apparently 6.0 fixed some problems with nested
+    # try-catch blocks.
+    ifeq ($(exceptions),1)
+      CCFLAGS     += -qeh=v6
     endif
   else
-    # Using 32bit the staticinline option works.
-    #CCFLAGS += -qstaticinline
+     CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
   endif
-  CCFLAGS += -qfuncsect
 endif
+
+DLD         = $(CXX) -qmkshrobj
+SOFLAGS    += $(CCFLAGS) $(CPPFLAGS) $(INCLDIRS)
+
+ifeq ($(buildbits),64)
+  DLD     += -q64
+  CFLAGS  += -q64 -qwarn64
+  CCFLAGS += -q64 -qwarn64
+  ARFLAGS := -X64 $(ARFLAGS)
+
+  # This option results in a crash of TAO when building 64bit with
+  # Visual Age 6. No idea why but don't use it when using Visual Age 6.
+  ifneq ($(XLCVERSION),0x0600)
+    # CCFLAGS += -qstaticinline
+  endif
+else
+  # Using 32bit the staticinline option works.
+  #CCFLAGS += -qstaticinline
+ndif
+
+CCFLAGS += -qfuncsect
 
 # The Visual Age preprocessor is not usable with the TAO_IDL compiler.
 # At the moment an idl file just contains includes of other idl files
@@ -182,7 +165,4 @@ SOVERSION   =
 # either in this file or on the command line.
 #OCCFLAGS    += -qarch=ppc -qtune=604
 
-# -O2 is too much for Visual Age C++ 5.0.  It ends up calling
-# the wrong methods in some cases (orbsvcs/tests/EC_Throughput).
-# Chad Elliott 7/24/2001
-OCCFLAGS    += -qlibansi -O -qarch=com
+OCCFLAGS    += -qlibansi -O2 -qarch=com
