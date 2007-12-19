@@ -1,3 +1,9 @@
+Wed Dec 19 14:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+        * ace/config-aix-5.x.h:
+          Deprecated Visual Age 5 and older
+
 Tue Dec 18 14:40:11 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:
