@@ -1,3 +1,24 @@
+Wed Dec 19 17:15:19 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+
+          Fixed a bug in my prior check-in of this code.  The case where the
+          thread calling close(1) is also a CSD ThreadPool thread was not
+          previously covered.
+
+        * tests/CSD_Collocation/CSD_Collocation.mpc:
+        * tests/CSD_Collocation/Diamond_i.h:
+        * tests/CSD_Collocation/run_test.pl:
+
+          Simplified the test down to one executable, no shared libraries.
+
+        * tests/CSD_Collocation/diamond_export.h:
+        * tests/CSD_Collocation/stub_export.h:
+
+          Removed these files.
+
 Wed Dec 19 09:31:59 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/IFR_Service/IFR_Service.h:
@@ -8,7 +29,7 @@ Wed Dec 19 09:31:59 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 Tue Dec 18 20:21:05 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_interface_header (check_concrete_supported_inheritance):
-        
+
           Fixed bug in the logic of this method, which checks
           valuetypes that support a concrete interface to make sure
           that, if the supported interface has ancestors, that all
