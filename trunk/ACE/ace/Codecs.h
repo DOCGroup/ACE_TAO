@@ -63,7 +63,7 @@ public:
   static ACE_Byte* encode (const ACE_Byte* input,
                            const size_t input_len,
                            size_t* output_len,
-			   bool is_chunked = true);
+                           bool is_chunked = true);
   /**
    * Decodes a stream of Base64 to bytes data
    *
