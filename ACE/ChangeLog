@@ -1,3 +1,11 @@
+Tue Dec 18 17:56:30 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/ACE-development-process.html,
+        * docs/ACE-bug-process.html: Updated these documents to clarify
+          that submitters of code, bug fixes, etc. waive claims to
+          copyright or ownership of the submissions.  Thanks to Tom
+          Callaway <tcallawa at redhat dot com> for help with this.
+
 Thu Dec 20 15:39:43 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Codecs.h:
@@ -51,6 +59,7 @@ Thu Dec 20 10:30:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
           overload/tax the LynxOS kernal resulting in random process
           table corruption and filing system errors.
 
+>>>>>>> .r80320
 Wed Dec 19 14:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix_ibm.GNU:
