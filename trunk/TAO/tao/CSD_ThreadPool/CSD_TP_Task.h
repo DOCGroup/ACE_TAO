@@ -153,6 +153,8 @@ namespace TAO
 
       /// The list of ids for the threads launched by this task.
       Thread_Ids activated_threads_;
+
+      enum { MAX_THREADPOOL_TASK_WORKER_THREADS = 50 };
     };
 
   }

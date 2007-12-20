@@ -1,3 +1,10 @@
+Thu Dec 20 15:01:48 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.inl:
+
+          Resolved errors from the Borland compiler.
+
 Wed Dec 19 17:15:19 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * tao/CSD_ThreadPool/CSD_TP_Task.h:
