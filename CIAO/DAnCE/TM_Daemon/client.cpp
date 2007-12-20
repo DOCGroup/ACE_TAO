@@ -85,7 +85,7 @@ namespace CIAO
                 {
 //                  ACE_DEBUG ((LM_DEBUG, "%d Invoking get_snapshot ... ", i));
                   latency.start ();
-                  ::Deployment::Domain_var domain = daemon->get_snapshot ();
+                  ::Deployment::Domain_var domain = daemon->getSnapshot ();
                   latency.stop ();
                   latency.dump ();
 //                  ACE_DEBUG ((LM_DEBUG, "done!\n"));

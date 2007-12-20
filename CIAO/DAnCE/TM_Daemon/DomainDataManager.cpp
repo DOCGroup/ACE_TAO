@@ -100,10 +100,15 @@ namespace CIAO
               sub_domain.node[0] = initial_domain_.node[i];
               try
                 {
+                  ACE_DEBUG ((LM_DEBUG, "Calling join doamin on %s... ",
+                              sub_domain.node[0].name.in ()));
                   node_manager->joinDomain (sub_domain, NULL, log);
+                  ACE_DEBUG ((LM_DEBUG, "done!"));
                 }
               catch (CORBA::Exception& ex)
                 {
+                  ACE_DEBUG ((LM_DEBUG, "EXCEPTION CAUGHT!!!!!!\n"));
+
                   std::string msg = "TM::DomainDataManager.cpp:call_all_node_managers(): "
                                     "Error in invoking join domaintrying on ";
                   msg += this->initial_domain_.node[i].name.in ();
@@ -281,7 +286,7 @@ namespace CIAO
           //          this->node_timers_[this->current_domain_.node[i].name.in ()]->start ();
           this->node_monitors_[i]->sendc_get_resource_data (handler);
 
-          // for synchronous calls 
+          // for synchronous calls
 //          this->node_monitors_[i]->get_resource_data ();
         }
       this->condition_.wait ();
@@ -299,13 +304,13 @@ namespace CIAO
       plans.length (plans_.size ());
 
       // form the plans and send them over
-      for (int i =0;i < plans_.size ();i++)      
+      for (int i =0;i < plans_.size ();i++)
       {
         CIAO::Config_Handlers::XML_File_Intf intf (plans_[i].c_str ());
         ::Deployment::DeploymentPlan_var plan = intf.get_plan ();
 	plans[i] = plan;
-      }      
-      
+      }
+
 
       for (CORBA::ULong i = 0; i < this->node_monitors_.size (); ++i)
         {

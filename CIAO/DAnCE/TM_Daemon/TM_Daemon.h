@@ -27,7 +27,9 @@ namespace CIAO
 
       virtual ~Daemon_impl ();
 
-      virtual ::Deployment::Domain * get_snapshot (void);
+      virtual ::Deployment::Domain * getInitialDomain ();
+
+      virtual ::Deployment::Domain * getSnapshot ();
 
       virtual void shutdown ();
 

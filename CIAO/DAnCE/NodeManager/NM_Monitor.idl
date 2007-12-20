@@ -4,10 +4,13 @@
 
 module Onl_Monitor
 {
+  typedef sequence<::Deployment::DeploymentPlan> Plan_Seq;
+  
   interface NM_Monitor
   {
     ///
-    void monitor_app_QoS (in ::Deployment::DeploymentPlan plan);
+    //    void monitor_app_QoS (in ::Deployment::DeploymentPlan plan);
+    void monitor_app_QoS (in Plan_Seq plans);
 
     /// gets the resource data , called by TM
     ::Deployment::Domain get_resource_data ();

@@ -1,3 +1,23 @@
+Thu Dec 20 16:00:55 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * CIAO_TAO.mwc:
+        * DAnCE/NodeApplication/App_Monitor_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/CIAO_Monitor.cpp:
+        * DAnCE/NodeManager/NA_Monitor.cpp:
+        * DAnCE/NodeManager/NM_Monitor.idl:
+        * DAnCE/NodeManager/NM_Monitor_Impl.h:
+        * DAnCE/NodeManager/NM_Monitor_Impl.cpp:
+        * DAnCE/TM_Daemon/DomainDataManager.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.h:
+        * DAnCE/TM_Daemon/TM_Daemon.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.idl:
+        * DAnCE/TM_Daemon/client.cpp:
+        * DAnCE/TM_Daemon/driver.cpp:
+        * examples/space/descriptors/NodeManagerMap_MT.dat:
+
+        Checking in updates to the TM.
+
 Thu Dec 13 16:50:49 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * DAnCE/TM_Daemon/DomainDataManager.h:

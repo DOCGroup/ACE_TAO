@@ -24,6 +24,4 @@ workspace {
   ciao
   ciaosvcs
   tools
-  tests
-  examples
 }

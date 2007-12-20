@@ -3,11 +3,13 @@
 #define NM_MONITORI_H_
 
 #include "NM_MonitorS.h"
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+using namespace std;
 
 namespace CIAO
 {
@@ -26,10 +28,10 @@ public:
   // Destructor
   virtual ~Onl_Monitor_NM_Monitor_i (void);
 
-  virtual
+  virtual 
   void monitor_app_QoS (
-      const ::Deployment::DeploymentPlan & plan);
-
+    const ::Onl_Monitor::Plan_Seq & plans);
+  
   virtual
   ::Deployment::Domain * get_resource_data (void);
 
@@ -46,7 +48,9 @@ protected:
   CIAO::NodeManager_Impl_Base* node_manager_;
 
   /// The Node Application Monitor
-  Onl_Monitor::App_Monitor_var qos_monitor_;
+//  Onl_Monitor::App_Monitor_var qos_monitor_;
+  
+  vector<Onl_Monitor::App_Monitor_var> qos_monitor_seq_;
 };
 
 

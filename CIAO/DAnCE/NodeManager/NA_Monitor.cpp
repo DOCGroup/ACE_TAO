@@ -193,13 +193,6 @@ int CIAO::NA_Monitor::stop ()
 
 ::Deployment::Domain* CIAO::NA_Monitor::get_current_data ()
 {
-//   if (CIAO::debug_level () > 9)
-//     {
-//       ACE_DEBUG ((LM_DEBUG ,
-//                  "NA_Monitor::Inside the get_current_data of[%s]\n",
-//                  current_domain_->node[0].name.in ()));
-//     }
-
   // first get the process id for the NA from the controller
 
   NodeManager_Impl_Base::Component_Ids cids =
@@ -219,45 +212,45 @@ int CIAO::NA_Monitor::stop ()
     {
       CORBA::Double current_load = 0;
 
-      ACE_Unbounded_Set_Iterator<pid_data> iter_data (pid_set_);
-
-      for (iter_data = pid_set_.begin ();
-          iter_data != pid_set_.end ();
-          iter_data++)
-      {
-        pid_t pid = (*iter_data).pid_;
-        if (*iter == pid)
-          this->past_data_ = (*iter_data).prev_data_;
-      }
-
-      auto_ptr<data> curr_data = read_data (*iter);
-
-      current_load = ((curr_data->utime + curr_data->stime +
-            curr_data->cutime + curr_data->cstime -
-            past_data_.utime - past_data_.stime -
-            past_data_.cutime - past_data_.cstime) *
-          100.0)
-        / (this->interval_ * sysconf (_SC_CLK_TCK)) ;
-
-      //      ACE_DEBUG ((LM_INFO, "\n%3.2f\n", current_load));
-
-      //      std::cout << "\n The NA load is " << current_load << std::endl;
-
-      if (current_load > 100 || current_load < 0)
-        current_load = 100;
-
-      this->past_data_ = *curr_data.get ();
-
-
-      if (iter_data == pid_set_.end ())
-      {
-        pid_data new_data;
-        new_data.pid_ = *iter;
-        new_data.prev_data_ = *curr_data.get ();
-        pid_set_.insert_tail (new_data);
-      }
-      else
-        (*iter_data).prev_data_ = *curr_data.get ();
+//      ACE_Unbounded_Set_Iterator<pid_data> iter_data (pid_set_);
+//
+//      for (iter_data = pid_set_.begin ();
+//          iter_data != pid_set_.end ();
+//          iter_data++)
+//      {
+//        pid_t pid = (*iter_data).pid_;
+//        if (*iter == pid)
+//          this->past_data_ = (*iter_data).prev_data_;
+//      }
+//
+//      auto_ptr<data> curr_data = read_data (*iter);
+//
+//      current_load = ((curr_data->utime + curr_data->stime +
+//            curr_data->cutime + curr_data->cstime -
+//            past_data_.utime - past_data_.stime -
+//            past_data_.cutime - past_data_.cstime) *
+//          100.0)
+//        / (this->interval_ * sysconf (_SC_CLK_TCK)) ;
+//
+//      //      ACE_DEBUG ((LM_INFO, "\n%3.2f\n", current_load));
+//
+//      //      std::cout << "\n The NA load is " << current_load << std::endl;
+//
+//      if (current_load > 100 || current_load < 0)
+//        current_load = 100;
+//
+//      this->past_data_ = *curr_data.get ();
+//
+//
+//      if (iter_data == pid_set_.end ())
+//      {
+//        pid_data new_data;
+//        new_data.pid_ = *iter;
+//        new_data.prev_data_ = *curr_data.get ();
+//        pid_set_.insert_tail (new_data);
+//      }
+//      else
+//        (*iter_data).prev_data_ = *curr_data.get ();
 
 
       CORBA::Any any;

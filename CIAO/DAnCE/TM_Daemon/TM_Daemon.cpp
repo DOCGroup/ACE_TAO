@@ -20,8 +20,8 @@ namespace CIAO
 
     {
 
-      //      ACE_DEBUG ((LM_DEBUG, "Making call to intf \n"));
-      //      ACE_DEBUG ((LM_DEBUG, "After call to get plan \n"));
+      ACE_DEBUG ((LM_DEBUG, "Making call to intf \n"));
+      ACE_DEBUG ((LM_DEBUG, "After call to get plan \n"));
 
       // Now create the manager.
       this->manager_ = new DomainDataManager (orb, mapping, domain, deployment_plans);
@@ -34,7 +34,7 @@ namespace CIAO
       this->handler_  = Onl_Monitor::AMI_NM_MonitorHandler::_narrow (object.in ());
 
       this->manager_->start_monitor_qos (this->handler_);
-      //      ACE_DEBUG ((LM_DEBUG, "Created the Daemon!\n"));
+      ACE_DEBUG ((LM_DEBUG, "Created the Daemon!\n"));
 
     }
 
@@ -63,9 +63,18 @@ namespace CIAO
     }
 
     ::Deployment::Domain*
-    Daemon_impl::get_snapshot (void)
+    Daemon_impl::getInitialDomain ()
     {
-      //      ACE_DEBUG ((LM_DEBUG, "In get_snapshot!\n"));
+      ACE_DEBUG ((LM_DEBUG, "In getInitialDomain!\n"));
+      ::Deployment::Domain_var domain = new ::Deployment::Domain ();
+      return domain._retn ();
+    }
+
+
+    ::Deployment::Domain*
+    Daemon_impl::getSnapshot ()
+    {
+      ACE_DEBUG ((LM_DEBUG, "In getSnapshot!\n"));
       ::Deployment::Domain_var domain = new ::Deployment::Domain ();
       std::map<std::string, ::Deployment::Node> temp =
         this->manager_->get_all_data (this->handler_);
@@ -78,6 +87,7 @@ namespace CIAO
           domain->node [i] = (*itr).second;
         }
       return domain._retn ();
+      //      return 0;
     }
 
     void
