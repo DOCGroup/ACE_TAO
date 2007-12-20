@@ -1,3 +1,8 @@
+Thu Dec 20 13:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Fixed warning with VxWorks 6.6 which uses GCC 4.1.2
+
 Thu Dec 20 13:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix_ibm.GNU:
