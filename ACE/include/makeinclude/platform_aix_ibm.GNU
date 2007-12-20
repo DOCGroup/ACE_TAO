@@ -130,7 +130,7 @@ ifeq ($(buildbits),64)
 else
   # Using 32bit the staticinline option works.
   #CCFLAGS += -qstaticinline
-ndif
+endif
 
 CCFLAGS += -qfuncsect
 
