@@ -1152,8 +1152,12 @@ monitor_qos (const ::Deployment::DeploymentPlan & plan)
   }
 
 
+// added for the time being ....
   if (func.length () == 0)
+    return NULL;
+  else
     return obj;
+    
 
   // Attach to the program
   BPatch_process *appThread =

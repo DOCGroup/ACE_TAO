@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 #include "DAnCE/Deployment/Deployment_TargetData.idl"
 
@@ -6,14 +6,17 @@ module CIAO
 {
   module TM_Daemon
   {
-
     interface Daemon
     {
 
-      ::Deployment::Domain get_snapshot ();
+      ::Deployment::Domain getInitialDomain ();
+
+      ::Deployment::Domain getSnapshot ();
 
       oneway void shutdown ();
 
+
     };
+
   };
 };

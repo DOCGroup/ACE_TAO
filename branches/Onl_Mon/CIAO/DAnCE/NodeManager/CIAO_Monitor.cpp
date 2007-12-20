@@ -76,7 +76,7 @@ int CIAO::CIAO_Monitor::stop ()
 
   CORBA::Double current_load = 0;
 
-  current_load = calculate_load ();
+//  current_load = calculate_load ();
 
   CORBA::Any any;
   any <<= current_load;

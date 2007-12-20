@@ -7,6 +7,7 @@
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Config_Handlers/DnC_Dump.h"
 #include "Client_Task.h"
+#include "orbsvcs/CosNamingC.h"
 
 #include <vector>
 #include <string>
@@ -19,6 +20,7 @@ namespace CIAO
   {
     const char *ior_output_file = "daemon.ior";
 //    const char *deploymentplan_file = 0;
+    char *name = 0;
     vector<string> plans;
     string aplan;
     const char *domain_file = 0;
@@ -29,7 +31,7 @@ namespace CIAO
     int
     parse_args (int argc, char *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "o:n:k:d:m:");
+      ACE_Get_Opt get_opts (argc, argv, "o:n:k:d:m:N:");
       int c;
 
       while ((c = get_opts ()) != -1)
@@ -39,6 +41,12 @@ namespace CIAO
               ior_output_file = get_opts.opt_arg ();
               break;
 
+            case 'N':
+              name = get_opts.opt_arg ();
+              ACE_DEBUG ((LM_DEBUG, "Naming service enabled!\nName is %s\n", name));
+
+              break;
+
             case 'n':
               threads = (size_t) strtod (get_opts.opt_arg (), 0);
               break;
@@ -46,7 +54,7 @@ namespace CIAO
             case 'k':
 //              deploymentplan_file = get_opts.opt_arg ();
 //              ACE_DEBUG ((LM_DEBUG, "deploymentplan_file is %s.\n", deploymentplan_file));
-	      aplan = get_opts.opt_arg ();	
+	      aplan = get_opts.opt_arg ();
 	      plans.push_back (aplan);
               break;
 
@@ -67,6 +75,7 @@ namespace CIAO
                                  "-d <Domain filename>\n"
                                  "-m <CORBALOC filename>\n"
                                  "-n <no of threads default = 2>"
+                                 "-N <name ro register with the naming service>"
                                  "\n",
                                  argv [0]),
                                 -1);
@@ -89,6 +98,8 @@ namespace CIAO
     {
       try
         {
+          ACE_DEBUG ((LM_DEBUG, "Now running the TM daemon!\n"));
+
           CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
           if (parse_args (argc, argv) != 0)
             {
@@ -136,6 +147,20 @@ namespace CIAO
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
 
+          if (name)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Now trying to bind to the naming service...."));
+              CORBA::Object_var naming_context_object =
+                orb->resolve_initial_references ("NameService");
+              CosNaming::NamingContext_var naming_context =
+                CosNaming::NamingContext::_narrow (naming_context_object.in ());
+              CosNaming::Name cos_name;
+              cos_name.length (1);
+              cos_name[0].id = ::CORBA::string_dup (name);
+              naming_context->rebind (cos_name, daemon.in ());
+              ACE_DEBUG ((LM_DEBUG, "done! Bound witht the naming service under %s.\n", name));
+
+            }
           daemon_impl->run ();
 
         }
