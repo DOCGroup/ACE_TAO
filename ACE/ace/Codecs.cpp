@@ -38,7 +38,7 @@ ACE_Byte*
 ACE_Base64::encode (const ACE_Byte* input,
                     const size_t input_len,
                     size_t* output_len,
-		    bool is_chunked)
+                    bool is_chunked)
 {
   if (!ACE_Base64::init_)
     ACE_Base64::init();
@@ -71,7 +71,7 @@ ACE_Base64::encode (const ACE_Byte* input,
           result[pos++] = alphabet[bits & 0x3f];
           cols += 4;
           if (cols == max_columns) {
-	    if (is_chunked) 
+            if (is_chunked) 
               result[pos++] = '\n';
             cols = 0;
           }
@@ -94,13 +94,13 @@ ACE_Base64::encode (const ACE_Byte* input,
         {
           result[pos++] = pad;
           result[pos++] = pad;
-	  cols += 2;
+          cols += 2;
         }
       else
         {
           result[pos++] = alphabet[(bits >> 6) & 0x3f];
           result[pos++] = pad;
-	  cols += 2;
+          cols += 2;
         }
     }
 
