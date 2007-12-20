@@ -1,5 +1,13 @@
 Thu Dec 20 13:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * ace/OS_NS_Thread.h:
+          Layout change
+
+        * ace/OS_NS_Thread.inl:
+          Fixed warning with VxWorks 6.6 which uses GCC 4.1.2
+
+Thu Dec 20 13:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * ace/OS_NS_dlfcn.inl:
           Fixed warning with VxWorks 6.6 which uses GCC 4.1.2
 
