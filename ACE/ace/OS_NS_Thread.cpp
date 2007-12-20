@@ -1049,9 +1049,8 @@ ACE_TSS_Cleanup::tss_keys ()
         }
     }
 
-  ACE_TSS_Keys *ts_keys = 0;
-  if (ACE_OS::thr_getspecific (in_use_,
-                               reinterpret_cast <void **> (&ts_keys)) == -1)
+  void *ts_keys = 0;
+  if (ACE_OS::thr_getspecific (in_use_, &ts_keys) == -1)
     {
       ACE_ASSERT (false);
       return 0; // This should not happen!
@@ -1064,16 +1063,15 @@ ACE_TSS_Cleanup::tss_keys ()
                       0);
       // Store the dynamically allocated pointer in thread-specific
       // storage.
-      if (ACE_OS::thr_setspecific (in_use_,
-                                   reinterpret_cast <void *> (ts_keys)) == -1)
+      if (ACE_OS::thr_setspecific (in_use_, ts_keys) == -1)
         {
           ACE_ASSERT (false);
-          delete ts_keys;
+          delete reinterpret_cast <ACE_TSS_Keys*> (ts_keys);
           return 0; // Major problems, this should *never* happen!
         }
     }
 
-  return ts_keys;
+  return reinterpret_cast <ACE_TSS_Keys*>(ts_keys);
 }
 
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
