@@ -1,3 +1,10 @@
+Thu Dec 20 20:01:07 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Codecs.h:
+        * ace/Codes.cpp:
+
+          Fixed fuzz warnings.
+
 Tue Dec 18 17:56:30 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs/ACE-development-process.html,
@@ -59,7 +66,6 @@ Thu Dec 20 10:30:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
           overload/tax the LynxOS kernal resulting in random process
           table corruption and filing system errors.
 
->>>>>>> .r80320
 Wed Dec 19 14:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix_ibm.GNU:
