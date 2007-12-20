@@ -1,10 +1,16 @@
+Thu Dec 20 23:50:52 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * examples/space/descriptors/Domain_1.cdd:
+        * examples/space/descriptors/NodeManagerMap_1.dat:
+				  The above files will configure and run a single NodeManager
+
 Thu Dec 20 23:49:06 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * ChangeLog:
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-				  Updated to remove dyninst dependancy
+                                  Updated to remove dyninst dependancy
 
 Thu Dec 20 16:00:55 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
