@@ -1,3 +1,8 @@
+Thu Dec 20 13:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+          Fixed typo in this file
+
 Thu Dec 20 10:30:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * bin/tao_orb_tests.lst:
