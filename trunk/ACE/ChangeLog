@@ -1,3 +1,19 @@
+Thu Dec 20 15:39:43 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Codecs.h:
+        * ace/Codecs.cpp:
+
+          Add is_chunked argument to encode() which selects whether the
+          encoded output is "chunked" into newline terminated 72 column
+          chunks.  Fixed bug where "chunked" output was not terminated by
+          a newline if the input buffer length was an exact multiple of 3.
+          Thanks to Alick Nie <alick_nie at 163 dot com> for reporting
+          inconsistant encoding behavior which lead to this change.
+
+        * THANKS:
+
+          Add Alick Nie <alick_nie at 163 dot com>.
+
 Thu Dec 20 14:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sched_Params.cpp:

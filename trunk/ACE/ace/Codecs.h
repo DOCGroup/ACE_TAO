@@ -55,13 +55,15 @@ public:
    * @param input Binary data in byte stream.
    * @param input_len Length of the byte stream.
    * @param output_len Length of the encoded Base64 byte stream.
+   * @param is_chunked If true, terminate 72 character blocks with newline
    * @return Encoded Base64 data in byte stream or NULL if input data cannot
    *         be encoded.
    */
 
   static ACE_Byte* encode (const ACE_Byte* input,
                            const size_t input_len,
-                           size_t* output_len);
+                           size_t* output_len,
+			   bool is_chunked = true);
   /**
    * Decodes a stream of Base64 to bytes data
    *
