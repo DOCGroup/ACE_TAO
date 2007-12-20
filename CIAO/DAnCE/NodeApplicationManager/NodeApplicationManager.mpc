@@ -7,11 +7,11 @@ project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, dance_ex
   after       += NodeManager_stub CIAO_TargetManager_stub
   dynamicflags = CIAO_NAM_BUILD_DLL
 
-  includes += $(DYNINST_ROOT)/core/dyninstAPI/h
+//  includes += $(DYNINST_ROOT)/core/dyninstAPI/h
 
-  libs += dyninstAPI dwarf elf common symtabAPI iberty
+//  libs += dyninstAPI dwarf elf common symtabAPI iberty
   
-  libpaths += $(DYNINST_ROOT)/$(PLATFORM)/lib /export/home/nilabjar/AppMon/dyninstAPI/dwarf-20070703/libdwarf /export/home/nilabjar/Software/lib/lib
+//  libpaths += $(DYNINST_ROOT)/$(PLATFORM)/lib /export/home/nilabjar/AppMon/dyninstAPI/dwarf-20070703/libdwarf /export/home/nilabjar/Software/lib/lib
 
   Source_Files {
     NodeApplicationManager_Impl.cpp

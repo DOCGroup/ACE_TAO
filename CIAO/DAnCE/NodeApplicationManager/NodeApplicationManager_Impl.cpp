@@ -14,17 +14,19 @@
 #include "NodeApplication/NodeApp_Configurator.h"
 #include "ace/Reactor.h"
 
+/*
 #include   "BPatch.h"
 #include   "BPatch_Vector.h"
 #include   "BPatch_thread.h"
 #include   "BPatch_function.h"
-
+*/
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 /// Variables for the DynInst API
+/*
 BPatch bpatch;
 BPatch_Vector<BPatch_function*> targetFuncs;
 BPatch_Vector<BPatch_point *> *entrypoints;
@@ -33,6 +35,7 @@ BPatch_Vector<BPatch_function*> startFuncs;
 BPatch_Vector<BPatch_function*> stopFuncs;
 BPatch_Vector<BPatch_snippet *> startArgs;
 BPatch_Vector<BPatch_snippet *> stopArgs;
+*/
 ///
 
 bool
@@ -1158,7 +1161,7 @@ monitor_qos (const ::Deployment::DeploymentPlan & plan)
   else
     return obj;
     
-
+/*
   // Attach to the program
   BPatch_process *appThread =
     bpatch.processAttach (this->nodeapp_command_op_.in (), this->process_id_);
@@ -1237,7 +1240,7 @@ monitor_qos (const ::Deployment::DeploymentPlan & plan)
   //             bpatch.waitForStatusChange();
 
   ACE_DEBUG ((LM_DEBUG, "\t\nContinuing Execution\n"));
-
   return obj;
+*/
 }
 
