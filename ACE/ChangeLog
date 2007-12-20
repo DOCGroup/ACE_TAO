@@ -1,3 +1,9 @@
+Thu Dec 20 14:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sched_Params.cpp:
+          Use VX_TASK_PRIORITY_MAX and VX_TASK_PRIORITY_MIN when they
+          are defined
+
 Thu Dec 20 13:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:
