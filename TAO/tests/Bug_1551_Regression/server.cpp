@@ -4,6 +4,7 @@
 #include "Server_Task.h"
 #include "tao/Utils/Servant_Var.h"
 #include "ace/Get_Opt.h"
+#include "ace/High_Res_Timer.h"
 
 ACE_RCSID (Bug_1XXX_Regression, server, "$Id$")
 
@@ -52,6 +53,14 @@ parse_args (int argc, char *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  // Fetching the high res timer's global scale factor ensures that it
+  // is calibrated (if necessary on this platform) at the beginning of
+  // the test.  While the timer would otherwise be calibrated on first
+  // use, this introduces delay in the middle of the test's execution.
+  // This leads to failures due to timing assumptions (timeouts, etc.) 
+  // within the test itself.
+  (void) ACE_High_Res_Timer::global_scale_factor();
+
   try
     {
       CORBA::ORB_var orb =

@@ -4,9 +4,8 @@
 
 #include "worker.h"
 
-Worker::Worker (CORBA::ORB_ptr orb, int time)
-  :  orb_ (CORBA::ORB::_duplicate (orb)),
-     orb_timeout_(time)
+Worker::Worker (CORBA::ORB_ptr orb)
+  :  orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -16,10 +15,7 @@ Worker::svc (void)
 
   try
     {
-      ACE_Time_Value tv (orb_timeout_);
-
-      // orb times out after <timeout> seconds
-      this->orb_->run (tv);
+      this->orb_->run ();
     }
   catch (const CORBA::Exception& ex)
     {

@@ -9,13 +9,12 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use strict;
 
-my $base_test = '../Timeout';
 my $status = 0;
 my $iorfile = 'server.ior';
 my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
                                           'PerlACE::Process');
-my $SV = $class->new("$base_test/server", "-o $iorfile");
-my $CL = new PerlACE::Process("$base_test/client",
+my $SV = $class->new("server", "-o $iorfile");
+my $CL = new PerlACE::Process("client",
                               "-ORBid ClientORB -k file://$iorfile " .
                               "-l 35 -h 40");
 

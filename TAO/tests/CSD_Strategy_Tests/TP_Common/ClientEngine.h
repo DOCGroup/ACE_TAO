@@ -25,7 +25,7 @@ class ClientEngine;
 typedef TAO_Intrusive_Ref_Count_Handle<ClientEngine> ClientEngine_Handle;
 
 
-class CSD_TP_Test_Export ClientEngine : public TAO_Intrusive_Ref_Count_Base<ACE_SYNCH_MUTEX>
+class CSD_TP_Test_Export ClientEngine : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
 {
   public:
 

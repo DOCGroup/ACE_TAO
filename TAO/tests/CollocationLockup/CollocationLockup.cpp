@@ -97,6 +97,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       threads.spawn_n (N_THREADS, TestThread);
       ACE_DEBUG ((LM_INFO, "All threads spawned.\n"));
 
+      threads.wait ();
+
     } //destructor of ACE_Thread_Manager = implicit join
   catch (CORBA::Exception& ex)
     {
@@ -105,6 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   g_pOrb->shutdown (0);
+  g_pOrb->destroy ();
 
   return 0;
 }

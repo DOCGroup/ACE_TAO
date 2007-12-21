@@ -80,7 +80,7 @@ namespace
                TAO::VMCID,                                         \
                EFAULT),                                            \
              CORBA::COMPLETED_NO);                                 \
-    } else ;
+    }
 
 #define KEVORKIAN_DURING(method)                                   \
   if (this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){\
@@ -90,7 +90,7 @@ namespace
                TAO::VMCID,                                         \
                EFAULT),                                            \
              CORBA::COMPLETED_NO);                                 \
-    } else ;
+    }
 
 #define KEVORKIAN_RETURN(value, method, result)                    \
   if (this->death_pending_ == (FT_TEST::TestReplica::value)){      \
@@ -100,7 +100,7 @@ namespace
               TAO::VMCID,                                          \
               EFAULT),                                             \
               CORBA::COMPLETED_NO);                                \
-    } else ;
+    }
 
 #define KEVORKIAN_DURING_RETURN(method, result)                    \
   if (this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){\
@@ -110,7 +110,7 @@ namespace
              TAO::VMCID,                                           \
              EFAULT),                                              \
      CORBA::COMPLETED_NO);                                         \
-    } else ;
+    }
 
 
 //////////////////////////////////////////////////

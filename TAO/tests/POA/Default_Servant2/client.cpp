@@ -121,7 +121,7 @@ main (int argc, char **argv)
       // write the message to the file
       fd->write (data_sent);
 
-      //seek to the beginning of the file
+      // seek to the beginning of the file
       fd->lseek (0, SEEK_SET);
 
       // Read back the written message

@@ -7,6 +7,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    } 
+}
 
 $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
@@ -14,12 +21,12 @@ unlink $iorfile;
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o server.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");
+    $SV = new PerlACE::Process ("server", "-ORBDebuglevel $debug_level -o $iorfile");
 }
-$CL = new PerlACE::Process ("client", " -k file://$iorfile");
+$CL = new PerlACE::Process ("client", "-ORBDebuglevel $debug_level -k file://$iorfile");
 
 $SV->Spawn ();
 

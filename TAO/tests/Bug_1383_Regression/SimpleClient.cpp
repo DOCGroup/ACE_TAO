@@ -2,6 +2,7 @@
 
 #include "tao/corba.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Thread.h"
 #include "simpleC.h"
 #include "Callee_i.h"
 #include "tao/IORManipulation/IORManip_Loader.h"

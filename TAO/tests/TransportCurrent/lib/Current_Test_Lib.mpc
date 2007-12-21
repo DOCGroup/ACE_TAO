@@ -16,9 +16,8 @@ project(*idl): taoidldefaults {
 
 project(*Client): tc {
 
-  after += *idl TAO_TC
+  after += *idl
   includes += .
-  libout = .
   dynamicflags += CURRENT_TEST_BUILD_DLL
 
   Source_Files {
@@ -36,9 +35,8 @@ project(*Client): tc {
 
 project(*Server): tc, pi_server {
 
-  after += *Client
+  after += *idl
   includes += .
-  libout = .
   dynamicflags += CURRENT_TEST_BUILD_DLL
 
   Source_Files {

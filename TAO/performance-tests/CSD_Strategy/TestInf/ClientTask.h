@@ -39,7 +39,7 @@ class CSD_PT_TestInf_Export ClientTask : public ACE_Task_Base
 
   private:
 
-     typedef ACE_SYNCH_MUTEX     LockType;
+     typedef TAO_SYNCH_MUTEX     LockType;
      typedef ACE_Guard<LockType> GuardType;
 
      typedef ACE_Vector<ClientEngine_Handle> EngineVector;

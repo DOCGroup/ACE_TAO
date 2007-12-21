@@ -222,5 +222,5 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::FilterAdmin_var& filte
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<TAO_Notify_Tests_LookupManager, ACE_Thread_Mutex> *ACE_Singleton<TAO_Notify_Tests_LookupManager, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX> *ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX>::singleton_;
 #endif /*ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

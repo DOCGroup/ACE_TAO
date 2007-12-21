@@ -297,8 +297,7 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  const int result =
-    this->handle_output_eh (handle, this);
+  int const result = this->handle_output_eh (handle, this);
 
   if (result == -1)
     {
@@ -336,8 +335,7 @@ TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 }
 
 int
-TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE,
-                                           ACE_Reactor_Mask)
+TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_ASSERT (0);
   return 0;
@@ -376,8 +374,7 @@ TAO_IIOP_Connection_Handler::add_transport_to_cache (void)
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Idle the transport..
-  return cache.cache_idle_transport (&prop,
-                                     this->transport ());
+  return cache.cache_idle_transport (&prop, this->transport ());
 }
 
 int
@@ -385,7 +382,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
     IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
-  const CORBA::ULong len = listen_list.length ();
+  CORBA::ULong const len = listen_list.length ();
 
   if (TAO_debug_level > 0 && len == 0)
     {
@@ -426,11 +423,8 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int retval =
-        this->transport ()->recache_transport (&prop);
-
-      if (retval == -1)
-        return retval;
+      if (this->transport ()->recache_transport (&prop) == -1)
+        return -1;
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();
@@ -517,8 +511,7 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 
       if (tph != 0)
         {
-          CORBA::Long codepoint =
-            tph->get_dscp_codepoint ();
+          CORBA::Long codepoint = tph->get_dscp_codepoint ();
 
           tos = static_cast<int> (codepoint) << 2;
           this->set_tos (tos);

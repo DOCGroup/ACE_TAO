@@ -174,8 +174,7 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId (poa_id);
 
-  poa->activate_object_with_id (id.in (),
-                                context);
+  poa->activate_object_with_id (id.in (), context);
 
   result = context->_this ();
 

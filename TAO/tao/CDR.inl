@@ -24,7 +24,7 @@ TAO_OutputCDR::more_fragments (bool more)
 ACE_INLINE void
 TAO_OutputCDR::message_attributes (CORBA::ULong request_id,
                                    TAO_Stub * stub,
-                                   int message_semantics,
+                                   TAO_Transport::TAO_Message_Semantics message_semantics,
                                    ACE_Time_Value * timeout)
 {
   this->request_id_        = request_id;
@@ -45,7 +45,7 @@ TAO_OutputCDR::stub (void) const
   return this->stub_;
 }
 
-ACE_INLINE int
+ACE_INLINE TAO_Transport::TAO_Message_Semantics
 TAO_OutputCDR::message_semantics (void) const
 {
   return this->message_semantics_;

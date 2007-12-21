@@ -692,6 +692,8 @@ FE_populate (void)
 void
 FE_store_env_include_paths (void)
 {
+  // If this method have to change then don't forget to update
+  // util/utl_global.cpp:IDL_GlobalData::validate_orb_include (...).
   ACE_Env_Value<char*> incl_paths ("INCLUDE",
                                    (char *) 0);
   const char *aggr_str = incl_paths;

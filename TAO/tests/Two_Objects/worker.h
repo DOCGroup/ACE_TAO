@@ -15,7 +15,7 @@ class Worker : public ACE_Task_Base
 public:
 
   // Ctor
-  Worker (CORBA::ORB_ptr orb, int time);
+  Worker (CORBA::ORB_ptr orb);
 
   // The thread entry point.
   virtual int svc (void);
@@ -24,8 +24,6 @@ public:
 private:
   // The orb
   CORBA::ORB_var orb_;
-
-  int orb_timeout_;
 };
 
 #endif  /* TAO_TWO_OBJECTS_WORKER_H */

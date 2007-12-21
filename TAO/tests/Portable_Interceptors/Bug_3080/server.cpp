@@ -83,7 +83,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
+      root_poa->destroy (1, 1 );
+
+      orb->destroy ();
+
+      ACE_DEBUG ((LM_DEBUG, "Server event loop finished.\n"));
     }
   catch (const CORBA::Exception& ex)
     {

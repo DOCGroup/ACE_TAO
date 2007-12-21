@@ -100,13 +100,11 @@ TAO::SSLIOP::Connection_Handler::open (void *)
         {
           if (this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE)
             {
-              tph->client_protocol_properties_at_orb_level (
-                protocol_properties);
+              tph->client_protocol_properties_at_orb_level (protocol_properties);
             }
           else
             {
-              tph->server_protocol_properties_at_orb_level (
-                protocol_properties);
+              tph->server_protocol_properties_at_orb_level (protocol_properties);
             }
         }
       catch (const CORBA::Exception&)
@@ -255,8 +253,7 @@ TAO::SSLIOP::Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO::SSLIOP::Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  const int result =
-    this->handle_output_eh (handle, this);
+  int const result = this->handle_output_eh (handle, this);
 
   if (result == -1)
     {
@@ -269,7 +266,7 @@ TAO::SSLIOP::Connection_Handler::handle_output (ACE_HANDLE handle)
 
 int
 TAO::SSLIOP::Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                               const void *)
+                                                 const void *)
 {
   // Using this to ensure this instance will be deleted (if necessary)
   // only after reset_state(). Without this, when this refcount==1 -
@@ -343,8 +340,7 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache (void)
       addr.get_port_number ()   // port
     };
 
-  TAO_SSLIOP_Endpoint endpoint (&ssl,
-                                &tmpoint);
+  TAO_SSLIOP_Endpoint endpoint (&ssl, &tmpoint);
 
   // Construct a property object
   TAO_Base_Transport_Property prop (&endpoint);
@@ -361,7 +357,7 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
   IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
-  const CORBA::ULong len = listen_list.length ();
+  CORBA::ULong const len = listen_list.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -408,9 +404,8 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      const int retval = this->transport ()->recache_transport (&prop);
-      if (retval == -1)
-        return retval;
+      if (this->transport ()->recache_transport (&prop) == -1)
+        return -1;
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();

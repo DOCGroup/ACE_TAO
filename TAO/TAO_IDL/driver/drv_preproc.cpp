@@ -269,6 +269,8 @@ DRV_cpp_init (void)
 
       char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
 
+      // When adding new dirs here don't forget to update
+      // IDL_GlobalData::validate_orb_include accordingly.
       if (TAO_ROOT != 0)
         {
             DRV_add_include_path (include_path1, TAO_ROOT, 0);
@@ -297,7 +299,7 @@ DRV_cpp_init (void)
             }
         }
 
-        idl_global->tao_root (include_path1.c_str ());
+      idl_global->tao_root (include_path1.c_str ());
     }
 
   // Add any flags in platform_cpp_args to cpp's DRV_arglist.
@@ -486,6 +488,8 @@ DRV_cpp_post_init (void)
 
   ACE_CString include_path3, include_path4, include_path5;
 
+  // When adding new dirs here don't forget to update
+  // IDL_GlobalData::validate_orb_include accordingly.
   if (TAO_ROOT != 0)
     {
       DRV_add_include_path (include_path3, TAO_ROOT, "/orbsvcs");

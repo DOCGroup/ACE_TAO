@@ -17,6 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Invocation_Base.h"
+#include "tao/Transport.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -68,15 +69,14 @@ namespace TAO
     void init_target_spec (TAO_Target_Specification &spec);
 
     /// Write the GIOP header into the stream.
-    void write_header (TAO_Target_Specification &spec,
-                       TAO_OutputCDR &out_stream);
+    void write_header (TAO_OutputCDR &out_stream);
 
     /// Marshal the arguments into the stream.
     void marshal_data (TAO_OutputCDR &cdr);
 
     /// Write the message onto the socket
     Invocation_Status send_message (TAO_OutputCDR &cdr,
-                                    short message_semantics,
+                                    TAO_Transport::TAO_Message_Semantics message_semantics,
                                     ACE_Time_Value *max_wait_time);
 
   protected:

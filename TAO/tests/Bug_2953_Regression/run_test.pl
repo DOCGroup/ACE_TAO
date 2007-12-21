@@ -24,14 +24,12 @@ $iorfileB = PerlACE::LocalFile ("$iorbaseB");
 unlink $iorfileA;
 unlink $iorfileB;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-ORBdebuglevel $debug_level");
-}
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$SV = new $class ("server", "-ORBDebuglevel $debug_level");
+
 $CL = new PerlACE::Process ("client", " -k file://$iorfile");
-    
+
 $server = $SV->Spawn ();
 
 if ($server != 0) {
@@ -41,7 +39,7 @@ if ($server != 0) {
 
 if (PerlACE::waitforfile_timed ($iorfileA,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    print STDERR "ERROR: cannot find file <$iorfileA>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 } 
@@ -53,7 +51,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

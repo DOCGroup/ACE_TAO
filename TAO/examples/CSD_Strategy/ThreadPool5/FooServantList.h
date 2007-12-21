@@ -33,7 +33,7 @@ class FooServantList
 
   private:
 
-    typedef ACE_SYNCH_MUTEX     LockType;
+    typedef TAO_SYNCH_MUTEX     LockType;
     typedef ACE_Guard<LockType> GuardType;
 
     Foo_i** servants_;

@@ -9,15 +9,14 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 # The server IOR file
-$server_ior_file = PerlACE::LocalFile ("server.ior");
+$server_ior_file_base = "server.ior";
+$server_ior_file = PerlACE::LocalFile ("$server_ior_file_base");
 
 # The client and server processes
-if (PerlACE::is_vxworks_test()) {
-  $SERVER     = new PerlACE::ProcessVX(PerlACE::LocalFile("server"));
-}
-else {
-  $SERVER     = new PerlACE::Process(PerlACE::LocalFile("server"));
-}
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$SERVER = new $class ("server");
+
 $perl_executable = $^X;
 $perl_executable =~ s/\.exe//ig;
 if ($^O == 'VMS') {
@@ -30,7 +29,7 @@ $DUMMY_CLIENT->Arguments("hang_client.pl");
 $DUMMY_CLIENT->IgnoreExeSubDir(1);
 
 if (PerlACE::is_vxworks_test()) {
-  $SERVER->Arguments("-o server.ior -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");
+  $SERVER->Arguments("-o $server_ior_file_base -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");
 }
 else {
   $SERVER->Arguments("-o $server_ior_file -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");

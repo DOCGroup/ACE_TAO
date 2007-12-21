@@ -55,7 +55,7 @@ private:
 
 private:
   /// Synchronize the internal state
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 
   /// Keep a reference to the Session_Control, this is used to report
   /// when the test finishes.

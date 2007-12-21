@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/RTCORBA/RTCORBA_includeC.h"
+#include "tao/RTCORBA/RT_ORBInitializer.h"
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -46,7 +47,6 @@ class TAO_Thread_Pool_Manager;
  * @brief Manages the names of named and unnamed RT Mutexes
  *
  */
-
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex_Manager
 {
 
@@ -97,7 +97,9 @@ class TAO_RTCORBA_Export TAO_RT_ORB
 public:
 
   /// Constructor.
-  TAO_RT_ORB (TAO_ORB_Core *orb_core, ACE_Time_Value const &dynamic_thread_idle_timeout);
+  TAO_RT_ORB (TAO_ORB_Core *orb_core,
+              TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+              ACE_Time_Value const &dynamic_thread_time);
 
   /**
    * Create a new mutex.  Mutexes returned by this method
@@ -268,8 +270,11 @@ protected:
   /// Thread Pool Manager
   TAO_Thread_Pool_Manager *tp_manager_;
 
-  /// Dynamic thread idle timeout
-  ACE_Time_Value const dynamic_thread_idle_timeout_;
+  /// Dynamic thread lifespan policy
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan_;
+
+  /// Dynamic thread run time
+  ACE_Time_Value const dynamic_thread_time_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -26,7 +26,7 @@ namespace TAO {
 
 CosSchedulingLockList::CosSchedulingLockList(CosSchedulingLockNode *lock_array,
   const int size,
-  ACE_SYNCH_MUTEX *mutex)
+  TAO_SYNCH_MUTEX *mutex)
 {
   try
     {
@@ -121,7 +121,7 @@ CosSchedulingLockList::grant_lock(const CosSchedulingLockNode& L)
 
 int
 CosSchedulingLockList::defer_lock(const CosSchedulingLockNode& L,
-  ACE_SYNCH_MUTEX & mutex)
+  TAO_SYNCH_MUTEX & mutex)
 {
   if (this->free_->next() == 0)
     {
@@ -239,7 +239,7 @@ CosSchedulingLockList::remove_deferred_lock(CosSchedulingLockNode& L)
 }
 
 PCP_Manager::PCP_Manager(CosSchedulingLockList *locks,
-  ACE_SYNCH_MUTEX *mutex,
+  TAO_SYNCH_MUTEX *mutex,
   const RTCORBA::Current_var current)
 : locks_(locks),
   mutex_(mutex),

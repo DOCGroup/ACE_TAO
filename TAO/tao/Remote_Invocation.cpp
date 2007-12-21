@@ -4,7 +4,6 @@
 #include "tao/Profile.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Stub.h"
-#include "tao/Transport.h"
 #include "tao/Connection_Handler.h"
 #include "tao/operation_details.h"
 #include "tao/ORB_Core.h"
@@ -99,9 +98,11 @@ namespace TAO
   }
 
   void
-  Remote_Invocation::write_header (TAO_Target_Specification &spec,
-                                   TAO_OutputCDR &out_stream)
+  Remote_Invocation::write_header (TAO_OutputCDR &out_stream)
   {
+    TAO_Target_Specification spec;
+    this->init_target_spec (spec);
+
     this->resolver_.transport ()->clear_translators (0, &out_stream);
 
     // Send the request for the header
@@ -126,7 +127,7 @@ namespace TAO
 
   Invocation_Status
   Remote_Invocation::send_message (TAO_OutputCDR &cdr,
-                                   short message_semantics,
+                                   TAO_Transport::TAO_Message_Semantics message_semantics,
                                    ACE_Time_Value *max_wait_time)
   {
     TAO_Protocols_Hooks *tph =
@@ -142,7 +143,7 @@ namespace TAO
     if (nph != 0)
       {
         // nph = 0, means DiffServ library is not used
-        // nph = 0, means DiffServ library is used, and 
+        // nph = 0, means DiffServ library is used, and
         // request DSCP and reply DSCP are set.
         // Note that the application could still be using
         // RTCORBA, but still setting DIffServ codepoints

@@ -20,9 +20,6 @@ Builder::Builder(void)
 
 Builder::~Builder(void)
 {
-  delete[] this->poa_list_;
-  delete[] this->task_list_;
-  delete[] this->job_list_;
 }
 
 int
@@ -42,61 +39,85 @@ Builder::init (int argc, char *argv[])
         {
           task_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (task_list_, Periodic_Task*[task_count_], -1);
+          ACE_OS::memset (this->task_list_,
+                          this->task_count_ * sizeof (this->task_list_[0]),
+                          0);
           arg_shifter.consume_arg ();
         }
       if (0 != (current_arg = arg_shifter.get_the_parameter ("-JobCount")))
         {
           job_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (job_list_, Job_i*[job_count_], -1);
+          ACE_OS::memset (this->job_list_,
+                          this->job_count_ * sizeof (this->job_list_[0]),
+                          0);
           arg_shifter.consume_arg ();
         }
       if (0 != (current_arg = arg_shifter.get_the_parameter ("-POACount")))
         {
           poa_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (poa_list_, POA_Holder*[poa_count_], -1);
+          ACE_OS::memset (this->poa_list_,
+                          this->poa_count_ * sizeof (this->poa_list_[0]),
+                          0);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-ThreadTask") == 0)
         {
-          arg_shifter.consume_arg ();
+          if (task_count < this->task_count_)
+            {
+              arg_shifter.consume_arg ();
 
-          Periodic_Task *task = 0;
+              Periodic_Task *task;
 
-          ACE_NEW_RETURN (task, Thread_Task (), -1);
+              ACE_NEW_RETURN (task, Thread_Task (), -1);
 
-          if (task->init_task (arg_shifter) == -1)
+              if (task->init_task (arg_shifter) == -1)
+                return -1;
+
+              task_list_[task_count++] = task;
+            }
+          else
             return -1;
-
-          task_list_[task_count++] = task;
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-Job") == 0)
         {
-          arg_shifter.consume_arg ();
+          if (job_count < this->job_count_)
+            {
+              arg_shifter.consume_arg ();
 
-          Job_i *job = 0;
+              Job_i *job;
 
-          ACE_NEW_RETURN (job, Job_i (), -1);
+              ACE_NEW_RETURN (job, Job_i (), -1);
 
-          if (job->init (arg_shifter) == -1)
+              if (job->init (arg_shifter) == -1)
+                return -1;
+
+              this->job_list_[job_count++] = job;
+            }
+          else
             return -1;
-
-          this->job_list_[job_count++] = job;
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-POA") == 0)
         {
-          arg_shifter.consume_arg ();
-
-          POA_Holder *poa_holder;
-
-          ACE_NEW_RETURN (poa_holder, POA_Holder (), -1);
-
-          if (poa_holder->init (arg_shifter) == -1)
+          if (poa_count < this->poa_count_)
             {
-              delete poa_holder;
-              return -1;
-            }
+              arg_shifter.consume_arg ();
 
-          this->poa_list_[poa_count++] = poa_holder;
+              POA_Holder *poa_holder;
+
+              ACE_NEW_RETURN (poa_holder, POA_Holder (), -1);
+
+              if (poa_holder->init (arg_shifter) == -1)
+                {
+                  delete poa_holder;
+                  return -1;
+                }
+
+              this->poa_list_[poa_count++] = poa_holder;
+            }
+          else
+            return -1;
         }
         else
         {
@@ -110,6 +131,25 @@ Builder::init (int argc, char *argv[])
 int
 Builder::fini (void)
 {
+  // It's only a hack for proper cleanup of this badly designed test.
+  static bool already_cleaned = false;
+  if (already_cleaned)
+    return 0;
+
+  int count;
+
+  for (count = 0; count < this->task_count_; ++count)
+    delete this->task_list_[count];
+  delete [] this->task_list_;
+
+  delete [] this->job_list_;
+
+  for (count = 0; count < this->poa_count_; ++count)
+      delete this->poa_list_[count];
+  delete [] this->poa_list_;
+
+  already_cleaned = true;
+
   return 0;
 }
 

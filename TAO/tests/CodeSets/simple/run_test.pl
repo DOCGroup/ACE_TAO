@@ -14,7 +14,9 @@ $status = 0;
 
 print STDOUT "Client using char translator\n\n";
 
-$SV = new PerlACE::Process ("server", " -ORBDottedDecimalAddresses 1");
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$SV = new $class ("server", " -ORBDottedDecimalAddresses 1");
 $CL = new PerlACE::Process ("client", " -ORBSvcConf cs_test.conf");
 
 $SV->Spawn ();
@@ -26,14 +28,14 @@ if (PerlACE::waitforfile_timed ($iorfile,
     exit 1;
 } 
 
-$client = $CL->SpawnWaitKill (300);
+$client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
@@ -44,7 +46,7 @@ unlink $iorfile;
 
 print STDOUT "\nServer using char translator\n\n";
 
-$SV2 = new PerlACE::Process ("server", " -ORBDottedDecimalAddresses 1 -ORBSvcConf cs_test.conf");
+$SV2 = new $class ("server", " -ORBDottedDecimalAddresses 1 -ORBSvcConf cs_test.conf");
 $CL2 = new PerlACE::Process ("client");
 
 $SV2->Spawn ();
@@ -56,14 +58,14 @@ if (PerlACE::waitforfile_timed ($iorfile,
     exit 1;
 } 
 
-$client2 = $CL2->SpawnWaitKill (300);
+$client2 = $CL2->SpawnWaitKill (60);
 
 if ($client2 != 0) {
     print STDERR "ERROR: client returned $client2\n";
     $status = 1;
 }
 
-$server2 = $SV2->WaitKill (10);
+$server2 = $SV2->WaitKill (15);
 
 if ($server2 != 0) {
     print STDERR "ERROR: server returned $server2\n";

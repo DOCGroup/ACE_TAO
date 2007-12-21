@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Thread_Per_Connection_Handler::TAO_Thread_Per_Connection_Handler (
     TAO_Connection_Handler *ch,
     TAO_ORB_Core *oc)
-  : TAO_TPC_BASE (oc->thr_mgr ())
+  : ACE_Task_Base (oc->thr_mgr ())
   , ch_ (ch)
 {
   this->ch_->transport ()->add_reference ();
@@ -25,39 +25,6 @@ TAO_Thread_Per_Connection_Handler::~TAO_Thread_Per_Connection_Handler (void)
 {
   this->ch_->close_connection ();
   this->ch_->transport ()->remove_reference ();
-}
-
-int
-TAO_Thread_Per_Connection_Handler::activate (long flags,
-                                             int n_threads,
-                                             int force_active,
-                                             long priority,
-                                             int grp_id,
-                                             ACE_Task_Base *task,
-                                             ACE_hthread_t thread_handles[],
-                                             void *stack[],
-                                             size_t stack_size[],
-                                             ACE_thread_t  thread_names[])
-{
-  if (TAO_debug_level)
-    {
-      ACE_DEBUG  ((LM_DEBUG,
-                   ACE_TEXT ("TAO (%P|%t) - Thread_Per_Connection_Handler::")
-                   ACE_TEXT ("activate %d threads, flags = %d\n"),
-                   n_threads,
-                   flags));
-    }
-
-  return TAO_TPC_BASE::activate (flags,
-                                 n_threads,
-                                 force_active,
-                                 priority,
-                                 grp_id,
-                                 task,
-                                 thread_handles,
-                                 stack,
-                                 stack_size,
-                                 thread_names);
 }
 
 int

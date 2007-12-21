@@ -30,7 +30,7 @@ public:
 
 private:
   /// Synchronize the internal state
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 
   /// The type of test
   CORBA::ULong session_count_;

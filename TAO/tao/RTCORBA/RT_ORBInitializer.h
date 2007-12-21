@@ -57,12 +57,29 @@ public:
       TAO_NETWORK_PRIORITY_MAPPING_LINEAR
     };
 
+  /*
+   * Lifespan of the dynamic threads
+   * TAO_RTCORBA_DT_INFINITIVE When the Dynamic Thread is created it will run
+   * forever
+   * TAO_RTCORBA_DT_IDLE When the Dynamic Thread is created it will run until
+   * it has been idle for the specified amount of time
+   * TAO_RTCORBA_DT_FIXED When the Dynamic Thread is created it will run for
+   * the specified fix amount of time
+   */
+  enum TAO_RTCORBA_DT_LifeSpan
+  {
+    TAO_RTCORBA_DT_INFINITIVE,
+    TAO_RTCORBA_DT_IDLE,
+    TAO_RTCORBA_DT_FIXED
+  };
+
   TAO_RT_ORBInitializer (int priority_mapping_type,
                          int network_priority_mapping_type,
                          int ace_sched_policy,
                          long sched_policy,
                          long scope_policy,
-                         ACE_Time_Value const &dynamic_thread_idle_timeout);
+                         TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                         ACE_Time_Value const &dynamic_thread_time);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
@@ -115,14 +132,16 @@ private:
    */
   long const scope_policy_;
 
-  /// Dynamic thread idle timeout
+  /// Dynamic thread lifespan policy
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan_;
+
+  /// Dynamic thread time
   /**
    * When using thread pool a certain number of dynamic threads can be created.
-   * By default these threads are created when needed but never end, when this
-   * timeout is specified the threads end themselves at the moment they
-   * have not been serving any requests for the specified amount of time
+   * By default these threads are created when needed but never end. Optionally
+   * a time can be specified
    */
-  ACE_Time_Value const dynamic_thread_idle_timeout_;
+  ACE_Time_Value const dynamic_thread_time_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

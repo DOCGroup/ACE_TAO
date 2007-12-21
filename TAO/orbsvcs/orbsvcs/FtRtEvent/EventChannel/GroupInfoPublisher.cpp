@@ -156,7 +156,7 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex> *ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<GroupInfoPublisherBase, TAO_SYNCH_MUTEX> *ACE_Singleton<GroupInfoPublisherBase, TAO_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

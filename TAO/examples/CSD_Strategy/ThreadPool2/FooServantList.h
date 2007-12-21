@@ -25,7 +25,7 @@ class FooServantList
 
   private:
 
-    typedef ACE_SYNCH_MUTEX     LockType;
+    typedef TAO_SYNCH_MUTEX     LockType;
     typedef ACE_Guard<LockType> GuardType;
 
     PortableServer::ServantBase_var* servants_;

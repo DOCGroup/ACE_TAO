@@ -75,7 +75,7 @@ namespace TAO
                                       TP_Servant_State::HandleType,
                                       ACE_Hash<void*>,
                                       ACE_Equal_To<void*>,
-                                      ACE_SYNCH_MUTEX>            MapType;
+                                      TAO_SYNCH_MUTEX>            MapType;
 
       /// The underlying map of servant state objects.
       MapType map_;

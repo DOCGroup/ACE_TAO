@@ -801,7 +801,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 
       flow_handler = handler;
 
-      result = handler->get_mcast_socket ()->subscribe (*inet_addr);
+      result = handler->get_mcast_socket ()->join (*inet_addr);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_connector::open failed\n"),-1);
 
@@ -840,15 +840,15 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 
           local_addr->set (local_addr->get_port_number (),
                            local_addr->get_host_name ());
-	  handler->set_peer_addr (local_addr);
+          handler->set_peer_addr (local_addr);
         }
     }
   else
     {
       if (local_addr == 0)
-	ACE_NEW_RETURN (local_addr,
-			ACE_INET_Addr ("0"),
-			-1);
+        ACE_NEW_RETURN (local_addr,
+                        ACE_INET_Addr ("0"),
+                        -1);
 
       TAO_AV_UDP_Flow_Handler *handler;
       ACE_NEW_RETURN (handler,
@@ -860,7 +860,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       if (ct == ACCEPTOR)
         result = handler->open (*inet_addr);
       else
-	result = handler->open (*local_addr);
+        result = handler->open (*local_addr);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"handler::open failed\n"),-1);
 
@@ -882,7 +882,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
         return 0;
 
       if (ct == CONNECTOR)
-	handler->set_remote_address  (inet_addr);
+        handler->set_remote_address  (inet_addr);
 
       result = handler->get_socket ()->get_local_addr (*local_addr);
 
@@ -971,8 +971,9 @@ int
 TAO_AV_UDP_Object::send_frame (ACE_Message_Block *frame,
                                TAO_AV_frame_info * /*frame_info*/)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Object::send_frame\n"));
-  int result = this->transport_->send (frame);
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Object::send_frame\n"));
+  int const result = this->transport_->send (frame);
   if (result < 0)
     return result;
   return 0;
@@ -983,7 +984,7 @@ TAO_AV_UDP_Object::send_frame (const iovec *iov,
                                int iovcnt,
                                TAO_AV_frame_info * /*frame_info*/)
 {
-  int result = this->transport_->send (iov,iovcnt);
+  int const result = this->transport_->send (iov,iovcnt);
   if (result < 0)
     return result;
   return 0;
@@ -993,7 +994,7 @@ int
 TAO_AV_UDP_Object::send_frame (const char*buf,
                                size_t len)
 {
-  int result = this->transport_->send (buf, len, 0);
+  int const result = this->transport_->send (buf, len, 0);
   if (result < 0)
     return result;
   return 0;

@@ -13,6 +13,9 @@
 // ACE headers
 #include "ace/Task.h"
 
+// TAO headrs
+// #include "tao/orbconf.h"
+
 // STL headers
 #include <map>
 #include <string>
@@ -132,7 +135,7 @@ private:
 
 #include "Stock_Database.tpp"
 
-//typedef ACE_Singleton<Stock_Database, ACE_Thread_Mutex> Stock_Database_Singleton;
+//typedef ACE_Singleton<Stock_Database, TAO_SYNCH_MUTEX> Stock_Database_Singleton;
 //#define STOCK_DATABASE Stock_Database_Singleton::instance()
 
 #endif  // !defined STOCK_DATABASE_H_

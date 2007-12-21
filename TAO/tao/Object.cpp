@@ -208,7 +208,7 @@ CORBA::Object::_is_a (const char *type_id)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
-  // NOTE: if istub->type_id is nonzero and we have local knowledge of
+  // NOTE: if _stub->type_id is nonzero and we have local knowledge of
   // it, we can answer this question without a costly remote call.
   //
   // That "local knowledge" could come from stubs or skeletons linked

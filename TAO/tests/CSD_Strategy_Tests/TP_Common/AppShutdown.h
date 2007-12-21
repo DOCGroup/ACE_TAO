@@ -24,7 +24,7 @@ class CSD_TP_Test_Export AppShutdown
 
   private:
 
-    typedef ACE_SYNCH_MUTEX LockType;
+    typedef TAO_SYNCH_MUTEX LockType;
     typedef ACE_Guard<LockType> GuardType;
 
     LockType lock_;

@@ -81,6 +81,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_strings.h"
 #include "ace/Process.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/Env_Value_T.h"
 
 ACE_RCSID (util,
            utl_global,
@@ -1858,4 +1859,105 @@ IDL_GlobalData::open_included_file (char const * filename,
     }
 
   return f;
+}
+
+bool
+IDL_GlobalData::validate_orb_include (UTL_String *idl_file_name)
+{
+  // It's important to update the check of include_counter
+  // at the end of this method once new TAO include dirs are
+  // added somewhere in driver/drv_preproc.cpp
+
+  // Count number of includes in environment variable.
+  // If the way how INCLUDE environment variable is processed
+  // will change in fe/fe_init.cpp:FE_store_env_include_paths ()
+  // then the below do/while loop has to be changed accordingly.
+  int env_includes = 1;
+  ACE_Env_Value<char*> incl_paths ("INCLUDE",
+                                   (char *) 0);
+  const char *aggr_str = incl_paths;
+  if (aggr_str != 0)
+    {
+      char separator;
+#if defined (ACE_WIN32)
+      separator = ';';
+#else
+      separator = ':';
+#endif
+      do
+        {
+          aggr_str = ACE_OS::strchr (aggr_str, separator);
+          env_includes++;
+        } while (aggr_str != 0 && aggr_str++);
+    }
+
+  char abspath[MAXPATHLEN] = "";
+  char *full_path = 0;
+  unsigned int include_counter = 0;
+
+  for (ACE_Unbounded_Queue_Iterator<char *>iter (
+           this->include_paths_
+         );
+       !iter.done (); )
+    {
+      ACE_CString partial;
+      if (include_counter == 0)
+        {
+          char *path_tmp = ACE_OS::getcwd (abspath, MAXPATHLEN);
+          partial = path_tmp;
+        }
+      else
+        {
+          char **path_tmp = 0;
+          iter.next (path_tmp);
+          iter.advance ();
+          partial = *path_tmp;
+        }
+
+      // If the include path has literal "s (because of an include
+      // of a Windows path with spaces), we must remove them here.
+      const char *tmp_partial = partial.c_str ();
+      if (tmp_partial && this->hasspace (tmp_partial) && tmp_partial[0] == '\"')
+        {
+          partial =
+            partial.substr (1, partial.length () - 2);
+        }
+
+      partial += ACE_DIRECTORY_SEPARATOR_STR;
+      partial += idl_file_name->get_string ();
+      full_path =
+        ACE_OS::realpath (partial.c_str (), abspath);
+
+      if (full_path != 0)
+        {
+          FILE *test = ACE_OS::fopen (abspath, "r");
+
+          if (test == 0)
+            {
+              ++include_counter;
+              continue;
+            }
+
+          ACE_OS::fclose (test);
+
+          // This file name is an orb file if it is either in first 2
+          // dirs (i.e. $TAO_ROOT, $TAO_ROOT/tao) or in
+          // last 3 dirs (i.e. $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO,
+          // $TAO_ROOT/CIAO/ciao)
+          if (include_counter != 0 &&
+              (include_counter - env_includes <= 2 ||
+               include_counter - env_includes >= this->include_paths_.size () - 3))
+            {
+              return true;
+            }
+          else
+            {
+              return false;
+            }
+        }
+
+      ++include_counter;
+    }
+
+  return false;
 }

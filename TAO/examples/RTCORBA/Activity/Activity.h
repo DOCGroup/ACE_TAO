@@ -72,7 +72,7 @@ public:
   /// Job shutdown notification
   void job_ended (Job_i* ended_job);
 
-  protected:
+protected:
   /// = Activation methods.
   /// Activate the POA's
   void activate_poa_list (void);
@@ -114,7 +114,7 @@ public:
   PortableServer::POA_var root_poa_;
 
   /// A naming context.
-  CosNaming::NamingContextExt_var naming_;
+  CosNaming::NamingContextExt_ptr naming_;
 
   /// The Priority Mapping helper.
   RTCORBA::PriorityMapping *priority_mapping_;

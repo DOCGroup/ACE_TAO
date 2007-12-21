@@ -244,5 +244,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<DT_Test, ACE_Thread_Mutex> *ACE_Singleton<DT_Test, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<DT_Test, TAO_SYNCH_MUTEX> *ACE_Singleton<DT_Test, TAO_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

@@ -2,6 +2,7 @@
 #include "orbsvcs/Notify/MonitorControl/Statistic_Registry.h"
 #include "orbsvcs/Notify/MonitorControl/Statistic.h"
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
+#include "tao/TAO_Singleton_Manager.h"
 
 void
 error(const char* msg)

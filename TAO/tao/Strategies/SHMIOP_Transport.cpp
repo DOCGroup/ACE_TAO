@@ -96,7 +96,7 @@ TAO_SHMIOP_Transport::recv (char *buf,
       if (TAO_debug_level > 3 && errno != ETIME)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - %p \n"),
+                      ACE_TEXT ("TAO (%P|%t) -  SHMIOP_Transport::recv, %p \n"),
                       ACE_TEXT ("TAO - read message failure ")
                       ACE_TEXT ("recv_i () \n")));
         }
@@ -273,7 +273,7 @@ int
 TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
                                     TAO_ORB_Core *orb_core,
                                     TAO_OutputCDR &stream,
-                                    int message_semantics,
+                                    TAO_Message_Semantics message_semantics,
                                     ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
@@ -293,9 +293,9 @@ TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
 
 int
 TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
-                                  TAO_Stub *stub,
-                                  int message_semantics,
-                                  ACE_Time_Value *max_wait_time)
+                                    TAO_Stub *stub,
+                                    TAO_Message_Semantics message_semantics,
+                                    ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
   if (this->messaging_object_->format_message (stream) != 0)
@@ -315,7 +315,7 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %p\n"),
+                    ACE_TEXT ("TAO (%P|%t) closing transport %d after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 

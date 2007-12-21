@@ -4,11 +4,9 @@
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
 
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Queued_Data.inl"
 #endif /* __ACE_INLINE__ */
-
 
 ACE_RCSID (tao,
            Queued_Data,

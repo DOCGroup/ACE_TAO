@@ -10,13 +10,14 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorfilebase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 unlink $iorfile;
 
 print STDERR "\n\n==== Bug 2804_Regression\n";
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");

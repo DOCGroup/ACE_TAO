@@ -2498,7 +2498,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_ACEXML
 if BUILD_EXCEPTIONS
-if BUILD_ZLIB
 if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES += libTAO_CosNotification_Persist.la
@@ -2512,9 +2511,15 @@ libTAO_CosNotification_Persist_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(ACE_ROOT)/ACEXML/common \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS) \
   -DTAO_NOTIFY_PERSIST_BUILD_DLL
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+libTAO_CosNotification_Persist_la_CPPFLAGS += \
+  $(ACE_ZZIP_CPPFLAGS) \
+  $(ACE_ZLIB_CPPFLAGS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 libTAO_CosNotification_Persist_la_SOURCES = \
   Notify/XML_Loader.cpp \
@@ -2522,7 +2527,15 @@ libTAO_CosNotification_Persist_la_SOURCES = \
   Notify/XML_Topology_Factory.cpp
 
 libTAO_CosNotification_Persist_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_ZZIP_LDFLAGS) $(ACE_ZLIB_LDFLAGS)
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ 
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+libTAO_CosNotification_Persist_la_LDFLAGS += \
+  $(ACE_ZZIP_LDFLAGS) \
+  $(ACE_ZLIB_LDFLAGS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 libTAO_CosNotification_Persist_la_LIBADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
@@ -2539,9 +2552,15 @@ libTAO_CosNotification_Persist_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+libTAO_CosNotification_Persist_la_LIBADD += \
   $(ACE_ZZIP_LIBS) \
   $(ACE_ZLIB_LIBS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 nobase_include_HEADERS += \
   Notify/XML_Loader.h \
@@ -2550,7 +2569,6 @@ nobase_include_HEADERS += \
   Notify/notify_persist_export.h
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_ZLIB
 endif BUILD_EXCEPTIONS
 endif BUILD_ACEXML
 

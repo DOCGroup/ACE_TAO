@@ -28,7 +28,7 @@ const char *ior = "file://test.ior";
 int nthreads = 5;
 int niterations = 5;
 int debug = 0;
-ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> number_of_replies = 0;
+ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> number_of_replies = 0;
 
 CORBA::Long in_number = 931232;
 const char * in_str = "Let's talk AMI.";

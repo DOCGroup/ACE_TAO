@@ -41,7 +41,7 @@ TAO_EC_TPC_Dispatching::~TAO_EC_TPC_Dispatching ()
 int
 TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   // Duplicate the pointer and hold it safely
   RtecEventComm::PushConsumer_var pc =
@@ -97,7 +97,7 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
 int
 TAO_EC_TPC_Dispatching::remove_consumer (RtecEventComm::PushConsumer_ptr consumer)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   TAO_EC_Dispatching_Task* dtask = 0;
 
@@ -131,7 +131,7 @@ TAO_EC_TPC_Dispatching::activate (void)
 void
 TAO_EC_TPC_Dispatching::shutdown (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   // The MT_Dispatching strategy sends a TAO_EC_Shutdown_Task_Command
   // to the dispatching task.  Is that what we should do here?
@@ -183,7 +183,7 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::push_nocopy(supplier=%@,consumer=%@)\n", proxy, consumer));
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   TAO_EC_Dispatching_Task* dtask;
 
   if (this->consumer_task_map_.find (consumer, dtask) == -1)

@@ -10,12 +10,9 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server");
-}
-else {
-    $SV = new PerlACE::Process ("server");
-}
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$SV = new $class ("server");
 
 $server = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
