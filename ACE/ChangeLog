@@ -1,3 +1,9 @@
+Fri Dec 21 14:10:48 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Task_T.inl: Added #include "ace/config-all.h" to the
+          ACE_NOTSUP_RETURN macro would be visible.  Thanks to Steve
+          Huston for reporting this.
+
 Fri Dec 21 03:05:46 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Task_T.h (class ACE_Task): Updated the documentation for
