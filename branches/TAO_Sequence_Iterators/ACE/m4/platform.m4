@@ -92,22 +92,6 @@ dnl  */
   *cray-unicos*)
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_UNICOS"
     ;;
-  *dgux4.11*)
-    AC_DEFINE([ACE_DGUX])
-    AC_DEFINE([IP_ADD_MEMBERSHIP], [0x13])
-    AC_DEFINE([IP_DROP_MEMBERSHIP], [0x14])
-    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_SOURCE -D_DGUX_SOURCE"
-    ;;
-  *dgux4*)
-    AC_DEFINE([ACE_DGUX])
-    AC_DEFINE([IP_ADD_MEMBERSHIP], [0x13])
-    AC_DEFINE([IP_DROP_MEMBERSHIP], [0x14])
-    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX4A_DRAFT10_SOURCE -D_POSIX4_DRAFT_SOURCE"
-    ;;
-  *fsu*)
-dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
-    AC_DEFINE([PTHREAD_STACK_MIN], [(1024*10)])
-    ;;
   *hpux9*)
     AC_DEFINE([HPUX])
     ;;
@@ -169,8 +153,8 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE([ACE_TIMER_SKEW], [(1000 * 10)])
     dnl Does this box have NPTL?
     NPTL=`getconf GNU_LIBPTHREAD_VERSION | $AWK '{print [$][1]}' -`
-    if test "$NPTL" = NPTL; then
-      ACE_CPPFLAGS="$ACE_CPPFLAGS -DACE_HAS_LINUX_NPTL"
+    if test "$NPTL" != NPTL; then
+      ACE_CPPFLAGS="$ACE_CPPFLAGS -DACE_LACKS_LINUX_NPTL"
     fi
     ;;
   *lynxos*)
@@ -181,12 +165,6 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE([ACE_USE_RCSID], [0])
     AC_DEFINE([ACE_HAS_LYNXOS_SIGNALS])
     AC_DEFINE([ACE_TIMER_SKEW], [(1000 * 10)])
-    ;;
-  *m88k*)
-    AC_DEFINE([m88k])
-    AC_DEFINE([__m88k__])
-    AC_DEFINE([IP_ADD_MEMBERSHIP], [0x13])
-    AC_DEFINE([IP_DROP_MEMBERSHIP], [0x14])
     ;;
   *mvs*)
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_ALL_SOURCE"
@@ -231,21 +209,6 @@ dnl Check for _POSIX_C_SOURCE macro
     AC_DEFINE([ACE_DEFAULT_BASE_ADDR], [((char *) 0x80000000)])
     AC_DEFINE([ACE_NEEDS_HUGE_THREAD_STACKSIZE], [(1024 * 1024)])
     AC_DEFINE([ACE_TIMER_SKEW], [(1000 * 10)])
-    ;;
-  *psos*)
-    AC_DEFINE([ACE_PSOS])
-    AC_DEFINE([ACE_PSOSIM])
-    AC_DEFINE([ACE_PSOSTBD])
-    dnl need ACE_HAS_TSS_EMULATION for ACE_DEFAULT_THREAD_KEYS!
-    AC_EGREP_CPP([ACE_TSS_EMULATION],
-      [
-#if defined (ACE_HAS_TSS_EMULATION)
-         ACE_TSS_EMULATION
-#endif
-      ], [AC_DEFINE([ACE_DEFAULT_THREAD_KEYS], [256])],[])
-    AC_DEFINE([ACE_MAIN], [extern "C" void root])
-    AC_DEFINE([ACE_MALLOC_ALIGN], [8])
-    AC_DEFINE([ACE_USE_RCSID], [0])
     ;;
   *sco4.2*)
     AC_DEFINE([SCO])
@@ -350,7 +313,7 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
 esac
 
 ACE_FUNC_IOCTL_ARGTYPES
-
+ACE_CHECK_HAS_NONCONST_FD_ISSET
 ACE_CHECK_FORMAT_SPECIFIERS
 ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING
 
@@ -375,9 +338,9 @@ AH_TEMPLATE([ACE_SIZE_T_FORMAT_SPECIFIER],
 AH_TEMPLATE([ACE_SSIZE_T_FORMAT_SPECIFIER],
 [Define to the *printf format specifier  (e.g. "%d") for ssize_t])dnl
 AH_TEMPLATE([ACE_INT64_FORMAT_SPECIFIER],
-[Define to the *printf format specifier (e.g. "%lld") for the 64 bit signed integer type])dnl
+[Define to the *printf format specifier (e.g. "%lld") for ACE_INT64])dnl
 AH_TEMPLATE([ACE_UINT64_FORMAT_SPECIFIER],
-[Define to the *printf format specifier (e.g. "%llu") for the 64 bit signed integer type])dnl
+[Define to the *printf format specifier (e.g. "%llu") for ACE_UINT64])dnl
 
 case "$host_os" in
 darwin*)
@@ -486,4 +449,25 @@ if test "$ace_cv_var_timezone" = yes; then
   AC_DEFINE([ACE_HAS_TIMEZONE], 1,
 	    [Define to 1 if platform has global timezone variable])
 fi
+])
+
+
+# ACE_HAS_NONCONST_FD_ISSET
+#
+# Checks if system has a nonconst FD_ISSET macro.
+#
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_CHECK_HAS_NONCONST_FD_ISSET],
+[dnl
+    AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM([#include <sys/time.h>],
+                [
+                //const fd_set* temp = new fd_set();
+                //FD_ISSET(0, const_cast< fd_set* >( temp ) );
+                const fd_set* temp = new fd_set();
+                FD_ISSET(0, temp );
+                ])
+        ],[],[AC_DEFINE([ACE_HAS_NONCONST_FD_ISSET], 1,
+                [Define to 1 if system has nonconst FD_ISSET() macro.])]
+    )
 ])

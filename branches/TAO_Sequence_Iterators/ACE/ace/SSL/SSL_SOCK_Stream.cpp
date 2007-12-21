@@ -70,8 +70,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
   ssize_t bytes_sent = 0;
 
   ACE_Time_Value t;
-  ACE_Time_Value *timeout =
-    const_cast<ACE_Time_Value *> (max_wait_time);
+  ACE_Time_Value *timeout = const_cast<ACE_Time_Value *> (max_wait_time);
 
   if (max_wait_time != 0)
     {
@@ -86,7 +85,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
 
   for (size_t i = 0; i < n; ++i)
     {
-      const ssize_t result = this->send (iov[i].iov_base,
+      ssize_t const result = this->send (iov[i].iov_base,
                                          iov[i].iov_len,
                                          timeout);
 
@@ -195,7 +194,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
                                  val) == -1)
     return -1;
 
-  ssize_t bytes_transferred = this->send (buf, len, flags);
+  ssize_t const bytes_transferred = this->send (buf, len, flags);
 
   ACE::restore_non_blocking_mode (this->get_handle (), val);
 
@@ -219,7 +218,7 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
-  const size_t total_tuples = n / 2;
+  size_t const total_tuples = n / 2;
 
   va_list argp;
   va_start (argp, n);
@@ -233,9 +232,8 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
   //       scatter writes over SSL.
   for (size_t i = 0; i < total_tuples; ++i)
     {
-      const ssize_t data_len = va_arg (argp, ssize_t);
-      const ssize_t result = this->send (va_arg (argp, char *),
-                                         data_len);
+      ssize_t const data_len = va_arg (argp, ssize_t);
+      ssize_t const result = this->send (va_arg (argp, char *), data_len);
 
       if (result == -1)
         {
@@ -277,7 +275,7 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
-  const size_t total_tuples = n / 2;
+  size_t const total_tuples = n / 2;
 
   va_list argp;
   va_start (argp, n);
@@ -286,9 +284,8 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
 
   for (size_t i = 0; i < total_tuples; ++i)
     {
-      const ssize_t data_len = va_arg (argp, ssize_t);
-      const ssize_t result = this->recv (va_arg (argp, char *),
-                                         data_len);
+      ssize_t const data_len = va_arg (argp, ssize_t);
+      ssize_t const result = this->recv (va_arg (argp, char *), data_len);
 
       if (result == -1)
         {
@@ -540,8 +537,8 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
 
   for (size_t i = 0; i < iovcnt; ++i)
     {
-      ssize_t result = this->recv_n (iov[i].iov_base,
-                                     iov[i].iov_len);
+      ssize_t const result = this->recv_n (iov[i].iov_base,
+                                           iov[i].iov_len);
 
       if (result == -1)
         {

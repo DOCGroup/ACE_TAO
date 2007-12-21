@@ -19,11 +19,11 @@ ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
     thr_mgr_ (thr_man),
     flags_ (0),
     grp_id_ (-1)
-#if !defined (ACE_MVS)
+#if !(defined (ACE_MVS) || defined(__TANDEM))
     ,last_thread_id_ (0)
 #endif /* !defined (ACE_MVS) */
 {
-#if defined (ACE_MVS)
+#if (defined (ACE_MVS) || defined(__TANDEM))
    ACE_OS::memset( &this->last_thread_id_, '\0', sizeof( this->last_thread_id_ ));
 #endif /* defined (ACE_MVS) */
 }
@@ -126,7 +126,8 @@ ACE_Task_Base::activate (long flags,
                          ACE_hthread_t thread_handles[],
                          void *stack[],
                          size_t stack_size[],
-                         ACE_thread_t thread_ids[])
+                         ACE_thread_t thread_ids[],
+                         const char* thr_name[])
 {
   ACE_TRACE ("ACE_Task_Base::activate");
 
@@ -171,7 +172,8 @@ ACE_Task_Base::activate (long flags,
                                task,
                                thread_handles,
                                stack,
-                               stack_size);
+                               stack_size,
+                               thr_name);
   else
     // thread names were specified
     grp_spawned =
@@ -185,7 +187,8 @@ ACE_Task_Base::activate (long flags,
                                stack,
                                stack_size,
                                thread_handles,
-                               task);
+                               task,
+                               thr_name);
   if (grp_spawned == -1)
     {
       // If spawn_n fails, restore original thread count.
@@ -196,7 +199,7 @@ ACE_Task_Base::activate (long flags,
   if (this->grp_id_ == -1)
     this->grp_id_ = grp_spawned;
 
-#if defined (ACE_MVS)
+#if defined (ACE_MVS) || defined(__TANDEM)
   ACE_OS::memcpy( &this->last_thread_id_, '\0', sizeof(this->last_thread_id_));
 #else
   this->last_thread_id_ = 0;    // Reset to prevent inadvertant match on ID
@@ -217,6 +220,7 @@ ACE_Task_Base::activate (long flags,
     ACE_UNUSED_ARG (stack);
     ACE_UNUSED_ARG (stack_size);
     ACE_UNUSED_ARG (thread_ids);
+    ACE_UNUSED_ARG (thr_name);
     ACE_NOTSUP_RETURN (-1);
   }
 #endif /* ACE_MT_SAFE */
@@ -270,7 +274,7 @@ ACE_Task_Base::svc_run (void *args)
   // Call the Task's svc() hook method.
   int svc_status = t->svc ();
   ACE_THR_FUNC_RETURN status;
-#if (defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__MINGW32__) || (defined (_MSC_VER) && (_MSC_VER <= 1500)) || (defined (ACE_WIN32) && defined (__DCC__))
+#if (defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__MINGW32__) || (defined (_MSC_VER) && (_MSC_VER <= 1500)) || (defined (ACE_WIN32) && defined (__DCC__)) || (defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x660) && defined (ACE_HAS_VXTHREADS))
   // Some compilers complain about reinterpret_cast from int to unsigned long...
   status = static_cast<ACE_THR_FUNC_RETURN> (svc_status);
 #else

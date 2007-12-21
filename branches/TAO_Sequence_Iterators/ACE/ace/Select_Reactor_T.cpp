@@ -391,10 +391,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
                       ACE_Sig_Handler,
                       -1);
 
-      if (this->signal_handler_ == 0)
-        result = -1;
-      else
-        this->delete_signal_handler_ = 1;
+      this->delete_signal_handler_ = true;
     }
 
   // Allows the timer queue to be overridden.
@@ -404,10 +401,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
                       ACE_Timer_Heap,
                       -1);
 
-      if (this->timer_queue_ == 0)
-        result = -1;
-      else
-        this->delete_timer_queue_ = true;
+      this->delete_timer_queue_ = true;
     }
 
   // Allows the Notify_Handler to be overridden.
@@ -417,10 +411,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
                       ACE_Select_Reactor_Notify,
                       -1);
 
-      if (this->notify_handler_ == 0)
-        result = -1;
-      else
-        this->delete_notify_handler_ = true;
+      this->delete_notify_handler_ = true;
     }
 
   if (result != -1 && this->handler_rep_.open (size) == -1)
@@ -982,7 +973,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::is_suspended_i (ACE_HANDLE handl
 
   return this->suspend_set_.rd_mask_.is_set (handle) ||
          this->suspend_set_.wr_mask_.is_set (handle) ||
-         this->suspend_set_.ex_mask_.is_set (handle)    ;
+         this->suspend_set_.ex_mask_.is_set (handle);
 
 }
 
@@ -1073,7 +1064,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
 {
   ACE_TRACE ("ACE_Select_Reactor_T::wait_for_multiple_events");
   ACE_Time_Value timer_buf (0);
-  ACE_Time_Value *this_timeout;
+  ACE_Time_Value *this_timeout = 0;
 
   int number_of_active_handles = this->any_ready (dispatch_set);
 

@@ -807,9 +807,9 @@ ACE_OS::sendv (ACE_HANDLE handle,
       local_iov[i].iov_len  = buffers[i].iov_len;
 
       new_total = total + buffers[i].iov_len;
-      if ( new_total >= SSIZE_MAX )
+      if (new_total >= ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE)
         {
-          local_iov[i].iov_len = SSIZE_MAX - total;
+          local_iov[i].iov_len = ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE - total;
           n = i+1;
           break;
         }

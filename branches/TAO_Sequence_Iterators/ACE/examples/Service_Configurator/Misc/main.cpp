@@ -48,8 +48,8 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   args.add (ACE_TEXT ("-S"));
   args.add (ACE_TEXT ("\"dynamic Timer_Service_2 Service_Object * Timer:_make_Timer_Service_2() 'timer 2 10 $TRACE'\""));
   // Test the -f option!
-  args.add (ACE_TEXT ("-fsvc.conf1"));
-  args.add (ACE_TEXT ("-fsvc.conf2"));
+  args.add (ACE_TEXT ("-f svc.conf1"));
+  args.add (ACE_TEXT ("-f svc.conf2"));
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("argc = %d\n"),

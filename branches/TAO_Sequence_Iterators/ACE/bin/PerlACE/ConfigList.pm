@@ -61,18 +61,18 @@ sub check_config (@)
 {
     my $self = shift;
     my @testconfigs = @_;
-    my $included = 0;
-    my $excluded = 0;
-    my $noincludes = 1;
+    my $the_config_allows_this = 1; # default case is true
 
+    # Go though each ID on the line in turn...
     foreach my $config (@testconfigs) {
-        if ($config =~ /^\w/) { $noincludes = 0; }
+        my $required_found = !($config =~ /^\w/);
         foreach my $myconfig (@{$self->{MY_CONFIGS}}) {
-            if ($config eq "!$myconfig") { $excluded = 1; }
-            if ($config eq $myconfig) { $included = 1; }
+            if ($config eq "!$myconfig") { $the_config_allows_this = 0; }
+            if ($config eq $myconfig) { $required_found = 1; }
         }
+        if (!$required_found) { $the_config_allows_this = 0; }
     }
-    return ($included || $noincludes) && !$excluded;
+    return $the_config_allows_this;
 }
 
 sub load ($)

@@ -11,6 +11,8 @@ ACE_RCSID(ace, OS_NS_sys_utsname, "$Id$")
 #if defined (ACE_VXWORKS) && defined (ACE_LACKS_UNAME)
 // for sysBspRev(), sysModel()
 #  include /**/ <sysLib.h>
+// for kernelVersion()
+#  include /**/ <kernelLib.h>
 #endif /* ACE_VXWORKS && ACE_LACKS_UNAME */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -213,7 +215,7 @@ ACE_OS::uname (ACE_utsname *name)
 #elif defined (ACE_VXWORKS)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "VxWorks");
-  ACE_OS::strcpy (name->release, "???");
+  ACE_OS::strcpy (name->release, kernelVersion());
   ACE_OS::strcpy (name->version, sysBspRev ());
   ACE_OS::strcpy (name->machine, sysModel ());
 

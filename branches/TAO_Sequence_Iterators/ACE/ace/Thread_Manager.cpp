@@ -550,7 +550,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                              int grp_id,
                              void *stack,
                              size_t stack_size,
-                             ACE_Task_Base *task)
+                             ACE_Task_Base *task,
+                             const char** thr_name)
 {
   // First, threads created by Thread Manager should not be daemon threads.
   // Using assertion is probably a bit too strong.  However, it helps
@@ -591,23 +592,6 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_hthread_t thr_handle;
 
-#if defined (ACE_HAS_VXTHREADS)
-  if (t_handle != 0)
-    {
-      thr_handle = *t_handle;
-    }
-  else
-    {
-      ACE_NEW_RETURN (thr_handle,
-                      char[16],
-                      -1);
-      // Mark the thread ID to show that the ACE_Thread_Manager
-      // allocated it.
-      thr_handle[0] = ACE_THR_ID_ALLOCATED;
-      thr_handle[1] = '\0';
-    }
-#endif  /* !ACE_HAS_VXTHREADS */
-
   ACE_thread_t thr_id;
   if (t_id == 0)
     t_id = &thr_id;
@@ -625,7 +609,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                         priority,
                                         stack,
                                         stack_size,
-                                        thread_args);
+                                        thread_args,
+                                        thr_name);
 
   if (result != 0)
     {
@@ -680,7 +665,8 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
                            long priority,
                            int grp_id,
                            void *stack,
-                           size_t stack_size)
+                           size_t stack_size,
+                           const char** thr_name)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn");
 
@@ -701,7 +687,8 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
                      grp_id,
                      stack,
                      stack_size,
-                     0) == -1)
+                     0,
+                     thr_name) == -1)
     return -1;
 
   return grp_id;
@@ -719,7 +706,8 @@ ACE_Thread_Manager::spawn_n (size_t n,
                              ACE_Task_Base *task,
                              ACE_hthread_t thread_handles[],
                              void *stack[],
-                             size_t stack_size[])
+                             size_t stack_size[],
+                             const char* thr_name[])
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -740,7 +728,8 @@ ACE_Thread_Manager::spawn_n (size_t n,
                          grp_id,
                          stack == 0 ? 0 : stack[i],
                          stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
-                         task) == -1)
+                         task,
+                         thr_name == 0 ? 0 : &thr_name [i]) == -1)
         return -1;
     }
 
@@ -760,7 +749,8 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
                              void *stack[],
                              size_t stack_size[],
                              ACE_hthread_t thread_handles[],
-                             ACE_Task_Base *task)
+                             ACE_Task_Base *task,
+                             const char* thr_name[])
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -781,7 +771,8 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
                          grp_id,
                          stack == 0 ? 0 : stack[i],
                          stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
-                         task) == -1)
+                         task,
+                         thr_name == 0 ? 0 : &thr_name [i]) == -1)
         return -1;
     }
 
@@ -923,14 +914,6 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 
   td->tm_ = 0;
   this->thr_list_.remove (td);
-
-#if defined (ACE_HAS_VXTHREADS)
-  // Delete the thread ID, if the ACE_Thread_Manager allocated it.
-  if (td->thr_handle_ && td->thr_handle_[0] == ACE_THR_ID_ALLOCATED)
-    {
-      delete [] td->thr_handle_;
-    }
-#endif /* ACE_HAS_VXTHREADS */
 
 #if defined (ACE_WIN32)
   if (close_handler != 0)
@@ -1429,12 +1412,6 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
 # endif /* ! _AIX */
             return -1;
 
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-          // Must explicitly detach threads.  Threads without THR_DETACHED
-          // were detached in ACE_OS::thr_create ().
-          ::pthread_detach (&tdb->thr_handle_);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
-
           delete tdb;
           return 0;
           // return immediately if we've found the thread we want to join.
@@ -1475,12 +1452,6 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
 # endif /* ! _AIX */
     return -1;
 
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-  // Must explicitly detach threads.  Threads without THR_DETACHED
-  // were detached in ACE_OS::thr_create ().
-
-  ::pthread_detach (&tdb.thr_handle_);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
   return 0;
 }
 
@@ -1548,12 +1519,6 @@ ACE_Thread_Manager::wait_grp (int grp_id)
     {
       if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
         result = -1;
-
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-      // Must explicitly detach threads.  Threads without THR_DETACHED
-      // were detached in ACE_OS::thr_create ().
-      ::pthread_detach (&copy_table[i].thr_handle_);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
     }
 
   delete [] copy_table;
@@ -1565,13 +1530,13 @@ ACE_Thread_Manager::wait_grp (int grp_id)
 // slot.
 
 ACE_THR_FUNC_RETURN
-ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
+ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, bool do_thread_exit)
 {
   ACE_TRACE ("ACE_Thread_Manager::exit");
 #if defined (ACE_WIN32)
   // Remove detached thread handle.
 
-  if (do_thr_exit)
+  if (do_thread_exit)
     {
 #if 0
       // @@ This callback is now taken care of by TSS_Cleanup.  Do we
@@ -1595,7 +1560,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
 
     // Find the thread id, but don't use the cache.  It might have been
     // deleted already.
-    ACE_thread_t id = ACE_OS::thr_self ();
+    ACE_thread_t const id = ACE_OS::thr_self ();
     ACE_Thread_Descriptor* td = this->find_thread (id);
     if (td != 0)
      {
@@ -1605,7 +1570,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
      }
   }
 
-  if (do_thr_exit)
+  if (do_thread_exit)
     {
       ACE_Thread::exit (status);
       // On reasonable systems <ACE_Thread::exit> should not return.
@@ -1700,11 +1665,6 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
           // Detached handles shouldn't reached here.
           (void) ACE_Thread::join (item->thr_handle_);
 
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-        // Must explicitly detach threads.  Threads without
-        // THR_DETACHED were detached in ACE_OS::thr_create ().
-        ::pthread_detach (&item->thr_handle_);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
         delete item;
       }
 
@@ -1817,12 +1777,6 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     {
       if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
         result = -1;
-
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-      // Must explicitly detach threads.  Threads without THR_DETACHED
-      // were detached in ACE_OS::thr_create ().
-      ::pthread_detach (&copy_table[i].thr_handle_);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
     }
 
   delete [] copy_table;

@@ -453,8 +453,8 @@ endif
 <%if(staticflags)%>
 ifeq ($(static_libs),1)
   CPPFLAGS +=<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
-<%if(exename && link_groups)%>
-  ifeq ($(notdir $(CXX)), g++)
+<%if(exename)%>
+  ifeq ($(link_groups), 1)
     LDLIBS := -Wl,--start-group $(LDLIBS) -Wl,--end-group
   endif
 <%endif%>

@@ -322,7 +322,6 @@
 # endif /* ! _POSIX_PTHREAD_SEMANTICS */
 
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
   // . . . but only supports SCHED_OTHER scheduling policy
 # define ACE_HAS_ONLY_SCHED_OTHER
 # define ACE_HAS_SIGWAIT
@@ -407,6 +406,9 @@
 #if defined (_POSIX_PTHREAD_SEMANTICS) || (_FILE_OFFSET_BITS == 64) || (_POSIX_C_SOURCE - 0 >= 199506L)
 #  define ACE_HAS_3_PARAM_READDIR_R
 #endif
+
+// Sum of the iov_len values can't be larger then SSIZE_MAX
+#define ACE_HAS_SOCK_BUF_SIZE_MAX
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_DLL_MANAGER_H
 #define ACE_DLL_MANAGER_H
 #include /**/ "ace/pre.h"
@@ -41,19 +40,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Provides an abstract interface for handling various DLL
  * operations.
  *
- * This class is an wrapper over the various methods for utilizing
- * a dynamically linked library (DLL), which is called a shared
- * library on some platforms.  It is refcounted and managed by
+ * This class is an wrapper over the various methods for utilizing a
+ * dynamically linked library (DLL), which is called a shared library
+ * on some platforms.  It is refcounted and managed by
  * ACE_DLL_Manager, so there will only be a single instance of this
  * class for each dll loaded, no matter how many instances of ACE_DLL
- * an application has open.  Operations <open>, <close>, and
- * <symbol> have been implemented to help opening/closing and
- * extracting symbol information from a DLL, respectively.
+ * an application has open.  Operations <open>, <close>, and <symbol>
+ * have been implemented to help opening/closing and extracting symbol
+ * information from a DLL, respectively.
  *
- * Most of this class came from the original ACE_DLL class.
- * ACE_DLL is now just an interface that passed all it's calls
- * either directly or via ACE_DLL_Manager to this class for
- * execution.
+ * Most of this class came from the original ACE_DLL class.  ACE_DLL
+ * is now just an interface that passed all it's calls either directly
+ * or via ACE_DLL_Manager to this class for execution.
  *
  */
 class ACE_Export ACE_DLL_Handle

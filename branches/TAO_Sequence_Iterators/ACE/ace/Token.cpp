@@ -13,10 +13,10 @@ ACE_RCSID(ace, Token, "$Id$")
 #include "ace/Thread.h"
 #include "ace/Log_Msg.h"
 
-#if defined (DEBUGGING)
+#if defined (ACE_TOKEN_DEBUGGING)
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-#endif /* DEBUGGING */
+#endif /* ACE_TOKEN_DEBUGGING */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -189,11 +189,11 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   ACE_TRACE ("ACE_Token::shared_acquire");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-#if defined (DEBUGGING)
+#if defined (ACE_TOKEN_DEBUGGING)
   this->dump ();
-#endif /* DEBUGGING */
+#endif /* ACE_TOKEN_DEBUGGING */
 
-  ACE_thread_t thr_id = ACE_Thread::self ();
+  ACE_thread_t const thr_id = ACE_Thread::self ();
 
   // Nobody holds the token.
   if (!this->in_use_)
@@ -255,14 +255,13 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
       ++ret;
     }
 
-  int timed_out = 0;
-  int error = 0;
+  bool timed_out = false;
+  bool error = false;
 
   // Sleep until we've got the token (ignore signals).
   do
     {
-      int result = my_entry.wait (timeout,
-                                  this->lock_);
+      int const result = my_entry.wait (timeout, this->lock_);
 
       if (result == -1)
         {
@@ -271,19 +270,19 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
           if (errno == EINTR)
             continue;
 
-#if defined (DEBUGGING)
+#if defined (ACE_TOKEN_DEBUGGING)
           cerr << '(' << ACE_Thread::self () << ')'
                << " acquire: "
                << (errno == ETIME ? "timed out" : "error occurred")
                << endl;
-#endif /* DEBUGGING */
+#endif /* ACE_TOKEN_DEBUGGING */
 
           // We come here if a timeout occurs or some serious
           // ACE_Condition object error.
           if (errno == ETIME)
-            timed_out = 1;
+            timed_out = true;
           else
-            error = 1;
+            error = true;
 
           // Stop the loop.
           break;
@@ -295,10 +294,9 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   --this->waiters_;
   queue->remove_entry (&my_entry);
 
-#if defined (DEBUGGING)
-  cerr << '(' << ACE_Thread::self () << ')'
-       << " acquire (UNBLOCKED)" << endl;
-#endif /* DEBUGGING */
+#if defined (ACE_TOKEN_DEBUGGING)
+  ACE_DEBUG ((LM_DEBUG, "(%t) ACE_Token::shared_acquire (UNBLOCKED)\n"));
+#endif /* ACE_TOKEN_DEBUGGING */
 
   // If timeout occured
   if (timed_out)
@@ -362,9 +360,9 @@ ACE_Token::renew (int requeue_position,
   ACE_TRACE ("ACE_Token::renew");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-#if defined (DEBUGGING)
+#if defined (ACE_TOKEN_DEBUGGING)
   this->dump ();
-#endif /* DEBUGGING */
+#endif /* ACE_TOKEN_DEBUGGING */
   // ACE_ASSERT (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_));
 
   // Check to see if there are any waiters worth giving up the lock
@@ -403,14 +401,13 @@ ACE_Token::renew (int requeue_position,
   // Wakeup waiter.
   this->wakeup_next_waiter ();
 
-  int timed_out = 0;
-  int error = 0;
+  bool timed_out = false;
+  bool error = false;
 
   // Sleep until we've got the token (ignore signals).
   do
     {
-      int result = my_entry.wait (timeout,
-                                  this->lock_);
+      int const result = my_entry.wait (timeout, this->lock_);
 
       if (result == -1)
         {
@@ -419,19 +416,19 @@ ACE_Token::renew (int requeue_position,
           if (errno == EINTR)
             continue;
 
-#if defined (DEBUGGING)
+#if defined (ACE_TOKEN_DEBUGGING)
           cerr << '(' << ACE_Thread::self () << ')'
                << " renew: "
                << (errno == ETIME ? "timed out" : "error occurred")
                << endl;
-#endif /* DEBUGGING */
+#endif /* ACE_TOKEN_DEBUGGING */
 
           // We come here if a timeout occurs or some serious
           // ACE_Condition object error.
           if (errno == ETIME)
-            timed_out = 1;
+            timed_out = true;
           else
-            error = 1;
+            error = true;
 
           // Stop the loop.
           break;
@@ -443,10 +440,9 @@ ACE_Token::renew (int requeue_position,
   --this->waiters_;
   this_threads_queue->remove_entry (&my_entry);
 
-#if defined (DEBUGGING)
-  cerr << '(' << ACE_Thread::self () << ')'
-       << " acquire (UNBLOCKED)" << endl;
-#endif /* DEBUGGING */
+#if defined (ACE_TOKEN_DEBUGGING)
+  ACE_DEBUG ((LM_DEBUG, "(%t) ACE_Token::renew (UNBLOCKED)\n"));
+#endif /* ACE_TOKEN_DEBUGGING */
 
   // If timeout occured
   if (timed_out)
@@ -485,11 +481,9 @@ ACE_Token::release (void)
   ACE_TRACE ("ACE_Token::release");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  // ACE_ASSERT (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_));
-
-#if defined (DEBUGGING)
+#if defined (ACE_TOKEN_DEBUGGING)
   this->dump ();
-#endif /* DEBUGGING */
+#endif /* ACE_TOKEN_DEBUGGING */
 
   // Nested release...
   if (this->nesting_level_ > 0)

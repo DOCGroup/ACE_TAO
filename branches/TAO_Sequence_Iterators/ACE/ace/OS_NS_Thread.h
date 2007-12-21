@@ -225,7 +225,7 @@ typedef struct
 } ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
 typedef int ACE_thread_t;
-typedef char * ACE_hthread_t;
+typedef int ACE_hthread_t;
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
 // use u_int, so the ACE TSS emulation is compatible with them.)
@@ -239,10 +239,6 @@ typedef u_int ACE_OS_thread_key_t;
 #   endif /* ! ACE_HAS_TSS_EMULATION */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-      // Marker for ACE_Thread_Manager to indicate that it allocated
-      // an ACE_thread_t.  It is placed at the beginning of the ID.
-#     define ACE_THR_ID_ALLOCATED '\022'
 
 #   elif defined (ACE_HAS_WTHREADS)
 
@@ -867,7 +863,7 @@ private:
   static ACE_OS_thread_key_t native_tss_key_;
 
   // Used to indicate if native tss key has been allocated
-  static int key_created_;
+  static bool key_created_;
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 };
 # endif /* ACE_HAS_TSS_EMULATION */
@@ -1512,9 +1508,9 @@ namespace ACE_OS {
 
   /*
    * Creates a new thread having @a flags attributes and running @a func
-   * with <args> (if <thread_adapter> is non-0 then @a func and <args>
-   * are ignored and are obtained from <thread_adapter>).  <thr_id>
-   * and <t_handle> are set to the thread's ID and handle (?),
+   * with @a args (if @a thread_adapter is non-0 then @a func and @a args
+   * are ignored and are obtained from @a thread_adapter).  @a thr_id
+   * and @a t_handle are set to the thread's ID and handle (?),
    * respectively.  The thread runs at @a priority priority (see
    * below).
    *
@@ -1529,16 +1525,20 @@ namespace ACE_OS {
    *
    * By default, or if @a priority is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
-   * the given scheduling policy (specified in <flags}>, e.g.,
-   * <THR_SCHED_DEFAULT>) is used.  This value is calculated
+   * the given scheduling policy (specified in @a flags, e.g.,
+   * @c THR_SCHED_DEFAULT) is used.  This value is calculated
    * dynamically, and is the median value between the minimum and
    * maximum priority values for the given policy.  If an explicit
    * value is given, it is used.  Note that actual priority values are
    * EXTREMEMLY implementation-dependent, and are probably best
    * avoided.
    *
-   * Note that <thread_adapter> is always deleted by <thr_create>,
+   * Note that @a thread_adapter is always deleted by @c thr_create,
    * therefore it must be allocated with global operator new.
+   *
+   * At the moment for @a thr_name a valid string is passed then this
+   * will be used on VxWorks to set the task name. If we just pass a pointer
+   * the name of the task is returned
    */
   extern ACE_Export
   int thr_create (ACE_THR_FUNC func,
@@ -1549,7 +1549,8 @@ namespace ACE_OS {
                   long priority = ACE_DEFAULT_THREAD_PRIORITY,
                   void *stack = 0,
                   size_t stacksize = ACE_DEFAULT_THREAD_STACKSIZE,
-                  ACE_Base_Thread_Adapter *thread_adapter = 0);
+                  ACE_Base_Thread_Adapter *thread_adapter = 0,
+                  const char** thr_name = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_equal (ACE_thread_t t1,
@@ -1574,7 +1575,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   /// for internal use only.  Applications should call thr_getspecific
   int thr_getspecific_native (ACE_OS_thread_key_t key,
-                       void **data);
+                              void **data);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -1673,7 +1674,7 @@ namespace ACE_OS {
 # endif /* ACE_HAS_THR_C_DEST */
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  /// @internal  applications should call thr_keyfree instead
+  /// @internal Applications should call thr_keyfree instead
   extern ACE_Export
   int thr_keyfree_native (ACE_OS_thread_key_t key);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
@@ -1693,6 +1694,9 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void thr_self (ACE_hthread_t &);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  const char* thr_name (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setcancelstate (int new_state,

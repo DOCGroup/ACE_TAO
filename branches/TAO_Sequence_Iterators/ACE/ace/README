@@ -326,13 +326,6 @@ ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS    Compiler does not call
                                         thrown.  In particular, the
                                         exception specification is not
                                         respected.
-ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION Compiler's template
-                                        instantiation mechanism
-                                        supports the use of explicit
-                                        C++ specializations for all
-                                        used templates. This is also
-                                        used for GNU G++ if you don't
-                                        use the "repo" patches.
 ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT  When a base-class is a
                                         specialization of a class template
                                         then this class template must be

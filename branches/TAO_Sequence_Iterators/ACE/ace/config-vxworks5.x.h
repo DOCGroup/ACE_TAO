@@ -36,6 +36,10 @@
 
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
+# if (__GNUC__ == 2)
+#   define ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE 1
+# endif
+
 # if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
   // GNU 3.3+ toolchain supports long long types but fails to define this so STL
   // skips some definitions
@@ -272,7 +276,6 @@
 // It is possible to enable pthread support with VxWorks, when the user decides
 // to use this, we need some more defines
 #if defined ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
 # define ACE_LACKS_CONDATTR_PSHARED
 # define ACE_LACKS_MUTEXATTR_PSHARED
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE

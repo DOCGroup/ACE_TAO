@@ -51,6 +51,15 @@
 #  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! ghs */
 
+#if !defined __RTP__
+# if defined (TOOL) && (TOOL == gnu)
+#  if defined (CPU) && (CPU == PPC85XX || CPU == PPC604 || CPU == PPC603)
+// These PPC's do lack log2 in kernel mode
+#   define ACE_LACKS_LOG2
+#  endif
+# endif
+#endif
+
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_NONCONST_GETBY
@@ -246,7 +255,6 @@
 // It is possible to enable pthread support with VxWorks, when the user decides
 // to use this, we need some more defines
 #if defined ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 # define ACE_HAS_POSIX_SEM
 # define ACE_LACKS_MUTEXATTR_PSHARED

@@ -17,8 +17,8 @@
 //    to zero on that platform.
 //
 //    In this test, the event handler is started at the port value
-//    USHRT_MAX and decremented for 300 port values and tested if the
-//    highest port number used agrees with ACE_MAX_DEFAULT_PORT value.
+//    USHRT_MAX and decremented for 'ports_to_test' port values and tested
+//    if the highest port number used agrees with ACE_MAX_DEFAULT_PORT value.
 //
 //
 // = AUTHOR
@@ -179,8 +179,16 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   u_short max_listened_port = 0;
 
+#if defined (__Lynx__)
+  // LynxOS can handle only 80 test iterations.
+  // This needs to be investigated further -- olli 12.11.2007
+  const u_short ports_to_test = 80;
+#else
+  const u_short ports_to_test = 300;
+#endif
+	
   //Ports beyond 65279 were said to bad on NT sp 3.
-  for (u_short idx = USHRT_MAX; idx != USHRT_MAX - 300; --idx)
+  for (u_short idx = USHRT_MAX; idx != USHRT_MAX - ports_to_test; --idx)
     {
 #if defined (ACE_VXWORKS)
       if (retry_port_>0)

@@ -63,7 +63,7 @@ svc_config_entries
     {
       if ($2 != 0)
       {
-        $2->apply (ACE_SVC_CONF_PARAM->config, ACE_SVC_CONF_PARAM->yyerrno); 
+        $2->apply (ACE_SVC_CONF_PARAM->config, ACE_SVC_CONF_PARAM->yyerrno);
         delete $2;
       }
       ACE_SVC_CONF_PARAM->obstack.release ();
@@ -404,13 +404,13 @@ ace_get_module (ACE_Service_Type const * sr,
   return const_cast<ACE_Module_Type *> (mt);
 }
 
-#if defined (DEBUGGING)
+#if defined (SVC_CONF_Y_DEBUGGING)
 // Main driver program.
 
 int
 main (int argc, char *argv[])
 {
-  ACE_Svc_Conf_Param param (stdin);
+  ACE_Svc_Conf_Param param (0, stdin);
 
   // Try to reopen any filename argument to use YYIN.
   if (argc > 1 && (yyin = freopen (argv[1], "r", stdin)) == 0)
@@ -418,7 +418,7 @@ main (int argc, char *argv[])
 
   return ::yyparse (&param);
 }
-#endif /* DEBUGGING */
+#endif /* SVC_CONF_Y_DEBUGGING */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

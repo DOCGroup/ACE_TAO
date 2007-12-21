@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Global_Macros.h"
 #include "ace/Unbounded_Queue.h"
 
 // Open versioned namespace, if enabled by the user.

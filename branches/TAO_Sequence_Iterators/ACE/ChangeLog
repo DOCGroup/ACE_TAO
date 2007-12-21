@@ -1,3 +1,1176 @@
+Thu Dec 20 20:01:07 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Codecs.h:
+        * ace/Codes.cpp:
+
+          Fixed fuzz warnings.
+
+Tue Dec 18 17:56:30 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/ACE-development-process.html,
+        * docs/ACE-bug-process.html: Updated these documents to clarify
+          that submitters of code, bug fixes, etc. waive claims to
+          copyright or ownership of the submissions.  Thanks to Tom
+          Callaway <tcallawa at redhat dot com> for help with this.
+
+Thu Dec 20 15:39:43 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Codecs.h:
+        * ace/Codecs.cpp:
+
+          Add is_chunked argument to encode() which selects whether the
+          encoded output is "chunked" into newline terminated 72 column
+          chunks.  Fixed bug where "chunked" output was not terminated by
+          a newline if the input buffer length was an exact multiple of 3.
+          Thanks to Alick Nie <alick_nie at 163 dot com> for reporting
+          inconsistant encoding behavior which lead to this change.
+
+        * THANKS:
+
+          Add Alick Nie <alick_nie at 163 dot com>.
+
+Thu Dec 20 14:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sched_Params.cpp:
+          Use VX_TASK_PRIORITY_MAX and VX_TASK_PRIORITY_MIN when they
+          are defined
+
+Thu Dec 20 13:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Layout change
+
+        * ace/OS_NS_Thread.inl:
+          Fixed warning with VxWorks 6.6 which uses GCC 4.1.2
+
+Thu Dec 20 13:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_dlfcn.inl:
+          Fixed warning with VxWorks 6.6 which uses GCC 4.1.2
+
+Thu Dec 20 13:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Fixed warning with VxWorks 6.6 which uses GCC 4.1.2
+
+Thu Dec 20 13:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+          Fixed typo in this file
+
+Thu Dec 20 10:30:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Exclude TAO/tests/CSD_Collocation from LynxOS builds. They
+          overload/tax the LynxOS kernal resulting in random process
+          table corruption and filing system errors.
+
+Wed Dec 19 14:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+        * ace/config-aix-5.x.h:
+          Deprecated Visual Age 5 and older
+
+Tue Dec 18 14:40:11 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Exclude TAO/tests/CSD_Collocation from minimum CORBA builds.
+
+Tue Dec 18 10:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug 3171 Regression
+
+Mon Dec 17 16:41:44 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added TAO/tests/CSD_Collocation.
+
+Mon Dec 17 12:35:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          added TAO/orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/run_test.pl
+          for bugzilla 3174.
+
+Mon Dec 17 10:00:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Pipe.cpp:
+          Implemented fix for delays on OpenVMS when using socketpair() for Pipe.
+
+Sun Dec 16 19:26:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.inl:
+          Extended this template, thanks to Hu Yi <huyi dot zg at gmail dot com>
+          for extending this template
+
+        * tests/Refcounted_Auto_Ptr_Test.cpp:
+          Extended
+
+        * tests/TSS_Test.cpp:
+          Removed pthread draft 4 code and fixed compile warnings with VxWorks 6.6
+
+        * ace/Pipe.cpp:
+          Const changes
+
+Sun Dec 16 07:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/common/AttributesImpl.h:
+          Doxygen improvements
+
+Sun Dec 16 06:49:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Added ACE_HAS_SOCK_BUF_SIZE_MAX, thanks to Adam Mitz for pointing
+          out this is needed for Solaris
+
+        * ace/OS_NS_Thread.cpp:
+          Const changes
+
+        * ace/OS_NS_Thread.inl:
+          Simplified ifdef checks in multiple methods
+
+        * ace/Select_Reactor_Base.cpp:
+          Layout change
+
+        * ace/Select_Reactor_Base.inl:
+          Change for msvc9
+
+        * ace/Select_Reactor_T.cpp:
+          No need to check for 0 after ACE_NEW_RETURN
+
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp:
+          Changed DEBUGGING to SVC_CONF_Y_DEBUGGING and also fixed
+          the compile problems that exist in the code guarded by
+          this define
+
+Sat Dec 15 15:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/gperf.mpc:
+        * bin/PerlACE/perlace.mpc:
+          Use custom_only=1 for these MPC files
+
+Sat Dec 15 14:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Object_Manager.cpp:
+          Disable the critical error boxes when  ACE_DISABLE_WIN32_ERROR_WINDOWS
+          is defined. This fixes bugzilla 3170. Thanks to Adrian Tulloch
+          <my-ace-sub at reyes-tulloch dot com> for suggesting this
+
+        * ace/Svc_Conf.h:
+          Fixed compile error when DEBUGGING is defined
+
+        * ace/Token.cpp:
+          Renamed DEBUGGING to ACE_TOKEN_DEBUGGING, DEBUGGING is used on
+          more places like as a member in an enum. Also const, bool changes.
+
+        * ace/TP_Reactor.cpp:
+          Layout and const changes
+
+Sat Dec 15 14:36:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bzcar/bczar.html:
+          Updated location of this page and improved bczar instructions
+
+Fri Dec 14 13:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/index.html:
+        * docs/Download.html:
+          Updated for x.6.2
+
+Fri Dec 14 02:48:57 CST 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 5.6.2 released.
+
+Thu Dec 13 16:19:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_socket.h:
+          Set ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE to SSIZE_MAX when it is not
+          set yet
+
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+          No need to set ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE anymore
+
+        * ace/Pipe.h:
+          Doxygen changes
+
+Wed Dec 12 13:15:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_socket.inl:
+          When ACE_HAS_SOCK_BUF_SIZE_MAX is defined, don't use
+          SSIZE_MAX but ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE as value
+          to check. That way we can limit the size of the packets
+          on OpenVMS.
+
+        * ace/config-openvms.h:
+          Added ACE_HAS_SOCK_BUF_SIZE_MAX and set
+          ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE to a value of 64k. This should
+          increase the test results on OpenVMS to a better level
+
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+          Set ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE to SSIZE_MAX to match
+          the old behaviour.
+
+        * ace/Reactor.h:
+          Layout change
+
+        * ace/Select_Reactor_T.cpp:
+          Layout change, initialise pointer to 0
+
+        * ace/SSL/SSL_SOCK_Stream.inl:
+          Const changes
+
+        * ace/TP_Reactor.cpp:
+          Layout change
+
+Fri Dec  7 18:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.h:
+          Make sure we initialise the resolvLib with VxWorks RTP
+
+Fri Dec  7 06:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/gperf.mpc:
+        * bin/PerlACE/perlace.mpc:
+          With vc9 set ConfigurationType to 10 to disable the creation
+          of the manifest file which fails because these projects don't
+          have source code
+
+Thu Dec  6 15:22:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_SOCK_Stream.cpp:
+          Layout and const changes
+
+Wed Dec  5 14:46:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+          Use this-> to comply with coding standards
+
+        * ace/OS_NS_dlfcn.inl:
+          Initialise pointer with 0
+
+        * ace/OS_NS_netdb.cpp:
+          Use C++ const_cast instead of c-style cast
+
+Tue Dec  4 20:20:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+          Removed some not needed ACE_UNUSED_ARG
+
+        * OS_NS_netdb.inl (gethostbyaddr_r):
+          Fixed VxWorks implementation
+
+Tue Dec  4 19:28:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Run all csd tests on VxWorks
+
+Tue Dec  4 18:07:59 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Temporarily exclude $TAO_ROOT/orbsvcs/orbsvcs/ESF from the
+          ACE_SYNCH_MUTEX check to eliminate fuzz warnings.
+
+Tue Dec  4 16:30:19 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Reactor_Notify_Test.cpp: Don't try to call
+          run_quiet_notify_test in single-threaded build.
+
+Tue Dec  4 15:03:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.h:
+          Changed ACE_IMPLEMENT_WITH_NATIVE_LONGDOUBLE to
+          ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE which has to be defined to
+          1. This makes this file easier to maintain
+
+        * ace/config-linux-common.h:
+        * aceconfig-vxworks5.x.h:
+          Added ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE defined as 1. This fixes
+          also the LongDouble issues with VxWorks 6.x
+
+Tue Dec  4 13:50:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Name_Handler.cpp (parse_args):
+          Fixed unicode build
+
+Mon Dec  3 19:41:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added bug 3163 regression
+
+Mon Dec  3 19:00:57 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * netsvcs/lib/Name_Handler.cpp (naming_context): Fixed typos.
+
+Mon Dec  3 14:57:36 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * netsvcs/lib/Name_Handler.h: Moved the inline methods to the
+          Name_Handler.cpp file.  Also, zapped the unnecessary virtual
+          method for naming_context().  Thanks to Johnny for catching
+          this.
+
+Mon Dec  3 14:21:20 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * netsvcs/lib/Name_Handler.{h,cpp}: Check the return value from
+          this->parse_args (argc, argv) and allow use all range config
+          options for ACE_Name_Acceptor::init.  Thanks to Vladislav Zverev
+          vladislav at gtss dot spb dot ru> for these patches.
+
+Mon Dec  3 10:06:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Removed not needed check for pthread_cancel
+
+Mon Dec  3 10:02:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-aix-5.x.h:
+        * ace/config-cray.h:
+        * ace/config-cygwin32.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-integritySCA.h:
+        * ace/config-irix6.x-common.h:
+        * ace/config-linux.h:
+        * ace/config-macosx-leopard.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-posix.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-rtems.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+        * ace/config-win32-interix.h:
+          Removed ACE_HAS_PTHREADS_STD, we only support the official pthread
+          standard, not any draft
+
+        * ace/config-cray.h:
+          Removed support for Unicos 9 and earlier. So far as I can find on the web
+          unicos 9 is from 1997
+
+        * ace/config-mvs.h:
+          Removed draft6, according to references on the web the std
+          pthread is supported now
+
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+          Newer NSK versions to support pthread std
+
+        * ace/config-tru64.h:
+          Removed support for ancient tru64 versions
+
+        * ace/os_include/os_limits.h:
+          Updated for VxWorks 6.6.
+
+        * ace/os_include/os_pthread.h:
+          Removed support for the draft pthread mappings
+
+        * ace/os_include/os_time.h:
+          Use ACE_HAS_PTHREADS
+
+        * ace/os_include/sys/os_msg.h:
+          Removed not needed workaround for osf1
+
+        * ace/OS_NS_pwd.inl:
+        * ace/OS_NS_signal.inl:
+          Use ACE_HAS_PTHREADS
+
+        * ace/OS_NS_string.cpp:
+          Initialise pointer with 0
+
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.inl:
+        * ace/Thread_Manager.cpp:
+          Removed support for pthread draft 4, 6, & 7
+
+        * ace/Recursive_Thread_Mutex.cpp:
+          get_nesting_level is only not support with VxWorks tasks
+
+        * ace/Select_Reactor_Base.cpp:
+          Layout change
+
+        * ace/Token.h:
+          Only with VxWorks tasks use semaphores
+
+        * ace/WIN32_Asynch_IO.cpp
+
+Sun Dec  2 17:47:13 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Remove code which defined ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
+          and ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION feature test macros.
+          There are vestigial bits of the tests which still remain -- the
+          entire platform template capability tests need to be rewritten.
+
+        * m4/config_h.m4:
+
+          Remove templates for ACE_HAS_TEMPLATE_INSTANTATION_PRAGMA and
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION.
+
+Sun Dec  2 17:43:27 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/README:
+
+          Remove description of ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION.
+          This feature test macro was removed some time ago.
+
+Sun Dec  2 17:41:01 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_stdlib.cpp:
+
+          Change initial program name returned by the emulated version of
+          ACE_OS::getprogname() to be the empty string rather than a null
+          pointer.
+
+Sun Dec  2 06:47:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/gperf/tests/test.cpp:
+          Fixed conversion warning
+
+Sat Dec  1 17:06:32 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+          Fixed the checks of ACE_SYNCH_MUTEX and ACE_Thread_Mutex to exclude
+          checking for those key words in ACE. We only want to detect the usage
+          of those words in TAO and CIAO.
+
+Fri Nov 30 23:59:41 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Added the following checks:
+
+          check_for_ACE_SYNCH_MUTEX:
+          This test checks for the use of ACE_SYNCH_MUTEX in TAO/CIAO,
+          TAO_SYNCH_MUTEX should be used instead for consistency.
+
+          check_for_ACE_Thread_Mutex:
+          This test checks for the use of ACE_Thread_Mutex in TAO/CIAO,
+          TAO_SYNCH_MUTEX should be used instead to make the code buid
+          in single-threaded builds.
+
+          I will fix the resulting fuzz errors over the weekend.
+
+Fri Nov 30 22:11:32 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/WFMO_Reactor.h: Clarify that only the owner thread can expire
+          timers and wait on the notifications handle.
+
+Fri Nov 30 21:53:15 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Reactor_Notify_Test.cpp: Added a test to verify that a quiet
+          (e.g., no I/O occurring) event loop will be awoken by a notify().
+
+Fri Nov 30 16:58:00 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/CDR_Stream.{h cpp}:
+          Added replace (ACE_CDR::Short, char *), analogous to the existing
+          replace (ACE_CDR::Long, char *); replaces a previous place in the
+          stream with a short.
+          To make the replace() methods more convenient and easier to use
+          correctly, added the following methods:
+            char* write_long_placeholder (void);
+            char* write_short_placeholder (void);
+          These methods align the stream's write pointer properly then write
+          a 0-valued placeholder in the stream. The pointer to the placeholder
+          is returned; that pointer can later be passed to replace().
+
+        * tests/CDR_Test.cpp: Added tests for placeholder and replace ops.
+
+          Thank you to Howard Finer for contributing these additions.
+
+        * NEWS: Added note about these additions.
+
+Fri Nov 30 11:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          add TAO/orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/run_test.pl
+
+Thu Nov 29 19:49:23 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Process_Manager_Test.cpp: Changed ACE_MT_SYNCH to ACE_SYNCH so
+          this works on single-threaded builds.  Thanks to Johnny for
+          reporting this.
+
+Thu Nov 29 18:10:27 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/ARGV.h:
+
+          #include "ace/Global_Macros.h".  This is included implicitly on
+          platforms where ACE_TEMPLATES_REQUIRE_SOURCE, but is needed for
+          those that don't.
+
+Wed Nov 28 13:37:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Only use pic when building rtp
+
+Wed Nov 28 13:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl:
+          Updated for VxWorks 6.6
+
+Wed Nov 28 13:24:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task.cpp:
+          Updated for VxWorks 6.6
+
+Wed Nov 28 13:18:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_arpa_inet.cpp:
+          Updated for VxWorks 6.6
+
+Wed Nov 28 13:08:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_types.h:
+          Updated for VxWorks 6.6
+
+Wed Nov 28 10:56:29 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_3154_Regression.
+
+Wed Nov 28 07:30:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Queue_Adapters.{h,cpp}:
+          Updated activate method because of new argument in the base
+          class
+
+Tue Nov 27 14:16:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          Added support for Fedora 8
+
+Tue Nov 27 14:03:17 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Process_Manager_Test.cpp: Added
+
+          #include "ace/Synch_Traits.h"
+
+          so the ACE_MT_SYNCH macro is visible.  Thanks to Johnny for
+          reporting this.
+
+Tue Nov 27 13:14:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Added missing const_cast for VxWorks
+
+Tue Nov 27 13:10:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Multicast/server.cpp
+          Don't use the deprecated ACE_SOCK_Dgram_Mcast methods
+
+Tue Nov 27 10:01:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          Updated for FC7
+
+Tue Nov 27 08:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.{h,cpp,inl}:
+        * ace/Task.{h,cpp}:
+        * ace/Thread.{h,cpp,inl}:
+        * ace/Thread_Manager.{h,cpp}:
+          Added a const char* argument to all methods that create a thread
+          so that we can pass in an optional thread name which is used at
+          this moment only on VxWorks. Added ACE_OS::thr_name() to retrieve
+          the name of the current thread.
+
+        * ace/SOCK_Dgram_Mcast.{h,cpp}:
+          Removed deprecated subscribe/unsubscribe methods
+
+Tue Nov 27 06:33:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+          Don't use the deprecated ACE_SOCK_Dgram_Mcast methods
+
+Mon Nov 26 20:41:03 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Process_Manager_Test.cpp: Changed the use of
+          ACE_Thread_Mutex to ACE_SYNCH_MUTEX so that the test compilees
+          properly on single-threaded builds.  Thanks to Johnny for
+          reporting this.
+
+Mon Nov 26 19:41:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Ntalker/ntalker.cpp:
+          Don't use the deprecated ACE_SOCK_Dgram_Mcast methods
+
+Mon Nov 26 15:10:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.6.GNU:
+        * ace/config-vxworks6.6.h:
+          New files for VxWorks 6.6
+
+Mon Nov 26 12:27:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Make sure we also use -mlongcall with c files
+
+Mon Nov 26 11:26:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          With FC6 and RedHat 5.0/5.1 we have to disable visibility. Use
+          lsb_release info to detect these versions. Simplifies the checks
+          we do and at the same moment we also support RedHat 5.1 on IA65
+
+Mon Nov 26 11:04:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabed several tests for VxWorks
+
+Mon Nov 26 03:29:21 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Process_Manager.cpp: Fixed a problem where spawning a
+          process with ACE_Process_Manager resulted in deadlock while
+          waiting for the end of another process.  Thanks to Oliver Spang
+          <oliver dot spang at nsn dot com> for these fixes.
+
+        * tests/Process_Manager_Test.cpp: Added a regression test for
+          Oliver's patches.  Thanks again to oliver Spang for this code.
+
+Sun Nov 25 09:18:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl (vsprintf):
+          Updated for msvc9
+
+Sun Nov 25 09:15:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc9.h:
+          Disabled warning 4250 with this compiler
+
+Sat Nov 24 00:23:34 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h: Clarified the workings of the optional hook function
+          that can be passed to event loop methods. Thanks to Andre Kostur
+          for this idea.
+
+Fri Nov 23 19:38:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc8_warnings.mpb:
+        * bin/MakeProjectCreator/config/vc_warnings.mpb:
+          Renamed vc8 to vc because this file is now also used for vc9
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Updated base project because of rename above
+
+        * bin/MakeProjectCreator/config/vc9.features:
+          New file
+
+        * bin/MakeProjectCreator/config/vc9nmake.mpb:
+          New file
+
+        * contrib/minizip/minizip.mpc:
+          Updated for vc9
+
+        * examples/Service_Configurator/Misc/Timer_Service.cpp:
+          Layout change
+
+        * examples/Connection/non_blocking/CPP-connector.cpp:
+          Just not name an argument instead of using ACE_UNUSED_ARG
+
+        * examples/APG/Reactor/HAStatus-AC.cpp:
+          Initialise some pointers with 0
+
+        * bin/make_release.py:
+          Added generation for vc9
+
+        * ASNMP/asnmp/wpdu.cpp:
+          Layout change
+
+        * ACE-install.sh:
+          Removed, ancient
+
+Fri Nov 23 19:38:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Use join instead of subscribe
+
+Fri Nov 23 06:50:01 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * tests/run_test.lst:
+          Do not run Signal_Test on LynxOS.
+
+Thu Nov 22 13:47:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+        * ace/QoS/qos.mpc:
+        * bin/MakeProjectCreator/config/ace_fl.mpb:
+        * bin/MakeProjectCreator/config/ace_gl.mpb:
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+        * bin/MakeProjectCreator/config/ace_x11.mpb:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/ipv6.mpb:
+          Added support for vc9
+
+Thu Nov 22 12:44:54 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Vector_T.inl:
+          Fixed compile error
+
+        * bin/msvc_mpc_auto_compile.pl:
+        * bin/msvc_static_compile.pl:
+          Added vc9 as option
+
+Wed Nov 21 21:43:54 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Vector_T.inl (advance):
+        * ace/Vector_T.cpp: Fixed the push_back() and pop_back() methods
+          so they work properly after resizing.  Thanks to Karl-Heinz Wind
+          <wind at itq dot de> for these fixes.  This fixes bugid 3152.
+
+Wed Nov 21 21:36:27 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Vector_Test.cpp (run_main): Updated the test so that it
+          checks for the buggy push_back() and pop_back().  Thanks to
+          Karl-Heinz Wind <wind at itq dot de> for providing these
+          enhancements.
+
+Wed Nov 21 19:37:29 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Reactor/Ntalker/ntalker.cpp (ACE_TMAIN):
+
+          Use ACE_SOCK_Dgram_Mcast::leave() instead of deprecated
+          ...::unsubscribe() to leave the multicast group.  Thanks to
+          Stefan Naewe <stefan dot naewe at atlas-elektronik dot com> for
+          reporting this.
+
+Wed Nov 21 16:14:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_utsname.cpp (name):
+          Extended VxWorks implementation
+
+Wed Nov 21 16:06:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added support for iBoot
+
+Sun Nov 18 06:25:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Fixed ACE_HAS_POSIX_SEM_TIMEOUT check, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this.
+          This fixes bugzilla 3153
+
+Fri Nov 16 04:12:20 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Service_Configurator/Misc/main.cpp (ACE_TMAIN): Added a
+          space between "-f" and "svc.conf".  This fixes a bug.  Thanks
+          to Kun Niu <haoniukun at gmail dot com> for this fix.
+
+Fri Nov 16 09:37:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_common.GNU:
+        * ace/config-linux-common.h:
+        * m4/platform.m4:
+          Changed ACE_HAS_LINUX_NPTL to ACE_LACKS_LINUX_NPTL. All recent
+          linux distributions do have NPTL, only older versions lack this
+          support. By changing HAS to LACKS it makes it easier to use ACE
+          with their own makefile scheme. This fixes bugzilla 3084
+
+Thu Nov 15 19:44:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_common.GNU:
+          Retrieve distribution and release number using lsb_release
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Moved RedHat/FC checks to platform_linux.GNU, this only needs
+          to be done when using GCC on Linux, not when using GCC on
+          other platforms
+
+        * include/makeinclude/platform_linux.GNU:
+          With Ubuntu 7.04 and 7.10 we can't use visibilit, we get
+          unresolved externals when using it. We are now using
+          lsb_release to detect the distribution
+
+Thu Nov 15 08:41:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_limits.h:
+          PIPE_BUF is also defined to -1 with VxWorks 6.5
+
+Thu Nov 15 05:40:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GN:
+          Add -mlongcall also to CFLAGS
+
+Wed Nov 14 19:12:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          When link_groups is defined to 1 we group the LDLIBS within
+          -Wl,--start-group and -Wl,--end-group. This way the user can
+          manually enable this through the platform_macros.GNU file and
+          doesn't need to regenerate all makefiles. Also removed the
+          check for the compiler name, with VxWorks we also can use this
+          and there we have different compilers (ccppc, ccpentium, etc)
+
+        * include/makeinclude/wrapper_macros.GNU:
+ also can use this
+          and there we have different compilers (ccppc, ccpentium, etc)
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Set link_groups to 0 by default, the user has to explicitly enable
+          it
+
+        * bin/MakeProjectCreator/docs/templates/gnu.txt:
+          Removed link_groups, that is now enabled through platform_macros.GNU,
+          not through MPC
+
+Wed Nov 14 16:16:49 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * ace/Service_Config.cpp:
+          Check the reactor instance before using it.
+
+Wed Nov 14 14:34:26 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * m4/platform.m4:
+
+          Remove autoheader template and platform support for the pSOS
+          platform.  Support was removed from ACE some time ago.
+
+Wed Nov 14 11:00:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Added support for Intel C++ 10.1
+
+Wed Nov 14 07:47:28 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+
+          Removed PTHREAD_STACK_MAX autoheader template as this feature
+          test macro is not used.
+
+Wed Nov 14 07:46:43 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * m4/platform.m4:
+
+          Remove autoheader template and platform support for the DG/UX
+          platforms.  Support was removed from ACE some time ago.
+
+Wed Nov 14 07:23:07 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/platform.m4:
+
+          Update autoheader templates for ACE_INT64_FORMAT_SPECIFIER and
+          ACE_UINT64_FORMAT_SPECIFIER to clarify that they're the printf
+          format specifiers for the ACE_INT64 and ACE_UINT64 types.
+
+          This can be an important distinction for platforms with
+          compilers that validate literal format strings (where passing
+          "long long" for "%ld", or "long" for "%lld" will result in an
+          warning/error even when both are 64 bit integers).
+
+Wed Nov 14 07:18:21 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/platform.m4:
+
+          Remove platform support for the "fsu" platform.  Support was
+          removed from ACE some time ago.
+
+Wed Nov 14 07:12:03 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * m4/platform.m4:
+
+          Remove autoheader templates and platform support for the "m88k"
+          platform.  Support was removed from ACE some time ago.
+
+Tue Nov 13 14:34:17 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Replace autoheader templates for ACE_HAS_ALPHA_TIMER,
+          ACE_HAS_POWERPC_TIMER, and ACE_HAS_PENTIUM in config_h.m4 with
+          a third argument to AC_DEFINE in configure.ac
+
+Tue Nov 13 07:45:25 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_HAS_INTEL_ASSEMBLY feature test.
+
+Tue Nov 13 06:48:16 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_time.inl:
+
+          Changed the inline assembly implementation of gethrtime() for
+          the amd64/x86_64 architecture to recognize that the timestamp is
+          read into the %eax and %edx registers, and thus must be combined
+          into a 64 bit value. Thanks to Nathan Ernst <Nathan dot Ernst at
+          citadelgroup dot com > for reporting this bug.
+
+        * THANKS:
+
+          Add Nathan Ernst <Nathan dot Ernst at citadelgroup dot com>.
+
+Tue Nov 13 06:01:33 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_stdio.inl:
+
+          Change of Thu Nov  8 04:02:21 UTC 2007 was missing ACE_WIN32
+          in conditional.  Thanks to Johnny Willemsen for pointing out
+          resulting scoreboard failures.
+
+Mon Nov 12 20:05:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Enabled Smart_Proxies/Policy with VxWorks
+
+Mon Nov 12 14:16:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.{h,cpp,inl}:
+          Use bool for several flags
+
+Mon Nov 12 14:12:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disable Bug_2953_Regression for the moment on VxWorks, it hangs out
+          target
+
+Mon Nov 12 13:04:11 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/CDR_Base.inl:
+
+          Take advantage of bswap16, bswap32, and bswap64 macros when
+          ACE_HAS_BSWAPXX is defined as we do for bswap_16, bswap_32,
+          and bswap_64 when ACE_HAS_BSWAP_XX is defined.
+
+        * configure.ac:
+
+          Changed checks for bswap_16, bswap_32, and bswap_64 to use
+          ACE_CHECK_HAS_DEFINES.  Thanks to Thomas Girard <thomas dot g
+          dot girard at free dot fr> for reporting the ACE_HAS_BSWAP_XX
+          feature test macros were not being defined because bswap_16,
+          bswap_32, and bswap_64 are implemented as macros.  This fixes
+          bugzilla 3134.
+
+          Added check for bswap16, bswap32, and bswap64.  These are the
+          *BSD, Darwin, etc. equivalents of the bswap_XX macros.
+
+        * m4/ace_defines.m4:
+
+          New file, new autoconf macros ACE_CHECK_DEFINE,
+          ACE_CHECK_HAS_DEFINES, and ACE_CHECK_LACKS_DEFINES.  These are
+          used like ACE_CHECK_HAS_FUNCS and ACE_CHECK_LACKS_FUNCS, where
+          the tested feature is implemented as a macro and not a function.
+
+Mon Nov 12 10:25:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * bin/PerlACE/ConfigList.pm:
+
+          Bugzilla 3085: Fix for "and" test for test suite control.
+
+Mon Nov 12 10:01:53 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * tests/Max_Default_Port_Test.cpp:
+          Changed this test to work on LynxOS.
+
+Mon Nov 12 06:36:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disable bug 2494 regression for vxworks, it hangs our target.
+          When this test has been analyzed in detail we will enable
+          it again
+
+Mon Nov 12 06:31:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          The ACE_HAS_RUSAGE_WHO_ENUM and ACE_HAS_RLIMIT_RESOURCE_ENUM
+          are not needed anymore with glibc 2.3 and newer
+          Thanks to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this. This fixes bugzilla 3143
+
+Sun Nov 11 18:59:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disable bug 1020 regression for vxworks, it hangs our target.
+          When this test has been analyzed in detail we will enable
+          it again
+
+Sun Nov 11 18:41:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added check for wcsnlen.
+          Thanks to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this. This fixes bugzilla 3146
+
+Sun Nov 11 18:31:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Replaces ACE_RUN_TAO_DEBUG_LEVEL with TAO_RUN_TAO_ORB_DEBUG
+
+Fri Nov  9 23:45:48 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+
+          Remove DEFAULT_INCLUDES= added on Wed Nov 7 04:33:02 UTC 2007.
+          Automake's nostdinc option performs the same function, but in
+          a documented, supported, manner.
+
+        * configure.ac:
+
+          Use nostdinc option to AM_INIT_AUTOMAKE.  This instructs
+          automake not to add -I options for the current directory.
+
+Fri Nov  9 02:16:24 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Asynch_IO.h: Disallow copying and assignment for
+          ACE_Handler.  Thanks to Juraj Ivancic <juraj dot ivancic at
+          gmail dot com> for this suggestion.
+
+Fri Nov  9 11:46:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/os_include/sys/os_types.h:
+        * ace/Task.cpp:
+        * ace/Truncate.h:
+          Improved NSK support, thanks to Gary Maxey <gary dot maxey at hp dot com>
+          for delivering the patches. This fixes bugzilla 3124
+
+Fri Nov  9 11:25:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Doxygen improvements
+
+Fri Nov  9 11:06:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Newer glibc versions don't need ACE_HAS_NONCONST_SETRLIMIT anymore.
+          Thanks to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this. This fixes bugzilla 3136
+
+Fri Nov  9 09:46:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Some PPC's don't have log2 in kernel mode
+
+Fri Nov  9 09:37:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.{h,cpp,inl}:
+        * ace/Thread_Manager.cpp:
+          Changed ACE_hthread_t to an int for VxWorks. This makes the core of
+          ACE cleaner and more stable on VxWorks. At this moment you can't give
+          a Task a name, but we will extend the thread creation functions
+          with an additional char* in a next iteration. That way you can use
+          task names also when using pthread on vxworks. See also bugzilla 3131
+
+        * tests/Conn_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+          Disable task name setting, will be enabled again when the spawn
+          methods are extended
+
+Fri Nov  9 08:58:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.inl:
+          Fixed incorrect define. This fixes bugzilla 3139. Thanks to
+          Thomas Girard <thomas dot g dot girard at free dot fr>
+
+        * ace/Dynamic_Service_Base.{h,cpp}:
+          Reduced number of methods by using default argument values
+
+        * ace/Object_Manager.{h,cpp}:
+        * ace/Service_Config.cpp:
+          The Service Configurator depends on the availability of TSS. When
+          TSS emulation is enabled, that emulation needs to be initialized
+          within the Object Manager. The Object Manager also depends on the SG,
+          so added a new init_tss() method that just initializes TSS
+          which is then called from the SG constructor. This fixes
+          problems with TAO VxWorks 6.x kernel mode. Thanks to Iliyan for
+          giving insights how SG/SC should work.
+
+        * ace/OS_NS_Thread.h:
+          Changed key_create_ to bool and check the return value of taskSpawn
+
+        * ace/Reactor.h:
+        * ace/Service_Config.inl:
+          Doxygen change
+
+        * ace/Service_Config.cpp:
+          Updated some debug statements
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added ACE_RUN_ACE_DEBUG and ACE_RUN_TAO_DEBUG_LEVEL, if set then
+          ACE_DEBUG/TAO_DEBUG_LEVEL are set as environment variabled on the
+          target
+
+Thu Nov  8 04:02:21 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_stdio.inl:
+
+          Changed wide character version of ACE_OS::vsnprintf()'s to match
+          ACE_OS::snprintf() as like prior to Sun Oct 28 21:11:57 UTC 2007.
+          This fixes a error reporting in buffer overflow conditions.
+
+          At that time all the ACE_OS::*printf() functions were changed to
+          call ACE_OS::v*printf().  The intent was to reduce the chance of
+          bugs being introduced because of largly parallel implementations.
+          What I didn't expect was that such a bug was already present.
+
+Thu Nov  8 02:09:02 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Codeset_Registry_db.cpp:
+          Added an entry for UTF-8.
+
+Wed Nov  7 18:53:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_2133 regression
+
+Wed Nov  7 04:33:02 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+
+          Add DEFAULT_INCLUDES definition that got lost during regeneration.
+          Fixes autoconf builds on case-insensitive filesystems.
+
+        * m4/platform.m4:
+
+          Add ACE_HAS_NONCONST_FD_ISSET feature test.
+
+          Thanks to Doug McCorkle <mccdo at iastate dot edu> for providing
+          this patch.
+
+Tue Nov  6 11:30:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Re-instated the change of Thu Nov  1 14:40:00 UTC 2007.
+          Valgrind tests prove this is not causing the memory leaks
+          just exposing some existing ones. The whole area of TSS use
+          with singletons/statics needs to be investigated.
+          (See Bugzilla 3128 for details.)
+
+Tue Nov  6 10:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Fixed dirname setting
+
 Mon Nov  5 20:00:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
@@ -769,7 +1942,7 @@ Thu Oct 11 12:22:57 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
 
-          Added Grégor Boirie <gregor dot boirie at free dot fr>
+          Added Grï¿½gor Boirie <gregor dot boirie at free dot fr>
 
 Wed Oct 10 11:33:40 UTC 2007  Steve Huston  <shuston@riverace.com>
 
@@ -3469,7 +4642,7 @@ Sat Jul 28 18:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:
           Added checks for byteswap.h, intrin.h, ia32intrin.h, and
-          ia64intrin.h, part of buzilla 2905.
+          ia64intrin.h, part of bugzilla 2905.
 
 Fri Jul 27 06:50:14 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 

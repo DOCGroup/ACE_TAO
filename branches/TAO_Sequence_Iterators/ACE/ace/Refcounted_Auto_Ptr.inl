@@ -124,6 +124,18 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator *() const
   return *this->rep_->get ();
 }
 
+template<class X, class ACE_LOCK> inline bool
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator !() const
+{
+  return this->rep_->get () == 0;
+}
+
+template<class X, class ACE_LOCK> inline
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator bool () const
+{
+  return this->rep_->get () != 0;
+}
+
 template <class X, class ACE_LOCK> inline X*
 ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::get (void) const
 {

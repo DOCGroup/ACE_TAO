@@ -261,6 +261,11 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         $vc7 = 1; # VC8 is like VC7
         $proj_ext = '.vcproj';
     }
+    elsif ($ARGV[0] =~ '-vc9') {    # Use VC9 project and solution files.
+        print "Using VC9 files\n" if ( $verbose );
+        $vc7 = 1; # VC9 is like VC7
+        $proj_ext = '.vcproj';
+    }
     elsif ($ARGV[0] =~ '-v') {          # verbose mode
         $verbose = 1;
     }

@@ -640,6 +640,13 @@ private:
  * use the DONT_CALL flag with remove_handler(). Preferably, use dynamically
  * allocated event handlers and call "delete this" inside the handle_close()
  * hook method.
+ *
+ * Note that although multiple threads can concurrently run the
+ * ACE_WFMO_Reactor event loop, the concept of the reactor "owner" is still
+ * important. Only the owner thread can expire timers and wait on the
+ * notifications handle. Thus, be careful to properly set the owner thread
+ * when spawning threads to run the event loop while you are using timers
+ * or notifications.
  */
 class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
 {

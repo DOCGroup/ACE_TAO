@@ -261,6 +261,10 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "Using VC8 files\n" if ( $verbose );
         $vc7 = 1; # vc8 is like vc7
     }
+    elsif ($ARGV[0] =~ '-vc9') {    # Use VC9 project and solution files.
+        print "Using VC9 files\n" if ( $verbose );
+        $vc7 = 1; # vc9 is like vc7
+    }
     elsif ($ARGV[0] =~ '-v') {          # verbose mode
         $verbose = 1;
     }

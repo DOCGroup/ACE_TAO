@@ -57,7 +57,7 @@ dnl Check what platform we are running on.
 AC_CANONICAL_TARGET([])
 
 dnl Initialize GNU Automake, and require Automake 1.9.6 or better.
-AM_INIT_AUTOMAKE([1.9.6 foreign no-define])
+AM_INIT_AUTOMAKE([1.9.6 foreign no-define nostdinc])
 
 dnl Add maintainer mode option to the option list.
 dnl AM_MAINTAINER_MODE
@@ -2490,7 +2490,16 @@ ACE_CACHE_CHECK([if const char * can be rvalue in conditional operator],
   ],,[AC_DEFINE([ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS])])
 
 dnl Check if templates require source on platform
-dnl FIXME:  This test may be broken.
+dnl
+dnl FIXME: This test may be broken.
+dnl
+dnl FIXME: This test contains vestigial bits of tests for explicit
+dnl template instantiation feature macros, even though support for
+dnl the same has been removed. 
+dnl 
+dnl A rewrite to test only whether ACE_TEMPLATES_REQUIRE_SOURCE or
+dnl ACE_TEMPLATES_REQUIRE_PRAGMA is clearly needed.
+dnl
 ACE_CACHE_CHECK([if templates require source],
   [ace_cv_feature_templates_require_source],
   [
@@ -2951,40 +2960,6 @@ dnl END OUTER REQUIRE PRAGMA #########################################
      ],
      [
       dnl Do nothing.
-     ])
-  ])
-
-ACE_CACHE_CHECK([if explicit template instantiation is needed],
-  [ace_cv_feature_explicit_template_instantiation],
-  [
-   AC_MSG_ERROR([
-Bug in configure script, check for need of explicit template
-instantiation should have occurred during check for need of template
-source.  Please e-mail the maintainer of this configure script:
-  $ACE_CONFIGURE_MAINTAINER
-this message.
-    ])
-  ],
-  [
-   AC_DEFINE([ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION])
-  ],
-  [
-   ACE_CACHE_CHECK([if pragma template instantiation is needed],
-     [ace_cv_feature_pragma_template_instantiation],
-     [
-      AC_MSG_FAILURE([
-Bug in configure script, check for need of pragma template
-instantiation should have occurred during check for need of template
-source.  Please e-mail the maintainer of this configure script:
-  $ACE_CONFIGURE_MAINTAINER
-this message.
-        ])
-     ],
-     [
-      AC_DEFINE([ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA])
-     ],
-     [
-      dnl Do nothing
      ])
   ])
 
@@ -3468,7 +3443,18 @@ ACE_CHECK_LACKS_FUNCS(alarm)
 
 ACE_CHECK_LACKS_FUNCS(bsearch)
 
-ACE_CHECK_HAS_FUNCS(bswap_16 bswap_32 bswap_64)
+ACE_CHECK_HAS_DEFINES([bswap16])
+if test "$ace_cv_defined_bswap16" = no; then
+  ACE_CHECK_HAS_DEFINES([bswap_16])
+fi
+ACE_CHECK_HAS_DEFINES([bswap32])
+if test "$ace_cv_defined_bswap32" = no; then
+  ACE_CHECK_HAS_DEFINES([bswap_32])
+fi
+ACE_CHECK_HAS_DEFINES([bswap64])
+if test "$ace_cv_defined_bswap64" = no; then
+  ACE_CHECK_HAS_DEFINES([bswap_64])
+fi
 
 ACE_CHECK_LACKS_FUNCS(chdir)
 
@@ -4115,6 +4101,8 @@ ACE_CHECK_LACKS_FUNCS(unlink)
 
 ACE_CHECK_HAS_FUNCS(vasprintf vaswprintf vfwprintf vswprintf)
 
+ACE_CHECK_HAS_FUNCS(wcsnlen)
+
 ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
 
 if test "$ac_cv_func_wcstok" = yes; then
@@ -4428,7 +4416,8 @@ main ()
           dnl action if cross-compiling
           ace_cv_sem_timedwait_works=yes
          ])
-       ],,)
+       ],
+        [AC_DEFINE([ACE_HAS_POSIX_SEM_TIMEOUT])],)
 fi
 
 
@@ -7040,7 +7029,8 @@ ACE_CACHE_CHECK([if running on an Alpha],
        dnl We only define ACE_HAS_ALPHA_TIMER if we are running Linux
        dnl on an Alpha and are using GNU C++!
        if test "$GXX" = yes; then
-         AC_DEFINE([ACE_HAS_ALPHA_TIMER])
+         AC_DEFINE([ACE_HAS_ALPHA_TIMER], 1,
+		   [Define to 1 if system should use Alpha's cycle counter])
        fi
        ;;
    esac
@@ -7066,7 +7056,8 @@ ACE_CACHE_CHECK([if running on a Power PC],
      *)
        dnl Only define ACE_HAS_POWERPC_TIMER when using GNU C++!
        if test "$GXX" = yes; then
-         AC_DEFINE([ACE_HAS_POWERPC_TIMER])
+         AC_DEFINE([ACE_HAS_POWERPC_TIMER], 1,
+		   [Define to 1 if system should use PowerPC's cycle counter])
        fi
        ;;
    esac
@@ -7091,10 +7082,27 @@ dnl since gethrtime.cpp uses assembler code specific to that compiler.
     esac
   ],
   [
-   AC_DEFINE([ACE_HAS_PENTIUM])
+   AC_DEFINE([ACE_HAS_PENTIUM], 1,
+	     [Define to 1 if system is using Intel Pentium(tm) processor])
   ],)
 AM_CONDITIONAL([ACE_ON_PENTIUM], [test X$ace_cv_feature_pentium = Xyes])
 
+case "$host" in
+  i386-* | i486-* | i586-* | i686-* | x86_64-*)
+    if test "$GXX" = yes; then
+      ace_cv_has_intel_assembly=yes
+    else
+      ace_cv_has_intel_assembly=no
+    fi
+    ;;
+  *)
+    ace_cv_has_intel_assembly=no
+    ;;
+esac
+if test "$ace_cv_has_intel_assembly" != "no"; then
+  AC_DEFINE([ACE_HAS_INTEL_ASSEMBLY], 1,
+            [Define to 1 if the system supports x86/x86_64 inline assembly])
+fi
 
 dnl
 dnl SECTION 14: checks for aggregated features
