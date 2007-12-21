@@ -3,6 +3,7 @@
 // $Id$
 
 #include "ace/os_include/os_assert.h"
+#include "ace/config-all.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
