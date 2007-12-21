@@ -38,11 +38,9 @@ my @tests = qw(
               );
 
 my @testsNoBoost = qw(
-#               Unbounded_Octet
-#               Unbounded_Simple_Types
-#               Bounded_Simple_Types
-                StringSeq
-                Bounded_String
+                 StringSeq
+                 Bounded_String
+                 Unbounded_Objectref
               );
 
 my @testsToRun = qw();
@@ -52,8 +50,6 @@ push(@testsToRun, @testsNoBoost) if ($#ARGV < 0 || $ARGV[0] eq '-noboost');
 
 
 foreach my $process (@testsToRun) {
-
-
 
   my $P = 0;
   if (PerlACE::is_vxworks_test()) {

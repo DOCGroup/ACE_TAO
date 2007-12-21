@@ -89,9 +89,11 @@ public:
     implementation_type::freebuf(buffer);
   }
 
+#ifdef ACE_HAS_STDCPP_STL_INCLUDES
+
   ///
-  /// Additions to support iterator semantics for TAO unbounded basic
-  /// string sequences.
+  /// Additions to support iterator semantics for TAO unbounded value
+  /// sequences.
   ///
 
   // = Traits and factory methods that create iterators.
@@ -149,6 +151,8 @@ public:
   {
     return impl_.rend ();
   }
+
+#endif /* ACE_HAS_STDCPP_STL_INCLUDES */
 
 private:
   implementation_type impl_;

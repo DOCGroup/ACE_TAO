@@ -2,13 +2,29 @@
 // $Id$
 
 project(StringSeq) : taoexe {
+
+  exename = StringSeq
+
   Source_Files {
     StringSeq.cpp
   }
 }
 
 project(Bounded_String) : taoexe {
+
+  exename = Bounded_String
+
   Source_Files {
     Bounded_String.cpp
+  }
+}
+
+project(Unbounded_Objectref) : taoexe {
+
+  exename = Unbounded_Objectref
+
+  Source_Files {
+    mock_reference.cpp
+    Unbounded_Objectref.cpp
   }
 }
