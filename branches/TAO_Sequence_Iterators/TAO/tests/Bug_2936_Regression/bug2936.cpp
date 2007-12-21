@@ -2,6 +2,7 @@
 
 #include "ace/OS.h"
 #include "ace/Service_Config.h"
+#include "ace/Log_Msg.h"
 
 char const * const scpc_orbId = "testDllOrb";
 

@@ -123,14 +123,14 @@ TAO_IOR_Multicast::common_init (const char *ior,
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
   if (this->mcast_nic_.length() != 0)
     {
-      if (this->mcast_dgram_.subscribe (this->mcast_addr_,
-                                        1,
-                                        ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_.c_str())) == -1)
+      if (this->mcast_dgram_.join (this->mcast_addr_,
+                                   1,
+                                   ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_.c_str())) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", "subscribe"),-1);
     }
   else
     {
-      if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
+      if (this->mcast_dgram_.join (this->mcast_addr_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
       "TAO_IOR_Multicast::common_init() %p\n",
                            "subscribe"),

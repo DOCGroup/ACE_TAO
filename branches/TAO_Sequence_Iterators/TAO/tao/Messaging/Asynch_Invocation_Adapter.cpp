@@ -170,11 +170,9 @@ namespace TAO
           CORBA::COMPLETED_NO);
       }
 
-    if (this->safe_rd_.get ())
+    if (this->safe_rd_.get () && r.transport ())
       {
-        // Cache the  transport in the reply dispatcher
         this->safe_rd_->transport (r.transport ());
-
         // AMI Timeout Handling Begin
         ACE_Time_Value tmp;
 

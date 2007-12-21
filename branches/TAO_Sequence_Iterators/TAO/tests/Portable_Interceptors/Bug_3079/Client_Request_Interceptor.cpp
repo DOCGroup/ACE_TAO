@@ -58,7 +58,7 @@ Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   ++this->exception_count_;
-  ACE_DEBUG ((LM_DEBUG, "RECEIVED EXCEPTION %d\n", 
+  ACE_DEBUG ((LM_DEBUG, "received exception %d\n", 
               this->exception_count_));
   if (CORBA::is_nil (this->orb_.in ()))
   {
@@ -70,6 +70,7 @@ Client_Request_Interceptor::receive_exception (
 
   if (this->exception_count_ == 1)
     {
+      ACE_DEBUG ((LM_DEBUG, "forwarding client to the second server\n"));
       CORBA::Object_var first_forward =
         this->orb_->string_to_object (this->first_forward_str_.in ());
 
@@ -78,6 +79,7 @@ Client_Request_Interceptor::receive_exception (
     }
   else if (this->exception_count_ == 2)
     {
+      ACE_DEBUG ((LM_DEBUG, "forwarding client to the third server\n"));
       CORBA::Object_var second_forward =
         this->orb_->string_to_object (this->second_forward_str_.in ());
 

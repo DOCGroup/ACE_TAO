@@ -67,8 +67,7 @@ namespace TAO
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
 
-    while (status == TAO_INVOKE_START ||
-           status == TAO_INVOKE_RESTART)
+    while (status == TAO_INVOKE_START || status == TAO_INVOKE_RESTART)
       {
         // Default we go to remote
         Collocation_Strategy strat = TAO_CS_REMOTE_STRATEGY;
@@ -232,7 +231,7 @@ namespace TAO
 
     (void) this->set_response_flags (stub, details);
 
-    CORBA::Octet rflags = details.response_flags ();
+    CORBA::Octet const rflags = details.response_flags ();
     bool const block_connect =
       rflags != static_cast<CORBA::Octet> (Messaging::SYNC_NONE)
       && rflags != static_cast<CORBA::Octet> (TAO::SYNC_DELAYED_BUFFERING);
@@ -254,25 +253,30 @@ namespace TAO
                       ACE_TEXT ("max wait time consumed during transport resolution\n")));
       }
 
-
     // Update the request id now that we have a transport
-    details.request_id (resolver.transport ()->tms ()->request_id ());
-
-    if (this->type_ == TAO_ONEWAY_INVOCATION)
+    if (resolver.transport ())
       {
-        return this->invoke_oneway (details,
-                                    effective_target,
-                                    resolver,
-                                    max_wait_time);
-      }
-    else if (this->type_ == TAO_TWOWAY_INVOCATION)
-      {
-        return this->invoke_twoway (details,
-                                    effective_target,
-                                    resolver,
-                                    max_wait_time);
+        details.request_id (resolver.transport ()->tms ()->request_id ());
       }
 
+    switch (this->type_)
+      {
+        case TAO_ONEWAY_INVOCATION:
+          {
+            return this->invoke_oneway (details,
+                                        effective_target,
+                                        resolver,
+                                        max_wait_time);
+          }
+        case TAO_TWOWAY_INVOCATION:
+          {
+            return this->invoke_twoway (details,
+                                        effective_target,
+                                        resolver,
+                                        max_wait_time);
+
+          }
+      }
     return TAO_INVOKE_FAILURE;
   }
 
@@ -370,8 +374,6 @@ namespace TAO
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
           errno),
         CORBA::COMPLETED_NO);
-
-    return;
   }
 } // End namespace TAO
 

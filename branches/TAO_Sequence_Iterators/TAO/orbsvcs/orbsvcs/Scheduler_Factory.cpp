@@ -102,7 +102,7 @@ struct ACE_Scheduler_Factory_Data
   // The static runtime scheduler.
 */
 
-  TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX> scheduler_;
+  TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> scheduler_;
   // The scheduler.
 
   ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >

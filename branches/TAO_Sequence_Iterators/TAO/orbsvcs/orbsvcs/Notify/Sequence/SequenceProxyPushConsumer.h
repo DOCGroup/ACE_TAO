@@ -62,11 +62,9 @@ protected:
   //= interface methods
   virtual CosNotifyChannelAdmin::ProxyType MyType (void);
 
-  virtual void connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier
-                                               );
+  virtual void connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier);
 
-  virtual void push_structured_events (const CosNotification::EventBatch & notifications
-                                      );
+  virtual void push_structured_events (const CosNotification::EventBatch & notifications);
 
   virtual void disconnect_sequence_push_consumer (void);
 

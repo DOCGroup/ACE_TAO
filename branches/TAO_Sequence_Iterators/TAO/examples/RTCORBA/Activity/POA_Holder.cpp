@@ -4,10 +4,10 @@
 #include "ace/Log_Msg.h"
 
 POA_Holder::POA_Holder (void)
-  :priority_model_ (RTCORBA::CLIENT_PROPAGATED),
-   server_priority_ (0)
-  {
-  }
+  : priority_model_ (RTCORBA::CLIENT_PROPAGATED),
+    server_priority_ (0)
+{
+}
 
 int
 POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
@@ -58,7 +58,9 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
 
                   //if (TAO_debug_level > 0)
                   ACE_DEBUG ((LM_DEBUG, "lane parsed - %d, %d, %d\n",
-                              lanes_[l_index].lane_priority, lanes_[l_index].static_threads, lanes_[l_index].dynamic_threads));
+                              lanes_[l_index].lane_priority,
+                              lanes_[l_index].static_threads,
+                              lanes_[l_index].dynamic_threads));
                   l_index++;
                 }
               else
@@ -88,7 +90,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   arg_shifter.consume_arg ();
 
                   //if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG, "band parsed - %d, %d \n",
+                  ACE_DEBUG ((LM_DEBUG, "band parsed - %d, %d\n",
                               bands_[b_index].low, bands_[b_index].high));
                   b_index++;
                 }
@@ -123,7 +125,7 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
     else
     policy_list_length = 1
 
-   */
+  */
 
   CORBA::Policy_var priority_model_policy;
   CORBA::Policy_var lanes_policy;
@@ -202,7 +204,7 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
   PortableServer::POAManager_var poa_manager =
     parent_poa->the_POAManager ();
 
-  parent_poa->create_POA (POA_name_.c_str (),
-                          poa_manager.in (),
-                          poa_policy_list);
+  this->poa_ = parent_poa->create_POA (POA_name_.c_str (),
+                                       poa_manager.in (),
+                                       poa_policy_list);
 }

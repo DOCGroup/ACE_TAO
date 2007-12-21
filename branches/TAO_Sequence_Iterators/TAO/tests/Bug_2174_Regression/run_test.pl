@@ -8,13 +8,14 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorfilebase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 unlink $iorfile;
 
 # Test A: object exists (_non_existent() returns false)
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
@@ -34,7 +35,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (15);
+$client = $CL->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 $SV->Kill ();
 unlink $iorfile;
 if ($client != 2) {
@@ -46,7 +47,7 @@ if ($client != 2) {
 # Test B: object does not exist (_non_existent() returns true)
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -r");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase -r");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile -r");
@@ -59,7 +60,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (15);
+$client = $CL->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 $SV->Kill ();
 if ($client != 3) {
     print STDERR "ERROR: client returned $client in test B, expected 3\n";
@@ -73,7 +74,7 @@ if ($client != 3) {
 # This test was failing on win32 without this sleep.
 sleep 1;
 
-$client = $CL->SpawnWaitKill (15);
+$client = $CL->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 unlink $iorfile;
 if ($client != 5) {
     print STDERR "ERROR: client returned $client in test C, expected 5\n";

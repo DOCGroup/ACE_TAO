@@ -4,6 +4,7 @@
 #include "tao/SystemException.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/Reply_Dispatcher.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (Messaging,
            AMI_Arguments_Converter_Impl,

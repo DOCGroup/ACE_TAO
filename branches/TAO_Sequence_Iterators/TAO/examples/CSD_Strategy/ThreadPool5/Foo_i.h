@@ -86,9 +86,9 @@ class Foo_i : public virtual POA_Foo
 
   private:
 
-    typedef ACE_Atomic_Op <ACE_SYNCH_MUTEX, CORBA::Long> AtomicLong;
-    typedef ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned> AtomicUnsigned;
-    typedef ACE_Atomic_Op <ACE_SYNCH_MUTEX, bool> AtomicBool;
+    typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> AtomicLong;
+    typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> AtomicUnsigned;
+    typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> AtomicBool;
 
     AtomicLong value_;
     AtomicUnsigned count_op1_;

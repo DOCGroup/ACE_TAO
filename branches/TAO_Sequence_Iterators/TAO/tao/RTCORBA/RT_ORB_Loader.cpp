@@ -43,7 +43,8 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
   long sched_policy = THR_SCHED_DEFAULT;
   long scope_policy = THR_SCOPE_PROCESS;
   int curarg = 0;
-  ACE_Time_Value dynamic_thread_idle_timeout;
+  ACE_Time_Value dynamic_thread_time;
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_INFINITIVE;
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -135,7 +136,17 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
         {
           const ACE_TCHAR *name = current_arg;
           int timeout = ACE_OS::atoi (name);
-          dynamic_thread_idle_timeout = ACE_Time_Value (0, timeout);
+          dynamic_thread_time = ACE_Time_Value (0, timeout);
+          lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_IDLE;
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                                   (ACE_TEXT("-RTORBDynamicThreadRunTime"))))
+        {
+          const ACE_TCHAR *name = current_arg;
+          int timeout = ACE_OS::atoi (name);
+          dynamic_thread_time = ACE_Time_Value (0, timeout);
+          lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_FIXED;
           arg_shifter.consume_arg ();
         }
     else
@@ -164,7 +175,8 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                                                ace_sched_policy,
                                                sched_policy,
                                                scope_policy,
-                                               dynamic_thread_idle_timeout),
+                                               lifespan,
+                                               dynamic_thread_time),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,

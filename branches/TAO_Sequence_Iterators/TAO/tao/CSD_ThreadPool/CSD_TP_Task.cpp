@@ -143,12 +143,7 @@ TAO::CSD::TP_Task::svc()
     // Put the thread id into a collection which is used to check whether
     // the orb shutdown is called by one of the threads in the pool.
     ACE_thread_t thr_id = ACE_OS::thr_self ();
-    if (this->activated_threads_.set(thr_id, this->num_threads_) == -1)
-      {
-        ACE_ERROR_RETURN((LM_ERROR,
-          ACE_TEXT("(%P|%t)TP_Task::svc: number of threads is out of range \n")),
-          0);
-      }
+    this->activated_threads_.push_back(thr_id);
     ++this->num_threads_;
     this->active_workers_.signal();
   }
@@ -173,6 +168,12 @@ TAO::CSD::TP_Task::svc()
           if (this->shutdown_initiated_)
             {
               // This breaks us out of all loops with one fell swoop.
+              return 0;
+            }
+
+          if (this->deferred_shutdown_initiated_)
+            {
+              this->deferred_shutdown_initiated_  = false;
               return 0;
             }
 
@@ -265,7 +266,7 @@ TAO::CSD::TP_Task::close(u_long flag)
       // Signal all worker threads waiting on the work_available_ condition.
       this->work_available_.broadcast();
 
-      size_t num_waiting_threads = 0;
+      bool calling_thread_in_tp = false;
 
       ACE_thread_t my_thr_id = ACE_OS::thr_self ();
 
@@ -275,16 +276,17 @@ TAO::CSD::TP_Task::close(u_long flag)
 
       for (size_t i = 0; i < size; i ++)
         {
-          ACE_thread_t thr_id = 0;
-          if (activated_threads_.get (thr_id, i) == 0 && thr_id == my_thr_id)
+          if (this->activated_threads_[i] == my_thr_id)
             {
-              num_waiting_threads = 1;
+              calling_thread_in_tp = true;
+              this->deferred_shutdown_initiated_ = true;
               break;
             }
         }
 
       // Wait until all worker threads have shutdown.
-      while (this->num_threads_ != num_waiting_threads)
+      size_t target_num_threads = calling_thread_in_tp ? 1 : 0;
+      while (this->num_threads_ != target_num_threads)
         {
           this->active_workers_.wait();
         }
@@ -292,6 +294,9 @@ TAO::CSD::TP_Task::close(u_long flag)
       // Cancel all requests.
       TP_Cancel_Visitor cancel_visitor;
       this->queue_.accept_visitor(cancel_visitor);
+
+      this->opened_ = false;
+      this->shutdown_initiated_ = false;
     }
 
   return 0;

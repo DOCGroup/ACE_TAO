@@ -1321,7 +1321,7 @@ TAO_SFP_Frame_State::reset (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<TAO_SFP_Base, ACE_Thread_Mutex> *ACE_Singleton<TAO_SFP_Base, ACE_Thread_Mutex>::singleton_;
+template ACE_Singleton<TAO_SFP_Base, TAO_SYNCH_MUTEX> *ACE_Singleton<TAO_SFP_Base, TAO_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

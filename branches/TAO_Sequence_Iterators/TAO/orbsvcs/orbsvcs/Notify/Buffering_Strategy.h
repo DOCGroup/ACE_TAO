@@ -89,7 +89,7 @@ private:
   TAO_Notify_AdminProperties::Ptr admin_properties_;
 
   /// The shared global lock used by all the queues.
-  ACE_SYNCH_MUTEX& global_queue_lock_;
+  TAO_SYNCH_MUTEX& global_queue_lock_;
 
   /// The global queue length - queue length accross all the queues.
   CORBA::Long& global_queue_length_;

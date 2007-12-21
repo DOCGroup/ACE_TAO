@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/RTCORBA/RTCORBA_includeC.h"
+#include "tao/RTCORBA/RT_ORBInitializer.h"
 #include "ace/Hash_Map_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/New_Leader_Generator.h"
@@ -125,14 +126,14 @@ class TAO_Thread_Pool;
 class TAO_RTCORBA_Export TAO_Thread_Lane
 {
 public:
-
   /// Constructor.
   TAO_Thread_Lane (TAO_Thread_Pool &pool,
                    CORBA::ULong id,
                    CORBA::Short lane_priority,
                    CORBA::ULong static_threads,
                    CORBA::ULong dynamic_threads,
-                   ACE_Time_Value const &dynamic_thread_idle_timeout);
+                   TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                   ACE_Time_Value const &dynamic_thread_time);
 
   /// Destructor.
   ~TAO_Thread_Lane (void);
@@ -174,7 +175,6 @@ public:
 
   /// @name Accessors
   // @{
-
   TAO_Thread_Pool &pool (void) const;
   CORBA::ULong id (void) const;
 
@@ -188,7 +188,9 @@ public:
 
   TAO_Thread_Lane_Resources &resources (void);
 
-  ACE_Time_Value const &dynamic_thread_idle_timeout (void) const;
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan (void) const;
+
+  ACE_Time_Value const &dynamic_thread_time (void) const;
   // @}
 
 private:
@@ -234,10 +236,12 @@ private:
 
   CORBA::Short native_priority_;
 
-  ACE_Time_Value const dynamic_thread_idle_timeout_;
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan const lifespan_;
+
+  ACE_Time_Value const dynamic_thread_time_;
 
   /// Lock to guard all members of the lane
-  mutable ACE_SYNCH_MUTEX lock_;
+  mutable TAO_SYNCH_MUTEX lock_;
 };
 
 class TAO_Thread_Pool_Manager;
@@ -265,7 +269,8 @@ public:
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
                    CORBA::ULong max_request_buffer_size,
-                   ACE_Time_Value const &dynamic_thread_idle_timeout);
+                   TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                   ACE_Time_Value const &dynamic_thread_time);
 
   /// Constructor (for pools with lanes).
   TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
@@ -276,7 +281,8 @@ public:
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
                    CORBA::ULong max_request_buffer_size,
-                   ACE_Time_Value const &dynamic_thread_idle_timeout);
+                   TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                   ACE_Time_Value const &dynamic_thread_time);
 
   /// Destructor.
   ~TAO_Thread_Pool (void);
@@ -319,7 +325,6 @@ public:
 
   TAO_Thread_Lane **lanes (void);
   CORBA::ULong number_of_lanes (void) const;
-
   // @}
 
 private:
@@ -332,7 +337,8 @@ private:
   CORBA::Boolean allow_request_buffering_;
   CORBA::ULong max_buffered_requests_;
   CORBA::ULong max_request_buffer_size_;
-  ACE_Time_Value const dynamic_thread_idle_timeout_;
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan const lifespan_;
+  ACE_Time_Value const dynamic_thread_time_;
 
   TAO_Thread_Lane **lanes_;
   CORBA::ULong number_of_lanes_;
@@ -380,7 +386,8 @@ public:
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
                      CORBA::ULong max_request_buffer_size,
-                     ACE_Time_Value const &dynamic_thread_idle_timeout);
+                     TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                     ACE_Time_Value const &dynamic_thread_time);
 
   /// Create a threadpool with lanes.
   RTCORBA::ThreadpoolId
@@ -390,12 +397,11 @@ public:
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
                                 CORBA::ULong max_request_buffer_size,
-                                ACE_Time_Value const &dynamic_thread_idle_timeout
-                                );
+                                TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                                ACE_Time_Value const &dynamic_thread_time);
 
   /// Destroy a threadpool.
-  void destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                           );
+  void destroy_threadpool (RTCORBA::ThreadpoolId threadpool);
 
   TAO_Thread_Pool *get_threadpool (RTCORBA::ThreadpoolId thread_pool_id);
 
@@ -404,9 +410,7 @@ public:
 
   /// @name Accessors
   // @{
-
   TAO_ORB_Core &orb_core (void) const;
-
   // @}
 
 private:
@@ -422,7 +426,8 @@ private:
                        CORBA::Boolean allow_request_buffering,
                        CORBA::ULong max_buffered_requests,
                        CORBA::ULong max_request_buffer_size,
-                       ACE_Time_Value const &dynamic_thread_idle_timeout);
+                       TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                       ACE_Time_Value const &dynamic_thread_time);
 
   RTCORBA::ThreadpoolId
   create_threadpool_with_lanes_i (CORBA::ULong stacksize,
@@ -431,12 +436,11 @@ private:
                                   CORBA::Boolean allow_request_buffering,
                                   CORBA::ULong max_buffered_requests,
                                   CORBA::ULong max_request_buffer_size,
-                                  ACE_Time_Value const &dynamic_thread_idle_timeout
-                                  );
+                                  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
+                                  ACE_Time_Value const &dynamic_thread_time);
 
   RTCORBA::ThreadpoolId
   create_threadpool_helper (TAO_Thread_Pool *thread_pool);
-
   // @}
 
 private:
@@ -445,7 +449,7 @@ private:
 
   THREAD_POOLS thread_pools_;
   RTCORBA::ThreadpoolId thread_pool_id_counter_;
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

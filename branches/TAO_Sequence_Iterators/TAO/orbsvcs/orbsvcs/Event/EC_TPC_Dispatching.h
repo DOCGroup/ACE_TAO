@@ -88,7 +88,7 @@ private:
   // Lock for modifying the map.  It's not enough to have a lock only
   // on the map, because we have to hold the map constant while doing
   // multiple distinct map manipulations, such as in remove_consumer().
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 
   // Service object information
   TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;  // @@ who will release?

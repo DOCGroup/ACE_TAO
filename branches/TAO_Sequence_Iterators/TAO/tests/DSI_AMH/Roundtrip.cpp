@@ -29,14 +29,14 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
 
   else if (ACE_OS::strcmp ("_is_a", request->operation ()) == 0)
     {
-      CORBA::NVList_var list;
-      this->orb_->create_list (0, list.out());
+      CORBA::NVList_ptr list;
+      this->orb_->create_list (0, list);
 
       CORBA::Any type_id;
       type_id._tao_set_typecode (CORBA::_tc_string);
       list->add_value ("type_id", type_id, CORBA::ARG_IN);
 
-      request->arguments (list.inout());
+      request->arguments (list);
 
       // list still has ownership of the item
       CORBA::NamedValue_ptr nv = list->item (0);
@@ -64,14 +64,14 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
 
   else if (ACE_OS::strcmp ("test_method", request->operation ()) == 0)
     {
-      CORBA::NVList_var list;
-      this->orb_->create_list (0, list.out());
+      CORBA::NVList_ptr list; // will become property of the arguments list
+      this->orb_->create_list (0, list);
 
       CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
       list->add_value ("send_time", send_time, CORBA::ARG_IN);
 
-      request->arguments (list.inout());
+      request->arguments (list);
 
       CORBA::NamedValue_ptr nv = list->item (0);
 

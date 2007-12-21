@@ -61,10 +61,17 @@ TAO_Thread_Lane::resources (void)
 }
 
 ACE_INLINE
-ACE_Time_Value const &
-TAO_Thread_Lane::dynamic_thread_idle_timeout (void) const
+TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan
+TAO_Thread_Lane::lifespan (void) const
 {
-  return this->dynamic_thread_idle_timeout_;
+  return this->lifespan_;
+}
+
+ACE_INLINE
+ACE_Time_Value const &
+TAO_Thread_Lane::dynamic_thread_time (void) const
+{
+  return this->dynamic_thread_time_;
 }
 
 ACE_INLINE

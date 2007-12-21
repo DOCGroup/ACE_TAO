@@ -36,6 +36,6 @@ class OrbShutdownTask : public ACE_Task_Base
     CORBA::ORB_var orb_;
 };
 
-typedef ACE_Singleton<OrbShutdownTask, ACE_Thread_Mutex> TheOrbShutdownTask;
+typedef ACE_Singleton<OrbShutdownTask, TAO_SYNCH_MUTEX> TheOrbShutdownTask;
 
 #endif

@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/CSD_ThreadPool/CSD_TP_Export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -53,7 +54,7 @@ namespace TAO
      *
      */
     class TAO_CSD_TP_Export TP_Servant_State
-                      : public TAO_Intrusive_Ref_Count_Base<ACE_SYNCH_MUTEX>
+                      : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
 

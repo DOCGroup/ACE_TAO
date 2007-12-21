@@ -60,8 +60,8 @@ namespace TAO
     Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time);
 
     virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr);
-  private:
 
+  private:
     CORBA::ExceptionList *excp_list_;
 
     /// Back pointer to the DII request that created us.
@@ -89,10 +89,8 @@ namespace TAO
     Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time);
 
   private:
-
     /// Back pointer to the DII request that created us.
     CORBA::Request_ptr host_;
-
   };
 
   /**

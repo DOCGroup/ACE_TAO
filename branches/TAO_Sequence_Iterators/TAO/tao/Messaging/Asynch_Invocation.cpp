@@ -41,12 +41,6 @@ namespace TAO
   Invocation_Status
   Asynch_Remote_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
   {
-    TAO_Target_Specification tspec;
-    this->init_target_spec (tspec);
-
-    TAO_OutputCDR & cdr =
-      this->resolver_.transport ()->messaging_object ()->out_stream ();
-
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -61,6 +55,18 @@ namespace TAO
     try
       {
 #endif /* TAO_HAS_INTERCEPTORS */
+        TAO_Transport* const transport = this->resolver_.transport ();
+
+        if (!transport)
+          {
+            // Way back, we failed to find a profile we could connect to.
+            // We've come this far only so we reach the interception points
+            // in case they can fix things. Time to bail....
+            throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+          }
+
+        TAO_OutputCDR & cdr =
+          this->resolver_.transport ()->messaging_object ()->out_stream ();
 
         // Oneway semantics.  See comments for below send_message()
         // call.
@@ -69,7 +75,7 @@ namespace TAO
                                 TAO_Transport::TAO_ONEWAY_REQUEST,
                                 max_wait_time);
 
-        this->write_header (tspec, cdr);
+        this->write_header (cdr);
 
         this->marshal_data (cdr);
 
@@ -78,7 +84,7 @@ namespace TAO
         TAO_Bind_Dispatcher_Guard dispatch_guard (
           this->details_.request_id (),
           this->safe_rd_.get (),
-          this->resolver_.transport ()->tms ());
+          transport->tms ());
 
         // Now that we have bound the reply dispatcher to the map, just
         // loose ownership of the reply dispatcher.
@@ -132,7 +138,7 @@ namespace TAO
 
         // NOTE: Not sure how things are handles with exclusive muxed
         // strategy.
-        if (this->resolver_.transport ()->idle_after_send ())
+        if (transport->idle_after_send ())
           (void) this->resolver_.transport_released ();
 
 #if TAO_HAS_INTERCEPTORS == 1

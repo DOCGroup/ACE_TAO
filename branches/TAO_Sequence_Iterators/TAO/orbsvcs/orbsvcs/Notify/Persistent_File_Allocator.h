@@ -192,9 +192,9 @@ private:
   Random_File pstore_;
   Bit_Vector free_blocks_;
   ACE_Unbounded_Queue<Persistent_Storage_Block*> block_queue_;
-  ACE_SYNCH_MUTEX lock_;
-  ACE_SYNCH_MUTEX free_blocks_lock_;
-  ACE_SYNCH_MUTEX queue_lock_;
+  TAO_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX free_blocks_lock_;
+  TAO_SYNCH_MUTEX queue_lock_;
   bool terminate_thread_;
   bool thread_active_;
   ACE_SYNCH_CONDITION wake_up_thread_;

@@ -167,10 +167,7 @@ int main (int argc, char* argv[])
    // TAO_ECG_UDP_Sender::init() takes a TAO_ECG_Refcounted_Endpoint.
     // If we don't clone our endpoint and pass &endpoint, the sender will
     // attempt to delete endpoint during shutdown.
-    TAO_ECG_UDP_Out_Endpoint* clone;
-    ACE_NEW_RETURN (clone,
-                    TAO_ECG_UDP_Out_Endpoint (endpoint),
-                    -1);
+    TAO_ECG_Refcounted_Endpoint clone (new TAO_ECG_UDP_Out_Endpoint (endpoint));
     sender->init (ec.in (), addr_srv.in (), clone);
 
     // Setup the subscription and connect to the EC
@@ -187,10 +184,8 @@ int main (int argc, char* argv[])
     // TAO_ECG_UDP_Receiver::init() takes a TAO_ECG_Refcounted_Endpoint.
     // If we don't clone our endpoint and pass &endpoint, the receiver will
     // attempt to delete endpoint during shutdown.
-    ACE_NEW_RETURN (clone,
-                    TAO_ECG_UDP_Out_Endpoint (endpoint),
-                    -1);
-    receiver->init (ec.in (), clone, addr_srv.in ());
+    TAO_ECG_Refcounted_Endpoint clone2 (new TAO_ECG_UDP_Out_Endpoint (endpoint));
+    receiver->init (ec.in (), clone2, addr_srv.in ());
 
     // Setup the registration and connect to the event channel
     ACE_SupplierQOS_Factory supp_qos_fact;

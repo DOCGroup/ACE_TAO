@@ -10,9 +10,14 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
+if (PerlACE::is_vxworks_test()) {
+$SV = new PerlACE::ProcessVX ("server", "-ORBUseIMR 1 -ORBDefaultInitRef corbaloc:iiop:localhost:12345");
+}
+else {
 $SV = new PerlACE::Process ("server", "-ORBUseIMR 1 -ORBDefaultInitRef corbaloc:iiop:localhost:12345");
+}
 
-$server = $SV->SpawnWaitKill (30);
+$server = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

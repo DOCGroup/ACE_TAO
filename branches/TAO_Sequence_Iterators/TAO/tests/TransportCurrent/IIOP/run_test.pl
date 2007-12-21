@@ -20,14 +20,6 @@ sub add_path {
     }
 }
 
-# Set the library path for the client to be able to load
-# the common library library.
-add_path('LD_LIBRARY_PATH', '../lib');
-add_path('LIBPATH', '../lib');
-add_path('SHLIB_PATH', '../lib');
-add_path('PATH', '../lib');
-add_path('DYLD_LIBRARY_PATH', '../lib');
-
 $status = 0;
 
 $client = PerlACE::LocalFile ("client");
@@ -77,7 +69,7 @@ if (PerlACE::waitforfile_timed ($iorfile,
 }
 
 print STDERR $CL->CommandLine()."\n";
-$client = $CL->SpawnWaitKill (300);
+$client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {
     print STDERR "$0: ERROR: client returned $client\n";

@@ -13,12 +13,9 @@ $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 
-if (PerlACE::is_vxworks_test()) {
-    $CL = new PerlACE::ProcessVX ("client", "");
-}
-else {
-    $CL = new PerlACE::Process ("client", "");
-}
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$CL = new $class ("client");
 
 $client = $CL->Spawn ();
 
@@ -34,7 +31,7 @@ if (PerlACE::waitforfile_timed ($iorfile,
     exit 1;
 }
 
-$client = $CL->WaitKill (10);
+$client = $CL->WaitKill (15);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

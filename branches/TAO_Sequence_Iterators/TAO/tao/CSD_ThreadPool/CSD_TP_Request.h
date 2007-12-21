@@ -49,7 +49,7 @@ namespace TAO
      * object.
      */
     class TAO_CSD_TP_Export TP_Request 
-      : public TAO_Intrusive_Ref_Count_Base<ACE_SYNCH_MUTEX>
+      : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
 

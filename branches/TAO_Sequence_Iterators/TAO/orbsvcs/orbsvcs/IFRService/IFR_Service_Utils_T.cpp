@@ -331,8 +331,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
   repo->config ()->set_string_value (
                        new_key,
                        "base_type",
-                       holder
-                     );
+                       holder);
 
   TAO_Port_Utils<T>::set_is_multiple (is_multiple,
                                       repo->config (),

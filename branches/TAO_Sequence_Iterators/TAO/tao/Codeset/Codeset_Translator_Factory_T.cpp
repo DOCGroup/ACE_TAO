@@ -18,6 +18,7 @@
 #include "tao/Codeset/Codeset_Translator_Factory_T.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
+#include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

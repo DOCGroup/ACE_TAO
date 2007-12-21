@@ -58,9 +58,6 @@ namespace TAO
     TAO_Synch_Reply_Dispatcher rd (this->resolver_.stub ()->orb_core (),
                                    this->details_.reply_service_info ());
 
-    TAO_Target_Specification tspec;
-    this->init_target_spec (tspec);
-
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -76,15 +73,24 @@ namespace TAO
     try
       {
 #endif /*TAO_HAS_INTERCEPTORS */
+        TAO_Transport* const transport = this->resolver_.transport ();
 
-        TAO_OutputCDR &cdr = this->resolver_.transport ()->out_stream ();
+        if (!transport)
+          {
+            // Way back, we failed to find a profile we could connect to.
+            // We've come this far only so we reach the interception points
+            // in case they can fix things. Time to bail....
+            throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+          }
+
+        TAO_OutputCDR &cdr = transport->out_stream ();
 
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time);
 
-        this->write_header (tspec, cdr);
+        this->write_header (cdr);
 
         this->marshal_data (cdr);
 
@@ -93,13 +99,13 @@ namespace TAO
         TAO_Bind_Dispatcher_Guard dispatch_guard (
           this->details_.request_id (),
           &rd,
-          this->resolver_.transport ()->tms ());
+          transport->tms ());
 
         if (dispatch_guard.status () != 0)
           {
             // @@ What is the right way to handle this error? Why should
             // we close the connection?
-            this->resolver_.transport ()->close_connection ();
+            transport->close_connection ();
 
             throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
           }
@@ -132,7 +138,7 @@ namespace TAO
         // For some strategies one may want to release the transport
         // back to  cache. If the idling is successfull let the
         // resolver about that.
-        if (this->resolver_.transport ()->idle_after_send ())
+        if (transport->idle_after_send ())
           this->resolver_.transport_released ();
 
         // @@ In all MT environments, there's a cancellation point lurking
@@ -175,7 +181,7 @@ namespace TAO
 
         // For some strategies one may want to release the transport
         // back to  cache after receiving the reply.
-        if (this->resolver_.transport ()->idle_after_reply ())
+        if (transport->idle_after_reply ())
           this->resolver_.transport_released ();
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -238,7 +244,7 @@ namespace TAO
     int const reply_error =
       this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);
 
-    if (TAO_debug_level > 0 && max_wait_time != 0)
+    if (TAO_debug_level > 0 && max_wait_time)
       {
         CORBA::ULong const msecs = max_wait_time->msec ();
 
@@ -622,9 +628,6 @@ namespace TAO
         return s;
       }
 
-    TAO_Target_Specification tspec;
-    this->init_target_spec (tspec);
-
 #if TAO_HAS_INTERCEPTORS == 1
     s = this->send_request_interception ();
 
@@ -634,8 +637,15 @@ namespace TAO
     try
       {
 #endif /*TAO_HAS_INTERCEPTORS */
-
         TAO_Transport* const transport = this->resolver_.transport ();
+
+        if (!transport)
+          {
+            // Way back, we failed to find a profile we could connect to.
+            // We've come this far only so we reach the interception points
+            // in case they can fix things. Time to bail....
+            throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+          }
 
         TAO_OutputCDR &cdr = transport->out_stream ();
 
@@ -644,7 +654,7 @@ namespace TAO
                                 TAO_Transport::TAO_ONEWAY_REQUEST,
                                 max_wait_time);
 
-        this->write_header (tspec, cdr);
+        this->write_header (cdr);
 
         this->marshal_data (cdr);
 

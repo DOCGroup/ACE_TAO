@@ -3,6 +3,7 @@
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 #include "ace/Service_Config.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (Bug_2735_Regression,
            server,

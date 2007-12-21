@@ -8,12 +8,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-if (PerlACE::is_vxworks_test()) {
-    $T = new PerlACE::ProcessVX ("IORTest");
-}
-else {
-    $T = new PerlACE::Process ("IORTest");
-}
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$T = new $class ("IORTest");
 
 $test = $T->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 

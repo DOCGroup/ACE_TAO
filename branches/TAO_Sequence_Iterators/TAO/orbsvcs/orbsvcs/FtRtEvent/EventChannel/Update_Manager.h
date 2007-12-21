@@ -15,6 +15,7 @@
 
 #include "ace/Synch_T.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,7 +45,7 @@ private:
   int num_backups_;
   int transaction_level_;
   bool& success_;
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

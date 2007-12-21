@@ -117,8 +117,6 @@ Activity::resolve_naming_service (void)
   this->naming_ =
     CosNaming::NamingContextExt::_narrow (naming_obj.in ());
 
-  //@@tmp hack, otherwise crashes on exit!..??
-  CosNaming::NamingContextExt::_duplicate (this->naming_.in());
   return 0;
 }
 
@@ -337,9 +335,14 @@ Activity::run (int argc, char *argv[])
 
   orb_->run ();
 
-  orb_->destroy ();
-
   ACE_Thread_Manager::instance ()->wait ();
+
+  CORBA::release (this->naming_);
+
+  // Hack for proper cleanup.
+  this->builder_->fini ();
+
+  orb_->destroy ();
 }
 
 void

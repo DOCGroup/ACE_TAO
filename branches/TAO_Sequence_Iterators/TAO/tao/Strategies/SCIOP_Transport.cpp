@@ -109,10 +109,10 @@ TAO_SCIOP_Transport::recv (char *buf,
 
 int
 TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
-                                  TAO_ORB_Core *orb_core,
-                                  TAO_OutputCDR &stream,
-                                  int message_semantics,
-                                  ACE_Time_Value *max_wait_time)
+                                   TAO_ORB_Core *orb_core,
+                                   TAO_OutputCDR &stream,
+                                   TAO_Message_Semantics message_semantics,
+                                   ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
@@ -132,9 +132,9 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
 int
 TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
-                                  TAO_Stub *stub,
-                                  int message_semantics,
-                                  ACE_Time_Value *max_wait_time)
+                                   TAO_Stub *stub,
+                                   TAO_Message_Semantics message_semantics,
+                                   ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
   if (this->messaging_object_->format_message (stream) != 0)
@@ -161,9 +161,9 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
 
 int
 TAO_SCIOP_Transport::send_message_shared (TAO_Stub *stub,
-                                         int message_semantics,
-                                         const ACE_Message_Block *message_block,
-                                         ACE_Time_Value *max_wait_time)
+                                          TAO_Message_Semantics message_semantics,
+                                          const ACE_Message_Block *message_block,
+                                          ACE_Time_Value *max_wait_time)
 {
   int r;
 
@@ -184,8 +184,8 @@ TAO_SCIOP_Transport::send_message_shared (TAO_Stub *stub,
 
 int
 TAO_SCIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
-                                             TAO_Target_Specification &spec,
-                                             TAO_OutputCDR &msg)
+                                              TAO_Target_Specification &spec,
+                                              TAO_OutputCDR &msg)
 {
   // Check whether we have a Bi Dir SCIOP policy set, whether the
   // messaging objects are ready to handle bidirectional connections

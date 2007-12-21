@@ -42,7 +42,7 @@ project(SSLIOP) : orbsvcslib, install, security, ssl, pi_server, interceptors, t
       ./SSLIOP/SSLIOP_Transport.cpp
       ./SSLIOP/SSLIOP_Util.cpp
       SSLIOPC.cpp
-      conditional(vc71, vc8) {
+      conditional(vc71, vc8, vc9) {
         ./SSLIOP/params_dup.cpp
       } else {
         ./SSLIOP/params_dup.c

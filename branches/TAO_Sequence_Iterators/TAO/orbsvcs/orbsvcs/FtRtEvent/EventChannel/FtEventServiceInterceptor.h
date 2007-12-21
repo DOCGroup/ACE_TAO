@@ -41,7 +41,7 @@ public:
     void get_state(FtRtecEventChannelAdmin::CachedOptionResults& state);
     void set_state(const FtRtecEventChannelAdmin::CachedOptionResults& state);
 private:
-   typedef ACE_Hash_Map_Manager<ACE_CString, CachedRequestInfo, ACE_SYNCH_MUTEX> TableImpl;
+   typedef ACE_Hash_Map_Manager<ACE_CString, CachedRequestInfo, TAO_SYNCH_MUTEX> TableImpl;
    TableImpl table_;
 };
 

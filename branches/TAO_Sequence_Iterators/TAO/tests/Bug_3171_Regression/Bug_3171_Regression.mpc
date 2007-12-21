@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver, valuetype, messaging, utils, threads {
+  Source_Files {
+    server.cpp
+  }
+}
+

@@ -65,10 +65,10 @@ namespace Test
   void
   Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   {
-    //Test TC
+    // Test TC
     test_transport_current ("send_request");
 
-    CORBA::Boolean response_expected =
+    CORBA::Boolean const response_expected =
       ri->response_expected ();
 
     // Oneway?
@@ -87,7 +87,7 @@ namespace Test
       ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
       ACE_OS::sprintf (temp, "%d", this->requestID_);
-      this->requestID_++;
+      ++this->requestID_;
     }
 
     CORBA::ULong string_len = ACE_OS::strlen (temp) + 1;

@@ -978,19 +978,15 @@ TAO_IFR_Service_Utils::gen_valuetype_tc_r (
         }
     }
 
-  ACE_TString base_id;
+  ACE_TString base_path;
   int status =
     repo->config ()->get_string_value (key,
                                        "base_value",
-                                       base_id);
+                                       base_path);
   CORBA::TypeCode_var base_tc = CORBA::TypeCode::_nil ();
 
   if (status == 0)
     {
-      ACE_TString base_path;
-      repo->config ()->get_string_value (repo->repo_ids_key (),
-                                         base_id.fast_rep (),
-                                         base_path);
       ACE_Configuration_Section_Key base_key;
       repo->config ()->expand_path (repo->root_key (),
                                     base_path,

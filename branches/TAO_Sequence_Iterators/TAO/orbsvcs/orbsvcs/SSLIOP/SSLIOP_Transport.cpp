@@ -54,8 +54,7 @@ TAO::SSLIOP::Transport::handle_input (TAO_Resume_Handle &rh,
   int result = 0;
 
   // Set up the SSLIOP::Current object.
-  TAO::SSLIOP::State_Guard ssl_state_guard (this->connection_handler_,
-                                            result);
+  TAO::SSLIOP::State_Guard ssl_state_guard (this->connection_handler_, result);
 
   if (result == -1)
     return -1;
@@ -89,14 +88,13 @@ TAO::SSLIOP::Transport::recv (char *buf,
 
   // Most of the errors handling is common for
   // Now the message has been read
-  if (n == -1
-      && TAO_debug_level > 4
-      && errno != ETIME)
+  if (n == -1 && TAO_debug_level > 4 && errno != ETIME)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
-                  ACE_TEXT ("TAO - read message failure ")
-                  ACE_TEXT ("recv_i () \n")));
+                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport[%d]::recv, ")
+                  ACE_TEXT ("read failure - %m errno %d\n"),
+                  this->id (),
+                  errno));
     }
 
   // Error handling
@@ -120,7 +118,7 @@ int
 TAO::SSLIOP::Transport::send_request (TAO_Stub *stub,
                                       TAO_ORB_Core *orb_core,
                                       TAO_OutputCDR &stream,
-                                      int message_semantics,
+                                      TAO_Message_Semantics message_semantics,
                                       ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core, message_semantics) == -1)
@@ -139,7 +137,7 @@ TAO::SSLIOP::Transport::send_request (TAO_Stub *stub,
 int
 TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
                                       TAO_Stub *stub,
-                                      int message_semantics,
+                                      TAO_Message_Semantics message_semantics,
                                       ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
@@ -201,9 +199,7 @@ TAO::SSLIOP::Transport::generate_request_header (
 
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
-  return TAO_Transport::generate_request_header (opdetails,
-                                                 spec,
-                                                 msg);
+  return TAO_Transport::generate_request_header (opdetails, spec, msg);
 }
 
 int
@@ -270,8 +266,7 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
     return;
 
   // Add this info in to the svc_list
-  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
-                                                    cdr);
+  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
   return;
 }
 
@@ -289,12 +284,10 @@ TAO::SSLIOP::Transport::get_listen_point (
 
   // Get the array of IIOP (not SSLIOP!) endpoints serviced by the
   // SSLIOP_Acceptor.
-  const ACE_INET_Addr *endpoint_addr =
-    ssliop_acceptor->endpoints ();
+  const ACE_INET_Addr *endpoint_addr = ssliop_acceptor->endpoints ();
 
   // Get the count
-  const size_t count =
-    ssliop_acceptor->endpoint_count ();
+  size_t const count = ssliop_acceptor->endpoint_count ();
 
   // The SSL port is stored in the SSLIOP::SSL component associated
   // with the SSLIOP_Acceptor.
@@ -310,7 +303,7 @@ TAO::SSLIOP::Transport::get_listen_point (
                            ACE_TEXT ("(%P|%t) Could not resolve local host")
                            ACE_TEXT (" address in get_listen_point()\n")),
                         -1);
-    }
+      }
 
   }
 
@@ -351,7 +344,7 @@ TAO::SSLIOP::Transport::get_listen_point (
       if (local_addr == endpoint_addr[index])
         {
           // Get the count of the number of elements
-          const CORBA::ULong len = listen_point_list.length ();
+          CORBA::ULong const len = listen_point_list.length ();
 
           // Increase the length by 1
           listen_point_list.length (len + 1);

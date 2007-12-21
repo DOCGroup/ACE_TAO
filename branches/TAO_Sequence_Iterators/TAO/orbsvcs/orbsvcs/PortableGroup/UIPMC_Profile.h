@@ -45,7 +45,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class defines the UIPMC profile as specified in the CORBA
  * specification.
  *
- * @NOTE: This class inherits the ObjectKey from TAO_Profile which may
+ * @note This class inherits the ObjectKey from TAO_Profile which may
  *  not be needed at all! But lets punt on this for the timebeing.
  */
 class TAO_PortableGroup_Export TAO_UIPMC_Profile : public TAO_Profile

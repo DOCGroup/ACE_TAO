@@ -13,6 +13,7 @@
 #include "ace/Task.h"
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
+#include "tao/orbconf.h"
 
 ACE_RCSID (TAO_RTEC_PERF_TCP_Baseline,
            client,
@@ -39,7 +40,7 @@ private:
   char const * endpoint_;
   ACE_Barrier * the_barrier_;
   int period_in_usecs_;
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
   int stopped_;
 };
 
@@ -135,7 +136,7 @@ Scavenger_Task::Scavenger_Task(char const * endpoint,
 void
 Scavenger_Task::stop(void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->stopped_ = 1;
 }
 
@@ -163,7 +164,7 @@ Scavenger_Task::svc(void)
       ACE_OS::sleep (period);
 
       {
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
         if (this->stopped_)
           break;
       }
