@@ -604,6 +604,9 @@ ACE_HAS_STHREADS                        Platform supports Solaris
                                         threads
 ACE_HAS_STANDARD_CPP_LIBRARY            Platform/compiler supports
                                         Standard C++ Library
+ACE_HAS_STDCPP_STL_INCLUDES             Standard C++ headers can be
+                                        included in the standard way.
+                                        e.g. #include <vector>
 ACE_HAS_STRBUF_T                        Compiler/platform supports
                                         struct strbuf
 ACE_HAS_STRDUP_EMULATION                Use ACE's strdup() emulation (even
