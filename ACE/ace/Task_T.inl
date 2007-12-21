@@ -28,8 +28,7 @@ template <ACE_SYNCH_DECL> ACE_INLINE int
 ACE_Task<ACE_SYNCH_USE>::can_put (ACE_Message_Block *)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::can_put");
-  assert (!"not implemented");
-  return -1;
+  return ACE_NOTSUP_RETURN (-1);
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE int

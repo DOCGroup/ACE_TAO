@@ -1,3 +1,15 @@
+Fri Dec 21 03:05:46 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Task_T.h (class ACE_Task): Updated the documentation for
+          can_put() to make it clear that this method is deprecated and
+          will go away at some point.
+
+Fri Dec 21 03:03:56 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Task_T.inl (can_put): Removed the assert() since ACE library
+          methods shouldn't call assert...  Changed this to
+          ACE_NOTSUP_RETURN.  Thanks to Gautam Thaker for reporting this.
+
 Thu Dec 20 20:01:07 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Codecs.h:
