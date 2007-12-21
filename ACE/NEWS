@@ -5,12 +5,76 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (OO) Various other fixes that have been piling up.
 
+USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
+====================================================
+
+. Deprecated Visual Age 5 and older
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 ====================================================
 
 . ACE-ified the UUID class, which will change user applications slightly.
 
 . Added support for Sun Studio 12
+
+. Added support for Intel C++ 10.1
+
+. Fixed runtime problems with VxWorks 6.x in kernel mode, several improvements
+  have been made to ACE, but also some problems in the VxWorks kernel have
+  been found for which WindRiver has made patches.
+
+. Added support for VxWorks 6.5 kernel mode
+
+. Added support for MacOS 10.5
+
+. Support for MacOS 10.4 is now deprecated.
+
+. Added support for OpenSuSE 10.3
+
+. Added support for RedHat 5.1
+
+. Added support for Microsoft Visual Studio 2008
+
+. Added support for Fedora Core 8
+
+. Added support for Ubuntu 7.10
+
+. With Ubuntu 7.04 and 7.10 we can't use visibility, that results in
+  unresolved externals when building some tests. With lsb_release we
+  now detect Ubuntu 7.04 and 7.10 automatically and then we disable
+  visibility
+
+. Removed deprecated (un)subscribe methods from ACE_SOCK_Dgram_Mcast
+
+. Added an additional replace() method to ACE_OuptutCDR for replacing a
+  ACE_CDR::Short value. Also added write_long_placeholder() and
+  write_short_placeholder() to properly align the stream's write pointer,
+  write a placeholder value and return the placeholder's pointer. The pointer
+  can later be used in a call to replace() to replace the placeholder with a
+  different value.
+
+. Initial support for VxWorks 6.6
+
+. Removed support for pthread draft 4, 6, & 7. This makes the ACE threading
+  code much cleaner
+
+. Improved autoconf support
+
+. Fixed TSS emulation problems
+
+. Changed ACE_thread_t and ACE_hthread_t to int for VxWorks kernel mode. All
+  thread creation methods do have an additional const char* argument to
+  specify the task name, this now also works with pthread support enabled
+
+. Use bool in much more interfaces where this is possible
+
+. Added support for Debian Etch
+
+. Fixed ACE CDR LongDouble support on VxWorks 6.x
+
+. Added Microsoft Visual Studio 2008 project files to the release packages
+
+. Fixed a few bugs in the ACE_Vector template
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6 and ACE-5.6.1
 ====================================================

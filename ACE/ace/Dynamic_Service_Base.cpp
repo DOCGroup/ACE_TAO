@@ -35,15 +35,6 @@ ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name, bool no_global)
   return instance (ACE_Service_Config::current (), name, no_global);
 }
 
-
-void *
-ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name)
-{
-  ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
-  return instance (ACE_Service_Config::current (), name, false);
-}
-
-
 // Find a service registration
 
 const ACE_Service_Type *
@@ -106,16 +97,5 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
 
   return obj;
 }
-
-
-// Get the instance using <name> for specific configuration repository.
-
-void *
-ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
-                                    const ACE_TCHAR *name)
-{
-  return instance (repo, name, false);
-}
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -36,14 +36,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The following yylex() declarations require support for reentrant
 // parser generation (e.g. from GNU Bison).
-#if defined (DEBUGGING)
-#if defined (ACE_YY_DECL)
-#undef ACE_YY_DECL
-#endif /* ACE_YY_DECL */
-#define ACE_YY_DECL extern "C" char *ace_yylex (ACE_YYSTYPE *ace_yylval, void *ACE_YYLEX_PARAM)
-#else
 #define ACE_YY_DECL extern "C" int ace_yylex (ACE_YYSTYPE *ace_yylval, void *ACE_YYLEX_PARAM)
-#endif /* DEBUGGING */
 
 // Forward declarations
 class ACE_Location_Node;

@@ -59,47 +59,17 @@
 #  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! __DECCXX && ! __rational__ */
 
-#if defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199506L)
-  // cxx with POSIX 1003.1c-1995 threads (pthreads) . . .
-# define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-# define ACE_HAS_BROKEN_IF_HEADER
-# define ACE_HAS_BROKEN_R_ROUTINES
+#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#define ACE_HAS_BROKEN_IF_HEADER
+#define ACE_HAS_BROKEN_R_ROUTINES
 #if (ACE_MT_SAFE != 0)
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #endif /* ACE_MT_SAFE != 0 */
-# define ACE_LACKS_T_ERRNO
-# if !defined (DIGITAL_UNIX)
-#   define DIGITAL_UNIX 0x400
-# endif /* ! DIGITAL_UNIX */
-  // DJT removed this due to some minor issues related to the
-  // definitions of timestruc_t and tid_t in procfs.h not sure what
-  // functionality is lost?  Platform supports <sys/procfs.h>
-  //#define ACE_HAS_PROC_FS
-#else /* _POSIX_C_SOURCE < 199506L */
-  // cxx with DCE threads . . .
-  // This ACE configuration is only supported with cxx; it has not been
-  // test with g++.
-# define ACE_HAS_BROKEN_MSG_H
-# define ACE_HAS_BROKEN_POSIX_TIME
-#if (ACE_MT_SAFE != 0)
-# define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_DRAFT4
-# define ACE_HAS_THREAD_SELF
-# define ACE_LACKS_THREAD_PROCESS_SCOPING
-# define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-# define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-#endif
-# define ACE_HAS_GETPAGESIZE
-# define ACE_HAS_PROC_FS
-# define ACE_HAS_SETKIND_NP
-# define ACE_LACKS_CONST_TIMESPEC_PTR
-# define ACE_LACKS_READDIR_R
-# define ACE_LACKS_SETSCHED
-# define ACE_LACKS_SIGNED_CHAR
-# define ACE_LACKS_SYSV_MSQ_PROTOS
-#endif /* _POSIX_C_SOURCE < 199506L */
+#define ACE_LACKS_T_ERRNO
+#if !defined (DIGITAL_UNIX)
+#  define DIGITAL_UNIX 0x400
+#endif /* ! DIGITAL_UNIX */
 
 #define ACE_SIZEOF_LONG 8
 

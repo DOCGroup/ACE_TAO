@@ -686,17 +686,17 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
     notification_queue_.push_new_notification(buffer);
 
   if (notification_required == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (notification_required == 0)
-  {
-    // No failures, the handler is now owned by the notification queue
-    safe_handler.release ();
+    {
+      // No failures, the handler is now owned by the notification queue
+      safe_handler.release ();
 
-    return 0;
-  }
+      return 0;
+    }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
   ssize_t const n = ACE::send (this->notification_pipe_.write_handle (),
@@ -810,8 +810,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   // we've been passed.
   if (buffer.eh_ != 0)
     {
-      ACE_Event_Handler *event_handler =
-        buffer.eh_;
+      ACE_Event_Handler *event_handler = buffer.eh_;
 
       bool const requires_reference_counting =
         event_handler->reference_counting_policy ().value () ==

@@ -347,9 +347,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
           if (if_cnt < 2)
             {
-              if (this->subscribe (mcast_addr,
-                                   reuse_addr,
-                                   ACE_TEXT ("0.0.0.0")) == 0)
+              if (this->join (mcast_addr,
+                              reuse_addr,
+                              ACE_TEXT ("0.0.0.0")) == 0)
                 ++nr_subscribed;
             }
           else
@@ -363,9 +363,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                   // Convert to 0-based for indexing, next loop check.
                   if (if_addrs[if_cnt].get_type () != AF_INET || if_addrs[if_cnt].is_loopback ())
                     continue;
-                  if (this->subscribe (mcast_addr,
-                                       reuse_addr,
-                                       ACE_TEXT_CHAR_TO_TCHAR
+                  if (this->join (mcast_addr,
+                                  reuse_addr,
+                                  ACE_TEXT_CHAR_TO_TCHAR
                                    (if_addrs[if_cnt].get_host_addr ())) == 0)
                     ++nr_subscribed;
                 }
@@ -398,9 +398,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
       if (if_cnt < 2)
         {
-          if (this->subscribe (mcast_addr,
-                               reuse_addr,
-                               ACE_TEXT ("0.0.0.0")) == 0)
+          if (this->join (mcast_addr,
+                          reuse_addr,
+                          ACE_TEXT ("0.0.0.0")) == 0)
             ++nr_subscribed;
         }
       else
@@ -414,9 +414,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
               // Convert to 0-based for indexing, next loop check.
               if (if_addrs[if_cnt].is_loopback ())
                 continue;
-              if (this->subscribe (mcast_addr,
-                                   reuse_addr,
-                                   ACE_TEXT_CHAR_TO_TCHAR
+              if (this->join (mcast_addr,
+                              reuse_addr,
+                              ACE_TEXT_CHAR_TO_TCHAR
                                      (if_addrs[if_cnt].get_host_addr ())) == 0)
                 ++nr_subscribed;
             }
@@ -460,22 +460,6 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
   return 0;
 
-}
-
-// Subscribe and add address/iface to subscription list if successful.
-int
-ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
-                                 int reuse_addr,
-                                 const ACE_TCHAR *net_if,
-                                 int protocol_family,
-                                 int protocol)
-{
-  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe");
-
-  ACE_UNUSED_ARG (protocol_family);
-  ACE_UNUSED_ARG (protocol);
-
-  return this->join (mcast_addr,reuse_addr, net_if);
 }
 
 int
@@ -534,7 +518,7 @@ ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
     }
 
   // Attempt subscription.
-  int  result = this->subscribe_i (subscribe_addr, reuse_addr, net_if);
+  int result = this->subscribe_i (subscribe_addr, reuse_addr, net_if);
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
   if (result == 0)
@@ -810,24 +794,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 }
 
 
-// Unsubscribe, and remove address from subscription list.
-// Note: If there are duplicate entries, only finds the first in the list (this
-// is a defined restriction - most environments don't allow duplicates to be
-// created.)
-int
-ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
-                                   const ACE_TCHAR *net_if,
-                                   int protocol_family,
-                                   int protocol)
-{
-  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe");
-
-  ACE_UNUSED_ARG (protocol_family);
-  ACE_UNUSED_ARG (protocol);
-
-  return this->leave (mcast_addr, net_if);
-}
-
 int
 ACE_SOCK_Dgram_Mcast::leave (const ACE_INET_Addr &mcast_addr,
                              const ACE_TCHAR *net_if)
@@ -940,30 +906,10 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_i (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-ACE_SOCK_Dgram_Mcast::unsubscribe (void)
-{
-  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe");
-
-  // Can't implement this reliably without keeping an expensive list,
-  // and can't close the socket since the caller may want to continue
-  // using the socket to send() or join() new groups.  Even if we
-  // wanted to be clever and reopen the socket, we'd need to know what
-  // options had been set, and reset them--and we have no way of doing
-  // that either. :-(
-  // Should this return -1?
-  ACE_ERROR_RETURN ((LM_INFO,
-                     ACE_TEXT ("ACE_SOCK_Dgram_Mcast::unsubscribe (void) ")
-                     ACE_TEXT ("has been deprecated. You must either ")
-                     ACE_TEXT ("close to socket to unsubscribe to all ")
-                     ACE_TEXT ("or unsubscribe to each individually.\n")),
-                     0);
-}
-
-int
 ACE_SOCK_Dgram_Mcast::clear_subs_list (void)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::clear_subs_list");
-  int  result = 0;
+  int result = 0;
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
   ACE_MT (ACE_GUARD_RETURN (ACE_SDM_LOCK, guard,

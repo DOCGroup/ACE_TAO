@@ -657,9 +657,9 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     ostream_ (0),
     msg_callback_ (0),
     trace_depth_ (0),
-    trace_active_ (0),
-    tracing_enabled_ (1), // On by default?
-    delete_ostream_(0),
+    trace_active_ (false),
+    tracing_enabled_ (true), // On by default?
+    delete_ostream_(false),
     thr_desc_ (0),
     priority_mask_ (default_priority_mask_),
     timestamp_ (0)
@@ -751,7 +751,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
   //
   // do we need to close and clean up?
   //
-  if (this->delete_ostream_ == 1)
+  if (this->delete_ostream_)
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
     {
       ACE_OS::fclose (this->ostream_);
@@ -2118,7 +2118,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
   if (ACE_BIT_DISABLED (ACE_Log_Msg::flags_,
                         ACE_Log_Msg::SILENT))
     {
-      int tracing = this->tracing_enabled ();
+      bool tracing = this->tracing_enabled ();
       this->stop_tracing ();
 
 #if !defined (ACE_WIN32)
@@ -2388,7 +2388,7 @@ ACE_Log_Msg::msg_backend (void)
 }
 
 void
-ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, int delete_ostream)
+ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, bool delete_ostream)
 {
   if (this->ostream_ == m)
     return;

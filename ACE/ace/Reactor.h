@@ -75,11 +75,14 @@ public:
   };
 
   /**
-   * You can add a hook to various run_event methods and the hook will
-   * be called after handling every reactor event.  If this function
-   * returns 0, <run_reactor_event_loop> will check for the return
-   * value of <handle_event>.  If it is -1, the
-   * <run_reactor_event_loop> will return (pre-maturely.)
+   * You can specify a hook function to event-handling methods that will
+   * be called after each iteration of event handling.  If the hook function
+   * returns a non-zero value, the event loop will immediately resume
+   * waiting for the next event(s) to process without checking the error
+   * status of the just-completed iteration of event handling or the
+   * end-of-loop indication. If the hook function returns 0, the event
+   * handling error status and the end-of-loop indication will be checked
+   * as normal, just as if there is no hook function specified.
    */
   typedef int (*REACTOR_EVENT_HOOK)(ACE_Reactor *);
 
@@ -260,7 +263,7 @@ public:
    * but does not actually dispatch the event handlers.  By default,
    * don't block while checking this, i.e., "poll".
    */
-  int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero);
+  int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero);
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
@@ -616,8 +619,8 @@ public:
 
   // = High-level Event_Handler scheduling operations
 
-  /// Add @a masks_to_be_added to the <event_handler>'s entry.
-  /// <event_handler> must already have been registered.
+  /// Add @a masks_to_be_added to the @a event_handler's entry.
+  /// @a event_handler must already have been registered.
   /// Note that this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
@@ -693,7 +696,7 @@ public:
 
   /**
    * Set the maximum number of times that ACE_Reactor will
-   * iterate and dispatch the <ACE_Event_Handlers> that are passed in
+   * iterate and dispatch the ACE_Event_Handlers that are passed in
    * via the notify queue before breaking out of its
    * <ACE_Message_Queue::dequeue> loop.  By default, this is set to
    * -1, which means "iterate until the queue is empty."  Setting this

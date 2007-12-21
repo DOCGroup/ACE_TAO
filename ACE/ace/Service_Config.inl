@@ -51,7 +51,6 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
   return ACE_Service_Config::current ()->parse_args (argc, argv);
 }
 
-
 /// Return the configuration instance, considered "global" in the
 /// current thread. This may be the same as instance(), but on some
 /// occasions, it may be a different one. For example,
@@ -62,7 +61,6 @@ ACE_Service_Config::instance (void)
 {
   return ACE_Service_Config::global ()->tss_;
 }
-
 
 /// Return the configuration instance, considered "global" in the
 /// current thread. This may be the same as instance(), but on some
@@ -83,16 +81,14 @@ ACE_Service_Config::current (ACE_Service_Gestalt *newcurrent)
 }
 
 
-// Compare two service descriptors for equality.
-
+/// Compare two service descriptors for equality.
 ACE_INLINE bool
 ACE_Static_Svc_Descriptor::operator== (ACE_Static_Svc_Descriptor &d) const
 {
   return ACE_OS::strcmp (name_, d.name_) == 0;
 }
 
-// Compare two service descriptors for inequality.
-
+/// Compare two service descriptors for inequality.
 ACE_INLINE bool
 ACE_Static_Svc_Descriptor::operator!= (ACE_Static_Svc_Descriptor &d) const
 {
@@ -105,8 +101,7 @@ ACE_Service_Config::signal_handler (ACE_Sig_Adapter *signal_handler)
   signal_handler_ = signal_handler;
 }
 
-// Initialize and activate a statically linked service.
-
+/// Initialize and activate a statically linked service.
 ACE_INLINE int
 ACE_Service_Config::initialize (const ACE_TCHAR *svc_name,
                                 const ACE_TCHAR *parameters)
@@ -116,9 +111,8 @@ ACE_Service_Config::initialize (const ACE_TCHAR *svc_name,
                                                      parameters);
 }
 
-// Dynamically link the shared object file and retrieve a pointer to
-// the designated shared object in this file.
-
+/// Dynamically link the shared object file and retrieve a pointer to
+/// the designated shared object in this file.
 ACE_INLINE int
 ACE_Service_Config::initialize (const ACE_Service_Type *sr,
                                 const ACE_TCHAR *parameters)
@@ -142,8 +136,8 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
   return ACE_Service_Config::current ()->process_directive (directive);
 }
 
-// Process service configuration requests as indicated in the queue of
-// svc.conf files.
+/// Process service configuration requests as indicated in the queue of
+/// svc.conf files.
 ACE_INLINE int
 ACE_Service_Config::process_directives (void)
 {

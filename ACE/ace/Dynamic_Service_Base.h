@@ -43,20 +43,13 @@ public:
   void dump (void) const;
 
 protected:
-  /// Return instance using @a name to search the (default) Service_Repository.
-  static void* instance (const ACE_TCHAR *name);
-
   /// Perform the default repo search, but optionally skip searching the global
   /// repo.
-  static void* instance (const ACE_TCHAR *name, bool no_global);
-
-  /// Return instance using @a name to search the specific @a repo instance.
-  static void* instance (const ACE_Service_Gestalt* repo,
-                         const ACE_TCHAR *name);
+  static void* instance (const ACE_TCHAR *name, bool no_global = false);
 
   static void* instance (const ACE_Service_Gestalt* repo,
                          const ACE_TCHAR *name,
-                         bool no_global);
+                         bool no_global = false);
 
   /// No need to create, or assign instances of this class
   ACE_Dynamic_Service_Base (void);

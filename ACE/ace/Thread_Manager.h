@@ -461,22 +461,8 @@ public:
    */
   int close (void);
 
-  // The <ACE_thread_t> * argument to each of the <spawn> family member
-  // functions is interpreted and used as shown in the following
-  // table.  NOTE:  the final option, to provide task names, is _only_
-  // supported on VxWorks!
-  //
-  // Value of ACE_thread_t * argument  Use                         Platforms
-  // ================================  ==========================  =========
-  // 0                                 Not used.                   All
-  // non-0 (and points to 0 char *     The task name is passed     All
-  //   on VxWorks)                       back in the char *.
-  // non-0, points to non-0 char *     The char * is used as       VxWorks only
-  //                                     the task name.  The
-  //                                     argument is not modified.
-
   /**
-   * Create a new thread, which executes @a func with argument <arg>.
+   * Create a new thread, which executes @a func with argument @a arg.
    * Returns: on success a unique group id that can be used to control
    * other threads added to the same group.  On failure, returns -1.
    */
@@ -488,10 +474,11 @@ public:
              long priority = ACE_DEFAULT_THREAD_PRIORITY,
              int grp_id = -1,
              void *stack = 0,
-             size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE);
+             size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE,
+             const char** thr_name = 0);
 
   /**
-   * Spawn N new threads, which execute @a func with argument <arg>.
+   * Spawn N new threads, which execute @a func with argument @a arg.
    * If <thread_ids> != 0 the thread_ids of successfully spawned
    * threads will be placed into the <thread_ids> buffer (which must
    * be the same size as @a n).  If @a stack != 0 it is assumed to be an
@@ -528,10 +515,11 @@ public:
                ACE_Task_Base *task = 0,
                ACE_hthread_t thread_handles[] = 0,
                void *stack[] = 0,
-               size_t stack_size[] = 0);
+               size_t stack_size[] = 0,
+               const char* thr_name[] = 0);
 
   /**
-   * Spawn N new threads, which execute @a func with argument <arg>.
+   * Spawn N new threads, which execute @a func with argument @a arg.
    * If <thread_ids> != 0 the thread_ids of successfully spawned
    * threads will be placed into the <thread_ids> buffer (which must
    * be the same size as @a n).  If @a stack != 0 it is assumed to be an
@@ -569,7 +557,8 @@ public:
                void *stack[] = 0,
                size_t stack_size[] = 0,
                ACE_hthread_t thread_handles[] = 0,
-               ACE_Task_Base *task = 0);
+               ACE_Task_Base *task = 0,
+               const char* thr_name[] = 0);
 
   /**
    * Called to clean up when a thread exits.
@@ -581,7 +570,7 @@ public:
    * Should _not_ be called by main thread.
    */
   ACE_THR_FUNC_RETURN exit (ACE_THR_FUNC_RETURN status = 0,
-                            int do_thread_exit = 1);
+                            bool do_thread_exit = true);
 
   /**
    * Block until there are no more threads running in this thread
@@ -590,7 +579,7 @@ public:
    * @param timeout is treated as "absolute" time by default, but this
    *                can be changed to "relative" time by setting the @c
    *                use_absolute_time to false.
-   * @param abandon_detached_threads If non-0, @c wait() will first
+   * @param abandon_detached_threads If true, @c wait() will first
    *                                 check thru its thread list for
    *                                 threads with THR_DETACHED or
    *                                 THR_DAEMON flags set and remove
@@ -602,11 +591,11 @@ public:
    *                                 flags are set or not unless it is
    *                                 called with @c
    *                                 abandon_detached_threads flag set.
-   * @param use_absolute_time If non-0 then treat @c timeout as
+   * @param use_absolute_time If true then treat @c timeout as
    *                          absolute time, else relative time.
    * @return 0 on success * and -1 on failure.
    *
-   * NOTE that if this function is called while the @c
+   * @note If this function is called while the @c
    * ACE_Object_Manager is shutting down (as a result of program
    * rundown via @c ACE::fini()), it will not wait for any threads to
    * complete. If you must wait for threads spawned by this thread
@@ -618,7 +607,7 @@ public:
             bool abandon_detached_threads = false,
             bool use_absolute_time = true);
 
-  /// Join a thread specified by <tid>.  Do not wait on a detached thread.
+  /// Join a thread specified by @a tid.  Do not wait on a detached thread.
   int join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status = 0);
 
   /**
@@ -665,8 +654,8 @@ public:
   int suspend_grp (int grp_id);
 
   /**
-   * True if <t_id> is inactive (i.e., suspended), else false.  Always
-   * return false if <t_id> is not managed by the Thread_Manager.
+   * True if @a t_id is inactive (i.e., suspended), else false.  Always
+   * return false if @a t_id is not managed by the Thread_Manager.
    */
   int testsuspend (ACE_thread_t t_id);
 
@@ -681,8 +670,8 @@ public:
   int resume_grp (int grp_id);
 
   /**
-   * True if <t_id> is active (i.e., resumed), else false.  Always
-   * return false if <t_id> is not managed by the Thread_Manager.
+   * True if @a t_id is active (i.e., resumed), else false.  Always
+   * return false if @a t_id is not managed by the Thread_Manager.
    */
   int testresume (ACE_thread_t t_id);
 
@@ -690,16 +679,18 @@ public:
   /**
    * Send @a signum to all stopped threads.  Not supported on platforms
    * that do not have advanced signal support, such as Win32.
+   */
+  int kill_all (int signum);
+  /**
    * Send the @a signum to a single thread.  Not supported on platforms
    * that do not have advanced signal support, such as Win32.
+   */
+  int kill (ACE_thread_t, int signum);
+  /**
    * Send @a signum to a group of threads, not supported on platforms
    * that do not have advanced signal support, such as Win32.
    */
-  int kill_all (int signum);
-  int kill (ACE_thread_t,
-            int signum);
-  int kill_grp (int grp_id,
-                int signum);
+  int kill_grp (int grp_id, int signum);
 
   // = Cancel methods, which provides a cooperative thread-termination mechanism (will not block).
   /**
@@ -718,15 +709,15 @@ public:
   int cancel_grp (int grp_id, int async_cancel = 0);
 
   /**
-   * True if <t_id> is cancelled, else false.  Always return false if
-   * <t_id> is not managed by the Thread_Manager.
+   * True if @a t_id is cancelled, else false.  Always return false if
+   * @a t_id is not managed by the Thread_Manager.
    */
   int testcancel (ACE_thread_t t_id);
 
   /**
-   * True if <t_id> has terminated (i.e., is no longer running),
+   * True if @a t_id has terminated (i.e., is no longer running),
    * but the slot in the thread manager hasn't been reclaimed yet,
-   * else false.  Always return false if <t_id> is not managed by the
+   * else false.  Always return false if @a t_id is not managed by the
    * Thread_Manager.
    */
   int testterminate (ACE_thread_t t_id);
@@ -773,8 +764,7 @@ public:
   /**
    * Send a signal @a signum to all threads in an ACE_Task.
    */
-  int kill_task (ACE_Task_Base *task,
-                 int signum);
+  int kill_task (ACE_Task_Base *task, int signum);
 
   /**
    * Cancel all threads in an ACE_Task.  If <async_cancel> is non-0,
@@ -987,7 +977,8 @@ protected:
                int grp_id = -1,
                void *stack = 0,
                size_t stack_size = 0,
-               ACE_Task_Base *task = 0);
+               ACE_Task_Base *task = 0,
+               const char** thr_name = 0);
 
   /// Run the registered hooks when the thread exits.
   void run_thread_exit_hooks (int i);

@@ -3,11 +3,11 @@
 
 // The following configuration file is designed to work for VxWorks
 // 6.4 platforms using one of these compilers:
-// 1) The GNU g++ compiler that is shipped with VxWorks 6.4
-// 2) The Diab compiler that is shipped with VxWorks 6.4
+// 1) The GNU g++ compiler that is shipped with VxWorks 6.6
+// 2) The Diab compiler that is shipped with VxWorks 6.6
 
-#ifndef ACE_CONFIG_VXWORKS_6_4_H
-#define ACE_CONFIG_VXWORKS_6_4_H
+#ifndef ACE_CONFIG_VXWORKS_6_6_H
+#define ACE_CONFIG_VXWORKS_6_6_H
 #include /**/ "ace/pre.h"
 
 #if ! defined (VXWORKS)
@@ -15,7 +15,7 @@
 #endif /* ! VXWORKS */
 
 #if ! defined (ACE_VXWORKS)
-# define ACE_VXWORKS 0x640
+# define ACE_VXWORKS 0x660
 #endif /* ! ACE_VXWORKS */
 
 #if !defined (__RTP__)
@@ -44,12 +44,6 @@
 #     define _GLIBCPP_USE_LONG_LONG
 #   endif
 # endif /* (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)) */
-
-# if defined (__RTP__) && !defined (_HAS_C9X)
-// Workaround for the fact that under RTP the log2 method can't be used
-// without this define set, see TSR560446
-#  define _C99
-# endif
 
 #elif defined (__DCC__)
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1

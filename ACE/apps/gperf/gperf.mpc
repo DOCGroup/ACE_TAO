@@ -2,8 +2,8 @@
 // $Id$
 
 project (gperf_docs) : man {
-
   Man_Files {
     gperf.1
   }
+  custom_only=1
 }

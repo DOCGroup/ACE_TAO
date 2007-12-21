@@ -91,7 +91,7 @@ Server_Events::Server_Events (u_short port,
                 "%p\n",
                 "hostname"));
 
-  else if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
+  else if (this->mcast_dgram_.join (this->mcast_addr_) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "subscribe"));
@@ -109,7 +109,7 @@ Server_Events::Server_Events (u_short port,
 
 Server_Events::~Server_Events (void)
 {
-  this->mcast_dgram_.unsubscribe ();
+  this->mcast_dgram_.leave (this->mcast_addr_);
 
   ACE_DEBUG ((LM_DEBUG,
               "total bytes received = %d after %d second\n",

@@ -9,4 +9,5 @@ project(PerlACE) : script {
     Process_Win32.pm
     Run_Test.pm
   }
+  custom_only=1
 }

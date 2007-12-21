@@ -37,7 +37,6 @@
 #define _THREAD_SAFE
 #define ACE_MTSAFE 1
 #define ACE_MT_SAFE 1
-#define ACE_HAS_PTHREADS_STD
 #define ACE_LACKS_PTHREAD_YIELD
 #define ACE_HAS_MUTEX_TIMEOUTS
 #else

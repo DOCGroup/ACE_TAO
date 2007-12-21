@@ -315,11 +315,11 @@ public:
   void msg_ostream (ACE_OSTREAM_TYPE *);
 
   /**
-   * delete_stream == 1, forces Log_Msg.h to delete the stream in
+   * delete_stream == true, forces Log_Msg.h to delete the stream in
    * its own ~dtor (assumes control of the stream)
    * use only with proper ostream (eg: fstream), not (cout, cerr)
    */
-  void msg_ostream (ACE_OSTREAM_TYPE *, int delete_ostream);
+  void msg_ostream (ACE_OSTREAM_TYPE *, bool delete_ostream);
 
   /// Get the ostream that is used to print error messages.
   ACE_OSTREAM_TYPE *msg_ostream (void) const;
@@ -359,10 +359,10 @@ public:
   void trace_depth (int);
 
   /// Set trace active status.
-  int trace_active (void) const;
+  bool trace_active (void) const;
 
   /// Get trace active status.
-  void trace_active (int value);
+  void trace_active (bool value);
 
   /// Get the TSS thread descriptor.
   ACE_Thread_Descriptor *thr_desc (void) const;
@@ -402,7 +402,7 @@ public:
   void start_tracing (void);
 
   /// Query tracing status on a per-thread basis...
-  int  tracing_enabled (void) const;
+  bool tracing_enabled (void) const;
 
   typedef enum
   {
@@ -599,13 +599,13 @@ private:
   int trace_depth_;
 
   /// Are we already within an ACE_Trace constructor call?
-  int trace_active_;
+  bool trace_active_;
 
   /// Are we allowing tracing in this thread?
-  int tracing_enabled_;
+  bool tracing_enabled_;
 
   /// Are we deleting this ostream?
-  int delete_ostream_;
+  bool delete_ostream_;
 
   /**
    * If we're running in the context of an ACE_Thread_Manager this

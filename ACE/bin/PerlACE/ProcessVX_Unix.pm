@@ -201,6 +201,8 @@ sub Spawn ()
 
     my $t;
     my $ok;
+    my $iboot;
+    my $text;
 
     ##
     ## initialize VxWorks kernel (reboot!) if needed
@@ -212,6 +214,36 @@ sub Spawn ()
             system ($ENV{'ACE_RUN_VX_REBOOT_TOOL'});
         }
         else {
+          if (defined $ENV{'ACE_RUN_VX_IBOOT'}) {
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+              print "Using iBoot: $ENV{'ACE_RUN_VX_IBOOT'}\n";
+            }
+            $iboot = IO::Socket::INET->new ("$ENV{'ACE_RUN_VX_IBOOT'}");
+            if  ($iboot) {
+              $iboot->send ("\ePASS\ef\r");
+              $iboot->recv ($text,128);
+              if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print "iBoot is currently: $text\n";
+              }
+              close $iboot;
+            }
+            else {
+              print "ERROR: FAILED to execute 'reboot' command!\n";
+            }
+            $iboot = IO::Socket::INET->new ("$ENV{'ACE_RUN_VX_IBOOT'}");
+            if  ($iboot) {
+              $iboot->send ("\ePASS\en\r");
+              $iboot->recv ($text,128);
+              if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print "iBoot is currently: $text\n";
+              }
+              close $iboot;
+            }
+            else {
+              print "ERROR: FAILED to execute 'reboot' command!\n";
+            }
+          }
+          else {
             if (defined $ENV{'ACE_TEST_VERBOSE'}) {
               print "Executing 'reboot' command over Telnet to ".$ENV{'ACE_RUN_VX_TGTHOST'}.".\n";
             }
@@ -228,6 +260,7 @@ sub Spawn ()
               print "ERROR: FAILED to execute 'reboot' command!\n";
             }
             $t->close();
+          }
         }
         $set_vx_defgw = 1;
         $do_vx_init = 0;
@@ -260,6 +293,14 @@ sub Spawn ()
         @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'C putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
+        if (defined $ENV{'ACE_RUN_ACE_DEBUG'}) {
+            @cmds[$cmdnr++] = 'putenv("ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"} . '")';
+        }
+
+        if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
+            @cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
+        }
+
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
             @cmds[$cmdnr++] = 'C memShow()';
         }
@@ -275,6 +316,14 @@ sub Spawn ()
 
         @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
+
+        if (defined $ENV{'ACE_RUN_ACE_DEBUG'}) {
+            @cmds[$cmdnr++] = 'putenv("ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"} . '")';
+        }
+
+        if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
+            @cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
+        }
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
             @cmds[$cmdnr++] = 'memShow()';

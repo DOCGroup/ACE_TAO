@@ -119,7 +119,7 @@ ACE_OS::strerror (int errnum)
   // and set errno to EINVAL.
   ACE_Errno_Guard g (errno);
   errno = 0;
-  char *errmsg;
+  char *errmsg = 0;
 
 #if defined (ACE_HAS_TR24731_2005_CRT)
   errmsg = ret_errortext;
@@ -360,7 +360,7 @@ ACE_OS::strtok_r_emulation (ACE_WCHAR_T *s,
 {
   ACE_WCHAR_T* sbegin = s ? s : *lasts;
   sbegin += ACE_OS::strspn(sbegin, tokens);
-  if (*sbegin == 0) 
+  if (*sbegin == 0)
     {
       static ACE_WCHAR_T empty[1] = { 0 };
       *lasts = empty;

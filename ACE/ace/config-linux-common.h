@@ -25,7 +25,7 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
-#if defined (ACE_HAS_LINUX_NPTL)
+#if !defined (ACE_LACKS_LINUX_NPTL)
 
 # include "ace/config-posix.h"
 
@@ -48,7 +48,7 @@
 #     define ACE_HAS_POSIX_SEM_TIMEOUT
 #   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && (((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600)) */
 # endif /* ACE_HAS_POSIX_SEM */
-#endif /* ACE_HAS_LINUX_NPTL */
+#endif /* !ACE_LACKS_LINUX_NPTL */
 
 // First the machine specific part
 
@@ -67,9 +67,13 @@
 // Then glibc/libc5 specific parts
 
 #if defined(__GLIBC__)
-# define ACE_HAS_NONCONST_SETRLIMIT
-# define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
-# define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
+# if (__GLIBC__  < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 1)
+#   define ACE_HAS_NONCONST_SETRLIMIT
+# endif
+# if (__GLIBC__  < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 3)
+#   define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
+#   define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
+# endif
 # define ACE_HAS_SOCKLEN_T
 # define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 
@@ -294,6 +298,8 @@
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
+
+#define ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE 1
 
 #define ACE_HAS_GETPAGESIZE 1
 

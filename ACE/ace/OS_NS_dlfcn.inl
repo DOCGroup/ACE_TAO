@@ -256,7 +256,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
 # elif defined (__hpux)
 
-  void *value;
+  void *value = 0;
   int status;
   shl_t _handle = handle;
   ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
@@ -268,11 +268,11 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   // which resolves the most recently loaded symbols .. which resolve mostly what we want..
   ACE_UNUSED_ARG (handle);
   SYM_TYPE symtype;
-  void *value = 0;
+  char *value = 0;
   STATUS status;
-  ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, (char **)&value, &symtype), int, -1, status);
+  ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, &value, &symtype), int, -1, status);
 
-  return status == OK ? value : 0;
+  return status == OK ? reinterpret_cast <void*>(value) : 0;
 
 # else
 

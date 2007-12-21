@@ -75,7 +75,6 @@
 #define ACE_HAS_THREADS
 
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
 /***** End Threading Defines *****/
 
 /***** Hardware Defines *****/

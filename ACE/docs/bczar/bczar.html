@@ -181,10 +181,9 @@ you execute these commands all users can download these packages.</li>
 <code>
 cp $DOC_ROOT/packages-PID/ACE* /export/www/download.dre/ACE+TAO-distribution<br>
 </code>
-<li>Once the distribution is ready, get ready for creating doxygen
-documentation. This is slightly complicated than it requires. We will
-address the complexity soon.</li>
-<li>Login to naboo.dre.vanderbilt.edu as bczar</li>
+<li>After the repository is tagged you can start generating the doxygen
+documentation.</li>
+<li>Login to naboo.dre.vanderbilt.edu as bczar: <code>ssh bczar@naboo.dre.vanderbilt.edu</code></li>
 <ul><li>After login, ssh to bczar@download.dre.vanderbilt.edu as bczar and check whether ssh succeeds. If not fix the problem. The make script tries to copy the tar.gz files to the website using ssh.</li></ul>
 <li> go to /web/users/isisbuilds/tmp/ACE_wrappers and remove the contents of this directory</li>
 <li> Update the workspace with the right version tag </li>
@@ -314,7 +313,7 @@ as Solaris).<br>
 15. When you get an account to access the cvs repo, make sure you are added to the correct groups, for example, gid=100(users),5000(doc),5002(acetaodev),5003(cvs). Otherwise you will have problem to checkout various modules.<br>
 16. Install your public key to the different machines you have frequent access to avoid typing password.<br>
 17. Update this page if you have any more tips for future build czars :-). This
-page is <code>bugzilla@deuce.doc.wustl.edu:~/.www-docs/index.html</code><br>
+page is in svn under <code>ACE_wrappres/docs/bczar/bczar.html</code><br>
 </p>
 </body>
 

@@ -245,6 +245,11 @@ public:
    */
   static int at_exit (ACE_Cleanup *object, void *param = 0);
 
+#if defined (ACE_HAS_TSS_EMULATION)
+  static int init_tss (void);
+  int init_tss_i (void);
+#endif
+
   /**
    * Register an object (or array) for cleanup at process termination.
    * "cleanup_hook" points to a (global, or static member) function
@@ -424,6 +429,7 @@ private:
 #if defined (ACE_HAS_TSS_EMULATION)
   // Main thread's thread-specific storage array.
   void *ts_storage_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
+  bool ts_storage_initialized_;
 #endif /* ACE_HAS_TSS_EMULATION */
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
