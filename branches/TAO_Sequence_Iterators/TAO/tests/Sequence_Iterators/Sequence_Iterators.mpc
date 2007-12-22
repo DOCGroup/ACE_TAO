@@ -19,6 +19,15 @@ project(Bounded_String) : taoexe {
   }
 }
 
+project(Unbounded_Value) : taoexe {
+
+  exename = Unbounded_Value
+
+  Source_Files {
+    Unbounded_Value.cpp
+  }
+}
+
 project(Unbounded_Objectref) : taoexe {
 
   exename = Unbounded_Objectref

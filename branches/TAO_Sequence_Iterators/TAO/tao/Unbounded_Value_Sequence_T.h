@@ -89,7 +89,7 @@ public:
     implementation_type::freebuf(buffer);
   }
 
-#ifdef ACE_HAS_STDCPP_STL_INCLUDES
+#if TAO_HAS_SEQUENCE_ITERATORS
 
   ///
   /// Additions to support iterator semantics for TAO unbounded value
@@ -142,7 +142,7 @@ public:
   // of the sequence.
   reverse_iterator rend (void)
   {
-    return impl_.end ();
+    return impl_.rend ();
   }
 
   // Get a const reverse iterator that points to one before the
@@ -152,7 +152,7 @@ public:
     return impl_.rend ();
   }
 
-#endif /* ACE_HAS_STDCPP_STL_INCLUDES */
+#endif /* TAO_HAS_SEQUENCE_ITERATORS */
 
 private:
   implementation_type impl_;

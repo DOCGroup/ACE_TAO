@@ -68,7 +68,7 @@ namespace TAO
 namespace details
 {
 
-#ifdef ACE_HAS_STDCPP_STL_INCLUDES
+#if TAO_HAS_SEQUENCE_ITERATORS
 
 // Forward declare the iterators
 template<typename T>
@@ -83,7 +83,7 @@ class Generic_Sequence_Reverse_Iterator;
 template<typename T>
 class Const_Generic_Sequence_Reverse_Iterator;
 
-#endif /* ACE_HAS_STDCPP_STL_INCLUDES */
+#endif /* TAO_HAS_SEQUENCE_ITERATORS */
 
 template<typename T,
          class ALLOCATION_TRAITS,
@@ -91,14 +91,14 @@ template<typename T,
 class generic_sequence
 {
 
-#ifdef ACE_HAS_STDCPP_STL_INCLUDES
+#if TAO_HAS_SEQUENCE_ITERATORS
 
   friend class Generic_Sequence_Iterator<generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> >;
   friend class Const_Generic_Sequence_Iterator<generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> >;
   friend class Generic_Sequence_Reverse_Iterator<generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> >;
   friend class Const_Generic_Sequence_Reverse_Iterator<generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> >;
 
-#endif /* ACE_HAS_STDCPP_STL_INCLUDES */
+#endif /* TAO_HAS_SEQUENCE_ITERATORS */
 
 public:
   typedef T value_type;
@@ -344,7 +344,7 @@ public:
     allocation_traits::freebuf(buffer);
   }
 
-#ifdef ACE_HAS_STDCPP_STL_INCLUDES
+#if TAO_HAS_SEQUENCE_ITERATORS
 
   ///
   /// Additions to support iterator semantics for TAO sequences.
@@ -416,7 +416,7 @@ public:
               -1);
   }
 
-#endif /* ACE_HAS_STDCPP_STL_INCLUDES */
+#endif /* TAO_HAS_SEQUENCE_ITERATORS */
 
 private:
   /// The maximum number of elements the buffer can contain.
@@ -430,7 +430,7 @@ private:
   mutable CORBA::Boolean release_;
 };
 
-#ifdef ACE_HAS_STDCPP_STL_INCLUDES
+#if TAO_HAS_SEQUENCE_ITERATORS
 
 /**
  * @class Generic_Sequence_Iterator
@@ -1308,7 +1308,7 @@ template<typename SEQUENCE_T>
      return Const_Generic_Sequence_Reverse_Iterator<SEQUENCE_T> (iter.sequence_, iter.pos_ + n);
    }
 
-#endif /* ACE_HAS_STDCPP_STL_INCLUDES */
+#endif /* TAO_HAS_SEQUENCE_ITERATORS */
 
 } // namespace details
 } // namespace TAO

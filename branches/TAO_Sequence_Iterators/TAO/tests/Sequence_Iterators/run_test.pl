@@ -19,35 +19,12 @@ if ($ARGV[0] =~ /^-h/i || $ARGV[0] =~ /^-\?/i) {
 
 my $final_result = 0;
 
-my @tests = qw(
-#               unbounded_value_sequence_ut
-#               unbounded_array_sequence_ut
-#               bounded_value_sequence_ut
-#               string_sequence_element_ut
-#               unbounded_string_sequence_ut
-#               bounded_string_sequence_ut
-#               testing_allocation_traits_ut
-#               unbounded_octet_sequence_ut
-#               unbounded_octet_sequence_no_copy_ut
-#               object_reference_sequence_element_ut
-#               unbounded_object_reference_sequence_ut
-#               unbounded_fwd_object_reference_sequence_ut
-#               bounded_object_reference_sequence_ut
-#               bounded_sequence_cdr_ut
-#               unbounded_sequence_cdr_ut
-              );
-
-my @testsNoBoost = qw(
+my @testsToRun = qw(
                  StringSeq
                  Bounded_String
+                 Unbounded_Value
                  Unbounded_Objectref
               );
-
-my @testsToRun = qw();
-  
-push(@testsToRun, @tests) if ($#ARGV < 0 || $ARGV[0] eq '-boost');
-push(@testsToRun, @testsNoBoost) if ($#ARGV < 0 || $ARGV[0] eq '-noboost');
-
 
 foreach my $process (@testsToRun) {
 

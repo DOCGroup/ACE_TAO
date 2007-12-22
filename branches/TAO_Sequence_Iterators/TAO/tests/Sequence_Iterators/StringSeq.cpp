@@ -15,7 +15,6 @@
 #include <sstream>
 
 #define FAIL_RETURN_IF(CONDITION) \
-          ACE_DEBUG ((LM_INFO, ACE_TEXT ("in %N:%l\n"))); \
           if (CONDITION) \
 	    { \
               ACE_DEBUG ((LM_ERROR, ACE_TEXT ("\tFailed at %N:%l\n"))); \
