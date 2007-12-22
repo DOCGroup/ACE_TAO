@@ -19,7 +19,6 @@
 typedef TAO::bounded_basic_string_sequence<char, 4> s_sequence;
 
 #define FAIL_RETURN_IF(CONDITION) \
-          ACE_DEBUG ((LM_INFO, ACE_TEXT ("in %N:%l\n"))); \
           if (CONDITION) \
 	    { \
               ACE_DEBUG ((LM_ERROR, ACE_TEXT ("\tFailed at %N:%l\n"))); \
@@ -650,6 +649,8 @@ int test_const_sequence_reverse ()
 
   return 0;
 }
+
+//-----------------------------------------------------------------------------
 
 int main(int,char*[])
 {
