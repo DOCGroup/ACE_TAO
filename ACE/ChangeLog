@@ -1,6 +1,17 @@
+Mon Dec 24 09:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_common.GNU:
+          New file, factored out common sunos5
+
+        * include/makeinclude/platform_sunos5_g++.GNU:
+          Use new common file
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Use new common file and removed SunOS4 support
+
 Fri Dec 21 21:22:58 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
-        * ace/README: added documentation for ACE_HAS_STDCPP_STL_INCLUDES 
+        * ace/README: added documentation for ACE_HAS_STDCPP_STL_INCLUDES
           macro.
 
 Fri Dec 21 14:10:48 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
