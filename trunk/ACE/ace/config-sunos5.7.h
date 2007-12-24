@@ -72,4 +72,7 @@
 # define ACE_HAS_3_PARAM_WCSTOK
 #endif
 
+// Solaris 7 started to support /dev/poll
+#define ACE_HAS_DEV_POLL
+
 #endif /* ACE_CONFIG_H */
