@@ -55,14 +55,6 @@ templates ?= automatic
 ## to CFLAGS or the assembler code will not compile
 atomic_ops_sparc ?= 0
 
-PLATFORM_TK_CPPFLAGS=
-PLATFORM_TK_LIBS=-ltk -ltcl
-PLATFORM_TK_LDFLAGS=
-
-PLATFORM_X11_CPPFLAGS= -I/usr/openwin/include -I/usr/dt/include
-PLATFORM_X11_LIBS =-lX11
-PLATFORM_X11_LDFLAGS=
-
 ifeq ($(threads),1)
   CFLAGS += -mt
   LDFLAGS += -mt
@@ -114,90 +106,78 @@ endif # fast
 # Make sure we resolve all symbols at link time, see bugzilla 2710
 LDFLAGS         += -z now
 
-ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
-  #### CC 4.2, only, supports -features=castop
-  CCFLAGS      += $(CFLAGS) -features=castop
+ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
+  #### CC 5.0 or later
+  #### Inlining appears to cause link problems with early releases of
+  #### CC 5.0.
+  ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
+      inline = 0
+  else
+    ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
+      inline = 0
+    else # ! 5.1
+      inline ?= 1
+      exceptions ?= 1
+    endif # 5.2 or greater
+  endif #! 5.0
 
-  CCFLAGS += -features=rtti
+  CCFLAGS += $(CFLAGS)
 
-  #### Create template repository to avoid compiler warning.
-  TEMPLATE_REPOSITORY = Templates.DB
-
-else  # ! 4.2
-  ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
-    #### CC 5.0 or later
-    #### Inlining appears to cause link problems with early releases of
-    #### CC 5.0.
+  #### If compat=4 is desired, set up for that. There are syntactic diffs
+  #### in the compatibility modes, but here all we need to be concerned with
+  #### is turning on -compat=4, and not trying to enable the new libraries.
+  ifeq ($(compat4),1)
+    CCFLAGS += -compat=4
+    CCFLAGS += -features=rtti
+  else
+    #### Use old iostreams.
     ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
-        inline = 0
-    else
-      ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
-        inline = 0
-      else # ! 5.1
-        inline ?= 1
-        exceptions ?= 1
-      endif # 5.2 or greater
-    endif #! 5.0
-
-    CCFLAGS += $(CFLAGS)
-
-    #### If compat=4 is desired, set up for that. There are syntactic diffs
-    #### in the compatibility modes, but here all we need to be concerned with
-    #### is turning on -compat=4, and not trying to enable the new libraries.
-    ifeq ($(compat4),1)
-      CCFLAGS += -compat=4
-      CCFLAGS += -features=rtti
-    else
-      #### Use old iostreams.
-      ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
-        ifeq (1,$(stdcpplib))
-          CCFLAGS += -library=Cstd
-        else
-          CCFLAGS += -library=iostream,no%Cstd
-          CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
-        endif # stdcpplib
+      ifeq (1,$(stdcpplib))
+        CCFLAGS += -library=Cstd
       else
-        ifeq (0,$(stdcpplib))
-          CCFLAGS += -library=iostream
-          CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
-        endif # stdcpplib
+        CCFLAGS += -library=iostream,no%Cstd
+        CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
+      endif # stdcpplib
+    else
+      ifeq (0,$(stdcpplib))
+        CCFLAGS += -library=iostream
+        CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
+      endif # stdcpplib
 
-        # If 64-bit build is desired, turn that on. If no code gen options
-        # are given to Forte 6, the default build is 32-bit, even when
-        # building on a 64-bit system. Specifying xarch=v9 generates code
-        # that runs on any Sparc v9 (64-bit) processor.
-        # Beginning at (I believe) Studio 10 (C++ 5.7) there's a
-        # -xarch=generic64 option that works for both Sparc and x86.
-        # If you want to tune this further, you should extract and insert
-        # from CCFLAGS in a private platform_macros.GNU file.
-        ifeq (64,$(buildbits))
-          ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
+      # If 64-bit build is desired, turn that on. If no code gen options
+      # are given to Forte 6, the default build is 32-bit, even when
+      # building on a 64-bit system. Specifying xarch=v9 generates code
+      # that runs on any Sparc v9 (64-bit) processor.
+      # Beginning at (I believe) Studio 10 (C++ 5.7) there's a
+      # -xarch=generic64 option that works for both Sparc and x86.
+      # If you want to tune this further, you should extract and insert
+      # from CCFLAGS in a private platform_macros.GNU file.
+      ifeq (64,$(buildbits))
+        ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
+          CFLAGS += -xarch=generic64
+          LDFLAGS += -xarch=generic64
+        else
+          ifeq (C++ 5.8,$(findstring C++ 5.8,$(CC_VERSION)))
             CFLAGS += -xarch=generic64
             LDFLAGS += -xarch=generic64
           else
-            ifeq (C++ 5.8,$(findstring C++ 5.8,$(CC_VERSION)))
-              CFLAGS += -xarch=generic64
-              LDFLAGS += -xarch=generic64
+            ifeq (C++ 5.9,$(findstring C++ 5.9,$(CC_VERSION)))
+              CFLAGS += -m64
+              LDFLAGS += -m64
             else
-              ifeq (C++ 5.9,$(findstring C++ 5.9,$(CC_VERSION)))
-                CFLAGS += -m64
-                LDFLAGS += -m64
-              else
-                CFLAGS += -xarch=v9
-                LDFLAGS += -xarch=v9
-              endif
-            endif # C++ 5.8
-          endif # C++ 5.7
-        endif # buildbits
-      endif # CC 5.0
-    endif # compat4 requested
-  endif # CC 5.0 or later
-endif # ! 4.2
-
+              CFLAGS += -xarch=v9
+              LDFLAGS += -xarch=v9
+            endif
+          endif # C++ 5.8
+        endif # C++ 5.7
+      endif # buildbits
+    endif # CC 5.0
+  endif # compat4 requested
+endif # CC 5.0 or later
 
 CCFLAGS         += $(TEMPLATES_FLAG)
 
-#### Sun CC-specific "Pure virtual finction called" bug fix trigger.
+#### Sun CC-specific "Pure virtual function called" bug fix trigger.
 #### XXX: Shouldn't this go into a compiler version specific guard ???
 CPPFLAGS       += -DSUN_CC_HAS_PVFC_BUG
 
@@ -242,14 +222,9 @@ ifeq ($(distrib),0)
   LDFLAGS       += -R $(ACE_ROOT)/lib -R./
 endif
 
-ifeq ($(shell /bin/uname -r),5.9)
-  # Solaris 9 puts sendfile() in a separate library.
-  LIBS          += -lsendfile
-endif
-ifeq ($(shell /bin/uname -r),5.10)
-  # Solaris 10 puts sendfile() in a separate library.
-  LIBS          += -lsendfile
-endif
+# Get common Solaris settings
+include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU
+
 LIBS            += -lsocket -lrt -laio -ldl -lnsl -lgen -lposix4 -ladm
 
 LDFLAGS         += -xildoff
