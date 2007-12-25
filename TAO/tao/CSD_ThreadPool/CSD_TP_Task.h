@@ -28,6 +28,7 @@
 #include "ace/Task.h"
 #include "ace/Synch.h"
 #include "ace/Containers_T.h"
+#include "ace/Vector_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -135,6 +136,10 @@ namespace TAO
       /// Flag used to initiate a shutdown request to all worker threads.
       bool shutdown_initiated_;
 
+      /// Complete shutdown needed to be deferred because the thread calling
+      /// close(1) was also one of the ThreadPool threads
+      bool deferred_shutdown_initiated_;
+
       /// Flag used to avoid multiple open() calls.
       bool opened_;
 
@@ -144,10 +149,12 @@ namespace TAO
       /// The queue of pending servant requests (a.k.a. the "request queue").
       TP_Queue queue_;
 
-      typedef ACE_Array <ACE_thread_t> Thread_Ids;
+      typedef ACE_Vector <ACE_thread_t> Thread_Ids;
 
       /// The list of ids for the threads launched by this task.
       Thread_Ids activated_threads_;
+
+      enum { MAX_THREADPOOL_TASK_WORKER_THREADS = 50 };
     };
 
   }

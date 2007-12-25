@@ -5,8 +5,8 @@
 #include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
 #include "orbsvcs/ETCL/ETCL_y.h"
 
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
