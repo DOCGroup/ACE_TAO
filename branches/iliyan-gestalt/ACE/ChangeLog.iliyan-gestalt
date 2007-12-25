@@ -1,3 +1,13 @@
+Tue Dec 25 14:04:22 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Intrusive_Auto_Ptr.inl:
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+        Refining the reference count mechanism for SC
+
 Mon Dec 17 16:03:22 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * .:

@@ -76,12 +76,11 @@ ACE_Service_Config::current (void)
 ACE_INLINE ACE_Service_Gestalt_Auto_Ptr
 ACE_Service_Config::current (ACE_Service_Gestalt_Auto_Ptr newcurrent)
 {
-  //  return ACE_Service_Gestalt_Auto_Ptr (ACE_Service_Config::singleton ()->tss_.ts_object(newcurrent.get()));
   ACE_Service_Gestalt* g = newcurrent.get ();
   if (g != 0) ACE_Service_Gestalt::intrusive_add_ref (g);
-
   ACE_Service_Gestalt* old = ACE_Service_Config::singleton ()->tss_.ts_object(g);
-  return ACE_Service_Gestalt_Auto_Ptr (old, false);
+
+  return ACE_Service_Gestalt_Auto_Ptr (old);
 }
 
 /// Return the configuration instance, considered "global" in the

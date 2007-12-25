@@ -91,7 +91,6 @@ public:
   /// Perform user-specified close activities and remove dynamic
   /// memory.
   virtual ~ACE_Service_Gestalt (void);
-  void operator delete (void*);
 
   /// Dump the state of an object.
   void dump (void) const;
