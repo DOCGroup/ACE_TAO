@@ -10,7 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-class Diamond_Export Top_i : public POA_Diamond::Top
+class Top_i : public POA_Diamond::Top
 {
 public:
   Top_i (void);
@@ -21,7 +21,7 @@ public:
   // Return the shape of this object (interface.)
 };
 
-class Diamond_Export Left_i : public POA_Diamond::Left
+class Left_i : public POA_Diamond::Left
 {
 public:
   Left_i (void);
@@ -35,7 +35,7 @@ public:
   // Return the color of this object (interface.)
 };
 
-class Diamond_Export Right_i : public POA_Diamond::Right
+class Right_i : public POA_Diamond::Right
 {
 public:
   Right_i (void);
@@ -52,7 +52,7 @@ public:
   // Return the width of the stuff.
 };
 
-class Diamond_Export Buttom_i : public POA_Diamond::Buttom
+class Buttom_i : public POA_Diamond::Buttom
 {
 public:
   Buttom_i (void);

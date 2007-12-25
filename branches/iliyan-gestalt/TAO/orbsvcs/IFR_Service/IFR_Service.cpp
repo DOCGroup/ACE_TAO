@@ -75,3 +75,8 @@ IFR_Service::fini (void)
   return 0;
 }
 
+void
+IFR_Service::shutdown (void)
+{
+  this->orb_->shutdown ();
+}

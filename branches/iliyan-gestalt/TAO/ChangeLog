@@ -1,3 +1,83 @@
+Thu Dec 20 15:01:48 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.inl:
+
+          Resolved errors from the Borland compiler.
+
+Wed Dec 19 17:15:19 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+
+          Fixed a bug in my prior check-in of this code.  The case where the
+          thread calling close(1) is also a CSD ThreadPool thread was not
+          previously covered.
+
+        * tests/CSD_Collocation/CSD_Collocation.mpc:
+        * tests/CSD_Collocation/Diamond_i.h:
+        * tests/CSD_Collocation/run_test.pl:
+
+          Simplified the test down to one executable, no shared libraries.
+
+        * tests/CSD_Collocation/diamond_export.h:
+        * tests/CSD_Collocation/stub_export.h:
+
+          Removed these files.
+
+Wed Dec 19 09:31:59 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/IFR_Service/IFR_Service.h:
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+          Fixed bug 3175.
+
+Tue Dec 18 20:21:05 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_interface_header (check_concrete_supported_inheritance):
+
+          Fixed bug in the logic of this method, which checks
+          valuetypes that support a concrete interface to make sure
+          that, if the supported interface has ancestors, that all
+          its ancestors are supported by the valuetype's ancestors.
+
+Tue Dec 18 14:38:22 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/CSD_Collocation/CSD_Collocation.mpc:
+
+          Exclude this test from minimum CORBA.
+
+Tue Dec 18 12:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Queued_Message.{h,cpp,inl}:
+          Added new inline file
+
+Tue Dec 18 10:45:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3171_Regression/*:
+          New regression provided by Joe Seward <joseph dot f dot seward at saic dot com>
+          for providing this test. This bug is not fixed yet.
+
+Tue Dec 18 10:11:20 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/IFRService/Options.cpp:
+          Fixed two memory leaks in Options::parse_args in handling
+          of string arguments.
+
+Tue Dec 18 07:53:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CDR.{h,cpp,inl}:
+        * tao/Remote_Invocation.{h,cpp}:
+          Updated message_semantics
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+          Added needed include to fix GCC 4 errors
+
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+          Reordered includes
+
 Mon Dec 17 20:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp

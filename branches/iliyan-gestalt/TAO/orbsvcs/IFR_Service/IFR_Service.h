@@ -50,6 +50,9 @@ public:
   /// Run the IFR service.
   int run (void);
 
+  /// Shutdown the Service.
+  void shutdown (void);
+
 protected:
 
   /// Reference to our ORB.
