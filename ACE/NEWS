@@ -5,6 +5,11 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (OO) Various other fixes that have been piling up.
 
+USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
+====================================================
+
+. Deprecated Visual Age 5 and older
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 ====================================================
 
@@ -22,7 +27,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 
 . Added support for MacOS 10.5
 
-. Support for MacOS 10.4 is now deprecated. 
+. Support for MacOS 10.4 is now deprecated.
 
 . Added support for OpenSuSE 10.3
 
