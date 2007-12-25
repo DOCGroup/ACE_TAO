@@ -11,7 +11,7 @@ template <class X> ACE_INLINE
 ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (X *p, bool addref)
   : rep_ (p)
 {
-  if (rep_ != 0 )//&& addref)
+  if (rep_ != 0  && addref)
     X::intrusive_add_ref (rep_);
 }
 

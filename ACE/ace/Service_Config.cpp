@@ -55,8 +55,7 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt_Auto_Ptr
                 psg->repo_));
 
   // Modify the TSS if the repo has changed
-  if (saved_ != psg)
-      (void)ACE_Service_Config::current (psg);
+  (void)ACE_Service_Config::current (psg);
 }
 
 ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
@@ -380,7 +379,7 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
 
   // The TSS owns its objects too, so we need to bump the SG reference
   // count to avoid double deletions from TSS tear-down and SC::fini()
-  ACE_Service_Gestalt::intrusive_add_ref (tmp);
+  //  ACE_Service_Gestalt::intrusive_add_ref (tmp);
   this->tss_.ts_object (tmp);
 
   this->instance_ = tmp;
@@ -408,7 +407,7 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
 
   // The TSS owns its objects too, so we need to bump the SG reference
   // count to avoid double deletions from TSS tear-down and SC::fini()
-  ACE_Service_Gestalt::intrusive_add_ref (tmp);
+  //  ACE_Service_Gestalt::intrusive_add_ref (tmp);
   this->tss_.ts_object (tmp);
 
   this->instance_ = tmp;
@@ -571,10 +570,14 @@ ACE_Service_Config::fini_svcs (void)
 template<> void
 ACE_TSS <ACE_Service_Gestalt>::cleanup (void* p)
 {
+  if (p == 0) return;
+
   // Just decrement the reference count. This eliminates dependency
   // and ordering problems between TSS rundown and ACE::fini()
+  // as it allows either to dealocate the gestalt gracefuly
   ACE_Service_Gestalt* tmp = reinterpret_cast<ACE_Service_Gestalt*> (p);
   printf ("//cleanup: %ld\n", tmp->refcnt_.value ());
+
   ACE_Service_Gestalt::intrusive_remove_ref (tmp);
 }
 
