@@ -45,7 +45,8 @@ void **&
 ACE_TSS_Emulation::tss_base ()
 {
 #    if defined (ACE_HAS_VXTHREADS)
-  return (void **&) taskIdCurrent->ACE_VXWORKS_SPARE;
+  int &spare = taskIdCurrent->ACE_VXWORKS_SPARE;
+  return reinterpret_cast <void **&> (spare);
 #    else
   // Uh oh.
   ACE_NOTSUP_RETURN (0);

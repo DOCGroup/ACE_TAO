@@ -1,3 +1,127 @@
+Mon Dec 24 10:17:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.7.h:
+          Added ACE_HAS_DEV_POLL, it is introduced with Solaris 7
+
+Mon Dec 24 09:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_common.GNU:
+          New file, factored out common sunos5
+
+        * include/makeinclude/platform_sunos5_g++.GNU:
+          Use new common file
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Use new common file and removed SunOS4 support
+
+Fri Dec 21 21:22:58 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * ace/README: added documentation for ACE_HAS_STDCPP_STL_INCLUDES
+          macro.
+
+Fri Dec 21 14:10:48 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Task_T.inl: Added #include "ace/config-all.h" to the
+          ACE_NOTSUP_RETURN macro would be visible.  Thanks to Steve
+          Huston for reporting this.
+
+Fri Dec 21 03:05:46 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Task_T.h (class ACE_Task): Updated the documentation for
+          can_put() to make it clear that this method is deprecated and
+          will go away at some point.
+
+Fri Dec 21 03:03:56 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Task_T.inl (can_put): Removed the assert() since ACE library
+          methods shouldn't call assert...  Changed this to
+          ACE_NOTSUP_RETURN.  Thanks to Gautam Thaker for reporting this.
+
+Thu Dec 20 20:01:07 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Codecs.h:
+        * ace/Codes.cpp:
+
+          Fixed fuzz warnings.
+
+Tue Dec 18 17:56:30 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/ACE-development-process.html,
+        * docs/ACE-bug-process.html: Updated these documents to clarify
+          that submitters of code, bug fixes, etc. waive claims to
+          copyright or ownership of the submissions.  Thanks to Tom
+          Callaway <tcallawa at redhat dot com> for help with this.
+
+Thu Dec 20 15:39:43 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Codecs.h:
+        * ace/Codecs.cpp:
+
+          Add is_chunked argument to encode() which selects whether the
+          encoded output is "chunked" into newline terminated 72 column
+          chunks.  Fixed bug where "chunked" output was not terminated by
+          a newline if the input buffer length was an exact multiple of 3.
+          Thanks to Alick Nie <alick_nie at 163 dot com> for reporting
+          inconsistant encoding behavior which lead to this change.
+
+        * THANKS:
+
+          Add Alick Nie <alick_nie at 163 dot com>.
+
+Thu Dec 20 14:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sched_Params.cpp:
+          Use VX_TASK_PRIORITY_MAX and VX_TASK_PRIORITY_MIN when they
+          are defined
+
+Thu Dec 20 13:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Layout change
+
+        * ace/OS_NS_Thread.inl:
+          Fixed warning with VxWorks 6.6 which uses GCC 4.1.2
+
+Thu Dec 20 13:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_dlfcn.inl:
+          Fixed warning with VxWorks 6.6 which uses GCC 4.1.2
+
+Thu Dec 20 13:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Fixed warning with VxWorks 6.6 which uses GCC 4.1.2
+
+Thu Dec 20 13:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+          Fixed typo in this file
+
+Thu Dec 20 10:30:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Exclude TAO/tests/CSD_Collocation from LynxOS builds. They
+          overload/tax the LynxOS kernal resulting in random process
+          table corruption and filing system errors.
+
+Wed Dec 19 14:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+        * ace/config-aix-5.x.h:
+          Deprecated Visual Age 5 and older
+
+Tue Dec 18 14:40:11 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Exclude TAO/tests/CSD_Collocation from minimum CORBA builds.
+
+Tue Dec 18 10:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug 3171 Regression
+
 Mon Dec 17 16:41:44 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:

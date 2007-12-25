@@ -1575,7 +1575,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   /// for internal use only.  Applications should call thr_getspecific
   int thr_getspecific_native (ACE_OS_thread_key_t key,
-                       void **data);
+                              void **data);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
   ACE_NAMESPACE_INLINE_FUNCTION
