@@ -82,19 +82,23 @@ ACE_Intrusive_Auto_Ptr<X>::reset (X *p)
 template <class X> ACE_INLINE void
 ACE_Intrusive_Auto_Ptr<X>::operator = (const ACE_Intrusive_Auto_Ptr<X> &rhs)
 {
-  //  bind <this> to the same <ACE_Intrusive_Auto_Ptr_Rep> as <r>.
-  X *old_rep = this->rep_;
-  if (rhs.rep_ != 0)
+  // do nothing when aliasing
+  if (this->rep_ == rhs.rep_)
+    return;
+
+  // assign a zero
+  if (rhs.rep_  == 0)
     {
-      this->rep_ = rhs.rep_;
-      X::intrusive_add_ref (this->rep_);
-      X::intrusive_remove_ref (old_rep);
-    }
-  else    // Assign a 0 rep to this
-    {
-      X::intrusive_remove_ref (old_rep);
+      X::intrusive_remove_ref (rhs.rep_);
       this->rep_ = 0;
+      return;
     }
+
+  //  bind <this> to the same <ACE_Intrusive_Auto_Ptr_Rep> as <rhs>.
+  X *old_rep = this->rep_;
+  this->rep_ = rhs.rep_;
+  X::intrusive_add_ref (this->rep_);
+  X::intrusive_remove_ref (old_rep);
 }
 
 // Copy derived class constructor

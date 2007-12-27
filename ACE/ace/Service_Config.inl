@@ -77,8 +77,13 @@ ACE_INLINE ACE_Service_Gestalt_Auto_Ptr
 ACE_Service_Config::current (ACE_Service_Gestalt_Auto_Ptr newcurrent)
 {
   ACE_Service_Gestalt* g = newcurrent.get ();
-  if (g != 0) ACE_Service_Gestalt::intrusive_add_ref (g);
   ACE_Service_Gestalt* old = ACE_Service_Config::singleton ()->tss_.ts_object(g);
+
+  if (old == g)
+    return newcurrent;
+
+  if (g != 0)
+    ACE_Service_Gestalt::intrusive_add_ref (g);
 
   return ACE_Service_Gestalt_Auto_Ptr (old);
 }

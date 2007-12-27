@@ -377,9 +377,6 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (size, false, ignore_static_svcs));
 
-  // The TSS owns its objects too, so we need to bump the SG reference
-  // count to avoid double deletions from TSS tear-down and SC::fini()
-  //  ACE_Service_Gestalt::intrusive_add_ref (tmp);
   this->tss_.ts_object (tmp);
 
   this->instance_ = tmp;
@@ -405,9 +402,6 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
 
-  // The TSS owns its objects too, so we need to bump the SG reference
-  // count to avoid double deletions from TSS tear-down and SC::fini()
-  //  ACE_Service_Gestalt::intrusive_add_ref (tmp);
   this->tss_.ts_object (tmp);
 
   this->instance_ = tmp;
@@ -527,23 +521,16 @@ ACE_Service_Config::reconfigure (void)
 int
 ACE_Service_Config::close (void)
 {
-  ACE_Service_Gestalt_Auto_Ptr ginst (ACE_Service_Config::instance ());
-
-  int result1 = 0;
-  if (ginst != 0)
-    result1 = ginst->close ();
+    ACE_Service_Config::singleton ()->instance_->close ();
 
   // Delete the service repository.  All the objects inside the
   // service repository should already have been finalized.
   ACE_Service_Repository::close_singleton ();
 
-  //  ACE_Service_Config::current (global ());
-  ACE_Service_Config::current (0);
-
   // Do away with the singleton ACE_Service_Config (calls dtor)
   ACE_SERVICE_CONFIG_SINGLETON::close ();
 
-  return result1;
+  return 0;
 }
 
 
@@ -570,15 +557,6 @@ ACE_Service_Config::fini_svcs (void)
 template<> void
 ACE_TSS <ACE_Service_Gestalt>::cleanup (void* p)
 {
-  if (p == 0) return;
-
-  // Just decrement the reference count. This eliminates dependency
-  // and ordering problems between TSS rundown and ACE::fini()
-  // as it allows either to dealocate the gestalt gracefuly
-  ACE_Service_Gestalt* tmp = reinterpret_cast<ACE_Service_Gestalt*> (p);
-  printf ("//cleanup: %ld\n", tmp->refcnt_.value ());
-
-  ACE_Service_Gestalt::intrusive_remove_ref (tmp);
 }
 
 // Perform user-specified close activities and remove dynamic memory.

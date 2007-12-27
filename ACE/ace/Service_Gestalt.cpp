@@ -273,7 +273,7 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , repo_ (0)
   , static_svcs_ (0)
   , processed_static_svcs_ (0)
-  , refcnt_ (1)
+  , refcnt_ (0)
 {
   ACE_DEBUG ((LM_STARTUP, "(%P|%t) ACE_Service_Gestalt::ACE_Service_Gestalt\n"));
 
