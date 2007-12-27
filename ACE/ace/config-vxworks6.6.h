@@ -264,7 +264,6 @@
   #define ACE_LACKS_FGETWC
   #define ACE_LACKS_FGETWS
   #define ACE_LACKS_FPUTWS
-  #define ACE_HAS_IOCTL_INT_3_PARAM
   #define ACE_LACKS_MMAP
   #define ACE_LACKS_MSYNC
   #define ACE_LACKS_MPROTECT
