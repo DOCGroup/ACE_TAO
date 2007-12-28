@@ -10,6 +10,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
 
 . Deprecated Visual Age 5 and older
 
+. Fixed bug 3185.
+
+. Tweaks to support MacOS X 10.5 on Intel.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 ====================================================
 
