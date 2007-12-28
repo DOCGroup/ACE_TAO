@@ -1,3 +1,10 @@
+Fri Dec 28 18:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.6.GNU:
+          Added -fno-strict-aliasing to the CPPFLAGS as workaround to get
+          rid of the warnings on the VxWorks system header files. This
+          has been reported to WindRiver
+
 Fri Dec 28 18:18:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.11.h:
