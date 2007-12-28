@@ -17,14 +17,13 @@ testReusingGlobals (int , ACE_TCHAR *[])
 
   {
     ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> one (new ACE_Service_Gestalt (10, false));
-    //   ACE_Service_Gestalt/*_Test*/ one (10, false) ;
+
     // The ACE_Service_Gestalt_Test will teardown all!
     one->process_directive (ace_svc_desc_TAO_CORBANAME_Parser);
     one->process_directive (ace_svc_desc_TAO_CORBALOC_Parser);
 
     const ACE_TCHAR *svcname = ACE_TEXT ("IIOP_Factory");
-    TAO_Protocol_Factory* p1 =
-      ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (one, svcname);
+    TAO_Protocol_Factory* p1 = ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (one.get (), svcname);
 
     if (p1 != 0)
       {
@@ -33,8 +32,7 @@ testReusingGlobals (int , ACE_TCHAR *[])
       }
 
     svcname = ACE_TEXT ("CORBANAME_Parser");
-    ACE_Service_Object* p2 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (one, svcname);
+    ACE_Service_Object* p2 = ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
 
     if (p2 == 0)
       {
@@ -43,8 +41,7 @@ testReusingGlobals (int , ACE_TCHAR *[])
       }
 
     svcname = ACE_TEXT ("CORBALOC_Parser");
-    ACE_Service_Object* p3 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (one, svcname);
+    ACE_Service_Object* p3 = ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
 
     if (p3 == 0)
       {
@@ -58,8 +55,7 @@ testReusingGlobals (int , ACE_TCHAR *[])
   //  ACE_Service_Gestalt_Test two; // Use the ACE_Service_Repository::instance ()
 
   const ACE_TCHAR *svcname = ACE_TEXT ("IIOP_Factory");
-  TAO_Protocol_Factory* p1 =
-    ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (two, svcname);
+  TAO_Protocol_Factory* p1 = ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (two.get (), svcname);
 
   if (p1 != 0)
     {
@@ -68,14 +64,13 @@ testReusingGlobals (int , ACE_TCHAR *[])
     }
 
   svcname = ACE_TEXT ("CORBANAME_Parser");
-  ACE_Service_Object* p2 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (two, svcname);
+  ACE_Service_Object* p2 = ACE_Dynamic_Service<ACE_Service_Object>::instance (two.get (), svcname);
 
-  if (p2 == 0) // You should be able to find the same stuff here, too
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not expected to find %s in the global repo\n"), svcname));
-        return -1;
-      }
+  if (p2 == 0) // You should be able to find the same stuff here, too``
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not expected to find %s in the global repo\n"), svcname));
+      return -1;
+    }
 
   return 0;
 }

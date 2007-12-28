@@ -869,7 +869,7 @@ public:
     const TAO_Service_Context &service_context);
 
   /// Configuration accessor method
-  ACE_Service_Gestalt_Auto_Ptr configuration () const;
+  ACE_Service_Gestalt* configuration () const;
 
   /// Get outgoing fragmentation strategy.
   auto_ptr<TAO_GIOP_Fragmentation_Strategy>

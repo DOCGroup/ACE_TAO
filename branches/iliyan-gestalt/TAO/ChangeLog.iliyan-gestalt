@@ -1,3 +1,23 @@
+Fri Dec 28 22:47:55 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+        * tao/TAO_Internal.cpp:
+
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * tests/ORB_Local_Config/Separation/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Shared/Test.cpp:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+
+        Changed the Service Config interfaces back to using plain pointers
+        instead of auto pointers for passing the Service Gestalt instances
+        in and out. The lifecycle of SG's is determined by the lifecycle
+        of SC instance. Anyone else willing to keep a reference should use
+        the Intrusive_Auto_Ptr template to capitalize on and participate
+        in the reference counting of SG's
+
 Sun Dec 16 21:36:32 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ChangeLog.iliyan-gestalt:
