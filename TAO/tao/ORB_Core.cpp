@@ -117,7 +117,7 @@ TAO_ORB_Core_Static_Resources::initialization_reference_ =
 TAO_ORB_Core_Static_Resources*
 TAO_ORB_Core_Static_Resources::instance (void)
 {
-  ACE_Service_Gestalt_Auto_Ptr current = ACE_Service_Config::current();
+  ACE_Service_Gestalt* current = ACE_Service_Config::current();
   TAO_ORB_Core_Static_Resources* tocsr =
     ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
     (current, "TAO_ORB_Core_Static_Resources", true);
@@ -133,7 +133,7 @@ TAO_ORB_Core_Static_Resources::instance (void)
       tocsr = ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
         (current, "TAO_ORB_Core_Static_Resources", true);
 
-      ACE_Service_Gestalt_Auto_Ptr global = ACE_Service_Config::global();
+      ACE_Service_Gestalt* global = ACE_Service_Config::global();
       if (current != global)
         {
           TAO_ORB_Core_Static_Resources* global_tocsr =
@@ -1579,7 +1579,7 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
 {
   // @todo The ORBInitializer_Registry is supposed to be a singleton.
 
-  ACE_Service_Gestalt_Auto_Ptr const config = this->configuration ();
+  ACE_Service_Gestalt* const config = this->configuration ();
 
   // If not, lookup it up.
   this->orbinitializer_registry_ =

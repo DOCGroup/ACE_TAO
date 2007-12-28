@@ -39,34 +39,34 @@ testCompatibility (int , ACE_TCHAR *[])
 
     svcname = "CORBANAME_Parser";
 
-    ACE_Service_Object* p20 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (one, svcname);
-    if ((p20 == 0))
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
+    ACE_Service_Object* p20 = ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
+    if (p20 == 0)
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
     svcname = "CORBALOC_Parser";
 
-    ACE_Service_Object* p21 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (one, svcname);
+    ACE_Service_Object* p21 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
     if ((p21 == 0))
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
     // Exiting this scope should fini all services in the glob ...
   }
 
   svcname = "CORBANAME_Parser";
 
-  ACE_Service_Object* p20 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (glob, svcname);
+  ACE_Service_Object* p20 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (glob.get (), svcname);
   if ((p20 != 0))
-    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
 
   svcname = "CORBALOC_Parser";
 
-  ACE_Service_Object* p21 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (glob, svcname);
+  ACE_Service_Object* p21 = ACE_Dynamic_Service<ACE_Service_Object>::instance (glob.get (), svcname);
   if ((p21 != 0))
-    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
 
   return 0;
 }

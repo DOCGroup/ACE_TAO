@@ -127,7 +127,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   // Lookup it up.
   TAO::ORBInitializer_Registry_Adapter* oir =
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-      (one, "ORBInitializer_Registry");
+    (one.get (), "ORBInitializer_Registry");
 
 #if defined (TAO_AS_STATIC_LIBS)
   if ((oir == 0))
@@ -157,7 +157,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
                                       ""));
       oir =
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-          (one, "ORBInitializer_Registry");
+        (one.get (), "ORBInitializer_Registry");
     }
   if (oir == 0)
     {
@@ -212,7 +212,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   // Try to instantiate the dynamic service from the local repository ...
   TAO::ORBInitializer_Registry_Adapter* oir2 =
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-      (one, "ORBInitializer_Registry");
+    (one.get (), "ORBInitializer_Registry");
 
   // Right! That's local.
   if (oir2 == 0)
@@ -229,7 +229,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   // registrations, those may end up in the wrong (global) gestalt and will
   // be in memory, which may not be mapped by finalization time!
   {
-    ACE_Service_Config_Guard guard (one);
+    ACE_Service_Config_Guard guard (one.get ());
     oir2->init (0,0);
   }
 
@@ -239,7 +239,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
 
   // ... and also one of the dependent static services
   if (0 == ACE_Dynamic_Service <ACE_Service_Object>::instance
-                      (one, "CodecFactory_Loader"))
+      (one.get (), "CodecFactory_Loader"))
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT ("Expected to find CodecFactory_Loader locally\n")),
                      -1);
@@ -257,7 +257,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
 
 
   if (0 == ACE_Dynamic_Service <ACE_Service_Object>::instance
-      (one, "PolicyFactory_Loader"))
+      (one.get (), "PolicyFactory_Loader"))
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT ("Expected to find PolicyFactory_Loader locally\n")),
                      -1);
@@ -301,7 +301,7 @@ testServiceDependency (int , ACE_TCHAR *[])
 
     TAO_Codeset_Manager_Factory_Base *factory =
       ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance
-      (one, "TAO_Codeset");
+      (one.get (), "TAO_Codeset");
 
     if (factory == 0)
       ACE_ERROR_RETURN((LM_ERROR,

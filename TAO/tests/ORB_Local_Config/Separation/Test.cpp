@@ -25,37 +25,31 @@ testSeparation(int , ACE_TCHAR *[])
 
   const ACE_TCHAR * svcname = "IIOP_Factory";
 
-  TAO_Protocol_Factory* p10 =
-    ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (one, svcname);
+  TAO_Protocol_Factory* p10 = ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (one.get (), svcname);
   if (p10 != 0)
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Not expected %s locally in one\n"), svcname), -1);
 
-  TAO_Protocol_Factory* p11 =
-    ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (two, "IIOP_Factory");
+  TAO_Protocol_Factory* p11 =  ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (two.get (), "IIOP_Factory");
   if (p11 != 0)
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Not expected %s locally in two\n"), svcname), -1);
 
   svcname = "CORBANAME_Parser";
 
-  ACE_Service_Object* p20 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (one, svcname);
+  ACE_Service_Object* p20 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
   if (p20 == 0)
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
-  ACE_Service_Object* p31 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (two, svcname);
+  ACE_Service_Object* p31 = ACE_Dynamic_Service<ACE_Service_Object>::instance (two.get (), svcname);
   if (p31 != 0)
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Not expected %s locally, in two\n"), svcname), -1);
 
   svcname = "CORBALOC_Parser";
 
-  ACE_Service_Object* p21 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (one, svcname);
+  ACE_Service_Object* p21 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
   if (p21 != 0)
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Not expected %s locally, in one\n"), svcname), -1);
 
-  ACE_Service_Object* p30 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (two, svcname);
+  ACE_Service_Object* p30 = ACE_Dynamic_Service<ACE_Service_Object>::instance (two.get (), svcname);
   if (p30 == 0)
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s locally, in two\n"), svcname), -1);
 

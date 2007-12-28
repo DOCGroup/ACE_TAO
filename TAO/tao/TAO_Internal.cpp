@@ -103,8 +103,8 @@ namespace
    *       reentrant meaning that it is really no longer necessary to
    *       do so.
    */
-  void register_global_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg);
-  void register_additional_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg);
+  void register_global_services_i (ACE_Service_Gestalt*);
+  void register_additional_services_i (ACE_Service_Gestalt*);
 
   /**
    * Parses the supplied command-line arguments to extract any
@@ -274,7 +274,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   // (global) Service Configurator instance.
   CORBA::StringSeq global_svc_config_argv;
 
-  ACE_Service_Gestalt_Auto_Ptr theone = ACE_Service_Config::global ();
+  ACE_Service_Gestalt* theone = ACE_Service_Config::global ();
 
   if (service_open_count == 1)
     {
@@ -478,7 +478,7 @@ namespace
   /// @brief registers all process-wide (global) services, available
   /// to all ORBs
   void
-  register_global_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg)
+  register_global_services_i (ACE_Service_Gestalt* pcfg)
   {
     // This has to be done before intializing the resource
     // factory. Codesets is a special library since its configuration
@@ -573,7 +573,7 @@ namespace
   } /* register_global_services_i */
 
   void
-  register_additional_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg)
+  register_additional_services_i (ACE_Service_Gestalt* pcfg)
   {
     // @@ What the heck do these things do and do we need to avoid
     //    calling them if we're not invoking the svc.conf file?
