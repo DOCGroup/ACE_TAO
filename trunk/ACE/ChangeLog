@@ -1,7 +1,21 @@
+Fri Dec 28 17:52:32 UTC 2007  Chris Cleeland  <cleeland@ociweb.com>
+
+        * ace/config-macosx-leopard.h:
+ 
+          Tweaks to get ACE tests to run properly on OS X Intel.  Major
+          change was properly setting ACE_SIZEOF_LONG_DOUBLE.
+ 
+        * include/makeinclude/platform_macosx_leopard.GNU:
+ 
+          Broke this into a separate file, even though all it does right
+          now is include the platform_macros for tiger.  Eventually I hope
+          to refactor the OS X support so that it's structured more like
+          the G++ supporting files.
+
 Fri Dec 28 17:44:37 UTC 2007  Chris Cleeland  <cleeland@ociweb.com>
 
         * ace/Atomic_Op.cpp:
- 
+
           Folded in changes originally from OCITAO 1.5a that prevent low
           probability race conditions when using ACE_Atomic_Op<> inside
           static instances in libraries that link with libACE.  This
