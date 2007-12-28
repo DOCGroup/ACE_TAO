@@ -1,12 +1,17 @@
+Fri Dec 28 18:18:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.11.h:
+          New file for Solaris 11
+
 Fri Dec 28 17:52:32 UTC 2007  Chris Cleeland  <cleeland@ociweb.com>
 
         * ace/config-macosx-leopard.h:
- 
+
           Tweaks to get ACE tests to run properly on OS X Intel.  Major
           change was properly setting ACE_SIZEOF_LONG_DOUBLE.
- 
+
         * include/makeinclude/platform_macosx_leopard.GNU:
- 
+
           Broke this into a separate file, even though all it does right
           now is include the platform_macros for tiger.  Eventually I hope
           to refactor the OS X support so that it's structured more like
