@@ -48,7 +48,7 @@ protected:
   /// repo.
   static void* instance (const ACE_TCHAR *name, bool no_global = false);
 
-  static void* instance (const ACE_Service_Gestalt_Auto_Ptr repo,
+  static void* instance (const ACE_Service_Gestalt* repo,
                          const ACE_TCHAR *name,
                          bool no_global = false);
 

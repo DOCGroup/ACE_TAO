@@ -1,3 +1,23 @@
+Fri Dec 28 22:17:18 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Dynamic_Service.h:
+        * ace/Dynamic_Service.cpp:
+        * ace/Dynamic_Service_Base.h:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Dynamic_Service_Dependency.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.cpp:
+        * ace/Thread_Adapter.cpp:
+
+        Changed the Service Config interfaces back to using plain pointers
+        instead of auto pointers for passing the Service Gestalt instances
+        in and out. The lifecycle of SG's is determined by the lifecycle
+        of SC instance. Anyone else willing to keep a reference should use
+        the Intrusive_Auto_Ptr template to capitalize on and participate
+        in the reference counting of SG's
+
 Thu Dec 27 15:06:37 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Intrusive_Auto_Ptr.inl:

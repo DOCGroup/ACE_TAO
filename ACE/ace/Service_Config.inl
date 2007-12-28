@@ -53,10 +53,10 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 
 /// Return the global configuration instance. Allways returns the same
 /// instance
-ACE_INLINE ACE_Service_Gestalt_Auto_Ptr
+ACE_INLINE ACE_Service_Gestalt*
 ACE_Service_Config::global (void)
 {
-  return ACE_Service_Config::singleton()->instance_;
+  return ACE_Service_Config::singleton()->instance_.get ();
 }
 
 /// Return the configuration instance, considered "global" in the
@@ -64,36 +64,7 @@ ACE_Service_Config::global (void)
 /// occasions, it may be a different one. For example,
 /// ACE_Service_Config_Guard provides a way of temporarily replacing
 /// the "current" configuration instance in the context of a thread.
-ACE_INLINE ACE_Service_Gestalt_Auto_Ptr
-ACE_Service_Config::current (void)
-{
-  // Make an intrusive auto ptr, without changing the reference count
-  ACE_Service_Gestalt* g = ACE_Service_Config::singleton ()->tss_.ts_object();
-  return ACE_Service_Gestalt_Auto_Ptr (g);
-}
-
-/// A mutator to set the "current" (TSS) gestalt instance.
-ACE_INLINE ACE_Service_Gestalt_Auto_Ptr
-ACE_Service_Config::current (ACE_Service_Gestalt_Auto_Ptr newcurrent)
-{
-  ACE_Service_Gestalt* g = newcurrent.get ();
-  ACE_Service_Gestalt* old = ACE_Service_Config::singleton ()->tss_.ts_object(g);
-
-  if (old == g)
-    return newcurrent;
-
-  if (g != 0)
-    ACE_Service_Gestalt::intrusive_add_ref (g);
-
-  return ACE_Service_Gestalt_Auto_Ptr (old);
-}
-
-/// Return the configuration instance, considered "global" in the
-/// current thread. This may be the same as instance(), but on some
-/// occasions, it may be a different one. For example,
-/// ACE_Service_Config_Guard provides a way of temporarily replacing
-/// the "current" configuration instance in the context of a thread.
-ACE_INLINE ACE_Service_Gestalt_Auto_Ptr
+ACE_INLINE ACE_Service_Gestalt*
 ACE_Service_Config::instance (void)
 {
   return ACE_Service_Config::current ();
@@ -107,7 +78,7 @@ ACE_Service_Config::instance (void)
 // to expose the repository storage *and* it is much easier to debug
 // service registration problems.
 
-ACE_INLINE ACE_Service_Gestalt_Auto_Ptr
+ACE_INLINE ACE_Service_Gestalt*
 ACE_Service_Config::static_svcs (void)
 {
   return ACE_Service_Config::current ();
