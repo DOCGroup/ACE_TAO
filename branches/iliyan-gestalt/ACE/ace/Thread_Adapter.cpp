@@ -53,9 +53,7 @@ ACE_Thread_Adapter::invoke (void)
   // ACE_Log_Msg instance in thread-specific storage.
   this->inherit_log_msg ();
 
-  ACE_ASSERT (0 == ACE_Service_Config::current ());
-  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> tmp (ACE_Service_Config::global());
-  ACE_Service_Config::current (tmp);
+  ACE_Service_Config::current (ACE_Service_Config::global());
 
 #if !defined(ACE_USE_THREAD_MANAGER_ADAPTER)
   // NOTE: this preprocessor directive should match the one in above

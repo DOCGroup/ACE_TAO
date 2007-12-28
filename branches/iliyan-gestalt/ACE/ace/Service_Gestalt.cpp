@@ -203,7 +203,8 @@ ACE_Service_Gestalt::intrusive_add_ref (ACE_Service_Gestalt* g)
   if (g != 0)
     {
       long tmp = ++g->refcnt_;
-      printf ("//++refcnt=%ld\n", tmp);
+      //      printf ("// (%x) ++refcnt=%ld\n", (unsigned int)ACE_OS::thr_self (), tmp);
+      ACE_ASSERT (tmp > 0);
     }
 }
 
@@ -213,8 +214,9 @@ ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
   if (g != 0)
     {
       long tmp = --g->refcnt_;
-      printf ("//refcnt--=%ld\n", tmp);
+      //      printf ("// (%x) refcnt--=%ld\n", (unsigned int)ACE_OS::thr_self (), tmp);
       if (tmp <= 0)  delete g;
+      ACE_ASSERT (tmp >= 0);
     }
 
 }
@@ -235,7 +237,7 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SG::dtor - this=%@, pss = %@\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::~SG - this=%@, pss = %@\n"),
                 this, this->processed_static_svcs_));
 #endif
 
@@ -257,7 +259,7 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
   delete this->svc_conf_file_queue_;
   this->svc_conf_file_queue_ = 0;
 
-  ACE_DEBUG ((LM_STARTUP, "(%P|%t) ACE_Service_Gestalt::~ACE_Service_Gestalt\n"));
+  //  ACE_DEBUG ((LM_STARTUP, "(%P|%t) ACE_Service_Gestalt::~ACE_Service_Gestalt\n"));
 }
 
 ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
@@ -275,8 +277,6 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , processed_static_svcs_ (0)
   , refcnt_ (0)
 {
-  ACE_DEBUG ((LM_STARTUP, "(%P|%t) ACE_Service_Gestalt::ACE_Service_Gestalt\n"));
-
   (void)this->init_i ();
 
 #ifndef ACE_NLOGGING
@@ -843,9 +843,7 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
   // other static services registered. Thus this instance will own both the
   // DLL and those static services, which implies that their finalization
   // will be performed in the correct order, i.e. prior to finalizing the DLL
-  ACE_Service_Gestalt_Auto_Ptr tmp (this);
-  ACE_Service_Config_Guard guard (tmp);
-  tmp.release();
+  ACE_Service_Config_Guard guard (this);
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
