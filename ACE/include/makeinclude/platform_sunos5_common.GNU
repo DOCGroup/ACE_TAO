@@ -12,6 +12,10 @@ ifeq ($(shell /bin/uname -r),5.10)
   # Solaris 10 puts sendfile() in a separate library.
   LIBS          += -lsendfile
 endif
+ifeq ($(shell /bin/uname -r),5.11)
+  # Solaris 11 puts sendfile() in a separate library.
+  LIBS          += -lsendfile
+endif
 
 PLATFORM_X11_CPPFLAGS= -I/usr/openwin/include -I/usr/dt/include
 PLATFORM_X11_LIBS =-lX11
