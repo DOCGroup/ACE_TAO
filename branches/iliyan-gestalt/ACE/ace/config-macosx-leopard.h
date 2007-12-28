@@ -10,6 +10,16 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#if !defined (ACE_SIZEOF_LONG_DOUBLE)
+# if (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
+   // Size of long double in GCC 3.3 is 8.
+#  define ACE_SIZEOF_LONG_DOUBLE 8
+# else // Else, the compiler is GCC4
+   // For GCC4, the size is 16.
+#  define ACE_SIZEOF_LONG_DOUBLE 16
+# endif // GCC 3.3
+#endif // ACE_SIZEOF_LONG_DOUBLE
+
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
@@ -21,16 +31,6 @@
 #define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 #define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%lu")
-
-#if !defined (ACE_SIZEOF_LONG_DOUBLE)
-# if (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
-   // Size of long double in GCC 3.3 is 8.
-#  define ACE_SIZEOF_LONG_DOUBLE 8
-# else // Else, the compiler is GCC4
-   // For GCC4, the size is 16.
-#  define ACE_SIZEOF_LONG_DOUBLE 16
-# endif // GCC 3.3
-#endif // ACE_SIZEOF_LONG_DOUBLE
 
 #if !defined (__i386__)
 # if defined (ACE_HAS_PENTIUM)
@@ -175,6 +175,7 @@
 # define ACE_HAS_THREADS
 // And they're even POSIX pthreads
 # define ACE_HAS_PTHREADS
+# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_PTHREAD_SCHEDPARAM
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #endif  /* ACE_MT_SAFE == 1 */

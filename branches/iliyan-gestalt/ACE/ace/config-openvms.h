@@ -127,11 +127,9 @@
 #define ACE_LACKS_RLIMIT 1
 #define ACE_LACKS_RLIMIT_PROTOTYPE 1
 #define ACE_LACKS_SETSCHED
-//#define ACE_LACKS_SOCKETPAIR 1
 #define ACE_LACKS_SYSCALL 1
 
 /* (missing) standard data types */
-//#define ACE_LACKS_TIMESPEC_T    1
 #define ACE_LACKS_CONST_TIMESPEC_PTR 1
 #define ACE_LACKS_SUSECONDS_T 1
 #define ACE_HAS_IDTYPE_T 1
@@ -163,7 +161,6 @@
 #define ACE_HAS_PTHREAD_SETCONCURRENCY 1
 #define ACE_HAS_PTHREAD_GETCONCURRENCY 1
 #define ACE_HAS_PTHREAD_SCHEDPARAM 1
-
 
 /* language/platform conformance */
 #define ACE_NEW_THROWS_EXCEPTIONS 1
