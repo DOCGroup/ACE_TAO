@@ -1,3 +1,19 @@
+Sun Dec 30 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Simplify the setup for VxWorks. We have GNU and config files for each
+        specific release, but the end user can just include the two new files
+        below and we will select the specific file required
+
+        * include/makeinclude/platform_vxworks.GNU:
+          New file, based on the environment variable WIND_PLATFORM we
+          select a specific VxWorks GNU file. The WIND_PLATFORM environment
+          variable is set by the wrenv tool
+
+        * ace/config-vxworks.h:
+          Based on ACE_VXWORKS we include a specific vxworks config file.
+          ACE_VXWORKS is added to the compiler flags when using the ACE
+          GNU makefiles.
+
 Fri Dec 28 18:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.6.GNU:
