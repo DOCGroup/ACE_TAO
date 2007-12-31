@@ -1,3 +1,13 @@
+Mon Dec 31 16:43:40 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/ssliop_params_dup.mpb:
+
+          Make the decision of params_dup.c vs. params_dup.cpp based on the
+          presence/absence of the mfc feature instead of the type of the mpc
+          project.  Only mfc builds require params_dup.cpp, and it causes build
+          errors in (non-mfc) vc71 builds with the latest OpenSSL (0.9.8g).
+
 Thu Dec 20 15:01:48 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * tao/CSD_ThreadPool/CSD_TP_Task.h:
