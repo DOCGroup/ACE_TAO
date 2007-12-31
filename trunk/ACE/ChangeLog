@@ -1,3 +1,11 @@
+Mon Dec 31 18:32:29 UTC 2007  Chris Cleeland  <cleeland@ociweb.com>
+
+        * bin/PerlACE/Process_Unix.pm:
+ 
+          Integrated a change originally made in OCITAO 1.4a to use a
+          non-blocking waitpid() call in a loop (max 5 seconds) to avoid
+          hanging the perl process in case waitpid() doesn't return.
+
 Sun Dec 30 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Simplify the setup for VxWorks. We have GNU and config files for each
