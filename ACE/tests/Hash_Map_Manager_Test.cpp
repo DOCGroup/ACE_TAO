@@ -189,7 +189,7 @@ int test_two_allocators ()
 
 struct Key_Equal_To 
 {
-  Key_Equal_To (const TCHAR * key)
+  Key_Equal_To (const ACE_TCHAR * key)
     : key_ (key)
   {
 
@@ -201,7 +201,7 @@ struct Key_Equal_To
   }
 
   // Key of interest.
-  const TCHAR * key_;
+  const ACE_TCHAR * key_;
 };
 
 static void
