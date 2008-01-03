@@ -153,7 +153,7 @@ private:
 
   // Set a task_name string starting with "@", so we are able to
   // accurately count the number of context switches.
-  const char* task_name_;
+  char* task_name_;
 
   ACE_Time_Value delta_;
   // elapsed time for the latency tests.
