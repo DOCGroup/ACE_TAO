@@ -336,6 +336,9 @@ Client_i::activate_high_client (void)
   ACE_DEBUG ((LM_DEBUG,
               "Creating 1 client with high priority of %d\n",
               this->high_priority_));
+
+  const char *t_name = this->task_name_;
+
   if (this->high_priority_client_->activate (
       GLOBALS::instance ()->thr_create_flags,
       1,
@@ -347,7 +350,7 @@ Client_i::activate_high_client (void)
       0,
       0,
       0,
-      &this->task_name_) == -1)
+      &t_name) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p; priority is %d\n",
                        "activate failed",
@@ -406,6 +409,8 @@ Client_i::activate_low_client (void)
                   this->low_priority_));
       // The first thread starts at the lowest priority of all the low
       // priority clients.
+      const char *t_name = this->task_name_;
+
       if (this->low_priority_client_[i - 1]->activate (
           GLOBALS::instance ()->thr_create_flags,
           1,
@@ -417,7 +422,7 @@ Client_i::activate_low_client (void)
           0,                   // void *stack[] = 0,
           0,                   // size_t stack_size[] = 0,
           0,
-          &this->task_name_) == -1)
+          &t_name) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%p; priority is %d\n",
                     "activate failed",
