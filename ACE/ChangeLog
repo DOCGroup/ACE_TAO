@@ -1,7 +1,23 @@
+Thu Jan  3 00:47:36 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.h:
+
+          Increased support for using ACE_Hash_Map_*_Iterator with 
+          functions in the STL <algorithm> header file. This involved
+          defining all the traits required by std::iterator_traits
+          for all the iterator types. 
+
+        * tests/Hash_Map_Manager_Test.cpp:
+        
+          Updated the test to check if the ACE_Hash_Map_*_Iterator
+          classes are able to compile with simple STL <algorith>
+          cases. If the target platform does not support STL or
+          our iterators, this compilation will fail.
+        
 Mon Dec 31 18:32:29 UTC 2007  Chris Cleeland  <cleeland@ociweb.com>
 
         * bin/PerlACE/Process_Unix.pm:
- 
+
           Integrated a change originally made in OCITAO 1.4a to use a
           non-blocking waitpid() call in a loop (max 5 seconds) to avoid
           hanging the perl process in case waitpid() doesn't return.
