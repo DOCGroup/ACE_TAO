@@ -24,10 +24,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
-
-#if defined (ACE_HAS_STDCPP_STL_INCLUDES)
 #include <algorithm>
-#endif /* ACE_HAS_STDCPP_STL_INCLUDES */
 
 ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
 
@@ -418,11 +415,7 @@ run_test (void)
 
   test_two_allocators();
 
-  // This portion of the test only runs if we support standard C++
-  // STL headers, e.g., #include <algorithm>.
-#if defined (ACE_HAS_STDCPP_STL_INCLUDES)
   test_STL_algorithm ();
-#endif  /* ACE_HAS_STDCPP_STL_INCLUDES */
 
   return 0;
 }
