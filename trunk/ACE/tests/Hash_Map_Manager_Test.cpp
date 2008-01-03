@@ -25,6 +25,10 @@
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
 
+#if defined (ACE_HAS_STDCPP_STL_INCLUDES)
+#include <algorithm>
+#endif /* ACE_HAS_STDCPP_STL_INCLUDES */
+
 ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
 
 static const size_t STRING_TABLE_ENTRIES = 3 * 2;
@@ -183,6 +187,100 @@ int test_two_allocators ()
   return 0;
 }
 
+struct Key_Equal_To 
+{
+  Key_Equal_To (const TCHAR * key)
+    : key_ (key)
+  {
+
+  }
+
+  bool operator () (const HASH_STRING_MAP::value_type & entry)
+  {
+    return ACE_OS::strcmp (entry.ext_id_, this->key_) == 0;
+  }
+
+  // Key of interest.
+  const TCHAR * key_;
+};
+
+static void
+print_value (const HASH_STRING_MAP::value_type & entry)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("hash entry: [%s, %s]\n"),
+              entry.ext_id_,
+              entry.int_id_));
+}
+
+static int 
+test_STL_algorithm (void)
+{
+  // We are only validating that the container's iterators compile with
+  // the <algorithm> header.
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("starting STL algorithm test\n")));
+
+  // Initialize the hash map for the algorithm test(s).
+  HASH_STRING_MAP hash;
+  const HASH_STRING_MAP & chash = hash;
+
+  for (size_t i = 0; string_table[i].key_ != 0; i ++)
+    {
+      if (hash.bind (string_table[i].key_, string_table[i].value_) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p failed for %s \n"),
+                           ACE_TEXT ("bind"),
+                           string_table[i].key_), 
+                           -1);
+    }
+
+  // Test the (reverse_)iterator using std::for_each.
+  std::for_each (hash.begin (), hash.end (), &print_value);
+  std::for_each (chash.begin (), chash.end (), &print_value);
+  std::for_each (hash.rbegin (), hash.rend (), &print_value);
+
+  // Test the find operation. Let's see if we can locate all the 
+  // keys in the hash map using std::find_if function.
+  for (size_t i = 0; string_table[i].key_ != 0; i ++)
+    {
+      if (std::find_if (hash.begin (), 
+                        hash.end (), 
+                        Key_Equal_To (string_table[i].key_)) == hash.end ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("`%s' not found\n"),
+                           string_table[i].key_),
+                           -1);
+    }
+  
+  // Test the counting operation. Let's make sure the number of keys
+  // is equal to one using the std::count_if function.
+  HASH_STRING_MAP::difference_type diff;
+
+  for (size_t i = 0; string_table[i].key_ != 0; i ++)
+    {
+      diff = std::count_if (hash.begin (), 
+                            hash.end (), 
+                            Key_Equal_To (string_table[i].key_));
+
+      if (diff != 1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("duplicate key found [%s]\n"),
+                           string_table[i].key_),
+                           -1);
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("count of key `%s' is %d\n"),
+                    string_table[i].key_,
+                    diff));
+    }
+
+  // We are finish with the STL algorithm test(s).
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("finished STL algorithm test\n")));
+  return 0;
+}
+
 static int
 run_test (void)
 {
@@ -319,6 +417,12 @@ run_test (void)
   ace_test_allocator.dump ();
 
   test_two_allocators();
+
+  // This portion of the test only runs if we support standard C++
+  // STL headers, e.g., #include <algorithm>.
+#if defined (ACE_HAS_STDCPP_STL_INCLUDES)
+  test_STL_algorithm ();
+#endif  /* ACE_HAS_STDCPP_STL_INCLUDES */
 
   return 0;
 }
