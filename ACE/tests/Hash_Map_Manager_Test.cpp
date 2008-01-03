@@ -66,6 +66,24 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *,
                                          ACE_Equal_To<const ACE_TCHAR *>,
                                          ACE_Null_Mutex> HASH_STRING_REVERSE_ITER;
 
+
+struct Key_Equal_To 
+{
+  Key_Equal_To (const ACE_TCHAR * key)
+    : key_ (key)
+  {
+
+  }
+
+  bool operator () (const HASH_STRING_MAP::value_type & entry)
+  {
+    return ACE_OS::strcmp (entry.ext_id_, this->key_) == 0;
+  }
+
+  // Key of interest.
+  const ACE_TCHAR * key_;
+};
+
 struct String_Table
 {
   const ACE_TCHAR *key_;
@@ -183,23 +201,6 @@ int test_two_allocators ()
 
   return 0;
 }
-
-struct Key_Equal_To 
-{
-  Key_Equal_To (const ACE_TCHAR * key)
-    : key_ (key)
-  {
-
-  }
-
-  bool operator () (const HASH_STRING_MAP::value_type & entry)
-  {
-    return ACE_OS::strcmp (entry.ext_id_, this->key_) == 0;
-  }
-
-  // Key of interest.
-  const ACE_TCHAR * key_;
-};
 
 static void
 print_value (const HASH_STRING_MAP::value_type & entry)

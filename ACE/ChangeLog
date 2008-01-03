@@ -1,9 +1,15 @@
-Thu Jan  3 14:21:40 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+Thu Jan  3 14:29:28 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * tests/Hash_Map_Manager_Test.cpp:
         
+           Moved the Key_Equal_To struct to the top of the file.
+
+Thu Jan  3 14:21:40 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/Hash_Map_Manager_Test.cpp:
+
           Removed ACE_HAS_STDCPP_STL_INCLUDES guard so the test can
-          always execute the test_STL_algorithm () function if it 
+          always execute the test_STL_algorithm () function if it
           compiles.
 
 Thu Jan  3 01:06:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
