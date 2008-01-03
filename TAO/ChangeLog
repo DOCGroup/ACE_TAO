@@ -1,3 +1,9 @@
+Thu Jan  3 14:36:18 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/ssliop_params_dup.mpb:
+
+          Fixed a fuzz error.
+
 Thu Jan  3 10:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.{h,cpp}:
