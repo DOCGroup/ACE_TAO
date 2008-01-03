@@ -1,8 +1,16 @@
-Thu Jan  3 01:06:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+Thu Jan  3 14:21:40 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * tests/Hash_Map_Manager_Test.cpp:
         
-          Fixed compilation error on non-Windows systems. For some 
+          Removed ACE_HAS_STDCPP_STL_INCLUDES guard so the test can
+          always execute the test_STL_algorithm () function if it 
+          compiles.
+
+Thu Jan  3 01:06:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/Hash_Map_Manager_Test.cpp:
+
+          Fixed compilation error on non-Windows systems. For some
           reason, I used TCHAR instead of ACE_TCHAR. :/
 
 Thu Jan  3 00:47:36 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
@@ -17,7 +25,7 @@ Thu Jan  3 00:47:36 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
         * tests/Hash_Map_Manager_Test.cpp:
 
           Updated the test to check if the ACE_Hash_Map_*_Iterator
-          classes are able to compile with simple STL <algorith>
+          classes are able to compile with simple STL <algorithm>
           cases. If the target platform does not support STL or
           our iterators, this compilation will fail.
 
