@@ -673,7 +673,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 while (!ifstr.eof ())
                   {
-                    char ch;
+                    char ch = 0;
                     ifstr.get (ch);
                     if (ifstr.eof () || ch == '\n' || ch == '\r')
                       break;
@@ -831,7 +831,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 while (!cin.eof ())
                   {
-                    char ch;
+                    char ch = 0;
                     cin.get (ch);
                     if (cin.eof () || ch == '\n' || ch == '\r')
                       break;
