@@ -10,6 +10,7 @@ require POSIX;
 require File::Path;
 
 use Cwd;
+use File::Spec;
 use Env qw(ACE_ROOT TAO_ROOT CIAO_ROOT DDS_ROOT);
 
 # Configuration and default values
@@ -129,6 +130,15 @@ sub parse_args {
   @ARGV = @ARGS;
 }
 
+#is $arg1 the same path as "$arg2/$arg3"?
+sub same_dir {
+  my $lhs = shift;
+  my $rhs_base = shift;
+  my $rhs_dir = shift;
+  my $rhs = File::Spec->catdir($rhs_base, $rhs_dir);
+  return File::Spec->canonpath($lhs) eq File::Spec->canonpath($rhs);
+}
+
 sub generate_doxy_files {
 
   my $KIT = shift;
@@ -138,6 +148,11 @@ sub generate_doxy_files {
   my $VERSION = 'Snapshot ('.
     POSIX::strftime("%Y/%m/%d-%H:%M", localtime)
       .')';
+
+  my $KIT_path = ($KIT eq 'CIAO') ? 'TAO/CIAO' : $KIT;
+  my $translate_paths =
+    ($KIT eq 'TAO' && !same_dir($TAO_ROOT, $ACE_ROOT, 'TAO')) ||
+    ($KIT eq 'CIAO' && !same_dir($CIAO_ROOT, $TAO_ROOT, 'CIAO'));
 
   foreach my $i (@DOCS) {
     if ($is_release) {
@@ -195,12 +210,37 @@ sub generate_doxy_files {
 	  print DOXYOUTPUT "GENERATE_TAGFILE = $html_out_dir\n";
 	  next;
         }
+      } elsif ($generate_html && /^TAGFILES\s*=\s*(.*)$/) {
+        my $value = $1;
+        while ($value =~ /\\$/) {
+          chop $value; #removes trailing \
+          my $line = <DOXYINPUT>;
+          chomp $line;
+          $value .= ' ' . $line;
+	}
+	my @values = split(' ', $value);
+	map {$_ = $html_output_dir . '/' . $_; } @values;
+	print DOXYOUTPUT 'TAGFILES = ' . join(' ', @values) . "\n";
+	next;
       } elsif ($generate_man && /^MAN_OUTPUT/) {
         my @field = split(' = ');
         if ($#field >= 1) {
           push @output_dirs, $field[1];
         }
+      } elsif ($translate_paths && /^(INPUT|INCLUDE_PATH)\s*=\s*(.*)$/) {
+	my $keyword = $1;
+        my $value = $2;
+        while ($value =~ /\\$/) {
+          chop $value; #removes trailing \
+          my $line = <DOXYINPUT>;
+          chomp $line;
+          $value .= ' ' . $line;
+        }
+        $value =~ s/$KIT_path/${"${KIT}_ROOT"}/g;
+        print DOXYOUTPUT "$keyword = $value\n";
+        next;
       }
+
       print DOXYOUTPUT $_, "\n";
     }
     close (DOXYOUTPUT);
