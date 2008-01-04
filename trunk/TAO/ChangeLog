@@ -1,3 +1,11 @@
+Fri Jan  4 09:38:32 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Messaging/Messaging_ORBInitializer.cpp:
+          Fixed a potential memory leak which can occur if
+          TAO_Messaging_ORBInitializer::register_value_factory is called
+          more than once. Currently I don't know any setup where this
+          can happen but still the code was unsafe and had to be fixed.
+
 Fri Jan  4 09:30:14 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/ORB_Core.cpp:
