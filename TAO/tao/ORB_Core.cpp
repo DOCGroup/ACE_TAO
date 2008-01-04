@@ -1357,8 +1357,6 @@ TAO_ORB_Core::fini (void)
   // Wait for any server threads, ignoring any failures.
   (void) this->thr_mgr ()->wait ();
 
-  ::CORBA::release (this->implrepo_service_);
-
   ::CORBA::release (this->typecode_factory_);
 
   ::CORBA::release (this->codec_factory_);
@@ -2232,6 +2230,15 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
   // contains references to objects, which themselves may contain
   // reference to this ORB.
   this->object_ref_table_.destroy ();
+
+  // Release implrepo_service_ if one existed. If everything went
+  // fine then this must release reference from implrepo_service_
+  // object to this orb core.
+  if (!CORBA::is_nil (this->implrepo_service_))
+    {
+      ::CORBA::release (this->implrepo_service_);
+      this->implrepo_service_ = CORBA::Object::_nil ();
+    }
 
 #if (TAO_HAS_INTERCEPTORS == 1)
   CORBA::release (this->pi_current_);
