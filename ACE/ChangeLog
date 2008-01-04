@@ -1,7 +1,14 @@
+Fri Jan  4 18:47:56 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/generate_doxygen.pl:
+
+          Added support for peer-based layout of ACE+TAO+CIAO, and also fixed
+          the use of TAGFILES when the -html_output option is used.
+
 Thu Jan  3 14:29:28 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * tests/Hash_Map_Manager_Test.cpp:
-        
+
            Moved the Key_Equal_To struct to the top of the file.
 
 Thu Jan  3 14:21:40 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
