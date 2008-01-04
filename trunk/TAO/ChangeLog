@@ -1,3 +1,13 @@
+Fri Jan  4 10:33:21 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/ORB_Core.cpp:
+          Removed a check for nil of implrepo_service_ before releasing
+          it that I intoduced with a fix of bug 3181. The fix was actully
+          about moving the release of implrepo_service_ object from
+          TAO_ORB_Core::fini() which is called only when orb core's counter
+          reachs zero and which never happens till implrepo_service_ exists
+          to TAO_ORB_Core::shutdown().
+
 Fri Jan  4 09:38:32 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/Messaging/Messaging_ORBInitializer.cpp:
