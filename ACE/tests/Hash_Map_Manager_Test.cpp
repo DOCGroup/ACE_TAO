@@ -251,28 +251,6 @@ test_STL_algorithm (void)
                            -1);
     }
   
-  // Test the counting operation. Let's make sure the number of keys
-  // is equal to one using the std::count_if function.
-  HASH_STRING_MAP::difference_type diff;
-
-  for (size_t i = 0; string_table[i].key_ != 0; i ++)
-    {
-      diff = std::count_if (hash.begin (), 
-                            hash.end (), 
-                            Key_Equal_To (string_table[i].key_));
-
-      if (diff != 1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("duplicate key found [%s]\n"),
-                           string_table[i].key_),
-                           -1);
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("count of key `%s' is %d\n"),
-                    string_table[i].key_,
-                    diff));
-    }
-
   // We are finish with the STL algorithm test(s).
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("finished STL algorithm test\n")));
