@@ -2234,11 +2234,8 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
   // Release implrepo_service_ if one existed. If everything went
   // fine then this must release reference from implrepo_service_
   // object to this orb core.
-  if (!CORBA::is_nil (this->implrepo_service_))
-    {
-      ::CORBA::release (this->implrepo_service_);
-      this->implrepo_service_ = CORBA::Object::_nil ();
-    }
+  ::CORBA::release (this->implrepo_service_);
+  this->implrepo_service_ = CORBA::Object::_nil ();
 
 #if (TAO_HAS_INTERCEPTORS == 1)
   CORBA::release (this->pi_current_);
