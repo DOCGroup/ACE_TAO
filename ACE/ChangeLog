@@ -1,10 +1,16 @@
+Sat Jan  5 07:03:36 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ChangeLog:
+        
+          Fixed incomplete entry below.
+
 Fri Jan  4 23:49:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * tests/Hash_Map_Manager_Test.cpp:
-        
+
           Removed std::count_if sanity check since std::count_if is not
-          supported on Sun Studio 10. Please see
-          
+          supported on Sun Studio 10.
+
 Fri Jan  4 18:47:56 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * bin/generate_doxygen.pl:
