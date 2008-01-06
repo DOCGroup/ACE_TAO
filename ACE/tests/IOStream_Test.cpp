@@ -29,7 +29,7 @@ ACE_RCSID (tests, IOStream_Test, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 #  include "ace/OS_NS_unistd.h"
-#  include "ace/os_include/os_ctype.h"  // Needed for isspace() function
+#  include "ace/OS_NS_ctype.h"  // Needed for isspace() function
 
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
@@ -108,19 +108,11 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
   // if we don't have a quote, append until we see space
   if (c != '"')
     for (*buf++ = c;
-#ifdef CHORUS
-         stream.get (c) && !ACE_OS::ace_isspace (c);
-#else
          (void *) stream.get (c) && !ACE_OS::ace_isspace (c);
-#endif /* CHORUS */
          *buf++ = c)
       continue;
   else
-#ifdef CHORUS
-    for (; stream.get (c) && c != '"'; *buf++ = c)
-#else
     for (; (void *) stream.get (c) && c != '"'; *buf++ = c)
-#endif /* CHORUS */
       if (c == '\\')
         {
           stream.get (c);
