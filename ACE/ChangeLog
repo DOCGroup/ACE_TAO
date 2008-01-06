@@ -1,7 +1,12 @@
+Sun Jan  6 06:43:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IOStream_Test.cpp:
+          Fixed include and removed chorus support
+
 Sat Jan  5 07:03:36 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * ChangeLog:
-        
+
           Fixed incomplete entry below.
 
 Fri Jan  4 23:49:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
