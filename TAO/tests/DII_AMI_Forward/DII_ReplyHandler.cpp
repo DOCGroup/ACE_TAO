@@ -108,7 +108,7 @@ DII_ReplyHandler::handle_location_forward (TAO_InputCDR &incoming,
   char **argv = 0;
   CORBA::ORB_var  orb = CORBA::ORB_init(argc,argv);
 
-  CORBA::String_var iorstr = orb->object_to_string(fwd);
+  CORBA::String_var iorstr = orb->object_to_string(fwd.in ());
 
   bool is_perm = reply_status == TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
   ACE_DEBUG ((LM_DEBUG,
