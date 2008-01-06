@@ -35,7 +35,6 @@ class TAO_CSD_FW_Export TAO_CSD_Default_Servant_Dispatcher
 public:
   virtual ~TAO_CSD_Default_Servant_Dispatcher (void);
 
-
   /// Factory method for creating new CSD Root POA.
   virtual TAO_Root_POA *create_Root_POA (const ACE_CString &name,
                                          PortableServer::POAManager_ptr poa_manager,
