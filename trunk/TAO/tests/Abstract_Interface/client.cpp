@@ -161,13 +161,25 @@ test_operation (base_ptr abs)
 void
 test_exception (base_ptr abs)
 {
-  CORBA::String_var retval = abs->base_op ("bad_name");
-
-  if (debug)
+  try
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "%s\n",
-                  retval.in ()));
+      CORBA::String_var retval = abs->base_op ("bad_name");
+
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\n",
+                      retval.in ()));
+        }
+    }
+  catch (const BadInput& ex)
+    {
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\n",
+                      ex.message.in ()));
+        }
     }
 }
 
@@ -273,23 +285,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           test_exception (package.in ());
         }
 
+      objref->shutdown ();
+
       orb->destroy ();
-    }
-  catch (const BadInput& ex)
-    {
-      if (which_test != TEST_EXCEPTION)
-        {
-          ex._tao_print_exception ("Client: exception caught - ");
-
-          return 1;
-        }
-
-      if (debug)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s\n",
-                      ex.message.in ()));
-        }
     }
   catch (const CORBA::Exception& ex)
     {

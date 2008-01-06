@@ -82,7 +82,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var obj = orb->string_to_object(ior);
-      test_var server = test::_narrow(obj);
+      test_var server = test::_narrow(obj.in ());
       if (CORBA::is_nil(server))
           {
             ACE_ERROR_RETURN ((LM_DEBUG,
