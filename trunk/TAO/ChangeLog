@@ -1,3 +1,12 @@
+Sun Jan  6 07:36:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
+          Fixed conversion warning
+
+        * tao/Dynamic_Adapter.h:
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.h:
+          Layout changes
+
 Fri Jan  4 10:33:21 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/ORB_Core.cpp:

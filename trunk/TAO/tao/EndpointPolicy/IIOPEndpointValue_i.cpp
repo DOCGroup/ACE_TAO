@@ -94,7 +94,7 @@ void
 IIOPEndpointValue_i::host (const char *h)
 {
   this->host_ = h;
-  if (this->addr_.set(this->port_,this->host_) != 0)
+  if (this->addr_.set(this->port_, this->host_.in ()) != 0)
     this->addr_.set_type (-1);
 }
 
@@ -108,7 +108,7 @@ void
 IIOPEndpointValue_i::port (CORBA::UShort p )
 {
   this->port_ = p;
-  if (this->addr_.set(this->port_,this->host_) != 0)
+  if (this->addr_.set(this->port_, this->host_.in ()) != 0)
     this->addr_.set_type (-1);
 }
 
