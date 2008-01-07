@@ -96,10 +96,17 @@ CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &)
   throw ::CORBA::MARSHAL ();
 }
 
+const char *
+CORBA::UnknownUserException::_rep_id (void) const
+{
+  return this->exception_->_tao_get_typecode ()->id ();
+}
+
 CORBA::TypeCode_ptr
 CORBA::UnknownUserException::_tao_type (void) const
 {
-  return CORBA::_tc_UnknownUserException;
+  //return CORBA::_tc_UnknownUserException;
+  return this->exception_->_tao_get_typecode ();
 }
 
 namespace TAO

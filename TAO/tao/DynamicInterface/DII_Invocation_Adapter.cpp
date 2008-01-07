@@ -1,4 +1,6 @@
 //$Id$
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/DynamicInterface/DII_Invocation_Adapter.h"
 #include "tao/DynamicInterface/DII_Invocation.h"
 #include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
@@ -6,6 +8,7 @@
 #include "tao/DynamicInterface/Request.h"
 
 #include "tao/Exception.h"
+#include "tao/Exception_Data.h"
 #include "tao/ORB_Constants.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Transport.h"
@@ -43,11 +46,36 @@ namespace TAO
                           mode)
       , exception_list_ (excp)
       , request_ (r)
+      , ex_data_ (0)
   {
   }
 
   DII_Invocation_Adapter::~DII_Invocation_Adapter (void)
   {
+    delete ex_data_;
+  }
+
+  void
+  DII_Invocation_Adapter::invoke (TAO::Exception_Data * /*ex_data*/,
+                                  unsigned long ex_count)
+  {
+    // Convert DII exception list to a form the invocation can use
+    // to filter raised user exceptions.
+    ex_count = this->exception_list_->count ();
+    ACE_NEW_THROW_EX (this->ex_data_,
+                      TAO::Exception_Data[ex_count],
+                      CORBA::NO_MEMORY ());
+    for (unsigned long l=0; l<ex_count ;++l)
+    {
+      CORBA::TypeCode_var xtc = this->exception_list_->item (l);
+      this->ex_data_[l].id = xtc->id ();
+      this->ex_data_[l].alloc = 0;
+#if TAO_HAS_INTERCEPTORS == 1
+      this->ex_data_[l].tc_ptr = xtc.in ();
+#endif
+    }
+
+    Invocation_Adapter::invoke (this->ex_data_, ex_count);
   }
 
   Invocation_Status

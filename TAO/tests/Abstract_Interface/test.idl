@@ -21,6 +21,7 @@ interface passer
 {
   void pass_ops (out base outarg);
   void pass_state (out base outarg);
+  oneway void shutdown ();
 };
 
 valuetype BaseNode
@@ -29,7 +30,7 @@ valuetype BaseNode
   public BaseNode right;
 };
 
-valuetype StringNode : BaseNode 
+valuetype StringNode : BaseNode
 {
   public string name;
 };

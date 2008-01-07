@@ -15,8 +15,6 @@ $iorfile = PerlACE::LocalFile ("$iorbase");
 
 unlink $iorfile;
 
-my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
-                                          'PerlACE::Process');
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o $iorbase");
     $direct_colloc = "-ORBCollocationStrategy direct -o $iorbase";

@@ -96,7 +96,7 @@ catiiop (char* string)
     continue;
 
   *cp = 0;
-  string++;
+  ++string;
 
   cp = ACE_OS::strchr ((char *) string, '/');
 
@@ -366,7 +366,7 @@ catpoop (char* string)
     continue;
 
   *cp = 0;
-  string++;
+  ++string;
 
   ACE_DEBUG ((LM_DEBUG,
               "Host Name:\t%s\n",
@@ -384,7 +384,7 @@ catpoop (char* string)
     continue;
 
   *cp = 0;
-  string++;
+  ++string;
 
   ACE_DEBUG ((LM_DEBUG,
               "Server Name:\t%s\n",
@@ -403,7 +403,7 @@ catpoop (char* string)
     continue;
 
   *cp = 0;
-  string++;
+  ++string;
 
   ACE_DEBUG ((LM_DEBUG,
               "Marker:\t\t%s\n",
@@ -421,7 +421,7 @@ catpoop (char* string)
     continue;
 
   *cp = 0;
-  string++;
+  ++string;
 
   ACE_DEBUG ((LM_DEBUG,
               "IR Host:\t\t%s\n",
@@ -439,7 +439,7 @@ catpoop (char* string)
     continue;
 
   *cp = 0;
-  string++;
+  ++string;
 
   ACE_DEBUG ((LM_DEBUG,
               "IR Server:\t\t%s\n",
@@ -667,18 +667,18 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
             while (!ifstr.eof())
               {
-                char ch;
                 ACE_CString aString;
 
                 have_some_input = 0;
 
                 while (!ifstr.eof ())
                   {
+                    char ch = 0;
                     ifstr.get (ch);
                     if (ifstr.eof () || ch == '\n' || ch == '\r')
                       break;
                     aString += ch;
-                    have_some_input++;
+                    ++have_some_input;
                   }
 #else
             FILE* ifstr = ACE_OS::fopen (get_opt.opt_arg (), ACE_TEXT ("r"));
@@ -713,7 +713,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     if (ch == EOF || ch == '\n' || ch == '\r')
                       break;
                     aString += ch;
-                    have_some_input++;
+                    ++have_some_input;
                   }
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
                 if (have_some_input == 0 || !aString.length())
@@ -738,7 +738,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       }
                   }
 
-                decode_pass_count++;
+                ++decode_pass_count;
 
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",
@@ -825,18 +825,18 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
             while (!cin.eof())
               {
-                char ch;
                 ACE_CString aString;
 
                 have_some_input = 0;
 
                 while (!cin.eof ())
                   {
+                    char ch = 0;
                     cin.get (ch);
                     if (cin.eof () || ch == '\n' || ch == '\r')
                       break;
                     aString += ch;
-                    have_some_input++;
+                    ++have_some_input;
                   }
 #else
             FILE* ifstr = stdin;
@@ -870,7 +870,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     if (ch == EOF || ch == '\n' || ch == '\r')
                       break;
                     aString += ch;
-                    have_some_input++;
+                    ++have_some_input;
                   }
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
 
@@ -893,7 +893,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       }
                   }
 
-                decode_pass_count++;
+                ++decode_pass_count;
 
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",

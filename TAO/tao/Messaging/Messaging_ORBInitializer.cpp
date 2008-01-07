@@ -101,7 +101,8 @@ TAO_Messaging_ORBInitializer::register_value_factory (
            TAO::ExceptionHolderFactory);
   CORBA::ValueFactory_var factory = base_factory;
 
-  tao_info->orb_core()->orb ()->register_value_factory (
+  CORBA::ValueFactory_var old_factory =
+    tao_info->orb_core()->orb ()->register_value_factory (
         Messaging::ExceptionHolder::_tao_obv_static_repository_id (),
         base_factory);
 }

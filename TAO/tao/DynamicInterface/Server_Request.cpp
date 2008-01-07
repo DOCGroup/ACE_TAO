@@ -8,11 +8,15 @@ ACE_RCSID (DynamicInterface,
            Server_Request,
            "$Id$")
 
+#include "tao/DynamicInterface/DII_Arguments.h"
+#include "tao/DynamicInterface/Unknown_User_Exception.h"
+#include "tao/PortableServer/Collocated_Arguments_Converter.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/operation_details.h"
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
@@ -75,16 +79,37 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
     }
 
-  // Save params for later use when marshaling the reply.
-  this->params_ = list;
+  // In a collocated situation there will not be an incoming CDR stream
+  // in which case we can get the arguments from the
+  // operation_details using the 'collocated argument converter'.
+  if (this->orb_server_request_.collocated ())
+  {
+    this->params_ = list;
 
-  this->params_->_tao_incoming_cdr (*this->orb_server_request_.incoming (),
-                                    CORBA::ARG_IN | CORBA::ARG_INOUT,
-                                    this->lazy_evaluation_);
+    if (this->orb_server_request_.operation_details ()->cac () != 0)
+      {
+        TAO_OutputCDR output;
+        this->orb_server_request_.operation_details ()->cac (
+                )->dsi_convert_request (this->orb_server_request_,
+                                        output);
 
-  // Pass this alignment back to the TAO_ServerRequest.
-  this->orb_server_request_.dsi_nvlist_align (
-                                this->params_->_tao_target_alignment ());
+        TAO_InputCDR input(output);
+        this->params_->_tao_decode (input, CORBA::ARG_IN | CORBA::ARG_INOUT);
+      }
+  }
+  else
+  {
+    // Save params for later use when marshaling the reply.
+    this->params_ = list;
+
+    this->params_->_tao_incoming_cdr (*this->orb_server_request_.incoming (),
+                                      CORBA::ARG_IN | CORBA::ARG_INOUT,
+                                      this->lazy_evaluation_);
+
+    // Pass this alignment back to the TAO_ServerRequest.
+    this->orb_server_request_.dsi_nvlist_align (
+                                  this->params_->_tao_target_alignment ());
+  }
 }
 
 // Store the result value.  There's either an exception, or a result,
@@ -146,42 +171,78 @@ CORBA::ServerRequest::dsi_marshal (void)
       return;
     }
 
-  if (this->orb_server_request_.reply_status () == GIOP::NO_EXCEPTION)
-    {
-      // In DSI, we can't rely on the skeleton to do this.
-      if (this->retval_ == 0 && this->params_ == 0)
-        {
-          this->orb_server_request_.argument_flag (false);
-        }
+  // In a collocated situation there is no outgoing CDR stream.
+  // So, in case of an exception we just raise the UnknownUserException
+  // and for a regular reply we use the 'collocated argument converter'.
+  if (this->orb_server_request_.collocated ())
+  {
+    if (this->orb_server_request_.reply_status () == GIOP::USER_EXCEPTION)
+      {
+        throw CORBA::UnknownUserException (*this->exception_);
+      }
+    else if (this->orb_server_request_.operation_details ()->cac () != 0)
+      {
+        TAO_OutputCDR output;
+        // marshal the return value if any
+        if (this->retval_ != 0)
+          {
+            this->retval_->impl ()->marshal_value (output);
+          }
 
-      this->orb_server_request_.init_reply ();
+        // marshal the "inout" and "out" parameters.
+        if (this->params_ != 0)
+          {
+            this->params_->_tao_encode (
+                              output,
+                              CORBA::ARG_INOUT | CORBA::ARG_OUT);
+          }
 
-      // Send the return value, if any.
-      if (this->retval_ != 0)
-        {
-          this->retval_->impl ()->marshal_value (
-                                      *this->orb_server_request_.outgoing ());
-        }
-
-      // Send the "inout" and "out" parameters.
-      if (this->params_ != 0)
-        {
-          this->params_->_tao_encode (
-                             *this->orb_server_request_.outgoing (),
-                             CORBA::ARG_INOUT | CORBA::ARG_OUT);
-        }
-    }
+        TAO_InputCDR input (output);
+        // set reply parameters
+        this->orb_server_request_.operation_details ()->cac (
+                )->dsi_convert_reply (this->orb_server_request_,
+                                      input);
+      }
+  }
   else
-    {
+  {
+    if (this->orb_server_request_.reply_status () == GIOP::NO_EXCEPTION)
+      {
+        // In DSI, we can't rely on the skeleton to do this.
+        if (this->retval_ == 0 && this->params_ == 0)
+          {
+          this->orb_server_request_.argument_flag (false);
+          }
+
+        this->orb_server_request_.init_reply ();
+
+        // Send the return value, if any.
+        if (this->retval_ != 0)
+          {
+            this->retval_->impl ()->marshal_value (
+                                        *this->orb_server_request_.outgoing ());
+          }
+
+        // Send the "inout" and "out" parameters.
+        if (this->params_ != 0)
+          {
+            this->params_->_tao_encode (
+                              *this->orb_server_request_.outgoing (),
+                              CORBA::ARG_INOUT | CORBA::ARG_OUT);
+          }
+      }
+    else
+      {
       // This defaults to true, but just to be safe...
       this->orb_server_request_.argument_flag (true);
 
-      // Write the reply header to the ORB request's outgoing CDR stream.
-      this->orb_server_request_.init_reply ();
+        // Write the reply header to the ORB request's outgoing CDR stream.
+        this->orb_server_request_.init_reply ();
 
-      this->exception_->impl ()->marshal_value (
-                                     *this->orb_server_request_.outgoing ());
-    }
+        this->exception_->impl ()->marshal_value (
+                                      *this->orb_server_request_.outgoing ());
+      }
+  }
 
   this->orb_server_request_.tao_send_reply ();
 }
