@@ -23,8 +23,8 @@ public:
 
   virtual void shutdown (void);
 private:
-  PortableServer::POA_var poa_;
   CORBA::ORB_var orb_;
+  PortableServer::POA_var poa_;
 };
 
 #endif /* TAO_TEST_I_H */
