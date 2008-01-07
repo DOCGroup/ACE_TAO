@@ -1,8 +1,28 @@
+Mon Jan  7 18:30:09 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * DAnCE/NodeManager/CIAO_Monitor.cpp:
+        * DAnCE/NodeManager/MonitorController.cpp:
+        * DAnCE/NodeManager/NM_Monitor_Impl.cpp:
+
+        Fixed the monitor to obtain the correct CPU load.
+
+        * DAnCE/TM_Daemon/DomainDataManager.cpp:
+        * DAnCE/TM_Daemon/Handler_i.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.cpp:
+        * DAnCE/TM_Daemon/driver.cpp:
+
+        Made some minor updates and cosmetic changes.
+
+        * examples/space/descriptors/Domain_1.cdd:
+        * examples/space/descriptors/run_TM.sh:
+
+        Update these as well.
+
 Thu Dec 20 23:50:52 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * examples/space/descriptors/Domain_1.cdd:
         * examples/space/descriptors/NodeManagerMap_1.dat:
-				  The above files will configure and run a single NodeManager
+                                  The above files will configure and run a single NodeManager
 
 Thu Dec 20 23:49:06 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 

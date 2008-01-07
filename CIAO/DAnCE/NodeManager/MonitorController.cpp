@@ -88,8 +88,8 @@ int CIAO::MonitorController::init ()
 
 ::Deployment::Domain* CIAO::MonitorController::update_data_for_TM ()
 {
-// 	ACE_DEBUG ((LM_DEBUG , "The list size is %d\n",
-// 		    monitor_list_.size ()));
+	ACE_DEBUG ((LM_DEBUG , "The list size is %d\n",
+		    monitor_list_.size ()));
 
   ::Deployment::Domain* domain =
     new ::Deployment::Domain (this->initial_domain_);
@@ -97,24 +97,11 @@ int CIAO::MonitorController::init ()
   // Set the new domain resource to zero
   domain->node[0].resource.length (0);
 
-// form the monitor time file name
-
-/*
-  std::string mon_file = domain->node[0].name.in ();
-  mon_file += "_Tmon";
-  Profile_Code prf_mon (mon_file);
-*/
-
   for (size_t i = 0;i < monitor_list_.size ();i++)
   {
-
-    //     prf_mon.start ();
     ::Deployment::Domain *new_domain =
       monitor_list_[i]->monitor_->get_current_data ();
-
     add_resource_to_domain (*domain , *new_domain);
-
-    //    prf_mon.stop ();
   }
 
   return domain;

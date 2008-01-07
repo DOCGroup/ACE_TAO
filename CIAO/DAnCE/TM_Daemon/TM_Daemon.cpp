@@ -33,7 +33,7 @@ namespace CIAO
       this->handler_  = Onl_Monitor::AMI_NM_MonitorHandler::_narrow (object.in ());
 
       this->manager_->start_monitor_qos (this->handler_);
-      ACE_DEBUG ((LM_DEBUG, "Created the Daemon!\n"));
+      //      ACE_DEBUG ((LM_DEBUG, "Created the Daemon!\n"));
 
     }
 

@@ -33,7 +33,7 @@ void Monitor_Handler_I::get_resource_data_excep (::Messaging::ExceptionHolder
 
 void Monitor_Handler_I::monitor_app_QoS (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Monitor app QoS returned\n"));
+  //  ACE_DEBUG ((LM_DEBUG, "Monitor app QoS returned\n"));
 }
 
 void Monitor_Handler_I::monitor_app_QoS_excep (::Messaging::ExceptionHolder * /*excep_holder*/)

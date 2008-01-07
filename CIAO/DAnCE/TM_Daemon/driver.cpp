@@ -124,8 +124,6 @@ namespace CIAO
                                        domain_file,
                                        root_poa,
                                        threads), 1);
-          ACE_DEBUG ((LM_DEBUG, "done!\n"));
-
           PortableServer::ServantBase_var owner_transfer(daemon_impl);
 
           PortableServer::ObjectId_var id =
@@ -157,7 +155,8 @@ namespace CIAO
               cos_name.length (1);
               cos_name[0].id = ::CORBA::string_dup (name);
               naming_context->rebind (cos_name, daemon.in ());
-              ACE_DEBUG ((LM_DEBUG, "done! Bound witht the naming service under %s.\n", name));
+              ACE_DEBUG ((LM_DEBUG, "done! Bound with the naming "
+                          "service under %s.\n", name));
 
             }
           daemon_impl->run ();
