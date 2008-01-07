@@ -1,4 +1,23 @@
-Sun Jan  6 07:36:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Jan  7 12:56:12 UTC 2008  Martin Corino <mcorino@remedy.nl>
+
+        * tao/PortableServer/Collocated_Arguments_Converter.h:
+        * tao/Messaging/AMI_Arguments_Converter_Impl.{h, cpp}:
+        * tao/DynamicInterface/DII_Arguments_Converter.{h, cpp}:
+          Implemented new conversion methods for collocation in combination
+          with DSI which follows a different path from 'normal' servants and
+          requires slightly different functionality.
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.{h, cpp}:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Server_Request.cpp:
+        * tao/DynamicInterface/Unknown_User_Exception.{h, cpp}:
+          Various changes to fix problems with (DII +) DSI + Collocation.
+          Problems were visible in the failing DII_Collocation_Tests/twoway
+          tests (all platforms) and testing done with R2CORBA which is
+          implemented using DII and DSI.
+
+Sun Jan  6 07:36:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
           Fixed conversion warning
@@ -36,17 +55,17 @@ Thu Jan  3 14:36:18 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
           Fixed a fuzz error.
 
-Thu Jan  3 10:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Jan  3 10:14:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.{h,cpp}:
           Fixed compile problems with VxWorks
 
-Thu Jan  3 10:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Jan  3 10:04:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.cpp:
           Fixed may be unitialized warnings with VxWorks 6.6
 
-Thu Jan  3 09:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Jan  3 09:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.cpp:
           Prefix increment and moved some variables into the loop

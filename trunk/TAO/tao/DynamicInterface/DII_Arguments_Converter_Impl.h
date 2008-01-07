@@ -46,9 +46,15 @@ public:
                                 TAO::Argument * const args[],
                                 size_t nargs);
 
+  virtual void dsi_convert_request (TAO_ServerRequest & server_request,
+                                    TAO_OutputCDR & output);
+  
   virtual void convert_reply (TAO_ServerRequest & server_request,
                               TAO::Argument * const args[],
                               size_t nargs);
+
+  virtual void dsi_convert_reply (TAO_ServerRequest & server_request,
+                                  TAO_InputCDR & input);
 
   virtual void handle_corba_exception (TAO_ServerRequest & server_request,
                                        CORBA::Exception *exception);

@@ -11,6 +11,8 @@ ACE_RCSID (DynamicInterface,
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Collocated_Arguments_Converter.h"
+#include "tao/operation_details.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
@@ -153,12 +155,22 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
           dsi_request->dsi_marshal ();
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception& ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
         {
-          request.tao_send_reply_exception (ex);
+          if (request.collocated ()
+               && request.operation_details ()->cac () != 0)
+            {
+              // If we have a cac it will handle the exception and no
+              // need to do any further processing
+              request.operation_details ()->cac ()->handle_corba_exception (
+                request, &ex);
+              return;
+            }
+          else
+            request.tao_send_reply_exception (ex);
         }
     }
 
