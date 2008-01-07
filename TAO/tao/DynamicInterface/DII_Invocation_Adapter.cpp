@@ -56,7 +56,7 @@ namespace TAO
   }
 
   void
-  DII_Invocation_Adapter::invoke (TAO::Exception_Data */*ex_data*/,
+  DII_Invocation_Adapter::invoke (TAO::Exception_Data * /*ex_data*/,
                                   unsigned long ex_count)
   {
     // Convert DII exception list to a form the invocation can use
