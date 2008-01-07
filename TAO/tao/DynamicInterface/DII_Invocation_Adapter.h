@@ -93,6 +93,9 @@ namespace TAO
 
     virtual ~DII_Invocation_Adapter (void);
 
+    /// Invoke the target
+    virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
+
   protected:
 
     virtual Invocation_Status invoke_twoway (
@@ -112,6 +115,8 @@ namespace TAO
     CORBA::ExceptionList *exception_list_;
 
     CORBA::Request *request_;
+
+    TAO::Exception_Data *ex_data_;
   private:
 
     /// Dont allow default initializations
