@@ -70,18 +70,16 @@ int CIAO::CIAO_Monitor::stop ()
       //            current_domain_->node[0].name.in ()));
     }
 
-//   ACE_DEBUG ((LM_DEBUG ,
-//         "CIAO_Monitor::Inside the get_current_data of[%s]\n",
-//         current_domain_->node[0].name.in ()));
+  ACE_DEBUG ((LM_DEBUG ,
+        "CIAO_Monitor::Inside the get_current_data of[%s]\n",
+        current_domain_->node[0].name.in ()));
 
-  CORBA::Double current_load = 0;
-
-//  current_load = calculate_load ();
+  CORBA::Double current_load = calculate_load ();
 
   CORBA::Any any;
   any <<= current_load;
 
-  //  ACE_DEBUG ((LM_DEBUG, "The current load is %f\n", current_load));
+  ACE_DEBUG ((LM_DEBUG, "The current load is %f\n", current_load));
 
   // here insert the util value, in the right position
 
@@ -98,7 +96,7 @@ int CIAO::CIAO_Monitor::stop ()
               if (!ACE_OS::strcmp (
                            current_domain_
                            ->node[0].resource[i].property[j].name.in (),
-                           "LoadAverage"))
+                           "Current"))
                 {
                   current_domain_->node[0].resource[i].property[j].kind =
                     ::Deployment::Quantity;
@@ -132,18 +130,16 @@ double CIAO::CIAO_Monitor::calculate_load ()
   res_file >> current_.system_cpu;
   res_file >> current_.idle_time;
 
-  current_.total_load = current_.user_cpu + current_.user_cpu_low + current_.system_cpu + current_.idle_time;
-
-  double load = current_.total_load - previous_.total_load;
-
-  double user_current_load = (current_.user_cpu - previous_.user_cpu)/load;
-  double system_current_load = (current_.system_cpu - previous_.system_cpu)/load;
-  double idle_load = (current_.idle_time - previous_.idle_time)/load;
-
-
   res_file.close ();
 
-  previous_ = current_;
+  current_.total_load = current_.user_cpu + current_.user_cpu_low +
+                        current_.system_cpu + current_.idle_time;
 
-  return user_current_load*100;
+  double load = current_.total_load - previous_.total_load;
+  //  double user_current_load = (current_.user_cpu - previous_.user_cpu)/load;
+  //  double system_current_load = (current_.system_cpu - previous_.system_cpu)/load;
+  double delta_idle = current_.idle_time - previous_.idle_time;
+  double percent_cpu_load = 100.0 - (delta_idle / load * 100.0);
+  previous_ = current_;
+  return percent_cpu_load;
 }

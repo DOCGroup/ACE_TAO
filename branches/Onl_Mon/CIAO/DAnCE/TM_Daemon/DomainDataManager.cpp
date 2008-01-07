@@ -91,7 +91,7 @@ namespace CIAO
                   ACE_DEBUG ((LM_DEBUG, "Calling join doamin on %s... ",
                               sub_domain.node[0].name.in ()));
                   node_manager->joinDomain (sub_domain, NULL, log);
-                  ACE_DEBUG ((LM_DEBUG, "done!"));
+                  ACE_DEBUG ((LM_DEBUG, "done!\n"));
                 }
               catch (CORBA::Exception& ex)
                 {
@@ -269,6 +269,8 @@ namespace CIAO
       this->condition_.wait ();
 
       // Now update the current domain.
+//       ACE_DEBUG ((LM_DEBUG, "Obtained resource data from node monitors."
+//                   "\nNow updating the current domain!\n"));
       this->current_domain_.node.length (this->node_info_map_.size ());
       std::map<std::string, ::Deployment::Node>::iterator itr = this->node_info_map_.begin ();
       CORBA::ULong i = 0;
