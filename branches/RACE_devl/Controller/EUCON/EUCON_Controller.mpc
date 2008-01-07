@@ -60,7 +60,7 @@ project(EUCON_Controller_stub) : ciao_client_dnc {
   }
 }
 
-project(EUCON_Controller_exec) : ciao_component_dnc {
+project(EUCON_Controller_exec) : ciao_component_dnc, ciao_config_handlers {
   avoids += ace_for_tao
   after   += EUCON_Controller_cidl_gen EUCON_Controller_stub
   sharedname = EUCON_Controller_exec

@@ -57,6 +57,12 @@ namespace CIAO
           /// Object reference of the DAnCE output adapter admin object.
           DAnCE_OA::Admin_var OA_;
 
+          /// Object reference of the Controller's Admin object.
+          //Controller::Admin Controller_Admin_;
+
+          /// Object reference of the Controller's Control_Operations object.
+          //Controller::Control_Operations Controller_Ops_;
+
           Logger &logger_;
         };
       }

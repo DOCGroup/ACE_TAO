@@ -1,3 +1,34 @@
+Mon Jan  7 22:14:22 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Conductor/Admin_exec.h:
+        * Conductor/Conductor_exec.cpp:
+
+        Updated these files to invoke the controller.
+
+        * Controller/EUCON/Admin_exec.cpp:
+        * Controller/EUCON/Controller.cpp:
+        * Controller/EUCON/EUCON_Controller.mpc:
+        * Controller/EUCON/EUCON_Controller_exec.cpp:
+
+        Updated the controller to parse the domain structure obtained from
+        the TM_Proxy component.
+
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+
+        Made cosmetic modification.
+
+        * TM_Proxy/SystemSnapshot.cpp:
+        * TM_Proxy/TM_Proxy_exec.cpp:
+        * TM_Proxy/Utility.cpp:
+
+        The proxy component now forwards the invocation to the TM.
+
+        * utils/Logger.cpp:
+        * utils/RACE_utils.h:
+
+        Made cosmetic modifications.
+
 Fri Dec 14 23:05:11 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Conductor/Conductor.idl:

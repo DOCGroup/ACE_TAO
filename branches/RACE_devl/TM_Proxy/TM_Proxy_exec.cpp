@@ -108,7 +108,7 @@ namespace CIAO
             name.length (1);
             name[0].id = CORBA::string_dup (this->TM_Name_.in ());
             CORBA::Object_var TM = namingContext->resolve (name);
-            msg << "Now trying to resolve: " << this->TM_Name_.in () << "from the naming service...";
+            msg << "Now trying to resolve \"" << this->TM_Name_.in () << "\" from the naming service...";
             this->TM_Daemon_ =
               ::CIAO::TM_Daemon::Daemon::_narrow (TM.in ());
 

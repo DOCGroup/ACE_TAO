@@ -30,15 +30,15 @@ namespace CIAO
         ::CORBA::Boolean
         Admin_exec_i::start_controller ()
         {
-          return false;
-          //return this->controller_->start_controller ();
+          //return false;
+          return this->controller_->start_controller ();
         }
 
         ::CORBA::Boolean
         Admin_exec_i::stop_controller ()
         {
-          return false;
-          //return this->controller_->stop_controller ();
+          //return false;
+          return this->controller_->stop_controller ();
         }
       }
     }

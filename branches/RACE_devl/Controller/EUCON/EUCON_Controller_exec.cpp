@@ -23,15 +23,14 @@ namespace CIAO
         ::CORBA::Long
         EUCON_Controller_exec_i::sampling_period ()
         {
-          // Your code here.
-          return 0;
+          return this->sampling_period_;          
         }
 
         void
         EUCON_Controller_exec_i::sampling_period (::CORBA::Long
-                                                 /* sampling_period */)
+                                                 sampling_period)
         {
-          // Your code here.
+          this->sampling_period_ = sampling_period;
         }
 
         // Port operations.
