@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Deployment:domain
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+<UUID>effd4bd0-6db0-4c50-9bb7-db9decebae1c</UUID>
+<label>Hello Domain</label>
+
+
+<node>
+  <name>blade38</name>
+  <label>Linux Node</label>
+  <resource>
+    <name>Processor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>true</dynamic>
+      <value>
+        <type>
+	  <kind>tk_long</kind>
+	</type>
+	<value><long>99</long></value>
+      </value>
+    </property>
+  </resource>
+  <resource>
+    <name>NA_Monitor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>false</dynamic>
+      <value>
+        <type>
+          <kind>tk_double</kind>
+        </type>
+        <value>
+          <double>100</double>
+        </value>
+      </value>
+    </property>
+  </resource>
+</node>
+
+<node>
+  <name>blade39</name>
+  <label>VxWorks Node</label>
+  <resource>
+    <name>Processor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>true</dynamic>
+      <value>
+        <type>
+	  <kind>tk_long</kind>
+	</type>
+	<value><long>99</long></value>
+      </value>
+    </property>
+  </resource>
+  <resource>
+    <name>NA_Monitor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>false</dynamic>
+      <value>
+        <type>
+          <kind>tk_double</kind>
+        </type>
+        <value>
+          <double>100</double>
+        </value>
+      </value>
+    </property>
+  </resource>
+</node>
+
+<node>
+  <name>blade40</name>
+  <label>Linux Node</label>
+  <resource>
+    <name>Processor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>true</dynamic>
+      <value>
+        <type>
+	  <kind>tk_long</kind>
+	</type>
+	<value><long>99</long></value>
+      </value>
+    </property>
+  </resource>
+  <resource>
+    <name>NA_Monitor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>false</dynamic>
+      <value>
+        <type>
+          <kind>tk_double</kind>
+        </type>
+        <value>
+          <double>100</double>
+        </value>
+      </value>
+    </property>
+  </resource>
+</node>
+
+<node>
+  <name>blade41</name>
+  <label>VxWorks Node</label>
+  <resource>
+    <name>Processor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>true</dynamic>
+      <value>
+        <type>
+	  <kind>tk_long</kind>
+	</type>
+	<value><long>99</long></value>
+      </value>
+    </property>
+  </resource>
+  <resource>
+    <name>NA_Monitor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>false</dynamic>
+      <value>
+        <type>
+          <kind>tk_double</kind>
+        </type>
+        <value>
+          <double>100</double>
+        </value>
+      </value>
+    </property>
+  </resource>
+</node>
+
+<node>
+  <name>blade42</name>
+  <label>Linux Node</label>
+  <resource>
+    <name>Processor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>true</dynamic>
+      <value>
+        <type>
+	  <kind>tk_long</kind>
+	</type>
+	<value><long>99</long></value>
+      </value>
+    </property>
+  </resource>
+  <resource>
+    <name>NA_Monitor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>false</dynamic>
+      <value>
+        <type>
+          <kind>tk_double</kind>
+        </type>
+        <value>
+          <double>100</double>
+        </value>
+      </value>
+    </property>
+  </resource>
+</node>
+
+<node>
+  <name>blade36</name>
+  <label>Linux Node</label>
+  <resource>
+    <name>Processor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>true</dynamic>
+      <value>
+        <type>
+	  <kind>tk_long</kind>
+	</type>
+	<value><long>99</long></value>
+      </value>
+    </property>
+  </resource>
+  <resource>
+    <name>NA_Monitor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>false</dynamic>
+      <value>
+        <type>
+          <kind>tk_double</kind>
+        </type>
+        <value>
+          <double>100</double>
+        </value>
+      </value>
+    </property>
+  </resource>
+</node>
+
+<node>
+  <name>blade37</name>
+  <label>VxWorks Node</label>
+  <resource>
+    <name>Processor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>true</dynamic>
+      <value>
+        <type>
+	  <kind>tk_long</kind>
+	</type>
+	<value><long>99</long></value>
+      </value>
+    </property>
+  </resource>
+  <resource>
+    <name>NA_Monitor</name>
+    <resourceType>CPULoad</resourceType>
+    <property>
+      <name>LoadAverage</name>
+      <kind>Quantity</kind>
+      <dynamic>false</dynamic>
+      <value>
+        <type>
+          <kind>tk_double</kind>
+        </type>
+        <value>
+          <double>100</double>
+        </value>
+      </value>
+    </property>
+  </resource>
+</node>
+
+
+<interconnect>
+  <name>NoBridgeInterConnect</name>
+  <connect>
+    <name>Receiver</name>
+    <resource>
+      <name>Processor</name>
+      <resourceType>CPULoad</resourceType>
+      <property>
+        <name>LoadAverage</name>
+        <kind>Quantity</kind>
+        <dynamic>true</dynamic>
+        <value>
+          <type>
+	    <kind>tk_long</kind>
+	  </type>
+          <value><long>99</long></value>
+        </value>
+      </property>
+    </resource>
+  </connect>
+</interconnect>
+
+
+<bridge>
+  <name>NoBridge</name>
+  <connect>
+    <name>NoBridgeInterConnect</name>
+    <connect>
+      <name>Receiver</name>
+      <resource>
+        <name>Processor</name>
+        <resourceType>CPULoad</resourceType>
+        <property>
+          <name>LoadAverage</name>
+          <kind>Quantity</kind>
+          <dynamic>true</dynamic>
+          <value>
+            <type>
+	      <kind>tk_long</kind>
+	    </type>
+	    <value><long>99</long></value>
+          </value>
+        </property>
+      </resource>
+    </connect>
+  </connect>
+</bridge>
+
+
+</Deployment:domain>
