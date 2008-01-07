@@ -1,7 +1,7 @@
 #include "TM_Daemon.h"
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Client_Task.h"
-
+#include "tools/Config_Handlers/DnC_Dump.h"
 namespace CIAO
 {
   namespace TM_Daemon

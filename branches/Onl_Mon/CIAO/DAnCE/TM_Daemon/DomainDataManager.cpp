@@ -22,10 +22,19 @@ namespace CIAO
         condition_ (condition_mutex_)
 
     {
-      CIAO::Config_Handlers::DD_Handler dd (domain_file);
-      ::Deployment::Domain* dmn = dd.domain_idl ();
-      this->current_domain_ = *dmn;
-      this->initial_domain_ = this->current_domain_;
+      try
+        {
+
+          CIAO::Config_Handlers::DD_Handler dd (domain_file);
+          ::Deployment::Domain* dmn = dd.domain_idl ();
+          this->current_domain_ = *dmn;
+          this->initial_domain_ = this->current_domain_;
+        }
+      catch (::CIAO::Config_Handlers::DD_Handler::NoDomain &ex)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Exception caught! No domain!\n"));
+        }
+
       if (this->call_all_node_managers () != 0)
         {
 

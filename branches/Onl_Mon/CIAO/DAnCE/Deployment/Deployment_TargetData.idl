@@ -34,7 +34,7 @@ module Deployment {
     ::CORBA::ULongSeq sharedResourceRef;
     ::CORBA::ULongSeq connectionRef;
     Resources resource;
-    QoSSpecifications qos_seq;
+    //QoSSpecifications qos_seq;
   };
   typedef sequence < Node > Nodes;
 
