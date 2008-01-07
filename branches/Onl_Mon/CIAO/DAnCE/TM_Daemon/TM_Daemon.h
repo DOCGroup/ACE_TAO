@@ -18,7 +18,6 @@ namespace CIAO
 
     public:
       Daemon_impl (CORBA::ORB_ptr orb,
-//                   const char *deployment_plan,
 		   vector<string> deployment_plans,
                    const char *mapping,
                    const char *domain,

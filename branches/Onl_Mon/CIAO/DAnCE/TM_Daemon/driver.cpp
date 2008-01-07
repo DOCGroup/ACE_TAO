@@ -119,7 +119,6 @@ namespace CIAO
           Daemon_impl *daemon_impl = 0;
           ACE_NEW_RETURN (daemon_impl,
                           Daemon_impl (orb,
-                   //                    deploymentplan_file,
 				       plans,
                                        mapping_file,
                                        domain_file,
