@@ -9,7 +9,6 @@ namespace CIAO
 
 
     Daemon_impl::Daemon_impl (CORBA::ORB_ptr orb,
-//                              const char *deployment_plan,
 			      vector<string> deployment_plans,
                               const char *mapping,
                               const char *domain,
@@ -66,7 +65,8 @@ namespace CIAO
     Daemon_impl::getInitialDomain ()
     {
       ACE_DEBUG ((LM_DEBUG, "In getInitialDomain!\n"));
-      ::Deployment::Domain_var domain = new ::Deployment::Domain ();
+      ::Deployment::Domain_var domain =
+          new ::Deployment::Domain (this->manager_->initial_domain ());
       return domain._retn ();
     }
 
@@ -75,19 +75,19 @@ namespace CIAO
     Daemon_impl::getSnapshot ()
     {
       ACE_DEBUG ((LM_DEBUG, "In getSnapshot!\n"));
-      ::Deployment::Domain_var domain = new ::Deployment::Domain ();
-      std::map<std::string, ::Deployment::Node> temp =
-        this->manager_->get_all_data (this->handler_);
+      ::Deployment::Domain_var domain = new
+          ::Deployment::Domain (this->manager_->get_all_data (this->handler_));
+//       std::map<std::string, ::Deployment::Node> temp =
+//         this->manager_->get_all_data (this->handler_);
 
-      domain->node.length (temp.size ());
-      std::map<std::string, ::Deployment::Node>::iterator itr = temp.begin ();
-      CORBA::ULong i = 0;
-      for (;itr != temp.end (); ++itr, ++i)
-        {
-          domain->node [i] = (*itr).second;
-        }
+//       domain->node.length (temp.size ());
+//       std::map<std::string, ::Deployment::Node>::iterator itr = temp.begin ();
+//       CORBA::ULong i = 0;
+//       for (;itr != temp.end (); ++itr, ++i)
+//         {
+//           domain->node [i] = (*itr).second;
+//         }
       return domain._retn ();
-      //      return 0;
     }
 
     void

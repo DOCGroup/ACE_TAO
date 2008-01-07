@@ -14,12 +14,9 @@ namespace CIAO
     DomainDataManager::DomainDataManager (CORBA::ORB_ptr orb,
                                           const char *dat_file,
                                           const char *domain_file,
-//                                          ::Deployment::DeploymentPlan& plan)
 	    				  vector<string> plans)
       : orb_ (CORBA::ORB::_duplicate (orb)),
         deployment_config_ (orb_.in()),
-        //        delay_ (utils::Timer ("delay")),
-//        plan_ (plan),
 	plans_ (plans),
         dat_file_ (dat_file),
         condition_ (condition_mutex_)
@@ -27,17 +24,8 @@ namespace CIAO
     {
       CIAO::Config_Handlers::DD_Handler dd (domain_file);
       ::Deployment::Domain* dmn = dd.domain_idl ();
-      current_domain_ = *dmn;
-      initial_domain_ = current_domain_;
-
-      // set up the profile timers for each node
-      /*
-      for (CORBA::ULong i = 0; i < this->current_domain_.node.length (); ++i)
-        {
-          this->node_timers_ [this->current_domain_.node[i].name.in ()] =
-            new utils::Timer (this->current_domain_.node[i].name.in ());
-        }
-      */
+      this->current_domain_ = *dmn;
+      this->initial_domain_ = this->current_domain_;
       if (this->call_all_node_managers () != 0)
         {
 
@@ -134,31 +122,29 @@ namespace CIAO
     int
     DomainDataManager::update_domain (const ::CORBA::StringSeq &,
                                       const ::Deployment::Domain & domainSubset,
-                                      ::Deployment::DomainUpdateKind /*update_kind*/)
+                                      ::Deployment::DomainUpdateKind update_kind)
     {
       //check the type of update ..
-      return this->update_dynamic (domainSubset);
+      //      return this->update_dynamic (domainSubset);
 
-      //   switch (update_kind)
-      //     {
-      //       case ::Deployment::UpdateAll:
-      //       case ::Deployment::UpdateDynamic:
-      //         this->update_dynamic (domainSubset);
-      //         break;
+      switch (update_kind)
+        {
+          case ::Deployment::UpdateAll:
+          case ::Deployment::UpdateDynamic:
+            return this->update_dynamic (domainSubset);
+            break;
 
-      //       case ::Deployment::Add:
-      // 	ex_occur = true;
-      //         break;
-      //       default:
-      //         return 1;
-      //     }
+          case ::Deployment::Add:
+            this->ex_occur_ = true;
+          default:
+            return 1;
+        }
     }
 
     int
     DomainDataManager::update_dynamic (const ::Deployment::Domain &domainSubset)
     {
       this->node_info_map_ [domainSubset.node[0].name.in ()] = domainSubset.node[0];
-      //      this->node_timers_[domainSubset.node[0].name.in ()]->stop ();
 
       // Acquire the mutex before making any modifications as multiple
       // threads might try to do this simultaneously.
@@ -173,15 +159,6 @@ namespace CIAO
           //  this->delay_.stop ();
           //          this->delay_.dump ();
           this->condition_.signal ();
-          /*
-          for (std::map<std::string, utils::Timer*>::iterator itr = this->node_timers_.begin ();
-               itr != this->node_timers_.end ();
-               itr++)
-            {
-              (*itr).second->dump ();
-
-            }
-          */
         }
 
       //       CORBA::Double load;
@@ -273,24 +250,34 @@ namespace CIAO
     }
 
 
-  std::map<std::string, ::Deployment::Node>
+  ::Deployment::Domain
+  CIAO::DomainDataManager::initial_domain ()
+  {
+    return this->initial_domain_;
+
+  }
+
+  ::Deployment::Domain
   CIAO::DomainDataManager::get_all_data
   (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler)
     {
       this->response_count_ = this->current_domain_.node.length ();
-      //      this->delay_.start ();
-
       for (CORBA::ULong i = 0; i < this->node_monitors_.size (); ++i)
         {
-
-          //          this->node_timers_[this->current_domain_.node[i].name.in ()]->start ();
           this->node_monitors_[i]->sendc_get_resource_data (handler);
-
-          // for synchronous calls
-//          this->node_monitors_[i]->get_resource_data ();
         }
       this->condition_.wait ();
-      return this->node_info_map_;
+
+      // Now update the current domain.
+      this->current_domain_.node.length (this->node_info_map_.size ());
+      std::map<std::string, ::Deployment::Node>::iterator itr = this->node_info_map_.begin ();
+      CORBA::ULong i = 0;
+      for (;itr != this->node_info_map_.end (); ++itr, ++i)
+        {
+          this->current_domain_.node [i] = (*itr).second;
+        }
+
+      return this->current_domain_;
 
     }
 
@@ -304,7 +291,7 @@ namespace CIAO
       plans.length (plans_.size ());
 
       // form the plans and send them over
-      for (int i =0;i < plans_.size ();i++)
+      for (size_t i =0; i < plans_.size ();i++)
       {
         CIAO::Config_Handlers::XML_File_Intf intf (plans_[i].c_str ());
         ::Deployment::DeploymentPlan_var plan = intf.get_plan ();

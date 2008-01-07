@@ -62,7 +62,6 @@ namespace CIAO
       DomainDataManager (CORBA::ORB_ptr orb,
                          const char *dat_file,
                          const char *domain_file,
-//                         ::Deployment::DeploymentPlan& plan);
 			vector<string> plans);
 
 
@@ -85,10 +84,16 @@ namespace CIAO
                          ::Deployment::DomainUpdateKind updateKind);
 
       /**
-       * @brief signals all the nodes to send in data
+       * @brief Obtain the current status of the doamin.
        */
-      std::map<std::string, ::Deployment::Node>
+      ::Deployment::Domain
       get_all_data (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler);
+
+      /**
+       * @brief Obtain the initial doamin structure.
+       */
+      ::Deployment::Domain
+      initial_domain ();
 
       /**
        * @brief tells all the node managers to start the monitoring of QoS
@@ -144,15 +149,8 @@ namespace CIAO
       /// The count of responses returned
       int response_count_;
 
-      /// Stores the time taken to obtain the snapshot of the entire domain.
-      //      utils::Timer delay_;
-
       /// Exception occured
       bool ex_occur_;
-
-      /// Timers for each node to measure data collection delay latency for
-      /// each node
-      //      std::map<std::string, utils::Timer*> node_timers_;
 
       /// Map used to store "dynamic information" of each node.
       std::map<std::string, ::Deployment::Node> node_info_map_;
@@ -160,7 +158,7 @@ namespace CIAO
       /// Deployment plan.
       ::Deployment::DeploymentPlan plan_;
 
-      // name of the plans 
+      // name of the plans
       vector<string> plans_;
 
       /// the Data file which contains the Node Manager references
