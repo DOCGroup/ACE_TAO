@@ -1,3 +1,20 @@
+Mon Jan  7 22:10:23 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * DAnCE/Deployment/Deployment_TargetData.idl:
+        * DAnCE/NodeManager/NM_Monitor_Impl.cpp:
+
+        Removed QoS related filed from the base IDL.
+
+        * DAnCE/TM_Daemon/DomainDataManager.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.cpp:
+
+        Made cosmetic changes.
+
+        * examples/space/descriptors/run_NodeManager_Nish.pl:
+        * examples/space/descriptors/run_TM.sh:
+
+        Added the second node in the domain.
+
 Mon Jan  7 18:30:09 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * DAnCE/NodeManager/CIAO_Monitor.cpp:

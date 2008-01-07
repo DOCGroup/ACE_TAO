@@ -111,14 +111,14 @@ void Onl_Monitor_NM_Monitor_i::monitor_app_QoS (
   Deployment::Domain_var domainv = this->controller_->update_data_for_TM ();
 
  // now get the qos data from each NAM
-  domainv->node[0].qos_seq.length (this->qos_monitor_seq_.size ());
+//   domainv->node[0].qos_seq.length (this->qos_monitor_seq_.size ());
 
-  for (unsigned int i = 0;i < qos_monitor_seq_.size ();i++)
-  {
-    ::Deployment::QoSSpecifications_var qos_seq =
-	    this->qos_monitor_seq_[i]->get_app_QoS ();
-    domainv->node[0].qos_seq[i] = (*qos_seq)[0];
-  }
+//   for (unsigned int i = 0;i < qos_monitor_seq_.size ();i++)
+//   {
+//     ::Deployment::QoSSpecifications_var qos_seq =
+// 	    this->qos_monitor_seq_[i]->get_app_QoS ();
+//     domainv->node[0].qos_seq[i] = (*qos_seq)[0];
+//   }
   return domainv._retn ();
 }
 
