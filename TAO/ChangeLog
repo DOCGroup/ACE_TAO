@@ -17,6 +17,25 @@ Mon Jan  7 12:56:12 UTC 2008  Martin Corino <mcorino@remedy.nl>
           tests (all platforms) and testing done with R2CORBA which is
           implemented using DII and DSI.
 
+Sun Jan  6 19:05:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Abstract_Interface/client.cpp:
+        * tests/Abstract_Interface/run_test.pl:
+        * tests/Abstract_Interface/server.cpp:
+        * tests/Abstract_Interface/test.idl:
+        * tests/Abstract_Interface/test_i.cpp:
+        * tests/Abstract_Interface/test_i.h:
+          Reworked this test so that the client does a shutdown of the
+          server.
+
+        * tests/Bug_2234_Regression/client.cpp:
+        * tests/Bug_3108_Regression/client.cpp:
+        * tests/DII_AMI_Forward/DII_ReplyHandler.cpp:
+          Fixed conversion warning
+
+        * tests/Multiple/run_test.pl:
+          Removed not needed code
+
 Sun Jan  6 07:36:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
