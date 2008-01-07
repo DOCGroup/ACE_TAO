@@ -24,8 +24,7 @@ namespace CIAO
         {
           std::string msg = "Entering Utility_exec_i::getInitialDomain ()\n";
           msg += "Leaving Utility_exec_i::getInitialDomain ()\n";
-          this->logger_.log (msg);
-          //return 0;
+          this->logger_.log (msg);          
           return this->TM_Daemon_->getInitialDomain ();
         }
       }

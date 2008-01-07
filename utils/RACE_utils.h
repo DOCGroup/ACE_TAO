@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 /**
 * @file RACE_utils.h
@@ -23,21 +23,22 @@
 
 namespace CIAO
 {
-	namespace RACE
-	{
-		/**
-		* Return the debug level.  The debug level of RACE is control by
-		* an environment variable "RACE_DEBUG_LEVEL".  It should be an int
-		* value.  If it is not defined, the default debug level is 0.  The
-		* value of debug value is evaluated on its first use and the value
-		* is then cached.
-		*
-		* Some recommendation for using the debug_level
-		*
-		*   > 10 : Write log file as well as to STDOUT.
-		*/
-		/*RACE_UTILS_Export */int debug_level (void);
-	}
+  namespace RACE
+  {
+    /**
+    * Return the debug level.  The debug level of RACE is control by
+    * an environment variable "RACE_DEBUG_LEVEL".  It should be an int
+    * value.  If it is not defined, the default debug level is 0.  The
+    * value of debug value is evaluated on its first use and the value
+    * is then cached.
+    *
+    * Some recommendation for using the debug_level
+    *
+    *   > 10 : Write log file as well as to STDOUT.
+    */
+    /*RACE_UTILS_Export */
+    int debug_level (void);
+  }
 }
 #include /**/ "ace/post.h"
 

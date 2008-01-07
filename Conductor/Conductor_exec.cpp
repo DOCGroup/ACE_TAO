@@ -47,6 +47,17 @@ namespace CIAO
               {
                 msg << "Error while initializing the controller.\n";
               }
+
+              msg << "Now trying to start the controller.\n";
+              if (this->context_->get_connection_controllerAdmin()->start_controller())
+              {
+                msg << "Successfully started the controller.\n";
+              }
+              else
+              {
+                msg << "Error while starting the controller.\n";
+              }
+
               msg << "Conductor_Component_exec_i::Leaving deploy_plan.";
               this->logger_.log (msg.str());
               return true;

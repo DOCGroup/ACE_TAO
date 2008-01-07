@@ -26,9 +26,8 @@ namespace CIAO
         {
           std::string msg = "Entering SystemSnapshot_exec_i::getSnapshot ()\n";
           msg += "Leaving SystemSnapshot_exec_i::getSnapshot ()\n";
-          this->logger_.log (msg);
-          return 0;
-          //return this->TM_Daemon_->getSnapshot ();
+          this->logger_.log (msg);          
+          return this->TM_Daemon_->getSnapshot ();
         }
       }
     }
