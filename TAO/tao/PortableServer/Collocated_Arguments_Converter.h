@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Server_Request.h"
+#include "tao/CDR.h"
 #include "ace/Service_Object.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -48,9 +49,15 @@ public:
                                 TAO::Argument * const args[],
                                 size_t nargs) = 0;
 
+  virtual void dsi_convert_request (TAO_ServerRequest & server_request,
+                                    TAO_OutputCDR & output) = 0;
+
   virtual void convert_reply (TAO_ServerRequest & server_request,
                               TAO::Argument * const args[],
                               size_t nargs) = 0;
+
+  virtual void dsi_convert_reply (TAO_ServerRequest & server_request,
+                                  TAO_InputCDR & input) = 0;
 
   virtual void handle_corba_exception (TAO_ServerRequest & server_request,
                                        CORBA::Exception *exception) = 0;

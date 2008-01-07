@@ -24,16 +24,8 @@ TAO_AMI_Arguments_Converter_Impl::convert_request (
   // and not just the inout arguments we need to expand the client arguments
   // to be list of Arguments.
 
-  CORBA::ULong const nrarg = server_request.operation_details ()->args_num ();
-
   TAO_OutputCDR output;
-  for (CORBA::ULong i = 1; i < nrarg; ++i)
-    {
-    if (!(server_request.operation_details ()->args()[i])->marshal (output))
-        {
-          throw ::CORBA::BAD_PARAM ();
-        }
-    }
+  this->dsi_convert_request (server_request, output);
 
   TAO_InputCDR input (output);
   for (CORBA::ULong j = 1; j < nargs; ++j)
@@ -50,6 +42,23 @@ TAO_AMI_Arguments_Converter_Impl::convert_request (
   details->use_stub_args (false);
 }
 
+void 
+TAO_AMI_Arguments_Converter_Impl::dsi_convert_request (
+    TAO_ServerRequest & server_request,
+    TAO_OutputCDR & output)
+{
+  // The AMI requests on client side just has the in and inout arguments
+  CORBA::ULong const nrarg = server_request.operation_details ()->args_num ();
+
+  for (CORBA::ULong i = 1; i < nrarg; ++i)
+    {
+    if (!(server_request.operation_details ()->args()[i])->marshal (output))
+        {
+          throw ::CORBA::BAD_PARAM ();
+        }
+    }
+}
+
 void
 TAO_AMI_Arguments_Converter_Impl::convert_reply (
     TAO_ServerRequest & server_request,
@@ -59,8 +68,6 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
   if (server_request.operation_details ()->reply_dispatcher ())
     {
       TAO_OutputCDR output;
-      TAO_Pluggable_Reply_Params params (0);
-      params.reply_status (GIOP::NO_EXCEPTION);
       for (CORBA::ULong j = 0; j < nargs; ++j)
         {
           if (!(args[j]->marshal (output)))
@@ -69,6 +76,19 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
             }
         }
       TAO_InputCDR input (output);
+      this->dsi_convert_reply (server_request, input);
+    }
+}
+
+void 
+TAO_AMI_Arguments_Converter_Impl::dsi_convert_reply (
+    TAO_ServerRequest & server_request,
+    TAO_InputCDR & input)
+{
+  if (server_request.operation_details ()->reply_dispatcher ())
+    {
+      TAO_Pluggable_Reply_Params params (0);
+      params.reply_status (GIOP::NO_EXCEPTION);
       params.input_cdr_ = &input;
       server_request.operation_details ()->
         reply_dispatcher ()->dispatch_reply (params);
