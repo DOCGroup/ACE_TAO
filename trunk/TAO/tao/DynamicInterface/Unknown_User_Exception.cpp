@@ -99,7 +99,7 @@ CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &)
 const char *
 CORBA::UnknownUserException::_rep_id (void) const
 {
-  this->exception_->_tao_get_typecode ()->id ();
+  return this->exception_->_tao_get_typecode ()->id ();
 }
 
 CORBA::TypeCode_ptr
