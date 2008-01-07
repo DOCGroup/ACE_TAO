@@ -151,11 +151,9 @@ private:
   u_int counter_;
   // counter of the number of priorities used within a grain.
 
-  // Set a task_handle string starting with "@", so we are able to
+  // Set a task_name string starting with "@", so we are able to
   // accurately count the number of context switches.
-  // On VxWorks, ACE_hthread_t is a char *, making the string
-  // manipulations in the .cpp file valid.
-  ACE_hthread_t task_handle_;
+  char* task_name_;
 
   ACE_Time_Value delta_;
   // elapsed time for the latency tests.

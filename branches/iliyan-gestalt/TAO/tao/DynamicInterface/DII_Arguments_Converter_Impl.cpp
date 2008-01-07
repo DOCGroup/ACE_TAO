@@ -76,11 +76,56 @@ TAO_DII_Arguments_Converter_Impl::convert_request (
 }
 
 void
-TAO_DII_Arguments_Converter_Impl::convert_reply (
-    TAO_ServerRequest & /* server_request */,
-    TAO::Argument * const /*args*/[],
-    size_t /*nargs*/)
+TAO_DII_Arguments_Converter_Impl::dsi_convert_request (
+    TAO_ServerRequest & server_request,
+    TAO_OutputCDR & output)
 {
+  // The DII requests on client side always have two arguments
+  // - one is the return argument and the other is NVList_Argument.
+  CORBA::NVList_ptr lst
+    = static_cast<TAO::NVList_Argument *> (
+        server_request.operation_details ()->args()[1])->arg ();
+
+  // Only marshal the in(out) arguments since we use this to demarshal
+  // these values in the serverside argument list.
+  lst->_tao_encode (output, CORBA::ARG_IN | CORBA::ARG_INOUT);
+}
+
+void
+TAO_DII_Arguments_Converter_Impl::convert_reply (
+    TAO_ServerRequest & server_request,
+    TAO::Argument * const args[],
+    size_t nargs)
+{
+  TAO_OutputCDR output;
+  for (CORBA::ULong j = 0; j < nargs; ++j)
+    {
+      if (!(args[j]->marshal (output)))
+        {
+          TAO_OutputCDR::throw_skel_exception (errno);
+        }
+    }
+  TAO_InputCDR input (output);
+  this->dsi_convert_reply (server_request, input);
+}
+
+void
+TAO_DII_Arguments_Converter_Impl::dsi_convert_reply (
+    TAO_ServerRequest & server_request,
+    TAO_InputCDR & input)
+{
+  TAO::NamedValue_Argument * _ret_val
+    = static_cast<TAO::NamedValue_Argument *> (
+        server_request.operation_details ()->args()[0]);
+
+  _ret_val->demarshal (input);
+
+  CORBA::NVList_ptr lst
+    = static_cast<TAO::NVList_Argument *> (
+        server_request.operation_details ()->args()[1])->arg ();
+
+  lst->_tao_decode (input,
+                    CORBA::ARG_INOUT | CORBA::ARG_OUT);
 }
 
 void

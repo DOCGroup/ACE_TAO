@@ -298,7 +298,7 @@ main(
       arr_c[0][0] = 23;
       arr_c[1].length (1);
       arr_c[1][0] = 9;
- 
+
       ACE_DEBUG( (LM_INFO, ". MyArray()     ") );
       Test::MyArray_var arr_ret = foo->TestArray (arr_a, arr_b.out (), arr_c);
       CORBA::ULong zero (0), one (1); //Use ULong to avoid ambiguity
@@ -332,9 +332,9 @@ main(
 
     //-----------------------------------------------------------------------
     {
-      CORBA::Object_var a = CORBA::Object::_duplicate (foo);
+      CORBA::Object_var a = CORBA::Object::_duplicate (foo.in ());
       CORBA::Object_var b;
-      CORBA::Object_var c = CORBA::Object::_duplicate (a);
+      CORBA::Object_var c = CORBA::Object::_duplicate (a.in ());
       CORBA::Object_var ret = foo->TestObject (a.in (), b.out (), c.inout ());
     }
 

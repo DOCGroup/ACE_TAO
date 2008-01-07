@@ -78,13 +78,11 @@ public:
                                CORBA::NamedValue_ptr result,
                                CORBA::ExceptionList_ptr exceptions,
                                CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags
-                               ) = 0;
+                               CORBA::Flags req_flags) = 0;
 
   virtual CORBA::Request_ptr request (CORBA::Object_ptr obj,
                                       CORBA::ORB_ptr orb,
-                                      const char *op
-                                      ) = 0;
+                                      const char *op) = 0;
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
@@ -101,8 +99,7 @@ public:
   virtual void server_request_release (CORBA::ServerRequest_ptr req) = 0;
 
   // CORBA::ORB::create_exception_list.
-  virtual void create_exception_list (CORBA::ExceptionList_ptr &
-                                      ) = 0;
+  virtual void create_exception_list (CORBA::ExceptionList_ptr &) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

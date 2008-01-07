@@ -86,6 +86,9 @@ namespace CORBA
     static UnknownUserException * _downcast (CORBA::Exception *ex);
     static UnknownUserException const * _downcast (CORBA::Exception const * ex);
 
+    /// Return the repository ID of the Exception.
+    virtual const char * _rep_id (void) const;
+
     // = TAO specific extension.
 
     /// This class has a specific typecode.

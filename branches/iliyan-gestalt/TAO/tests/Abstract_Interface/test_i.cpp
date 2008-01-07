@@ -43,9 +43,16 @@ foo_i::base_op (const char * inarg)
   return retval._retn ();
 }
 
-passer_i::passer_i (PortableServer::POA_ptr poa)
- : poa_ (PortableServer::POA::_duplicate (poa))
+passer_i::passer_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+ : orb_ (CORBA::ORB::_duplicate (orb))
+ , poa_ (PortableServer::POA::_duplicate (poa))
 {
+}
+
+void
+passer_i::shutdown (void)
+{
+  this->orb_->shutdown (0);
 }
 
 void

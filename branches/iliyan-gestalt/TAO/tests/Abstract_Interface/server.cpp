@@ -41,9 +41,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Create and register factory for BaseNode.
       BaseNode_init *bn_factory = 0;
@@ -96,7 +94,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      passer_i servant (root_poa.in ());
+      passer_i servant (orb.in (), root_poa.in ());
       PortableServer::ObjectId_var id =
         root_poa->activate_object (&servant);
 
@@ -133,12 +131,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      ACE_Time_Value tv (10);
-      orb->run (tv);
+      orb->run ();
 
       // Destroy the POA, waiting until the destruction terminates
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }

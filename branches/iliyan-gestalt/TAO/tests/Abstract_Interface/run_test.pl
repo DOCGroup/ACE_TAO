@@ -10,6 +10,7 @@ use PerlACE::Run_Test;
 
 $debug = "";
 $which_test = "";
+$status = 0;
 
 foreach $i (@ARGV) {
     if ($i eq "-d") {
@@ -20,14 +21,15 @@ foreach $i (@ARGV) {
     }
 }
 
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorfilebase = "test.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
   $SV = new PerlACE::ProcessVX ("server",
                               "-ORBDottedDecimalAddresses 1 "
-                            . " -o test.ior");
+                            . " -o $iorfilebase");
 }
 else {
   $SV = new PerlACE::Process ("server",
@@ -45,17 +47,24 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
 
 $CL = new PerlACE::Process ("client",
                             " -k file://$iorfile "
-			    . " $debug "
-			    . " $which_test");
+                          . " $debug "
+                          . " $which_test");
 
-$client = $CL->SpawnWaitKill (20);
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
+}
+
 $server = $SV->WaitKill (20);
 
 unlink $iorfile;
 
-if ($server != 0 || $client != 0) {
-    exit 1;
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
 }
 
-exit 0;
+exit $status;
 

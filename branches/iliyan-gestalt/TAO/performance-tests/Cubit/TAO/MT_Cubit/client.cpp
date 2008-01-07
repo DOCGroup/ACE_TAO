@@ -75,7 +75,7 @@ Client_i::Client_i (void)
     num_priorities_ (0),
     grain_ (0),
     counter_ (0),
-    task_handle_ (0),
+    task_name_ (0),
     argc_ (0),
     argv_ (0),
     context_switch_ (0)
@@ -326,7 +326,7 @@ Client_i::activate_high_client (void)
 #if defined (ACE_HAS_VXTHREADS)
   // Set a task_handle string starting with "@", so we are able to
   // accurately count the number of context switches.
-  ACE_OS::strcpy (this->task_handle_,
+  ACE_OS::strcpy (this->task_name_,
                   "@High");
 #endif /* ACE_HAS_VXTHREADS */
 
@@ -336,6 +336,9 @@ Client_i::activate_high_client (void)
   ACE_DEBUG ((LM_DEBUG,
               "Creating 1 client with high priority of %d\n",
               this->high_priority_));
+
+  const char *t_name = this->task_name_;
+
   if (this->high_priority_client_->activate (
       GLOBALS::instance ()->thr_create_flags,
       1,
@@ -343,10 +346,11 @@ Client_i::activate_high_client (void)
       this->high_priority_,
       -1,
       0,
-      &this->task_handle_,
       0,
       0,
-      0) == -1)
+      0,
+      0,
+      &t_name) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p; priority is %d\n",
                        "activate failed",
@@ -393,9 +397,9 @@ Client_i::activate_low_client (void)
       const ACE_Time_Value delay (0L, 500000L);
       ACE_OS::sleep (delay);
 
-      // Set a task_handle string starting with "@", so we are able to
+      // Set a task_name string starting with "@", so we are able to
       // accurately count the number of context switches on VXWORKS
-      ACE_OS::sprintf (this->task_handle_,
+      ACE_OS::sprintf (this->task_name_,
                        "@Low%u",
                        i);
 #endif /* ACE_HAS_VXTHREADS */
@@ -405,6 +409,8 @@ Client_i::activate_low_client (void)
                   this->low_priority_));
       // The first thread starts at the lowest priority of all the low
       // priority clients.
+      const char *t_name = this->task_name_;
+
       if (this->low_priority_client_[i - 1]->activate (
           GLOBALS::instance ()->thr_create_flags,
           1,
@@ -412,10 +418,11 @@ Client_i::activate_low_client (void)
           this->low_priority_, // These are constructor defaults.
           -1,                  // int grp_id = -1,
           0,                   // ACE_Task_Base *task = 0,
-          &this->task_handle_, // ACE_hthread_t thread_handles[] = 0,
+          0,                   // ACE_hthread_t thread_handles[] = 0,
           0,                   // void *stack[] = 0,
           0,                   // size_t stack_size[] = 0,
-          0) == -1)
+          0,
+          &t_name) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%p; priority is %d\n",
                     "activate failed",
@@ -638,7 +645,7 @@ Client_i::do_priority_inversion_test (void)
   this->timer_.start ();
 #if defined (ACE_HAS_VXTHREADS)
   ctx = 0;
-  ACE_NEW_RETURN (this->task_handle_,
+  ACE_NEW_RETURN (this->task_name_,
                   char[TASK_HANDLE_LEN],
                   -1);
 #endif /* ACE_HAS_VXTHREADS */
