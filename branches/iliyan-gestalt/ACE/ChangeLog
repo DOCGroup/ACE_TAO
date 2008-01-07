@@ -1,3 +1,94 @@
+Sun Jan  6 19:55:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run bug 2936 in a static build
+
+Sun Jan  6 06:43:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IOStream_Test.cpp:
+          Fixed include and removed chorus support
+
+Sat Jan  5 07:03:36 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ChangeLog:
+
+          Fixed incomplete entry below.
+
+Fri Jan  4 23:49:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/Hash_Map_Manager_Test.cpp:
+
+          Removed std::count_if sanity check since std::count_if is not
+          supported on Sun Studio 10.
+
+Fri Jan  4 18:47:56 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/generate_doxygen.pl:
+
+          Added support for peer-based layout of ACE+TAO+CIAO, and also fixed
+          the use of TAGFILES when the -html_output option is used.
+
+Thu Jan  3 14:29:28 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/Hash_Map_Manager_Test.cpp:
+
+           Moved the Key_Equal_To struct to the top of the file.
+
+Thu Jan  3 14:21:40 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/Hash_Map_Manager_Test.cpp:
+
+          Removed ACE_HAS_STDCPP_STL_INCLUDES guard so the test can
+          always execute the test_STL_algorithm () function if it
+          compiles.
+
+Thu Jan  3 01:06:23 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/Hash_Map_Manager_Test.cpp:
+
+          Fixed compilation error on non-Windows systems. For some
+          reason, I used TCHAR instead of ACE_TCHAR. :/
+
+Thu Jan  3 00:47:36 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.h:
+
+          Increased support for using ACE_Hash_Map_*_Iterator with
+          functions in the STL <algorithm> header file. This involved
+          defining all the traits required by std::iterator_traits
+          for all the iterator types.
+
+        * tests/Hash_Map_Manager_Test.cpp:
+
+          Updated the test to check if the ACE_Hash_Map_*_Iterator
+          classes are able to compile with simple STL <algorithm>
+          cases. If the target platform does not support STL or
+          our iterators, this compilation will fail.
+
+Mon Dec 31 18:32:29 UTC 2007  Chris Cleeland  <cleeland@ociweb.com>
+
+        * bin/PerlACE/Process_Unix.pm:
+
+          Integrated a change originally made in OCITAO 1.4a to use a
+          non-blocking waitpid() call in a loop (max 5 seconds) to avoid
+          hanging the perl process in case waitpid() doesn't return.
+
+Sun Dec 30 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Simplify the setup for VxWorks. We have GNU and config files for each
+        specific release, but the end user can just include the two new files
+        below and we will select the specific file required
+
+        * include/makeinclude/platform_vxworks.GNU:
+          New file, based on the environment variable WIND_PLATFORM we
+          select a specific VxWorks GNU file. The WIND_PLATFORM environment
+          variable is set by the wrenv tool
+
+        * ace/config-vxworks.h:
+          Based on ACE_VXWORKS we include a specific vxworks config file.
+          ACE_VXWORKS is added to the compiler flags when using the ACE
+          GNU makefiles.
+
 Fri Dec 28 18:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.6.GNU:

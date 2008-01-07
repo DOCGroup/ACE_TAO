@@ -1,3 +1,23 @@
+Mon Jan  7 21:09:24 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * .:
+        * COPYING:
+        * ChangeLog:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/config-vxworks.h:
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/generate_doxygen.pl:
+        * bin/tao_orb_tests.lst:
+        * include/makeinclude/platform_macosx_leopard.GNU:
+        * include/makeinclude/platform_vxworks.GNU:
+        * include/makeinclude/platform_vxworks6.6.GNU:
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/IOStream_Test.cpp:
+
+        Merged revisions 80352-80353, 80355-80358, 80365-80367,
+        80372-80375, 80378, 80381 via svnmerge from
+        https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk/ACE
+
 Fri Dec 28 22:17:18 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Dynamic_Service.h:

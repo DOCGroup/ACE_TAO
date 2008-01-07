@@ -453,9 +453,17 @@ sub Kill ($)
 
     if ($self->{RUNNING} && !defined $ENV{'ACE_TEST_WINDOW'}) {
         kill ('KILL', $self->{PROCESS});
-        waitpid ($self->{PROCESS}, 0);
-        if (! $ignore_return_value) {
-            $self->check_return_value ($?);
+        for(my $i = 0; $i < 10; $i++) {
+          my $pid = waitpid ($self->{PROCESS}, WNOHANG);
+          if ($pid > 0) {
+            if (! $ignore_return_value) {
+              $self->check_return_value ($?);
+            }
+            last;
+          }
+          else {
+            select(undef, undef, undef, .5);
+          }
         }
     }
 
