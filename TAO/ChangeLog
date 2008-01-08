@@ -1,3 +1,12 @@
+Tue Jan  8 10:11:48 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Active_Policy_Strategies.inl:
+        * tao/PortableServer/Active_Policy_Strategies.h:
+        * tao/PortableServer/Root_POA.cpp:
+          Fixed bug 3184 which was about leaks of POA manager and strategies
+          in active_policy_strategies_ inside TAO_Root_POA constructor in
+          case if exception is thrown in that constructor.
+
 Mon Jan  7 15:43:12 UTC 2008  Martin Corino <mcorino@remedy.nl>
 
         * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
