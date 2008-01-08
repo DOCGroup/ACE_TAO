@@ -1,0 +1,24 @@
+// $Id$
+
+#ifndef RACE_INPUT_ADAPTER_BASE_IDL
+#define RACE_INPUT_ADAPTER_BASE_IDL
+
+#include <Components.idl>
+#include "RACE/Conductor/Conductor.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    module Input_Adapter
+    {
+      component Input_Adapter_Base
+      {
+        uses Conductor::Admin conductor;
+      };
+    };
+
+  };
+};
+
+#endif /* RACE_INPUT_ADAPTER_BASE_IDL */

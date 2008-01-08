@@ -8,7 +8,7 @@ namespace CIAO
 {
   namespace RACE
   {
-    namespace SA_POP_IA
+    namespace Input_Adapter
     {
       namespace CIDL_SA_POP_IA_Component_Impl
       {
@@ -21,7 +21,7 @@ namespace CIAO
         {
         }
 
-        ::CIAO::RACE::SA_POP_IA::CCM_Admin_ptr
+        ::CIAO::RACE::Input_Adapter::CCM_Admin_ptr
         SA_POP_IA_Component_exec_i::get_admin ()
         {
           std::string msg = "SA_POP_IA_Component_exec_i::"
@@ -92,7 +92,7 @@ namespace CIAO
 
         extern "C" SA_POP_INPUT_ADAPTER_EXEC_Export ::Components::
         HomeExecutorBase_ptr
-        create_CIAO_RACE_SA_POP_IA_SA_POP_IA_Component_Home_Impl (void)
+        create_CIAO_RACE_Input_Adapter_SA_POP_IA_Component_Home_Impl (void)
         {
           ::Components::HomeExecutorBase_ptr retval =
             ::Components::HomeExecutorBase::_nil ();

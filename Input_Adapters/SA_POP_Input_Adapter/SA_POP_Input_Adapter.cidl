@@ -6,7 +6,7 @@ module CIAO
 {
   module RACE
   {
-    module SA_POP_IA
+    module Input_Adapter
     {
       composition session SA_POP_IA_Component_Impl
       {

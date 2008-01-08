@@ -1,6 +1,7 @@
 workspace {
   common
   Output_Adapters/DAnCE_Output_Adapter
+  Input_Adapters/Base
   Input_Adapters/SA_POP_Input_Adapter
   Data_Base
   utils

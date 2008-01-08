@@ -85,24 +85,6 @@
     </configProperty>
   </instance>
 
-  <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component">
-    <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component</name>
-    <node>RACE_Node</node>
-    <source/>
-    <implementation>_906BBE3F-8014-40DE-A26D-E7753D38BBC7</implementation>
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SA_POP_IA_Component.ior</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
   <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Data_Base_Component">
     <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Data_Base_Component</name>
     <node>RACE_Node</node>
@@ -197,19 +179,23 @@
     </configProperty>
   </instance>
 
-  <connection>
-    <name>conductor_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</name>
-    <internalEndpoint>
-      <portName>conductor</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>admin</portName>
-      <kind>Facet</kind>
-      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</instance>
-    </internalEndpoint>
-  </connection>
+  <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component">
+    <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component</name>
+    <node>RACE_Node</node>
+    <source/>
+    <implementation>_906BBE3F-8014-40DE-A26D-E7753D38BBC7</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SA_POP_IA_Component.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
 
   <connection>
     <name>DB_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Data_Base_Component</name>
@@ -292,6 +278,20 @@
       <portName>utils</portName>
       <kind>Facet</kind>
       <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.TM_Proxy_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>conductor_adminRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</name>
+    <internalEndpoint>
+      <portName>conductor</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.SA_POP_IA_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>admin</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE.RACE_Assembly.Conductor_Component</instance>
     </internalEndpoint>
   </connection>
 
@@ -400,7 +400,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CIAO_RACE_SA_POP_IA_SA_POP_IA_Component_Home_Servant</string>
+          <string>create_CIAO_RACE_Input_Adapter_SA_POP_IA_Component_Home_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -418,7 +418,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CIAO_RACE_SA_POP_IA_SA_POP_IA_Component_Home_Impl</string>
+          <string>create_CIAO_RACE_Input_Adapter_SA_POP_IA_Component_Home_Impl</string>
         </value>
       </value>
     </execParameter>

@@ -5,14 +5,13 @@
 #include <Components.idl>
 #include "RACE/common/OpString.idl"
 #include "RACE/common/RACE_common.idl"
-
-#include "RACE/Conductor/Conductor.idl"
+#include "RACE/Input_Adapters/Base/Input_Adapter_Base.idl"
 
 module CIAO
 {
   module RACE
   {
-    module SA_POP_IA
+    module Input_Adapter
     {
       interface Admin
       {
@@ -45,12 +44,9 @@ module CIAO
 
       };
 
-      component SA_POP_IA_Component
+      component SA_POP_IA_Component : Input_Adapter_Base
       {
         provides Admin admin;
-
-        uses Conductor::Admin conductor;
-
       };
 
       home SA_POP_IA_Component_Home manages SA_POP_IA_Component
