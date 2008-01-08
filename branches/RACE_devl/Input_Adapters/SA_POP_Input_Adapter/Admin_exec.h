@@ -10,12 +10,12 @@ namespace CIAO
 {
   namespace RACE
   {
-    namespace SA_POP_IA
+    namespace Input_Adapter
     {
       namespace CIDL_SA_POP_IA_Component_Impl
       {
         class SA_POP_INPUT_ADAPTER_EXEC_Export Admin_exec_i
-          : public virtual ::CIAO::RACE::SA_POP_IA::CCM_Admin,
+          : public virtual ::CIAO::RACE::Input_Adapter::CCM_Admin,
             public virtual TAO_Local_RefCounted_Object
         {
           public:

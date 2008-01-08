@@ -5,7 +5,7 @@ namespace CIAO
 {
   namespace RACE
   {
-    namespace SA_POP_IA
+    namespace Input_Adapter
     {
       namespace CIDL_SA_POP_IA_Component_Impl
       {

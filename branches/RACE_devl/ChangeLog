@@ -1,3 +1,38 @@
+Tue Jan  8 19:21:02 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Input_Adapters/Base/Input_Adapter_Base.idl:
+        * Input_Adapters/Base/Input_Adapter_Base.mpc:
+        * Input_Adapters/Base/Input_Adapter_Base_stub_export.h:
+        * Input_Adapters/Base/Input_Adapter_Base_svnt_export.h:
+
+        Added the Input_Adapter_Base component.
+
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.cidl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
+
+        Updated the SA_POP_IA component so that it derives from the
+        Input_Adapter_Base component.
+
+        * descriptors/RACE.cdp:
+
+        Regenerated the descriptor.
+
+        * RACE.mwc:
+
+        Updated the project file to include Input_Adapter/Base.
+
+        * Input_Adapters/Base/Input_Adapter.idl:
+        * Input_Adapters/Base/Input_Adapter.mpc:
+        * Input_Adapters/Base/Input_Adapter_stub_export.h:
+        * Input_Adapters/Base/Input_Adapter_svnt_export.h:
+
+        Removed these files.
+
 Mon Jan  7 22:14:22 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Conductor/Admin_exec.h:
