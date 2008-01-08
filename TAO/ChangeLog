@@ -1,3 +1,9 @@
+Tue Jan  8 21:56:58 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/TAO_IDL.mwc:
+          Filled this file to make it useful.  Builds all necessary dependencies
+          for tao_idl, which is useful in cross-compile builds.
+
 Tue Jan  8 10:11:48 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/PortableServer/Active_Policy_Strategies.inl:
