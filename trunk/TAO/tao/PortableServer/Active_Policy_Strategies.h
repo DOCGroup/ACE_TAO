@@ -91,6 +91,22 @@ namespace TAO
       IdUniquenessStrategyFactory *id_uniqueness_strategy_factory_;
       IdAssignmentStrategyFactory *id_assignment_strategy_factory_;
     };
+
+    /**
+     * This class quards the cleanup of strategies if something went wrong
+     * in the code that called Active_Policy_Strategies::update().
+     */
+    class Active_Policy_Strategies_Cleanup_Guard
+    {
+    public:
+      Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies *p);
+      ~Active_Policy_Strategies_Cleanup_Guard (void);
+
+      Active_Policy_Strategies *_retn (void);
+
+    private:
+      Active_Policy_Strategies *ptr_;
+    };
   }
 }
 
