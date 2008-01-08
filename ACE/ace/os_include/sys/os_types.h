@@ -143,7 +143,7 @@ typedef double ACE_timer_t;
 #endif
 
 #if defined (ACE_WIN32) && !defined(__MINGW32__)
-   typedef long pid_t;
+   typedef int pid_t;
 #endif /* ACE_WIN32 */
 
 # if !defined (ACE_INVALID_PID)
