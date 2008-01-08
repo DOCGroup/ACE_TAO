@@ -1882,7 +1882,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                           exitcode));
             }
         }
-
+      
       // Adjust the file offset to the EOF for the server skeleton
       // file.
       ACE_OS::fseek (this->strategy_->get_out_stream ()->file (),
