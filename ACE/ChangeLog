@@ -1,3 +1,10 @@
+Tue Jan  8 09:02:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_types.h:
+          Changed pid_t to be an int on windows. This fixes bugzilla
+          3190, thanks to Nathan Ernst <nathan dot ernst at citadelgroup dot com>
+          for reporting this
+
 Sun Jan  6 19:55:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
