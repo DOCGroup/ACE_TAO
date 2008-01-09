@@ -112,9 +112,6 @@ namespace CIAO
         (const ::CIAO::RACE::OperationalString & opstring,
          const char * ID) throw (UnknownID)
         {
-          // @@ TODO: Now that we have ReDAC working, we need to redeploy
-          // the string if it has ben already deployed in addition to
-          // modifying it in the database.
           try
             {
               return this->conductor_->modify_string(opstring, ID);

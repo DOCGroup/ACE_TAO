@@ -25,8 +25,7 @@ namespace CIAO
           const ::CIAO::RACE::OperationalString & opstring,
           ::CORBA::String_out ID)
         {
-          return false;
-          //return this->controller_->register_string (opstring, ID);
+          return this->controller_->register_string (opstring, ID);
         }
 
           ::CORBA::Boolean

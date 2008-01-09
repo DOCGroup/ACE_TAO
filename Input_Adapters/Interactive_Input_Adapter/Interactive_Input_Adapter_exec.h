@@ -4,7 +4,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Interactive_Input_Adapter_svnt.h"
+#include "Interactive_Input_AdapterEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -12,106 +12,70 @@
 
 #include "Interactive_Input_Adapter_exec_export.h"
 #include "tao/LocalObject.h"
+#include "Logger.h"
 
 namespace CIAO
 {
   namespace RACE
   {
-    namespace CIDL_Interactive_Input_Adapter_Impl
+    namespace Input_Adapter
     {
-      class INTERACTIVE_INPUT_ADAPTER_EXEC_Export Interactive_Input_Adapter_exec_i
-      : public virtual Interactive_Input_Adapter_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      namespace CIDL_Interactive_IA_Component_Impl
       {
-        public:
-        Interactive_Input_Adapter_exec_i (void);
+        class INTERACTIVE_INPUT_ADAPTER_EXEC_Export
+        Interactive_IA_Component_exec_i
+          : public virtual Interactive_IA_Component_Exec,
+            public virtual TAO_Local_RefCounted_Object
+        {
+          public:
+          Interactive_IA_Component_exec_i (void);
 
-        virtual ~Interactive_Input_Adapter_exec_i (void);
+          virtual ~Interactive_IA_Component_exec_i (void);
 
-        virtual void
-        push_deployment (::CIAO::RACE::Deploy_Input *ev)
-          throw (CORBA::SystemException);
+          virtual ::CIAO::RACE::Input_Adapter::CCM_Admin_ptr
+          get_admin ();
 
-        virtual void
-        push_meta_data (::CIAO::RACE::Metadata *mde)
-          throw (CORBA::SystemException);
+          virtual void
+          set_session_context (
+            ::Components::SessionContext_ptr ctx);
 
+          virtual void ciao_preactivate ();
 
-        virtual void
-        set_session_context (
-          ::Components::SessionContext_ptr ctx
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+          virtual void ciao_postactivate ();
 
-        virtual void
-        ciao_preactivate (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+          virtual void ccm_activate ();
 
-        virtual void
-        ciao_postactivate (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+          virtual void ccm_passivate ();
 
-        virtual void
-        ccm_activate (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+          virtual void ccm_remove ();
 
-        virtual void
-        ccm_passivate (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+          private:
+          ::CIAO::RACE::Input_Adapter::
+          CCM_Interactive_IA_Component_Context_var context_;
 
-        virtual void
-        ccm_remove (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+          Logger logger_;
 
-        protected:
-        Interactive_Input_Adapter_Context *context_;
-      };
+        };
 
-      class INTERACTIVE_INPUT_ADAPTER_EXEC_Export Interactive_Input_Adapter_Home_exec_i
-      : public virtual Interactive_Input_Adapter_Home_Exec,
-      public virtual TAO_Local_RefCounted_Object
-      {
-        public:
-        Interactive_Input_Adapter_Home_exec_i (void);
-        virtual ~Interactive_Input_Adapter_Home_exec_i (void);
+        class INTERACTIVE_INPUT_ADAPTER_EXEC_Export
+        Interactive_IA_Component_Home_exec_i
+          : public virtual Interactive_IA_Component_Home_Exec,
+            public virtual TAO_Local_RefCounted_Object
+        {
+          public:
+          Interactive_IA_Component_Home_exec_i (void);
 
-        // Supported or inherited operations.
+          virtual ~Interactive_IA_Component_Home_exec_i (void);
 
-        // Home operations.
+          virtual ::Components::EnterpriseComponent_ptr
+          create ();
+        };
 
-        // Factory and finder operations.
-
-        // Attribute operations.
-
-        // Implicit operations.
-
-        virtual ::Components::EnterpriseComponent_ptr
-        create (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
-      };
-
-      extern "C" INTERACTIVE_INPUT_ADAPTER_EXEC_Export ::Components::HomeExecutorBase_ptr
-      create_CIAO_RACE_Interactive_Input_Adapter_Home_Impl (void);
+        extern "C" INTERACTIVE_INPUT_ADAPTER_EXEC_Export
+        ::Components::HomeExecutorBase_ptr
+        create_CIAO_RACE_Input_Adapter_Interactive_IA_Component_Home_Impl
+        (void);
+      }
     }
   }
 }

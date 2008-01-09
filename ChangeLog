@@ -1,3 +1,70 @@
+Wed Jan  9 21:28:23 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Conductor/Admin_exec.h:
+        * Conductor/Admin_exec.cpp:
+        * Conductor/Conductor.idl:
+        * Conductor/Conductor_exec.cpp:
+
+        Updated these files. In this updated version, the Admin servant
+        contacts the controller to register a string with the controller,
+        initializes and starts the controller.
+
+        * Controller/EUCON/Controller.cpp:
+
+        Added more debug messages.
+
+        * Controller/EUCON/Operations_exec.cpp:
+
+        Updated this file so that the operations servant forwards the
+        invocations to the concrete implementation of the controller.
+
+
+
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.cidl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec_export.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_stub_export.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_svnt_export.h:
+
+        Checking in the initial implementation of the interactive input
+        adapter.
+
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.cidl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+
+        Made cosmetic modifications.
+
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+
+        Enhansed the OA so that it converts the opstring to a deployment
+        plan without depending on the repo man.
+
+        * Tester/Interactive_IA_Tester.cpp:
+
+        Checking in an Interactive Input Adapter tester.
+
+        * Tester/tester.mpc:
+
+        Updated this file.
+
+        * descriptors/RACE.cdp:
+
+        Regenerated the descriptor. The updated RACE assembly uses the
+        IIA, and not the SA_POP_IA.
+
+        * descriptors/RACE_SA-POP_IA.cdp:
+
+        Checking in a deployment plan in which RACE uses the SA_POP_IA.
+
+        * Tester/tester.cpp:
+
+          Removed this file.
+
 Tue Jan  8 19:21:02 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Input_Adapters/Base/Input_Adapter_Base.idl:

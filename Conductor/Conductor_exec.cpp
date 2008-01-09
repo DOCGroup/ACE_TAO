@@ -105,7 +105,7 @@ namespace CIAO
         {
           std::string msg = "Conductor_Component_exec_i::"
                             "Creating the admin object.\n";
-          this->logger_.log (msg);
+          this->logger_.log (msg);          
           return (new Admin_exec_i (this->context_, this->logger_));
         }
 

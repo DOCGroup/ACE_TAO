@@ -1,5 +1,5 @@
 #include "Admin_exec.h"
-#include <string>
+#include <sstream>
 
 namespace CIAO
 {
@@ -18,12 +18,15 @@ namespace CIAO
             {
               this->DB_ = context->get_connection_DB ();
               this->OA_ = context->get_connection_OA ();
+              this->Controller_Admin_ = context->get_connection_controllerAdmin();
+              this->Controller_Ops_ = context->get_connection_controlOperations();
             }
           catch (CORBA::Exception &ex)
             {
               std::string msg = "Exception caught::Admin_exec:: "
                                 "Error while resolving references to "
-                                "DAnCE OA & RACE Data Base objects!\n";
+                                "DAnCE_OA/RACE_Data_Base/Controller_Admin/Controlelr_Ops "
+                                "objects!\n";
               msg += ex._info ().c_str();
               this->logger_.log (msg);
 
@@ -83,14 +86,28 @@ namespace CIAO
           const ::CIAO::RACE::OperationalString & opstring,
           ::CORBA::String_out ID)
         {
+          std::stringstream msg;
+          msg << "Admin_exec_i::deploy_string:";
+          msg << "Trying to deploy string " << opstring.ID << ".\n";
           try
             {
               if (this->OA_->deploy_string (opstring))
+              {                  
+                msg << "Successfully deployed string. "
+                  << "Now trying to register witht he controller\n"; 
+                if (this->Controller_Ops_->register_string (opstring, ID))
                 {
-                  this->DB_->add_string (opstring);
-                  return true;
+                  msg << "Successfully resitered with the controller.\n";                      
                 }
-            }
+                else
+                {
+                  msg << "Oops! Error while resiterering with the controller.\n";                      
+                }
+                this->DB_->add_string (opstring);
+                this->logger_.log (msg.str());
+                return true;
+              }
+          }
           catch (CORBA::Exception &ex)
             {
               std::string msg = "Exception caught in "
@@ -130,12 +147,9 @@ namespace CIAO
         (const ::CIAO::RACE::OperationalString & opstring,
          const char * ID) throw (UnknownID)
         {
-          // @@ TODO: Now that we have ReDAC working, we need to redeploy
-          // the string if it has ben already deployed in addition to
-          // modifying it in the database.
           try
             {
-              if (this->OA_->deploy_string (opstring))
+              if (this->OA_->redeploy_string (opstring))
                 {
                   this->DB_->modify_string (opstring, ID);
                   return true;
@@ -170,6 +184,46 @@ namespace CIAO
             }
           return false;
         }
+
+        ::CORBA::Boolean
+        Admin_exec_i::init_system ()
+        {
+          std::stringstream msg;
+          msg << "Admin_exec_1::init_system:"
+              << "Trying to initialize the controller.\n";
+          if (this->Controller_Admin_->init_controller())
+          { 
+            msg << "Successfully initialized the controller.\n";
+            this->logger_.log(msg.str());
+            return true;
+          }
+          else
+          {
+            msg << "Error while initializing the controller.\n";
+            this->logger_.log(msg.str());
+            return false;
+          }
+        }
+
+        ::CORBA::Boolean
+        Admin_exec_i::start_system ()
+        {
+          std::stringstream msg;
+          msg << "Admin_exec_1::start_system:"
+              << "Trying to start the controller.\n";
+          if (this->Controller_Admin_->start_controller())
+          { 
+            msg << "Successfully started the controller.\n";
+            this->logger_.log(msg.str());
+            return true;
+          }
+          else
+          {
+            msg << "Error while starting the controller.\n";
+            this->logger_.log(msg.str());
+            return false;
+          }
+        }          
       }
     }
   }

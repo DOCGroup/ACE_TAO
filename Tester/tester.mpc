@@ -1,8 +1,8 @@
-project (Tester) : ciao_client_dnc, valuetype, ciao_deployment_stub {
+project (Interactive_IA_Tester) : ciao_client_dnc, valuetype, ciao_deployment_stub {
   avoids += ace_for_tao
-  exename = tester
-  after += Conductor_stub
-  libs += Conductor_Component_stub \
+  exename = Interactive_IA_Tester
+  after += Interactive_Input_Adapter_stub
+  libs += Interactive_Input_Adapter_stub\
           OpString_stub \
           RACE_common_stub
 
@@ -11,7 +11,7 @@ project (Tester) : ciao_client_dnc, valuetype, ciao_deployment_stub {
   }
 
   Source_Files {
-    tester.cpp
+    Interactive_IA_Tester.cpp
   }
 
   Header_Files {
