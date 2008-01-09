@@ -19,10 +19,22 @@ else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
 }
 
-$SV->Spawn ();
+$server = $SV->Spawn ();
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    exit 1;
+}
+
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+} 
 
 ## Slower hardware can require much more time to complete.
-$server = $SV->WaitKill ($PerlACE::wait_interval_for_process_creation);
+$server = $SV->WaitKill (90);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
