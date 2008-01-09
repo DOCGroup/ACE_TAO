@@ -113,20 +113,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      One_Impl *one_impl;
+      One_Impl *one_impl = 0;
       ACE_NEW_RETURN (one_impl,
                       One_Impl (orb.in ()),
                       1);
-      Two_Impl *two_impl;
+      Two_Impl *two_impl = 0;
       ACE_NEW_RETURN (two_impl,
                       Two_Impl (orb.in ()),
                       1);
 
-      Three_Impl *three_impl;
+      Three_Impl *three_impl = 0;
       ACE_NEW_RETURN (three_impl,
                       Three_Impl (orb.in ()),
                       1);
-
 
       PortableServer::ServantBase_var owner_transfer1 (one_impl);
       PortableServer::ServantBase_var owner_transfer2 (two_impl);
@@ -139,7 +138,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               poa_manager.in (),
                               policies);
 
-
       PortableServer::ObjectId_var oid1 =
         first_poa->activate_object (one_impl);
 
@@ -149,6 +147,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var oid3 =
         first_poa->activate_object (three_impl);
 
+      // Output the IOR to the <ior_output_file>
+      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s\n",
+                           ior_output_file),
+                           1);
+      ACE_OS::fprintf (output_file, "%s", "started");
+      ACE_OS::fclose (output_file);
 
       MT_Task task (first_poa.in (),
                     one_impl,
