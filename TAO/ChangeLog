@@ -1,3 +1,11 @@
+Wed Jan  9 11:54:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Servant_To_Reference_Test/run_test.pl:
+        * tests/Servant_To_Reference_Test/server.cpp:
+          When the server has started it writes a dummy ior file, that way
+          we can correctly handle the slow startup of the vxworks tests. Then
+          we can use the original timeout of 90 seconds again
+
 Tue Jan  8 21:56:58 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/TAO_IDL.mwc:
