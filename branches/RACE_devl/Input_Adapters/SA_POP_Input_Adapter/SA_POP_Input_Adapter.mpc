@@ -2,8 +2,8 @@ project(SA_POP_Input_Adapter_stub): ciao_client_dnc, ciao_deployment_stub {
 
   sharedname = SA_POP_IA_Component_stub
   after += OpString_stub \
-           Conductor_stub\
            Input_Adapter_Base_stub
+
   idlflags -= -GT
   idlflags += -St \
               -Wb,stub_export_macro=SA_POP_INPUT_ADAPTER_STUB_Export \

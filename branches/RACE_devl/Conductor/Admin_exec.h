@@ -50,6 +50,10 @@ namespace CIAO
           virtual ::CORBA::Boolean tear_down_string (const char * ID)
             throw (UnknownID);
 
+          virtual ::CORBA::Boolean init_system ();            
+
+          virtual ::CORBA::Boolean start_system();            
+
           private:
           /// Object reference of the data base admin object.
           Data_Base::Admin_var DB_;
@@ -58,10 +62,10 @@ namespace CIAO
           DAnCE_OA::Admin_var OA_;
 
           /// Object reference of the Controller's Admin object.
-          //Controller::Admin Controller_Admin_;
+          Controller::Admin_var Controller_Admin_;
 
           /// Object reference of the Controller's Control_Operations object.
-          //Controller::Control_Operations Controller_Ops_;
+          Controller::Control_Operations_var Controller_Ops_;
 
           Logger &logger_;
         };

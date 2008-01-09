@@ -52,6 +52,12 @@ module CIAO
         boolean tear_down_string (in UUID ID)
           raises (UnknownID);
 
+        /// Initialize the system.
+        boolean init_system();
+
+        /// Start the controller.
+        boolean start_system();
+
       };
 
       component Conductor_Component  supports Test

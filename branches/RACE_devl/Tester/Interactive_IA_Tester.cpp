@@ -1,7 +1,7 @@
-#include "RACE/Conductor/ConductorC.h"
+#include "RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_AdapterC.h"
 #include "ace/Get_Opt.h"
 
-// IOR file of the Conductor.
+// IOR file of the Interactive Input Adapter.
 const char * ior = 0;
 const char * filename = 0;
 bool redeploy = false;
@@ -44,7 +44,7 @@ parse_args (int argc, char *argv[])
 
   if (ior  == 0)
     {
-      ior = "file://Conductor_Component.ior";
+      ior = "file://Interactive_IA_Component.ior";
     }
 
   return 0;
@@ -67,28 +67,29 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->string_to_object (ior);
 
-      ::CIAO::RACE::Conductor::Test_var test =
-        ::CIAO::RACE::Conductor::Test::_narrow (obj.in ());
+      ::CIAO::RACE::Input_Adapter::Interactive_IA_Component_var iia =
+      ::CIAO::RACE::Input_Adapter::Interactive_IA_Component::_narrow
+          (obj.in ());
 
-      if (CORBA::is_nil (test.in ()))
+      if (CORBA::is_nil (iia.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to acquire Conductor's objref\n"),
+                             "Unable to acquire Interactive Input Adapter's "
+                             "objref\n"),
                             -1);
         }
 
+      // Now that we have obtained the object reference to the IIA
+      // component, we try to acquire the objref to the Admin interface.
+
+      ::CIAO::RACE::Input_Adapter::Admin_var admin =
+          iia->provide_admin ();
+
       if (filename)
       {
-        if (redeploy)
-          {
-            test->redeploy_plan (filename);
-          }
-
-        else
-          {
-            test->deploy_plan (filename);
-          }
-
+        ::CORBA::String_var id;
+        admin->deploy_plan (filename, id.out());
+        admin->start_system();
       }
 
       orb->destroy ();

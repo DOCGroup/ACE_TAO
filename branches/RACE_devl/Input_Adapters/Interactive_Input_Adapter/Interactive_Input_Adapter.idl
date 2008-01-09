@@ -1,42 +1,60 @@
-//Interactive_Input_Adapter.idl,v 1.1 2005/09/06 19:57:22 wotte Exp
+// $Id$
 #ifndef RACE_INTERACTIVE_INPUT_ADAPTER_IDL
 #define RACE_INTERACTIVE_INPUT_ADAPTER_IDL
 
 #include <Components.idl>
-#include "RACE/Input_Adapters/Base/Input_Adapter.idl"
+#include "RACE/Input_Adapters/Base/Input_Adapter_Base.idl"
 #include "RACE/common/RACE_common.idl"
-#include "ciao/Deployment_Packaging_Data.idl"
 
 module CIAO
 {
   module RACE
   {
-    eventtype Deploy_Input
+    module Input_Adapter
     {
-      public string plan_uri;
-      public string package_uri;
-      public Action command;
-    };
+      interface Admin
+      {
+        /// "Schedule" a plan for future deployment.
+        boolean add_plan (in string filename, out UUID ID);
 
-    eventtype Metadata
-    {
-      public Action command;
-      public Deployment::DeploymentPlan plan;
-      public Deployment::PackageConfiguration package;
-    };
+        /// Remove a plan that was scheduled for deployment. Raises
+        /// UnknownID.
+        boolean delete_plan (in UUID ID)
+          raises (UnknownID);
 
-    component Interactive_Input_Adapter : Input_Adapter
-    {
-      consumes Deploy_Input deployment;
+        /// Deploy the plan right away.
+        boolean deploy_plan (in string filename, out UUID ID);
 
-      consumes Metadata meta_data;
+        /// Deploy a plan that was previously scheduled via
+        /// add_plan. Raises UnknownID.
+        boolean deploy_plan_with_id (in UUID ID)
+          raises (UnknownID);
 
-    };
+        /// Modify a previously scheduled/deployed plan. Raises UnknownID.
+        boolean modify_plan (in string filename, in UUID ID)
+          raises (UnknownID);
 
-    home Interactive_Input_Adapter_Home manages Interactive_Input_Adapter
-    {
+        /// Teardown a plan. Raises UnknownID.
+        boolean tear_down_plan (in UUID ID)
+          raises (UnknownID);
+
+        /// Kick start the system.
+        boolean start_system ();
+
+      };
+
+      component Interactive_IA_Component : Input_Adapter_Base
+      {
+        provides Admin admin;
+      };
+
+      home Interactive_IA_Component_Home manages Interactive_IA_Component
+      {
+      };
     };
   };
+
 };
+
 
 #endif /* RACE_INTERACTIVE_INPUT_ADAPTER_IDL */

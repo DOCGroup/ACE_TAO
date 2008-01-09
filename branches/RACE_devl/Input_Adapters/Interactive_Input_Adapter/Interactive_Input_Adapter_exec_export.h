@@ -1,6 +1,6 @@
 
 // -*- C++ -*-
-// Interactive_Input_Adapter_exec_export.h,v 1.1 2005/09/06 19:57:22 wotte Exp
+// $Id$
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl INTERACTIVE_INPUT_ADAPTER_EXEC
 // ------------------------------
@@ -8,6 +8,10 @@
 #define INTERACTIVE_INPUT_ADAPTER_EXEC_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (INTERACTIVE_INPUT_ADAPTER_EXEC_HAS_DLL)
+#  define INTERACTIVE_INPUT_ADAPTER_EXEC_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && INTERACTIVE_INPUT_ADAPTER_EXEC_HAS_DLL */
 
 #if !defined (INTERACTIVE_INPUT_ADAPTER_EXEC_HAS_DLL)
 #  define INTERACTIVE_INPUT_ADAPTER_EXEC_HAS_DLL 1

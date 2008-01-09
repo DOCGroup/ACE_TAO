@@ -104,7 +104,8 @@ namespace CIAO
           return retval;
         }
 
-        extern "C" DANCE_OUTPUT_ADAPTER_EXEC_Export ::Components::HomeExecutorBase_ptr
+        extern "C" DANCE_OUTPUT_ADAPTER_EXEC_Export
+        ::Components::HomeExecutorBase_ptr
         create_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Home_Impl (void)
         {
           ::Components::HomeExecutorBase_ptr retval =

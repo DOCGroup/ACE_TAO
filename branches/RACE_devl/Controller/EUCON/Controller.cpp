@@ -22,7 +22,7 @@ namespace CIAO
         active_ (false),
         initialized_ (false),
         logger_ ("EUCON_Controller.log")
-      {       
+      {
         std::stringstream msg;
         msg << "Successfully created the controller object.\n";
         this->logger_.log (msg.str());
@@ -59,7 +59,7 @@ namespace CIAO
           catch (::CORBA::Exception &ex)
           {
             msg << "Exception caught in Controller::"
-                <<  "init_controller."              
+                <<  "init_controller."
                 << ex._info ().c_str();
 
             this->initialized_ = false;
@@ -75,6 +75,7 @@ namespace CIAO
       {
         std::stringstream msg;
         msg << "Trying to start the controller.\n";
+        //ACE_DEBUG ((LM_DEBUG, "PLEASE NOTE!!!!!!!!!!!!!!!!!!!!!%s\n", msg.str().c_str()));
         if (!this->active_)
         {
           if (this->initialized_)
@@ -83,7 +84,7 @@ namespace CIAO
 
             // This method should be called only after all opstrings
             // have been registered!
-            //this->controller_.init (this->tasks_);
+            this->controller_.init (this->tasks_);
 
             // Now activate the active object.
             if (this->activate () != 0)
@@ -155,6 +156,9 @@ namespace CIAO
           this->tasks_.push_back (task);
           msg << "done!\nSuccessfully registered string with ID:"
             << opstring.ID.in () << "\n";
+          ID = CORBA::string_dup(opstring.ID.in ());
+          this->logger_.log (msg.str());
+          return true;
         }
         else
         {
@@ -162,9 +166,10 @@ namespace CIAO
             << "controller is active.\n";
           msg << "First deactive the controller, and then try "
             << "registering a string.\n";
+          this->logger_.log (msg.str());
+          return false;
         }
-        this->logger_.log (msg.str());
-        return true;
+        
       }
 
       int
@@ -174,20 +179,22 @@ namespace CIAO
         {
           try
           {
-            ACE_DEBUG ((LM_DEBUG, "In controller periodic task!\nTrying to obtain the current domain...."));
+            ACE_DEBUG ((LM_DEBUG, "In controller periodic task!\n"
+                        "Trying to obtain the current domain...."));
             ::Deployment::Domain_var domain =
               this->system_monitor_->getSnapshot ();
             ACE_DEBUG ((LM_DEBUG, "done!\nNow parsing it..."));
             this->populate_domain_info (domain.in());
             ACE_DEBUG ((LM_DEBUG, "done!\n"));
-            //this->tasks_ = this->controller_.control_period(this->domain_,this->tasks_);
-            ACE_OS::sleep (this->interval_);            
+            //this->tasks_ =
+            //this->controller_.control_period(this->domain_,this->tasks_);
+            ACE_OS::sleep (this->interval_);
           }
           catch (::CORBA::Exception &ex)
           {
-            ACE_PRINT_EXCEPTION (ex, "Exception caught!\n");            
+            ACE_PRINT_EXCEPTION (ex, "Exception caught!\n");
             this->active_ = false;
-          }          
+          }
         }
         return 0;
       }
@@ -197,7 +204,7 @@ namespace CIAO
         (const ::Deployment::Domain& domain)
       {
         /// First, we dump the contents of the domain structure.
-        //  Deployment::DnC_Dump::dump (domain);        
+        //  Deployment::DnC_Dump::dump (domain);
 
         std::stringstream msg;
         msg << "Entering populate_doamin_info.\n";
@@ -209,7 +216,7 @@ namespace CIAO
 
         // For each node in the system domain, populate RACE::Domain info.
         msg << "Obtaining resource info for each node in the domain.\n";
-        
+
         for (::CORBA::ULong i = 0; i < nodes.length(); ++i)
         {
           msg << "Workin on node: " << nodes [i].name.in() << "...\n";
@@ -218,17 +225,17 @@ namespace CIAO
 
           // Obtian info regarding every resource in the domain.
           ::CIAO::RACE::Resource resource;
-          ::Deployment::Resources resources = nodes [i].resource;          
+          ::Deployment::Resources resources = nodes [i].resource;
           for (::CORBA::ULong j = 0; j < resources.length(); ++j)
           {
             // We care only about the processor resource.
             if (ACE_OS::strcmp (resources [j].name.in(), "Processor") == 0)
-            {                
+            {
 
               msg << "Trying to obtain current utilization and "
                   << "utilization set-point for resource "
                   << resources [j].name.in() << "\n";
-        
+
               resource.UUID = resources [j].name.in();
 
               // We need to parse the properties associated
@@ -249,7 +256,7 @@ namespace CIAO
                   {
                     value >>= resource.set_point;
                     msg << "Obtained set point! Value is: "
-                        << resource.set_point << "\n";                    
+                        << resource.set_point << "\n";
                   }
                 }
                 else if (ACE_OS::strcmp (props [k].name.in (), "Current")
@@ -274,10 +281,10 @@ namespace CIAO
             }
           }
           // Now that the node structure has been fully populated, we add
-          // it to the doamin. 
-          temp_domain.nodes.push_back (node);          
+          // it to the doamin.
+          temp_domain.nodes.push_back (node);
           msg << "Added node: " << nodes [i].name.in()
-              << " to the doamin structure.\n";          
+              << " to the doamin structure.\n";
         }
         this->logger_.log (msg.str());
         this->domain_ = temp_domain;

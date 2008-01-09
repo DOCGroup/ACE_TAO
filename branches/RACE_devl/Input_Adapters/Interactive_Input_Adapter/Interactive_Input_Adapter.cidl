@@ -1,3 +1,4 @@
+// $Id:$
 #ifndef RACE_INTERACTIVE_INPUT_ADAPTER_CIDL
 #define RACE_INTERACTIVE_INPUT_ADAPTER_CIDL
 
@@ -7,13 +8,16 @@ module CIAO
 {
   module RACE
   {
-    composition session Interactive_Input_Adapter_Impl
+    module Input_Adapter
     {
-      home executor Interactive_Input_Adapter_Home_Exec
+      composition session Interactive_IA_Component_Impl
+      {
+        home executor Interactive_IA_Component_Home_Exec
         {
-          implements RACE::Interactive_Input_Adapter_Home;
-          manages    Interactive_Input_Adapter_Exec;
+          implements Interactive_IA_Component_Home;
+          manages    Interactive_IA_Component_Exec;
         };
+      };
     };
   };
 };
