@@ -624,7 +624,7 @@ public:
   }
 
 private:
-  /// the array with which we are dealing
+  /// the sequence with which we are dealing
   generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
 
   /// Our current position in the sequence.
