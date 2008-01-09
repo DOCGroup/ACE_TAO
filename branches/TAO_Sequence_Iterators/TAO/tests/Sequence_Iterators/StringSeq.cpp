@@ -58,7 +58,7 @@ int test_sequence ()
   FAIL_RETURN_IF (a_it != a.begin ());
 
   // test non const dereferencing
-  char* value0 = *a_it;
+  typename ITERATOR_T::element_type value0 = *a_it;
   FAIL_RETURN_IF (ACE_OS::strcmp (value0, elem0_cstr) != 0);
 
   // test const dereferencing
@@ -159,8 +159,8 @@ int test_sequence ()
   std::ostringstream ostream;
   std::copy (a.begin (),
              a.end (),
-             std::ostream_iterator<CORBA::StringSeq::value_type> (ostream,
-                                                                  "\n"));
+             std::ostream_iterator<CORBA::StringSeq::const_value_type> (ostream,
+                                                                        "\n"));
 
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem0\nelem1\nelem2\nelem3\n") != 0);
@@ -177,17 +177,29 @@ int test_const_sequence ()
   const char * elem2_cstr = "elem2";
   const char * elem3_cstr = "elem3";
 
-  ::CORBA::StringSeq setup;;
+  ::CORBA::StringSeq setup;
   setup.length (4);
   setup[0] = CORBA::string_dup (elem0_cstr);
   setup[1] = CORBA::string_dup (elem1_cstr);
   setup[2] = CORBA::string_dup (elem2_cstr);
   setup[3] = CORBA::string_dup (elem3_cstr);
 
-  const ::CORBA::StringSeq a = setup;;
+  const ::CORBA::StringSeq a = setup;
 
   // test equality operator
+  // JWH2 - Below are (failed) attempts to make the compiler happy.
+  // The compiler wants to construct a UBS_Sequence_Iterator and
+  // complains about the constructor being passed a const sequence
+  // pointer when it expects a non-const pointer. Why is the compiler
+  // trying to construct a UBS_Sequence_Iterator rather than a
+  // Const_UBS_Sequence_Iterator??
+  //
   FAIL_RETURN_IF (!(a.begin () == a.begin ()));
+  //ITERATOR_T c_iter1 (a.begin ());
+  //::CORBA::StringSeq::const_iterator c_iter1 (a.begin ());
+  //::TAO::Const_UBS_Sequence_Iterator<TAO::unbounded_basic_string_sequence<char> > c_iter1 = a.begin ();
+  //ITERATOR_T c_iter2 = a.begin ();
+  //FAIL_RETURN_IF (!(c_iter1 == c_iter2));
 
   // test non-equality operator
   FAIL_RETURN_IF (a.end () != a.end ());
@@ -197,11 +209,13 @@ int test_const_sequence ()
   FAIL_RETURN_IF (a_it != a.begin ());
 
   // test non const dereferencing
-  char* value0 = *a_it;
-  FAIL_RETURN_IF (ACE_OS::strcmp (value0, elem0_cstr) != 0);
+  // JWH2 - I guess this test shouldn't be done since we are dealing with
+  // a const iterator. Is that right?
+  //typename ITERATOR_T::element_type value0 = *a_it;
+  //FAIL_RETURN_IF (ACE_OS::strcmp (value0, elem0_cstr) != 0);
 
   // test const dereferencing
-  const char* const value1 = *a_it;
+  typename ITERATOR_T::const_element_type value1 = *a_it;
   FAIL_RETURN_IF (ACE_OS::strcmp (value1, elem0_cstr) != 0);
 
   // test increment operation
@@ -298,8 +312,8 @@ int test_const_sequence ()
   std::ostringstream ostream;
   std::copy (a.begin (),
              a.end (),
-             std::ostream_iterator<CORBA::StringSeq::value_type> (ostream,
-								  "\n"));
+             std::ostream_iterator<CORBA::StringSeq::const_value_type> (ostream,
+                                                                        "\n"));
 
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem0\nelem1\nelem2\nelem3\n") != 0);
@@ -346,7 +360,7 @@ int test_sequence_reverse ()
   FAIL_RETURN_IF (a_it != a.rbegin ());
 
   // test non const dereferencing
-  char* value0 = *a_it;
+  typename REVERSE_ITERATOR_T::element_type value0 = *a_it;
   FAIL_RETURN_IF (ACE_OS::strcmp (value0, elem3_cstr) != 0);
 
   // test const dereferencing
@@ -457,8 +471,8 @@ int test_sequence_reverse ()
   std::ostringstream ostream;
   std::copy (a.rbegin (),
              a.rend (),
-             std::ostream_iterator<CORBA::StringSeq::value_type> (ostream,
-								  "\n"));
+             std::ostream_iterator<CORBA::StringSeq::element_type> (ostream,
+                                                                    "\n"));
 
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem3\nelem2\nelem1\nelem0\n") != 0);
@@ -492,16 +506,12 @@ int test_const_sequence_reverse ()
   // test non-equality operator
   FAIL_RETURN_IF (a.end () != a.end ());
 
-  // test for correct behaviour for empty sequence
-
-  FAIL_RETURN_IF (a.begin() != a.end ());
-  
   // test iterator copy constructor
   REVERSE_ITERATOR_T a_it (a.rbegin ());
   FAIL_RETURN_IF (a_it != a.rbegin ());
 
   // test non const dereferencing
-  char* value0 = *a_it;
+  typename REVERSE_ITERATOR_T::const_element_type value0 = *a_it;
   FAIL_RETURN_IF (ACE_OS::strcmp (value0, elem3_cstr) != 0);
 
   // test const dereferencing
@@ -612,8 +622,8 @@ int test_const_sequence_reverse ()
   std::ostringstream ostream;
   std::copy (a.rbegin (),
              a.rend (),
-             std::ostream_iterator<CORBA::StringSeq::value_type> (ostream,
-								  "\n"));
+             std::ostream_iterator<CORBA::StringSeq::const_element_type> (ostream,
+                                                                          "\n"));
 
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem3\nelem2\nelem1\nelem0\n") != 0);
