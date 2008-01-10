@@ -62,7 +62,7 @@ namespace CIAO
         {
         }
 
-        ::CORBA::Boolean
+        bool
         Admin_exec_i::deploy_plan (const ::Deployment::DeploymentPlan &plan)
         {
           try
@@ -106,7 +106,7 @@ namespace CIAO
           return false;
         }
 
-        ::CORBA::Boolean
+        bool
         Admin_exec_i::redeploy_plan (const ::Deployment::DeploymentPlan &plan)
         {
           try

@@ -15,10 +15,10 @@ module CIAO
       interface Admin
       {
         /// Deploy the given plan.
-        boolean deploy_plan (in ::Deployment::DeploymentPlan plan);
+        //boolean deploy_plan (in ::Deployment::DeploymentPlan plan);
 
         /// Re_deploy the given plan.
-        boolean redeploy_plan (in ::Deployment::DeploymentPlan plan);
+        //boolean redeploy_plan (in ::Deployment::DeploymentPlan plan);
 
         /// Convert the given operational string to a DeploymentPlan and
         /// deploy it.

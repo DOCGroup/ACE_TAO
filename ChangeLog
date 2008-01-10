@@ -1,3 +1,12 @@
+Thu Jan 10 17:24:15 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
+
+        Removed the deploy_plan and redeploy_plan methods from the Admin
+        interface.
+
 Thu Jan 10 17:16:40 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Conductor/Conductor.idl:
