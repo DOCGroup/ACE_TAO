@@ -27,9 +27,8 @@ namespace CIAO
       /// Current execution rate (in Hz).
       double curr_rate;
 
-      // Rate change after EUCON, new rate = curr_rate +
-      // delta_rate. Yingming Chen. 3.23.2007
-	  double delta_rate;
+      // Rate change after EUCON, new rate = curr_rate + delta_rate.
+      double delta_rate;
 
       /// Current RT-CORBA priority.
       size_t priority;

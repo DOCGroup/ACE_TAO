@@ -1,3 +1,10 @@
+Thu Jan 10 17:31:49 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/EUCON/Controller.cpp:
+        * Controller/EUCON/Task.h:
+
+        Made cosmetic changes.
+
 Thu Jan 10 17:24:15 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.h:
