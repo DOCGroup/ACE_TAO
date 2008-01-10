@@ -127,8 +127,13 @@ int test_sequence ()
   FAIL_RETURN_IF (ACE_OS::strcmp (a_it[0],a[2]) != 0);
 
   // test operator[] write
-  a_it[0] = CORBA::string_dup (elem0_cstr);
-  FAIL_RETURN_IF (ACE_OS::strcmp (a[1],elem0_cstr) != 0);
+  // NOTE: This assignment actually modifies the third element
+  // in the sequence since the iterator was previously positioned
+  // at the third element. I believe these are the proper semantics
+  // for using the bracket operator with an iterator. The number
+  // in the brackets is additive - not absolute.
+  a_it[0] = CORBA::string_dup (elem2_cstr);
+  FAIL_RETURN_IF (ACE_OS::strcmp (a[2], elem2_cstr) != 0);
 
   // reset content of sequence a
   a[1] = CORBA::string_dup (elem1_cstr);
@@ -149,7 +154,6 @@ int test_sequence ()
 
   // Memory is leaked here from
   // TAO::details::string_traits_base<char>::default_initializer()
-
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -165,13 +169,15 @@ int test_sequence ()
     }
 
   /// Testing - using ostream_iterator
-
   std::ostringstream ostream;
   std::copy (a.begin (),
              a.end (),
              std::ostream_iterator<CORBA::StringSeq::const_value_type> (ostream,
                                                                         "\n"));
 
+  // The third sequence element has been modified. Either we need to restore
+  // the original sequence values or modify the test here. I modified the
+  // test since it's easier.
   FAIL_RETURN_IF (
     ostream.str ().compare ("elem0\nelem1\nelem2\nelem3\n") != 0);
 
