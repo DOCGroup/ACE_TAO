@@ -306,15 +306,6 @@ public:
                            this->sequence_->release ());
     }
 
-  /// @copydoc details::generic_sequence::operator[]
-  //inline const_element_type operator[](CORBA::ULong i) const {
-  //  return const_element_type (impl_[i], release());
-  //}
-  /// @copydoc details::generic_sequence::operator[]
-  //inline element_type operator[](CORBA::ULong i) {
-  //  return element_type(impl_[i], release());
-  //}
-
   /// Returns a const reference to the item contained at the current position
   //const value_type & operator* (void) const
   const_element_type operator* (void) const
@@ -408,12 +399,20 @@ public:
       return this->pos_ - rhs.pos_;
     }
 
+  /// Element operator/assignment
+  element_type operator[] (difference_type n)
+    {
+      // Return the element at position pos_ + n
+      return element_type ((*(this->sequence_))[this->pos_ + n],
+                           this->sequence_->release ());
+    }
 
   /// Element operator/assignment
-  value_type & operator[] (difference_type n)
+  const_element_type operator[] (difference_type n) const
     {
-      // Return the element at position n
-      return (*(this->sequence_))[this->pos_ + n];
+      // Return the element at position pos_ + n
+      return const_element_type ((*(this->sequence_))[this->pos_ + n],
+                                 this->sequence_->release ());
     }
 
   /// Less than
@@ -632,11 +631,12 @@ public:
       return this->pos_ - rhs.pos_;
     }
 
-  /// Element operator/assignment
-  const value_type & operator[] (difference_type n) const
+  /// Element operator
+  const_element_type operator[] (difference_type n) const
     {
-      // Return the element at position n
-      return (*(this->sequence_))[this->pos_ + n];
+      // Return the element at position pos_ + n
+      return const_element_type ((*(this->sequence_))[this->pos_ + n],
+                                 this->sequence_->release ());
     }
 
   /// Less than
@@ -850,12 +850,20 @@ public:
       return rhs.pos_ - this->pos_;
     }
 
+  /// Element operator/assignment
+  element_type operator[] (difference_type n)
+    {
+      // Return the element at position pos_ + n
+      return element_type ((*(this->sequence_))[this->pos_ + n],
+                           this->sequence_->release ());
+    }
 
   /// Element operator/assignment
-  value_type & operator[] (difference_type n)
+  const_element_type operator[] (difference_type n) const
     {
-      // Return the element at position n
-      return (*(this->sequence_))[this->pos_ - n];
+      // Return the element at position pos_ + n
+      return const_element_type ((*(this->sequence_))[this->pos_ + n],
+                                 this->sequence_->release ());
     }
 
   /// Less than
@@ -1091,10 +1099,11 @@ public:
     }
 
   /// Element operator/assignment
-  const value_type & operator[] (difference_type n) const
+  const_element_type operator[] (difference_type n) const
     {
-      // Return the element at position n
-      return (*(this->sequence_))[this->pos_ - n];
+      // Return the element at position pos_ + n
+      return const_element_type ((*(this->sequence_))[this->pos_ + n],
+                                 this->sequence_->release ());
     }
 
   /// Less than
