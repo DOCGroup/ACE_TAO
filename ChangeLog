@@ -1,3 +1,12 @@
+Thu Jan 10 17:16:40 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Conductor/Conductor.idl:
+        * Conductor/Conductor_exec.h:
+        * Conductor/Conductor_exec.cpp:
+
+        Removed the "Test" interface, which comprised of deploy and
+        redeply plan methord.
+
 Wed Jan  9 21:28:23 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Conductor/Admin_exec.h:
