@@ -29,11 +29,7 @@ namespace CIAO
           Conductor_Component_exec_i (void);
 
           virtual ~Conductor_Component_exec_i (void);
-
-          virtual ::CORBA::Boolean deploy_plan (const char * uri);
-
-          virtual ::CORBA::Boolean redeploy_plan (const char * uri);
-
+          
           virtual ::CIAO::RACE::Conductor::CCM_Admin_ptr
           get_admin ();
 
