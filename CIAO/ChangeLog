@@ -1,3 +1,8 @@
+Fri Jan 11 18:02:07 UTC 2008  William R. Otte  <wotte@dre.Vanderbilt.Edu>
+
+        * MPC/config/cidlc.mpb:
+          Make sure CIDLC bits don't build on cross-compile targets.
+
 Wed Jan  9 17:55:33 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
@@ -15,7 +20,7 @@ Sat Dec 15 15:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec 14 02:48:57 CST 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.6.2 released.
+        * CIAO version 0.6.2 released.
 
 Tue Dec 11 13:49:18 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
