@@ -25,7 +25,7 @@ namespace CIAO
                     context,
                     ::CORBA::Long interval);
 
-        virtual ~Controller ();      
+        virtual ~Controller ();
 
         virtual bool init_controller ();
 
@@ -46,7 +46,24 @@ namespace CIAO
 
       protected:
 
-        bool populate_domain_info (const ::Deployment::Domain& domain);
+        // Helper methods.
+
+        virtual bool populate_domain_info
+          (const ::Deployment::Domain& domain);
+
+        virtual void populate_node
+        (const ::Deployment::Node &d_node,
+         ::CIAO::RACE::Node &r_node);
+
+        virtual void dump_task (::CIAO::RACE::Task task);
+
+        virtual void populate_task
+        (const ::CIAO::RACE::OperationalString & opstring,
+         ::CIAO::RACE::Task & task);
+
+        virtual int node_ref (const char *node);
+
+
 
       private:
 

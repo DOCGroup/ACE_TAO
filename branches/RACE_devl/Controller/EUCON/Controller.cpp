@@ -38,6 +38,9 @@ namespace CIAO
           {
             std::stringstream msg;
             msg << "Trying to initializing the controller.\n";
+            this->logger_.log (msg.str());
+            msg.str("");
+
             try
               {
                 this->system_monitor_ =
@@ -85,6 +88,7 @@ namespace CIAO
                 // have been registered!
                 this->controller_.init (this->tasks_);
 
+
                 // Now activate the active object.
                 if (this->activate () != 0)
                   {
@@ -127,56 +131,42 @@ namespace CIAO
         ::CORBA::String_out ID)
       {
         std::stringstream msg;
-        msg << "Trying to register string... ";
-        if (!this->active_)
+        msg << "Entering register_string ()\n";
+        if (this->initialized_)
           {
-            ID = ::CORBA::string_dup (opstring.ID.in ());
-
-            // Now creating a RACE::Task and populating its fields.
-            ::CIAO::RACE::Task task;
-            task.max_rate = opstring.rate.maxRate;
-            task.min_rate = opstring.rate.minRate;
-            task.curr_rate = opstring.rate.currRate;
-
-            ::CIAO::RACE::Execution_Time time;
-            ::CIAO::RACE::Subtask subtask;
-
-            for (::CORBA::ULong i = 0; i < opstring.instance.length(); ++i)
+            if (!this->active_)
               {
-                time.BCET.sec =
-                  opstring.instance[i].executionTime.earliest.sec;
-                time.BCET.usec =
-                  opstring.instance[i].executionTime.earliest.usec;
-
-                time.WCET.sec =
-                  opstring.instance[i].executionTime.latest.sec;
-                time.WCET.usec =
-                  opstring.instance[i].executionTime.latest.usec;
-
-                subtask.exec_time = time;
-                subtask.UUID = opstring.instance[i].ID.in();
-                subtask.label = opstring.instance[i].name.in();
-                subtask.node = opstring.instance[i].nodeRef;
-                task.subtasks.push_back (subtask);
+                ID = ::CORBA::string_dup (opstring.ID.in ());
+                // Now creating a RACE::Task and populating its fields.
+                ::CIAO::RACE::Task task;
+                this->populate_task (opstring, task);
+                this->tasks_.push_back (task);
+                this->dump_task (task);
+                msg << "done!\nSuccessfully registered string with ID:"
+                    << opstring.ID.in () << "\n";
+                ID = CORBA::string_dup(opstring.ID.in ());
+                this->logger_.log (msg.str());
+                return true;
               }
-
-            this->tasks_.push_back (task);
-            msg << "done!\nSuccessfully registered string with ID:"
-                << opstring.ID.in () << "\n";
-            ID = CORBA::string_dup(opstring.ID.in ());
-            this->logger_.log (msg.str());
-            return true;
+            else
+              {
+                msg << "\nCan not register an opsting while the "
+                    << "controller is active.\n";
+                msg << "First deactive the controller, and then try "
+                    << "registering a string.\n";
+                this->logger_.log (msg.str());
+                return false;
+              }
           }
         else
           {
             msg << "\nCan not register an opsting while the "
-                << "controller is active.\n";
-            msg << "First deactive the controller, and then try "
+                << "controller has not initialized!\n";
+            msg << "First initialize the controller, and then try "
                 << "registering a string.\n";
             this->logger_.log (msg.str());
             return false;
           }
-
       }
 
       int
@@ -184,17 +174,38 @@ namespace CIAO
       {
         while (this->active_)
           {
+            std::stringstream msg;
             try
               {
-                ACE_DEBUG ((LM_DEBUG, "In controller periodic task!\n"
-                            "Trying to obtain the current domain...."));
+                msg << "In controller periodic task!\n"
+                    << "Trying to obtain the current domain...";
                 ::Deployment::Domain_var domain =
                     this->system_monitor_->getSnapshot ();
-                ACE_DEBUG ((LM_DEBUG, "done!\nNow parsing it..."));
+                msg << "done!\nNow parsing it...";
+                this->logger_.log (msg.str());
+                msg.str("");
                 this->populate_domain_info (domain.in());
-                ACE_DEBUG ((LM_DEBUG, "done!\n"));
-                //this->tasks_ =
-                //this->controller_.control_period(this->domain_,this->tasks_);
+                msg <<  "Parsing complete!\n";
+                this->logger_.log (msg.str ());
+                msg.str ("");
+                this->tasks_ =
+                  this->controller_.control_period
+                  (this->domain_,this->tasks_);
+
+                // Now we dump out the new rates.
+                std::vector<CIAO::RACE::Task>::iterator itr;
+                for (size_t itr = 0; itr < this->tasks_.size(); ++itr)
+                  {
+                    msg << "Delta rate for task: "
+                        << this->tasks_[itr].UUID.c_str()
+                        << " is: "
+                        << this->tasks_[itr].delta_rate
+                        << "\n";
+                    ACE_DEBUG ((LM_DEBUG, "%s", msg.str ().c_str ()));
+                    this->tasks_[itr].curr_rate +=
+                      this->tasks_[itr].delta_rate;
+                  }
+                this->logger_.log (msg.str ());
                 ACE_OS::sleep (this->interval_);
               }
             catch (::CORBA::Exception &ex)
@@ -226,68 +237,8 @@ namespace CIAO
 
         for (::CORBA::ULong i = 0; i < nodes.length(); ++i)
           {
-            msg << "Workin on node: " << nodes [i].name.in() << "...\n";
-            node.UUID = nodes [i].name.in();
-            node.label = nodes [i].label.in();
 
-            // Obtian info regarding every resource in the domain.
-            ::CIAO::RACE::Resource resource;
-            ::Deployment::Resources resources = nodes [i].resource;
-            for (::CORBA::ULong j = 0; j < resources.length(); ++j)
-              {
-                // We care only about the processor resource.
-                if (ACE_OS::strcmp (resources [j].name.in(), "Processor") == 0)
-                  {
-
-                    msg << "Trying to obtain current utilization and "
-                        << "utilization set-point for resource "
-                        << resources [j].name.in() << "\n";
-
-                    resource.UUID = resources [j].name.in();
-
-                    // We need to parse the properties associated
-                    // with individual resources to obtain its current
-                    // resource utilization and utilization setpoint.
-
-                    ::Deployment::SatisfierProperties props =
-                        resources [j].property;
-                    for (::CORBA::ULong k = 0; k < props.length(); ++k)
-                      {
-                        Deployment::DnC_Dump::dump (props [k]);
-
-                        if (ACE_OS::strcmp (props [k].name.in (), "Setpoint")
-                            == 0)
-                          {
-                            CORBA::Any value = props [k].value;
-                            CORBA::TypeCode_var tc = value.type ();
-                            if (tc->kind () == CORBA::tk_double)
-                              {
-                                value >>= resource.set_point;
-                                msg << "Obtained set point! Value is: "
-                                    << resource.set_point << "\n";
-                              }
-                          }
-                        else if (ACE_OS::strcmp (props [k].name.in (),
-                                                 "Current")== 0)
-                          {
-                            CORBA::Any value = props [k].value;
-                            CORBA::TypeCode_var tc = value.type ();
-                            if (tc->kind () == CORBA::tk_double)
-                              {
-                                value >>= resource.util;
-                                msg << "Obtained curr util! Value is: "
-                                    << resource.util << "\n";
-
-                              }
-                          }
-                      }
-                    // Now that we have populated the resource info, we add it
-                    // to the node.
-                    node.resources.push_back (resource);
-                    msg << "Added resource \"" << resources [j].name.in()
-                        << "\" to the node structure.\n";
-                  }
-              }
+            this->populate_node (nodes[i], node);
             // Now that the node structure has been fully populated, we add
             // it to the doamin.
             temp_domain.nodes.push_back (node);
@@ -297,6 +248,183 @@ namespace CIAO
         this->logger_.log (msg.str());
         this->domain_ = temp_domain;
         return true;
+      }
+
+      void
+      Controller::populate_node
+      (const ::Deployment::Node &d_node,
+       ::CIAO::RACE::Node &r_node)
+      {
+        std::stringstream msg;
+        msg << "Entering populate_node ()\n";
+        msg << "Workin on node: " << d_node.name.in() << "...\n";
+        r_node.UUID = d_node.name.in();
+        r_node.label = d_node.label.in();
+        // Obtian info regarding every resource in the domain.
+        ::CIAO::RACE::Resource resource;
+        ::Deployment::Resources resources = d_node.resource;
+        for (::CORBA::ULong j = 0; j < resources.length(); ++j)
+          {
+            // We care only about the processor resource.
+            if (ACE_OS::strcmp (resources [j].name.in(), "Processor") == 0)
+              {
+
+                msg << "Trying to obtain current utilization and "
+                    << "utilization set-point for resource "
+                    << resources [j].name.in() << "\n";
+
+                resource.label = resources [j].name.in();
+
+                // We need to parse the properties associated
+                // with individual resources to obtain its current
+                // resource utilization and utilization setpoint.
+
+                ::Deployment::SatisfierProperties props =
+                    resources [j].property;
+                for (::CORBA::ULong k = 0; k < props.length(); ++k)
+                  {
+                    Deployment::DnC_Dump::dump (props [k]);
+
+                    if (ACE_OS::strcmp (props [k].name.in (), "Setpoint")
+                        == 0)
+                      {
+                        CORBA::Any value = props [k].value;
+                        CORBA::TypeCode_var tc = value.type ();
+                        if (tc->kind () == CORBA::tk_double)
+                          {
+                            value >>= resource.set_point;
+                            msg << "Obtained set point! Value is: "
+                                << resource.set_point << "\n";
+                          }
+                      }
+                    else if (ACE_OS::strcmp (props [k].name.in (),
+                                             "Current")== 0)
+                      {
+                        CORBA::Any value = props [k].value;
+                        CORBA::TypeCode_var tc = value.type ();
+                        if (tc->kind () == CORBA::tk_double)
+                          {
+                            value >>= resource.util;
+                            msg << "Obtained curr util! Value is: "
+                                << resource.util << "\n";
+                          }
+                      }
+                  }
+                // Now that we have populated the resource info, we add it
+                // to the node.
+                r_node.resources.push_back (resource);
+                msg << "Added resource \"" << resources [j].name.in()
+                    << "\" to the node structure.\n";
+              }
+          }
+        msg << "Leaving populate_node ()\n";
+        this->logger_.log (msg.str ());
+      }
+
+      void
+      Controller::populate_task
+      (const ::CIAO::RACE::OperationalString & opstring,
+       ::CIAO::RACE::Task & task)
+      {
+        std::stringstream msg;
+        msg << "In populate_task()\n";
+        task.UUID = ::CORBA::string_dup (opstring.ID.in());
+        task.max_rate = opstring.rate.maxRate;
+        task.min_rate = opstring.rate.minRate;
+        task.curr_rate = opstring.rate.currRate;
+        task.delta_rate = 0;
+
+        for (::CORBA::ULong i = 0; i < opstring.instance.length(); ++i)
+          {
+            ::CIAO::RACE::Execution_Time time;
+            time.BCET.sec =
+              opstring.instance[i].executionTime.earliest.sec;
+            time.BCET.usec =
+              opstring.instance[i].executionTime.earliest.usec;
+
+            time.WCET.sec =
+              opstring.instance[i].executionTime.latest.sec;
+            time.WCET.usec =
+              opstring.instance[i].executionTime.latest.usec;
+
+            // If either BCET or WCET is equal to 0, we don't
+            // add that component to the subtak list.
+            if ((time.BCET.sec + time.BCET.usec == 0) ||
+                (time.WCET.sec + time.WCET.usec == 0))
+              {
+                continue;
+              }
+
+            ::CIAO::RACE::Subtask subtask;
+            subtask.exec_time = time;
+            subtask.UUID = opstring.instance[i].ID.in();
+            subtask.label = opstring.instance[i].name.in();
+            int node_ref = this->node_ref (opstring.instance[i].node.in());
+            if (node_ref != -1)
+              {
+                subtask.node = node_ref;
+              }
+            else
+              {
+                msg << "ERROR! Given node for subtask : "
+                    << opstring.instance[i].ID.in()
+                    << "is not present in the domain!\n";
+                continue;
+              }
+            task.subtasks.push_back (subtask);
+          }
+        msg << "Leaving populate_task ()\n";
+        this->logger_.log (msg.str ());
+      }
+
+      int Controller::node_ref (const char *node)
+      {
+        for (size_t itr = 0; itr < this->domain_.nodes.size (); ++itr)
+          {
+            // Compare the given name with the names of the nodes in the
+            // domain.
+            if (ACE_OS::strcmp (node,
+                                this->domain_.nodes[itr].UUID.c_str())== 0)
+              {
+                return itr;
+              }
+          }
+        return -1;
+      }
+
+      void
+      Controller::dump_task (::CIAO::RACE::Task task)
+      {
+        std::stringstream msg;
+
+        msg << "Task details...\n";
+        msg << "UUID: " << task.UUID;
+        msg << "\nLabel: " << task.label;
+        msg << "\nmin_rate: " << task.min_rate;
+        msg << "\nmax_rate: " << task.max_rate;
+        msg << "\ncurr_rate: " << task.curr_rate;
+        msg << "\ndelta_rate: " << task.delta_rate;
+
+        msg << "\nSubtask info... \n";
+        for (size_t itr = 0; itr < task.subtasks.size(); ++itr)
+          {
+            msg << "\tSubtask: " << itr+1;
+            msg << "\n\tUUID: " << task.subtasks[itr].UUID;
+            msg << "\n\tlabel: " << task.subtasks[itr].label;
+            msg << "\n\tnode: " << task.subtasks[itr].node;
+            msg << "\n\tBCET: "
+                << task.subtasks[itr].exec_time.BCET.sec
+                << " seconds and "
+                << task.subtasks[itr].exec_time.BCET.usec
+                << " micro seconds.";
+            msg << "\n\tWCET: "
+                << task.subtasks[itr].exec_time.WCET.sec
+                << " seconds and "
+                << task.subtasks[itr].exec_time.WCET.usec
+                << " micro seconds.\n";
+          }
+
+        this->logger_.log (msg.str());
       }
     }
   }
