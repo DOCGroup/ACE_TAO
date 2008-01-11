@@ -1,3 +1,24 @@
+Fri Jan 11 21:56:02 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/EUCON/Controller.h:
+        * Controller/EUCON/Controller.cpp:
+
+        Added helper methods.
+
+        * Conductor/Admin_exec.cpp:
+        * Controller/EUCON/MPC_Controller.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
+
+        Made cosmetic changes.
+
+        * common/OpString.idl:
+
+        Removed nodeRef field in InstanceDescription.
+
+        * descriptors/NodeDetails.dat:
+
+        Updated this file.
+
 Thu Jan 10 17:31:49 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/EUCON/Controller.cpp:

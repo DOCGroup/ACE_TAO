@@ -94,7 +94,7 @@ namespace CIAO
               if (this->OA_->deploy_string (opstring))
               {                  
                 msg << "Successfully deployed string. "
-                  << "Now trying to register witht he controller\n"; 
+                  << "Now trying to register with the controller\n"; 
                 if (this->Controller_Ops_->register_string (opstring, ID))
                 {
                   msg << "Successfully resitered with the controller.\n";                      

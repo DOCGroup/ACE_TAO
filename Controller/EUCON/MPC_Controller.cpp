@@ -336,7 +336,7 @@ MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::T
 	m_R_Chgs.GetData(rccPtr,m_task_num);
 	for(i = 0; i < m_task_num; i++){
 		m_rate_chgs[i] += rccPtr[i];
-		std::cout<< rccPtr[i] << std::endl;
+		//std::cout<< rccPtr[i] << std::endl;
 	}
 	i = 0;
 	for (it_t = tasks.begin(); it_t != tasks.end(); it_t++) {

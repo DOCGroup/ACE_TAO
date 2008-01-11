@@ -3,7 +3,7 @@
 #include "Config_Handlers/DP_Handler.h"
 #include "Config_Handlers/Utils/XML_Helper.h"
 #include "Config_Handlers/Deployment.hpp"
-#include <string>
+#include <sstream>
 
 namespace CIAO
 {
@@ -53,7 +53,7 @@ namespace CIAO
             }
           else {
             msg = "DAnCE_OA::Admin_exec:: No repoman ID provided "
-                  "to constructor.";
+                  "to constructor.\n";
             this->logger_.log (msg);
           }
         }
@@ -287,31 +287,33 @@ namespace CIAO
         ::CORBA::Boolean
         Admin_exec_i::tear_down_string (const char *ID )
         {
-          std::string msg;
+          std::stringstream msg;
           try
             {
               if (this->launcher_.teardown_plan(ID))
                 {
-                  msg = "DANCE_OA::tear_down_string(): "
-                        "successfully torn down plan with UUID ";
-                  msg += ID;
-                  this->logger_.log (msg);
+                  msg << "DANCE_OA::tear_down_string(): "
+                      <<   "successfully torn down plan with UUID "
+                      << ID 
+                      << std::endl;
+                  this->logger_.log (msg.str());
                   return true;
                 }
               else
                 {
-                  msg = "DANCE_OA::tear_down_string():Oops! "
-                        "Error while tearing down plan with UUID: ";
-                  msg += ID;
-                  this->logger_.log (msg);
+                  msg << "DANCE_OA::tear_down_string():Oops! "
+                      << "Error while tearing down plan with UUID: "
+                      << ID
+                      << std::endl;;
+                  this->logger_.log (msg.str());
 
                 }
             }
           catch (CORBA::Exception &ex)
             {
-              msg = "DANCE_OA::tear_down_string():Exeption caught ";
-              msg += ex._info().c_str();
-              this->logger_.log (msg);
+              msg << "DANCE_OA::tear_down_string():Exeption caught ";
+              msg << ex._info().c_str();
+              this->logger_.log (msg.str());
             }
           return false;
         }

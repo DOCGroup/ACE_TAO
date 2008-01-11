@@ -22,11 +22,7 @@ module CIAO
         label name;
 
         // Node to which instance is deployed.
-        string node;
-
-        // Reference to the node on which this instance is deployed on-
-        // index into the Deployment::Nodes sequence in the Domain structure.
-        unsigned long nodeRef;
+        string node;       
 
         // Reference to the concrete implementation used by this instance -
         // index into the Deployment::MonolithicDeploymentDescriptions of
