@@ -1,3 +1,10 @@
+Fri Jan 11 09:01:12 UTC 2008  Martin Corino   <mcorino@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added ACE_RUN_VX_PRJ_ROOT env.var. to allow for projects
+          having root directory for tests different from ACE_ROOT.
+
+
 Tue Jan  8 09:02:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_types.h:
