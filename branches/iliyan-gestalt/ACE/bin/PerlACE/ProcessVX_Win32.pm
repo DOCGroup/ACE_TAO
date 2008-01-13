@@ -253,11 +253,12 @@ sub Spawn ()
 
     my $program = $self->Executable ();
     my $cwdrel = dirname ($program);
+    my $prjroot = defined $ENV{"ACE_RUN_VX_PRJ_ROOT"} ? $ENV{"ACE_RUN_VX_PRJ_ROOT"} : $ENV{"ACE_ROOT"};
     if (length ($cwdrel) > 0) {
-        $cwdrel = File::Spec->abs2rel( cwd(), $ENV{"ACE_ROOT"} );
+        $cwdrel = File::Spec->abs2rel( cwd(), $prjroot );
     }
     else {
-        $cwdrel = File::Spec->abs2rel( $cwdrel, $ENV{"ACE_ROOT"} );
+        $cwdrel = File::Spec->abs2rel( $cwdrel, $prjroot );
     }
     $cwdrel =~ s/\\/\//g;
     $program = basename($program, $self->{EXE_EXT});
@@ -281,7 +282,7 @@ sub Spawn ()
             $set_vx_defgw = 0;
         }
 
-        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
+        @cmds[$cmdnr++] = 'cd "' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'C putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
         if (defined $ENV{'ACE_RUN_ACE_DEBUG'}) {
@@ -305,7 +306,7 @@ sub Spawn ()
             $set_vx_defgw = 0;
         }
 
-        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
+        @cmds[$cmdnr++] = 'cd "' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
