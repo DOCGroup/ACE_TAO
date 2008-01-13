@@ -57,7 +57,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
       CORBA::NamedValue_var result = 0;
       this->orb_->create_named_value (result.out());
       *(result->value()) = result_any;
-      rh->invoke_reply (list, result);
+      rh->invoke_reply (list, result.in ());
 
       return;
     }

@@ -1,3 +1,9 @@
+Sun Jan 13 18:44:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3108_Regression/client.cpp:
+        * tests/DSI_AMH/Roundtrip.cpp:
+          Fixed conversion warnings
+
 Wed Jan  9 11:54:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Servant_To_Reference_Test/run_test.pl:
