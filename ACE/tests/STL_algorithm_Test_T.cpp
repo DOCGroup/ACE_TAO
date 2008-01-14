@@ -12,9 +12,10 @@ static void
 for_each_callback (ITEM & item)
 {
   // do nothing; just testing compilation and execution
-
   ACE_DEBUG ((LM_DEBUG,
               "algorithm test: for_each_callback\n"));
+
+  ACE_UNUSED_ARG (item);
 }
 
 template <typename T>
