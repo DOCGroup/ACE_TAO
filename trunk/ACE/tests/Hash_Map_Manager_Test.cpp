@@ -184,15 +184,6 @@ int test_two_allocators ()
   return 0;
 }
 
-static void
-print_value (const HASH_STRING_MAP::value_type & entry)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("hash entry: [%s, %s]\n"),
-              entry.ext_id_,
-              entry.int_id_));
-}
-
 static int
 run_test (void)
 {
