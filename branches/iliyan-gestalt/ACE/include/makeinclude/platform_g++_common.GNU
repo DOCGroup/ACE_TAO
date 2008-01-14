@@ -5,9 +5,9 @@
 
 ifeq ($(CXX),insure)
   # insure does not pass through the -dumpversion option.
-  CXX_FOR_VERSION_TEST = g++
+  CXX_FOR_VERSION_TEST ?= g++
 else
-  CXX_FOR_VERSION_TEST = $(CXX)
+  CXX_FOR_VERSION_TEST ?= $(CXX)
 endif
 
 CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
