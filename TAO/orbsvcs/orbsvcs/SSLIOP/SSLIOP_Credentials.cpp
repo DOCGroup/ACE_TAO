@@ -37,8 +37,6 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
         {
           char * id = BN_bn2hex (bn);
 
-          BN_free(bn);
-
           ACE_CString s =
             ACE_CString ("X509: ")
             + ACE_CString (const_cast<const char *> (id));
@@ -53,6 +51,7 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
           CRYPTO_free (id);
 #endif  /* OPENSSL_free */
         }
+      BN_free (bn);
 
       // -------------------------------------------
 
