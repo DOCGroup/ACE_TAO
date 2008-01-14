@@ -231,8 +231,9 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     servant_for_key_to_object_ (0)
 {
   // Since we are keeping a reference to a POAManager, we need to
-  // increment the reference count
-  this->poa_manager_._add_ref();
+  // increment the reference count but we do this safely.
+  PortableServer::POAManager_var pm_guard (
+    PortableServer::POAManager::_duplicate(&this->poa_manager_));
 
   // Parse the policies that are used in the critical path in
   // a cache.
@@ -268,6 +269,8 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   // Set the active strategies to be used by this POA
   this->active_policy_strategies_.update (this->cached_policies_,
                                           this);
+  TAO::Portable_Server::Active_Policy_Strategies_Cleanup_Guard aps_cleanup_guard (
+    &this->active_policy_strategies_);
 
   // Set the folded name of this POA.
   this->set_folded_name (parent);
@@ -309,6 +312,10 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
                                           this->system_name_.in ());
       throw;
     }
+
+  // Now when everything is fine we can release the quards.
+  pm_guard._retn ();
+  aps_cleanup_guard._retn ();
 }
 
 TAO_Root_POA::~TAO_Root_POA (void)

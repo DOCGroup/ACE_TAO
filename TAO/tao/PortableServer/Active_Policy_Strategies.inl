@@ -56,6 +56,32 @@ namespace TAO
     {
       return this->servant_retention_strategy_;
     }
+
+    ACE_INLINE
+    Active_Policy_Strategies_Cleanup_Guard
+      ::Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies *p)
+      : ptr_ (p)
+    {
+    }
+
+    ACE_INLINE
+    Active_Policy_Strategies_Cleanup_Guard
+      ::~Active_Policy_Strategies_Cleanup_Guard (void)
+    {
+      if (this->ptr_)
+        {
+          this->ptr_->cleanup ();
+        }
+    }
+
+    ACE_INLINE
+    Active_Policy_Strategies *
+    Active_Policy_Strategies_Cleanup_Guard::_retn (void)
+    {
+      Active_Policy_Strategies *temp = this->ptr_;
+      this->ptr_ = 0;
+      return temp;
+    }
   }
 }
 

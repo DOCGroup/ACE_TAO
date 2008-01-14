@@ -4,4 +4,7 @@
 // Many existing MPC builds rely on this workspace.  It is not
 // necessary other than that.
 workspace {
+  $(ACE_ROOT)/ace
+  $(ACE_ROOT)/apps/gperf/src
+  $(TAO_ROOT)/TAO_IDL
 }
