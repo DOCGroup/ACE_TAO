@@ -6,10 +6,9 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
   <UUID>effd4bd0-6db0-4c50-9bb7-db9decebae1c</UUID>
-  <label>Hello Domain</label>
+
   <node>
     <name>blade36</name>
-    <label>Linux Node</label>
     <resource>
       <name>Processor</name>
       <resourceType>CPULoad</resourceType>
@@ -39,4 +38,37 @@
       </property>
     </resource>
   </node>
+
+  <node>
+    <name>blade39</name>
+    <resource>
+      <name>Processor</name>
+      <resourceType>CPULoad</resourceType>
+      <property>
+        <name>Setpoint</name>
+        <kind>Quantity</kind>
+        <dynamic>true</dynamic>
+        <value>
+          <type>
+            <kind>tk_double</kind>
+          </type>
+          <value><double>0.5</double></value>
+        </value>
+      </property>
+      <property>
+        <name>Current</name>
+        <kind>Quantity</kind>
+        <dynamic>false</dynamic>
+        <value>
+          <type>
+            <kind>tk_double</kind>
+          </type>
+          <value>
+            <double>0.21</double>
+          </value>
+        </value>
+      </property>
+    </resource>
+  </node>
+
 </Deployment:domain>
