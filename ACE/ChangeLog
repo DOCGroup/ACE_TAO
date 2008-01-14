@@ -1,3 +1,12 @@
+Mon Jan 14 16:14:11 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/STL_algorithm_Test_T.cpp:
+
+          Changed the std::for_each functor object to an actual class
+          that will count the number of elements handled. It would
+          be nice to eventually validate that the number of elements
+          handled is equal to the number of elements in the container.
+
 Mon Jan 14 14:06:33 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * tests/Hash_Map_Manager_Test.cpp:
