@@ -71,13 +71,7 @@ ifeq (C++ 5.4,$(findstring C++ 5.4,$(CC_VERSION)))
   ACE_CC_PREPROCESSOR = cc
 endif
 
-ifeq (C++ 5.6,$(findstring C++ 5.6,$(CC_VERSION)))
-  PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
-else
-  ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
-    PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
-  endif
-endif
+PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
 
 ifeq ($(atomic_ops_sparc),1)
   CFLAGS += -DACE_HAS_BUILTIN_ATOMIC_OP -DACE_INCLUDE_ATOMIC_OP_SPARC

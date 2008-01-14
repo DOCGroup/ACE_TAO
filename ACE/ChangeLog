@@ -1,9 +1,18 @@
+Sun Jan 13 16:40:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Set PLATFORM_STLPORT_CPPFLAGS independent of the Sun C++ version.
+          Thanks to Charles Brown <charles dot brown at sensis dot com>
+          for reporting that this was causing a problem with Studio 12
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Only set CXX_VERSION_FOR_TEST when it has not been set yet
+
 Fri Jan 11 09:01:12 UTC 2008  Martin Corino   <mcorino@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Win32.pm:
           Added ACE_RUN_VX_PRJ_ROOT env.var. to allow for projects
           having root directory for tests different from ACE_ROOT.
-
 
 Tue Jan  8 09:02:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
