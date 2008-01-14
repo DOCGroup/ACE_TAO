@@ -1,3 +1,10 @@
+Mon Jan 14 14:02:44 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+          Changed a bit a fix for bug 3165. It happens that ASN1_INTEGER_to_BN
+          unconditionally allocates BIGNUM and thus that BIGNUM has to be
+          freed unconditionally too.
+
 Mon Jan 14 01:04:17 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/TAO_IDL.mwc:
