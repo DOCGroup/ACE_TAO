@@ -1,0 +1,39 @@
+#ifndef RACE_EUCON_EFFECTOR_IDL
+#define RACE_EUCON_EFFECTOR_IDL
+
+/**
+ * @file EUCON_Effector.idl
+ *
+ * @brief EUCON_Effector Component of RACE.
+ *
+ * This file declares a EUCON_Effector of the RACE framework.
+ *
+ * @author Nishanth Shankaran <nshankar@nospam.com>
+ */
+
+#include <Components.idl>
+#include "RACE/Effectors/Base/Effector_Base.idl"
+
+
+module CIAO
+{
+  module RACE
+  {
+    module Effector
+    {
+      /**
+       * @component EUCON_Effector
+       * @brief The EUCON_Effector component of RACE.
+       */
+      component EUCON_Effector : Effector_Base
+      {
+      };
+
+      home EUCON_Effector_Home manages EUCON_Effector
+      {
+      };
+    };
+  };
+};
+
+#endif /* RACE_EUCON_EFFECTOR_IDL */

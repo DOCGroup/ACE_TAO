@@ -51,6 +51,10 @@ namespace CIAO
                   ::CIAO::RACE::TM_Proxy::Utility::_duplicate (
                     this->context_->get_connection_system_utils ());
 
+                this->appActuator_ =
+                  ::CIAO::RACE::Effector::ApplicationActuator::_duplicate (
+                    this->context_->get_connection_appActuator());
+
                 // Now we populate info regarding the initial domain.
                 ::Deployment::Domain_var domain =
                     this->system_utility_->getInitialDomain ();
@@ -146,6 +150,13 @@ namespace CIAO
                     << opstring.ID.in () << "\n";
                 ID = CORBA::string_dup(opstring.ID.in ());
                 this->logger_.log (msg.str());
+
+                // Add this string to the internal opstrings_ sequence as
+                // well.
+                CORBA::ULong cur_len = this->opstrings_.length ();
+                this->opstrings_.length (cur_len + 1);
+                this->opstrings_[cur_len] = opstring;
+
                 return true;
               }
             else
@@ -205,6 +216,7 @@ namespace CIAO
                     this->tasks_[itr].curr_rate +=
                       this->tasks_[itr].delta_rate;
                   }
+                this->appActuator_->modifyApplications (this->opstrings_);
                 this->logger_.log (msg.str ());
                 ACE_OS::sleep (this->interval_);
               }

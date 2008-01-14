@@ -15,6 +15,7 @@
 #include "RACE/TM_Proxy/TM_Proxy.idl"
 #include "RACE/common/OpString.idl"
 #include "RACE/common/RACE_common.idl"
+#include "RACE/Effectors/Base/Effector_Base.idl"
 
 module CIAO
 {
@@ -53,6 +54,10 @@ module CIAO
         uses ::CIAO::RACE::TM_Proxy::SystemSnapshot system_monitor;
 
         uses ::CIAO::RACE::TM_Proxy::Utility system_utils;
+
+        uses ::CIAO::RACE::Effector::ApplicationActuator appActuator;
+
+        uses ::CIAO::RACE::Effector::SystemActuator sysActuator;
 
         provides Control_Operations operations ;
 

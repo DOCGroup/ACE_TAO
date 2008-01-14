@@ -1,3 +1,51 @@
+Mon Jan 14 22:34:25 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/Base/Controller_Base.idl:
+        * Controller/Base/Controller_Base.mpc:
+        * Controller/EUCON/Controller.h:
+        * Controller/EUCON/Controller.cpp:
+        * Controller/EUCON/EUCON_Controller.mpc:
+
+        Updated these files to employ RACE Effectors.
+
+        * Effectors:
+        * Effectors/Base:
+        * Effectors/Base/Effector_Base.idl:
+        * Effectors/Base/Effector_Base.mpc:
+        * Effectors/Base/Effector_Base_stub_export.h:
+        * Effectors/Base/Effector_Base_svnt_export.h:
+
+        Checking in RACE's Base Effector.
+
+        * Effectors/EUCON:
+        * Effectors/EUCON/ApplicationActuator_exec.h:
+        * Effectors/EUCON/ApplicationActuator_exec.cpp:
+        * Effectors/EUCON/EUCON_Effector.cidl:
+        * Effectors/EUCON/EUCON_Effector.idl:
+        * Effectors/EUCON/EUCON_Effector.mpc:
+        * Effectors/EUCON/EUCON_Effector_exec.h:
+        * Effectors/EUCON/EUCON_Effector_exec.cpp:
+        * Effectors/EUCON/EUCON_Effector_exec_export.h:
+        * Effectors/EUCON/EUCON_Effector_stub_export.h:
+        * Effectors/EUCON/EUCON_Effector_svnt_export.h:
+        * Effectors/EUCON/SystemActuator_exec.h:
+        * Effectors/EUCON/SystemActuator_exec.cpp:
+
+        Checking in the initial implementation of EUCON_Effector.
+
+        * RACE.mwc:
+
+        Updated this file to include the Effectors directory.
+
+        * TM_Proxy/TM_Proxy_exec.h:
+        * TM_Proxy/TM_Proxy_exec.cpp:
+
+        Made cosmetic modifications.
+
+        * descriptors/RACE.cdp:
+
+        Regenerated the descriptor after including the EUCON_Effector.
+
 Fri Jan 11 21:56:02 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/EUCON/Controller.h:
