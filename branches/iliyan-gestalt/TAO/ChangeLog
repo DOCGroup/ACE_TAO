@@ -1,3 +1,26 @@
+Wed Jan  9 11:54:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Servant_To_Reference_Test/run_test.pl:
+        * tests/Servant_To_Reference_Test/server.cpp:
+          When the server has started it writes a dummy ior file, that way
+          we can correctly handle the slow startup of the vxworks tests. Then
+          we can use the original timeout of 90 seconds again
+
+Tue Jan  8 21:56:58 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/TAO_IDL.mwc:
+          Filled this file to make it useful.  Builds all necessary dependencies
+          for tao_idl, which is useful in cross-compile builds.
+
+Tue Jan  8 10:11:48 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Active_Policy_Strategies.inl:
+        * tao/PortableServer/Active_Policy_Strategies.h:
+        * tao/PortableServer/Root_POA.cpp:
+          Fixed bug 3184 which was about leaks of POA manager and strategies
+          in active_policy_strategies_ inside TAO_Root_POA constructor in
+          case if exception is thrown in that constructor.
+
 Mon Jan  7 15:43:12 UTC 2008  Martin Corino <mcorino@remedy.nl>
 
         * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
