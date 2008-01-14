@@ -1,3 +1,11 @@
+Mon Jan 14 05:01:19 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/acetest.mpb:
+
+          Added an empty template declaration to the base project to
+          prevent actual tests from including unnecesary template source
+          files.
+
 Mon Jan 14 04:47:50 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * ace/Hash_Map_Manager_T.h:
