@@ -43,7 +43,8 @@ namespace CIAO
           TM_Proxy_Component_exec_i::get_snapshot ()
         {
           // Your code here.
-          return new SystemSnapshot_exec_i (this->TM_Daemon_.in (), this->logger_);             
+          return new SystemSnapshot_exec_i
+            (this->TM_Daemon_.in (), this->logger_);
         }
 
         ::CIAO::RACE::TM_Proxy::CCM_Utility_ptr
@@ -108,7 +109,8 @@ namespace CIAO
             name.length (1);
             name[0].id = CORBA::string_dup (this->TM_Name_.in ());
             CORBA::Object_var TM = namingContext->resolve (name);
-            msg << "Now trying to resolve \"" << this->TM_Name_.in () << "\" from the naming service...";
+            msg << "Now trying to resolve \""
+                << this->TM_Name_.in () << "\" from the naming service...";
             this->TM_Daemon_ =
               ::CIAO::TM_Daemon::Daemon::_narrow (TM.in ());
 
@@ -117,12 +119,14 @@ namespace CIAO
               msg << "\nObject reference of TM_Daemon is nil!\n";
 
             }
-            msg << "... done!\nSuccessfully obtained the object reference of the TM\n";
+            msg << "... done!\n"
+                << "Successfully obtained the object reference of the TM\n";
           }
           catch (CORBA::Exception &ex)
           {
             msg <<  "Exception caught\n" << ex._info ().c_str();
-            msg <<  "\nUnable to resolve reference to " << this->TM_Name_.in () << "\n";
+            msg <<  "\nUnable to resolve reference to "
+                << this->TM_Name_.in () << "\n";
           }
           this->logger_.log (msg.str());
           return;

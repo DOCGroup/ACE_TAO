@@ -75,6 +75,22 @@
     <artifact>_E4103F97-3E2C-4163-990D-6A137559C0D0</artifact>
   </implementation>
 
+  <implementation id="_66630BDE-7EC0-49A4-8155-8EA2693F98BB">
+    <name>RACE_SA_POP.ComponentImplementations.Effector_BaseImplementation.Effector_BaseMonolithicImpl</name>
+    <source/>
+    <artifact>_58618FA8-759E-43B8-AB61-F182DEDFF837</artifact>
+    <artifact>_33858AE1-8276-4423-8EF1-9A8CDDDDCF31</artifact>
+    <artifact>_3AF008AB-A9F2-45D8-A11A-3AFB46244D35</artifact>
+  </implementation>
+
+  <implementation id="_57C6434A-7701-451A-8747-6C7AC5E9C152">
+    <name>RACE_SA_POP.ComponentImplementations.EUCON_EffectorImplementation.EUCON_EffectorMonolithicImpl</name>
+    <source/>
+    <artifact>_03457B8A-DE24-449E-AE21-A68F6018D736</artifact>
+    <artifact>_70201A30-3A26-40E5-8F86-6BCA700C48C3</artifact>
+    <artifact>_E35469B8-D950-400F-956D-F5CC542B9F36</artifact>
+  </implementation>
+
   <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_Controller">
     <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_Controller</name>
     <node>RACE_Node</node>
@@ -205,6 +221,24 @@
     </configProperty>
   </instance>
 
+  <instance id="RACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_Effector">
+    <name>RACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_Effector</name>
+    <node>RACE_Node</node>
+    <source/>
+    <implementation>_57C6434A-7701-451A-8747-6C7AC5E9C152</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>EUCON_Effector.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <connection>
     <name>system_utils_utilsRACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_ControllerRACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.TM_Proxy_Component</name>
     <internalEndpoint>
@@ -300,6 +334,34 @@
       <portName>admin</portName>
       <kind>Facet</kind>
       <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.Data_Base_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>appActuator_appActuatorRACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_ControllerRACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_Effector</name>
+    <internalEndpoint>
+      <portName>appActuator</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_Controller</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>appActuator</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_Effector</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>sysActuator_sysActuatorRACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_ControllerRACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_Effector</name>
+    <internalEndpoint>
+      <portName>sysActuator</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_Controller</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>sysActuator</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.Assembly_RACE_IN_IA.RACE_IN_IA.EUCON_Effector</instance>
     </internalEndpoint>
   </connection>
 
@@ -685,6 +747,92 @@
         </type>
         <value>
           <string>create_CIAO_RACE_Input_Adapter_Interactive_IA_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_58618FA8-759E-43B8-AB61-F182DEDFF837">
+    <name>RACE_SA_POP.ImplementationArtifacts.Effector_BaseArtifacts.Effector_Base_stub</name>
+    <source/>
+    <node/>
+    <location>Effector_Base_stub</location>
+  </artifact>
+
+  <artifact id="_33858AE1-8276-4423-8EF1-9A8CDDDDCF31">
+    <name>RACE_SA_POP.ImplementationArtifacts.Effector_BaseArtifacts.Effector_Base_svnt</name>
+    <source/>
+    <node/>
+    <location>Effector_Base_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Effector_Effector_BaseHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_3AF008AB-A9F2-45D8-A11A-3AFB46244D35">
+    <name>RACE_SA_POP.ImplementationArtifacts.Effector_BaseArtifacts.Effector_Base_exec</name>
+    <source/>
+    <node/>
+    <location>Effector_Base_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Effector_Effector_BaseHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_03457B8A-DE24-449E-AE21-A68F6018D736">
+    <name>RACE_SA_POP.ImplementationArtifacts.EUCON_EffectorArtifacts.EUCON_Effector_stub</name>
+    <source/>
+    <node/>
+    <location>EUCON_Effector_Component_stub</location>
+  </artifact>
+
+  <artifact id="_70201A30-3A26-40E5-8F86-6BCA700C48C3">
+    <name>RACE_SA_POP.ImplementationArtifacts.EUCON_EffectorArtifacts.EUCON_Effector_svnt</name>
+    <source/>
+    <node/>
+    <location>EUCON_Effector_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Effector_EUCON_Effector_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_E35469B8-D950-400F-956D-F5CC542B9F36">
+    <name>RACE_SA_POP.ImplementationArtifacts.EUCON_EffectorArtifacts.EUCON_Effector_exec</name>
+    <source/>
+    <node/>
+    <location>EUCON_Effector_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Effector_EUCON_Effector_Home_Impl</string>
         </value>
       </value>
     </execParameter>

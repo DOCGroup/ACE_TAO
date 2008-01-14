@@ -19,10 +19,14 @@ project(Controller_Base_stub) : ciao_client_dnc {
   after += Controller_Base_idl_gen \
            OpString_stub \
            RACE_common_stub \
-           TM_Proxy_stub
+           TM_Proxy_stub \
+           Effector_Base_stub
+
+
   libs  += OpString_stub \
            RACE_common_stub \
-           TM_Proxy_Component_stub
+           TM_Proxy_Component_stub \
+           Effector_Base_stub
 
   sharedname = Controller_Base_stub
   dynamicflags   = CONTROLLER_BASE_STUB_BUILD_DLL
@@ -47,11 +51,14 @@ project(Controller_Base_stub) : ciao_client_dnc {
 project(Controller_Base_svnt) : ciao_servant_dnc {
   avoids += ace_for_tao
   after      +=  Controller_Base_stub
+
   sharedname  = Controller_Base_svnt
+
   libs       += Controller_Base_stub \
                 OpString_stub \
                 RACE_common_stub \
-                TM_Proxy_Component_stub
+                TM_Proxy_Component_stub \
+                Effector_Base_stub
 
   dynamicflags = CONTROLLER_BASE_SVNT_BUILD_DLL
 

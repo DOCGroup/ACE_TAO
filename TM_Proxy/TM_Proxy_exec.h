@@ -74,6 +74,7 @@ namespace CIAO
           virtual void ccm_remove ();
 
           private:
+
           TM_Proxy_Component_Context *context_;
 
           ::CIAO::TM_Daemon::Daemon_var TM_Daemon_;

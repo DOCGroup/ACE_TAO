@@ -1,14 +1,13 @@
 workspace {
   common
   Output_Adapters/DAnCE_Output_Adapter
-  Input_Adapters/Base
-  Input_Adapters/SA_POP_Input_Adapter
+  Input_Adapters
   Data_Base
   utils
   Conductor
   Controller/Base
-  Controller/FMUF
   Controller/EUCON
   Tester
   TM_Proxy
+  Effectors
 }

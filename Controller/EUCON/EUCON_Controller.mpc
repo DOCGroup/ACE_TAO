@@ -74,7 +74,8 @@ project(EUCON_Controller_exec) : ciao_component_dnc, ciao_config_handlers {
           RACE_utils \
           OpString_stub \
           RACE_common_stub \
-          TM_Proxy_Component_stub
+          TM_Proxy_Component_stub \
+          Effector_Base_stub
 
   includes += $(CIAO_ROOT)/RACE/utils
 
@@ -124,7 +125,8 @@ project(EUCON_Controller_svnt) : ciao_servant_dnc {
                 Controller_Base_stub \
                 OpString_stub \
                 RACE_common_stub \
-                TM_Proxy_Component_stub
+                TM_Proxy_Component_stub \
+                Effector_Base_stub
 
 
   dynamicflags = EUCON_CONTROLLER_SVNT_BUILD_DLL

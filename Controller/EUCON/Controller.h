@@ -82,6 +82,9 @@ namespace CIAO
         /// System utility object reference.
         ::CIAO::RACE::TM_Proxy::Utility_var system_utility_;
 
+        /// Reference to the application actuator.
+        ::CIAO::RACE::Effector::ApplicationActuator_var appActuator_;
+
         /// Sampling period.
         ACE_Time_Value interval_;
 
@@ -89,6 +92,8 @@ namespace CIAO
         bool active_;
 
         bool initialized_;
+
+        ::CIAO::RACE::OperationalStrings opstrings_;
 
         Logger logger_;
 

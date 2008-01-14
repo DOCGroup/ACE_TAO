@@ -1,0 +1,47 @@
+// $Id$
+
+/**
+ * @file Effector_Base.idl
+ * @brief Interface definition of Effector_Base component.
+ *
+ * @author Nishanth Shankaran <nshankar@nospam.com>
+ */
+
+#ifndef EFFECTOR_BASE_IDL
+#define EFFECTOR_BASE_IDL
+
+#include "ciao/Components.idl"
+#include "RACE/common/OpString.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    module Effector
+    {
+      interface ApplicationActuator
+      {
+        boolean modifyApplications (in OperationalStrings opstrings);
+      };
+
+      interface SystemActuator
+      {
+      };
+
+      component Effector_Base
+      {
+        provides ApplicationActuator appActuator;
+
+        provides SystemActuator sysActuator;
+
+      };
+
+      home Effector_Base_Component_Home manages Effector_Base
+      {
+      };
+    };
+  };
+};
+
+
+#endif /* EFFECTOR_BASE_IDL */
