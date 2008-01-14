@@ -17,4 +17,6 @@ project : aceexe {
   }
   Inline_Files {
   }
+  Template_Files {
+  }
 }
