@@ -1,3 +1,24 @@
+Mon Jan 14 04:41:29 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_Manager_T.inl:
+
+          Implemented the ACE_Hash_Map_Const_Reverse_Iterator_Ex class,
+          which is the const_reverse_iterator for the
+          ACE_Hash_Map_Manager_Ex class.
+
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/STL_algorithm_Test_T.h:
+        * tests/STL_algorithm_Test_T.cpp:
+
+          Generalized the STL algorithm test used in the hash map
+          manager test so that it can be used with any ACE container.
+
+        * tests/tests.mpc:
+
+          Added the STL_algorithm_Test_T.* files to the
+          Hash_Map_Manager_Test project.
+
 Sun Jan 13 16:40:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
