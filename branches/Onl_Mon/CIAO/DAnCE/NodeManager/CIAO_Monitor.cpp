@@ -139,7 +139,7 @@ double CIAO::CIAO_Monitor::calculate_load ()
   //  double user_current_load = (current_.user_cpu - previous_.user_cpu)/load;
   //  double system_current_load = (current_.system_cpu - previous_.system_cpu)/load;
   double delta_idle = current_.idle_time - previous_.idle_time;
-  double percent_cpu_load = 100.0 - (delta_idle / load * 100.0);
+  double cpu_load = 1.0 - (delta_idle / load);
   previous_ = current_;
-  return percent_cpu_load;
+  return cpu_load;
 }
