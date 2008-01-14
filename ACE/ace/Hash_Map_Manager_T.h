@@ -146,6 +146,8 @@ public:
           CONST_ITERATOR;
   typedef ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
           REVERSE_ITERATOR;
+  typedef ACE_Hash_Map_Const_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
+          CONST_REVERSE_ITERATOR;
 
   // = STL-style iterator typedefs.
   typedef ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
