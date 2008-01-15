@@ -2,7 +2,6 @@
 
 #include "TX_Object_i.h"
 
-
 ACE_RCSID (Big_Request,
            TX_Object_i,
            "$Id$")
@@ -38,7 +37,7 @@ TX_Object_i::recv (DataSeq_out data)
   (*data) = this->data_;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Sending  octet sequence of length:\t%u\n",
+              "Sending octet sequence of length:\t%u\n",
               data->length ()));
 }
 

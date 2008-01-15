@@ -1,3 +1,28 @@
+Tue Jan 15 19:05:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+          Const changes
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.cpp:
+          Initialise some pointers with 0
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+          Const changes and use ACE_ERROR
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+          Layout changes
+
+        * orbsvcs/tests/Security/Big_Request/client.cpp:
+          Extended this client to be able to specify the number of
+          iterations and the size of the data send
+
+        * orbsvcs/tests/Security/Big_Request/TX_Object.idl:
+          Use CORBA::OctetSeq
+
+        * orbsvcs/tests/Security/Big_Request/TX_Object_i.cpp:
+          Layout changes
+
 Tue Jan 15 18:33:20 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Bug_3193_Regression:

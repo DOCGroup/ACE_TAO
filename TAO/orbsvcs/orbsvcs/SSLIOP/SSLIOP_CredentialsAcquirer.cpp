@@ -135,7 +135,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
 {
   this->check_validity ();
 
-  ::SSLIOP::AuthData *data;
+  ::SSLIOP::AuthData *data = 0;
 
   if (!(this->acquisition_arguments_ >>= data))
     throw CORBA::BAD_PARAM ();
@@ -161,7 +161,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
       throw CORBA::BAD_PARAM ();
     }
 
-  TAO::SSLIOP::OwnCredentials * creds;
+  TAO::SSLIOP::OwnCredentials * creds = 0;
   ACE_NEW_THROW_EX (creds,
                     TAO::SSLIOP::OwnCredentials (x509.in (), evp.in ()),
                     CORBA::NO_MEMORY ());
