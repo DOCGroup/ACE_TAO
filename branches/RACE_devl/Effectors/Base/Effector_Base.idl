@@ -21,7 +21,10 @@ module CIAO
     {
       interface ApplicationActuator
       {
-        boolean modifyApplications (in OperationalStrings opstrings);
+        boolean init (in OperationalStrings opstrings);
+
+        boolean modifyApplications
+        (in OperationalStrings opstrings);
       };
 
       interface SystemActuator

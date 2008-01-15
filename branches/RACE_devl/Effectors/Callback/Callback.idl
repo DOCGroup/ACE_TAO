@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file Callback.idl
+ *
+ * @brief Interface definition of the callback interface used by RACE's
+ * application effector to modify the functioning of the application.
+ *
+ * @author Nishanth Shankaran <nshankar@nospam.com>
+ */
+
+#ifndef CALLBACK_IDL
+#define CALLBACK_IDL
+
+module CIAO
+{
+  module RACE
+  {
+    module Effector
+    {
+      interface Callback
+      {
+        boolean set_rate (in double rate);
+
+      };
+    };
+  };
+};
+
+
+#endif /* CALLBACK_IDL */

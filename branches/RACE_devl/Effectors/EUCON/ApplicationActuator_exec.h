@@ -6,6 +6,10 @@
 
 #include "EUCON_Effector_svnt.h"
 #include "Logger.h"
+#include "orbsvcs/CosNamingC.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/SString.h"
+#include "RACE/Effectors/Callback/CallbackC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,17 +37,42 @@ namespace CIAO
 
           virtual ~ApplicationActuator_exec_i (void);
 
-          // Operations from ::CIAO::RACE::Effector::ApplicationActuator
+
+          virtual ::CORBA::Boolean
+            init (const ::CIAO::RACE::OperationalStrings & opstrings);
+
 
           virtual ::CORBA::Boolean
           modifyApplications (
             const ::CIAO::RACE::OperationalStrings & opstrings);
+
+          protected:
+
+          //Helper functions.
+
+          virtual bool
+            resolve_naming_service ();
+
+          virtual bool
+            populate_callback_map
+            (const ::CIAO::RACE::OperationalStrings & opstrings);
 
           private:
 
           Logger &logger_;
 
           EUCON_Effector_Context *context_;
+
+          CosNaming::NamingContext_var naming_context_;
+
+          typedef
+          ACE_Hash_Map_Manager_Ex <ACE_CString,
+            Callback_var,
+            ACE_Hash<ACE_CString>,
+            ACE_Equal_To<ACE_CString>,
+            ACE_Null_Mutex> MAP;
+
+          MAP callback_map_;
         };
 
       }

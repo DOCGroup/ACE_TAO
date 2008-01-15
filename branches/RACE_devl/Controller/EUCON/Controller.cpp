@@ -92,15 +92,36 @@ namespace CIAO
                 // have been registered!
                 this->controller_.init (this->tasks_);
 
-
-                // Now activate the active object.
-                if (this->activate () != 0)
+                // Now trying to initialize the effector.
+                msg << "Trying to initialize the effector....";
+                try
                   {
-                    msg << "Could not initialize the periodic task!\n";
+                    if (this->appActuator_->init (this->opstrings_))
+                      {
+                        msg << "done!\n";
+                        // Now activate the active object.
+                        if (this->activate () != 0)
+                          {
+                            msg << "Could not initialize the periodic task!\n";
+                            this->active_ = false;
+                          }
+                        msg << "Successfully started the controller.\n";
+                        this->active_ = true;
+                      }
+                    else
+                      {
+                        msg << "Oops! Error "
+                            << "while initializing the effector!\n"
+                            << "Controller can not be started without the "
+                            << "effector.... bailing out....\n";
+                        this->active_ = false;
+                      }
+                  }
+                catch (CORBA::Exception &ex)
+                  {
+                    msg << "Exception caught\n" << ex._info ().c_str();
                     this->active_ = false;
                   }
-                msg << "Successfully started the controller.\n";
-                this->active_ = true;
               }
             else
               {
@@ -140,7 +161,6 @@ namespace CIAO
           {
             if (!this->active_)
               {
-                ID = ::CORBA::string_dup (opstring.ID.in ());
                 // Now creating a RACE::Task and populating its fields.
                 ::CIAO::RACE::Task task;
                 this->populate_task (opstring, task);
@@ -203,9 +223,12 @@ namespace CIAO
                   this->controller_.control_period
                   (this->domain_,this->tasks_);
 
-                // Now we dump out the new rates.
-                std::vector<CIAO::RACE::Task>::iterator itr;
-                for (size_t itr = 0; itr < this->tasks_.size(); ++itr)
+                // Now we update our internal opstrings
+                // sequence and dump out the new rates.
+                for (size_t itr = 0;
+                     (itr < this->tasks_.size() &&
+                      itr < this->opstrings_.length());
+                     ++itr)
                   {
                     msg << "Delta rate for task: "
                         << this->tasks_[itr].UUID.c_str()
@@ -215,15 +238,27 @@ namespace CIAO
                     ACE_DEBUG ((LM_DEBUG, "%s", msg.str ().c_str ()));
                     this->tasks_[itr].curr_rate +=
                       this->tasks_[itr].delta_rate;
+                    this->opstrings_[itr].rate.currRate =
+                      this->tasks_[itr].curr_rate;
                   }
-                this->appActuator_->modifyApplications (this->opstrings_);
+                // Invoke the application effector to modify the
+                // application execution rate.
+                if (!this->appActuator_->modifyApplications
+                    (this->opstrings_))
+                  {
+                    msg << "Error while invoking effector!\n"
+                        << "Bailing out.....\n";
+                    this->logger_.log (msg.str ());
+                    return -1;
+                  }
+
                 this->logger_.log (msg.str ());
                 ACE_OS::sleep (this->interval_);
               }
             catch (::CORBA::Exception &ex)
               {
                 ACE_PRINT_EXCEPTION (ex, "Exception caught!\n");
-                this->active_ = false;
+                return -1;
               }
           }
         return 0;

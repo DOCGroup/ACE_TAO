@@ -142,6 +142,9 @@ module CIAO
         // Opstring execution rate.
         ExecutionRate rate;
 
+        // ID (Naming Service ID) of the effector component.
+        string effectorID;
+        
         // Properties for deployment of opstring.
         ::Deployment::Properties infoProperty;
 

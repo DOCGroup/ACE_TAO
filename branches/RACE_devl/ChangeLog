@@ -1,3 +1,33 @@
+Tue Jan 15 21:27:51 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
+
+        * Controller/EUCON/Controller.cpp:
+
+        Updated this file to first initialize the effector while the
+        controller was being started up.
+
+        * Effectors/Base/Effector_Base.idl:
+
+        Added the init method.
+
+        * Effectors/Callback:
+        * Effectors/Callback/Callback.idl:
+        * Effectors/Callback/Callback.mpc:
+        * Effectors/Callback/Callback_stub_export.h:
+        * Effectors/Callback/Callback_svnt_export.h:
+
+        Checking in the Callback interface that application's effector
+        components have to implement.
+
+        * Effectors/EUCON/ApplicationActuator_exec.h:
+        * Effectors/EUCON/ApplicationActuator_exec.cpp:
+        * Effectors/EUCON/EUCON_Effector.mpc:
+
+        Added implementation for init, modifyApplications methods.
+
+        * common/OpString.idl:
+
+        Added the monitorID entry to the opstring structure.
+
 Mon Jan 14 22:34:25 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/Base/Controller_Base.idl:
