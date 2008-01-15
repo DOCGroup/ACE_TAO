@@ -40,7 +40,8 @@ TAO_Leader_Follower_Flushing_Strategy::flush_message (
 
 int
 TAO_Leader_Follower_Flushing_Strategy::flush_transport (
-    TAO_Transport *transport)
+    TAO_Transport *transport,
+    ACE_Time_Value *max_wait_time)
 {
   // @todo This is not the right way to do this....
 
@@ -50,7 +51,7 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
 
       while (!transport->queue_is_empty ())
         {
-          if (orb_core->run (0, 1) == -1)
+          if (orb_core->run (max_wait_time, 1) == -1)
             return -1;
         }
     }
