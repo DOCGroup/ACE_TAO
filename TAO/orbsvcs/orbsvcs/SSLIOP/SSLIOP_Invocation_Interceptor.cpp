@@ -150,7 +150,6 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
       CORBA::ORBid_var orb_id = ri->orb_id ();
       CORBA::OctetSeq_var adapter_id = ri->adapter_id ();
       CORBA::OctetSeq_var object_id = ri->object_id ();
-
       CORBA::String_var operation_name = ri->operation ();
 
       CORBA::Boolean it_should_happen = false;
@@ -160,12 +159,14 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
 						cred_list,
 						operation_name.in());
       if (TAO_debug_level >= 3)
-	ACE_DEBUG ((LM_DEBUG,
-		    "TAO (%P|%t) SL2::access_allowed_ex returned %s\n",
-		    it_should_happen ? "true" : "false"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            "TAO (%P|%t) SL2::access_allowed_ex returned %s\n",
+            it_should_happen ? "true" : "false"));
+        }
 
       if (! it_should_happen)
-	throw CORBA::NO_PERMISSION ();
+        throw CORBA::NO_PERMISSION ();
     }
 }
 
