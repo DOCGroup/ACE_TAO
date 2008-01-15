@@ -51,7 +51,8 @@ TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
 }
 
 int
-TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport)
+TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport
+                                                 , ACE_Time_Value *max_wait_time)
 {
   // @@ Should we pass this down?  Can we?
   try
@@ -60,7 +61,7 @@ TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport)
 
       while (!transport->queue_is_empty ())
         {
-          if (orb_core->run (0, 1) == -1)
+          if (orb_core->run (max_wait_time, 1) == -1)
             return -1;
         }
     }
