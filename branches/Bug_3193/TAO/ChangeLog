@@ -1,17 +1,29 @@
 Tue Jan 15 22:19:48 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
+        * tao/Transport.h:
         * tao/Block_Flushing_Strategy.h:
         * tao/Block_Flushing_Strategy.cpp:
         * tao/Connection_Handler.cpp:
         * tao/Flushing_Strategy.h:
-        * tao/IIOP_Transport.h:
-        * tao/IIOP_Transport.cpp:
         * tao/Leader_Follower_Flushing_Strategy.h:
         * tao/Leader_Follower_Flushing_Strategy.cpp:
         * tao/Reactive_Flushing_Strategy.h:
         * tao/Reactive_Flushing_Strategy.cpp:
-        * tao/Transport.h:
+          API changes to pass max_wait_time.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Remove base class duplicate method send_message_shared().
+
         * tao/Transport.cpp:
+          Pass max_wait_time properly through the stack.
+          Additional comments/notes.
+          Flush only if timeout hasn't already been encountered.
+          Pass max_wait_time to the flushing strategy.
+          Bubble up flushing startegy errors (ignored earlier).
+          In asynch send (send_asynchronous_message_i), push remaining
+          message to front of queue and only flush if timeout hasn't been
+          already encountered.
 
 Tue Jan 15 19:49:31 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
