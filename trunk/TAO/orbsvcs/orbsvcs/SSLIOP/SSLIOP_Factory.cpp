@@ -96,8 +96,7 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
 // Parses a X509 path. Beware: This function modifies
 // the buffer pointed to by arg!
 int
-TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg,
-                                                char **path)
+TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char **path)
 {
   ACE_ASSERT (arg != 0);
   ACE_ASSERT (path != 0);
@@ -117,8 +116,7 @@ TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg,
 
 
 int
-TAO::SSLIOP::Protocol_Factory::init (int argc,
-                                     char* argv[])
+TAO::SSLIOP::Protocol_Factory::init (int argc, char* argv[])
 {
   char *certificate_path = 0;
   char *private_key_path = 0;
@@ -161,7 +159,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
                                              session_id_len))
   {
     if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_ERROR,
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) Unable to set the session id ")
                   ACE_TEXT ("context to \'%s\'\n"), session_id_context_));
 
