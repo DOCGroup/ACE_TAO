@@ -1,3 +1,8 @@
+Tue Jan 15 18:33:20 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Bug_3193_Regression:
+          New regression for Bug 3193.
+
 Mon Jan 14 14:02:44 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
