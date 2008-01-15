@@ -10,6 +10,7 @@
 # NOTE: This file contains tests only for TAO's ORB. Please do not
 # include things like performance-tests, and examples here.
 
+TAO/tests/Bug_3193_Regression/run_test.pl:
 TAO/tests/Abstract_Interface/run_test.pl: !CORBA_E_MICRO
 TAO/tests/Bug_2702_Regression/run_test.pl:
 TAO/tests/ORB_Local_Config/Bunch/run_test.pl:
