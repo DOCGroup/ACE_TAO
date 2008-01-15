@@ -1,3 +1,9 @@
+Tue Jan 15 19:49:31 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Bug_3193_Regression/test_i.h:
+        * tests/Bug_3193_Regression/test_i.cpp:
+          Remove Fuzz build errors.
+
 Tue Jan 15 19:05:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
