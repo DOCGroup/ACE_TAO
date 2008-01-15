@@ -1,0 +1,43 @@
+/* -*- C++ -*- */
+
+//=============================================================================
+/**
+ *  @file    testSched.idl
+ *
+ *  $Id$
+ *
+ *  @author Matt Murphy <murphym@cs.uri.edu>
+ */
+//=============================================================================
+
+/**
+ * @class Object1
+ *
+ * @brief Used by the RTCORBA 1.0 scheduling service.
+ */
+
+#ifndef TEST_SCHED
+#define TEST_SCHED
+
+/**
+ * Object1 class is used in the RTCORBA 1.0 Scheduling
+ * Service test.
+ */
+module testSched {
+
+  exception testSchedException {};
+
+  interface Object1 {
+    /**
+     * method1 executes work at the location specified by the object reference.
+     * It sleeps for the number of seconds specified.
+     *
+     * @param seconds The number of seconds to sleep for.
+     */
+    void method1(in string activity, in long second, inout string output_file)
+      raises (testSchedException);
+  };
+
+};
+
+#endif  /* TEST_SCHED */

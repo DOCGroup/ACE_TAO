@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>C679B363-82A2-4252-B34A-F6B579BF9E37</UUID>
+
+  <implementation id="_7205655C-4CBD-42BE-A0F1-870705A77D77">
+    <name>MyQuoter.ComponentImplementations.StockBrokerImplementation.StockBrokerMonolithicImpl</name>
+    <source/>
+    <artifact>_C964CED0-3DFD-4D87-9AB2-0FB76C672D6E</artifact>
+    <artifact>_28F23672-EB7E-41DD-8F12-77B9FC9175C2</artifact>
+    <artifact>_32859990-B97C-4195-BA0E-60DA9930C5FB</artifact>
+  </implementation>
+
+  <implementation id="_8F7FE6F8-1AF2-4490-90BE-EC41863033FC">
+    <name>MyQuoter.ComponentImplementations.StockDistributorImplementation.StockDistributorMonolithicImpl</name>
+    <source/>
+    <artifact>_2DCEC213-F447-421C-A27A-D6222EFB9A38</artifact>
+    <artifact>_5CDF934B-8D0F-4012-89A1-811D2E9C0D63</artifact>
+    <artifact>_00F15FA6-FA09-460E-9670-D878F508BA4D</artifact>
+  </implementation>
+
+  <instance id="MyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockBroker">
+    <name>MyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockBroker</name>
+    <node>Broker</node>
+    <source/>
+    <implementation>_7205655C-4CBD-42BE-A0F1-870705A77D77</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>StockBroker.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="MyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockDistributor">
+    <name>MyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockDistributor</name>
+    <node>Distributor</node>
+    <source/>
+    <implementation>_8F7FE6F8-1AF2-4490-90BE-EC41863033FC</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>StockDistributor.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>read_quoter_push_quoterMyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockBrokerMyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockDistributor</name>
+    <internalEndpoint>
+      <portName>read_quoter</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>MyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockBroker</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_quoter</portName>
+      <kind>Facet</kind>
+      <instance>MyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockDistributor</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>notify_out_notify_inMyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockDistributorMyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockBroker</name>
+    <internalEndpoint>
+      <portName>notify_out</portName>
+      <kind>EventPublisher</kind>
+      <instance>MyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockDistributor</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>notify_in</portName>
+      <kind>EventConsumer</kind>
+      <instance>MyQuoter.ComponentImplementations.StockQuoterImplementation.StockQuoter.StockBroker</instance>
+    </internalEndpoint>
+  </connection>
+
+  <artifact id="_C964CED0-3DFD-4D87-9AB2-0FB76C672D6E">
+    <name>MyQuoter.ImplementationArtifacts.StockBrokerArtifacts.StockBroker_stub</name>
+    <source/>
+    <node/>
+    <location>StockBroker_stub</location>
+  </artifact>
+
+  <artifact id="_28F23672-EB7E-41DD-8F12-77B9FC9175C2">
+    <name>MyQuoter.ImplementationArtifacts.StockBrokerArtifacts.StockBroker_svnt</name>
+    <source/>
+    <node/>
+    <location>StockBroker_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Stock_StockBrokerHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_32859990-B97C-4195-BA0E-60DA9930C5FB">
+    <name>MyQuoter.ImplementationArtifacts.StockBrokerArtifacts.StockBroker_exec</name>
+    <source/>
+    <node/>
+    <location>StockBroker_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Stock_StockBrokerHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_2DCEC213-F447-421C-A27A-D6222EFB9A38">
+    <name>MyQuoter.ImplementationArtifacts.StockDistributorArtifacts.StockDistributor_stub</name>
+    <source/>
+    <node/>
+    <location>StockDistributor_stub</location>
+  </artifact>
+
+  <artifact id="_5CDF934B-8D0F-4012-89A1-811D2E9C0D63">
+    <name>MyQuoter.ImplementationArtifacts.StockDistributorArtifacts.StockDistributor_svnt</name>
+    <source/>
+    <node/>
+    <location>StockDistributor_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Stock_StockDistributorHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_00F15FA6-FA09-460E-9670-D878F508BA4D">
+    <name>MyQuoter.ImplementationArtifacts.StockDistributorArtifacts.StockDistributor_exec</name>
+    <source/>
+    <node/>
+    <location>StockDistributor_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Stock_StockDistributorHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:deploymentPlan>
