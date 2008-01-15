@@ -78,7 +78,9 @@ project(EUCON_Effector_svnt) : ciao_servant_dnc {
 }
 
 project(EUCON_Effector_exec) : ciao_component_dnc {
-  after   +=  EUCON_Effector_svnt
+  after += EUCON_Effector_svnt \
+           Callback_stub \
+           OpString_stub
 
   sharedname = EUCON_Effector_Component_exec
 
@@ -86,7 +88,9 @@ project(EUCON_Effector_exec) : ciao_component_dnc {
           EUCON_Effector_Component_svnt \
           Effector_Base_svnt        \
           Effector_Base_stub \
-          RACE_utils
+          RACE_utils \
+          Callback_stub \
+          OpString_stub
 
  includes += $(CIAO_ROOT)/RACE/utils
 
