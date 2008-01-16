@@ -1,3 +1,13 @@
+Wed Jan 16 19:31:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        
+          Fixed bug in coercion of typedef'd unsigned short IDL constant,
+          having an rhs consisting of a bitwise OR expression made up
+          of previously declared constants of the same type. Thanks to
+          Nayeem Khan <d dot nayeem dot khan at gmail dot com> for
+          reporting the problem and supplying example IDL.
+
 Wed Jan 16 19:22:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CSD_Framework/CSD_POA.cpp:
