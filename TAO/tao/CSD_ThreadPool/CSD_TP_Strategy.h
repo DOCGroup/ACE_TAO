@@ -90,21 +90,18 @@ namespace TAO
       /// (dispatched or cancelled) or rejected.
       /// Will return REQUEST_EXECUTED, REQUEST_CANCELLED, or REQUEST_REJECTED.
       CustomRequestOutcome custom_synch_request
-                                        (TP_Custom_Request_Operation* op
-                                        );
+                                        (TP_Custom_Request_Operation* op);
 
       /// Inject an asynchronous, custom request into the request queue.
       /// This will return control to the calling thread once the request
       /// has been placed into the queue (or rejected).
       /// Will return REQUEST_DISPATCHED or REQUEST_REJECTED.
       CustomRequestOutcome custom_asynch_request
-                                         (TP_Custom_Request_Operation* op
-                                         );
+                                         (TP_Custom_Request_Operation* op);
 
       /// Cancel all requests that are targeted for the provided servant.
       /// This is requested on the user application level.
-      void cancel_requests(PortableServer::Servant servant
-                          );
+      void cancel_requests(PortableServer::Servant servant);
 
     protected:
 
@@ -118,8 +115,7 @@ namespace TAO
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
                               const char*                     operation,
-                              PortableServer::Servant         servant
-                             );
+                              PortableServer::Servant         servant);
 
       /// Handle the dispatching of a collocated request.
       ///
@@ -131,8 +127,7 @@ namespace TAO
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
                               const char*                     operation,
-                              PortableServer::Servant         servant
-                             );
+                              PortableServer::Servant         servant);
 
       /// Event - The POA has been activated.
       /// This will activate the worker thread(s).
@@ -147,15 +142,12 @@ namespace TAO
       /// Event - A servant has been activated
       virtual void servant_activated_event_i
                                      (PortableServer::Servant servant,
-                                      const PortableServer::ObjectId& oid
-                                     );
+                                      const PortableServer::ObjectId& oid);
 
       /// Event - A servant has been deactivated
       virtual void servant_deactivated_event_i
                                     (PortableServer::Servant servant,
-                                     const PortableServer::ObjectId& oid
-                                    );
-
+                                     const PortableServer::ObjectId& oid);
 
     private:
 
@@ -174,8 +166,7 @@ namespace TAO
       *        state cannot be determined.
       */
       TP_Servant_State::HandleType get_servant_state
-                                      (PortableServer::Servant servant
-                                      );
+                                      (PortableServer::Servant servant);
 
 
       /// This is the active object used by the worker threads.

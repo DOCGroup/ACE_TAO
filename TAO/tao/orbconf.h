@@ -158,7 +158,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 // @@ This assumes we are using one or more protocols that will all
 // @@ 1) know what to do with a port number and
 // @@ 2) use the same default port number.
-// @@ This shou8ld go away!
+// @@ This should go away!
 #if !defined (TAO_DEFAULT_SERVER_PORT)
 #define TAO_DEFAULT_SERVER_PORT 0
 #endif /* TAO_DEFAULT_SERVER_PORT */

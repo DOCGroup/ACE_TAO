@@ -240,9 +240,9 @@ protected:
   int reactor_mask_signals_;
 
   /**
-   * Flag that is set to 1 if the reactor obtained from the
+   * Flag that is set to true if the reactor obtained from the
    * get_reactor() method is dynamically allocated.  If this flag is
-   * set to 1, then the reclaim_reactor() method with call the delete
+   * set to true, then the reclaim_reactor() method with call the delete
    * operator on the given reactor.  This flag is necessary to make
    * sure that a reactor not allocated by the default resource factory
    * is not reclaimed by the default resource factory.  Such a
@@ -250,7 +250,7 @@ protected:
    * default one overrides the get_reactor() method but does not
    * override the reclaim_reactor() method.
    */
-  int dynamically_allocated_reactor_;
+  bool dynamically_allocated_reactor_;
 
   virtual int load_default_protocols (void);
 

@@ -61,8 +61,8 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
         {
           //FUZZ: disable check_for_lack_ACE_OS
           ACE_ERROR_RETURN((LM_ERROR,
-                            "(%P|%t) TP_Task failed to open.  "
-                            "Invalid argument type passed to open().\n"),
+                            ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
+                            ACE_TEXT ("Invalid argument type passed to open().\n")),
                            -1);
           //FUZZ: enable check_for_lack_ACE_OS
         }
@@ -74,8 +74,8 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
   if (num < 1)
     {
       ACE_ERROR_RETURN((LM_ERROR,
-                        "(%P|%t) TP_Task failed to open.  "
-                        "num_threads (%u) is less-than 1.\n",
+                        ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
+                        ACE_TEXT ("num_threads (%u) is less-than 1.\n"),
                         num),
                        -1);
     }
@@ -84,8 +84,8 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
   if (num > MAX_THREADPOOL_TASK_WORKER_THREADS)
     {
       ACE_ERROR_RETURN((LM_ERROR,
-                        "(%P|%t) TP_Task failed to open.  "
-                        "num_threads (%u) is too large.  Max is %d.\n",
+                        ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
+                        ACE_TEXT ("num_threads (%u) is too large.  Max is %d.\n"),
                         num, MAX_THREADPOOL_TASK_WORKER_THREADS),
                         -1);
     }
@@ -99,8 +99,8 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_ERROR_RETURN((LM_ERROR,
-                        "(%P|%t) TP_Task failed to open.  "
-                        "Task has previously been open()'ed.\n"),
+                        ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
+                        ACE_TEXT ("Task has previously been open()'ed.\n")),
                        -1);
       //FUZZ: enable check_for_lack_ACE_OS
     }
@@ -111,8 +111,8 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
       // Assumes that when activate returns non-zero return code that
       // no threads were activated.
       ACE_ERROR_RETURN((LM_ERROR,
-                        "(%P|%t) TP_Task failed to activate "
-                        "(%d) worker threads.\n",
+                        ACE_TEXT ("(%P|%t) TP_Task failed to activate ")
+                        ACE_TEXT ("(%d) worker threads.\n"),
                         num),
                        -1);
     }
@@ -272,7 +272,7 @@ TAO::CSD::TP_Task::close(u_long flag)
 
       // Check whether the calling thread(calling orb shutdown) is one of the
       // threads in the pool. If it is then it should not wait itself.
-      size_t size = this->activated_threads_.size ();
+      size_t const size = this->activated_threads_.size ();
 
       for (size_t i = 0; i < size; i ++)
         {

@@ -102,9 +102,7 @@ namespace TAO
       virtual int close(u_long flag = 0);
 
       /// Cancel all requests that are targeted for the provided servant.
-      void cancel_servant (PortableServer::Servant servant
-                          );
-
+      void cancel_servant (PortableServer::Servant servant);
 
     private:
 

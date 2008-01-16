@@ -89,8 +89,7 @@ namespace TAO
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
                               const char*                     operation,
-                              PortableServer::Servant         servant
-                              ) = 0;
+                              PortableServer::Servant         servant) = 0;
 
       /// Subclass provides implementation to dispatch a collocated request.
       virtual DispatchResult dispatch_collocated_request_i
@@ -98,8 +97,7 @@ namespace TAO
                           const PortableServer::ObjectId& object_id,
                           PortableServer::POA_ptr         poa,
                           const char*                     operation,
-                          PortableServer::Servant         servant
-                          ) = 0;
+                          PortableServer::Servant         servant) = 0;
 
       /// Event - The POA has been activated.
       virtual bool poa_activated_event_i() = 0;
@@ -110,14 +108,12 @@ namespace TAO
       /// Event - A servant has been activated.
       virtual void servant_activated_event_i
                                   (PortableServer::Servant servant,
-                                  const PortableServer::ObjectId& oid
-                                 );
+                                   const PortableServer::ObjectId& oid);
 
       /// Event - A servant has been deactivated.
       virtual void servant_deactivated_event_i
                                   (PortableServer::Servant servant,
-                                  const PortableServer::ObjectId& oid
-                                 );
+                                  const PortableServer::ObjectId& oid);
 
     private:
 
@@ -130,8 +126,7 @@ namespace TAO
       /// This CSD Strategy_Base has been asked to dispatch a (collocated or remote)
       /// request.
       void dispatch_request(TAO_ServerRequest& server_request,
-                            ::TAO::Portable_Server::Servant_Upcall& upcall
-                           );
+                            ::TAO::Portable_Server::Servant_Upcall& upcall);
 
       /// Event - The POA has been activated. This happens when the POA_Manager
       ///         is activated.
@@ -143,14 +138,12 @@ namespace TAO
 
       /// Event - A servant has been activated.
       void servant_activated_event(PortableServer::Servant servant,
-                                  const PortableServer::ObjectId& oid
-                                 );
+                                  const PortableServer::ObjectId& oid);
 
       /// Event - A servant has been deactivated.  This also occurs when
       ///         the POA is destroyed.
       void servant_deactivated_event(PortableServer::Servant servant,
-                                    const PortableServer::ObjectId& oid
-                                   );
+                                     const PortableServer::ObjectId& oid);
 
       /// The POA to which this strategy has been applied.
       ::PortableServer::POA_var poa_;

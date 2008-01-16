@@ -108,7 +108,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , purge_percentage_ (TAO_PURGE_PERCENT)
   , max_muxed_connections_ (0)
   , reactor_mask_signals_ (1)
-  , dynamically_allocated_reactor_ (0)
+  , dynamically_allocated_reactor_ (false)
   , options_processed_ (0)
   , factory_disabled_ (0)
 #if TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL == 1
@@ -820,7 +820,7 @@ TAO_Default_Resource_Factory::get_reactor (void)
       reactor = 0;
     }
   else
-    this->dynamically_allocated_reactor_ = 1;
+    this->dynamically_allocated_reactor_ = true;
 
   return reactor;
 }
@@ -828,7 +828,7 @@ TAO_Default_Resource_Factory::get_reactor (void)
 void
 TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 {
-  if (this->dynamically_allocated_reactor_ == 1)
+  if (this->dynamically_allocated_reactor_)
     delete reactor;
 }
 
