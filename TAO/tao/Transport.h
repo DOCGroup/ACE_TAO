@@ -686,6 +686,8 @@ protected:
   /// Queue a message for @a message_block
   /// @param max_wait_time The maximum time that the operation can
   ///            block, used in the implementation of timeouts.
+  /// @param back If true, the message will be pushed to the back of the queue.
+  ///        If false, the message will be pushed to the front of the queue.
   int queue_message_i (const ACE_Message_Block *message_block,
                        ACE_Time_Value *max_wait_time, bool back=true);
 
