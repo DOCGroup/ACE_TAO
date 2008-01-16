@@ -1,3 +1,22 @@
+Wed Jan 16 19:22:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CSD_Framework/CSD_POA.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Base.h:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.h:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+          Layout changes
+
+        * tao/default_resource.{h,cpp}:
+          Changed dynamically_allocated_reactor to a real bool
+
+        * tao/orbconf.h:
+          Fixed typo in comment
+
+        * tao/Transport_Cache_Manager.cpp:
+          Layout and const changes
+
 Wed Jan 16 18:12:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3198_Regression/*:
