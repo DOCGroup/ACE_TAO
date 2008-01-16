@@ -1382,9 +1382,8 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
          this->id ()));
     }
 
-  bool front = (partially_sent ? true: false);
-
-  if (this->queue_message_i (message_block, max_wait_time, front) == -1)
+  if (this->queue_message_i (message_block, max_wait_time, !partially_sent)
+      == -1)
   {
     if (TAO_debug_level > 0)
       {

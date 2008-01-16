@@ -1,3 +1,10 @@
+Wed Jan 16 19:39:58 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.cpp:
+
+          Fixed a logic error where the rest of a partially-sent message was
+          put on the wrong end of the output queue.
+
 Wed Jan 16 16:12:35 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport.h:
