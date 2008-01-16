@@ -186,6 +186,8 @@ sub Spawn ()
     my $ok;
     my $iboot;
     my $text;
+    my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
+    my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
 
     ##
     ## initialize VxWorks kernel (reboot!) if needed
@@ -235,6 +237,17 @@ sub Spawn ()
                                  Errmode => 'return');
             $t->open($ENV{'ACE_RUN_VX_TGTHOST'});
             $t->print("");
+
+            if (defined $target_login)  {
+              $t->waitfor('/VxWorks login: $/');
+              $t->print("$target_login");
+            }
+
+            if (defined $target_password)  {
+              $t->waitfor('/Password: $/');
+              $t->print("$target_password");
+            }
+
             $ok = $t->waitfor('/-> $/');
             if ($ok) {
               $t->print($self->{REBOOT_CMD});
@@ -350,6 +363,20 @@ my $ok;
 my $t = new Net::Telnet(Timeout => 600, Errmode => 'return');
 $t->open($ENV{'ACE_RUN_VX_TGTHOST'});
 $t->print("");
+
+my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
+my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
+
+if (defined $target_login)  {
+  $t->waitfor('/VxWorks login: $/');
+  $t->print("$target_login");
+}
+
+if (defined $target_password)  {
+  $t->waitfor('/Password: $/');
+  $t->print("$target_password");
+}
+
 $ok = $t->waitfor('/-> $/');
 if ($ok) {
   $t->prompt ($prompt);
