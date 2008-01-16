@@ -202,10 +202,22 @@ sub Spawn ()
           if (defined $ENV{'ACE_RUN_VX_IBOOT'}) {
             if (defined $ENV{'ACE_TEST_VERBOSE'}) {
               print "Using iBoot: $ENV{'ACE_RUN_VX_IBOOT'}\n";
+
+              if (defined $ENV{'ACE_RUN_VX_IBOOT_OUTLET'}) {
+                print "Using iBoot Outlet #: $ENV{'ACE_RUN_VX_IBOOT_OUTLET'}\n";
+              }
             }
             $iboot = IO::Socket::INET->new ("$ENV{'ACE_RUN_VX_IBOOT'}");
             if  ($iboot) {
-              $iboot->send ("\ePASS\ef\r");
+              # if ACE_RUN_VX_IBOOT_OUTLET is defined, we're using
+              # the iBootBar, and we're using the iPAL Protocol
+              # to communicate with the iBootBar
+              if (defined $ENV{'ACE_RUN_VX_IBOOT_OUTLET'}) {
+                $iboot->send ("\ePASS\e$ENV{'ACE_RUN_VX_IBOOT_OUTLET'}E");
+              }
+              else  {
+                $iboot->send ("\ePASS\ef\r");
+              }
               $iboot->recv ($text,128);
               if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                 print "iBoot is currently: $text\n";
@@ -217,7 +229,15 @@ sub Spawn ()
             }
             $iboot = IO::Socket::INET->new ("$ENV{'ACE_RUN_VX_IBOOT'}");
             if  ($iboot) {
-              $iboot->send ("\ePASS\en\r");
+              # if ACE_RUN_VX_IBOOT_OUTLET is defined, we're using
+              # the iBootBar, and we're using the iPAL Protocol
+              # to communicate with the iBootBar
+              if (defined $ENV{'ACE_RUN_VX_IBOOT_OUTLET'}) {
+                $iboot->send ("\ePASS\e$ENV{'ACE_RUN_VX_IBOOT_OUTLET'}D");
+              }
+              else  {
+                $iboot->send ("\ePASS\en\r");
+              }
               $iboot->recv ($text,128);
               if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                 print "iBoot is currently: $text\n";
@@ -371,7 +391,7 @@ if (defined $target_login)  {
   $t->waitfor('/VxWorks login: $/');
   $t->print("$target_login");
 }
-
+            
 if (defined $target_password)  {
   $t->waitfor('/Password: $/');
   $t->print("$target_password");
