@@ -1,3 +1,9 @@
+Wed Jan 16 16:12:35 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.h:
+
+          Added doxygen for the 'back' parameter.
+
 Tue Jan 15 22:19:48 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport.h:
