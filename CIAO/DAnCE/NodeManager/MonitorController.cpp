@@ -88,9 +88,6 @@ int CIAO::MonitorController::init ()
 
 ::Deployment::Domain* CIAO::MonitorController::update_data_for_TM ()
 {
-	ACE_DEBUG ((LM_DEBUG , "The list size is %d\n",
-		    monitor_list_.size ()));
-
   ::Deployment::Domain* domain =
     new ::Deployment::Domain (this->initial_domain_);
 
@@ -447,11 +444,15 @@ void CIAO::MonitorController::upload_obj_ref ()
   }
   catch (CosNaming::NamingContext::NotFound& ex)
   {
-    ex._tao_print_exception ("MonitorController::upload_obj_ref\t\n");
+    ACE_DEBUG ((LM_DEBUG, "MonitorController:: namingcontext not "
+                "already registered with the naming service.\n"
+                "Now trying to rebind......"));
+    //    ex._tao_print_exception ("MonitorController::upload_obj_ref\t\n");
 
     try
     {
       naming_context->bind_new_context (name);
+      ACE_DEBUG ((LM_DEBUG, "done!\n"));
     }
     catch (CORBA::Exception & e)
     {

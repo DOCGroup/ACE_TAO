@@ -1,3 +1,15 @@
+Wed Jan 16 20:13:56 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * DAnCE/NodeManager/CIAO_Monitor.cpp:
+        * DAnCE/NodeManager/MonitorController.cpp:
+
+        Cleaned up the code a little.
+
+        * examples/space/descriptors/NodeManagerMap_1.dat:
+        * examples/space/descriptors/run_TM.sh:
+
+        Modified these scripts.
+
 Mon Jan 14 16:24:19 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * DAnCE/NodeManager/CIAO_Monitor.cpp:
