@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
   CORBA::ORB_var orb;
   try
   {
-    orb= CORBA::ORB_init (argc, argv, 0);
+    orb = CORBA::ORB_init (argc, argv);
 
     CORBA::Object_var root_poa_o =
       orb->resolve_initial_references ("RootPOA");

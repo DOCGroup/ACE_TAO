@@ -12,11 +12,12 @@ const char *ior = "file://test.ior";
 const char *cert_file = "cacert.pem";
 long number_iterations = 1;
 long data_size = 3461724;
+bool shutdown_server = false;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:d:");
+  ACE_Get_Opt get_opts (argc, argv, "k:i:d:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -31,6 +32,9 @@ parse_args (int argc, char *argv[])
       case 'd':
         data_size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
+      case 'x':
+        shutdown_server = true;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -38,6 +42,7 @@ parse_args (int argc, char *argv[])
                            "-k <ior> "
                            "-i <iterations> "
                            "-d <datasize> "
+                           "-x shutdown "
                            "\n",
                            argv [0]),
                           -1);
@@ -113,7 +118,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
         }
 
-      txObject->shutdown ();
+      if (shutdown_server)
+        {
+          txObject->shutdown ();
+        }
     }
   catch (const CORBA::Exception& ex)
     {
