@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/ORB_Core.h"
+#include "tao/SystemException.h"
 #include "tao/PolicyC.h"
 #include "ace/Get_Opt.h"
 
@@ -55,6 +56,10 @@ int main (int argc, char *argv[])
                            " (%P|%t) got true from _validate_connection\n"),
                           1);
     }
+  }
+  catch (const CORBA::TRANSIENT&)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Caught transient as expected\n"));
   }
   catch (const CORBA::Exception& ex)
   {

@@ -1,15 +1,23 @@
+Wed Jan 16 20:16:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3198_Regression/bug_3198_regression.cpp:
+          Check whether we get the transient exception as we should
+
+        * tests/Exposed_Policies/client.cpp:
+          use prefix increment
+
 Wed Jan 16 20:02:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/constants.idl:
-        
+
           Added example IDL mentioned in
-          
+
           Wed Jan 16 19:31:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jan 16 19:31:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_expression.cpp:
-        
+
           Fixed bug in coercion of typedef'd unsigned short IDL constant,
           having an rhs consisting of a bitwise OR expression made up
           of previously declared constants of the same type. Thanks to

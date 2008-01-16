@@ -28,13 +28,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          status++;
+          ++status;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("CORBA Exception Raised");
-      status++;
+      ++status;
     }
 
 
