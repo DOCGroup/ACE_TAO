@@ -9,7 +9,8 @@ use lib  "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$file = PerlACE::LocalFile ("test.ior");
+$filebase = "test.ior";
+$file = PerlACE::LocalFile ("$filebase");
 
 unlink $file;
 
@@ -21,9 +22,9 @@ $status = 0;
 #$ENV{'SSL_CERT_FILE'} = 'cacert.pem';
 
 $SV = new PerlACE::Process ("server",
-			    "-o $file -ORBSvcConf server$PerlACE::svcconf_ext");
+                "-o $file -ORBSvcConf server$PerlACE::svcconf_ext");
 $CL = new PerlACE::Process ("client",
-			    "-ORBSvcConf client$PerlACE::svcconf_ext -k file://$file");
+                "-ORBSvcConf client$PerlACE::svcconf_ext -k file://$file -x");
 
 print STDERR "\n\n==== Running SSLIOP Big_Request test\n";
 
@@ -42,7 +43,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (5);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

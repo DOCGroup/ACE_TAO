@@ -1,3 +1,22 @@
+Wed Jan 16 18:12:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3198_Regression/*:
+          New test, thanks to Hans Utz <hutz at arc dot nasa dot gov>
+          for reporting this problem
+
+        * orbsvcs/tests/Security/Big_Request/client.cpp:
+          Added -x option to indicate that the client has to shutdown the
+          server
+
+        * orbsvcs/tests/Security/Big_Request/run_test.pl:
+          Added -x
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          Layout changes and corrected an ACE_DEBUG to be an ACE_ERROR
+
+        * tests/Bug_2826_Regression/bug_2826_regression.cpp:
+          No need to pass in an empty orb name
+
 Tue Jan 15 19:49:31 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Bug_3193_Regression/test_i.h:
