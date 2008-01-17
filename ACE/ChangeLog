@@ -1,3 +1,32 @@
+Thu Jan 17 19:24:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task_Ex_T.h:
+          Marked can_put as deprecated like in Task_T.h
+
+        * ace/Task_Ex_T.inl:
+          Replaced assert with notsup return
+
+        * ace/Task_T.inl:
+          Removed not needed includes
+
+        * ace/ACE.cpp:
+          Const change
+
+        * ace/DLL.cpp:
+          Changed close_handle_on_destruction flag and error flag to bool.
+          Use ACE_OS::dl_error() to get the error message
+
+        * ace/DLL.h:
+          Changed close_handle_on_destruction flag and error flag to bool
+
+        * ace/Log_Msg.cpp:
+          Use bool and print the process id as hex on OpenVMS, the DCL
+          scripts also prints the process id as hax
+
+        * ace/Log_Msg.h:
+          Only defined the ACE_DEBUG, ACE_ERROR, and other
+          macros when they are not defined yet
+
 Thu Jan 17 18:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.6.h:
