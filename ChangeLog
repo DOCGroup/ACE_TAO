@@ -1,3 +1,11 @@
+Thu Jan 17 18:00:25 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
+
+        * descriptors/String1.cdp:
+        * descriptors/results.plt:
+
+        Checking in necessary files.
+
+
 Thu Jan 17 16:53:08 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
 
         * Controller/EUCON/Controller.h:
