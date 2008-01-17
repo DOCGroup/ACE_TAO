@@ -1,3 +1,8 @@
+Thu Jan 17 19:58:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Override RM on a solaris host
+
 Thu Jan 17 19:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.6.h:
