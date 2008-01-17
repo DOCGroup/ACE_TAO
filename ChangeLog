@@ -1,3 +1,19 @@
+Thu Jan 17 16:53:08 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
+
+        * Controller/EUCON/Controller.h:
+        * Controller/EUCON/Controller.cpp:
+
+        Added a "logger" to periodically dump resource utilization and
+        execution rates of applications to a file.
+
+        * descriptors/NodeDetails.dat:
+
+        Updated this file.
+
+        * descriptors/RACE.cdp:
+
+        Modified the sampling period of the controller.
+
 Tue Jan 15 21:27:51 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
 
         * Controller/EUCON/Controller.cpp:
