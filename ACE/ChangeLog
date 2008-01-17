@@ -1,3 +1,8 @@
+Thu Jan 17 19:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.6.h:
+          Improved VxWorks 6.6 RTP support
+
 Thu Jan 17 19:24:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Task_Ex_T.h:
