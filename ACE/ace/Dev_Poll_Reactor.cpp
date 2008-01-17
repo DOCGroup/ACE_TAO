@@ -920,7 +920,7 @@ ACE_Dev_Poll_Reactor::work_pending (const ACE_Time_Value & max_wait_time)
   ACE_MT (ACE_Countdown_Time countdown (&mwt));
 
   Token_Guard guard (this->token_);
-  int result = guard.acquire_quietly (&mwt);
+  int const result = guard.acquire_quietly (&mwt);
 
   // If the guard is NOT the owner just return the retval
   if (!guard.is_owner ())
@@ -949,18 +949,17 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
                // additional events.
 
   ACE_Time_Value timer_buf (0);
-  ACE_Time_Value *this_timeout = 0;
-
-  this_timeout = this->timer_queue_->calculate_timeout (max_wait_time,
-                                                        &timer_buf);
+  ACE_Time_Value *this_timeout =
+    this_timeout = this->timer_queue_->calculate_timeout (max_wait_time,
+                                                          &timer_buf);
 
   // Check if we have timers to fire.
-  const int timers_pending =
+  int const timers_pending =
  ((this_timeout != 0 && max_wait_time == 0)
      || (this_timeout != 0 && max_wait_time != 0
          && *this_timeout != *max_wait_time) ? 1 : 0);
 
-  const long timeout =
+  long const timeout =
  (this_timeout == 0
      ? -1 /* Infinity */
      : static_cast<long> (this_timeout->msec ()));
@@ -968,7 +967,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
 #if defined (ACE_HAS_EVENT_POLL)
 
    // Wait for events.
-   const int nfds = ::epoll_wait (this->poll_fd_,
+   int const nfds = ::epoll_wait (this->poll_fd_,
                                   this->events_,
                                   this->size_,
                                   static_cast<int> (timeout));
@@ -988,7 +987,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   dvp.dp_timeout = timeout;  // Milliseconds
 
   // Poll for events
-  const int nfds = ACE_OS::ioctl (this->poll_fd_, DP_POLL, &dvp);
+  int const nfds = ACE_OS::ioctl (this->poll_fd_, DP_POLL, &dvp);
 
   // Retrieve the results from the pollfd array.
   this->start_pfds_ = dvp.dp_fds;
@@ -1017,7 +1016,7 @@ ACE_Dev_Poll_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   ACE_MT (ACE_Countdown_Time countdown (max_wait_time));
 
   Token_Guard guard (this->token_);
-  int result = guard.acquire_quietly (max_wait_time);
+  int const result = guard.acquire_quietly (max_wait_time);
 
   // If the guard is NOT the owner just return the retval
   if (!guard.is_owner ())
@@ -1703,7 +1702,7 @@ ACE_Dev_Poll_Reactor::suspend_handlers (void)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
 
-  const size_t len = this->handler_rep_.size ();
+  size_t const len = this->handler_rep_.size ();
 
   for (size_t i = 0; i < len; ++i)
     if (this->handler_rep_.suspended (i) == 0
@@ -1812,7 +1811,7 @@ ACE_Dev_Poll_Reactor::resume_handlers (void)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
 
-  const size_t len = this->handler_rep_.size ();
+  size_t const len = this->handler_rep_.size ();
 
   for (size_t i = 0; i < len; ++i)
     if (this->handler_rep_.suspended (i)
@@ -1898,7 +1897,7 @@ ACE_Dev_Poll_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
 
   if (0 != this->timer_queue_)
     return this->timer_queue_->schedule
- (event_handler,
+      (event_handler,
        arg,
        this->timer_queue_->gettimeofday () + delay,
        interval);
@@ -2220,7 +2219,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
   // Block out all signals until method returns.
   ACE_Sig_Guard sb;
 
-  const ACE_Reactor_Mask old_mask = this->handler_rep_.mask (handle);
+  ACE_Reactor_Mask const old_mask = this->handler_rep_.mask (handle);
   ACE_Reactor_Mask new_mask = old_mask;
 
   // Perform GET, CLR, SET, and ADD operations on the interest/wait
@@ -2266,7 +2265,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
       // Only attempt to alter events for the handle from the
       // "interest set" if it hasn't been suspended.
 
-      const short events = this->reactor_mask_to_poll_event (new_mask);
+      short const events = this->reactor_mask_to_poll_event (new_mask);
 
 #if defined (sun)
       // Apparently events cannot be updated on-the-fly on Solaris so

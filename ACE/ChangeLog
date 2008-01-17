@@ -1,7 +1,28 @@
+Thu Jan 17 18:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.6.h:
+          Improved x86 support
+
+        * ace/Dev_Poll_Reactor.cpp:
+          Layout and const changes
+
+        * ace/Encoding_Converter_Factory.cpp:
+          Const changes
+
+        * ace/FILE_Connector.h:
+        * ace/Handle_Ops.h:
+          Doxygen changes
+
+        * ace/POSIX_Proactor.cpp:
+          Use prefix increment/decrement and initialise pointer to 0
+
+        * ace/SSL/SSL_Context.cpp:
+          Initialise pointer to 0
+
 ﻿Wed Jan 16 19:40:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
-        
+
           Added Nayeem Khan <d dot nayeem dot khan at gmail dot com>.
 
 Wed Jan 16 18:16:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
