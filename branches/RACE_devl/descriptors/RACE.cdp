@@ -114,7 +114,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>10</long>
+          <long>3</long>
         </value>
       </value>
     </configProperty>

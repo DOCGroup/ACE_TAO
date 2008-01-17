@@ -1,4 +1,3 @@
 RACE_Node      corbaloc:iiop:localhost:50000/NodeManager
 HelloNode      corbaloc:iiop:localhost:60000/NodeManager
-blade39        corbaloc:iiop:pantera.dre.vanderbilt.edu:30000/NodeManager
-blade36        corbaloc:iiop:pantera.dre.vanderbilt.edu:30001/NodeManager
+blade36        corbaloc:iiop:pantera.dre.vanderbilt.edu:30000/NodeManager

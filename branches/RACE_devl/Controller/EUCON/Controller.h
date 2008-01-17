@@ -97,6 +97,10 @@ namespace CIAO
 
         Logger logger_;
 
+        Logger util_logger_;
+
+        Logger rate_logger_;
+
       };
     }
   }

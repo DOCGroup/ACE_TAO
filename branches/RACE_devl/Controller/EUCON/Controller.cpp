@@ -21,7 +21,9 @@ namespace CIAO
           interval_ (interval),
           active_ (false),
           initialized_ (false),
-          logger_ ("EUCON_Controller.log")
+          logger_ ("EUCON_Controller.log"),
+          util_logger_("util.log"),
+          rate_logger_("rate.log")
       {
         std::stringstream msg;
         msg << "Successfully created the controller object.\n";
@@ -206,6 +208,7 @@ namespace CIAO
         while (this->active_)
           {
             std::stringstream msg;
+            std::stringstream rates;
             try
               {
                 msg << "In controller periodic task!\n"
@@ -240,7 +243,12 @@ namespace CIAO
                       this->tasks_[itr].delta_rate;
                     this->opstrings_[itr].rate.currRate =
                       this->tasks_[itr].curr_rate;
+                    rates << this->tasks_[itr].curr_rate 
+                          << "\t"
+                          << this->tasks_[itr].delta_rate
+                          << "\t";
                   }
+                 rates << "\n";
                 // Invoke the application effector to modify the
                 // application execution rate.
                 if (!this->appActuator_->modifyApplications
@@ -253,6 +261,7 @@ namespace CIAO
                   }
 
                 this->logger_.log (msg.str ());
+                this->rate_logger_.log (rates.str());
                 ACE_OS::sleep (this->interval_);
               }
             catch (::CORBA::Exception &ex)
@@ -303,6 +312,8 @@ namespace CIAO
        ::CIAO::RACE::Node &r_node)
       {
         std::stringstream msg;
+        std::stringstream util;
+
         msg << "Entering populate_node ()\n";
         msg << "Workin on node: " << d_node.name.in() << "...\n";
         r_node.UUID = d_node.name.in();
@@ -330,7 +341,7 @@ namespace CIAO
                     resources [j].property;
                 for (::CORBA::ULong k = 0; k < props.length(); ++k)
                   {
-                    Deployment::DnC_Dump::dump (props [k]);
+                    // Deployment::DnC_Dump::dump (props [k]);
 
                     if (ACE_OS::strcmp (props [k].name.in (), "Setpoint")
                         == 0)
@@ -342,6 +353,8 @@ namespace CIAO
                             value >>= resource.set_point;
                             msg << "Obtained set point! Value is: "
                                 << resource.set_point << "\n";
+                            ACE_DEBUG ((LM_DEBUG, "\n%f\t", resource.set_point)); 
+                            util << resource.set_point;
                           }
                       }
                     else if (ACE_OS::strcmp (props [k].name.in (),
@@ -352,8 +365,14 @@ namespace CIAO
                         if (tc->kind () == CORBA::tk_double)
                           {
                             value >>= resource.util;
+
+                            // Temporary hack! We are multiplying by 
+                            // the number of physical processors!
+                            //resource.util *= 4;
                             msg << "Obtained curr util! Value is: "
                                 << resource.util << "\n";
+                            ACE_DEBUG ((LM_DEBUG, "%f\n", resource.util)); 
+                            util << "\t" << resource.util << "\t";
                           }
                       }
                   }
@@ -365,7 +384,9 @@ namespace CIAO
               }
           }
         msg << "Leaving populate_node ()\n";
+        util << "\n";
         this->logger_.log (msg.str ());
+        this->util_logger_.log (util.str());
       }
 
       void
