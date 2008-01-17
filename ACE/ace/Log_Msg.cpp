@@ -1110,8 +1110,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           ACE_TCHAR format[128]; // Converted format string
           ACE_TCHAR *fp;         // Current format pointer
           int       wp = 0;      // Width/precision extracted from args
-          int       done = 0;
-          int       skip_nul_locate = 0;
+          bool      done = false;
+          bool      skip_nul_locate = false;
           int       this_len = 0;    // How many chars s[n]printf wrote
 
           fp = format;
@@ -1128,7 +1128,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
           while (!done)
             {
-              done = 1;               // Unless a conversion spec changes it
+              done = true; // Unless a conversion spec changes it
 
               switch (*format_str)
                 {
@@ -1155,14 +1155,14 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'L':
                 case 'h':
                   *fp++ = *format_str;
-                  done = 0;
+                  done = false;
                   break;
 
                 case '*':
                   wp = va_arg (argp, int);
                   ACE_OS::sprintf (fp, ACE_TEXT ("%d"), wp);
                   fp += ACE_OS::strlen (fp);
-                  done = 0;
+                  done = false;
                   break;
 
                 case 'A':             // ACE_timer_t
@@ -1238,7 +1238,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'P':             // Process ID
+#if defined (ACE_OPENVMS)
+                  // Print the process id in hex on OpenVMS.
+                  ACE_OS::strcpy (fp, ACE_TEXT ("x"));
+#else
                   ACE_OS::strcpy (fp, ACE_TEXT ("d"));
+#endif
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format,
@@ -1451,12 +1456,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case '{': // Increment the trace_depth, then indent
-                  skip_nul_locate = 1;
+                  skip_nul_locate = true;
                   (void) this->inc ();
                   break;
 
                 case '}': // indent, then decrement trace_depth
-                  skip_nul_locate = 1;
+                  skip_nul_locate = true;
                   (void) this->dec ();
                   break;
 
@@ -1486,7 +1491,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                   *bp = '\0';
                   bspace -= static_cast<size_t> (wp);
-                  skip_nul_locate = 1;
+                  skip_nul_locate = true;
                   break;
 
                 case 'r': // Run (invoke) this subroutine.
@@ -1513,7 +1518,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         *bp++ =  '}';
                       }
                     *bp = '\0';
-                    skip_nul_locate = 1;
+                    skip_nul_locate = true;
                     ACE_Log_Msg::msg_off_ = osave;
                     break;
                   }

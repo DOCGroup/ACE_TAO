@@ -2,8 +2,6 @@
 //
 // $Id$
 
-#include "ace/os_include/os_assert.h"
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE void
@@ -28,8 +26,7 @@ template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE int
 ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::can_put (ACE_MESSAGE_TYPE *)
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::can_put");
-  assert (!"not implemented");
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE int
