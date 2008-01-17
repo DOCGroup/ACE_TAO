@@ -1,0 +1,12 @@
+// $Id$
+
+project (simple) : aceexe {
+  exename = simple
+  after += MonitorControl
+  libs  += MonitorControl
+  
+  source_files {
+    main.cpp
+  }
+}
+

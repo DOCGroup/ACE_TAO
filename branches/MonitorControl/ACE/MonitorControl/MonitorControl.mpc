@@ -1,0 +1,32 @@
+// -*- MPC -*-
+// $Id$
+
+project(MonitorControl) : acelib {
+  dynamicflags += MONITORCONTROL_BUILD_DLL
+  
+  Source_Files {
+    Admin.cpp
+    BytesSentMonitor.cpp
+    ControlAction.cpp
+    ControlActionRegistry.cpp
+    CPULoadMonitor.cpp
+    Datatypes.cpp
+    GenericRegistry.cpp
+    MemoryUsageMonitor.cpp
+    MonitorControl.cpp
+    MonitorPoint.cpp
+    MonitorPointRegistry.cpp
+    NumThreadsMonitor.cpp
+    PacketsSentMonitor.cpp
+    Statistic.cpp
+  }
+  
+  Header_Files {
+    MonitorControl_export.h
+  }
+  
+  Template_Files {
+    LowLevelMonitors_T.cpp
+    MonitorPoint_T.cpp
+  }
+}

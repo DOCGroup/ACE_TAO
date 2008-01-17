@@ -1,3 +1,53 @@
+Thu Jan 17 21:33:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/MonitorControl_export.h:
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.h:
+        * MonitorControl/Datatypes.h:
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/LowLevelMonitors_T.cpp:
+        * MonitorControl/ControlActionRegistry.cpp:
+        * MonitorControl/GenericRegistry.h:
+        * MonitorControl/Statistic.h:
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/ControlAction.h:
+        * MonitorControl/MonitorControl.mpc:
+        * MonitorControl/MonitorControl.cpp:
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/MonitorPoint_T.h:
+        * MonitorControl/PacketsSentMonitor.cpp:
+        * MonitorControl/Admin.h:
+        * MonitorControl/Datatypes.cpp:
+        * MonitorControl/MonitorPointRegistry.h:
+        * MonitorControl/MonitorControl_macros.h:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        * MonitorControl/GenericRegistry.cpp:
+        * MonitorControl/Statistic.cpp:
+        * MonitorControl/MemoryUsageMonitor.h:
+        * MonitorControl/ControlActionRegistry.h:
+        * MonitorControl/LowLevelMonitors_T.h:
+        * MonitorControl/ControlAction.cpp:
+        * MonitorControl/MonitorPoint_T.cpp:
+        * MonitorControl/NumThreadsMonitor.h:
+        * MonitorControl/Admin.cpp:
+        * MonitorControl/MonitorPointRegistry.cpp:
+        * MonitorControl/MonitorControl.h:
+        * MonitorControl/BytesSentMonitor.h:
+        
+          New files, beginning the implementation of monitor and
+          control features that can be added to applications that
+          use ACE.
+        
+        * MonitorControl/examples/svc.conf:
+        * MonitorControl/examples/main.cpp:
+        * MonitorControl/examples/simple.mpc:
+        
+          Simple example executable, used at present for testing
+          the bits of the MonitorControl lib above as they are
+          added.
+
 Thu Jan 17 19:58:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
