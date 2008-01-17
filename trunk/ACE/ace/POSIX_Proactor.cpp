@@ -1422,7 +1422,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::start_aio_i");
 
   int ret_val;
-  const ACE_TCHAR *ptype;
+  const ACE_TCHAR *ptype = 0;
 
   // Start IO
 
@@ -1443,7 +1443,9 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
     }
 
   if (ret_val == 0)
-    this->num_started_aio_++;
+    {
+      ++this->num_started_aio_;
+    }
   else // if (ret_val == -1)
     {
       if (errno == EAGAIN || errno == ENOMEM)  //Ok, it will be deferred AIO
@@ -1510,9 +1512,9 @@ ACE_POSIX_AIOCB_Proactor::start_deferred_aio ()
   //AL notify  user
 
   result_list_[i] = 0;
-  aiocb_list_cur_size_--;
+  --aiocb_list_cur_size_;
 
-  num_deferred_aiocb_ --;
+  --num_deferred_aiocb_;
 
   result->set_error (errno);
   result->set_bytes_transferred (0);
@@ -1555,7 +1557,7 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
         if (this->result_list_[ai]->aio_fildes != handle)  // Not ours
           continue;
 
-        num_total++;
+        ++num_total;
 
         ACE_POSIX_Asynch_Result *asynch_result = this->result_list_[ai];
 
