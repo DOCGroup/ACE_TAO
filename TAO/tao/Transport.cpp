@@ -1384,21 +1384,36 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 
   if (this->queue_message_i (message_block, max_wait_time, !partially_sent)
       == -1)
-  {
-    if (TAO_debug_level > 0)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - Transport[%d]::")
-                    ACE_TEXT ("send_asynchronous_message_i, ")
-                    ACE_TEXT ("cannot queue message for  - %m\n"),
-                    this->id ()));
-      }
-    return -1;
-  }
-
-  // We can't flush if we have already encountered a timeout
-  if (!timeout_encountered)
     {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::")
+                      ACE_TEXT ("send_asynchronous_message_i, ")
+                      ACE_TEXT ("cannot queue message for  - %m\n"),
+                      this->id ()));
+        }
+      return -1;
+    }
+
+  if (timeout_encountered && partially_sent)
+    {
+      //Must close down the transport here since we can't guarantee the
+      //integrity of the GIOP stream (the next send may try to write to
+      //the socket before looking at the queue).
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::")
+                      ACE_TEXT ("send_asynchronous_message_i, ")
+                      ACE_TEXT ("timeout after partial send, closing.\n"),
+                      this->id ()));
+        }
+      return -1;
+    }
+  else if (!timeout_encountered)
+    {
+      // We can't flush if we have already encountered a timeout
       // ... if the queue is full we need to activate the output on the
       // queue ...
       bool must_flush = false;
@@ -1428,18 +1443,12 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
           TAO_REVERSE_LOCK reverse (*this->handler_lock_);
           ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
 
-          if (flushing_strategy->flush_transport (this, max_wait_time) == -1) {
-            // We may need to empty the transport queue here.
-            return -1;
-          }
+          if (flushing_strategy->flush_transport (this, max_wait_time) == -1)
+            {
+              return -1;
+            }
         }
     }
-  else {
-    // We may need to empty the transport queue here as well.
-    // encountered a timeout
-    return -1;
-  }
-
   return 0;
 }
 

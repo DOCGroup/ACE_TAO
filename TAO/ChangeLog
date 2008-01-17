@@ -1,3 +1,11 @@
+Thu Jan 17 22:53:05 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.cpp:
+
+          Fixed the case where a timeout happens with zero bytes sent.  This
+          is not a partial send so we don't return -1 to shut down the
+          transport.  Also added a debug log message and cleaned up indenting.
+
 Thu Jan 17 20:02:43 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
