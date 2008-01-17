@@ -162,7 +162,6 @@
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
 #define ACE_HAS_SIGTIMEDWAIT
 #define ACE_HAS_SIGSUSPEND
-#define ACE_HAS_GETIFADDRS
 
 #define ACE_LACKS_SETEGID
 #define ACE_LACKS_SETPGID
@@ -225,6 +224,7 @@
   #endif
 #else
   // We are building for kernel mode
+  #define ACE_HAS_GETIFADDRS
   #define ACE_LACKS_SUSECONDS_T
   #define ACE_LACKS_INTPTR_T
   #define ACE_LACKS_INTTYPES_H
