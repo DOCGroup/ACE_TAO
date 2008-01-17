@@ -1,0 +1,2 @@
+BMClosedED      corbaloc:iiop:localhost:10000/NodeManager
+EC              corbaloc:iiop:localhost:20000/NodeManager

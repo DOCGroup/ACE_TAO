@@ -1,0 +1,17 @@
+//$Id$
+
+Case
+----
+
+A simple test to test the passing of CORBA::VoidData to a method.
+
+To Run
+------
+
+./test
+
+Typical Output
+--------------
+
+Void Data Passed to method 28
+
