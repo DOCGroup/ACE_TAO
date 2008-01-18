@@ -1,3 +1,16 @@
+Fri Jan 18 19:52:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp(visit_interface):
+        
+          Added additional check before destroying the IFR contents of
+          an interface entry that has not been previously forward
+          declared. If the interface is from an included IDL file, we
+          leave the contents alone. Thanks to Chris Cleeland
+          <cleeland at ociweb dot com> for reporting the problem that
+          results when another IDL file with the same included file is
+          processed and the contents of the interface (an operation for
+          example) are not found in the IFR.
+
 Fri Jan 18 09:57:52 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3154_Regression/run_test.pl:
