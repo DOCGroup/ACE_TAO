@@ -58,7 +58,7 @@ Thu Jan 17 18:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/SSL/SSL_Context.cpp:
           Initialise pointer to 0
 
-﻿Wed Jan 16 19:40:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+Wed Jan 16 19:40:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
 
@@ -69,7 +69,7 @@ Wed Jan 16 18:16:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/tao_orb_tests.lst:
           Turn on Bug 3198 regression test.
 
-﻿Wed Jan 16 15:50:19 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+Wed Jan 16 15:50:19 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
         * bin/PerlACE/ProcessVX_Win32.pm:
@@ -82,7 +82,7 @@ Wed Jan 16 18:16:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           environment variable to specify the power outlet number you want
           to use.
 
-﻿Wed Jan 16 13:05:17 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+Wed Jan 16 13:05:17 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
         * bin/PerlACE/ProcessVX_Win32.pm:
