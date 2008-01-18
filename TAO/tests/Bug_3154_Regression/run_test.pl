@@ -24,7 +24,9 @@ $idl_file = PerlACE::LocalFile ("test.idl");
 # The IDL compiler
 $TAO_IDL = new PerlACE::Process ("$tao_idl");
 
-$TAO_IDL->Arguments ("-Se -hs _skel.h -hc _stub.h test.idl");
+$ENV{'INCLUDE'} = ":$ENV{TAO_ROOT}/orbsvcs/:$ENV{TAO_ROOT}/:";
+
+$TAO_IDL->Arguments ("-Se -hs _skel.h -hc _stub.h -I$ENV{TAO_ROOT} -I$ENV{TAO_ROOT}/orbsvcs/ test.idl");
 $TAO_IDL->SpawnWaitKill (20);
 
 $found = 0;
