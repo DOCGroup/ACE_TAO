@@ -47,6 +47,9 @@ int test_sequence ()
   const char * elem3_cstr = "elem3";
 
   a.length (4);
+  // Create a case to test for memory leaks
+  // in the sequence.
+  a[0] = CORBA::string_dup (elem0_cstr);
   a[0] = CORBA::string_dup (elem0_cstr);
   a[1] = CORBA::string_dup (elem1_cstr);
   a[2] = CORBA::string_dup (elem2_cstr);
@@ -58,10 +61,18 @@ int test_sequence ()
 
   // test assignment operator
   a_it = a.begin ();
+
+  // Create a case to test for memory leaks
+  // in the iterator.
+  *a_it = CORBA::string_dup (elem0_cstr);
   FAIL_RETURN_IF (a_it != a.begin ());
 
   // test non const dereferencing
-  typename ITERATOR_T::element_type value0 = *a_it;
+  // I'm not sure this test makes sense since what's returned from
+  // dereferencing the iterator is an r value.
+  const char* value_seq = a[0];
+  FAIL_RETURN_IF (ACE_OS::strcmp (value_seq, elem0_cstr) != 0);
+  const char* value0 = *a_it;
   FAIL_RETURN_IF (ACE_OS::strcmp (value0, elem0_cstr) != 0);
 
   // test const dereferencing
@@ -210,6 +221,7 @@ int test_sequence_const_iterator ()
 
   a.length (4);
   a[0] = CORBA::string_dup (elem0_cstr);
+  a[0] = CORBA::string_dup (elem0_cstr);
   a[1] = CORBA::string_dup (elem1_cstr);
   a[2] = CORBA::string_dup (elem2_cstr);
   a[3] = CORBA::string_dup (elem3_cstr);
@@ -223,7 +235,9 @@ int test_sequence_const_iterator ()
   FAIL_RETURN_IF (a_it != a.begin ());
 
   // test non const dereferencing
-  typename ITERATOR_T::const_element_type value0 = *a_it;
+  // I'm not sure non-const deferencing makes sense since
+  // we are getting an r value.
+  const char * value0 = *a_it;
   FAIL_RETURN_IF (ACE_OS::strcmp (value0, elem0_cstr) != 0);
 
   // test const dereferencing
@@ -524,6 +538,10 @@ int test_sequence_reverse ()
 
   // test assignment operator
   a_it = a.rbegin ();
+
+  // Create a case to test for memory leaks
+  // in the iterator.
+  *a_it = CORBA::string_dup (elem0_cstr);
   FAIL_RETURN_IF (a_it != a.rbegin ());
 
   // test non const dereferencing
