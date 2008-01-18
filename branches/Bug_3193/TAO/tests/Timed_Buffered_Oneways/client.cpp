@@ -220,6 +220,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
           catch (const CORBA::TIMEOUT& ex)
             {
+              end = ACE_OS::gettimeofday ();
               if (timeout == -1 || (end - start).msec () < timeout * .9)
                 {
                   ex._tao_print_exception (

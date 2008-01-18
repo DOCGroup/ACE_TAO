@@ -641,8 +641,6 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
                                                      max_wait_time);
   }
 
-  // The result could be -1 from either the send_synch_message_helper_i() call
-  // or the later flush. In either case return -1.
   if (flush_result == -1)
     {
       synch_message.remove_from_list (this->head_, this->tail_);
