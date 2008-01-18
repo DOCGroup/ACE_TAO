@@ -252,12 +252,11 @@ public:
   typedef typename SEQUENCE_T::const_element_type const_element_type;
   typedef typename SEQUENCE_T::allocation_traits allocation_traits;
   typedef typename SEQUENCE_T::element_traits element_traits;
+  typedef typename SEQUENCE_T::implementation_type implementation_type;
   typedef CORBA::Long difference_type;
 
   /// Construct a UBS_Sequence_Iterator at position pos.
-  UBS_Sequence_Iterator (details::generic_sequence<value_type, 
-                                                   allocation_traits, 
-                                                   element_traits> *sequence, 
+  UBS_Sequence_Iterator (implementation_type *sequence, 
 			 size_t pos = 0)
     : sequence_ (sequence),
     pos_ (pos)
@@ -298,23 +297,14 @@ public:
   element_type operator* (void)
     {
       // Access the underlying element in the sequence.
-      //return (*(this->sequence_))[this->pos_];
-      //return value_type ((*(this->sequence_))[this->pos_],
-      //                   this->sequence_->release());
-
       return element_type ((*(this->sequence_))[this->pos_],
                            this->sequence_->release ());
     }
 
   /// Returns a const reference to the item contained at the current position
-  //const value_type & operator* (void) const
   const_element_type operator* (void) const
     {
       // Access the underlying element in the sequence.
-      //return (*(this->sequence_))[this->pos_];
-      //return const_value_type ((*(this->sequence_))[this->pos_],
-      //                         this->sequence_->release ());
-
       return const_element_type ((*(this->sequence_))[this->pos_],
                                  this->sequence_->release ());
     }
@@ -446,7 +436,7 @@ public:
 
 private:
   /// the sequence with which we are dealing
-  details::generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
+  implementation_type *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
@@ -496,13 +486,12 @@ public:
   typedef typename SEQUENCE_T::const_element_type const_element_type;
   typedef typename SEQUENCE_T::allocation_traits allocation_traits;
   typedef typename SEQUENCE_T::element_traits element_traits;
+  typedef typename SEQUENCE_T::implementation_type implementation_type;
   typedef int difference_type;
 
   /// Construct a Const_UBS_Sequence_Iterator at position pos from
   /// a const sequence.
-  Const_UBS_Sequence_Iterator (const details::generic_sequence<value_type, 
-                                                               allocation_traits, 
-                                                               element_traits> *sequence,
+  Const_UBS_Sequence_Iterator (const implementation_type *sequence,
                                size_t pos = 0)
     : sequence_ (sequence),
     pos_ (pos)
@@ -551,10 +540,6 @@ public:
   const_element_type operator* (void) const
     {
       // Access the underlying element in the sequence.
-      //return (*(this->sequence_))[this->pos_];
-      //return const_value_type ((*(this->sequence_))[this->pos_],
-      //                         this->sequence_->release ());
-
       return const_element_type ((*(this->sequence_))[this->pos_],
                                  this->sequence_->release ());
     }
@@ -662,7 +647,7 @@ public:
 
 private:
   /// the sequence with which we are dealing
-  const details::generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
+  const implementation_type *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
@@ -708,12 +693,11 @@ public:
   typedef typename SEQUENCE_T::const_element_type const_element_type;
   typedef typename SEQUENCE_T::allocation_traits allocation_traits;
   typedef typename SEQUENCE_T::element_traits element_traits;
+  typedef typename SEQUENCE_T::implementation_type implementation_type;
   typedef int difference_type;
 
-  /// Construct a UBS_Sequence_Reverse_Iterator at position pos with before_start flag.
-  UBS_Sequence_Reverse_Iterator (details::generic_sequence<value_type, 
-                                                           allocation_traits, 
-                                                           element_traits> *sequence, 
+  /// Construct a UBS_Sequence_Reverse_Iterator at position pos
+  UBS_Sequence_Reverse_Iterator (implementation_type *sequence, 
                                  size_t pos)
     : sequence_ (sequence),
     pos_ (pos)
@@ -747,21 +731,17 @@ public:
 
   /// Dereference operator returns a reference to the item contained
   /// at the current position
-  //value_type & operator* (void)
   element_type operator* (void)
     {
       // Access the underlying element in the sequence.
-      //return (*(this->sequence_))[this->pos_];
       return element_type ((*(this->sequence_))[this->pos_],
                            this->sequence_->release ());
     }
 
   /// Returns a const reference to the item contained at the current position
-  //const value_type& operator* (void) const
   const_element_type operator* (void) const
     {
       // Access the underlying element in the sequence.
-      //return (*(this->sequence_))[this->pos_];
       return const_element_type ((*(this->sequence_))[this->pos_],
                                  this->sequence_->release ());
     }
@@ -913,7 +893,7 @@ public:
 
 private:
   /// The sequence with which we are dealing
-  details::generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
+  implementation_type *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
@@ -962,13 +942,12 @@ public:
   typedef typename SEQUENCE_T::const_element_type const_element_type;
   typedef typename SEQUENCE_T::allocation_traits allocation_traits;
   typedef typename SEQUENCE_T::element_traits element_traits;
+  typedef typename SEQUENCE_T::implementation_type implementation_type;
   typedef int difference_type;
 
   /// Construct a Const_UBS_Sequence_Reverse_Iterator at position pos
   /// using a const sequence.
-  Const_UBS_Sequence_Reverse_Iterator (const details::generic_sequence<value_type, 
-                                                                       allocation_traits, 
-                                                                       element_traits> *sequence, 
+  Const_UBS_Sequence_Reverse_Iterator (const implementation_type *sequence, 
                                        size_t pos)
     : sequence_ (sequence),
     pos_ (pos)
@@ -1012,11 +991,9 @@ public:
 
   /// Dereference operator returns a reference to the item contained
   /// at the current position
-  //const value_type& operator* (void) const
   const_element_type operator* (void) const
     {
       // Access the underlying element in the sequence.
-      //return (*this->sequence_)[this->pos_];
       return const_element_type ((*(this->sequence_))[this->pos_],
                                  this->sequence_->release ());
     }
@@ -1130,7 +1107,7 @@ public:
 
 private:
   /// the sequence with which we are dealing
-  const details::generic_sequence<value_type, allocation_traits, element_traits> *sequence_;
+  const implementation_type *sequence_;
 
   /// Our current position in the sequence.
   mutable difference_type pos_;
