@@ -1,3 +1,13 @@
+Fri Jan 18 09:57:52 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3154_Regression/run_test.pl:
+        * TAO_IDL/util/utl_global.cpp:
+          Updated a fix for bug 3154 with respect to the problem
+          that was found lately. I.e. application of custom endings
+          to ORB files when user provides ORB specific include paths
+          either with -I option on in INCLUDE environment variable.
+          The test is updated as well.
+
 Wed Jan 16 20:16:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3198_Regression/bug_3198_regression.cpp:
