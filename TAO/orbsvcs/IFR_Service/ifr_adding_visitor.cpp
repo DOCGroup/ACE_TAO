@@ -287,7 +287,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               // On the other hand, if prev_def is NOT the node type, we go 
               // ahead an attempt to create an interface, which will get an
               // exception from the IFR, as the spec requires.
-              if (!node->ifr_fwd_added ())
+              if (!node->ifr_fwd_added () && !node->imported ())
                 {
                   CORBA::DefinitionKind kind = prev_def->def_kind ();
 
