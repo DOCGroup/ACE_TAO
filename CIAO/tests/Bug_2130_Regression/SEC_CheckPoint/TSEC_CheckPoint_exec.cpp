@@ -6,6 +6,7 @@
 
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
+#include "ace/os_include/os_assert.h"
 
 #include "tao/LocalObject.h"
 #include <orbsvcs/CosNamingC.h>
