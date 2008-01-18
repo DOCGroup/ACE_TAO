@@ -1,3 +1,17 @@
+Fri Jan 18 21:51:21 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.cpp:
+
+          Completed the fix from yesterday's commit so that both sync and
+          async requests that don't send any bytes do NOT result in closing
+          the connection.
+
+        * tests/Timed_Buffered_Oneways/client.cpp:
+
+          Tolerate timeout exceptions when sending the oneways.  Prior to the
+          transport changes for Bug 3191, TAO would not enforce the timeout on
+          the request sending path.
+
 Thu Jan 17 22:53:05 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport.cpp:

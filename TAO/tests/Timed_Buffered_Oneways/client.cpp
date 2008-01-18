@@ -203,18 +203,35 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       for (CORBA::ULong i = 1; i <= iterations; ++i)
         {
-          ACE_Time_Value start = ACE_OS::gettimeofday ();
-          // Invoke the oneway method.
-          test_object->method (i,
-                               start.msec (),
-                               the_data,
-                               work);
+          ACE_Time_Value start = ACE_OS::gettimeofday (), end;
+          try
+            {
+              // Invoke the oneway method.
+              test_object->method (i,
+                                   start.msec (),
+                                   the_data,
+                                   work);
 
-          ACE_Time_Value end = ACE_OS::gettimeofday ();
+              end = ACE_OS::gettimeofday ();
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "client:\t%d took\t%dms\n",
-                      i, (end - start).msec ()));
+              ACE_DEBUG ((LM_DEBUG,
+                          "client:\t%d took\t%dms\n",
+                          i, (end - start).msec ()));
+            }
+          catch (const CORBA::TIMEOUT& ex)
+            {
+              if (timeout == -1 || (end - start).msec () < timeout * .9)
+                {
+                  ex._tao_print_exception (
+                    "Client side exception caught unexpected:");
+                  return -1;
+                }
+              else
+                {
+                  ACE_DEBUG ((LM_DEBUG, "client: caught expected timeout\n"));
+                }
+
+            }
 
           // Interval between successive calls.
           ACE_Time_Value sleep_interval (0, interval * 1000);

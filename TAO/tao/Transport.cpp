@@ -574,56 +574,76 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
 {
   // We are going to block, so there is no need to clone
   // the message block.
+  size_t const total_length = mb->total_length ();
   TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
   synch_message.push_back (this->head_, this->tail_);
 
   int const result = this->send_synch_message_helper_i (synch_message,
                                                         max_wait_time);
-  // A timeout doesn't return -1
-  if (result == -1 || result == 1)
+  if (result == -1 && errno == ETIME)
+    {
+      if (total_length == synch_message.message_length ()) //none was sent
+        {
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - ")
+                          ACE_TEXT ("Transport[%d]::send_synchronous_message_i, ")
+                          ACE_TEXT ("timeout encountered before any bytes sent\n"),
+                          this->id ()));
+            }
+          throw ::CORBA::TIMEOUT (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_TIMEOUT_SEND_MINOR_CODE,
+              ETIME),
+            CORBA::COMPLETED_NO);
+        }
+      else
+        {
+          return -1;
+        }
+    }
+  else if(result == -1 || result == 1)
     {
       return result;
     }
 
-  if (max_wait_time == 0 || errno != ETIME)
+  TAO_Flushing_Strategy *flushing_strategy =
+    this->orb_core ()->flushing_strategy ();
+  if (flushing_strategy->schedule_output (this) == -1)
     {
-      TAO_Flushing_Strategy *flushing_strategy =
-        this->orb_core ()->flushing_strategy ();
-      int result = flushing_strategy->schedule_output (this);
-      if (result == -1)
+      synch_message.remove_from_list (this->head_, this->tail_);
+      if (TAO_debug_level > 0)
         {
-          synch_message.remove_from_list (this->head_, this->tail_);
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::")
-                          ACE_TEXT ("send_synchronous_message_i, ")
-                          ACE_TEXT ("error while scheduling flush - %m\n"),
-                          this->id ()));
-            }
-          return -1;
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::")
+                      ACE_TEXT ("send_synchronous_message_i, ")
+                      ACE_TEXT ("error while scheduling flush - %m\n"),
+                      this->id ()));
         }
-
-      // No need to check for result == TAO_Flushing_Strategy::MUST_FLUSH,
-      // because we're always going to flush anyway.
-
-      // Release the mutex, other threads may modify the queue as we
-      // block for a long time writing out data.
-      {
-        typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
-        TAO_REVERSE_LOCK reverse (*this->handler_lock_);
-        ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
-
-        result = flushing_strategy->flush_message (this,
-                                                   &synch_message,
-                                                   max_wait_time);
-      }
+      return -1;
     }
+
+  // No need to check for result == TAO_Flushing_Strategy::MUST_FLUSH,
+  // because we're always going to flush anyway.
+
+  // Release the mutex, other threads may modify the queue as we
+  // block for a long time writing out data.
+  int flush_result;
+  {
+    typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+    TAO_REVERSE_LOCK reverse (*this->handler_lock_);
+    ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
+
+    flush_result = flushing_strategy->flush_message (this,
+                                                     &synch_message,
+                                                     max_wait_time);
+  }
 
   // The result could be -1 from either the send_synch_message_helper_i() call
   // or the later flush. In either case return -1.
-  if (result == -1)
+  if (flush_result == -1)
     {
       synch_message.remove_from_list (this->head_, this->tail_);
 
@@ -642,7 +662,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
       return -1;
     }
 
-  return result;
+  return 1;
 }
 
 
@@ -1343,13 +1363,33 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
           return 0;
         }
 
-      if (byte_count > 0) {
+      if (byte_count > 0)
+      {
         partially_sent = true;
       }
 
       // If it was partially sent, then push to front of queue and don't flush
-      if (errno == ETIME) {
+      if (errno == ETIME)
+      {
         timeout_encountered = true;
+        if (byte_count == 0)
+        {
+          //This request has timed out and none of it was sent to the transport
+          //We can't return -1 here, since that would end up closing the tranpsort
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - ")
+                          ACE_TEXT ("Transport[%d]::send_asynchronous_message_i, ")
+                          ACE_TEXT ("timeout encountered before any bytes sent\n"),
+                          this->id ()));
+            }
+          throw ::CORBA::TIMEOUT (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_TIMEOUT_SEND_MINOR_CODE,
+              ETIME),
+            CORBA::COMPLETED_NO);
+        }
       }
 
       if (TAO_debug_level > 6)
