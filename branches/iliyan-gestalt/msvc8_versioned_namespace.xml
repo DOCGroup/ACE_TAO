@@ -1,0 +1,53 @@
+<!-- $Id$ -->
+<autobuild>
+    <configuration>
+        <environment name="ACE_ROOT"     value="C:\ACE\vc8version\ACE_wrappers" />
+        <environment name="TAO_ROOT"     value="C:\ACE\vc8version\ACE_wrappers\TAO"/>
+        <environment name="RSYNC_RSH"    value="C:\cygwin\bin\ssh" />
+        <environment name="SSL_ROOT"     value="c:\OpenSSL" />
+        <environment name="PATH"         value="C:\Program Files\Microsoft Visual Studio 8\Common7\IDE;C:\Program Files\Microsoft Visual Studio 8\Vc\vcpackages;C:\Program Files\Microsoft Visual Studio 8\Vc\bin;C:\Program Files\Microsoft Visual Studio 8\VC\vcpackages;C:\ACE\vc8version\ACE_wrappers\bin;C:\ACE\vc8version\ACE_wrappers\lib;C:\Perl\bin;c:\Cygwin\bin" type="prefix" />
+        <environment name="INCLUDE"      value="c:\Program Files\Microsoft Visual Studio 8\VC\ATLMFC\INCLUDE;c:\Program Files\Microsoft Visual Studio 8\VC\INCLUDE;c:\Program Files\Microsoft Visual Studio 8\VC\PlatformSDK\include;c:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\include;" type="prefix" />
+        <environment name="LIB"          value="c:\Program Files\Microsoft Visual Studio 8\VC\ATLMFC\LIB;c:\Program Files\Microsoft Visual Studio 8\VC\LIB;c:\Program Files\Microsoft Visual Studio 8\VC\PlatformSDK\lib;c:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\lib;LIBPATH=c:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;c:\Program Files\Microsoft Visual Studio 8\VC\ATLMFC\LIB" type="prefix" />
+
+        <variable name="configs"  value="Win32 VC8 Exceptions SSL" />
+        <variable name="root"     value="C:\ACE\vc8version\" />
+        <variable name="log_file" value="build.txt" />
+        <variable name="log_root" value="C:\ACE\vc8version\" />
+        <variable name="name"     value="WinXP VS.NET 2005" />
+    </configuration>
+
+    <command name="status"            options="on" />
+    <command name="process_listener"  options="localhost:32001" />
+
+    <command name="win32make"         options="nmake /I CFG=\x22Win32 Debug\x22 REALCLEAN" />
+
+    <command name="log"               options="ON" />
+
+    <command name="svn"               options="co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO ." />
+
+    <command name="shell"             options="find ACE_wrappers -name '*.mak' -exec rm '{}' ';'" />
+    <command name="shell"             options="find ACE_wrappers -name '*.manifest' -exec rm '{}' ';'" />
+
+    <command name="file_manipulation" options="type=create file=ACE_wrappers/ace/config.h output='#define ACE_DISABLE_WIN32_ERROR_WINDOWS\n#include \x22ace/config-win32.h\x22\n'" />
+    <command name="file_manipulation" options="type=create file=ACE_wrappers/bin/MakeProjectCreator/config/default.features output='ipv6=1\nxerces=0\nversioned_namespace=1\nssl=1\n'" />
+    <command name="anonymous_shell"   options="scp -C johnnyw@naboo.dre.vanderbilt.edu:/web/users/isisbuilds/CIDLC/Win32/cidlc.exe ACE_wrappers/TAO/CIAO/bin" />
+    <command name="anonymous_shell"   options="chmod 777 ACE_wrappers/TAO/CIAO/bin/cidlc.exe" />
+
+    <command name="print_os_version" />
+    <command name="print_cidlc_version" />
+    <command name="check_compiler" options="msvc" />
+    <command name="print_openssl_version"/>
+    <command name="print_ace_config" />
+    <command name="print_perl_version" />
+
+    <command name="generate_workspace" options="-type nmake -base vc8nmake -exclude TAO/TAO_*.mwc,TAO/CIAO"/>
+
+    <command name="win32make"         options="nmake /I CFG=\x22Win32 Debug\x22 NO_EXTERNAL_DEPS=1" />
+
+    <command name="auto_run_tests"    options="-a -o -t -s \x22C:\ACE\autobuild\win32sandbox\sandbox.exe -t 5400000\x22" />
+
+    <command name="log"               options="OFF" />
+    <command name="process_logs"      options="move prettify clean index" />
+    <command name="status"            options="off" />
+    <command name="shell"             options="c:\cygwin\bin\rsync --progress --recursive --delete -z --exclude /ACE_wrappers*/ --include *.txt --include *.html --exclude ** ./ johnnyw@naboo.dre.vanderbilt.edu:/web/users/remedynl/vc8version" />
+</autobuild>
