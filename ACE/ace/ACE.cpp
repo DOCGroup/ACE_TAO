@@ -2840,11 +2840,11 @@ ACE::max_handles (void)
   ACE_TRACE ("ACE::max_handles");
 #if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
   rlimit rl;
-  int r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
+  int const r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
 # if !defined (RLIM_INFINITY)
   if (r == 0)
     return rl.rlim_cur;
-#else
+# else
   if (r == 0 && rl.rlim_cur != RLIM_INFINITY)
     return rl.rlim_cur;
   // If == RLIM_INFINITY, fall through to the ACE_LACKS_RLIMIT sections

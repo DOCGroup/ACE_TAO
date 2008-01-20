@@ -44,7 +44,7 @@ public:
   ACE_FILE_Connector (void);
 
   /**
-   * Actively ``connect'' and produce a @a new_io <ACE_FILE_IO> object
+   * Actively ``connect'' and produce a @a new_io ACE_FILE_IO object
    * if things go well.  The @a remote_sap is the file that we are
    * trying to create/open.  If it's the default value of
    * ACE_Addr::sap_any then the user is letting the OS create the

@@ -31,7 +31,7 @@ class ACE_Time_Value;
 namespace ACE
 {
   /**
-   * Wait up to @a timeout> amount of time to actively open a device.
+   * Wait up to @a timeout amount of time to actively open a device.
    * This method doesn't perform the @c connect, it just does the
    * timed wait.
    */

@@ -16,9 +16,9 @@ ACE_Encoding_Converter_Factory::create (
                        ACE_Encoding_Converter_Factory::Encoding_Hint hint)
 {
 #if defined (ACE_BIG_ENDIAN)
-  bool convert_for_bigendian = true;
+  bool const convert_for_bigendian = true;
 #else
-  bool convert_for_bigendian = false;
+  bool const convert_for_bigendian = false;
 #endif /* ACE_BIG_ENDIAN */
   ACE_Encoding_Converter* converter = 0;
 

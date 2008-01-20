@@ -38,6 +38,7 @@
 #define ACE_DEBUG(X) do {} while (0)
 #define ACE_ERROR_INIT(VALUE, FLAGS)
 #else
+#if !defined (ACE_HEX_DUMP)
 #define ACE_HEX_DUMP(X) \
   do { \
     int __ace_error = ACE_Log_Msg::last_error_adapter (); \
@@ -45,6 +46,8 @@
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log_hexdump X; \
   } while (0)
+#endif
+#if !defined (ACE_RETURN)
 #define ACE_RETURN(Y) \
   do { \
     int __ace_error = ACE_Log_Msg::last_error_adapter (); \
@@ -53,6 +56,8 @@
                  ace___->msg_ostream (), ace___->msg_callback ()); \
     return Y; \
   } while (0)
+#endif
+#if !defined (ACE_ERROR_RETURN)
 #define ACE_ERROR_RETURN(X, Y) \
   do { \
     int __ace_error = ACE_Log_Msg::last_error_adapter (); \
@@ -61,6 +66,8 @@
     ace___->log X; \
     return Y; \
   } while (0)
+#endif
+#if !defined (ACE_ERROR)
 #define ACE_ERROR(X) \
   do { \
     int __ace_error = ACE_Log_Msg::last_error_adapter (); \
@@ -68,6 +75,8 @@
     ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
     ace___->log X; \
   } while (0)
+#endif
+#if !defined (ACE_DEBUG)
 #define ACE_DEBUG(X) \
   do { \
     int __ace_error = ACE_Log_Msg::last_error_adapter (); \
@@ -75,12 +84,17 @@
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log X; \
   } while (0)
+#endif
+#if !defined (ACE_ERROR_INIT)
 #define ACE_ERROR_INIT(VALUE, FLAGS) \
   do { \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->set_flags (FLAGS); ace___->op_status (VALUE); \
   } while (0)
+#endif
+#if !defined (ACE_ERROR_BREAK)
 #define ACE_ERROR_BREAK(X) { ACE_ERROR (X); break; }
+#endif
 #endif /* ACE_NLOGGING */
 
 #include "ace/OS_Log_Msg_Attributes.h"

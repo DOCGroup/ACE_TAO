@@ -61,6 +61,8 @@
     // If running an Intel Pentium the
     // ACE_OS::gethrtime () can use the RDTSC instruction.
     # define ACE_HAS_PENTIUM
+    // We seem to lack log2 also on pentium with rtp
+    # define ACE_LACKS_LOG2
   #endif
 #else
   #if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
@@ -160,7 +162,6 @@
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
 #define ACE_HAS_SIGTIMEDWAIT
 #define ACE_HAS_SIGSUSPEND
-#define ACE_HAS_GETIFADDRS
 
 #define ACE_LACKS_SETEGID
 #define ACE_LACKS_SETPGID
@@ -223,6 +224,7 @@
   #endif
 #else
   // We are building for kernel mode
+  #define ACE_HAS_GETIFADDRS
   #define ACE_LACKS_SUSECONDS_T
   #define ACE_LACKS_INTPTR_T
   #define ACE_LACKS_INTTYPES_H
