@@ -125,7 +125,10 @@ public: // Should be protected:
    */
   int put_next (ACE_MESSAGE_TYPE *msg, ACE_Time_Value *timeout = 0);
 
-  /// Tests whether we can enqueue a message without blocking.
+  /**
+   * Tests whether we can enqueue a message without blocking.
+   * @deprecated This method is deprecated and will go away in the future.
+   */
   int can_put (ACE_MESSAGE_TYPE *);
 
   // = ACE_Task utility routines to identify names et al.

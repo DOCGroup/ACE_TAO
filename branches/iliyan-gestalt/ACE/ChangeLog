@@ -1,3 +1,158 @@
+Thu Jan 17 19:58:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Override RM on a solaris host
+
+Thu Jan 17 19:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.6.h:
+          Improved VxWorks 6.6 RTP support
+
+Thu Jan 17 19:24:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task_Ex_T.h:
+          Marked can_put as deprecated like in Task_T.h
+
+        * ace/Task_Ex_T.inl:
+          Replaced assert with notsup return
+
+        * ace/Task_T.inl:
+          Removed not needed includes
+
+        * ace/ACE.cpp:
+          Const change
+
+        * ace/DLL.cpp:
+          Changed close_handle_on_destruction flag and error flag to bool.
+          Use ACE_OS::dl_error() to get the error message
+
+        * ace/DLL.h:
+          Changed close_handle_on_destruction flag and error flag to bool
+
+        * ace/Log_Msg.cpp:
+          Use bool and print the process id as hex on OpenVMS, the DCL
+          scripts also prints the process id as hax
+
+        * ace/Log_Msg.h:
+          Only defined the ACE_DEBUG, ACE_ERROR, and other
+          macros when they are not defined yet
+
+Thu Jan 17 18:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.6.h:
+          Improved x86 support
+
+        * ace/Dev_Poll_Reactor.cpp:
+          Layout and const changes
+
+        * ace/Encoding_Converter_Factory.cpp:
+          Const changes
+
+        * ace/FILE_Connector.h:
+        * ace/Handle_Ops.h:
+          Doxygen changes
+
+        * ace/POSIX_Proactor.cpp:
+          Use prefix increment/decrement and initialise pointer to 0
+
+        * ace/SSL/SSL_Context.cpp:
+          Initialise pointer to 0
+
+Wed Jan 16 19:40:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * THANKS:
+
+          Added Nayeem Khan <d dot nayeem dot khan at gmail dot com>.
+
+Wed Jan 16 18:16:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Turn on Bug 3198 regression test.
+
+Wed Jan 16 15:50:19 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+
+          Added support for iBootBar. iBootBar is similar to iBoot, except
+          that it is rack mounted with 8 power outlets. The scripts above
+          were extended to use the iBootBar iPAL protocol. The configuration
+          in the autobuild xml file of iBootBar is exactly the same that of
+          iBoot, except that you need to define ACE_RUN_VX_IBOOT_OUTLET
+          environment variable to specify the power outlet number you want
+          to use.
+
+Wed Jan 16 13:05:17 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+
+          Added ACE_RUN_VX_LOGIN and ACE_RUN_VX_PASSWORD to the scripts.
+          One can use those variables in the autobuild XML to specify
+          the login/password used to access the target from telnet.
+
+Tue Jan 15 19:16:56 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * bin/tao_orb_tests.lst:
+          Turn on Bug 3193 regression test.
+
+Mon Jan 14 16:14:11 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/STL_algorithm_Test_T.cpp:
+
+          Changed the std::for_each functor object to an actual class
+          that will count the number of elements handled. It would
+          be nice to eventually validate that the number of elements
+          handled is equal to the number of elements in the container.
+
+Mon Jan 14 14:06:33 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/Hash_Map_Manager_Test.cpp:
+
+          Removed the print_value () function since it is no longer
+          needed in the test.
+
+        * tests/STL_algorithm_Test_T.cpp (for_each_callback):
+
+          Wrapped the unused argument in ACE_UNUSED_ARG () to prevent
+          compiler warnings.
+
+Mon Jan 14 05:01:19 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * tests/acetest.mpb:
+
+          Added an empty template declaration to the base project to
+          prevent actual tests from including unnecesary template source
+          files.
+
+Mon Jan 14 04:47:50 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.h:
+
+          Added the ACE style iterator declaration for the const
+          reverse iterator to ACE_Hash_Map_Manager_Ex.
+
+Mon Jan 14 04:41:29 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_Manager_T.inl:
+
+          Implemented the ACE_Hash_Map_Const_Reverse_Iterator_Ex class,
+          which is the const_reverse_iterator for the
+          ACE_Hash_Map_Manager_Ex class.
+
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/STL_algorithm_Test_T.h:
+        * tests/STL_algorithm_Test_T.cpp:
+
+          Generalized the STL algorithm test used in the hash map
+          manager test so that it can be used with any ACE container.
+
+        * tests/tests.mpc:
+
+          Added the STL_algorithm_Test_T.* files to the
+          Hash_Map_Manager_Test project.
+
 Sun Jan 13 16:40:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:

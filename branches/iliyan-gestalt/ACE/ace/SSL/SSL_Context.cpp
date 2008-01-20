@@ -342,7 +342,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // Note: The STACK_OF(X509_NAME) pointer is a copy of the pointer in
       // the CTX; any changes to it by way of these function calls will
       // change the CTX directly.
-      STACK_OF (X509_NAME) * cert_names;
+      STACK_OF (X509_NAME) * cert_names = 0;
       cert_names = ::SSL_CTX_get_client_CA_list (this->context_);
       bool error = false;
 

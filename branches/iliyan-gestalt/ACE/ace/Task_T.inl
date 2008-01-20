@@ -2,9 +2,6 @@
 //
 // $Id$
 
-#include "ace/os_include/os_assert.h"
-#include "ace/config-all.h"
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_SYNCH_DECL> ACE_INLINE void

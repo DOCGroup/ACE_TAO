@@ -18,7 +18,7 @@ ACE_RCSID(ace, DLL, "$Id$")
 // Default constructor. Also, by default, the object will be closed
 // before it is destroyed.
 
-ACE_DLL::ACE_DLL (int close_handle_on_destruction)
+ACE_DLL::ACE_DLL (bool close_handle_on_destruction)
   : open_mode_ (0),
     dll_name_ (0),
     close_handle_on_destruction_ (close_handle_on_destruction),
@@ -31,7 +31,7 @@ ACE_DLL::ACE_DLL (int close_handle_on_destruction)
 ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
   : open_mode_ (0),
     dll_name_ (0),
-    close_handle_on_destruction_ (0),
+    close_handle_on_destruction_ (false),
     dll_handle_ (0),
     error_ (0)
 {
@@ -73,7 +73,7 @@ ACE_DLL::operator= (const ACE_DLL &rhs)
 
 ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
-                  int close_handle_on_destruction)
+                  bool close_handle_on_destruction)
   : open_mode_ (open_mode),
     dll_name_ (0),
     close_handle_on_destruction_ (close_handle_on_destruction),
@@ -120,7 +120,7 @@ ACE_DLL::~ACE_DLL (void)
 int
 ACE_DLL::open (const ACE_TCHAR *dll_filename,
                int open_mode,
-               int close_handle_on_destruction)
+               bool close_handle_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::open");
 
@@ -130,7 +130,7 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
 int
 ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
                  int open_mode,
-                 int close_handle_on_destruction,
+                 bool close_handle_on_destruction,
                  ACE_SHLIB_HANDLE handle)
 {
   ACE_TRACE ("ACE_DLL::open_i");
@@ -211,7 +211,7 @@ ACE_DLL::close (void)
   this->dll_handle_ = 0;
   delete [] this->dll_name_;
   this->dll_name_ = 0;
-  this->close_handle_on_destruction_ = 0;
+  this->close_handle_on_destruction_ = false;
 
   return retval;
 }
@@ -223,8 +223,9 @@ ACE_DLL::error (void) const
 {
   ACE_TRACE ("ACE_DLL::error");
   if (this->error_)
-    return
-      const_cast<ACE_TCHAR *> (ACE_TEXT ("Error: check log for details."));
+    {
+      return ACE_OS::dlerror ();
+    }
 
   return 0;
 }
@@ -251,7 +252,7 @@ ACE_DLL::get_handle (int become_owner) const
 
 int
 ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
-                     int close_handle_on_destruction)
+                     bool close_handle_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::set_handle");
 

@@ -10,6 +10,7 @@
 # NOTE: This file contains tests only for TAO's ORB. Please do not
 # include things like performance-tests, and examples here.
 
+TAO/tests/Bug_3193_Regression/run_test.pl:
 TAO/tests/Abstract_Interface/run_test.pl: !CORBA_E_MICRO
 TAO/tests/Bug_2702_Regression/run_test.pl:
 TAO/tests/ORB_Local_Config/Bunch/run_test.pl:
@@ -108,6 +109,7 @@ TAO/tests/Bug_3108_Regression/run_test.pl: !ST
 TAO/tests/Bug_3154_Regression/run_test.pl:
 TAO/tests/Bug_3163_Regression/run_test.pl:
 TAO/tests/Bug_3171_Regression/run_test.pl: !ST !MINIMUM
+TAO/tests/Bug_3198_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DIOP/run_test.pl: !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO
 TAO/tests/DIOP/run_test_ipv6.pl: IPV6 !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO
 TAO/tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST

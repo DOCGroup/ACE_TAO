@@ -54,7 +54,7 @@ public:
    *        is controlled in a scope other than that of this ACE_DLL object.
    *        For example, termination by ACE_DLL_Manager via ACE::fini().
    */
-  explicit ACE_DLL (int close_handle_on_destruction = 1);
+  explicit ACE_DLL (bool close_handle_on_destruction = true);
 
   /// Allow assignment
   ACE_DLL& operator= (const ACE_DLL &rhs);
@@ -81,7 +81,7 @@ public:
    */
   explicit ACE_DLL (const ACE_TCHAR *dll_name,
                     int open_mode = ACE_DEFAULT_SHLIB_MODE,
-                    int close_handle_on_destruction = 1);
+                    bool close_handle_on_destruction = true);
 
   /// Copy constructor.
   ACE_DLL (const ACE_DLL &);
@@ -118,7 +118,7 @@ public:
    */
   int open (const ACE_TCHAR *dll_name,
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
-            int close_handle_on_destruction = 1);
+            bool close_handle_on_destruction = true);
 
   /// Call to close the DLL object.
   int close (void);
@@ -158,13 +158,13 @@ public:
   /// Set the handle for the DLL object. By default, the close()
   //operation on / the object will be invoked before it is destroyed.
   int set_handle (ACE_SHLIB_HANDLE handle,
-                  int close_handle_on_destruction = 1);
+                  bool close_handle_on_destruction = true);
 
 private:
 
   int open_i (const ACE_TCHAR *dll_name,
               int open_mode = ACE_DEFAULT_SHLIB_MODE,
-              int close_handle_on_destruction = 1,
+              bool close_handle_on_destruction = true,
               ACE_SHLIB_HANDLE handle = 0);
 
 
@@ -181,12 +181,12 @@ public:
 
   /// This flag keeps track of whether we should close the handle
   /// automatically when the object is destroyed.
-  int close_handle_on_destruction_;
+  bool close_handle_on_destruction_;
 
   ACE_DLL_Handle *dll_handle_;
 
   /// Flag to record if the last operation had an error.
-  int error_;
+  bool error_;
 
 };
 
