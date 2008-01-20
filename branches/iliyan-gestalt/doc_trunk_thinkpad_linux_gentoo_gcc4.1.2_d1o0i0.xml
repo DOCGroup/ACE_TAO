@@ -1,0 +1,85 @@
+<autobuild>
+  <!-- The command used to create this file was -->
+  <!-- /home/taoadmin/nightly/gen_build_xml.pl -autotest 1 -base /home/iliyan/tao/ACE+TAO -buildflags "debug=1 optimize=0 inline=0" -ciao 0 -clonebuild 1 -compiler gcc4.1.2 -createconfig 1 -devguide 0 -hostname thinkpad -platform linux-gentoo -featureflags "debug=1 optimize=0 inline=0 ssl=1 qos=0 cidl=0" -listener 1 -ocichangelog 0 -processlogs 1 -propagate 1 -updatestatus 1 -taoace 1 -organization doc -usevcs 1 -vcsroot https://svn.dre.vanderbilt.edu/DOC/Middleware/sets/ACE+TAO -vcstag head -usempc 1 -environment SSL_ROOT=/usr/share/ssl -environment SSL_CERT_DIR=/usr/share/ssl/certs -->
+  <configuration>
+    <environment name="ACE_ROOT"        value="/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0"/>
+    <environment name="CIAO_ROOT"       value="/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0/TAO/CIAO"/>
+    <environment name="CVSROOT"         value="https://svn.dre.vanderbilt.edu/DOC/Middleware/sets/ACE+TAO"/>
+    <environment name="CVS_RSH"         value="ssh"/>
+    <environment name="LD_LIBRARY_PATH" value="/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0/lib"/>
+    <environment name="MPC_ROOT"        value="/home/iliyan/tao/ACE+TAO/ACE_wrappers/MPC"/>
+    <environment name="PATH"            value="/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/ccs/bin"/>
+    <environment name="SSL_CERT_DIR"    value="/etc/ssl/certs"/>
+    <environment name="SSL_ROOT"        value="/etc/ssl"/>
+    <environment name="TAO_ROOT"        value="/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0/TAO"/>
+    <variable    name="build_name"      value="gcc4.1.2_d1o0i0"/>
+    <variable    name="log_file"        value="gcc4.1.2_d1o0i0.txt"/>
+    <variable    name="log_root"        value="/home/iliyan/tao/www/autobuild_logs/doc-trunc-thinkpad-linux-gentoo-gcc4.1.2_d1o0i0"/>
+    <variable    name="project_root"    value="/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0"/>
+    <variable    name="root"            value="/home/iliyan/tao/ACE+TAO"/>
+  </configuration>
+
+  <!-- Build preparation -->
+  <command name="process_listener"   options="localhost:32001"/>
+  <command name="status"             options="on"/>
+  <command name="print_status"       options="Setup:Build Status"/>
+  <command name="log"                options="on"/>
+<!--
+  <command name="svn"                options="co https://svn.dre.vanderbilt.edu/DOC/Middleware/sets/ACE+TAO ../ACE+TAO"/>
+-->
+  <command name="svn"                options="co https://svn.dre.vanderbilt.edu/DOC/Middleware/branches/iliyan-gestalt/ACE ../ACE+TAO/ACE_wrappers"/>
+  <command name="svn"                options="co https://svn.dre.vanderbilt.edu/DOC/Middleware/branches/iliyan-gestalt/TAO ../ACE+TAO/ACE_wrappers/TAO"/>
+  <command name="clone_build_tree"/>
+
+  <command name="file_manipulation"  options="type=update file=ACE_wrappers/build/gcc4.1.2_d1o0i0/ace/config.h output='#include \x22ace/config-linux.h\x22\n'"/>
+  <command name="file_manipulation"  options="type=create file=ACE_wrappers/build/gcc4.1.2_d1o0i0/bin/MakeProjectCreator/config/default.features output='debug=1\noptimize=0\ninline=0\nssl=1\nqos=0\ncidl=0\n'"/>
+  <command name="file_manipulation"  options="type=create file=ACE_wrappers/build/gcc4.1.2_d1o0i0/include/makeinclude/platform_macros.GNU output='debug=1\noptimize=0\ninline=0\nssl=1\n\ninclude $(ACE_ROOT)/include/makeinclude/platform_linux.GNU\n'"/>
+  <command name="file_manipulation"  options="type=create
+  file=ACE_wrappers/build/gcc4.1.2_d1o0i0/setenv.sh
+  output='ACE_ROOT=\x22/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0\x22;
+  export
+  ACE_ROOT\nCIAO_ROOT=\x22/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0/TAO/CIAO\x22;
+  export
+  CIAO_ROOT\nCVSROOT=\x22https://svn.dre.vanderbilt.edu/DOC/Middleware/sets/ACE+TAO\x22;
+  export CVSROOT\nCVS_RSH=\x22ssh\x22; export
+  CVS_RSH\nLD_LIBRARY_PATH=\x22/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0/lib\x22;
+  export
+  LD_LIBRARY_PATH\nMPC_ROOT=\x22/home/iliyan/tao/ACE+TAO/ACE_wrappers/MPC\x22;
+  export
+  MPC_ROOT\nPATH=\x22/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/ccs/bin\x22;
+  export PATH\nSSL_CERT_DIR=\x22/usr/share/ssl/certs\x22; export
+  SSL_CERT_DIR\nSSL_ROOT=\x22/usr/share/ssl\x22; export
+  SSL_ROOT\nTAO_ROOT=\x22/home/iliyan/tao/ACE+TAO/ACE_wrappers/build/gcc4.1.2_d1o0i0/TAO\x22;
+  export TAO_ROOT\n'"/>
+
+
+  <command name="print_os_version"/>
+  <command name="print_ace_config" options="XML_URL=http://cvs.ociweb.com/viewcvs/nightly"/>
+  <command name="print_make_version"/>
+  <command name="check_compiler" options="gcc" />
+  
+<!-- Finish build preparation -->
+  <!-- Finish build preparation -->
+  <command name="generate_workspace" options="-type gnuace -recurse -exclude TAO/CIAO"/>
+
+<!-- Build dependencies -->
+  <command name="print_status"       options="Dependencies:Build Status"/>
+  <command name="make" options="-s -k -j2 find=*akefile dir=TAO depend  all"/>
+  <command name="make" options="-s -k -j2 find=*akefile dir=tests  depend all"/>
+  <command name="make" options="-s -k -j2 find=*akefile dir=examples  depend all"/>
+  <command name="make" options="-s -k -j2 find=*akefile dir=TAO/tests  depend all"/>
+  <command name="make" options="-s -k -j2 find=*akefile  dir=TAO/examples depend all"/>
+  <command name="make" options="-s -k -j2 find=*akefile dir=TAO/performance-tests depend all"/>
+  <command name="make" options="-s -k -j2 find=*akefile dir=TAO/orbsvcs/tests depend all"/>
+  <command name="make" options="-s -k -j2 find=*akefile dir=TAO/orbsvcs/examples depend all"/>
+  <command name="make" options="-s -k -j2 find=*akefile dir=TAO/orbsvcs/performance-tests depend all"/>
+
+<!-- Post build -->
+  <command name="print_status"       options="Test:Build Status"/>
+
+  <command name="auto_run_tests"     options="-Config SSL -Config Linux"/>
+  <command name="log"                options="off"/>
+  <command name="process_logs"       options="copy"/>
+  <command name="status"             options="off"/>
+
+</autobuild>

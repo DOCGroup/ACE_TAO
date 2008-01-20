@@ -1,0 +1,56 @@
+<autobuild>
+  <!-- The command used to create this file (on thinkpad) was -->
+  <!-- BuildXML/buildxml.pl -base z:\iliyan\tao\ACE+TAO -buildflags "debug=1 optimize=0 inline=0" -checkout "svn://svn.dre.vanderbilt.edu/DOC/Middleware/branches/iliyan-gestalt ." -compiler vc8 -configh "//#include" -devguide 0 -docbuild 1 -environment X=x -featureflags "debug=1 optimize=0 inline=0 ssl=1 qos=0 cidl=0" -outdir /home/iliyan/tao -platform winxp -->
+  <configuration>
+    <environment name="ACE_ROOT"     value="z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0"/>
+    <environment name="CIAO_ROOT"    value="z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\TAO\CIAO"/>
+    <environment name="DDS_ROOT"     value="z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\TAO\DDS"/>
+    <environment name="MPC_ROOT"     value="z:\iliyan\tao\ACE+TAO\ACE_wrappers\MPC"/>
+    <environment name="PATH"         value="C:\Program Files\Microsoft Visual Studio 8\Common7\IDE;C:\Program Files\Microsoft Visual Studio 8\VC\bin;z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\bin;z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\lib;" type="prefix"/>
+    <environment name="TAO_ROOT"     value="z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\TAO"/>
+    <environment name="X"            value="x"/>
+    <variable    name="build_name"   value="vc8_d1o0i0"/>
+    <variable    name="creator"      value="iliyan"/>
+    <variable    name="log_file"     value="vc8_d1o0i0.log"/>
+    <variable    name="log_root"     value="z:\iliyan\tao\ACE+TAO\doc_trunk_thinkpad_winxp_vc8_d1o0i0"/>
+    <variable    name="project_root" value="z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0"/>
+    <variable    name="root"         value="z:\iliyan\tao\ACE+TAO"/>
+  </configuration>
+
+  <!-- Build preparation -->
+  <command name="process_listener"   options="localhost:32001"/>
+  <command name="status"             options="on"/>
+  <command name="log"                options="on"/>
+  <command name="svn"                options="co svn://svn.dre.vanderbilt.edu/DOC/Middleware/branches/iliyan-gestalt/ACE ACE_wrappers"/>
+  <command name="svn"                options="co svn://svn.dre.vanderbilt.edu/DOC/Middleware/branches/iliyan-gestalt/TAO ACE_wrappers/TAO"/>
+  <command name="svn"                options="co svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk ACE_wrappers/MPC"/>
+  <command name="clone_build_tree"/>
+  <command name="file_manipulation"  options="type=update file=ACE_wrappers/build/vc8_d1o0i0/ace/config.h output='//#include\n#define ACE_DISABLE_WIN32_ERROR_WINDOWS\n#define ACE_DISABLE_WIN32_INCREASE_PRIORITY\n#include \x22ace/config-win32.h\x22\n'"/>
+  <command name="file_manipulation"  options="type=create file=ACE_wrappers/build/vc8_d1o0i0/bin/MakeProjectCreator/config/default.features output='debug=1\noptimize=0\ninline=0\nssl=1\nqos=0\ncidl=0\n'"/>
+  <command name="file_manipulation"  options="type=create file=ACE_wrappers/build/vc8_d1o0i0/setenv.cmd output='set ACE_ROOT=z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\nset CIAO_ROOT=z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\TAO\CIAO\nset DDS_ROOT=z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\TAO\DDS\nset MPC_ROOT=u:\MPC\nset PATH=C:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE;C:\Program Files\Microsoft Visual Studio 9.0\VC\bin;z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\bin;z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\lib;%PATH%\nset TAO_ROOT=z:\iliyan\tao\ACE+TAO\ACE_wrappers\build\vc8_d1o0i0\TAO\nset X=x\n'"/>
+  <command name="print_os_version"/>
+  <command name="print_ace_config"   options="XML_URL=http://cvs.ociweb.com/viewvc/nightly"/>
+  <command name="check_compiler"     options="msvc"/>
+  <command name="generate_workspace" options="-type vc8 -recurse -exclude TAO/CIAO,TAO/DDS,ACE.mwc,TAO/TAO.mwc"/>
+
+  <!-- Build targets -->
+  <command name="vc7make" options="/build debug TAO/TAO_ACE.sln"/>
+  <command name="vc7make" options="/build debug bin/bin.sln"/>
+  <command name="vc7make" options="/build debug tests/tests.sln"/>
+  <command name="vc7make" options="/build debug protocols/protocols.sln"/>
+  <command name="vc7make" options="/build debug protocols/tests/tests.sln"/>
+  <command name="vc7make" options="/build debug examples/examples.sln"/>
+  <command name="vc7make" options="/build debug performance-tests/perf.sln"/>
+  <command name="vc7make" options="/build debug TAO/tests/tests.sln"/>
+  <command name="vc7make" options="/build debug TAO/examples/examples.sln"/>
+  <command name="vc7make" options="/build debug TAO/performance-tests/perf.sln"/>
+  <command name="vc7make" options="/build debug TAO/orbsvcs/tests/tests.sln"/>
+  <command name="vc7make" options="/build debug TAO/orbsvcs/examples/examples.sln"/>
+  <command name="vc7make" options="/build debug TAO/orbsvcs/performance-tests/perf.sln"/>
+
+  <!-- Post build -->
+  <command name="auto_run_tests"  options="-a -t -o -Config SSL -Config Win32 -Config NO_LOADAVG"/>
+  <command name="log"             options="off"/>
+  <command name="process_logs"    options="copy"/>
+  <command name="status"          options="off"/>
+</autobuild>
