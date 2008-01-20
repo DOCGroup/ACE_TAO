@@ -1,3 +1,133 @@
+Fri Jan 18 19:52:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp(visit_interface):
+        
+          Added additional check before destroying the IFR contents of
+          an interface entry that has not been previously forward
+          declared. If the interface is from an included IDL file, we
+          leave the contents alone. Thanks to Chris Cleeland
+          <cleeland at ociweb dot com> for reporting the problem that
+          results when another IDL file with the same included file is
+          processed and the contents of the interface (an operation for
+          example) are not found in the IFR.
+
+Fri Jan 18 09:57:52 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3154_Regression/run_test.pl:
+        * TAO_IDL/util/utl_global.cpp:
+          Updated a fix for bug 3154 with respect to the problem
+          that was found lately. I.e. application of custom endings
+          to ORB files when user provides ORB specific include paths
+          either with -I option on in INCLUDE environment variable.
+          The test is updated as well.
+
+Wed Jan 16 20:16:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3198_Regression/bug_3198_regression.cpp:
+          Check whether we get the transient exception as we should
+
+        * tests/Exposed_Policies/client.cpp:
+          use prefix increment
+
+Wed Jan 16 20:02:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/constants.idl:
+
+          Added example IDL mentioned in
+
+          Wed Jan 16 19:31:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+Wed Jan 16 19:31:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+
+          Fixed bug in coercion of typedef'd unsigned short IDL constant,
+          having an rhs consisting of a bitwise OR expression made up
+          of previously declared constants of the same type. Thanks to
+          Nayeem Khan <d dot nayeem dot khan at gmail dot com> for
+          reporting the problem and supplying example IDL.
+
+Wed Jan 16 19:22:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CSD_Framework/CSD_POA.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Base.h:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.h:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+          Layout changes
+
+        * tao/default_resource.{h,cpp}:
+          Changed dynamically_allocated_reactor to a real bool
+
+        * tao/orbconf.h:
+          Fixed typo in comment
+
+        * tao/Transport_Cache_Manager.cpp:
+          Layout and const changes
+
+Wed Jan 16 18:12:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3198_Regression/*:
+          New test, thanks to Hans Utz <hutz at arc dot nasa dot gov>
+          for reporting this problem
+
+        * orbsvcs/tests/Security/Big_Request/client.cpp:
+          Added -x option to indicate that the client has to shutdown the
+          server
+
+        * orbsvcs/tests/Security/Big_Request/run_test.pl:
+          Added -x
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          Layout changes and corrected an ACE_DEBUG to be an ACE_ERROR
+
+        * tests/Bug_2826_Regression/bug_2826_regression.cpp:
+          No need to pass in an empty orb name
+
+Tue Jan 15 19:49:31 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Bug_3193_Regression/test_i.h:
+        * tests/Bug_3193_Regression/test_i.cpp:
+          Remove Fuzz build errors.
+
+Tue Jan 15 19:05:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+          Const changes
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.cpp:
+          Initialise some pointers with 0
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+          Const changes and use ACE_ERROR
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+          Layout changes
+
+        * orbsvcs/tests/Security/Big_Request/client.cpp:
+          Extended this client to be able to specify the number of
+          iterations and the size of the data send
+
+        * orbsvcs/tests/Security/Big_Request/TX_Object.idl:
+          Use CORBA::OctetSeq
+
+        * orbsvcs/tests/Security/Big_Request/TX_Object_i.cpp:
+          Layout changes
+
+Tue Jan 15 18:33:20 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Bug_3193_Regression:
+          New regression for Bug 3193.
+
+Mon Jan 14 14:02:44 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+          Changed a bit a fix for bug 3165. It happens that ASN1_INTEGER_to_BN
+          unconditionally allocates BIGNUM and thus that BIGNUM has to be
+          freed unconditionally too.
+
 Mon Jan 14 01:04:17 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/TAO_IDL.mwc:

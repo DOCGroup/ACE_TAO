@@ -72,8 +72,7 @@ namespace TAO
       /// invocation + one conditional (an is_nil() call/comparison for truth on
       /// the smart pointer to the custom dispatching strategy object).
       void dispatch_request(TAO_ServerRequest& server_request,
-                            TAO::Portable_Server::Servant_Upcall& upcall
-                           );
+                            TAO::Portable_Server::Servant_Upcall& upcall);
 
 
       /// Event - The POA has been (or is being) activated.
@@ -84,13 +83,11 @@ namespace TAO
 
       /// Event - A servant has been activated.
       void servant_activated_event(PortableServer::Servant servant,
-                                  const PortableServer::ObjectId& oid
-                                 );
+                                  const PortableServer::ObjectId& oid);
 
       /// Event - A servant has been deactivated.
       void servant_deactivated_event(PortableServer::Servant servant,
-                                    const PortableServer::ObjectId& oid
-                                   );
+                                    const PortableServer::ObjectId& oid);
 
     private:
 

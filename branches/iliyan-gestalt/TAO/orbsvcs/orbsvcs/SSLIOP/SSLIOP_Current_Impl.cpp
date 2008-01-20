@@ -88,7 +88,7 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate_chain (
   if (certs == 0)
     return;
 
-  const int chain_length = sk_X509_num (certs);
+  int const chain_length = sk_X509_num (certs);
   cert_chain->length (chain_length);
 
   // Copy the peer certificate chain to the SSLIOP::SSL_Cert
@@ -99,7 +99,7 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate_chain (
       ::X509 *x = sk_X509_value (certs, i);
 
       // Get the size of the ASN.1 encoding.
-      const int cert_length = ::i2d_X509 (x, 0);
+      int const cert_length = ::i2d_X509 (x, 0);
       if (cert_length <= 0)
         continue;  // @@ What do we do if there is an error?
 
