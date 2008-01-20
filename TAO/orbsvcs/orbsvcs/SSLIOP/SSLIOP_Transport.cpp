@@ -157,9 +157,9 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport ")
-                    ACE_TEXT ("%d after fault %p\n"),
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport::send_message, ")
+                    ACE_TEXT ("closing transport %d after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 
@@ -244,13 +244,11 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
       // Check whether it is a IIOP acceptor
       if ((*acceptor)->tag () == IOP::TAG_INTERNET_IOP)
         {
-          if (this->get_listen_point (listen_point_list,
-                                      *acceptor) == -1)
+          if (this->get_listen_point (listen_point_list, *acceptor) == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SSLIOP_Transport::set_bidir_info, ",
                           "error getting listen_point \n"));
-
               return;
             }
         }
@@ -296,8 +294,7 @@ TAO::SSLIOP::Transport::get_listen_point (
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
   {
-    if (this->connection_handler_->peer ().get_local_addr (local_addr)
-        == -1)
+    if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) Could not resolve local host")

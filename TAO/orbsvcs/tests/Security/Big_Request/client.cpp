@@ -10,11 +10,14 @@ ACE_RCSID (Big_Request,
 
 const char *ior = "file://test.ior";
 const char *cert_file = "cacert.pem";
+long number_iterations = 1;
+long data_size = 3461724;
+bool shutdown_server = false;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, "k:i:d:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -23,11 +26,23 @@ parse_args (int argc, char *argv[])
       case 'k':
         ior = get_opts.opt_arg ();
         break;
+      case 'i':
+        number_iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+      case 'd':
+        data_size = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+      case 'x':
+        shutdown_server = true;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
                            "-k <ior> "
+                           "-i <iterations> "
+                           "-d <datasize> "
+                           "-x shutdown "
                            "\n",
                            argv [0]),
                           -1);
@@ -64,39 +79,49 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       DataSeq data_input;
 
-      const CORBA::ULong len = 3461724;
+      CORBA::ULong const len = data_size;
 
       data_input.length (len);
 
       // Fill in some useless data.
       for (CORBA::ULong i = 0; i < len; ++i)
-        data_input[i] = i % 9;
+        {
+          data_input[i] = i % 9;
+        }
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Sending  octet sequence of length:\t%u\n",
-                  data_input.length ()));
+      for (int iteration = 0; iteration < number_iterations; ++iteration)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sending octet sequence of length:\t%u\n",
+                      data_input.length ()));
 
-      txObject->send (data_input);
+          txObject->send (data_input);
 
-      DataSeq_var data_output;
+          DataSeq_var data_output;
 
-      txObject->recv (data_output.out ());
+          txObject->recv (data_output.out ());
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Received octet sequence of length:\t%u\n",
-                  data_output->length ()));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Received octet sequence of length:\t%u\n",
+                      data_output->length ()));
 
-      txObject->shutdown ();
+          // Sanity check
+          if (data_output->length () != len
+              || ACE_OS::memcmp (data_input.get_buffer (),
+                                 data_output->get_buffer (),
+                                 len) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "ERROR: Received octet sequence does not match "
+                                 "the one that was sent.\n"),
+                                -1);
+            }
+        }
 
-      // Sanity check
-      if (data_output->length () != len
-          || ACE_OS::memcmp (data_input.get_buffer (),
-                             data_output->get_buffer (),
-                             len) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Received octet sequence does not match "
-                           "the one that was sent.\n"),
-                          -1);
+      if (shutdown_server)
+        {
+          txObject->shutdown ();
+        }
     }
   catch (const CORBA::Exception& ex)
     {

@@ -2057,8 +2057,10 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
                   AST_ExprValue,
                   0);
 
+  switch (ek)
+  {
 #if !defined (ACE_LACKS_LONGLONG_T)
-  if (ek == EK_ulonglong)
+  case EK_ulonglong:
     {
       this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulonglong));
       this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulonglong));
@@ -2090,7 +2092,9 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-  else if (ek == EK_longlong)
+    
+    break;
+  case EK_longlong:
     {
       this->pd_v1->set_ev (this->pd_v1->coerce (EV_longlong));
       this->pd_v2->set_ev (this->pd_v2->coerce (EV_longlong));
@@ -2122,9 +2126,10 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-  else
-#endif
-  if (ek == EK_ulong)
+    
+    break;
+#endif /* !defined (ACE_LACKS_LONGLONG_T) */
+  case EK_ulong:
     {
       this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulong));
       this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulong));
@@ -2156,7 +2161,9 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-  else if (ek == EK_long)
+    
+    break;
+  case EK_long:
     {
       this->pd_v1->set_ev (this->pd_v1->coerce (EV_long));
       this->pd_v2->set_ev (this->pd_v2->coerce (EV_long));
@@ -2188,7 +2195,77 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       } 
     }
-  else if (ek == EK_bool)
+    
+    break;
+  case EK_ushort:
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ushort));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ushort));
+      retval->et = EV_ushort;
+
+      switch (this->pd_ec)
+      {
+        case EC_or:
+          retval->u.usval =
+            this->pd_v1->ev ()->u.usval | this->pd_v2->ev ()->u.usval;
+          break;
+        case EC_xor:
+          retval->u.usval =
+            this->pd_v1->ev ()->u.usval ^ this->pd_v2->ev ()->u.usval;
+          break;
+        case EC_and:
+          retval->u.usval =
+            this->pd_v1->ev ()->u.usval & this->pd_v2->ev ()->u.usval;
+          break;
+        case EC_left:
+          retval->u.usval =
+            this->pd_v1->ev ()->u.usval << this->pd_v2->ev ()->u.usval;
+          break;
+        case EC_right:
+          retval->u.usval =
+            this->pd_v1->ev ()->u.usval >> this->pd_v2->ev ()->u.usval;
+          break;
+        default:
+          return 0;
+      }
+    }
+    
+    break;
+  case EK_short:
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_short));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_short));
+      retval->et = EV_short;
+
+      switch (this->pd_ec)
+      {
+        case EC_or:
+          retval->u.sval =
+            this->pd_v1->ev ()->u.sval | this->pd_v2->ev ()->u.sval;
+          break;
+        case EC_xor:
+          retval->u.sval =
+            this->pd_v1->ev ()->u.sval ^ this->pd_v2->ev ()->u.sval;
+          break;
+        case EC_and:
+          retval->u.sval =
+            this->pd_v1->ev ()->u.sval & this->pd_v2->ev ()->u.sval;
+          break;
+        case EC_left:
+          retval->u.sval =
+            this->pd_v1->ev ()->u.sval << this->pd_v2->ev ()->u.sval;
+          break;
+        case EC_right:
+          retval->u.sval =
+            this->pd_v1->ev ()->u.sval >> this->pd_v2->ev ()->u.sval;
+          break;
+        default:
+          return 0;
+      } 
+    }
+    
+    break;
+  case EK_bool:
     {
       this->pd_v1->set_ev (this->pd_v1->coerce (EV_bool));
       this->pd_v2->set_ev (this->pd_v2->coerce (EV_bool));
@@ -2220,7 +2297,9 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-  else if (ek == EK_octet)
+    
+    break;
+  case EK_octet:
     {
       this->pd_v1->set_ev (this->pd_v1->coerce (EV_octet));
       this->pd_v2->set_ev (this->pd_v2->coerce (EV_octet));
@@ -2261,10 +2340,11 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           return 0;
       }
     }
-  else
-    {
-      return 0;
-    }
+    
+    break;
+  default:
+    return 0;
+  }  
 
   return retval;
 }

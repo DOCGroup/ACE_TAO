@@ -105,9 +105,7 @@ namespace TAO
     // are holding our lock
     this->purging_strategy_->update_item (int_id.transport ());
 
-    int retval = this->cache_map_.bind (ext_id,
-                                        int_id,
-                                        entry);
+    int retval = this->cache_map_.bind (ext_id, int_id, entry);
     if (retval == 0)
       {
         // The entry has been added to cache succesfully
@@ -126,9 +124,7 @@ namespace TAO
 
         // There was an entry like this before, so let us do some
         // minor adjustments and rebind
-        retval = this->get_last_index_bind (ext_id,
-                                            int_id,
-                                            entry);
+        retval = this->get_last_index_bind (ext_id, int_id, entry);
         if (retval == 0)
           {
             int_id.transport ()->cache_map_entry (entry);
@@ -167,8 +163,7 @@ namespace TAO
     Cache_ExtId ext_id (prop);
     Cache_IntId int_id;
 
-    int const retval = this->find (ext_id,
-                                   int_id);
+    int const retval = this->find (ext_id, int_id);
     if (retval == 0)
       {
         transport = int_id.relinquish_transport ();
@@ -176,11 +171,8 @@ namespace TAO
         if (transport->wait_strategy ()->non_blocking () == 0 &&
             transport->orb_core ()->client_factory ()->use_cleanup_options ())
           {
-            ACE_Event_Handler * const eh =
-              transport->event_handler_i ();
-
-            ACE_Reactor * const r =
-              transport->orb_core ()->reactor ();
+            ACE_Event_Handler * const eh = transport->event_handler_i ();
+            ACE_Reactor * const r = transport->orb_core ()->reactor ();
 
             if (eh &&
                 r->remove_handler (eh,
@@ -497,7 +489,7 @@ namespace TAO
         {
           // BEGIN FORMER close_entries
           // Calculate the number of entries to purge
-          const int amount = (sorted_size * this->percent_) / 100;
+          int const amount = (sorted_size * this->percent_) / 100;
 
           if (TAO_debug_level > 0)
             {
@@ -539,7 +531,7 @@ namespace TAO
                     }
 
                   // Count this as a successful purged entry
-                  count++;
+                  ++count;
                 }
             }
 
@@ -602,7 +594,7 @@ namespace TAO
   Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
   {
     int current_size = 0;
-    int cache_maximum = this->purging_strategy_->cache_maximum ();
+    int const cache_maximum = this->purging_strategy_->cache_maximum ();
 
     // set sorted_set to 0.  This signifies nothing to purge.
     sorted_set = 0;

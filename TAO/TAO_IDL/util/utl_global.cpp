@@ -1861,18 +1861,71 @@ IDL_GlobalData::open_included_file (char const * filename,
   return f;
 }
 
-bool
-IDL_GlobalData::validate_orb_include (UTL_String *idl_file_name)
+static bool
+is_include_file_found (ACE_CString & inc_file,
+                       UTL_String * idl_file_name,
+                       IDL_GlobalData * global)
 {
-  // It's important to update the check of include_counter
-  // at the end of this method once new TAO include dirs are
-  // added somewhere in driver/drv_preproc.cpp
+  char abspath[MAXPATHLEN] = "";
+  char *full_path = 0;
+
+  // If the include path has literal "s (because of an include
+  // of a Windows path with spaces), we must remove them here.
+  const char *tmp_inc_file = inc_file.c_str ();
+  if (tmp_inc_file && global->hasspace (tmp_inc_file) && tmp_inc_file[0] == '\"')
+    {
+      inc_file =
+        inc_file.substr (1, inc_file.length () - 2);
+    }
+
+  // If there are trailing directory separators in inc_file then
+  // remove them here.
+  size_t pos = inc_file.length () == 0 ? 0 : inc_file.length () - 1;
+  while (inc_file[pos] == ACE_DIRECTORY_SEPARATOR_CHAR)
+    {
+      --pos;
+    }
+  if (static_cast<ssize_t> (inc_file.length () - 1 - pos) > 0)
+    {
+      inc_file =
+        inc_file.substr (0, inc_file.length () - pos);
+    }
+  
+  inc_file += ACE_DIRECTORY_SEPARATOR_STR;
+  inc_file += idl_file_name->get_string ();
+  full_path =
+    ACE_OS::realpath (inc_file.c_str (), abspath);
+
+  if (full_path != 0)
+    {
+      FILE *test = ACE_OS::fopen (abspath, "r");
+      if (test == 0)
+        {
+          ACE_OS::fclose (test);
+          return false;
+        }
+      else
+        {
+          ACE_OS::fclose (test);
+          return true;
+        }
+    }
+
+  return false;
+}
+
+bool
+IDL_GlobalData::validate_orb_include (UTL_String * idl_file_name)
+{
+  // It's important to update the check of include_counter when
+  // we decide which group is processed once new TAO include dirs
+  // are added somewhere in driver/drv_preproc.cpp
 
   // Count number of includes in environment variable.
   // If the way how INCLUDE environment variable is processed
   // will change in fe/fe_init.cpp:FE_store_env_include_paths ()
   // then the below do/while loop has to be changed accordingly.
-  int env_includes = 1;
+  unsigned int env_includes = 0;
   ACE_Env_Value<char*> incl_paths ("INCLUDE",
                                    (char *) 0);
   const char *aggr_str = incl_paths;
@@ -1887,22 +1940,79 @@ IDL_GlobalData::validate_orb_include (UTL_String *idl_file_name)
       do
         {
           aggr_str = ACE_OS::strchr (aggr_str, separator);
-          env_includes++;
+          ++env_includes;
         } while (aggr_str != 0 && aggr_str++);
     }
 
-  char abspath[MAXPATHLEN] = "";
-  char *full_path = 0;
+  // We try to search for idl_file_name in several folders in the
+  // following order.
+  //   1) Current folder (include_counter == 0). If idl_file_name is
+  //      found here then it's definitely not TAO specific. Return false.
+  //   2) Those includes that were extracted from INCLUDE environment
+  //      variable if one existed (include_counter >= 1 && include_counter
+  //      < env_includes + 1). If idl_file_name is found here then
+  //      we have to check if its complete path is not equal to any of
+  //      those in group 3 or 5.
+  //   3) $TAO_ROOT, $TAO_ROOT/tao
+  //      (include_counter >= env_includes + 1 && include_counter <
+  //      env_includes + 3). Return true if nothing was found in group
+  //      2 and idl_file_name is found here OR idl_file_name was found
+  //      in group 2 and path is the same as here.
+  //   4) User specific includes i.e. those that were provided with -I
+  //      option (include_counter >= env_includes + 3 && include_counter
+  //      < include_paths_.size () - 2). If idl_file_name is found here
+  //      then check for existence of the same path in group 5.
+  //   5) $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao
+  //      (include_counter >= include_paths_.size () - 2 && include_counter
+  //      < include_paths_.size () + 1). Return true if nothing was found
+  //      in groups 2 or 4 and idl_file_name is found here OR idl_file_name
+  //      was found in groups 2 or 4 and path is the same as here.
+  // Return false if idl_file_name was found neither in groups 3 nor 5.
+
+  char foundpath[MAXPATHLEN] = "";
   unsigned int include_counter = 0;
 
-  for (ACE_Unbounded_Queue_Iterator<char *>iter (
-           this->include_paths_
-         );
-       !iter.done (); )
+  for (ACE_Unbounded_Queue_Iterator<char *>iter (this->include_paths_);
+       !iter.done (); ++include_counter)
     {
-      ACE_CString partial;
+      unsigned int inc_group = 0;
       if (include_counter == 0)
         {
+          inc_group = 1;
+        }
+      else if (include_counter >= 1 &&
+               include_counter < env_includes + 1)
+        {
+          inc_group = 2;
+        }
+      else if (include_counter >= env_includes + 1 &&
+               include_counter < env_includes + 3)
+        {
+          inc_group = 3;
+        }
+      else if (include_counter >= env_includes + 3 &&
+               include_counter < this->include_paths_.size () - 2)
+        {
+          inc_group = 4;
+        }
+      else if (include_counter >= this->include_paths_.size () - 2 &&
+               include_counter < this->include_paths_.size () + 1)
+        {
+          inc_group = 5;
+        }
+
+      // We don't need to check anything in groups 2 and 4 if
+      // foundpath was already set and we only have to check
+      // whether it belongs to groups 3 or 5.
+      if (foundpath[0] != 0 && (inc_group == 2 || inc_group == 4))
+        {
+          continue;
+        }
+
+      ACE_CString partial;
+      if (inc_group == 1)
+        {
+          char abspath[MAXPATHLEN] = "";
           char *path_tmp = ACE_OS::getcwd (abspath, MAXPATHLEN);
           partial = path_tmp;
         }
@@ -1914,49 +2024,48 @@ IDL_GlobalData::validate_orb_include (UTL_String *idl_file_name)
           partial = *path_tmp;
         }
 
-      // If the include path has literal "s (because of an include
-      // of a Windows path with spaces), we must remove them here.
-      const char *tmp_partial = partial.c_str ();
-      if (tmp_partial && this->hasspace (tmp_partial) && tmp_partial[0] == '\"')
+      if (is_include_file_found (partial, idl_file_name, this))
         {
-          partial =
-            partial.substr (1, partial.length () - 2);
-        }
-
-      partial += ACE_DIRECTORY_SEPARATOR_STR;
-      partial += idl_file_name->get_string ();
-      full_path =
-        ACE_OS::realpath (partial.c_str (), abspath);
-
-      if (full_path != 0)
-        {
-          FILE *test = ACE_OS::fopen (abspath, "r");
-
-          if (test == 0)
-            {
-              ++include_counter;
-              continue;
-            }
-
-          ACE_OS::fclose (test);
-
-          // This file name is an orb file if it is either in first 2
-          // dirs (i.e. $TAO_ROOT, $TAO_ROOT/tao) or in
-          // last 3 dirs (i.e. $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO,
-          // $TAO_ROOT/CIAO/ciao)
-          if (include_counter != 0 &&
-              (include_counter - env_includes <= 2 ||
-               include_counter - env_includes >= this->include_paths_.size () - 3))
-            {
-              return true;
-            }
-          else
+          // 1)
+          if (inc_group == 1)
             {
               return false;
             }
+          // 2)
+          else if (inc_group == 2)
+            {
+              // We can fill in foundpath here since we are sure
+              // that it was not set before. Check above ensures that.
+              ACE_OS::strcpy (foundpath, partial.c_str ());
+              continue;
+            }
+          // 3)
+          else if (inc_group == 3)
+            {
+              if (foundpath[0] == 0 ||
+                  ACE_OS::strcmp (foundpath, partial.c_str ()) == 0)
+                {
+                  return true;
+                }
+            }
+          // 4)
+          else if (inc_group == 4)
+            {
+              // We can fill in foundpath here since we are sure
+              // that it was not set before. Check above ensures that.
+              ACE_OS::strcpy (foundpath, partial.c_str ());
+              continue;
+            }
+          // 5)
+          else if (inc_group == 5)
+            {
+              if (foundpath[0] == 0 ||
+                  ACE_OS::strcmp (foundpath, partial.c_str ()) == 0)
+                {
+                  return true;
+                }
+            }
         }
-
-      ++include_counter;
     }
 
   return false;
