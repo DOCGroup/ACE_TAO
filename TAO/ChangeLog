@@ -1,7 +1,16 @@
+Mon Jan 21 06:11:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+          Check whether we have a transport before using it. This fixes
+          bugzilla 3198
+
+        * tao/Policy_Current.h:
+          Fixed incorrect file documentation
+
 Fri Jan 18 19:52:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp(visit_interface):
-        
+
           Added additional check before destroying the IFR contents of
           an interface entry that has not been previously forward
           declared. If the interface is from an included IDL file, we

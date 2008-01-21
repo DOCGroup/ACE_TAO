@@ -66,6 +66,12 @@ namespace TAO
 
             resolver.resolve (max_wait_time);
 
+            if (!resolver.transport ())
+              {
+                // We failed to find a profile we could connect to.
+                throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+              }
+
             // Dummy operation details that is used to instantiate the
             // LocateRequest class.
             TAO_Operation_Details op (0, 0);
