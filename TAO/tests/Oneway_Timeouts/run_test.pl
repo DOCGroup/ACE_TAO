@@ -367,19 +367,23 @@ sub test_one_request
 sub run_test
 {
     my $ret = shift;
+    my $name = shift;
     if ($ret != 0) {
-        exit $ret;
+        print "Subtest $name ERROR: $ret\n";
     }
+    return $ret;
 }
 
 unlink $srv_ior;
 
-run_test(test_timeouts());
-run_test(test_buffering());
-run_test(test_buffer_count_timeout());
-run_test(test_buffer_bytes_timeout());
-run_test(test_buffer_timeout());
-run_test(test_one_request());
+my $ret = 0;
+
+$ret |= run_test(test_timeouts(), 'test_timeouts');
+$ret |= run_test(test_buffering(), 'test_buffering');
+$ret |= run_test(test_buffer_count_timeout() ,'test_buffer_count_timeout');
+$ret |= run_test(test_buffer_bytes_timeout(), 'test_buffer_bytes_timeout');
+$ret |= run_test(test_buffer_timeout(), 'test_buffer_timeout');
+$ret |= run_test(test_one_request(), 'test_one_request');
 
 # Regardless of the return value, ensure that the processes
 # are terminated before exiting
@@ -387,4 +391,4 @@ $CLI->Kill();
 $SRV->Kill();
 
 unlink $srv_ior;
-exit 0;
+exit $ret;
