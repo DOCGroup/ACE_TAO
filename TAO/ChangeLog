@@ -1,3 +1,10 @@
+Mon Jan 21 17:45:12 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Big_Oneways/server.cpp:
+          POA manager activation before IOR distribution closes a failure
+          window. Clients could fail trying to narrow a reference before
+          the POA is in accept state.
+
 Mon Jan 21 16:43:51 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Oneway_Timeouts/run_test.pl:
