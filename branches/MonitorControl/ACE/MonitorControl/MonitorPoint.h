@@ -62,11 +62,6 @@ namespace ACE
       
       /// Meaningful implementation of member function.
       virtual void clear (void);
-      
-    protected:
-      /// Meaningful verison of base class constructor.
-      MonitorPoint (const char* name,
-                    Datatypes::InfoType type);
     };
   }
 }

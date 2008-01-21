@@ -1,3 +1,43 @@
+Mon Jan 21 19:36:33 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/GenericRegistry.h:
+        * MonitorControl/MonitorControl.mpc:
+        * MonitorControl/Admin.h:
+        * MonitorControl/MonitorControl_macros.h:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/GenericRegistry.cpp:
+        * MonitorControl/MonitorPoint_T.cpp:
+        * MonitorControl/Admin.cpp:
+        * MonitorControl/MonitorControl.h:
+        
+          - Added typedefs for enabled and disabled versions of
+            the low level monitors. Which version is seen by the
+            compiler is controlled by a proprocessor flag.
+            
+          - Implemented function that adds a monitor point to
+            the registry.
+            
+        * MonitorControl/examples/main.cpp:
+        * MonitorControl/examples/simple.mpc:
+        
+          - Added code to test monitor point instantiation and
+            addition to the registry.
+            
+          - Added code to catch MapError exception.
+          
+          - Added preprocessor flag for enabling monitors to the
+            MPC file.
+            
+          - Tested example for correct behavior when
+            - Adding a single monitor correctly
+            - Adding the same monitor a second time
+            - Passing a null monitor pointer to the registry and
+              catching the resulting MapError exception
+              
+          - Purify checks for memory leaks for all the above 
+            scenarios
+
 Thu Jan 17 21:33:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorControl_export.h:

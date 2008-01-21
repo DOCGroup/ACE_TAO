@@ -1,6 +1,7 @@
 // $Id$
 
 #include "MonitorControl/Admin.h"
+#include "MonitorControl/MonitorPointRegistry.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,29 +47,15 @@ namespace ACE
     }
     
     bool
-    Admin::add_monitor_point (Statistic* /* monitor_point */,
+    Admin::add_monitor_point (Statistic* monitor_point,
                               unsigned long /* auto_update_msec */)
     {
       // TODO
-      return true;
-    }
-    
-    bool
-    Admin::remove_monitor_point (const char* /* name */)
-    {
-      // TODO
-      return true;
+      return MonitorPointRegistry::instance ()->add (monitor_point);
     }
     
     bool
     Admin::add_control_action (ControlAction* /* control_action */)
-    {
-      // TODO
-      return true;
-    }
-    
-    bool
-    Admin::remove_control_action (const char* /* name */)
     {
       // TODO
       return true;

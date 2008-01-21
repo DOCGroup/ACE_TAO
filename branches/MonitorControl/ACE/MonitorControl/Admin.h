@@ -104,9 +104,6 @@ namespace ACE
       bool add_monitor_point (Statistic* monitor_point,
                               unsigned long auto_update_msec = 0);
                               
-      /// Throws InvalidName.   
-      bool remove_monitor_point (const char* name);
-      
       /// Same as for monitor points, except that a different registry
       /// is used, and there is no registration with the reactor. These
       /// are actions that may be triggered by a constraint or called
@@ -114,9 +111,6 @@ namespace ACE
       
       bool add_control_action (ControlAction* control_action);
                               
-      /// Throws InvalidName.   
-      bool remove_control_action (const char* name);
-      
       /// Resets the monitor points found in the registry by
       /// lookup of the passed list of names. Throws InvalidName
       void clear_statistics (const Datatypes::NameList& names);

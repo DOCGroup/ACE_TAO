@@ -78,9 +78,6 @@ namespace ACE
       /// Throws MapError.
       bool add (Generic* type);
       
-      /// Removes a Statistic or ControlAction specified by name.
-      bool remove (const ACE_CString& name);
-      
       /// Retrieves a list of the names added to the registry so far.
       const Datatypes::NameList& names (void) const;
       

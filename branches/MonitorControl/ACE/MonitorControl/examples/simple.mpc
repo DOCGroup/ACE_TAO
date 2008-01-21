@@ -4,6 +4,7 @@ project (simple) : aceexe {
   exename = simple
   after += MonitorControl
   libs  += MonitorControl
+  macros += ENABLE_MONITORS
   
   source_files {
     main.cpp

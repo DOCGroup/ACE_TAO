@@ -23,7 +23,10 @@
 
 #include "MonitorControl/MonitorControl_export.h"
 #include "MonitorControl/Admin.h"
+#include "MonitorControl/GenericRegistry.h"
 #include "MonitorControl/MonitorControl_macros.h"
+
+using namespace ACE::MonitorControl;
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

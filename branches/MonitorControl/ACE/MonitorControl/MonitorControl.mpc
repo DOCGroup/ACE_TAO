@@ -23,6 +23,7 @@ project(MonitorControl) : acelib {
   
   Header_Files {
     MonitorControl_export.h
+    MonitorControl_macros.h
   }
   
   Template_Files {

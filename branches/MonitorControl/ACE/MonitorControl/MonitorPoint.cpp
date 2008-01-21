@@ -8,13 +8,6 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    MonitorPoint<true>::MonitorPoint (const char* name,
-                                      Datatypes::InfoType /* type */)
-      : Statistic (name)
-    {
-      // TODO
-    }
-      
     void
     MonitorPoint<true>::set_group_parent (Statistic* /* parent */)
     {
