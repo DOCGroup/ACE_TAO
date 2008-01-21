@@ -97,6 +97,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Coordinator_var coordinator =
         Test::Coordinator::_narrow (object.in ());
 
+      poa_manager->activate ();
+
       CORBA::String_var ior =
         orb->object_to_string (coordinator.in ());
 
@@ -109,8 +111,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
-
-      poa_manager->activate ();
 
       ACE_DEBUG ((LM_DEBUG, "Waiting for peers . . . "));
       for (int i = 0;
