@@ -950,7 +950,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
 
   ACE_Time_Value timer_buf (0);
   ACE_Time_Value *this_timeout =
-    = this->timer_queue_->calculate_timeout (max_wait_time, &timer_buf);
+    this->timer_queue_->calculate_timeout (max_wait_time, &timer_buf);
 
   // Check if we have timers to fire.
   int const timers_pending =
