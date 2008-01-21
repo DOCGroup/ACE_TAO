@@ -1,3 +1,11 @@
+Mon Jan 21 16:19:15 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Oneway_Timeouts/run_test.pl:
+
+          This one perl script runs a number of sub-tests.  If any one fails,
+          print an error message but continue, making sure to return nonzero
+          from the perl script.
+
 Fri Jan 18 21:51:21 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport.cpp:
