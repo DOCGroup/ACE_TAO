@@ -1,3 +1,12 @@
+Tue Jan 22 20:49:04 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/MonitorControl.vsd:
+        
+          New file, Visio diagram with 3 panels:
+          - UML class diagram of MonitorControl library
+          - UML sequence diagram showing MonitorControl behavior
+          - UML sequence diagram showing lifecycles of MC entities
+
 Mon Jan 21 19:36:33 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorPoint.h:
