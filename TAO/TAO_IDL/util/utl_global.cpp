@@ -1878,19 +1878,6 @@ is_include_file_found (ACE_CString & inc_file,
         inc_file.substr (1, inc_file.length () - 2);
     }
 
-  // If there are trailing directory separators in inc_file then
-  // remove them here.
-  size_t pos = inc_file.length () == 0 ? 0 : inc_file.length () - 1;
-  while (inc_file[pos] == ACE_DIRECTORY_SEPARATOR_CHAR)
-    {
-      --pos;
-    }
-  if (static_cast<ssize_t> (inc_file.length () - 1 - pos) > 0)
-    {
-      inc_file =
-        inc_file.substr (0, inc_file.length () - pos);
-    }
-  
   inc_file += ACE_DIRECTORY_SEPARATOR_STR;
   inc_file += idl_file_name->get_string ();
   full_path =
@@ -1901,11 +1888,13 @@ is_include_file_found (ACE_CString & inc_file,
       FILE *test = ACE_OS::fopen (abspath, "r");
       if (test == 0)
         {
-          ACE_OS::fclose (test);
           return false;
         }
       else
         {
+          // Overwrite inc_file with abspath since the later
+          // is normalized to the native OS representation.
+          inc_file = abspath;
           ACE_OS::fclose (test);
           return true;
         }
@@ -2006,6 +1995,7 @@ IDL_GlobalData::validate_orb_include (UTL_String * idl_file_name)
       // whether it belongs to groups 3 or 5.
       if (foundpath[0] != 0 && (inc_group == 2 || inc_group == 4))
         {
+          iter.advance ();
           continue;
         }
 
