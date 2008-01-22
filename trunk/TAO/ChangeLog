@@ -1,3 +1,11 @@
+Tue Jan 22 14:34:51 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/util/utl_global.cpp:
+          Fixed a problem with the fix for bug 3154 that existed on
+          Windows and also fixed a more dangerous bug where iterator
+          used in a cycle was not advanced while I was trying to optimize
+          the work of that cycle.
+
 Mon Jan 21 17:45:12 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Big_Oneways/server.cpp:
