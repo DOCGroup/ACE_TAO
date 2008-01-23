@@ -1,3 +1,14 @@
+Wed Jan 23 23:40:32 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/INET_Addr.cpp (set): Propagate IPv4 and 6 lookup error values
+          to errno.
+
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp: When picking a
+          unused listen port ends up binding an IPv6 address, use the IPv6
+          "localhost" for the connect address. When unregistering a event
+          handler, don't deref reactor() if it's zero (happens when the
+          registration fails). Remove an extraneous %t spec in a log string.
+
 Wed Jan 23 19:21:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_gnuwin32_common.GNU:
