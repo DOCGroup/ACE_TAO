@@ -34,10 +34,10 @@ CC      = gcc
 CXX     = g++
 RC      = windres
 
-ifeq (3.4,$(findstring 3.4,$(GNUWIN32_CXX_VERSION)))
-  MODEL_FLAGS += -mtune=$(TCPU)
-else
+ifeq (2.9,$(findstring 2.9,$(GNUWIN32_CXX_VERSION)))
   MODEL_FLAGS += -mcpu=$(TCPU)
+else
+  MODEL_FLAGS += -mtune=$(TCPU)
 endif
 
 CFLAGS += -Wpointer-arith
