@@ -146,8 +146,15 @@ Pipe::open (void)
     result = -1;
   else
     {
+      int af = my_addr.get_type ();
+      const ACE_TCHAR *local = ACE_LOCALHOST;
+#if defined (ACE_HAS_IPV6)
+      if (af == AF_INET6)
+        local = ACE_IPV6_LOCALHOST;
+#endif /* ACE_HAS_IPV6 */
       ACE_INET_Addr sv_addr (my_addr.get_port_number (),
-                             ACE_LOCALHOST);
+                             local,
+                             af);
 
       // Establish a connection within the same process.
       if (connector.connect (writer, sv_addr) == -1)
@@ -308,8 +315,9 @@ Sender::close (void)
 {
   // Remove socket from Reactor (may fail if another thread has already
   // removed the handle from the Reactor).
-  this->reactor ()->remove_handler (this->handle_,
-                                    ACE_Event_Handler::ALL_EVENTS_MASK);
+  if (this->reactor() != 0)
+    this->reactor ()->remove_handler (this->handle_,
+                                      ACE_Event_Handler::ALL_EVENTS_MASK);
 
   // Remove self from connection cache (may fail if another thread has
   // already removed "this" from the cache).
@@ -826,7 +834,7 @@ Invocation_Thread::create_connection (void)
   ACE_UNUSED_ARG (result);
 #else
   if (result != 0)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) (%t) create_connection h %d, %p\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %d, %p\n"),
                 client_handle,
                 ACE_TEXT ("register_handler")));
 #endif
