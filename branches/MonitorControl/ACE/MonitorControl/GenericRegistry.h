@@ -42,22 +42,21 @@ namespace ACE
      * be one global registry each for monitor points and
      * control actions.
      */
-    class GenericRegistry
+    class MONITORCONTROL_Export GenericRegistry
     {
     public:
       /**
-       * @class MapError
+       * @struct MapError
        *
-       * @brief Exception class, thrown by the add() operation
+       * @brief Exception, thrown by the add() operation
        * in class GenericRegistry.
        *
        * Used when items are added to the registry,
        * to give more info about an insertion error than we get
        * from the boolean return type.
        */
-      class MapError
+      struct MapError
       {
-      public:
         /// Info that the MapError exception might contain.
         enum ErrorReason
         {
@@ -66,7 +65,6 @@ namespace ACE
         };
         
         MapError (ErrorReason why);
-        ~MapError (void);
       
         ErrorReason why_;
       };

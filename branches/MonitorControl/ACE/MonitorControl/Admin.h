@@ -45,12 +45,8 @@ namespace ACE
      * call the appropriate method on the monitor point to get
      * it to update its data.
      */
-    class MonitorPointAutoUpdater : public ACE_Event_Handler
+    struct MonitorPointAutoUpdater : ACE_Event_Handler
     {
-    public:
-      MonitorPointAutoUpdater (void);
-      ~MonitorPointAutoUpdater (void);
-      
       /// Override of ACE base class method.
       virtual int handle_timeout (const ACE_Time_Value& interval,
                                   const void* monitor_point);
@@ -71,23 +67,21 @@ namespace ACE
     {
     public:
       /**
-       * @class InvalidName
+       * @struct InvalidName
        *
-       * @brief Exception class, thrown when an operation below taking a
+       * @brief Exception, thrown when an operation below taking a
        *        single name or list of names has a problem because of
        *        an invalid name.
        *
        */
-      class InvalidName
+      struct InvalidName
       {
-      public:
         /// Constructor stores the list of names for which there was a
         /// problem in the operation where the exception was thrown.
         InvalidName (const Datatypes::NameList& names);
         
         ~InvalidName (void);
         
-      public:
         /// Class member which holds the namelist passed to the constructor.
         Datatypes::NameList names_;
       };
@@ -102,7 +96,7 @@ namespace ACE
       /// method.
       
       bool add_monitor_point (Statistic* monitor_point,
-                              unsigned long auto_update_msec = 0);
+                              unsigned long auto_update_msec);
                               
       /// Same as for monitor points, except that a different registry
       /// is used, and there is no registration with the reactor. These
@@ -122,7 +116,7 @@ namespace ACE
       void update (const Datatypes::NameList& names, bool notify);
       
     private:
-      MonitorPointAutoUpdater* auto_updater_;
+      MonitorPointAutoUpdater auto_updater_;
     };
   }
 }

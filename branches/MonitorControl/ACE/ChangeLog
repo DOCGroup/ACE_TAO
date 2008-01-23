@@ -1,3 +1,36 @@
+Wed Jan 23 19:11:09 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/AutoUpdateStarter.cpp:
+        * MonitorControl/AutoUpdateStarter.h:
+        * MonitorControl/MonitorControl.mpc:
+        
+          New files, containing a struct that inherits from ACE_Task
+          and is used to start the reactor's event loop in a new
+          thread. Also updated the MPC file accordingly.
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/GenericRegistry.h:
+        * MonitorControl/MonitorPoint_T.h:
+        * MonitorControl/Admin.h:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/MonitorControl_macros.h:
+        * MonitorControl/GenericRegistry.cpp:
+        * MonitorControl/MonitorPoint_T.cpp:
+        * MonitorControl/Admin.cpp:
+        * MonitorControl/MonitorControl.h:
+        * MonitorControl/examples/main.cpp:
+        
+          - Added capability to get a given monitor point updated
+            periodically, by registering an associated timer with
+            the reactor.
+            
+          - Added convenient macros for the ACE calls to
+            - read the svc.conf file that starts the dynamic service
+            - start up the reactor's event loop
+            - stop the reactor's event loop and wait for its
+              thread to join the application thread
+
 Tue Jan 22 20:49:04 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorControl.vsd:

@@ -9,19 +9,19 @@ namespace ACE
   namespace MonitorControl
   {
     void
-    MonitorPoint<true>::set_group_parent (Statistic* /* parent */)
+    MonitorPoint<true>::group_parent (const Statistic* /* parent */)
     {
       // TODO
     }
     
     void
-    MonitorPoint<true>::add_group_child (Statistic* /* child */)
+    MonitorPoint<true>::add_group_child (const Statistic* /* child */)
     {
       // TODO
     }
     
     void
-    MonitorPoint<true>::set_constraint (
+    MonitorPoint<true>::constraint (
       const ETCL_Constraint* /* constraint */)
     {
       // TODO

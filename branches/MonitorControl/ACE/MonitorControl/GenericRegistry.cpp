@@ -12,9 +12,6 @@ namespace ACE
       : why_ (why)
     {}
     
-    GenericRegistry::MapError::~MapError (void)
-    {}
-    
     GenericRegistry::GenericRegistry (void)
     {}
     

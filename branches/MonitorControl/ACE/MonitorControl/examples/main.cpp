@@ -1,16 +1,23 @@
 
 #include "MonitorControl/MonitorControl.h"
 
+#include "ace/OS_NS_unistd.h"
+
 int main (int argc, char *argv [])
 {
-  ACE_Service_Config::open (argc,
-                            argv,
-                            ACE_DEFAULT_LOGGER_KEY,
-                            false);
   try
   {
-    ADD_MONITOR (CPU_LOAD_MONITOR);
-    ADD_MONITOR (CPU_LOAD_MONITOR);
+    START_MC_SERVICE;
+    ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, 2000);
+    START_PERIODIC_MONITORS;
+    
+    for (int i = 0; i < 10; ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "looping\n"));
+        ACE_OS::sleep (1);
+      }
+
+    STOP_PERIODIC_MONITORS;
   }
   catch (const GenericRegistry::MapError &e)
   {

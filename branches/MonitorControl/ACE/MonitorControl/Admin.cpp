@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/Reactor.h"
+
 #include "MonitorControl/Admin.h"
 #include "MonitorControl/MonitorPointRegistry.h"
 
@@ -9,18 +11,15 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    MonitorPointAutoUpdater::MonitorPointAutoUpdater (void)
-    {}
-  
-    MonitorPointAutoUpdater::~MonitorPointAutoUpdater (void)
-    {}
-  
     int
     MonitorPointAutoUpdater::handle_timeout (
-      const ACE_Time_Value& /* interval */,
-      const void* /* monitor_point */)
+      const ACE_Time_Value& /* current_time */,
+      const void* monitor_point)
     {
-      // TODO
+      const Statistic* const_mp =
+        reinterpret_cast<const Statistic*> (monitor_point);
+      Statistic* mp = const_cast<Statistic*> (const_mp);
+      mp->calculate ();
       return 0;
     }
     
@@ -38,20 +37,36 @@ namespace ACE
     //====================================================================
     
     Admin::Admin (void)
-      : auto_updater_ (new MonitorPointAutoUpdater)
     {}
     
     Admin::~Admin (void)
     {
-      delete this->auto_updater_;
+      /// Destroys the timers associated with our event handler
+      /// before its destructor is called.
+      ACE_Reactor::instance ()->close_singleton ();
     }
     
     bool
     Admin::add_monitor_point (Statistic* monitor_point,
-                              unsigned long /* auto_update_msec */)
+                              unsigned long auto_update_msec)
     {
-      // TODO
-      return MonitorPointRegistry::instance ()->add (monitor_point);
+      bool good_reg_add =
+        MonitorPointRegistry::instance ()->add (monitor_point);
+       
+      /// @@@ (JP) TODO if the boolean in false.  
+      if (good_reg_add && auto_update_msec != 0)
+        {
+          time_t secs = static_cast<time_t> (auto_update_msec / 1000);
+          suseconds_t usecs =
+            static_cast<suseconds_t> ((auto_update_msec % 1000) * 1000);
+          ACE_Time_Value tv (secs, usecs);
+          ACE_Reactor::instance ()->schedule_timer (&this->auto_updater_,
+                                                    monitor_point,
+                                                    ACE_Time_Value::zero,
+                                                    tv);
+        }
+        
+      return good_reg_add;
     }
     
     bool

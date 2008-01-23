@@ -6,6 +6,7 @@ project(MonitorControl) : acelib {
   
   Source_Files {
     Admin.cpp
+    AutoUpdateStarter.cpp
     BytesSentMonitor.cpp
     ControlAction.cpp
     ControlActionRegistry.cpp

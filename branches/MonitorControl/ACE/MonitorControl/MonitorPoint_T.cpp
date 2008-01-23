@@ -23,12 +23,6 @@ namespace ACE
     
     template<bool ENABLED>
     void
-    MonitorPoint<ENABLED>::calculate (void)
-    {
-    }
-    
-    template<bool ENABLED>
-    void
     MonitorPoint<ENABLED>::group_parent (const Statistic* /* parent */)
     {
     }

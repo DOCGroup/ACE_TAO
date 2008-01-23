@@ -46,13 +46,13 @@ namespace ACE
       
     public:
       /// Meaningful implementation of member function.
-      virtual void set_group_parent (Statistic* parent);
+      virtual void group_parent (const Statistic* parent);
       
       /// Meaningful implementation of member function.
-      virtual void add_group_child (Statistic* child);
+      virtual void add_group_child (const Statistic* child);
       
       /// Meaningful implementation of member function.
-      virtual void set_constraint (const ETCL_Constraint* constraint);
+      virtual void constraint (const ETCL_Constraint* constraint);
       
       /// Meaningful implementation of member function.
       virtual void receive (const double data);

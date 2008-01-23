@@ -24,6 +24,7 @@
 #include "MonitorControl/MonitorControl_export.h"
 #include "MonitorControl/Admin.h"
 #include "MonitorControl/GenericRegistry.h"
+#include "MonitorControl/CPULoadMonitor.h"
 #include "MonitorControl/MonitorControl_macros.h"
 
 using namespace ACE::MonitorControl;
