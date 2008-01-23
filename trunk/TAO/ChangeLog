@@ -1,3 +1,16 @@
+Wed Jan 23 20:51:11 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp(visit_array):
+        
+          Fixed bug when processing an anonymous array member whose base
+          type is declared as part of the array declaration itself. Very
+          unusual IDL, but legal. This fix closes [BUGID:3203], thanks
+          to Chris Cleeland <cleeland_c at ociweb dot com> for reporting it.
+          
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        
+          Corrected mistake in comment.
+
 Tue Jan 22 14:34:51 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * TAO_IDL/util/utl_global.cpp:
