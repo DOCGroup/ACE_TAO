@@ -412,7 +412,7 @@ ifr_adding_visitor_structure::add_members (AST_Structure *node,
       );
     }
 
-  // Correct ir_current_ and move the real union members into the union.
+  // Correct ir_current_ and move the real members into the struct.
   this->ir_current_= CORBA::StructDef::_duplicate (struct_def);
   struct_def->members (this->members_);
   size_t size = this->move_queue_.size ();

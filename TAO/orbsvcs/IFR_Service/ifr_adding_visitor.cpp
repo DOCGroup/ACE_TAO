@@ -2099,7 +2099,24 @@ ifr_adding_visitor::visit_array (AST_Array *node)
 {
   try
     {
-      this->element_type (node->base_type ());
+      bool owned = false;
+      AST_Type *bt = node->base_type ();
+      UTL_Scope *bts = bt->defined_in ();
+      UTL_Scope *ns = node->defined_in ();
+      
+      if (bts == ns && !bt->ifr_added ())
+        {
+          // What we most likely have if we get here is an
+          // anonymous array member whose base type is
+          // defined as part of the array declaration.
+          // Setting the boolean to TRUE and passing it
+          // to element_type() will force the base type
+          // to be added to the IFR before anything else
+          // happens.
+          owned = true;
+        }
+      
+      this->element_type (bt, owned);
 
       AST_Expression **dims = node->dims ();
 
