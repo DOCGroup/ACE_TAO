@@ -55,7 +55,6 @@ Wed Jan 23 17:23:31 UTC 2008  Steve Huston  <shuston@riverace.com>
           because it ends up adding -pipe twice when pipe=1. Thanks to Howard
           Finer for reporting this.
 
->>>>>>> .r80489
 Tue Jan 22 10:46:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
