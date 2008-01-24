@@ -106,7 +106,7 @@ TAO/tests/Bug_2966_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_3000_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_3042_Regression/run_test.pl:
 TAO/tests/Bug_3108_Regression/run_test.pl: !ST
-TAO/tests/Bug_3154_Regression/run_test.pl:
+TAO/tests/Bug_3154_Regression/run_test.pl: !NO_IFR
 TAO/tests/Bug_3163_Regression/run_test.pl:
 TAO/tests/Bug_3171_Regression/run_test.pl: !ST !MINIMUM
 TAO/tests/Bug_3198_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
