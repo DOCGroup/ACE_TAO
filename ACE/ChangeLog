@@ -1,3 +1,8 @@
+Thu Jan 24 08:32:53 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Disabled test for bug 3154 on builds where no tao_idl present.
+
 Thu Jan 24 08:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_main.h:
@@ -27,6 +32,7 @@ Wed Jan 23 17:23:31 UTC 2008  Steve Huston  <shuston@riverace.com>
           because it ends up adding -pipe twice when pipe=1. Thanks to Howard
           Finer for reporting this.
 
+>>>>>>> .r80489
 Tue Jan 22 10:46:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
