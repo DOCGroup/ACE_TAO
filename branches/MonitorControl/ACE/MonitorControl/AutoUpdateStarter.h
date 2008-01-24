@@ -19,7 +19,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Task_T.h"
+#include "ace/Task.h"
 
 #include "MonitorControl/MonitorControl_export.h"
 
@@ -40,7 +40,7 @@ namespace ACE
      * can run as well. A very simple struct inheriting from ACE_Task
      * and overriding the svc() method suffices.
      */
-    struct MONITORCONTROL_Export AutoUpdateStarter : ACE_Task<ACE_NULL_SYNCH>
+    struct MONITORCONTROL_Export AutoUpdateStarter : ACE_Task_Base
     {
       int svc (void);
     };

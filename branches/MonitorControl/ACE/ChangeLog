@@ -1,3 +1,12 @@
+Thu Jan 24 17:39:45 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/AutoUpdateStarter.h:
+        
+          Changed inheritance of AutoUpdateStarter from
+          ACE_Task<ACE_NULL_SYNCH> to ACE_Task_Base, which is sufficient
+          and more lightweight. Thanks to Johnny Willemsen
+          <jwillemsen at remedy dot nl> for the suggestion.
+
 Wed Jan 23 19:11:09 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/AutoUpdateStarter.cpp:
