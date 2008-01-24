@@ -1,3 +1,24 @@
+Thu Jan 24 09:12:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+        * bin/MakeProjectCreator/config/vc8nmake.mpb
+        * bin/MakeProjectCreator/config/vc9nmake.mpb
+          Changed to use synchronous exception handling with msvc 8/9 which
+          is the default. Asynchrous exception handling does catch access
+          violations but it leads to lower performance and other problems.
+          Also the C+ gurus advice not to use asynchronous exception
+          handloing
+
+        * tests/Reactor_Exceptions_Test.cpp:
+          Always use a C++ exception to test the reactor. This test is the
+          only one that fails when using synchronous exception handling with
+          msvc8/9 because it causes only an access violation on windows
+          with msvc, on other platforms it already did throw a regular
+          C++ exception
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Fixed typo in this template
+
 Thu Jan 24 08:32:53 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:
