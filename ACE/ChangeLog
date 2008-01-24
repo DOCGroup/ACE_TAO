@@ -1,3 +1,10 @@
+Thu Jan 24 08:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.h:
+          Declare ace_main as extern C for VxWorks kernel mode. With this
+          we can resolve ace_main using symFindByName. This fixes bugzilla
+          3204
+
 Wed Jan 23 23:40:32 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/INET_Addr.cpp (set): Propagate IPv4 and 6 lookup error values
