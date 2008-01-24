@@ -77,6 +77,13 @@ typedef int (*ace_main_proc_ptr)(int, char *[]);
 
 extern ace_main_proc_ptr vx_ace_main_i_ptr;
 
+// Declare ACE_MAIN as extern C so that it can be retrieved
+// using symFindByName
+extern "C"
+{
+  int ACE_MAIN (int, char* []);
+}
+
 #     define main \
 ACE_MAIN (int, char *[]); /* forward decl to gobble up the 'int' if there is one */ \
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
