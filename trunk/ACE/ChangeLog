@@ -7,7 +7,9 @@ Thu Jan 24 09:12:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           is the default. Asynchrous exception handling does catch access
           violations but it leads to lower performance and other problems.
           Also the C+ gurus advice not to use asynchronous exception
-          handloing
+          handling. This fixes bugzilla 3169, thanks to
+          Adrian Tulloch <my-ace-sub at reyes-tulloch dot com>
+          for reporting this.
 
         * tests/Reactor_Exceptions_Test.cpp:
           Always use a C++ exception to test the reactor. This test is the
