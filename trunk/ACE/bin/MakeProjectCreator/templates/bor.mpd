@@ -123,7 +123,7 @@ INCDIR_NAME = <%relwd%>
 # <%custom_type%> rules
 #
 
-<%if(cutom_type->libpath)%>
+<%if(custom_type->libpath)%>
 PATH := $(PATH);<%custom_type->libpath%>
 
 <%endif%>

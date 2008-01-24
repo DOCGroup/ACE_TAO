@@ -28,17 +28,6 @@ ACE_RCSID(tests, Reactor_Exceptions_Test, "$Id$")
 
 #if defined (ACE_HAS_EXCEPTIONS)
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-static void
-throw_exception (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) throw exception\n")));
-
-  // Cause a Win32 structured exception.
-  *(char *) 0 = 0;
-}
-#else
 // Just need a simple exception class.
 class Except {};
 
@@ -49,7 +38,6 @@ throw_exception (void)
               ACE_TEXT ("(%P|%t) throw exception\n")));
   throw Except ();
 }
-#endif /* ACE_WIN32 && ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 class My_Handler : public ACE_Event_Handler, public ACE_SOCK_Dgram
 {
@@ -106,26 +94,7 @@ public:
 
     try
       {
-#       if defined (ACE_WIN32) && defined (__BORLANDC__)
-        // BCB does not catch structured exceptions with catch (...).
-        // Actually, the ANSI spec says that system exceptions are not
-        // supposed to be caught with catch.  Borland may add this, and
-        // make it "switchable" in the future...
-        try
-        {
-#       endif /* defined (ACE_WIN32 && __BORLANDC__) */
-
         ret = ACE_Select_Reactor::handle_events (max_wait_time);
-
-#       if defined (ACE_WIN32) && defined (__BORLANDC__)
-        }
-        __except (EXCEPTION_EXECUTE_HANDLER)
-        {
-          // Probably should handle the details of the exception
-          // and throw something that represents the structured exception
-          throw "Win32 Structured Exception";
-        }
-#       endif /* defined (ACE_WIN32 &&__BORLANDC__) */
       }
     catch (...)
       {
