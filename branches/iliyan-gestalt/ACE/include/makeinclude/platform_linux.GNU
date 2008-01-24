@@ -44,29 +44,30 @@ ifeq (RedHatEnterpriseServer, $(findstring RedHatEnterpriseServer,$(LSB_RELEASE_
   endif
 endif
 
-CFLAGS  += -W -Wall -Wpointer-arith
+FLAGS_C_CC += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
 ifeq ($(buildbits),32)
-  CFLAGS   += -m32
-  LDFLAGS  += -m32
+  FLAGS_C_CC += -m32
+  LDFLAGS    += -m32
 endif
 ifeq ($(buildbits),64)
-  CFLAGS   += -m64
+  FLAGS_C_CC += -m64
 endif
 
 #
 # Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h
 # instead of setting them directly here (older versions of gcc don't set it
-# for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, etc...
+# for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
 CPPFLAGS += -D_GNU_SOURCE
 
-DCFLAGS += -g
-DLD     = $(CXX)
-LD      = $(CXX)
-LIBS    += -ldl
+DCFLAGS  += -g
+DCCFLAGS += -g
+DLD      = $(CXX)
+LD       = $(CXX)
+LIBS     += -ldl
 
 ifeq ($(threads),1)
   LIBS += -lpthread
@@ -92,11 +93,14 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 # the ForwardRequest PI test will fail. For GCC 4.0.2 we default to -O2
 ifeq ($(CXX_VERSION),4.0.2)
   OCFLAGS ?= -O2
+  OCCFLAGS ?=-O2
 else
   OCFLAGS ?= -O3
+  OCCFLAGS ?= -O3
 endif
 
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
+CFLAGS  += $(FLAGS_C_CC)
+CCFLAGS += $(FLAGS_C_CC) $(TEMPLATES_FLAG)
 
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).

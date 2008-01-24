@@ -345,6 +345,7 @@ ACE_INET_Addr::set (u_short port_number,
             {
               if (res)
                 ::freeaddrinfo(res);
+              errno = error;
               return -1;
             }
           address_family = AF_INET;
@@ -358,6 +359,7 @@ ACE_INET_Addr::set (u_short port_number,
         {
           if (res)
             ::freeaddrinfo(res);
+          errno = error;
           return -1;
         }
     }
@@ -392,6 +394,8 @@ ACE_INET_Addr::set (u_short port_number,
 
       hostent *hp = ACE_OS::gethostbyname_r (host_name, &hentry,
                                              buf, &h_error);
+      if (hp == 0)
+        errno = h_error;
 #  endif /* ACE_VXWORKS */
 
       if (hp == 0)

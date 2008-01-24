@@ -1,3 +1,73 @@
+Thu Jan 24 09:12:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+        * bin/MakeProjectCreator/config/vc8nmake.mpb
+        * bin/MakeProjectCreator/config/vc9nmake.mpb
+          Changed to use synchronous exception handling with msvc 8/9 which
+          is the default. Asynchrous exception handling does catch access
+          violations but it leads to lower performance and other problems.
+          Also the C+ gurus advice not to use asynchronous exception
+          handling. This fixes bugzilla 3169, thanks to
+          Adrian Tulloch <my-ace-sub at reyes-tulloch dot com>
+          for reporting this.
+
+        * tests/Reactor_Exceptions_Test.cpp:
+          Always use a C++ exception to test the reactor. This test is the
+          only one that fails when using synchronous exception handling with
+          msvc8/9 because it causes only an access violation on windows
+          with msvc, on other platforms it already did throw a regular
+          C++ exception
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Fixed typo in this template
+
+Thu Jan 24 08:32:53 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Disabled test for bug 3154 on builds where no tao_idl present.
+
+Thu Jan 24 08:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.h:
+          Declare ace_main as extern C for VxWorks kernel mode. With this
+          we can resolve ace_main using symFindByName. This fixes bugzilla
+          3204
+
+Wed Jan 23 23:40:32 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/INET_Addr.cpp (set): Propagate IPv4 and 6 lookup error values
+          to errno.
+
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp: When picking a
+          unused listen port ends up binding an IPv6 address, use the IPv6
+          "localhost" for the connect address. When unregistering a event
+          handler, don't deref reactor() if it's zero (happens when the
+          registration fails). Remove an extraneous %t spec in a log string.
+
+Wed Jan 23 19:21:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          With GCC 2.9x we need to use -mcpu
+
+Wed Jan 23 17:23:31 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_linux.GNU: Don't add CFLAGS to CCFLAGS
+          because it ends up adding -pipe twice when pipe=1. Thanks to Howard
+          Finer for reporting this.
+
+>>>>>>> .r80489
+Tue Jan 22 10:46:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Refactored these scripts so that we have less duplicated code
+
+Mon Jan 21 06:07:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.cpp:
+          Fixed compile error
+
 Thu Jan 17 19:58:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:

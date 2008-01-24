@@ -18,9 +18,4 @@ project: ipv6, vc_warnings {
     includes += $(ACE_BUILDDIR)
     libpaths -= $(ACE_ROOT)/lib
   }
-
-  specific(vc8,vc9) {
-    // Enable structured exception handling
-    ExceptionHandling = 2
-  }
 }
