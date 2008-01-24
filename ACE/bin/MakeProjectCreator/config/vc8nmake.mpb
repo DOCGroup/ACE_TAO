@@ -2,9 +2,5 @@
 // $Id$
 
 project {
-  specific(nmake) {
-    compile_flags -= /EHsc
-    compile_flags += /EHa
-  }
 }
 
