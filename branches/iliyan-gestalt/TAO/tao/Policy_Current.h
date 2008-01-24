@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * An implementation for the CORBA::PolicyManager interface.
+ * An implementation for the CORBA::PolicyCurrent interface.
  *
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
