@@ -1,0 +1,61 @@
+<autobuild>
+  <!-- The command used to create this file (on A3843457) was -->
+  <!-- ../../nightly/BuildXML/buildxml.pl -autotest 0 -base C:\cygwin\tmp\tao\doc\iliyan-gestalt -checkout "svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk ../../MPC" -checkout "svn://svn.dre.vanderbilt.edu/DOC/autobuild/trunk ../../autobuild" -checkout "svn://svn.dre.vanderbilt.edu/DOC/Middleware/branches/iliyan-gestalt ." -compiler vc8 -create "bin/msbuild-adapter.bat=@echo off\nset\n:process\nset param=%1\nshift\nif not defined %param goto quit\nif "%param%" equ "/build" goto process\nif "%param%" equ "debug" set mode=%param%\nif "%param%" equ "release" set mode=%param%\nif not "%param:~-3%" equ "sln" goto process\nmsbuild %param% /p:Configuration=%mode%\n:quit\n" -devguide 0 -docbuild 1 -environment MPC_ROOT=C:\cygwin\tmp\tao\doc\MPC -environment "prefix INCLUDE=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include;C:\Program Files\Microsoft Visual Studio 8\VC\INCLUDE" -environment "prefix LIBPATH=C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727" -environment "prefix INETSDK=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2" -environment "prefix LIB=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Lib;C:\Program Files\Microsoft Visual Studio 8\VC\LIB;C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\lib" -environment "prefix PATH=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Bin;C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Bin\WinNT;C:\Program Files\Microsoft Visual Studio 8\Common7\IDE;C:\Program Files\Microsoft Visual Studio 8\VC\BIN;C:\Program Files\Microsoft Visual Studio 8\Common7\Tools;C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\bin;C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;C:\Program Files\Microsoft Visual Studio 8\VC\VCPackages;C:\Program Files\Perl\bin" -logdir C:\cygwin\tmp\tao -outdir . -peerlayout 1 -platform win -variable vctool=msbuild-adapter.bat -->
+  <configuration>
+    <environment name="ACE_ROOT"     value="C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\ACE"/>
+    <environment name="CIAO_ROOT"    value="C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\CIAO"/>
+    <environment name="DDS_ROOT"     value="C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0"/>
+    <environment name="INCLUDE"      value="C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include;C:\Program Files\Microsoft Visual Studio 8\VC\INCLUDE"/>
+    <environment name="INETSDK"      value="C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2"/>
+    <environment name="LIB"          value="C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Lib;C:\Program Files\Microsoft Visual Studio 8\VC\LIB;C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\lib"/>
+    <environment name="LIBPATH"      value="C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727"/>
+    <environment name="MPC_ROOT"     value="C:\cygwin\tmp\tao\doc\MPC"/>
+    <environment name="PATH"         value="C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Bin;C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Bin\WinNT;C:\Program Files\Microsoft Visual Studio 8\Common7\IDE;C:\Program Files\Microsoft Visual Studio 8\VC\BIN;C:\Program Files\Microsoft Visual Studio 8\Common7\Tools;C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\bin;C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;C:\Program Files\Microsoft Visual Studio 8\VC\VCPackages;C:\Program Files\Perl\binC:\Program Files\Microsoft Visual Studio 8\Common7\IDE;C:\Program Files\Microsoft Visual Studio 8\VC\bin;C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\ACE\bin;C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\ACE\lib;" type="prefix"/>
+    <environment name="TAO_ROOT"     value="C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\TAO"/>
+    <variable    name="base"         value="C:\cygwin\tmp\tao\doc\iliyan-gestalt"/>
+    <variable    name="build_name"   value="vc8_d1o0"/>
+    <variable    name="creator"      value="fi326c"/>
+    <variable    name="log_file"     value="vc8_d1o0.log"/>
+    <variable    name="log_root"     value="C:\cygwin\tmp\tao\doc_iliyan-gestalt_A3843457.mw.nos_win_vc8_d1o0"/>
+    <variable    name="project_root" value="C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0"/>
+    <variable    name="root"         value="C:\cygwin\tmp\tao\doc\iliyan-gestalt"/>
+    <variable    name="vctool"       value="msbuild-adapter.bat"/>
+  </configuration>
+
+  <!-- Build preparation -->
+  <command name="process_listener"   options="localhost:32001"/>
+  <command name="status"             options="on"/>
+  <command name="log"                options="on"/>
+  <command name="svn"                options="co svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk ../../MPC"/>
+  <command name="svn"                options="co svn://svn.dre.vanderbilt.edu/DOC/autobuild/trunk ../../autobuild"/>
+  <command name="svn"                options="co svn://svn.dre.vanderbilt.edu/DOC/Middleware/branches/iliyan-gestalt ."/>
+  <command name="clone_build_tree"/>
+  <command name="file_manipulation"  options="type=update file=build/vc8_d1o0/ACE/ace/config.h output='#define ACE_DISABLE_WIN32_ERROR_WINDOWS\n#define ACE_DISABLE_WIN32_INCREASE_PRIORITY\n#include \x22ace/config-win32.h\x22\n'"/>
+  <command name="file_manipulation"  options="type=create file=build/vc8_d1o0/ACE/bin/MakeProjectCreator/config/default.features output='qos=1\n'"/>
+  <command name="file_manipulation"  options="type=create file=build/vc8_d1o0/ACE/setenv.cmd output='set ACE_ROOT=C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\ACE\nset CIAO_ROOT=C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\CIAO\nset DDS_ROOT=C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\nset INCLUDE=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include;C:\Program Files\Microsoft Visual Studio 8\VC\INCLUDE\nset INETSDK=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\nset LIB=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Lib;C:\Program Files\Microsoft Visual Studio 8\VC\LIB;C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\lib\nset LIBPATH=C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\nset MPC_ROOT=C:\cygwin\tmp\tao\doc\MPC\nset PATH=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Bin;C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Bin\WinNT;C:\Program Files\Microsoft Visual Studio 8\Common7\IDE;C:\Program Files\Microsoft Visual Studio 8\VC\BIN;C:\Program Files\Microsoft Visual Studio 8\Common7\Tools;C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\bin;C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;C:\Program Files\Microsoft Visual Studio 8\VC\VCPackages;C:\Program Files\Perl\binC:\Program Files\Microsoft Visual Studio 8\Common7\IDE;C:\Program Files\Microsoft Visual Studio 8\VC\bin;C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\ACE\bin;C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\ACE\lib;%PATH%\nset TAO_ROOT=C:\cygwin\tmp\tao\doc\iliyan-gestalt\build\vc8_d1o0\TAO\n'"/>
+  <command name="file_manipulation"  options="type=create file=build/vc8_d1o0/ACE/bin/msbuild-adapter.bat output='@echo off\nset\n:process\nset param=%1\nshift\nif not defined %param goto quit\nif \x22%param%\x22 equ \x22/build\x22 goto process\nif \x22%param%\x22 equ \x22debug\x22 set mode=%param%\nif \x22%param%\x22 equ \x22release\x22 set mode=%param%\nif not \x22%param:~-3%\x22 equ \x22sln\x22 goto process\nmsbuild %param% /p:Configuration=%mode%\n:quit\n'"/>
+  <command name="print_os_version"/>
+  <command name="print_ace_config"   options="XML_URL=http://cvs.ociweb.com/viewvc/nightly"/>
+  <command name="check_compiler"     options="msvc"/>
+  <command name="generate_workspace" options="-type vc8 -recurse -exclude CIAO,DDS,ACE/ACE.mwc,TAO/TAO.mwc"/>
+
+  <!-- Build targets -->
+  <command name="vc7make" options="/build debug TAO/TAO_ACE.sln"/>
+  <command name="vc7make" options="/build debug ACE/bin/bin.sln"/>
+  <command name="vc7make" options="/build debug ACE/tests/tests.sln"/>
+  <command name="vc7make" options="/build debug ACE/protocols/protocols.sln"/>
+  <command name="vc7make" options="/build debug ACE/protocols/tests/tests.sln"/>
+  <command name="vc7make" options="/build debug ACE/examples/examples.sln"/>
+  <command name="vc7make" options="/build debug ACE/performance-tests/perf.sln"/>
+  <command name="vc7make" options="/build debug TAO/tests/tests.sln"/>
+  <command name="vc7make" options="/build debug TAO/examples/examples.sln"/>
+  <command name="vc7make" options="/build debug TAO/performance-tests/perf.sln"/>
+  <command name="vc7make" options="/build debug TAO/orbsvcs/tests/tests.sln"/>
+  <command name="vc7make" options="/build debug TAO/orbsvcs/examples/examples.sln"/>
+  <command name="vc7make" options="/build debug TAO/orbsvcs/performance-tests/perf.sln"/>
+
+  <!-- Post build -->
+  <command name="log"             options="off"/>
+  <command name="process_logs"    options="copy"/>
+  <command name="status"          options="off"/>
+</autobuild>
