@@ -70,13 +70,16 @@ sub client
 
 # Options for all simple tests recognized by the 'client' program.
 @opts = ("-p $file_persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         "-c file://$file_persistent_ior_file -ORBInitRef NameService=file://$iorfile");
+         "-c file://$file_persistent_ior_file -ORBInitRef NameService=file://$iorfile",
+         "-l file://$file_persistent_ior_file -ORBInitRef NameService=file://$iorfile");
 
 @server_opts = ("-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u NameService",
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u NameService",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u NameService");
 
 @comments = ("Flat File Persistent Test (Part 1): \n",
-             "Flat File Persistent Test (Part 2): \n");
+             "Flat File Persistent Test (Part 2): \n",
+             "Flat File Persistent Test (Part 3): \n");
 
 $test_number = 0;
 

@@ -285,6 +285,34 @@ private:
   // persistent test.
 };
 
+class Persistent_List_Test : public Naming_Test
+{
+  // = TITLE
+  //    This class implements the third part of the Persistent Naming
+  //    Service test.
+  //
+  // = DESCRIPTION
+  //   This test attempts to invoke various list() methods on different
+  //   known contexts.
+public:
+  // = Initialization and termination methods.
+
+  Persistent_List_Test (CORBA::ORB_ptr orb,
+                        PortableServer::POA_ptr poa);
+  // Constructor.  Takes in an orb pointer.
+
+  virtual ~Persistent_List_Test (void);
+  // Destructor.
+
+  virtual int execute (TAO_Naming_Client &root_context);
+  // Execute the persistent test (part 3).
+
+private:
+
+  CORBA::ORB_var orb_;
+  // A pointer to our ORB (used for string/object conversion).
+};
+
 class CosNaming_Client
 {
   // = TITLE,
