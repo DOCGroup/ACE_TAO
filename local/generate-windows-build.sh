@@ -1,0 +1,23 @@
+#/bin/sh
+../../nightly/BuildXML/buildxml.pl \
+ --autotest 0\
+ --base 'C:\cygwin\tmp\tao\doc\iliyan-gestalt'\
+ --clonebuild 1\
+ --peerlayout 1\
+ --checkout "svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk ../../MPC"\
+ --checkout "svn://svn.dre.vanderbilt.edu/DOC/autobuild/trunk ../../autobuild"\
+ --checkout "svn://svn.dre.vanderbilt.edu/DOC/Middleware/branches/iliyan-gestalt ."\
+ --compiler vc8\
+ --docbuild 1\
+ --logdir 'C:\cygwin\tmp\tao'\
+ --platform win\
+ --propagate 0\
+ --environment MPC_ROOT='C:\cygwin\tmp\tao\doc\MPC'\
+ --environment 'prefix INCLUDE=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include;C:\Program Files\Microsoft Visual Studio 8\VC\INCLUDE'\
+ --environment 'prefix LIBPATH=C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727'\
+ --environment 'prefix INETSDK=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2'\
+ --environment 'prefix LIB=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Lib;C:\Program Files\Microsoft Visual Studio 8\VC\LIB;C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\lib'\
+ --environment 'prefix PATH=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Bin;C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Bin\WinNT;C:\Program Files\Microsoft Visual Studio 8\Common7\IDE;C:\Program Files\Microsoft Visual Studio 8\VC\BIN;C:\Program Files\Microsoft Visual Studio 8\Common7\Tools;C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\bin;C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;C:\Program Files\Microsoft Visual Studio 8\VC\VCPackages;C:\Program Files\Perl\bin'\
+ --create bin/msbuild-adapter.bat='@echo off\nset\n:process\nset param=%1\nshift\nif not defined %param goto quit\nif "%param%" equ "/build" goto process\nif "%param%" equ "debug" set mode=%param%\nif "%param%" equ "release" set mode=%param%\nif not "%param:~-3%" equ "sln" goto process\nmsbuild %param% /p:Configuration=%mode%\n:quit\n'\
+ --variable vctool=msbuild-adapter.bat\
+ --outdir .
