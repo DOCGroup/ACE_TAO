@@ -106,7 +106,7 @@ TAO_Storable_Naming_Context_Activator::etherealize (
 {
   if (!remaining_activations)
     {
-      delete servant;
+      servant->_remove_ref ();
     }
 }
 

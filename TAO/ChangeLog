@@ -1,14 +1,39 @@
+Fri Jan 25 18:45:53 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * NEWS:
+
+          Added notes about this new feature.
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Merging a feature from OCITAO 1.5a into DOC. A Naming Service
+          started with flat-file persistence (-u) will now allow for
+          iteration of its contents using list().
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+
+          Fixed a bug where we ignored reference counting and just
+          called delete.
+
+        * orbsvcs/tests/Simple_Naming/client.h:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+
+          Added an additional test for a flat-file persistence Naming
+          Service. Use the results of previous tests as well as bind
+          new entries to validate iterator functionality.
+
 Wed Jan 23 20:51:11 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp(visit_array):
-        
+
           Fixed bug when processing an anonymous array member whose base
           type is declared as part of the array declaration itself. Very
           unusual IDL, but legal. This fix closes [BUGID:3203], thanks
           to Chris Cleeland <cleeland_c at ociweb dot com> for reporting it.
-          
+
         * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
-        
+
           Corrected mistake in comment.
 
 Tue Jan 22 14:34:51 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
