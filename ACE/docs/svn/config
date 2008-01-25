@@ -102,8 +102,9 @@ enable-auto-props = yes
 *.pl=svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable
 *.bat=svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable
 *.ini=svn:eol-style=native;svn:keywords=Author Date Id Revision
-*.mpc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mwc=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.mwb=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.mpc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mpb=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mpt=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cdp=svn:eol-style=native;svn:keywords=Author Date Id Revision
@@ -124,6 +125,7 @@ enable-auto-props = yes
 *.cls=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.clo=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.tex=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.tioa=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.bib=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.bst=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.eps=svn:mime-type=application/postscript
