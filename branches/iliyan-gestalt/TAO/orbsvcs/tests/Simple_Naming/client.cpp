@@ -86,7 +86,7 @@ CosNaming_Client::CosNaming_Client (void)
 int
 CosNaming_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "p:dstieym:c:");
+  ACE_Get_Opt get_opts (argc_, argv_, "p:dstieym:c:l");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -166,11 +166,18 @@ CosNaming_Client::parse_args (void)
                                                get_opts.opt_arg ()),
                           -1);
         break;
+      case 'l':
+        if (this->test_ == 0)
+          ACE_NEW_RETURN (this->test_,
+                          Persistent_List_Test (this->orbmgr_.orb (),
+                                                this->orbmgr_.root_poa ()),
+                          -1);
+        break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Argument %c \n usage:  %s"
                            " [-d]"
-                           " [-s or -e or -t or -i or -y or -p or -c<ior> or -m<size>]"
+                           " [-s or -e or -t or -i or -y or -p or -c<ior> or -l<ior> or -m<size>]"
                            "\n",
                            c,
                            this->argv_ [0]),
@@ -1148,6 +1155,149 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
     {
       ex._tao_print_exception (
         "Unexpected exception in Persistent Test (part 2)");
+      return -1;
+    }
+
+  return 0;
+}
+
+Persistent_List_Test::Persistent_List_Test (CORBA::ORB_ptr orb,
+                                            PortableServer::POA_ptr poa)
+  : Naming_Test (poa),
+    orb_ (orb)
+{
+}
+
+Persistent_List_Test::~Persistent_List_Test (void)
+{
+}
+
+/**
+ * @brief Verify functionality of a Naming Service's list() iterator
+ *        when dealing with a flat-file persistent NS.
+ *
+ * Uses information stored in the NS in prior tests, then adds its
+ * own bindings and runs additional tests iterating through them.
+ */
+int
+Persistent_List_Test::execute (TAO_Naming_Client &root_context)
+{
+  try
+    {
+      // Create a name structure we will reuse.
+      CosNaming::Name test_name;
+      test_name.length (1);
+      test_name[0].id = CORBA::string_dup ("level1");
+      CORBA::Object_var obj1 =
+        root_context->resolve (test_name);
+
+      CosNaming::NamingContext_var level1_context =
+        CosNaming::NamingContext::_narrow (obj1.in ());
+
+      //  Resolve for <level2> context through level1
+      test_name.length (1);
+      test_name[0].id = CORBA::string_dup ("level2");
+      CORBA::Object_var obj2 =
+        level1_context->resolve (test_name);
+
+      CosNaming::NamingContext_var level2_context =
+        CosNaming::NamingContext::_narrow (obj2.in ());
+
+      // List the content of the Naming Context.
+      CosNaming::BindingIterator_var iter;
+      CosNaming::BindingList_var bindings_list;
+      CosNaming::Binding_var binding;
+      unsigned int objects_found = 0;
+      unsigned int contexts_found = 0;
+
+      root_context->list (0,
+                          bindings_list.out (),
+                          iter.out ());
+      if (CORBA::is_nil (iter.in ())
+          || bindings_list->length () != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "CosNaming::list does not function properly\n"),
+                          -1);
+
+      while (iter->next_one (binding.out ()))
+        {
+          if (binding->binding_type == CosNaming::nobject)
+            ++objects_found;
+          if (binding->binding_type == CosNaming::ncontext)
+            ++contexts_found;
+        }
+
+      if (objects_found != 0 && contexts_found != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "CosNaming::next_one does not function properly\n"),
+                            -1);
+        }
+
+      iter->destroy ();
+
+      contexts_found = 0;
+
+      // Instantiate four dummy objects.
+      My_Test_Object *impl = new My_Test_Object;
+      Test_Object_var obj = impl->_this ();
+      impl->_remove_ref ();
+
+      // Bind objects to the naming context.
+      CosNaming::Name name1;
+      name1.length (1);
+      name1[0].id = CORBA::string_dup ("foo1");
+      CosNaming::Name name2;
+      name2.length (1);
+      name2[0].id = CORBA::string_dup ("foo2");
+      CosNaming::Name name3;
+      name3.length (1);
+      name3[0].id = CORBA::string_dup ("foo3");
+      CosNaming::Name name4;
+      name4.length (1);
+      name4[0].id = CORBA::string_dup ("foo4");
+
+      level1_context->bind (name1,
+                          obj.in ());
+      level1_context->bind (name2,
+                          obj.in ());
+      level1_context->bind (name3,
+                          obj.in ());
+      level1_context->bind (name4,
+                          obj.in ());
+
+      level1_context->list (0,
+                            bindings_list.out (),
+                            iter.out ());
+      if (CORBA::is_nil (iter.in ())
+          || bindings_list->length () != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "CosNaming::list does not function properly\n"),
+                          -1);
+
+      while (iter->next_one (binding.out ()))
+        {
+          if (binding->binding_type == CosNaming::nobject)
+            ++objects_found;
+          if (binding->binding_type == CosNaming::ncontext)
+            ++contexts_found;
+        }
+
+      if (objects_found != 4 && contexts_found != 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "CosNaming::next_one does not function properly\n"),
+                            -1);
+        }
+
+      iter->destroy ();
+
+      ACE_DEBUG ((LM_DEBUG, "Persistent Naming test (part 3) OK.\n"));
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (
+        "Unexpected exception in Persistent Test (part 3)");
       return -1;
     }
 

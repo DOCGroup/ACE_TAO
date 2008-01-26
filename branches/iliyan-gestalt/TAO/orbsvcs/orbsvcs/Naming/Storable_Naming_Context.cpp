@@ -1349,13 +1349,14 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   // If we do not need to pass back BindingIterator.
   if (this->context_->current_size () <= how_many)
     return;
-  else
+  else if (redundant_)
     {
       //  ***  This is a problem.  Is there an exception we can throw? ***
       ACE_UNUSED_ARG (bind_iter);
       throw CORBA::NO_IMPLEMENT ();
-
-#if 0
+    }
+  else
+    {
       // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
                         ITER_SERVANT (this, hash_iter,
@@ -1372,19 +1373,19 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
       interface_->_add_ref ();
 
       // Register with the POA.
+      // Is an ACE_UINT32 enough?
       char poa_id[BUFSIZ];
-      ACE_OS::sprintf (poa_id,
-                       "%s_%d",
-                       this->poa_id_.c_str (),
-                       this->counter_++);
+      ACE_OS::snprintf (poa_id,
+                        BUFSIZ,
+                        "%s_%d",
+                        this->poa_id_.c_str (),
+                        this->gcounter_++);
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId (poa_id);
 
       this->poa_->activate_object_with_id (id.in (),
                                            bind_iter);
-
       bi = bind_iter->_this ();
-#endif  /* 0 */
     }
 }
 
