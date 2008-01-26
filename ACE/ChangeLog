@@ -1,3 +1,8 @@
+Sat Jan 26 07:18:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+          Fixed GCC warnings
+
 Sat Jan 26 06:45:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.h
