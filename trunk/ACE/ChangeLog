@@ -1,3 +1,11 @@
+Sun Jan 27 07:32:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_mingw32.GNU:
+          With gcc4 use the shared gcc libs
+
+        * ACE-INSTALL.html:
+          Document postfix for msvc71
+
 Sat Jan 26 07:18:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Proactor_Scatter_Gather_Test.cpp:
