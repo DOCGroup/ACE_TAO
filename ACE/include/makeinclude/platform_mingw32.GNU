@@ -58,4 +58,8 @@ PLATFORM_SSL_LIBS ?= -lssl32 -leay32
 
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
 
+ifeq ($(GXX_4_OR_BETTER), 1)
+  LDFLAGS += -shared-libgcc
+endif
+
 PRELIB:=
