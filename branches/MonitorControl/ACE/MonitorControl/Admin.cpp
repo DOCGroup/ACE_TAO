@@ -37,13 +37,22 @@ namespace ACE
     //====================================================================
     
     Admin::Admin (void)
+      : reactor_ (ACE_Reactor::instance ()),
+        delete_reactor_ (false)
     {}
     
     Admin::~Admin (void)
     {
-      /// Destroys the timers associated with our event handler
-      /// before its destructor is called.
-      ACE_Reactor::instance ()->close_singleton ();
+      if (this->delete_reactor_)
+        {
+          delete this->reactor_;
+        }
+      else
+        {
+          /// Destroys the timers associated with our event handler
+          /// before its destructor is called.
+          ACE_Reactor::instance ()->close_singleton ();
+        }
     }
     
     bool
@@ -60,10 +69,10 @@ namespace ACE
           suseconds_t usecs =
             static_cast<suseconds_t> ((auto_update_msec % 1000) * 1000);
           ACE_Time_Value tv (secs, usecs);
-          ACE_Reactor::instance ()->schedule_timer (&this->auto_updater_,
-                                                    monitor_point,
-                                                    ACE_Time_Value::zero,
-                                                    tv);
+          this->reactor_->schedule_timer (&this->auto_updater_,
+                                          monitor_point,
+                                          ACE_Time_Value::zero,
+                                          tv);
         }
         
       return good_reg_add;
@@ -83,10 +92,23 @@ namespace ACE
     }
     
     void
-    Admin::update (const Datatypes::NameList& /* names */,
-                   bool /* notify */)
+    Admin::update_monitors (const Datatypes::NameList& /* names */,
+                            bool /* notify */)
     {
       // TODO
+    }
+    
+    void
+    Admin::reactor (ACE_Reactor* new_reactor)
+    {
+      this->reactor_ = new_reactor;
+      this->delete_reactor_ = true;
+    }
+    
+    ACE_Reactor*
+    Admin::reactor (void) const
+    {
+      return this->reactor_;
     }
   }
 }

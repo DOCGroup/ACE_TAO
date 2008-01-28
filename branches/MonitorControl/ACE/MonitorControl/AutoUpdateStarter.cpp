@@ -3,6 +3,7 @@
 #include "ace/Reactor.h"
 
 #include "MonitorControl/AutoUpdateStarter.h"
+#include "MonitorControl/MonitorControl.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -13,12 +14,15 @@ namespace ACE
     int 
     AutoUpdateStarter::svc (void)
     {
+      MC_ADMINMANAGER* mgr =
+        ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+    
       /// We want the thread in which the event loop is started to
       /// own the reactor, otherwise the handle_timeout() calls 
       /// aren't triggerd.
-      ACE_Reactor::instance ()->owner (ACE_Thread::self ());
+      mgr->admin ().reactor ()->owner (ACE_Thread::self ());
       
-      return ACE_Reactor::instance ()->run_reactor_event_loop ();
+      return mgr->admin ().reactor ()->run_reactor_event_loop ();
     }
   }
 }

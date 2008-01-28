@@ -113,10 +113,17 @@ namespace ACE
       /// (or group) specified in <names>. The boolean parameter specifies
       /// whether or not some action should be triggered (constraint check,
       /// logging, or some other action). Throws InvalidName.
-      void update (const Datatypes::NameList& names, bool notify);
+      void update_monitors (const Datatypes::NameList& names, bool notify);
+      
+      /// This mutator allows the application to create its own reactor
+      /// and substitute it for the default reactor.
+      void reactor (ACE_Reactor* new_reactor);
+      ACE_Reactor* reactor (void) const;
       
     private:
       MonitorPointAutoUpdater auto_updater_;
+      ACE_Reactor* reactor_;
+      bool delete_reactor_;
     };
   }
 }

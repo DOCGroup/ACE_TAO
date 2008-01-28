@@ -8,6 +8,12 @@ int main (int argc, char *argv [])
   try
   {
     START_MC_SERVICE;
+    
+    ACE_Reactor* new_reactor = new ACE_Reactor;
+    MC_ADMINMANAGER* mgr =
+      ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+    mgr->admin ().reactor (new_reactor);
+    
     ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, 2000);
     START_PERIODIC_MONITORS;
     

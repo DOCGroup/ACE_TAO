@@ -106,7 +106,9 @@ typedef ACE_VERSIONED_NAMESPACE_NAME::DISABLED_PACKETS_SENT_MONITOR
   starter.activate ()
 
 #define STOP_PERIODIC_MONITORS \
-  ACE_VERSIONED_NAMESPACE_NAME::ACE_Reactor::instance ()->end_reactor_event_loop (); \
+  ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service< \
+    ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance ( \
+      "MC_ADMINMANAGER")->admin ().reactor ()->end_reactor_event_loop (); \
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Thread_Manager::instance ()->wait ()
 
 #include /**/ "ace/post.h"
