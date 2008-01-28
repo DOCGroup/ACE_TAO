@@ -1481,8 +1481,28 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
           TAO_REVERSE_LOCK reverse (*this->handler_lock_);
           ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
 
+          TAO_Queued_Message *pre_head = head_;
           if (flushing_strategy->flush_transport (this, max_wait_time) == -1)
             {
+              if (errno == ETIME)
+                {
+                  if (pre_head == head_) // if nothing was actually flushed
+                    {
+                      //This request has timed out and none of it was sent to the transport
+                      //We can't return -1 here, since that would end up closing the tranpsort
+                      if (TAO_debug_level > 2)
+                        {
+                          ACE_DEBUG ((LM_DEBUG,
+                                      ACE_TEXT ("TAO (%P|%t) - ")
+                                      ACE_TEXT ("Transport[%d]::send_asynchronous_message_i, ")
+                                      ACE_TEXT ("2 timeout encountered before any bytes sent\n"),
+                                      this->id ()));
+                        }
+                      throw ::CORBA::TIMEOUT (CORBA::SystemException::_tao_minor_code
+                                              (TAO_TIMEOUT_SEND_MINOR_CODE, ETIME),
+                                              CORBA::COMPLETED_NO);
+                    }
+                }
               return -1;
             }
         }
