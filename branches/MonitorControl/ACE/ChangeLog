@@ -1,3 +1,25 @@
+Mon Jan 28 20:14:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.h:
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/Statistic.h:
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        * MonitorControl/MemoryUsageMonitor.h:
+        * MonitorControl/NumThreadsMonitor.h:
+        * MonitorControl/Admin.cpp:
+        * MonitorControl/BytesSentMonitor.h:
+        
+          Changed the name of the calculate() method to update(). The
+          new name is more sensible, since it was decided not to maintain
+          any statistics, such as min, max or avg, in the monitor point
+          classes or in the registry. Thanks to Johnny Willemsen
+          <jwillemsen at remedy dot nl> for the suggestion.
+
 Mon Jan 28 20:06:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/Admin.h:

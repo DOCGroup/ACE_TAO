@@ -9,7 +9,7 @@ namespace ACE
   namespace MonitorControl
   {
     void
-    MemoryUsageMonitor<true>::calculate (void)
+    MemoryUsageMonitor<true>::update (void)
     {
       // TODO
     }

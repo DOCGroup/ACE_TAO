@@ -19,7 +19,7 @@ namespace ACE
       const Statistic* const_mp =
         reinterpret_cast<const Statistic*> (monitor_point);
       Statistic* mp = const_cast<Statistic*> (const_mp);
-      mp->calculate ();
+      mp->update ();
       return 0;
     }
     

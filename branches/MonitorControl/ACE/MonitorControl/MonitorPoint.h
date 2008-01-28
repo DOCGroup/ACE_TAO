@@ -41,7 +41,7 @@ namespace ACE
     {
       /// Meaningful implementations of these methods in the enabled
       /// version of the monitor point. Note that the virtual method
-      /// calculate() isn't implemented here, but in the class that
+      /// update() isn't implemented here, but in the class that
       /// inherits from this one.
       
     public:

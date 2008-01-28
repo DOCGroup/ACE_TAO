@@ -60,9 +60,8 @@ namespace ACE
       };
     
       /// Implemented by the most-derived class. Does the actual
-      /// work of fetching the monitored value and updating
-      /// whatever statistics are appropriate.
-      virtual void calculate (void) = 0;
+      /// work of fetching the monitored value.
+      virtual void update (void) = 0;
       
       /// Sets a referemce to the Statistic's parent in a group.
       virtual void group_parent (const Statistic* parent) = 0;

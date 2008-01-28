@@ -9,10 +9,10 @@ namespace ACE
   namespace MonitorControl
   {
     void
-    CPULoadMonitor<true>::calculate (void)
+    CPULoadMonitor<true>::update (void)
     {
       // TODO
-      ACE_DEBUG ((LM_DEBUG, "calculate\n"));
+      ACE_DEBUG ((LM_DEBUG, "update\n"));
     }
   }
 }

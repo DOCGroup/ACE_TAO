@@ -9,7 +9,7 @@ namespace ACE
   namespace MonitorControl
   {
     void
-    PacketsSentMonitor<true>::calculate (void)
+    PacketsSentMonitor<true>::update (void)
     {
       // TODO
     }

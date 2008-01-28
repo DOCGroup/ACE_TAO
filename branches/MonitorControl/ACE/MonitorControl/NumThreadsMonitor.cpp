@@ -9,7 +9,7 @@ namespace ACE
   namespace MonitorControl
   {
     void
-    NumThreadsMonitor<true>::calculate (void)
+    NumThreadsMonitor<true>::update (void)
     {
       // TODO
     }

@@ -31,7 +31,7 @@ namespace ACE
     /**
      * @note This file contains a class declarations for a specialized monitor
      *       point we will want to have at the OS level. In the
-     *       enabled ("true") versions, the virtual calculate() method
+     *       enabled ("true") versions, the virtual update() method
      *       is implemented with the appropriate behavior, while in the
      *       disabled ("false") versions, it is implemented as a no-op,
      *       so the compiler may optimize it away. The purpose of the
@@ -49,7 +49,7 @@ namespace ACE
       : public MonitorPoint<true>
     {
       /// Implementation of the pure virtual method.
-      virtual void calculate (void);
+      virtual void update (void);
     };
   }
 }
