@@ -1,3 +1,12 @@
+Mon Jan 28 22:53:40 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+          flush_transport() correctly sets errno to ETIME if timeout
+          expires.
+
+        * tao/Transport.cpp:
+          Throws a CORBA::TIMEOUT if flush_transport() gets a timeout.
+
 Mon Jan 21 16:19:15 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Oneway_Timeouts/run_test.pl:
