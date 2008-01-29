@@ -33,6 +33,7 @@
 #include "utl_identifier.h"
 #include "utl_string.h"
 #include "utl_exceptlist.h"
+#include "fe_extern.h"
 #include "nr_extern.h"
 
 #include "ifr_adding_visitor.h"
@@ -2548,6 +2549,9 @@ ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::element_type -")
               ACE_TEXT (" failed to accept visitor\n")
             ));
+
+          idl_global->set_err_count (idl_global->err_count () + 1);
+          throw FE_Bailout ();
         }
     }
   else
@@ -2562,6 +2566,9 @@ ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
               ACE_TEXT ("(%N:%l) ifr_adding_visitor::element_type -")
               ACE_TEXT (" lookup_id failed\n")
             ));
+
+          idl_global->set_err_count (idl_global->err_count () + 1);
+          throw FE_Bailout ();
         }
 
       this->ir_current_ = CORBA::IDLType::_narrow (contained.in ());
