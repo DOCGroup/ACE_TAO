@@ -1,3 +1,24 @@
+Tue Jan 29 22:55:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/be_produce.cpp(BE_ifr_repo_init):
+        
+          Added catch block for CORBA::ORB::InvalidName exception, which
+          is what will be thrown if no -ORBInitRef option is passed to
+          the IFR loader and multicast fails. In this catch block, the
+          error count is incremented (which affects the return value of
+          main()) and the FE_Bailout exception is thrown so proper
+          cleanup will happen.
+          
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp(element_type):
+        
+          One of two things happens in this method - either the element
+          type is visited or its repo id is looked up. If either action
+          fails, we now increment the global error count and throw
+          FE_Bailout, to get proper cleanup and exit value.
+          
+        Thanks to Chris Cleeland <cleeland at ociweb dot com> for
+        reporting these bugs.
+
 Fri Jan 25 18:45:53 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
 
         * NEWS:
