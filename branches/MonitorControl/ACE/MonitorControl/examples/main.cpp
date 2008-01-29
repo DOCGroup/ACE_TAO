@@ -9,18 +9,26 @@ int main (int argc, char *argv [])
   {
     START_MC_SERVICE;
     
+    /// The Admin class will own the reactor and destroy it.
     ACE_Reactor* new_reactor = new ACE_Reactor;
+    
     MC_ADMINMANAGER* mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
     mgr->admin ().reactor (new_reactor);
     
+    /// Set the timer for CPU load check at 2000 msecs (2 sec).
     ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, 2000);
+    
     START_PERIODIC_MONITORS;
     
     for (int i = 0; i < 10; ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, "looping\n"));
-        ACE_OS::sleep (1);
+        /// Since the CPU load is checked every 2 seconds, the output
+        /// of the monitor will vary between about 50% and 100%.
+        if (i % 2 == 0)
+          ACE_OS::sleep (1);
+        else
+          for (int j = 0; j < 500000000; j++);
       }
 
     STOP_PERIODIC_MONITORS;

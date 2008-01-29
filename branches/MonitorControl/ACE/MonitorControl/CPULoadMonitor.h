@@ -22,6 +22,12 @@
 #include "MonitorControl/LowLevelMonitors_T.h"
 #include "MonitorControl/MonitorPoint.h"
 
+#if defined (ACE_WIN32)
+/// Must include this after the ACE headers to avoid many redefinition
+/// errors.
+#include <pdh.h>
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -48,8 +54,19 @@ namespace ACE
     class MONITORCONTROL_Export CPULoadMonitor<true>
       : public MonitorPoint<true>
     {
+    public:
+      CPULoadMonitor (void);
+      
       /// Implementation of the pure virtual method.
       virtual void update (void);
+      
+    private:
+#if defined (ACE_WIN32)
+      HQUERY query_;
+      HCOUNTER counter_;
+      PDH_STATUS status_;
+      PDH_FMT_COUNTERVALUE value_;
+#endif
     };
   }
 }

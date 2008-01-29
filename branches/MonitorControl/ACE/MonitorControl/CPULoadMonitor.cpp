@@ -8,11 +8,47 @@ namespace ACE
 {
   namespace MonitorControl
   {
+    CPULoadMonitor<true>::CPULoadMonitor (void)
+#if defined (ACE_WIN32)
+      : query_ (0),
+        counter_ (0)
+#endif
+    {
+#if defined (ACE_WIN32)
+      this->status_ = PdhOpenQuery (0, 0, &this->query_);
+      
+      if (ERROR_SUCCESS != this->status_)
+        {
+          ACE_DEBUG ((LM_DEBUG, "PdhOpenQuery failed\n"));
+        }
+        
+      this->status_ =
+        PdhAddCounter (this->query_,
+                       "\\Processor(_Total)\\% Processor Time",
+                       0,
+                       &this->counter_);
+      
+      if (ERROR_SUCCESS != this->status_)
+        {
+          ACE_DEBUG ((LM_DEBUG, "PdhAddCounter failed\n"));
+        }
+#endif
+    }
+    
     void
     CPULoadMonitor<true>::update (void)
     {
-      // TODO
-      ACE_DEBUG ((LM_DEBUG, "update\n"));
+#if defined (ACE_WIN32)
+      PdhCollectQueryData (this->query_);
+      PdhGetFormattedCounterValue (this->counter_,
+                                   PDH_FMT_DOUBLE,
+                                   0,
+                                   &this->value_);
+          
+      ACE_DEBUG ((LM_DEBUG,
+                  "percent CPU load = %f\n",
+                  this->value_.doubleValue));
+#endif
     }
   }
 }

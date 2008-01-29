@@ -1,3 +1,19 @@
+Tue Jan 29 19:42:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/MonitorControl.mpc:
+        * MonitorControl/CPULoadMonitor.h:
+        * MonitorControl/examples/main.cpp:
+        
+          Implemented CPU load monitor for Windows. Includes and code
+          are guarded so builds will succeed on other platforms, but
+          the monitor will in those cases be a no-op. This implementation
+          uses the Windows Performance Data Helper (PDH) API and links
+          pdh.lib (which was added to the MPC file). In the future, to
+          support more Windows version or to obtain better performance,
+          the implementation may change to access the Windows registry
+          directly.
+
 Mon Jan 28 20:14:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/CPULoadMonitor.cpp:
