@@ -1477,16 +1477,20 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 
       if (must_flush)
         {
-          typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
-          TAO_REVERSE_LOCK reverse (*this->handler_lock_);
-          ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
+          size_t sent_byte = sent_byte_count_;
+          int ret = 0;
+          {
+            typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+            TAO_REVERSE_LOCK reverse (*this->handler_lock_);
+            ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
+            ret = flushing_strategy->flush_transport (this, max_wait_time);
+          }
 
-          TAO_Queued_Message *pre_head = head_;
-          if (flushing_strategy->flush_transport (this, max_wait_time) == -1)
+          if (ret == -1)
             {
               if (errno == ETIME)
                 {
-                  if (pre_head == head_) // if nothing was actually flushed
+                  if (sent_byte == sent_byte_count_) // if nothing was actually flushed
                     {
                       //This request has timed out and none of it was sent to the transport
                       //We can't return -1 here, since that would end up closing the tranpsort
