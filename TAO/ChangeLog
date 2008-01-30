@@ -1,3 +1,9 @@
+Wed Jan 30 18:02:59 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tao/Transport.cpp:
+          Check sent_bytes value to determine if something got flushed
+          instead of queue head location.
+
 Mon Jan 28 22:53:40 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tao/Leader_Follower_Flushing_Strategy.cpp:
