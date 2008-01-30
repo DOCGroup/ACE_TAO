@@ -21,7 +21,7 @@ namespace ACE
     bool
     GenericRegistry::add (Generic* type)
     {
-      ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, false);
+      ACE_WRITE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
       
       if (type == 0)
         {

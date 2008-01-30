@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -85,7 +86,7 @@ namespace ACE
                                    Generic*,
                                    ACE_SYNCH_NULL_MUTEX> Map;
         
-      mutable ACE_SYNCH_RW_MUTEX mutex_;
+      mutable ACE_SYNCH_MUTEX mutex_;
       Map map_;
       Datatypes::NameList name_cache_;
     };

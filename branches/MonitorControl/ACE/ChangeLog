@@ -1,3 +1,12 @@
+Wed Jan 30 20:57:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/GenericRegistry.h:
+        * MonitorControl/GenericRegistry.cpp:
+        
+          Changed the type of mutex used when writing to the registry
+          from an RW mutex to a regular, more lightweight
+          ACE_Thread_Mutex.
+
 Tue Jan 29 19:42:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/CPULoadMonitor.cpp:
