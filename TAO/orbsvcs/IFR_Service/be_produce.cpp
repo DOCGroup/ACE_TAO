@@ -95,7 +95,7 @@ BE_abort (void)
               ACE_TEXT ("Fatal Error - Aborting\n")));
 
   // BE_cleanup will be called after the exception is caught.
-  throw FE_Bailout ();
+  throw Bailout ();
 }
 
 void
@@ -162,8 +162,7 @@ BE_ifr_repo_init (void)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("resolution of Interface Repository failed\n")));
-    idl_global->set_err_count (idl_global->err_count () + 1);
-    throw FE_Bailout ();    
+    throw Bailout ();    
   }
 
   return 0;

@@ -2550,8 +2550,7 @@ ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
               ACE_TEXT (" failed to accept visitor\n")
             ));
 
-          idl_global->set_err_count (idl_global->err_count () + 1);
-          throw FE_Bailout ();
+          throw Bailout ();
         }
     }
   else
@@ -2567,8 +2566,7 @@ ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
               ACE_TEXT (" lookup_id failed\n")
             ));
 
-          idl_global->set_err_count (idl_global->err_count () + 1);
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       this->ir_current_ = CORBA::IDLType::_narrow (contained.in ());
