@@ -163,8 +163,6 @@ int test_sequence ()
   ::CORBA::StringSeq test;
   test.length (a.length ());
 
-  // Memory is leaked here from
-  // TAO::details::string_traits_base<char>::default_initializer()
   std::copy (a.begin (),
              a.end (),
              test.begin ());
@@ -541,7 +539,7 @@ int test_sequence_reverse ()
 
   // Create a case to test for memory leaks
   // in the iterator.
-  *a_it = CORBA::string_dup (elem0_cstr);
+  *a_it = CORBA::string_dup (elem3_cstr);
   FAIL_RETURN_IF (a_it != a.rbegin ());
 
   // test non const dereferencing
