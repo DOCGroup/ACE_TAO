@@ -62,7 +62,7 @@ int test_sequence ()
   FAIL_RETURN_IF (a_it != a.begin ());
 
   // test non const dereferencing
-  // I don't think this test makes sense. I believe the compiler
+  // JWH2 - I don't think this test makes sense. I believe the compiler
   // will always return a const value since the dereference is on
   // the right hand side of the assignment (i.e., r value).
   //char* value0 = *a_it;
@@ -222,7 +222,7 @@ int test_const_sequence ()
   FAIL_RETURN_IF (a_it != a.begin ());
 
   // test non const dereferencing
-  // I don't think this test makes sense. I believe the compiler
+  // JWH2 - I don't think this test makes sense. I believe the compiler
   // will always return a const value since the dereference is on
   // the right hand side of the assignment (i.e., r value).
   //char* value0 = *a_it;
@@ -386,7 +386,7 @@ int test_sequence_reverse ()
   FAIL_RETURN_IF (a_it != a.rbegin ());
 
   // test non const dereferencing
-  // I don't think this test makes sense. I believe the compiler
+  // JWH2 - I don't think this test makes sense. I believe the compiler
   // will always return a const value since the dereference is on
   // the right hand side of the assignment (i.e., r value).
   //char* value0 = *a_it;
@@ -546,7 +546,7 @@ int test_const_sequence_reverse ()
   FAIL_RETURN_IF (a_it != a.rbegin ());
 
   // test non const dereferencing
-  // I don't think this test makes sense. I believe the compiler
+  // JWH2 - I don't think this test makes sense. I believe the compiler
   // will always return a const value since the dereference is on
   // the right hand side of the assignment (i.e., r value).
   //char* value0 = *a_it;
