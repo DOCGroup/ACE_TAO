@@ -572,8 +572,7 @@ DRV_parse_args (long ac, char **av)
                           ACE_TEXT ("temporary directory "),
                           tmpdir));
 
-              idl_global->set_err_count (idl_global->err_count () + 1);
-              throw FE_Bailout ();
+              throw Bailout ();
             }
         }
 

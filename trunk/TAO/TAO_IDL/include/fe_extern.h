@@ -99,7 +99,7 @@ FE_new_UTL_Indenter (void);
 // Also used when command line options limit the output to
 // usage, version or preprocessed files. Catch block is just
 // before front end cleanup and exit.
-class TAO_IDL_FE_Export FE_Bailout
+class TAO_IDL_FE_Export Bailout
 {
 };
 

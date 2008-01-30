@@ -635,7 +635,7 @@ UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
   // Better to bail here than to increment the error count and
   // try to avoid further bogus error messages and crashes
   // that may arise.
-  throw FE_Bailout ();
+  throw Bailout ();
 }
 
 void

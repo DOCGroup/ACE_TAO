@@ -252,7 +252,7 @@ DRV_drive (const char *s)
                     : ACE_TEXT ("")))));
 
       // Backend will be cleaned up after the exception is caught.
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   // Dump the code.
@@ -294,7 +294,7 @@ DRV_drive (const char *s)
     }
   else
     {
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   DRV_refresh ();
@@ -315,7 +315,7 @@ main (int argc, char *argv[])
     {
       if (0 != DRV_init (argc, argv))
         {
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       // Parse arguments.
@@ -344,7 +344,7 @@ main (int argc, char *argv[])
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("IDL: No input files\n")));
 
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       AST_Generator *gen = be_global->generator_init ();
@@ -357,7 +357,7 @@ main (int argc, char *argv[])
               ACE_TEXT ("generator, exiting\n")
             ));
 
-          throw FE_Bailout ();
+          throw Bailout ();
         }
       else
         {
@@ -377,7 +377,7 @@ main (int argc, char *argv[])
           DRV_drive (DRV_files[DRV_file_index]);
         }
     }
-  catch (FE_Bailout)
+  catch (Bailout)
     {
       // Incrementing here may be redundant, but the error count
       // is the exit value, and we want to make sure it isn't 0

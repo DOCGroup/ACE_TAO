@@ -188,8 +188,8 @@ UTL_String::compare (UTL_String *s)
           idl_global->err ()->name_case_error (this->p_str,
                                                s->get_string ());
 
-            // If we try to continue from here, we risk a crash.
-            throw FE_Bailout ();
+          // If we try to continue from here, we risk a crash.
+          throw Bailout ();
         }
       else
         {
