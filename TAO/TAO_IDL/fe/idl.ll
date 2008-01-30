@@ -436,8 +436,7 @@ idl_parse_line_and_file (char *buf)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("IDL: No input files\n")));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
   else
     {

@@ -1722,7 +1722,7 @@ IDL_GlobalData::check_primary_keys (void)
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) idl_global::check_primary_keys - "
                       "dequeue_head failed\n"));
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       if (!holder->legal_for_primary_key ())

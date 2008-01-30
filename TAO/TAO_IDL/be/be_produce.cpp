@@ -93,7 +93,7 @@ BE_abort (void)
               "Fatal Error - Aborting\n"));
 
   // BE_cleanup will be called after the exception is caught.
-  throw FE_Bailout ();
+  throw Bailout ();
 }
 
 void

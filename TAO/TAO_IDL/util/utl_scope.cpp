@@ -2185,7 +2185,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
                                            ref_string);
 
           // if we try to continue from here, we risk a crash.
-          throw FE_Bailout ();
+          throw Bailout ();
         }
       // If the spellings differ only by case, it's also an error,
       // unless one, but not both of the identifiers were escaped.
@@ -2199,7 +2199,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
 
 
               // if we try to continue from here, we risk a crash.
-              throw FE_Bailout ();
+              throw Bailout ();
             }
           else
             {
@@ -2229,7 +2229,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
                                 );
 
           // if we try to continue from here, we risk a crash.
-          throw FE_Bailout ();
+          throw Bailout ();
         }
       else if (decl_name->case_compare_quiet (parent_name) == true)
         {
@@ -2241,7 +2241,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
                                     );
 
               // if we try to continue from here, we risk a crash.
-              throw FE_Bailout ();
+              throw Bailout ();
            }
           else
             {

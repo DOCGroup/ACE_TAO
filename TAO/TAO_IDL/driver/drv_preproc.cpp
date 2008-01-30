@@ -133,8 +133,7 @@ DRV_cpp_putarg (const char *str)
                   DRV_MAX_ARGCOUNT,
                   "arguments to preprocessor"));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   DRV_arglist[DRV_argcount++] = ACE::strnew (str);
@@ -553,8 +552,7 @@ DRV_cpp_post_init (void)
       ACE_ERROR ((LM_ERROR,
                   "DRV_cpp_post_init: ACE_OS::getcwd failed\n"));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   // If first arg is non-zero, adds an include path and filename
@@ -566,8 +564,7 @@ DRV_cpp_post_init (void)
                   "DRV_cpp_post_init: DRV_sweep_dirs (%s) failed\n",
                   idl_global->recursion_start ()));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   // This is redundant for most backends, but not if the call to
@@ -578,8 +575,7 @@ DRV_cpp_post_init (void)
                   "DRV_cpp_post_init: ACE_OS::chdir (%s) failed\n",
                   cwd_path));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 }
 
@@ -667,8 +663,7 @@ DRV_check_for_include (const char* buf)
                   ACE_TEXT ("TAO_IDL: No input files\n")));
 
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   // Find the closing " or < character.
@@ -814,8 +809,7 @@ DRV_convert_includes (const char* buf)
                   ACE_TEXT ("TAO_IDL: No input files\n")));
 
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   // Find the closing '"' character.
@@ -856,8 +850,7 @@ DRV_get_orb_idl_includes (void)
                       "TAO_IDL: cannot open or find file: %s\n",
                       orb_idl_path.c_str ()));
 
-          idl_global->set_err_count (idl_global->err_count () + 1);
-          throw FE_Bailout ();
+          throw Bailout ();
         }
     }
   else
@@ -893,8 +886,7 @@ DRV_copy_input (FILE *fin,
                   idl_global->prog_name (),
                   fn));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   if (fin == 0)
@@ -904,8 +896,7 @@ DRV_copy_input (FILE *fin,
                   idl_global->prog_name (),
                   ": cannot open input file\n"));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
 #if !defined (ACE_WIN32)
@@ -1010,8 +1001,7 @@ DRV_pre_proc (const char *myfile)
                   idl_global->prog_name ()));
 
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   ACE_OS::strcpy (tmp_file,  tmpdir);
@@ -1031,8 +1021,7 @@ DRV_pre_proc (const char *myfile)
                   idl_global->prog_name ()));
 
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   char tmp_cpp_file [MAXPATHLEN + 1] = { 0 };
@@ -1107,8 +1096,7 @@ DRV_pre_proc (const char *myfile)
                   idl_global->prog_name ()));
 
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   // Remove any existing output file.
@@ -1141,8 +1129,7 @@ DRV_pre_proc (const char *myfile)
                       t_file));
 
 
-          idl_global->set_err_count (idl_global->err_count () + 1);
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
@@ -1156,8 +1143,7 @@ DRV_pre_proc (const char *myfile)
                   DRV_arglist[0]));
 
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   if (fd != ACE_INVALID_HANDLE)
@@ -1171,8 +1157,7 @@ DRV_pre_proc (const char *myfile)
                       t_file));
 
 
-          idl_global->set_err_count (idl_global->err_count () + 1);
-          throw FE_Bailout ();
+          throw Bailout ();
         }
     }
 
@@ -1189,8 +1174,7 @@ DRV_pre_proc (const char *myfile)
                   "%s: wait for child process failed\n",
                   idl_global->prog_name ()));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   if (WIFEXITED ((status)))
@@ -1205,8 +1189,7 @@ DRV_pre_proc (const char *myfile)
                       idl_global->prog_name (),
                       DRV_arglist[0]));
 
-          idl_global->set_err_count (idl_global->err_count () + 1);
-          throw FE_Bailout ();
+          throw Bailout ();
         }
     }
   else
@@ -1220,8 +1203,7 @@ DRV_pre_proc (const char *myfile)
                   idl_global->prog_name (),
                   DRV_arglist[0]));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
   // TODO: Manage problems in the pre-processor, in the previous
   // version the current process would exit if the pre-processor
@@ -1240,8 +1222,7 @@ DRV_pre_proc (const char *myfile)
                   idl_global->prog_name (),
                   t_file));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   FE_set_yyin (yyin);
@@ -1259,8 +1240,7 @@ DRV_pre_proc (const char *myfile)
                       idl_global->prog_name (),
                       t_file));
 
-          idl_global->set_err_count (idl_global->err_count () + 1);
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       // ACE_DEBUG sends to stderr - we want stdout for this dump
@@ -1295,8 +1275,7 @@ DRV_pre_proc (const char *myfile)
                   idl_global->prog_name (),
                   t_ifile));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   if (ACE_OS::unlink (t_file) == -1)
@@ -1306,13 +1285,6 @@ DRV_pre_proc (const char *myfile)
                   idl_global->prog_name (),
                   t_file));
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
-    }
-
-  if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
-    {
-      // Go straight to cleanup, exit normally.
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 }
