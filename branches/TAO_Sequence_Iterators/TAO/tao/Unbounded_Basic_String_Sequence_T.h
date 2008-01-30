@@ -20,6 +20,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 
+#if TAO_HAS_SEQUENCE_ITERATORS
+
 // Forward declare the iterators
 template<typename T>
 class UBS_Sequence_Iterator;
@@ -32,6 +34,8 @@ class UBS_Sequence_Reverse_Iterator;
 
 template<typename T>
 class Const_UBS_Sequence_Reverse_Iterator;
+  
+#endif /* TAO_HAS_SEQUENCE_ITERATORS */
 
 template<typename charT>
 class unbounded_basic_string_sequence
@@ -194,7 +198,7 @@ public:
     return const_reverse_iterator (&this->impl_,
                                    -1);
   }
-
+  
 #endif /* TAO_HAS_SEQUENCE_ITERATORS */
 
 private:
