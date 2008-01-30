@@ -1,21 +1,37 @@
+Wed Jan 30 18:34:02 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
+
+        * TAO_IDL/tao_idl.cpp (main):
+ 
+          Bump up the value of "status" when FE_Bailout is caught.  This
+          insures that tao_ifr (and tao_idl) exit with a non-zero error
+          condition whenever FE_Bailout is thrown.  The correct fix is to
+          go through and find all the places where FE_bailout is thrown
+          without incrementing the error count and fix those, but this
+          will suffice for now.  The downside to this change is that the
+          exit status is supposed to indicate the number of errors
+          encountered, and this change could make it be higher than actual
+          errors.  I tend to think that this is a better alternative to
+          what we had before, which is that the exit status could indicate
+          a LOWER number of errors...namely, zero.
+
 Tue Jan 29 22:55:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/be_produce.cpp(BE_ifr_repo_init):
-        
+
           Added catch block for CORBA::ORB::InvalidName exception, which
           is what will be thrown if no -ORBInitRef option is passed to
           the IFR loader and multicast fails. In this catch block, the
           error count is incremented (which affects the return value of
           main()) and the FE_Bailout exception is thrown so proper
           cleanup will happen.
-          
+
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp(element_type):
-        
+
           One of two things happens in this method - either the element
           type is visited or its repo id is looked up. If either action
           fails, we now increment the global error count and throw
           FE_Bailout, to get proper cleanup and exit value.
-          
+
         Thanks to Chris Cleeland <cleeland at ociweb dot com> for
         reporting these bugs.
 
