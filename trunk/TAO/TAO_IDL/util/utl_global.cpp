@@ -75,6 +75,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_indenter.h"
 #include "utl_err.h"
 #include "utl_string.h"
+#include "fe_extern.h"
 #include "nr_extern.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -1716,11 +1717,12 @@ IDL_GlobalData::check_primary_keys (void)
   while (!this->primary_keys_.is_empty ())
     {
       // Dequeue the element at the head of the queue.
-      if (this->primary_keys_.dequeue_head (holder))
+      if (this->primary_keys_.dequeue_head (holder) != 0)
         {
-          ACE_ERROR((LM_ERROR,
-                     "(%N:%l) idl_global::check_primary_keys - "
-                     "dequeue_head failed\n"));
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) idl_global::check_primary_keys - "
+                      "dequeue_head failed\n"));
+          throw FE_Bailout ();
         }
 
       if (!holder->legal_for_primary_key ())
