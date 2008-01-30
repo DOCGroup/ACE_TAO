@@ -1,3 +1,33 @@
+Wed Jan 30 23:17:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_extern.h:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          - Changed the name of exception FE_Bailout to
+            Bailout. The original name implied that the
+            exception could be used only in the front
+            end of the IDL compiler, which was not the
+            intention. Thanks to Chris Cleeland
+            <cleeland at ociweb dot com> for the
+            suggestion.
+
+          - Removed increments of global internal error
+            count before throwing Bailout, since the
+            increment is now done in the catch block.
+
 Wed Jan 30 21:30:49 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp:
