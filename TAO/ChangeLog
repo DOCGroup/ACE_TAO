@@ -1,3 +1,14 @@
+Wed Jan 30 20:13:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Cleaned up and made more consistent the way in which the
+          global internal error count is updated, in conjunction
+          with the use of the FE_Bailout exception. Thanks to Chris
+          Cleeland <cleeland at ociweb dot com> for helpful input
+          on this issue.
+
 Wed Jan 30 18:34:02 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
 
         * TAO_IDL/tao_idl.cpp (main):
