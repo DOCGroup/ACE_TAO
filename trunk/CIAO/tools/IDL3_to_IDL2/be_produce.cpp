@@ -89,7 +89,7 @@ BE_abort (void)
               ACE_TEXT ("Fatal Error - Aborting\n")));
 
   // BE_cleanup will be called after the exception is caught.
-  throw FE_Bailout ();
+  throw Bailout ();
 }
 
 // Do the work of this BE. This is the starting point for code generation.

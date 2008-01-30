@@ -1,3 +1,10 @@
+Wed Jan 30 23:20:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/be_produce.cpp:
+        
+          Changed use of exception FE_Bailout to Bailout, reflecting
+          the corresponding name change of the front end exception class.
+
 Fri Jan 11 18:02:07 UTC 2008  William R. Otte  <wotte@dre.Vanderbilt.Edu>
 
         * MPC/config/cidlc.mpb:
