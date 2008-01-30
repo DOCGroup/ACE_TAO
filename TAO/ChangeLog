@@ -1,3 +1,8 @@
+Wed Jan 30 23:11:05 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts:
+          New test for RTT validation during send/flush.
+
 Wed Jan 30 18:02:59 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tao/Transport.cpp:
