@@ -377,6 +377,7 @@ main (int argc, char *argv[])
     }
   catch (FE_Bailout)
     {
+      ++status;
     }
 
   // Case 1: init error, status = 1, nothing added here.
