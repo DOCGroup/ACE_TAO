@@ -205,6 +205,13 @@ DRV_drive (const char *s)
 
   DRV_pre_proc (s);
 
+  if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
+    {
+      // Go straight to cleanup, process the next file, if any.
+      DRV_refresh ();
+      return;
+    }
+
   // Parse.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
@@ -379,7 +386,8 @@ main (int argc, char *argv[])
       idl_global->set_err_count (idl_global->err_count () + 1);
     }
 
+  int retval = idl_global->err_count ();
   DRV_cleanup ();
 
-  return idl_global->err_count ();
+  return retval;
 }

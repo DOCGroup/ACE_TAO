@@ -1,3 +1,11 @@
+Wed Jan 30 21:30:49 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        
+          Added local temporary variable in main() to hold the error
+          count so it can be returned after the IDL_GlobalData class
+          that contains it is destroyed as part of cleanup.
+
 Wed Jan 30 20:13:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp:
