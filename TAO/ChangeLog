@@ -1,3 +1,12 @@
+Thu Jan 31 12:05:00 UTC 2008  Simon Massey <sma@prismtech.com>
+
+        * orbsvcs/tests/Security/Crash_Test/client.cpp
+        * orbsvcs/tests/Security/Crash_Test/run_test.pl
+
+          Make this test more robust to timing problems.
+          (NOTE this does not correct the server's BAD_PARAM problem of
+           previous build.)
+
 Wed Jan 30 23:17:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/fe_extern.h:

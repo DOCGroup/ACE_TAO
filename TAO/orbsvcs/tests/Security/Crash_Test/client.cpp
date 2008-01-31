@@ -105,20 +105,44 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           wait_time));
               ACE_OS::sleep (wait_time);
             }
+          catch (const CORBA::TRANSIENT&)
+            {
+              // If this happens second time then we are done.
+              if (i != 0)
+                throw;
+
+              // Waiting for server to come back
+              ACE_DEBUG ((LM_DEBUG,
+                          "CLIENT (%P): Caught CORBA::TRANSIENT. "
+                          "Assuming server crashed and will come up soon.\n"
+                          "CLIENT (%P): Waiting for %d seconds...\n",
+                          wait_time));
+              ACE_OS::sleep (wait_time);
+            }
         }
 
       if (call_shutdown)
         {
 
           // Let other clients to finish their task if any
-          ACE_OS::sleep (3);
+          ACE_OS::sleep (wait_time);
 
           ACE_DEBUG ((LM_DEBUG,
                       "CLIENT (%P): Calling shutdown...\n"));
 
-          server->shutdown ();
+          try
+            {
+              server->shutdown ();
+            }
+          catch (const CORBA::COMM_FAILURE&)
+            {
+              // Ignored
+            }
+          catch (const CORBA::TRANSIENT&)
+            {
+              // Ignored
+            }
         }
-
 
       orb->destroy ();
 
