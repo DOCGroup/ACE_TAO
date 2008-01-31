@@ -25,7 +25,9 @@
   <command name="print_status"       options="Setup:Build Status"/>
   <command name="log"                options="on"/>
 
+<!--
   <command name="svn"                options="co https://svn.dre.vanderbilt.edu/DOC/Middleware/branches/iliyan-gestalt ../ACE+TAO"/>
+-->
 
   <command name="clone_build_tree"/>
 
