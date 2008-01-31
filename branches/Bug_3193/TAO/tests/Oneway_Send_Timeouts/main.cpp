@@ -9,7 +9,7 @@
 class MyMain
 {
 public:
-  MyMain (int argc, const ACE_TCHAR* argv[]);
+  MyMain (int argc, ACE_TCHAR* argv[]);
   ~MyMain ();
 
   void run ();
@@ -82,7 +82,7 @@ MyMain::init_client (const ACE_TCHAR* args)
   return true;
 }
 
-MyMain::MyMain (int argc, const ACE_TCHAR* argv[])
+MyMain::MyMain (int argc, ACE_TCHAR* argv[])
   : s_init_ (false), shutdown_ (false)
 {
   argc--;
@@ -129,7 +129,7 @@ MyMain::~MyMain ()
   }
 }
 
-int ACE_TMAIN (int argc, const ACE_TCHAR* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   MyMain my_main (argc, argv);
 
