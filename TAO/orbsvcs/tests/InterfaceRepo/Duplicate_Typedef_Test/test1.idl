@@ -1,0 +1,12 @@
+#ifndef __TEST1_IDL__
+#define __TEST1_IDL__
+module test {
+  typedef sequence<string> StringSeq;
+};
+#endif // __TEST1_IDL__
+#ifndef __TEST1_IDL__
+#define __TEST1_IDL__
+module test {
+  typedef sequence<string> StringSeq;
+};
+#endif // __TEST1_IDL__
