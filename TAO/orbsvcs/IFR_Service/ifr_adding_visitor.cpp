@@ -51,9 +51,11 @@ ACE_RCSID (IFR_Service,
            "$Id$")
 
 ifr_adding_visitor::ifr_adding_visitor (AST_Decl *scope,
-                                        bool in_reopened)
+                                        bool in_reopened,
+          bool allow_duplicate_typedefs)
   : scope_ (scope),
-    in_reopened_ (in_reopened)
+  in_reopened_ (in_reopened),
+  allow_duplicate_typedefs_ (allow_duplicate_typedefs)
 {
 }
 
@@ -285,7 +287,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               // to destroy the entry itself, since it may have already been
               // made a member of some other entry, and destroying it would
               // make the containing entry's section key invalid) and repopulate.
-              // On the other hand, if prev_def is NOT the node type, we go 
+              // On the other hand, if prev_def is NOT the node type, we go
               // ahead an attempt to create an interface, which will get an
               // exception from the IFR, as the spec requires.
               if (!node->ifr_fwd_added () && !node->imported ())
@@ -605,7 +607,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
               // to destroy the entry itself, since it may have already been
               // made a member of some other entry, and destroying it would
               // make the containing entry's section key invalid) and repopulate.
-              // On the other hand, if prev_def is NOT the node type, we go 
+              // On the other hand, if prev_def is NOT the node type, we go
               // ahead an attempt to create an interface, which will get an
               // exception from the IFR, as the spec requires.
               if (!node->ifr_fwd_added ())
@@ -880,7 +882,7 @@ ifr_adding_visitor::visit_component (AST_Component *node)
               // to destroy the entry itself, since it may have already been
               // made a member of some other entry, and destroying it would
               // make the containing entry's section key invalid) and repopulate.
-              // On the other hand, if prev_def is NOT the node type, we go 
+              // On the other hand, if prev_def is NOT the node type, we go
               // ahead an attempt to create an interface, which will get an
               // exception from the IFR, as the spec requires.
               if (!node->ifr_fwd_added ())
@@ -1176,7 +1178,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
               // to destroy the entry itself, since it may have already been
               // made a member of some other entry, and destroying it would
               // make the containing entry's section key invalid) and repopulate.
-              // On the other hand, if prev_def is NOT the node type, we go 
+              // On the other hand, if prev_def is NOT the node type, we go
               // ahead an attempt to create an interface, which will get an
               // exception from the IFR, as the spec requires.
               if (!node->ifr_fwd_added ())
@@ -1458,7 +1460,7 @@ ifr_adding_visitor::visit_home (AST_Home *node)
               // to destroy the entry itself, since it may have already been
               // made a member of some other entry, and destroying it would
               // make the containing entry's section key invalid) and repopulate.
-              // On the other hand, if prev_def is NOT the node type, we go 
+              // On the other hand, if prev_def is NOT the node type, we go
               // ahead an attempt to create an interface, which will get an
               // exception from the IFR, as the spec requires.
               if (!node->ifr_fwd_added ())
@@ -1600,7 +1602,7 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
           CORBA::StructMemberSeq dummyMembers;
           dummyMembers.length (0);
           CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
-          
+ 
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
               ACE_ERROR_RETURN ((
@@ -1612,7 +1614,7 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
                 -1
               );
             }
-            
+ 
           CORBA::StructDef_var struct_def =
             current_scope->create_struct (
                 node->repoID (),
@@ -1620,7 +1622,7 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
                 node->version (),
                 dummyMembers
               );
-              
+ 
           node->full_definition ()->ifr_fwd_added (true);
         }
     }
@@ -1949,7 +1951,7 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
           CORBA::UnionMemberSeq dummyMembers;
           dummyMembers.length (0);
           CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
-          
+ 
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
               ACE_ERROR_RETURN ((
@@ -1961,7 +1963,7 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
                 -1
               );
             }
-            
+ 
           CORBA::UnionDef_var union_def =
             current_scope->create_union (
                 node->repoID (),
@@ -1970,7 +1972,7 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
                 CORBA::IDLType::_nil (),
                 dummyMembers
               );
-              
+ 
           node->full_definition ()->ifr_fwd_added (true);
         }
     }
@@ -2042,10 +2044,10 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           AST_Decl *enum_val =
             node->defined_in ()->lookup_by_name (cv->n (), true);
           AST_Decl *d = ScopeAsDecl (enum_val->defined_in ());
-                                                 
+ 
           CORBA::Contained_var contained =
             be_global->repository ()->lookup_id (d->repoID ());
-            
+ 
           this->ir_current_ = CORBA::IDLType::_narrow (contained.in ());
         }
       else
@@ -2053,7 +2055,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           // This constant's type is a primitive type - fetch it from the
           // repo and pass it to create_constant().
           CORBA::PrimitiveKind pkind = this->expr_type_to_pkind (et);
-          
+ 
           this->ir_current_ =
             be_global->repository ()->get_primitive (pkind);
         }
@@ -2104,7 +2106,7 @@ ifr_adding_visitor::visit_array (AST_Array *node)
       AST_Type *bt = node->base_type ();
       UTL_Scope *bts = bt->defined_in ();
       UTL_Scope *ns = node->defined_in ();
-      
+ 
       if (bts == ns && !bt->ifr_added ())
         {
           // What we most likely have if we get here is an
@@ -2116,7 +2118,7 @@ ifr_adding_visitor::visit_array (AST_Array *node)
           // happens.
           owned = true;
         }
-      
+ 
       this->element_type (bt, owned);
 
       AST_Expression **dims = node->dims ();
@@ -2236,9 +2238,19 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception (ACE_TEXT ("visit_typedef"));
+      if (!this->allow_duplicate_typedefs_)
+        {
+          ex._tao_print_exception (ACE_TEXT ("visit_typedef"));
 
-      return -1;
+          return -1;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+              "%s %s\n",
+              ACE_TEXT ("ifr_adding_visitor::visit_typedef - ignoring duplicate typedef"),
+              node->local_name ()->get_string ()));
+        }
     }
 
   return 0;
