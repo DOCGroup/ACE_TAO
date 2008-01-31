@@ -1,3 +1,98 @@
+Thu Jan 31 12:05:00 UTC 2008  Simon Massey <sma@prismtech.com>
+
+        * orbsvcs/tests/Security/Crash_Test/client.cpp
+        * orbsvcs/tests/Security/Crash_Test/run_test.pl
+
+          Make this test more robust to timing problems.
+          (NOTE this does not correct the server's BAD_PARAM problem of
+           previous build.)
+
+Wed Jan 30 23:17:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_extern.h:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          - Changed the name of exception FE_Bailout to
+            Bailout. The original name implied that the
+            exception could be used only in the front
+            end of the IDL compiler, which was not the
+            intention. Thanks to Chris Cleeland
+            <cleeland at ociweb dot com> for the
+            suggestion.
+
+          - Removed increments of global internal error
+            count before throwing Bailout, since the
+            increment is now done in the catch block.
+
+Wed Jan 30 21:30:49 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        
+          Added local temporary variable in main() to hold the error
+          count so it can be returned after the IDL_GlobalData class
+          that contains it is destroyed as part of cleanup.
+
+Wed Jan 30 20:13:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Cleaned up and made more consistent the way in which the
+          global internal error count is updated, in conjunction
+          with the use of the FE_Bailout exception. Thanks to Chris
+          Cleeland <cleeland at ociweb dot com> for helpful input
+          on this issue.
+
+Wed Jan 30 18:34:02 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
+
+        * TAO_IDL/tao_idl.cpp (main):
+ 
+          Bump up the value of "status" when FE_Bailout is caught.  This
+          insures that tao_ifr (and tao_idl) exit with a non-zero error
+          condition whenever FE_Bailout is thrown.  The correct fix is to
+          go through and find all the places where FE_bailout is thrown
+          without incrementing the error count and fix those, but this
+          will suffice for now.  The downside to this change is that the
+          exit status is supposed to indicate the number of errors
+          encountered, and this change could make it be higher than actual
+          errors.  I tend to think that this is a better alternative to
+          what we had before, which is that the exit status could indicate
+          a LOWER number of errors...namely, zero.
+
+Tue Jan 29 22:55:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/be_produce.cpp(BE_ifr_repo_init):
+
+          Added catch block for CORBA::ORB::InvalidName exception, which
+          is what will be thrown if no -ORBInitRef option is passed to
+          the IFR loader and multicast fails. In this catch block, the
+          error count is incremented (which affects the return value of
+          main()) and the FE_Bailout exception is thrown so proper
+          cleanup will happen.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp(element_type):
+
+          One of two things happens in this method - either the element
+          type is visited or its repo id is looked up. If either action
+          fails, we now increment the global error count and throw
+          FE_Bailout, to get proper cleanup and exit value.
+
+        Thanks to Chris Cleeland <cleeland at ociweb dot com> for
+        reporting these bugs.
+
 Fri Jan 25 18:45:53 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
 
         * NEWS:
