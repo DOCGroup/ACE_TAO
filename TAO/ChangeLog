@@ -1,3 +1,8 @@
+Thu Jan 31 16:05:52 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Client.cpp:
+          More Windows warnings fixes.
+
 Thu Jan 31 15:57:56 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Send_Timeouts/Client.cpp:

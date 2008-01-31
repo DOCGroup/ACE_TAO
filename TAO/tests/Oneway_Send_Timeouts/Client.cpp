@@ -455,7 +455,8 @@ Client::flood_connection (ACE_Time_Value& tv)
   ACE_OS::memset (msg,'A',1999999);
   msg[1999999] = 0;
 
-  test_obj_->sleep (tv.sec(), tv.msec());
+  test_obj_->sleep (static_cast<CORBA::Long>(tv.sec())
+                    , static_cast<CORBA::Long>(tv.msec()));
   mod_test_obj->dummy_one_way (msg);
 
   orb_->perform_work ();
