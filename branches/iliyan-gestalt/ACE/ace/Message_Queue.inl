@@ -2,9 +2,9 @@
 //
 // $Id$
 
-#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 #  include "ace/Guard_T.h"
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

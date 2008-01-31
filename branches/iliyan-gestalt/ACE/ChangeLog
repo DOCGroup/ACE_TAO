@@ -1,3 +1,31 @@
+Wed Jan 30 16:00:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue.inl:
+          Fixed incorrect include check
+
+Sun Jan 27 07:32:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_mingw32.GNU:
+          With gcc4 use the shared gcc libs
+
+        * ACE-INSTALL.html:
+          Document postfix for msvc71
+
+Sat Jan 26 07:18:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+          Fixed GCC warnings
+
+Sat Jan 26 06:45:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.h
+        * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.h
+        * examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.h
+        * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.h
+        * examples/QOS/Simple/Receiver_QoS_Event_Handler.h
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.h
+          Fixed compile errors with MinGW GCC 4.2.1
+
 Fri Jan 25 18:43:46 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/svn/config:
