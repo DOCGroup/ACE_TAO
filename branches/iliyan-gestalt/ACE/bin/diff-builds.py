@@ -115,8 +115,6 @@ class IndexParser (AbstractParser):
     def prefix (self,name,a):
         if name == 'tr':
             self.column = -1
-            if len (self.build) > 0 and self.build[-1].filtered:
-                self.build.pop ()
         elif name == 'td':
             self.column += 1
         elif name == 'a':
@@ -130,6 +128,12 @@ class IndexParser (AbstractParser):
                 elif self.column == 5:
                     if href.find ('Brief'):
                         self.build[-1].briefurl = url
+
+    def postfix (self,name):
+        if name == 'tr':
+            self.column = -1
+            if len (self.build) > 0 and self.build[-1].filtered:
+                self.build.pop ()
 
     def data (self,content):
         if len (self.context) >= 2:
@@ -150,16 +154,11 @@ class IndexParser (AbstractParser):
 
 
     def addBuild (self, b):
-#        print "(build) %s [%s]" % (b, self.current_group)
-
-#        if len (self.build) > 0:
-#            print "(build) historyurl: %s" %  (self.build[-1].historyurl)
-#            print "(build) briefurl: %s" %  (self.build[-1].briefurl)
-
-        self.build[-1].filtered = ((len (self.filter_build) > 0 and 
-                                    not b in self.filter_build) 
-                                   or (len (self.filter_group) > 0 and 
-                                       not self.current_group in self.filter_group))
+        filtered = ((len (self.filter_build) > 0 and 
+                     not b in self.filter_build) 
+                    or (len (self.filter_group) > 0 and 
+                        not self.current_group in self.filter_group))
+        self.build[-1].filtered = filtered
         self.build[-1].name = b
 
 ## Searches a specific build for available results
@@ -381,7 +380,7 @@ def list_timestamps_for_build (b):
     
 def main ():
     parser = OptionParser()
-    parser.add_option("-D", "--date", action="append", dest="date",
+    parser.add_option("-D", "--date", action="append", dest="dates",
                       help="date to use in comparisons  [default=today]")
     parser.add_option("-g", "--group", action="append",  dest="groups",
                       default=[],
@@ -394,6 +393,18 @@ def main ():
 
     (options, args) = parser.parse_args()
 
+    print "timestamps: %s" % options.dates
+
+#    try:
+#        try:
+#            timestamps = [strptime(s, "%Y%m%d%H%M") for s in options.dates]
+#        except ValueError:
+#            timestamps = [strptime(s, "%Y%m%d%H") for s in options.dates]
+#    except ValueError:
+    timestamps = [strptime(s, '%Y%m%d') for s in options.dates]
+    
+    print "timestamps: " % timestamps
+
     if len (args) > 0 and (args[0] == 'list' or ars[0] == 'l'):
         ip = IndexParser (integrated_url, options.groups, options.builds)
         ip.parse ()
@@ -402,10 +413,11 @@ def main ():
         logs = []
         for i in range (len (ip.build)):
             print "%s [%s]" % (ip.build[i].name, ip.build[i].group)
- #           hp = HistoryParser (ip.build[i].historyurl)
- #           hp.parse()
- #           print "%s: %s" % (ip.build[i].name, 
- #                             [strftime("%Y%m%d%H%M", t) for t in hp.timestamp])
+ 
+            hp = HistoryParser (ip.build[i].historyurl)
+            hp.parse()
+            print "%s: %s" % (ip.build[i].name, 
+                              [strftime("%Y%m%d%H%M", t) for t in hp.timestamp])
                                    
         
 
