@@ -115,25 +115,21 @@ Server::~Server ()
 }
 
 bool
-Server::parse_args (int argc, ACE_TCHAR* argv[])
+Server::parse_args (int , ACE_TCHAR* [])
 {
-  for (int my_count = 0; my_count < argc; my_count++) {
-    ACE_DEBUG ((LM_DEBUG, "<%d, %s> ", my_count, argv[my_count]));
-  }
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  /*
+    ACE_Get_Opt get_opts (argc, argv, "");
+    int c;
 
-
-  ACE_Get_Opt get_opts (argc, argv, "");
-  int c;
-
-  while ((c = get_opts ()) != -1) {
+    while ((c = get_opts ()) != -1) {
     switch (c)
-      {
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR, "Invalid option \'-%c\'\n", c)
-                          , false);
-      }
-  }
+    {
+    default:
+    ACE_ERROR_RETURN ((LM_ERROR, "Invalid option \'-%c\'\n", c)
+    , false);
+    }
+    }
+  */
 
   return true;
 }

@@ -194,7 +194,8 @@ Client::run ()
         bool flooded = false;
         bool test_condition_met = false;
         if (flush_strategy_ == BLOCKING) {
-          test_obj_->sleep (tv.sec(), tv.msec());
+          test_obj_->sleep (static_cast<CORBA::Long>(tv.sec())
+                            , static_cast<CORBA::Long>(tv.msec()));
           test_condition_met = true;
         }
         else {
