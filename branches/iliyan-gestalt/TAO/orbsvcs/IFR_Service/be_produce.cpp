@@ -95,7 +95,7 @@ BE_abort (void)
               ACE_TEXT ("Fatal Error - Aborting\n")));
 
   // BE_cleanup will be called after the exception is caught.
-  throw FE_Bailout ();
+  throw Bailout ();
 }
 
 void
@@ -128,33 +128,42 @@ BE_create_holding_scope (void)
 int
 BE_ifr_repo_init (void)
 {
-  CORBA::Object_var object =
-    be_global->orb ()->resolve_initial_references ("InterfaceRepository");
+  try
+  {
+    CORBA::Object_var object =
+      be_global->orb ()->resolve_initial_references ("InterfaceRepository");
 
-  if (CORBA::is_nil (object.in ()))
-    {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          ACE_TEXT ("Null objref from resolve_initial_references\n")
-        ),
-        -1
-      );
-    }
+    if (CORBA::is_nil (object.in ()))
+      {
+        ACE_ERROR_RETURN ((
+            LM_ERROR,
+            ACE_TEXT ("Null objref from resolve_initial_references\n")
+          ),
+          -1
+        );
+      }
 
-  CORBA::Repository_var repo =
-    CORBA::Repository::_narrow (object.in ());
+    CORBA::Repository_var repo =
+      CORBA::Repository::_narrow (object.in ());
 
-  if (CORBA::is_nil (repo.in ()))
-    {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          ACE_TEXT ("CORBA::Repository::_narrow failed\n")
-        ),
-        -1
-      );
-    }
+    if (CORBA::is_nil (repo.in ()))
+      {
+        ACE_ERROR_RETURN ((
+            LM_ERROR,
+            ACE_TEXT ("CORBA::Repository::_narrow failed\n")
+          ),
+          -1
+        );
+      }
 
-  be_global->repository (repo._retn ());
+    be_global->repository (repo._retn ());
+  }
+  catch (CORBA::ORB::InvalidName &)
+  {
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("resolution of Interface Repository failed\n")));
+    throw Bailout ();    
+  }
 
   return 0;
 }

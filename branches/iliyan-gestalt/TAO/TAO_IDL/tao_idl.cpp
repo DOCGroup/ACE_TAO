@@ -112,7 +112,8 @@ DRV_init (int &argc, char *argv[])
   // Initialize front end.
   FE_init ();
 
-  // Initialize driver private data
+  // Initialize driver private data. DRV_nfiles will be updated
+  // by DRV_parse_args().
   DRV_nfiles = 0;
   DRV_file_index = 0;
 
@@ -204,6 +205,13 @@ DRV_drive (const char *s)
 
   DRV_pre_proc (s);
 
+  if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
+    {
+      // Go straight to cleanup, process the next file, if any.
+      DRV_refresh ();
+      return;
+    }
+
   // Parse.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
@@ -219,7 +227,8 @@ DRV_drive (const char *s)
   (void) FE_yyparse ();
 
   // Filename set by FE_yyparse(), so we output it immediately after.
-  ACE_DEBUG ((LM_DEBUG, "processing %s\n",
+  ACE_DEBUG ((LM_DEBUG,
+              "processing %s\n",
               idl_global->filename ()->get_string ()));
 
   // We must do this as late as possible to make sure any
@@ -243,7 +252,7 @@ DRV_drive (const char *s)
                     : ACE_TEXT ("")))));
 
       // Backend will be cleaned up after the exception is caught.
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   // Dump the code.
@@ -285,7 +294,7 @@ DRV_drive (const char *s)
     }
   else
     {
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   DRV_refresh ();
@@ -296,41 +305,36 @@ DRV_drive (const char *s)
 **
 ** 1. Initialize compiler driver
 ** 2. Parse command line args
-** 3. If more than one file to parse, fork
-** 4. Otherwise, for the single file, invoke DRV_drive
+** 3. Invoke DRV_drive iteratively on each file passed in
 */
 
 int
 main (int argc, char *argv[])
 {
-  // Return status.
-  int status = 0;
-
   try
     {
-      // Initialize driver and global variables.
-      status = DRV_init (argc, argv);
-
-      if (0 != status)
+      if (0 != DRV_init (argc, argv))
         {
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       // Parse arguments.
       DRV_parse_args (argc, argv);
 
-      // If a version message is requested, print it and exit.
+      // If a version message is requested, print it and exit cleanly.
       if (idl_global->compile_flags () & IDL_CF_VERSION)
         {
           DRV_version ();
-          throw FE_Bailout ();
+          DRV_cleanup ();
+          return 0;
         }
 
-      // If a usage message is requested, give it and exit.
+      // If a usage message is requested, print it and exit cleanly.
       if (idl_global->compile_flags () & IDL_CF_ONLY_USAGE)
         {
           DRV_usage ();
-          throw FE_Bailout ();
+          DRV_cleanup ();
+          return 0;
         }
 
       // If there are no input files, and we are not using the
@@ -340,8 +344,7 @@ main (int argc, char *argv[])
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("IDL: No input files\n")));
 
-          ++status;
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       AST_Generator *gen = be_global->generator_init ();
@@ -354,8 +357,7 @@ main (int argc, char *argv[])
               ACE_TEXT ("generator, exiting\n")
             ));
 
-          ++status;
-          throw FE_Bailout ();
+          throw Bailout ();
         }
       else
         {
@@ -375,15 +377,17 @@ main (int argc, char *argv[])
           DRV_drive (DRV_files[DRV_file_index]);
         }
     }
-  catch (FE_Bailout)
+  catch (Bailout)
     {
+      // Incrementing here may be redundant, but the error count
+      // is the exit value, and we want to make sure it isn't 0
+      // if there was in fact an error. If a non-zero value is
+      // off by 1, it's not so important.
+      idl_global->set_err_count (idl_global->err_count () + 1);
     }
 
-  // Case 1: init error, status = 1, nothing added here.
-  // Case 2: other error(s), status = 0, error count added here.
-  status += idl_global->err_count ();
-
+  int retval = idl_global->err_count ();
   DRV_cleanup ();
 
-  return status;
+  return retval;
 }

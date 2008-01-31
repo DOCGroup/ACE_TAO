@@ -656,7 +656,7 @@ FE_populate (void)
           ACE_TEXT ("IDL: idl_global->gen() not initialized, exiting\n")
         ));
 
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   // Create a global root for the AST. Note that the AST root has no name.
@@ -672,7 +672,7 @@ FE_populate (void)
           ACE_TEXT ("IDL: FE init failed to create AST root, exiting\n")
         ));
 
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   // Push it on the stack

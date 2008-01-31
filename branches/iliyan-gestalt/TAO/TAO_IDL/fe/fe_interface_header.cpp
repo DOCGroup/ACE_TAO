@@ -371,7 +371,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       // Look it up.
@@ -418,7 +418,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       // Not an appropriate interface?
@@ -675,7 +675,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       // Look it up.
@@ -703,7 +703,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       // Remove typedefs, if any.
@@ -886,7 +886,7 @@ FE_ComponentHeader::compile_inheritance (UTL_ScopedName *base_component)
 
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   if (d->node_type () == AST_Decl::NT_typedef)
@@ -942,7 +942,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       // Look it up.
@@ -970,7 +970,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          throw FE_Bailout ();
+          throw Bailout ();
         }
 
       // Not an appropriate interface?
@@ -1100,7 +1100,7 @@ FE_HomeHeader::compile_inheritance (UTL_ScopedName *base_home)
 
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   if (d->node_type () == AST_Decl::NT_typedef)
@@ -1135,7 +1135,7 @@ FE_HomeHeader::compile_managed_component (UTL_ScopedName *managed_component)
 
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   if (d->node_type () == AST_Decl::NT_typedef)
@@ -1170,7 +1170,7 @@ FE_HomeHeader::compile_primary_key (UTL_ScopedName *primary_key)
 
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
-      throw FE_Bailout ();
+      throw Bailout ();
     }
 
   AST_Decl::NodeType nt = d->node_type ();
