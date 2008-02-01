@@ -1,3 +1,11 @@
+Fri Feb 01 14:15:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * tests/Big_Onewaysserver.cpp:
+          Fixed possiable shutdown race condition.
+
+        * tests/Big_Twoways/server.cpp:
+          Fixed possiable shutdown race condition.
+
 Thu Jan 31 19:12:00 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
 
         * orbsvcs/IFR_Service/be_global.h:
