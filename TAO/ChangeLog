@@ -1,10 +1,22 @@
+Fri Feb  1 15:01:11 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/a.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/b1.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/b2.idl:
+
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test1.idl:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test2.idl:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test3.idl:
+ 
+          Fixed missing RCS/CVS/SVN keywords that caused fuzz errors.
+
 Fri Feb 01 14:15:00 UTC 2008  Simon Massey  <sma@prismtech.com>
 
         * tests/Big_Onewaysserver.cpp:
-          Fixed possiable shutdown race condition.
+          Fixed possible shutdown race condition.
 
         * tests/Big_Twoways/server.cpp:
-          Fixed possiable shutdown race condition.
+          Fixed possible shutdown race condition.
 
 Thu Jan 31 19:12:00 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
 
@@ -13,7 +25,7 @@ Thu Jan 31 19:12:00 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
         * orbsvcs/IFR_Service/be_produce.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor.h:
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
- 
+
           Added in a new option, -T, to tao_ifr that warns but permits
           duplicate typedefs in submitted IDL rather than flagging it as
           an error.  This allows for backwards compatibility with IDL that
@@ -24,11 +36,11 @@ Thu Jan 31 19:12:00 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
         * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test1.idl:
         * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test2.idl:
         * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test3.idl:
- 
+
           Added a test for the new option.
 
         * NEWS: Updated to reflect recent commits.
- 
+
 Thu Jan 31 15:21:00 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression:
