@@ -21,6 +21,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
 
 . Make ace_main extern C with VxWorks so that it doesn't get mangled
 
+. Fixed compile errors and warnings for VxWorks 6.6
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 ====================================================
 
