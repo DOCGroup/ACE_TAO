@@ -1,3 +1,74 @@
+Fri Feb  1 18:12:28 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/Datatypes.h:
+        * MonitorControl/Datatypes.cpp:
+
+          Files moved to ACE_ROOT/ace and
+          renamed as MonitorControl_Types.{h,cpp}.
+          The struct containing the static data
+          types has been renamed similarly. The
+          Generic class has been renamed MC_Generic.
+
+        * MonitorControl/Statistic.h:
+        * MonitorControl/Statistic.cpp:
+
+          Files moved to ACE_ROOT/ace and
+          renamed as Monitor_Base.{h,cpp}.
+          Class Statistic has been renamed
+          similarly.
+
+        * ace/Monitor_Base.h:
+        * ace/Monitor_Base.cpp:
+        * ace/MonitorControl_Types.h:
+        * ace/MonitorControl_Types.cpp:
+
+          Files moved to ACE_ROOT/ace from
+          ACE_ROOT/MonitorControl, with files
+          and contained types renamed as described
+          above.
+
+        * ace/Message_Queue_Monitor.cpp:
+        * ace/Message_Queue_Monitor.h:
+
+          New files, containing a class of the same
+          name that monitors the size of the
+          ACE_Message_Queue that it is a member of.
+          The size is output proactively whenever
+          the size of the message queue changes.
+          To avoid overhead when monitoring isn't
+          desired, creation of and calls to the
+          member class are guard with a check for
+          the #define of ENABLE_ACE_MONITORS.
+
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_T.h:
+        * ace/ace.mpc:
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/GenericRegistry.h:
+        * MonitorControl/ControlAction.h:
+        * MonitorControl/MonitorControl.mpc
+        * MonitorControl/MonitorPoint_T.h:
+        * MonitorControl/Admin.h:
+        * MonitorControl/MonitorPointRegistry.h:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/GenericRegistry.cpp:
+        * MonitorControl/ControlAction.cpp:
+        * MonitorControl/MonitorPoint_T.cpp:
+        * MonitorControl/Admin.cpp:
+        * MonitorControl/MonitorPointRegistry.cpp:
+        * MonitorControl/examples/main.cpp:
+        * MonitorControl/examples/simple.mpc:
+
+          Changes to make the rest of ACE and the
+          MonitorControl lib consistent with the
+          changes described above. Also added
+          code to the example which creates a
+          message queue, adds 5 message blocks
+          to it one by one, then removes them
+          one by one. For testing purposes, the
+          new size and a timestamp are output to
+          stdout.
+
 Wed Jan 30 20:57:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/GenericRegistry.h:
