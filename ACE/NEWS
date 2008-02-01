@@ -10,9 +10,11 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
 
 . Deprecated Visual Age 5 and older
 
-. Fixed bug 3185.
+. Closed a rare race condition hole whereby ACE_Atomic_Op<> function
+  pointers would not be fully initialized prior to use.  See bugzilla
+  3185 for details.
 
-. Tweaks to support MacOS X 10.5 on Intel.
+. Tweaks to support MacOS X Leopard (10.5 and 10.5.1) on Intel.
 
 . Fixed compile problems with MinGW with GCC 4.2. Do note that we do see
   much more test failures then when using GCC 3.4.
