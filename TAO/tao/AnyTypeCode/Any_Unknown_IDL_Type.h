@@ -16,14 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/Any_Impl.h"
-#include "tao/CDR.h"
-
-#include "ace/Auto_Ptr.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Lock_Adapter_T.h"
+
+#include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -61,7 +62,7 @@ namespace TAO
     virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
 
   private:
-    // We make the lock global, so that it won't  be deleted when shared.
+    // We make the lock global, so that it won't be deleted when shared.
     // For instance, see Any_Basic_Impl::extract() which copies the insides
     // from an Unknown_IDL_Type to an Any_Basic_Impl.
 
@@ -71,13 +72,18 @@ namespace TAO
     // destroyed and that is boundto be a problem
     // somewhere. Typically, it becomes a problem when a code that
     // depends on that instance finds that the runtime has already
-    // destroyed it. The scenario plays allmost always in the process
+    // destroyed it. The scenario plays almost always in the process
     // shutdown code, after main() exits, having to debug which is a
     // lot of fun :) ...  Bottom line, use a static function, which
     // encapsulates a local static initializer, guaranteed to be
-    // initialized at the first invocation.
-    static ACE_Lock *lock_i (void);
-
+    // initialized at the first invocation. Using ACE_Refcounted_Auto_Ptr
+    // ensures that the ref count will not drop to zero until the library
+    // is unloaded *and* all Unknown_IDL_Type instances have been destroyed.
+    typedef ACE_Refcounted_Auto_Ptr<ACE_Lock,
+                                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >
+      LOCK;
+    static LOCK lock_i (void);
+    LOCK const lock_;
     mutable TAO_InputCDR cdr_;
   };
 }

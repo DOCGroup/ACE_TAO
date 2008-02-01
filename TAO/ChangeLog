@@ -1,3 +1,14 @@
+Fri Feb  1 21:57:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * AnyTypeCode/Any_Unknown_IDL_Type.h:
+        
+          Patch submitted by Russell Mora
+          <russell_mora at symantec dot com> to address the problem
+          of Unknown_IDL_Type's static local lock object sometimes being
+          destroyed before all instances of Unknown_IDL_Type. This fix
+          closes [BUGID:3214].
+
 Fri Feb  1 15:01:11 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/a.idl:
