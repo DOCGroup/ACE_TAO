@@ -1,9 +1,7 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-. (OO) Minor 64 bit file offset fixes for ACE AIO classes on HP-UX.
-
-. (OO) Various other fixes that have been piling up.
+. (Remedy) Add VxWorks 5.5.1 support
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
 ====================================================
@@ -13,6 +11,15 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
 . Fixed bug 3185.
 
 . Tweaks to support MacOS X 10.5 on Intel.
+
+. Fixed compile problems with MinGW with GCC 4.2. Do note that we do see
+  much more test failures then when using GCC 3.4.
+
+. Changed to use synchronous exception handling with msvc 8/9 which is the
+  default. Asynchrous exception handling does catch access violations but
+  it leads to lower performance and other problems. See also bugzilla 3169
+
+. Make ace_main extern C with VxWorks so that it doesn't get mangled
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 ====================================================
