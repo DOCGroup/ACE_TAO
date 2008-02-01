@@ -19,6 +19,10 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Guard_T.h"
 
+#if defined (ENABLE_ACE_MONITORS)
+#include "ace/Message_Queue_Monitor.h"
+#endif
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -592,6 +596,11 @@ protected:
 
   /// Used to make threads sleep until the queue is no longer full.
   ACE_SYNCH_CONDITION_T not_full_cond_;
+  
+  /// Sends the size of the queue whenever it changes.
+#if defined (ENABLE_ACE_MONITORS)
+  ACE::MonitorControl::Message_Queue_Monitor monitor_;
+#endif
 
 private:
 

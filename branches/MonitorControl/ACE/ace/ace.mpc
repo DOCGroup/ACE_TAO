@@ -6,6 +6,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL
+  macros      += ENABLE_ACE_MONITORS
 
   Source_Files(ACE_COMPONENTS) {
     ACE.cpp
@@ -120,10 +121,13 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     MEM_Stream.cpp
     Message_Block.cpp
     Message_Queue.cpp
+    Message_Queue_Monitor.cpp
     Message_Queue_Vx.cpp
     Method_Request.cpp
     MMAP_Memory_Pool.cpp
     Msg_WFMO_Reactor.cpp
+    Monitor_Base.cpp
+    MonitorControl_Types.cpp
     Multihomed_INET_Addr.cpp
     Mutex.cpp
     Netlink_Addr.cpp

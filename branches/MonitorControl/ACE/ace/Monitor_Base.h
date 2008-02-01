@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file Statistic.h
+ * @file Monitor_Base.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef STATISTIC_H
-#define STATISTIC_H
+#ifndef MONITOR_BASE_H
+#define MONITOR_BASE_H
 
 #include /**/ "ace/pre.h"
 
@@ -19,7 +19,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Datatypes.h"
+#include "MonitorControl_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -30,7 +30,7 @@ namespace ACE
   namespace MonitorControl
   {
     /**
-     * @class Statistic
+     * @class Monitor_Base
      *
      * @brief Base class from which the template monitor point class is
      *        derived.
@@ -39,7 +39,7 @@ namespace ACE
      * be implemented in the 'disabled' template specialization
      * as no-ops.
      */
-    class MONITORCONTROL_Export Statistic : public Generic
+    class ACE_Export Monitor_Base : public MC_Generic
     {
     public:
       /**
@@ -56,7 +56,7 @@ namespace ACE
       {
       public:
         InvalidOperation (void);
-        virtual ~InvalidOperation (void);
+        ~InvalidOperation (void);
       };
     
       /// Implemented by the most-derived class. Does the actual
@@ -64,10 +64,10 @@ namespace ACE
       virtual void update (void) = 0;
       
       /// Sets a referemce to the Statistic's parent in a group.
-      virtual void group_parent (const Statistic* parent) = 0;
+      virtual void group_parent (const Monitor_Base* parent) = 0;
       
       /// Adds a Statistic to the list of children in a group.
-      virtual void add_group_child (const Statistic* child) = 0;
+      virtual void add_group_child (const Monitor_Base* child) = 0;
       
       /// Attaches the (optional) constrain to this monitor point.
       virtual void constraint (const ETCL_Constraint* constraint) = 0;
@@ -76,15 +76,15 @@ namespace ACE
       virtual void receive (const double data) = 0;
       
       /// Updates the monitor's data if it is textual.
-      virtual void receive (const Datatypes::NameList& data) = 0;
+      virtual void receive (const MonitorControl_Types::NameList& data) = 0;
       
       /// Reset function.
       virtual void clear (void) = 0;
       
     protected:
-      Statistic (void);
-      Statistic (const char* name);
-      virtual ~Statistic (void);
+      Monitor_Base (void);
+      Monitor_Base (const char* name);
+      virtual ~Monitor_Base (void);
     };
   }
 }
@@ -93,4 +93,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // STATISTIC_H
+#endif // MONITOR_BASE_H

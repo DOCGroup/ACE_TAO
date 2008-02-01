@@ -20,9 +20,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Event_Handler.h"
+#include "ace/Monitor_Base.h"
 
 #include "MonitorControl/ControlAction.h"
-#include "MonitorControl/Statistic.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -78,12 +78,12 @@ namespace ACE
       {
         /// Constructor stores the list of names for which there was a
         /// problem in the operation where the exception was thrown.
-        InvalidName (const Datatypes::NameList& names);
+        InvalidName (const MonitorControl_Types::NameList& names);
         
         ~InvalidName (void);
         
         /// Class member which holds the namelist passed to the constructor.
-        Datatypes::NameList names_;
+        MonitorControl_Types::NameList names_;
       };
       
       Admin (void);
@@ -95,7 +95,7 @@ namespace ACE
       /// interval are passed to the reactor singleton's register_timeout()
       /// method.
       
-      bool add_monitor_point (Statistic* monitor_point,
+      bool add_monitor_point (Monitor_Base* monitor_point,
                               unsigned long auto_update_msec);
                               
       /// Same as for monitor points, except that a different registry
@@ -107,13 +107,14 @@ namespace ACE
                               
       /// Resets the monitor points found in the registry by
       /// lookup of the passed list of names. Throws InvalidName
-      void clear_statistics (const Datatypes::NameList& names);
+      void clear_statistics (const MonitorControl_Types::NameList& names);
       
       /// Called from the application to manually update the monitor points
       /// (or group) specified in <names>. The boolean parameter specifies
       /// whether or not some action should be triggered (constraint check,
       /// logging, or some other action). Throws InvalidName.
-      void update_monitors (const Datatypes::NameList& names, bool notify);
+      void update_monitors (const MonitorControl_Types::NameList& names,
+                            bool notify);
       
       /// This mutator allows the application to create its own reactor
       /// and substitute it for the default reactor.

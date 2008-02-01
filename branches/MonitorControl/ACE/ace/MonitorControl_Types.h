@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file Datatypes.h
+ * @file MonitorControl_Types.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef DATATYPES_H
-#define DATATYPES_H
+#ifndef MONITORCONTROL_TYPES_H
+#define MONITORCONTROL_TYPES_H
 
 #include /**/ "ace/pre.h"
 
@@ -22,15 +22,13 @@
 #include "ace/Vector_T.h"
 #include "ace/SString.h"
 
-#include "MonitorControl/MonitorControl_export.h"
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace MonitorControl
   {
-    struct MONITORCONTROL_Export Datatypes
+    struct ACE_Export MonitorControl_Types
     {
       /**
        * @brief An instance is contained by each enabled monitor point.
@@ -69,21 +67,21 @@ namespace ACE
     };
   
     /**
-     * @class Generic
+     * @class MC_Generic
      *
-     * @brief Base class of Statistic and ControlAction.
+     * @brief Base class of Monitor_Base and ControlAction.
      */
     /// Allows us to combine
     /// operations of the respective registries into a common base class.
-    class MONITORCONTROL_Export Generic
+    class ACE_Export MC_Generic
     {
     public:
       const char* name (void) const;
       
     protected:
-      Generic (void);
-      Generic (const char* name);
-      virtual ~Generic (void);
+      MC_Generic (void);
+      MC_Generic (const char* name);
+      ~MC_Generic (void);
       
     private:
       ACE_CString name_;
@@ -95,4 +93,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // DATATYPES_H
+#endif // MONITORCONTROL_TYPES_H

@@ -19,7 +19,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "MonitorPoint_T.h"
+#include "MonitorControl/MonitorPoint_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,7 +37,7 @@ namespace ACE
     /// be provided. Addition of such fine-grained control is doubtful,
     /// since it would make the monitor points much more heavyweight.
     template<>
-    class MONITORCONTROL_Export MonitorPoint<true> : public Statistic
+    class MONITORCONTROL_Export MonitorPoint<true> : public Monitor_Base
     {
       /// Meaningful implementations of these methods in the enabled
       /// version of the monitor point. Note that the virtual method
@@ -46,10 +46,10 @@ namespace ACE
       
     public:
       /// Meaningful implementation of member function.
-      virtual void group_parent (const Statistic* parent);
+      virtual void group_parent (const Monitor_Base* parent);
       
       /// Meaningful implementation of member function.
-      virtual void add_group_child (const Statistic* child);
+      virtual void add_group_child (const Monitor_Base* child);
       
       /// Meaningful implementation of member function.
       virtual void constraint (const ETCL_Constraint* constraint);
@@ -58,7 +58,7 @@ namespace ACE
       virtual void receive (const double data);
       
       /// Meaningful implementation of member function.
-      virtual void receive (const Datatypes::NameList& data);
+      virtual void receive (const MonitorControl_Types::NameList& data);
       
       /// Meaningful implementation of member function.
       virtual void clear (void);

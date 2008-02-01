@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file MonitorPoint_T.h
+ * @file Message_Queue_Monitor.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef MONITORPOINT_T_H
-#define MONITORPOINT_T_H
+#ifndef MESSAGE_QUEUE_MONITOR_H
+#define MESSAGE_QUEUE_MONITOR_H
 
 #include /**/ "ace/pre.h"
 
@@ -21,33 +21,23 @@
 
 #include "ace/Monitor_Base.h"
 
-#include "MonitorControl/MonitorControl_export.h"
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace MonitorControl
   {
-    /**
-     * @class MonitorPoint
-     *
-     * @brief Template class from which concrete monitor point classes are
-     *        derived.
-     *
-     * The template parameter will be specified by a preprocessor
-     * flag passed in at compile time to enable/disable monitors.
-     */
-    template<bool ENABLED>
-    class MonitorPoint : public Monitor_Base
+    class ACE_Export Message_Queue_Monitor : public Monitor_Base
     {
-    protected:
-      MonitorPoint (const char* name,
-                    MonitorControl_Types::InfoType type);
-                    
-      virtual ~MonitorPoint (void);
+    public:
+      Message_Queue_Monitor (void);
+      Message_Queue_Monitor (const char* name);
+      ~Message_Queue_Monitor (void);
+    
+      /// Implemented by the most-derived class. Does the actual
+      /// work of fetching the monitored value.
+      virtual void update (void);
       
-    public:  
       /// Sets a referemce to the Statistic's parent in a group.
       virtual void group_parent (const Monitor_Base* parent);
       
@@ -67,18 +57,10 @@ namespace ACE
       virtual void clear (void);
     };
   }
-}
+}    
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "MonitorControl/MonitorPoint_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("MonitorPoint_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include /**/ "ace/post.h"
 
-#endif // MONITORPOINT_T_H
+#endif // MESSAGE_QUEUE_MONITOR_H

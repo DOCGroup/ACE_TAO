@@ -24,7 +24,7 @@ namespace ACE
     MonitorPointRegistry::~MonitorPointRegistry (void)
     {}
     
-    Statistic*
+    Monitor_Base*
     MonitorPointRegistry::get (const ACE_CString& name) const
     {
       // TODO

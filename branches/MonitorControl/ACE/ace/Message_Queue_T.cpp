@@ -1344,6 +1344,10 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
   // Make sure that the prev and next fields are 0!
   first_item->prev (0);
   first_item->next (0);
+  
+#if defined (ENABLE_ACE_MONITORS)
+  this->monitor_.receive (static_cast<double> (this->cur_length_));
+#endif
 
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
@@ -1859,6 +1863,10 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::notify");
+  
+#if defined (ENABLE_ACE_MONITORS)
+  this->monitor_.receive (static_cast<double> (this->cur_length_));
+#endif
 
   // By default, don't do anything.
   if (this->notification_strategy_ == 0)

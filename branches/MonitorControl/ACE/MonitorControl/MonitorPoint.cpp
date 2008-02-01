@@ -9,13 +9,13 @@ namespace ACE
   namespace MonitorControl
   {
     void
-    MonitorPoint<true>::group_parent (const Statistic* /* parent */)
+    MonitorPoint<true>::group_parent (const Monitor_Base* /* parent */)
     {
       // TODO
     }
     
     void
-    MonitorPoint<true>::add_group_child (const Statistic* /* child */)
+    MonitorPoint<true>::add_group_child (const Monitor_Base* /* child */)
     {
       // TODO
     }
@@ -33,7 +33,8 @@ namespace ACE
     }
     
     void
-    MonitorPoint<true>::receive (const Datatypes::NameList& /* data */)
+    MonitorPoint<true>::receive (
+      const MonitorControl_Types::NameList& /* data */)
     {
       // TODO
     }

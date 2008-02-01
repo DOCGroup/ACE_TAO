@@ -7,6 +7,28 @@ int main (int argc, char *argv [])
 {
   try
   {
+    ACE_Message_Queue<ACE_NULL_SYNCH> monitored_queue;
+    ACE_Message_Block *mb = 0;
+    const char *msg = "Hidely Ho!";
+    ACE_Time_Value tv (0, 555555);
+    
+    for (int k = 0; k < 10; ++k)
+      {
+        if (k < 5)
+          {
+            mb = new ACE_Message_Block (ACE_OS::strlen (msg) + 1);
+            mb->copy (msg);
+            monitored_queue.enqueue_tail (mb);
+          }
+        else
+          {
+            monitored_queue.dequeue_head (mb);
+            mb->release ();
+          }
+          
+        ACE_OS::sleep (tv);
+      }
+  /*
     START_MC_SERVICE;
     
     /// The Admin class will own the reactor and destroy it.
@@ -32,6 +54,7 @@ int main (int argc, char *argv [])
       }
 
     STOP_PERIODIC_MONITORS;
+    */
   }
   catch (const GenericRegistry::MapError &e)
   {

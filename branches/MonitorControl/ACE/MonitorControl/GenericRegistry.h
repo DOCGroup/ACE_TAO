@@ -23,8 +23,9 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/MonitorControl_Types.h"
 
-#include "MonitorControl/Datatypes.h"
+#include "MonitorControl/MonitorControl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -75,20 +76,20 @@ namespace ACE
       
       /// Adds a Statistic or ControlAction to its respecive registry.
       /// Throws MapError.
-      bool add (Generic* type);
+      bool add (MC_Generic* type);
       
       /// Retrieves a list of the names added to the registry so far.
-      const Datatypes::NameList& names (void) const;
+      const MonitorControl_Types::NameList& names (void) const;
       
     private:
       /// Underlying container for the registries.
       typedef ACE_Hash_Map_Manager<ACE_CString,
-                                   Generic*,
+                                   MC_Generic*,
                                    ACE_SYNCH_NULL_MUTEX> Map;
         
       mutable ACE_SYNCH_MUTEX mutex_;
       Map map_;
-      Datatypes::NameList name_cache_;
+      MonitorControl_Types::NameList name_cache_;
     };
   }
 }

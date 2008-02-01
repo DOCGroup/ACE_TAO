@@ -19,7 +19,7 @@ namespace ACE
     {}
     
     bool
-    GenericRegistry::add (Generic* type)
+    GenericRegistry::add (MC_Generic* type)
     {
       ACE_WRITE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
       
@@ -43,7 +43,7 @@ namespace ACE
       return (status == 0);
     }
     
-    const Datatypes::NameList&
+    const MonitorControl_Types::NameList&
     GenericRegistry::names (void) const
     {
       // TODO

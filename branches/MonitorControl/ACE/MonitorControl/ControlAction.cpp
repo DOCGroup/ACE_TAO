@@ -12,7 +12,7 @@ namespace ACE
     {}
   
     ControlAction::ControlAction (const char* name)
-      : Generic (name)
+      : MC_Generic (name)
     {}
     
     ControlAction::~ControlAction (void)

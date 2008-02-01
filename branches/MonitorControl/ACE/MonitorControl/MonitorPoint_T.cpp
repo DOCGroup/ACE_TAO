@@ -13,8 +13,8 @@ namespace ACE
   {
     template<bool ENABLED>
     MonitorPoint<ENABLED>::MonitorPoint (const char* name,
-                                         Datatypes::InfoType /* type */)
-      : Statistic (name)
+                                         MonitorControl_Types::InfoType /* type */)
+      : Monitor_Base (name)
     {}
     
     template<bool ENABLED>
@@ -23,13 +23,13 @@ namespace ACE
     
     template<bool ENABLED>
     void
-    MonitorPoint<ENABLED>::group_parent (const Statistic* /* parent */)
+    MonitorPoint<ENABLED>::group_parent (const Monitor_Base* /* parent */)
     {
     }
     
     template<bool ENABLED>
     void
-    MonitorPoint<ENABLED>::add_group_child (const Statistic* /* child */)
+    MonitorPoint<ENABLED>::add_group_child (const Monitor_Base* /* child */)
     {
     }
     
@@ -48,7 +48,8 @@ namespace ACE
     
     template<bool ENABLED>
     void
-    MonitorPoint<ENABLED>::receive (const Datatypes::NameList& /* data */)
+    MonitorPoint<ENABLED>::receive (
+      const MonitorControl_Types::NameList& /* data */)
     {
     }
     

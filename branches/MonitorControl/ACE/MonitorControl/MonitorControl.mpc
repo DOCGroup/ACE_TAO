@@ -11,7 +11,6 @@ project(MonitorControl) : acelib {
     ControlAction.cpp
     ControlActionRegistry.cpp
     CPULoadMonitor.cpp
-    Datatypes.cpp
     GenericRegistry.cpp
     MemoryUsageMonitor.cpp
     MonitorControl.cpp
@@ -19,7 +18,6 @@ project(MonitorControl) : acelib {
     MonitorPointRegistry.cpp
     NumThreadsMonitor.cpp
     PacketsSentMonitor.cpp
-    Statistic.cpp
   }
   
   Header_Files {

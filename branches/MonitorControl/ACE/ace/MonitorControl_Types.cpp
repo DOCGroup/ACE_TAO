@@ -1,6 +1,6 @@
 // $Id$
 
-#include "MonitorControl/Datatypes.h"
+#include "ace/MonitorControl_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -8,18 +8,18 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    Generic::Generic (void)
+    MC_Generic::MC_Generic (void)
     {}
   
-    Generic::Generic (const char* name)
+    MC_Generic::MC_Generic (const char* name)
       : name_ (name)
     {}
     
-    Generic::~Generic (void)
+    MC_Generic::~MC_Generic (void)
     {}
     
     const char*
-    Generic::name (void) const
+    MC_Generic::name (void) const
     {
       return this->name_.fast_rep ();
     }

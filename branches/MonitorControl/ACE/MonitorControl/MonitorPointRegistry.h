@@ -19,6 +19,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Monitor_Base.h"
+
 #include "MonitorControl/GenericRegistry.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -48,7 +50,7 @@ namespace ACE
       ~MonitorPointRegistry (void);
       
       /// The lookup operation.
-      Statistic* get (const ACE_CString& name) const;
+      Monitor_Base* get (const ACE_CString& name) const;
     };
   }
 }

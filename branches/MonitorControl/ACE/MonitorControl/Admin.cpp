@@ -16,16 +16,17 @@ namespace ACE
       const ACE_Time_Value& /* current_time */,
       const void* monitor_point)
     {
-      const Statistic* const_mp =
-        reinterpret_cast<const Statistic*> (monitor_point);
-      Statistic* mp = const_cast<Statistic*> (const_mp);
+      const Monitor_Base* const_mp =
+        reinterpret_cast<const Monitor_Base*> (monitor_point);
+      Monitor_Base* mp = const_cast<Monitor_Base*> (const_mp);
       mp->update ();
       return 0;
     }
     
     //====================================================================
     
-    Admin::InvalidName::InvalidName (const Datatypes::NameList& names)
+    Admin::InvalidName::InvalidName (
+      const MonitorControl_Types::NameList& names)
       : names_ (names)
     {}
     
@@ -56,7 +57,7 @@ namespace ACE
     }
     
     bool
-    Admin::add_monitor_point (Statistic* monitor_point,
+    Admin::add_monitor_point (Monitor_Base* monitor_point,
                               unsigned long auto_update_msec)
     {
       bool good_reg_add =
@@ -86,13 +87,13 @@ namespace ACE
     }
     
     void
-    Admin::clear_statistics (const Datatypes::NameList& /* names */)
+    Admin::clear_statistics (const MonitorControl_Types::NameList& /* names */)
     {
       // TODO
     }
     
     void
-    Admin::update_monitors (const Datatypes::NameList& /* names */,
+    Admin::update_monitors (const MonitorControl_Types::NameList& /* names */,
                             bool /* notify */)
     {
       // TODO

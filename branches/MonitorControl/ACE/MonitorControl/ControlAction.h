@@ -19,7 +19,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "MonitorControl/Datatypes.h"
+#include "ace/MonitorControl_Types.h"
+
+#include "MonitorControl/MonitorControl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,7 +44,7 @@ namespace ACE
      *       for a disabled monitor point, the associated
      *       control action (if any) won't be instantiated.
      */
-    class MONITORCONTROL_Export ControlAction : public Generic
+    class MONITORCONTROL_Export ControlAction : public MC_Generic
     {
     public:
       /// To be implemented by the concrete derived class.
