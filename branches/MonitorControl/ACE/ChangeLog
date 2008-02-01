@@ -1,3 +1,12 @@
+Fri Feb  1 18:48:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp:
+        * MonitorControl/examples/main.cpp:
+        
+          Added call to monitor when the message queue is flushed, if
+          the size actually changes as a result of the flush. Also
+          added this case to the example.
+
 Fri Feb  1 18:12:28 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/Datatypes.h:

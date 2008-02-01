@@ -14,7 +14,7 @@ int main (int argc, char *argv [])
     
     for (int k = 0; k < 10; ++k)
       {
-        if (k < 5)
+        if (k < 6)
           {
             mb = new ACE_Message_Block (ACE_OS::strlen (msg) + 1);
             mb->copy (msg);
@@ -28,6 +28,8 @@ int main (int argc, char *argv [])
           
         ACE_OS::sleep (tv);
       }
+      
+    monitored_queue.flush ();
   /*
     START_MC_SERVICE;
     

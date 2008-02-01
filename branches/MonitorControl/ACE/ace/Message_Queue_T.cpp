@@ -970,6 +970,14 @@ ACE_Message_Queue<ACE_SYNCH_USE>::flush_i (void)
       // reference counted.
       temp->release ();
     }
+    
+#if defined (ENABLE_ACE_MONITORS)
+  // The monitor should output only if the size has actually changed.
+  if (number_flushed > 0)
+    {
+      this->monitor_.receive (static_cast<double> (this->cur_length_));
+    }
+#endif
 
   return number_flushed;
 }
