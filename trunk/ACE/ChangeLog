@@ -1,3 +1,11 @@
+Fri Feb 01 13:25:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * ace/Timer_Heap_T.cpp:
+          Fixed possiable race condition.
+
+        * test/Timer_Queue_Reference_Counting_Test.cpp:
+          Fixed periodic test timeout problem.
+
 Wed Jan 30 16:00:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Queue.inl:
