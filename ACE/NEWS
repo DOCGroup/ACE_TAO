@@ -23,6 +23,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
 
 . Fixed compile errors and warnings for VxWorks 6.6
 
+. Added an MPC generator for the WindRiver Workbench 2.6 which is shipped
+  with VxWorks 6.4
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 ====================================================
 
