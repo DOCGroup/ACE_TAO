@@ -1,4 +1,12 @@
-Sat Jan  2 06:36:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sat Feb  2 07:08:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Malloc_T.h:
+        * ace/Process_Semaphore.inl:
+        * ace/Reactor.h:
+        * ace/Select_Reactor_T.h:
+          Doxygen improvements
+
+Sat Feb  2 06:36:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
           Updated for CodeGear C++ Builder 2007 December Update
