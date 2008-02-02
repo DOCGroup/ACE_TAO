@@ -1,3 +1,8 @@
+Sat Jan  2 06:36:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Updated for CodeGear C++ Builder 2007 December Update
+
 Fri Feb 01 13:25:00 UTC 2008  Simon Massey  <sma@prismtech.com>
 
         * ace/Timer_Heap_T.cpp:
