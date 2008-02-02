@@ -408,7 +408,7 @@ public:
    *
    * Shorthand for calling
    * register_handler(int,ACE_Event_Handler*,ACE_Sig_Action*,ACE_Event_Handler**,ACE_Sig_Action*)
-   * multiple times for the same @a event_handler and <sig_action> but
+   * multiple times for the same @a event_handler and @a sig_action but
    * different <signals>.
    */
   int register_handler (const ACE_Sig_Set &sigset,
