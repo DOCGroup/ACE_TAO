@@ -813,9 +813,9 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
 {
   ACE_TRACE ("ACE_Timer_Heap_T::cancel");
 
-  int number_of_cancellations = 0;
-
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+
+  int number_of_cancellations = 0;
 
   // Try to locate the ACE_Timer_Node that matches the timer_id.
 
