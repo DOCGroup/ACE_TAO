@@ -79,6 +79,9 @@ public:
   bool do_included_files (void) const;
   void do_included_files (bool val);
 
+  bool allow_duplicate_typedefs () const;
+  void allow_duplicate_typedefs (bool val);
+
   ACE_CString orb_args (void) const;
   void orb_args (const ACE_CString& args);
 
@@ -129,6 +132,9 @@ private:
 
   bool do_included_files_;
   // Option to process included IDL files.
+
+  bool allow_duplicate_typedefs_;
+  // Option to enable duplicate typedefs in parsed IDL.
 
   ACE_CString orb_args_;
   //Holder for -ORB args saved and passed to DRV_fork.

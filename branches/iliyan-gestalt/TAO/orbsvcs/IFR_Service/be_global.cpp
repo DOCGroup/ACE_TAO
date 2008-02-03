@@ -33,7 +33,8 @@ BE_GlobalData::BE_GlobalData (void)
     holding_scope_name_ (CORBA::string_dup ("TAO_IFR_holding_scope_module")),
     filename_ (0),
     enable_locking_ (false),
-    do_included_files_ (true)
+    do_included_files_ (true),
+    allow_duplicate_typedefs_ (false)
 {
   // At this point, the FE has been initialized.  We can
   // now instruct it that we want to preserve c++ keywords.
@@ -145,6 +146,18 @@ BE_GlobalData::do_included_files (bool val)
   this->do_included_files_ = val;
 }
 
+bool
+BE_GlobalData::allow_duplicate_typedefs () const
+{
+  return this->allow_duplicate_typedefs_;
+}
+
+void
+BE_GlobalData::allow_duplicate_typedefs (bool val)
+{
+  this->allow_duplicate_typedefs_ = val;
+}
+
 ACE_CString
 BE_GlobalData::orb_args (void) const
 {
@@ -192,6 +205,9 @@ BE_GlobalData::parse_args (long &i, char **av)
             ACE_OS::exit (99);
           }
         break;
+      case 'T':
+        be_global->allow_duplicate_typedefs (true);
+        break;
       default:
         ACE_ERROR ((
             LM_ERROR,
@@ -231,6 +247,10 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Si\t\t\tSuppress processing of included IDL files\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -T\t\t\tAllow duplicate typedefs in IDL files\n")
     ));
 }
 
