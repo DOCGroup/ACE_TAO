@@ -1,8 +1,15 @@
+Sun Feb  3 19:48:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Incoming_Message_Stack.h:
+        * orbsvcs/orbsvcs/Trader.h:
+        * orbsvcs/orbsvcs/IFR_Service_Utils_T.cpp:
+          Fixes for CodeGear C++ Builder 2007 December 2007 update
+
 Fri Feb  1 21:57:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * AnyTypeCode/Any_Unknown_IDL_Type.cpp:
         * AnyTypeCode/Any_Unknown_IDL_Type.h:
-        
+
           Patch submitted by Russell Mora
           <russell_mora at symantec dot com> to address the problem
           of Unknown_IDL_Type's static local lock object sometimes being
@@ -18,7 +25,7 @@ Fri Feb  1 15:01:11 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
         * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test1.idl:
         * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test2.idl:
         * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test3.idl:
- 
+
           Fixed missing RCS/CVS/SVN keywords that caused fuzz errors.
 
 Fri Feb 01 14:15:00 UTC 2008  Simon Massey  <sma@prismtech.com>
