@@ -4,6 +4,7 @@
 #include "Session_Control.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Big_Oneways, server, "$Id$")
 
@@ -203,7 +204,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Shutdown all peers . . .\n"));
 
       coordinator_impl->shutdown_all_peers ();
-
+      ACE_OS::sleep (5); // Allow the shutdown message to be processed.
       ACE_DEBUG ((LM_DEBUG, "Shutdown poa and orb . . .\n"));
 
       root_poa->destroy (1, 1);

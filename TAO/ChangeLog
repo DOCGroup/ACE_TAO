@@ -1,3 +1,80 @@
+Fri Feb  1 21:57:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * AnyTypeCode/Any_Unknown_IDL_Type.h:
+        
+          Patch submitted by Russell Mora
+          <russell_mora at symantec dot com> to address the problem
+          of Unknown_IDL_Type's static local lock object sometimes being
+          destroyed before all instances of Unknown_IDL_Type. This fix
+          closes [BUGID:3214].
+
+Fri Feb  1 15:01:11 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/a.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/b1.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/b2.idl:
+
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test1.idl:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test2.idl:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test3.idl:
+ 
+          Fixed missing RCS/CVS/SVN keywords that caused fuzz errors.
+
+Fri Feb 01 14:15:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * tests/Big_Onewaysserver.cpp:
+          Fixed possible shutdown race condition.
+
+        * tests/Big_Twoways/server.cpp:
+          Fixed possible shutdown race condition.
+
+Thu Jan 31 19:12:00 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
+
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Added in a new option, -T, to tao_ifr that warns but permits
+          duplicate typedefs in submitted IDL rather than flagging it as
+          an error.  This allows for backwards compatibility with IDL that
+          used to be able to be processed by older versions of tao_ifr.
+
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test1.idl:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test2.idl:
+        * orbsvcs/tests/InterfaceRepo/Duplicate_Typedef_Test/test3.idl:
+
+          Added a test for the new option.
+
+        * NEWS: Updated to reflect recent commits.
+
+Thu Jan 31 15:21:00 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/a.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/b1.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/b2.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/run_test.pl:
+
+          Added regression test for [BUGID:3200] as promised.
+
+        * orbsvcs/tests/InterfaceRepo/IDL_Test:
+        * orbsvcs/tests/InterfaceRepo/IDL_Test/IFR.pm:
+        * orbsvcs/tests/InterfaceRepo/IDL_Test/README:
+        * orbsvcs/tests/InterfaceRepo/IDL_Test/run_test.pl:
+
+          Added new stress test for IFR that runs the IFR with various
+          IDL.  In its current unfinished form, this test uses the IDL
+          files from the IDL compiler's "IDL_Test", but can easily be
+          extended to use other files.
+
+          The plan for the test is outlined in the README, though only
+          phase 1 is currently implemented.
+
 Thu Jan 31 12:05:00 UTC 2008  Simon Massey <sma@prismtech.com>
 
         * orbsvcs/tests/Security/Crash_Test/client.cpp
@@ -40,7 +117,7 @@ Wed Jan 30 23:17:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Jan 30 21:30:49 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp:
-        
+
           Added local temporary variable in main() to hold the error
           count so it can be returned after the IDL_GlobalData class
           that contains it is destroyed as part of cleanup.
@@ -49,17 +126,18 @@ Wed Jan 30 20:13:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Cleaned up and made more consistent the way in which the
           global internal error count is updated, in conjunction
           with the use of the FE_Bailout exception. Thanks to Chris
           Cleeland <cleeland at ociweb dot com> for helpful input
           on this issue.
 
+>>>>>>> .r80528
 Wed Jan 30 18:34:02 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
 
         * TAO_IDL/tao_idl.cpp (main):
- 
+
           Bump up the value of "status" when FE_Bailout is caught.  This
           insures that tao_ifr (and tao_idl) exit with a non-zero error
           condition whenever FE_Bailout is thrown.  The correct fix is to

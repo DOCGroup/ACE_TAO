@@ -18,17 +18,18 @@ ACE_RCSID (AnyTypeCode,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-ACE_Lock *
+TAO::Unknown_IDL_Type::LOCK
 TAO::Unknown_IDL_Type::lock_i (void)
 {
-  static ACE_Auto_Ptr<ACE_Lock> lock_ (new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
-  return lock_.get ();
+  static LOCK base_lock_ (new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
+  return base_lock_;
 }
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc,
                                          TAO_InputCDR &cdr)
   : TAO::Any_Impl (0, tc, true)
-  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_i ())
+  , lock_ (lock_i ())
+  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_.get ())
 {
   try
     {
@@ -41,7 +42,8 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc,
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc)
   : TAO::Any_Impl (0, tc, true)
-  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_i ())
+  , lock_ (lock_i ())
+  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_.get ())
 {
 }
 

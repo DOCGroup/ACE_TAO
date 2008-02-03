@@ -41,7 +41,8 @@ class ifr_adding_visitor : public ifr_visitor
   //
 public:
   ifr_adding_visitor (AST_Decl *scope,
-                      CORBA::Boolean in_reopened = 0);
+                      CORBA::Boolean in_reopened = 0,
+                      bool allow_duplicate_typedefs = false);
 
   virtual ~ifr_adding_visitor (void);
 
@@ -193,6 +194,9 @@ protected:
 
   bool in_reopened_;
   // Are we traversing the scope of a reopened module?
+
+  bool allow_duplicate_typedefs_;
+  // Do we allow duplicate typedefs?
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_H */

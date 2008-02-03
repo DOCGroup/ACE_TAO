@@ -162,7 +162,7 @@ BE_ifr_repo_init (void)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("resolution of Interface Repository failed\n")));
-    throw Bailout ();    
+    throw Bailout ();
   }
 
   return 0;
@@ -217,7 +217,7 @@ BE_produce (void)
         }
       else
         {
-          ifr_adding_visitor visitor (d);
+          ifr_adding_visitor visitor (d, 0, be_global->allow_duplicate_typedefs ());
 
           TAO_IFR_VISITOR_WRITE_GUARD;
 
