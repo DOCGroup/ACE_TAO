@@ -35,6 +35,19 @@ static int debug = 0;
 static const char *one_second_timeout = "one second timeout";
 static const char *two_second_timeout = "two second timeout";
 
+namespace
+{
+  inline void WAIT_FOR_NEXT_EVENT (ACE_Timer_Queue &timer_queue)
+  {
+    ACE_Time_Value const earliest_time = timer_queue.earliest_time ();
+    ACE_Time_Value const time_of_day =   timer_queue.gettimeofday ();
+    if (earliest_time > time_of_day)
+      {
+        ACE_OS::sleep (earliest_time - time_of_day);
+      }
+  }
+}
+
 class Reference_Counted_Event_Handler : public ACE_Event_Handler
 {
 public:
@@ -316,21 +329,7 @@ expire (ACE_Timer_Queue &timer_queue,
 
   for (int i = 0; i < events;)
     {
-      ACE_Time_Value sleep_time;
-
-      ACE_Time_Value earliest_time =
-        timer_queue.earliest_time ();
-
-      ACE_Time_Value time_of_day =
-        timer_queue.gettimeofday ();
-
-      if (earliest_time > time_of_day)
-        sleep_time =
-          earliest_time - time_of_day;
-      else
-        sleep_time = ACE_Time_Value::zero;
-
-      ACE_OS::sleep (sleep_time);
+      WAIT_FOR_NEXT_EVENT (timer_queue);
 
       result =
         expire_function (timer_queue);
@@ -479,8 +478,7 @@ simple (ACE_Timer_Queue &timer_queue)
 
   for (int i = 0; i < events;)
     {
-      ACE_OS::sleep (timer_queue.earliest_time () -
-                     timer_queue.gettimeofday ());
+      WAIT_FOR_NEXT_EVENT (timer_queue);
 
       result =
         timer_queue.expire ();

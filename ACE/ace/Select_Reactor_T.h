@@ -58,11 +58,11 @@ public:
 
   // = Initialization and termination methods.
 
-  /// If <disable_notify_pipe> is non-0 then the reactor will
+  /// If @a disable_notify_pipe is non-0 then the reactor will
   /// not create a notification pipe, which will save two I/O handles
-  /// but will elide the <notify()> feature.  If <mask_signals> is
+  /// but will elide the <notify()> feature.  If @a mask_signals is
   /// 1 the reactor is "signal-safe" when dispatching handlers to
-  /// signal events, whereas if <mask_signals> is 0 the reactor will
+  /// signal events, whereas if @a mask_signals is 0 the reactor will
   /// be more efficient, but not signal-safe (which may be perfectly
   /// fine if your application doesn't use the reactor to handle signals).
   ACE_Select_Reactor_T (ACE_Sig_Handler * = 0,
@@ -193,7 +193,7 @@ public:
 
   /**
    * Control whether the Reactor will handle any more incoming events or not.
-   * If <do_stop> == 1, the Reactor will be disabled.  By default, a reactor
+   * If @a do_stop == 1, the Reactor will be disabled.  By default, a reactor
    * is in active state and can be deactivated/reactived as wish.
    */
   virtual void deactivate (int do_stop);
@@ -201,7 +201,7 @@ public:
   // = Register and remove ACE_Event_Handlers.
   /**
    * Register a @a eh with a particular @a mask.  Note that the
-   * <Select_Reactor> will call <ACE_Event_Handler::get_handle> to
+   * <Select_Reactor> will call ACE_Event_Handler::get_handle() to
    * extract the underlying I/O handle.
    */
   virtual int register_handler (ACE_Event_Handler *eh,
