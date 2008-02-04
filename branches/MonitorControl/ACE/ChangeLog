@@ -1,8 +1,13 @@
+Mon Feb  4 14:07:27 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MonitorControl/LowLevelMonitors_T.h:
+          Fixed compile problems with BCB
+
 Fri Feb  1 18:48:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp:
         * MonitorControl/examples/main.cpp:
-        
+
           Added call to monitor when the message queue is flushed, if
           the size actually changes as a result of the flush. Also
           added this case to the example.
@@ -82,7 +87,7 @@ Wed Jan 30 20:57:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/GenericRegistry.h:
         * MonitorControl/GenericRegistry.cpp:
-        
+
           Changed the type of mutex used when writing to the registry
           from an RW mutex to a regular, more lightweight
           ACE_Thread_Mutex.
@@ -93,7 +98,7 @@ Tue Jan 29 19:42:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/MonitorControl.mpc:
         * MonitorControl/CPULoadMonitor.h:
         * MonitorControl/examples/main.cpp:
-        
+
           Implemented CPU load monitor for Windows. Includes and code
           are guarded so builds will succeed on other platforms, but
           the monitor will in those cases be a no-op. This implementation
@@ -118,7 +123,7 @@ Mon Jan 28 20:14:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/NumThreadsMonitor.h:
         * MonitorControl/Admin.cpp:
         * MonitorControl/BytesSentMonitor.h:
-        
+
           Changed the name of the calculate() method to update(). The
           new name is more sensible, since it was decided not to maintain
           any statistics, such as min, max or avg, in the monitor point
@@ -132,7 +137,7 @@ Mon Jan 28 20:06:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/AutoUpdateStarter.cpp:
         * MonitorControl/Admin.cpp:
         * MonitorControl/examples/main.cpp:
-        
+
           Added capability for the application to replace the MonitorControl
           service's default reactor with one of its own creation, and code
           to the example to test this capability.
@@ -140,7 +145,7 @@ Mon Jan 28 20:06:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Jan 24 17:39:45 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/AutoUpdateStarter.h:
-        
+
           Changed inheritance of AutoUpdateStarter from
           ACE_Task<ACE_NULL_SYNCH> to ACE_Task_Base, which is sufficient
           and more lightweight. Thanks to Johnny Willemsen
@@ -151,7 +156,7 @@ Wed Jan 23 19:11:09 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/AutoUpdateStarter.cpp:
         * MonitorControl/AutoUpdateStarter.h:
         * MonitorControl/MonitorControl.mpc:
-        
+
           New files, containing a struct that inherits from ACE_Task
           and is used to start the reactor's event loop in a new
           thread. Also updated the MPC file accordingly.
@@ -168,11 +173,11 @@ Wed Jan 23 19:11:09 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/Admin.cpp:
         * MonitorControl/MonitorControl.h:
         * MonitorControl/examples/main.cpp:
-        
+
           - Added capability to get a given monitor point updated
             periodically, by registering an associated timer with
             the reactor.
-            
+
           - Added convenient macros for the ACE calls to
             - read the svc.conf file that starts the dynamic service
             - start up the reactor's event loop
@@ -182,7 +187,7 @@ Wed Jan 23 19:11:09 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Jan 22 20:49:04 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorControl.vsd:
-        
+
           New file, Visio diagram with 3 panels:
           - UML class diagram of MonitorControl library
           - UML sequence diagram showing MonitorControl behavior
@@ -200,32 +205,32 @@ Mon Jan 21 19:36:33 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/MonitorPoint_T.cpp:
         * MonitorControl/Admin.cpp:
         * MonitorControl/MonitorControl.h:
-        
+
           - Added typedefs for enabled and disabled versions of
             the low level monitors. Which version is seen by the
             compiler is controlled by a proprocessor flag.
-            
+
           - Implemented function that adds a monitor point to
             the registry.
-            
+
         * MonitorControl/examples/main.cpp:
         * MonitorControl/examples/simple.mpc:
-        
+
           - Added code to test monitor point instantiation and
             addition to the registry.
-            
+
           - Added code to catch MapError exception.
-          
+
           - Added preprocessor flag for enabling monitors to the
             MPC file.
-            
+
           - Tested example for correct behavior when
             - Adding a single monitor correctly
             - Adding the same monitor a second time
             - Passing a null monitor pointer to the registry and
               catching the resulting MapError exception
-              
-          - Purify checks for memory leaks for all the above 
+
+          - Purify checks for memory leaks for all the above
             scenarios
 
 Thu Jan 17 21:33:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -265,15 +270,15 @@ Thu Jan 17 21:33:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/MonitorPointRegistry.cpp:
         * MonitorControl/MonitorControl.h:
         * MonitorControl/BytesSentMonitor.h:
-        
+
           New files, beginning the implementation of monitor and
           control features that can be added to applications that
           use ACE.
-        
+
         * MonitorControl/examples/svc.conf:
         * MonitorControl/examples/main.cpp:
         * MonitorControl/examples/simple.mpc:
-        
+
           Simple example executable, used at present for testing
           the bits of the MonitorControl lib above as they are
           added.

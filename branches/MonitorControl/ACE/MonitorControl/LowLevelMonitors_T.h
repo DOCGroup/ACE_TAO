@@ -43,15 +43,15 @@ namespace ACE
     template<bool ENABLED>
     class CPULoadMonitor : public MonitorPoint<ENABLED>
     {
-      friend class ACE_Singleton<CPULoadMonitor, ACE_Null_Mutex>;
-    
+      friend class ACE_Singleton<CPULoadMonitor <ENABLED>, ACE_Null_Mutex>;
+
     private:
       CPULoadMonitor (void);
       virtual ~CPULoadMonitor (void);
     };
-    
+
     //======================================================
-    
+
     /**
      * @class MemoryUsageMonitor
      *
@@ -60,15 +60,15 @@ namespace ACE
     template<bool ENABLED>
     class MemoryUsageMonitor : public MonitorPoint<ENABLED>
     {
-      friend class ACE_Singleton<MemoryUsageMonitor, ACE_Null_Mutex>;
-    
+      friend class ACE_Singleton<MemoryUsageMonitor <ENABLED>, ACE_Null_Mutex>;
+
     private:
       MemoryUsageMonitor (void);
       virtual ~MemoryUsageMonitor (void);
     };
-    
+
     //=======================================================
-    
+
     /**
      * @class NumThreadsMonitor
      *
@@ -77,15 +77,15 @@ namespace ACE
     template<bool ENABLED>
     class NumThreadsMonitor : public MonitorPoint<ENABLED>
     {
-      friend class ACE_Singleton<NumThreadsMonitor, ACE_Null_Mutex>;
-    
+      friend class ACE_Singleton<NumThreadsMonitor <ENABLED>, ACE_Null_Mutex>;
+
     private:
       NumThreadsMonitor (void);
       virtual ~NumThreadsMonitor (void);
     };
-    
+
     //=======================================================
-    
+
     /**
      * @class BytesSentMonitor
      *
@@ -94,15 +94,15 @@ namespace ACE
     template<bool ENABLED>
     class BytesSentMonitor : public MonitorPoint<ENABLED>
     {
-      friend class ACE_Singleton<BytesSentMonitor, ACE_Null_Mutex>;
-    
+      friend class ACE_Singleton<BytesSentMonitor <ENABLED>, ACE_Null_Mutex>;
+
     private:
       BytesSentMonitor (void);
       virtual ~BytesSentMonitor (void);
     };
-    
+
     //=======================================================
-    
+
     /**
      * @class PacketsSentMonitor
      *
@@ -111,39 +111,39 @@ namespace ACE
     template<bool ENABLED>
     class PacketsSentMonitor : public MonitorPoint<ENABLED>
     {
-      friend class ACE_Singleton<PacketsSentMonitor, ACE_Null_Mutex>;
-    
+      friend class ACE_Singleton<PacketsSentMonitor <ENABLED>, ACE_Null_Mutex>;
+
     private:
       PacketsSentMonitor (void);
       virtual ~PacketsSentMonitor (void);
     };
   }
 }
-    
+
 typedef ACE::MonitorControl::CPULoadMonitor<true>
   ENABLED_CPU_LOAD_MONITOR;
-  
+
 typedef ACE::MonitorControl::CPULoadMonitor<false>
   DISABLED_CPU_LOAD_MONITOR;
-    
+
 typedef ACE::MonitorControl::MemoryUsageMonitor<true>
   ENABLED_MEMORY_USAGE_MONITOR;
 
 typedef ACE::MonitorControl::MemoryUsageMonitor<false>
   DISABLED_MEMORY_USAGE_MONITOR;
-    
+
 typedef ACE::MonitorControl::NumThreadsMonitor<true>
   ENABLED_NUM_THREADS_MONITOR;
 
 typedef ACE::MonitorControl::NumThreadsMonitor<false>
   DISABLED_NUM_THREADS_MONITOR;
-    
+
 typedef ACE::MonitorControl::BytesSentMonitor<true>
   ENABLED_BYTES_SENT_MONITOR;
 
 typedef ACE::MonitorControl::BytesSentMonitor<false>
   DISABLED_BYTES_SENT_MONITOR;
-    
+
 typedef ACE::MonitorControl::PacketsSentMonitor<true>
   ENABLED_PACKETS_SENT_MONITOR;
 
