@@ -1,0 +1,76 @@
+// -*- MPC -*-
+// $Id$
+
+project(*IDL): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Client): taoserver, ftclientorb {
+  after += *IDL
+
+  exename = client 
+
+  verbatim (gnuace, local) {
+    ifeq ($(target_platform),)
+      tao_target := $(shell uname -srm)
+    else
+      tao_target = $(target_platform)
+    endif
+
+    ifeq (SunOS,$(findstring SunOS,$(tao_target)))
+      ifeq ($(CC),gcc)
+        LDFLAGS += -z now
+      endif
+    endif
+  }
+
+  Source_Files {
+    client.cpp
+    Hello.cpp
+    TestS.cpp
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project (*Server) : taoserver, ftclientorb, pi_server {
+  after += *IDL
+
+  exename = server
+
+  verbatim (gnuace, local) {
+    ifeq ($(target_platform),)
+      tao_target := $(shell uname -srm)
+    else
+      tao_target = $(target_platform)
+    endif
+
+    ifeq (SunOS,$(findstring SunOS,$(tao_target)))
+      ifeq ($(CC),gcc)
+        # So, in a standard build server requires '-z now' too.
+        ifndef debug
+          ifeq ($(optimize),1)
+            ifeq ($(inline),0)
+              LDFLAGS += -z now
+            endif # inline
+          endif # optimize
+        endif # debug
+      endif
+    endif
+  }
+
+  Source_Files {
+    server.cpp
+    Hello.cpp
+    ServerORBInitializer2.cpp
+    ServerRequest_Interceptor2.cpp
+    TestS.cpp
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}
