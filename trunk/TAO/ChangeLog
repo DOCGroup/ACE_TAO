@@ -1,3 +1,37 @@
+Mon Feb  4 12:35:07 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_2777_Regression:
+        * orbsvcs/tests/Bug_2777_Regression/README:
+        * orbsvcs/tests/Bug_2777_Regression/run_test.pl:
+
+          Regression test for bug #2777.
+
+        * tao/Strategies/SHMIOP_Profile.cpp:
+
+          Avoid double incrment of object key pointer. This fixes bug #2777.
+
+        * orbsvcs/tests/Bug_3215_Regression:
+        * orbsvcs/tests/Bug_3215_Regression/Bug_3215_Regression.mpc:
+        * orbsvcs/tests/Bug_3215_Regression/Hello.h:
+        * orbsvcs/tests/Bug_3215_Regression/Hello.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/README:
+        * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.h:
+        * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/ServerRequest_Interceptor2.h:
+        * orbsvcs/tests/Bug_3215_Regression/ServerRequest_Interceptor2.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/Test.idl:
+        * orbsvcs/tests/Bug_3215_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_3215_Regression/server.cpp:
+
+          Regression test for bug #3215.
+
+        * tao/Stub.inl:
+        * tao/Stub.cpp:
+
+          Prevent deletion of permanent location forward profiles when unwinding
+          the forward stack on exception. This fixes bug #3215.
+
 Sun Feb  3 19:48:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.h:
