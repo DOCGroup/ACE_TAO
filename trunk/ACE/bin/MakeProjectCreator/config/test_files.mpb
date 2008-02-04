@@ -1,0 +1,9 @@
+// $Id$
+project {
+  Define_Custom(Test) {
+  }
+  Test_Files {
+    run_test.pl
+  }
+}
+
