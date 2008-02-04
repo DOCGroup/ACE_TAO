@@ -1,3 +1,14 @@
+Mon Feb  4 18:37:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/test_files.mpb:
+          New file to list run_test.pl as Test_Files in for example a msvc
+          project file. Thanks to Adam Mitz for suggesting a way to do
+          this. This fixes bugzilla 3212
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Added test_files and build_files as base projects so that we
+          get *.mpc/*.mpb/*.mwc/run_test.pl added to project files
+
 Mon Feb  4 12:34:06 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_other_tests.lst:
