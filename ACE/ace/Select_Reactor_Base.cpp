@@ -87,20 +87,17 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::open");
 
-#if defined (ACE_WIN32)
   if (this->event_handlers_.open (size) == -1)
     return -1;
-#else
-  if (this->event_handlers_.size (size) == -1)
-    return -1;
 
+#if !defined (ACE_WIN32)
   // Initialize the ACE_Event_Handler pointers to 0.
   std::fill (this->event_handlers_.begin (),
              this->event_handlers_.end (),
              static_cast<ACE_Event_Handler *> (0));
 
   this->max_handlep1_ = 0;
-#endif /* ACE_WIN32 */
+#endif /* !ACE_WIN32 */
 
   // Try to increase the number of handles if <size> is greater than
   // the current limit.
@@ -653,8 +650,10 @@ ACE_Select_Reactor_Notify::close (void)
            r > 0;
            r = read_notify_pipe(notification_pipe_.read_handle(), b))
         {
-          if (b.eh_ == 0) continue;
-          b.eh_->remove_reference();
+          if (b.eh_ != 0)
+            {
+              b.eh_->remove_reference();
+            }
         }
     }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
