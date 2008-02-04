@@ -1,3 +1,17 @@
+Mon Feb  4 19:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.6.h:
+          Simplified this file
+
+        * ace/Obstack_T.cpp:
+          Initialise a few pointers
+
+        * ace/Select_Reactor_Base.cpp:
+          Removed duplicated code, made loop easier to read
+
+        * ace/Naming_Context.{h,cpp,inl}:
+          Use bool and added new inline file
+
 Mon Feb  4 18:37:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/test_files.mpb:

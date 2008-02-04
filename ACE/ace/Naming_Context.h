@@ -331,10 +331,10 @@ public:
   char *base_address (void);
 
   /// Get use of registry in naming
-  int use_registry (void);
+  bool use_registry (void) const;
 
   /// Set use of registry in naming
-  void use_registry (int);
+  void use_registry (bool x);
 
   /// Return debug status
   int debug (void);
@@ -350,7 +350,7 @@ private:
   int verbosity_;
 
   /// Use Win32 Registry
-  int use_registry_;
+  bool use_registry_;
 
   /// Port to connect to nameserver process.
   int nameserver_port_;
@@ -375,6 +375,10 @@ private:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+#include "ace/Naming_Context.inl"
+#endif /* __ACE_INLINE__ */
 
 ACE_FACTORY_DECLARE (ACE, ACE_Naming_Context)
 ACE_STATIC_SVC_DECLARE_EXPORT (ACE, ACE_Naming_Context)

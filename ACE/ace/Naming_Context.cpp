@@ -16,6 +16,10 @@
 
 ACE_RCSID(ace, Naming_Context, "$Id$")
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Naming_Context.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Make life easier later on...
@@ -411,7 +415,7 @@ ACE_Naming_Context::fini (void)
 ACE_Name_Options::ACE_Name_Options (void)
   : debugging_ (0),
     verbosity_ (0),
-    use_registry_ (0),
+    use_registry_ (false),
     nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
     nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     process_name_ (0),
@@ -536,48 +540,6 @@ ACE_Name_Options::context (ACE_Naming_Context::Context_Scope_Type context)
   this->context_ = context;
 }
 
-const ACE_TCHAR *
-ACE_Name_Options::process_name (void)
-{
-  ACE_TRACE ("ACE_Name_Options::process_name");
-  return this->process_name_;
-}
-
-const ACE_TCHAR *
-ACE_Name_Options::namespace_dir (void)
-{
-  ACE_TRACE ("ACE_Name_Options::namespace_dir");
-  return this->namespace_dir_;
-}
-
-int
-ACE_Name_Options::debug (void)
-{
-  ACE_TRACE ("ACE_Name_Options::debug");
-  return this->debugging_;
-}
-
-int
-ACE_Name_Options::use_registry (void)
-{
-  ACE_TRACE ("ACE_Name_Options::use_registry");
-  return this->use_registry_;
-}
-
-void
-ACE_Name_Options::use_registry (int x)
-{
-  ACE_TRACE ("ACE_Name_Options::use_registry");
-  this->use_registry_ = x;
-}
-
-int
-ACE_Name_Options::verbose (void)
-{
-  ACE_TRACE ("ACE_Name_Options::verbose");
-  return this->verbosity_;
-}
-
 void
 ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -619,7 +581,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->debugging_ = 1;
         break;
       case 'r':
-        this->use_registry_ = 1;
+        this->use_registry_ = true;
         break;
       case 'h':
         this->nameserver_host (get_opt.opt_arg ());
