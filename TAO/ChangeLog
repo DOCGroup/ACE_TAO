@@ -1,3 +1,17 @@
+Mon Feb  4 13:42:29 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_3215_Regression/Bug_3215_Regression.mpc:
+        * orbsvcs/tests/Bug_3215_Regression/Hello.h:
+        * orbsvcs/tests/Bug_3215_Regression/Hello.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.h:
+        * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/ServerRequest_Interceptor2.h:
+        * orbsvcs/tests/Bug_3215_Regression/ServerRequest_Interceptor2.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/run_test.pl:
+
+          Fix fuzz errors and weirdness involving disappearing run_test.pl
+          contents.
+
 Mon Feb  4 12:35:07 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2777_Regression:
