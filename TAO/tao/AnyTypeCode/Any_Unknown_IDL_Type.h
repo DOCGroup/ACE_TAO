@@ -16,15 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Lock_Adapter_T.h"
 
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/CDR.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
