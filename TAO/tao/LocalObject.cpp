@@ -120,14 +120,15 @@ CORBA::LocalObject::_request (const char *)
   throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
 }
 
-CORBA::Object_ptr
-CORBA::LocalObject::_get_component (void)
+char *
+CORBA::LocalObject::_repository_id (void)
 {
   throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
-char *
-CORBA::LocalObject::_repository_id (void)
+#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
+CORBA::Object_ptr
+CORBA::LocalObject::_get_component (void)
 {
   throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
@@ -143,6 +144,7 @@ CORBA::LocalObject::_get_implementation (void)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
+#endif
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 

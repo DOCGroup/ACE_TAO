@@ -42,8 +42,7 @@ namespace TAO
       void set_servant (PortableServer::Servant servant);
 
       void validate_servant_manager (
-        PortableServer::ServantManager_ptr servant_manager
-       );
+        PortableServer::ServantManager_ptr servant_manager);
 
       virtual PortableServer::Servant system_id_to_servant (
         const PortableServer::ObjectId &system_id);
