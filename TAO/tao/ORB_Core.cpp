@@ -1111,7 +1111,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   (void) ACE_OS::signal (SIGPIPE, (ACE_SignalHandler) SIG_IGN);
 #endif /* SIGPIPE */
 
-
   // Calling the open method here so that the svc.conf file is
   // opened and TAO_default_resource_factory::init () is called by the
   // time this method is called.
@@ -1125,7 +1124,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   if (trf == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Resource Factory instance")));
       throw ::CORBA::INTERNAL (
@@ -1145,7 +1144,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   if (reactor == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to initialize reactor")));
       throw ::CORBA::INITIALIZE (
         CORBA::SystemException::_tao_minor_code (
@@ -1159,7 +1158,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   if (ssf == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Server Strategy Factory instance")));
       throw ::CORBA::INTERNAL (
@@ -3116,7 +3115,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("IORInterceptor Adapter Factory instance")));
 
@@ -3173,7 +3172,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Client Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
@@ -3222,7 +3221,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Server Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
@@ -3246,7 +3245,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Client Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
@@ -3270,7 +3269,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Server Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));

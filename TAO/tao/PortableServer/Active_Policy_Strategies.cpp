@@ -64,8 +64,7 @@ namespace TAO
 
     void
     Active_Policy_Strategies::update (Cached_Policies &policies,
-                                      ::TAO_Root_POA *poa
-                                      )
+                                      ::TAO_Root_POA *poa)
     {
       this->thread_strategy_factory_ =
         ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategyFactory");
