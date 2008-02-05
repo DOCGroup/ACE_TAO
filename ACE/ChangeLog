@@ -1,3 +1,9 @@
+Tue Feb  5 07:58:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_Base.cpp:
+          Revert change of yesterday, caused compile errors on non win32
+          platforms
+
 Mon Feb  4 19:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.6.h:
