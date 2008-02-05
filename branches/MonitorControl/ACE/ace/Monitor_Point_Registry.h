@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file ControlActionRegistry.h
+ * @file Monitor_Point_Registry.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef CONTROLACTIONREGISTRY_H
-#define CONTROLACTIONREGISTRY_H
+#ifndef MONITOR_POINT_REGISTRY_H
+#define MONITOR_POINT_REGISTRY_H
 
 #include /**/ "ace/pre.h"
 
@@ -19,36 +19,37 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "MonitorControl/GenericRegistry.h"
+#include "ace/Monitor_Base.h"
+#include "ace/MC_Generic_Registry.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class ControlAction;
+class Statistic;
 
 namespace ACE
 {
   namespace MonitorControl
   {
     /**
-     * @class ControlActionRegistry
+     * @class Monitor_Point_Registry
      *
-     * @brief Specializaton of GenericRegistry.
+     * @brief Specializaton of Generic_MC_Registry.
      *
-     * Stores instances of the control actions.
+     * Stores instances of the monitor point classes.
      */
-    class MONITORCONTROL_Export ControlActionRegistry
-      : public GenericRegistry
+    class ACE_Export Monitor_Point_Registry
+      : public MC_Generic_Registry
     {
     public:
       /// Used to help ensure that there is only a single instance
-      /// per process of ControlRegistry.
-      static ControlActionRegistry* instance (void);
+      /// per process of MonitorPointRegistry.
+      static Monitor_Point_Registry* instance (void);
       
-      ControlActionRegistry (void);
-      ~ControlActionRegistry (void);
+      Monitor_Point_Registry (void);
+      ~Monitor_Point_Registry (void);
       
       /// The lookup operation.
-      ControlAction* get (const ACE_CString& name) const;
+      Monitor_Base* get (const ACE_CString& name) const;
     };
   }
 }
@@ -57,4 +58,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // CONTROLACTIONREGISTRY_H
+#endif // MONITOR_POINT_REGISTRY_H

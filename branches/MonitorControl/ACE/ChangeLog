@@ -1,3 +1,54 @@
+Tue Feb  5 19:01:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/ControlActionRegistry.cpp:
+        * MonitorControl/GenericRegistry.h:
+        * MonitorControl/ControlAction.h:
+        * MonitorControl/MonitorControl.cpp:
+        * MonitorControl/Admin.h:
+        * MonitorControl/MonitorPointRegistry.h:
+        * MonitorControl/GenericRegistry.cpp:
+        * MonitorControl/ControlActionRegistry.h:
+        * MonitorControl/ControlAction.cpp:
+        * MonitorControl/Admin.cpp:
+        * MonitorControl/MonitorPointRegistry.cpp:
+
+          Files moved from ACE_ROOT/MonitorControl
+          to ACE_ROOT/ace and renamed. The registry
+          admin and service object classes needed
+          to be in ACE to avoid circular dependencies,
+          and were renamed according to traditional
+          ACE style.
+
+        * ace/Control_Action.cpp:
+        * ace/Control_Action.h:
+        * ace/MC_Admin.h:
+        * ace/MC_Admin_Manager.cpp:
+        * ace/Monitor_Point_Registry.cpp:
+        * ace/Control_Action_Registry.cpp:
+        * ace/MC_Generic_Registry.h:
+        * ace/MC_Generic_Registry.cpp:
+        * ace/Monitor_Point_Registry.h:
+        * ace/Control_Action_Registry.h:
+        * ace/MC_Admin_Manager.h:
+        * ace/MC_Admin.cpp:
+
+          New files, moved from ACE_ROOT/MonitorControl
+          and renamed.
+
+        * ace/ace.mpc:
+        * ace/Monitor_Base.h:
+        * ace/Message_Queue_Monitor.cpp:
+        * ace/Message_Queue_Monitor.h:
+        * ace/Message_Queue_T.cpp:
+        * MonitorControl/AutoUpdateStarter.cpp:
+        * MonitorControl/MonitorControl.h:
+        * MonitorControl/examples/main.cpp:
+        * MonitorControl/MonitorControl.mpc:
+
+          Changes to existing ACE and MonitorControl
+          files consistent with the renaming of the
+          contents of the moved files above.
+
 Mon Feb  4 14:07:27 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MonitorControl/LowLevelMonitors_T.h:

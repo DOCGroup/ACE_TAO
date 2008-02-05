@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file GenericRegistry.h
+ * @file MC_Generic_Registry.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef GENERICREGISTRY_H
-#define GENERICREGISTRY_H
+#ifndef MC_GENERIC_REGISTRY_H
+#define MC_GENERIC_REGISTRY_H
 
 #include /**/ "ace/pre.h"
 
@@ -25,8 +25,6 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/MonitorControl_Types.h"
 
-#include "MonitorControl/MonitorControl_export.h"
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -34,7 +32,7 @@ namespace ACE
   namespace MonitorControl
   {
     /**
-     * @class GenericRegistry
+     * @class MC_Generic_Registry
      *
      * @brief Common base class for the statistic and control registries.
      *
@@ -44,7 +42,7 @@ namespace ACE
      * be one global registry each for monitor points and
      * control actions.
      */
-    class MONITORCONTROL_Export GenericRegistry
+    class ACE_Export MC_Generic_Registry
     {
     public:
       /**
@@ -71,8 +69,8 @@ namespace ACE
         ErrorReason why_;
       };
       
-      GenericRegistry (void);
-      ~GenericRegistry (void);
+      MC_Generic_Registry (void);
+      ~MC_Generic_Registry (void);
       
       /// Adds a Statistic or ControlAction to its respecive registry.
       /// Throws MapError.
@@ -98,4 +96,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // GENERICREGISTRY_H
+#endif // MC_GENERIC_REGISTRY_H

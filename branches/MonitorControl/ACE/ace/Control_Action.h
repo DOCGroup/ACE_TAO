@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file ControlAction.h
+ * @file Control_Action.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef CONTROLACTION_H
-#define CONTROLACTION_H
+#ifndef CONTROL_ACTION_H
+#define CONTROL_ACTION_H
 
 #include /**/ "ace/pre.h"
 
@@ -20,8 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/MonitorControl_Types.h"
-
-#include "MonitorControl/MonitorControl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,16 +42,16 @@ namespace ACE
      *       for a disabled monitor point, the associated
      *       control action (if any) won't be instantiated.
      */
-    class MONITORCONTROL_Export ControlAction : public MC_Generic
+    class ACE_Export Control_Action : public MC_Generic
     {
     public:
       /// To be implemented by the concrete derived class.
       virtual void execute (const char* command) = 0;
       
     protected:
-      ControlAction (void);
-      ControlAction (const char* name);
-      virtual ~ControlAction (void);
+      Control_Action (void);
+      Control_Action (const char* name);
+      virtual ~Control_Action (void);
     };
   }
 }
@@ -62,4 +60,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // CONTROLACTION_H
+#endif // CONTROL_ACTION_H

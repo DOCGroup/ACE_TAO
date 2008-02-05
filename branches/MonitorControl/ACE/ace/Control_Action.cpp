@@ -1,6 +1,6 @@
 // $Id$
 
-#include "MonitorControl/ControlAction.h"
+#include "ace/Control_Action.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -8,14 +8,14 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    ControlAction::ControlAction (void)
+    Control_Action::Control_Action (void)
     {}
   
-    ControlAction::ControlAction (const char* name)
+    Control_Action::Control_Action (const char* name)
       : MC_Generic (name)
     {}
     
-    ControlAction::~ControlAction (void)
+    Control_Action::~Control_Action (void)
     {}
   }
 }

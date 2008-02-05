@@ -72,8 +72,11 @@ namespace ACE
       /// Attaches the (optional) constrain to this monitor point.
       virtual void constraint (const ETCL_Constraint* constraint) = 0;
       
-      /// Updates the monitor's data if it is numeric.
+      /// Updates the monitor's data if it is a numeric floating point.
       virtual void receive (const double data) = 0;
+      
+      /// Updates the monitor's data if it is an integer size.
+      virtual void receive (const size_t data) = 0;
       
       /// Updates the monitor's data if it is textual.
       virtual void receive (const MonitorControl_Types::NameList& data) = 0;

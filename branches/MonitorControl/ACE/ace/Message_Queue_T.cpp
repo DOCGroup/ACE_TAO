@@ -975,7 +975,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::flush_i (void)
   // The monitor should output only if the size has actually changed.
   if (number_flushed > 0)
     {
-      this->monitor_.receive (static_cast<double> (this->cur_length_));
+      this->monitor_.receive (this->cur_length_);
     }
 #endif
 
@@ -1354,7 +1354,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
   first_item->next (0);
   
 #if defined (ENABLE_ACE_MONITORS)
-  this->monitor_.receive (static_cast<double> (this->cur_length_));
+  this->monitor_.receive (this->cur_length_);
 #endif
 
   // Only signal enqueueing threads if we've fallen below the low
@@ -1873,7 +1873,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::notify");
   
 #if defined (ENABLE_ACE_MONITORS)
-  this->monitor_.receive (static_cast<double> (this->cur_length_));
+  this->monitor_.receive (this->cur_length_);
 #endif
 
   // By default, don't do anything.

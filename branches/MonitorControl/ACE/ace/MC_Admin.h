@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file Admin.h
+ * @file MC_Admin.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef ADMIN_H
-#define ADMIN_H
+#ifndef MC_ADMIN_H
+#define MC_ADMIN_H
 
 #include /**/ "ace/pre.h"
 
@@ -21,8 +21,7 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Monitor_Base.h"
-
-#include "MonitorControl/ControlAction.h"
+#include "ace/Control_Action.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,7 +62,7 @@ namespace ACE
      * arg, the monitor point will get registered with the reactor, which
      * will prompt it to automatically update its data.
      */
-    class MONITORCONTROL_Export Admin
+    class ACE_Export MC_Admin
     {
     public:
       /**
@@ -86,8 +85,8 @@ namespace ACE
         MonitorControl_Types::NameList names_;
       };
       
-      Admin (void);
-      ~Admin (void);
+      MC_Admin (void);
+      ~MC_Admin (void);
       
       /// Add or remove monitor points from a global registry
       /// (see Registry.h). If the auto_update_msec arg is non-zero,
@@ -103,7 +102,7 @@ namespace ACE
       /// are actions that may be triggered by a constraint or called
       /// from the application directly.
       
-      bool add_control_action (ControlAction* control_action);
+      bool add_control_action (Control_Action* control_action);
                               
       /// Resets the monitor points found in the registry by
       /// lookup of the passed list of names. Throws InvalidName
@@ -133,4 +132,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // ADMIN_H
+#endif // MC_ADMIN_H

@@ -48,6 +48,11 @@ namespace ACE
     }
     
     void
+    Message_Queue_Monitor::receive (const size_t /* data */)
+    {
+    }
+    
+    void
     Message_Queue_Monitor::receive (
       const MonitorControl_Types::NameList& /* data */)
     {

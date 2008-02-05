@@ -1,9 +1,8 @@
 // $Id$
 
+#include "ace/MC_Admin.h"
 #include "ace/Reactor.h"
-
-#include "MonitorControl/Admin.h"
-#include "MonitorControl/MonitorPointRegistry.h"
+#include "ace/Monitor_Point_Registry.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -25,24 +24,24 @@ namespace ACE
     
     //====================================================================
     
-    Admin::InvalidName::InvalidName (
+    MC_Admin::InvalidName::InvalidName (
       const MonitorControl_Types::NameList& names)
       : names_ (names)
     {}
     
-    Admin::InvalidName::~InvalidName (void)
+    MC_Admin::InvalidName::~InvalidName (void)
     {
       // TODO - destroy name list?
     }
     
     //====================================================================
     
-    Admin::Admin (void)
+    MC_Admin::MC_Admin (void)
       : reactor_ (ACE_Reactor::instance ()),
         delete_reactor_ (false)
     {}
     
-    Admin::~Admin (void)
+    MC_Admin::~MC_Admin (void)
     {
       if (this->delete_reactor_)
         {
@@ -57,11 +56,11 @@ namespace ACE
     }
     
     bool
-    Admin::add_monitor_point (Monitor_Base* monitor_point,
-                              unsigned long auto_update_msec)
+    MC_Admin::add_monitor_point (Monitor_Base* monitor_point,
+                                 unsigned long auto_update_msec)
     {
       bool good_reg_add =
-        MonitorPointRegistry::instance ()->add (monitor_point);
+        Monitor_Point_Registry::instance ()->add (monitor_point);
        
       /// @@@ (JP) TODO if the boolean in false.  
       if (good_reg_add && auto_update_msec != 0)
@@ -80,34 +79,34 @@ namespace ACE
     }
     
     bool
-    Admin::add_control_action (ControlAction* /* control_action */)
+    MC_Admin::add_control_action (Control_Action* /* control_action */)
     {
       // TODO
       return true;
     }
     
     void
-    Admin::clear_statistics (const MonitorControl_Types::NameList& /* names */)
+    MC_Admin::clear_statistics (const MonitorControl_Types::NameList& /* names */)
     {
       // TODO
     }
     
     void
-    Admin::update_monitors (const MonitorControl_Types::NameList& /* names */,
-                            bool /* notify */)
+    MC_Admin::update_monitors (const MonitorControl_Types::NameList& /* names */,
+                               bool /* notify */)
     {
       // TODO
     }
     
     void
-    Admin::reactor (ACE_Reactor* new_reactor)
+    MC_Admin::reactor (ACE_Reactor* new_reactor)
     {
       this->reactor_ = new_reactor;
       this->delete_reactor_ = true;
     }
     
     ACE_Reactor*
-    Admin::reactor (void) const
+    MC_Admin::reactor (void) const
     {
       return this->reactor_;
     }

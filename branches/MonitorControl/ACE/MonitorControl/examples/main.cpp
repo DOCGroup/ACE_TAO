@@ -58,16 +58,16 @@ int main (int argc, char *argv [])
     STOP_PERIODIC_MONITORS;
     */
   }
-  catch (const GenericRegistry::MapError &e)
+  catch (const ACE::MonitorControl::MC_Generic_Registry::MapError &e)
   {
     switch (e.why_)
     {
-      case GenericRegistry::MapError::MAP_ERROR_BIND_FAILURE:
+      case ACE::MonitorControl::MC_Generic_Registry::MapError::MAP_ERROR_BIND_FAILURE:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Monitor add failed\n"),
                           -1);
         break;
-      case GenericRegistry::MapError::MAP_ERROR_INVALID_VALUE:
+      case ACE::MonitorControl::MC_Generic_Registry::MapError::MAP_ERROR_INVALID_VALUE:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Invalid monitor\n"),
                           -1);

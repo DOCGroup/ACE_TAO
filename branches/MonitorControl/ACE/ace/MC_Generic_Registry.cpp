@@ -1,6 +1,6 @@
 // $Id$
 
-#include "MonitorControl/GenericRegistry.h"
+#include "ace/MC_Generic_Registry.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -8,18 +8,18 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    GenericRegistry::MapError::MapError (ErrorReason why)
+    MC_Generic_Registry::MapError::MapError (ErrorReason why)
       : why_ (why)
     {}
     
-    GenericRegistry::GenericRegistry (void)
+    MC_Generic_Registry::MC_Generic_Registry (void)
     {}
     
-    GenericRegistry::~GenericRegistry (void)
+    MC_Generic_Registry::~MC_Generic_Registry (void)
     {}
     
     bool
-    GenericRegistry::add (MC_Generic* type)
+    MC_Generic_Registry::add (MC_Generic* type)
     {
       ACE_WRITE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
       
@@ -44,7 +44,7 @@ namespace ACE
     }
     
     const MonitorControl_Types::NameList&
-    GenericRegistry::names (void) const
+    MC_Generic_Registry::names (void) const
     {
       // TODO
       return this->name_cache_;

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file MonitorPointRegistry.h
+ * @file Control_Action_Registry.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef MONITORPOINTREGISTRY_H
-#define MONITORPOINTREGISTRY_H
+#ifndef CONTROL_ACTION_REGISTRY_H
+#define CONTROL_ACTION_REGISTRY_H
 
 #include /**/ "ace/pre.h"
 
@@ -19,38 +19,36 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Monitor_Base.h"
-
-#include "MonitorControl/GenericRegistry.h"
+#include "ace/MC_Generic_Registry.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class Statistic;
 
 namespace ACE
 {
   namespace MonitorControl
   {
+    class Control_Action;
+
     /**
-     * @class MonitorPointRegistry
+     * @class Control_Action_Registry
      *
-     * @brief Specializaton of GenericRegistry.
+     * @brief Specializaton of Generic_MC_Registry.
      *
-     * Stores instances of the monitor point classes.
+     * Stores instances of the control actions.
      */
-    class MONITORCONTROL_Export MonitorPointRegistry
-      : public GenericRegistry
+    class ACE_Export Control_Action_Registry
+      : public MC_Generic_Registry
     {
     public:
       /// Used to help ensure that there is only a single instance
-      /// per process of MonitorPointRegistry.
-      static MonitorPointRegistry* instance (void);
+      /// per process of ControlRegistry.
+      static Control_Action_Registry* instance (void);
       
-      MonitorPointRegistry (void);
-      ~MonitorPointRegistry (void);
+      Control_Action_Registry (void);
+      ~Control_Action_Registry (void);
       
       /// The lookup operation.
-      Monitor_Base* get (const ACE_CString& name) const;
+      Control_Action* get (const ACE_CString& name) const;
     };
   }
 }
@@ -59,4 +57,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // MONITORPOINTREGISTRY_H
+#endif // CONTROL_ACTION_REGISTRY_H

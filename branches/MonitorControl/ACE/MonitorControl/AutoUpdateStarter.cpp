@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Reactor.h"
+#include "ace/MC_Admin_Manager.h"
 
 #include "MonitorControl/AutoUpdateStarter.h"
 #include "MonitorControl/MonitorControl.h"
