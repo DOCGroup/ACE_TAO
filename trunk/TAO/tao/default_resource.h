@@ -319,8 +319,6 @@ private:
   bool drop_replies_;
 };
 
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Resource_Factory)

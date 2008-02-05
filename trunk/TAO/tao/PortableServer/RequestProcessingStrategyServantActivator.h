@@ -42,26 +42,22 @@ namespace TAO
 
       PortableServer::ServantManager_ptr get_servant_manager (void);
 
-      void set_servant_manager (PortableServer::ServantManager_ptr imgr
-                                );
+      void set_servant_manager (PortableServer::ServantManager_ptr imgr);
 
       virtual TAO_SERVANT_LOCATION locate_servant (
         const PortableServer::ObjectId &system_id,
-        PortableServer::Servant &servant
-       );
+        PortableServer::Servant &servant);
 
       virtual PortableServer::Servant locate_servant (
         const char *operation,
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-        bool &wait_occurred_restart_call
-       );
+        bool &wait_occurred_restart_call);
 
       virtual void cleanup_servant (
         PortableServer::Servant servant,
-        const PortableServer::ObjectId &user_id
-       );
+        const PortableServer::ObjectId &user_id);
 
       virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
 
@@ -71,13 +67,11 @@ namespace TAO
 
     private:
       PortableServer::Servant incarnate_servant (
-        const PortableServer::ObjectId& object_id
-       );
+        const PortableServer::ObjectId& object_id);
 
       void etherealize_servant (const PortableServer::ObjectId& object_id,
         PortableServer::Servant servant,
-        CORBA::Boolean cleanup_in_progress
-       );
+        CORBA::Boolean cleanup_in_progress);
 
     private:
       PortableServer::ServantActivator_var servant_activator_;

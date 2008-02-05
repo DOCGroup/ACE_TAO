@@ -30,8 +30,13 @@ TAO_Parser_Registry::~TAO_Parser_Registry (void)
 int
 TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
 {
-  char **names;
+  char **names = 0;
   int number_of_names = 0;
+
+  if (orb_core->resource_factory () == 0)
+    {
+      return -1;
+    }
 
   orb_core->resource_factory ()->get_parser_names (names, number_of_names);
 

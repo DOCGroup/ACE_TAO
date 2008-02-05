@@ -1,3 +1,35 @@
+Tue Feb  5 19:56:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.h:
+          Layout change
+
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.h:
+          Improved CORBA/e support
+
+        * tao/ORB_Core.cpp:
+          Updated a few ACE_DEBUG statements to have the normal formatting
+
+        * tao/Parser_Registry.cpp:
+          Guard against the fact that the resource factory could be zero. This
+          could happen when there are issues with static initialisation
+
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+          Layout changes
+
+        * tao/PortableServer/POA.pidl:
+        * tao/PortableServer/RequestProcessingStrategy.h
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.cpp
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.h
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.h
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.h
+        * tao/PortableServer/RequestProcessingStrategyServantManager.h
+          CORBA/e and layout improvements
+
+        * tao/TAO_Internal.cpp:
+          Use prefix decrement
+
 Mon Feb  4 15:02:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Any_Unknown_IDL_Type.h:
