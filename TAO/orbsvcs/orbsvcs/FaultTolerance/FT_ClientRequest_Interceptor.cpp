@@ -29,6 +29,7 @@ namespace TAO
       , uuid_ (0)
       , lock_ (0)
       , retention_id_ (0)
+      , ft_send_extended_sc_ (false)
   {
     ACE_Utils::UUID_GENERATOR::instance ()->init ();
 
@@ -226,48 +227,53 @@ namespace TAO
   {
     try
     {
-      // Grab the object group version
-      // @@ NOTE: This involves an allocation and a dellocation. This is
-      // really bad.
-      TAO_InputCDR cdr (reinterpret_cast<const char*> (tp->component_data.get_buffer ()),
-        tp->component_data.length ());
-      CORBA::Boolean byte_order;
-
-      if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        return;
-
-      cdr.reset_byte_order (static_cast<int> (byte_order));
-
-      FT::TagFTGroupTaggedComponent gtc;
-
-      if ((cdr >> gtc) == 0)
-        throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
-
       IOP::ServiceContext sc;
       sc.context_id = IOP::FT_GROUP_VERSION;
-
-      TAO_OutputCDR ocdr;
-      if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
-        return;
-        //ACE_THROW (CORBA::MARSHAL ());
-
-      if (!(ocdr << gtc.object_group_ref_version))
-        return;
-        //ACE_THROW (CORBA::MARSHAL ());
-
-      CORBA::ULong length =
-        static_cast<CORBA::ULong> (ocdr.total_length ());
-      sc.context_data.length (length);
-      CORBA::Octet *buf = sc.context_data.get_buffer ();
-
-      for (const ACE_Message_Block *i = ocdr.begin ();
-        i != 0;
-        i = i->cont ())
-      {
-        ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-        buf += i->length ();
-      }
-
+      
+      if (this->ft_send_extended_sc_)
+        {
+          // We send the whole tagged component as a service context.
+          sc.context_data.length (tp->component_data.length ());
+          CORBA::Octet *sc_buf = sc.context_data.get_buffer ();
+          ACE_OS::memcpy (sc_buf, tp->component_data.get_buffer (), tp->component_data.length ());
+        }
+      else
+        {
+          // Grab the object group version
+          TAO_InputCDR cdr (reinterpret_cast<const char*> (tp->component_data.get_buffer ()),
+            tp->component_data.length ());
+          CORBA::Boolean byte_order;
+    
+          if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+            return;
+    
+          cdr.reset_byte_order (static_cast<int> (byte_order));
+    
+          FT::TagFTGroupTaggedComponent gtc;
+    
+          if ((cdr >> gtc) == 0)
+            throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
+    
+          TAO_OutputCDR ocdr;
+          if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+            return;
+            
+          if (!(ocdr << gtc.object_group_ref_version))
+            return;
+            
+          CORBA::ULong length =
+            static_cast<CORBA::ULong> (ocdr.total_length ());
+          sc.context_data.length (length);
+          CORBA::Octet *buf = sc.context_data.get_buffer ();
+    
+          for (const ACE_Message_Block *i = ocdr.begin ();
+            i != 0;
+            i = i->cont ())
+          {
+            ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+            buf += i->length ();
+          }
+        }
       // Add this context to the service context list.
       ri->add_request_service_context (sc,
         0);
@@ -276,7 +282,6 @@ namespace TAO
     catch (const CORBA::Exception&)
     {
       // Not much can be done anyway. Just keep quiet
-      // ACE_RE_THROW;
     }
 
     return;
@@ -327,11 +332,9 @@ namespace TAO
       TAO_OutputCDR ocdr;
       if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
         return;
-        //ACE_THROW (CORBA::MARSHAL ());
 
       if (!(ocdr << ftrsc))
         return;
-        // ACE_THROW (CORBA::MARSHAL ());
 
       // Make a *copy* of the CDR stream...
       CORBA::ULong length =
@@ -353,7 +356,6 @@ namespace TAO
     }
     catch (const CORBA::Exception&)
     {
-      // ACE_RE_THROW;
     }
     return;
   }
@@ -391,6 +393,12 @@ namespace TAO
     t += TAO_FT_Service_Callbacks::now ();
 
     return t;
+  }
+
+  void
+  FT_ClientRequest_Interceptor::ft_send_extended_sc (CORBA::Boolean send)
+  {
+    this->ft_send_extended_sc_ = send;
   }
 }
 

@@ -144,6 +144,12 @@ TAO_ORB_Core::fault_tolerance_service (void)
   return this->ft_service_;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::ft_send_extended_sc (void)
+{
+  return this->ft_send_extended_sc_;
+}
+
 ACE_INLINE ACE_Thread_Manager *
 TAO_ORB_Core::thr_mgr (void)
 {
