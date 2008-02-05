@@ -44,7 +44,7 @@ class Client
   //  if tv is 0, remember to unsleep server.
   bool flood_connection (ACE_Time_Value& tv);
   bool unplug_transport ();
-  bool test_oneway_timeout (bool flooded, bool simulate_flooding);
+  bool test_oneway_timeout (bool flood);
 };
 
 #endif //_CLIENT_
