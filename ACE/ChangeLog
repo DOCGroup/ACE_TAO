@@ -1,3 +1,9 @@
+Tue Feb  5 13:30:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Added build_files as base project, test_files is the one that
+          causes some problems
+
 Tue Feb  5 08:07:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
