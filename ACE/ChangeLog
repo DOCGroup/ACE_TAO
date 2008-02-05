@@ -1,3 +1,9 @@
+Tue Feb  5 08:07:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Temporarily remove test_files and build_files, it seems
+          to cause some errors in the windows builds
+
 Tue Feb  5 07:58:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.cpp:
