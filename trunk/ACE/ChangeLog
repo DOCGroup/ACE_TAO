@@ -1,3 +1,13 @@
+Tue Feb  5 18:51:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/test_files.mpb:
+          Use run_test*.pl as filter and automatic=0. That way we only
+          generate projects when there is a run_test.pl file. Thanks to
+          Adam Mitz for the suggestions.
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Readded test_files
+
 Tue Feb  5 13:49:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
