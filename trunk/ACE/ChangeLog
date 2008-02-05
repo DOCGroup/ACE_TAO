@@ -1,3 +1,9 @@
+Tue Feb  5 22:15:29 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Scheduled bug #3216.
+
 Tue Feb  5 18:51:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/test_files.mpb:
