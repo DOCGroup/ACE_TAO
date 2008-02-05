@@ -1,3 +1,9 @@
+Tue Feb  5 13:49:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          No need to set TAO_IDL, TAO_IDL_DEP, etc, just use HOST_ROOT.
+          Also set the values in such a way we also support a Solaris host.
+
 Tue Feb  5 13:30:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
