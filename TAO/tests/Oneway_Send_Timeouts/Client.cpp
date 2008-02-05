@@ -188,52 +188,38 @@ Client::run ()
   bool status = true;
 
   try {
-    if (one_way_test_)
-      {
-        ACE_Time_Value tv (0);
-        bool flooded = false;
-        bool test_condition_met = false;
-        if (flush_strategy_ == BLOCKING) {
-          test_obj_->sleep (static_cast<CORBA::Long>(tv.sec())
-                            , static_cast<CORBA::Long>(tv.msec()));
-          test_condition_met = true;
-        }
-        else {
-          flooded = this->flood_connection (tv);
-          if (flooded) {
-            test_condition_met = true;
-          }
-        }
-
-        if (test_condition_met) {
-          if (!this->test_oneway_timeout (flooded, !flooded)) {
+    try {
+      if (one_way_test_)
+        {
+          if (!this->test_oneway_timeout (true)) {
             ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: Client::run> "
                         "test_oneway_timeout failed.\n"));
             status = false;
           }
-
-          management_->unsleep ();
         }
 
-        // flush out the channel
-        test_obj_->dummy_two_way ();
-
-        // now run same test without the transport flooded.
-        if (!this->test_oneway_timeout (false, false)) {
-            ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: Client::run> "
-                        "test_oneway_timeout 2 failed.\n"));
-            status = false;
-        }
+      // now run same test without the transport flooded.
+      if (!this->test_oneway_timeout (false)) {
+        ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: Client::run> "
+                    "test_oneway_timeout 2 failed.\n"));
+        status = false;
       }
 
-    test_obj_->shutdown ();
+      test_obj_->shutdown ();
+    }
+    catch( CORBA::Exception& ex) {
+      management_->unsleep (); // remote side could be asleep
+      ACE_ERROR ((LM_ERROR, "(%P|%t) Client::run> Caught during test logic CORBA::Exception %s"
+                  , ex._info().c_str()));
+      status = false;
+    }
 
     orb_->shutdown (1);
     orb_->destroy ();
     orb_ = CORBA::ORB::_nil();
   }
   catch( CORBA::Exception& ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Client::run> Caught CORBA::Exception %s"
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Client::run> Caught during test shutdown CORBA::Exception %s"
                 , ex._info().c_str()));
     status = false;
   }
@@ -242,7 +228,7 @@ Client::run ()
 }
 
 bool
-Client::test_oneway_timeout (bool flooded, bool simulate_flooding)
+Client::test_oneway_timeout (bool flood)
 {
   bool status = true;
 
@@ -252,25 +238,30 @@ Client::test_oneway_timeout (bool flooded, bool simulate_flooding)
   ACE_OS::memset (msg,'A',5999999);
   msg[5999999] = 0;
 
+  test_obj_->dummy_two_way (); // connection establishment
+
+  ACE_Time_Value tv (0);
+  if (flood && !this->flood_connection(tv)) {
+    ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> flooding failed.\n"));
+  }
 
   // Timeout with SYNC_SCOPE SYNC_NONE
   try {
-    if (simulate_flooding) {
-      test_obj_none_timeout_->dummy_one_way (msg);
+    std::string scope_name ("SYNC_NONE");
+    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+    test_obj_none_timeout_->dummy_one_way (msg);
+
+    if (flood && flush_strategy_ == BLOCKING) {
+      // block flushing gives a oneway SYNCH_WITH_TRANSPORT semantics
+      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A Timeout was expected for SYNC_NONE.\n"));
     }
     else {
-      test_obj_none_timeout_->dummy_one_way ("SYNC_NONE");
-    }
-    if (!simulate_flooding) {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) No Timeout for SYNC_NONE\n"));
-    }
-    else {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: Timeout expected for SYNC_NONE.\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_NONE\n"));
     }
   }
   catch (CORBA::TIMEOUT&) {
-    if (simulate_flooding) {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected timeout received for SYNC_NONE.\n"));
+    if (flood && flush_strategy_ == BLOCKING) {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected a timeout was received for SYNC_NONE.\n"));
     }
     else {
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> Unexpected "
@@ -282,24 +273,32 @@ Client::test_oneway_timeout (bool flooded, bool simulate_flooding)
 
   // Timeout with TAO specific SYNC_SCOPE SYNC_EAGER_BUFFERING
   try {
-    if (simulate_flooding) {
-      management_->unsleep ();
-      test_obj_->sleep (0, 0);
-      test_obj_eager_timeout_->dummy_one_way (msg);
+    std::string scope_name ("SYNC_EAGER_BUFFERING");
+    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+
+    if (flush_strategy_ == BLOCKING) {
+      if (flood) {
+        management_->unsleep ();
+        test_obj_->sleep (0, 0); // rebuild connection and put server thread to sleep
+      }
+      else {
+        // else simply re-establish connection
+        test_obj_->dummy_two_way ();
+      }
+    }
+
+    test_obj_eager_timeout_->dummy_one_way (msg);
+
+    if (flood && flush_strategy_ == BLOCKING) {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A Timeout was expected for SYNC_EAGER_BUFFERING\n"));
     }
     else {
-      test_obj_eager_timeout_->dummy_one_way ("SYNC_EAGER_BUFFERING");
-    }
-    if (!simulate_flooding) {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) No Timeout for SYNC_EAGER_BUFFERING\n"));
-    }
-    else {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) No Timeout for SYNC_EAGER_BUFFERING\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_EAGER_BUFFERING\n"));
     }
   }
   catch (CORBA::TIMEOUT&) {
-    if (simulate_flooding) {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected timeout received for SYNC_EAGER_BUFFERING\n"));
+    if (flood && flush_strategy_ == BLOCKING) {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected a timeout was received for SYNC_EAGER_BUFFERING\n"));
     }
     else {
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> Unexpected "
@@ -310,23 +309,31 @@ Client::test_oneway_timeout (bool flooded, bool simulate_flooding)
 
   // Timeout with TAO specific SYNC_SCOPE SYNC_DELAYED_BUFFERING
   try {
-    if (simulate_flooding) {
-      management_->unsleep ();
-      test_obj_->sleep (0, 0);
-      test_obj_delayed_timeout_->dummy_one_way (msg);
+    std::string scope_name ("SYNC_DELAYED_BUFFERING");
+    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+
+    if (flush_strategy_ == BLOCKING) {
+      if (flood) {
+        management_->unsleep ();
+        test_obj_->sleep (0, 0);
+      }
+      else {
+        test_obj_->dummy_two_way ();
+      }
+    }
+
+    test_obj_delayed_timeout_->dummy_one_way (msg);
+
+    if (flood && flush_strategy_ == BLOCKING) {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A Timeout was expected for SYNC_DELAYED_BUFFERING\n"));
     }
     else {
       test_obj_delayed_timeout_->dummy_one_way ("SYNC_DELAYED_BUFFERING");
-    }
-    if (!simulate_flooding) {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) No Timeout for SYNC_DELAYED_BUFFERING\n"));
-    }
-    else {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) No Timeout for SYNC_DELAYED_BUFFERING\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_DELAYED_BUFFERING\n"));
     }
   }
   catch (CORBA::TIMEOUT&) {
-    if (simulate_flooding) {
+    if (flood && flush_strategy_ == BLOCKING) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected timeout received for SYNC_DELAYED_BUFFERING\n"));
     }
     else {
@@ -338,89 +345,120 @@ Client::test_oneway_timeout (bool flooded, bool simulate_flooding)
 
   // Timeout with SYNC_SCOPE SYNC_WITH_TRANSPORT
   try {
-    if (simulate_flooding) {
-      management_->unsleep ();
-      test_obj_->sleep (0, 0);
-      test_obj_transport_timeout_->dummy_one_way (msg);
+    std::string scope_name ("SYNC_WITH_TRANSPORT");
+    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+
+    if (flush_strategy_ == BLOCKING) {
+      if (flood) {
+        management_->unsleep ();
+        test_obj_->sleep (0, 0);
+      }
+      else {
+        test_obj_->dummy_two_way ();
+      }
     }
-    else {
-      test_obj_transport_timeout_->dummy_one_way ("SYNC_WITH_TRANSPORT");
-    }
-    if (flooded || simulate_flooding) {
+
+    test_obj_transport_timeout_->dummy_one_way (msg);
+
+    if (flood) {
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> Expected "
                   "timeout not received for synch scope SYNC_WITH_TRANSPORT.\n"
                   ));
       status = false;
-    } else {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) No Timeout for SYNC_WITH_TRANSPORT\n"));
+    }
+    else {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_WITH_TRANSPORT\n"));
     }
   }
   catch (CORBA::TIMEOUT&) {
-    if (!flooded && !simulate_flooding) {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> No timeout "
-                  "expected for synch scope SYNC_WITH_TRANSPORT.\n"));
+    if (flood) {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected Timeout received for SYNC_WITH_TRANSPORT\n"));
+    }
+    else {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> Unexpected "
+                  "timeout exception with synch scope SYNC_WITH_TRANSPORT.\n"));
       status = false;
-    } else {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Timeout for SYNC_WITH_TRANSPORT\n"));
     }
   }
 
 
   // Timeout with default SYNC_SCOPE SYNC_WITH_SERVER
   try {
-    if (simulate_flooding) {
-      management_->unsleep ();
-      test_obj_->sleep (0, 0);
-      test_obj_server_timeout_->dummy_one_way (msg);
+    std::string scope_name ("SYNC_WITH_SERVER");
+    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+
+    if (flush_strategy_ == BLOCKING) {
+      if (flood) {
+        management_->unsleep ();
+        test_obj_->sleep (0, 0);
+      }
+      else {
+        test_obj_->dummy_two_way ();
+      }
     }
-    else {
-      test_obj_server_timeout_->dummy_one_way ("SYNC_WITH_SERVER");
-    }
-    if (flooded || simulate_flooding) {
+
+    test_obj_server_timeout_->dummy_one_way (msg);
+
+    if (flood) {
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> Expected "
                   "timeout not received for SYNC_SCOPE SYNC_WITH_SERVER.\n"));
       status = false;
-    } else {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) No Timeout for SYNC_WITH_SERVER.\n"));
+    }
+    else {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_WITH_SERVER\n"));
     }
   }
   catch (CORBA::TIMEOUT&) {
-    if (!flooded && !simulate_flooding) {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> No timeout "
-                  "expected for synch scope SYNC_WITH_SERVER.\n"));
+    if (flood) {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected Timeout received for SYNC_WITH_SERVER\n"));
+    }
+    else {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> Unexpected "
+                  "timeout exception with synch scope SYNC_WITH_SERVER.\n"));
       status = false;
-    } else {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Timeout for SYNC_WITH_SERVER\n"));
     }
   }
 
 
   // Timeout with default SYNC_SCOPE (SYNC_WITH_TARGET)
   try {
-    if (simulate_flooding) {
-      management_->unsleep ();
-      test_obj_->sleep (0, 0);
-      test_obj_target_timeout_->dummy_one_way (msg);
+    std::string scope_name ("SYNC_WITH_TARGET");
+    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+
+    if (flush_strategy_ == BLOCKING) {
+      if (flood) {
+        management_->unsleep ();
+        test_obj_->sleep (0, 0);
+      }
+      else {
+        test_obj_->dummy_two_way ();
+      }
     }
-    else {
-      test_obj_target_timeout_->dummy_one_way ("SYNC_WITH_TARGET");
-    }
-    if (flooded || simulate_flooding) {
+
+    test_obj_target_timeout_->dummy_one_way (msg);
+
+    if (flood) {
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> Expected "
                   "timeout not received for SYNC_SCOPE SYNC_WITH_TARGET.\n"));
       status = false;
-    } else {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) No Timeout for SYNC_WITH_TARGET.\n"));
+    }
+    else {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_WITH_TARGET\n"));
     }
   }
   catch (CORBA::TIMEOUT&) {
-    if (!flooded && !simulate_flooding) {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> No timeout "
-                  "expected for synch scope SYNC_WITH_TARGET.\n"));
-      status = false;
-    } else {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Timeout for SYNC_WITH_TARGET\n"));
+    if (flood) {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected Timeout received for SYNC_WITH_TARGET\n"));
     }
+    else {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: test_oneway_timeout> Unexpected "
+                  "timeout exception with synch scope SYNC_WITH_TARGET.\n"));
+      status = false;
+    }
+  }
+
+  if (flood) {
+    management_->unsleep ();
   }
 
   return status;
@@ -429,6 +467,9 @@ Client::test_oneway_timeout (bool flooded, bool simulate_flooding)
 bool
 Client::flood_connection (ACE_Time_Value& tv)
 {
+  // Block flushing currently blocks even on SYNC_DELAYED_BUFFERING
+  //  so we can't use it to flood connections.
+
   // Set the policy value.
   // SYNC_DELAYED_BUFFERING is used to ensure that the tcp buffer gets filled before
   //  buffering starts.
@@ -457,11 +498,15 @@ Client::flood_connection (ACE_Time_Value& tv)
 
   test_obj_->sleep (static_cast<CORBA::Long>(tv.sec())
                     , static_cast<CORBA::Long>(tv.msec()));
-  mod_test_obj->dummy_one_way (msg);
 
-  orb_->perform_work ();
+  if (flush_strategy_ != BLOCKING)
+    {
+      mod_test_obj->dummy_one_way (msg);
 
-  //ACE_OS::sleep (ACE_Time_Value (5000));
+      // attempt again to flood connection.
+      ACE_Time_Value tv_tmp (2);
+      orb_->perform_work (tv_tmp);
+    }
 
   return true;
 }
