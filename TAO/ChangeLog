@@ -1,3 +1,40 @@
+Tue Feb  5 21:59:02 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+
+          Add a new ORB initialisation option '-ORBFTSendFullGroupTC'.
+          When FT support is enabled this property controls the format of data
+          transmitted in the IOP::FT_GROUP_VERSION service context in GIOP
+          messages to IOGRs. The value '0' (this is the default value if the
+          option is not supplied) transmits the group version only as per the
+          CORBA spec (i.e. as defined in the IDL for
+          FT::FTGroupVersionServiceContext). The value '1' will transmit
+          instead the whole data found in the server IOGR's
+          FT::TagFTGroupTaggedComponent tagged component in the context body.
+
+          This fixes bugzilla bug #3216.
+
+        * orbsvcs/tests/Bug_3216_Regression:
+        * orbsvcs/tests/Bug_3216_Regression/Bug_3216_Regression.mpc:
+        * orbsvcs/tests/Bug_3216_Regression/Hello.h:
+        * orbsvcs/tests/Bug_3216_Regression/Hello.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/README:
+        * orbsvcs/tests/Bug_3216_Regression/ServerORBInitializer.h:
+        * orbsvcs/tests/Bug_3216_Regression/ServerORBInitializer.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/ServerRequest_Interceptor.h:
+        * orbsvcs/tests/Bug_3216_Regression/ServerRequest_Interceptor.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/Test.idl:
+        * orbsvcs/tests/Bug_3216_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_3216_Regression/server.cpp:
+
+          Regression test for the above.
+
 Tue Feb  5 19:56:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_resource.h:

@@ -213,6 +213,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     resource_factory_ (0),
     client_factory_ (0),
     server_factory_ (0),
+    ft_send_extended_sc_ (false),
     opt_for_collocation_ (true),
     use_global_collocation_ (true),
     collocation_strategy_ (THRU_POA),
@@ -1034,6 +1035,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                 (ACE_TEXT("-ORBMaxMessageSize"))))
         {
           this->orb_params_.max_message_size (ACE_OS::atoi (current_arg));
+
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBFTSendFullGroupTC"))))
+        {
+          this->ft_send_extended_sc_ = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }

@@ -9,6 +9,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
+#include "tao/ORB_Core.h"
+#include "tao/PI/ORBInitInfo.h"
 
 ACE_RCSID (FaultTolerance,
            FT_ClientORBInitializer,
@@ -79,15 +81,21 @@ void
 TAO_FT_ClientORBInitializer::register_client_request_interceptors (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  PortableInterceptor::ClientRequestInterceptor_ptr cri =
-    PortableInterceptor::ClientRequestInterceptor::_nil ();
+  TAO::FT_ClientRequest_Interceptor* ftcri = 0;
 
-  ACE_NEW_THROW_EX (cri,
+  ACE_NEW_THROW_EX (ftcri,
                     TAO::FT_ClientRequest_Interceptor,
                     CORBA::NO_MEMORY ());
 
   PortableInterceptor::ClientRequestInterceptor_var
-    client_interceptor = cri;
+    client_interceptor = ftcri;
+
+  TAO_ORBInitInfo* real_info = dynamic_cast<TAO_ORBInitInfo*> (info);
+
+  if (real_info)
+    {
+      ftcri->ft_send_extended_sc (real_info->orb_core ()->ft_send_extended_sc ());
+    }
 
   info->add_client_request_interceptor (client_interceptor.in ());
 }

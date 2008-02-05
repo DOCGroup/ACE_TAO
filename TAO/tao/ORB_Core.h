@@ -735,6 +735,11 @@ public:
   /// Return a reference to the Fault Tolerant service object.
   TAO_Fault_Tolerance_Service &fault_tolerance_service (void);
 
+  /// Transmit the entire TAG_FT_GROUP component data from a server IOGR as
+  /// a FT_GROUP_VERSION tagged service context on requests to that IOGR instead
+  /// of just the group version.
+  CORBA::Boolean ft_send_extended_sc (void);
+
   /// Raise a comm failure exception if a service is not loaded, else
   /// delegate to the service to see what the service has to do for
   /// this case.
@@ -1080,8 +1085,13 @@ protected:
 
   /// Fault Tolerant service hook.
   TAO_Fault_Tolerance_Service ft_service_;
-
+  
   //@}
+
+  /// TRUE transmits a full TAG_FT_GROUP component in place of the FT_GROUP_VERSION
+  /// context on FT requests. This is contrary to the spec but enables more effective
+  /// fault tolerant stuff. @todo reference to OMG issue. Default false.
+  CORBA::Boolean ft_send_extended_sc_;
 
   /// TRUE if we want to take advantage of collocation optimization in
   /// this ORB.
