@@ -1,3 +1,12 @@
+Wed Feb  6 23:29:55 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * examples/APG/Proactor/HA_Proactive_Status.cpp: Pass
+          ACE_DEFAULT_ASYNCH_BACKLOG, not ACE_DEFAULT_BACKLOG, to the
+          ACE_Asynch_Acceptor contructor. Corrects a startup error on Windows.
+          Thanks to Sorin Voicu-Comendant for this fix.
+
+        * THANKS: Added Sorin Voicu-Comendant to the Hall of Fame.
+
 Tue Feb  5 22:15:29 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_other_tests.lst:

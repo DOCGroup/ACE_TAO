@@ -1482,7 +1482,6 @@ Val Dumiterscu <val dot dumitrescu at am-beo dot com>
 Oleg Kraynov <olegvkr at yahoo dot com>
 Stephan Gudmundson <stephang at netacquire dot com>
 Frank Kuhlman <kuhlmann at materna dot de>
-Sorin Iordachescu <sorin dot iordachescu at am-beo dot com>
 Denis Otchenashko <oko at bank dot gov dot ua>
 Marc M Adkins <Marc dot M dot Adkins at doorways dot org>
 Jon Lambert <jlsysinc at ix dot netcom dot com>
@@ -2236,6 +2235,7 @@ Tom Callaway <tcallawa at redhat dot com>
 Alick Nie <alick_nie at 163 dot com>
 Douglas Atique <tellmebout-corba at yahoo dot com>
 Nayeem Khan <d dot nayeem dot khan at gmail dot com>
+Sorin Voicu-Comendant <sorinvc at gmail dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

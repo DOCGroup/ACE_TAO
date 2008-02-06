@@ -127,7 +127,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (0 != aio_acceptor.open (listen_addr,
                               0,     // bytes_to_read
                               0,     // pass_addresses
-                              ACE_DEFAULT_BACKLOG,
+                              ACE_DEFAULT_ASYNCH_BACKLOG,
                               1,     // reuse_addr
                               0,     // proactor
                               1))    // validate_new_connection
