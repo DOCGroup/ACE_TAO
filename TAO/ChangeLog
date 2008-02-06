@@ -1,3 +1,8 @@
+Wed Feb  6 10:34:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_3080/client.cpp:
+          Fixed compile errors when interceptors are disabled
+
 Wed Feb  6 10:05:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LocalObject.cpp:
