@@ -55,7 +55,6 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
 
   CORBA::Object_var new_ref =
     iorm->merge_iors (iors );
-  ACE_CHECK_RETURN (0);
 
   // Property values
 
@@ -80,7 +79,6 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
   CORBA::Boolean retval = iorm->set_property (&iogr_prop,
                                               new_ref.in ()
                                               );
-  ACE_CHECK_RETURN (0);
 
   // Set the primary
   // See we are setting the second ior as the primary
@@ -90,7 +88,6 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
                                   new_ref.in (),
                                   new_ref.in ()
                                   );
-      ACE_CHECK_RETURN (0);
     }
 
   return new_ref._retn ();
@@ -110,19 +107,19 @@ main (int argc, char *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      );
-      
+
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" );
-      
+
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" );
-      
+
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in () );
-      
+
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -131,7 +128,7 @@ main (int argc, char *argv[])
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
-      
+
 
       CORBA::PolicyList policies (2);
       policies.length (2);
@@ -139,26 +136,26 @@ main (int argc, char *argv[])
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID
                                                );
-      
+
 
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT
                                           );
-      
+
 
       PortableServer::POA_var my_poa =
         root_poa->create_POA ("my_poa",
                               poa_manager.in (),
                               policies
                               );
-      
+
 
       // Creation of the new POA is over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
           policy->destroy ();
-          
+
         }
 
 
@@ -176,34 +173,34 @@ main (int argc, char *argv[])
       my_poa->activate_object_with_id (server_id.in (),
                                        hello_impl
                                        );
-      
+
 
       CORBA::Object_var hello =
         my_poa->id_to_reference (server_id.in () );
-      
+
 
       CORBA::String_var ior =
         orb->object_to_string (hello.in () );
-      
+
 
       // Get a ref to the IORManipulation object
       CORBA::Object_var IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                          0
                                          );
-      
+
 
       // Narrow
       iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() );
-      
+
 
       CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, orb->string_to_object (ior.in ())  );
-      
+
 
       CORBA::String_var iorgr_string =
         orb->object_to_string (iogr.in () );
-      
+
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -216,18 +213,18 @@ main (int argc, char *argv[])
       ACE_OS::fclose (output_file);
 
       poa_manager->activate ();
-      
+
 
       orb->run ();
-      
+
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
       root_poa->destroy (1, 1 );
-      
+
 
       orb->destroy ();
-      
+
     }
   catch (const CORBA::Exception& ex)
     {
@@ -235,7 +232,7 @@ main (int argc, char *argv[])
                            "Exception caught:");
       return 1;
     }
-  
+
 
   return 0;
 }

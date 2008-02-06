@@ -26,12 +26,12 @@ void
 Hello::check_normal_context ()
 {
   if (! normal_context_ok_)
-    ACE_THROW (Test::MyException ());
+    throw Test::MyException ();
 }
 
 void
 Hello::check_extended_context ()
 {
   if (! extended_context_ok_)
-    ACE_THROW (Test::MyException ());
+    throw Test::MyException ();
 }
