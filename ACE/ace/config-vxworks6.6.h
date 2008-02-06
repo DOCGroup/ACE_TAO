@@ -16,11 +16,9 @@
 
 #include "ace/config-vxworks6.5.h"
 
-# if !defined (_HAS_C9X)
-// Workaround for the fact that the log2 method can't be used
-// without this define set, see TSR605078
-#  define _C99
-# endif
+#if defined (ACE_HAS_PENTIUM)
+# define ACE_LACKS_LOG2
+#endif
 
 #if !defined (__RTP__)
 # undef ACE_HAS_IOCTL_INT_3_PARAM
