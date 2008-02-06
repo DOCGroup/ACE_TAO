@@ -1,3 +1,17 @@
+Wed Feb  6 10:05:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+          Removed _get_implementation, it is deprecated with CORBA 2.2 and we
+          always just return 0.
+
+        * tao/Strategies/advanced_resource.cpp:
+          Added TAO_DEFAULT_REACTOR_TYPE which is ACE_TP_Reactor by default. This
+          way we can easily change the default reactor at the moment the
+          strategies library is used.
+
 Tue Feb  5 21:59:02 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/ORB_Core.h:
