@@ -138,12 +138,6 @@ CORBA::LocalObject::_get_interface (void)
 {
   throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
-
-CORBA::ImplementationDef_ptr
-CORBA::LocalObject::_get_implementation (void)
-{
-  throw ::CORBA::NO_IMPLEMENT ();
-}
 #endif
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

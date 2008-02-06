@@ -498,12 +498,6 @@ CORBA::Object::_get_interface (void)
   return this->proxy_broker ()->_get_interface (this);
 }
 
-CORBA::ImplementationDef_ptr
-CORBA::Object::_get_implementation (void)
-{
-  return 0;
-}
-
 CORBA::Object_ptr
 CORBA::Object::_get_component (void)
 {

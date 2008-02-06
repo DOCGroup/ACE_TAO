@@ -71,9 +71,6 @@ namespace CORBA
     virtual CORBA::Boolean _non_existent (void);
 
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
-    /// Throws CORBA::NO_IMPLEMENT.
-    virtual CORBA::ImplementationDef_ptr _get_implementation (void);
-
     /// Gets info about object from the Interface Repository.
     virtual CORBA::InterfaceDef_ptr _get_interface (void);
 

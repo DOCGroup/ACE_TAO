@@ -37,6 +37,10 @@
 
 ACE_RCSID(Strategies, advanced_resource, "$Id$")
 
+#if !defined (TAO_DEFAULT_REACTOR_TYPE)
+#define TAO_DEFAULT_REACTOR_TYPE TAO_REACTOR_TP
+#endif /* !TAO_DEFAULT_REACTOR_TYPE */
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
@@ -67,7 +71,7 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 }
 
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
-  : reactor_type_ (TAO_REACTOR_TP),
+  : reactor_type_ (TAO_DEFAULT_REACTOR_TYPE),
     threadqueue_type_ (TAO_THREAD_QUEUE_NOT_SET),
     cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
     amh_response_handler_allocator_lock_type_ (TAO_ALLOCATOR_THREAD_LOCK),
