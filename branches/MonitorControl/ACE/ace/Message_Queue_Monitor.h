@@ -32,7 +32,7 @@ namespace ACE
     public:
       Message_Queue_Monitor (void);
       Message_Queue_Monitor (const char* name);
-      ~Message_Queue_Monitor (void);
+      virtual ~Message_Queue_Monitor (void);
     
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.
@@ -48,13 +48,10 @@ namespace ACE
       virtual void constraint (const ETCL_Constraint* constraint);
       
       /// Updates the monitor's data if it is a numeric floating point.
-      virtual void receive (const double data);
+      virtual void receive (const double value);
       
       /// Updates the monitor's data if it is an integer size.
-      virtual void receive (const size_t data);
-      
-      /// Updates the monitor's data if it is textual.
-      virtual void receive (const MonitorControl_Types::NameList& data);
+      virtual void receive (const size_t value);
       
       /// Reset function.
       virtual void clear (void);

@@ -36,8 +36,9 @@ namespace ACE
        */
       struct Data
       {
-        ACE_Time_Value tv_;
-        double number_;
+        Data (void);
+        ACE_Time_Value timestamp_;
+        double value_;
       };
         
       /**

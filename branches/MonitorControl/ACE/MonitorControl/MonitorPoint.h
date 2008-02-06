@@ -58,9 +58,6 @@ namespace ACE
       virtual void receive (const double data);
       
       /// Meaningful implementation of member function.
-      virtual void receive (const MonitorControl_Types::NameList& data);
-      
-      /// Meaningful implementation of member function.
       virtual void clear (void);
     };
   }

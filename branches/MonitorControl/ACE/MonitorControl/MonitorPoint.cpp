@@ -33,13 +33,6 @@ namespace ACE
     }
     
     void
-    MonitorPoint<true>::receive (
-      const MonitorControl_Types::NameList& /* data */)
-    {
-      // TODO
-    }
-    
-    void
     MonitorPoint<true>::clear (void)
     {
       // TODO

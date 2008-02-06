@@ -8,6 +8,13 @@ namespace ACE
 {
   namespace MonitorControl
   {
+    MonitorControl_Types::Data::Data (void)
+      : timestamp_ (ACE_Time_Value::zero),
+        value_ (0.0)
+    {}
+    
+    //===================================================
+  
     MC_Generic::MC_Generic (void)
     {}
   

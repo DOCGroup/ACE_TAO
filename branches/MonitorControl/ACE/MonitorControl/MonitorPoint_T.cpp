@@ -48,13 +48,6 @@ namespace ACE
     
     template<bool ENABLED>
     void
-    MonitorPoint<ENABLED>::receive (
-      const MonitorControl_Types::NameList& /* data */)
-    {
-    }
-    
-    template<bool ENABLED>
-    void
     MonitorPoint<ENABLED>::clear (void)
     {
     }

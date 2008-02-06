@@ -1,3 +1,29 @@
+Wed Feb  6 21:13:15 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_Monitor.h:
+        * ace/MonitorControl_Types.h:
+        * ace/Monitor_Base.h:
+        * ace/Message_Queue_Monitor.cpp:
+        * ace/MonitorControl_Types.cpp:
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/MonitorPoint_T.cpp:
+        * MonitorControl/MonitorPoint_T.h:
+
+          - Renamed some data types and members to be
+            more intuitive.
+
+          - Added a default constructor for struct Data
+            so its members will have reasonable values
+            if by chance they are accessed before having
+            been set by a call to receive() on the containing
+            monitor instance.
+
+          - Removed the overload of receive() that takes
+            a list of names, since it's doubtful it will
+            be needed.
+
 Wed Feb  6 19:28:25 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp:

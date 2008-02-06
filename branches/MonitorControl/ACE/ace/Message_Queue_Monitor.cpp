@@ -42,25 +42,19 @@ namespace ACE
     }
     
     void
-    Message_Queue_Monitor::receive (const double data)
+    Message_Queue_Monitor::receive (const double value)
     {
       ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-      this->data_.tv_ = ACE_OS::gettimeofday ();
-      this->data_.number_ = data;
+      this->data_.timestamp_ = ACE_OS::gettimeofday ();
+      this->data_.value_ = value;
     }
     
     void
-    Message_Queue_Monitor::receive (const size_t data)
+    Message_Queue_Monitor::receive (const size_t value)
     {
       ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-      this->data_.tv_ = ACE_OS::gettimeofday ();
-      this->data_.number_ = static_cast<double> (data);
-    }
-    
-    void
-    Message_Queue_Monitor::receive (
-      const MonitorControl_Types::NameList& /* data */)
-    {
+      this->data_.timestamp_ = ACE_OS::gettimeofday ();
+      this->data_.value_ = static_cast<double> (value);
     }
     
     void

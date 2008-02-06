@@ -60,9 +60,6 @@ namespace ACE
       /// Updates the monitor's data if it is numeric.
       virtual void receive (const double data);
       
-      /// Updates the monitor's data if it is textual.
-      virtual void receive (const MonitorControl_Types::NameList& data);
-      
       /// Reset function.
       virtual void clear (void);
     };
