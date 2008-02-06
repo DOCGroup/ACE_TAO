@@ -1,3 +1,12 @@
+Wed Feb  6 11:00:38 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_3216_Regression/Bug_3216_Regression.mpc:
+        * orbsvcs/tests/Bug_3216_Regression/Hello.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/ServerRequest_Interceptor.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/server.cpp:
+
+          Fix deprecated macros and remove explicit solaris compile flags.
+
 Wed Feb  6 10:34:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_3080/client.cpp:
