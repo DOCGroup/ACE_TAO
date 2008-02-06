@@ -89,6 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           // ignore
         }
 
+#if TAO_HAS_INTERCEPTORS == 1
       if (temp_initializer->client_interceptor_->request_count () != 1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -102,6 +103,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              "Error, receive exception interceptor not called\n"),
                             1);
         }
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
   catch (const CORBA::Exception& ex)
     {
