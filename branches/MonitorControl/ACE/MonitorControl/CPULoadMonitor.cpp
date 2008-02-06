@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/OS_NS_sys_time.h"
+
 #include "MonitorControl/CPULoadMonitor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -44,11 +46,18 @@ namespace ACE
                                    PDH_FMT_DOUBLE,
                                    0,
                                    &this->value_);
-          
-      ACE_DEBUG ((LM_DEBUG,
-                  "percent CPU load = %f\n",
-                  this->value_.doubleValue));
+        
+      /// Stores value and timestamp with thread-safety.    
+      this->receive (this->value_.doubleValue);
 #endif
+    }
+    
+    void
+    CPULoadMonitor<true>::receive (const double data)
+    {
+      ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+      this->data_.tv_ = ACE_OS::gettimeofday ();
+      this->data_.number_ = data;
     }
   }
 }

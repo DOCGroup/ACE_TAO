@@ -19,7 +19,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "MonitorControl_Types.h"
+#include "ace/MonitorControl_Types.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Synch_Traits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,10 +86,17 @@ namespace ACE
       /// Reset function.
       virtual void clear (void) = 0;
       
+      /// Data accessor.
+      MonitorControl_Types::Data retrieve (void);
+      
     protected:
       Monitor_Base (void);
       Monitor_Base (const char* name);
       virtual ~Monitor_Base (void);
+      
+    protected:
+      MonitorControl_Types::Data data_;
+      ACE_SYNCH_MUTEX mutex_;
     };
   }
 }

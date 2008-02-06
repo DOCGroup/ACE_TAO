@@ -88,21 +88,23 @@ namespace ACE
       MC_Admin (void);
       ~MC_Admin (void);
       
-      /// Add or remove monitor points from a global registry
-      /// (see Registry.h). If the auto_update_msec arg is non-zero,
+      /// Add or access monitor points in a global registry
+      /// (see MC_Generic_Registry.h). If the auto_update_msec arg is non-zero,
       /// the monitor point, the auto updater member, and the given time
-      /// interval are passed to the reactor singleton's register_timeout()
+      /// interval are passed to our reactor's register_timeout()
       /// method.
       
-      bool add_monitor_point (Monitor_Base* monitor_point,
-                              unsigned long auto_update_msec);
+      bool monitor_point (Monitor_Base* monitor_point,
+                          unsigned long auto_update_msec);
+      Monitor_Base* monitor_point (const char* name);
                               
       /// Same as for monitor points, except that a different registry
       /// is used, and there is no registration with the reactor. These
       /// are actions that may be triggered by a constraint or called
       /// from the application directly.
       
-      bool add_control_action (Control_Action* control_action);
+      bool control_action (Control_Action* control_action);
+      Control_Action* control_action (const char* name);
                               
       /// Resets the monitor points found in the registry by
       /// lookup of the passed list of names. Throws InvalidName

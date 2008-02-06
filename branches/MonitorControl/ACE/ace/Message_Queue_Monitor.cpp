@@ -1,6 +1,8 @@
 // $Id$
 
 #include "ace/Message_Queue_Monitor.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,14 +44,17 @@ namespace ACE
     void
     Message_Queue_Monitor::receive (const double data)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "length: %B bytes - %D\n",
-                  static_cast<size_t> (data)));
+      ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+      this->data_.tv_ = ACE_OS::gettimeofday ();
+      this->data_.number_ = data;
     }
     
     void
-    Message_Queue_Monitor::receive (const size_t /* data */)
+    Message_Queue_Monitor::receive (const size_t data)
     {
+      ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+      this->data_.tv_ = ACE_OS::gettimeofday ();
+      this->data_.number_ = static_cast<double> (data);
     }
     
     void

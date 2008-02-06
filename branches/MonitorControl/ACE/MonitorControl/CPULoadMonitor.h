@@ -60,6 +60,10 @@ namespace ACE
       /// Implementation of the pure virtual method.
       virtual void update (void);
       
+      /// Not implemented in base class to keep down the size of
+      /// disabled monitors.
+      virtual void receive (const double data);
+      
     private:
 #if defined (ACE_WIN32)
       HQUERY query_;

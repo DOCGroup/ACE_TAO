@@ -56,8 +56,8 @@ namespace ACE
     }
     
     bool
-    MC_Admin::add_monitor_point (Monitor_Base* monitor_point,
-                                 unsigned long auto_update_msec)
+    MC_Admin::monitor_point (Monitor_Base* monitor_point,
+                             unsigned long auto_update_msec)
     {
       bool good_reg_add =
         Monitor_Point_Registry::instance ()->add (monitor_point);
@@ -78,8 +78,15 @@ namespace ACE
       return good_reg_add;
     }
     
+    Monitor_Base*
+    MC_Admin::monitor_point (const char* name)
+    {
+      ACE_CString name_str (name, 0, false);
+      return Monitor_Point_Registry::instance ()->get (name_str);
+    }
+    
     bool
-    MC_Admin::add_control_action (Control_Action* /* control_action */)
+    MC_Admin::control_action (Control_Action* /* control_action */)
     {
       // TODO
       return true;

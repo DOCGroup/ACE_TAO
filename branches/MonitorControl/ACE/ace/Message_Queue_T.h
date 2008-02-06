@@ -21,6 +21,8 @@
 
 #if defined (ENABLE_ACE_MONITORS)
 #include "ace/Message_Queue_Monitor.h"
+#include "ace/MC_Admin_Manager.h"
+#include "ace/Dynamic_Service.h"
 #endif
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

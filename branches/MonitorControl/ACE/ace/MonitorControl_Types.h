@@ -21,6 +21,7 @@
 
 #include "ace/Vector_T.h"
 #include "ace/SString.h"
+#include "ace/Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,9 +34,9 @@ namespace ACE
       /**
        * @brief An instance is contained by each enabled monitor point.
        */
-      union Data
+      struct Data
       {
-        const char* string_;
+        ACE_Time_Value tv_;
         double number_;
       };
         

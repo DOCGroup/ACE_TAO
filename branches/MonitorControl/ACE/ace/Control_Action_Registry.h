@@ -32,7 +32,7 @@ namespace ACE
     /**
      * @class Control_Action_Registry
      *
-     * @brief Specializaton of Generic_MC_Registry.
+     * @brief Specializaton of MC_Generic_Registry.
      *
      * Stores instances of the control actions.
      */

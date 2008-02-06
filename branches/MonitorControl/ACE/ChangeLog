@@ -1,3 +1,50 @@
+Wed Feb  6 19:28:25 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp:
+        * ace/MC_Admin.h:
+        * ace/Monitor_Point_Registry.cpp:
+        * ace/Message_Queue_T.h:
+        * ace/Monitor_Base.cpp:
+        * ace/MonitorControl_Types.h:
+        * ace/Monitor_Base.h:
+        * ace/Message_Queue_Monitor.cpp:
+        * ace/MC_Generic_Registry.h:
+        * ace/MC_Generic_Registry.cpp:
+        * ace/Monitor_Point_Registry.h:
+        * ace/Control_Action_Registry.h:
+        * ace/MC_Admin.cpp:
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/MonitorControl_macros.h:
+        * MonitorControl/CPULoadMonitor.h:
+
+          - Added mutex to class Monitor_Base, for
+            use when storing/retrieving data.
+
+          - Added retrieve() method to class
+            Monitor_Base, since it will be common
+            to all concrete subclasses.
+
+          - Modifed overloaded receive() methods in
+            class Message_Queue_Monitor to simply
+            store the passed data in the class member.
+
+          - Modified class CPULoadMonitor's update()
+            method to call receive() to store the data
+            obtained from the system calls.
+
+          - Added mechanism to get a reference to a
+            named monitor point instance from the
+            Admin class, which looks it up in the
+            registry.
+
+          - Modifed ACE_Message_Queue to add its monitor
+            to the registry, if the ACE build enables
+            monitors. We plan to test only a single
+            message queue for now, but eventually some
+            way will have to be implemented to give the
+            monitor of each message queue instance a
+            unique name.
+
 Tue Feb  5 19:01:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/ControlActionRegistry.cpp:

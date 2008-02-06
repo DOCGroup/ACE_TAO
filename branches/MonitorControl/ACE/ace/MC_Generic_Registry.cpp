@@ -49,6 +49,15 @@ namespace ACE
       // TODO
       return this->name_cache_;
     }
+    
+    MC_Generic*
+    MC_Generic_Registry::getobj (const ACE_CString& name) const
+    {
+      ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
+      Map::data_type type = 0;
+      this->map_.find (name, type);
+      return type;
+    }
   }
 }
 

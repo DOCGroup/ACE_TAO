@@ -924,14 +924,23 @@ template <ACE_SYNCH_DECL>
 ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
                                                      size_t lwm,
                                                      ACE_Notification_Strategy *ns)
-  : not_empty_cond_ (lock_),
-    not_full_cond_ (lock_)
+  : not_empty_cond_ (lock_)
+    , not_full_cond_ (lock_)
+#if defined (ENABLE_ACE_MONITORS)
+    , monitor_ ("MQ monitor")
+#endif
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue");
 
   if (this->open (hwm, lwm, ns) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("open")));
+
+#if defined (ENABLE_ACE_MONITORS)
+  MC_ADMINMANAGER *mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  mgr->admin ().monitor_point (&this->monitor_, 0);
+#endif
 }
 
 template <ACE_SYNCH_DECL>

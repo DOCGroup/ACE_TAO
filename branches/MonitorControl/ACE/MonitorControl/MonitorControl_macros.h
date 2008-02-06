@@ -72,7 +72,7 @@ typedef ACE_VERSIONED_NAMESPACE_NAME::DISABLED_PACKETS_SENT_MONITOR
       TYPE, \
       ACE_VERSIONED_NAMESPACE_NAME::ACE_Null_Mutex>::instance (); \
   bool good_add = \
-    mgr->admin ().add_monitor_point (mp, 0); \
+    mgr->admin ().monitor_point (mp, 0); \
   if (!good_add) \
     { \
       ACE_ERROR ((LM_ERROR, \
@@ -92,7 +92,7 @@ typedef ACE_VERSIONED_NAMESPACE_NAME::DISABLED_PACKETS_SENT_MONITOR
       TYPE, \
       ACE_VERSIONED_NAMESPACE_NAME::ACE_Null_Mutex>::instance (); \
   bool good_add = \
-    mgr->admin ().add_monitor_point (mp, INTERVAL_MSEC); \
+    mgr->admin ().monitor_point (mp, INTERVAL_MSEC); \
   if (!good_add) \
     { \
       ACE_ERROR ((LM_ERROR, \

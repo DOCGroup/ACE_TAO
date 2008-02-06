@@ -69,15 +69,20 @@ namespace ACE
         ErrorReason why_;
       };
       
-      MC_Generic_Registry (void);
-      ~MC_Generic_Registry (void);
-      
       /// Adds a Statistic or ControlAction to its respecive registry.
       /// Throws MapError.
       bool add (MC_Generic* type);
       
       /// Retrieves a list of the names added to the registry so far.
       const MonitorControl_Types::NameList& names (void) const;
+    
+    protected:  
+      MC_Generic_Registry (void);
+      ~MC_Generic_Registry (void);
+      
+      /// Retrieves a monitor point or a control action, which is
+      /// then downcast by the calling subclass.
+      MC_Generic* getobj (const ACE_CString& name) const;
       
     private:
       /// Underlying container for the registries.

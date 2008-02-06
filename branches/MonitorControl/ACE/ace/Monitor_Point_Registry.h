@@ -19,21 +19,20 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Monitor_Base.h"
 #include "ace/MC_Generic_Registry.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class Statistic;
 
 namespace ACE
 {
   namespace MonitorControl
   {
+    class Monitor_Base;
+
     /**
      * @class Monitor_Point_Registry
      *
-     * @brief Specializaton of Generic_MC_Registry.
+     * @brief Specializaton of MC_Generic_Registry.
      *
      * Stores instances of the monitor point classes.
      */
