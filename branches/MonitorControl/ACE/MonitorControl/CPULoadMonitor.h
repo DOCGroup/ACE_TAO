@@ -62,7 +62,7 @@ namespace ACE
       
       /// Not implemented in base class to keep down the size of
       /// disabled monitors.
-      virtual void receive (const double data);
+      virtual void receive (double data);
       
     private:
 #if defined (ACE_WIN32)

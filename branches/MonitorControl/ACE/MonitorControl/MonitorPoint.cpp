@@ -28,7 +28,7 @@ namespace ACE
     }
     
     void
-    MonitorPoint<true>::receive (const double /* data */)
+    MonitorPoint<true>::receive (double /* data */)
     {
     }
     

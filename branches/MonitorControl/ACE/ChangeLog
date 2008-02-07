@@ -1,3 +1,24 @@
+Thu Feb  7 16:26:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_Monitor.h:
+        * ace/Monitor_Base.h:
+        * ace/Message_Queue_Monitor.cpp:
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/MonitorPoint_T.cpp:
+        * MonitorControl/MonitorPoint_T.h:
+
+          In the declarations and implementations of
+          the receive() method, overloaded to take
+          a single arg of various numeric types,
+          removed the const qualifier from the arg.
+          Thanks to Johnny Willemsen
+          <jwillemsen at rememdy dot nl> for pointing
+          that the qualifier isn't needed and could
+          cause problems with the Intel compiler.
+
 Thu Feb  7 13:23:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Control_Action_Registry.h:

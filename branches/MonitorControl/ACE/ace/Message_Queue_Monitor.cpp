@@ -42,7 +42,7 @@ namespace ACE
     }
     
     void
-    Message_Queue_Monitor::receive (const double value)
+    Message_Queue_Monitor::receive (double value)
     {
       ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
       this->data_.timestamp_ = ACE_OS::gettimeofday ();
@@ -50,7 +50,7 @@ namespace ACE
     }
     
     void
-    Message_Queue_Monitor::receive (const size_t value)
+    Message_Queue_Monitor::receive (size_t value)
     {
       ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
       this->data_.timestamp_ = ACE_OS::gettimeofday ();

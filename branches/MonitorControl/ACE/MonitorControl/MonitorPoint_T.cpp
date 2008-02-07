@@ -42,7 +42,7 @@ namespace ACE
     
     template<bool ENABLED>
     void
-    MonitorPoint<ENABLED>::receive (const double /* data */)
+    MonitorPoint<ENABLED>::receive (double /* data */)
     {
     }
     

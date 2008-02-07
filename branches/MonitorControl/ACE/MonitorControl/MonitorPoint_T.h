@@ -58,7 +58,7 @@ namespace ACE
       virtual void constraint (const ETCL_Constraint* constraint);
       
       /// Updates the monitor's data if it is numeric.
-      virtual void receive (const double data);
+      virtual void receive (double data);
       
       /// Reset function.
       virtual void clear (void);

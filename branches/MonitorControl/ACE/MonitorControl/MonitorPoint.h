@@ -55,7 +55,7 @@ namespace ACE
       virtual void constraint (const ETCL_Constraint* constraint);
       
       /// Meaningful implementation of member function.
-      virtual void receive (const double data);
+      virtual void receive (double data);
       
       /// Meaningful implementation of member function.
       virtual void clear (void);

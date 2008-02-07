@@ -53,7 +53,7 @@ namespace ACE
     }
     
     void
-    CPULoadMonitor<true>::receive (const double data)
+    CPULoadMonitor<true>::receive (double data)
     {
       ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
       this->data_.timestamp_ = ACE_OS::gettimeofday ();
