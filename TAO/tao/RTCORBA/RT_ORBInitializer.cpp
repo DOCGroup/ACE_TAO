@@ -74,6 +74,18 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   // orb_core() TAO extension.
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
+  if (CORBA::is_nil (tao_info.in ()))
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) TAO_RT_ORBInitializer::pre_init:\n"
+                    "(%P|%t)    Unable to narrow "
+                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+
+      throw ::CORBA::INTERNAL ();
+    }
+
   // Set the name of the Protocol_Hooks to be RT_Protocols_Hooks.
   tao_info->orb_core ()->orb_params ()->protocols_hooks_name ("RT_Protocols_Hooks");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Protocols_Hooks);
@@ -160,18 +172,6 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   info->register_initial_reference ("NetworkPriorityMappingManager",
                                     network_manager);
-
-  if (CORBA::is_nil (tao_info.in ()))
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) TAO_RT_ORBInitializer::pre_init:\n"
-                    "(%P|%t)    Unable to narrow "
-                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
-                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
-
-      throw ::CORBA::INTERNAL ();
-    }
 
   // Create the RT_ORB.
   CORBA::Object_ptr rt_orb = CORBA::Object::_nil ();
