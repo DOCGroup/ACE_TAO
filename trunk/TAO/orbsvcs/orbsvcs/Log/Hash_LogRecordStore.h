@@ -70,8 +70,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
                            DsLogAdmin::LogId id,
                            DsLogAdmin::LogFullActionType log_full_action,
                            CORBA::ULongLong max_size,
-                           const DsLogAdmin::CapacityAlarmThresholdList* thresholds
-                           );
+                           const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
 
   /// Destructor.
   virtual ~TAO_Hash_LogRecordStore (void);
@@ -110,87 +109,68 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
     set_forwarding_state (DsLogAdmin::ForwardingState state);
 
   /// Get the log duration
-  virtual DsLogAdmin::TimeInterval
-    get_interval (void) const;
+  virtual DsLogAdmin::TimeInterval get_interval (void) const;
 
   /// Set the log duration.
   virtual void
     set_interval (const DsLogAdmin::TimeInterval & interval);
 
   /// Gets the log full action
-  virtual DsLogAdmin::LogFullActionType
-    get_log_full_action (void) const;
+  virtual DsLogAdmin::LogFullActionType get_log_full_action (void) const;
 
   /// Sets the log full action
-  virtual void
-    set_log_full_action(DsLogAdmin::LogFullActionType action);
+  virtual void set_log_full_action(DsLogAdmin::LogFullActionType action);
 
   /// Get the list of the QoS properties supported by the log.
-  virtual DsLogAdmin::QoSList*
-    get_log_qos (void) const;
+  virtual DsLogAdmin::QoSList* get_log_qos (void) const;
 
   /// Set the list of the QoS properties supported by the log.
-  virtual void
-    set_log_qos (const DsLogAdmin::QoSList& qos);
+  virtual void set_log_qos (const DsLogAdmin::QoSList& qos);
 
   /// Gets the max record life
-  virtual CORBA::ULong
-    get_max_record_life (void) const;
+  virtual CORBA::ULong get_max_record_life (void) const;
 
   /// Sets the max record life
-  virtual void
-    set_max_record_life (CORBA::ULong life);
+  virtual void set_max_record_life (CORBA::ULong life);
 
   /// Get the current set value of the max size of the log data.
-  virtual CORBA::ULongLong
-    get_max_size (void) const;
+  virtual CORBA::ULongLong get_max_size (void) const;
 
   /// Set the max size of log data. size == 0, => infinite.
-  virtual void
-    set_max_size (CORBA::ULongLong size);
+  virtual void set_max_size (CORBA::ULongLong size);
 
   /// Get the weekly scheduling parameters
-  virtual DsLogAdmin::WeekMask*
-    get_week_mask (void);
+  virtual DsLogAdmin::WeekMask* get_week_mask (void);
 
   /// Set the weekly scheduling parameters.
-  virtual void
-    set_week_mask (const DsLogAdmin::WeekMask & masks);
-
+  virtual void set_week_mask (const DsLogAdmin::WeekMask & masks);
 
   // = LogRecordStore status methods
 
   /// Gets the current size of the log data.
-  virtual CORBA::ULongLong
-    get_current_size (void);
+  virtual CORBA::ULongLong get_current_size (void);
 
   /// Get the number of records in the log right now.
-  virtual CORBA::ULongLong
-    get_n_records (void);
+  virtual CORBA::ULongLong get_n_records (void);
 
 
   // = LogRecordStore gauge
 
   /// Gets the current value of the "gauge" that measures the total
   /// size of the records written to the log.
-  virtual CORBA::ULongLong
-    get_gauge(void);
+  virtual CORBA::ULongLong get_gauge(void);
 
   /// Resets the "gauge" to 0
-  virtual void
-    reset_gauge(void);
-
+  virtual void reset_gauge(void);
 
   // = Record logging, retrieval, update and removal methods.
 
   /// Insert rec into storage. Returns 0 on success -1 on failure and 1
   /// if the log is full.
-  virtual int
-    log (const DsLogAdmin::LogRecord &rec);
+  virtual int log (const DsLogAdmin::LogRecord &rec);
 
   /// Deletes "old" records from the store.
-  virtual int
-    purge_old_records (void);
+  virtual int purge_old_records (void);
 
   /// Set single record attributes.
   virtual void
@@ -211,8 +191,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Ensure changes have been flushed to persistent media
   /// Returns 0 on success, -1 on failure.
-  virtual int
-    flush (void);
+  virtual int flush (void);
 
   /// Returns all records in the log that match the given constraint
   /// <c>.
@@ -229,9 +208,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
               DsLogAdmin::Iterator_out i);
 
   /// Returns the number of records matching constraint <c>.
-  virtual CORBA::ULong
-    match (const char * grammar,
-           const char * c);
+  virtual CORBA::ULong match (const char * grammar, const char * c);
 
   /// Delete records matching constraint <c>.
   virtual CORBA::ULong
@@ -242,8 +219,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   virtual CORBA::ULong
     delete_records_by_id (const DsLogAdmin::RecordIdList & ids);
 
-  virtual CORBA::ULong
-    remove_old_records (void);
+  virtual CORBA::ULong remove_old_records (void);
 
   /// Read-Write Lock
   virtual ACE_SYNCH_RW_MUTEX& lock();
