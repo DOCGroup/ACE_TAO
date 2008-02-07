@@ -54,8 +54,7 @@ TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id)
     RTEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
   RTEventLogAdmin::EventLog_var log =
-    eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_,
-                             id);
+    eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_, id);
 
   copy_attributes (log.in ());
 
@@ -69,8 +68,7 @@ TAO_RTEventLog_i::copy_with_id (DsLogAdmin::LogId id)
     RTEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
   RTEventLogAdmin::EventLog_var log =
-    eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0,
-                                     thresholds_);
+    eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_);
 
   copy_attributes (log.in ());
 
@@ -86,8 +84,7 @@ TAO_RTEventLog_i::destroy (void)
   this->logmgr_i_.remove (this->logid_);
 
   // Deregister with POA.
-  PortableServer::ObjectId_var id =
-    this->log_poa_->servant_to_id (this);
+  PortableServer::ObjectId_var id = this->log_poa_->servant_to_id (this);
 
   this->log_poa_->deactivate_object (id.in ());
 }
@@ -109,8 +106,7 @@ TAO_RTEventLog_i::for_consumers (void)
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-TAO_RTEventLog_i::for_suppliers (
-    )
+TAO_RTEventLog_i::for_suppliers (void)
 {
   return this->event_channel_->for_suppliers();
 }

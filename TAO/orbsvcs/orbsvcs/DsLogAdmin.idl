@@ -68,15 +68,15 @@ module DsLogAdmin
 
   struct LogRecord
   {
+    /// Unique number assigned by the log
     RecordId id;
-    // Unique number assigned by the log
+    /// Time when the event is logged
     TimeT time;
-    // Time when the event is logged
+    /// List of user defined name/value pairs. Not part of the event
+    /// received by the log. Optional.
     NVList attr_list;
-    // List of user defined name/value pairs. Not part of the event
-    // received by the log. Optional.
+    /// Event content
     any info;
-    // Event content
   };
 
   typedef sequence<LogRecord> RecordList;

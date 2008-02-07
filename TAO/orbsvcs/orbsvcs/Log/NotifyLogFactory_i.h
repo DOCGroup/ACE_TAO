@@ -61,8 +61,7 @@ public:
 
   /// Activate this servant with the ORB and POA passed in.
   DsNotifyLogAdmin::NotifyLogFactory_ptr
-    activate (CORBA::ORB_ptr orb,
-              PortableServer::POA_ptr poa);
+    activate (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Used to create an NotifyLog.
   DsNotifyLogAdmin::NotifyLog_ptr create (
@@ -71,8 +70,7 @@ public:
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         const CosNotification::QoSProperties & initial_qos,
         const CosNotification::AdminProperties & initial_admin,
-        DsLogAdmin::LogId_out id
-      );
+        DsLogAdmin::LogId_out id);
 
   /// Same as create (), but allows clients to specify the id.
   DsNotifyLogAdmin::NotifyLog_ptr create_with_id (
@@ -112,11 +110,9 @@ public:
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID& id);
 
-  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-        );
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void);
 
-  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
-        );
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void);
 
   void destroy (void);
 

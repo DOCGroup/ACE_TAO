@@ -45,10 +45,10 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   virtual ~TAO_LogRecordStore (void);
 
   /// Initialization.
-  virtual int open (void)					= 0;
+  virtual int open (void) = 0;
 
   /// Close the record store.
-  virtual int close (void)					= 0;
+  virtual int close (void) = 0;
 
 
   // = Log Parameters
@@ -59,7 +59,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Sets the administrative state of the log
   virtual void
-    set_administrative_state (DsLogAdmin::AdministrativeState state)			= 0;
+    set_administrative_state (DsLogAdmin::AdministrativeState state) = 0;
 
   /// Get the capacity alarm thresholds
   virtual DsLogAdmin::CapacityAlarmThresholdList*
@@ -67,7 +67,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Set the capacity alarm thresholds
   virtual void
-    set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds)		= 0;
+    set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds) = 0;
 
   /// Gets the forwarding state
   virtual DsLogAdmin::ForwardingState
@@ -75,11 +75,10 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Sets the forwarding state
   virtual void
-    set_forwarding_state (DsLogAdmin::ForwardingState state)			= 0;
+    set_forwarding_state (DsLogAdmin::ForwardingState state) = 0;
 
   /// Get the log duration
-  virtual DsLogAdmin::TimeInterval
-    get_interval (void) const   = 0;
+  virtual DsLogAdmin::TimeInterval get_interval (void) const = 0;
 
   /// Set the log duration.
   virtual void
@@ -87,7 +86,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Get the log full action
   virtual DsLogAdmin::LogFullActionType
-    get_log_full_action (void) const    = 0;
+    get_log_full_action (void) const = 0;
 
   /// Set the log full action
   virtual void

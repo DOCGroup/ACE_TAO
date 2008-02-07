@@ -1,3 +1,21 @@
+Thu Feb  7 10:49:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+        * orbsvcs/orbsvcs/DsLogAdmin.idl:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/EventLogConsumer.h:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/Hash_Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogConsumer.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogNotification.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+          Layout and doxygen changes
+
 Thu Feb  7 10:33:29 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/RTCORBA/RT_ORBInitializer.cpp:
