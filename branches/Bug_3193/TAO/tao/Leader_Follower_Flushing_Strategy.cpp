@@ -45,25 +45,17 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
     TAO_Transport *transport,
     ACE_Time_Value *max_wait_time)
 {
-  // @todo This is not the right way to do this....
-
   try
     {
       TAO_ORB_Core * const orb_core = transport->orb_core ();
 
-      ACE_Time_Value current = ACE_High_Res_Timer::gettimeofday_hr ();
-      ACE_Time_Value timeout;
-      if (max_wait_time != 0) {
-        timeout = current + *max_wait_time;
-      }
       while (!transport->queue_is_empty ())
         {
           if (orb_core->run (max_wait_time, 1) == -1)
             return -1;
 
           if (max_wait_time != 0) {
-            current = ACE_High_Res_Timer::gettimeofday_hr ();
-            if (current >= timeout) {
+            if (*max_wait_time <= ACE_Time_Value::zero) {
               errno = ETIME;
               return -1;
             }

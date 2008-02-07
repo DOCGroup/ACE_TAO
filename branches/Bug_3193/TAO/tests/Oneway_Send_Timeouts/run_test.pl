@@ -23,6 +23,10 @@ foreach $i (@ARGV) {
 	$client_conf = "block_flush.conf";
 	$flush_strategy = "BLOCKING";
     }
+    elsif ($i eq '-reactive') {
+        $client_conf = "reactive_flush.conf";
+        $flush_strategy = "REACTIVE";
+    }
     else {
 	print STDERR "ERROR: Unknown option: $i\n";
 	exit 1;
@@ -32,7 +36,6 @@ foreach $i (@ARGV) {
 my $test_opts = "-s \'-ORBEndpoint iiop://localhost:$test_port -ORBEndpoint " .
     "iiop://localhost:$management_port -ORBDebuglevel $debug_level -ORBCollocation " .
     "no -ORBGestalt LOCAL\' -c \'-k corbaloc::localhost:$test_port/Test -b " .
-    #"no\' -c \'-k corbaloc::localhost:$test_port/Test -b " .
     "corbaloc::localhost:$management_port/Management -ORBDebuglevel $debug_level " .
     "-ORBCollocation no -1 -ORBSvcConf $client_conf -f $flush_strategy " .
     "-ORBGestalt LOCAL\'";
