@@ -33,31 +33,31 @@ namespace ACE
       Message_Queue_Monitor (void);
       Message_Queue_Monitor (const char* name);
       virtual ~Message_Queue_Monitor (void);
-    
+
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.
       virtual void update (void);
-      
+
       /// Sets a referemce to the Statistic's parent in a group.
       virtual void group_parent (const Monitor_Base* parent);
-      
+
       /// Adds a Statistic to the list of children in a group.
       virtual void add_group_child (const Monitor_Base* child);
-      
+
       /// Attaches the (optional) constrain to this monitor point.
       virtual void constraint (const ETCL_Constraint* constraint);
-      
+
       /// Updates the monitor's data if it is a numeric floating point.
       virtual void receive (const double value);
-      
+
       /// Updates the monitor's data if it is an integer size.
       virtual void receive (const size_t value);
-      
+
       /// Reset function.
       virtual void clear (void);
     };
   }
-}    
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -43,10 +43,10 @@ namespace ACE
       /// Used to help ensure that there is only a single instance
       /// per process of ControlRegistry.
       static Control_Action_Registry* instance (void);
-      
+
       Control_Action_Registry (void);
-      ~Control_Action_Registry (void);
-      
+      virtual ~Control_Action_Registry (void);
+
       /// The lookup operation.
       Control_Action* get (const ACE_CString& name) const;
     };

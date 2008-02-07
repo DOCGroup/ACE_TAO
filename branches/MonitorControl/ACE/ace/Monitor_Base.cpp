@@ -11,27 +11,27 @@ namespace ACE
   {
     Monitor_Base::InvalidOperation::InvalidOperation (void)
     {}
-    
+
     Monitor_Base::InvalidOperation::~InvalidOperation (void)
     {}
-    
+
     Monitor_Base::Monitor_Base (void)
     {}
-    
+
     Monitor_Base::Monitor_Base (const char*  name)
       : MC_Generic (name)
     {}
-    
+
     Monitor_Base::~Monitor_Base (void)
     {}
-    
+
     MonitorControl_Types::Data
     Monitor_Base::retrieve (void)
     {
-      ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                             guard,
-                             this->mutex_,
-                             this->data_);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                        guard,
+                        this->mutex_,
+                        this->data_);
       return this->data_;
     }
   }
