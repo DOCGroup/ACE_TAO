@@ -8,6 +8,12 @@ namespace ACE
 {
   namespace MonitorControl
   {
+    MonitorPoint<true>::MonitorPoint (
+      const char* name,
+      MonitorControl_Types::InfoType /* type */)
+      : Monitor_Base (name)
+    {}
+    
     void
     MonitorPoint<true>::group_parent (const Monitor_Base* /* parent */)
     {
@@ -29,6 +35,11 @@ namespace ACE
     
     void
     MonitorPoint<true>::receive (double /* data */)
+    {
+    }
+    
+    void
+    MonitorPoint<true>::receive (size_t /* data */)
     {
     }
     

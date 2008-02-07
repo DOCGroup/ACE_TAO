@@ -11,9 +11,11 @@ namespace ACE
   namespace MonitorControl
   {
     CPULoadMonitor<true>::CPULoadMonitor (void)
+      : MonitorPoint<true> ("CPULoad",
+                            MonitorControl_Types::IT_NUMBER)
 #if defined (ACE_WIN32)
-      : query_ (0),
-        counter_ (0)
+      , query_ (0)
+      , counter_ (0)
 #endif
     {
 #if defined (ACE_WIN32)

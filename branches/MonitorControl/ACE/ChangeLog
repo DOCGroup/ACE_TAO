@@ -1,3 +1,47 @@
+Thu Feb  7 20:55:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_T.h:
+
+          Moved code to register the message queue's
+          monitor from the constructor to a new
+          method, to make it controlled by the application
+          instead of automatic. At least one message
+          queue is created under the hood, and we don't
+          want any message queue monitors registered
+          except those from message queues created by
+          the application. In the future, when a mechanism
+          is in place to specify the name of the message
+          queue monitor, the registration logic may change
+          again.
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/MonitorPoint.h:
+
+          Added some missing constructors so the string name
+          gets initialized properly.
+
+        * MonitorControl/LowLevelMonitors_T.cpp:
+
+          Fixed typos in template class constructor parameters,
+          not caught by the compiler until the class is
+          instantiated.
+
+        * MonitorControl/examples/svc.conf:
+
+          Changed file to reflect the fact that the
+          MonitorControl service define is now in ACE.
+
+        * MonitorControl/examples/main.cpp:
+
+          Changed example to create a CPU load monitor (periodically
+          updated automatically) and an ACE message queue (with a
+          monitor that updates proactively whenever the size of the
+          queue changes) in one thread, and a "worker" that queries
+          the values of these monitors periodically in another
+          thread.
+
 Thu Feb  7 16:26:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_Monitor.h:

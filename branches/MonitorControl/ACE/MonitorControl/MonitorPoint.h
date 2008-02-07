@@ -45,6 +45,8 @@ namespace ACE
       /// inherits from this one.
       
     public:
+      MonitorPoint (const char* name, MonitorControl_Types::InfoType type);
+    
       /// Meaningful implementation of member function.
       virtual void group_parent (const Monitor_Base* parent);
       
@@ -56,6 +58,9 @@ namespace ACE
       
       /// Meaningful implementation of member function.
       virtual void receive (double data);
+      
+      /// Meaningful implementation of member function.
+      virtual void receive (size_t data);
       
       /// Meaningful implementation of member function.
       virtual void clear (void);

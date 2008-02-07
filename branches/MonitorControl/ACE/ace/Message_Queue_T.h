@@ -483,6 +483,10 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+#if defined (ENABLE_ACE_MONITORS)
+  void register_monitor (void);
+#endif
+
 protected:
   // = Routines that actually do the enqueueing and dequeueing.
 
