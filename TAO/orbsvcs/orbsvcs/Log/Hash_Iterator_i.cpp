@@ -35,8 +35,7 @@ TAO_Hash_Iterator_i::~TAO_Hash_Iterator_i (void)
 
 
 DsLogAdmin::RecordList*
-TAO_Hash_Iterator_i::get (CORBA::ULong position,
-                          CORBA::ULong how_many)
+TAO_Hash_Iterator_i::get (CORBA::ULong position, CORBA::ULong how_many)
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -60,7 +59,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
   // meet the constraints.
 
   // Allocate the list of <how_many> length.
-  DsLogAdmin::RecordList* rec_list;
+  DsLogAdmin::RecordList* rec_list = 0;
   ACE_NEW_THROW_EX (rec_list,
                     DsLogAdmin::RecordList (how_many),
                     CORBA::NO_MEMORY ());

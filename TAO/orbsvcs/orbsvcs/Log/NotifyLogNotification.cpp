@@ -60,8 +60,7 @@ TAO_NotifyLogNotification::subscription_change
 }
 
 void
-TAO_NotifyLogNotification::disconnect_push_supplier
-   (void)
+TAO_NotifyLogNotification::disconnect_push_supplier (void)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 

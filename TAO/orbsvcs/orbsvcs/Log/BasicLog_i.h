@@ -46,7 +46,7 @@ class TAO_LogMgr_i;
  *
  * @brief It allows clients to write, query and delete records from the log.
  *
- * The class supports the @c destroy> method to destroy the Log.
+ * The class supports the @c destroy method to destroy the Log.
  */
 class TAO_Log_Serv_Export TAO_BasicLog_i :
   public TAO_Log_i,
