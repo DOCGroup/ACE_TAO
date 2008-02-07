@@ -1,3 +1,10 @@
+Thu Feb  7 10:00:22 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_3215_Regression/ServerRequest_Interceptor2.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/server.cpp:
+
+          As below.
+
 Wed Feb  6 11:00:38 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_3216_Regression/Bug_3216_Regression.mpc:

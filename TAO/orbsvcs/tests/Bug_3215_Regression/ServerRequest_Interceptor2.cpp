@@ -81,8 +81,8 @@ TAO249_ServerRequest_Interceptor2::receive_request (
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     {
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                           CORBA::COMPLETED_NO));
+      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
+                           CORBA::COMPLETED_NO);
     }
 
 
@@ -91,8 +91,8 @@ TAO249_ServerRequest_Interceptor2::receive_request (
   FT::FTRequestServiceContext ftrsc;
 
   if ((cdr >> ftrsc) == 0)
-    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                             CORBA::COMPLETED_NO));
+    throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
+                             CORBA::COMPLETED_NO);
 
 
   TimeBase::TimeT now = get_now ();
@@ -130,7 +130,7 @@ TAO249_ServerRequest_Interceptor2::receive_request (
 
       // Throw a forward back to ourselves on the first try
       // This means that we are testing the exception handling after a forward perm...
-      ACE_THROW (PortableInterceptor::ForwardRequest (server_iogr_.in ()));
+      throw PortableInterceptor::ForwardRequest (server_iogr_.in ());
     }
   else
     {
@@ -140,7 +140,7 @@ TAO249_ServerRequest_Interceptor2::receive_request (
           ACE_DEBUG ((LM_DEBUG, "On re-invocation #%d throwing a TRANSIENT back to the client\n", invocation_count));
         }
       // Thaen throw a transient on all subsequent invocations
-      ACE_THROW (CORBA::TRANSIENT (0, CORBA::COMPLETED_NO));
+      throw CORBA::TRANSIENT (0, CORBA::COMPLETED_NO);
     }
 }
 
