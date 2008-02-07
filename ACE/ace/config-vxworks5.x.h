@@ -310,6 +310,13 @@
 # define ACE_HAS_PENTIUM
 #endif
 
+# if defined (TOOL) && (TOOL == gnu)
+#  if defined (CPU) && (CPU == PPC85XX || CPU == PPC604 || CPU == PPC603)
+// These PPC's do lack log2
+#   define ACE_LACKS_LOG2
+#  endif
+# endif
+
 #if !defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
 # define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
 #endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
