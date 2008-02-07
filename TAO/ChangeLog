@@ -1,3 +1,19 @@
+Thu Feb  7 22:49:48 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Check for timeout in flush_message and flush_transport API's. If
+          hit set errno appropriately and return -1, informing higher layer.
+
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/SCIOP_Transport.h:
+        * tao/Strategies/SCIOP_Transport.cpp:
+          Chop out replicated code.
+
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+          Extend test for reactive flushing.
+
 Tue Feb  5 22:50:16 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Send_Timeouts/Client.h:
