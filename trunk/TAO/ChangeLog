@@ -1,3 +1,9 @@
+Thu Feb  7 10:33:29 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+          Fixed a potential bug after refactor where an object was
+          checked for nil after it was actually used.
+
 Thu Feb  7 10:00:22 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_3215_Regression/ServerRequest_Interceptor2.cpp:
