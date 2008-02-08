@@ -110,7 +110,7 @@ ACE_Obstack_T<CHAR>::new_chunk (void)
 {
   ACE_TRACE ("ACE_Obstack_T<CHAR>::new_chunk");
 
-  ACE_Obchunk *temp;
+  ACE_Obchunk *temp = 0;
 
   ACE_NEW_MALLOC_RETURN (temp,
                          static_cast<ACE_Obchunk *> (this->allocator_strategy_->malloc
@@ -181,9 +181,7 @@ ACE_Obstack_T<CHAR>::unwind (void* obj)
 template <class CHAR> void
 ACE_Obstack_T<CHAR>::unwind_i (void* obj)
 {
-  ACE_Obchunk* curr;
-
-  curr = this->head_;
+  ACE_Obchunk* curr = this->head_;
   while (curr != 0 && (curr->contents_ > obj || curr->end_ < obj))
       curr = curr->next_;
   if (curr)
