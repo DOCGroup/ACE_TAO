@@ -653,8 +653,10 @@ ACE_Select_Reactor_Notify::close (void)
            r > 0;
            r = read_notify_pipe(notification_pipe_.read_handle(), b))
         {
-          if (b.eh_ == 0) continue;
-          b.eh_->remove_reference();
+          if (b.eh_ != 0)
+            {
+              b.eh_->remove_reference();
+            }
         }
     }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */

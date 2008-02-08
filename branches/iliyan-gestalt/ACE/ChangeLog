@@ -1,3 +1,88 @@
+Wed Feb  6 08:30:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Some PPC's do lack log2
+
+Wed Feb  6 23:29:55 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * examples/APG/Proactor/HA_Proactive_Status.cpp: Pass
+          ACE_DEFAULT_ASYNCH_BACKLOG, not ACE_DEFAULT_BACKLOG, to the
+          ACE_Asynch_Acceptor contructor. Corrects a startup error on Windows.
+          Thanks to Sorin Voicu-Comendant for this fix.
+
+        * THANKS: Added Sorin Voicu-Comendant to the Hall of Fame.
+
+Tue Feb  5 22:15:29 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Scheduled bug #3216.
+
+Tue Feb  5 18:51:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/test_files.mpb:
+          Use run_test*.pl as filter and automatic=0. That way we only
+          generate projects when there is a run_test.pl file. Thanks to
+          Adam Mitz for the suggestions.
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Readded test_files
+
+Tue Feb  5 13:49:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          No need to set TAO_IDL, TAO_IDL_DEP, etc, just use HOST_ROOT.
+          Also set the values in such a way we also support a Solaris host.
+
+Tue Feb  5 13:30:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Added build_files as base project, test_files is the one that
+          causes some problems
+
+Tue Feb  5 08:07:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Temporarily remove test_files and build_files, it seems
+          to cause some errors in the windows builds
+
+Tue Feb  5 07:58:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_Base.cpp:
+          Revert change of yesterday, caused compile errors on non win32
+          platforms
+
+Mon Feb  4 19:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.6.h:
+          Simplified this file
+
+        * ace/Obstack_T.cpp:
+          Initialise a few pointers
+
+        * ace/Select_Reactor_Base.cpp:
+          Removed duplicated code, made loop easier to read
+
+        * ace/Naming_Context.{h,cpp,inl}:
+          Use bool and added new inline file
+
+Mon Feb  4 18:37:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/test_files.mpb:
+          New file to list run_test.pl as Test_Files in for example a msvc
+          project file. Thanks to Adam Mitz for suggesting a way to do
+          this. This fixes bugzilla 3212
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Added test_files and build_files as base projects so that we
+          get *.mpc/*.mpb/*.mwc/run_test.pl added to project files
+
+Mon Feb  4 12:34:06 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Schedule regression tests for bug #2777 and #3215.
+
 Sat Feb  2 07:08:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Malloc_T.h:
