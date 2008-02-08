@@ -106,7 +106,7 @@ module PortableServer
     exception AdapterAlreadyExists {};
     exception AdapterNonExistent {};
     exception InvalidPolicy {unsigned short index;};
-#if !defined (TAO_HAS_MINIMUM_POA)
+#if !defined (TAO_HAS_MINIMUM_POA) && !defined (CORBA_E_COMPACT)
     exception NoServant {};
 #endif
     exception ObjectAlreadyActive {};

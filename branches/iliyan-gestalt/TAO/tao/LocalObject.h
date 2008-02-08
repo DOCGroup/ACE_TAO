@@ -70,14 +70,13 @@ namespace CORBA
     /// Always returns false.
     virtual CORBA::Boolean _non_existent (void);
 
-    /// Throws CORBA::NO_IMPLEMENT.
-    virtual CORBA::ImplementationDef_ptr _get_implementation (void);
-
+#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
     /// Gets info about object from the Interface Repository.
     virtual CORBA::InterfaceDef_ptr _get_interface (void);
 
     /// Throws NO_IMPLEMENT.
     virtual CORBA::Object_ptr _get_component (void);
+#endif
 
     /// Get the repository id.
     virtual char * _repository_id (void);

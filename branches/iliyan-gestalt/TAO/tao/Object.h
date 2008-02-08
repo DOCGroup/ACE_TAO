@@ -61,9 +61,6 @@ namespace CORBA
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
 
-  class ImplementationDef;
-  typedef ImplementationDef *ImplementationDef_ptr;
-
   class Context;
   typedef Context *Context_ptr;
 
@@ -156,10 +153,6 @@ namespace CORBA
     virtual CORBA::Boolean _non_existent (void);
 
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
-    /// This method is deprecated in the CORBA 2.2 spec, we just return 0
-    /// every time.
-    virtual CORBA::ImplementationDef_ptr _get_implementation (void);
-
     /// Get info about the object from the Interface Repository.
     virtual InterfaceDef_ptr _get_interface (void);
 
