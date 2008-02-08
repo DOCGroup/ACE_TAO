@@ -5,8 +5,9 @@ import pdb
 from HTMLParser import HTMLParser
 from urllib import urlopen
 from urlparse import urljoin
-from time import strptime, strftime
+from time import gmtime, strptime, strftime
 from optparse import OptionParser
+from difflib import unified_diff
 
 ## Abstract base class implementing basic bookkeeping tasks
 ## like maintaing context information about the tags we care
@@ -420,6 +421,12 @@ def nearest_after (ts, available_sorted):
     return None
 
 
+def find_index (array, what):
+    for i in range (len(array)):
+        if what == array[i]:
+            return i
+    return -1
+
 def diff_dates (timestamps, available_unsorted):
     # available is a list of timestamps that are available.
     # timestamps contains up to two timestamps to filter with.
@@ -436,6 +443,16 @@ def diff_dates (timestamps, available_unsorted):
 
     return [None, None]
 
+
+def parse_with_retry (parser, what):
+    return parser.parse()
+#    while True:
+#        try:
+#            return parser.parse()
+#        except:
+#            print "Cant access %s. Retry/Stop/Continue [r/s/c]?" % (what)
+    
+
 def main ():
     parser = OptionParser()
     parser.add_option("-D", "--date", action="append", dest="dates",
@@ -450,7 +467,11 @@ def main ():
                       help="make lots of noise [default=true]")
 
     (options, args) = parser.parse_args()
-    options.dates = [parse_date (d) for d in options.dates]
+    
+    if options.dates == None or len (options.dates) == 0:
+        options.dates = []
+    else:
+        options.dates = [parse_date (d) for d in options.dates]
 
     # what do we need to do?
     if len (args) > 0 and (args[0] == 'list' or args[0] == 'l'):
@@ -461,9 +482,8 @@ def main ():
             print "%s [%s]" % (ip.build[i].name, ip.build[i].group)
  
             hp = HistoryParser (ip.build[i].historyurl)
-            hp.parse()
-            print "%s: %s" % (ip.build[i].name, 
-                              [format_date (t) for t in hp.timestamp])
+            parse_with_retry (hp, ip.build[i].historyurl)
+
 
     elif len (args) > 0 and (args[0] == 'diff' or args[0] == 'd'):
         ip = IndexParser (integrated_url, options.groups, options.builds)
@@ -473,8 +493,8 @@ def main ():
         for i in range (len (ip.build)):
             print "%s [%s]" % (ip.build[i].name, ip.build[i].group)
  
-            hp = HistoryParser (ip.build[i].historyurl)
-            hp.parse()
+            hp = HistoryParser (ip.build[i].historyurl) 
+            parse_with_retry (hp, ip.build[i].historyurl) 
             
             print "options.dates %s" % options.dates
 
@@ -485,7 +505,39 @@ def main ():
             if None in times:
                 print "error: %s dates %s not in %s" % (ip.build[i].name, 
                                                         [format_date(t) for t in times],
-                                                        [format_date(t) for t in hp.timestamp]) 
+                                                        [format_date(t) for t in hp.timestamp])
+            else:
+                log_abbrev_index = [find_index (hp.timestamp, times[0]),
+                                    find_index (hp.timestamp, times[1])]
+
+                print "info: indexes [%d, %d]" % (log_abbrev_index[0],
+                                                  log_abbrev_index[1])
+
+                dp0 = DailyParser (hp.build_log_index[log_abbrev_index[0]])
+                dp0.parse()
+                print "info: %s -> %s" % (format_date (times[0]),
+                                          dp0.brief_url[5])
+
+                bp0 = BriefParser (dp0.brief_url[5])
+                bp0.parse()
+
+#                print "info: %s -> %s" % (format_date (times[0]),
+#                                          bp0.failed)
+
+                dp1 = DailyParser (hp.build_log_index[log_abbrev_index[1]])
+                dp1.parse()
+                print "info: %s -> %s" % (format_date (times[1]),
+                                               dp1.brief_url[5])
+
+                bp1 = BriefParser (dp1.brief_url[5])
+                bp1.parse()
+
+#                print "info: %s -> %s" % (format_date (times[1]),
+#                                          bp1.failed)
+
+                for l in unified_diff (bp0.failed, bp1.failed):
+                    print l
+
 
 def sample():
     ip = IndexParser (integrated_url, [], [])
