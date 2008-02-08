@@ -75,12 +75,9 @@ protected:
     );
 
   // = PushSupplier methods
-  virtual void push (
-      const CORBA::Any & event
-    );
+  virtual void push (const CORBA::Any & event);
 
-  virtual void disconnect_push_consumer (
-      );
+  virtual void disconnect_push_consumer (void);
 
   /// ProxyPushSupplier used to connect to NotifyLog.
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;

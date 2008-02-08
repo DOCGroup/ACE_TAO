@@ -423,7 +423,7 @@ TAO::ORB::close_services (ACE_Service_Gestalt_Auto_Ptr pcfg)
                             guard,
                             *ACE_Static_Object_Lock::instance (),
                             -1));
-  service_open_count--;
+  --service_open_count;
 
   if (pcfg == ACE_Service_Config::global())
     return 0;

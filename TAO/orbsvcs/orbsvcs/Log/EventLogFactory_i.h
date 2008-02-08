@@ -69,35 +69,29 @@ public:
 
   /// Activate this servant with the ORB and POA passed in.
   DsEventLogAdmin::EventLogFactory_ptr
-    activate (CORBA::ORB_ptr orb,
-              PortableServer::POA_ptr poa);
+    activate (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Used to create an EventLog.
   DsEventLogAdmin::EventLog_ptr create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        DsLogAdmin::LogId_out id
-      );
+        DsLogAdmin::LogId_out id);
 
   /// Same as create (), but allows clients to specify the id.
   DsEventLogAdmin::EventLog_ptr create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds
-      );
+        const DsLogAdmin::CapacityAlarmThresholdList & thresholds);
 
   // = Implementation of the CosEventChannelAdmin::ConsumerAdmin methods.
-  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-      );
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void);
 
-  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
-      );
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void);
 
 protected:
-  virtual CORBA::RepositoryId
-    create_repositoryid ();
+  virtual CORBA::RepositoryId create_repositoryid ();
 
   virtual PortableServer::ServantBase*
     create_log_servant (DsLogAdmin::LogId id);

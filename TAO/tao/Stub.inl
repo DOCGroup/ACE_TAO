@@ -25,7 +25,10 @@ TAO_Stub::profile_lock (void) const
 ACE_INLINE void
 TAO_Stub::reset_forward (void)
 {
-  while (this->forward_profiles_ != 0)
+  while (this->forward_profiles_ != 0
+         && this->forward_profiles_ != this->forward_profiles_perm_) // Disturbingly the permanent
+                                                                     // forwarded profile lives at the  bottom
+                                                                     // of this stack if it exists. Avoid deleting it.
     this->forward_back_one ();
 }
 
@@ -34,6 +37,17 @@ TAO_Stub::reset_profiles_i (void)
 {
   this->reset_forward ();
   this->reset_base ();
+
+  if (this->forward_profiles_perm_)
+    {
+      // The *permanent* forward is being kept in the transient
+      // forward queue (??!). We have just nuked it. Put it back the way it was.
+      // reset_base should have reset the profile success.
+      // @todo We have knives in the spoon draw - TAO_Stub needs total rewrite.
+      this->forward_profiles_ = this->forward_profiles_perm_;
+      this->forward_profiles_->rewind ();
+      this->set_profile_in_use_i (this->forward_profiles_->get_next ());
+    }
 }
 
 ACE_INLINE void
@@ -204,7 +218,10 @@ TAO_Stub::next_profile_retry (void)
 
       // In this case we are falling back from the forwarded IOR stright to the base IOR
       this->reset_profiles_i ();
-      return true;
+
+      // We used to return unconditional true at this point but this results in
+      // infinite retries of any permanent location forward. This is undesirable.
+      return !this->forward_profiles_perm_;
     }
   else if (this->next_profile_i ())
     {

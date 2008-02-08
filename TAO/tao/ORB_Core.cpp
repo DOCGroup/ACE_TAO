@@ -213,6 +213,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     resource_factory_ (0),
     client_factory_ (0),
     server_factory_ (0),
+    ft_send_extended_sc_ (false),
     opt_for_collocation_ (true),
     use_global_collocation_ (true),
     collocation_strategy_ (THRU_POA),
@@ -1033,6 +1034,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           arg_shifter.consume_arg ();
         }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBFTSendFullGroupTC"))))
+        {
+          this->ft_send_extended_sc_ = ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
 
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
@@ -1107,7 +1115,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   (void) ACE_OS::signal (SIGPIPE, (ACE_SignalHandler) SIG_IGN);
 #endif /* SIGPIPE */
 
-
   // Calling the open method here so that the svc.conf file is
   // opened and TAO_default_resource_factory::init () is called by the
   // time this method is called.
@@ -1121,7 +1128,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   if (trf == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Resource Factory instance")));
       throw ::CORBA::INTERNAL (
@@ -1141,7 +1148,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   if (reactor == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to initialize reactor")));
       throw ::CORBA::INITIALIZE (
         CORBA::SystemException::_tao_minor_code (
@@ -1155,7 +1162,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   if (ssf == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Server Strategy Factory instance")));
       throw ::CORBA::INTERNAL (
@@ -3112,7 +3119,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("IORInterceptor Adapter Factory instance")));
 
@@ -3169,7 +3176,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Client Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
@@ -3218,7 +3225,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Server Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
@@ -3242,7 +3249,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Client Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
@@ -3266,7 +3273,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Server Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));

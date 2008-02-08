@@ -57,8 +57,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyDefaultServant::set_servant (
-      PortableServer::Servant servant
-      )
+      PortableServer::Servant servant)
     {
       // This operation registers the specified servant with the POA as
       // the default servant. This servant will be used for all requests
@@ -113,8 +112,7 @@ namespace TAO
       const PortableServer::ObjectId & system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      bool & /*wait_occurred_restart_call*/
-      )
+      bool & /*wait_occurred_restart_call*/)
     {
       PortableServer::Servant servant = 0;
 
@@ -182,8 +180,7 @@ namespace TAO
     void
     RequestProcessingStrategyDefaultServant::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id
-      )
+      const PortableServer::ObjectId &user_id)
     {
       if (servant)
         {
@@ -211,8 +208,7 @@ namespace TAO
 
     PortableServer::ObjectId *
     RequestProcessingStrategyDefaultServant::servant_to_id (
-      PortableServer::Servant servant
-      )
+      PortableServer::Servant servant)
     {
       PortableServer::Servant default_servant = this->default_servant_.in ();
 

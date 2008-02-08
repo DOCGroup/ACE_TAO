@@ -350,7 +350,9 @@ TAO_Stub::forward_back_one (void)
 {
   TAO_MProfile *from = forward_profiles_->forward_from ();
 
-  delete this->forward_profiles_;
+  // Only delete the forward location if it is not permanent
+  if (this->forward_profiles_ != this->forward_profiles_perm_)
+    delete this->forward_profiles_;
 
   // the current profile in this profile list is no
   // longer being forwarded, so set the reference to zero.

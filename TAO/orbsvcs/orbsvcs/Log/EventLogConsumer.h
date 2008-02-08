@@ -65,8 +65,7 @@ public:
   ~TAO_Event_LogConsumer (void);
 
   /// Connect to EventLog.
-  void
-    connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
+  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 private:
 

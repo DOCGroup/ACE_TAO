@@ -21,7 +21,7 @@ namespace TAO
     {
     }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
     PortableServer::ServantManager_ptr
     RequestProcessingStrategyAOMOnly::get_servant_manager (void)
@@ -43,13 +43,13 @@ namespace TAO
       throw PortableServer::POA::WrongPolicy ();
     }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::get_servant (void)
     {
       throw PortableServer::POA::WrongPolicy ();
     }
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
     TAO_SERVANT_LOCATION
     RequestProcessingStrategyAOMOnly::locate_servant (
