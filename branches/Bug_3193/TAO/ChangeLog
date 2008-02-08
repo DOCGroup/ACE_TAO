@@ -1,3 +1,8 @@
+Fri Feb  8 21:43:01 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/reactive_flush.conf:
+          Need this for testing the reactive flush strategy.
+
 Thu Feb  7 22:49:48 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tao/Leader_Follower_Flushing_Strategy.cpp:
