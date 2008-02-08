@@ -377,7 +377,65 @@ def list_timestamps_for_build (b):
     hp.parse()
     print hp.timestamp
     
-    
+def format_date (t):
+    if t == None or len (t) != 9:
+        return '(unknown)'
+    else:
+        return strftime("%Y-%m-%d %H:%M", t)
+
+def parse_date (s):
+    timeformats = [ 
+        '%Y_%m_%d %H:%M',
+        '%Y-%m-%d %H:%M',
+        '%Y%m%d%H%M',
+        '%Y_%m_%d %H',
+        '%Y-%m-%d %H',
+        '%Y%m%d%H',
+        '%Y_%m_%d',
+        '%Y-%m-%d',
+        '%Y%m%d',
+        '%Y_%m',
+        '%Y-%m',
+        '%Y%m',
+        '%Y',
+        ]
+
+    for tf in timeformats:
+        try:
+            return strptime(s, tf)
+        except ValueError:
+            pass
+
+    return None
+
+
+def nearest_after (ts, available_sorted):
+    """ 
+    Returns the closest date, that's not before ts, or None
+    """
+    for (i,a) in enumerate (available_sorted):
+        if a >= ts:
+            return available_sorted[i]
+
+    return None
+
+
+def diff_dates (timestamps, available_unsorted):
+    # available is a list of timestamps that are available.
+    # timestamps contains up to two timestamps to filter with.
+    available = sorted (available_unsorted)
+    if len (timestamps) == 0 and len (available) >= 2:
+        # if none specified - compare, using the one before last with the last
+        return [available[-2], available[-1]]
+    elif len (timestamps) == 1 and len (available) >= 1:
+        return [nearest_after (timestamps[0], available), 
+                available[-1]]
+    elif len (timestamps) >= 2 and len (available) >= 1:
+        return [nearest_after (timestamps[0], available), 
+                nearest_after (timestamps[1], available)]
+
+    return [None, None]
+
 def main ():
     parser = OptionParser()
     parser.add_option("-D", "--date", action="append", dest="dates",
@@ -392,34 +450,42 @@ def main ():
                       help="make lots of noise [default=true]")
 
     (options, args) = parser.parse_args()
+    options.dates = [parse_date (d) for d in options.dates]
 
-    print "timestamps: %s" % options.dates
-
-#    try:
-#        try:
-#            timestamps = [strptime(s, "%Y%m%d%H%M") for s in options.dates]
-#        except ValueError:
-#            timestamps = [strptime(s, "%Y%m%d%H") for s in options.dates]
-#    except ValueError:
-    timestamps = [strptime(s, '%Y%m%d') for s in options.dates]
-    
-    print "timestamps: " % timestamps
-
-    if len (args) > 0 and (args[0] == 'list' or ars[0] == 'l'):
+    # what do we need to do?
+    if len (args) > 0 and (args[0] == 'list' or args[0] == 'l'):
         ip = IndexParser (integrated_url, options.groups, options.builds)
         ip.parse ()
         
-        times = []
-        logs = []
         for i in range (len (ip.build)):
             print "%s [%s]" % (ip.build[i].name, ip.build[i].group)
  
             hp = HistoryParser (ip.build[i].historyurl)
             hp.parse()
             print "%s: %s" % (ip.build[i].name, 
-                              [strftime("%Y%m%d%H%M", t) for t in hp.timestamp])
-                                   
+                              [format_date (t) for t in hp.timestamp])
+
+    elif len (args) > 0 and (args[0] == 'diff' or args[0] == 'd'):
+        ip = IndexParser (integrated_url, options.groups, options.builds)
+        ip.parse ()
         
+        logs = []
+        for i in range (len (ip.build)):
+            print "%s [%s]" % (ip.build[i].name, ip.build[i].group)
+ 
+            hp = HistoryParser (ip.build[i].historyurl)
+            hp.parse()
+            
+            print "options.dates %s" % options.dates
+
+            times = diff_dates (options.dates, hp.timestamp)
+            print "%s: %s" % (ip.build[i].name, 
+                              [format_date(t) for t in times])
+                                   
+            if None in times:
+                print "error: %s dates %s not in %s" % (ip.build[i].name, 
+                                                        [format_date(t) for t in times],
+                                                        [format_date(t) for t in hp.timestamp]) 
 
 def sample():
     ip = IndexParser (integrated_url, [], [])
@@ -449,5 +515,5 @@ def sample():
 
 if __name__ == '__main__':
 #    sys.exit (sample())
-    sys.exit (main())
-#  pdb.run ("main()");
+#    sys.exit (main())
+    pdb.run ("main()");
