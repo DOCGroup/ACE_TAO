@@ -297,7 +297,13 @@ class DailyParser (AbstractParser):
         self.brief_url = []
         self.full_url = []
         self.column = -1
-        
+
+    def briefurl (self, section_name):
+        for (i,s) in enumerate (self.section):
+            if s == section_name:
+                return self.brief_url[i]
+        return None
+
     def istag (self, tagname):
         return (['a', 'td', 'tr'].count (tagname) > 0)
 
@@ -489,7 +495,9 @@ def main ():
         ip = IndexParser (integrated_url, options.groups, options.builds)
         ip.parse ()
         
-        logs = []
+        ## Determine build times and brief test error's URL for each build
+        testlogs = []
+        times = []
         for i in range (len (ip.build)):
             print "%s [%s]" % (ip.build[i].name, ip.build[i].group)
  
@@ -498,45 +506,58 @@ def main ():
             
             print "options.dates %s" % options.dates
 
-            times = diff_dates (options.dates, hp.timestamp)
+            btimes = diff_dates (options.dates, hp.timestamp)
             print "%s: %s" % (ip.build[i].name, 
-                              [format_date(t) for t in times])
+                              [format_date(t) for t in btimes])
                                    
-            if None in times:
+            if None in btimes:
                 print "error: %s dates %s not in %s" % (ip.build[i].name, 
-                                                        [format_date(t) for t in times],
+                                                        [format_date(t) for t in btimes],
                                                         [format_date(t) for t in hp.timestamp])
             else:
-                log_abbrev_index = [find_index (hp.timestamp, times[0]),
-                                    find_index (hp.timestamp, times[1])]
+                times.append (btimes)
 
-                print "info: indexes [%d, %d]" % (log_abbrev_index[0],
-                                                  log_abbrev_index[1])
+                log_abbrev_index = [find_index (hp.timestamp, btimes[0]),
+                                    find_index (hp.timestamp, btimes[1])]
+
+#                print "info: indexes [%d, %d]" % (log_abbrev_index[0],
+#                                                  log_abbrev_index[1])
 
                 dp0 = DailyParser (hp.build_log_index[log_abbrev_index[0]])
                 dp0.parse()
-                print "info: %s -> %s" % (format_date (times[0]),
-                                          dp0.brief_url[5])
-
-                bp0 = BriefParser (dp0.brief_url[5])
-                bp0.parse()
-
-#                print "info: %s -> %s" % (format_date (times[0]),
-#                                          bp0.failed)
+                
+#                print "info: %s -> %s" % (format_date (btimes[0]),
+#                                          dp0.brief_url[5])
 
                 dp1 = DailyParser (hp.build_log_index[log_abbrev_index[1]])
                 dp1.parse()
-                print "info: %s -> %s" % (format_date (times[1]),
-                                               dp1.brief_url[5])
+#                print "info: %s -> %s" % (format_date (btimes[1]),
+#                                               dp1.brief_url[5])
 
-                bp1 = BriefParser (dp1.brief_url[5])
-                bp1.parse()
+                testlogs.append ([dp0.briefurl('test'), dp1.briefurl('test')])
+                
+        print "testlogs=%s" % testlogs
 
-#                print "info: %s -> %s" % (format_date (times[1]),
-#                                          bp1.failed)
+        if len (ip.build) > 1:
+            l = [testlogs[0][0], testlogs[1][0]]
+            t = [times[0][1], times[1][1]]
 
-                for l in unified_diff (bp0.failed, bp1.failed):
-                    print l
+            bp0 = BriefParser (l[0])
+            bp0.parse()
+
+#            print "info: %s -> %s" % (format_date (t[0]),
+#                                      bp0.failed)
+
+            bp1 = BriefParser (l[1])
+            bp1.parse()
+
+#            print "info: %s -> %s" % (format_date (t[1]),
+#                                      bp1.failed)
+
+            for l in unified_diff (bp0.failed, bp1.failed, 
+                                   l[0], l[1], 
+                                   format_date (t[0]), format_date (t[1])):
+                print l
 
 
 def sample():
@@ -564,8 +585,18 @@ def sample():
     print bp.failed
     return 0
 
+def testDaylyLog():
+    url ="http://scoreboard.ociweb.com/doc_iliyan-gestalt_mosquito_linux_gcc_d1o0/2008_02_10_12_25_Totals.html"
+
+    dp0 = DailyParser (url)
+    dp0.parse()
+    print "info: %s -> %s" % (url, dp0.briefurl('test'))
+    print "info: section=%s" % dp0.section
+    print "info: briefs=%s" % dp0.brief_url
+    
 
 if __name__ == '__main__':
 #    sys.exit (sample())
 #    sys.exit (main())
     pdb.run ("main()");
+#    pdb.run ("testDaylyLog()")
