@@ -289,7 +289,7 @@ public:
   TAO_Wait_Strategy *wait_strategy (void) const;
 
   /// Callback method to reactively drain the outgoing data queue
-  int handle_output (void);
+  int handle_output (ACE_Time_Value *max_wait_time);
 
   /// Get the bidirectional flag
   int bidirectional_flag (void) const;
@@ -686,8 +686,10 @@ protected:
   /// Queue a message for @a message_block
   /// @param max_wait_time The maximum time that the operation can
   ///            block, used in the implementation of timeouts.
+  /// @param back If true, the message will be pushed to the back of the queue.
+  ///        If false, the message will be pushed to the front of the queue.
   int queue_message_i (const ACE_Message_Block *message_block,
-                       ACE_Time_Value *max_wait_time);
+                       ACE_Time_Value *max_wait_time, bool back=true);
 
 public:
   /// Format and queue a message for @a stream
@@ -786,10 +788,10 @@ private:
    * Returns 0 if there is more data to send, -1 if there was an error
    * and 1 if the message was completely sent.
    */
-  int drain_queue (void);
+  int drain_queue (ACE_Time_Value *max_wait_time);
 
   /// Implement drain_queue() assuming the lock is held
-  int drain_queue_i (void);
+  int drain_queue_i (ACE_Time_Value *max_wait_time);
 
   /// Check if there are messages pending in the queue
   /**
@@ -801,7 +803,7 @@ private:
   bool queue_is_empty_i (void);
 
   /// A helper routine used in drain_queue_i()
-  int drain_queue_helper (int &iovcnt, iovec iov[]);
+  int drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max_wait_time);
 
   /// These classes need privileged access to:
   /// - schedule_output_i()
