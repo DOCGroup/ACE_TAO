@@ -6,6 +6,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Queued_Message.h"
 
+#include "ace/High_Res_Timer.h"
+
 ACE_RCSID (tao,
            Reactive_Flushing_Strategy,
            "$Id$")
@@ -40,6 +42,13 @@ TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
       while (!msg->all_data_sent () && result >= 0)
         {
           result = orb_core->run (max_wait_time, 1);
+
+          if (max_wait_time != 0) {
+            if (*max_wait_time <= ACE_Time_Value::zero) {
+              errno = ETIME;
+              result = -1;
+            }
+          }
         }
     }
   catch (const ::CORBA::Exception&)
@@ -51,17 +60,24 @@ TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
 }
 
 int
-TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport)
+TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport
+                                                 , ACE_Time_Value *max_wait_time)
 {
-  // @@ Should we pass this down?  Can we?
   try
     {
       TAO_ORB_Core * const orb_core = transport->orb_core ();
 
       while (!transport->queue_is_empty ())
         {
-          if (orb_core->run (0, 1) == -1)
+          if (orb_core->run (max_wait_time, 1) == -1)
             return -1;
+
+          if (max_wait_time != 0) {
+            if (*max_wait_time <= ACE_Time_Value::zero) {
+              errno = ETIME;
+              return -1;
+            }
+          }
         }
     }
   catch (const ::CORBA::Exception&)
