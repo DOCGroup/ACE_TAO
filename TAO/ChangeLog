@@ -1,3 +1,151 @@
+Mon Feb 11 20:51:59 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        Merging in changes from branch "Bug_3193". Here are the individual
+        Changelog entries:
+        Mon Feb 11 17:00:23 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Test_i.h:
+        * tests/Oneway_Send_Timeouts/Test_i.cpp:
+          Remove ACE_THROW_SPEC.
+
+        Fri Feb  8 21:43:01 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/reactive_flush.conf:
+          Need this for testing the reactive flush strategy.
+
+        Thu Feb  7 22:49:48 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Check for timeout in flush_message and flush_transport API's. If
+          hit set errno appropriately and return -1, informing higher layer.
+
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/SCIOP_Transport.h:
+        * tao/Strategies/SCIOP_Transport.cpp:
+          Chop out replicated code.
+
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+          Extend test for reactive flushing.
+
+        Tue Feb  5 22:50:16 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Client.h:
+        * tests/Oneway_Send_Timeouts/Client.cpp:
+          Refactor test to better simulate flooded TCP buffers in block
+          flushing scenario.
+
+        Thu Jan 31 16:05:52 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Client.cpp:
+          More Windows warnings fixes.
+
+        Thu Jan 31 15:57:56 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Client.cpp:
+        * tests/Oneway_Send_Timeouts/Oneway_scenarios.mpc:
+        * tests/Oneway_Send_Timeouts/Server.cpp:
+        * tests/Oneway_Send_Timeouts/main.cpp:
+          Fix for Windows warnings.
+
+        Wed Jan 30 23:11:05 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts:
+          New test for RTT validation during send/flush.
+
+        Wed Jan 30 18:02:59 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tao/Transport.cpp:
+          Check sent_bytes value to determine if something got flushed
+          instead of queue head location.
+
+        Mon Jan 28 22:53:40 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+          flush_transport() correctly sets errno to ETIME if timeout
+          expires.
+
+        * tao/Transport.cpp:
+          Throws a CORBA::TIMEOUT if flush_transport() gets a timeout.
+
+        Mon Jan 21 16:19:15 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Oneway_Timeouts/run_test.pl:
+
+          This one perl script runs a number of sub-tests.  If any one fails,
+          print an error message but continue, making sure to return nonzero
+          from the perl script.
+
+        Fri Jan 18 21:51:21 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.cpp:
+
+          Completed the fix from yesterday's commit so that both sync and
+          async requests that don't send any bytes do NOT result in closing
+          the connection.
+
+        * tests/Timed_Buffered_Oneways/client.cpp:
+
+          Tolerate timeout exceptions when sending the oneways.  Prior to the
+          transport changes for Bug 3191, TAO would not enforce the timeout on
+          the request sending path.
+
+        Thu Jan 17 22:53:05 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.cpp:
+
+          Fixed the case where a timeout happens with zero bytes sent.  This
+          is not a partial send so we don't return -1 to shut down the
+          transport.  Also added a debug log message and cleaned up indenting.
+
+        Thu Jan 17 20:02:43 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
+        * tests/Bug_3154_Regression/run_test.pl:
+
+          Fixed tests that assumed $TAO_ROOT was $ACE_ROOT/TAO.
+
+        Wed Jan 16 19:39:58 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.cpp:
+
+          Fixed a logic error where the rest of a partially-sent message was
+          put on the wrong end of the output queue.
+
+        Wed Jan 16 16:12:35 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.h:
+
+          Added doxygen for the 'back' parameter.
+
+        Tue Jan 15 22:19:48 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.h:
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Connection_Handler.cpp:
+        * tao/Flushing_Strategy.h:
+        * tao/Leader_Follower_Flushing_Strategy.h:
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.h:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          API changes to pass max_wait_time.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Remove base class duplicate method send_message_shared().
+
+        * tao/Transport.cpp:
+          Pass max_wait_time properly through the stack.
+          Additional comments/notes.
+          Flush only if timeout hasn't already been encountered.
+          Pass max_wait_time to the flushing strategy.
+          Bubble up flushing startegy errors (ignored earlier).
+          In asynch send (send_asynchronous_message_i), push remaining
+          message to front of queue and only flush if timeout hasn't been
+          already encountered.
+
 Thu Feb  7 10:49:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/Log/Basic/TLS_Client.cpp:

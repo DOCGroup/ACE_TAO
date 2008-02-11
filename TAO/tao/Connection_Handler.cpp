@@ -201,7 +201,7 @@ TAO_Connection_Handler::handle_output_eh (
       return return_value;
     }
 
-  return_value = this->transport ()->handle_output ();
+  return_value = this->transport ()->handle_output (0);
 
   this->pos_io_hook (return_value);
 

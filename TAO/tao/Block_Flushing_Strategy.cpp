@@ -23,22 +23,23 @@ TAO_Block_Flushing_Strategy::cancel_output (TAO_Transport *)
 int
 TAO_Block_Flushing_Strategy::flush_message (TAO_Transport *transport,
                                             TAO_Queued_Message *msg,
-                                            ACE_Time_Value *)
+                                            ACE_Time_Value *max_wait_time)
 {
   while (!msg->all_data_sent ())
     {
-      if (transport->handle_output () == -1)
+      if (transport->handle_output (max_wait_time) == -1)
         return -1;
     }
   return 0;
 }
 
 int
-TAO_Block_Flushing_Strategy::flush_transport (TAO_Transport *transport)
+TAO_Block_Flushing_Strategy::flush_transport (TAO_Transport *transport
+                                              , ACE_Time_Value *max_wait_time)
 {
   while (!transport->queue_is_empty ())
     {
-      if (transport->handle_output () == -1)
+      if (transport->handle_output (max_wait_time) == -1)
         return -1;
     }
   return 0;
