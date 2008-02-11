@@ -1,3 +1,9 @@
+Mon Feb 11 16:12:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+          Added wait_interval_for_process_shutdown which can be used to
+          wait longer on slower systems
+
 Wed Feb  6 08:30:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:

@@ -51,6 +51,8 @@ if ($^O eq 'VMS') {
   $wait_interval_for_process_creation *= 3;
 }
 
+$wait_interval_for_process_shutdown = (($PerlACE::VxWorks_Test or $PerlACE::VxWorks_RTP_Test) ? 30 : 10);
+
 # Turn on autoflush
 $| = 1;
 
