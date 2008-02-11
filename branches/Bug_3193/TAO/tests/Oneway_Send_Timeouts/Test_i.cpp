@@ -16,7 +16,6 @@ Test_i::~Test_i ()
 
 void
 Test_i::sleep (CORBA::Long sec, CORBA::Long msec)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::sleep> enter\n"));
   sleep_ = true;
@@ -49,7 +48,6 @@ Test_i::sleep (CORBA::Long sec, CORBA::Long msec)
 
 void
 Test_i::unsleep ()
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   sleep_ = false;
 
@@ -63,7 +61,6 @@ Test_i::unsleep ()
 
 void
 Test_i::dummy_one_way (const char* msg)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   if (msg != 0) {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::dummy_one_way> %.25s\n", msg));
@@ -73,14 +70,12 @@ Test_i::dummy_one_way (const char* msg)
 
 void
 Test_i::dummy_two_way ()
-    ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::dummy_two_way>\n"));
 }
 
 void
 Test_i::shutdown ()
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   orb_->shutdown (0);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::shutdown>\n"));
