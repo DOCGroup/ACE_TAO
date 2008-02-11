@@ -1,3 +1,9 @@
+Mon Feb 11 17:00:23 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Test_i.h:
+        * tests/Oneway_Send_Timeouts/Test_i.cpp:
+          Remove ACE_THROW_SPEC.
+
 Fri Feb  8 21:43:01 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Send_Timeouts/reactive_flush.conf:
