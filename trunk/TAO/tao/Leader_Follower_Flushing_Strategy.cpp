@@ -7,8 +7,6 @@
 #include "tao/Queued_Message.h"
 #include "tao/ORB_Core.h"
 
-#include "ace/High_Res_Timer.h"
-
 ACE_RCSID (tao,
            Leader_Follower_Flushing_Strategy,
            "$Id$")
