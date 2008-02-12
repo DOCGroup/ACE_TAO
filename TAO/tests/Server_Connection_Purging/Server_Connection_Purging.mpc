@@ -34,7 +34,7 @@ project(*Client): taoclient, anytypecode {
   }
 }
 
-project(*ShutdownClient): taoclient, anytypecode {
+project(*ShutCl): taoclient, anytypecode {
   after += *idl
   exename = shutdown_client
   Source_Files {
