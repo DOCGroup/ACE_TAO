@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef _TEST_I_
 #define _TEST_I_
 

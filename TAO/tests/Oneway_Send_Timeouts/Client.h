@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef _CLIENT_
 #define _CLIENT_
 
