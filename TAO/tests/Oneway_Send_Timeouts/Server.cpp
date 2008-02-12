@@ -1,3 +1,4 @@
+// $Id$
 
 #include "Server.h"
 
@@ -169,7 +170,7 @@ Server::run (bool management)
 void
 Server::shutdown ()
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   if (shutdown_) {
     return;
   }
