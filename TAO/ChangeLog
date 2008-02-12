@@ -1,3 +1,10 @@
+Tue Feb 12 10:55:28 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * tests/BiDirectional/run_test.pl:
+
+          Removed inadvertent debug addition.
+
 Tue Feb 12 10:18:14 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * MPC/config/csd_pt_testinf_lib.mpb:
