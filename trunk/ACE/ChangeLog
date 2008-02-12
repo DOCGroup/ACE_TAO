@@ -1,3 +1,11 @@
+Tue Feb 12 12:31:34 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Amend PerlACE::add_lib_path to add path relative to $HOST_ROOT
+          also in the even that it is set. Should hopefully make this function
+          work on VXWorks. In the even that it does this will fix bug #3177.
+
 Tue Feb 12 10:18:14 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * bin/MakeProjectCreator/config/ace_output.mpb:

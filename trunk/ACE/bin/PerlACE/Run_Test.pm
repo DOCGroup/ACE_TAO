@@ -206,6 +206,12 @@ sub add_lib_path {
   add_path('LIBPATH', $value);
   add_path('SHLIB_PATH', $value);
 
+  if (defined $ENV{"HOST_ROOT"}) {
+    add_path('PATH', VX_HostFile ($value));
+    add_path('LD_LIBRARY_PATH', VX_HostFile ($value));
+    add_path('LIBPATH', VX_HostFile ($value));
+    add_path('SHLIB_PATH', VX_HostFile ($value));
+  }
 }
 
 sub check_privilege_group {
