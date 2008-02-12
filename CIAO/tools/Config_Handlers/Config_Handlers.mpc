@@ -60,7 +60,7 @@ project (XSC_XML_Handlers) : acelib, ace_output, xerces {
 
 }
 
-project (XSC_Config_Handlers) : ciao_deployment_stub, ciao_events_dnc, ciao_config_handlers_base {
+project (XSC_Config_Handlers) : ciao_deployment_stub, ciao_events_dnc, ciao_config_handlers_base, ace_output {
   after += CIAO_Events_Handlers \
            RT_CCM_Config_Handlers \
            XSC_DynAny_Handler \
@@ -105,7 +105,7 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, ciao_events_dnc, ciao_conf
 
 }
 
-project (XSC_Config_Handlers_Common) : ciao_deployment_stub, ciao_config_handlers_base {
+project (XSC_Config_Handlers_Common) : ciao_deployment_stub, ciao_config_handlers_base, ace_output {
    after += XSC_DynAny_Handler
    sharedname = XSC_Config_Handlers_Common
    dynamicflags = CONFIG_HANDLERS_COMMON_BUILD_DLL

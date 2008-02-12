@@ -7,6 +7,7 @@ project(Plan_Launcher_Impl) : ciao_servant_dnc \
                               , ciao_plan_generator \
                               , rtcorba \
                               , dance_utils \
+                              , ace_output
 {
   sharedname = Plan_Launcher_Impl
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
@@ -34,11 +35,11 @@ project(Plan_Launcher) : ciao_server_dnc \
   exename = plan_launcher
   after += Plan_Launcher_Impl
   libs  += Plan_Launcher_Impl
-  
+
   Source_Files {
     Plan_Launcher.cpp
   }
-  
+
   Header_Files {
   }
 }
