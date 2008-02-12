@@ -26,6 +26,9 @@
 /// Must include this after the ACE headers to avoid many redefinition
 /// errors.
 #include <pdh.h>
+#elif defined (linux)
+#elif defined (sun)
+#include <kstat.h>
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -65,11 +68,25 @@ namespace ACE
       virtual void receive (double data);
       
     private:
+      /// Common to Linux and Solaris implementations.
+      ACE_UINT64 user_;
+      ACE_UINT64 nice_;
+      ACE_UINT64 kernel_;
+      ACE_UINT64 idle_;
+      ACE_UINT64 prev_idle_;
+      ACE_UINT64 prev_total_;
 #if defined (ACE_WIN32)
       HQUERY query_;
       HCOUNTER counter_;
       PDH_STATUS status_;
       PDH_FMT_COUNTERVALUE value_;
+#elif defined (linux)
+      FILE *file_ptr_;
+      char buf_[1024];
+#elif defined (sun)
+      kstat_ctl_t *kstats_;
+      kstat_t *kstat_;
+      kid_t kstat_id_;
 #endif
     };
   }
