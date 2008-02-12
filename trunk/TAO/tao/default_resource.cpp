@@ -1196,8 +1196,6 @@ TAO_Default_Resource_Factory::create_fragmentation_strategy (
   // GIOP fragments are supported in GIOP 1.1 and better, but TAO only
   // supports them in 1.2 or better since GIOP 1.1 fragments do not
   // have a fragment message header.
-
-
   if (transport) // No transport.  Cannot fragment.
     {
       if (max_message_size < min_message_size
