@@ -1,7 +1,22 @@
+Tue Feb 12 10:18:14 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc:
+        * ciao/CCM_Core.mpc:
+        * ciaosvcs/Events/CIAO_Events.mpc:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc:
+        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc:
+        * tools/Config_Handlers/Config_Handlers.mpc:
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc:
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc:
+        * tools/Config_Handlers/Utils/Utils.mpc:
+
+          Add specific tao_output base project dependencies to direct libraries
+          into $ACE_ROOT/lib. See bug #3192.
+
 Wed Jan 30 23:20:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/be_produce.cpp:
-        
+
           Changed use of exception FE_Bailout to Bailout, reflecting
           the corresponding name change of the front end exception class.
 
