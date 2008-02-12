@@ -25,7 +25,7 @@ class Server_Task : public ACE_Task_Base
   {
     bool initializer = false;
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
       if (server_.get() == 0) {
   ACE_ARGV my_args (args_.c_str());
 
