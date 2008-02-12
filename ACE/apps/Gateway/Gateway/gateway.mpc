@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Gateway) : acelib {
+project(Gateway) : acelib, ace_output {
   sharedname = Gateway
   Source_Files {
     Concrete_Connection_Handlers.cpp

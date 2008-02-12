@@ -1,3 +1,57 @@
+Tue Feb 12 10:18:14 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * bin/MakeProjectCreator/config/ace_output.mpb:
+
+          Create new base project to direct libraries into $ACE_ROOT/lib.
+
+        * bin/MakeProjectCreator/config/acelib.mpb:
+
+          Remove entries that direct libraries into $ACE_ROOT/lib.
+
+        * ACEXML/apps/svcconf/svcconf.mpc:
+        * ACEXML/common/common.mpc:
+        * ACEXML/parser/parser/parser.mpc:
+        * ASNMP/asnmp/asnmp.mpc:
+        * Kokyu/Kokyu.mpc:
+        * ace/QoS/qos.mpc:
+        * ace/SSL/ssl.mpc:
+        * ace/SSL/ssl_for_tao.mpc:
+        * ace/ace_flreactor.mpc:
+        * ace/ace_foxreactor.mpc:
+        * ace/ace_qtreactor.mpc:
+        * ace/ace_tkreactor.mpc:
+        * ace/ace_xtreactor.mpc:
+        * apps/Gateway/Gateway/gateway.mpc:
+        * apps/Gateway/Peer/peer.mpc:
+        * apps/JAWS/server/server.mpc:
+        * apps/JAWS2/HTTPU/httpu.mpc:
+        * apps/JAWS2/JAWS/jaws2.mpc:
+        * apps/JAWS3/jaws3/jaws3.mpc:
+        * netsvcs/lib/lib.mpc:
+        * protocols/ace/HTBP/HTBP.mpc:
+        * protocols/ace/RMCast/RMCast.mpc:
+        * protocols/ace/TMCast/TMCast.mpc:
+        * websvcs/lib/lib.mpc:
+
+          Add ace_output.mpb as base project.
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Add '.' onto the search path for test libraries.
+
+        * bin/tao_orb_tests.lst:
+
+          Create new alternate entries for some overly protracted tests
+          enabling a quicker run through.
+
+        * tests/SSL/acetest.mpb:
+
+          Add $ACE_ROOT/tests onto the link path for ACE tests.
+
+        * tests/run_test.pl:
+
+          Add $ACE_ROOT/tests onto the load path for running ACE tests.
+
 Mon Feb 11 20:46:13 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         Merging in changes from branch "Bug_3193". Here are the individual
