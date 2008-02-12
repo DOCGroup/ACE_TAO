@@ -1,3 +1,18 @@
+Tue Feb 12 17:43:18 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
+        * tests/Bug_3154_Regression/run_test.pl:
+	  Build tao_idl path relative to ACE_ROOT instead of current
+          position. This was based upon the legacy packaging style.
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Remove extra include headers.
+
+        * tests/Timed_Buffered_Oneways/client.cpp:
+          The client has RTT enabled and therefore needed to catch timeout
+          exceptions.
+
 Tue Feb 12 16:03:33 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * Updated NEWS file.
