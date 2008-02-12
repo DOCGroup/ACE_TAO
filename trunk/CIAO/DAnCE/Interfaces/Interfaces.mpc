@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (ExecutionManager_stub): ciao_deployment_stub, messaging {
+project (ExecutionManager_stub): ciao_deployment_stub, messaging, ace_output {
 
   sharedname = ExecutionManager_stub
 
@@ -19,7 +19,7 @@ project (ExecutionManager_stub): ciao_deployment_stub, messaging {
   }
 }
 
-project (NodeManager_stub): ciao_deployment_stub, messaging {
+project (NodeManager_stub): ciao_deployment_stub, messaging, ace_output {
   sharedname = NodeManager_stub
 
   idlflags     += -Wb,stub_export_macro=NodeManager_stub_Export

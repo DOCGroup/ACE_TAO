@@ -1,7 +1,7 @@
 // -*- MPC -*-
 //$Id$
 
-project (Plan_Generator): ciao_component_dnc {
+project (Plan_Generator): ciao_component_dnc, ace_output {
   sharedname = Plan_Generator
   after += RepositoryManager
 
