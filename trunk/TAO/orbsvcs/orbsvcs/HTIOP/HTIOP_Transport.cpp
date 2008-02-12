@@ -194,28 +194,6 @@ TAO::HTIOP::Transport::send_message (TAO_OutputCDR &stream,
 }
 
 int
-TAO::HTIOP::Transport::send_message_shared (TAO_Stub *stub,
-                                            TAO_Message_Semantics message_semantics,
-                                            const ACE_Message_Block *message_block,
-                                            ACE_Time_Value *max_wait_time)
-{
-  int r;
-  {
-    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
-    r = this->send_message_shared_i (stub, message_semantics,
-                                     message_block, max_wait_time);
-  }
-
-  if (r == -1)
-    {
-      this->close_connection ();
-    }
-
-  return r;
-}
-
-int
 TAO::HTIOP::Transport::generate_request_header (TAO_Operation_Details &opdetails,
                                                 TAO_Target_Specification &spec,
                                                 TAO_OutputCDR &msg)

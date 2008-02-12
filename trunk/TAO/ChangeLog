@@ -1,3 +1,26 @@
+Tue Feb 12 15:49:53 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+          Chop out code replicated in base class.
+
+        * tao/Transport.cpp:
+          Removed tab.
+
+        * tests/Oneway_Send_Timeouts/Client.h:
+        * tests/Oneway_Send_Timeouts/Client.cpp:
+        * tests/Oneway_Send_Timeouts/Client_Task.h:
+        * tests/Oneway_Send_Timeouts/ORB_Task.h:
+        * tests/Oneway_Send_Timeouts/Oneway_scenarios.mpc:
+        * tests/Oneway_Send_Timeouts/Server.h:
+        * tests/Oneway_Send_Timeouts/Server.cpp:
+        * tests/Oneway_Send_Timeouts/Server_Task.h:
+        * tests/Oneway_Send_Timeouts/Test.idl:
+        * tests/Oneway_Send_Timeouts/Test_i.h:
+        * tests/Oneway_Send_Timeouts/Test_i.cpp:
+        * tests/Oneway_Send_Timeouts/main.cpp:
+          Fuzz build fixes.
+
 Tue Feb 12 15:12:58 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Oneway_Send_Timeouts/Server_Task.h:

@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef _CLIENT_TASK_
 #define _CLIENT_TASK_
 

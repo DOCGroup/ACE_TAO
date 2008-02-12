@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Server_Task.h"
 #include "Client_Task.h"
 
@@ -94,12 +96,12 @@ MyMain::MyMain (int argc, ACE_TCHAR* argv[])
       }
 
       if (ACE_OS::strcasecmp (argv[p], "-s") == 0) {
-        const ACE_TCHAR* s_args = (((p+1) <= argc) ? argv[p+1] : NULL);
+        const ACE_TCHAR* s_args = (((p+1) <= argc) ? argv[p+1] : 0);
         s_init_ = this->init_server (s_args);
         p++;
       }
       else if (ACE_OS::strcasecmp (argv[p], "-c") == 0) {
-        const ACE_TCHAR* s_args = (((p+1) <= argc) ? argv[p+1] : NULL);
+        const ACE_TCHAR* s_args = (((p+1) <= argc) ? argv[p+1] : 0);
         if (s_init_) {
           this->init_client (s_args);
         }
