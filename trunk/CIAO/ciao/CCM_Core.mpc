@@ -1,6 +1,6 @@
 // $Id$
 
-project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
+project (CIAO_Client) : taolib_with_idl, tao_output, valuetype, ifr_client {
   sharedname  = CIAO_Client
   idlflags  += -Wb,stub_export_include=CIAO_Client_Export.h
   idlflags  += -Wb,stub_export_macro=CIAO_CLIENT_Export
@@ -80,7 +80,7 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 }
 
-project (CIAO_Container) : orbsvcslib \
+project (CIAO_Container) : orbsvcslib, orbsvcs_output \
                            , portableserver \
                            , valuetype \
                            , ifr_client \
@@ -183,7 +183,7 @@ project (CIAO_Container) : orbsvcslib \
   }
 }
 
-project (CIAO_Server) : orbsvcslib \
+project (CIAO_Server) : orbsvcslib, orbsvcs_output \
                         , portableserver \
                         , valuetype \
                         , naming \

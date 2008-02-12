@@ -9,7 +9,7 @@ project (XSC_XML_Generation) : xscdefaults {
    xscflags += --cxx-namespace-regex  <%quote%>%.*Deployment.*%CIAO/Config_Handlers%<%quote%>
    xscflags += --cxx-export-header XSC_XML_Handlers_Export.h
    xscflags += --search-path "$(CIAO_ROOT)/docs/schema"
-   
+
    custom_only = 1
 
    XSC_Files {
@@ -30,7 +30,7 @@ project (XSC_XML_Generation) : xscdefaults {
    }
 }
 
-project (XSC_XML_Handlers) : acelib, xerces {
+project (XSC_XML_Handlers) : acelib, ace_output, xerces {
   sharedname    += XSC_XML_Handlers
   dynamicflags  = XSC_XML_HANDLERS_BUILD_DLL
   macros       += XML_USE_PTHREADS

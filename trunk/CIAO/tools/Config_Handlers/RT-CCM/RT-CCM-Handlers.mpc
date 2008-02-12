@@ -9,7 +9,7 @@ project (RT_CCM_XML_Generation) : xscdefaults {
    xscflags += --cxx-namespace-regex  <%quote%>%.*vanderbilt.*%CIAO/Config_Handlers%<%quote%>
    xscflags += --cxx-export-header RT_CCM_Handlers_Export.h
    xscflags += --search-path "$(CIAO_ROOT)/docs/schema"
-   
+
    custom_only = 1
 
    XSC_Files {
@@ -18,7 +18,7 @@ project (RT_CCM_XML_Generation) : xscdefaults {
    }
 }
 
-project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, ciao_config_handlers_base {
+project (RT_CCM_Config_Handlers) : acelib, ace_output, ciao_deployment_stub, ciao_config_handlers_base {
   sharedname = RT_CCM_Config_Handlers
   dynamicflags   = RT_CCM_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
