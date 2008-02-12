@@ -1,3 +1,28 @@
+Tue Feb 12 14:27:09 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+        * DAnCE/Interfaces/Interfaces.mpc:
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+        * DAnCE/NodeManager/Monitor.mpc:
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/Plan_Generator/Plan_Generator.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/Utils/DAnCE_Utils.mpc:
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
+        * tools/Config_Handlers/Config_Handlers.mpc:
+
+          Add specific base projects to direct libraries into $ACE_ROOT/lib.
+
+        * MPC/config/ciao_client_dnc.mpb:
+        * MPC/config/ciao_component_dnc.mpb:
+
+          Cop out and add tao_output into the dependency of these two projects.
+          These two are on the inheritance hierarchy of all CIAO test; example;
+          or tutorial libraries it seems so this should direct them all back
+          into $ACE_ROOT/lib where they were before.
+
 Tue Feb 12 10:18:14 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * DAnCE/Deployment/DAnCE_Core.mpc:
