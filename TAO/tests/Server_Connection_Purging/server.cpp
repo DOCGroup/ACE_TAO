@@ -55,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       test_i *test_impl;
       ACE_NEW_RETURN (test_impl,
-                      test_i (),
+                      test_i (orb),
                       1);
       PortableServer::ServantBase_var owner_transfer(test_impl);
 

@@ -9,6 +9,7 @@ project(*client) : orbsvcsexe, portableserver, naming  {
     includes += $(srcdir)/../idl
   }
   includes += ../idl
+  libpaths += ../idl
 
   source_files {
     client.cpp
@@ -23,6 +24,7 @@ project(*server) : orbsvcsexe, portableserver, naming {
     includes += $(srcdir)/../idl
   }
   includes += ../idl
+  libpaths += ../idl
 
   source_files {
     server.cpp

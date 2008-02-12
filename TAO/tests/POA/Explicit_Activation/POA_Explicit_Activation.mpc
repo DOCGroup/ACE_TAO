@@ -9,6 +9,7 @@ project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoid
      includes += $(srcdir)/../Generic_Servant
    }
    includes += ../Generic_Servant
+   libpaths += ../Generic_Servant
 
    Source_Files {
     server.cpp

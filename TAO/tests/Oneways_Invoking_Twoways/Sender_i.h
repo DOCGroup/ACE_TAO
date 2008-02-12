@@ -39,6 +39,8 @@ public:
 
   virtual void ping (void);
 
+  virtual void shutdown (void);
+
 private:
   /// Our local ORB ptr
   CORBA::ORB_ptr orb_;

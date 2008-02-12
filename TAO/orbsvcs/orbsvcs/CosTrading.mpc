@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosTrading_IDL) : orbsvcslib, install, tao_versioning_idl_defaults {
+project(CosTrading_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h
 
@@ -13,7 +13,7 @@ project(CosTrading_IDL) : orbsvcslib, install, tao_versioning_idl_defaults {
 }
 
 
-project(CosTrading) : orbsvcslib, install {
+project(CosTrading) : orbsvcslib, orbsvcs_output, install {
   sharedname   = TAO_CosTrading
   dynamicflags = TAO_TRADING_BUILD_DLL
   tagchecks   += Trader
@@ -55,7 +55,7 @@ project(CosTrading) : orbsvcslib, install {
 }
 
 
-project(CosTrading_Skel) : orbsvcslib, install, trading, portableserver {
+project(CosTrading_Skel) : orbsvcslib, orbsvcs_output, install, trading, portableserver {
   sharedname   = TAO_CosTrading_Skel
   dynamicflags = TAO_TRADING_SKEL_BUILD_DLL
   tagchecks   += Trader
@@ -91,7 +91,7 @@ project(CosTrading_Skel) : orbsvcslib, install, trading, portableserver {
 }
 
 
-project(CosTrading_Serv) : orbsvcslib, install, trading_skel, dynamicany, svc_utils, utils, iortable {
+project(CosTrading_Serv) : orbsvcslib, orbsvcs_output, install, trading_skel, dynamicany, svc_utils, utils, iortable {
   sharedname   = TAO_CosTrading_Serv
   dynamicflags = TAO_TRADING_SERV_BUILD_DLL
   tagchecks   += Trader
@@ -123,7 +123,7 @@ project(CosTrading_Serv) : orbsvcslib, install, trading_skel, dynamicany, svc_ut
     Trader/Constraint_l.cpp: Trader/constraint.l
     "	@echo 'INFORMATION: Potentially outdated $@'"
     "	@echo '             either touch(1) the file or explicitly'"
-    "	@echo '             generate it using:'"                    
+    "	@echo '             generate it using:'"
     "	@echo '    make -f GNUmakefile.CosTrading_Serv Constraint_l'"
 
     .PHONY: Constraint_l
@@ -138,14 +138,14 @@ project(CosTrading_Serv) : orbsvcslib, install, trading_skel, dynamicany, svc_ut
     "	    -e 's/\\$$Hea''der.*\\$$/$$I''d$$/' \\"
     "	    -e 's@#include <stdio\.h>@#include \"ace/os_include/os_stdio.h\"@' \\"
     "	    -e 's@#include <unistd\.h>@#include \"ace/OS_NS_unistd.h\"@' \\"
-    "	    -e '/#include </d' \\"  
+    "	    -e '/#include </d' \\"
     "	>> Trader/Constraint_l.cpp"
     "	(cd Trader; patch < Constraint_l.cpp.diff)"
 
     Trader/Constraint_y.cpp: Trader/constraint.y
     "	@echo 'INFORMATION: Potentially outdated $@'"
     "	@echo '             either touch(1) the file or explicitly'"
-    "	@echo '             generate it using:'"                    
+    "	@echo '             generate it using:'"
     "	@echo '    make -f GNUmakefile.CosTrading_Serv Constraint_y'"
 
     .PHONY: Constraint_y

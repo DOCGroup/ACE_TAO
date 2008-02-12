@@ -36,6 +36,11 @@ local $max_running_time = 360;
 local $elapsed = time() - $start_time;
 my $p = $SV->{'PROCESS'};
 
+if ($ARGV[0] eq '-quick')  {
+    $elapsed = 0;
+    $max_running_time = 1;
+}
+
 while (($elapsed < $max_running_time) )
 {
  # Start all clients in parallel

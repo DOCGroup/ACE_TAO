@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : taolib {
+project : taolib, tao_output {
   requires += dummy_label
   sharedname    = TAO_PSDL
   dynamicflags += TAO_PSDL_BUILD_DLL
@@ -33,7 +33,7 @@ project : taolib {
   }
 }
 
-project(*Datastore) : taolib {
+project(*Datastore) : taolib, tao_output {
   requires += dummy_label
   sharedname = TAO_PSDL_Datastore
   dynamicflags += TAO_PSDL_BUILD_DLL

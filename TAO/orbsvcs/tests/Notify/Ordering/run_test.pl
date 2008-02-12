@@ -8,6 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../lib');
+
 PerlACE::check_privilege_group();
 
 $ior = PerlACE::LocalFile ("supplier.ior");
@@ -48,10 +50,10 @@ $SEC = new PerlACE::Process ("Sequence_Consumer");
 
 $client_args = "-ORBInitRef NameService=iioploc://localhost:" .
                "$port/NameService";
-               
+
 unlink $notifyior;
 unlink $naming_ior;
-               
+
 $NS->Spawn ();
 if (PerlACE::waitforfile_timed ($naming_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: waiting for the naming service to start\n";

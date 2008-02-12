@@ -37,6 +37,8 @@ private:
   /// The ORB.
   CORBA::ORB_var orb_;
 
+  CORBA::Boolean client_done_;
+
 };
 
 #endif /* TAO_SINGLE_READ_TEST_I_H*/

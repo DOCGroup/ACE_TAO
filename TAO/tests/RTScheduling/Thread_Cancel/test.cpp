@@ -30,7 +30,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
 		  "Waiting for Threads to Activate...\n"));
-      ACE_OS::sleep (10);
+      ACE_OS::sleep (5);
       ACE_DEBUG ((LM_DEBUG,
 		  "Threads Activated\n"));
 

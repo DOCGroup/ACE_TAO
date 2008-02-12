@@ -12,6 +12,7 @@ project(*IDL): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoid
 project(*server): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
+  libpaths += ../lib
 
   specific (automake) {
     includes += $(srcdir)/../lib
@@ -34,6 +35,7 @@ project(*server): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, av
 project(*client): orbsvcsexe, rtcorbaevent, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
+  libpaths += ../lib
 
   specific (automake) {
     includes += $(srcdir)/../lib

@@ -11,6 +11,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../lib');
+
 $status = 0;
 
 $svc_pull_conf = PerlACE::LocalFile ("svc.pull$PerlACE::svcconf_ext");
@@ -24,7 +26,7 @@ sub RunTest ($$$)
     my $TEST = new PerlACE::Process ($program, $arguments);
 
     print STDERR "\n\n$message\n";
-    
+
     my $test = $TEST->SpawnWaitKill (240);
 
     if ($test != 0) {
@@ -40,7 +42,7 @@ RunTest ("\n\nShutdown EC with clients still attached\n",
 RunTest ("\n\nDisconnect callbacks test\n",
          "Disconnect",
          "");
-          
+
 RunTest ("\n\nMT Disconnects test\n",
          "MT_Disconnect",
          "");
