@@ -32,18 +32,18 @@ namespace ACE
     {
 #if defined (ACE_WIN32)
       this->status_ = PdhOpenQuery (0, 0, &this->query_);
-      
+
       if (ERROR_SUCCESS != this->status_)
         {
           ACE_ERROR ((LM_DEBUG, "PdhOpenQuery failed\n"));
         }
-        
+
       this->status_ =
         PdhAddCounter (this->query_,
                        "\\Processor(_Total)\\% Processor Time",
                        0,
                        &this->counter_);
-      
+
       if (ERROR_SUCCESS != this->status_)
         {
           ACE_ERROR ((LM_DEBUG, "PdhAddCounter failed\n"));
@@ -53,7 +53,7 @@ namespace ACE
       /// get values here in the constructor to subtract for the difference
       /// in subsequent calls.
       this->file_ptr_ = ACE_OS::fopen ("/proc/stat", "r");
-      
+
       if (this->file_ptr_ == 0)
         {
           ACE_ERROR ((LM_ERROR, "Opening file /proc/stat failed\n"));
@@ -68,16 +68,16 @@ namespace ACE
                   &this->kernel_,
                   &this->prev_idle_);
         }
-        
+
       /// Maybe we can reduce overhead by leaving the file open. This line
-      /// may have to be replaced by fclose(). 
+      /// may have to be replaced by fclose().
       ACE_OS::rewind (this->file_ptr_);
-        
+
       this->prev_total_ =
         this->user_ + this->nice_ + this->kernel_ + this->prev_idle_;
 #endif
     }
-    
+
     void
     CPULoadMonitor<true>::update (void)
     {
@@ -87,8 +87,8 @@ namespace ACE
                                    PDH_FMT_DOUBLE,
                                    0,
                                    &this->value_);
-        
-      /// Stores value and timestamp with thread-safety.    
+
+      /// Stores value and timestamp with thread-safety.
       this->receive (this->value_.doubleValue);
 #elif defined (linux)
       while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != 0)
@@ -100,28 +100,28 @@ namespace ACE
                   &this->kernel_,
                   &this->idle_);
         }
-      
+
       ACE_UINT64 delta_idle = this->idle_ - this->prev_idle_;
       ACE_UINT64 total =
         this->user_ + this->nice_ + this->kernel_ + this->idle_;
       ACE_UINT64 delta_total = total - this->prev_total_;
-      
+
       double percent_cpu_load = 100.0 - (delta_idle / delta_total * 100.0);
       this->receive (percent_cpu_load);
-      
+
       this->prev_idle_ = this->idle_;
       this->prev_total_ = total;
-        
+
       /// Maybe we can reduce overhead by leaving the file open. This line
-      /// may have to be replaced by fclose(). 
+      /// may have to be replaced by fclose().
       ACE_OS::rewind (this->file_ptr_);
 #endif
     }
-    
+
     void
     CPULoadMonitor<true>::receive (double data)
     {
-      ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
       this->data_.timestamp_ = ACE_OS::gettimeofday ();
       this->data_.value_ = data;
     }

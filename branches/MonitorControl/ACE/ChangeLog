@@ -1,14 +1,19 @@
+Tue Feb 12 19:24:56 UTC 2008  Johnny WIllemsen  <jwillemsen@remedy.nl>
+
+        * MonitorControl/CPULoadMonitor.cpp:
+          Use regular guard
+
 Tue Feb 12 18:56:56 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/CPULoadMonitor.{h,cpp}:
-          
-          Added implementation for Linux, plus includes and class 
+
+          Added implementation for Linux, plus includes and class
           members for Solaris implementation.
 
 Fri Feb  8 19:36:33 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/main.cpp:
-        
+
           Added C++ stream code to format the output of the results of
           monitor queries, and added comments.
 
