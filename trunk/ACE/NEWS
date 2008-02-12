@@ -12,7 +12,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
   pointers would not be fully initialized prior to use.  See bugzilla
   3185 for details.
 
-. Tweaks to support MacOS X Leopard (10.5 and 10.5.1) on Intel.
+. Tweaks to support MacOS X Leopard (10.5 and 10.5.1) on Intel
 
 . Fixed compile problems with MinGW with GCC 4.2. Do note that we do see
   much more test failures then when using GCC 3.4.
@@ -32,6 +32,11 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
   installed
 
 . Added support for VxWorks 5.5.1
+
+. Implemented the const reverse iterator for ACE_Hash_Map_Manager_Ex
+
+. Increased support for using ACE_Hash_Map_Manager_Ex with STL <algorithm>
+  functions based on lastest standard C++ draft
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 ====================================================
