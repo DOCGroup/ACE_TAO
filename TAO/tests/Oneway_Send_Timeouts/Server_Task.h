@@ -5,6 +5,7 @@
 
 #include "ace/Task.h"
 #include "ace/ARGV.h"
+#include "ace/Auto_Ptr.h"
 
 class Server_Task : public ACE_Task_Base
 {
@@ -27,7 +28,7 @@ class Server_Task : public ACE_Task_Base
   ACE_ARGV my_args (args_.c_str());
 
   // Initialize Server ORB in new thread
-  server_.reset (new Server (my_args.argc(), my_args.argv()));
+  ACE_auto_ptr_reset (server_, new Server (my_args.argc(), my_args.argv()));
   ACE_ASSERT (server_.get() != 0);
   initializer = true;
       }
