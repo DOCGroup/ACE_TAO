@@ -233,6 +233,9 @@ sub check_privilege_group {
   }
 }
 
+# Add PWD to the load library path
+add_lib_path ('.');
+
 $sleeptime = 5;
 
 1;
