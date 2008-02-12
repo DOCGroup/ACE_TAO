@@ -1,3 +1,17 @@
+Tue Feb 12 21:52:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        
+          Numerous changes to Linux-specific implementation of update().
+          Also moved receive(double) to base class, to avoid a
+          warning from the Borland compiler.
+          
+        * MonitorControl/MonitorPoint.cpp:
+        
+          Replaced empty implementation of receive(double) with the
+          real version from CPULoadMonitor, as described above.
+
 Tue Feb 12 19:24:56 UTC 2008  Johnny WIllemsen  <jwillemsen@remedy.nl>
 
         * MonitorControl/CPULoadMonitor.cpp:

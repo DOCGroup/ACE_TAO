@@ -1,7 +1,5 @@
 // $Id$
 
-#include "ace/OS_NS_sys_time.h"
-
 #include "MonitorControl/CPULoadMonitor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -52,26 +50,7 @@ namespace ACE
       /// All data in this file are stored as running 'jiffy' totals, so we
       /// get values here in the constructor to subtract for the difference
       /// in subsequent calls.
-      this->file_ptr_ = ACE_OS::fopen ("/proc/stat", "r");
-
-      if (this->file_ptr_ == 0)
-        {
-          ACE_ERROR ((LM_ERROR, "Opening file /proc/stat failed\n"));
-        }
-
-      while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != 0)
-        {
-          sscanf (this->buf_,
-                  "cpu %qu %qu %qu %qu",
-                  &this->user_,
-                  &this->nice_,
-                  &this->kernel_,
-                  &this->prev_idle_);
-        }
-
-      /// Maybe we can reduce overhead by leaving the file open. This line
-      /// may have to be replaced by fclose().
-      ACE_OS::rewind (this->file_ptr_);
+      this->access_proc_stat (&this->prev_idle_);
 
       this->prev_total_ =
         this->user_ + this->nice_ + this->kernel_ + this->prev_idle_;
@@ -91,15 +70,7 @@ namespace ACE
       /// Stores value and timestamp with thread-safety.
       this->receive (this->value_.doubleValue);
 #elif defined (linux)
-      while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != 0)
-        {
-          sscanf (this->buf_,
-                  "cpu %qu %qu %qu %qu",
-                  &this->user_,
-                  &this->nice_,
-                  &this->kernel_,
-                  &this->idle_);
-        }
+      this->access_proc_stat (&this->idle_);    
 
       ACE_UINT64 delta_idle = this->idle_ - this->prev_idle_;
       ACE_UINT64 total =
@@ -111,20 +82,49 @@ namespace ACE
 
       this->prev_idle_ = this->idle_;
       this->prev_total_ = total;
-
-      /// Maybe we can reduce overhead by leaving the file open. This line
-      /// may have to be replaced by fclose().
-      ACE_OS::rewind (this->file_ptr_);
 #endif
     }
 
+#if defined (linux)
     void
-    CPULoadMonitor<true>::receive (double data)
+    CPULoadMonitor<true>::access_proc_stat (ACE_UINT64 *which_idle)
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-      this->data_.timestamp_ = ACE_OS::gettimeofday ();
-      this->data_.value_ = data;
+      this->file_ptr_ = ACE_OS::fopen ("/proc/stat", "r");
+      
+      if (this->file_ptr_ == 0)
+        {
+          ACE_ERROR ((LM_ERROR, "Opening file /proc/stat failed\n"));
+          return;
+        }
+        
+      char *item = 0;
+      char *arg = 0;
+
+      while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != 0)
+        {
+          item = ACE_OS::strtok (this->buf_, " \t\n");
+          arg = ACE_OS::strtok (0, "\n");
+          
+          if (item == 0 || arg == 0)
+            {
+              continue;
+            }
+          
+          if (ACE_OS::strcmp (item, "cpu") == 0)
+            {  
+              sscanf (arg,
+                      "%qu %qu %qu %qu",
+                      &this->user_,
+                      &this->nice_,
+                      &this->kernel_,
+                      which_idle);
+              break;
+            }
+        }
+
+      ACE_OS::fclose (this->file_ptr_);    
     }
+#endif
   }
 }
 

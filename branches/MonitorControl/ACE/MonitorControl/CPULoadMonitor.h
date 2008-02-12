@@ -63,9 +63,10 @@ namespace ACE
       /// Implementation of the pure virtual method.
       virtual void update (void);
       
-      /// Not implemented in base class to keep down the size of
-      /// disabled monitors.
-      virtual void receive (double data);
+    private:
+#if defined (linux)
+      void access_proc_stat (ACE_UINT64 *which_idle);
+#endif
       
     private:
       /// Common to Linux and Solaris implementations.
