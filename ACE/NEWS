@@ -1,8 +1,6 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-. (Remedy) Add VxWorks 5.5.1 support
-
 . (Remedy) Add VxWorks 6.x kernel mode with shared library support
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
@@ -32,6 +30,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
 
 . Added support for CodeGear C++ Builder 2007 with December 2007 update
   installed
+
+. Added support for VxWorks 5.5.1
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 ====================================================
