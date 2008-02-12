@@ -27,6 +27,8 @@ use File::Basename;
 
 $config_list = new PerlACE::ConfigList;
 
+PerlACE::add_lib_path("$ENV{ACE_ROOT}/tests");
+
 ################################################################################
 
 sub check_for_more_configs ()

@@ -5,6 +5,7 @@ project : aceexe {
 
   after += Test_Output
   libs  += Test_Output
+  libpaths += ..
 
   Source_Files {
     ../Main.cpp
