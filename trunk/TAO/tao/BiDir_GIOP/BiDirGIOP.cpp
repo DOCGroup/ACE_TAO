@@ -28,7 +28,6 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 {
   if (TAO_BiDirGIOP_Loader::is_activated_ == false && TAO_DEF_GIOP_MINOR >= 2)
     {
-      ACE_DEBUG ((LM_DEBUG, "Activating BiDirectional GIOP\n"));
       PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
       PortableInterceptor::ORBInitializer_var bidir_orb_initializer;

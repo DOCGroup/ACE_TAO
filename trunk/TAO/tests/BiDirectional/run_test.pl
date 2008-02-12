@@ -18,7 +18,7 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o $iorbase -i 100");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile -i 100 -ORBDebugLevel 10");
+    $SV = new PerlACE::Process ("server", "-o $iorfile -i 100");
 }
 $CL = new PerlACE::Process ("client", "-k file://$iorfile");
 
