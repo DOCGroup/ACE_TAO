@@ -93,6 +93,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           if (i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "Finished iteration %d\n", i));
+
+          // Lets not waste any more time than we have to
+          if (exception_count > 10 && normal_count > 0)
+            break;
         }
 
       if (exception_count == 0)

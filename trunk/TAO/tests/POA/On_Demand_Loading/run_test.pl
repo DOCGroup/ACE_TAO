@@ -8,6 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../Generic_Servant/.');
+
 $iorfile = "ior";
 
 $oneway = "";
@@ -55,10 +57,10 @@ if (PerlACE::is_vxworks_test()) {
 else {
   $SV  = new PerlACE::Process ("server", "-f $iorfile $extra_args");
 }
-$CL1 = new PerlACE::Process ("../Generic_Servant/client", 
+$CL1 = new PerlACE::Process ("../Generic_Servant/client",
                              "$extra_args $oneway -i $iterations -k file://$iorfile1");
 $CL2 = new PerlACE::Process ("../Generic_Servant/client",
-                             "$extra_args $oneway -i $iterations -k file://$iorfile2 -x"); 
+                             "$extra_args $oneway -i $iterations -k file://$iorfile2 -x");
 
 $server = $SV->Spawn ();
 
@@ -97,7 +99,7 @@ $server = $SV->WaitKill (5);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     $status = 1;
 }
 

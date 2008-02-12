@@ -8,6 +8,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../TP_Foo_A/.');
+PerlACE::add_lib_path ('../TP_Foo_B/.');
+PerlACE::add_lib_path ('../TP_Foo_C/.');
+PerlACE::add_lib_path ('../TP_Common/.');
+
 $status = 0;
 
 $iorfile = PerlACE::LocalFile ("server.ior");
@@ -20,7 +25,7 @@ else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
 }
 $CL = new PerlACE::Process ("client", " -k file://$iorfile");
-    
+
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile,
@@ -28,7 +33,7 @@ if (PerlACE::waitforfile_timed ($iorfile,
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
 $client = $CL->SpawnWaitKill (300);
 

@@ -33,3 +33,16 @@ project(*Client): taoclient, anytypecode {
   IDL_Files {
   }
 }
+
+project(*ShutdownClient): taoclient, anytypecode {
+  after += *idl
+  exename = shutdown_client
+  Source_Files {
+    client2.cpp
+  }
+  Source_Files {
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}

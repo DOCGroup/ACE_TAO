@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosNotification_IDL) : orbsvcslib, install, event, tao_versioning_idl_defaults {
+project(CosNotification_IDL) : orbsvcslib, orbsvcs_output, install, event, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h
 
@@ -15,7 +15,7 @@ project(CosNotification_IDL) : orbsvcslib, install, event, tao_versioning_idl_de
   }
 }
 
-project(CosNotification) : orbsvcslib, install, event {
+project(CosNotification) : orbsvcslib, orbsvcs_output, install, event {
   sharedname   = TAO_CosNotification
   dynamicflags = TAO_NOTIFY_BUILD_DLL
   tagchecks   += Notify
@@ -67,7 +67,7 @@ project(CosNotification) : orbsvcslib, install, event {
 }
 
 
-project(CosNotification_Skel) : orbsvcslib, install, notification, event_skel, portableserver {
+project(CosNotification_Skel) : orbsvcslib, orbsvcs_output, install, notification, event_skel, portableserver {
   sharedname   = TAO_CosNotification_Skel
   dynamicflags = TAO_NOTIFY_SKEL_BUILD_DLL
   tagchecks   += Notify
@@ -111,7 +111,7 @@ project(CosNotification_Skel) : orbsvcslib, install, notification, event_skel, p
   }
 }
 
-project(CosNotification_Serv) : orbsvcslib, svc_utils, install, notification_skel, dynamicany, etcl{
+project(CosNotification_Serv) : orbsvcslib, orbsvcs_output, svc_utils, install, notification_skel, dynamicany, etcl{
   sharedname   = TAO_CosNotification_Serv
   dynamicflags = TAO_NOTIFY_SERV_BUILD_DLL
   tagchecks   += Notify
@@ -223,7 +223,7 @@ project(CosNotification_Serv) : orbsvcslib, svc_utils, install, notification_ske
 
 }
 
-project(CosNotification_Persist) : notification_serv, install, acexml {
+project(CosNotification_Persist) : notification_serv, orbsvcs_output, install, acexml {
   sharedname   = TAO_CosNotification_Persist
   dynamicflags = TAO_NOTIFY_PERSIST_BUILD_DLL
   tagchecks   += Notify
@@ -246,7 +246,7 @@ project(CosNotification_Persist) : notification_serv, install, acexml {
   }
 }
 
-project(CosNotification_MC): tao_versioning_idl_defaults, naming, portableserver, iortable, install {
+project(CosNotification_MC): tao_versioning_idl_defaults, orbsvcs_output, naming, portableserver, iortable, install {
   sharedname   = TAO_CosNotification_MC
   dynamicflags = TAO_NOTIFY_MC_BUILD_DLL
   tagchecks   += Notify
@@ -274,7 +274,7 @@ project(CosNotification_MC): tao_versioning_idl_defaults, naming, portableserver
   }
 }
 
-project(CosNotification_MC_Ext): notification_serv, notification_mc, install {
+project(CosNotification_MC_Ext): notification_serv, orbsvcs_output, notification_mc, install {
   sharedname   = TAO_CosNotification_MC_Ext
   dynamicflags = TAO_NOTIFY_MC_EXT_BUILD_DLL
   tagchecks   += Notify

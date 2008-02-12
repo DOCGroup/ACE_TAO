@@ -104,7 +104,7 @@ Thread_Task::svc (void)
           }
       }
 
-      ACE_OS::sleep (50);
+      ACE_OS::sleep (10);
 
       this->current_->end_scheduling_segment (name);
       //  End - Nested Scheduling Segment

@@ -10,6 +10,8 @@ use strict;
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../lib');
+
 PerlACE::check_privilege_group();
 
 my $ior = PerlACE::LocalFile ("supplier.ior");
@@ -64,7 +66,7 @@ if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creati
   $NS->Kill ();
   exit 1;
 }
-    
+
 $STC->Arguments($args);
 my $client = $STC->SpawnWaitKill(20);
 if ($client != 0) {
@@ -93,7 +95,7 @@ if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creati
   $NS->Kill ();
   exit 1;
 }
-    
+
 $STC->Arguments("-f $args");
 my $client = $STC->SpawnWaitKill(20);
 if ($client != 0) {

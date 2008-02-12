@@ -9,6 +9,7 @@ project(*client) : taoexe, portableserver {
     includes += $(srcdir)/../../idl
   }
   includes += ../../idl
+  libpaths += ../../idl
 
   source_files {
     client.cpp
@@ -23,6 +24,7 @@ project(*server) : taoserver, avoids_corba_e_micro {
     includes += $(srcdir)/../../idl
   }
   includes += ../../idl
+  libpaths += ../../idl
 
   source_files {
     server.cpp
