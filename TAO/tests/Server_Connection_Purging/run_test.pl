@@ -43,6 +43,17 @@ if ($client != 0) {
     $status = 1;
 }
 
+print "Calling shutdown client\n";
+
+$SHUTDOWN = new PerlACE::Process ("shutdown_client", "-k file://$iorfile");
+
+$client = $SHUTDOWN->SpawnWaitKill (300);
+
+if ($client != 0) {
+    print STDERR "ERROR: shutdown_client returned $client\n";
+    $status = 1;
+}
+
 $server = $SV->WaitKill (120);
 
 if ($server != 0) {

@@ -25,6 +25,8 @@ public:
   // = The skeleton methods
   virtual void run_test (Test::Crashed_Callback_ptr callback);
 
+  CORBA::ORB_var orb_;
+
 private:
   /// Call the are_you_there callback multiple times.
   /**
@@ -41,6 +43,7 @@ private:
 private:
   /// Count the number of tests executed
   int test_count_;
+
 };
 
 #include /**/ "ace/post.h"

@@ -20,7 +20,14 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
 }
-$CL = new PerlACE::Process ("client", " -k file://$iorfile");
+
+$iterations = 1000;
+
+if ($ARGV[0] eq '-quick')  {
+    $iterations = 100;
+}
+
+$CL = new PerlACE::Process ("client", " -k file://$iorfile -i $iterations");
 
 $SV->Spawn ();
 

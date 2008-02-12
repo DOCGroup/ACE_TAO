@@ -8,6 +8,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ( '../TestInf');
+PerlACE::add_lib_path ( '../TestServant');
+
 # 5 Minute server timeout.
 my $server_timeout_secs = 300;
 

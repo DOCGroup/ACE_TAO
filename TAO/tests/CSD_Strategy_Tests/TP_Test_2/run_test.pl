@@ -8,6 +8,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../TP_Foo_A/.');
+PerlACE::add_lib_path ('../TP_Foo_B/.');
+PerlACE::add_lib_path ('../TP_Foo_C/.');
+PerlACE::add_lib_path ('../TP_Common/.');
+
 my $status = 0;
 
 my $iorfname_prefix        = "servant";
@@ -105,7 +110,7 @@ for ($i = 0; $i < $num_servants; $i++) {
 }
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server_main", 
+    $SV = new PerlACE::ProcessVX ("server_main",
                            "-p $iorfname_prefix "        .
                            "-s $num_servants "           .
                            "-n $num_csd_threads "        .
@@ -115,7 +120,7 @@ if (PerlACE::is_vxworks_test()) {
                            "-k $collocated_client_kind");
 }
 else {
-    $SV = new PerlACE::Process("server_main", 
+    $SV = new PerlACE::Process("server_main",
                            "-p $iorfname_prefix "        .
                            "-s $num_servants "           .
                            "-n $num_csd_threads "        .
@@ -146,11 +151,11 @@ my $count = 0;
 
 for ($i = 0; $i < $num_remote_clients; $i++)
 {
-  
+
   $client_id = $i+1;
 
   $j = $i % $num_servants;
-  
+
   $CLS[$i] = new PerlACE::Process("client_main",
                                   "-i file://$iorfile[$j] ".
                                   "-k $client_kind ".

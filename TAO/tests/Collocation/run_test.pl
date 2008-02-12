@@ -9,6 +9,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
+PerlACE::add_lib_path ('.');
+
 my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
 
 $status = 0;

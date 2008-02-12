@@ -8,6 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../../lib');
+
 PerlACE::check_privilege_group();
 
 $experiment_timeout = 60;
@@ -34,7 +36,7 @@ $test = new PerlACE::Process ("RedGreen_Test",
 
 $Naming->Spawn ();
 
-if (PerlACE::waitforfile_timed ($namingior, $startup_timeout) == -1) 
+if (PerlACE::waitforfile_timed ($namingior, $startup_timeout) == -1)
   {
     print STDERR "ERROR: waiting for the naming service to start\n";
     $Naming->Kill ();
@@ -45,7 +47,7 @@ for $config (@test_configs)
   {
     print STDERR "\nTesting Notification Service with config file = $config ....\n\n";
 
-    $Notification = 
+    $Notification =
       new PerlACE::Process ("../../../../Notify_Service/Notify_Service",
                             "-ORBInitRef NameService=file://$namingior " .
                             "-IORoutput $notifyior " .

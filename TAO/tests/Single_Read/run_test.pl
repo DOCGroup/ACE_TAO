@@ -9,8 +9,10 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("server.ior");
+$client_done_file = PerlACE::LocalFile ("client_done");
 
 unlink $iorfile;
+unlink $client_done_file;
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
@@ -39,6 +41,10 @@ if ($client != 0) {
     $status = 1;
 }
 
+open (FILE , ">$client_done_file");
+print FILE "Client Done !\n";
+close (FILE);
+
 $server = $SV->WaitKill (400);
 
 if ($server != 0) {
@@ -48,5 +54,6 @@ if ($server != 0) {
 }
 
 unlink $iorfile;
+unlink $client_done_file;
 
 exit $status;

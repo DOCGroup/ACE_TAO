@@ -114,10 +114,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "Registration failed \n"),
                           -1);
 
-      ACE_Time_Value tv (1);
+      // ACE_Time_Value tv (1);
 
-      while (singleton->handle_events (&tv) >= 1);
+      // while (singleton->handle_events (&tv) >= 1);
+
     }
+
+  // Handle events moved to here to prevent this test taking best part
+  // of a minute
+  ACE_Time_Value tv (3);
+  while (singleton->handle_events (&tv) >= 1);
 
   // Remove the handlers to avoid the possibility of the reactor
   // using any of them after they leave the scope (those that haven't

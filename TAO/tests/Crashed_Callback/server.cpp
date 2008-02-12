@@ -91,6 +91,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(service_impl);
 
+      service_impl->orb_ = CORBA::ORB::_duplicate (orb);
+
       PortableServer::ObjectId_var id =
         root_poa->activate_object (service_impl);
 
