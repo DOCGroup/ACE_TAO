@@ -1,7 +1,11 @@
+Wed Feb 13 12:41:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Semaphores/*:
+          Added a basic example for process semaphores
+
 Tue Feb 12 15:43:57 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * NEWS:
-
           Updated the NEW file with my updates for to ACE.
 
 Tue Feb 12 12:31:34 UTC 2008  Simon McQueen  <sm@prismtech.com>
