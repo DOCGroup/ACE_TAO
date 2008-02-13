@@ -69,13 +69,15 @@ Server::Server (int , ACE_TCHAR* argv[])
       return;
 
     CORBA::Object_var obj = orb_->resolve_initial_references ("RootPOA");
-    PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
+    PortableServer::POA_var root_poa =
+      PortableServer::POA::_narrow (obj.in ());
     PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
     test_i_.reset (new Test_i (orb_.in()));
-    PortableServer::ObjectId_var oid = root_poa->activate_object (test_i_.get());
-    obj = root_poa->id_to_reference (oid);
-    Test_var test_obj = Test::_narrow (obj);
+    PortableServer::ObjectId_var oid =
+      root_poa->activate_object (test_i_.get());
+    obj = root_poa->id_to_reference (oid.in());
+    Test_var test_obj = Test::_narrow (obj.in());
 
     std::string ior = orb_->object_to_string (test_obj.in ());
     obj = orb_->resolve_initial_references("IORTable");
@@ -87,12 +89,14 @@ Server::Server (int , ACE_TCHAR* argv[])
     // initialize management objects
 
     obj = management_orb_->resolve_initial_references ("RootPOA");
-    PortableServer::POA_var management_root_poa = PortableServer::POA::_narrow (obj.in ());
-    PortableServer::POAManager_var management_poa_manager = management_root_poa->the_POAManager ();
+    PortableServer::POA_var management_root_poa =
+      PortableServer::POA::_narrow (obj.in ());
+    PortableServer::POAManager_var management_poa_manager =
+      management_root_poa->the_POAManager ();
 
     oid = management_root_poa->activate_object (test_i_.get());
-    obj = management_root_poa->id_to_reference (oid);
-    test_obj = Test::_narrow (obj);
+    obj = management_root_poa->id_to_reference (oid.in());
+    test_obj = Test::_narrow (obj.in());
 
     ior = orb_->object_to_string (test_obj.in ());
     obj = management_orb_->resolve_initial_references("IORTable");
