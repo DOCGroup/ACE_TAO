@@ -7,6 +7,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Auto_Ptr.h"
 
 class MyMain
 {
@@ -40,7 +41,7 @@ MyMain::init_server (const ACE_TCHAR* args)
   // main thread and extra thread for backdoor operations
   int thread_pool = 2;
 
-  server_task_.reset (new Server_Task (my_args));
+  ACE_auto_ptr_reset (server_task_, new Server_Task (my_args));
   ACE_ASSERT (server_task_.get() != 0);
 
   server_task_->activate (THR_NEW_LWP | THR_JOINABLE |THR_INHERIT_SCHED
@@ -62,7 +63,7 @@ MyMain::init_server (const ACE_TCHAR* args)
 
   if (!server_task_->ready()) {
     server_task_->force_shutdown ();
-    server_task_.reset (0);
+    ACE_auto_ptr_reset (server_task_, (Server_Task*)0);
     return false;
   }
 
@@ -75,7 +76,7 @@ MyMain::init_client (const ACE_TCHAR* args)
   std::string my_args (args);
   int thread_pool = 1;
 
-  client_task_.reset (new Client_Task (my_args));
+  ACE_auto_ptr_reset (client_task_, new Client_Task (my_args));
   ACE_ASSERT (client_task_.get() != 0);
 
   client_task_->activate (THR_NEW_LWP | THR_JOINABLE |THR_INHERIT_SCHED

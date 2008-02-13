@@ -73,7 +73,7 @@ Server::Server (int , ACE_TCHAR* argv[])
       PortableServer::POA::_narrow (obj.in ());
     PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
-    test_i_.reset (new Test_i (orb_.in()));
+    ACE_auto_ptr_reset (test_i_, new Test_i (orb_.in()));
     PortableServer::ObjectId_var oid =
       root_poa->activate_object (test_i_.get());
     obj = root_poa->id_to_reference (oid.in());

@@ -1,3 +1,11 @@
+Wed Feb 13 18:36:52 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Client.cpp:
+        * tests/Oneway_Send_Timeouts/Server.cpp:
+        * tests/Oneway_Send_Timeouts/main.cpp:
+          Now using ACE_auto_ptr_reset instead of std::auto_ptr::reset() for
+          wider platform compatibility.
+
 Wed Feb 13 16:42:51 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Send_Timeouts/Server.cpp:
