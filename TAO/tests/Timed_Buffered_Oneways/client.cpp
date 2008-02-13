@@ -217,6 +217,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               ACE_DEBUG ((LM_DEBUG,
                           "client:\t%d took\t%dms\n",
                           i, (end - start).msec ()));
+
+	      // Interval between successive calls.
+	      ACE_Time_Value sleep_interval (0, interval * 1000);
+
+	      // If we don't run the orb, then no data will be sent, and no
+	      // connection will be made initially.
+	      orb->run (sleep_interval);
             }
           catch (const CORBA::TIMEOUT& ex)
             {
@@ -233,13 +240,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                 }
 
             }
-
-          // Interval between successive calls.
-          ACE_Time_Value sleep_interval (0, interval * 1000);
-
-          // If we don't run the orb, then no data will be sent, and no
-          // connection will be made initially.
-          orb->run (sleep_interval);
         }
 
       ACE_DEBUG ((LM_DEBUG, "client: flushing\n"));
