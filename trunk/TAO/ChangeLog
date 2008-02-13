@@ -1,3 +1,9 @@
+Wed Feb 13 20:50:50 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Bug_3193_Regression:
+          Removed test. The test scenario is covered in
+          Oneway_Send_Timeouts.
+
 Wed Feb 13 18:36:52 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Send_Timeouts/Client.cpp:
