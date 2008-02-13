@@ -1,4 +1,4 @@
-// Id$
+// $Id$
 
 #include "ace/Process_Semaphore.h"
 #include "ace/OS_NS_unistd.h"
