@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(*starter) : aceexe {
+  exename = starter
+
+  Source_Files {
+    starter.cpp
+  }
+}
+project(*worker) : aceexe {
+  exename = worker
+
+  Source_Files {
+    worker.cpp
+  }
+}
