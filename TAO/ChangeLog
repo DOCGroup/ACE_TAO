@@ -1,3 +1,9 @@
+Wed Feb 13 16:21:16 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Timed_Buffered_Oneways/client.cpp:
+          Since the invocations are oneways, the timeout exception can
+          occur when the ORB is driven.
+
 Tue Feb 12 19:08:38 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Send_Timeouts/Server_Task.h:
