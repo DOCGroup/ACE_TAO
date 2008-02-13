@@ -1,3 +1,8 @@
+Wed Feb 13 16:42:51 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Server.cpp:
+          Fix for VxWorks warnings.
+
 Wed Feb 13 16:21:16 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Timed_Buffered_Oneways/client.cpp:
@@ -13,7 +18,7 @@ Tue Feb 12 17:43:18 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
         * tests/Bug_3154_Regression/run_test.pl:
-	  Build tao_idl path relative to ACE_ROOT instead of current
+          Build tao_idl path relative to ACE_ROOT instead of current
           position. This was based upon the legacy packaging style.
 
         * tao/Leader_Follower_Flushing_Strategy.cpp:
