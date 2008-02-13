@@ -276,21 +276,29 @@ ifeq ($(vxworks_ntbuild),1)
 		echo "Installing $(@F) to $(@D)" && \
 		$(RM) $@ && \
 		$(LN_S) $(shell pwd)/$(@F) $@
-else
-ifneq ($(mingw32),1)
-	@if test $(shell pwd) != $(@D) -o -n "$(SOVERSION)" ; then \
-		if test -s $@ ; then \
-			echo "$(@F) already installed" ; \
-		else \
+else #not vxworks_ntbuild
+  ifeq ($(mingw32),1)
+    #If we're actually copying instead of linking, pay attention to timestamps to know when to install
+    ifeq ($(firstword $(LN_S)),cp)
+      ifneq ($(SOVERSION),)
+	@if test $(call PWD) != $(@D) ; then \
+		if test $(@F) -ot $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) ; then \
 			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			echo "Installing $(@F) -> $(@D)" ; \
-			$(RM) $@; \
-			$(LN_S) $(shell pwd)/$(@F) $@; \
+			$(LN_S) $(call PWD)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 		fi ; \
 	fi
-else
+      endif #SOVERSION
+	@if test $(call PWD) != $(@D) ; then \
+		if test $@ -nt $(@F) ; then \
+			echo "$(@F) already installed" ; \
+		else \
+			echo "Installing $(@F) -> $(@D)" ; \
+			$(RM) $@; \
+			$(LN_S) $(call PWD)/$(@F) $@; \
+		fi ; \
+	fi
+    else #firstword of LN_S is not cp, so we're using real symlinks
 	@if test $(call PWD) != $(@D) -o -n "$(SOVERSION)" ; then \
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
@@ -303,8 +311,23 @@ else
 			$(LN_S) $(call PWD)/$(@F) $@; \
 		fi ; \
 	fi
-endif
-endif
+    endif #firstword
+  else #not mingw32
+	@if test $(shell pwd) != $(@D) -o -n "$(SOVERSION)" ; then \
+		if test -s $@ ; then \
+			echo "$(@F) already installed" ; \
+		else \
+			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
+			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			echo "Installing $(@F) -> $(@D)" ; \
+			$(RM) $@; \
+			$(LN_S) $(shell pwd)/$(@F) $@; \
+		fi ; \
+	fi
+  endif #mingw32
+endif #vxworks_ntbuild
+
 ifdef MVSLIB
 #special for MVS in order to use the .x files
 	@if test -w $(@D) ; then \
@@ -432,7 +455,13 @@ depend.local: $(DEPENDENCY_FILE)
 -include $(DEPENDENCY_FILE)
 endif
 
-DEPGEN ?= $(ACE_ROOT)/bin/depgen.pl
+ifdef COMSPEC
+  DEPGEN ?= perl $(ACE_ROOT)/bin/depgen.pl
+else
+  DEPGEN ?= $(ACE_ROOT)/bin/depgen.pl
+  DEPGEN_ENV := ACE_PLATFORM_CONFIG=$(ACE_PLATFORM_CONFIG) \
+ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)"
+endif
 
 # Use findstring just in case the script was preceded by /usr/bin/perl
 ifeq ($(findstring depgen.pl, $(notdir $(DEPGEN))), depgen.pl)
@@ -442,13 +471,12 @@ ifeq ($(findstring depgen.pl, $(notdir $(DEPGEN))), depgen.pl)
   endif
 endif
 
+
 depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
-	ACE_PLATFORM_CONFIG=$(ACE_PLATFORM_CONFIG) \
-	ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" \
-	$(DEPGEN) -A $(DEPEND_CMD_ARGS) -e config.h -f $(DEPENDENCY_FILE) $(CPPFLAGS) \
-	-DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC)
+	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -e config.h -f $(DEPENDENCY_FILE) \
+	$(CPPFLAGS) -t gnu -DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "GNUmakefile dependencies unchanged." ;\
 	else \

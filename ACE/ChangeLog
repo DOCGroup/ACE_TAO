@@ -1,3 +1,13 @@
+Wed Feb 13 16:19:09 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+          This is a (partial) fix for bug #3217, addressing two problems when
+          using gnu make on Windows systems:
+          1. make depend (invoking depgen.pl) was broken
+          2. when LN_S is cp the target of the copy operation was not updated
+             if the actual executable was remade.
+
 Wed Feb 13 12:41:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Semaphores/*:
