@@ -17,4 +17,6 @@ int main(int, char**)
   s.release();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starter has released semaphore\n")));
+
+  return 0;
 }
