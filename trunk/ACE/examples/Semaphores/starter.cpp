@@ -4,7 +4,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 
-int main(int, char**)
+int ACE_TMAIN (int , ACE_TCHAR *[])
 {
   // Create locked
   ACE_Process_Semaphore s (0, ACE_TEXT("AceTest"));
