@@ -9,6 +9,9 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $tao_idl = "$PerlACE::ACE_ROOT/bin/tao_idl";
+if (exists $ENV{HOST_ROOT}) {
+    $tao_idl = "$ENV{HOST_ROOT}/bin/tao_idl";
+}
 
 # IDL file names
 $idl_file = PerlACE::LocalFile ("test.idl");
