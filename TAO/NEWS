@@ -3,8 +3,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) Add ZIOP support
 
-. (Remedy) Add support for TAO on VxWorks 5.5.1
-
 USER VISIBLE CHANGES BETWEEN TAO-1.6.2 and TAO-1.6.3
 ====================================================
 
@@ -35,6 +33,8 @@ USER VISIBLE CHANGES BETWEEN TAO-1.6.2 and TAO-1.6.3
   be changed.
 
 . Fix crashing of _validate_connection on an invalid object reference
+
+. Add support for TAO on VxWorks 5.5.1
 
 USER VISIBLE CHANGES BETWEEN TAO-1.6.1 and TAO-1.6.2
 ====================================================
