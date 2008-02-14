@@ -2,6 +2,7 @@
 // $Id$
 
 project(*starter) : aceexe {
+  avoids += ace_for_tao
   exename = starter
 
   Source_Files {
@@ -9,6 +10,7 @@ project(*starter) : aceexe {
   }
 }
 project(*worker) : aceexe {
+  avoids += ace_for_tao
   exename = worker
 
   Source_Files {
