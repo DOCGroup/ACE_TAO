@@ -48,42 +48,55 @@ if ($server != 0) {
 
 if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
+  $SV->Kill ();
   exit 1;
 }
 
-$CL1->Spawn ();
-$CL2->Spawn ();
-$CL3->Spawn ();
+$client1 = $CL1->Spawn ();
+if ($client1 != 0) {
+  print STDERR "ERROR: client 1 returned $client1\n";
+  $SV->Kill ();
+  exit 1;
+}
+$client2 = $CL2->Spawn ();
+if ($client2 != 0) {
+  print STDERR "ERROR: client 2 returned $client2\n";
+  $CL1->Kill ();
+  $SV->Kill ();
+  exit 1;
+}
+$client3 = $CL3->Spawn ();
+if ($client3 != 0) {
+  print STDERR "ERROR: client 3 returned $client3\n";
+  $CL2->Kill ();
+  $CL1->Kill ();
+  $SV->Kill ();
+  exit 1;
+}
 
-$client1 = $CL1->WaitKill (180);
-
+$client1 = $CL1->WaitKill (300);
 if ($client1 != 0) {
   print STDERR "ERROR: client 1 returned $client1\n";
   $status = 1;
 }
 
-$client2 = $CL2->WaitKill (15);
-
+$client2 = $CL2->WaitKill (60);
 if ($client2 != 0) {
   print STDERR "ERROR: client 2 returned $client2\n";
   $status = 1;
 }
 
-$client3 = $CL3->WaitKill (15);
-
+$client3 = $CL3->WaitKill (60);
 if ($client3 != 0) {
   print STDERR "ERROR: client 3 returned $client3\n";
   $status = 1;
 }
 
 $server = $SV->WaitKill (15);
-
 if ($server != 0) {
   print STDERR "ERROR: server returned $server\n";
   $status = 1;
 }
 
 unlink $iorfile;
-
 exit $status;
