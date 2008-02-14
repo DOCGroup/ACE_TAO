@@ -116,6 +116,9 @@ int main (int argc, char *argv [])
     MonitorChecker monitor_checker;
     monitor_checker.activate ();
     
+    /// Make sure the monitor checker is spawned before growing the queue.
+    ACE_OS::sleep (1);
+    
     for (int i = 0; i < 10; ++i)
       {
         /// Add 6 message blocks to the queue, then remove
@@ -140,7 +143,10 @@ int main (int argc, char *argv [])
           }
         else
           {
-            for (int j = 0; j < 500000000; j++);
+            for (unsigned long j = 0; j < 500000; j++)
+              {
+                (void) ACE_OS::fopen ("non existent file", "r");
+              }
           }
       }
      

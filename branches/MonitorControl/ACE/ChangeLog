@@ -1,3 +1,14 @@
+Thu Feb 14 21:10:57 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        * MonitorControl/examples/main.cpp:
+        
+          Fixed bugs in Linux implementation of CPU load monitor, and
+          changed the busy loop in the example from an empty FOR loop
+          to a loop that tries to open a non-existent file repeatedly.
+          The empty loop was getting optimized away by gcc.
+
 Tue Feb 12 21:52:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/CPULoadMonitor.cpp:

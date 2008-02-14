@@ -72,10 +72,17 @@ namespace ACE
 #elif defined (linux)
       this->access_proc_stat (&this->idle_);    
 
-      ACE_UINT64 delta_idle = this->idle_ - this->prev_idle_;
-      ACE_UINT64 total =
+      double delta_idle = this->idle_ - this->prev_idle_;
+      double total =
         this->user_ + this->nice_ + this->kernel_ + this->idle_;
-      ACE_UINT64 delta_total = total - this->prev_total_;
+      double delta_total = total - this->prev_total_;
+      
+      if (delta_total == 0.0)
+        {
+          /// The system hasn't updated /proc/stat since the last call
+          /// to update(), we must avoid dividing by 0.
+          return;
+        }
 
       double percent_cpu_load = 100.0 - (delta_idle / delta_total * 100.0);
       this->receive (percent_cpu_load);
@@ -87,7 +94,7 @@ namespace ACE
 
 #if defined (linux)
     void
-    CPULoadMonitor<true>::access_proc_stat (ACE_UINT64 *which_idle)
+    CPULoadMonitor<true>::access_proc_stat (unsigned long *which_idle)
     {
       this->file_ptr_ = ACE_OS::fopen ("/proc/stat", "r");
       
@@ -113,7 +120,7 @@ namespace ACE
           if (ACE_OS::strcmp (item, "cpu") == 0)
             {  
               sscanf (arg,
-                      "%qu %qu %qu %qu",
+                      "%lu %lu %lu %lu",
                       &this->user_,
                       &this->nice_,
                       &this->kernel_,

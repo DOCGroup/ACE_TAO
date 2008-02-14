@@ -65,17 +65,17 @@ namespace ACE
       
     private:
 #if defined (linux)
-      void access_proc_stat (ACE_UINT64 *which_idle);
+      void access_proc_stat (unsigned long *which_idle);
 #endif
       
     private:
       /// Common to Linux and Solaris implementations.
-      ACE_UINT64 user_;
-      ACE_UINT64 nice_;
-      ACE_UINT64 kernel_;
-      ACE_UINT64 idle_;
-      ACE_UINT64 prev_idle_;
-      ACE_UINT64 prev_total_;
+      unsigned long user_;
+      unsigned long nice_;
+      unsigned long kernel_;
+      unsigned long idle_;
+      unsigned long prev_idle_;
+      double prev_total_;
 #if defined (ACE_WIN32)
       HQUERY query_;
       HCOUNTER counter_;
