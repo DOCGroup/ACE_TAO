@@ -143,9 +143,9 @@ int main (int argc, char *argv [])
           }
         else
           {
-            for (unsigned long j = 0; j < 500000; j++)
+            for (unsigned long j = 0; j < 5050505; j++)
               {
-                (void) ACE_OS::fopen ("non existent file", "r");
+                (void) ACE::gcd (2419233733, 567715713);
               }
           }
       }
