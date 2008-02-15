@@ -1,3 +1,127 @@
+Thu Feb 14 11:22:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Semaphores/starter.cpp:
+        * examples/Semaphores/worker.cpp:
+          Fixed unicode link errors
+
+Wed Feb 13 20:53:00 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * bin/tao_orb_tests.lst:
+          Turn off test Bug_3193_Regression.
+
+Wed Feb 13 19:03:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Semaphores/starter.cpp:
+          Added missing return
+
+Wed Feb 13 16:19:09 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+          This is a (partial) fix for bug #3217, addressing two problems when
+          using gnu make on Windows systems:
+          1. make depend (invoking depgen.pl) was broken
+          2. when LN_S is cp the target of the copy operation was not updated
+             if the actual executable was remade.
+
+Wed Feb 13 12:41:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Semaphores/*:
+          Added a basic example for process semaphores
+
+Tue Feb 12 15:43:57 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * NEWS:
+          Updated the NEW file with my updates for to ACE.
+
+Tue Feb 12 12:31:34 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Amend PerlACE::add_lib_path to add path relative to $HOST_ROOT
+          also in the even that it is set. Should hopefully make this function
+          work on VXWorks. In the even that it does this will fix bug #3177.
+
+Tue Feb 12 10:18:14 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * bin/MakeProjectCreator/config/ace_output.mpb:
+
+          Create new base project to direct libraries into $ACE_ROOT/lib.
+
+        * bin/MakeProjectCreator/config/acelib.mpb:
+
+          Remove entries that direct libraries into $ACE_ROOT/lib.
+
+        * ACEXML/apps/svcconf/svcconf.mpc:
+        * ACEXML/common/common.mpc:
+        * ACEXML/parser/parser/parser.mpc:
+        * ASNMP/asnmp/asnmp.mpc:
+        * Kokyu/Kokyu.mpc:
+        * ace/QoS/qos.mpc:
+        * ace/SSL/ssl.mpc:
+        * ace/SSL/ssl_for_tao.mpc:
+        * ace/ace_flreactor.mpc:
+        * ace/ace_foxreactor.mpc:
+        * ace/ace_qtreactor.mpc:
+        * ace/ace_tkreactor.mpc:
+        * ace/ace_xtreactor.mpc:
+        * apps/Gateway/Gateway/gateway.mpc:
+        * apps/Gateway/Peer/peer.mpc:
+        * apps/JAWS/server/server.mpc:
+        * apps/JAWS2/HTTPU/httpu.mpc:
+        * apps/JAWS2/JAWS/jaws2.mpc:
+        * apps/JAWS3/jaws3/jaws3.mpc:
+        * netsvcs/lib/lib.mpc:
+        * protocols/ace/HTBP/HTBP.mpc:
+        * protocols/ace/RMCast/RMCast.mpc:
+        * protocols/ace/TMCast/TMCast.mpc:
+        * websvcs/lib/lib.mpc:
+
+          Add ace_output.mpb as base project.
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Add '.' onto the search path for test libraries.
+
+        * bin/tao_orb_tests.lst:
+
+          Create new alternate entries for some overly protracted tests
+          enabling a quicker run through.
+
+        * tests/SSL/acetest.mpb:
+
+          Add $ACE_ROOT/tests onto the link path for ACE tests.
+
+        * tests/run_test.pl:
+
+          Add $ACE_ROOT/tests onto the load path for running ACE tests.
+
+Mon Feb 11 20:46:13 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        Merging in changes from branch "Bug_3193". Here are the individual
+        Changelog entries:
+        Thu Feb  7 23:01:55 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * bin/tao_orb_tests.lst:
+          Turn on reactive flushing oneway send test scenario.
+
+        Wed Feb  6 21:41:25 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * bin/tao_orb_tests.lst:
+          Disable test on Windows. No viable mechanism found to fulfill
+          test pre-requisites on Windows.
+
+        Wed Jan 30 23:18:35 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * bin/tao_orb_tests.lst:
+          Turn on TAO/tests/Oneway_Send_Timeouts.
+
+Mon Feb 11 16:12:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+          Added wait_interval_for_process_shutdown which can be used to
+          wait longer on slower systems
+
 Wed Feb  6 08:30:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:
