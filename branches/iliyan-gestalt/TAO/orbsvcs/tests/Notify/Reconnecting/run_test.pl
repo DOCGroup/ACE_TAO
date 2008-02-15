@@ -14,6 +14,8 @@ use strict;
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../lib');
+
 # ******************************************************************
 # Data Section
 # ******************************************************************

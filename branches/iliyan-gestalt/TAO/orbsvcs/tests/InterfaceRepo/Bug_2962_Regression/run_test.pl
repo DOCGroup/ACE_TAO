@@ -45,7 +45,7 @@ if (PerlACE::waitforfile_timed ($iorfile,
     exit 1;
 }
 
-$LOADER = new PerlACE::Process ("../../../../../bin/tao_ifr",
+$LOADER = new PerlACE::Process ("$PerlACE::ACE_ROOT/bin/tao_ifr",
                                 "-ORBInitRef InterfaceRepository=file://$iorfile test.idl");
 print STDERR "Loading test.idl into IFR service\n";
 $status = $LOADER->SpawnWaitKill (15);

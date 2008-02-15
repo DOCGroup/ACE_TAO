@@ -8,6 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../Generic_Servant/.');
+
 $iorbase = "ior";
 $iorfile = PerlACE::LocalFile ("$iorbase");
 
@@ -76,13 +78,13 @@ if (PerlACE::waitforfile_timed ($iorfile_1, $PerlACE::wait_interval_for_process_
 
 if (PerlACE::waitforfile_timed ($iorfile_2, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile_2>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 
 if (PerlACE::waitforfile_timed ($iorfile_3, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile_3>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 

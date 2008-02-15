@@ -8,6 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../lib');
+
 PerlACE::check_privilege_group();
 
 $experiment_timeout = 60;
@@ -82,7 +84,7 @@ $Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
 unlink $namingior;
 
 $naming_spawn = $Naming->Spawn ();
-if ($naming_spawn != 0) 
+if ($naming_spawn != 0)
   {
     exit 1;
   }
@@ -127,7 +129,7 @@ for $config (@test_configs)
         ## The MaxQueueLength and MaxEventsPerConsumer are not supported in the Reactive
         ## configuration, so we skip this test for now.
         ## The Notification should actually throw an exception for the property not supported.
-        if ($name->{name} eq "AdminProperties" 
+        if ($name->{name} eq "AdminProperties"
             && ($config eq "notify.reactive.conf" || $config eq "notify.rt.conf"))
           {
             next;
@@ -138,7 +140,7 @@ for $config (@test_configs)
                                       "-ORBInitRef NameService=file://$namingior " .
                                       "$name->{args} ");
         $test_spawn = $test->Spawn ();
-        if ($test_spawn != 0) 
+        if ($test_spawn != 0)
           {
             break;
           }
@@ -147,7 +149,7 @@ for $config (@test_configs)
                                    (defined $name->{extra} ?
                                             $name->{extra} : 0));
 
-        if ($status != 0) 
+        if ($status != 0)
           {
             print STDERR "ERROR: $name->{name} returned $status\n";
             break;

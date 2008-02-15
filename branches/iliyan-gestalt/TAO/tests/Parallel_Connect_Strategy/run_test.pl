@@ -33,6 +33,10 @@ $CL_CORBALOC = new PerlACE::Process ("client", "-ORBUseSharedProfile 1 -ORBusePa
 $CL_Reactive = new PerlACE::Process ("client", "-ORBSvcConf reactive.conf -ORBuseParallelConnects 1 -k file://$iorfile");
 $CL_Blocked = new PerlACE::Process ("client", "-ORBSvcConf blocked.conf -ORBuseParallelConnects 1 -k file://$iorfile");
 $CL_None = new PerlACE::Process ("client", "-ORBuseParallelConnects 0 -k file://$iorfile");
+if ($ARGV[0] eq '-quick')  {
+  $CL_Blocked = new PerlACE::Process ("client", "-ORBSvcConf blocked.conf -ORBuseParallelConnects 1 -k file://$iorfile -t");
+  $CL_None = new PerlACE::Process ("client", "-ORBuseParallelConnects 0 -k file://$iorfile -t");
+}
 $CL_Shutdown =  new PerlACE::Process ("client", "-ORBuseParallelConnects 1 -k file://$iorfile -x");
 
 $SV_ALT_IIOP->Spawn ();

@@ -1,6 +1,0 @@
-# $Id$
-
-Test to reproduce Bug 3193 issue.
-
-The aim is to fill up the TCP buffers then get a one-way invocation with
- SYNC_WITH_TRANSPORT synch scope and Block flushing to timeout.

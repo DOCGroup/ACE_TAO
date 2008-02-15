@@ -66,7 +66,6 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
     this->connection_handler_->peer ().sendv (iov,
                                               iovcnt,
                                               max_wait_time);
-
   if (retval > 0)
     bytes_transferred = retval;
   else
@@ -256,30 +255,6 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
     }
 
   return 1;
-}
-
-int
-TAO_IIOP_Transport::send_message_shared (
-  TAO_Stub *stub,
-  TAO_Message_Semantics message_semantics,
-  const ACE_Message_Block *message_block,
-  ACE_Time_Value *max_wait_time)
-{
-  int r;
-
-  {
-    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
-    r = this->send_message_shared_i (stub, message_semantics,
-                                     message_block, max_wait_time);
-  }
-
-  if (r == -1)
-    {
-      this->close_connection ();
-    }
-
-  return r;
 }
 
 int

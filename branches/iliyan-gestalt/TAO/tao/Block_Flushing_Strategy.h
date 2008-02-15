@@ -35,7 +35,8 @@ public:
   virtual int flush_message (TAO_Transport *transport,
                              TAO_Queued_Message *msg,
                              ACE_Time_Value *max_wait_time);
-  virtual int flush_transport (TAO_Transport *transport);
+  virtual int flush_transport (TAO_Transport *transport
+                               , ACE_Time_Value *max_wait_time);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

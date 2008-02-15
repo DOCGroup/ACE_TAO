@@ -78,11 +78,6 @@ protected:
                         size_t len,
                         const ACE_Time_Value *s = 0);
 
-  virtual int send_message_shared (TAO_Stub *stub,
-                                   TAO_Message_Semantics message_semantics,
-                                   const ACE_Message_Block *message_block,
-                                   ACE_Time_Value *max_wait_time);
-
 
 public:
   /// @todo These methods IMHO should have more meaningful

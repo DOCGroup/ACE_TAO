@@ -9,6 +9,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use Config;
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../lib');
+
 sub add_path {
     my($name)  = shift;
     my($value) = shift;

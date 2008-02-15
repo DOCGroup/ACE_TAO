@@ -8,14 +8,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-# The location of the tao_idl utility - depends on O/S
-if ($^O eq "MSWin32")
-{
-   $tao_idl = "../../../bin/tao_idl";
-}
-else
-{
-   $tao_idl = "../../../TAO/TAO_IDL/tao_idl";
+$tao_idl = "$PerlACE::ACE_ROOT/bin/tao_idl";
+if (exists $ENV{HOST_ROOT}) {
+    $tao_idl = "$ENV{HOST_ROOT}/bin/tao_idl";
 }
 
 # IDL file names

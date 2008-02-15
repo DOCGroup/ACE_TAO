@@ -25,6 +25,11 @@ local $start_time = time();
 local $max_running_time = 600; # 5 minutes
 local $elapsed = time() - $start_time;
 
+if ($ARGV[0] eq '-quick')  {
+    $elapsed = 0;
+    $max_running_time = 1;
+}
+
 while($elapsed < $max_running_time) {
 
 print STDERR " Going .. \n";

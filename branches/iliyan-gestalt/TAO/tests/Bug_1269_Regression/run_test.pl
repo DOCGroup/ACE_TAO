@@ -23,7 +23,7 @@ $CL3 = new PerlACE::Process ("client", "-k file://$iorfile");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 
+if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
@@ -33,6 +33,11 @@ if (PerlACE::waitforfile_timed ($iorfile,
 local $start_time = time();
 local $max_running_time = 240; # 4 minutes
 local $elapsed = time() - $start_time;
+
+if ($ARGV[0] eq '-quick')  {
+    $elapsed = 0;
+    $max_running_time = 1;
+}
 
 while($elapsed < $max_running_time) {
   # Start all clients in parallel

@@ -8,16 +8,20 @@ ACE_RCSID(Stack_Recursion,
           "$Id$")
 
 const char *ior = "file://test.ior";
+static int iterations = 1000;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, "i:k:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'i':
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
       case 'k':
         ior = get_opts.opt_arg ();
         break;
@@ -61,7 +65,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
       Client_Task client_task (sender.in (),
-                               1000,
+                               iterations,
                                1048576,
                                ACE_Thread_Manager::instance ());
 

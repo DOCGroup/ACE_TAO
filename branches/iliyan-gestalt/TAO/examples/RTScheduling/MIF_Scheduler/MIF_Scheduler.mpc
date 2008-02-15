@@ -4,6 +4,7 @@
 project(*Starter): portableserver, namingexe {
   after += RTSchedSynch
   libs += RTSchedSynch
+  libpaths += ..
 
   specific (automake) {
     includes += $(TAO_ROOT)/examples/RTScheduling
@@ -20,6 +21,7 @@ project(*Starter): portableserver, namingexe {
 project(*test) : namingexe, rtscheduling_server {
   after += *Starter RTSchedTestLib
   libs += RTSchedTestLib Job RTSchedSynch
+  libpaths += ..
   idlflags += -SS -St -o ..
 
   specific (automake) {
