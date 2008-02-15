@@ -85,13 +85,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Service *service_impl;
+      Service *service_impl = 0;
       ACE_NEW_RETURN (service_impl,
                       Service,
                       1);
       PortableServer::ServantBase_var owner_transfer(service_impl);
 
-      service_impl->orb_ = CORBA::ORB::_duplicate (orb);
+      service_impl->orb_ = CORBA::ORB::_duplicate (orb.in());
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (service_impl);
