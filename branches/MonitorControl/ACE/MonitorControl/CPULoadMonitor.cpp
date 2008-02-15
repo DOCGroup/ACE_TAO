@@ -1,5 +1,9 @@
 // $Id$
 
+#if defined (sun)
+#include <sys/sysinfo.h>
+#endif
+
 #include "MonitorControl/CPULoadMonitor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -161,11 +165,11 @@ namespace ACE
 
 #if defined (sun)
     void
-    CPULoadMonitor::access_kstats (unsigned long *which_idle)
+    CPULoadMonitor<true>::access_kstats (unsigned long *which_idle)
     {
       this->kstats_ = kstat_open ();
       
-      if (this->kstats+ == 0)
+      if (this->kstats_ == 0)
         {
           ACE_ERROR ((LM_ERROR, "opening kstats file failed\n"));
           return;
@@ -188,7 +192,7 @@ namespace ACE
             {
               int result = ACE_OS::strncmp (this->kstat_->ks_name,
                                             "cpu_stat",
-                                            ACE_OS::strlen ("cpu_stat"))
+                                            ACE_OS::strlen ("cpu_stat"));
                                            
               if (result == 0)
                 {
@@ -197,7 +201,7 @@ namespace ACE
                   /// differs from what we saw during the walk. The restart
                   /// is done by breaking from the cycle with kstat_ not 0.
                   
-                  kid_t kstat_id = kstat_read (this->kstats_, this->kstat_);
+                  kid_t kstat_id = kstat_read (this->kstats_, this->kstat_, 0);
                   
                   if (kstat_id != this->kstat_id_)
                     {
@@ -222,8 +226,8 @@ namespace ACE
               
               if (! this->kstat_id_ > 0)
                 {
-                  ACE_ERROR (LM_ERROR,
-                             "kstat chain update returned null id\n"))
+                  ACE_ERROR ((LM_ERROR,
+                              "kstat chain update returned null id\n"));
                   return;
                 }
             }
