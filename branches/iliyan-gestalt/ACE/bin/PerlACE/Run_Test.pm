@@ -51,6 +51,8 @@ if ($^O eq 'VMS') {
   $wait_interval_for_process_creation *= 3;
 }
 
+$wait_interval_for_process_shutdown = (($PerlACE::VxWorks_Test or $PerlACE::VxWorks_RTP_Test) ? 30 : 10);
+
 # Turn on autoflush
 $| = 1;
 
@@ -204,6 +206,12 @@ sub add_lib_path {
   add_path('LIBPATH', $value);
   add_path('SHLIB_PATH', $value);
 
+  if (defined $ENV{"HOST_ROOT"}) {
+    add_path('PATH', VX_HostFile ($value));
+    add_path('LD_LIBRARY_PATH', VX_HostFile ($value));
+    add_path('LIBPATH', VX_HostFile ($value));
+    add_path('SHLIB_PATH', VX_HostFile ($value));
+  }
 }
 
 sub check_privilege_group {
@@ -230,6 +238,9 @@ sub check_privilege_group {
     }
   }
 }
+
+# Add PWD to the load library path
+add_lib_path ('.');
 
 $sleeptime = 5;
 

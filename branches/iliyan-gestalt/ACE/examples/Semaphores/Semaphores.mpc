@@ -1,0 +1,19 @@
+// -*- MPC -*-
+// $Id$
+
+project(*starter) : aceexe {
+  avoids += ace_for_tao
+  exename = starter
+
+  Source_Files {
+    starter.cpp
+  }
+}
+project(*worker) : aceexe {
+  avoids += ace_for_tao
+  exename = worker
+
+  Source_Files {
+    worker.cpp
+  }
+}

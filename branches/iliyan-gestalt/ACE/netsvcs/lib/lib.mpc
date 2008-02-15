@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(netsvcs): acelib {
+project(netsvcs): ace_output, acelib {
   avoids       += ace_for_tao
   sharedname    = netsvcs
   dynamicflags += ACE_NETSVCS_BUILD_DLL
