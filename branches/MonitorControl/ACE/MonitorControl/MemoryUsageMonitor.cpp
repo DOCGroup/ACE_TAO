@@ -8,6 +8,11 @@ namespace ACE
 {
   namespace MonitorControl
   {
+    MemoryUsageMonitor<true>::MemoryUsageMonitor (void)
+      : MonitorPoint<true> ("MemoryUsage",
+                            MonitorControl_Types::IT_NUMBER)
+    {}
+  
     void
     MemoryUsageMonitor<true>::update (void)
     {

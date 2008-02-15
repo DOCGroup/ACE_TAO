@@ -8,6 +8,11 @@ namespace ACE
 {
   namespace MonitorControl
   {
+    NumThreadsMonitor<true>::NumThreadsMonitor (void)
+      : MonitorPoint<true> ("NumThreads",
+                            MonitorControl_Types::IT_NUMBER)
+    {}
+  
     void
     NumThreadsMonitor<true>::update (void)
     {

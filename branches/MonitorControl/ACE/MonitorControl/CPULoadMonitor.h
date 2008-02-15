@@ -26,7 +26,6 @@
 /// Must include this after the ACE headers to avoid many redefinition
 /// errors.
 #include <pdh.h>
-#elif defined (linux)
 #elif defined (sun)
 #include <kstat.h>
 #endif
@@ -67,11 +66,15 @@ namespace ACE
 #if defined (linux)
       void access_proc_stat (unsigned long *which_idle);
 #endif
+
+#if defined (sun)
+      void access_kstats (unsigned long *which_idle);
+#endif
       
     private:
       /// Common to Linux and Solaris implementations.
       unsigned long user_;
-      unsigned long nice_;
+      unsigned long wait_;
       unsigned long kernel_;
       unsigned long idle_;
       unsigned long prev_idle_;

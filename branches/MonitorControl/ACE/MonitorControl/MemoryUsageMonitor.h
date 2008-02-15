@@ -48,6 +48,8 @@ namespace ACE
     class MONITORCONTROL_Export MemoryUsageMonitor<true>
       : public MonitorPoint<true>
     {
+      MemoryUsageMonitor (void);
+    
       /// Implementation of the pure virtual method.
       virtual void update (void);
     };

@@ -48,6 +48,8 @@ namespace ACE
     class MONITORCONTROL_Export NumThreadsMonitor<true>
       : public MonitorPoint<true>
     {
+      NumThreadsMonitor (void);
+    
       /// Implementation of the pure virtual method.
       virtual void update (void);
     };

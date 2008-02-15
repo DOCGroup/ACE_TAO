@@ -1,3 +1,22 @@
+Fri Feb 15 18:43:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        
+          First cut at implementation for Solaris.
+          
+        * MonitorControl/PacketsSentMonitor.h:
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/MemoryUsageMonitor.h:
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/NumThreadsMonitor.h:
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.cpp:
+        * MonitorControl/BytesSentMonitor.h:
+        
+          Added default constructors, similar to what exists in
+          class CPULoadMonitor.
+
 Thu Feb 14 21:10:57 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/CPULoadMonitor.cpp:

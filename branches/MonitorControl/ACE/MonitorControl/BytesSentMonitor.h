@@ -48,6 +48,8 @@ namespace ACE
     class MONITORCONTROL_Export BytesSentMonitor<true>
       : public MonitorPoint<true>
     {
+      BytesSentMonitor (void);
+    
       /// Implementation of the pure virtual method.
       virtual void update (void);
     };

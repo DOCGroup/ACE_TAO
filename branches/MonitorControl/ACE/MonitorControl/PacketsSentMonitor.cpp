@@ -8,6 +8,11 @@ namespace ACE
 {
   namespace MonitorControl
   {
+    PacketsSentMonitor<true>::PacketsSentMonitor (void)
+      : MonitorPoint<true> ("PacketsSent",
+                            MonitorControl_Types::IT_NUMBER)
+    {}
+  
     void
     PacketsSentMonitor<true>::update (void)
     {
