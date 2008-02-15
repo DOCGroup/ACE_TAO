@@ -9,4 +9,5 @@ project : taoexe, portableserver {
     includes += $(srcdir)/../../idl
   }
   includes += ../../idl
+  libpaths += ../../idl
 }

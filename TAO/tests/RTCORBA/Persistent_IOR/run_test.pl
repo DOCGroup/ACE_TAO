@@ -79,15 +79,15 @@ sub run_server
 
     $SV->Spawn ();
 
-    $server = $SV->Wait (10);
-    if ($server == 0)
-    {
-       return 0;
-    }
+    # $server = $SV->Wait (10);
+    # if ($server == 0)
+    # {
+    #    return 0;
+    # }
 
     for $file (@$iorfiles)
     {
-        if (PerlACE::waitforfile_timed ($file, 1) == -1)
+        if (PerlACE::waitforfile_timed ($file, 5) == -1)
         {
             print STDERR "ERROR: cannot find ior file: $file\n";
             $status = 1;

@@ -6,7 +6,8 @@
 ACE_RCSID(Crashed_Callback, Service, "$Id$")
 
 Service::Service (void)
-  : test_count_ (0)
+  : orb_ (CORBA::ORB::_nil ()),
+    test_count_ (0)
 {
 }
 
@@ -56,6 +57,7 @@ Service::run_test (Test::Crashed_Callback_ptr callback)
       ACE_DEBUG ((LM_DEBUG,
                   "Good!! %d exceptions raised after crash\n",
                   pos_crash_exceptions));
+      orb_->shutdown (false);
     }
 
   /// Increment the number of tests completed

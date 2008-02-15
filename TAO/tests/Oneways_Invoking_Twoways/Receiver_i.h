@@ -38,6 +38,11 @@ public:
   /// Retun the number of calls that every thread would make...
   virtual CORBA::Long get_call_count (void);
 
+  virtual void shutdown (void);
+
+  /// Number of calls processed so far..
+  CORBA::ULong no_calls_;
+
 private:
   /// Our Orb...
   CORBA::ORB_var orb_;
@@ -47,9 +52,6 @@ private:
 
   /// Number of invocations to be made on the sender..
   CORBA::ULong iteration_;
-
-  /// Number of calls processed so far..
-  CORBA::ULong no_calls_;
 };
 
 #include /**/ "ace/post.h"

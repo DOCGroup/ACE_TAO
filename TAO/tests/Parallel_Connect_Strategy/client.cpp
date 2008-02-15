@@ -3,16 +3,29 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(Hello, client, "$Id$")
 
 const char *ior = "file://test.ior";
 int kill_server = 0;
+bool sanity_timeout = false;
+
+void hook (TAO_ORB_Core *,
+           TAO_Stub *,
+           bool &has_timeout,
+           ACE_Time_Value &tv)
+{
+  ACE_DEBUG ((LM_DEBUG, "Timeout hook called\n"));
+  ACE_Time_Value ten_secs (10, 0);
+  tv.set (10, 0);
+  has_timeout = true;
+}
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:x");
+  ACE_Get_Opt get_opts (argc, argv, "k:xt");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -23,6 +36,9 @@ parse_args (int argc, char *argv[])
         break;
       case 'x':
         kill_server = 1;
+        break;
+      case 't':
+        sanity_timeout = true;
         break;
       case '?':
       default:
@@ -48,6 +64,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
+
+      if (sanity_timeout)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Installing sanity timeout\n"));
+          orb->orb_core ()->connection_timeout_hook (hook);
+        }
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior);

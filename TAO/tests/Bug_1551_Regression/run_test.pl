@@ -27,6 +27,11 @@ local $max_running_time = 600; # 10 minutes
 local $elapsed = time() - $start_time;
 
 local $ntimes = 50 ; # run test for 50 times
+
+if ($ARGV[0] eq '-quick')  {
+    $ntimes = 1;
+}
+
 local $n = 0;
 
 while($n < $ntimes) {

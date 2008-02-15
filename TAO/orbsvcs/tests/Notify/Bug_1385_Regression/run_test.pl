@@ -7,6 +7,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
+
+PerlACE::add_lib_path ('../lib');
+
 use strict;
 
 PerlACE::check_privilege_group();

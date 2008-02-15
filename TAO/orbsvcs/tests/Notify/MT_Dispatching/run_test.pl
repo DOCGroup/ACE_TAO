@@ -8,6 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::add_lib_path ('../lib');
+
 PerlACE::check_privilege_group();
 
 $experiment_timeout = 60;
@@ -18,33 +20,33 @@ $naming_ior = PerlACE::LocalFile ("naming.ior");
 $supplier_ior = PerlACE::LocalFile ("supplier.ior");
 $status = 0;
 
-@tests = 
+@tests =
   (
    {
     description => "no threads",
-    config => "notify_nothreads$PerlACE::svcconf_ext", 
+    config => "notify_nothreads$PerlACE::svcconf_ext",
     supplier => " -c 10 -e 10 ",
     consumer => " -c 2 -e 100 ",
    },
    {
     description => "multi-threaded dispatching",
-    config => "notify_mtdispatching$PerlACE::svcconf_ext", 
+    config => "notify_mtdispatching$PerlACE::svcconf_ext",
     supplier => " -c 10 -e 10 ",
     consumer => " -c 2 -e 100 ",
    },
    {
     description => "multi-threaded supplier-side",
-    config => "notify_mtsource$PerlACE::svcconf_ext", 
+    config => "notify_mtsource$PerlACE::svcconf_ext",
     supplier => " -c 10 -e 10 ",
     consumer => " -c 2 -e 100 ",
    },
   );
 
-@tests2 = 
+@tests2 =
   (
    {
     description => "multi-threaded dispatching",
-    config => "notify_mtdispatching$PerlACE::svcconf_ext", 
+    config => "notify_mtdispatching$PerlACE::svcconf_ext",
     supplier => " ",
     consumer => " ",
    }
@@ -81,20 +83,20 @@ for $test (@tests)
     $args = $Notification->Arguments ();
     print STDERR "Running Notification with arguments: $args\n";
     $Notification->Spawn ();
-    
+
     if (PerlACE::waitforfile_timed ($notify_ior, $startup_timeout) == -1) {
       print STDERR "ERROR: waiting for the notify service to start\n";
       $Notification->Kill ();
       $Naming->Kill ();
       exit 1;
     }
-    
+
     unlink $supplier_ior;
     $Supplier->Arguments ($Supplier->Arguments () . $test->{supplier});
     $args = $Supplier->Arguments ();
     print STDERR "Running Supplier with arguments: $args\n";
     $Supplier->Spawn ();
-    
+
     if (PerlACE::waitforfile_timed ($supplier_ior, $startup_timeout) == -1) {
       print STDERR "ERROR: waiting for the supplier to start\n";
       $Supplier->Kill ();
@@ -102,12 +104,12 @@ for $test (@tests)
       $Naming->Kill ();
       exit 1;
     }
-    
+
     $Consumer->Arguments ($Consumer->Arguments () . $test->{consumer});
     $args = $Consumer->Arguments ();
     print STDERR "Running Consumer with arguments: $args\n";
     $status = $Consumer->SpawnWaitKill ($experiment_timeout);
-    if ($status != 0) 
+    if ($status != 0)
       {
         print STDERR "ERROR: Consumer returned $status\n";
         $Supplier->Kill ();
@@ -127,7 +129,7 @@ for $test (@tests)
     $Notification->Kill ();
     unlink $notify_ior;
   }
-    
+
 $Naming->Kill ();
 unlink $naming_ior;
 

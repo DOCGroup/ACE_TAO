@@ -96,7 +96,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Client_Task client_task (sender.in (),
                                receiver.in (),
-                               ACE_Thread_Manager::instance ());
+                               ACE_Thread_Manager::instance (),
+                               receiver_impl);
 
       Server_Task server_task (orb.in (),
                                ACE_Thread_Manager::instance ());

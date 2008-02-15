@@ -3,10 +3,24 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) Add ZIOP support
 
-. (Remedy) Fix some SSLIOP memory leaks
-
 USER VISIBLE CHANGES BETWEEN TAO-1.6.2 and TAO-1.6.3
 ====================================================
+
+. Fixed send side logic (both synchronous and asynchronous) to honor
+  timeouts. An RTT enabled two-way invocation could earlier hang
+  indefinately if tcp buffers were flooded.
+
+. Bug fix for cases where the IDL compiler would abort but with an
+  exit value of 0.
+
+. Bug fix in IDL compiler's handling of typedef'd constants having
+  a bitwise integer expression as the value.
+
+. Bug fix that ensures valuetypes and their corresponding supported
+  interfaces have parallel inheritance hierarchies.
+
+. Fix for possible out-of-order destruction of Unknown_IDL_Type's
+  static local lock object (bugzilla 3214).
 
 . Added list() iterator functionality for the Naming Service when
   using the -u persistence option.
@@ -19,6 +33,15 @@ USER VISIBLE CHANGES BETWEEN TAO-1.6.2 and TAO-1.6.3
   be changed.
 
 . Fix crashing of _validate_connection on an invalid object reference
+
+. Add support for TAO on VxWorks 5.5.1
+
+. _get_implementation has been removed from CORBA::Object, it was
+  deprecated in CORBA 2.2
+
+. Improved CORBA/e support
+
+. Fixed SSLIOP memory leaks
 
 USER VISIBLE CHANGES BETWEEN TAO-1.6.1 and TAO-1.6.2
 ====================================================

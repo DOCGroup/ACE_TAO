@@ -32,6 +32,11 @@ local $start_time = time();
 local $max_running_time = 300; # 5 minutes
 local $elapsed = time() - $start_time;
 
+if ($ARGV[0] eq '-quick')  {
+    $elapsed = 0;
+    $max_running_time = 1;
+}
+
     print STDERR "elaped is $elapsed\n";
 while($elapsed < $max_running_time) {
     print STDERR "**************************** \n";

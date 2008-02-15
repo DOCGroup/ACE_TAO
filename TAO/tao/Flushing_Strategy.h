@@ -75,7 +75,7 @@ public:
                              ACE_Time_Value *max_wait_time) = 0;
 
   /// Wait until the transport has no messages queued.
-  virtual int flush_transport (TAO_Transport *transport) = 0;
+  virtual int flush_transport (TAO_Transport *transport, ACE_Time_Value *max_wait_time) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

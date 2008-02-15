@@ -53,9 +53,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      test_i *test_impl;
+      test_i *test_impl = 0;
       ACE_NEW_RETURN (test_impl,
-                      test_i (),
+                      test_i (orb.in ()),
                       1);
       PortableServer::ServantBase_var owner_transfer(test_impl);
 
