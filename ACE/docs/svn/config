@@ -10,7 +10,7 @@
 ### saving of *new* credentials;  it doesnt invalidate existing
 ### caches.  (To do that, remove the cache files by hand.)
 # [auth]
-# store-auth-creds = no
+store-auth-creds = yes
 
 ### Section for configuring external helper applications.
 ### Set editor to the command used to invoke your text editor.
@@ -26,9 +26,9 @@
 ### Set diff3-has-program-arg to true or yes if your diff3
 ###   program accepts the --diff-program option.
 # [helpers]
-# editor-cmd = editor (vi, emacs, notepad, etc.)
-# diff-cmd = diff_program (diff, gdiff, etc.)
-# diff3-cmd = diff3_program (diff3, gdiff3, etc.)
+editor-cmd = emacs
+diff-cmd   = /usr/bin/diff
+diff3-cmd  = /usr/bin/diff3
 # diff3-has-program-arg = [true | false]
 
 ### Section for configuring tunnel agents.
