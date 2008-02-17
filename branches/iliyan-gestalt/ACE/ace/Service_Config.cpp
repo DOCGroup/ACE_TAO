@@ -277,37 +277,6 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   if (result == -1)
     return -1;
 
-  if (instance_->init_svc_conf_file_queue () == -1)
-    return -1;
-
-  // Check if the default file exists before attempting to queue it
-  // for processing
-  if (!ignore_default_svc_conf_file)
-    {
-      FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF,
-                                ACE_TEXT ("r"));
-      ignore_default_svc_conf_file = (fp == 0);
-      if (fp != 0)
-        ACE_OS::fclose (fp);
-    }
-
-  if (!ignore_default_svc_conf_file
-      && instance_->svc_conf_file_queue_->is_empty ())
-    {
-      // Load the default "svc.conf" entry here if there weren't
-      // overriding -f arguments in <parse_args>.
-      if (instance_->svc_conf_file_queue_->enqueue_tail
-          (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("enqueuing ")
-                             ACE_DEFAULT_SVC_CONF
-                             ACE_TEXT(" file")),
-                            -1);
-        }
-    }
-
   return instance_->open_i (program_name,
           logger_key,
           ignore_static_svcs,
@@ -366,11 +335,8 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
 ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
                                         size_t size,
                                         int signum)
-  :  key_ (ACE_OS::NULL_key)
-
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
-
 
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
@@ -380,25 +346,7 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
                     ACE_Service_Gestalt (size, false, ignore_static_svcs));
 
   this->instance_ = tmp;
-
-#if defined (ACE_HAS_TSS_EMULATION)
-  ACE_Object_Manager::init_tss ();
-#endif
-  if (ACE_Thread::keycreate (&this->key_, 0, tmp) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Failed to create thread key: %p\n"),
-                  ""));
-    }
-
-  if (ACE_Thread::setspecific (this->key_, tmp))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Failed to set thread key value: %p\n"),
-                  ""));
-    }
-
-  //  ACE_ASSERT (key_ != ACE_OS::NULL_key);
+  this->threadkey_.set (tmp);
 
   ACE_Service_Config::signum_ = signum;
 }
@@ -407,7 +355,6 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
 
 ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
                                         const ACE_TCHAR *logger_key)
-  :  key_ (ACE_OS::NULL_key)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
@@ -419,26 +366,7 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
                     ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
 
   this->instance_ = tmp;
-
-#if defined (ACE_HAS_TSS_EMULATION)
-  ACE_Object_Manager::init_tss ();
-#endif
-
-  if (ACE_Thread::keycreate (&this->key_, 0, tmp) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Failed to create thread key: %p\n"),
-                  ""));
-    }
-
-  if (ACE_Thread::setspecific (this->key_, tmp))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Failed to set thread key value: %p\n"),
-                  ""));
-    }
-
-  ACE_ASSERT (key_ != ACE_OS::NULL_key);
+  this->threadkey_.set (tmp);
 
   if (this->open (program_name,
                   logger_key) == -1 && errno != ENOENT)
@@ -451,22 +379,63 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
     }
 }
 
+ACE_Threading_Helper::ACE_Threading_Helper ()
+  :  key_ (ACE_OS::NULL_key)
+{
+#if defined (ACE_HAS_TSS_EMULATION)
+  ACE_Object_Manager::init_tss ();
+#endif
 
-/// Return the configuration instance, considered "global" in the
-/// current thread. This may be the same as instance(), but on some
-/// occasions, it may be a different one. For example,
-/// ACE_Service_Config_Guard provides a way of temporarily replacing
-/// the "current" configuration instance in the context of a thread.
+  if (ACE_Thread::keycreate (&key_, 0, 0) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Failed to create thread key: %p\n"),
+                  ""));
+    }
+}
+
+
+ACE_Threading_Helper::~ACE_Threading_Helper ()
+{
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
+  ACE_OS::thr_key_detach (this->key_, 0);
+  ACE_OS::thr_keyfree (this->key_);
+#else // defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
+
+#endif // defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
+}
+
+void
+ACE_Threading_Helper::set (void* p)
+{
+  if (ACE_Thread::setspecific (key_, p) == -1)
+    ACE_ERROR ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) Service Config failed to set thread key value: %p\n"),
+                       ""));
+}
+
+void*
+ACE_Threading_Helper::get (void)
+{
+  void* temp = 0;
+  if (ACE_Thread::getspecific (key_, &temp) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) Service Config failed to get thread key value: %p\n"),
+                       ""),
+                      0);
+  return temp;
+}
+
+
+/// Return the "global" configuration instance, for the current
+/// thread. This may be the same as instance(), but on some occasions,
+/// it may be a different one. For example, ACE_Service_Config_Guard
+/// provides a way of temporarily replacing the "current"
+/// configuration instance in the context of a thread.
 ACE_Service_Gestalt*
 ACE_Service_Config::current (void)
 {
-  void* temp = 0;
-  if (ACE_Thread::getspecific (ACE_Service_Config::singleton ()->key_, &temp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Failed to get thread key value: %p\n"),
-                       ""),
-                      0);
-
+  void* temp = ACE_Service_Config::singleton()->threadkey_.get ();
   ACE_ASSERT (temp != 0);
   return static_cast<ACE_Service_Gestalt*> (temp);
 }
@@ -475,14 +444,8 @@ ACE_Service_Config::current (void)
 void
 ACE_Service_Config::current (ACE_Service_Gestalt* newcurrent)
 {
-  void* temp = newcurrent;
-  if (ACE_Thread::setspecific (ACE_Service_Config::singleton ()->key_, temp) == -1)
-    ACE_ERROR ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Service Config failed to set thread key value: %p\n"),
-                       ""));
+  ACE_Service_Config::singleton()->threadkey_.set (newcurrent);
 }
-
-
 
 
 
@@ -633,12 +596,6 @@ ACE_TSS <ACE_Service_Gestalt>::cleanup (void*)
 ACE_Service_Config::~ACE_Service_Config (void)
 {
   ACE_TRACE ("ACE_Service_Config::~ACE_Service_Config");
-#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
-  ACE_OS::thr_key_detach (this->key_, 0);
-  ACE_OS::thr_keyfree (this->key_);
-#else // defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
-
-#endif // defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
 }
 
 // ************************************************************
