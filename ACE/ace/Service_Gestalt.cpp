@@ -311,6 +311,34 @@ ACE_Service_Gestalt::init_i (void)
         }
     }
 
+  if (init_svc_conf_file_queue () == -1)
+    return -1;
+
+  // Check if the default file exists before attempting to queue it
+  // for processing
+  FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF,
+                            ACE_TEXT ("r"));
+  bool no_static_svcs_ = (fp == 0);
+  if (fp != 0)
+    ACE_OS::fclose (fp);
+
+  if (!no_static_svcs_
+      && svc_conf_file_queue_->is_empty ())
+    {
+      // Load the default "svc.conf" entry here if there weren't
+      // overriding -f arguments in <parse_args>.
+      if (svc_conf_file_queue_->enqueue_tail
+          (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("enqueuing ")
+                             ACE_DEFAULT_SVC_CONF
+                             ACE_TEXT(" file")),
+                            -1);
+        }
+    }
+
   return 0;
 }
 

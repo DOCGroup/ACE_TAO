@@ -17,7 +17,6 @@
 
 #include /**/ "ace/config-all.h"
 #include "ace/Default_Constants.h"
-#include "ace/Service_Gestalt.h"
 #include "ace/Intrusive_Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -29,6 +28,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl.
+class ACE_Service_Gestalt;
 class ACE_Service_Object;
 class ACE_Service_Type;
 class ACE_Service_Type_Impl;
@@ -133,6 +133,33 @@ public:
   bool operator!= (ACE_Static_Svc_Descriptor &) const;
 };
 
+/**
+ * @class ACE_Threading_Helper
+ *
+ * @brief Encapsulates responsibility for allocating, destroying and
+ * manipulating the value, associated with a thread-specific
+ * key. Relates to the ability of the created thread to inherit the
+ * parent thread's gestalt. Designed to be used as an instance member
+ * of @c ACE_Service_Config
+ */
+class ACE_Threading_Helper
+{
+public:
+  ACE_Threading_Helper ();
+  ~ACE_Threading_Helper ();
+
+  void set (void*);
+  void* get (void);
+
+private:
+
+  /**
+   * Key for the thread-specific data Service Configuration keeps
+   * around.  This datum is a simple pointer to the configuration
+   * context (Gestalt).
+   */
+  ACE_thread_key_t key_;
+};
 
 #define ACE_Component_Config ACE_Service_Config
 
@@ -187,7 +214,7 @@ public:
    * registered when the repository is opened.
    */
   ACE_Service_Config (bool ignore_static_svcs = true,
-                      size_t size = ACE_Service_Gestalt::MAX_SERVICES,
+                      size_t size = 1024,
                       int signum = SIGHUP);
 
   /**
@@ -230,18 +257,9 @@ protected:
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
 
   /**
-   * Key for the thread-specific data Service Configuration keeps
-   * around.  It is a simple pointer to the configuration context
-   * (Gestalt) that static initializers use. The design allows
-   * substitution of a gestalt as the "global one" and ensures
-   * subsequently loaded DLL's static initialization code will use the
-   * designated configuration context.
-   *
-   * Using an instance member here instead of static member helps
-   * avoid static initialization problems and doesn't preclude
-   * multiple ACE_Service_Config instances (if it makes sense).
+   * A helper instance to manage thread-specific key creation
    */
-  ACE_thread_key_t key_;
+  ACE_Threading_Helper threadkey_;
 
   /// = Static interfaces
 
@@ -611,7 +629,6 @@ private:
 
 private:
   ACE_Service_Gestalt_Auto_Ptr saved_;
-
 };
 
 

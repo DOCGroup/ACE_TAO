@@ -1,22 +1,33 @@
-Mon Jan  7 21:09:24 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+Sun Feb 17 23:43:43 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
-        * .:
-        * COPYING:
-        * ChangeLog:
-        * ace/Hash_Map_Manager_T.h:
-        * ace/config-vxworks.h:
-        * bin/PerlACE/Process_Unix.pm:
-        * bin/generate_doxygen.pl:
-        * bin/tao_orb_tests.lst:
-        * include/makeinclude/platform_macosx_leopard.GNU:
-        * include/makeinclude/platform_vxworks.GNU:
-        * include/makeinclude/platform_vxworks6.6.GNU:
-        * tests/Hash_Map_Manager_Test.cpp:
-        * tests/IOStream_Test.cpp:
+        * ace/OS_Thread_Adapter.h:
+        * ace/OS_Thread_Adapter.cpp:
 
-        Merged revisions 80352-80353, 80355-80358, 80365-80367,
-        80372-80375, 80378, 80381 via svnmerge from
-        https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk/ACE
+        Added a pointer instance member, which the ctor intializes with
+        the "current" service configuration context (gestalt). Current
+        means the one active in the "parent" thread. The invoke() method,
+        which runs in the new thread and uses the stored value to
+        initialize its own configuration context. This scheme ensures any
+        newly spawned thread would inherit the spawning thread's gestalt.
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+
+        Encapsulated thread-specific key operations within a new
+        ACE_Threading_Helper class. It is designed to be used as an
+        instance member in ACE_Service_Config.
+
+        * ace/Service_Gestalt.cpp:
+
+        Moved the functionality dealing with the default service
+        configuration file from ACE_Service_Config::open_i() to
+        ACE_Service_Gestalt::open_i() which fixes an issue with some
+        application that inadverently ignored svc.conf's content (unless
+        explicitely calling ACE_Service_Config::open())
+
+        * ace/Parse_Node.h:
+
+        Updated the #include directive.
 
 Fri Dec 28 22:17:18 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
