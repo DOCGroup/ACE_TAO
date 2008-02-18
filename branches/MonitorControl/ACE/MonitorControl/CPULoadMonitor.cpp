@@ -1,6 +1,6 @@
 // $Id$
 
-#if defined (sun)
+#if defined (ACE_HAS_KSTAT)
 #include <sys/sysinfo.h>
 #endif
 
@@ -26,7 +26,7 @@ namespace ACE
       , counter_ (0)
 #elif defined (linux)
       , file_ptr_ (0)
-#elif defined (sun)
+#elif defined (ACE_HAS_KSTAT)
       , kstats_ (0)
       , kstat_ (0)
       , kstat_id_ (0)
@@ -58,7 +58,7 @@ namespace ACE
 
       this->prev_total_ =
         this->user_ + this->wait_ + this->kernel_ + this->prev_idle_;
-#elif defined (sun)
+#elif defined (ACE_HAS_KSTAT)
       /// Stored similarly to Linux, in a system file.
       this->access_kstats (&this->prev_idle_);
       
@@ -99,7 +99,7 @@ namespace ACE
 
       this->prev_idle_ = this->idle_;
       this->prev_total_ = total;
-#elif defined (sun)
+#elif defined (ACE_HAS_KSTAT)
       this->access_kstats (&this->idle_);    
 
       double delta_idle = this->idle_ - this->prev_idle_;
@@ -163,7 +163,7 @@ namespace ACE
     }
 #endif
 
-#if defined (sun)
+#if defined (ACE_HAS_KSTAT)
     void
     CPULoadMonitor<true>::access_kstats (unsigned long *which_idle)
     {

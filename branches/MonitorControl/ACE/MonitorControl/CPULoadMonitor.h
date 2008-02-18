@@ -26,7 +26,7 @@
 /// Must include this after the ACE headers to avoid many redefinition
 /// errors.
 #include <pdh.h>
-#elif defined (sun)
+#elif defined (ACE_HAS_KSTAT)
 #include <kstat.h>
 #endif
 
@@ -67,7 +67,7 @@ namespace ACE
       void access_proc_stat (unsigned long *which_idle);
 #endif
 
-#if defined (sun)
+#if defined (ACE_HAS_KSTAT)
       void access_kstats (unsigned long *which_idle);
 #endif
       
@@ -87,7 +87,7 @@ namespace ACE
 #elif defined (linux)
       FILE *file_ptr_;
       char buf_[1024];
-#elif defined (sun)
+#elif defined (ACE_HAS_KSTAT)
       kstat_ctl_t *kstats_;
       kstat_t *kstat_;
       kid_t kstat_id_;

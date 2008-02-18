@@ -4,6 +4,8 @@
 
 # SunOS 5.x common settings
 
+kstat ?= 0
+
 ifeq ($(shell /bin/uname -r),5.9)
   # Solaris 9 puts sendfile() in a separate library.
   LIBS          += -lsendfile
@@ -15,6 +17,12 @@ endif
 ifeq ($(shell /bin/uname -r),5.11)
   # Solaris 11 puts sendfile() in a separate library.
   LIBS          += -lsendfile
+endif
+ifeq ($(kstat),1)
+  # Unguard the raw monitor code and link the system lib.
+  CFLAGS        += -DACE_HAS_KSTAT
+  CPPFLAGS      += -DACE_HAS_KSTAT
+  LIBS          += -lkstat
 endif
 
 PLATFORM_X11_CPPFLAGS= -I/usr/openwin/include -I/usr/dt/include

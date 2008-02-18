@@ -1,3 +1,19 @@
+Mon Feb 18 17:04:56 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * include/makeinclude/platform_sunos5_common.GNU:
+        
+          Added a check for the value of 'kstat' which is set to 0
+          by default. If set to 1 in platform_macros.GNU, then we
+          link the kstat system lib and add -DACE_HAS_KSTAT to the
+          command line.
+          
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        
+          Replace the 'sun' argument in the guard for the Solaris
+          raw monitoring code with the above flag ACE_HAS_KSTAT, which
+          will be easier to maintain.
+
 Fri Feb 15 20:30:49 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/main.cpp:
