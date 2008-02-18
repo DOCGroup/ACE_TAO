@@ -26,6 +26,7 @@ Sun Feb 17 23:43:43 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
         explicitely calling ACE_Service_Config::open())
 
         * ace/Parse_Node.h:
+        * ace/Service_Config.inl:
 
         Updated the #include directive.
 
