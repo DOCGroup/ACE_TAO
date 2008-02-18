@@ -36,7 +36,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
 . Implemented the const reverse iterator for ACE_Hash_Map_Manager_Ex
 
 . Increased support for using ACE_Hash_Map_Manager_Ex with STL <algorithm>
-  functions based on lastest standard C++ draft
+  functions based on latest standard C++ draft
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.1 and ACE-5.6.2
 ====================================================
