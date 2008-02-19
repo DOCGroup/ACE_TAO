@@ -1,3 +1,11 @@
+Tue Feb 19 18:51:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/examples/Message_Queue_Size/svc.conf:
+        
+          Copied from CPU_Load/svc.conf, which had to be added to the repo
+          before it could be copied by SubVersion (along with its
+          all-important properties).
+
 Tue Feb 19 18:26:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/svc.conf:
