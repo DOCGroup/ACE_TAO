@@ -1412,15 +1412,8 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
   // ... either the message must be queued or we need to queue it
   // because it was not completely sent out ...
 
-  if (TAO_debug_level > 6)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, ")
-         ACE_TEXT ("message is queued\n"),
-         this->id ()));
-    }
-
-  if (this->queue_message_i (message_block, max_wait_time, !partially_sent)
+  ACE_Time_Value *wait_time = (partially_sent ? 0: max_wait_time);
+  if (this->queue_message_i (message_block, wait_time, !partially_sent)
       == -1)
     {
       if (TAO_debug_level > 0)
@@ -1432,6 +1425,14 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
                       this->id ()));
         }
       return -1;
+    }
+
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, ")
+         ACE_TEXT ("message is queued\n"),
+         this->id ()));
     }
 
   if (timeout_encountered && partially_sent)
@@ -1477,6 +1478,15 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 
       if (must_flush)
         {
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::")
+                          ACE_TEXT ("send_asynchronous_message_i, ")
+                          ACE_TEXT ("flushing transport.\n"),
+                          this->id ()));
+            }
+
           size_t sent_byte = sent_byte_count_;
           int ret = 0;
           {
