@@ -17,7 +17,6 @@ void hook (TAO_ORB_Core *,
            ACE_Time_Value &tv)
 {
   ACE_DEBUG ((LM_DEBUG, "Timeout hook called\n"));
-  ACE_Time_Value ten_secs (10, 0);
   tv.set (10, 0);
   has_timeout = true;
 }
