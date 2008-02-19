@@ -1,3 +1,9 @@
+Tue Feb 19 19:12:39 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * orbsvcs/tests/Bug_3216_Regression/run_test.pl:
+
+        Fixed to use $ACE_ROOT instead of '../..', to search for PerlACE.
+
 Tue Feb 19 02:39:24 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB.cpp:
