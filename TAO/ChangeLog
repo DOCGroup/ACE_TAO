@@ -1,3 +1,10 @@
+Tue Feb 19 00:22:13 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tao/Transport.cpp:
+          Partially sent messages should not be discarded from the
+          queue. GIOP stream was getting corrupted when a partially sent
+          message was being discarded.
+
 Fri Feb 15 08:52:41 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Crashed_Callback/server.cpp:
