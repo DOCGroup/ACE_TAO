@@ -1,3 +1,10 @@
+Tue Feb 19 02:39:24 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB.cpp:
+
+        Fixed a typo that caused "local" and "global" values for
+        -ORBGestalt
+
 Mon Jan  7 21:19:38 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * .:
