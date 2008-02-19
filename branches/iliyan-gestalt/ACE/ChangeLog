@@ -1,3 +1,8 @@
+Mon Feb 18 19:59:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run Bug_3171_Regression when messaging is disabled
+
 Thu Feb 14 11:22:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Semaphores/starter.cpp:
