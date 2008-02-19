@@ -1,0 +1,13 @@
+// $Id$
+
+project (Memory_Usage) : aceexe {
+  exename = memory_usage
+  after += MonitorControl
+  libs  += MonitorControl
+  macros += ENABLE_MONITORS ENABLE_ACE_MONITORS
+  
+  source_files {
+    memory_usage.cpp
+  }
+}
+

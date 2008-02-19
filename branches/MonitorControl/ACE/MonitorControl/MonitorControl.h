@@ -23,6 +23,7 @@
 
 #include "MonitorControl/MonitorControl_macros.h"
 #include "MonitorControl/CPULoadMonitor.h"
+#include "MonitorControl/MemoryUsageMonitor.h"
 
 #include /**/ "ace/post.h"
 

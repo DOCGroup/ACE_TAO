@@ -1,3 +1,20 @@
+Tue Feb 19 21:10:59 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/MemoryUsageMonitor.h:
+        * MonitorControl/MonitorControl.h:
+        
+          Implemented the update() method for Windows and added the
+          header file to the #includes of MonitorControl.h so it
+          can be pulled into an application.
+          
+        * MonitorControl/examples/Memory_Usage/svc.conf:
+        * MonitorControl/examples/Memory_Usage/Memory_Usage.mpc:
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp:
+        
+          New files, implementing an example for the memory usage
+          monitor.
+
 Tue Feb 19 18:51:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/Message_Queue_Size/svc.conf:
