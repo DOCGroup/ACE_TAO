@@ -4,10 +4,13 @@ import sys
 import pdb
 from HTMLParser import HTMLParser
 from urllib import urlopen
-from urlparse import urljoin
+from urlparse import urljoin, urlparse
 from time import gmtime, strptime, strftime
 from optparse import OptionParser
 from difflib import unified_diff
+from os import stat, access, F_OK, makedirs, remove
+from os.path import split, expanduser
+from shutil import copyfileobj
 
 ## Abstract base class implementing basic bookkeeping tasks
 ## like maintaing context information about the tags we care
@@ -19,16 +22,84 @@ class AbstractParser (HTMLParser):
         HTMLParser.__init__ (self)
         self.base_url = baseurl
         self.context = []
-#        print "(debug) Parser: %s ..." % baseurl
+        self.verbose_ = 3
 
+    def opencached (self, url, c):
+        (cachepath, cachefile) = split (c)
+        
+        iscached = True
+        if not access (cachepath, F_OK):
+            print "(info) Create dirs=%s" % (cachepath)
+            makedirs (cachepath)
+            iscached = False
+
+        if not access (c, F_OK):
+            print "(info) Create cache file=%s" % (c)
+            open (c, 'a').close()
+            iscached = False
+
+        # Determine the time last modified either from the HTTP
+        # headers or from the last modified date of the cache file (if
+        # no connection is available)
+        try:
+            f = urlopen (url)
+            lastmod = parse_date (f.info().get ('last-modified'))
+            return (f, lastmod)
+        except IOError:
+            if self.verbose_ > 1:
+                print "(warning) Failed to retrieve headers, url=%s" % (url)
+
+            if not iscached:
+                if self.verbose_ > 0:
+                    print "(error) No cache found, url=%s" % (url)
+                raise
+        
+        return (open (c), gmtime (stat (c).st_mtime))
+
+        
+    def cached (self, url):
+        """
+        Returns the file object representing the URL from the
+        cache. If not cached yet (or stale) the contents is
+        downloaded.
+        """
+        parts = urlparse (url)
+        p = parts.path.replace ('~', '')
+        c = expanduser("~") + '/.diff-builds' + p
+
+        (f, lastmod) = self.opencached (url, c)
+
+        # Determine the last cached time stamp
+        try:
+            st = stat (c)
+            lastcached = gmtime (st.st_mtime)
+
+            if lastmod > lastcached or st.st_size < 1: 
+                if self.verbose_ > 2:
+                    print "(debug) Caching, url=%s" % (url)
+
+                tgt = open (c, 'w+')
+                try:
+                    copyfileobj(f, tgt)
+                finally:
+                    tgt.close ()
+            else:
+                if self.verbose_ > 2:
+                    print "(debug) Using cached url=%s" % (url)
+        finally:
+            f.close()
+
+        return open (c)
+
+        
     def parse (self, url=None):
         try:
             if not url:
                 url = self.base_url
                 
-            f = urlopen(url)
+            f = self.cached (url)
             try:
- #               print "(debug) Opening %s ..." % url
+                print "(debug) Opening %s ..." % url
                 self.feed(f.read())
             finally:
  #               print "(debug) Closing %s ..." % url
@@ -392,6 +463,7 @@ def format_date (t):
 
 def parse_date (s):
     timeformats = [ 
+        '%a, %d %b %Y %H:%M:%S %Z',
         '%Y_%m_%d %H:%M',
         '%Y-%m-%d %H:%M',
         '%Y%m%d%H%M',

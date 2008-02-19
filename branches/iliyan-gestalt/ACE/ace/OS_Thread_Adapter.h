@@ -24,8 +24,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class ACE_Service_Gestalt;
-
 /**
  * @class ACE_OS_Thread_Adapter
  *
@@ -65,12 +63,6 @@ protected:
 
   /// Ensure that this object is allocated on the heap.
   ~ACE_OS_Thread_Adapter (void);
-
- protected:
-
-  /// Keep a reference to the configuration context that spawns the thread
-  /// so the child can inherit it.
-  ACE_Service_Gestalt * const ctx_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

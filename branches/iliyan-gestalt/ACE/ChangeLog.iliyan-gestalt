@@ -1,3 +1,17 @@
+Tue Feb 19 02:38:02 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Base_Thread_Adapter.h:
+        * ace/Base_Thread_Adapter.cpp:
+        * ace/OS_Thread_Adapter.h:
+        * ace/OS_Thread_Adapter.cpp:
+
+        Moved the gestalt-setting code to the base thread adapter class
+        to ensure all descendants behave uniformly.
+
+        * bin/diff-builds.py:
+
+        Added file caching and debugging.
+
 Sun Feb 17 23:43:43 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/OS_Thread_Adapter.h:

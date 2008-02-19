@@ -10,7 +10,6 @@ ACE_RCSID (ace,
 #include "ace/Object_Manager_Base.h"
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_Thread.h"
-#include "ace/Service_Config.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -30,7 +29,6 @@ ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
                              , handler
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
                              )
-  , ctx_ (ACE_Service_Config::current())
 {
 }
 
@@ -49,8 +47,6 @@ ACE_OS_Thread_Adapter::invoke (void)
   ACE_THR_FUNC_INTERNAL func =
     reinterpret_cast<ACE_THR_FUNC_INTERNAL> (this->user_func_);
   void *arg = this->arg_;
-
-  ACE_Service_Gestalt * const ctx = this->ctx_;
 
   // Delete ourselves since we don't need <this> anymore.  Make sure
   // not to access <this> anywhere below this point.
@@ -74,9 +70,6 @@ ACE_OS_Thread_Adapter::invoke (void)
 #endif /* ACE_NEEDS_LWP_PRIO_SET */
 
   ACE_THR_FUNC_RETURN status = 0;
-
-  // Initialize the proper configuration context for the new thread
-  ACE_Service_Config::current (ctx);
 
   ACE_SEH_TRY
     {
