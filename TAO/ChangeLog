@@ -1,3 +1,10 @@
+Tue Feb 19 22:20:05 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Timed_Buffered_Oneways/client.cpp:
+          The timeout could be from a previous loop. A simplistic analysis
+          could incorrectly conclude that as an unexpected timeout
+          exception.
+
 Tue Feb 19 16:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO/tests/Parallel_Connect_Strategy/client.cpp:
