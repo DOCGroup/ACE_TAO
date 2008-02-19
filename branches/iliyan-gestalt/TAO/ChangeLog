@@ -1,3 +1,8 @@
+Tue Feb 19 16:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO/tests/Parallel_Connect_Strategy/client.cpp:
+          Remove unused variable.
+
 Tue Feb 19 00:22:13 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tao/Transport.cpp:
