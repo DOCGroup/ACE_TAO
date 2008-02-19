@@ -608,23 +608,23 @@ def main ():
 
                 testlogs.append ([dp0.briefurl('test'), dp1.briefurl('test')])
                 
-        print "testlogs=%s" % testlogs
+#        print "testlogs=%s" % testlogs
 
         if len (ip.build) > 1:
-            l = [testlogs[0][0], testlogs[1][0]]
+            l = [testlogs[0][1], testlogs[1][1]]
             t = [times[0][1], times[1][1]]
 
             bp0 = BriefParser (l[0])
             bp0.parse()
 
-#            print "info: %s -> %s" % (format_date (t[0]),
-#                                      bp0.failed)
+            print "info: %s -> %s" % (format_date (t[0]),
+                                      bp0.failed)
 
             bp1 = BriefParser (l[1])
             bp1.parse()
 
-#            print "info: %s -> %s" % (format_date (t[1]),
-#                                      bp1.failed)
+            print "info: %s -> %s" % (format_date (t[1]),
+                                      bp1.failed)
 
             for l in unified_diff (bp0.failed, bp1.failed, 
                                    l[0], l[1], 
