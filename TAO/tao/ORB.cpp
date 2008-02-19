@@ -1220,14 +1220,13 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
                          orbconfig_string))
     {
       const ACE_TCHAR *arg = ACE_TEXT_CHAR_TO_TCHAR(orbconfig_string.c_str ());
-      const ACE_TCHAR *local = ACE_TEXT("GLOBAL");
-      const ACE_TCHAR *global = ACE_TEXT("LOCAL");
+      const ACE_TCHAR *global = ACE_TEXT("GLOBAL");
+      const ACE_TCHAR *local = ACE_TEXT("LOCAL");
       const ACE_TCHAR *shared = ACE_TEXT("ORB:");
       // Need a local repo? Make one which typically should not be as
       // big as the default repository
       if  (ACE_OS::strcasecmp (arg, local) == 0)
         {
-      ACE_Service_Gestalt* g = 0;
           ACE_NEW_THROW_EX (gestalt,
                             ACE_Service_Gestalt
                             (ACE_Service_Gestalt::MAX_SERVICES / 4, true),
@@ -1235,7 +1234,6 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
                             (CORBA::SystemException::_tao_minor_code (0,
                                                                       ENOMEM),
                              CORBA::COMPLETED_NO));
-          gestalt = g;
         }
       else if  (ACE_OS::strcasecmp (arg, global) == 0)
         {
