@@ -1,0 +1,13 @@
+// $Id$
+
+project (CPU_Load) : aceexe {
+  exename = cpu_load
+  after += MonitorControl
+  libs  += MonitorControl
+  macros += ENABLE_MONITORS ENABLE_ACE_MONITORS
+  
+  source_files {
+    cpu_load.cpp
+  }
+}
+

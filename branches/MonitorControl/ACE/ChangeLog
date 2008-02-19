@@ -1,3 +1,25 @@
+Tue Feb 19 18:26:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/examples/svc.conf:
+        * MonitorControl/examples/main.cpp:
+        * MonitorControl/examples/simple.mpc:
+
+          Removed these files, and turned them into two separate
+          examples, each in its own directory, represented by the
+          new files below.
+
+        * MonitorControl/examples/Message_Queue_Size:
+        * MonitorControl/examples/Message_Queue_Size/Message_Queue_Size.mpc:
+        * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp:
+        * MonitorControl/examples/CPU_Load:
+        * MonitorControl/examples/CPU_Load/svc.conf:
+        * MonitorControl/examples/CPU_Load/CPU_Load.mpc:
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp:
+
+          New files, resulting from the separation of the original
+          examples files, removed above, into 2 examples, each
+          dedicated to one particular monitor point.
+
 Tue Feb 19 16:41:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/MC_Admin_Manager.cpp:

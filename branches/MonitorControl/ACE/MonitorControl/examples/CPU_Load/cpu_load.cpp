@@ -34,15 +34,6 @@ display_cpu_load (const MonitorControl_Types::Data &data)
        << setprecision (2) << data.value_ << endl;
 }
 
-/// Display the message queue size as an unsigned integer.
-void
-display_mq_size (const MonitorControl_Types::Data &data)
-{
-  cout << "Message queue size: ";
-  display_timestamp (data);
-  cout << static_cast<size_t> (data.value_) << endl;
-}
-
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
@@ -58,8 +49,6 @@ public:
     /// Call on the administrator class to look up the desired monitors.  
     ACE::MonitorControl::Monitor_Base *cpu_monitor =
       mgr->admin ().monitor_point ("CPULoad");
-    ACE::MonitorControl::Monitor_Base *mq_monitor =
-      mgr->admin ().monitor_point ("MQ monitor");
       
     /// Query each monitor for its data every 2 seconds, and call the
     /// appropriate display function.
@@ -69,9 +58,6 @@ public:
         
         MonitorControl_Types::Data data = cpu_monitor->retrieve ();
         display_cpu_load (data);
-                   
-        data = mq_monitor->retrieve ();
-        display_mq_size (data);               
       }
 
     return 0;
@@ -100,41 +86,15 @@ int main (int argc, char *argv [])
     /// can run concurrently with the application.
     START_PERIODIC_MONITORS;
     
-    /// Create a message queue with a built-in monitor (since ACE was
-    /// compiled with monitors enabled) and add the monitor to the
-    /// registry (some ACE activities create a message queue under
-    /// the hood, so we must make the registration explicit).
-    ACE_Message_Queue<ACE_NULL_SYNCH> monitored_queue;
-    monitored_queue.register_monitor ();
-    
-    /// The message string is 11 bytes long so the message queue will
-    /// grow and shrink in 11-byte increments.
-    ACE_Message_Block *mb = 0;
-    const char *msg = "Hidely Ho!";
-    
     /// Run the monitor checker in a separate thread.
     MonitorChecker monitor_checker;
     monitor_checker.activate ();
     
-    /// Make sure the monitor checker is spawned before growing the queue.
+    /// Make sure the monitor checker is spawned before doing anything.
     ACE_OS::sleep (1);
     
     for (int i = 0; i < 10; ++i)
       {
-        /// Add 6 message blocks to the queue, then remove
-        /// 4 of them.
-        if (i < 6)
-          {
-            mb = new ACE_Message_Block (ACE_OS::strlen (msg) + 1);
-            mb->copy (msg);
-            monitored_queue.enqueue_tail (mb);
-          }
-        else
-          {
-            monitored_queue.dequeue_head (mb);
-            mb->release ();
-          }
-          
         /// Alternate between letting the CPU sleep and keeping it
         /// busy. 
         if (i % 2 == 0)
@@ -150,9 +110,6 @@ int main (int argc, char *argv [])
           }
       }
      
-    /// Clean up the remaining message queue resources. 
-    monitored_queue.flush ();
-  
     /// End the reactor's event loop, stopping the timer(s).
     STOP_PERIODIC_MONITORS;
   }

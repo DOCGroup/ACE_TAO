@@ -1,13 +1,13 @@
 // $Id$
 
-project (simple) : aceexe {
-  exename = simple
+project (Message_Queue_Size) : aceexe {
+  exename = message_queue_size
   after += MonitorControl
   libs  += MonitorControl
   macros += ENABLE_MONITORS ENABLE_ACE_MONITORS
   
   source_files {
-    main.cpp
+    message_queue_size.cpp
   }
 }
 
