@@ -42,9 +42,7 @@ namespace ACE
     class MonitorPoint : public Monitor_Base
     {
     protected:
-      MonitorPoint (const char* name,
-                    MonitorControl_Types::InfoType type);
-                    
+      MonitorPoint (const char* name);             
       virtual ~MonitorPoint (void);
       
     public:  

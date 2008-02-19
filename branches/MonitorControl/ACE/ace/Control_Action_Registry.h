@@ -44,9 +44,6 @@ namespace ACE
       /// per process of ControlRegistry.
       static Control_Action_Registry* instance (void);
 
-      Control_Action_Registry (void);
-      virtual ~Control_Action_Registry (void);
-
       /// The lookup operation.
       Control_Action* get (const ACE_CString& name) const;
     };

@@ -18,12 +18,6 @@ namespace ACE
       /// @@@ (JP) We may need to use ACE_Recursive_Thread_Mutex instead.
     }
     
-    Monitor_Point_Registry::Monitor_Point_Registry (void)
-    {}
-    
-    Monitor_Point_Registry::~Monitor_Point_Registry (void)
-    {}
-    
     Monitor_Base*
     Monitor_Point_Registry::get (const ACE_CString& name) const
     {

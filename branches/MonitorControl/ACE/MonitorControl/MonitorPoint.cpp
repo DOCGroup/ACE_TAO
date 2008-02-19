@@ -11,9 +11,7 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    MonitorPoint<true>::MonitorPoint (
-      const char* name,
-      MonitorControl_Types::InfoType /* type */)
+    MonitorPoint<true>::MonitorPoint (const char* name)
       : Monitor_Base (name)
     {}
     

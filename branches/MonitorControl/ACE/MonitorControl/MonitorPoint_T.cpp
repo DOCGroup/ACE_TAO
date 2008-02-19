@@ -12,8 +12,7 @@ namespace ACE
   namespace MonitorControl
   {
     template<bool ENABLED>
-    MonitorPoint<ENABLED>::MonitorPoint (const char* name,
-                                         MonitorControl_Types::InfoType /* type */)
+    MonitorPoint<ENABLED>::MonitorPoint (const char* name)
       : Monitor_Base (name)
     {}
     

@@ -18,12 +18,6 @@ namespace ACE
       /// @@@ (JP) We may need to use ACE_Recursive_Thread_Mutex instead.
     }
     
-    Control_Action_Registry::Control_Action_Registry (void)
-    {}
-    
-    Control_Action_Registry::~Control_Action_Registry (void)
-    {}
-    
     Control_Action*
     Control_Action_Registry::get (const ACE_CString& name) const
     {

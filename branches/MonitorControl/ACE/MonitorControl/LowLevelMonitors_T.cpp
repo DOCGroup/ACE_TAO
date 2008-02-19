@@ -16,8 +16,7 @@ namespace ACE
   {
     template<bool ENABLED>
     CPULoadMonitor<ENABLED>::CPULoadMonitor (void)
-      : MonitorPoint<ENABLED> ("CPULoad",
-                               MonitorControl_Types::IT_NUMBER)
+      : MonitorPoint<ENABLED> ("CPULoad")
     {}
   
     template<bool ENABLED>
@@ -28,8 +27,7 @@ namespace ACE
     
     template<bool ENABLED>
     MemoryUsageMonitor<ENABLED>::MemoryUsageMonitor (void)
-      : MonitorPoint<ENABLED> ("MemoryUsage",
-                               MonitorControl_Types::IT_NUMBER)
+      : MonitorPoint<ENABLED> ("MemoryUsage")
     {}
   
     template<bool ENABLED>
@@ -40,8 +38,7 @@ namespace ACE
     
     template<bool ENABLED>
     NumThreadsMonitor<ENABLED>::NumThreadsMonitor (void)
-      : MonitorPoint<ENABLED> ("NumThreads",
-                               MonitorControl_Types::IT_NUMBER)
+      : MonitorPoint<ENABLED> ("NumThreads")
     {}
   
     template<bool ENABLED>
@@ -52,8 +49,7 @@ namespace ACE
     
     template<bool ENABLED>
     BytesSentMonitor<ENABLED>::BytesSentMonitor (void)
-      : MonitorPoint<ENABLED> ("BytesSent",
-                               MonitorControl_Types::IT_COUNTER)
+      : MonitorPoint<ENABLED> ("BytesSent")
     {}
   
     template<bool ENABLED>
@@ -64,8 +60,7 @@ namespace ACE
     
     template<bool ENABLED>
     PacketsSentMonitor<ENABLED>::PacketsSentMonitor (void)
-      : MonitorPoint<ENABLED> ("PacketsSent",
-                               MonitorControl_Types::IT_COUNTER)
+      : MonitorPoint<ENABLED> ("PacketsSent")
     {}
   
     template<bool ENABLED>

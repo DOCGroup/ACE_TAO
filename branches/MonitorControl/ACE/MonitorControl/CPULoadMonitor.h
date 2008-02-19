@@ -73,12 +73,14 @@ namespace ACE
       
     private:
       /// Common to Linux and Solaris implementations.
+#if defined (linux) || defined (ACE_HAS_KSTAT)
       unsigned long user_;
       unsigned long wait_;
       unsigned long kernel_;
       unsigned long idle_;
       unsigned long prev_idle_;
       double prev_total_;
+#endif
 #if defined (ACE_WIN32)
       HQUERY query_;
       HCOUNTER counter_;

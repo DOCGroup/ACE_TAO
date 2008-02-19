@@ -13,14 +13,15 @@ namespace ACE
   namespace MonitorControl
   {
     CPULoadMonitor<true>::CPULoadMonitor (void)
-      : MonitorPoint<true> ("CPULoad",
-                            MonitorControl_Types::IT_NUMBER)
+      : MonitorPoint<true> ("CPULoad")
+#if defined (linux) || defined (ACE_HAS_KSTAT)
       , user_ (0)
       , wait_ (0)
       , kernel_ (0)
       , idle_ (0)
       , prev_idle_ (0)
-      , prev_total_ (0)
+      , prev_total_ (0.0)
+#endif
 #if defined (ACE_WIN32)
       , query_ (0)
       , counter_ (0)

@@ -34,20 +34,8 @@ namespace ACE
         {
           throw MapError (MapError::MAP_ERROR_BIND_FAILURE);
         }
-      else if (status == 0)
-        {
-          // Invalidate the name list cache.
-          this->name_cache_.clear ();
-        }
 
       return (status == 0);
-    }
-
-    const MonitorControl_Types::NameList&
-    MC_Generic_Registry::names (void) const
-    {
-      // TODO
-      return this->name_cache_;
     }
 
     MC_Generic*

@@ -51,21 +51,6 @@ namespace ACE
        * @brief Used in various places to pass around a set of string names.
        */
       typedef ACE_Vector<ACE_CString> NameList;
-       
-      /**
-       * @brief Used internally by a monitor point to tell which operations
-       *        on its data are valid or invalid, and to give it some limited
-       *        smarts about the semantics of its data.
-       */
-      enum InfoType
-      {
-        IT_COUNTER,
-        IT_NUMBER,
-        IT_TIME,
-        IT_INTERVAL,
-        IT_LIST,
-        IT_DISABLED
-      };
     };
   
     /**

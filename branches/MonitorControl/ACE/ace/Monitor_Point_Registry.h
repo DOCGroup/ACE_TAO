@@ -44,9 +44,6 @@ namespace ACE
       /// per process of MonitorPointRegistry.
       static Monitor_Point_Registry* instance (void);
 
-      Monitor_Point_Registry (void);
-      virtual ~Monitor_Point_Registry (void);
-
       /// The lookup operation.
       Monitor_Base* get (const ACE_CString& name) const;
     };

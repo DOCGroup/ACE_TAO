@@ -1,3 +1,34 @@
+Tue Feb 19 16:41:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/MC_Admin_Manager.cpp:
+        * ace/Monitor_Point_Registry.cpp:
+        * ace/Control_Action_Registry.cpp:
+        * ace/MonitorControl_Types.h:
+        * ace/MC_Generic_Registry.h:
+        * ace/MC_Generic_Registry.cpp:
+        * ace/Monitor_Point_Registry.h:
+        * ace/Control_Action_Registry.h:
+        * ace/MC_Admin_Manager.h:
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/LowLevelMonitors_T.cpp:
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/MonitorPoint_T.cpp:
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/MonitorPoint_T.h:
+        * MonitorControl/PacketsSentMonitor.cpp:
+
+          Removed unnecessary type declarations and
+          class methods/members/arguments. All the
+          removed items were originally copied 
+          wholesale from the original OCI implementation
+          in the TAO Notification Service, without
+          knowing at that early date if they would be
+          needed or not.
+
 Mon Feb 18 17:04:56 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * include/makeinclude/platform_sunos5_common.GNU:

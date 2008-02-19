@@ -73,9 +73,6 @@ namespace ACE
       /// Throws MapError.
       bool add (MC_Generic* type);
       
-      /// Retrieves a list of the names added to the registry so far.
-      const MonitorControl_Types::NameList& names (void) const;
-    
     protected:  
       MC_Generic_Registry (void);
       ~MC_Generic_Registry (void);
@@ -92,7 +89,6 @@ namespace ACE
         
       mutable ACE_SYNCH_MUTEX mutex_;
       Map map_;
-      MonitorControl_Types::NameList name_cache_;
     };
   }
 }

@@ -43,21 +43,6 @@ namespace ACE
     class ACE_Export MC_Admin_Manager : public ACE_Service_Object
     {
     public:
-      MC_Admin_Manager (void);
-      virtual ~MC_Admin_Manager (void);
-    
-      /// Override of the ACE base class method.
-      virtual int init (int argc, ACE_TCHAR* argv[]);
-      
-      /// Override of the ACE base class method.
-      virtual int fini (void);
-      
-      /// Override of the ACE base class method.
-      int run (void);
-      
-      /// Override of the ACE base class method.
-      static void shutdown (void);
-      
       /// Access the admin instance.
       MC_Admin& admin (void);
       
