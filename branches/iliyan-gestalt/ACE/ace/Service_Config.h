@@ -18,6 +18,7 @@
 #include /**/ "ace/config-all.h"
 #include "ace/Default_Constants.h"
 #include "ace/Intrusive_Auto_Ptr.h"
+#include "ace/Service_Gestalt.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +29,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl.
-class ACE_Service_Gestalt;
 class ACE_Service_Object;
 class ACE_Service_Type;
 class ACE_Service_Type_Impl;

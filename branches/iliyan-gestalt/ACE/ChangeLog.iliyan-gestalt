@@ -1,3 +1,12 @@
+Tue Feb 19 21:00:00 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+
+        Reinstated the Service_Gestalt #include to placate the VC8
+        compiler on Windows, which apparently cannot typedef a template
+        instantiation without being able to see the full definition of the
+        participating types.
+
 Tue Feb 19 02:38:02 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Base_Thread_Adapter.h:
