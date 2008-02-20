@@ -224,7 +224,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	      // connection will be made initially.
 	      orb->run (sleep_interval);
             }
-          catch (const CORBA::TIMEOUT& ex)
+          catch (const CORBA::TIMEOUT& )
             {
               // The timeout could be from a previous loop.
               // A simplistic analysis could incorrectly conclude
