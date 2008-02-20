@@ -14,6 +14,9 @@ namespace ACE
   {
     CPULoadMonitor<true>::CPULoadMonitor (void)
       : MonitorPoint<true> ("CPULoad")
+#if defined (ACE_WIN32)
+      , WindowsMonitor ("\\Processor(_Total)\\% Processor Time")
+#endif
 #if defined (linux) || defined (ACE_HAS_KSTAT)
       , user_ (0)
       , wait_ (0)
@@ -22,10 +25,7 @@ namespace ACE
       , prev_idle_ (0)
       , prev_total_ (0.0)
 #endif
-#if defined (ACE_WIN32)
-      , query_ (0)
-      , counter_ (0)
-#elif defined (linux)
+#if defined (linux)
       , file_ptr_ (0)
 #elif defined (ACE_HAS_KSTAT)
       , kstats_ (0)
@@ -33,25 +33,7 @@ namespace ACE
       , kstat_id_ (0)
 #endif
     {
-#if defined (ACE_WIN32)
-      this->status_ = PdhOpenQuery (0, 0, &this->query_);
-
-      if (ERROR_SUCCESS != this->status_)
-        {
-          ACE_ERROR ((LM_DEBUG, "PdhOpenQuery failed\n"));
-        }
-
-      this->status_ =
-        PdhAddCounter (this->query_,
-                       "\\Processor(_Total)\\% Processor Time",
-                       0,
-                       &this->counter_);
-
-      if (ERROR_SUCCESS != this->status_)
-        {
-          ACE_ERROR ((LM_DEBUG, "PdhAddCounter failed\n"));
-        }
-#elif defined (linux)
+#if defined (linux)
       /// All data in this file are stored as running 'jiffy' totals, so we
       /// get values here in the constructor to subtract for the difference
       /// in subsequent calls.
@@ -72,11 +54,7 @@ namespace ACE
     CPULoadMonitor<true>::update (void)
     {
 #if defined (ACE_WIN32)
-      PdhCollectQueryData (this->query_);
-      PdhGetFormattedCounterValue (this->counter_,
-                                   PDH_FMT_DOUBLE,
-                                   0,
-                                   &this->value_);
+      this->win_update ();
 
       /// Stores value and timestamp with thread-safety.
       this->receive (this->value_.doubleValue);

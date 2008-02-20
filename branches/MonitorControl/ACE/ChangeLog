@@ -1,3 +1,25 @@
+Wed Feb 20 18:57:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/WindowsMonitor.cpp:
+        * MonitorControl/WindowsMonitor.h:
+
+          New files, factored out code common to Windows
+          monitor implementations into a mixin class.
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/MemoryUsageMonitor.h:
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/NumThreadsMonitor.h:
+
+          Factored the common Windows code out of thes monitors.
+
+        * MonitorControl/examples/Num_Threads/num_threads.cpp:
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp:
+
+          Minor changes to comments.
+
 Wed Feb 20 17:33:22 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/NumThreadsMonitor.cpp:

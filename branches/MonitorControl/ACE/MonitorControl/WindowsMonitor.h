@@ -1,0 +1,66 @@
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ * @file WindowsMonitor.h
+ *
+ * $Id$
+ *
+ * @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef WINDOWSMONITOR_H
+#define WINDOWSMONITOR_H
+
+#include /**/ "ace/pre.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "MonitorControl/MonitorControl_export.h"
+
+#if defined (ACE_WIN32)
+
+/// Must include this after the ACE headers to avoid many redefinition
+/// errors.
+#include <pdh.h>
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE
+{
+  namespace MonitorControl
+  {
+    /**
+     * @class WindowsMonitor
+     *
+     * @brief Mixin class for concrete monitors compiled on Windows machines.
+     */
+    class MONITORCONTROL_Export WindowsMonitor
+    {
+    protected:
+      WindowsMonitor (const char *path);
+    
+      /// Implementation of the pure virtual method.
+      void win_update (void);
+      
+    protected:
+      PDH_FMT_COUNTERVALUE value_;
+      
+    private:
+      HQUERY query_;
+      HCOUNTER counter_;
+      PDH_STATUS status_;
+    };
+  }
+}
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#include /**/ "ace/post.h"
+
+#endif /* defined (ACE_WIN32) */
+
+#endif // WINDOWSMONITOR_H

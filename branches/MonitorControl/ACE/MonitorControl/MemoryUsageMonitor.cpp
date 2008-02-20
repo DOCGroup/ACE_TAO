@@ -14,17 +14,8 @@ namespace ACE
   {
     MemoryUsageMonitor<true>::MemoryUsageMonitor (void)
       : MonitorPoint<true> ("MemoryUsage")
-#if defined (linux) || defined (ACE_HAS_KSTAT)
-      , user_ (0)
-      , wait_ (0)
-      , kernel_ (0)
-      , idle_ (0)
-      , prev_idle_ (0)
-      , prev_total_ (0.0)
-#endif
 #if defined (ACE_WIN32)
-      , query_ (0)
-      , counter_ (0)
+      , WindowsMonitor ("\\Memory\\% Committed Bytes In Use")
 #elif defined (linux)
       , file_ptr_ (0)
 #elif defined (ACE_HAS_KSTAT)
@@ -33,38 +24,13 @@ namespace ACE
       , kstat_id_ (0)
 #endif
     {
-#if defined (ACE_WIN32)
-      this->status_ = PdhOpenQuery (0, 0, &this->query_);
-
-      if (ERROR_SUCCESS != this->status_)
-        {
-          ACE_ERROR ((LM_DEBUG, "PdhOpenQuery failed\n"));
-        }
-
-      this->status_ =
-        PdhAddCounter (this->query_,
-                       "\\Memory\\% Committed Bytes In Use",
-                       0,
-                       &this->counter_);
-
-      if (ERROR_SUCCESS != this->status_)
-        {
-          ACE_ERROR ((LM_DEBUG, "PdhAddCounter failed\n"));
-        }
-#elif defined (linux)
-#elif defined (ACE_HAS_KSTAT)
-#endif
     }
   
     void
     MemoryUsageMonitor<true>::update (void)
     {
 #if defined (ACE_WIN32)
-      PdhCollectQueryData (this->query_);
-      PdhGetFormattedCounterValue (this->counter_,
-                                   PDH_FMT_DOUBLE,
-                                   0,
-                                   &this->value_);
+      this->win_update ();
 
       /// Stores value and timestamp with thread-safety.
       this->receive (this->value_.doubleValue);

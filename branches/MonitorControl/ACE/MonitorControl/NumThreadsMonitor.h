@@ -23,11 +23,7 @@
 #include "MonitorControl/MonitorPoint.h"
 
 #if defined (ACE_WIN32)
-/// Must include this after the ACE headers to avoid many redefinition
-/// errors.
-#include <pdh.h>
-#elif defined (ACE_HAS_KSTAT)
-#include <kstat.h>
+#include "MonitorControl/WindowsMonitor.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -55,36 +51,15 @@ namespace ACE
     template<>
     class MONITORCONTROL_Export NumThreadsMonitor<true>
       : public MonitorPoint<true>
+#if defined (ACE_WIN32)
+      , public WindowsMonitor
+#endif
     {
     public:
       NumThreadsMonitor (void);
     
       /// Implementation of the pure virtual method.
       virtual void update (void);
-      
-    private:
-      /// Common to Linux and Solaris implementations.
-#if defined (linux) || defined (ACE_HAS_KSTAT)
-      unsigned long user_;
-      unsigned long wait_;
-      unsigned long kernel_;
-      unsigned long idle_;
-      unsigned long prev_idle_;
-      double prev_total_;
-#endif
-#if defined (ACE_WIN32)
-      HQUERY query_;
-      HCOUNTER counter_;
-      PDH_STATUS status_;
-      PDH_FMT_COUNTERVALUE value_;
-#elif defined (linux)
-      FILE *file_ptr_;
-      char buf_[1024];
-#elif defined (ACE_HAS_KSTAT)
-      kstat_ctl_t *kstats_;
-      kstat_t *kstat_;
-      kid_t kstat_id_;
-#endif
     };
   }
 }

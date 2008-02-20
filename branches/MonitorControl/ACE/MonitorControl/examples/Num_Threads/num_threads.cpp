@@ -80,7 +80,7 @@ int main (int argc, char *argv [])
     /// Start up the MonitorControl service before doing anything else.
     START_MC_SERVICE;
     
-    /// Set the timer for CPU load check at 2000 msecs (2 sec).
+    /// Set the timer for # of threads check at 2000 msecs (2 sec).
     ADD_PERIODIC_MONITOR (NUM_THREADS_MONITOR, 2000);
     
     /// Runs the reactor's event loop in a separate thread so the timer(s)
@@ -91,6 +91,7 @@ int main (int argc, char *argv [])
     MonitorChecker monitor_checker;
     monitor_checker.activate ();
     
+    /// Spawn 100 threads, sleep until they finish.
     Worker worker;
     worker.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 100);
     
