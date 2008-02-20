@@ -1,3 +1,19 @@
+Wed Feb 20 17:33:22 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/NumThreadsMonitor.h:
+        * MonitorControl/MonitorControl.h:
+        
+          Implementation of Windows version of monitor for the total
+          number of threads in the system.
+          
+        * MonitorControl/examples/Num_Threads/svc.conf:
+        * MonitorControl/examples/Num_Threads/Num_Threads.mpc:
+        * MonitorControl/examples/Num_Threads/num_threads.cpp:
+        
+          New files, corresponding example for the above monitor
+          implementation.
+
 Tue Feb 19 21:10:59 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MemoryUsageMonitor.cpp:

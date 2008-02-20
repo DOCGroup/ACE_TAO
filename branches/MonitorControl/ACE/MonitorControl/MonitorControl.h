@@ -24,6 +24,9 @@
 #include "MonitorControl/MonitorControl_macros.h"
 #include "MonitorControl/CPULoadMonitor.h"
 #include "MonitorControl/MemoryUsageMonitor.h"
+#include "MonitorControl/NumThreadsMonitor.h"
+#include "MonitorControl/BytesSentMonitor.h"
+#include "MonitorControl/PacketsSentMonitor.h"
 
 #include /**/ "ace/post.h"
 
