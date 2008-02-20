@@ -1,3 +1,10 @@
+Wed Feb 20 19:55:57 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/MemoryUsageMonitor.h:
+        
+          Implemented Linux version of this monitor.
+
 Wed Feb 20 18:57:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/WindowsMonitor.cpp:

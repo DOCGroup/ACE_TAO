@@ -16,8 +16,6 @@ namespace ACE
       : MonitorPoint<true> ("MemoryUsage")
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\Memory\\% Committed Bytes In Use")
-#elif defined (linux)
-      , file_ptr_ (0)
 #elif defined (ACE_HAS_KSTAT)
       , kstats_ (0)
       , kstat_ (0)
@@ -35,6 +33,17 @@ namespace ACE
       /// Stores value and timestamp with thread-safety.
       this->receive (this->value_.doubleValue);
 #elif defined (linux)
+      if (sysinfo (&this->sysinfo_) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Memory usage - sysinfo() failed\n"));
+          return;
+        }
+        
+      double used_ram = this->sysinfo_.totalram - this->sysinfo_.freeram;
+      double percent_mem_usage = used_ram / this->sysinfo_.totalram * 100.0;
+      
+      this->receive (percent_mem_usage);
 #elif defined (ACE_HAS_KSTAT)
 #endif
     }

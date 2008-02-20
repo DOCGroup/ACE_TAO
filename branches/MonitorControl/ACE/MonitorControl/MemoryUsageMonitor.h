@@ -24,6 +24,8 @@
 
 #if defined (ACE_WIN32)
 #include "MonitorControl/WindowsMonitor.h"
+#elif defined (linux)
+#include <sys/sysinfo.h>
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -62,10 +64,8 @@ namespace ACE
       virtual void update (void);
       
     private:
-      /// Common to Linux and Solaris implementations.
 #if defined (linux)
-      FILE *file_ptr_;
-      char buf_[1024];
+      struct sysinfo sysinfo_;
 #elif defined (ACE_HAS_KSTAT)
       kstat_ctl_t *kstats_;
       kstat_t *kstat_;
