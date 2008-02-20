@@ -1,3 +1,18 @@
+Wed Feb 20 20:35:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        
+          Refactored code common to Linux and Solaris implementations.
+          
+        * MonitorControl/examples/Num_Threads/num_threads.cpp:
+        
+          Minor change to output message.
+          
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/NumThreadsMonitor.h:
+        
+          Implemented this monitor for Linux.
+
 Wed Feb 20 19:55:57 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MemoryUsageMonitor.cpp:

@@ -60,6 +60,13 @@ namespace ACE
     
       /// Implementation of the pure virtual method.
       virtual void update (void);
+      
+    private:
+#if defined (linux)
+      FILE *file_ptr_;
+      char buf_[1024];
+      unsigned long nthreads_;
+#endif
     };
   }
 }

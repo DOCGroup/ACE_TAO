@@ -28,7 +28,7 @@ display_timestamp (const MonitorControl_Types::Data &data)
 void
 display_num_threads (const MonitorControl_Types::Data &data)
 {
-  cout << "# of system threads:         ";
+  cout << "# of threads:         ";
   display_timestamp (data);
   cout << static_cast<size_t> (data.value_) << endl;
 }

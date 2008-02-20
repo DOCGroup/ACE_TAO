@@ -60,27 +60,11 @@ namespace ACE
       this->receive (this->value_.doubleValue);
 #elif defined (linux)
       this->access_proc_stat (&this->idle_);    
-
-      double delta_idle = this->idle_ - this->prev_idle_;
-      double total =
-        this->user_ + this->wait_ + this->kernel_ + this->idle_;
-      double delta_total = total - this->prev_total_;
-      
-      if (delta_total == 0.0)
-        {
-          /// The system hasn't updated /proc/stat since the last call
-          /// to update(), we must avoid dividing by 0.
-          return;
-        }
-
-      double percent_cpu_load = 100.0 - (delta_idle / delta_total * 100.0);
-      this->receive (percent_cpu_load);
-
-      this->prev_idle_ = this->idle_;
-      this->prev_total_ = total;
 #elif defined (ACE_HAS_KSTAT)
       this->access_kstats (&this->idle_);    
+#endif 
 
+#if defined (linux) || defined (ACE_HAS_KSTAT)
       double delta_idle = this->idle_ - this->prev_idle_;
       double total =
         this->user_ + this->wait_ + this->kernel_ + this->idle_;
@@ -94,6 +78,8 @@ namespace ACE
         }
 
       double percent_cpu_load = 100.0 - (delta_idle / delta_total * 100.0);
+      
+      /// Stores value and timestamp with thread-safety.
       this->receive (percent_cpu_load);
 
       this->prev_idle_ = this->idle_;
@@ -109,7 +95,7 @@ namespace ACE
       
       if (this->file_ptr_ == 0)
         {
-          ACE_ERROR ((LM_ERROR, "opening file \"/proc/stat\" failed\n"));
+          ACE_ERROR ((LM_ERROR, "CPU load - opening /proc/stat failed\n"));
           return;
         }
         
