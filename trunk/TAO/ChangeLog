@@ -1,3 +1,9 @@
+Wed Feb 20 11:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/CodeSets/simple/run_test.pl:
+          Add the necessary library paths for the libs/IBM1047_ISO8859
+          and libs/UCS4_UTF16.
+
 Tue Feb 19 22:20:05 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Timed_Buffered_Oneways/client.cpp:
