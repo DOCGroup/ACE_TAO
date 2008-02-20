@@ -83,8 +83,12 @@ int run_main (int, ACE_TCHAR *[])
     // ACE_ASSERT uses Log_Msg::instance() and needs to be done only
     // after ACE_START_TEST
 
+    // Additional ACE::init() should not have changed  the context
     ACE_ASSERT (p0 == p1);
+
+    // It should appear open
     ACE_ASSERT (!p0->is_opened ());
+
     ACE_END_TEST;
 
 
@@ -111,8 +115,6 @@ int run_main (int, ACE_TCHAR *[])
 
     // ACE_ASSERT uses Log_Msg::instance() and needs to be done only
     // after ACE_START_TEST
-    ACE_ASSERT (p1 == p2);
-
     // An attempt to dereference should be fine.
     ACE_ASSERT (!p2->is_opened ());
 

@@ -1,3 +1,20 @@
+Wed Feb 20 15:05:01 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/Intrusive_Auto_Ptr_Test.cpp:
+
+        Fixed a compiler warning about unused parameter to main()
+
+        * tests/Object_Manager_Flipping_Test.cpp:
+
+        ACE::{init,fini} may or may not destroy the default service
+        configuration context. The behavior is platform dependent, based
+        on how ACE has been initialized. Windows main() is modified to
+        automatically call ACE::{init,fini} while *nix (generally)
+        isn't. In the first case, the test's (second) ACE::init is
+        ignored. While in the latter case, the tests ACE::init and
+        ACE::fini actually perform work and completely destroy the Object
+        Manager.
+
 Tue Feb 19 21:00:00 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:
