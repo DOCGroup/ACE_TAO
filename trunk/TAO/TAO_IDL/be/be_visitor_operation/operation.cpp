@@ -192,13 +192,16 @@ be_visitor_operation::gen_stub_operation_body (
           << "{" << be_idt_nl
           << "::CORBA::Object::tao_object_initialize (this);"
           << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
-          << be_idt_nl
-          << "{" << be_idt_nl
-          << intf->flat_name () << "_setup_collocation ();"
-          << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+        {
+            *os << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
+                << be_idt_nl
+                << "{" << be_idt_nl
+                << intf->flat_name () << "_setup_collocation ();"
+                << be_uidt_nl
+                << "}" << be_uidt_nl << be_nl;
+        }
     }
 
   // Declare return type helper class.
@@ -277,8 +280,16 @@ be_visitor_operation::gen_stub_operation_body (
 
   // original_local_name() strips off the leading '_cxx_' if any.
   *os << node->original_local_name () << "\"," << be_nl
-      << tmp_len << "," << be_nl
-      << "this->the" << intf->base_proxy_broker_name () << "_";
+      << tmp_len << "," << be_nl;
+
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      *os << "this->the" << intf->base_proxy_broker_name () << "_";
+    }
+  else
+    {
+      *os << "0";
+    }
 
   if (node->flags () == AST_Operation::OP_oneway)
     {

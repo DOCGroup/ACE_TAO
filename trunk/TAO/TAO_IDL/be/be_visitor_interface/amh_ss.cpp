@@ -102,11 +102,20 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       *os << "TAO::AbstractBase_Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
     }
   *os << be_idt << be_idt_nl
-      << "obj.in ()," << be_nl
-      << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer" << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl
+      << "obj.in ()," << be_nl;
+
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      *os << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "0" << be_uidt_nl;
+    }
+
+  *os << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
 }
