@@ -1,3 +1,24 @@
+Thu Feb 21 19:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+          When collocation optimizations have been disabled also don't
+          generate a collocated proxy broker function and the checks
+          for this cpb function, this results in a footprint reduction
+          for each interface but also for each operation. This fixes
+          bugzilla 2971
+
 Thu Feb 21 15:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/corba_e_compact.mpb:
@@ -10,7 +31,7 @@ Thu Feb 21 15:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           taoidldefaults now also derives from the CORBA profiles
           so that when we compile IDL we also generate code focused
           for the set profile. This reduces the size of the generated
-          code.
+          code, this fixes bugzilla 3233
 
 Thu Feb 21 02:34:37 CST 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 

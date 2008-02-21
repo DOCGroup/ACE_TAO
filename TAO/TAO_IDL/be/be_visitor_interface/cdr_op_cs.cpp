@@ -133,11 +133,20 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     }
 
   *os << be_idt << be_idt_nl
-      << "obj.in ()," << be_nl
-      << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer" << be_uidt_nl
-      << ");" << be_uidt_nl << be_uidt_nl;
+      << "obj.in ()," << be_nl;
+
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      *os << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "0" << be_uidt_nl;
+    }
+
+  *os << ");" << be_uidt_nl << be_uidt_nl;
 
   *os << "return true;" << be_uidt_nl
       << "}" << be_nl;
@@ -145,7 +154,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   if (be_global->gen_ostream_operators ())
     {
       *os << be_nl;
-      
+
       node->gen_ostream_operator (os);
     }
 

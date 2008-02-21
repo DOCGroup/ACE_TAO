@@ -173,12 +173,15 @@ be_visitor_component_ch::visit_component (be_component *node)
   // The virtual marshal method, to prevent marshal of local iterfaces.
   *os << be_nl << "virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);";
 
-  // Add the Proxy Broker member variable.
-  *os << be_uidt_nl << be_nl
-      << "private:" << be_idt_nl
-      << "TAO::Collocation_Proxy_Broker *"
-      << "the" << node->base_proxy_broker_name ()
-      << "_;";
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      // Add the Proxy Broker member variable.
+      *os << be_uidt_nl << be_nl
+          << "private:" << be_idt_nl
+          << "TAO::Collocation_Proxy_Broker *"
+          << "the" << node->base_proxy_broker_name ()
+          << "_;";
+    }
 
   *os << be_uidt_nl <<  be_nl
       << "protected:" << be_idt;
@@ -189,13 +192,16 @@ be_visitor_component_ch::visit_component (be_component *node)
   *os << be_nl
       << node->local_name () << " (void);";
 
-  *os << be_nl << be_nl
-      << "// These methods travese the inheritance tree and set the"
-      << be_nl
-      << "// parents piece of the given class in the right mode."
-      << be_nl
-      << "virtual void " << node->flat_name ()
-      << "_setup_collocation (void);";
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      *os << be_nl << be_nl
+          << "// These methods travese the inheritance tree and set the"
+          << be_nl
+          << "// parents piece of the given class in the right mode."
+          << be_nl
+          << "virtual void " << node->flat_name ()
+          << "_setup_collocation (void);";
+    }
 
   *os << be_nl << be_nl
       << node->local_name () << " (" << be_idt << be_idt_nl
