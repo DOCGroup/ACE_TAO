@@ -1,0 +1,32 @@
+//$Id$
+
+/**
+ * @file MIF_Scheduling.idl
+ *
+ * $Id$
+ *
+ */
+
+#include "tao/RTScheduling/RTScheduler_include.pidl"
+#include "tao/RTCORBA/RTCORBA_include.pidl"
+
+module MIF_Scheduling
+{
+  struct SchedulingParameter
+  {
+    long importance;
+  };
+
+  local interface SchedulingParameterPolicy
+  : CORBA::Policy
+  {
+    attribute SchedulingParameter value;
+  };
+
+  local interface Scheduler : RTScheduling::Scheduler
+  {
+    SchedulingParameterPolicy
+      create_scheduling_parameter
+        (in SchedulingParameter value);
+  };
+};

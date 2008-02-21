@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+project: ipv6, vc_warnings, build_files, test_files {
+  staticflags += ACE_AS_STATIC_LIBS
+  includes    += $(ACE_ROOT)
+  libpaths    += $(ACE_ROOT)/lib
+
+  // Support the alternative Borland Make project type
+  specific(bmake) {
+    unicode_flags += -DACE_USES_WCHAR
+    macros += ACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\\"$(ILIBMODIFIER)\\")
+    debug_macros += ACE_NO_INLINE=1
+  }
+
+  specific(automake) {
+    am_release = @ACE_VERSION_NAME@
+    includes += $(ACE_BUILDDIR)
+    libpaths -= $(ACE_ROOT)/lib
+  }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ImplementationArtifactDescription
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Sender Stub Artifact</label>
+  <UUID>93bbdf7d-d3f7-4227-bb75-b0562ac15b92</UUID>
+  <location>Hello_Sender_stub</location>
+  <dependsOn>
+    <name>ACE</name>
+    <referencedArtifact href="Libraries.iad"/>
+  </dependsOn>
+</Deployment:ImplementationArtifactDescription>

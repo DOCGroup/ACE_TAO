@@ -1,0 +1,20 @@
+// $Id$
+
+#if !defined (CCM_EXTENSIONCOMPONENT_IDL)
+#define CCM_EXTENSIONCOMPONENT_IDL
+
+#include "ciao/CCM_EnterpriseComponent.idl"
+#include "ciao/CCM_ExtensionContext.idl"
+
+module Components
+{
+  local interface ExtensionComponent : EnterpriseComponent
+  {
+    void set_extension_context (in ExtensionContext ctx)
+      raises (CCMException);
+    void ccm_remove ()
+      raises (CCMException);
+  };
+};
+
+#endif /* CCM_EXTENSIONCOMPONENT_IDL */

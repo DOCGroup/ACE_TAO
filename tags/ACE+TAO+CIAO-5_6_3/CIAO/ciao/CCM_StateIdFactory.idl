@@ -1,0 +1,72 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../.. -I ../../orbsvcs/orbsvcs \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Container_Ex.idl
+ */
+
+//#define CIAO_HAS_IMPORT_KEYWORD
+
+#if !defined (CCM_STATEIDFACTORY)
+#define CCM_STATEIDFACTORY
+
+#include <CosPersistentState.idl>
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  typedef short SegmentId;
+  const SegmentId COMPONENT_SEGMENT = 0;
+
+  typedef short FacetId;
+  const FacetId COMPONENT_FACET = 0;
+
+  typedef sequence<octet> IdData;
+  typedef CosPersistentState::Pid PersistentId;
+
+  exception InvalidStateIdData {};
+
+  typedef short StateIdType;
+  const StateIdType PERSISTENT_ID = 0;
+
+  abstract valuetype StateIdValue
+  {
+    StateIdType get_sid_type();
+    IdData get_sid_data();
+  };
+
+  local interface StateIdFactory
+  {
+    StateIdValue create (in IdData data)
+      raises (InvalidStateIdData);
+  };
+
+  valuetype PersistentIdValue : StateIdValue
+  {
+    private PersistentId pid;
+    PersistentId get_pid();
+    factory init (in PersistentId pid);
+  };
+
+  valuetype SegmentDescr
+  {
+    private StateIdValue sid;
+    private SegmentId seg;
+
+    StateIdValue get_sid();
+    SegmentId get_seg_id();
+    factory init (in StateIdValue sid,
+                  in SegmentId seg);
+  };
+
+  typedef sequence<SegmentDescr> SegmentDescrSeq;
+
+};
+#endif /* CCM_STATEIDFACTORY */

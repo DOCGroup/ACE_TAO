@@ -1,0 +1,38 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    INS.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, utils, iortable, avoids_corba_e_micro {
+  exename = INS_test_server
+  after += *idl
+  Source_Files {
+    INS_i.cpp
+    Server_i.cpp
+    INS_test_server.cpp
+  }
+  Source_Files {
+    INSC.cpp
+    INSS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, anytypecode {
+  exename = INS_test_client
+  after += *idl
+  Source_Files {
+    INS_test_client.cpp
+  }
+  Source_Files {
+    INSC.cpp
+  }
+  IDL_Files {
+  }
+}

@@ -1,0 +1,22 @@
+// -*- MPC -*-
+//$Id$
+
+project (Plan_Generator): ciao_component_dnc, ace_output {
+  sharedname = Plan_Generator
+  after += RepositoryManager
+
+  dynamicflags = PLAN_GENERATOR_IMPL_BUILD_DLL
+
+  Source_Files {
+    Plan_Generator_Impl.cpp
+    PCVisitorBase.cpp
+    PCVisitor.cpp
+  }
+
+  Header_Files {
+    Plan_Generator_Impl.h
+    PCVisitor.h
+    PCVisitorBase.h
+    Plan_Generator_Impl_Export.h
+  }
+}
