@@ -1,3 +1,8 @@
+Thu Feb 21 08:09:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.2.GNU:
+          Updated for a Windows host
+
 Mon Feb 18 19:59:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
