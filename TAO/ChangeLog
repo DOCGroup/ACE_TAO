@@ -1,3 +1,17 @@
+Thu Feb 21 15:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/corba_e_compact.mpb:
+        * MPC/config/corba_e_micro.mpb:
+        * MPC/config/core_minimum_corba.mpb:
+        * MPC/config/minimum_corba.mpb:
+        * MPC/config/taoidldefaults.mpb:
+        * MPC/config/taobaseidldefaults.mpb:
+          Moved the contents of taoidldefaults to taobaseidldefaults,
+          taoidldefaults now also derives from the CORBA profiles
+          so that when we compile IDL we also generate code focused
+          for the set profile. This reduces the size of the generated
+          code.
+
 Thu Feb 21 02:34:37 CST 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO version 1.6.3 released.
