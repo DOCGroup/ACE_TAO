@@ -32,10 +32,10 @@ namespace ACE
 
       if (ERROR_SUCCESS != this->status_)
         {
-          ACE_ERROR ((LM_DEBUG, "PdhAddCounter failed\n"));
+          ACE_ERROR ((LM_DEBUG, "PdhAddCounter %s failed\n", path));
         }
     }
-  
+
     void
     WindowsMonitor::win_update (void)
     {

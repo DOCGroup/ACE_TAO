@@ -10,12 +10,20 @@ namespace ACE
   {
     PacketsSentMonitor<true>::PacketsSentMonitor (void)
       : MonitorPoint<true> ("PacketsSent")
+#if defined (ACE_WIN32)
+      , WindowsMonitor ("\\\\Network Interfaces(*)\\\\\Packets Sent")
+#endif
     {}
-  
+
     void
     PacketsSentMonitor<true>::update (void)
     {
-      // TODO
+#if defined (ACE_WIN32)
+      this->win_update ();
+
+      /// Stores value and timestamp with thread-safety.
+      this->receive (this->value_.doubleValue);
+#endif
     }
   }
 }

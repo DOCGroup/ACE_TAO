@@ -23,14 +23,25 @@ display_timestamp (const MonitorControl_Types::Data &data)
        << setw (6) << dt.microsec () << ":   ";
 }
 
-/// Display the message queue size as an unsigned integer.
+/// Display the CPU load as a floating point percentage, to
+/// 2 decimal places.
 void
-display_mq_size (const MonitorControl_Types::Data &data)
+display_num_threads (const MonitorControl_Types::Data &data)
 {
-  cout << "Message queue size: ";
+  cout << "# bytes send:         ";
   display_timestamp (data);
   cout << static_cast<size_t> (data.value_) << endl;
 }
+
+class Worker : public ACE_Task_Base
+{
+public:
+  int svc (void)
+  {
+    ACE_OS::sleep (5);
+    return 0;
+  }
+};
 
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
@@ -45,19 +56,19 @@ public:
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::MonitorControl::Monitor_Base *mq_monitor =
-      mgr->admin ().monitor_point ("MQ monitor");
+    ACE::MonitorControl::Monitor_Base *thread_monitor =
+      mgr->admin ().monitor_point ("BytesSent");
 
-    if (mq_monitor != 0)
+    if (thread_monitor != 0)
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < 5; ++i)
           {
             ACE_OS::sleep (2);
 
-            MonitorControl_Types::Data data = mq_monitor->retrieve ();
-            display_mq_size (data);
+            MonitorControl_Types::Data data = thread_monitor->retrieve ();
+            display_num_threads (data);
           }
       }
 
@@ -72,43 +83,25 @@ int main (int argc, char *argv [])
     /// Start up the MonitorControl service before doing anything else.
     START_MC_SERVICE;
 
-    /// Create a message queue with a built-in monitor (since ACE was
-    /// compiled with monitors enabled) and add the monitor to the
-    /// registry (some ACE activities create a message queue under
-    /// the hood, so we must make the registration explicit).
-    ACE_Message_Queue<ACE_NULL_SYNCH> monitored_queue;
-    monitored_queue.register_monitor ();
+    /// Set the timer for # of threads check at 2000 msecs (2 sec).
+    ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, 2000);
 
-    /// The message string is 11 bytes long so the message queue will
-    /// grow and shrink in 11-byte increments.
-    ACE_Message_Block *mb = 0;
-    const char *msg = "Hidely Ho!";
+    /// Runs the reactor's event loop in a separate thread so the timer(s)
+    /// can run concurrently with the application.
+    START_PERIODIC_MONITORS;
 
     /// Run the monitor checker in a separate thread.
     MonitorChecker monitor_checker;
     monitor_checker.activate ();
 
-    for (int i = 0; i < 10; ++i)
-      {
-        ACE_OS::sleep (1);
+    /// Spawn 100 threads, sleep until they finish.
+    Worker worker;
+    worker.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 100);
 
-        /// Add 6 message blocks to the queue, then remove
-        /// 4 of them.
-        if (i < 6)
-          {
-            mb = new ACE_Message_Block (ACE_OS::strlen (msg) + 1);
-            mb->copy (msg);
-            monitored_queue.enqueue_tail (mb);
-          }
-        else
-          {
-            monitored_queue.dequeue_head (mb);
-            mb->release ();
-          }
-      }
+    ACE_OS::sleep (6);
 
-    /// Clean up the remaining message queue resources.
-    monitored_queue.flush ();
+    /// End the reactor's event loop, stopping the timer(s).
+    STOP_PERIODIC_MONITORS;
   }
   catch (const MC_Generic_Registry::MapError &e)
   {

@@ -13,7 +13,7 @@ void
 display_timestamp (const MonitorControl_Types::Data &data)
 {
   ACE_Date_Time dt (data.timestamp_);
-  cout << setfill ('0') 
+  cout << setfill ('0')
        << setw (2) << dt.month () << '-'
        << setw (2) << dt.day () << '-'
        << dt.year () << ' '
@@ -45,19 +45,22 @@ public:
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-      
-    /// Call on the administrator class to look up the desired monitors.  
+
+    /// Call on the administrator class to look up the desired monitors.
     ACE::MonitorControl::Monitor_Base *cpu_monitor =
       mgr->admin ().monitor_point ("CPULoad");
-      
-    /// Query each monitor for its data every 2 seconds, and call the
-    /// appropriate display function.
-    for (int i = 0; i < 10; ++i)
+
+    if (cpu_monitor != 0)
       {
-        ACE_OS::sleep (2);
-        
-        MonitorControl_Types::Data data = cpu_monitor->retrieve ();
-        display_cpu_load (data);
+        /// Query each monitor for its data every 2 seconds, and call the
+        /// appropriate display function.
+        for (int i = 0; i < 10; ++i)
+          {
+            ACE_OS::sleep (2);
+
+            MonitorControl_Types::Data data = cpu_monitor->retrieve ();
+            display_cpu_load (data);
+          }
       }
 
     return 0;
@@ -70,33 +73,33 @@ int main (int argc, char *argv [])
   {
     /// Start up the MonitorControl service before doing anything else.
     START_MC_SERVICE;
-    
+
     /// The Admin class will own the reactor and destroy it. We are
     /// passing a vanilla reactor to show how it works, but in real
     /// life it could be some specialized reactor.
-    ACE_Reactor* new_reactor = new ACE_Reactor;   
+    ACE_Reactor* new_reactor = new ACE_Reactor;
     MC_ADMINMANAGER* mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
     mgr->admin ().reactor (new_reactor);
-    
+
     /// Set the timer for CPU load check at 2000 msecs (2 sec).
     ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, 2000);
-    
+
     /// Runs the reactor's event loop in a separate thread so the timer(s)
     /// can run concurrently with the application.
     START_PERIODIC_MONITORS;
-    
+
     /// Run the monitor checker in a separate thread.
     MonitorChecker monitor_checker;
     monitor_checker.activate ();
-    
+
     /// Make sure the monitor checker is spawned before doing anything.
     ACE_OS::sleep (1);
-    
+
     for (int i = 0; i < 10; ++i)
       {
         /// Alternate between letting the CPU sleep and keeping it
-        /// busy. 
+        /// busy.
         if (i % 2 == 0)
           {
             ACE_OS::sleep (1);
@@ -109,7 +112,7 @@ int main (int argc, char *argv [])
               }
           }
       }
-     
+
     /// End the reactor's event loop, stopping the timer(s).
     STOP_PERIODIC_MONITORS;
   }

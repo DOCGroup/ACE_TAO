@@ -3,7 +3,7 @@
 
 project(MonitorControl) : acelib {
   dynamicflags += MONITORCONTROL_BUILD_DLL
-  
+
   Source_Files {
     AutoUpdateStarter.cpp
     BytesSentMonitor.cpp
@@ -12,19 +12,20 @@ project(MonitorControl) : acelib {
     MonitorPoint.cpp
     NumThreadsMonitor.cpp
     PacketsSentMonitor.cpp
+    WindowsMonitor.cpp
   }
-  
+
   Header_Files {
     MonitorControl.h
     MonitorControl_export.h
     MonitorControl_macros.h
   }
-  
+
   Template_Files {
     LowLevelMonitors_T.cpp
     MonitorPoint_T.cpp
   }
-  
+
   specific (vc6, vc7, vc71, vc8, vc9, nmake) {
     lit_libs += pdh
   }

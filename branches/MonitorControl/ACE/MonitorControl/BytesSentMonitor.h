@@ -22,6 +22,10 @@
 #include "MonitorControl/LowLevelMonitors_T.h"
 #include "MonitorControl/MonitorPoint.h"
 
+#if defined (ACE_WIN32)
+#include "MonitorControl/WindowsMonitor.h"
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -47,9 +51,13 @@ namespace ACE
     template<>
     class MONITORCONTROL_Export BytesSentMonitor<true>
       : public MonitorPoint<true>
+#if defined (ACE_WIN32)
+      , public WindowsMonitor
+#endif
     {
+    public:
       BytesSentMonitor (void);
-    
+
       /// Implementation of the pure virtual method.
       virtual void update (void);
     };

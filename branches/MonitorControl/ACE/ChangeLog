@@ -1,23 +1,52 @@
+Thu Feb 21 14:23:55 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MonitorControl/BytesSentMonitor.cpp
+        * MonitorControl/BytesSentMonitor.h
+        * MonitorControl/PacketsSentMonitor.cpp
+        * MonitorControl/PacketsSentMonitor.h
+          Add windows part, pdh seems to work but we get 0, need to look at this
+
+        * MonitorControl/examples/Bytes_Sent
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp
+        * MonitorControl/examples/Bytes_Sent/Bytes_Sent.mpc
+        * MonitorControl/examples/Bytes_Sent/svc.conf
+          New example
+
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp
+        * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp
+        * MonitorControl/examples/Num_Threads/num_threads.cpp
+          Check if we get a monitor back
+
+        * MonitorControl/MonitorControl.mpc:
+          Added WindowsMonitor
+
+        * MonitorControl/NumThreadsMonitor.cpp:
+          Zap spaces
+
+        * MonitorControl/WindowsMonitor.cpp:
+          When adding the counter fails say which one fails.
+
 Wed Feb 20 20:35:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/CPULoadMonitor.cpp:
-        
+
           Refactored code common to Linux and Solaris implementations.
-          
+
         * MonitorControl/examples/Num_Threads/num_threads.cpp:
-        
+
           Minor change to output message.
-          
+
         * MonitorControl/NumThreadsMonitor.cpp:
         * MonitorControl/NumThreadsMonitor.h:
-        
+
           Implemented this monitor for Linux.
 
 Wed Feb 20 19:55:57 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MemoryUsageMonitor.cpp:
         * MonitorControl/MemoryUsageMonitor.h:
-        
+
           Implemented Linux version of this monitor.
 
 Wed Feb 20 18:57:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -47,14 +76,14 @@ Wed Feb 20 17:33:22 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/NumThreadsMonitor.cpp:
         * MonitorControl/NumThreadsMonitor.h:
         * MonitorControl/MonitorControl.h:
-        
+
           Implementation of Windows version of monitor for the total
           number of threads in the system.
-          
+
         * MonitorControl/examples/Num_Threads/svc.conf:
         * MonitorControl/examples/Num_Threads/Num_Threads.mpc:
         * MonitorControl/examples/Num_Threads/num_threads.cpp:
-        
+
           New files, corresponding example for the above monitor
           implementation.
 
@@ -63,22 +92,22 @@ Tue Feb 19 21:10:59 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/MemoryUsageMonitor.cpp:
         * MonitorControl/MemoryUsageMonitor.h:
         * MonitorControl/MonitorControl.h:
-        
+
           Implemented the update() method for Windows and added the
           header file to the #includes of MonitorControl.h so it
           can be pulled into an application.
-          
+
         * MonitorControl/examples/Memory_Usage/svc.conf:
         * MonitorControl/examples/Memory_Usage/Memory_Usage.mpc:
         * MonitorControl/examples/Memory_Usage/memory_usage.cpp:
-        
+
           New files, implementing an example for the memory usage
           monitor.
 
 Tue Feb 19 18:51:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/Message_Queue_Size/svc.conf:
-        
+
           Copied from CPU_Load/svc.conf, which had to be added to the repo
           before it could be copied by SubVersion (along with its
           all-important properties).
@@ -130,7 +159,7 @@ Tue Feb 19 16:41:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Removed unnecessary type declarations and
           class methods/members/arguments. All the
-          removed items were originally copied 
+          removed items were originally copied
           wholesale from the original OCI implementation
           in the TAO Notification Service, without
           knowing at that early date if they would be
@@ -139,15 +168,15 @@ Tue Feb 19 16:41:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Feb 18 17:04:56 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * include/makeinclude/platform_sunos5_common.GNU:
-        
+
           Added a check for the value of 'kstat' which is set to 0
           by default. If set to 1 in platform_macros.GNU, then we
           link the kstat system lib and add -DACE_HAS_KSTAT to the
           command line.
-          
+
         * MonitorControl/CPULoadMonitor.cpp:
         * MonitorControl/CPULoadMonitor.h:
-        
+
           Replace the 'sun' argument in the guard for the Solaris
           raw monitoring code with the above flag ACE_HAS_KSTAT, which
           will be easier to maintain.
@@ -155,23 +184,23 @@ Mon Feb 18 17:04:56 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Feb 15 20:30:49 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/main.cpp:
-        
+
           Replaced ACE_OS::fopen() as the CPU busy-work action with
           ACE::gcd().
 
 Fri Feb 15 19:33:10 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/CPULoadMonitor.cpp:
-        
+
           Fixed typos in the Solaris-specific implementation.
 
 Fri Feb 15 18:43:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/CPULoadMonitor.cpp:
         * MonitorControl/CPULoadMonitor.h:
-        
+
           First cut at implementation for Solaris.
-          
+
         * MonitorControl/PacketsSentMonitor.h:
         * MonitorControl/MemoryUsageMonitor.cpp:
         * MonitorControl/MemoryUsageMonitor.h:
@@ -180,7 +209,7 @@ Fri Feb 15 18:43:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/BytesSentMonitor.cpp:
         * MonitorControl/PacketsSentMonitor.cpp:
         * MonitorControl/BytesSentMonitor.h:
-        
+
           Added default constructors, similar to what exists in
           class CPULoadMonitor.
 
@@ -189,7 +218,7 @@ Thu Feb 14 21:10:57 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/CPULoadMonitor.cpp:
         * MonitorControl/CPULoadMonitor.h:
         * MonitorControl/examples/main.cpp:
-        
+
           Fixed bugs in Linux implementation of CPU load monitor, and
           changed the busy loop in the example from an empty FOR loop
           to a loop that tries to open a non-existent file repeatedly.

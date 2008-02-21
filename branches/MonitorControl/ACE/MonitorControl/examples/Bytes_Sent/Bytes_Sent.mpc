@@ -1,0 +1,13 @@
+// $Id$
+
+project (*) : aceexe {
+  exename = bytes_sent
+  after += MonitorControl
+  libs  += MonitorControl
+  macros += ENABLE_MONITORS ENABLE_ACE_MONITORS
+
+  source_files {
+    bytes_sent.cpp
+  }
+}
+

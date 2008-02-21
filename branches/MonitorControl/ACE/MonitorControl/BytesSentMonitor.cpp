@@ -10,13 +10,21 @@ namespace ACE
   {
     BytesSentMonitor<true>::BytesSentMonitor (void)
       : MonitorPoint<true> ("BytesSent")
+#if defined (ACE_WIN32)
+      , WindowsMonitor ("\\\\Network Interfaces(*)\\\\Bytes Sent")
+#endif
     {}
-  
+
     void
     BytesSentMonitor<true>::update (void)
     {
-      // TODO
+#if defined (ACE_WIN32)
+      this->win_update ();
+
+      /// Stores value and timestamp with thread-safety.
+      this->receive (this->value_.doubleValue);
     }
+#endif
   }
 }
 

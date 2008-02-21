@@ -13,7 +13,7 @@ void
 display_timestamp (const MonitorControl_Types::Data &data)
 {
   ACE_Date_Time dt (data.timestamp_);
-  cout << setfill ('0') 
+  cout << setfill ('0')
        << setw (2) << dt.month () << '-'
        << setw (2) << dt.day () << '-'
        << dt.year () << ' '
@@ -45,19 +45,22 @@ public:
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-      
-    /// Call on the administrator class to look up the desired monitors.  
+
+    /// Call on the administrator class to look up the desired monitors.
     ACE::MonitorControl::Monitor_Base *memory_monitor =
       mgr->admin ().monitor_point ("MemoryUsage");
-      
-    /// Query each monitor for its data every 2 seconds, and call the
-    /// appropriate display function.
-    for (int i = 0; i < 10; ++i)
+
+    if (memory_monitor != 0)
       {
-        ACE_OS::sleep (2);
-        
-        MonitorControl_Types::Data data = memory_monitor->retrieve ();
-        display_memory_usage (data);
+        /// Query each monitor for its data every 2 seconds, and call the
+        /// appropriate display function.
+        for (int i = 0; i < 10; ++i)
+          {
+            ACE_OS::sleep (2);
+
+            MonitorControl_Types::Data data = memory_monitor->retrieve ();
+            display_memory_usage (data);
+          }
       }
 
     return 0;
@@ -70,24 +73,24 @@ int main (int argc, char *argv [])
   {
     /// Start up the MonitorControl service before doing anything else.
     START_MC_SERVICE;
-    
+
     /// Set the timer for memory usage check at 2000 msecs (2 sec).
     ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, 2000);
-    
+
     /// Runs the reactor's event loop in a separate thread so the timer(s)
     /// can run concurrently with the application.
     START_PERIODIC_MONITORS;
-    
+
     /// Run the monitor checker in a separate thread.
     MonitorChecker monitor_checker;
     monitor_checker.activate ();
-    
+
     char * str_array[5] = {0};
-    
+
     for (int i = 0; i < 10; ++i)
-      { 
+      {
         ACE_OS::sleep (2);
-        
+
         /// Allocate a large string in each of the first 5 loops,
         /// free them in the last 5 loops.
         if (i < 5)
@@ -99,7 +102,7 @@ int main (int argc, char *argv [])
             delete [] str_array[i - 5];
           }
       }
-     
+
     /// End the reactor's event loop, stopping the timer(s).
     STOP_PERIODIC_MONITORS;
   }
