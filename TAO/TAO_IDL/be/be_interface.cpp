@@ -571,12 +571,11 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
                   << ")" << be_uidt;
             }
 
-          int status =
+          int const status =
             this->traverse_inheritance_graph (
                       be_interface::gen_abstract_init_helper,
                       os,
-                      true
-                    );
+                      true);
 
           if (status == -1)
             {
@@ -601,13 +600,20 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           *os << "::CORBA::Object (objref, _tao_collocated, servant, oc)";
         }
 
-      *os << "," << be_nl
-          << "the"<< this->base_proxy_broker_name () << "_ (0)"
-          << be_uidt << be_uidt;
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+        {
+          *os << "," << be_nl
+              << "the"<< this->base_proxy_broker_name () << "_ (0)"
+              << be_uidt << be_uidt;
+        }
 
-      *os << be_nl << "{" << be_idt_nl
-          << "this->" << this->flat_name ()
-          << "_setup_collocation ();";
+      *os << be_nl << "{" << be_idt_nl;
+
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+        {
+          *os << "this->" << this->flat_name ()
+              << "_setup_collocation ();";
+        }
 
       if (this->is_abstract ())
         {
@@ -1859,7 +1865,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   if (result != -1)
     {
       result = process.spawn (process_options);
-      
+
       // Spawn a process for gperf.
       if (result == -1)
         {
@@ -1873,7 +1879,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
         {
           ACE_exitcode exitcode;
           result = process.wait (&exitcode);
-          
+
           if (result == -1)
             {
               ACE_ERROR ((LM_ERROR,

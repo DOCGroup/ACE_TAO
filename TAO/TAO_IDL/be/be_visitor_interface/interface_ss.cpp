@@ -863,13 +863,28 @@ be_visitor_interface_ss::this_method (be_interface *node)
   /* Coverity whines about an unused return value from _nil() when
      initializing tmp.  Just use zero instead. */
   *os << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();"
-      << be_nl << be_nl
-      << "::CORBA::Boolean const _tao_opt_colloc =" << be_idt_nl
-      << "stub->servant_orb_var ()->orb_core ()->"
-      << "optimize_collocation_objects ();" << be_uidt_nl << be_nl
-      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+      << be_nl << be_nl;
+
+   if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+     {
+       *os << "::CORBA::Boolean const _tao_opt_colloc =" << be_idt_nl
+           << "stub->servant_orb_var ()->orb_core ()->"
+           << "optimize_collocation_objects ();" << be_uidt_nl << be_nl;
+     }
+  *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "tmp," << be_nl
-      << "::CORBA::Object (stub, _tao_opt_colloc, this)," << be_nl
+      << "::CORBA::Object (stub, ";
+
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      *os << "_tao_opt_colloc";
+    }
+  else
+    {
+      *os << "false";
+    }
+
+  *os << ", this)," << be_nl
       << "0" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
@@ -879,11 +894,20 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "return" << be_idt_nl
       << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow ("
       << be_idt << be_idt_nl
-      << "obj.in ()," << be_nl
-      << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer" << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl
+      << "obj.in ()," << be_nl;
+
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      *os << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "0" << be_uidt_nl;
+    }
+
+  *os << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
 }
 
@@ -954,75 +978,78 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
             }
         }
 
-      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+      {
+        *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+            << "// " << __FILE__ << ":" << __LINE__;
 
-      // Proxy Broker Factory Function.
-      *os << be_nl << be_nl
-          << "TAO::Collocation_Proxy_Broker *" << be_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function ( ::CORBA::Object_ptr)" << be_nl
-          << "{" << be_idt_nl
-          << "return";
+        // Proxy Broker Factory Function.
+        *os << be_nl << be_nl
+            << "TAO::Collocation_Proxy_Broker *" << be_nl
+            << node->flat_client_enclosing_scope ()
+            << node->base_proxy_broker_name ()
+            << "_Factory_function ( ::CORBA::Object_ptr)" << be_nl
+            << "{" << be_idt_nl
+            << "return";
 
-      if (be_global->gen_direct_collocation ())
-        {
-          *os << be_idt_nl
-              << "::"
-              << node->full_strategized_proxy_broker_name ()
-              << "::" <<"the"
-              << node->strategized_proxy_broker_name ()
-              << " ();" << be_uidt;
-        }
-      else
-        {
-          // @@ HACK!
+        if (be_global->gen_direct_collocation ())
+          {
+            *os << be_idt_nl
+                << "::"
+                << node->full_strategized_proxy_broker_name ()
+                << "::" <<"the"
+                << node->strategized_proxy_broker_name ()
+                << " ();" << be_uidt;
+          }
+        else
+          {
+            // @@ HACK!
 
-          // Dummy function pointer for the thru-POA case.  It isn't
-          // used to call a function but it is used to determine if
-          // collocation is available.
+            // Dummy function pointer for the thru-POA case.  It isn't
+            // used to call a function but it is used to determine if
+            // collocation is available.
 
-          // @todo Change the way TAO's ORB_Core detects collocation,
-          //       or at least augment it so that we don't have to
-          //       resort this hack.
-          *os << " reinterpret_cast<TAO::Collocation_Proxy_Broker *> (0xdead);"
-              << " // Dummy";
-        }
+            // @todo Change the way TAO's ORB_Core detects collocation,
+            //       or at least augment it so that we don't have to
+            //       resort this hack.
+            *os << " reinterpret_cast<TAO::Collocation_Proxy_Broker *> (0xdead);"
+                << " // Dummy";
+          }
 
-      *os << be_uidt_nl
-          << "}" << be_nl << be_nl;
+        *os << be_uidt_nl
+            << "}" << be_nl << be_nl;
 
-      // Proxy Broker Function Pointer Initializer.
-      *os << "int" << be_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_Initializer (size_t)" << be_nl
-          << "{" << be_idt_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer = "
-          << be_idt_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function;"
-          << be_uidt_nl
-          << be_nl
-          << "return 0;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+        // Proxy Broker Function Pointer Initializer.
+        *os << "int" << be_nl
+            << node->flat_client_enclosing_scope ()
+            << node->base_proxy_broker_name ()
+            << "_Factory_Initializer (size_t)" << be_nl
+            << "{" << be_idt_nl
+            << node->flat_client_enclosing_scope ()
+            << node->base_proxy_broker_name ()
+            << "_Factory_function_pointer = "
+            << be_idt_nl
+            << node->flat_client_enclosing_scope ()
+            << node->base_proxy_broker_name ()
+            << "_Factory_function;"
+            << be_uidt_nl
+            << be_nl
+            << "return 0;" << be_uidt_nl
+            << "}" << be_nl << be_nl;
 
-      *os << "static int" << be_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Stub_Factory_Initializer_Scarecrow =" << be_idt_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_Initializer (" << be_idt << be_idt_nl
-          << "reinterpret_cast<size_t> ("
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_Initializer)" << be_uidt_nl
-          << ");" << be_uidt << be_uidt;
+        *os << "static int" << be_nl
+            << node->flat_client_enclosing_scope ()
+            << node->base_proxy_broker_name ()
+            << "_Stub_Factory_Initializer_Scarecrow =" << be_idt_nl
+            << node->flat_client_enclosing_scope ()
+            << node->base_proxy_broker_name ()
+            << "_Factory_Initializer (" << be_idt << be_idt_nl
+            << "reinterpret_cast<size_t> ("
+            << node->flat_client_enclosing_scope ()
+            << node->base_proxy_broker_name ()
+            << "_Factory_Initializer)" << be_uidt_nl
+            << ");" << be_uidt << be_uidt;
+      }
     }
 
   if (be_global->gen_direct_collocation ())
