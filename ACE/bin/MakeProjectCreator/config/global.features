@@ -108,6 +108,9 @@ ZIP_Wrapper = 0
 corba_e_compact = 0
 corba_e_micro   = 0
 
+// Footprint feature
+optimize_collocated_invocations = 1
+
 // Option to disable iiop
 tao_no_iiop = 0
 
