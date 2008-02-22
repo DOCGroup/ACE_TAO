@@ -1,3 +1,12 @@
+Fri Feb 22 17:01:26 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/RTCORBA/Admin.cpp:
+        * docs/tutorials/Quoter/RTCORBA/Broker.cpp:
+        * docs/tutorials/Quoter/RTCORBA/Distributor.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
 Fri Feb 22 08:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/optimize_collocated_invocations.mpb:
@@ -52,7 +61,7 @@ Thu Feb 21 15:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Feb 21 02:34:37 CST 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.6.3 released.
+        * TAO version 1.6.3 released.
 
 Local Variables:
 mode: change-log
