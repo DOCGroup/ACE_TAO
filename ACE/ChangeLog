@@ -1,3 +1,8 @@
+Fri Feb 22 18:55:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue_NT.h:
+          Fixed wrong include
+
 Fri Feb 22 14:20:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Queue.{h,cpp,inl}:
