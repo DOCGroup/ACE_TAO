@@ -23,7 +23,7 @@
 #include "MonitorControl/MonitorPoint.h"
 
 #if defined (ACE_WIN32)
-#include "MonitorControl/WindowsMonitor.h"
+#include "MonitorControl/WindowsMultiInstanceMonitor.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -52,7 +52,7 @@ namespace ACE
     class MONITORCONTROL_Export BytesSentMonitor<true>
       : public MonitorPoint<true>
 #if defined (ACE_WIN32)
-      , public WindowsMonitor
+      , public WindowsMultiInstanceMonitor
 #endif
     {
     public:

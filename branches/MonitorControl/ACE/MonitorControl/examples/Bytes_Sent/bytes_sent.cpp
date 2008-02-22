@@ -26,22 +26,12 @@ display_timestamp (const MonitorControl_Types::Data &data)
 /// Display the CPU load as a floating point percentage, to
 /// 2 decimal places.
 void
-display_num_threads (const MonitorControl_Types::Data &data)
+display_bytes_sent (const MonitorControl_Types::Data &data)
 {
-  cout << "# bytes send:         ";
+  cout << "total bytes sent:         ";
   display_timestamp (data);
-  cout << static_cast<size_t> (data.value_) << endl;
+  cout << static_cast<ACE_UINT64> (data.value_) << endl;
 }
-
-class Worker : public ACE_Task_Base
-{
-public:
-  int svc (void)
-  {
-    ACE_OS::sleep (5);
-    return 0;
-  }
-};
 
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
@@ -61,14 +51,14 @@ public:
 
     if (thread_monitor != 0)
       {
-        /// Query each monitor for its data every 2 seconds, and call the
+        /// Query the monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 15; ++i)
           {
             ACE_OS::sleep (2);
 
             MonitorControl_Types::Data data = thread_monitor->retrieve ();
-            display_num_threads (data);
+            display_bytes_sent (data);
           }
       }
 
@@ -94,11 +84,7 @@ int main (int argc, char *argv [])
     MonitorChecker monitor_checker;
     monitor_checker.activate ();
 
-    /// Spawn 100 threads, sleep until they finish.
-    Worker worker;
-    worker.activate ();
-
-    ACE_OS::sleep (6);
+    ACE_OS::sleep (30);
 
     /// End the reactor's event loop, stopping the timer(s).
     STOP_PERIODIC_MONITORS;

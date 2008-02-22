@@ -40,10 +40,11 @@ namespace ACE
      */
     class MONITORCONTROL_Export WindowsMonitor
     {
+      friend class WindowsMultiInstanceMonitor;
+    
     protected:
       WindowsMonitor (const char *path);
     
-      /// Implementation of the pure virtual method.
       void win_update (void);
       
     protected:

@@ -14,6 +14,7 @@ project(MonitorControl) : acelib {
     NumThreadsMonitor.cpp
     PacketsSentMonitor.cpp
     WindowsMonitor.cpp
+    WindowsMultiInstanceMonitor.cpp
   }
 
   Header_Files {
