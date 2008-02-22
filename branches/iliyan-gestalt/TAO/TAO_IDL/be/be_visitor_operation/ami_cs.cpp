@@ -157,12 +157,15 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
-      *os << "if (this->the_TAO_" << parent->local_name ()
-          << "_Proxy_Broker_ == 0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << parent->flat_name () << "_setup_collocation ("
-          << ");" << be_uidt_nl
-          << "}" << be_uidt;
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+        {
+          *os << "if (this->the_TAO_" << parent->local_name ()
+              << "_Proxy_Broker_ == 0)" << be_idt_nl
+              << "{" << be_idt_nl
+              << parent->flat_name () << "_setup_collocation ("
+              << ");" << be_uidt_nl
+              << "}" << be_uidt;
+        }
     }
 
   // Includes the reply handler, but we have to add 1 for the retval anyway.
@@ -243,9 +246,18 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       << "_the_tao_operation_signature," << be_nl
       << nargs << "," << be_nl
       << "\"" << opname.fast_rep () << "\"," << be_nl
-      << opname_len << "," << be_nl
-      << "this->the" << intf->base_proxy_broker_name () << "_"
-      << be_uidt_nl
+      << opname_len << "," << be_nl;
+
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      *os << "this->the" << intf->base_proxy_broker_name () << "_";
+    }
+  else
+    {
+      *os << "0";
+    }
+
+  *os << be_uidt_nl
       << ");" << be_uidt;
 
   *os << be_nl << be_nl
