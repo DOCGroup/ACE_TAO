@@ -1,3 +1,11 @@
+Fri Feb 22 00:34:17 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * bin/tao_orb_tests.lst: Added !LabVIEW_RT to all tests that haven't
+          been adapted to the non-local filesystem mechanism I invented to run
+          tests for LabVIEW RT targets (and can also be used for other target
+          types). Now I can enable TAO tests for the LabVIEW RT scoreboard
+          build.
+
 Thu Feb 21 15:25:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
