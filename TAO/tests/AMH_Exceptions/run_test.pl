@@ -14,7 +14,7 @@ use PerlACE::TestTarget;
 # Amount of delay (in seconds) between starting a server and a client.
 $sleeptime = $PerlACE::wait_interval_for_process_creation;
 
-my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+$target = PerlACE::TestTarget::create_target($PerlACE::TestConfig) || die "Create target failed\n";
 
 # File used to pass AMH server ior to its clients.
 # This file name is hard-coded in the server.cpp and client.cpp files

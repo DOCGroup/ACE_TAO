@@ -62,12 +62,15 @@ be_visitor_root_ch::init (void)
           << "// " << __FILE__ << ":" << __LINE__;
 
       *os << be_global->core_versioning_begin () << be_nl;
-      
+
       *os << be_nl << be_nl
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl;
 
-      *os << "class Collocation_Proxy_Broker;" << be_nl;
+     if (be_global->gen_direct_collocation () || be_global->gen_thru_poa_collocation ())
+       {
+         *os << "class Collocation_Proxy_Broker;" << be_nl;
+       }
 
       if (idl_global->abstract_iface_seen_)
         {

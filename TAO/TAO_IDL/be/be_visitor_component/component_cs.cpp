@@ -128,17 +128,20 @@ be_visitor_component_cs::visit_component (be_component *node)
           << "}";
     }
 
-  // Generate the proxy broker factory function pointer definition.
-  *os << be_nl << be_nl
-      << "// Function pointer for collocation factory initialization."
-      << be_nl
-      << "TAO::Collocation_Proxy_Broker * " << be_nl
-      << "(*" << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer) ("
-      << be_idt << be_idt_nl
-      << "::CORBA::Object_ptr obj" << be_uidt_nl
-      << ") = 0;" << be_uidt;
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      // Generate the proxy broker factory function pointer definition.
+      *os << be_nl << be_nl
+          << "// Function pointer for collocation factory initialization."
+          << be_nl
+          << "TAO::Collocation_Proxy_Broker * " << be_nl
+          << "(*" << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer) ("
+          << be_idt << be_idt_nl
+          << "::CORBA::Object_ptr obj" << be_uidt_nl
+          << ") = 0;" << be_uidt;
+    }
 
    // Generate the destructor and default constructor.
   *os << be_nl << be_nl
@@ -148,36 +151,44 @@ be_visitor_component_cs::visit_component (be_component *node)
 
   *os << node->name () << "::" << node->local_name ()
       << " (void)" << be_nl
-      << "{" << be_idt_nl
-      << "this->" << node->flat_name ()
-      << "_setup_collocation ();" << be_uidt_nl
-      << be_uidt << "}" << be_nl << be_nl;
+      << "{" << be_idt_nl;
 
-  // Collocation setup method.
-  *os << "void" << be_nl
-      << node->name () << "::" << node->flat_name ()
-      << "_setup_collocation (void)" << be_nl
-      << "{" << be_idt_nl
-      << "if ("<< "::" << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer)" << be_idt_nl
-      << "this->the" << node->base_proxy_broker_name ()
-      << "_ =" << be_idt_nl
-      << "::" << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer (this);"
-      << be_uidt << be_uidt_nl;
-
-  AST_Component *base = node->base_component ();
-
-  if (base != 0)
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
     {
-      *os << be_nl
-          << "this->" << base->flat_name ()
-          << "_setup_collocation" << " ();";
+      *os << "this->" << node->flat_name ()
+          << "_setup_collocation ();" << be_uidt_nl;
     }
 
-  *os << be_uidt_nl << "}" << be_nl << be_nl;
+  *os << be_uidt << "}" << be_nl << be_nl;
+
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      // Collocation setup method.
+      *os << "void" << be_nl
+          << node->name () << "::" << node->flat_name ()
+          << "_setup_collocation (void)" << be_nl
+          << "{" << be_idt_nl
+          << "if ("<< "::" << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer)" << be_idt_nl
+          << "this->the" << node->base_proxy_broker_name ()
+          << "_ =" << be_idt_nl
+          << "::" << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer (this);"
+          << be_uidt << be_uidt_nl;
+
+      AST_Component *base = node->base_component ();
+
+      if (base != 0)
+        {
+          *os << be_nl
+              << "this->" << base->flat_name ()
+              << "_setup_collocation" << " ();";
+        }
+
+      *os << be_uidt_nl << "}" << be_nl << be_nl;
+    }
 
   if (be_global->any_support ())
     {
@@ -212,11 +223,20 @@ be_visitor_component_cs::visit_component (be_component *node)
 
   *os << be_idt << be_idt_nl
       << "_tao_objref," << be_nl
-      << "\"" << node->repoID () << "\"," << be_nl
-      << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer" << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl
+      << "\"" << node->repoID () << "\"," << be_nl;
+
+  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+    {
+      *os << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "0" << be_uidt_nl;
+    }
+
+  *os << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // The _duplicate method

@@ -143,15 +143,18 @@ int be_visitor_root::visit_root (be_root *node)
         {
           be_global->non_local_interfaces.dequeue_head (i);
 
-          *os << be_nl << be_nl
-              << "extern " << be_global->stub_export_macro () << be_nl
-              << "TAO::Collocation_Proxy_Broker *" << be_nl
-              << "(*" << i->flat_client_enclosing_scope ()
-              << i->base_proxy_broker_name ()
-              << "_Factory_function_pointer) ("
-              << be_idt << be_idt_nl
-              << "::CORBA::Object_ptr obj" << be_uidt_nl
-              << ");" << be_uidt;
+          if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+            {
+              *os << be_nl << be_nl
+                  << "extern " << be_global->stub_export_macro () << be_nl
+                  << "TAO::Collocation_Proxy_Broker *" << be_nl
+                  << "(*" << i->flat_client_enclosing_scope ()
+                  << i->base_proxy_broker_name ()
+                  << "_Factory_function_pointer) ("
+                  << be_idt << be_idt_nl
+                  << "::CORBA::Object_ptr obj" << be_uidt_nl
+                  << ");" << be_uidt;
+            }
         }
 
       size = be_global->non_defined_interfaces.size ();

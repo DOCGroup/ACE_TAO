@@ -246,7 +246,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "virtual std::ostream &_tao_stream_v (std::ostream &) const;";
     }
 
-  if (! node->is_local ())
+  if (! node->is_local () &&
+        (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ()))
     {
       // Add the Proxy Broker member variable.
       *os << be_uidt_nl
@@ -271,12 +272,15 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
               << be_nl << be_nl;
         }
 
-      *os << "// These methods travese the inheritance tree and set the"
-          << be_nl
-          << "// parents piece of the given class in the right mode."
-          << be_nl
-          << "virtual void " << node->flat_name ()
-          << "_setup_collocation (void);" << be_nl << be_nl;
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+        {
+          *os << "// These methods travese the inheritance tree and set the"
+              << be_nl
+              << "// parents piece of the given class in the right mode."
+              << be_nl
+              << "virtual void " << node->flat_name ()
+              << "_setup_collocation (void);" << be_nl << be_nl;
+        }
     }
 
   if (node->is_abstract () || node->is_local ())

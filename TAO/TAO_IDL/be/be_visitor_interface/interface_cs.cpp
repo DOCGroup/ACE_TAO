@@ -147,7 +147,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  if (!node->is_local ())
+  if (!node->is_local () &&
+      (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ()))
     {
       // Generate the proxy broker factory function pointer definition.
       *os << be_nl << be_nl
@@ -184,15 +185,25 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << node->name () << "::" << node->local_name ()
-          << " (void)" << be_nl
-          << " : the" << node->base_proxy_broker_name () << "_ (0)" << be_nl
-          << "{" << be_idt_nl
-          << "this->" << node->flat_name ()
-          << "_setup_collocation ();" << be_uidt_nl
-          << be_uidt << "}";
+          << " (void)" << be_nl;
+
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+        {
+          *os << " : the" << node->base_proxy_broker_name () << "_ (0)" << be_nl;
+        }
+
+      *os << "{" << be_idt_nl;
+
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+        {
+          *os << "this->" << node->flat_name ()
+              << "_setup_collocation ();" << be_uidt_nl;
+        }
+      *os << be_uidt << "}";
     }
 
-  if (! node->is_local ())
+  if (! node->is_local () &&
+     (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ()))
     {
       *os << be_nl << be_nl
           << "void" << be_nl
@@ -241,7 +252,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
       // Now we setup the immediate parents.
       long n_parents = node->n_inherits ();
-      int has_parent = 0;
+      bool has_parent = false;
 
       if (n_parents > 0)
         {
@@ -255,7 +266,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                   *os << be_nl;
                 }
 
-              has_parent = 1;
+              has_parent = true;
 
               *os << be_nl
                   << "this->" << inherited->flat_name ()
@@ -541,11 +552,19 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
 
       *os << be_idt << be_idt_nl
           << "_tao_objref," << be_nl
-          << "\"" << node->repoID () << "\"," << be_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << be_uidt_nl
-          << ");" << be_uidt << be_nl
+          << "\"" << node->repoID () << "\"," << be_nl;
+
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+        {
+          *os << node->flat_client_enclosing_scope ()
+              << node->base_proxy_broker_name ()
+              << "_Factory_function_pointer" << be_uidt_nl;
+        }
+      else
+        {
+          *os << "0" << be_uidt_nl;
+        }
+      *os << ");" << be_uidt << be_nl
           << "return TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (proxy);"
           << be_uidt << be_uidt_nl
@@ -568,11 +587,19 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
 
       *os << be_idt << be_idt_nl
           << "_tao_objref," << be_nl
-          << "\"" << node->repoID () << "\"," << be_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << be_uidt_nl
-          << ");" << be_uidt << be_uidt << be_uidt_nl
+          << "\"" << node->repoID () << "\"," << be_nl;
+
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+        {
+          *os << node->flat_client_enclosing_scope ()
+              << node->base_proxy_broker_name ()
+              << "_Factory_function_pointer" << be_uidt_nl;
+        }
+      else
+        {
+          *os << "0" << be_uidt_nl;
+        }
+      *os << ");" << be_uidt << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
