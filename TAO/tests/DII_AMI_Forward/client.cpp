@@ -100,7 +100,7 @@ int do_shutdown_test (CORBA::Object_var &server)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
   if (parse_args (argc, argv) != 0)

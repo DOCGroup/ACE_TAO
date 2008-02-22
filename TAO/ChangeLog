@@ -1,3 +1,44 @@
+Fri Feb 22 18:27:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Bug_2935_Regression/middle.cpp:
+        * tests/Bug_2935_Regression/sink.cpp:
+        * tests/Bug_2935_Regression/source.cpp:
+        * tests/DII_AMI_Forward/client.cpp:
+        * tests/DII_AMI_Forward/server.cpp:
+        * tests/POA/Adapter_Activator/server.cpp:
+        * tests/POA/DSI/client.cpp:
+        * tests/POA/DSI/server.cpp:
+        * tests/POA/Default_Servant2/client.cpp:
+        * tests/POA/Default_Servant2/server.cpp:
+        * tests/POA/Explicit_Activation/server.cpp:
+        * tests/POA/FindPOA/FindPOA.cpp:
+        * tests/POA/Forwarding/client.cpp:
+        * tests/POA/Forwarding/server.cpp:
+        * tests/POA/Generic_Servant/client.cpp:
+        * tests/POA/Loader/server.cpp:
+        * tests/POA/NewPOA/NewPOA.cpp:
+        * tests/POA/On_Demand_Activation/server.cpp:
+        * tests/POA/On_Demand_Loading/server.cpp:
+        * tests/POA/POA_BiDir/POA_BiDir.cpp:
+        * tests/POA/Reference_Counted_Servant/server.cpp:
+        * tests/POA/RootPOA/RootPOA.cpp:
+        * tests/POA/TIE/client.cpp:
+        * tests/POA/TIE/server.cpp:
+        * tests/Portable_Interceptors/Bug_2133/client.cpp:
+        * tests/Portable_Interceptors/Bug_2133/server.cpp:
+        * tests/objref_comparison_test/main.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * tests/POA/Generic_Servant/POA_Generic_Servant.mpc:
+        * tests/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+        * tests/POA/On_Demand_Loading/POA_On_Demand_Loading.mpc:
+        * tests/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
 Fri Feb 22 17:01:26 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/RTCORBA/Admin.cpp:

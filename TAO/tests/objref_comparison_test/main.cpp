@@ -68,7 +68,7 @@ Server_Task::svc ()
 }
 
 int
-main (int argc, char * argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var s_orb;
   try

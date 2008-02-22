@@ -100,7 +100,7 @@ read_IOR_from_file (void)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 
   char str [255];
