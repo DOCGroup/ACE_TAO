@@ -86,7 +86,7 @@ foreach $type (@types) {
     }
     else
     {
-        if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+        if ($target->WaitForFileTimed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
             print STDERR "ERROR: cannot find file <$iorfile>\n";
             $SV->Kill ();
             exit 1;
@@ -109,11 +109,11 @@ foreach $type (@types) {
         }
     }
 
-    unlink $iorfile;
+    $target->DeleteFile($iorfile);
 
     print STDERR "==== Test for $type finished ===\n";
 }
 
-unlink $iorfile;
+$target->DeleteFile($iorfile);
 
 exit $status;
