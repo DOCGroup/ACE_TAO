@@ -157,6 +157,7 @@ libACE_la_SOURCES = \
   Mem_Map.cpp \
   Message_Block.cpp \
   Message_Queue.cpp \
+  Message_Queue_NT.cpp \
   Message_Queue_Vx.cpp \
   Method_Request.cpp \
   Msg_WFMO_Reactor.cpp \
