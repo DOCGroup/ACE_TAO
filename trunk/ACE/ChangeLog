@@ -1,3 +1,8 @@
+Fri Feb 22 08:54:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/global.features:
+          Default optimize_collocated_invocations to 1
+
 Fri Feb 22 00:34:17 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * bin/tao_orb_tests.lst: Added !LabVIEW_RT to all tests that haven't
