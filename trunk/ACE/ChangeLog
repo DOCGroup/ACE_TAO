@@ -1,3 +1,12 @@
+Fri Feb 22 14:20:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue.{h,cpp,inl}:
+        * ace/Message_Queue_NT.{h,cpp,inl}:
+        * tests/Message_Queue_Test.cpp:
+        * ace/ace.mpc:
+        * ace/Makefile.am:
+          Moved ACE_Message_Queue_NT to its own file
+
 Fri Feb 22 08:54:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/global.features:
