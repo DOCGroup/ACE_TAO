@@ -46,17 +46,14 @@ namespace ACE
       virtual ~MonitorPoint (void);
       
     public:  
-      /// Sets a referemce to the Statistic's parent in a group.
-      virtual void group_parent (const Monitor_Base* parent);
-      
-      /// Adds a Statistic to the list of children in a group.
-      virtual void add_group_child (const Monitor_Base* child);
-      
       /// Attaches the (optional) constrain to this monitor point.
       virtual void constraint (const ETCL_Constraint* constraint);
       
-      /// Updates the monitor's data if it is numeric.
+      /// Updates the monitor's data with a double.
       virtual void receive (double data);
+      
+      /// Updates the monitor's data with an unsigned integer.
+      virtual void receive (size_t value);
       
       /// Reset function.
       virtual void clear (void);

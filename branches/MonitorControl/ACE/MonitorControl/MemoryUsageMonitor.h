@@ -67,9 +67,6 @@ namespace ACE
 #if defined (linux)
       struct sysinfo sysinfo_;
 #elif defined (ACE_HAS_KSTAT)
-      kstat_ctl_t *kstats_;
-      kstat_t *kstat_;
-      kid_t kstat_id_;
 #endif
     };
   }

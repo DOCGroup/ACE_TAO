@@ -16,18 +16,6 @@ namespace ACE
     {}
     
     void
-    MonitorPoint<true>::group_parent (const Monitor_Base* /* parent */)
-    {
-      // TODO
-    }
-    
-    void
-    MonitorPoint<true>::add_group_child (const Monitor_Base* /* child */)
-    {
-      // TODO
-    }
-    
-    void
     MonitorPoint<true>::constraint (
       const ETCL_Constraint* /* constraint */)
     {

@@ -48,12 +48,6 @@ namespace ACE
       MonitorPoint (const char* name);
     
       /// Meaningful implementation of member function.
-      virtual void group_parent (const Monitor_Base* parent);
-      
-      /// Meaningful implementation of member function.
-      virtual void add_group_child (const Monitor_Base* child);
-      
-      /// Meaningful implementation of member function.
       virtual void constraint (const ETCL_Constraint* constraint);
       
       /// Meaningful implementation of member function.

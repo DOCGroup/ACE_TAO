@@ -1,3 +1,32 @@
+Fri Feb 22 000:03:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/MonitorGroup.cpp:
+        * MonitorControl/MonitorGroup.h:
+        * MonitorControl/MonitorGroup_T.cpp:
+        * MonitorControl/MonitorGroup_T.h:
+
+          New files, defining a monitor group class.
+
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/MemoryUsageMonitor.h:
+        * MonitorControl/MonitorPoint_T.cpp:
+        * MonitorControl/MonitorControl.mpc:
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/MonitorPoint_T.h:
+        * MonitorControl/PacketsSentMonitor.cpp:
+
+          Removed previous monitor group-related methods,
+          since they have been replaced by the new class
+          above. Also made minor changes to the 
+          BYtesSentMonitor and PacketsSentMonitor classes.
+
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
+
+          Changed the Worker class activation to spawn only
+          a single thread.
+
 Thu Feb 21 14:23:55 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MonitorControl/BytesSentMonitor.cpp

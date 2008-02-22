@@ -11,7 +11,7 @@ namespace ACE
     BytesSentMonitor<true>::BytesSentMonitor (void)
       : MonitorPoint<true> ("BytesSent")
 #if defined (ACE_WIN32)
-      , WindowsMonitor ("\\\\Network Interfaces(*)\\\\Bytes Sent")
+      , WindowsMonitor ("\\Network Interfaces(*)\\Bytes Sent")
 #endif
     {}
 

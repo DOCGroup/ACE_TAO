@@ -22,18 +22,6 @@ namespace ACE
     
     template<bool ENABLED>
     void
-    MonitorPoint<ENABLED>::group_parent (const Monitor_Base* /* parent */)
-    {
-    }
-    
-    template<bool ENABLED>
-    void
-    MonitorPoint<ENABLED>::add_group_child (const Monitor_Base* /* child */)
-    {
-    }
-    
-    template<bool ENABLED>
-    void
     MonitorPoint<ENABLED>::constraint (
       const ETCL_Constraint* /* constraint */)
     {
@@ -42,6 +30,12 @@ namespace ACE
     template<bool ENABLED>
     void
     MonitorPoint<ENABLED>::receive (double /* data */)
+    {
+    }
+    
+    template<bool ENABLED>
+    void
+    MonitorPoint<ENABLED>::receive (size_t /* data */)
     {
     }
     

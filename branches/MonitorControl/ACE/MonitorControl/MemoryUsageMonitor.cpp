@@ -17,9 +17,6 @@ namespace ACE
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\Memory\\% Committed Bytes In Use")
 #elif defined (ACE_HAS_KSTAT)
-      , kstats_ (0)
-      , kstat_ (0)
-      , kstat_id_ (0)
 #endif
     {
     }
@@ -45,6 +42,14 @@ namespace ACE
       
       this->receive (percent_mem_usage);
 #elif defined (ACE_HAS_KSTAT)
+      unsigned long page_size = sysconf (_SC_PAGE_SIZE);
+      unsigned long total = sysconf (_SC_PHYS_PAGES) * page_size;
+      unsigned long free = sysconf (_SC_AVPHYS_PAGES) * page_size;
+      
+      double used = total - free;
+      double percent_mem_usage = used / total * 100.0;
+      
+      this->receive (percent_mem_usage);
 #endif
     }
   }

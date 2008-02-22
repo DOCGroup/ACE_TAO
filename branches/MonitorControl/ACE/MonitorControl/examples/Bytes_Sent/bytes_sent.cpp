@@ -96,7 +96,7 @@ int main (int argc, char *argv [])
 
     /// Spawn 100 threads, sleep until they finish.
     Worker worker;
-    worker.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 100);
+    worker.activate ();
 
     ACE_OS::sleep (6);
 

@@ -1,0 +1,47 @@
+// $Id$
+
+#include "MonitorControl/MonitorGroup.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE
+{
+  namespace MonitorControl
+  {
+    void
+    MonitorGroup<true>::add_member (Monitor_Base* member)
+    {
+      this->members_.enqueue_tail (member);
+    }
+    
+    void
+    MonitorGroup<true>::update (void)
+    {
+      for (MEMBERS_ITERATOR i (this->members_); !i.done (); i.advance ())
+        {
+          i.next (this->current_member_);
+          (*this->current_member_)->update ();
+        }
+    }
+    
+    void
+    MonitorGroup<true>::constraint (
+      const ETCL_Constraint* /* constraint */)
+    {
+      // TODO
+    }
+    
+    void
+    MonitorGroup<true>::clear (void)
+    {
+      for (MEMBERS_ITERATOR i (this->members_); !i.done (); i.advance ())
+        {
+          i.next (this->current_member_);
+          (*this->current_member_)->clear ();
+        }
+    }
+  }
+}
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+

@@ -9,6 +9,7 @@ project(MonitorControl) : acelib {
     BytesSentMonitor.cpp
     CPULoadMonitor.cpp
     MemoryUsageMonitor.cpp
+    MonitorGroup.cpp
     MonitorPoint.cpp
     NumThreadsMonitor.cpp
     PacketsSentMonitor.cpp
@@ -23,6 +24,7 @@ project(MonitorControl) : acelib {
 
   Template_Files {
     LowLevelMonitors_T.cpp
+    MonitorGroup_T.cpp
     MonitorPoint_T.cpp
   }
 
