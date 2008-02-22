@@ -16,19 +16,18 @@
 VXWORKS = 1
 CROSS-COMPILE = 1
 
-ifneq (,$(HOST_ROOT))
-  TAO_IDL ?= $(HOST_ROOT)/bin/tao_idl$(EXEEXT)
-  TAO_IDL_DEP ?= $(TAO_IDL)
-  TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf
-endif
-
 debug ?= 1
 optimize ?= 1
 threads ?= 1
 exceptions ?= 1
 rtp ?= 1
-pthread ?= 1
+ifeq ($(rtp),0)
+  pthread ?= 0
+else
+  pthread ?= 1
+endif
 xerces ?= 0
+aio ?= 0
 versioned_so ?= 0
 
 ifeq ($(static_libs),1)
@@ -54,12 +53,30 @@ ifeq (,$(WIND_HOST_TYPE))
 endif # WIND_HOST_TYPE
 
 ifeq ("$(WIND_HOST_TYPE)","x86-win32")
-  ifneq ($(MAKE_MODE), unix)
-    vxworks_ntbuild ?= 1
-    MKDIR_NTSTYLE ?= 1
-    lacks_touch ?= 1
-  endif
-override RM=rm -f
+  vxworks_ntbuild ?= 0
+  mingw32 ?= 1
+  lacks_touch ?= 0
+  PWD=$(subst \,/,$(shell pwd))
+  ACE_ROOT:=$(subst \,/,$(ACE_ROOT))
+  TAO_ROOT:=$(subst \,/,$(TAO_ROOT))
+  CIAO_ROOT:=$(subst \,/,$(CIAO_ROOT))
+  override RM=rm -f
+endif # x86-win32
+
+ifneq (,$(HOST_ROOT))
+TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf
+ifeq ("$(WIND_HOST_TYPE)","x86-win32")
+  TAO_IDL = $(HOST_ROOT)/bin/tao_idl.exe
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2.exe
+  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc.exe
+else
+  TAO_IDL = $(HOST_ROOT)/bin/tao_idl
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
+  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc
+endif
+TAO_IDL_DEP = $(TAO_IDL)
+TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
+CIDLC_DEP = $(CIDLC)
 endif
 
 HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
@@ -77,9 +94,15 @@ ifeq ($(TOOL),)
 else
   override TOOL := $(TOOL)
 endif
-override TOOL_FAMILY := $(TOOL)
+ifeq ($(TOOL_FAMILY),)
+  ifeq ($(findstring gnu,$(TOOL)),gnu)
+    override TOOL_FAMILY := gnu
+  else
+    override TOOL_FAMILY := diab
+  endif
+endif
 
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
   templates ?= automatic
 endif
 
@@ -223,13 +246,13 @@ ifeq ($(pthread),1)
   CPPFLAGS += -DACE_HAS_PTHREADS
 endif
 
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 ifeq ("$(templates)","automatic")
-ifdef repo
+ifeq ($(repo),1)
 ifeq ("$(VXWORKSLINK)","true")
   ifeq ($(VX_APP_BUILD),1)
 	ifneq ($(SHARED_LIBS),1)
@@ -241,7 +264,9 @@ else
     ace_lib_prelink := 1
     LINK.cc          = override
     LINK.cc.override = $(LD_PARTIAL) -frepo -L$(ACE_ROOT)/ace -L$(INSLIB) -L./ $(LDLIBPATH) $(LD_LINK_PATH)
-    LDFLAGS          = $(ACE_SHLIBS)
+    ifneq ($(SHARED_LIBS),1)
+      LDFLAGS        = $(ACE_SHLIBS)
+    endif
   endif
 endif
 endif
@@ -251,16 +276,16 @@ endif
 ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
   CPPFLAGS += $(TEMPLATES_FLAG)
 endif
-endif  # TOOL == gnu
+endif  # TOOL_FAMILY == gnu
 
-ifeq ("$(TOOL)","diab")
+ifeq ("$(TOOL_FAMILY)","diab")
 ifeq ($(exceptions),1)
   C++FLAGS += -Xexceptions
 else
   C++FLAGS += -Xexceptions-off
 endif
 else
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
 ifeq ($(exceptions),1)
   C++FLAGS += -fexceptions
 else
@@ -270,10 +295,10 @@ endif
 endif
 
 ifneq ($(findstring $(VX_CPU_FAMILY),ppc arm),)
-ifeq ("$(TOOL)","diab")
+ifeq ("$(TOOL_FAMILY)","diab")
   C++FLAGS += -Xchar-signed
 else
-ifeq ("$(TOOL)","gnu")
+ifeq ("$(TOOL_FAMILY)","gnu")
   C++FLAGS += -fsigned-char
 endif
 endif
@@ -303,7 +328,7 @@ endif
 
 ifeq ("$(VXWORKSLINK)","true")
 
-  ifdef repo
+  ifeq ($(repo),1)
     ifeq ($(SHARED_LIBS),1)
       BACKUP_RPO_RULE = for %f in ($(basename $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS))) do if exist %f.rpo mv %f.rpo %f.rpobak $(ACE_NUL_STDERR)
       POST_BUILD_RULE = for %f in ($(basename $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS))) do if exist %f.rpobak mv %f.rpobak %f.rpo $(ACE_NUL_STDERR)
@@ -313,7 +338,7 @@ ifeq ("$(VXWORKSLINK)","true")
 .PHONY: $(PRJ_DIR)/$(PRJ_FILE)
   ## special target to satisfy VxWorks dependencies for images
 $(PRJ_DIR)/$(PRJ_FILE):
-  ifdef repo
+  ifeq ($(repo),1)
     ifeq ($(SHARED_LIBS),1)
     #### execute prelink step to make compiler instantiate all needed
     #### templates; discard image and repo files (*.rpo) after linkstep
