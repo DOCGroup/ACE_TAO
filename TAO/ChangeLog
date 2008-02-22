@@ -1,3 +1,13 @@
+Fri Feb 22 08:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/optimize_collocated_invocations.mpb:
+          New file, when this feature is set to 0 we pass -Sp -Sd to the
+          idl compiler. In the future we can also change the core libraries
+          to disable certain classes
+
+        * MPC/config/taoidldefaults.mpb:
+          Derive from optimize_collocated_invocations
+
 Fri Feb 22 00:39:46 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Param_Test/run_test.pl: Use target class to wait for, and
