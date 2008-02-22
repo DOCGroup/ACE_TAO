@@ -1,3 +1,23 @@
+Fri Feb 22 21:55:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/WindowsMultiInstanceMonitor.cpp:
+        * MonitorControl/WindowsMultiInstanceMonitor.h:
+        
+          New files, a specialized Windows monitor mixin class for
+          cases where the Performance Data Helper (PDH) object of
+          interest to the monitor has more than one 'instance', for
+          example a Network Interface object has an instance for each
+          network card.
+          
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/WindowsMonitor.h:
+        * MonitorControl/BytesSentMonitor.h:
+        * MonitorControl/MonitorControl.mpc:
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
+        
+          Changes corresponding to the integration of the new class
+          described above.
+
 Fri Feb 22 000:03:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorGroup.cpp:
