@@ -224,7 +224,7 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Queue.inl"
+#include "ace/Message_Queue_NT.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
