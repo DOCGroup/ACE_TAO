@@ -568,18 +568,22 @@ def main ():
         ip.parse ()
         
         ## Determine build times and brief test error's URL for each build
+        order = []
         testlogs = []
         times = []
         for i in range (len (ip.build)):
-            print "%s [%s]" % (ip.build[i].name, ip.build[i].group)
- 
+            print "build=%s, group=%s" % (ip.build[i].name, ip.build[i].group)
+
+            ## index page may have the builds in different order
+            order.append (find_index (options.builds, ip.build[i].name))
+
             hp = HistoryParser (ip.build[i].historyurl) 
             parse_with_retry (hp, ip.build[i].historyurl) 
             
             print "options.dates %s" % options.dates
 
             btimes = diff_dates (options.dates, hp.timestamp)
-            print "%s: %s" % (ip.build[i].name, 
+            print "build: %s, times:  %s" % (ip.build[i].name, 
                               [format_date(t) for t in btimes])
                                    
             if None in btimes:
@@ -592,8 +596,8 @@ def main ():
                 log_abbrev_index = [find_index (hp.timestamp, btimes[0]),
                                     find_index (hp.timestamp, btimes[1])]
 
-#                print "info: indexes [%d, %d]" % (log_abbrev_index[0],
-#                                                  log_abbrev_index[1])
+                print "info: timestamp indexes [%d, %d]" % (log_abbrev_index[0],
+                                                  log_abbrev_index[1])
 
                 dp0 = DailyParser (hp.build_log_index[log_abbrev_index[0]])
                 dp0.parse()
@@ -608,11 +612,17 @@ def main ():
 
                 testlogs.append ([dp0.briefurl('test'), dp1.briefurl('test')])
                 
-#        print "testlogs=%s" % testlogs
+        print "testlogs=%s\n" % testlogs
+        print "times=%s\n" % times
+        print "order=%s\n" % order
 
         if len (ip.build) > 1:
-            l = [testlogs[0][1], testlogs[1][1]]
-            t = [times[0][1], times[1][1]]
+            (first, second) = order
+            l = [testlogs[first][1], testlogs[second][1]]
+            t = [times[first][1], times[second][1]]
+
+            print "l=%s\n" % l
+            print "t=%s\n" % t
 
             bp0 = BriefParser (l[0])
             bp0.parse()

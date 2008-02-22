@@ -1,3 +1,18 @@
+Fri Feb 22 13:29:29 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/diff-builds.py:
+
+        Fixed a bug causing confusion with the datestamps available for
+        comparison
+
+        * tests/Bug_2980_Regression_Dll.cpp:
+        * tests/Bug_2980_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+        Addded a test for bug 2980. Thanks to Lothar Werzinger <lothar at
+        tradescape biz> for contributing the code.
+
 Wed Feb 20 15:05:01 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Intrusive_Auto_Ptr_Test.cpp:
@@ -164,3 +179,11 @@ Sun Dec 16 20:48:39 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * tests/tests.mpc:
 
         Updated to use the intrusive auto pointer
+
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ"))
+(set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
