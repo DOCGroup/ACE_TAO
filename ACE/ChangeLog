@@ -1,3 +1,8 @@
+Sat Feb 23 06:56:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          OpenVMS doesn't have rwho
+
 Fri Feb 22 18:55:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Queue_NT.h:
