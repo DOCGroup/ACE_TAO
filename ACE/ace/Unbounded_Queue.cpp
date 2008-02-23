@@ -122,6 +122,9 @@ ACE_Unbounded_Queue<T>::copy_nodes (const ACE_Unbounded_Queue<T> &us)
 template <class T> void
 ACE_Unbounded_Queue<T>::delete_nodes (void)
 {
+  if (this->head_ == 0)
+    return;
+
   for (ACE_Node<T> *curr = this->head_->next_;
        // Keep looking until we've hit the dummy node.
        curr != this->head_;

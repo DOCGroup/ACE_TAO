@@ -440,21 +440,9 @@ class BriefParser (AbstractParser):
         if self.context[-1] == 'h3' and self.ready:
             self.failed.append (content)
 
-integrated_url = "http://www.dre.vanderbilt.edu/scoreboard/integrated.html"
-#dates_url = "http://acebuilds.riverace.com/cuddy/dev/va6-64_debug/index.html"
-#    brieflog = "http://acebuilds.riverace.com/cuddy/dev/va6-64_debug/2008_01_25_10_31_Brief.html#section_6"
-    
-def list_timestamps_for_build (b):
-    ip = IndexParser (integrated_url)
-    ip.parse ()
-    ix = ip.build_name.find (b)
-    if ix == -1:
-        return -1
 
-    hp = HistoryParser (ip.build_history_url[ix])
-    hp.parse()
-    print hp.timestamp
-    
+
+
 def format_date (t):
     if t == None or len (t) != 9:
         return '(unknown)'
@@ -531,29 +519,47 @@ def parse_with_retry (parser, what):
 #            print "Cant access %s. Retry/Stop/Continue [r/s/c]?" % (what)
     
 
+
+scoreboards = {"oci":"http://scoreboard.ociweb.com/oci-all.html", 
+               "doc":"http://www.dre.vanderbilt.edu/scoreboard/integrated.html"}
+
 def main ():
     parser = OptionParser()
     parser.add_option("-D", "--date", action="append", dest="dates",
-                      help="date to use in comparisons  [default=today]")
+                      help="Date to use in comparisons. One can be specified "
+                      + "for each build provided on the command line  [default=today]")
     parser.add_option("-g", "--group", action="append",  dest="groups",
                       default=[],
-                      help="consider only builds from specific group(s) [all]")
-    parser.add_option("-b", "--build", action="append",  dest="builds",
-                      default=[],
-                      help="builds to compare [all]")
+                      help="Filter builds by their scoreboard group. Can be used "
+                      + " multiple times [default=all]")
+    parser.add_option("-d", "--diff", action="store_true",  dest="isdiff",
+                      default=True, help="Compare tests failures [default=true]")
+    parser.add_option("-l", "--list", action="store_true",  dest="islist",
+                      help="Compare tests failures [default=false]")
     parser.add_option("-v", action="store_true", dest="verbose",
-                      help="make lots of noise [default=true]")
+                      help="Make a bit more noise [default=true]")
+    parser.add_option("-S", "--scoreboard", action="store", dest="scoreboard",
+                      default="doc",
+                      help="Specify the scoreboard URL to use. Can be either a "
+                      + "proper URL, or one of the shortcuts (oci, doc), which "
+                      + "designates respectively, the OCI's or the DOC's scoreboard "
+                      + "[default=doc]")
 
-    (options, args) = parser.parse_args()
+    (options, builds) = parser.parse_args()
     
+    for key in scoreboards.keys():
+        if options.scoreboard.startswith (key):
+            options.scoreboard = scoreboards[options.scoreboard]
+            break
+        
     if options.dates == None or len (options.dates) == 0:
         options.dates = []
     else:
         options.dates = [parse_date (d) for d in options.dates]
 
     # what do we need to do?
-    if len (args) > 0 and (args[0] == 'list' or args[0] == 'l'):
-        ip = IndexParser (integrated_url, options.groups, options.builds)
+    if options.islist:
+        ip = IndexParser (options.scoreboard, options.groups, builds)
         ip.parse ()
         
         for i in range (len (ip.build)):
@@ -563,8 +569,8 @@ def main ():
             parse_with_retry (hp, ip.build[i].historyurl)
 
 
-    elif len (args) > 0 and (args[0] == 'diff' or args[0] == 'd'):
-        ip = IndexParser (integrated_url, options.groups, options.builds)
+    elif options.isdiff:
+        ip = IndexParser (options.scoreboard, options.groups, builds)
         ip.parse ()
         
         ## Determine build times and brief test error's URL for each build
@@ -575,7 +581,7 @@ def main ():
             print "build=%s, group=%s" % (ip.build[i].name, ip.build[i].group)
 
             ## index page may have the builds in different order
-            order.append (find_index (options.builds, ip.build[i].name))
+            order.append (find_index (builds, ip.build[i].name))
 
             hp = HistoryParser (ip.build[i].historyurl) 
             parse_with_retry (hp, ip.build[i].historyurl) 
@@ -642,6 +648,17 @@ def main ():
                 print l
 
 
+def timestamps_for_build (build_name):
+    ip = IndexParser (integrated_url)
+    ip.parse ()
+    ix = ip.build_name.find (build_name)
+    if ix == -1:
+        return -1
+
+    hp = HistoryParser (ip.build_history_url[ix])
+    hp.parse()
+    print hp.timestamp
+    
 def sample():
     ip = IndexParser (integrated_url, [], [])
     ip.parse ()

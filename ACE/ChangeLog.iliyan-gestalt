@@ -1,3 +1,21 @@
+Sat Feb 23 03:34:30 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Unbounded_Queue.cpp:
+
+        This one will be tough to explain easily. Adding a check for head
+        != 0 before trying to dereference it. The background is that
+        TAO/orbsvcs/tests/Notify/Ordering test is using a static instance
+        of Routing_Slip_Queue (orbsvcs/Notify), which is being destroyed
+        upon process termination. This is bad in itself because it causes
+        indeterminism of the process behavior. The problem still lies with
+        Unbounded_Queue though, because it was assumming the head_ member
+        is _always_ != 0. This however doesn't hold true, for example
+        perhaps by calling dequeue_head() enough times.
+
+        * bin/diff-builds.py:
+
+        Simplified argument passing and parsing.
+
 Fri Feb 22 13:29:29 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/diff-builds.py:
