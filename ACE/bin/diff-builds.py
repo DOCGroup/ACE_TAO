@@ -547,6 +547,8 @@ def main ():
 
     (options, builds) = parser.parse_args()
     
+    print "builds=%s" % (builds)
+    
     for key in scoreboards.keys():
         if options.scoreboard.startswith (key):
             options.scoreboard = scoreboards[options.scoreboard]
@@ -578,7 +580,7 @@ def main ():
         testlogs = []
         times = []
         for i in range (len (ip.build)):
-            print "build=%s, group=%s" % (ip.build[i].name, ip.build[i].group)
+            print "(%d) build=%s, group=%s" % (i, ip.build[i].name, ip.build[i].group)
 
             ## index page may have the builds in different order
             order.append (find_index (builds, ip.build[i].name))
