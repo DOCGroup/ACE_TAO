@@ -458,7 +458,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
   if (!ssl_endpoint->credentials_set ())
     {
       if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_ERROR,
+        ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) Initializing SSLIOP_Endpoint \n")
                     ));
 
