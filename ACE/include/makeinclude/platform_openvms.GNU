@@ -10,6 +10,7 @@ optimize ?= 0
 threads ?= 1
 pthread ?= 1
 ssl ?= 0
+rwho ?= 0
 
 ifeq ($(static_libs),1)
   override shared_libs =
