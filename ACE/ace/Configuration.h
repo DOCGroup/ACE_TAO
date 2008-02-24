@@ -888,5 +888,9 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+#if defined (__ACE_INLINE__)
+#include "ace/Configuration.inl"
+#endif /* __ACE_INLINE__ */
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIGURATION_H */
