@@ -244,7 +244,7 @@ write_iors_to_file (const char *first_ior,
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 
   try
