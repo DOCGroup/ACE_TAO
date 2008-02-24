@@ -45,7 +45,7 @@ TAO_AbstractInterfaceDef_i::is_a_i (const char *interface_id)
 {
   if (ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/AbstractBase:1.0") == 0)
     {
-      return 1;
+      return true;
     }
 
   return this->TAO_InterfaceDef_i::is_a_i (interface_id);

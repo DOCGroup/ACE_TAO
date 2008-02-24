@@ -30,9 +30,7 @@ IFR_Service::init (int argc,
   int result;
   try
     {
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    0);
+      this->orb_ = CORBA::ORB_init (argc, argv);
 
       result = this->my_ifr_server_.init_with_orb (argc,
                                                    argv,

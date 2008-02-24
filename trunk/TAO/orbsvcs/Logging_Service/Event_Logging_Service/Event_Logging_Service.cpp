@@ -29,9 +29,7 @@ Event_Logging_Service::~Event_Logging_Service (void)
 void
 Event_Logging_Service::init_ORB (int& argc, char *argv [])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                "");
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references("RootPOA");
@@ -162,8 +160,7 @@ Event_Logging_Service::init (int argc, char *argv[])
       name.length (1);
       name[0].id = CORBA::string_dup (this->service_name_);
 
-      this->naming_->rebind (name,
-                             obj.in ());
+      this->naming_->rebind (name, obj.in ());
     }
 
   return 0;
