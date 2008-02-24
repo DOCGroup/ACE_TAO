@@ -691,7 +691,7 @@ ACE_Get_Opt::permute (void)
                          ACE_TEXT ("--")) == 0)
     {
       // We found the marker for the end of the options.
-      this->optind++;
+      ++this->optind;
 
       if (this->nonopt_start_ != this->nonopt_end_
           && this->nonopt_end_ != this->optind)
