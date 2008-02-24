@@ -1,3 +1,16 @@
+Sun Feb 24 19:37:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Configuration.cpp:
+        * ace/Configuration.h:
+        * ace/Configuration.inl:
+          Added new inline file
+
+        * ace/Get_Opt.cpp:
+          Prefix increment
+
+        * ace/Event_Handler.h:
+          Removed commented out code
+
 Sat Feb 23 06:56:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_openvms.GNU:
