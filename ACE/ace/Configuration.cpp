@@ -13,6 +13,10 @@
 #  include "ace/OS_NS_unistd.h"
 #endif /* ACE_LACKS_ACCESS */
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Configuration.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Section_Key_Internal::ACE_Section_Key_Internal (void)
@@ -154,7 +158,7 @@ ACE_Configuration::validate_name (const ACE_TCHAR* name, int allow_path)
     allow_path ? ACE_TEXT ("][") : ACE_TEXT ("\\][");
 
   // Position of the first invalid character or terminating null.
-  size_t pos = ACE_OS::strcspn (name, reject);
+  size_t const pos = ACE_OS::strcspn (name, reject);
 
   // Check if it is an invalid character.
   if (name[pos] != ACE_TEXT ('\0'))
@@ -467,7 +471,7 @@ ACE_Configuration_Win32Registry::operator!= (const ACE_Configuration_Win32Regist
 
 ACE_Configuration_Win32Registry::ACE_Configuration_Win32Registry (HKEY hKey)
 {
-  ACE_Section_Key_Win32 *temp;
+  ACE_Section_Key_Win32 *temp = 0;
 
   ACE_NEW (temp, ACE_Section_Key_Win32 (hKey));
 
@@ -1165,7 +1169,7 @@ ACE_Configuration_ExtId::operator== (const ACE_Configuration_ExtId& rhs) const
 bool
 ACE_Configuration_ExtId::operator!= (const ACE_Configuration_ExtId& rhs) const
 {
-  return (ACE_OS::strcasecmp (name_, rhs.name_) != 0);
+  return !this->operator== (rhs);
 }
 
 u_long
@@ -1173,12 +1177,6 @@ ACE_Configuration_ExtId::hash (void) const
 {
   ACE_TString temp (name_, 0, false);
   return temp.hash ();
-}
-
-const ACE_TCHAR*
-ACE_Configuration_ExtId::name (void)
-{
-  return name_;
 }
 
 void
