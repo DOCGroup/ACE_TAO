@@ -104,7 +104,7 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 
   try
