@@ -1,3 +1,12 @@
+Sun Feb 24 23:11:04 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Unbounded_Queue.cpp:
+
+        Reverted the last change since no other member function could
+        account for making head_ a 0. Interestingly, after removing the
+        code explicitely settiong head_ to 0 from the dtor the problem
+        "went away". Now, the test mentioned previosly works. WTF?
+
 Sat Feb 23 03:34:30 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Unbounded_Queue.cpp:
