@@ -1,3 +1,12 @@
+Mon Feb 25 20:14:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ORB_Local_Config/run_tests_all.pl:
+        * tests/Parallel_Connect_Strategy/run_test.pl:
+          Updated for VxWorks
+
+        * tests/CSD_Collocation/run_test.pl:
+          No need to set libpath
+
 Mon Feb 25 19:47:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2183_Regression/run_test.pl:
