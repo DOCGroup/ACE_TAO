@@ -23,7 +23,16 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$TAO_IFR = new PerlACE::Process ("../../../../orbsvcs/IFR_Service/tao_ifr");
+if ($^O eq "MSWin32")
+{
+   $tao_ifr = "$ENV{ACE_ROOT}/bin/tao_ifr";
+}
+else
+{
+   $tao_ifr = "../../../IFR_Service/tao_ifr";
+}
+
+$TAO_IFR = new PerlACE::Process ("$tao_ifr");
 $IFR     = new PerlACE::Process ("../../../../orbsvcs/IFR_Service/IFR_Service", " -o $ifr_iorfile");
 $CL      = new PerlACE::Process ("IDL3_Test", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile"
                                  . " $debug");
