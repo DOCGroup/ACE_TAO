@@ -1,3 +1,30 @@
+Mon Feb 25 15:36:17 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/compare_histo.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/server.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/server.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/server.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
 Mon Feb 25 09:45:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Loader/Servant_Locator.cpp:

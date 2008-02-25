@@ -167,7 +167,7 @@ run_service_command (Options& opts)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Options opts;
 
