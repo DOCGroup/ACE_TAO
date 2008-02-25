@@ -1,3 +1,9 @@
+Mon Feb 25 09:45:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Loader/Servant_Locator.cpp:
+        * tests/POA/On_Demand_Loading/Servant_Manager.cpp:
+          Fixed OpenVMS IA64 warnings
+
 Sun Feb 24 19:48:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3154_Regression/run_test.pl:
