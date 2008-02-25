@@ -1,3 +1,14 @@
+Mon Feb 25 08:13:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+          Set ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN when
+          ACE_THR_FUNC_RETURN is an integral type
+
+        * ace/Task.cpp:
+          Use ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN to determine whether
+          we can do a reinterpret_cast or static_cast. This is much easier
+          then checking all compilers
+
 Sun Feb 24 19:37:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Configuration.cpp:
