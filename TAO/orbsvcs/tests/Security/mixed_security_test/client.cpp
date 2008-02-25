@@ -152,7 +152,7 @@ ClientTest::secure_invocation ()
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // Accomodate deficiencies on Windows that preclude doing this in
   // run_test.pl

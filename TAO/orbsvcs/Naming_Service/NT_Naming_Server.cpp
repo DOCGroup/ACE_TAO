@@ -220,7 +220,7 @@ Options::run (int argc, char* argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   return OPTIONS::instance ()->run (argc, argv);
 }

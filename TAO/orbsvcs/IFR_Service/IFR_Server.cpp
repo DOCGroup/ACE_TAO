@@ -34,7 +34,7 @@ IFR_Service_Shutdown_Functor::operator() (int which_signal)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   IFR_Service server;
 

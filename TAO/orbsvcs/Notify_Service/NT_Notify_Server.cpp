@@ -17,7 +17,7 @@
 // = AUTHORS
 //    John Tucker <jtucker@infoglide.com>,
 //    Mike Vitalo <mvitalo@infoglide.com>, and
-//    David Robison <drrobison@openroadsconsulting.com> 
+//    David Robison <drrobison@openroadsconsulting.com>
 //
 // ============================================================================
 
@@ -223,7 +223,7 @@ Options::run (int argc, char* argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   return OPTIONS::instance ()->run (argc, argv);
 }

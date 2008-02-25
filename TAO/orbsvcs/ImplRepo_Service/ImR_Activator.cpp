@@ -184,7 +184,7 @@ run_service_command (Activator_Options& opts)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Activator_Options opts;
 

@@ -123,7 +123,7 @@ publish_ior (CORBA::ORB_ptr orb, CORBA::Object_ptr o, const char* filename)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // Necessary nonsense to make up for deficencies doing this
   // in run_test.pl on Windows platforms.
