@@ -1,3 +1,31 @@
+Mon Feb 25 19:47:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2183_Regression/run_test.pl:
+        * tests/Bug_2702_Regression/run_test.pl:
+          Use the new IgnoreHostRoot support when spawning perl
+
+        * tests/Bug_3154_Regression/run_test.pl:
+          Don't use HOST_ROOT to get tao_idl, the test framework will
+          do this
+
+        * tests/Hang_Shutdown/client.cpp:
+        * tests/Hang_Shutdown/server.cpp
+          Fixed typo and no need to pass in an empty orb name
+
+        * tests/Leader_Followers/run_test.pl:
+        * tests/MT_Timeout/run_test.pl:
+        * tests/MProfile_Connection_Timeout/run_test.pl:
+          Only store the ior filename once
+
+        * tests/OctetSeq/test_i.cpp
+          Initialise pointer with 0
+
+        * tests/MT_Timeout/Client_Task.cpp:
+          Use prefix increment
+
+        * tests/MProfile_Connection_Timeout/client.cpp:
+          Laout changes
+
 Mon Feb 25 15:36:17 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/IFR_Service/IFR_Server.cpp:

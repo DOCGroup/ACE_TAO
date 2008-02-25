@@ -127,7 +127,7 @@ namespace Test
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) Calling shutdown \n"));
 
-          // Just wait for the main thread to start sening out
+          // Just wait for the main thread to start sending out
           // messages
           ACE_OS::sleep (4);
 
@@ -177,9 +177,7 @@ namespace Test
     try
       {
         CORBA::ORB_var orb =
-          CORBA::ORB_init (argc,
-                           argv,
-                           "");
+          CORBA::ORB_init (argc, argv);
 
         if (parse_args (argc, argv) == false)
           return -1;
