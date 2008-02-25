@@ -272,14 +272,14 @@ ACE_Task_Base::svc_run (void *args)
 #endif /* ACE_HAS_SIG_C_FUNC */
 
   // Call the Task's svc() hook method.
-  int svc_status = t->svc ();
+  int const svc_status = t->svc ();
   ACE_THR_FUNC_RETURN status;
-#if (defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__MINGW32__) || (defined (_MSC_VER) && (_MSC_VER <= 1500)) || (defined (ACE_WIN32) && defined (__DCC__)) || (defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x660) && defined (ACE_HAS_VXTHREADS))
-  // Some compilers complain about reinterpret_cast from int to unsigned long...
+#if defined (ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN)
+  // Reinterpret case between integral types is not mentioned in the C++ spec
   status = static_cast<ACE_THR_FUNC_RETURN> (svc_status);
 #else
   status = reinterpret_cast<ACE_THR_FUNC_RETURN> (svc_status);
-#endif /* (__BORLANDC__ < 0x600) || __MINGW32__ || _MSC_VER <= 1400 */
+#endif /* ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN */
 
 // If we changed this zero change the other if in OS.cpp Thread_Adapter::invoke
 #if 1
