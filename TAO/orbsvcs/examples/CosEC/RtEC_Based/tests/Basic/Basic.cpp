@@ -5,7 +5,7 @@
 #include "CosEvent_Utilities.h"
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Basic basic;
 
