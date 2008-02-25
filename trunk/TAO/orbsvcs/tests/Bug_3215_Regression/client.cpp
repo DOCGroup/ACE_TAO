@@ -36,25 +36,25 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::Boolean result = 0;
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" );
-      
+
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior );
-      
+
 
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in () );
-      
+
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -66,13 +66,13 @@ main (int argc, char *argv[])
 
       // Check this isn't generating transients for any other reason
       hello->ping ();
-      
+
 
 
       try
         {
           hello->throw_location_forward ();
-          
+
 
           ACE_DEBUG ((LM_ERROR, "REGRESSION - Test has failed !!!\n"));
           result = 1;
@@ -82,13 +82,13 @@ main (int argc, char *argv[])
           ACE_UNUSED_ARG (my_ex);
           ACE_DEBUG ((LM_DEBUG, "Client catches a TRANSIENT, as expected. No problem !\n"));
         }
-      
+
 
       hello->shutdown ();
-      
+
 
       orb->destroy ();
-      
+
     }
   catch (const CORBA::Exception& ex)
     {
@@ -96,7 +96,7 @@ main (int argc, char *argv[])
                            "Test failed (Not regression) because unexpected exception caught:");
       return 1;
     }
-  
+
 
   if (result)
     {

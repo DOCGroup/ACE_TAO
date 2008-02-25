@@ -8,8 +8,9 @@ project(*Performance_IDL): loadbalancing, strategies {
 }
 
 project(*Performance_Server): loadbalancing, pi_server, strategies {
-  after += *Performance_IDL
-  avoids += ace_for_tao
+  after   += *Performance_IDL
+  avoids  += ace_for_tao
+  exename  = server
   Source_Files {
     server.cpp
     Roundtrip.cpp
@@ -25,8 +26,9 @@ project(*Performance_Server): loadbalancing, pi_server, strategies {
 }
 
 project(*Performance_Client): loadbalancing, strategies {
-  after += *Performance_IDL
-  avoids += ace_for_tao
+  after   += *Performance_IDL
+  avoids  += ace_for_tao
+  exename  = client
   Source_Files {
     TestC.cpp
     client.cpp
