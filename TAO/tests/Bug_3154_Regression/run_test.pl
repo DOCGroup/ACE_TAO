@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $tao_idl = "$PerlACE::ACE_ROOT/bin/tao_idl";
 if (exists $ENV{HOST_ROOT}) {
-    $tao_idl = "$ENV{HOST_ROOT}/bin/tao_idl";
+    $tao_idl = "/bin/tao_idl";
 }
 
 # IDL file names

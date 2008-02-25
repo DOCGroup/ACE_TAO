@@ -16,9 +16,7 @@ namespace Test
     try
       {
         CORBA::ORB_var orb =
-          CORBA::ORB_init (argc,
-                           argv,
-                           "");
+          CORBA::ORB_init (argc, argv);
 
         CORBA::Object_var poa_object =
           orb->resolve_initial_references("RootPOA");
@@ -34,7 +32,7 @@ namespace Test
         PortableServer::POAManager_var poa_manager =
           root_poa->the_POAManager ();
 
-        test_i *test_impl;
+        test_i *test_impl = 0;
         ACE_NEW_RETURN (test_impl,
                         test_i (),
                         1);
@@ -70,8 +68,7 @@ namespace Test
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) server - event loop finished\n"));
 
-        root_poa->destroy (1,
-                           1);
+        root_poa->destroy (1, 1);
 
         orb->destroy ();
       }

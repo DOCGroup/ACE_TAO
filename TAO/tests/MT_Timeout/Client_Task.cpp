@@ -79,9 +79,9 @@ Client_Task::svc (void)
           int retval = this->one_iteration ();
 
           if (retval == 1)
-            successful_calls++;
+            ++successful_calls;
           else if (retval == 0)
-            timed_out_calls++;
+            ++timed_out_calls;
 
 #if 0
           if (i % 50 == 0)
