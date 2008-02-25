@@ -196,7 +196,7 @@ TAO_Notify_Lanes_Supplier_Client::svc (void)
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

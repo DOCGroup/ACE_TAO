@@ -8,6 +8,7 @@ project(*idl) : taoidldefaults, anytypecode {
 
 project(*Server): taoexe, loadbalancing, pi_server {
   avoids += ace_for_tao
+  exename = server
   after  += *idl
   Source_Files {
     ServerRequestInterceptor.cpp

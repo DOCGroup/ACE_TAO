@@ -2,8 +2,9 @@
 // $Id$
 
 project(*Cons) : orbsvcsexe, event, event_skel, rtevent, rtsched, rtevent_serv {
-  after += CosEC_RtEC_Based_lib
-  libs += CosEC_RtEC_Based
+  after    += CosEC_RtEC_Based_lib
+  exename   = Consumer
+  libs     += CosEC_RtEC_Based
   libpaths += ../../lib
 
   specific (automake) {
@@ -19,8 +20,9 @@ project(*Cons) : orbsvcsexe, event, event_skel, rtevent, rtsched, rtevent_serv {
 }
 
 project(*Supp) : orbsvcsexe, event, event_skel, rtevent, rtsched, rtevent_serv {
-  after += CosEC_RtEC_Based_lib *Cons
-  libs += CosEC_RtEC_Based
+  after    += CosEC_RtEC_Based_lib *Cons
+  exename   = Supplier
+  libs     += CosEC_RtEC_Based
   libpaths += ../../lib
 
   source_files {

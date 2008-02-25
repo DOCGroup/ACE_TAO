@@ -7,7 +7,8 @@ project(*idl): taoidldefaults {
 }
 
 project(*Server): orbsvcsexe, fault_tolerance, tmcast, pi_server, interceptors {
-  after += *idl
+  after  += *idl
+  exename = server
   Source_Files {
     RolyPolyC.cpp
     RolyPolyS.cpp
