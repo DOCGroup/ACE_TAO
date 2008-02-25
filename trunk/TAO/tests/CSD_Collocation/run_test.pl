@@ -8,8 +8,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-PerlACE::add_lib_path('.');
-
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
@@ -19,11 +17,10 @@ else {
     $SV = new PerlACE::Process ("Collocation", "-ORBSvcConf svc.conf.csd");
 }
 
-
 $server = $SV->SpawnWaitKill (60);
 
 if ($server != 0) {
-    print STDERR "ERROR: Collocation returned $server \n";
+    print STDERR "ERROR: CSD Collocation test returned $server \n";
     $status = 1;
 }
 
