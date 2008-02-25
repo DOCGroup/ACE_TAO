@@ -1,3 +1,15 @@
+Mon Feb 25 19:44:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+          Added IgnoreHostRoot which can be set from a test script. That way
+          when doing cross host testing we can make sure we don't get the
+          executable from the host root directory. This is for example usefull
+          when we want to spawn perl or another system utility
+
+        * bin/PerlACE/Run_Test.pm:
+          Removed commented out line
+
 Mon Feb 25 14:30:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxwork6.2.GNU:

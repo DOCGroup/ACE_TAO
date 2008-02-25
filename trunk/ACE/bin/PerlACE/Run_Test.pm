@@ -4,7 +4,6 @@
 # startup ARGV processing that is used by all tests.
 
 use PerlACE::Process;
-##use PerlACE::ProcessVX;
 use PerlACE::ConfigList;
 
 package PerlACE;
