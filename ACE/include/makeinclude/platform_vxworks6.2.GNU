@@ -211,14 +211,14 @@ ifeq ("$(VXWORKSLINK)","true")
   ifeq ($(SHARED_LIBS),1)
     ##LD_PARTIAL += -L$(ACE_ROOT)/lib -L./ $(LDLIBPATH) $(LD_LINK_PATH)
     PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
-	ifeq ($(VX_SO_BUILD),1)
-	  ## Shared lib builds for VxWorks will also build 'import' libraries
+    ifeq ($(VX_SO_BUILD),1)
+      ## Shared lib builds for VxWorks will also build 'import' libraries
       LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
       CLEANUP_INSTALL += $(CLEANUP_VLIB:%=$(INSLIB)/%)
-	  REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
-	endif
+      REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
+    endif
   else
-    LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)
+    LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH) $(LD_PARTIALFLAGS)
     PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS) $(VLDLIBS) $(ACE_SHLIBS) $(LIBS)
   endif
   PRJ_OBJS_FOR_LD=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
