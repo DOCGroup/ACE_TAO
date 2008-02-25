@@ -65,12 +65,6 @@ namespace ACE
       /// work of fetching the monitored value.
       virtual void update (void) = 0;
       
-      /// Sets a referemce to the Statistic's parent in a group.
-      virtual void group_parent (const Monitor_Base* parent) = 0;
-      
-      /// Adds a Statistic to the list of children in a group.
-      virtual void add_group_child (const Monitor_Base* child) = 0;
-      
       /// Attaches the (optional) constrain to this monitor point.
       virtual void constraint (const ETCL_Constraint* constraint) = 0;
       
