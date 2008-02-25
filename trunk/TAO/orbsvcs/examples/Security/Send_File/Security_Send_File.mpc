@@ -9,7 +9,8 @@ project(*Idl) : taoidldefaults {
 }
 
 project(*Client) : orbsvcsexe, portableserver {
-  after += *Idl
+  after   += *Idl
+  exename  = client
   source_files {
     testC.cpp
     client.cpp
@@ -19,7 +20,8 @@ project(*Client) : orbsvcsexe, portableserver {
 }
 
 project(*Server) : orbsvcsexe, portableserver {
-  after += *Idl
+  after   += *Idl
+  exename  = server
   source_files {
     testC.cpp
     testS.cpp

@@ -213,7 +213,7 @@ join_object_group (CORBA::ORB_ptr orb,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

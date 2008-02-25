@@ -1,3 +1,48 @@
+Mon Feb 25 22:19:46 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+        * orbsvcs/examples/CosEC/Factory/main.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
+        * orbsvcs/examples/LoadBalancing/client.cpp:
+        * orbsvcs/examples/LoadBalancing/server.cpp:
+        * orbsvcs/examples/Notify/Filter/main.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/Subscribe/main.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+        * orbsvcs/examples/ORT/client.cpp:
+        * orbsvcs/examples/ORT/gateway_server.cpp:
+        * orbsvcs/examples/ORT/server.cpp:
+        * orbsvcs/examples/PSS/Simple_Naming.cpp:
+        * orbsvcs/examples/PSS/server.cpp:
+        * orbsvcs/examples/Security/SecurityLevel1/client.cpp:
+        * orbsvcs/examples/Security/SecurityLevel1/server.cpp:
+        * orbsvcs/examples/Security/Send_File/client.cpp:
+        * orbsvcs/examples/Security/Send_File/server.cpp:
+        * orbsvcs/tests/Notify/Destroy/main.cpp:
+        * orbsvcs/tests/Notify/Driver/main.cpp:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
+        * orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+        * orbsvcs/examples/ORT/ORT.mpc:
+        * orbsvcs/examples/Security/Send_File/Security_Send_File.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
 Mon Feb 25 20:14:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ORB_Local_Config/run_tests_all.pl:
