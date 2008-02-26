@@ -40,6 +40,7 @@ sub new
 
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 0;
+    $self->{IGNOREHOSTROOT} = 0;
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
@@ -104,10 +105,12 @@ sub Executable
 
     my $executable = $self->{EXECUTABLE};
 
-    if (PerlACE::is_vxworks_test()) {
-        $executable = PerlACE::VX_HostFile ($executable);
+    if ($self->{IGNOREHOSTROOT} == 0) {
+      if (PerlACE::is_vxworks_test()) {
+          $executable = PerlACE::VX_HostFile ($executable);
+      }
     }
-    
+
     if ($self->{IGNOREEXESUBDIR} == 0) {
         $executable = PerlACE::Process::Normalize_Executable_Name ($executable);
     }
@@ -117,7 +120,7 @@ sub Executable
         }
         $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
     }
-    
+
     return $executable;
 }
 
@@ -154,6 +157,17 @@ sub IgnoreExeSubDir
     }
 
     return $self->{IGNOREEXESUBDIR};
+}
+
+sub IgnoreHostRoot
+{
+    my $self = shift;
+
+    if (@_ != 0) {
+        $self->{IGNOREHOSTROOT} = shift;
+    }
+
+    return $self->{IGNOREHOSTROOT};
 }
 
 ###############################################################################

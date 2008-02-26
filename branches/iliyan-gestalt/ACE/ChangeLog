@@ -1,3 +1,32 @@
+Mon Feb 25 19:44:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+          Added IgnoreHostRoot which can be set from a test script. That way
+          when doing cross host testing we can make sure we don't get the
+          executable from the host root directory. This is for example usefull
+          when we want to spawn perl or another system utility
+
+        * bin/PerlACE/Run_Test.pm:
+          Removed commented out line
+
+Mon Feb 25 14:30:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxwork6.2.GNU:
+        * include/makeinclude/platform_vxwork6.3.GNU:
+          Added LD_PARTIALFLAGS which can be set for footprint builds
+
+Mon Feb 25 08:13:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+          Set ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN when
+          ACE_THR_FUNC_RETURN is an integral type
+
+        * ace/Task.cpp:
+          Use ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN to determine whether
+          we can do a reinterpret_cast or static_cast. This is much easier
+          then checking all compilers
+
 Sun Feb 24 19:37:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Configuration.cpp:
