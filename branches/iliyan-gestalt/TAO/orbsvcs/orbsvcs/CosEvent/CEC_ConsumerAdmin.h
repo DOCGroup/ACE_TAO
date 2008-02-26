@@ -53,7 +53,7 @@ class TAO_Event_Serv_Export TAO_CEC_ConsumerAdmin
 public:
   /**
    * constructor. If <supplier_set> is nil then it builds one using
-   * the <event_channel> argument.
+   * the @a event_channel argument.
    * In any case it assumes ownership.
    */
   TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel* event_channel);

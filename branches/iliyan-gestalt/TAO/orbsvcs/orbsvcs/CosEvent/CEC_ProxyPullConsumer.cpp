@@ -122,8 +122,7 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
     }
   catch (CORBA::SystemException& sysex)
     {
-      control->system_exception (this,
-                                 sysex);
+      control->system_exception (this, sysex);
     }
   catch (const CORBA::Exception&)
     {
