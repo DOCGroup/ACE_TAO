@@ -11,6 +11,7 @@ threads ?= 1
 pthread ?= 1
 ssl ?= 0
 rwho ?= 0
+buildbits ?= 32
 
 ifeq ($(static_libs),1)
   override shared_libs =
@@ -37,6 +38,10 @@ else
   CCFLAGS         += -msg_disable intoverflow,reftemporary,intsignchange -Wc/DISTINGUISH_NESTED_ENUMS
 endif
 CCFLAGS         += -Wc/template=auto
+
+ifeq ($(buildbits),64)
+  CCFLAGS += -Wc/MODEL=ANSI
+endif
 
 ifeq ($(HOSTTYPE),ia64)
   SYMVEC_OPT_FILE ?= $(LIB_NAME)_symvec.opt
