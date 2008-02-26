@@ -513,8 +513,10 @@ typedef ACE_HANDLE ACE_SOCKET;
 # if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 # include /**/ <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
+#define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
 # elif defined (ACE_WIN32)
 typedef DWORD ACE_THR_FUNC_RETURN;
+#define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
 # else
 typedef void* ACE_THR_FUNC_RETURN;
 # endif /* ACE_VXWORKS */
