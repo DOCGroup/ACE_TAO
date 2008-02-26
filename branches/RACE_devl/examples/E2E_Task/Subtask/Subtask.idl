@@ -12,7 +12,7 @@ module CIAO
     {
       consumes Test test_in;
 
-      publishes Test test_out;
+      emits Test test_out;
 
       attribute long iterations;
 

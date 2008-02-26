@@ -1,1 +1,5 @@
-Alpha     corbaloc:iiop:localhost:50000/NodeManager
+one     corbaloc:iiop:localhost:50000/NodeManager
+two     corbaloc:iiop:localhost:50001/NodeManager
+three   corbaloc:iiop:localhost:50002/NodeManager
+four    corbaloc:iiop:localhost:50003/NodeManager
+five    corbaloc:iiop:localhost:50004/NodeManager
