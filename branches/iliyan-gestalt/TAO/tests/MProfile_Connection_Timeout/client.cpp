@@ -78,8 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Get an object reference for the ORBs IORManipultion object!
       CORBA::Object_ptr IORM =
-        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                         0);
+        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
 
       TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
@@ -97,7 +96,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
-
       CORBA::Any timeout_as_any;
       timeout_as_any <<= timeout_period;
 
@@ -107,7 +105,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       policy_list[0] =
         orb->create_policy (TAO::CONNECTION_TIMEOUT_POLICY_TYPE,
                             timeout_as_any);
-
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE);
@@ -138,7 +135,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (freq != 919263)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) ERROR in the test \n")));
-
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Shutting server down \n")));

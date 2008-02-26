@@ -26,6 +26,7 @@ $DUMMY_CLIENT = new PerlACE::Process($perl_executable);
 $CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
 
 $DUMMY_CLIENT->Arguments("hang_client.pl");
+$DUMMY_CLIENT->IgnoreHostRoot(1);
 $DUMMY_CLIENT->IgnoreExeSubDir(1);
 
 if (PerlACE::is_vxworks_test()) {

@@ -12,9 +12,6 @@ $iorbase = "altiiop.ior";
 $status = 0;
 @bogus_eps = ("-orbendpoint iiop://localhost:10200/hostname_in_ior=126.0.0.123",
               "-orbendpoint iiop://localhost:10202/hostname_in_ior=126.0.0.124");
-$valid_ep = "-orbendpoint iiop://localhost:10201";
-
-$corbaloc = "corbaloc::126.0.0.123:10200,:localhost:10201,:126.0.0.124:10202/pcs_test";
 
 if (PerlACE::is_vxworks_test()) {
   $iorfile = $iorbase;
@@ -23,7 +20,9 @@ if (PerlACE::is_vxworks_test()) {
   $SV_ALT_IIOP = new PerlACE::ProcessVX ("server", "-ORBUseSharedProfile 1 -o $iorfile $bogus_eps[0] $valid_ep $bogus_eps[1]");
 }
 else {
+  $valid_ep = "-orbendpoint iiop://localhost:10201";
   $iorfile = PerlACE::LocalFile ($iorbase);
+  $corbaloc = "corbaloc::126.0.0.123:10200,:localhost:10201,:126.0.0.124:10202/pcs_test";
   $SV_ALT_IIOP = new PerlACE::Process ("server", "-ORBUseSharedProfile 1 -o $iorfile $bogus_eps[0] $valid_ep $bogus_eps[1]");
 }
 unlink $iorfile;

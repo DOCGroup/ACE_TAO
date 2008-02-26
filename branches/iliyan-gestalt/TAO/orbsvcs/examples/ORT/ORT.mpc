@@ -10,7 +10,8 @@ project(*idl): taoidldefaults, avoids_minimum_corba, avoids_corba_e_compact, avo
 }
 
 project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
-  after += *idl
+  after   += *idl
+  exename  = gateway_server
 
   source_files {
     GatewayC.cpp
@@ -42,7 +43,8 @@ project(*Server) : orbsvcsexe, dynamicinterface, ifr_client, avoids_minimum_corb
 }
 
 project(*Client) : orbsvcsexe, event, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
-  after += *idl
+  after   += *idl
+  exename  = client
   source_files {
     client.cpp
     sum_serverC.cpp
