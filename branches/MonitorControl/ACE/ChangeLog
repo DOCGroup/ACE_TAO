@@ -1,3 +1,48 @@
+Tue Feb 26 16:35:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/MonitorGroup.h:
+
+          Removed this file, instead of defining a template
+          specialization of the entire class, defined a
+          template specialization of just the needed
+          methods. These methods had to be removed from
+          MonitorGroup_T.cpp and specialized in
+          MonitorGroup.cpp for both TRUE and FALSE
+          template arguments.
+
+        * MonitorControl/examples/Group/svc.conf:
+        * MonitorControl/examples/Group/Group.mpc:
+        * MonitorControl/examples/Group/group.cpp:
+
+          New files, comprising an example to demonstrate
+          the functionality of monitor groups.
+
+        * MonitorControl/WindowsMultiInstanceMonitor.cpp:
+
+          Plugged memory leak.
+
+        * MonitorControl/MonitorGroup_T.h:
+        * MonitorControl/MonitorGroup.cpp:
+        * MonitorControl/MonitorGroup_T.cpp:
+
+          Changes related to the removed file described
+          above.
+
+        * MonitorControl/AutoUpdateStarter.cpp:
+
+          Replaced #include which was pulling in all the
+          monitor point headers unnecessarily.
+
+        * MonitorControl/MonitorControl.h:
+
+          Replaced #include of removed file MonitorGroup.h
+          with #include of MonitorGroup_T.h.
+
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
+
+          Changed identifiers, cut and pasted from another
+          example, to be relevant to this example.
+
 Mon Feb 25 13:42:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Base.h:

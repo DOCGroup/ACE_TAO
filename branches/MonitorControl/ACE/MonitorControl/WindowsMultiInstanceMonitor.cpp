@@ -57,6 +57,8 @@ namespace ACE
           this->instances_.enqueue_tail (instance);
           path += lstrlen (path) + 1;
         }
+        
+      GlobalFree (paths);
     }
     
     WindowsMultiInstanceMonitor::~WindowsMultiInstanceMonitor (void)

@@ -27,6 +27,7 @@
 #include "MonitorControl/NumThreadsMonitor.h"
 #include "MonitorControl/BytesSentMonitor.h"
 #include "MonitorControl/PacketsSentMonitor.h"
+#include "MonitorControl/MonitorGroup_T.h"
 
 #include /**/ "ace/post.h"
 

@@ -1,10 +1,10 @@
 // $Id$
 
 #include "ace/Reactor.h"
+#include "ace/Dynamic_Service.h"
 #include "ace/MC_Admin_Manager.h"
 
 #include "MonitorControl/AutoUpdateStarter.h"
-#include "MonitorControl/MonitorControl.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

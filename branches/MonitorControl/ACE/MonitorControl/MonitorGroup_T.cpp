@@ -18,18 +18,6 @@ namespace ACE
     
     template<bool ENABLED>
     void
-    MonitorGroup<ENABLED>::add_member (Monitor_Base* /* member */)
-    {
-    }
-    
-    template<bool ENABLED>
-    void
-    MonitorGroup<ENABLED>::update (void)
-    {
-    }
-    
-    template<bool ENABLED>
-    void
     MonitorGroup<ENABLED>::constraint (
       const ETCL_Constraint* /* constraint */)
     {
@@ -44,12 +32,6 @@ namespace ACE
     template<bool ENABLED>
     void
     MonitorGroup<ENABLED>::receive (size_t /* data */)
-    {
-    }
-    
-    template<bool ENABLED>
-    void
-    MonitorGroup<ENABLED>::clear (void)
     {
     }
   }

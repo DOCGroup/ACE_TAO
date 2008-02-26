@@ -46,10 +46,10 @@ public:
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::MonitorControl::Monitor_Base *thread_monitor =
+    ACE::MonitorControl::Monitor_Base *bytes_monitor =
       mgr->admin ().monitor_point ("BytesSent");
 
-    if (thread_monitor != 0)
+    if (bytes_monitor != 0)
       {
         /// Query the monitor for its data every 2 seconds, and call the
         /// appropriate display function.
@@ -57,7 +57,7 @@ public:
           {
             ACE_OS::sleep (2);
 
-            MonitorControl_Types::Data data = thread_monitor->retrieve ();
+            MonitorControl_Types::Data data = bytes_monitor->retrieve ();
             display_bytes_sent (data);
           }
       }
