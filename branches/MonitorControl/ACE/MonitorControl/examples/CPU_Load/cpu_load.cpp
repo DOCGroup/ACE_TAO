@@ -71,9 +71,6 @@ int main (int argc, char *argv [])
 {
   try
   {
-    /// Start up the MonitorControl service before doing anything else.
-    START_MC_SERVICE;
-
     /// The Admin class will own the reactor and destroy it. We are
     /// passing a vanilla reactor to show how it works, but in real
     /// life it could be some specialized reactor.

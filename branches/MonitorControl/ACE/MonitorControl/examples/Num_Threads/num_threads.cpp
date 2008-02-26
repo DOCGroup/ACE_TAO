@@ -80,9 +80,6 @@ int main (int argc, char *argv [])
 {
   try
   {
-    /// Start up the MonitorControl service before doing anything else.
-    START_MC_SERVICE;
-
     /// Set the timer for # of threads check at 2000 msecs (2 sec).
     ADD_PERIODIC_MONITOR (NUM_THREADS_MONITOR, 2000);
 

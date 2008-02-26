@@ -29,6 +29,9 @@
 #include "MonitorControl/PacketsSentMonitor.h"
 #include "MonitorControl/MonitorGroup_T.h"
 
+static int
+ACE_Requires_MC_Initializer = MC_ADMINMANAGER::Initializer ();
+
 #include /**/ "ace/post.h"
 
 #endif // MONITORCONTROL_H

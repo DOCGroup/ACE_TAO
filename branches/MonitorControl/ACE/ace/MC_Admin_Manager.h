@@ -46,6 +46,9 @@ namespace ACE
       /// Access the admin instance.
       MC_Admin& admin (void);
       
+      /// Used to force initialization of the MC service.
+      static int Initializer (void);
+      
     private:
       MC_Admin admin_;
     };
@@ -56,6 +59,9 @@ namespace ACE
 typedef ACE::MonitorControl::MC_Admin_Manager MC_ADMINMANAGER;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (MC_ADMINMANAGER)
+ACE_FACTORY_DECLARE (ACE, MC_ADMINMANAGER)
 
 #include /**/ "ace/post.h"
 

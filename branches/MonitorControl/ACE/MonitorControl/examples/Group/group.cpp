@@ -108,9 +108,6 @@ int main (int argc, char *argv [])
 {
   try
   {
-    /// Start up the MonitorControl service before doing anything else.
-    START_MC_SERVICE;
-
     /// Creates these future group members without automatic update.
     ADD_MANUAL_MONITOR (BYTES_SENT_MONITOR);
     ADD_MANUAL_MONITOR (CPU_LOAD_MONITOR);

@@ -69,9 +69,6 @@ int main (int argc, char *argv [])
 {
   try
   {
-    /// Start up the MonitorControl service before doing anything else.
-    START_MC_SERVICE;
-
     /// Create a message queue with a built-in monitor (since ACE was
     /// compiled with monitors enabled) and add the monitor to the
     /// registry (some ACE activities create a message queue under

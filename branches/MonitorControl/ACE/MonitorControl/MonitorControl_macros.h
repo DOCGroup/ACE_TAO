@@ -54,13 +54,6 @@ typedef ACE_VERSIONED_NAMESPACE_NAME::DISABLED_PACKETS_SENT_MONITOR
 
 #endif /* defined (ENABLE_MONITORS) */
 
-#define START_MC_SERVICE \
-  ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Config::open ( \
-    argc, \
-    argv, \
-    ACE_DEFAULT_LOGGER_KEY, \
-    false)
-
 #define ADD_MANUAL_MONITOR(TYPE) \
 { \
   ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER *mgr = \

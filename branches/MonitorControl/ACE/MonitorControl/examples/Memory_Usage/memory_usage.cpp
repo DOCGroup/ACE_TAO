@@ -71,9 +71,6 @@ int main (int argc, char *argv [])
 {
   try
   {
-    /// Start up the MonitorControl service before doing anything else.
-    START_MC_SERVICE;
-
     /// Set the timer for memory usage check at 2000 msecs (2 sec).
     ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, 2000);
 

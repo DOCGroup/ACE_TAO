@@ -1,3 +1,43 @@
+Tue Feb 26 20:48:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/examples/Bytes_Sent/svc.conf:
+        * MonitorControl/examples/Message_Queue_Size/svc.conf:
+        * MonitorControl/examples/CPU_Load/svc.conf:
+        * MonitorControl/examples/Num_Threads/svc.conf:
+        * MonitorControl/examples/Memory_Usage/svc.conf:
+        * MonitorControl/examples/Group/svc.conf:
+
+          Removed these files, not needed after changes
+          described below.
+
+        * ace/MC_Admin_Manager.cpp:
+        * ace/MC_Admin_Manager.h:
+
+          Added static Initializer () method that processes the service
+          directive, starting the MC service.
+
+        * MonitorControl/MonitorControl_macros.h:
+
+          Removed the MC_START_SERVICE macro.
+
+        * MonitorControl/MonitorControl.h:
+
+          Added a static int constant that calls the static
+          Initializer() method in MC_Admin_Manager.
+
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
+        * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp:
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp:
+        * MonitorControl/examples/Num_Threads/num_threads.cpp:
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp:
+        * MonitorControl/examples/Group/group.cpp:
+
+          Removed the use of the MC_START_SERVICE macro. Every
+          application must include MonitorControl.h, which contains
+          the static integer which, when initialized before main()
+          starts, starts the MC service and creates the 
+          MC_Admin_Manager singleton.
+
 Tue Feb 26 18:33:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ACE_ETCL/ACE_ETCL.mpc:
