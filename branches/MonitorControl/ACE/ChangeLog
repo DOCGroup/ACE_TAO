@@ -1,3 +1,34 @@
+Tue Feb 26 18:33:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ACE_ETCL/ACE_ETCL.mpc:
+        * ACE_ETCL/ETCL.ll:
+        * ACE_ETCL/ETCL.yy:
+        * ACE_ETCL/ETCL_Constraint.cpp:
+        * ACE_ETCL/ETCL_Constraint.h:
+        * ACE_ETCL/ETCL_Constraint.inl:
+        * ACE_ETCL/ETCL_Constraint_Visitor.cpp:
+        * ACE_ETCL/ETCL_Constraint_Visitor.h:
+        * ACE_ETCL/ETCL_include/etcl_export.h:
+        * ACE_ETCL/ETCL_include/ETCL_include.h:
+        * ACE_ETCL/ETCL_include/ETCL_macros.h:
+        * ACE_ETCL/ETCL_Interpreter.cpp:
+        * ACE_ETCL/ETCL_Interpreter.h:
+        * ACE_ETCL/ETCL_l.cpp:
+        * ACE_ETCL/ETCL_y.cpp:
+        * ACE_ETCL/ETCL_y.h:
+
+          New files, to build a subset of the
+          Extended Trader constraint Language (ETCL)
+          that uses no CORBA types except predefined
+          ones, which are also defined as typedefs
+          in ACE. This library will be used by the
+          MonitorControl library to define and
+          evaluate constraints.
+
+        * docs/svn/config:
+
+          Added file extensions .ll, .yy and .conf.
+
 Tue Feb 26 18:21:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/MC_Generic_Registry.h:
