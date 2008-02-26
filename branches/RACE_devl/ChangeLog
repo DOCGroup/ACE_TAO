@@ -1,3 +1,11 @@
+Tue Feb 26 21:42:32 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.h:
+        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.cpp:
+
+        Updated these files so that "rates" can be floating point values.
+
+
 Tue Feb 26 20:19:16 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Input_Adapters/Interactive_Input_Adapter/Admin_exec.h:
