@@ -291,7 +291,7 @@ FactoryClient::run_test (void)
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "The FactoryClient will test the Cos Event Channel Factory\n"));

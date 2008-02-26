@@ -1,3 +1,118 @@
+Mon Feb 25 22:19:46 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+        * orbsvcs/examples/CosEC/Factory/main.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
+        * orbsvcs/examples/LoadBalancing/client.cpp:
+        * orbsvcs/examples/LoadBalancing/server.cpp:
+        * orbsvcs/examples/Notify/Filter/main.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/Subscribe/main.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+        * orbsvcs/examples/ORT/client.cpp:
+        * orbsvcs/examples/ORT/gateway_server.cpp:
+        * orbsvcs/examples/ORT/server.cpp:
+        * orbsvcs/examples/PSS/Simple_Naming.cpp:
+        * orbsvcs/examples/PSS/server.cpp:
+        * orbsvcs/examples/Security/SecurityLevel1/client.cpp:
+        * orbsvcs/examples/Security/SecurityLevel1/server.cpp:
+        * orbsvcs/examples/Security/Send_File/client.cpp:
+        * orbsvcs/examples/Security/Send_File/server.cpp:
+        * orbsvcs/tests/Notify/Destroy/main.cpp:
+        * orbsvcs/tests/Notify/Driver/main.cpp:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
+        * orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+        * orbsvcs/examples/ORT/ORT.mpc:
+        * orbsvcs/examples/Security/Send_File/Security_Send_File.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
+Mon Feb 25 20:14:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ORB_Local_Config/run_tests_all.pl:
+        * tests/Parallel_Connect_Strategy/run_test.pl:
+          Updated for VxWorks
+
+        * tests/CSD_Collocation/run_test.pl:
+          No need to set libpath
+
+Mon Feb 25 19:47:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2183_Regression/run_test.pl:
+        * tests/Bug_2702_Regression/run_test.pl:
+          Use the new IgnoreHostRoot support when spawning perl
+
+        * tests/Bug_3154_Regression/run_test.pl:
+          Don't use HOST_ROOT to get tao_idl, the test framework will
+          do this
+
+        * tests/Hang_Shutdown/client.cpp:
+        * tests/Hang_Shutdown/server.cpp
+          Fixed typo and no need to pass in an empty orb name
+
+        * tests/Leader_Followers/run_test.pl:
+        * tests/MT_Timeout/run_test.pl:
+        * tests/MProfile_Connection_Timeout/run_test.pl:
+          Only store the ior filename once
+
+        * tests/OctetSeq/test_i.cpp
+          Initialise pointer with 0
+
+        * tests/MT_Timeout/Client_Task.cpp:
+          Use prefix increment
+
+        * tests/MProfile_Connection_Timeout/client.cpp:
+          Laout changes
+
+Mon Feb 25 15:36:17 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/compare_histo.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/server.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/server.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/server.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
+Mon Feb 25 09:45:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Loader/Servant_Locator.cpp:
+        * tests/POA/On_Demand_Loading/Servant_Manager.cpp:
+          Fixed OpenVMS IA64 warnings
+
 Sun Feb 24 19:48:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3154_Regression/run_test.pl:

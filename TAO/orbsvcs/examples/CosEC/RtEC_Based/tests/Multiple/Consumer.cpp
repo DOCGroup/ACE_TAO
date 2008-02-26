@@ -147,7 +147,7 @@ Consumer::init_Consumer (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Consumer cons;
 

@@ -21,15 +21,18 @@ sub add_path {
 
 # Set the library path for the client to be able to load
 # the Time_Date library.
-add_path('LD_LIBRARY_PATH', '../lib');
-add_path('LIBPATH', '../lib');
-add_path('SHLIB_PATH', '../lib');
+PerlACE::add_lib_path ('../lib');
 
 sub test($)
 {
     (my $executable, my $arguments) = @_;
     chdir ($executable);
-    my $t1 = new PerlACE::Process ("Test", ($arguments ? $arguments : ""));
+    if (PerlACE::is_vxworks_test()) {
+      my $t1 = new PerlACE::ProcessVX ("Test", ($arguments ? $arguments : ""));
+    }
+    else {
+      my $t1 = new PerlACE::Process ("Test", ($arguments ? $arguments : ""));
+    }
     print STDERR "\nTest $executable is running ...\n";
     my $status = $t1->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
     chdir ("..");

@@ -142,7 +142,7 @@ Supplier::run (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Supplier supp;
 

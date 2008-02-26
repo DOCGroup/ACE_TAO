@@ -28,6 +28,7 @@ $CL = new PerlACE::Process ("client", " -k file://$iorfile -ORBdebuglevel 1 -ORB
 unlink "client.log";
 
 $SV->IgnoreExeSubDir(1);
+$SV->IgnoreHostRoot(1);
 $SV->Spawn ();
 sleep(1);  # give the server a chance to come up
 

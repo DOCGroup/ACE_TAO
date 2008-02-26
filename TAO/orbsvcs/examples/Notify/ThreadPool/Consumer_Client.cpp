@@ -34,7 +34,7 @@ TAO_Notify_ThreadPool_Consumer_Client::parse_args (int argc, char *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = 
+      if (0 != (current_arg =
                 arg_shifter.get_the_parameter(ACE_TEXT("-ProxySupplier_ThreadPool")))) // Specify a threadpool.
         {
           this->proxy_supplier_thread_count_ = ACE_OS::atoi (arg_shifter.get_current ());
@@ -194,7 +194,7 @@ TAO_Notify_ThreadPool_Consumer_Client::svc (void)
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
