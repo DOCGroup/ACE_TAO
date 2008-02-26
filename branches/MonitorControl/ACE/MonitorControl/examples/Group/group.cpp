@@ -3,6 +3,7 @@
 #include "ace/Date_Time.h"
 #include "ace/streams.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Monitor_Point_Registry.h"
 
 #include "MonitorControl/MonitorControl.h"
 
@@ -141,6 +142,24 @@ int main (int argc, char *argv [])
                     "Group monitor \"%s\" registration failed.\n",
                     group->name ()));
       }
+      
+    /// A quick test of the registry's name cache.  
+    MonitorControl_Types::NameList &mc_names =
+      Monitor_Point_Registry::instance ()->names ();
+      
+    cout << "stored in monitor point registry:" << endl << endl;
+      
+    for (MonitorControl_Types::NameList::Iterator i (mc_names);
+         !i.done ();
+         i.advance ())
+      {
+        ACE_CString *item = 0;
+        i.next (item);
+        
+        cout << item->c_str () << endl;
+      }
+      
+    cout << endl;
 
     /// Runs the reactor's event loop in a separate thread so the timer(s)
     /// can run concurrently with the application.

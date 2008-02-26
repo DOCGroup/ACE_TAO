@@ -34,8 +34,16 @@ namespace ACE
         {
           throw MapError (MapError::MAP_ERROR_BIND_FAILURE);
         }
+        
+      this->name_cache_.push_back (type->name ());
 
       return (status == 0);
+    }
+    
+    MonitorControl_Types::NameList&
+    MC_Generic_Registry::names (void)
+    {
+      return this->name_cache_;
     }
 
     MC_Generic*

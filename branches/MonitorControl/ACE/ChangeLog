@@ -1,3 +1,16 @@
+Tue Feb 26 18:21:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/MC_Generic_Registry.h:
+        * ace/MC_Generic_Registry.cpp:
+        
+          Added name cache, accessor, and code to update the cache
+          each time something is added to the registry.
+          
+        * MonitorControl/examples/Group/group.cpp:
+        
+          Added a quick test of the name cache feature to this
+          example.
+
 Tue Feb 26 16:35:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorGroup.h:
