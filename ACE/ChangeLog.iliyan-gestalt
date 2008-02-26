@@ -1,3 +1,14 @@
+Tue Feb 26 13:36:47 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/Bug_2980_Regression_Dll.cpp:
+        * tests/Bug_2980_Regression_Test.cpp:
+        * tests/tests.mpc:
+
+        The driver is a non-ACE executable (by design) and it doesn't have
+        the "standard" output stream of an ACE test. Therefore it is not
+        producing a test log file, which the test framework interprets as
+        an error. Changed the ACE-based DLL part to do the proper magic.
+
 Tue Feb 26 02:42:23 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Bug_2980_Regression_Test.cpp:

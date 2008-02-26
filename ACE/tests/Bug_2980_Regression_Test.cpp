@@ -8,7 +8,7 @@
 
 
 static void * dllHandle;
-typedef void (* voidfunction)(void);
+typedef int (* voidfunction)(void);
 
 static voidfunction   capi_init = 0;
 static voidfunction   capi_fini = 0;
