@@ -30,8 +30,8 @@ Index: tao/CDR.cpp
  {
    ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
 -}
-+} 
- 
++}
+
  TAO_OutputCDR::TAO_OutputCDR (char *data,
                                size_t size,
 @@ -104,6 +105,7 @@
@@ -129,7 +129,7 @@ Index: tao/Incoming_Message_Queue.cpp
 @@ -170,46 +170,6 @@
    return nb;
  }
- 
+
 -TAO_Queued_Data::TAO_Queued_Data (ACE_Allocator *alloc)
 -  : msg_block_ (0),
 -    missing_data_ (0),
@@ -174,13 +174,13 @@ Index: tao/Incoming_Message_Queue.cpp
  TAO_Queued_Data *
  TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
 @@ -370,7 +330,7 @@
- 
+
        // Set the message block to the new consolidated message block
        this->msg_block_ = dest;
 -      this->more_fragments_ = 0;
 +      this->more_fragments_ = false;
      }
- 
+
    return 0;
 Index: tao/ORB_Core.cpp
 ===================================================================
@@ -205,7 +205,7 @@ Index: tao/ORB_Core.cpp
 @@ -1641,6 +1643,22 @@
    return this->policy_factory_registry_;
  }
- 
+
 +TAO_ZIOP_Adapter *
 +TAO_ORB_Core::ziop_adapter_i (void)
 +{
@@ -241,7 +241,7 @@ Index: tao/ORB_Core.cpp
 +  if (this->ziop_adapter_)
 +    this->ziop_adapter_->load_policy_validators (validator);
  }
- 
+
  CORBA::Object_ptr
 Index: tao/tao.mpc
 ===================================================================
@@ -253,7 +253,7 @@ Index: tao/tao.mpc
      GUIResource_Factory.cpp
 +    ZIOP_Adapter.cpp
    }
- 
+
    Header_Files {
 @@ -577,6 +578,7 @@
      WrongTransactionS.h
@@ -261,8 +261,8 @@ Index: tao/tao.mpc
      WStringSeqS.h
 +    ZIOP_Adapter.h
    }
- 
- 
+
+
 Index: tao/GIOP_Message_Base.cpp
 ===================================================================
 --- tao/GIOP_Message_Base.cpp	(.../trunk/TAO)	(revision 78340)
@@ -273,36 +273,36 @@ Index: tao/GIOP_Message_Base.cpp
  #include "tao/SystemException.h"
 +#include "tao/ZIOP_Adapter.h"
  #include "ace/Min_Max.h"
- 
+
  /*
 @@ -77,7 +78,8 @@
    // Get a parser for us
    TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
- 
+
 -  CORBA::Octet major, minor;
 +  CORBA::Octet major = 0;
 +  CORBA::Octet minor = 0;
- 
+
    cdr.get_version (major, minor);
- 
+
 @@ -118,7 +120,7 @@
    // Get a parser for us
    TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
- 
+
 -  CORBA::Octet major, minor;
 +  CORBA::Octet major = 0, minor = 0;
- 
+
    cdr.get_version (major, minor);
- 
+
 @@ -159,7 +161,7 @@
    // Get a parser for us
    TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
- 
+
 -  CORBA::Octet major, minor;
 +  CORBA::Octet major = 0, minor = 0;
- 
+
    cdr.get_version (major, minor);
- 
+
 @@ -179,10 +181,7 @@
    try
      {
@@ -318,25 +318,25 @@ Index: tao/GIOP_Message_Base.cpp
 @@ -211,7 +210,7 @@
    // Get a parser for us
    TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
- 
+
 -  CORBA::Octet major, minor;
 +  CORBA::Octet major = 0, minor = 0;
- 
+
    cdr.get_version (major, minor);
- 
+
 @@ -242,7 +241,7 @@
  TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
  {
    // Ptr to first buffer.
 -  char * buf = (char *) stream.buffer ();
 +  char *buf = const_cast <char*> (stream.buffer ());
- 
+
    this->set_giop_flags (stream);
- 
+
 @@ -301,7 +300,7 @@
  {
    // Convert to the right type of Pluggable Messaging message type.
- 
+
 -  switch (msg_state.message_type_)
 +  switch (msg_state.message_type ())
      {
@@ -354,26 +354,26 @@ Index: tao/GIOP_Message_Base.cpp
 @@ -366,8 +365,9 @@
            return -1;
          }
- 
+
 -      const size_t message_size = state.message_size (); /* Header + Payload */
 +      size_t const message_size = state.message_size (); /* Header + Payload */
- 
+
 +// Ok, have to do something here to decompress if compressed data
        if (message_size > incoming.length ())
          {
            qd.missing_data_ = message_size - incoming.length ();
 @@ -441,7 +441,7 @@
      }
- 
+
    size_t copying_len = state.message_size ();
 -
 +// handle compress
    qd = this->make_queued_data (copying_len);
- 
+
    if (qd == 0)
 @@ -523,6 +523,7 @@
        TAO_GIOP_Message_State state;
- 
+
        // Parse the message header now...
 +// decompress
        if (state.parse_message_header (*qd->msg_block_) == -1)
@@ -384,8 +384,8 @@ Index: tao/GIOP_Message_Base.cpp
                          qd->major_version_,
                          qd->minor_version_);
 +  output.compressed (qd->compressed_);
-+ 
- 
++
+
    // Get the read and write positions before we steal data.
    size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
 @@ -707,6 +710,7 @@
@@ -393,28 +393,28 @@ Index: tao/GIOP_Message_Base.cpp
                            qd->minor_version_,
                            this->orb_core_);
 +input_cdr.compressed_ = qd->compressed_;
- 
+
    transport->assign_translators(&input_cdr,&output);
- 
+
 @@ -865,7 +869,7 @@
        0x50  // 'P'
      };
- 
+
 -  CORBA::Octet major, minor = 0;
 +  CORBA::Octet major = 0, minor = 0;
- 
+
    (void) msg.get_version (major, minor);
- 
+
 @@ -902,18 +906,15 @@
                               output,
                               transport,
                               this->orb_core_);
 +request.compressed_ = cdr.compressed_;
- 
+
    CORBA::ULong request_id = 0;
    CORBA::Boolean response_required = false;
 -  int parse_error = 0;
- 
+
    try
      {
 -      parse_error =
@@ -425,12 +425,12 @@ Index: tao/GIOP_Message_Base.cpp
 +      // Throw an exception if the parsing of the header failed
 +      if (parser->parse_request_header (request) != 0)
          throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_NO);
- 
+
        TAO_Codeset_Manager *csm = request.orb_core ()->codeset_manager ();
 @@ -929,6 +930,25 @@
- 
+
        CORBA::Object_var forward_to;
- 
+
 +//if (request.original_message_length_ > 0)
 +if (request.compressed_ == true)
 +{
@@ -460,19 +460,19 @@ Index: tao/GIOP_Message_Base.cpp
 -  this->write_protocol_header (TAO_GIOP_LOCATEREPLY,
 -                               output);
 +  this->write_protocol_header (TAO_GIOP_LOCATEREPLY, output);
- 
+
    // This writes the header & body
 -  parser->write_locate_reply_mesg (output,
 -                                   request.request_id (),
 -                                   status_info);
 +  parser->write_locate_reply_mesg (output, request.request_id (), status_info);
- 
+
    output.more_fragments (false);
- 
+
 @@ -1516,6 +1533,9 @@
        // Byte order.
        int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
- 
+
 +      // Compressed
 +      int compressed = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x04;
 +
@@ -493,16 +493,16 @@ Index: tao/GIOP_Message_Base.cpp
 +                  (compressed == 0) ? ACE_TEXT("not") : ACE_TEXT("is"),
                    ACE_TEXT_CHAR_TO_TCHAR(message_name),
                    *id));
- 
+
 @@ -1593,9 +1614,7 @@
    msg.get_version (major, minor);
- 
+
    // Get the state information that we need to use
 -  this->set_state (major,
 -                   minor,
 -                   parser);
 +  this->set_state (major, minor, parser);
- 
+
    // We dont really know.. So ask the generator and parser objects that
    // we know.
 @@ -1614,8 +1633,7 @@
@@ -512,7 +512,7 @@ Index: tao/GIOP_Message_Base.cpp
 -    this->orb_core_->create_input_cdr_data_block (sz +
 -                                                  ACE_CDR::MAX_ALIGNMENT);
 +    this->orb_core_->create_input_cdr_data_block (sz + ACE_CDR::MAX_ALIGNMENT);
- 
+
    TAO_Queued_Data *qd =
      TAO_Queued_Data::make_queued_data (
 @@ -1661,11 +1679,12 @@
@@ -530,12 +530,12 @@ Index: tao/GIOP_Message_Base.cpp
    qd->msg_type_       = this->message_type (state);
 +  qd->compressed_     = state.compressed_data ();
  }
- 
+
  int
 @@ -1701,8 +1720,7 @@
    // Get the flag in the message block
    flg = qd->msg_block_->self_flags ();
- 
+
 -  if (ACE_BIT_ENABLED (flg,
 -                       ACE_Message_Block::DONT_DELETE))
 +  if (ACE_BIT_ENABLED (flg, ACE_Message_Block::DONT_DELETE))
@@ -550,7 +550,7 @@ Index: tao/GIOP_Message_Base.cpp
 +  if (!(major <= 1 && minor < 2))
 +    ACE_SET_BITS (flags, msg.compressed () << 2);
  }
- 
+
  TAO_END_VERSIONED_NAMESPACE_DECL
 Index: tao/Unbounded_Octet_Sequence_T.h
 ===================================================================
@@ -563,7 +563,7 @@ Index: tao/Unbounded_Octet_Sequence_T.h
 -        ACE_Message_Block msgb (*mb,
 -                                ACE_CDR::MAX_ALIGNMENT);
 +        ACE_Message_Block msgb (*mb, ACE_CDR::MAX_ALIGNMENT);
- 
+
          // Get the base pointer of the incoming message block
          char *start = ACE_ptr_align_binary (mb->base (),
 Index: tao/Invocation_Base.h
@@ -571,7 +571,7 @@ Index: tao/Invocation_Base.h
 --- tao/Invocation_Base.h	(.../trunk/TAO)	(revision 78340)
 +++ tao/Invocation_Base.h	(.../branches/ZIOP2/modules/TAO)	(working copy)
 @@ -229,7 +229,7 @@
- 
+
      /// Flag used to distinguish a remote invocation versus a collocated
      /// (thru-poa) invocation.
 -    bool is_remote_request_;
@@ -620,13 +620,13 @@ Index: tao/operation_details.inl
 @@ -234,5 +235,16 @@
    this->reply_dispatcher_ = rd;
  }
- 
+
 +/*ACE_INLINE void
 +TAO_Operation_Details::compressed (CORBA::Boolean compressed)
 +{
 +  this->compressed_ = compressed;
 +}
- 
+
 +ACE_INLINE CORBA::Boolean
 +TAO_Operation_Details::compressed (void) const
 +{
@@ -641,7 +641,7 @@ Index: tao/CDR.inl
 @@ -21,7 +21,19 @@
    this->more_fragments_ = more;
  }
- 
+
 +ACE_INLINE bool
 +TAO_OutputCDR::compressed (void) const
 +{
@@ -731,7 +731,7 @@ Index: tao/CDR.inl
 +      orb_core_ (rhs.orb_core_)
  {
  }
- 
+
 @@ -188,6 +209,7 @@
  TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
                              TAO_ORB_Core* orb_core)
@@ -747,7 +747,7 @@ Index: tao/Incoming_Message_Queue.inl
 @@ -43,4 +43,50 @@
    mb.clr_self_flags (ACE_Message_Block::DONT_DELETE);
  }
- 
+
 +ACE_INLINE
 +TAO_Queued_Data::TAO_Queued_Data (ACE_Allocator *alloc)
 +  : msg_block_ (0),
@@ -802,7 +802,7 @@ Index: tao/ORB_Core.inl
 @@ -430,6 +430,18 @@
    return this->codeset_manager_;
  }
- 
+
 +ACE_INLINE TAO_ZIOP_Adapter *
 +TAO_ORB_Core::ziop_adapter ()
 +{
@@ -839,7 +839,7 @@ Index: tao/Compression/Compression.pidl
 @@ -47,6 +47,8 @@
      const CompressorId COMPRESSORID_BZIP2 = 3;
      const CompressorId COMPRESSORID_ZLIB = 4;
- 
+
 +    typedef sequence <CompressorId> CompressorIdList;
 +
      /**
@@ -953,13 +953,13 @@ Index: tao/Incoming_Message_Queue.h
    /// queue already has more fragments that is missing..
 -  CORBA::Octet more_fragments_;
 +  CORBA::Boolean more_fragments_;
- 
+
    /// The message type of the message
    TAO_Pluggable_Message_Type msg_type_;
 @@ -184,6 +184,8 @@
    /// Pounter to the next element in the queue.
    TAO_Queued_Data *next_;
- 
+
 +  CORBA::Octet compressed_;
 +
  private:
