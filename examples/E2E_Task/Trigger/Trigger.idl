@@ -10,19 +10,19 @@ module CIAO
   {
     component Trigger
     {
-      publishes Test test_out;
+      emits Test test_out;
 
       attribute long period;
 
       attribute double load;
-      
+
       attribute string task_ID;
     };
 
     home Trigger_Factory manages Trigger
     {
     };
-    
+
   };
 };
 

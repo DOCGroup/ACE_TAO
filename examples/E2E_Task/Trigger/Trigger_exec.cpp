@@ -26,7 +26,7 @@ namespace CIAO
         ACE_Time_Value interval (0, this->period_ * 1000);
         while (true)
           {
-            ACE_DEBUG ((LM_DEBUG, "Trigger %s: Pushing out test event\n",
+            ACE_DEBUG ((LM_DEBUG, "\n%s::Trigger: Pushing test event\n",
                         this->ID_.in ()));
 
             Test_var ev = new OBV_CIAO::RACE::Test;
