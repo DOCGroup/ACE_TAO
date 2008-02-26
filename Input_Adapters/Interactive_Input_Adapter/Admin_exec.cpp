@@ -272,9 +272,6 @@ namespace CIAO
             }
         }
 
-        //@@ TODO: Currently, the rate is assumed to be an int, whereas it
-        //can sctually be a double! Need to fix this code to take care of
-        //that!
         void
         Admin_exec_i::update_rate_info
         (const ::Deployment::DeploymentPlan * plan,
@@ -283,7 +280,7 @@ namespace CIAO
           // We further need to parse the min, max rate info properties.
           std::stringstream msg;
           ::CIAO::RACE::ExecutionRate rates;
-          int val = this->parse_properties ("min_rate", plan->infoProperty);
+          double val = this->parse_rate_info ("min_rate", plan->infoProperty);
           if (val != -1)
             {
               rates.minRate = val;
@@ -297,7 +294,7 @@ namespace CIAO
               rates.minRate = 0;
             }
 
-          val = this->parse_properties ("max_rate", plan->infoProperty);
+          val = this->parse_rate_info ("max_rate", plan->infoProperty);
           if (val != -1)
             {
               rates.maxRate = val;
@@ -311,7 +308,7 @@ namespace CIAO
               rates.maxRate = 0;
             }
 
-          val = this->parse_properties ("curr_rate", plan->infoProperty);
+          val = this->parse_rate_info ("curr_rate", plan->infoProperty);
           if (val != -1)
             {
               rates.currRate = val;
@@ -354,7 +351,8 @@ namespace CIAO
               // descriptors are in micro seconds!
               BCET.sec = 0;
               WCET.sec = 0;
-              int val = this->parse_properties ("BCET", instance.configProperty);
+              int val = this->parse_properties
+                        ("BCET", instance.configProperty);
               if (val != -1)
                 {
                   BCET.usec = val;
@@ -403,7 +401,7 @@ namespace CIAO
                                         const ::Deployment::Properties &props)
         {
           /// Parse the property sequence to obtain the value of the
-          /// desired property such as BCET/WCET/min-rate/max-rate.
+          /// desired property such as BCET/WCET.
           for (CORBA::ULong ctr (0); ctr < props.length (); ++ctr)
             {
               const ::Deployment::Property & property = props [ctr];
@@ -415,6 +413,34 @@ namespace CIAO
                       int value;
                       property.value>>= value;
                       ACE_DEBUG ((LM_DEBUG, "and value is %d\n",  value));
+                      return value;
+                    }
+                  else
+                    {
+                      return -1;
+                    }
+                }
+            }
+          return -1;
+        }
+
+        double
+        Admin_exec_i::parse_rate_info (const char* name,
+                                       const ::Deployment::Properties &props)
+        {
+          /// Parse the property sequence to obtain the value of the
+          /// desired property such as min-rate/max-rate/curr_rate.
+          for (CORBA::ULong ctr (0); ctr < props.length (); ++ctr)
+            {
+              const ::Deployment::Property & property = props [ctr];
+              if (ACE_OS::strcmp (property.name.in (), name) == 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "Found property %s...",  name));
+                  if (property.value.type ()->kind () == CORBA::tk_double)
+                    {
+                      double value;
+                      property.value>>= value;
+                      ACE_DEBUG ((LM_DEBUG, "and value is %f\n",  value));
                       return value;
                     }
                   else

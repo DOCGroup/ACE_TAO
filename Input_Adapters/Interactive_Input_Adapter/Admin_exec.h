@@ -80,7 +80,9 @@ namespace CIAO
           virtual const char * get_effector_ID
             (const ::Deployment::Properties &prop);
 
-
+          virtual double parse_rate_info
+            (const char* name,
+             const ::Deployment::Properties &props);
 
           private:
           /// Object reference of the conductor object.
