@@ -1,7 +1,10 @@
 #include <iostream>
+#include <assert.h>
+
+#if !defined (ACE_WIN32)
+
 #include <dlfcn.h>
 #include <pthread.h>
-#include <assert.h>
 
 
 static void * dllHandle;
@@ -75,14 +78,17 @@ void * loadunloadDll(void *pp)
 
   return 0;
 }
+#endif /* !defined (ACE_WIN32) */
 
 int main(int argc, char ** argv)
 {
+#if defined (ACE_WIN32)
+#else
   int result = 0;
 
   printf ("main - entered\n");
 
-#ifdef USE_THREAD
+#  ifdef USE_THREAD
   pthread_t tid1;
   result = pthread_create(&tid1, NULL, &loadDll, 0);
   if (result != 0)
@@ -92,12 +98,12 @@ int main(int argc, char ** argv)
   }
   pthread_join(tid1, 0);
   printf ("loadDll thread finished\n");
-#else
+#  else
   loadDll(0);
   printf ("loadDll finished"\n);
-#endif
+#  endif
 
-#ifdef USE_THREAD
+#  ifdef USE_THREAD
   pthread_t tid2;
   result = pthread_create(&tid2, NULL, &unloadDll, 0);
   if (result != 0)
@@ -107,12 +113,14 @@ int main(int argc, char ** argv)
   }
   pthread_join(tid2, 0);
   printf ("unloadDll thread finished\n");
-#else
+#  else
   unloadDll(0);
   printf ("unloadDll finished\n");
-#endif
+#  endif
 
   printf ("main - leaving\n");
+
+#endif /* defined (ACE_WIN32) */
 
   return 0;
 }
