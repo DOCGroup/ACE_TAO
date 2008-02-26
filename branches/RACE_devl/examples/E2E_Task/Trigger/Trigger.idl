@@ -1,0 +1,29 @@
+#ifndef TRIGGER_IDL
+#define TRIGGER_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    component Trigger
+    {
+      publishes Test test_out;
+
+      attribute long period;
+
+      attribute double load;
+      
+      attribute string task_ID;
+    };
+
+    home Trigger_Factory manages Trigger
+    {
+    };
+    
+  };
+};
+
+#endif // TRIGGER_IDL

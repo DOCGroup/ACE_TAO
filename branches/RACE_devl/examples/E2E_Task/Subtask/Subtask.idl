@@ -1,0 +1,30 @@
+#ifndef SUBTASK_IDL
+#define SUBTASK_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    component Subtask
+    {
+      consumes Test test_in;
+
+      publishes Test test_out;
+
+      attribute long iterations;
+
+      attribute string ID;
+
+    };
+
+    home Subtask_Factory manages Subtask
+    {
+    };
+  };
+};
+
+
+#endif /* SUBTASK_IDL */

@@ -1,0 +1,125 @@
+project(Subtask_idl_gen) : taoidldefaults, anytypecode {
+  avoids += ace_for_tao
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SUBTASK_STUB_Export \
+              -Wb,stub_export_include=Subtask_stub_export.h \
+              -Wb,skel_export_macro=SUBTASK_SVNT_Export \
+              -Wb,skel_export_include=Subtask_svnt_export.h \
+              -I ../Base
+
+  IDL_Files {
+    Subtask.idl
+  }
+}
+
+project(Subtask_cidl_gen) : ciaocidldefaults, taoidldefaults {
+  avoids += ace_for_tao
+  custom_only = 1
+  cidlflags += --svnt-export-macro SUBTASK_SVNT_Export \
+               --svnt-export-include Subtask_svnt_export.h \
+                -I ../Base
+  idlflags += -Wb,export_macro=SUBTASK_EXEC_Export \
+              -Wb,export_include=Subtask_exec_export.h \
+              -SS \
+              -I ../Base
+  CIDL_Files {
+    Subtask.cidl
+  }
+
+  IDL_Files {
+    SubtaskE.idl
+  }
+}
+
+project(Subtask_stub) : ciao_client_dnc {
+  avoids += ace_for_tao
+  after += Subtask_idl_gen \
+           Event_Types_stub
+
+  libs  += Event_Types_stub
+  includes += ../Base
+
+  sharedname = Subtask_stub
+  dynamicflags   = SUBTASK_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SubtaskC.cpp
+  }
+
+  Header_Files {
+    SubtaskC.h
+    Subtask_stub_export.h
+  }
+
+  Inline_Files {
+    SubtaskC.inl
+  }
+}
+
+project(Subtask_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
+  after   += Subtask_cidl_gen Subtask_stub
+  sharedname = Subtask_exec
+  libs += Subtask_stub \
+          Event_Types_stub
+  includes += ../Base
+
+  dynamicflags   = SUBTASK_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SubtaskEC.cpp
+    Subtask_exec.cpp
+  }
+
+  Header_Files {
+    SubtaskEC.h
+    Subtask_exec.h
+    Subtask_exec_export.h
+  }
+
+  Inline_Files {
+    SubtaskEC.inl
+  }
+}
+
+
+project(Subtask_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
+  after      +=  Subtask_exec \
+                 Event_Types_svnt
+  sharedname  = Subtask_svnt
+  libs       += Subtask_exec \
+                Subtask_stub \
+                Event_Types_stub \
+                Event_Types_svnt
+
+  includes += ../Base
+  dynamicflags = SUBTASK_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SubtaskS.cpp
+    Subtask_svnt.cpp
+  }
+
+  Header_Files {
+    SubtaskS.h
+    Subtask_svnt.h
+    Subtask_svnt_export.h
+  }
+
+  Inline_Files {
+    SubtaskS.inl
+  }
+}

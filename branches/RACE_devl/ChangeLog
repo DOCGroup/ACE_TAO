@@ -1,3 +1,46 @@
+Tue Feb 26 18:57:18 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
+
+        * examples:
+
+        * examples/E2E_Task:
+
+        * examples/E2E_Task/Base:
+
+        * examples/E2E_Task/Base/Event_Types.idl:
+        * examples/E2E_Task/Base/Event_Types.mpc:
+        * examples/E2E_Task/Base/Event_Types_stub_export.h:
+        * examples/E2E_Task/Base/Event_Types_svnt_export.h:
+
+        * examples/E2E_Task/Subtask:
+
+        * examples/E2E_Task/Subtask/Subtask.cidl:
+        * examples/E2E_Task/Subtask/Subtask.idl:
+        * examples/E2E_Task/Subtask/Subtask.mpc:
+        * examples/E2E_Task/Subtask/Subtask_exec.h:
+        * examples/E2E_Task/Subtask/Subtask_exec.cpp:
+        * examples/E2E_Task/Subtask/Subtask_exec_export.h:
+        * examples/E2E_Task/Subtask/Subtask_stub_export.h:
+        * examples/E2E_Task/Subtask/Subtask_svnt_export.h:
+
+        * examples/E2E_Task/Trigger:
+
+        * examples/E2E_Task/Trigger/Trigger.cidl:
+        * examples/E2E_Task/Trigger/Trigger.idl:
+        * examples/E2E_Task/Trigger/Trigger.mpc:
+        * examples/E2E_Task/Trigger/Trigger_exec.h:
+        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
+        * examples/E2E_Task/Trigger/Trigger_exec_export.h:
+        * examples/E2E_Task/Trigger/Trigger_stub_export.h:
+        * examples/E2E_Task/Trigger/Trigger_svnt_export.h:
+
+        * examples/E2E_Task/descriptors:
+
+        * examples/E2E_Task/descriptors/NodeDetails.dat:
+        * examples/E2E_Task/descriptors/Task1.cdp:
+        * examples/E2E_Task/descriptors/run_all.pl:
+
+        Checking in the initial implementation of the E2E task model.
+
 Thu Jan 17 18:00:25 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
 
         * descriptors/String1.cdp:
