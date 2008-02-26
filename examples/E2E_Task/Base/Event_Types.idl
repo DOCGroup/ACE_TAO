@@ -1,0 +1,20 @@
+#ifndef EVENT_TYPES_IDL
+#define EVENT_TYPES_IDL
+
+#include <Components.idl>
+
+module CIAO
+{
+  module RACE
+  {
+    eventtype Test
+    {
+      public double load;
+
+      public string task_ID;
+    };
+  };
+
+};
+
+#endif /* EVENT_TYPES_IDL */
