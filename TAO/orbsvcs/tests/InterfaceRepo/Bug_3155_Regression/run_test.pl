@@ -9,35 +9,27 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-my $exec_extn="";
-if ($^O eq "MSWin32") {
-  $exec_extn=".exe";
-}
-$ifr_service= "$ENV{ACE_ROOT}/bin/IFR_Service";
-if (! -e $ifr_service . $exec_extn ) {
-    $ifr_service= "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/IFR_Service";
-    if (! -e $ifr_service . $exec_extn ) {
-      $ifr_service = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/Release/IFR_Service";
-      if (! -e $ifr_service . $exec_extn ) {
-            print STDERR "ERROR: IFR_Service not found.\n";
-            exit 1;
-        }
-    }
-}
-$iorfile = PerlACE::LocalFile ("ifr.ior");
+
+$iorfilebase = "ifr.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 unlink $iorfile;
 
 print STDERR "\n\n==== Running Forward Declared ValueType Definition test\n";
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("$ifr_service", "-o $iorfile");
+    $SV = new PerlACE::ProcessVX ("../../../IFR_Service/IFR_Service", "-o $iorfilebase");
 }
 else {
-    $SV = new PerlACE::Process ("$ifr_service", "-o $iorfile");
+    $SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", "-o $iorfile");
 }
 
 print STDERR "Starting IFR Service\n";
-$SV->Spawn ();
+$ifspawn = $SV->Spawn ();
+if ($ifspawn != 0) {
+    print STDERR "ERROR: Can't spawn IFR Service $ifspawn\n";
+    exit 1;
+}
+
 if (PerlACE::waitforfile_timed ($iorfile,
      $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";

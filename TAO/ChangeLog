@@ -1,3 +1,38 @@
+Sun Feb 24 19:48:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3154_Regression/run_test.pl:
+          Extended timeout for OpenVMS
+
+Sun Feb 24 19:44:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+          No need to pass in empty orb name
+
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
+          Small code simplification
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+          Doxygen change
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+          Layout change
+
+        * orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.cpp:
+          Use true instead of 1
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+          Use LM_DEBUG with ACE_DEBUG
+
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:
+          Just check whether the spawn worked or not instead of trying to
+          check for the existince of the executable. The tests did fail on
+          OpenVMS and VxWorks
+
 Fri Feb 22 18:27:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Bug_2935_Regression/middle.cpp:

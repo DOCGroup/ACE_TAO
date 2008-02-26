@@ -22,7 +22,7 @@ $TAO_IDL = new PerlACE::Process ("$tao_idl");
 $ENV{'INCLUDE'} = ":$ENV{TAO_ROOT}/orbsvcs/:$ENV{TAO_ROOT}/:";
 
 $TAO_IDL->Arguments ("-Se -hs _skel.h -hc _stub.h -I$ENV{TAO_ROOT} -I$ENV{TAO_ROOT}/orbsvcs/ test.idl");
-$TAO_IDL->SpawnWaitKill (20);
+$TAO_IDL->SpawnWaitKill (60);
 
 $found = 0;
 
