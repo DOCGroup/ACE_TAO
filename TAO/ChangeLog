@@ -1,3 +1,10 @@
+Tue Feb 26 16:16:16 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * TAO_IDL/tao_idl.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
 Mon Feb 25 22:19:46 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
