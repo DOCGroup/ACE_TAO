@@ -25,6 +25,8 @@ using namespace CCF::CompilerElements;
 using namespace CCF::CIDL;
 using namespace SemanticGraph;
 
+//FUZZ: disable check_for_improper_main_declaration
+
 int
 main ()
 {

@@ -10,6 +10,8 @@
 
 #include "Generator.hpp"
 
+//FUZZ: disable check_for_improper_main_declaration
+
 int
 main ()
 {
