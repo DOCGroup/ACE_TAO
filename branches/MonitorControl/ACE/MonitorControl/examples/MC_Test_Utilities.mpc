@@ -7,4 +7,8 @@ project(MC_Test_Utilities) : acelib {
   Source_Files {
     MC_Test_Utilities.cpp
   }
+  
+  Header_Files {
+    MC_Test_Utilities_export.h"
+  }
 }

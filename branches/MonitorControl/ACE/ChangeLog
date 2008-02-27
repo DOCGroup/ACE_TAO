@@ -1,3 +1,9 @@
+Wed Feb 27 19:38:03 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/examples/MC_Test_Utilities.mpc:
+        
+          Added the export header file.
+
 Wed Feb 27 19:32:37 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/MC_Test_Utilities.h:
