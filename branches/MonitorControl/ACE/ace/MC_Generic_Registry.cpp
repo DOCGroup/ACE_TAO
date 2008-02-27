@@ -8,10 +8,6 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    MC_Generic_Registry::MapError::MapError (ErrorReason why)
-      : why_ (why)
-    {}
-
     MC_Generic_Registry::MC_Generic_Registry (void)
     {}
 
@@ -23,7 +19,9 @@ namespace ACE
     {
       if (type == 0)
         {
-          throw MapError (MapError::MAP_ERROR_INVALID_VALUE);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "registry add: null type\n"),
+                            false);
         }
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
@@ -32,7 +30,9 @@ namespace ACE
 
       if (status == -1)
         {
-          throw MapError (MapError::MAP_ERROR_BIND_FAILURE);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "registry add: map bind failed\n"),
+                            false);
         }
         
       this->name_cache_.push_back (type->name ());

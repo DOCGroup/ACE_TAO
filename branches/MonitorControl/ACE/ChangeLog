@@ -1,3 +1,20 @@
+Wed Feb 27 17:55:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/MC_Generic_Registry.h:
+        * ace/MC_Generic_Registry.cpp:
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
+        * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp:
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp:
+        * MonitorControl/examples/Num_Threads/num_threads.cpp:
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp:
+        * MonitorControl/examples/Group/group.cpp:
+
+          Removed the exception from class MC_Generic_Registry and
+          associated try/catch blocks in the examples. The
+          existing boolean return value of the registry method
+          where the exception was thrown, plus added ACE_ERROR
+          macros, provide the diagnostic information instead. 
+
 Tue Feb 26 20:48:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/Bytes_Sent/svc.conf:

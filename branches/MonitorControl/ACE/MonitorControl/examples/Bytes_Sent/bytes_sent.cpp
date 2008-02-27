@@ -68,44 +68,21 @@ public:
 
 int main (int argc, char *argv [])
 {
-  try
-  {
-    /// Set the timer for # of threads check at 2000 msecs (2 sec).
-    ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, 2000);
+  /// Set the timer for # of threads check at 2000 msecs (2 sec).
+  ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, 2000);
 
-    /// Runs the reactor's event loop in a separate thread so the timer(s)
-    /// can run concurrently with the application.
-    START_PERIODIC_MONITORS;
+  /// Runs the reactor's event loop in a separate thread so the timer(s)
+  /// can run concurrently with the application.
+  START_PERIODIC_MONITORS;
 
-    /// Run the monitor checker in a separate thread.
-    MonitorChecker monitor_checker;
-    monitor_checker.activate ();
+  /// Run the monitor checker in a separate thread.
+  MonitorChecker monitor_checker;
+  monitor_checker.activate ();
 
-    ACE_OS::sleep (30);
+  ACE_OS::sleep (30);
 
-    /// End the reactor's event loop, stopping the timer(s).
-    STOP_PERIODIC_MONITORS;
-  }
-  catch (const MC_Generic_Registry::MapError &e)
-  {
-    /// Catch possible errors in monitor registration. Other exceptions
-    /// will be implemented later on.
-    switch (e.why_)
-    {
-      case MC_Generic_Registry::MapError::MAP_ERROR_BIND_FAILURE:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Monitor add failed\n"),
-                          -1);
-        break;
-      case MC_Generic_Registry::MapError::MAP_ERROR_INVALID_VALUE:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Invalid monitor\n"),
-                          -1);
-        break;
-      default:
-        break;
-    }
-  }
+  /// End the reactor's event loop, stopping the timer(s).
+  STOP_PERIODIC_MONITORS;
 
   return 0;
 }

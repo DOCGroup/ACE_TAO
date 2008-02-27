@@ -69,70 +69,47 @@ public:
 
 int main (int argc, char *argv [])
 {
-  try
-  {
-    /// The Admin class will own the reactor and destroy it. We are
-    /// passing a vanilla reactor to show how it works, but in real
-    /// life it could be some specialized reactor.
-    ACE_Reactor* new_reactor = new ACE_Reactor;
-    MC_ADMINMANAGER* mgr =
-      ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-    mgr->admin ().reactor (new_reactor);
+  /// The Admin class will own the reactor and destroy it. We are
+  /// passing a vanilla reactor to show how it works, but in real
+  /// life it could be some specialized reactor.
+  ACE_Reactor* new_reactor = new ACE_Reactor;
+  MC_ADMINMANAGER* mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  mgr->admin ().reactor (new_reactor);
 
-    /// Set the timer for CPU load check at 2000 msecs (2 sec).
-    ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, 2000);
+  /// Set the timer for CPU load check at 2000 msecs (2 sec).
+  ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, 2000);
 
-    /// Runs the reactor's event loop in a separate thread so the timer(s)
-    /// can run concurrently with the application.
-    START_PERIODIC_MONITORS;
+  /// Runs the reactor's event loop in a separate thread so the timer(s)
+  /// can run concurrently with the application.
+  START_PERIODIC_MONITORS;
 
-    /// Run the monitor checker in a separate thread.
-    MonitorChecker monitor_checker;
-    monitor_checker.activate ();
+  /// Run the monitor checker in a separate thread.
+  MonitorChecker monitor_checker;
+  monitor_checker.activate ();
 
-    /// Make sure the monitor checker is spawned before doing anything.
-    ACE_OS::sleep (1);
+  /// Make sure the monitor checker is spawned before doing anything.
+  ACE_OS::sleep (1);
 
-    for (int i = 0; i < 10; ++i)
-      {
-        /// Alternate between letting the CPU sleep and keeping it
-        /// busy.
-        if (i % 2 == 0)
-          {
-            ACE_OS::sleep (1);
-          }
-        else
-          {
-            for (unsigned long j = 0; j < 5050505; j++)
-              {
-                (void) ACE::gcd (2419233733, 567715713);
-              }
-          }
-      }
-
-    /// End the reactor's event loop, stopping the timer(s).
-    STOP_PERIODIC_MONITORS;
-  }
-  catch (const MC_Generic_Registry::MapError &e)
-  {
-    /// Catch possible errors in monitor registration. Other exceptions
-    /// will be implemented later on.
-    switch (e.why_)
+  for (int i = 0; i < 10; ++i)
     {
-      case MC_Generic_Registry::MapError::MAP_ERROR_BIND_FAILURE:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Monitor add failed\n"),
-                          -1);
-        break;
-      case MC_Generic_Registry::MapError::MAP_ERROR_INVALID_VALUE:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Invalid monitor\n"),
-                          -1);
-        break;
-      default:
-        break;
+      /// Alternate between letting the CPU sleep and keeping it
+      /// busy.
+      if (i % 2 == 0)
+        {
+          ACE_OS::sleep (1);
+        }
+      else
+        {
+          for (unsigned long j = 0; j < 5050505; j++)
+            {
+              (void) ACE::gcd (2419233733, 567715713);
+            }
+        }
     }
-  }
+
+  /// End the reactor's event loop, stopping the timer(s).
+  STOP_PERIODIC_MONITORS;
 
   return 0;
 }

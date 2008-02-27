@@ -67,66 +67,43 @@ public:
 
 int main (int argc, char *argv [])
 {
-  try
-  {
-    /// Create a message queue with a built-in monitor (since ACE was
-    /// compiled with monitors enabled) and add the monitor to the
-    /// registry (some ACE activities create a message queue under
-    /// the hood, so we must make the registration explicit).
-    ACE_Message_Queue<ACE_NULL_SYNCH> monitored_queue;
-    monitored_queue.register_monitor ();
+  /// Create a message queue with a built-in monitor (since ACE was
+  /// compiled with monitors enabled) and add the monitor to the
+  /// registry (some ACE activities create a message queue under
+  /// the hood, so we must make the registration explicit).
+  ACE_Message_Queue<ACE_NULL_SYNCH> monitored_queue;
+  monitored_queue.register_monitor ();
 
-    /// The message string is 11 bytes long so the message queue will
-    /// grow and shrink in 11-byte increments.
-    ACE_Message_Block *mb = 0;
-    const char *msg = "Hidely Ho!";
+  /// The message string is 11 bytes long so the message queue will
+  /// grow and shrink in 11-byte increments.
+  ACE_Message_Block *mb = 0;
+  const char *msg = "Hidely Ho!";
 
-    /// Run the monitor checker in a separate thread.
-    MonitorChecker monitor_checker;
-    monitor_checker.activate ();
+  /// Run the monitor checker in a separate thread.
+  MonitorChecker monitor_checker;
+  monitor_checker.activate ();
 
-    for (int i = 0; i < 10; ++i)
-      {
-        ACE_OS::sleep (1);
-
-        /// Add 6 message blocks to the queue, then remove
-        /// 4 of them.
-        if (i < 6)
-          {
-            mb = new ACE_Message_Block (ACE_OS::strlen (msg) + 1);
-            mb->copy (msg);
-            monitored_queue.enqueue_tail (mb);
-          }
-        else
-          {
-            monitored_queue.dequeue_head (mb);
-            mb->release ();
-          }
-      }
-
-    /// Clean up the remaining message queue resources.
-    monitored_queue.flush ();
-  }
-  catch (const MC_Generic_Registry::MapError &e)
-  {
-    /// Catch possible errors in monitor registration. Other exceptions
-    /// will be implemented later on.
-    switch (e.why_)
+  for (int i = 0; i < 10; ++i)
     {
-      case MC_Generic_Registry::MapError::MAP_ERROR_BIND_FAILURE:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Monitor add failed\n"),
-                          -1);
-        break;
-      case MC_Generic_Registry::MapError::MAP_ERROR_INVALID_VALUE:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Invalid monitor\n"),
-                          -1);
-        break;
-      default:
-        break;
+      ACE_OS::sleep (1);
+
+      /// Add 6 message blocks to the queue, then remove
+      /// 4 of them.
+      if (i < 6)
+        {
+          mb = new ACE_Message_Block (ACE_OS::strlen (msg) + 1);
+          mb->copy (msg);
+          monitored_queue.enqueue_tail (mb);
+        }
+      else
+        {
+          monitored_queue.dequeue_head (mb);
+          mb->release ();
+        }
     }
-  }
+
+  /// Clean up the remaining message queue resources.
+  monitored_queue.flush ();
 
   return 0;
 }

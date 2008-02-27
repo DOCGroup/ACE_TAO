@@ -50,24 +50,7 @@ namespace ACE
        *
        * @brief Exception, thrown by the add() operation
        * in class GenericRegistry.
-       *
-       * Used when items are added to the registry,
-       * to give more info about an insertion error than we get
-       * from the boolean return type.
        */
-      struct MapError
-      {
-        /// Info that the MapError exception might contain.
-        enum ErrorReason
-        {
-          MAP_ERROR_BIND_FAILURE,
-          MAP_ERROR_INVALID_VALUE
-        };
-        
-        MapError (ErrorReason why);
-      
-        ErrorReason why_;
-      };
       
       /// Adds a Statistic or ControlAction to its respecive registry.
       /// Throws MapError.

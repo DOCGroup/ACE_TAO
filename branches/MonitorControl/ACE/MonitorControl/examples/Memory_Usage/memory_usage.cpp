@@ -69,60 +69,37 @@ public:
 
 int main (int argc, char *argv [])
 {
-  try
-  {
-    /// Set the timer for memory usage check at 2000 msecs (2 sec).
-    ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, 2000);
+  /// Set the timer for memory usage check at 2000 msecs (2 sec).
+  ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, 2000);
 
-    /// Runs the reactor's event loop in a separate thread so the timer(s)
-    /// can run concurrently with the application.
-    START_PERIODIC_MONITORS;
+  /// Runs the reactor's event loop in a separate thread so the timer(s)
+  /// can run concurrently with the application.
+  START_PERIODIC_MONITORS;
 
-    /// Run the monitor checker in a separate thread.
-    MonitorChecker monitor_checker;
-    monitor_checker.activate ();
+  /// Run the monitor checker in a separate thread.
+  MonitorChecker monitor_checker;
+  monitor_checker.activate ();
 
-    char * str_array[5] = {0};
+  char * str_array[5] = {0};
 
-    for (int i = 0; i < 10; ++i)
-      {
-        ACE_OS::sleep (2);
-
-        /// Allocate a large string in each of the first 5 loops,
-        /// free them in the last 5 loops.
-        if (i < 5)
-          {
-            str_array[i] = new char[1024*1024*10];
-          }
-        else
-          {
-            delete [] str_array[i - 5];
-          }
-      }
-
-    /// End the reactor's event loop, stopping the timer(s).
-    STOP_PERIODIC_MONITORS;
-  }
-  catch (const MC_Generic_Registry::MapError &e)
-  {
-    /// Catch possible errors in monitor registration. Other exceptions
-    /// will be implemented later on.
-    switch (e.why_)
+  for (int i = 0; i < 10; ++i)
     {
-      case MC_Generic_Registry::MapError::MAP_ERROR_BIND_FAILURE:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Monitor add failed\n"),
-                          -1);
-        break;
-      case MC_Generic_Registry::MapError::MAP_ERROR_INVALID_VALUE:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Invalid monitor\n"),
-                          -1);
-        break;
-      default:
-        break;
+      ACE_OS::sleep (2);
+
+      /// Allocate a large string in each of the first 5 loops,
+      /// free them in the last 5 loops.
+      if (i < 5)
+        {
+          str_array[i] = new char[1024*1024*10];
+        }
+      else
+        {
+          delete [] str_array[i - 5];
+        }
     }
-  }
+
+  /// End the reactor's event loop, stopping the timer(s).
+  STOP_PERIODIC_MONITORS;
 
   return 0;
 }
