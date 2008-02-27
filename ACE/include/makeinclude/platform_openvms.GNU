@@ -31,7 +31,7 @@ VSHDIR          = shobj/
 
 LN_S = cp -p
 DEFFLAGS        +=
-CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -names_as_is_short -Wc/STAND=STRICT
+CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -names_as_is_short
 ifeq ($(HOSTTYPE),ia64)
   CCFLAGS         += -msg_disable intoverflow -msg_disable reftemporary -msg_disable intsignchange
 else
