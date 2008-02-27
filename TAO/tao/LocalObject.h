@@ -217,8 +217,7 @@ private:
   //@{
   TAO_Local_RefCounted_Object (const TAO_Local_RefCounted_Object &);
   TAO_Local_RefCounted_Object & operator = (
-      const TAO_Local_RefCounted_Object &
-    );
+      const TAO_Local_RefCounted_Object &);
   //@}
 };
 

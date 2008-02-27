@@ -69,18 +69,6 @@ namespace TAO
     TAO_INTERCEPTOR (invoke_status_ = s);
   }
 
-  TAO_Service_Context &
-  Invocation_Base::request_service_context (void)
-  {
-    return this->details_.request_service_context ();
-  }
-
-  TAO_Service_Context &
-  Invocation_Base::reply_service_context (void)
-  {
-    return this->details_.reply_service_context ();
-  }
-
 #if TAO_HAS_INTERCEPTORS == 1
 
   Invocation_Status

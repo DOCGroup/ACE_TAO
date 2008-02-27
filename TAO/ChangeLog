@@ -1,3 +1,15 @@
+Wed Feb 27 08:36:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+          Check the return value of operator<<
+
+        * tao/Invocation_Base.{cpp,inl}:
+          Moved a few methods to the inline file
+
+        * tao/LocalObject.h:
+        * tao/TAO_Server_Request.cpp:
+          Layout change
+
 Tue Feb 26 16:16:16 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * TAO_IDL/tao_idl.cpp:
