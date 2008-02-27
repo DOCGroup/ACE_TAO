@@ -1,3 +1,12 @@
+Wed Feb 27 14:57:50 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+        * tests/tests.mpc:
+
+        Replaced the usage of ACE_WIN32 with the platform-specific WIN32
+        since the driver is ACE-unaware application. Updated the test to
+        compile cleanly on Windows.
+
 Tue Feb 26 13:36:47 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Bug_2980_Regression_Dll.cpp:
