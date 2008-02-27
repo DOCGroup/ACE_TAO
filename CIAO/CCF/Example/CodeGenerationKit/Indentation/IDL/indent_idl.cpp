@@ -10,6 +10,8 @@
 using std::cout;
 using std::endl;
 
+//FUZZ: disable check_for_improper_main_declaration
+
 int
 main ()
 {
