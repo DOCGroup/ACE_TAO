@@ -1,9 +1,9 @@
 // $Id$
 
-project (Num_Threads) : aceexe {
+project (*) : aceexe {
   exename = num_threads
-  after += MonitorControl
-  libs  += MonitorControl
+  after += MonitorControl MC_Test_Utilities
+  libs  += MonitorControl MC_Test_Utilities
   macros += ENABLE_MONITORS ENABLE_ACE_MONITORS
   
   source_files {

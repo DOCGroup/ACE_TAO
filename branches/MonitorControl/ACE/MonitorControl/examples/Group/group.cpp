@@ -1,63 +1,14 @@
+// $Id$
 
 #include "ace/OS_NS_unistd.h"
-#include "ace/Date_Time.h"
 #include "ace/streams.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Monitor_Point_Registry.h"
 
 #include "MonitorControl/MonitorControl.h"
+#include "MonitorControl/examples/MC_Test_Utilities.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
-
-/// At this point in the development, a monitor's 'data' is
-/// a double value plus a timestamp. The method below is a
-/// utlity function to display the timestamp, formatted as
-/// mm-dd-yyyy hr:min:sec.usec
-void
-display_timestamp (const MonitorControl_Types::Data &data)
-{
-  ACE_Date_Time dt (data.timestamp_);
-  cout << setfill ('0')
-       << setw (2) << dt.month () << '-'
-       << setw (2) << dt.day () << '-'
-       << dt.year () << ' '
-       << setw (2) << dt.hour () << ':'
-       << setw (2) << dt.minute () << ':'
-       << setw (2) << dt.second () << '.'
-       << setw (6) << dt.microsec () << ":   ";
-}
-
-/// Display the CPU load as a floating point percentage, to
-/// 2 decimal places.
-void
-display_cpu_load (const MonitorControl_Types::Data &data)
-{
-  cout << "% CPU load:               ";
-  display_timestamp (data);
-  cout << setiosflags (ios::showpoint | ios::fixed)
-       << setprecision (2) << data.value_ << endl;
-}
-
-/// Display the CPU load as a floating point percentage, to
-/// 2 decimal places.
-void
-display_memory_usage (const MonitorControl_Types::Data &data)
-{
-  cout << "% memory used:            ";
-  display_timestamp (data);
-  cout << setiosflags (ios::showpoint | ios::fixed)
-       << setprecision (2) << data.value_ << endl;
-}
-
-/// Display the CPU load as a floating point percentage, to
-/// 2 decimal places.
-void
-display_bytes_sent (const MonitorControl_Types::Data &data)
-{
-  cout << "total bytes sent:         ";
-  display_timestamp (data);
-  cout << static_cast<ACE_UINT64> (data.value_) << endl;
-}
 
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
@@ -87,13 +38,13 @@ public:
         ACE_OS::sleep (2);
 
         MonitorControl_Types::Data data = cpu_monitor->retrieve ();
-        display_cpu_load (data);
+        MC_Test_Utilities::display_cpu_load (data);
 
         data = memory_monitor->retrieve ();
-        display_memory_usage (data);
+        MC_Test_Utilities::display_memory_usage (data);
 
         data = bytes_monitor->retrieve ();
-        display_bytes_sent (data);
+        MC_Test_Utilities::display_bytes_sent (data);
         
         cout << endl;
       }

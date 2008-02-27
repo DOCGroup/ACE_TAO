@@ -1,3 +1,29 @@
+Wed Feb 27 19:32:37 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/examples/MC_Test_Utilities.h:
+        * MonitorControl/examples/MC_Test_Utilities_export.h:
+        * MonitorControl/examples/MC_Test_Utilities.mpc:
+        * MonitorControl/examples/MC_Test_Utilities.cpp:
+
+          New files, the beginnings of a library for code
+          common to the MonitorControl tests and examples.
+
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
+        * MonitorControl/examples/Bytes_Sent/Bytes_Sent.mpc:
+        * MonitorControl/examples/Message_Queue_Size/Message_Queue_Size.mpc:
+        * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp:
+        * MonitorControl/examples/CPU_Load/CPU_Load.mpc:
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp:
+        * MonitorControl/examples/Num_Threads/Num_Threads.mpc:
+        * MonitorControl/examples/Num_Threads/num_threads.cpp:
+        * MonitorControl/examples/Memory_Usage/Memory_Usage.mpc:
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp:
+        * MonitorControl/examples/Group/Group.mpc:
+        * MonitorControl/examples/Group/group.cpp:
+
+          Removed code moved to the new library, and modified the
+          MPC files accordingly.
+
 Wed Feb 27 17:55:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/MC_Generic_Registry.h:

@@ -2,8 +2,8 @@
 
 project (*) : aceexe {
   exename = group
-  after += MonitorControl
-  libs  += MonitorControl
+  after += MonitorControl MC_Test_Utilities
+  libs  += MonitorControl MC_Test_Utilities
   macros += ENABLE_MONITORS ENABLE_ACE_MONITORS
 
   source_files {
