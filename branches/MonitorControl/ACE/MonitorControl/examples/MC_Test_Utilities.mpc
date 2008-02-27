@@ -9,6 +9,6 @@ project(MC_Test_Utilities) : acelib {
   }
   
   Header_Files {
-    MC_Test_Utilities_export.h"
+    MC_Test_Utilities_export.h
   }
 }
