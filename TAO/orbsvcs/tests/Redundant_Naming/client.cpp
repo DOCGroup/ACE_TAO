@@ -79,7 +79,7 @@ My_Test_Object::id (CORBA::Short id)
 // This function runs the test.
 
 int
-main (int argc, ACE_TCHAR **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int c_breath = 4;
   int c_depth = 4;

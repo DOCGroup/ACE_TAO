@@ -2,6 +2,9 @@
 // $Id$
 
 project(*Consumer): messaging, rteventexe, naming {
+
+  exename = Consumer
+
   requires  += corba_messaging
 
   Source_Files {
@@ -10,6 +13,9 @@ project(*Consumer): messaging, rteventexe, naming {
 }
 
 project(*Supplier): messaging, rteventexe, naming {
+
+  exename = Supplier
+
   requires  += corba_messaging
 
   Source_Files {
@@ -18,6 +24,9 @@ project(*Supplier): messaging, rteventexe, naming {
 }
 
 project(*): messaging, rteventexe, rtevent_serv, naming {
+
+  exename = Gateway
+
   requires  += corba_messaging
 
   Source_Files {
@@ -26,6 +35,9 @@ project(*): messaging, rteventexe, rtevent_serv, naming {
 }
 
 project(*EC): messaging, rteventexe, rtevent_serv, naming {
+
+  exename = EC
+
   requires  += corba_messaging
 
   Source_Files {
