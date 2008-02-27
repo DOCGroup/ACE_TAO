@@ -9,6 +9,7 @@ project(Trigger_idl_gen) : taoidldefaults, anytypecode {
 
   IDL_Files {
     Trigger.idl
+    Callback.idl
   }
 }
 
@@ -49,10 +50,12 @@ project(Trigger_stub) : ciao_client_dnc {
 
   Source_Files {
     TriggerC.cpp
+    CallbackC.cpp
   }
 
   Header_Files {
     TriggerC.h
+    CallbackC.h
     Trigger_stub_export.h
   }
 
@@ -113,6 +116,7 @@ project(Trigger_svnt) : ciao_servant_dnc {
 
   Source_Files {
     TriggerS.cpp
+    CallbackS.cpp
     Trigger_svnt.cpp
   }
 

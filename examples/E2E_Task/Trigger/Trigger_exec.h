@@ -12,6 +12,8 @@
 #include "Trigger_exec_export.h"
 #include "tao/LocalObject.h"
 #include "ace/Task.h"
+#include "ace/Mutex.h"
+#include "ace/High_Res_Timer.h"
 
 namespace CIAO
 {
@@ -44,6 +46,8 @@ namespace CIAO
 
         virtual void task_ID (const char *task_ID);
 
+        virtual ::CORBA::Boolean set_rate (::CORBA::Double rate);
+
         virtual void
         set_session_context (::Components::SessionContext_ptr ctx);
 
@@ -60,14 +64,27 @@ namespace CIAO
         private:
         ::CIAO::RACE::CCM_Trigger_Context_var context_;
 
-        // Task period
-        size_t period_;
+        // Task period specified in usecs.
+        ACE_hrtime_t period_;
 
-        // Task ID
+        // Task ID.
         ::CORBA::String_var ID_;
 
-        // Load coefficient
+        // Load coefficient.
         double load_;
+
+        // Indicates whether the active object has been activated or not.
+        bool active_;
+
+        /// The high resolution timer.
+        ACE_High_Res_Timer timer_;
+
+        /// Elapsed time.
+        ACE_hrtime_t elapsed_time_;
+
+        // Mutex for the period_ variable.
+        ACE_Mutex mutex_;
+
 
       };
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
-  <UUID>9CDED012-8436-4EFE-A9C0-6E0739C12B65</UUID>
+  <UUID>AE8E2FB6-75F5-48E7-BBAD-ACC79BF78C85</UUID>
 
   <implementation id="_D6FB0F4E-54F7-4D39-AED8-CD45017408D6">
     <name>PICML_default_xme_file.ComponentImplementations.SubtaskImplementation.SubtaskMonolithicImpl</name>
@@ -19,9 +19,9 @@
     <artifact>_8D489B59-7C2F-4BF8-8C8D-F522CE41DFC2</artifact>
   </implementation>
 
-  <instance id="PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Trigger">
-    <name>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Trigger</name>
-    <node>four</node>
+  <instance id="PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Trigger">
+    <name>PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Trigger</name>
+    <node>two</node>
     <source/>
     <implementation>_65FF80E8-893E-416A-B056-03DB270D9D00</implementation>
     <configProperty>
@@ -42,18 +42,18 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Task1</string>
+          <string>Task2</string>
         </value>
       </value>
     </configProperty>
     <configProperty>
-      <name>task_ID</name>
+      <name>period</name>
       <value>
         <type>
-          <kind>tk_string</kind>
+          <kind>tk_long</kind>
         </type>
         <value>
-          <string>Task1</string>
+          <long>950000</long>
         </value>
       </value>
     </configProperty>
@@ -69,100 +69,20 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>period</name>
+      <name>task_ID</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_string</kind>
         </type>
         <value>
-          <long>450000</long>
+          <string>Task2</string>
         </value>
       </value>
     </configProperty>
   </instance>
 
-  <instance id="PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask1">
-    <name>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask1</name>
-    <node>four</node>
-    <source/>
-    <implementation>_D6FB0F4E-54F7-4D39-AED8-CD45017408D6</implementation>
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Subtask.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>ID</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Subtask1</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>iterations</name>
-      <value>
-        <type>
-          <kind>tk_long</kind>
-        </type>
-        <value>
-          <long>619</long>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance id="PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask2">
-    <name>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask2</name>
-    <node>five</node>
-    <source/>
-    <implementation>_D6FB0F4E-54F7-4D39-AED8-CD45017408D6</implementation>
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Subtask.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>iterations</name>
-      <value>
-        <type>
-          <kind>tk_long</kind>
-        </type>
-        <value>
-          <long>619</long>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>ID</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Subtask2</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance id="PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask3">
-    <name>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask3</name>
+  <instance id="PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask1">
+    <name>PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask1</name>
     <node>two</node>
     <source/>
     <implementation>_D6FB0F4E-54F7-4D39-AED8-CD45017408D6</implementation>
@@ -184,7 +104,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>206</long>
+          <long>1742</long>
         </value>
       </value>
     </configProperty>
@@ -195,15 +115,15 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Subtask3</string>
+          <string>Subtask1</string>
         </value>
       </value>
     </configProperty>
   </instance>
 
-  <instance id="PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask4">
-    <name>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask4</name>
-    <node>three</node>
+  <instance id="PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask2">
+    <name>PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask2</name>
+    <node>four</node>
     <source/>
     <implementation>_D6FB0F4E-54F7-4D39-AED8-CD45017408D6</implementation>
     <configProperty>
@@ -218,13 +138,42 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>ID</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Subtask2</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>iterations</name>
       <value>
         <type>
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>206</long>
+          <long>1306</long>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask3">
+    <name>PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask3</name>
+    <node>one</node>
+    <source/>
+    <implementation>_D6FB0F4E-54F7-4D39-AED8-CD45017408D6</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Subtask.ior</string>
         </value>
       </value>
     </configProperty>
@@ -235,65 +184,62 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Subtask4</string>
+          <string>Subtask3</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>iterations</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>435</long>
         </value>
       </value>
     </configProperty>
   </instance>
 
   <connection>
-    <name>test_out_test_inPICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask1PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask2</name>
+    <name>test_out_test_inPICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.TriggerPICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask1</name>
     <internalEndpoint>
       <portName>test_out</portName>
       <kind>EventEmitter</kind>
-      <instance>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask1</instance>
+      <instance>PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Trigger</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>test_in</portName>
       <kind>EventConsumer</kind>
-      <instance>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask2</instance>
+      <instance>PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask1</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>test_out_test_inPICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask2PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask3</name>
+    <name>test_out_test_inPICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask1PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask2</name>
     <internalEndpoint>
       <portName>test_out</portName>
       <kind>EventEmitter</kind>
-      <instance>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask2</instance>
+      <instance>PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask1</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>test_in</portName>
       <kind>EventConsumer</kind>
-      <instance>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask3</instance>
+      <instance>PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask2</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>test_out_test_inPICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask3PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask4</name>
+    <name>test_out_test_inPICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask2PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask3</name>
     <internalEndpoint>
       <portName>test_out</portName>
       <kind>EventEmitter</kind>
-      <instance>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask3</instance>
+      <instance>PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask2</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>test_in</portName>
       <kind>EventConsumer</kind>
-      <instance>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask4</instance>
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>test_out_test_inPICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.TriggerPICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask1</name>
-    <internalEndpoint>
-      <portName>test_out</portName>
-      <kind>EventEmitter</kind>
-      <instance>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Trigger</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>test_in</portName>
-      <kind>EventConsumer</kind>
-      <instance>PICML_default_xme_file.ComponentImplementations.Task1.TaskAssembly.Subtask1</instance>
+      <instance>PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask3</instance>
     </internalEndpoint>
   </connection>
 
@@ -384,24 +330,24 @@
   </artifact>
 
   <infoProperty>
+    <name>Effector_ID</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Task2</string>
+      </value>
+    </value>
+  </infoProperty>
+  <infoProperty>
     <name>curr_rate</name>
     <value>
       <type>
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>2.23</double>
-      </value>
-    </value>
-  </infoProperty>
-  <infoProperty>
-    <name>min_rate</name>
-    <value>
-      <type>
-        <kind>tk_double</kind>
-      </type>
-      <value>
-        <double>2</double>
+        <double>1.053</double>
       </value>
     </value>
   </infoProperty>
@@ -412,21 +358,20 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>5</double>
+        <double>1.334</double>
       </value>
     </value>
   </infoProperty>
   <infoProperty>
-    <name>Effector_ID</name>
+    <name>min_rate</name>
     <value>
       <type>
-        <kind>tk_string</kind>
+        <kind>tk_double</kind>
       </type>
       <value>
-        <string>Task1</string>
+        <double>1</double>
       </value>
     </value>
   </infoProperty>
-
 
 </Deployment:deploymentPlan>

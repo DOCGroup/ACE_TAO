@@ -51,17 +51,16 @@ namespace CIAO
       void
       Subtask_exec_i::push_test_in (
         ::CIAO::RACE::Test *ev )
-      {
-        ACE_DEBUG ((LM_DEBUG, "%s::%s: Received test event\n",
-                    ev->task_ID (),
-                    this->ID_.in ()));
-
+      {        
         size_t load = static_cast <size_t> (this->iterations_ * ev->load ());
 
         for (size_t i = 0; i < load; ++i)
           {
             ACE::is_prime (16127, 2, 16127 / 2);
           }
+        ACE_DEBUG ((LM_DEBUG, "%s::%s: Data processing complete.\n",
+                    ev->task_ID (),
+                    this->ID_.in ()));     
         this->context_->push_test_out (ev);
       }
 
