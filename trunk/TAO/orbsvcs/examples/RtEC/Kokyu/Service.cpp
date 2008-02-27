@@ -42,10 +42,10 @@ typedef TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_M
 typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_MUF_SCHED_TYPE;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (config_run);
-  
+
   //TAO_EC_Default_Factory::init_svcs ();
 
   TAO_EC_Kokyu_Factory::init_svcs ();
