@@ -74,7 +74,7 @@ public:
     if (ACE_OS::thr_create (&tracker_thunk,
                             this,
                             THR_JOINABLE,
-                            &thread_) != 0) 
+                            &thread_) != 0)
       ACE_OS::abort ();
   }
 
@@ -198,7 +198,7 @@ private:
 };
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
   {

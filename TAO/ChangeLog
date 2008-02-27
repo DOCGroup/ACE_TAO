@@ -1,3 +1,44 @@
+Wed Feb 27 15:21:48 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+        * orbsvcs/examples/CosEC/Simple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/Simple/Service.cpp:
+        * orbsvcs/examples/CosEC/Simple/Supplier.cpp:
+        * orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/TypedSimple/Supplier.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/test.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/Consumer.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/EC.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/Gateway.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp:
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+        * orbsvcs/examples/RtEC/Simple/Consumer.cpp:
+        * orbsvcs/examples/RtEC/Simple/Service.cpp:
+        * orbsvcs/examples/RtEC/Simple/Supplier.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+        * orbsvcs/tests/Sched/DynSched_Test.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * orbsvcs/examples/CosEC/Simple/CosEC_Simple.mpc:
+        * orbsvcs/examples/CosEC/TypedSimple/CosEC_TypedSimple.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/examples/RtEC/Kokyu/RtECKokyu.mpc:
+        * orbsvcs/examples/RtEC/IIOPGateway/RtEC_IIOPGateway.mpc:
+        * orbsvcs/examples/RtEC/MCast/RtEC_MCast.mpc:
+        * orbsvcs/examples/RtEC/Schedule/RtEC_Schedule.mpc:
+        * orbsvcs/examples/RtEC/Simple/RtEC_Simple.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
 Wed Feb 27 08:36:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Generator_Parser_12.cpp:
