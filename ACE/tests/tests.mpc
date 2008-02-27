@@ -267,6 +267,7 @@ project (Bug_2980_Regression_Test) {
 
 project (Bug_2980_Regression_Dll): acelib {
   sharedname = Bug_2980_Regression
+  dynamicflags = TEST_OUTPUT_BUILD_DLL
   Source_Files {
     Test_Output.cpp
     Bug_2980_Regression_Dll.cpp

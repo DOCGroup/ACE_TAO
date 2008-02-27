@@ -1,7 +1,12 @@
 #include <iostream>
 #include <assert.h>
 
-#if !defined (ACE_WIN32)
+// This is a non-ACE driver program which loads an ACE-based DLL.
+// The usual ACE-related defines will not apply and we must use
+// platform-specific ones. Luckily, it is only Windows where this
+// test has not been made to work yet ...
+
+#if !defined (WIN32)
 
 #include <dlfcn.h>
 #include <pthread.h>
@@ -82,7 +87,12 @@ void * loadunloadDll(void *pp)
 
 int main(int argc, char ** argv)
 {
-#if defined (ACE_WIN32)
+
+#if defined (WIN32)
+
+  printf ("Terminating because this test has not been designed "
+    "to run on platforms where WIN32 has been defined.\n");
+
 #else
   int result = 0;
 
