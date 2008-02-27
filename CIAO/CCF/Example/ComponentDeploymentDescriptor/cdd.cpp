@@ -94,6 +94,7 @@ struct C_Emitter : public virtual Traversal::Connection
   }
 };
 
+//FUZZ: disable check_for_improper_main_declaration
 
 int
 main ()

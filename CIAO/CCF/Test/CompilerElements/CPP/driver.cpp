@@ -14,6 +14,8 @@ using CCF::CompilerElements::InputStreamAdapter;
 
 using namespace CCF::CompilerElements::CPP;
 
+//FUZZ: disable check_for_improper_main_declaration
+
 int
 main ()
 {

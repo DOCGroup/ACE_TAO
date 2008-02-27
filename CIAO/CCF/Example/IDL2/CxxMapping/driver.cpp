@@ -28,6 +28,8 @@ using namespace CCF::IDL2::SemanticGraph;
 //@@ code repetition in driver.
 //
 
+//FUZZ: disable check_for_improper_main_declaration
+
 int
 main ()
 {

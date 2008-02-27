@@ -6,6 +6,8 @@
 
 using namespace CCF::IDL2;
 
+//FUZZ: disable check_for_improper_main_declaration
+
 int
 main ()
 {
