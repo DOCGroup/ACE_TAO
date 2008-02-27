@@ -3,12 +3,13 @@
 
 #include <Components.idl>
 #include "Event_Types.idl"
+#include "Callback.idl"
 
 module CIAO
 {
   module RACE
   {
-    component Trigger
+    component Trigger supports ::CIAO::RACE::Effector::Callback
     {
       emits Test test_out;
 
@@ -26,4 +27,4 @@ module CIAO
   };
 };
 
-#endif // TRIGGER_IDL
+#endif /* TRIGGER_IDL */

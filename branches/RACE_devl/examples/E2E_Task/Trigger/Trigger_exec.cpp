@@ -1,7 +1,7 @@
 #include "Trigger_exec.h"
 #include "ciao/CIAO_common.h"
 #include "ace/OS_NS_unistd.h"
-//#include "ace/Time_Value.h"
+#include "ace/Time_Value.h"
 
 namespace CIAO
 {
@@ -10,9 +10,10 @@ namespace CIAO
     namespace CIDL_Trigger
     {
       Trigger_exec_i::Trigger_exec_i (void)
-        : period_ (10),
+        : period_ (1000),
           load_ (1.0),
-          ID_ (::CORBA::string_dup ("CIAO::RACE::Task"))
+          ID_ (::CORBA::string_dup ("CIAO::RACE::Task")),
+          active_ (false)
       {
       }
 
@@ -20,11 +21,11 @@ namespace CIAO
       {
       }
 
+
       int
       Trigger_exec_i::svc ()
       {
-        ACE_Time_Value interval (0, this->period_ * 1000);
-        while (true)
+        while (this->active_)
           {
             ACE_DEBUG ((LM_DEBUG, "\n%s::Trigger: Pushing test event\n",
                         this->ID_.in ()));
@@ -35,22 +36,62 @@ namespace CIAO
 
             try
               {
+                this->timer_.start ();
                 this->context_->push_test_out (ev);
+                this->timer_.stop ();
               }
             catch (CORBA::Exception &ex)
               {
                 ACE_PRINT_EXCEPTION (ex, "Excaption caught!\n");
                 return -1;
               }
+
+
+            // Measure the time taken to execute the invocation.
+            this->timer_.elapsed_microseconds (this->elapsed_time_);
+
+            ACE_Time_Value interval (0, 0);
+            ACE_hrtime_t period;
+            this->mutex_.acquire ();
+            period = this->period_;
+            this->mutex_.release ();
+
+            ACE_DEBUG ((LM_DEBUG, "%s::Trigger::Period: %Q msec\t"
+                        "Elapsed time: %Q msec\n",
+                        this->ID_.in (),
+                        period / 1000,
+                        this->elapsed_time_ / 1000));
+
+            // Both period and elapsed_time_ are in to usec.
+            if (period  > this->elapsed_time_)
+              {
+                // Sleep for the remaining time period.
+                interval.set (0, period - this->elapsed_time_ );
+
+              }
+            //            ACE_DEBUG ((LM_DEBUG, "Sleeping for %f seconds.\n",
+            //                        interval.msec () /1000.0));
             ACE_OS::sleep (interval);
           }
       }
+
+      ::CORBA::Boolean
+      Trigger_exec_i::set_rate (::CORBA::Double rate)
+      {
+        ACE_DEBUG ((LM_DEBUG, "(%P) Got rate! New rate is %f\n", rate));
+        this->mutex_.acquire ();
+        // We multiply by 1000000 since the period is specified in usecs.
+        this->period_ = static_cast <ACE_hrtime_t> ((1.0 / rate) * 1000000);
+        this->mutex_.release ();
+        return true;
+      }
+
 
 
       ::CORBA::Long
       Trigger_exec_i::period ()
       {
-        return this->period_;
+        return static_cast < ::CORBA::Long > (this->period_);
       }
 
       void
@@ -120,6 +161,7 @@ namespace CIAO
             ACE_ERROR ((LM_ERROR, "Trigger_exec: Error will activating the "
                         "periodic task!\n"));
           }
+        this->active_ = true;
       }
 
       void
