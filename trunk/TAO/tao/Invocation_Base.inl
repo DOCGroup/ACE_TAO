@@ -66,6 +66,18 @@ namespace TAO
     return this->details_;
   }
 
+  ACE_INLINE TAO_Service_Context &
+  Invocation_Base::request_service_context (void)
+  {
+    return this->details_.request_service_context ();
+  }
+
+  ACE_INLINE TAO_Service_Context &
+  Invocation_Base::reply_service_context (void)
+  {
+    return this->details_.reply_service_context ();
+  }
+
 #if TAO_HAS_INTERCEPTORS == 1
   ACE_INLINE size_t &
   Invocation_Base::stack_size  (void)
