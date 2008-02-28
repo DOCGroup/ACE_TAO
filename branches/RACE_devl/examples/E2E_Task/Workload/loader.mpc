@@ -1,0 +1,11 @@
+project(load): taoserver, ciao_client_dnc, naming {
+  exename = load
+  after += Trigger_stub
+  libs += Trigger_stub \
+          Event_Types_stub
+  includes += ../Trigger \
+              ../Base
+  Source_Files {
+    load.cpp
+  }
+}
