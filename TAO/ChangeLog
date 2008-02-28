@@ -1,3 +1,18 @@
+Thu Feb 28 19:16:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.h:
+        
+          Cosmetic changes.
+          
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        
+          Changed creation of IOR output file to use
+          ACE_DEFAULT_FILE_PERMS. Also added more error checking to
+          cover the open, write and close steps. Thanks to Jules
+          Colding <colding at 42tools dot com> for reporting that
+          the previous code created a file that was world writable.
+
 Thu Feb 28 13:26:12 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/eval.cpp:

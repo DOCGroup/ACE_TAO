@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CONSTANTDEF_I_H
 #define TAO_CONSTANTDEF_I_H
 
@@ -49,50 +48,33 @@ public:
   virtual ~TAO_ConstantDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ()
-;
+  virtual CORBA::DefinitionKind def_kind (void);
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe ()
-;
+  virtual CORBA::Contained::Description *describe (void);
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i ()
-;
+  virtual CORBA::Contained::Description *describe_i (void);
 
-  virtual CORBA::TypeCode_ptr type ()
-;
+  virtual CORBA::TypeCode_ptr type (void);
 
-  CORBA::TypeCode_ptr type_i ()
-;
+  CORBA::TypeCode_ptr type_i (void);
 
-  virtual CORBA::IDLType_ptr type_def ()
-;
+  virtual CORBA::IDLType_ptr type_def (void);
 
-  CORBA::IDLType_ptr type_def_i ()
-;
+  CORBA::IDLType_ptr type_def_i (void);
 
-  virtual void type_def (
-      CORBA::IDLType_ptr type_def)
-;
+  virtual void type_def (CORBA::IDLType_ptr type_def);
 
-  void type_def_i (
-      CORBA::IDLType_ptr type_def)
-;
+  void type_def_i (CORBA::IDLType_ptr type_def);
 
-  virtual CORBA::Any *value ()
-;
+  virtual CORBA::Any *value (void);
 
-  CORBA::Any *value_i ()
-;
+  CORBA::Any *value_i (void);
 
-  virtual void value (
-      const CORBA::Any &value)
-;
+  virtual void value (const CORBA::Any &value);
 
-  void value_i (
-      const CORBA::Any &value)
-;
+  void value_i (const CORBA::Any &value);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
