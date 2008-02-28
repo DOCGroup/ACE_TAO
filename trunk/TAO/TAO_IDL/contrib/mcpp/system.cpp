@@ -44,10 +44,11 @@
 #include    "mcpp_lib.h"
 #endif
 
-#include    "ace/OS_NS_unistd.h"              /* For getcwd(), readlink(), getopt()   */
+#include "ace/OS_NS_unistd.h"              /* For getcwd(), readlink(), getopt()   */
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_stdlib.h"
 
 #undef OUT
 
