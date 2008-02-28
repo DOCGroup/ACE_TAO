@@ -1,11 +1,14 @@
-project(load): taoserver, ciao_client_dnc, naming {
-  exename = load
+project(Workload): taoexe, ciao_servant_dnc {
+  exename = Workload
   after += Trigger_stub
+
   libs += Trigger_stub \
           Event_Types_stub
+
   includes += ../Trigger \
               ../Base
+
   Source_Files {
-    load.cpp
+    Workload.cpp
   }
 }

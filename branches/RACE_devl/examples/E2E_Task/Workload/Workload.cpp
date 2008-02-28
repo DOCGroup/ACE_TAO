@@ -80,7 +80,7 @@ main (int argc, char *argv[])
         }
       trigger->load (load);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy ();
 
     }
   catch (::CORBA::Exception &ex)
