@@ -14,10 +14,9 @@ namespace ACE
     Monitor_Point_Registry::instance (void)
     {
       return
-        ACE_Singleton<Monitor_Point_Registry, ACE_Null_Mutex>::instance ();
-      /// @@@ (JP) We may need to use ACE_Recursive_Thread_Mutex instead.
+        ACE_Singleton<Monitor_Point_Registry, ACE_Thread_Mutex>::instance ();
     }
-    
+
     Monitor_Base*
     Monitor_Point_Registry::get (const ACE_CString& name) const
     {

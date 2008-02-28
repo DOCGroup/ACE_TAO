@@ -14,10 +14,9 @@ namespace ACE
     Control_Action_Registry::instance (void)
     {
       return
-        ACE_Singleton<Control_Action_Registry, ACE_Null_Mutex>::instance ();
-      /// @@@ (JP) We may need to use ACE_Recursive_Thread_Mutex instead.
+        ACE_Singleton<Control_Action_Registry, ACE_Thread_Mutex>::instance ();
     }
-    
+
     Control_Action*
     Control_Action_Registry::get (const ACE_CString& name) const
     {

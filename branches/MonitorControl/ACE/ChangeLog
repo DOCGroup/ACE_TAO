@@ -1,13 +1,25 @@
+Thu Feb 28 09:43:55 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Control_Action_Registry.cpp:
+        * ace/Monitor_Point_Registry.cpp:
+          Use thread mutex for the singletons
+
+        * ace/MC_Generic_Registry.h:
+          Removed old comments, made destructor virtual
+
+        * ace/MonitorControl_Types.h:
+          Made destructor virtual
+
 Wed Feb 27 19:41:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/MC_Test_Utilities.mpc:
-        
+
           Fixed typo.
 
 Wed Feb 27 19:38:03 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/MC_Test_Utilities.mpc:
-        
+
           Added the export header file.
 
 Wed Feb 27 19:32:37 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -51,7 +63,7 @@ Wed Feb 27 17:55:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
           associated try/catch blocks in the examples. The
           existing boolean return value of the registry method
           where the exception was thrown, plus added ACE_ERROR
-          macros, provide the diagnostic information instead. 
+          macros, provide the diagnostic information instead.
 
 Tue Feb 26 20:48:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -90,7 +102,7 @@ Tue Feb 26 20:48:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
           Removed the use of the MC_START_SERVICE macro. Every
           application must include MonitorControl.h, which contains
           the static integer which, when initialized before main()
-          starts, starts the MC service and creates the 
+          starts, starts the MC service and creates the
           MC_Admin_Manager singleton.
 
 Tue Feb 26 18:33:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -128,12 +140,12 @@ Tue Feb 26 18:21:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/MC_Generic_Registry.h:
         * ace/MC_Generic_Registry.cpp:
-        
+
           Added name cache, accessor, and code to update the cache
           each time something is added to the registry.
-          
+
         * MonitorControl/examples/Group/group.cpp:
-        
+
           Added a quick test of the name cache feature to this
           example.
 
@@ -185,17 +197,17 @@ Tue Feb 26 16:35:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Feb 25 13:42:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Base.h:
-        
+
           Removed pure virtual group-related methods. Overlooked in
           this checkin:
-          
+
           Fri Feb 22 000:03:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Feb 22 21:55:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/WindowsMultiInstanceMonitor.cpp:
         * MonitorControl/WindowsMultiInstanceMonitor.h:
-        
+
           New files, a specialized Windows monitor mixin class for
           cases where the Performance Data Helper (PDH) object of
           interest to the monitor has more than one 'instance', for

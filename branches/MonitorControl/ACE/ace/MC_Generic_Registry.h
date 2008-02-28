@@ -15,11 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Synch_Traits.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -45,34 +46,27 @@ namespace ACE
     class ACE_Export MC_Generic_Registry
     {
     public:
-      /**
-       * @struct MapError
-       *
-       * @brief Exception, thrown by the add() operation
-       * in class GenericRegistry.
-       */
-      
+
       /// Adds a Statistic or ControlAction to its respecive registry.
-      /// Throws MapError.
       bool add (MC_Generic* type);
-      
+
       /// Returns a list of names stored in the registry
       MonitorControl_Types::NameList& names (void);
 
-    protected:  
+    protected:
       MC_Generic_Registry (void);
-      ~MC_Generic_Registry (void);
-      
+      virtual ~MC_Generic_Registry (void);
+
       /// Retrieves a monitor point or a control action, which is
       /// then downcast by the calling subclass.
       MC_Generic* getobj (const ACE_CString& name) const;
-      
+
     private:
       /// Underlying container for the registries.
       typedef ACE_Hash_Map_Manager<ACE_CString,
                                    MC_Generic*,
                                    ACE_SYNCH_NULL_MUTEX> Map;
-        
+
       mutable ACE_SYNCH_MUTEX mutex_;
       Map map_;
       MonitorControl_Types::NameList name_cache_;

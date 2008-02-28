@@ -40,19 +40,19 @@ namespace ACE
         ACE_Time_Value timestamp_;
         double value_;
       };
-        
+
       /**
        * @brief Used by the admin class as a container for the data from
        *        a group of monitor points.
        */
       typedef ACE_Vector<Data> DataList;
-      
+
       /**
        * @brief Used in various places to pass around a set of string names.
        */
       typedef ACE_Vector<ACE_CString> NameList;
     };
-  
+
     /**
      * @class MC_Generic
      *
@@ -64,17 +64,17 @@ namespace ACE
     {
     public:
       const char* name (void) const;
-      
+
     protected:
       MC_Generic (void);
       MC_Generic (const char* name);
-      ~MC_Generic (void);
-      
+      virtual ~MC_Generic (void);
+
     private:
       ACE_CString name_;
     };
   }
-}    
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
