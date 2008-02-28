@@ -16,6 +16,7 @@
 #include "tao/Profile.h"
 #include "tao/AnyTypeCode/ValueModifierC.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID (IFR_Service,
            IFR_Service,
@@ -330,7 +331,43 @@ TAO_IFR_Server::create_repository (void)
   // Add the repository to the ORB's table of initialized object references.
   this->orb_->register_initial_reference ("InterfaceRepository",
                                           repo_ref);
+   
+  const char *ior_filename = OPTIONS::instance ()->ior_output_file ();                                      
+  ACE_HANDLE fd = ACE_OS::open (ior_filename,
+                                O_RDWR | O_CREAT | O_TRUNC,
+                                ACE_DEFAULT_FILE_PERMS);
 
+  if (fd == ACE_INVALID_HANDLE)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO_IFR_Server::create_repository - ",
+                         "ACE_OS::open() failed\n"),
+                        -1);
+    }
+    
+  const char *ifr_ior = this->ifr_ior_.in ();
+  size_t ior_size = ACE_OS::strlen (ifr_ior) + 1; 
+  ssize_t result = ACE_OS::write (fd, ifr_ior, ior_size);
+  
+  if (result != ior_size)
+    {
+      ACE_OS::unlink (ior_filename);
+      ACE_OS::close (fd);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO_IFR_Server::create_repository - ",
+                         "ACE_OS::write() failed\n"),
+                        -1);
+    }
+
+  if (ACE_OS::close (fd) != 0)
+    {
+      ACE_OS::unlink (ior_filename);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO_IFR_Server::create_repository - ",
+                         ACE_TEXT ("ACE_OS::close() failed\n")),
+                        -1);
+    }
+/*
   FILE *output_file_ =
     ACE_OS::fopen (OPTIONS::instance()->ior_output_file (),
                    "w");
@@ -340,7 +377,7 @@ TAO_IFR_Server::create_repository (void)
                    this->ifr_ior_.in ());
 
   ACE_OS::fclose (output_file_);
-
+*/
   return 0;
 }
 
