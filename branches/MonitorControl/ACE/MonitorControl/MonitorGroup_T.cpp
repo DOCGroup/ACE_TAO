@@ -36,8 +36,9 @@ namespace ACE
     {
       for (MEMBERS_ITERATOR i (this->members_); !i.done (); i.advance ())
         {
-          i.next (this->current_member_);
-          (*this->current_member_)->update ();
+          Monitor_Base **member;
+          i.next (member);
+          (*member)->update ();
         }
     }
 
@@ -53,8 +54,9 @@ namespace ACE
     {
       for (MEMBERS_ITERATOR i (this->members_); !i.done (); i.advance ())
         {
-          i.next (this->current_member_);
-          (*this->current_member_)->clear ();
+          Monitor_Base **member;
+          i.next (member);
+          (*member)->clear ();
         }
     }
     template<bool ENABLED>

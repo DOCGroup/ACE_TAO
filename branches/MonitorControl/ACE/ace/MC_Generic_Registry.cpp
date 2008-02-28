@@ -35,15 +35,20 @@ namespace ACE
                             false);
         }
         
-      this->name_cache_.push_back (type->name ());
-
       return (status == 0);
     }
     
-    MonitorControl_Types::NameList&
+    MonitorControl_Types::NameList
     MC_Generic_Registry::names (void)
     {
-      return this->name_cache_;
+      MonitorControl_Types::NameList name_holder_;
+      
+      for (Map::CONST_ITERATOR i (this->map_); !i.done (); i.advance ())
+        {
+          name_holder_.push_back (i->key ());
+        }
+        
+      return name_holder_;
     }
 
     MC_Generic*

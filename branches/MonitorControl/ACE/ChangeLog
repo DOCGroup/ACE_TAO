@@ -1,3 +1,21 @@
+Thu Feb 28 16:21:52 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/MC_Generic_Registry.h:
+        * ace/MC_Generic_Registry.cpp:
+        
+          Removed name cache, using iterator over contained hash map
+          to compose a list of names for each call to names().
+          
+        * MonitorControl/MonitorGroup_T.h:
+        * MonitorControl/MonitorGroup_T.cpp:
+        
+          Removed class member current_member_, using a temporary
+          instead.
+          
+        * MonitorControl/examples/MC_Test_Utilities.cpp:
+        
+          Evened up indentation of output for all monitor points.
+
 Thu Feb 28 10:42:55 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Monitor_Base.{h,cpp}:

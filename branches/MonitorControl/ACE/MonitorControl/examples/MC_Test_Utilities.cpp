@@ -24,7 +24,7 @@ void
 MC_Test_Utilities::display_num_threads (
   const MonitorControl_Types::Data &data)
 {
-  cout << "# of threads:         ";
+  cout << "# of threads:             ";
   display_timestamp (data);
   cout << static_cast<size_t> (data.value_) << endl;
 }
@@ -33,7 +33,7 @@ void
 MC_Test_Utilities::display_mq_size (
   const MonitorControl_Types::Data &data)
 {
-  cout << "Message queue size: ";
+  cout << "Message queue size:       ";
   display_timestamp (data);
   cout << static_cast<size_t> (data.value_) << endl;
 }
@@ -42,7 +42,7 @@ void
 MC_Test_Utilities::display_memory_usage (
   const MonitorControl_Types::Data &data)
 {
-  cout << "% memory used:         ";
+  cout << "% memory used:            ";
   display_timestamp (data);
   cout << setiosflags (ios::showpoint | ios::fixed)
        << setprecision (2) << data.value_ << endl;
@@ -52,7 +52,7 @@ void
 MC_Test_Utilities::display_cpu_load (
   const MonitorControl_Types::Data &data)
 {
-  cout << "% CPU load:         ";
+  cout << "% CPU load:               ";
   display_timestamp (data);
   cout << setiosflags (ios::showpoint | ios::fixed)
        << setprecision (2) << data.value_ << endl;

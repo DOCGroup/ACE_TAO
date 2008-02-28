@@ -51,7 +51,7 @@ namespace ACE
       bool add (MC_Generic* type);
 
       /// Returns a list of names stored in the registry
-      MonitorControl_Types::NameList& names (void);
+      MonitorControl_Types::NameList names (void);
 
     protected:
       MC_Generic_Registry (void);
@@ -69,7 +69,6 @@ namespace ACE
 
       mutable ACE_SYNCH_MUTEX mutex_;
       Map map_;
-      MonitorControl_Types::NameList name_cache_;
     };
   }
 }

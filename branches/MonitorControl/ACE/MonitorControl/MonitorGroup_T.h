@@ -52,7 +52,6 @@ namespace ACE
         MEMBERS_ITERATOR;
         
       MEMBERS members_;
-      Monitor_Base **current_member_;
     };
   }
 }
