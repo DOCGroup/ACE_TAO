@@ -2732,8 +2732,8 @@ static int  has_directory(
 
 static int  search_dir(
     char *  filename,               /* File name to include         */
-    int     searchlocal,            /* #include "header.h" for GNUC */
-    int     next                    /* TRUE if #include_next        */
+    int     ,            /* #include "header.h" for GNUC */
+    int                       /* TRUE if #include_next        */
 )
 /*
  * Look in any directories specified by -I command line arguments,
