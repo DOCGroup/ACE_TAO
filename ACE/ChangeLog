@@ -1,3 +1,9 @@
+Thu Feb 28 16:08:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Added --compiler as option so that we can specify a different
+          compiler then gcc
+
 Thu Feb 28 08:32:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-bug-process.html:
