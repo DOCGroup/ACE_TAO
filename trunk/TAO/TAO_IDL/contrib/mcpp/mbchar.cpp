@@ -567,7 +567,7 @@ void    mb_init( void)
 }
 
 static size_t   mb_read_2byte(
-    int     c1,         /* The 1st byte of mbchar sequence (already read)   */
+    int    ,         /* The 1st byte of mbchar sequence (already read)   */
     char ** in_pp,              /* Pointer to input     */
     char ** out_pp              /* Pointer to output    */
 )
