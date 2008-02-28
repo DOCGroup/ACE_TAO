@@ -28,14 +28,16 @@
 ###############################################################################
 usage ()
 {
-  echo "Usage: `basename $0` [--base=<dir>] [--name=<name>] <input_file>"
-  echo "       <destination_directory> [target_file] [Footprint|Compilation]"
-  echo "       [<date>] [<fudge_factor>]"
+  echo "Usage: `basename $0` [--base=<dir>] [--name=<name>] [--compiler=compiler]"
+  ech "        <input_file> <destination_directory> [target_file]"
+  echo "       [Footprint|Compilation] [<date>] [<fudge_factor>]"
   echo ""
   echo "--base       This option can be used to set the base root directory to"
   echo "             something other than the default \$ACE_ROOT."
   echo "--name       This option can be used to set the software title to something"
   echo "             other than the default ACE+TAO+CIAO."
+  echo "--compiler   This option can be used to set the compiler to something"
+  echo "             other than the default gcc."
   echo "input_file   This is the compilation log file."
   echo "destination_directory This designates the location of the generated html."
   echo "target_file  This is similar to input_file, but should contain no errors."
@@ -155,6 +157,9 @@ parse ()
       shift
     elif [ -n "`echo $1 | grep '^--name=.*'`" ]; then
       BASE_TITLE=`echo $1 | sed 's/^--name=//'`
+      shift
+    elif [ -n "`echo $1 | grep '^--compiler.*'`" ]; then
+      COMPILER=`echo $1 | sed 's/^--compiler=//'`
       shift
     else
       break
@@ -767,10 +772,10 @@ create_index_page ()
     cat /etc/redhat-release
   fi
 
-  echo '), and we use GCC '
+  echo "), and we use " $COMPILER " version "
 
-  gcc -dumpversion > .metrics/gccversion.txt 2>&1
-  cat .metrics/gccversion.txt
+  $COMPILER -dumpversion > .metrics/compilerversion.txt 2>&1
+  cat .metrics/compilerversion.txt
 
   echo ' to compile '$BASE_TITLE'. </P>'
 
@@ -811,16 +816,18 @@ create_index_page ()
 
   /bin/uname -a
 
-  echo '</PRE></TD></TR><TR><TD>Compiler Version</TD><TD>gcc -v</TD></TR>'
+  echo '</PRE></TD></TR><TR><TD>Compiler Version</TD><TD>'$COMPILER' -v</TD></TR>'
   echo '<TR><TD colspan="2">'
 
-  gcc -v > .metrics/gcc.txt 2>&1
-  cat .metrics/gcc.txt
+  $COMPILER -v > .metrics/compiler.txt 2>&1
+  cat .metrics/compiler.txt
 
-  echo '</TD></TR><TR><TD>Library Version</TD><TD>/lib/libc.so.6</TD></TR>'
-  echo '<TR><TD colspan="2"><PRE>'
+  if [ -e "/lib/libc.so.6" ]; then
+    echo '</TD></TR><TR><TD>Library Version</TD><TD>/lib/libc.so.6</TD></TR>'
+    echo '<TR><TD colspan="2"><PRE>'
 
-  /lib/libc.so.6 | sed -e 's/</\&lt;/g' -e 's/>/\&gt;/g'
+    /lib/libc.so.6 | sed -e 's/</\&lt;/g' -e 's/>/\&gt;/g'
+  fi
 
   echo '</PRE></TD></TR></TBODY></TABLE>'
   echo '</body></html>'
@@ -1025,6 +1032,7 @@ FUDGE_FACTOR=0
 BASE_ROOT=$ACE_ROOT
 DEFAULT_TITLE=ACE+TAO+CIAO
 BASE_TITLE=$DEFAULT_TITLE
+COMPILER="gcc"
 
 parse $@
 create_dirs ".metrics/"
