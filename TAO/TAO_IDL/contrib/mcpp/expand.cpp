@@ -730,8 +730,8 @@ static char *   stringize(
 }
 
 static char *   substitute(
-    const DEFBUF *  defp,           /* The macro getting arguments  */
-    int         gvar_arg,   /* gvar_arg's argument is GCC3 variable argument*/
+    const DEFBUF *  ,           /* The macro getting arguments  */
+    int         ,   /* gvar_arg's argument is GCC3 variable argument*/
     char **     arglist,        /* Pointers to actual arguments     */
     const char *    in,                     /* Replacement text     */
     char *      out,                        /* Output buffer        */
@@ -805,7 +805,7 @@ static char *   rescan(
     char *  tp = 0;              /* Temporary pointer into buffer*/
     char *  out_p = out;            /* Current output pointer       */
     FILEINFO *  file;       /* Input sequences stacked on a "file"  */
-    DEFBUF *    inner;              /* Inner macro to replace       */
+    DEFBUF *    inner = 0;              /* Inner macro to replace       */
     int     c;                      /* First character of token     */
 
     if (mcpp_debug & EXPAND) {

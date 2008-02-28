@@ -1,7 +1,7 @@
 // $Id$
 project(tao_mcpp_exe) : aceexe, install, tao_output, crosscompile {
   exename = tao_mcpp
-
+  requires += mcpp
   Header_Files {
      *.h
      *.H
