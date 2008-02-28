@@ -35,4 +35,6 @@ struct MC_TEST_UTILITIES_Export MC_Test_Utilities
   static void display_bytes_sent (const MonitorControl_Types::Data &data);
 };
 
+#include /**/ "ace/post.h"
+
 #endif /* MC_TEST_UTILITIES_H */
