@@ -44,7 +44,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
-
+#include "ace/OS_NS_stdlib.h"
 
     /* Function pointer to expand_macro() functions.    */
     char *   (*expand_macro)( DEFBUF * defp, char * out, char * out_end);
@@ -933,7 +933,7 @@ static void devide_line(
             *out_ptr = EOS;
             put_a_line( out);           /* Putout the former tokens */
             wp = out_ptr = stpcpy( out, save);      /* Restore the token    */
-	    ACE_OS::free( save);
+	        ACE_OS::free( save);
         } else {                            /* Still in size        */
             out_ptr = wp;                   /* Advance the pointer  */
         }
