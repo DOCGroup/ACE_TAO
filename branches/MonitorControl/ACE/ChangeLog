@@ -1,3 +1,8 @@
+Thu Feb 28 09:59:55 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MonitorControl_Types.h:
+          Applied workaround for broken BCB compiler
+
 Thu Feb 28 09:48:55 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MonitorControl/examples/MC_Test_Utilities.h:

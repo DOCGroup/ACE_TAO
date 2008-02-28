@@ -45,7 +45,7 @@ public:
 
         data = bytes_monitor->retrieve ();
         MC_Test_Utilities::display_bytes_sent (data);
-        
+
         cout << endl;
       }
 
@@ -61,50 +61,50 @@ int main (int argc, char *argv [])
   ADD_MANUAL_MONITOR (BYTES_SENT_MONITOR);
   ADD_MANUAL_MONITOR (CPU_LOAD_MONITOR);
   ADD_MANUAL_MONITOR (MEMORY_USAGE_MONITOR);
-  
+
   MonitorGroup<true> *group = new MonitorGroup<true> ("Test_Group");
   ACE_Auto_Ptr<MonitorGroup<true> > safety (group);
-  
+
   MC_Admin_Manager *mgr =
     ACE_Dynamic_Service<MC_Admin_Manager>::instance ("MC_ADMINMANAGER");
-    
+
   /// Fetch monitors from the registry and add them to the group.
-    
+
   Monitor_Base *m_base = mgr->admin ().monitor_point ("CPULoad");
   group->add_member (m_base);
-  
+
   m_base = mgr->admin ().monitor_point ("BytesSent");
   group->add_member (m_base);
-    
+
   m_base = mgr->admin ().monitor_point ("MemoryUsage");
   group->add_member (m_base);
-    
-  /// Register the group as an auto-updated monitor point.  
+
+  /// Register the group as an auto-updated monitor point.
   bool good_add = mgr->admin ().monitor_point (group, 2000);
-  
+
   if (!good_add)
     {
       ACE_ERROR ((LM_ERROR,
                   "Group monitor \"%s\" registration failed.\n",
                   group->name ()));
     }
-    
-  /// A quick test of the registry's name cache.  
+
+  /// A quick test of the registry's name cache.
   MonitorControl_Types::NameList &mc_names =
     Monitor_Point_Registry::instance ()->names ();
-    
+
   cout << "stored in monitor point registry:" << endl << endl;
-    
+
   for (MonitorControl_Types::NameList::Iterator i (mc_names);
        !i.done ();
        i.advance ())
     {
       ACE_CString *item = 0;
       i.next (item);
-      
+
       cout << item->c_str () << endl;
     }
-    
+
   cout << endl;
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)

@@ -41,6 +41,12 @@ namespace ACE
         double value_;
       };
 
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
+      // Borland C++ Builder 6 and earlier don't handle the second template
+      // argument correctly. We have to pass it explicitly
+      typedef ACE_Vector<Data, ACE_VECTOR_DEFAULT_SIZE> DataList;
+      typedef ACE_Vector<ACE_CString, ACE_VECTOR_DEFAULT_SIZE> NameList;
+#else
       /**
        * @brief Used by the admin class as a container for the data from
        *        a group of monitor points.
@@ -51,6 +57,7 @@ namespace ACE
        * @brief Used in various places to pass around a set of string names.
        */
       typedef ACE_Vector<ACE_CString> NameList;
+#endif
     };
 
     /**
