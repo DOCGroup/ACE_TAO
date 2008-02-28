@@ -77,6 +77,7 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_stdlib.h"
 
 static void     scan_id( int c);
                 /* Scan an identifier           */
