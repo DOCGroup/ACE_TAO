@@ -9,21 +9,18 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    Monitor_Base::InvalidOperation::InvalidOperation (void)
-    {}
-
-    Monitor_Base::InvalidOperation::~InvalidOperation (void)
-    {}
-
     Monitor_Base::Monitor_Base (void)
-    {}
+    {
+    }
 
     Monitor_Base::Monitor_Base (const char*  name)
       : MC_Generic (name)
-    {}
+    {
+    }
 
     Monitor_Base::~Monitor_Base (void)
-    {}
+    {
+    }
 
     MonitorControl_Types::Data
     Monitor_Base::retrieve (void)

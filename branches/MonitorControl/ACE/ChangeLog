@@ -1,3 +1,8 @@
+Thu Feb 28 10:42:55 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Base.{h,cpp}:
+          Removed not needed exception
+
 Thu Feb 28 10:24:55 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MonitorGroup.cpp:
