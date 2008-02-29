@@ -619,7 +619,7 @@ private:
 class ACE_Export ACE_Service_Config_Guard
 {
 public:
-  ACE_Service_Config_Guard (ACE_Service_Gestalt*);
+  ACE_Service_Config_Guard (const ACE_Service_Gestalt_Auto_Ptr);
   ~ACE_Service_Config_Guard (void);
 
 private:

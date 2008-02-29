@@ -1,3 +1,25 @@
+Fri Feb 29 03:07:36 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Dynamic_Service.h:
+        * ace/Dynamic_Service.cpp:
+        * ace/Dynamic_Service_Base.h:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+
+        Replacing the "naked" ACE_Service_Gestalt* with the "smart"
+        equivivalent.
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+        Expanding the interface of parse_args_i() with a parameter used to
+        return information whether the standard svc.conf file must be
+        ignored, due to explicitely specified configuration file. The
+        open_i() method now passes this piece of information to
+        process_directives().
+
 Wed Feb 27 14:57:50 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Bug_2980_Regression_Test.cpp:
