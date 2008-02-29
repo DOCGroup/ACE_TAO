@@ -1,3 +1,17 @@
+Fri Feb 29 18:52:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ACE_ETCL/*:
+        
+          Renamed this directory ETCL.
+          
+        * ETCL/ACE_ETCL.mpc:
+        
+          Renamed this file ETCL.mpc. The project name is still
+          ACE_ETCL however, since MPC doesn't like even global
+          clashes in project names. The library name is unchanged
+          as well, to disambiguate it from the TAO_ETCL library
+          that will be forthcoming.
+
 Thu Feb 28 16:21:52 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/MC_Generic_Registry.h:
