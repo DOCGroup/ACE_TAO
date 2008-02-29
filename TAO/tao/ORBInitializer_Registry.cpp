@@ -41,8 +41,6 @@ namespace PortableInterceptor
                       ACE_TEXT ("(%P|%t) register_orb_initializer: ")
                       ACE_TEXT ("Unable to pre-initialize TAO\n")));
         }
-
-      TAO::ORB::init_orb_globals ();
     }
 
 #if defined (ACE_VXWORKS) && defined (ACE_HAS_TSS_EMULATION)

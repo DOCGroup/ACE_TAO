@@ -46,6 +46,14 @@ namespace TAO
   {
     /**
      * Extract ACE Service Configurator arguments from the given
+     * argument vector, and initialize the _global_ configuration gestalt.
+     *
+     * @note This must be called just once per process (which init_orb_globals() does)
+     */
+    int open_global_services (int& argc, ACE_TCHAR** argv);
+
+    /**
+     * Extract ACE Service Configurator arguments from the given
      * argument vector, and initialize the ACE Service Configurator.
      *
      * @note This method should be called before the ORB Core is

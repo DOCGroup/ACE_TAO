@@ -1584,12 +1584,10 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
 {
   // @todo The ORBInitializer_Registry is supposed to be a singleton.
 
-  ACE_Service_Gestalt* const config = this->configuration ();
-
   // If not, lookup it up.
   this->orbinitializer_registry_ =
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-      (config,
+      (this->configuration (),
        ACE_TEXT ("ORBInitializer_Registry"));
 
 #if !defined (TAO_AS_STATIC_LIBS)
@@ -1598,14 +1596,14 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
       // output an error then.
   if (this->orbinitializer_registry_ == 0)
     {
-      config->process_directive (
+      this->configuration ()->process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
                                        "TAO_PI",
                                        "_make_ORBInitializer_Registry",
                                        ""));
       this->orbinitializer_registry_ =
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-          (config,
+          (this->configuration (),
            ACE_TEXT ("ORBInitializer_Registry"));
     }
 #endif /* !TAO_AS_STATIC_LIBS */
