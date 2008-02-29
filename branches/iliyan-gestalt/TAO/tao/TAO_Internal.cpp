@@ -187,11 +187,97 @@ public:
 
 private:
   /// The mutex, associated with the condition. Do not use the ACE
-  /// global mutex, because it causes deadlocks with other thrads that
+  /// global mutex, because it causes deadlocks with other threads that
   /// may be in DLL_Manager::open()
   ACE_Recursive_Thread_Mutex mutex_;
 };
 #endif // ACE_HAS_THREADS
+
+
+
+
+
+int
+TAO::ORB::open_global_services (int &argc,
+                                               ACE_TCHAR **argv)
+{
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                            guard,
+                            TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
+                            -1));
+
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) Initializing the ")
+                  ACE_TEXT ("process-wide service context\n")));
+    }
+
+  ACE_Service_Gestalt* theone = ACE_Service_Config::global ();
+  ACE_Service_Config_Guard auto_config_guard (theone);
+
+  register_global_services_i (theone);
+
+  // Be certain to copy the program name so that service configurator
+  // has something to skip!
+  ACE_CString argv0 ((argc <= 0 || argv == 0) ? "" : ACE_TEXT_ALWAYS_CHAR (argv[0]));
+
+  // Construct an argument vector specific to the process-wide
+  // (global) Service Configurator instance.
+  CORBA::StringSeq global_svc_config_argv;
+  global_svc_config_argv.length (1);
+  global_svc_config_argv[0] = argv0.c_str ();
+
+  if (parse_global_args_i (argc, argv, global_svc_config_argv, true) == -1)
+    return -1;
+
+  if (parse_svcconf_args_i (argc, argv, global_svc_config_argv) == -1)
+    return -1;
+
+  bool skip_service_config_open = false;
+  int global_svc_config_argc = global_svc_config_argv.length ();
+  int status = open_private_services_i (theone,
+                                        global_svc_config_argc,
+                                        global_svc_config_argv.get_buffer (),
+                                        skip_service_config_open);
+
+  if (status == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) Failed to open process-")
+                      ACE_TEXT ("wide service configuration context\n")));
+        }
+
+      return -1;
+    }
+
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) Completed initializing the ")
+                ACE_TEXT ("process-wide service context\n")));
+
+  if (TAO_debug_level > 4)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) Default ORB services initialization begins\n")));
+
+  register_additional_services_i (theone);
+
+  if (TAO_debug_level > 4)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) Default ORB services initialization completed\n")));
+
+  // Notify all other threads that may be waiting, that the global
+  // gestalt has been initialized.
+  is_ubergestalt_ready = true;
+  ACE_MT (if (TAO_Ubergestalt_Ready_Condition::instance ()->
+              broadcast () == -1)
+            return -1);
+
+  return 0;
+}
+
 
 int
 TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
@@ -274,121 +360,25 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   // (global) Service Configurator instance.
   CORBA::StringSeq global_svc_config_argv;
 
-  ACE_Service_Gestalt* theone = ACE_Service_Config::global ();
+  int status =
+        parse_global_args_i(argc, argv, global_svc_config_argv, false);
 
-  if (service_open_count == 1)
-    {
-      ACE_Service_Config_Guard config_guard (theone);
-
-      if (TAO_debug_level > 2)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Initializing the ")
-                      ACE_TEXT ("process-wide services\n")));
-        }
-
-      register_global_services_i (theone);
-
-      // Be certain to copy the program name so that service configurator
-      // has something to skip!
-      ACE_CString gargv0 ("");
-
-      if (argc > 0 && argv != 0)
-        {
-          gargv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
-        }
-
-      global_svc_config_argv.length (1);
-      global_svc_config_argv[0] = gargv0.c_str ();
-
-      if (parse_global_args_i (argc, argv, global_svc_config_argv, true) == -1)
-        {
-          return -1;
-        }
-
-      if (parse_svcconf_args_i (argc, argv, global_svc_config_argv) == -1)
-        {
-          return -1;
-        }
-
-      // If the target configuration happens to be the global context,
-      // add any 'private' arguments here.
-      if (pcfg == theone && svc_config_argv.length() > 1)
-        {
-          CORBA::ULong glen = global_svc_config_argv.length();
-          global_svc_config_argv.length(glen + svc_config_argv.length() - 1);
-          for (CORBA::ULong i = 1; i < svc_config_argv.length(); i++)
-            global_svc_config_argv[glen++] = svc_config_argv[i];
-          svc_config_argv.length(1);
-        }
-
-      int global_svc_config_argc = global_svc_config_argv.length ();
-      int status =
-        open_private_services_i (theone,
-                                 global_svc_config_argc,
-                                 global_svc_config_argv.get_buffer (),
-                                 skip_service_config_open);
-
-      if (status == -1)
-        {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) Failed to open process-")
-                          ACE_TEXT ("wide service configuration\n")));
-            }
-
-          return -1;
-        }
-
-      register_additional_services_i (theone);
-
-      if (TAO_debug_level > 4)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) Default ORB - global ")
-                    ACE_TEXT ("initialization completed.\n")));
-
-      // Notify all other threads that may be waiting, that the global
-      // gestalt has been initialized.
-      {
-        ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                                  guard,
-                                  TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
-                                  -1));
-
-        is_ubergestalt_ready = true;
-        ACE_MT (if (TAO_Ubergestalt_Ready_Condition::instance ()->
-                    broadcast () == -1)
-                return -1);
-      }
-
-    }
-  else
-    {
-      int status =
-        parse_global_args_i(argc, argv,global_svc_config_argv, false);
-      if (status == -1 && TAO_debug_level > 0)
+  if (status == -1 && TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) Skipping the process-wide ")
                     ACE_TEXT ("service configuration, service_open_count ")
                     ACE_TEXT ("= %d, status = %d\n"),
                     service_open_count,
                     status));
-    }
 
   if (TAO_debug_level > 2)
-    {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Initializing the ")
                   ACE_TEXT ("orb-specific services\n")));
-    }
 
   if (parse_svcconf_args_i (argc, argv, svc_config_argv) == -1)
-    {
       return -1;
-    }
 
-  int status = 0;
   // only open the private context if it is not also the global context
   if (pcfg != ACE_Service_Config::global())
     {
@@ -400,12 +390,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                                  skip_service_config_open);
     }
 
-  if (status >= 0)
-    {
-      return 0;
-    }
-
-  if (TAO_debug_level > 0)
+  if (status < 0 && TAO_debug_level > 0)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
                          ACE_TEXT ("TAO (%P|%t) Failed to ")
@@ -413,7 +398,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                         -1);
     }
 
-  return -1;
+  return status;
 }
 
 int

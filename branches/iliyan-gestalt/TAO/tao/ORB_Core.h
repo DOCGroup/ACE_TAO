@@ -874,7 +874,7 @@ public:
     const TAO_Service_Context &service_context);
 
   /// Configuration accessor method
-  ACE_Service_Gestalt* configuration () const;
+  ACE_Service_Gestalt_Auto_Ptr configuration () const;
 
   /// Get outgoing fragmentation strategy.
   auto_ptr<TAO_GIOP_Fragmentation_Strategy>
@@ -1085,7 +1085,7 @@ protected:
 
   /// Fault Tolerant service hook.
   TAO_Fault_Tolerance_Service ft_service_;
-  
+
   //@}
 
   /// TRUE transmits a full TAG_FT_GROUP component in place of the FT_GROUP_VERSION

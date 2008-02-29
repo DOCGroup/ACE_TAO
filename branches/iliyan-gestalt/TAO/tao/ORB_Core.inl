@@ -7,10 +7,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE ACE_Service_Gestalt*
+ACE_INLINE ACE_Service_Gestalt_Auto_Ptr
 TAO_ORB_Core::configuration (void) const
 {
-  return this->config_.get ();
+  return this->config_;
 }
 
 ACE_INLINE unsigned long

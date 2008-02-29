@@ -1,3 +1,33 @@
+Fri Feb 29 02:34:39 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+
+        Factored out the initialization of the global gestalt and the
+        determination of the context, given an ORB id.
+
+        * tao/ORBInitializer_Registry.cpp:
+
+        Removing the misplaced call to TAO::ORB::init_orb_globals(). Now
+        that the latter has non-trivial functionality, calling it from an
+        ORB initializer is really wrong.
+        The rest of the prolog code in register_orb_initializer() is also
+        suspect, but I can't recall the specific use case that must have
+        required what is effectively a duplicate of
+        TAO::ORB::open_global_services()
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+
+        Replacing the "naked" ACE_Service_Gestalt* with the "smart"
+        equivivalent.
+
+        * tao/ORB_Core.cpp:
+        * tao/TAO_Internal.h:
+        * tao/TAO_Internal.cpp:
+
+        Factored out the opening of global  service context .
+
 Tue Feb 19 19:12:39 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * orbsvcs/tests/Bug_3216_Regression/run_test.pl:
