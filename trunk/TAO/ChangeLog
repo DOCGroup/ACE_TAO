@@ -1,12 +1,17 @@
+Fri Feb 28 10:54:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3154_Regression/run_test.pl:
+          Updated for VxWorks cross platform testing
+
 Thu Feb 28 19:16:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/EnumDef_i.h:
         * orbsvcs/orbsvcs/IFRService/ConstantDef_i.h:
-        
+
           Cosmetic changes.
-          
+
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
-        
+
           Changed creation of IOR output file to use
           ACE_DEFAULT_FILE_PERMS. Also added more error checking to
           cover the open, write and close steps. Thanks to Jules
@@ -23,7 +28,7 @@ Thu Feb 28 13:26:12 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * TAO_IDL/contrib/mcpp/system.cpp:
 
           Compile error fixes.
-        
+
 Thu Feb 28 06:01:19 UTC 2008  Sumant Tambe  <sutambe@nospam>
 
         * TAO_IDL/contrib/mcpp/main.cpp:
