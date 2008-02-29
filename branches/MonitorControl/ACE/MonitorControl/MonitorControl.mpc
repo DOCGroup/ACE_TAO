@@ -1,12 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(MonitorControl) : acelib {
+project(MonitorControl) : acelib, ace_etcl {
   dynamicflags += MONITORCONTROL_BUILD_DLL
 
   Source_Files {
     AutoUpdateStarter.cpp
     BytesSentMonitor.cpp
+    Constraint_Interpreter.cpp
+    Constraint_Visitor.cpp
     CPULoadMonitor.cpp
     MemoryUsageMonitor.cpp
     MonitorGroup.cpp

@@ -20,6 +20,8 @@ namespace ACE
       const ETCL_Constraint* /* constraint */)
     {
       // TODO
+      // call build_tree() on the interpreter, to get that part done
+      // out of the critical path and possibly detect a bad constraint
     }
     
     void

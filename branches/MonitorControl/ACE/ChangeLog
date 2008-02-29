@@ -1,3 +1,22 @@
+Fri Feb 29 21:28:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/Constraint_Interpreter.cpp:
+        * MonitorControl/Constraint_Visitor.h:
+        * MonitorControl/Constraint_Visitor.cpp:
+        * MonitorControl/Constraint_Interpreter.h:
+        
+          New files, partially implemented 'backend' and 'driver',
+          specific to MonitorControl, using the ACE_ETCL 'frontend'
+          parser.
+        
+        * MonitorControl/MonitorControl.mpc:
+        
+          Added new files to the project.
+          
+        * MonitorControl/MonitorPoint.cpp(constraint):
+        
+          Left a comment in the (unimplemented) method.
+
 Fri Feb 29 18:52:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ACE_ETCL/*:
@@ -9,7 +28,7 @@ Fri Feb 29 18:52:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
           Renamed this file ETCL.mpc. The project name is still
           ACE_ETCL however, since MPC doesn't like even global
           clashes in project names. The library name is unchanged
-          as well, to disambiguate it from the TAO_ETCL library
+          as well, to disambiguate it from the TAO ETCL library
           that will be forthcoming.
 
 Thu Feb 28 16:21:52 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
