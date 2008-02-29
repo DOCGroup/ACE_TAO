@@ -16,7 +16,7 @@ ACE_RCSID (EC_Examples,
 static const char* ecname = 0;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   EC channel;
 

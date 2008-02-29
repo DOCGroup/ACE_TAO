@@ -69,7 +69,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 
   msg.write_octet_array (reserved, 3);
 
-  if (this->marshall_target_spec (spec, msg) == false)
+  if (!this->marshall_target_spec (spec, msg))
     return false;
 
   // Write the operation name
@@ -77,7 +77,8 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
                     opdetails.opname ());
 
   // Write the service context list
-  msg << opdetails.request_service_info ();
+  if (!(msg << opdetails.request_service_info ()))
+    return false;
 
   // We align the pointer only if the operation has arguments.
   if (opdetails.argument_flag ()
@@ -96,7 +97,8 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
     TAO_OutputCDR &msg)
 {
   // Write the request id
-  msg << request_id;
+  if (!(msg << request_id))
+    return false;
 
   // Write the target address
   if (!(this->marshall_target_spec (spec, msg)))
@@ -269,10 +271,19 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   // verify a digital signature, if that is required in this security
   // environment.  It may be required even when using IPSEC security
   // infrastructure.
-  IOP::ServiceContextList &req_service_info =
-    request.request_service_info ();
+  IOP::ServiceContextList &req_service_info = request.request_service_info ();
 
-  input >> req_service_info;
+  if (!(input >> req_service_info))
+    {
+      if (TAO_debug_level)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) parse_request_header, ")
+                      ACE_TEXT ("extracting context\n")));
+        }
+
+      return -1;
+    }
 
   // Check an process if BiDir contexts are available
   if (request.orb_core ()->bidir_giop_policy ())
@@ -297,11 +308,9 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
   // Get the stream .
   TAO_InputCDR &msg = request.incoming_stream ();
 
-  CORBA::Boolean hdr_status = true;
-
   // Get the request id.
   CORBA::ULong req_id = 0;
-  hdr_status = msg.read_ulong (req_id);
+  CORBA::Boolean hdr_status = msg.read_ulong (req_id);
 
   // Store it in the Locate request classes
   request.request_id (req_id);
@@ -324,7 +333,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
   if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr, params) == -1)
     return -1;
 
-  if ((cdr >> params.svc_ctx_) == 0)
+  if (!(cdr >> params.svc_ctx_))
     {
       if (TAO_debug_level)
         {
@@ -351,7 +360,6 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
     TAO_Pluggable_Reply_Params &params)
 {
   if (TAO_GIOP_Message_Generator_Parser::parse_locate_reply (cdr, params) == -1)
-
     return -1;
 
   // Note: We dont align the pointer to an 8 byte boundary for a
@@ -398,7 +406,8 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
     case TAO_Target_Specification::Key_Addr:
       {
         // As this is a union send in the discriminant first
-        msg << GIOP::KeyAddr;
+        if (!(msg << GIOP::KeyAddr))
+          return false;
 
         // Get the object key
         const TAO::ObjectKey *key = spec.object_key ();
@@ -406,7 +415,8 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
         if (key)
           {
             // Marshall in the object key
-            msg << *key;
+            if (!(msg << *key))
+              return false;
           }
         else
           {
@@ -446,7 +456,8 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
     case TAO_Target_Specification::Reference_Addr:
       {
         // As this is a union send in the discriminant first
-        msg << GIOP::ReferenceAddr;
+        if (!(msg << GIOP::ReferenceAddr))
+          return false;
 
         // Get the IOR
         IOP::IOR *ior = 0;
@@ -457,8 +468,10 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
             // This is a struct IORAddressingInfo. So, marshall each
             // member of the struct one after another in the order
             // defined.
-            msg << index;
-            msg << *ior;
+            if (!(msg << index))
+              return false;
+            if (!(msg << *ior))
+              return false;;
           }
         else
           {

@@ -208,14 +208,14 @@ TAO_Service_Context &
 TAO_ServerRequest::reply_service_context (void)
 {
   if (!operation_details_)
-  {
-    return this->reply_service_context_;
-  }
+    {
+      return this->reply_service_context_;
+    }
   else
-  {
-    return const_cast <TAO_Operation_Details*> (
-      this->operation_details_)->reply_service_context ();
-  }
+    {
+      return const_cast <TAO_Operation_Details*> (
+        this->operation_details_)->reply_service_context ();
+    }
 }
 
 

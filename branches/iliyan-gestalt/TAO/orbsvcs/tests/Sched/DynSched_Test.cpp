@@ -6,8 +6,8 @@
 # include <quantify.h>
 #endif /* ACE_HAS_QUANTIFY */
 
-ACE_RCSID (Sched, 
-           DynSched_Test, 
+ACE_RCSID (Sched,
+           DynSched_Test,
            "$Id$")
 
 // period times, in 100 nanoseconds
@@ -258,7 +258,7 @@ DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   int result = 0;
 

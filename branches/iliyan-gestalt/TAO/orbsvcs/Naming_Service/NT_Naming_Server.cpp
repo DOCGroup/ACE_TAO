@@ -27,7 +27,7 @@
 #include "ace/Log_Msg.h"
 
 int
-main (int, char*[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_INFO,
               "This program is only supported "
