@@ -1,3 +1,14 @@
+Fri Feb 29 21:38:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ace_etcl.mpb:
+        
+          New file, overlooked in the checkin
+          
+          Fri Feb 29 21:28:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+          
+          which is a base project for anything using the ACE ETCL
+          library, used now in ACE_ROOT/MonitorControl/MonitorControl.mpc.
+
 Fri Feb 29 21:28:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/Constraint_Interpreter.cpp:
