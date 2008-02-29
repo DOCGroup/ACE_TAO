@@ -1,3 +1,24 @@
+Thu Feb 28 16:08:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Added --compiler as option so that we can specify a different
+          compiler then gcc
+
+Thu Feb 28 08:32:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-bug-process.html:
+          Removed cvs
+
+Wed Feb 27 19:28:18 UTC 2008  William Otte  <wotte@william-ottes-macbook-pro.local>
+
+        * bin/MakeProjectCreator/config/global.features:
+          disable mcpp by default.
+
+Tue Feb 26 15:52:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Added support for buildbits=64
+
 Tue Feb 26 09:18:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_openvms.GNU:
