@@ -11,6 +11,7 @@ threads ?= 1
 pthread ?= 1
 ssl ?= 0
 rwho ?= 0
+buildbits ?= 32
 
 ifeq ($(static_libs),1)
   override shared_libs =
@@ -30,13 +31,17 @@ VSHDIR          = shobj/
 
 LN_S = cp -p
 DEFFLAGS        +=
-CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -names_as_is_short -Wc/STAND=STRICT
+CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -names_as_is_short
 ifeq ($(HOSTTYPE),ia64)
   CCFLAGS         += -msg_disable intoverflow -msg_disable reftemporary -msg_disable intsignchange
 else
   CCFLAGS         += -msg_disable intoverflow,reftemporary,intsignchange -Wc/DISTINGUISH_NESTED_ENUMS
 endif
 CCFLAGS         += -Wc/template=auto
+
+ifeq ($(buildbits),64)
+  CCFLAGS += -Wc/MODEL=ANSI
+endif
 
 ifeq ($(HOSTTYPE),ia64)
   SYMVEC_OPT_FILE ?= $(LIB_NAME)_symvec.opt
