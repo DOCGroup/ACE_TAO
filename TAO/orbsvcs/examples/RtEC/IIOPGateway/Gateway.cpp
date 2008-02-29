@@ -17,7 +17,7 @@ static const char* supplierec = 0;
 static const char* consumerec = 0;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Gateway gateway;
 

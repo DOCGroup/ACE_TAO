@@ -143,7 +143,6 @@ namespace TAO
     return TAO_INVOKE_SUCCESS;
   }
 
-
   Invocation_Status
   Invocation_Base::receive_other_interception (void)
   {

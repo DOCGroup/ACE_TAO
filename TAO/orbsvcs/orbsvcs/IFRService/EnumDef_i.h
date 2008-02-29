@@ -43,36 +43,27 @@ public:
   //
 public:
   /// Constructor
-  TAO_EnumDef_i (TAO_Repository_i *repoy);
+  TAO_EnumDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   virtual ~TAO_EnumDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ()
-;
+  virtual CORBA::DefinitionKind def_kind (void);
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ()
-;
+  virtual CORBA::TypeCode_ptr type (void);
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i ()
-;
+  virtual CORBA::TypeCode_ptr type_i (void);
 
-  virtual CORBA::EnumMemberSeq *members ()
-;
+  virtual CORBA::EnumMemberSeq *members (void);
 
-  CORBA::EnumMemberSeq *members_i ()
-;
+  CORBA::EnumMemberSeq *members_i (void);
 
-  virtual void members (
-      const CORBA::EnumMemberSeq &members)
-;
+  virtual void members (const CORBA::EnumMemberSeq &members);
 
-  void members_i (
-      const CORBA::EnumMemberSeq &members)
-;
+  void members_i (const CORBA::EnumMemberSeq &members);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

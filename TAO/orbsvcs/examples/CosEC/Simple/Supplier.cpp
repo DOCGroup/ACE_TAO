@@ -9,7 +9,7 @@ ACE_RCSID (CosEC_Examples,
            "$Id$")
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Supplier supplier;
 
