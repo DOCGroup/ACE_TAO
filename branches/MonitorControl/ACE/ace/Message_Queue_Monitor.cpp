@@ -26,19 +26,11 @@ namespace ACE
     }
     
     void
-    Message_Queue_Monitor::group_parent (const Monitor_Base* /* parent */)
-    {
-    }
-    
-    void
-    Message_Queue_Monitor::add_group_child (const Monitor_Base* /* child */)
-    {
-    }
-    
-    void
     Message_Queue_Monitor::constraint (
-      const ETCL_Constraint* /* constraint */)
+      const char* /* constraint */)
     {
+      // TODO - this will require some reshuffling of stuff 
+      // between MonitorPoint and ACE.
     }
     
     void

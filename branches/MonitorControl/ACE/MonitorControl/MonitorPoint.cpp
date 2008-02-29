@@ -4,6 +4,7 @@
 #include "ace/Guard_T.h"
 
 #include "MonitorControl/MonitorPoint.h"
+#include "MonitorControl/Constraint_Interpreter.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -16,12 +17,14 @@ namespace ACE
     {}
     
     void
-    MonitorPoint<true>::constraint (
-      const ETCL_Constraint* /* constraint */)
+    MonitorPoint<true>::constraint (const char* constraint)
     {
-      // TODO
-      // call build_tree() on the interpreter, to get that part done
-      // out of the critical path and possibly detect a bad constraint
+      if (this->interpreter_.build_tree (constraint) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "MonitorPoint<true>::constraint() - "
+                      "Constraint_Interpreter::build_tree() failed\n"));
+        }
     }
     
     void

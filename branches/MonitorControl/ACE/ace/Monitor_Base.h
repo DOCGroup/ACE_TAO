@@ -49,7 +49,7 @@ namespace ACE
       virtual void update (void) = 0;
 
       /// Attaches the (optional) constrain to this monitor point.
-      virtual void constraint (const ETCL_Constraint* constraint) = 0;
+      virtual void constraint (const char* constraint) = 0;
 
       /// Updates the monitor's data if it is a numeric floating point.
       virtual void receive (double value) = 0;

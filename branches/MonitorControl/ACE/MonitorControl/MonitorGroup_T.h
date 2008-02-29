@@ -37,7 +37,7 @@ namespace ACE
       
       virtual void update (void);
       
-      virtual void constraint (const ETCL_Constraint* constraint);
+      virtual void constraint (const char* constraint);
       
       virtual void receive (double value);
       

@@ -47,7 +47,7 @@ namespace ACE
       
     public:  
       /// Attaches the (optional) constrain to this monitor point.
-      virtual void constraint (const ETCL_Constraint* constraint);
+      virtual void constraint (const char* constraint);
       
       /// Updates the monitor's data with a double.
       virtual void receive (double data);

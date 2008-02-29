@@ -1,3 +1,49 @@
+Fri Feb 29 22:54:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+
+          New file, base project for anything using the 
+          MonitorControl library.
+
+        * MonitorControl/examples/Bytes_Sent/Bytes_Sent.mpc:
+        * MonitorControl/examples/Message_Queue_Size/Message_Queue_Size.mpc:
+        * MonitorControl/examples/CPU_Load/CPU_Load.mpc:
+        * MonitorControl/examples/Num_Threads/Num_Threads.mpc:
+        * MonitorControl/examples/Memory_Usage/Memory_Usage.mpc:
+        * MonitorControl/examples/Group/Group.mpc:
+
+          Added the new base project to all the example MPC files.
+
+        * MonitorControl/examples/Constraint/Constraint.mpc:
+        * MonitorControl/examples/Constraint/Constraint.cpp:
+
+          New files, containing a new example to test constraint
+          creation and evaluation as it is implemented.
+
+        * ace/Message_Queue_Monitor.h:
+        * ace/Monitor_Base.h:
+        * ace/Message_Queue_Monitor.cpp:
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/MonitorPoint_T.h:
+        * MonitorControl/MonitorGroup_T.h:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/MonitorPoint_T.cpp:
+        * MonitorControl/MonitorGroup_T.cpp:
+
+          - Changed the signature of the constraint() method,
+            which adds a constraint to a monitor point, to
+            accept a const char* instead of an ETCL_Constraint*.
+            Existing code in the Notification Service does it
+            this way, and it is more convenient for the
+            'application' to just pass in a constraint string,
+            and let the infrastructure create the constraint
+            class under the hood.
+
+          - Implemented the constraint() method for all monitor
+            points except Message_Queue_Monitor (which will
+            take some more thought since it would create a
+            circular dependency between ACE and ACE_ETCL).
+
 Fri Feb 29 21:38:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ace_etcl.mpb:

@@ -23,7 +23,7 @@ namespace ACE
     template<bool ENABLED>
     void
     MonitorPoint<ENABLED>::constraint (
-      const ETCL_Constraint* /* constraint */)
+      const char* /* constraint */)
     {
     }
     

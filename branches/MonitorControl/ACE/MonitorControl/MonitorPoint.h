@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "MonitorControl/MonitorPoint_T.h"
+#include "MonitorControl/Constraint_Interpreter.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,7 +49,7 @@ namespace ACE
       MonitorPoint (const char* name);
     
       /// Meaningful implementation of member function.
-      virtual void constraint (const ETCL_Constraint* constraint);
+      virtual void constraint (const char* constraint);
       
       /// Meaningful implementation of member function.
       virtual void receive (double data);
@@ -58,6 +59,9 @@ namespace ACE
       
       /// Meaningful implementation of member function.
       virtual void clear (void);
+      
+    private:
+      Constraint_Interpreter interpreter_;
     };
   }
 }

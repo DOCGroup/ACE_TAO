@@ -1,9 +1,9 @@
 // $Id$
 
-project (*) : aceexe {
+project (*) : aceexe, ace_mc {
   exename = group
-  after += MonitorControl MC_Test_Utilities
-  libs  += MonitorControl MC_Test_Utilities
+  after += MC_Test_Utilities
+  libs  += MC_Test_Utilities
   macros += ENABLE_MONITORS ENABLE_ACE_MONITORS
 
   source_files {
