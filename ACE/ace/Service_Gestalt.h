@@ -238,7 +238,7 @@ public:
    * provided in the svc.conf file(s).  Returns the number of errors
    * that occurred.
    */
-  int process_directives (void);
+  int process_directives (bool ignore_default_svc_conf_file = false);
 
   /// Tidy up and perform last rites when ACE_Service_Config is shut
   /// down.  This method calls <close_svcs>.  Returns 0.
@@ -321,7 +321,9 @@ protected:
   /**
    *
    */
-  virtual int parse_args_i (int, ACE_TCHAR *argv[]);
+  virtual int parse_args_i (int,
+                            ACE_TCHAR *argv[],
+                            bool &ignore_default_svc_conf_file);
 
   /**
    * Performs an open without parsing command-line arguments.  The
