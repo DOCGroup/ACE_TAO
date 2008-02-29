@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $tao_idl = "$PerlACE::ACE_ROOT/bin/tao_idl";
 if (exists $ENV{HOST_ROOT}) {
-    $tao_idl = "/bin/tao_idl";
+    $tao_idl = "$ENV{HOST_ROOT}/bin/tao_idl";
 }
 
 # IDL file names
@@ -18,7 +18,9 @@ $idl_file = PerlACE::LocalFile ("test.idl");
 
 # The IDL compiler
 $TAO_IDL = new PerlACE::Process ("$tao_idl");
-
+if (exists $ENV{HOST_ROOT}) {
+  $TAO_IDL->IgnoreHostRoot(1);
+}
 $ENV{'INCLUDE'} = ":$ENV{TAO_ROOT}/orbsvcs/:$ENV{TAO_ROOT}/:";
 
 $TAO_IDL->Arguments ("-Se -hs _skel.h -hc _stub.h -I$ENV{TAO_ROOT} -I$ENV{TAO_ROOT}/orbsvcs/ test.idl");
