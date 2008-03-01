@@ -737,7 +737,7 @@ static void mcpp_main( void)
                     char *  tp = out_ptr;
                     while (*tp == ' ')
                         tp++;           /* Remove excessive spaces  */
-		    ACE_OS::memmove( out_ptr, tp, ACE_OS::strlen( tp) + 1);
+                    ACE_OS::memmove( out_ptr, tp, ACE_OS::strlen( tp) + 1);
                     wp -= (tp - out_ptr);
                 }
                 if (has_pragma) {           /* Found _Pramga()      */
@@ -933,7 +933,7 @@ static void devide_line(
             *out_ptr = EOS;
             put_a_line( out);           /* Putout the former tokens */
             wp = out_ptr = stpcpy( out, save);      /* Restore the token    */
-	        ACE_OS::free( save);
+                ACE_OS::free( save);
         } else {                            /* Still in size        */
             out_ptr = wp;                   /* Advance the pointer  */
         }
@@ -1112,7 +1112,7 @@ static char *   esc_mbchar(
                 c = *(cp - 1);
                 if (c == '\\' || c == '"' || c == '\'') {
                                     /* Insert \ before 0x5c, 0x22, 0x27 */
-		  ACE_OS::memmove( cp, cp - 1, (size_t) (str_end - cp) + 2);
+                  ACE_OS::memmove( cp, cp - 1, (size_t) (str_end - cp) + 2);
                     *(cp++ - 1) = '\\';
                     str++;
                     str_end++;
