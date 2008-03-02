@@ -1742,7 +1742,7 @@ ace_get_module (ACE_Service_Type const * sr,
 // Main driver program.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_Svc_Conf_Param param (0, stdin);
 

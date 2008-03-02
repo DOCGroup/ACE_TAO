@@ -9,13 +9,13 @@
 
 ACE_RCSID(agent, main, "$Id$")
 
-int 
-main (int argc, char *argv[])
+int
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE::init ();
   snmp_agent the_agent;
 
-  if (the_agent.set_args(argc, argv)) 
+  if (the_agent.set_args(argc, argv))
     return 1;
 
   if (!the_agent.valid()) {

@@ -164,7 +164,7 @@ Leader_Follower_Task::svc (void)
         while (leader_available)
           {
             int result = this->synch_.condition_.wait ();
-            
+
             if (result == -1)
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -290,7 +290,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = parse_args (argc, argv);
-  
+
   if (result != 0)
     {
       return result;
@@ -379,7 +379,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   i, leader_followers[i]->processed ()));
       delete leader_followers[i];
     }
-    
+
   delete[] leader_followers;
 
   return result;
@@ -391,7 +391,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #else /*if defined (ACE_HAS_THREADS)*/
 
 int
-main (int , char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%p|%t) Cannot run in SIngle threaded mode \n"));

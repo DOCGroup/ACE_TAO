@@ -11,6 +11,7 @@
  **************************************************************************/
 
 /* FUZZ: disable check_for_math_include */
+/* FUZZ: disable check_for_improper_main_declaration */
 
 #include <thread.h>
 
@@ -582,7 +583,7 @@ char	configfile[MAXPATHLEN];
 char	connectstr[MAXHOSTNAMELEN+10];
 
 void
-main(int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
     int		file_count=0;
     int		getoptch;

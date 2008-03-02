@@ -49,6 +49,7 @@
 #define SYSV /* required on SGI IRIX releases before 3.3 */
 
 //FUZZ: disable check_for_lack_ACE_OS
+//FUZZ: disable check_for_improper_main_declaration
 
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Connector.h"

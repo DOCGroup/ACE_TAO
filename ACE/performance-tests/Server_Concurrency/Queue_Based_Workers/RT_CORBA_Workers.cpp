@@ -579,7 +579,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #else /*ACE_HAS_THREADS*/
 
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Not supported in single threaded builds \n"));
