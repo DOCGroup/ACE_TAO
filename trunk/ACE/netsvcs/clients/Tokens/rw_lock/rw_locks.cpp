@@ -58,7 +58,7 @@ run_thread (void *)
                   ACE_DEBUG ((LM_DEBUG, "rlock deadlock detected\n"));
                   goto READ_DEADLOCK;
                 }
-              else 
+              else
                 return 0;
             }
 
@@ -79,7 +79,7 @@ run_thread (void *)
                   ACE_DEBUG ((LM_DEBUG, "rlock deadlock detected during renew\n"));
                   goto READ_DEADLOCK;
                 }
-              else 
+              else
                 return 0;
             }
 
@@ -207,7 +207,7 @@ parse_args (int argc, char *argv[])
 #endif
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
     return -1;
@@ -247,7 +247,7 @@ main (int argc, char* argv[])
 
 #else
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads not supported on this platform\n"), -1);

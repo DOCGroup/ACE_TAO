@@ -350,7 +350,7 @@ STDIN_Token::create_proxy (const char *token, char type)
 }
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   STDIN_Token st;
   return st.open (argc, argv);
@@ -358,7 +358,7 @@ main (int argc, char* argv[])
 
 #else
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads or ACE_HAS_TOKENS_LIBRARY not supported on this platform\n"), -1);

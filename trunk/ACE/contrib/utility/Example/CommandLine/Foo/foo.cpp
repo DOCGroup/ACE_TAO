@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 
+/* FUZZ: disable check_for_improper_main_declaration */
 
 namespace CommandLine
 {

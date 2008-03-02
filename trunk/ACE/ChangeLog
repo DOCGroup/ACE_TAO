@@ -1,3 +1,44 @@
+Sun Mar  2 18:53:12 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ASNMP/agent/main.cpp:
+        * ace/Svc_Conf_y.cpp:
+        * apps/JAWS3/jaws3/main.cpp:
+        * examples/Mem_Map/IO-tests/test_io.cpp:
+        * examples/Reactor/Multicast/client.cpp:
+        * examples/Reactor/Multicast/server.cpp:
+        * examples/Reactor/Proactor/test_aiocb_ace.cpp:
+        * examples/System_V_IPC/SV_Shared_Memory/SV_Shared_Memory_Test.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/createfile.cpp:
+        * netsvcs/clients/Tokens/collection/collection.cpp:
+        * netsvcs/clients/Tokens/collection/rw_locks.cpp:
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+        * netsvcs/clients/Tokens/rw_lock/rw_locks.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+        * performance-tests/Misc/test_guard.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * examples/Mem_Map/IO-tests/Mem_Map_IO_Tests.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
+        * apps/JAWS/clients/WebSTONE/src/webclient.c:
+        * contrib/utility/Example/CommandLine/Foo/foo.cpp:
+        * performance-tests/Synch-Benchmarks/context.c:
+        * performance-tests/TTCP/C/new-ttcp.cpp:
+        * tests/Unload_libACE.cpp:
+
+          Disable fuzz's check_for_improper_main_declaration check on these files.
+          These files don't use ACE.
+
 Sat Mar  1 19:09:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:
@@ -116,7 +157,7 @@ Thu Feb 21 15:25:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Feb 21 02:34:37 CST 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.6.3 released.
+        * ACE version 5.6.3 released.
 
 Local Variables:
 mode: change-log
