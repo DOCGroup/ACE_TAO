@@ -75,7 +75,7 @@ if ($opt_r) {
   $startdir = $opt_r;
 }
 else {
-  $startdir = getcwd();
+  $startdir = "$ACE_ROOT";
 }
 
 if ($opt_l) {
