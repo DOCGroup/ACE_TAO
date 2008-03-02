@@ -162,7 +162,7 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   program_name = ACE::basename (argv[0],
                                 ACE_DIRECTORY_SEPARATOR_CHAR);
