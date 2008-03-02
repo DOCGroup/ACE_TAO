@@ -1,3 +1,8 @@
+Sun Mar  2 20:04:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ProcessVX.pm:
+          Integrated some OCI changes for the iBoot
+
 Sun Mar  2 19:32:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:
