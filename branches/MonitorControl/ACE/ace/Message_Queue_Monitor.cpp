@@ -34,6 +34,13 @@ namespace ACE
     }
     
     void
+    Message_Queue_Monitor::control_action (Control_Action * /* action */,
+                                           const char* /* command */)
+    {
+      // TODO
+    }
+    
+    void
     Message_Queue_Monitor::receive (double value)
     {
       ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);

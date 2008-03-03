@@ -29,6 +29,13 @@ namespace ACE
     
     template<bool ENABLED>
     void
+    MonitorPoint<ENABLED>::control_action (Control_Action* /* action */,
+                                           const char* /* command */)
+    {
+    }
+    
+    template<bool ENABLED>
+    void
     MonitorPoint<ENABLED>::receive (double /* data */)
     {
     }

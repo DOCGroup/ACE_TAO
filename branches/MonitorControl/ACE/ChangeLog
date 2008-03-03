@@ -1,3 +1,27 @@
+Mon Mar  3 18:26:01 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_Monitor.h:
+        * ace/Monitor_Base.h:
+        * ace/Message_Queue_Monitor.cpp:
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/MonitorPoint_T.h:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/MonitorPoint_T.cpp:
+        
+          Added control_action() method to attach an application-defined
+          action to a monitor point.
+          
+        * MonitorControl/Constraint_Visitor.h:
+        * MonitorControl/Constraint_Visitor.cpp:
+        
+          Implemented the methods necessary to evaluate a constraint.
+          
+        * MonitorControl/examples/Constraint/constraint.cpp:
+        
+          Added code to define a control action and attach it to the
+          BytesSent monitor point, triggered each time the monitor
+          point is updated and its associated constraint is satisfied.
+
 Fri Feb 29 22:54:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ace_mc.mpb:

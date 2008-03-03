@@ -46,9 +46,14 @@ namespace ACE
       virtual ~MonitorPoint (void);
       
     public:  
-      /// Attaches the (optional) constrain to this monitor point.
+      /// Attaches an (optional) constraint to this monitor point.
       virtual void constraint (const char* constraint);
       
+      /// Attaches an (optional) control action, to be triggered
+      /// by satisfaction of the constraint, if any.
+      virtual void control_action (Control_Action *action,
+                                   const char* command = 0);
+
       /// Updates the monitor's data with a double.
       virtual void receive (double data);
       
