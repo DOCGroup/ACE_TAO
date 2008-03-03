@@ -35,6 +35,7 @@ ACE_Service_Gestalt::open (int argc,
                           bool ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Gestalt::open");
+
   this->no_static_svcs_ = ignore_static_svcs;
 
   if (this->parse_args_i (argc,
