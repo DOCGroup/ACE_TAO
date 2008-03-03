@@ -124,9 +124,9 @@ namespace CIAO
 
         std::stringstream msg;
         msg << (metrics.miss_count_ * 1.0) / metrics.total_count_
-            << "\t"
+            << "\t\t"
             << (metrics.total_count_ * 1000000.0) / elapsed_time
-            << "\t"
+            << "\t\t"
             << rate
             << std::endl;
 
@@ -218,7 +218,7 @@ namespace CIAO
 
         // Create the logger.
         this->logger_ = new Logger (this->ID_.in ());
-        this->logger_->log (std::string ("#DMR\tThroughput\tRate\n"));
+        this->logger_->log (std::string ("#DMR\t\tThroughput\t\tRate\n"));
       }
 
       void
