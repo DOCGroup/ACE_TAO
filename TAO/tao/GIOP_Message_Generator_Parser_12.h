@@ -33,7 +33,7 @@ class TAO_Transport;
  *
  */
 
-class TAO_Export TAO_GIOP_Message_Generator_Parser_12:
+class TAO_GIOP_Message_Generator_Parser_12:
   public TAO_GIOP_Message_Generator_Parser
 {
 public:
