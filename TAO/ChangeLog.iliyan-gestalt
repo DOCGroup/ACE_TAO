@@ -1,3 +1,11 @@
+Mon Mar  3 21:20:36 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+        Copying the args with ARGV needs quoting to be enabled,
+        because space containing arguments will be handled incorrectly
+        otherwise. This fixes the regression of Bug_2735_Regression
+
 Mon Mar  3 05:53:49 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Internal.cpp:
