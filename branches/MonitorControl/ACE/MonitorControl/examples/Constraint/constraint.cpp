@@ -11,7 +11,7 @@ class Trigger : public Control_Action
 {
   virtual void execute (const char* /* command */)
   {
-    ACE_DEBUG ((LM_DEBUG, "Total bytes sent is above threshhold\n"));
+    ACE_DEBUG ((LM_DEBUG, "Total bytes received is above threshhold\n"));
   }
 };
 
@@ -29,7 +29,7 @@ public:
 
     /// Call on the administrator class to look up the desired monitors.
     ACE::MonitorControl::Monitor_Base *bytes_monitor =
-      mgr->admin ().monitor_point ("BytesSent");
+      mgr->admin ().monitor_point ("BytesReceived");
 
     if (bytes_monitor != 0)
       {
@@ -40,7 +40,7 @@ public:
             ACE_OS::sleep (2);
 
             MonitorControl_Types::Data data = bytes_monitor->retrieve ();
-            MC_Test_Utilities::display_bytes_sent (data);
+            MC_Test_Utilities::display_bytes_received (data);
           }
       }
 
@@ -51,13 +51,13 @@ public:
 int main (int argc, char *argv [])
 {
   /// Set the timer for # of threads check at 2000 msecs (2 sec).
-  ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, 2000);
+  ADD_PERIODIC_MONITOR (BYTES_RECEIVED_MONITOR, 2000);
 
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_Admin_Manager>::instance ("MC_ADMINMANAGER");
 
   ACE::MonitorControl::Monitor_Base *bytes_monitor =
-    mgr->admin ().monitor_point ("BytesSent");
+    mgr->admin ().monitor_point ("BytesReceived");
     
   bytes_monitor->constraint ("value > 8192");
   

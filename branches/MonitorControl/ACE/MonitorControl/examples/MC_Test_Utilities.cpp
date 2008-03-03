@@ -66,5 +66,31 @@ MC_Test_Utilities::display_bytes_sent (
   display_timestamp (data);
   cout << static_cast<ACE_UINT64> (data.value_) << endl;
 }
+void
+MC_Test_Utilities::display_bytes_received (
+  const MonitorControl_Types::Data &data)
+{
+  cout << "total bytes received:         ";
+  display_timestamp (data);
+  cout << static_cast<ACE_UINT64> (data.value_) << endl;
+}
+
+void
+MC_Test_Utilities::display_packets_sent (
+  const MonitorControl_Types::Data &data)
+{
+  cout << "total packets sent:         ";
+  display_timestamp (data);
+  cout << static_cast<ACE_UINT64> (data.value_) << endl;
+}
+void
+MC_Test_Utilities::display_packets_received (
+  const MonitorControl_Types::Data &data)
+{
+  cout << "total packets received:         ";
+  display_timestamp (data);
+  cout << static_cast<ACE_UINT64> (data.value_) << endl;
+}
+
 
 

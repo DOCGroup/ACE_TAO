@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file PacketsSentMonitor.h
+ * @file PacketsReceivedMonitor.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef PACKETSSENTMONITOR_H
-#define PACKETSSENTMONITOR_H
+#ifndef PACKETSRECEIVEDMONITOR_H
+#define PACKETSRECEIVEDMONITOR_H
 
 #include /**/ "ace/pre.h"
 
@@ -43,20 +43,20 @@ namespace ACE
      */
 
     /**
-     * @class PacketsSentMonitor
+     * @class PacketsReceivedMonitor
      *
      * @brief Template specialization with meaningful implementation of
      * pure virtual method.
      */
     template<>
-    class MONITORCONTROL_Export PacketsSentMonitor<true>
+    class MONITORCONTROL_Export PacketsReceivedMonitor<true>
       : public MonitorPoint<true>
 #if defined (ACE_WIN32)
       , public WindowsMultiInstanceMonitor
 #endif
     {
     public:
-      PacketsSentMonitor (void);
+      PacketsReceivedMonitor (void);
 
       /// Implementation of the pure virtual method.
       virtual void update (void);
@@ -68,4 +68,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // PACKETSSENTMONITOR_H
+#endif // PACKETSRECEIVEDMONITOR_H

@@ -6,6 +6,7 @@ project(MonitorControl) : acelib, ace_etcl {
 
   Source_Files {
     AutoUpdateStarter.cpp
+    BytesReceivedMonitor.cpp
     BytesSentMonitor.cpp
     Constraint_Interpreter.cpp
     Constraint_Visitor.cpp
@@ -14,6 +15,7 @@ project(MonitorControl) : acelib, ace_etcl {
     MonitorGroup.cpp
     MonitorPoint.cpp
     NumThreadsMonitor.cpp
+    PacketsReceivedMonitor.cpp
     PacketsSentMonitor.cpp
     WindowsMonitor.cpp
     WindowsMultiInstanceMonitor.cpp

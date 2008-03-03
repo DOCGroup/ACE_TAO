@@ -104,6 +104,23 @@ namespace ACE
     //=======================================================
 
     /**
+     * @class BytesReceivedMonitor
+     *
+     * @brief Counter for the number of bytes sent over the wire.
+     */
+    template<bool ENABLED>
+    class BytesReceivedMonitor : public MonitorPoint<ENABLED>
+    {
+      friend class ACE_Singleton<BytesReceivedMonitor <ENABLED>, ACE_Null_Mutex>;
+
+    private:
+      BytesReceivedMonitor (void);
+      virtual ~BytesReceivedMonitor (void);
+    };
+
+    //=======================================================
+
+    /**
      * @class PacketsSentMonitor
      *
      * @brief Counter for the number of packets sent over the wire.
@@ -116,6 +133,23 @@ namespace ACE
     private:
       PacketsSentMonitor (void);
       virtual ~PacketsSentMonitor (void);
+    };
+
+    //=======================================================
+
+    /**
+     * @class PacketsReceivedMonitor
+     *
+     * @brief Counter for the number of packets sent over the wire.
+     */
+    template<bool ENABLED>
+    class PacketsReceivedMonitor : public MonitorPoint<ENABLED>
+    {
+      friend class ACE_Singleton<PacketsReceivedMonitor <ENABLED>, ACE_Null_Mutex>;
+
+    private:
+      PacketsReceivedMonitor (void);
+      virtual ~PacketsReceivedMonitor (void);
     };
   }
 }
@@ -149,6 +183,18 @@ typedef ACE::MonitorControl::PacketsSentMonitor<true>
 
 typedef ACE::MonitorControl::PacketsSentMonitor<false>
   DISABLED_PACKETS_SENT_MONITOR;
+
+typedef ACE::MonitorControl::BytesReceivedMonitor<true>
+  ENABLED_BYTES_RECEIVED_MONITOR;
+
+typedef ACE::MonitorControl::BytesReceivedMonitor<false>
+  DISABLED_BYTES_RECEIVED_MONITOR;
+
+typedef ACE::MonitorControl::PacketsReceivedMonitor<true>
+  ENABLED_PACKETS_RECEIVED_MONITOR;
+
+typedef ACE::MonitorControl::PacketsReceivedMonitor<false>
+  DISABLED_PACKETS_RECEIVED_MONITOR;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -59,12 +59,34 @@ namespace ACE
     //======================================================
     
     template<bool ENABLED>
+    BytesReceivedMonitor<ENABLED>::BytesReceivedMonitor (void)
+      : MonitorPoint<ENABLED> ("BytesReceived")
+    {}
+  
+    template<bool ENABLED>
+    BytesReceivedMonitor<ENABLED>::~BytesReceivedMonitor (void)
+    {}
+
+    //======================================================
+    
+    template<bool ENABLED>
     PacketsSentMonitor<ENABLED>::PacketsSentMonitor (void)
       : MonitorPoint<ENABLED> ("PacketsSent")
     {}
   
     template<bool ENABLED>
     PacketsSentMonitor<ENABLED>::~PacketsSentMonitor (void)
+    {}
+
+    //======================================================
+    
+    template<bool ENABLED>
+    PacketsReceivedMonitor<ENABLED>::PacketsReceivedMonitor (void)
+      : MonitorPoint<ENABLED> ("PacketsReceived")
+    {}
+  
+    template<bool ENABLED>
+    PacketsReceivedMonitor<ENABLED>::~PacketsReceivedMonitor (void)
     {}
   }
 }

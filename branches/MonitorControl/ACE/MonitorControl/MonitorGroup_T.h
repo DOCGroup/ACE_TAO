@@ -39,6 +39,9 @@ namespace ACE
       
       virtual void constraint (const char* constraint);
       
+      virtual void control_action (Control_Action* action,
+                                   const char* command = 0);
+      
       virtual void receive (double value);
       
       virtual void receive (size_t value);

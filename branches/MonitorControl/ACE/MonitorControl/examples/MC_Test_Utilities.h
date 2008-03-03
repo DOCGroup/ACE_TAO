@@ -33,6 +33,9 @@ struct MC_TEST_UTILITIES_Export MC_Test_Utilities
   static void display_memory_usage (const MonitorControl_Types::Data &data);
   static void display_cpu_load (const MonitorControl_Types::Data &data);
   static void display_bytes_sent (const MonitorControl_Types::Data &data);
+  static void display_bytes_received (const MonitorControl_Types::Data &data);
+  static void display_packets_sent (const MonitorControl_Types::Data &data);
+  static void display_packets_received (const MonitorControl_Types::Data &data);
 };
 
 #include /**/ "ace/post.h"

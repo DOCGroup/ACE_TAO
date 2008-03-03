@@ -1,6 +1,6 @@
 // $Id$
 
-#include "MonitorControl/BytesSentMonitor.h"
+#include "MonitorControl/PacketsReceivedMonitor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -8,16 +8,16 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    BytesSentMonitor<true>::BytesSentMonitor (void)
-      : MonitorPoint<true> ("BytesSent")
+    PacketsReceivedMonitor<true>::PacketsReceivedMonitor (void)
+      : MonitorPoint<true> ("PacketsReceived")
 #if defined (ACE_WIN32)
       , WindowsMultiInstanceMonitor (
-          "\\Network Interface(*)\\Bytes Sent/sec")
+          "\\Network Interface(*)\\Packets Received/sec")
 #endif
     {}
 
     void
-    BytesSentMonitor<true>::update (void)
+    PacketsReceivedMonitor<true>::update (void)
     {
 #if defined (ACE_WIN32)
       this->win_update ();

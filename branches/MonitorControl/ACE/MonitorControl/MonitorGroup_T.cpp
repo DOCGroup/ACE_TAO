@@ -73,6 +73,14 @@ namespace ACE
 
     template<bool ENABLED>
     void
+    MonitorGroup<ENABLED>::control_action (
+      Control_Action* /* action */,
+      const char* /* command */)
+    {
+    }
+
+    template<bool ENABLED>
+    void
     MonitorGroup<ENABLED>::receive (double /* data */)
     {
     }
