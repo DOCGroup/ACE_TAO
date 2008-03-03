@@ -1,3 +1,11 @@
+Mon Mar  3 11:22:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Just single line comments
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Check VXWORKSLINK for 1
+
 Mon Mar  3 11:10:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
