@@ -1,3 +1,20 @@
+Mon Mar  3 00:43:17 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/TAO_Internal.h:
+        * tao/TAO_Internal.cpp:
+
+        Reversing the "naked" pointer replacement because it caused
+        unexpected reference counting issues with SG instances allocated
+        on the stack. Refined argv processing by clearly separating the
+        global service context initialization (for the default ORB) from
+        any subsequent ORB's service contextet. This fixes a problem with
+        examples/Simple/time-date which uses both -ORBSvcConf and
+        -ORBSvcConfDirective
+
 Fri Feb 29 02:34:39 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB.h:
@@ -10,11 +27,10 @@ Fri Feb 29 02:34:39 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         Removing the misplaced call to TAO::ORB::init_orb_globals(). Now
         that the latter has non-trivial functionality, calling it from an
-        ORB initializer is really wrong.
-        The rest of the prolog code in register_orb_initializer() is also
-        suspect, but I can't recall the specific use case that must have
-        required what is effectively a duplicate of
-        TAO::ORB::open_global_services()
+        ORB initializer is really wrong.  The rest of the prolog code in
+        register_orb_initializer() is also suspect, but I can't recall the
+        specific use case that must have required what is effectively a
+        duplicate of TAO::ORB::open_global_services()
 
         * tao/ORB_Core.h:
         * tao/ORB_Core.inl:
