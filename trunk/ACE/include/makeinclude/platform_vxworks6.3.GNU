@@ -232,6 +232,10 @@ else
 endif
 endif
 
+ifeq ($(footprint),1)
+  LD_PARTIALFLAGS += -Xlinker -M -Xlinker -Map -Xlinker $@.map
+endif
+
 ifeq ($(VXWORKSLINK), 1)
   # prevent possible clash with static LIB rules
   # in VxWorks make includes and rules.lib.GNU
