@@ -1,3 +1,8 @@
+Mon Mar  3 06:57:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ProcessVX.pm:
+          Added support to specify a custom password for the iBoot
+
 Sun Mar  2 20:04:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ProcessVX.pm:

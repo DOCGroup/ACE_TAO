@@ -38,7 +38,7 @@ sub delay_factor {
 
 sub iboot_cycle_power {
   my $self = shift;
-  
+
   my ($iboot_host,
       $iboot_outlet,
       $iboot_user,
@@ -48,14 +48,14 @@ sub iboot_cycle_power {
                          $ENV{'ACE_RUN_VX_IBOOT_PASSWORD'});
 
   my $v = $ENV{'ACE_TEST_VERBOSE'};
-    
+
   if ($v) {
     print "Using iBoot: $iboot_host\n";
     if (defined $iboot_outlet) {
       print "Using iBoot Outlet #: $iboot_outlet\n";
     }
   }
-  
+
   # There are three cases to handle here:
   # 1. using a single-outlet iBoot
   # 2. using a multi-outlet iBootBar with custom firmware
@@ -68,19 +68,19 @@ sub iboot_cycle_power {
   # of an outlet number, an iboot username, and an iboot password
   # in the environment.
   #
-  
+
   if (defined($iboot_outlet) && defined($iboot_user) && defined($iboot_passwd)) {
     # We perform case #3
-    
+
     my $t = new Net::Telnet();
 
     $t->prompt('/iBootBar \> /');
     my $savedmode = $t->errmode();
     $t->errmode("return");
-    
+
     my $retries = 5;
     my $is_open = 0;
-    
+
     while ($retries--) {
       my $r = $t->open($iboot_host);
       if ($r == 1) {
@@ -92,37 +92,40 @@ sub iboot_cycle_power {
       print "Couldn't open connection; sleeping then retrying\n" if ($v);
       sleep(5);
     }
-    
+
     if (! $is_open) {
       print "Unable to open $iboot_host.\n" if ($v);
       return 0;
     }
-    
+
     $t->errmode($savedmode);
-    
+
     # Simple login b/c Net::Telnet::login hardcodes the prompts
     $t->waitfor('/User Name:\s*$/i');
     $t->print($iboot_user);
     $t->waitfor('/password:\s*/i');
     $t->print($iboot_passwd);
-    
+
     $t->waitfor($t->prompt);
-    
+
     print "successfully logged in to $iboot_host\n" if ($v);
-    
+
     my $output = $t->cmd("set outlet $iboot_outlet cycle");
-    
+
     print "successfully cycled power on outlet $iboot_outlet\n" if ($v);
-    
+
     $t->close();
   }
   else {
     # Perform cases 1 & 2
     my $iboot;
     my $text;
-    
+    if (!defined($iboot_passwd)) {
+      $iboot_passwd = "PASS";
+    }
+
     my $ipal_command_series = (defined $iboot_outlet) ? ['E', 'D'] : ['f', 'n'];
-    
+
     foreach my $ipal_cmd (@$ipal_command_series) {
       $iboot = IO::Socket::INET->new ("$iboot_host");
       if  ($iboot) {
@@ -130,10 +133,10 @@ sub iboot_cycle_power {
         # the iBootBar, and we're using the iPAL Protocol
         # to communicate with the iBootBar
         if (defined $iboot_outlet) {
-          $iboot->send ("\ePASS\e".$iboot_outlet.$ipal_cmd);
+          $iboot->send ("\e".$iboot_passwd."\e".$iboot_outlet.$ipal_cmd);
         }
         else  {
-          $iboot->send ("\ePASS\e$ipal_cmd\r");
+          $iboot->send ("\e".$iboot_passwd."\e$ipal_cmd\r");
         }
         $iboot->recv ($text,128);
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
