@@ -44,13 +44,13 @@ namespace TAO
    */
   namespace ORB
   {
+
     /**
-     * Extract ACE Service Configurator arguments from the given
-     * argument vector, and initialize the _global_ configuration gestalt.
-     *
-     * @note This must be called just once per process (which init_orb_globals() does)
+     * If never done it before, extract ACE Service Configurator arguments from the given
+     * argument vector, and initialize the _global_ configuration gestalt. Return value 0 means OK,
+     * -1 spells major trouble ...
      */
-    int open_global_services (int& argc, ACE_TCHAR** argv);
+    int open_global_services (int argc, char** argv);
 
     /**
      * Extract ACE Service Configurator arguments from the given

@@ -26,6 +26,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/ARGV.h"
 #include "ace/Env_Value_T.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
@@ -196,11 +197,37 @@ private:
 
 
 
-
+// ****************************************************************
+/// Note that the argument vector will be corrupted upon return
 int
-TAO::ORB::open_global_services (int &argc,
-                                               ACE_TCHAR **argv)
+TAO::ORB::open_global_services (int argc,
+                                char **argv)
 {
+  // Count of the number of (times we did this for all) ORBs.
+  static int orb_init_count = 0;
+
+  {
+    // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
+    // from being called within a static object CTOR.
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                              guard,
+                              *ACE_Static_Object_Lock::instance (),
+                              -1));
+
+    // Make sure TAO's singleton manager is initialized.
+    // We need to initialize before TAO_default_environment() is called
+    // since that call instantiates a TAO_TSS_Singleton.
+    if (TAO_Singleton_Manager::instance ()->init () == -1)
+      return -1;
+
+    // Prevent multiple initializations.
+    if (++orb_init_count > 1)
+      return 0;
+
+  }
+
+  // Prevent any other thread from going through ORB initialization before the
+  // uber-gestalt is initialized.
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                             guard,
                             TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
@@ -228,19 +255,37 @@ TAO::ORB::open_global_services (int &argc,
   global_svc_config_argv.length (1);
   global_svc_config_argv[0] = argv0.c_str ();
 
-  if (parse_global_args_i (argc, argv, global_svc_config_argv, true) == -1)
+  // Will expand the environment variables, if any were used. Is this a good thing?
+  // I guess it provides greater flexibility for deployment, so let's leave it.
+  ACE_ARGV copyargv (argv);
+
+  // Adjust to proper TCHAR type
+  int tmpargc = argc;
+  ACE_Argv_Type_Converter cvtargv (tmpargc, copyargv.argv());
+
+  // Collect global SC parameters. True means "immediately
+  // apply global setting" like debug flag, etc.
+  if (parse_global_args_i (cvtargv.get_argc (),
+                           cvtargv.get_TCHAR_argv(),
+                           global_svc_config_argv,
+                           true) == -1)
     return -1;
 
-  if (parse_svcconf_args_i (argc, argv, global_svc_config_argv) == -1)
+  bool skip_service_config_open = false; // by default we shouldn't
+
+  if (parse_svcconf_args_i (cvtargv.get_argc (),
+                            cvtargv.get_TCHAR_argv(),
+                            global_svc_config_argv) == -1)
     return -1;
 
-  bool skip_service_config_open = false;
+  // Perform the open magic (unless SC::open() has been called already)
   int global_svc_config_argc = global_svc_config_argv.length ();
   int status = open_private_services_i (theone,
                                         global_svc_config_argc,
                                         global_svc_config_argv.get_buffer (),
                                         skip_service_config_open);
 
+  // okay?
   if (status == -1)
     {
       if (TAO_debug_level > 0)
@@ -262,6 +307,7 @@ TAO::ORB::open_global_services (int &argc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) Default ORB services initialization begins\n")));
 
+  // Load more ORB-related services
   register_additional_services_i (theone);
 
   if (TAO_debug_level > 4)
@@ -277,6 +323,7 @@ TAO::ORB::open_global_services (int &argc,
 
   return 0;
 }
+
 
 
 int
@@ -328,13 +375,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   // Be certain to copy the program name so that service configurator
   // has something to skip!
-  ACE_CString argv0 ("");
-
-  if (argc > 0 && argv != 0)
-    {
-      argv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
-    }
-
+  ACE_CString argv0 ((argc <= 0 || argv == 0) ? "" : ACE_TEXT_ALWAYS_CHAR (argv[0]));
   svc_config_argv.length (1);
   svc_config_argv[0] = argv0.c_str ();
 
@@ -359,7 +400,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   // Construct an argument vector specific to the process-wide
   // (global) Service Configurator instance.
   CORBA::StringSeq global_svc_config_argv;
-
+  // Parse any globally applicable arguments, but do not make them effective. We are effectively purging the command line from them without affecting the global state - after all, it may be a private (local) configuration context.
   int status =
         parse_global_args_i(argc, argv, global_svc_config_argv, false);
 
@@ -378,7 +419,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   if (parse_svcconf_args_i (argc, argv, svc_config_argv) == -1)
       return -1;
-
+  // Not a big deal to call open_private_services_i() again (if it was the global one). The SG::open() would not run if it has already been executed.
   // only open the private context if it is not also the global context
   if (pcfg != ACE_Service_Config::global())
     {
@@ -679,12 +720,12 @@ namespace
 
     while (arg_shifter.is_anything_left ())
       {
-        const ACE_TCHAR *current_arg =
-          arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"));
-
-        if (0 != current_arg)
+        // Can't interpret this argument.  Move on to the next argument.
+        if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBSvcConf")) == 0)
           {
-            // Specify the name of the svc.conf file to be used.
+            const ACE_TCHAR *current_arg =
+                        arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"));
+            arg_shifter.consume_arg ();
 
             // Proceeds only if the configuration file exists.
             FILE * const conf_file =
@@ -698,9 +739,8 @@ namespace
                 errno = EINVAL;
 
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("TAO (%P|%t) Service ")
-                                   ACE_TEXT ("Configurator ")
-                                   ACE_TEXT ("unable to open file %s\n"),
+                                   ACE_TEXT ("TAO (%P|%t) Unable to open file %s")
+                                   ACE_TEXT (", referenced by -ORBSvcConf option\n"),
                                    current_arg),
                                   -1);
               }
@@ -715,10 +755,7 @@ namespace
             svc_config_argv[len] = CORBA::string_dup ("-f");
             svc_config_argv[len + 1] =
               CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (current_arg));
-
-            arg_shifter.consume_arg ();
           }
-        // Can't interpret this argument.  Move on to the next argument.
         else
           {
             // Any arguments that don't match are ignored so that the

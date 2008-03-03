@@ -579,16 +579,6 @@ namespace CORBA
   };
 }  // End namespace CORBA
 
-namespace TAO
-{
-  namespace ORB
-  {
-    /// Initialize the ORB globals correctly, i.e., only when they
-    /// haven't been initialized yet. Return value 0 means OK,
-  /// -1 indicates major trouble ...
-    int init_orb_globals (int &argc, ACE_TCHAR **argv);
-  }
-}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
