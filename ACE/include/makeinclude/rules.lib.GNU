@@ -191,7 +191,7 @@ shr.o: $(VSHOBJS)
 .INTERMEDIATE: shr.o
 endif # aix_build
 
-ifeq ($(VXWORKSLINK),true)
+ifeq ($(VXWORKSLINK),1)
 $(VSHLIB): $(basename $(notdir $(PRJ_FILE))).out
 	-$(RM) $@
 	-$(LN_S)  $(PROJECT_OUT) $@
