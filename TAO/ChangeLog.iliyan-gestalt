@@ -1,3 +1,15 @@
+Mon Mar  3 05:53:49 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+        Adding a call to parse_private_args_i in open_global_services to
+        be able to process all args intended for the global config.
+
+        * tests/Bug_2735_Regression/server.cpp:
+
+        The argv must be 0-terminated to fulfill the contract with C's
+        argv.
+
 Mon Mar  3 00:43:17 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB.h:
