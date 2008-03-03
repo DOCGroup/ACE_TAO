@@ -866,12 +866,13 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
   // Were we called in the context of the current instance?
   ACE_ASSERT (this == param->config);
 
-  // Temporarily (for the duration of this call) make sure that *any* static
-  // service registrations will happen with this instance. Such registrations
-  // are possible as a side-effect of dynamically loading a DLL, which has
-  // other static services registered. Thus this instance will own both the
-  // DLL and those static services, which implies that their finalization
-  // will be performed in the correct order, i.e. prior to finalizing the DLL
+  // Temporarily (for the duration of this call) make sure that *any*
+  // static service registrations will happen with this instance. Such
+  // registrations are possible as a side-effect of dynamically
+  // loading a DLL, which has other static services registered. Thus
+  // this instance will own both the DLL and those static services,
+  // which implies that their finalization will be performed in the
+  // correct order, i.e. prior to finalizing the DLL
   ACE_Service_Config_Guard guard (this);
 
 #ifndef ACE_NLOGGING

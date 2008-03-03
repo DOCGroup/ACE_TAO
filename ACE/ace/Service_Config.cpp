@@ -42,7 +42,7 @@ typedef ACE_Unmanaged_Singleton<ACE_Service_Config,
 
 
 /// ctor
-ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt_Auto_Ptr psg)
+ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt* psg)
   : saved_ (ACE_Service_Config::current ())
 {
   if (ACE::debug ())
@@ -55,7 +55,7 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt_Auto_Ptr
                 psg->repo_));
 
   // Modify the TSS if the repo has changed
-  ACE_Service_Config::current (psg.get ());
+  ACE_Service_Config::current (psg);
 }
 
 ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
@@ -160,12 +160,12 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
 
   // Collect any argumets that were left
   for (int c = getopt.opt_ind (); c < argc; ++c)
-      superargv.add (argv[c-1], true);
+    superargv.add (argv[c-1], true);
 
-  bool unused_ignore_default_svc_conf = true;
+  bool ignore_default_svc_conf_file = false;
   return instance_->parse_args_i (superargv.argc (),
                                   superargv.argv (),
-                                  unused_ignore_default_svc_conf);
+                                  ignore_default_svc_conf_file);
 
 } /* parse_args_i () */
 

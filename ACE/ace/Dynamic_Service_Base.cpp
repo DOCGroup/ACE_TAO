@@ -60,7 +60,7 @@ ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
 
 // Get the instance using <name> for specific configuration repository.
 void *
-ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt_Auto_Ptr repo,
+ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
                                     const ACE_TCHAR *name,
                                     bool no_global)
 {
@@ -69,7 +69,7 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt_Auto_Ptr repo,
   void *obj = 0;
   const ACE_Service_Type_Impl *type = 0;
 
-  const ACE_Service_Gestalt* repo_found = repo.get ();
+  const ACE_Service_Gestalt* repo_found = repo;
   const ACE_Service_Type *svc_rec = find_i (repo_found, name, no_global);
   if (svc_rec != 0)
     {

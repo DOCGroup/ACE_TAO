@@ -1,3 +1,24 @@
+Mon Mar  3 00:25:37 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Dynamic_Service.h:
+        * ace/Dynamic_Service.cpp:
+        * ace/Dynamic_Service_Base.h:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+        Expanding the interface of process_directives() and parse_args_i()
+        with a parameter used to return information whether the standard
+        svc.conf file must be ignored, due to explicitely specified
+        configuration file. The open_i() method now passes this piece of
+        information to process_directives(). Reversing the "naked" pointer
+        replacement as it causes unexpected reference counting issues with
+        stack-allocated instances on SC.
+
 Fri Feb 29 03:07:36 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Dynamic_Service.h:
@@ -5,6 +26,7 @@ Fri Feb 29 03:07:36 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * ace/Dynamic_Service_Base.h:
         * ace/Dynamic_Service_Base.cpp:
         * ace/Service_Config.h:
+        * ace/Service_Config.inl:
         * ace/Service_Config.cpp:
 
         Replacing the "naked" ACE_Service_Gestalt* with the "smart"
