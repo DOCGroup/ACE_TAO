@@ -47,7 +47,6 @@ Thu Feb 28 19:16:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
           Colding <colding at 42tools dot com> for reporting that
           the previous code created a file that was world writable.
 
->>>>>>> .r80788
 Thu Feb 28 13:26:12 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/eval.cpp:
