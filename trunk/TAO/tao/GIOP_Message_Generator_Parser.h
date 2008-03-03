@@ -45,7 +45,7 @@ class TAO_ServerRequest;
  * which version do we need to use to send messages.
  */
 
-class TAO_Export TAO_GIOP_Message_Generator_Parser
+class TAO_GIOP_Message_Generator_Parser
 {
 public:
 
