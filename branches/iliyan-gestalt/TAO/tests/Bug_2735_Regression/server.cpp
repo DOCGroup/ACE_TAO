@@ -27,7 +27,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   while ((c = get_opts ()) != -1)
     switch (c)
-      {       
+      {
       case 'f':
         factory_strategy = FOO_STRATEGY;
         break;
@@ -40,12 +40,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "usage: %s "
                            "-f "
                            "-s "
-                           "\n", 
+                           "\n",
                            argv [0]),
                           -1);
       }
-  return 0;   
-}  
+  return 0;
+}
 
 
 int
@@ -57,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return -1;
 
       int targc = 3;
-      const char* targv[] = { "server", "-ORBSvcConfDirective", 0 };
+      const char* targv[] = { "server", "-ORBSvcConfDirective", 0, 0 }; // null-terminated!
       switch (factory_strategy)
         {
         case FOO_STRATEGY:

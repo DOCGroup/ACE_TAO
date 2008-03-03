@@ -120,162 +120,171 @@ namespace
                         CORBA::StringSeq & svc_config_argv,
                         bool & skip_service_config_open);
 
-  /**
-   * Initialize ORB-local (private) ACE Service Configurator
-   * repository.
-   *
-   * @return @c 0 if successful, @c -1 with @c errno set if failure.
-   *
-   */
-  int open_private_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg,
-                               int & argc,
-                               char ** argv,
-                               bool skip_service_config_open = false,
-                               bool ignore_default_svc_conf_file = false);
+    /**
+     * Initialize ORB-local (private) ACE Service Configurator
+     * repository.
+     *
+     * @return @c 0 if successful, @c -1 with @c errno set if failure.
+     *
+     */
+    int open_private_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg,
+                                 int & argc,
+                                 char ** argv,
+                                 bool skip_service_config_open = false,
+                                 bool ignore_default_svc_conf_file = false);
 
-  /**
-   * Number of times open_services() has been called.  Incremented by
-   * open_global_services_i(), and decremented by close_services().
-   *
-   * @note In/decrement operations are atomic.
-   */
-  long service_open_count = 0;
+    /**
+     * Number of times open_services() has been called.  Incremented by
+     * open_global_services_i(), and decremented by close_services().
+     *
+     * @note In/decrement operations are atomic.
+     */
+    long service_open_count = 0;
 
-  /**
-   * Part of a condition variable, which helps to ensure non-default
-   * ORBs can not proceed with their initialization, until the globaly
-   * required services have been instantiated by the default
-   * ORB. Usually, the first ORB to be created is designated the
-   * default ORB (reference the CORBA spec)
-   */
-  bool is_ubergestalt_ready = false;
+    /**
+     * Part of a condition variable, which helps to ensure non-default
+     * ORBs can not proceed with their initialization, until the globaly
+     * required services have been instantiated by the default
+     * ORB. Usually, the first ORB to be created is designated the
+     * default ORB (reference the CORBA spec)
+     */
+    bool is_ubergestalt_ready = false;
 
-  char const * resource_factory_args =
-    TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
-  char const * server_strategy_factory_args =
-    TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS;
-  char const * client_strategy_factory_args =
-    TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
+    char const * resource_factory_args =
+      TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
+    char const * server_strategy_factory_args =
+      TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS;
+    char const * client_strategy_factory_args =
+      TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
 
-#if (TAO_NEGOTIATE_CODESETS == 1)
-  bool negotiate_codesets = true;
-#else
-  bool negotiate_codesets = false;
-#endif /* TAO_NEGOTIATE_CODESETS */
-} // anonymous namespace
+  #if (TAO_NEGOTIATE_CODESETS == 1)
+    bool negotiate_codesets = true;
+  #else
+    bool negotiate_codesets = false;
+  #endif /* TAO_NEGOTIATE_CODESETS */
+  } // anonymous namespace
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+  TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_THREADS)
-/// A little helper class to get around the TAO_Singleton::instance ()
-/// inability to pass default initialization arguments to the
-/// singleton ctor.
+  #if defined (ACE_HAS_THREADS)
+  /// A little helper class to get around the TAO_Singleton::instance ()
+  /// inability to pass default initialization arguments to the
+  /// singleton ctor.
 
-class TAO_Ubergestalt_Ready_Condition
-  : public ACE_SYNCH_RECURSIVE_CONDITION
-{
-public:
-  static TAO_Ubergestalt_Ready_Condition* instance (void)
+  class TAO_Ubergestalt_Ready_Condition
+    : public ACE_SYNCH_RECURSIVE_CONDITION
   {
-    return TAO_Singleton <TAO_Ubergestalt_Ready_Condition,
-      TAO_SYNCH_RECURSIVE_MUTEX>::instance ();
-  }
-
-  TAO_Ubergestalt_Ready_Condition (void)
-    : ACE_SYNCH_RECURSIVE_CONDITION (mutex_)
-  {
-  }
-
-private:
-  /// The mutex, associated with the condition. Do not use the ACE
-  /// global mutex, because it causes deadlocks with other threads that
-  /// may be in DLL_Manager::open()
-  ACE_Recursive_Thread_Mutex mutex_;
-};
-#endif // ACE_HAS_THREADS
-
-
-
-
-// ****************************************************************
-/// Note that the argument vector will be corrupted upon return
-int
-TAO::ORB::open_global_services (int argc,
-                                char **argv)
-{
-  // Count of the number of (times we did this for all) ORBs.
-  static int orb_init_count = 0;
-
-  {
-    // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
-    // from being called within a static object CTOR.
-    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                              guard,
-                              *ACE_Static_Object_Lock::instance (),
-                              -1));
-
-    // Make sure TAO's singleton manager is initialized.
-    // We need to initialize before TAO_default_environment() is called
-    // since that call instantiates a TAO_TSS_Singleton.
-    if (TAO_Singleton_Manager::instance ()->init () == -1)
-      return -1;
-
-    // Prevent multiple initializations.
-    if (++orb_init_count > 1)
-      return 0;
-
-  }
-
-  // Prevent any other thread from going through ORB initialization before the
-  // uber-gestalt is initialized.
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                            guard,
-                            TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
-                            -1));
-
-  if (TAO_debug_level > 2)
+  public:
+    static TAO_Ubergestalt_Ready_Condition* instance (void)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Initializing the ")
-                  ACE_TEXT ("process-wide service context\n")));
+      return TAO_Singleton <TAO_Ubergestalt_Ready_Condition,
+        TAO_SYNCH_RECURSIVE_MUTEX>::instance ();
     }
 
-  ACE_Service_Gestalt* theone = ACE_Service_Config::global ();
-  ACE_Service_Config_Guard auto_config_guard (theone);
+    TAO_Ubergestalt_Ready_Condition (void)
+      : ACE_SYNCH_RECURSIVE_CONDITION (mutex_)
+    {
+    }
 
-  register_global_services_i (theone);
+  private:
+    /// The mutex, associated with the condition. Do not use the ACE
+    /// global mutex, because it causes deadlocks with other threads that
+    /// may be in DLL_Manager::open()
+    ACE_Recursive_Thread_Mutex mutex_;
+  };
+  #endif // ACE_HAS_THREADS
 
-  // Be certain to copy the program name so that service configurator
-  // has something to skip!
-  ACE_CString argv0 ((argc <= 0 || argv == 0) ? "" : ACE_TEXT_ALWAYS_CHAR (argv[0]));
 
-  // Construct an argument vector specific to the process-wide
-  // (global) Service Configurator instance.
-  CORBA::StringSeq global_svc_config_argv;
-  global_svc_config_argv.length (1);
-  global_svc_config_argv[0] = argv0.c_str ();
 
-  // Will expand the environment variables, if any were used. Is this a good thing?
-  // I guess it provides greater flexibility for deployment, so let's leave it.
-  ACE_ARGV copyargv (argv);
 
-  // Adjust to proper TCHAR type
-  int tmpargc = argc;
-  ACE_Argv_Type_Converter cvtargv (tmpargc, copyargv.argv());
+  // ****************************************************************
+  /// Note that the argument vector will be corrupted upon return
+  int
+  TAO::ORB::open_global_services (int argc,
+                                  char **argv)
+  {
+    // Count of the number of (times we did this for all) ORBs.
+    static int orb_init_count = 0;
 
-  // Collect global SC parameters. True means "immediately
-  // apply global setting" like debug flag, etc.
-  if (parse_global_args_i (cvtargv.get_argc (),
-                           cvtargv.get_TCHAR_argv(),
-                           global_svc_config_argv,
-                           true) == -1)
-    return -1;
+    {
+      // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
+      // from being called within a static object CTOR.
+      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                                guard,
+                                *ACE_Static_Object_Lock::instance (),
+                                -1));
 
-  bool skip_service_config_open = false; // by default we shouldn't
+      // Make sure TAO's singleton manager is initialized.
+      // We need to initialize before TAO_default_environment() is called
+      // since that call instantiates a TAO_TSS_Singleton.
+      if (TAO_Singleton_Manager::instance ()->init () == -1)
+        return -1;
 
-  if (parse_svcconf_args_i (cvtargv.get_argc (),
-                            cvtargv.get_TCHAR_argv(),
-                            global_svc_config_argv) == -1)
+      // Prevent multiple initializations.
+      if (++orb_init_count > 1)
+        return 0;
+
+    }
+
+    // Prevent any other thread from going through ORB initialization before the
+    // uber-gestalt is initialized.
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                              guard,
+                              TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
+                              -1));
+
+    if (TAO_debug_level > 2)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) Initializing the ")
+                    ACE_TEXT ("process-wide service context\n")));
+      }
+
+    ACE_Service_Gestalt* theone = ACE_Service_Config::global ();
+    ACE_Service_Config_Guard auto_config_guard (theone);
+
+    register_global_services_i (theone);
+
+    // Be certain to copy the program name so that service configurator
+    // has something to skip!
+    ACE_CString argv0 ((argc <= 0 || argv == 0) ? "" : ACE_TEXT_ALWAYS_CHAR (argv[0]));
+
+    // Construct an argument vector specific to the process-wide
+    // (global) Service Configurator instance.
+    CORBA::StringSeq global_svc_config_argv;
+    global_svc_config_argv.length (1);
+    global_svc_config_argv[0] = argv0.c_str ();
+
+    // Will expand the environment variables, if any were used. Is this a good thing?
+    // I guess it provides greater flexibility for deployment, so let's leave it.
+    ACE_ARGV copyargv (argv);
+
+    // Adjust to proper TCHAR type
+    int tmpargc = argc;
+    ACE_Argv_Type_Converter cvtargv (tmpargc, copyargv.argv());
+
+    tmpargc = cvtargv.get_argc ();
+    ACE_TCHAR **tmpargv = cvtargv.get_TCHAR_argv ();
+
+    // Collect global SC parameters. True means "immediately
+    // apply global setting" like debug flag, etc.
+    if (parse_global_args_i (tmpargc,
+                             tmpargv,
+                             global_svc_config_argv,
+                             true) == -1)
+      return -1;
+
+    bool skip_service_config_open = false; // by default we shouldn't
+
+    if (parse_svcconf_args_i (tmpargc,
+                              tmpargv,
+                              global_svc_config_argv) == -1)
+      return -1;
+
+  if (parse_private_args_i (tmpargc,
+                            tmpargv,
+                            global_svc_config_argv,
+                            skip_service_config_open) == -1)
     return -1;
 
   // Perform the open magic (unless SC::open() has been called already)
