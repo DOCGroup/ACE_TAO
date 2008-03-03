@@ -256,8 +256,9 @@ namespace
     global_svc_config_argv[0] = argv0.c_str ();
 
     // Will expand the environment variables, if any were used. Is this a good thing?
-    // I guess it provides greater flexibility for deployment, so let's leave it.
-    ACE_ARGV copyargv (argv);
+    // I guess it provides greater flexibility for deployment, so let's leave it. Will
+    // also quote arguments.
+    ACE_ARGV copyargv (argv, true, true);
 
     // Adjust to proper TCHAR type
     int tmpargc = argc;
