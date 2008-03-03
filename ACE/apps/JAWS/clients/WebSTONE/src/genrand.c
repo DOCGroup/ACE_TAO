@@ -11,6 +11,8 @@
  **************************************************************************/
 
 /* FUZZ: disable check_for_math_include */
+/* FUZZ: disable check_for_improper_main_declaration */
+
 #include <stdio.h>
 #include <fcntl.h>
 #include <math.h>

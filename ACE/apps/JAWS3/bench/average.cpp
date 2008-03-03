@@ -2,7 +2,7 @@
 #include "ace/OS.h"
 
 int
-main (void)
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   double sum = 0;
   double count = 0;

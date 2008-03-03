@@ -6,7 +6,8 @@
 //
 // This is a link-time test to detect any problems with inline functions
 // (notably missing inline specifier).
-//
+
+/* FUZZ: disable check_for_improper_main_declaration */
 
 #include "Utility/ExH/ExH.hpp"
 
