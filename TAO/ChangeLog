@@ -1,3 +1,12 @@
+Mon Mar  3 14:52:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/GIOP_Message_Generator_Parser_10.h:
+        * tao/GIOP_Message_Generator_Parser_11.h:
+        * tao/GIOP_Message_Generator_Parser_12.h:
+        * tao/GIOP_Message_Generator_Parser_Impl.h:
+          No need to export these classes from the TAO library
+
 Sat Mar  1 19:14:30 UTC 2008  William Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/mcpp.mpb:
@@ -6,16 +15,16 @@ Sat Mar  1 19:14:30 UTC 2008  William Otte  <wotte@dre.vanderbilt.edu>
         * TAO_IDL/contrib/mcpp/main.cpp:
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
         * TAO_IDL/preproc.mpb:
-        
+
           Fuzz fixes.
-        
+
 Fri Feb 29 16:24:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
-        
+
           Fixed signed/unsigned mismatch warning on Debian, introduced
           by changes in
-          
+
           Thu Feb 28 19:16:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Feb 28 10:54:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>

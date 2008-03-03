@@ -38,7 +38,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  versions in the higher versions.
  */
 
-class TAO_Export TAO_GIOP_Message_Generator_Parser_Impl
+class TAO_GIOP_Message_Generator_Parser_Impl
 {
 public:
 
