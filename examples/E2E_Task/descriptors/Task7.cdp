@@ -53,7 +53,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>4491</long>
+          <long>449</long>
         </value>
       </value>
     </configProperty>
@@ -82,7 +82,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>642</long>
+          <long>64</long>
         </value>
       </value>
     </configProperty>
@@ -133,7 +133,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>1925</long>
+          <long>193</long>
         </value>
       </value>
     </configProperty>
@@ -173,7 +173,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>1400000</long>
+          <long>140000</long>
         </value>
       </value>
     </configProperty>
@@ -195,7 +195,7 @@
           <kind>tk_double</kind>
         </type>
         <value>
-          <double>1.08</double>
+          <double>1</double>
         </value>
       </value>
     </configProperty>
@@ -347,7 +347,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>1</double>
+        <double>10</double>
       </value>
     </value>
   </infoProperty>
@@ -358,7 +358,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>0.714</double>
+        <double>7.14</double>
       </value>
     </value>
   </infoProperty>
@@ -369,7 +369,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>0.667</double>
+        <double>6.67</double>
       </value>
     </value>
   </infoProperty>

@@ -65,7 +65,8 @@ project(Subtask_exec) : ciao_component_dnc {
   sharedname = Subtask_exec
   libs += Subtask_stub \
           Event_Types_stub
-  includes += ../Base
+  includes += ../Base\
+              ../utils
 
   dynamicflags   = SUBTASK_EXEC_BUILD_DLL
 
@@ -75,12 +76,14 @@ project(Subtask_exec) : ciao_component_dnc {
   Source_Files {
     SubtaskEC.cpp
     Subtask_exec.cpp
+    ../utils/RT.cpp
   }
 
   Header_Files {
     SubtaskEC.h
     Subtask_exec.h
     Subtask_exec_export.h
+    ../utils/RT.h
   }
 
   Inline_Files {

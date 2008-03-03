@@ -1,5 +1,6 @@
 #include "Subtask_exec.h"
 #include "ciao/CIAO_common.h"
+#include "RT.h"
 
 namespace CIAO
 {
@@ -11,6 +12,9 @@ namespace CIAO
         :iterations_ (1000),
          ID_ (::CORBA::string_dup ("CIAO::RACE::Subtaks"))
       {
+        // Ser RT priority.
+        set_priority ();
+
       }
 
       Subtask_exec_i::~Subtask_exec_i (void)
@@ -51,16 +55,16 @@ namespace CIAO
       void
       Subtask_exec_i::push_test_in (
         ::CIAO::RACE::Test *ev )
-      {        
+      {
         size_t load = static_cast <size_t> (this->iterations_ * ev->load ());
 
         for (size_t i = 0; i < load; ++i)
           {
             ACE::is_prime (16127, 2, 16127 / 2);
           }
-        ACE_DEBUG ((LM_DEBUG, "%s::%s: Data processing complete.\n",
-                    ev->task_ID (),
-                    this->ID_.in ()));     
+//         ACE_DEBUG ((LM_DEBUG, "%s::%s: Data processing complete.\n",
+//                     ev->task_ID (),
+//                     this->ID_.in ()));
         this->context_->push_test_out (ev);
       }
 

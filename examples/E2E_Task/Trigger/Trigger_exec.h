@@ -14,6 +14,7 @@
 #include "ace/Task.h"
 #include "ace/Mutex.h"
 #include "ace/High_Res_Timer.h"
+#include "Metrics.h"
 
 namespace CIAO
 {
@@ -21,6 +22,9 @@ namespace CIAO
   {
     namespace CIDL_Trigger
     {
+      // Forward decleration.
+      class PerfMon;
+
       class TRIGGER_EXEC_Export Trigger_exec_i
         : public virtual Trigger_Exec,
           public virtual TAO_Local_RefCounted_Object,
@@ -47,6 +51,8 @@ namespace CIAO
         virtual void task_ID (const char *task_ID);
 
         virtual ::CORBA::Boolean set_rate (::CORBA::Double rate);
+
+        virtual Performance metrics ();
 
         virtual void
         set_session_context (::Components::SessionContext_ptr ctx);
@@ -85,6 +91,32 @@ namespace CIAO
         // Mutex for the period_ variable.
         ACE_Mutex mutex_;
 
+        // Performance metrics.
+        Performance metrics_;
+
+        // Performance monitor.
+        PerfMon *monitor_;
+
+      };
+
+      // This class periodically outputs performance metrics.
+      class PerfMon : public virtual ACE_Task_Base
+      {
+      public:
+
+        PerfMon (Trigger_exec_i &trigger,
+                 ACE_hrtime_t period);
+
+        virtual ~PerfMon ();
+
+        int svc ();
+
+      private:
+
+        Trigger_exec_i &trigger_;
+
+        // Monitor period specified in usecs.
+        ACE_hrtime_t period_;
 
       };
 

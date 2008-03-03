@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project SYSTEM "mga.dtd">
 
-<project guid="{E78E5F5F-FA50-4B7D-A7FD-D8E447990D53}" cdate="Tue Feb 26 12:23:42 2008" mdate="Tue Feb 26 12:23:42 2008" version="" metaguid="{525FE668-6953-4C7B-B381-780F8B2C3343}" metaversion="" metaname="PICML">
+<project guid="{71F5724F-FE77-407D-9D33-EE2882C0B15F}" cdate="Tue Feb 26 12:23:42 2008" mdate="Tue Feb 26 12:23:42 2008" version="" metaguid="{525FE668-6953-4C7B-B381-780F8B2C3343}" metaversion="" metaname="PICML">
 	<name>PICML_default_xme_file</name>
 	<comment></comment>
 	<author></author>
@@ -1069,7 +1069,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>450000</value>
+							<value>45000</value>
 						</attribute>
 						<reference id="id-0067-00000025" kind="DataType" role="DataType" guid="{5A10ABB7-BB94-4a75-816D-C4C3BDCF71DC}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -1150,7 +1150,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>619</value>
+							<value>62</value>
 						</attribute>
 						<reference id="id-0067-00000028" kind="DataType" role="DataType" guid="{A01FD14C-7A16-4768-BF58-67166337E2FF}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -1528,7 +1528,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>206</value>
+							<value>21</value>
 						</attribute>
 						<reference id="id-0067-00000040" kind="DataType" role="DataType" guid="{B10D1787-09E2-4f0c-9903-009D73566533}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -1974,7 +1974,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>950000</value>
+							<value>95000</value>
 						</attribute>
 						<reference id="id-0067-0000005c" kind="DataType" role="DataType" guid="{9958BC64-333A-4865-81C0-A3300C386CCA}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -2028,7 +2028,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>1742</value>
+							<value>174</value>
 						</attribute>
 						<reference id="id-0067-0000005e" kind="DataType" role="DataType" guid="{29B25D85-97A2-4cb3-93AA-7F143058E91B}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -2289,7 +2289,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>435</value>
+							<value>44</value>
 						</attribute>
 						<reference id="id-0067-0000006e" kind="DataType" role="DataType" guid="{C55785EB-BD27-486c-884E-8EBD8DBAC4B1}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -2316,7 +2316,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>1306</value>
+							<value>131</value>
 						</attribute>
 						<reference id="id-0067-0000006f" kind="DataType" role="DataType" guid="{79E4D6C7-BC2E-4e38-801B-92BFCA70302E}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -2513,7 +2513,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>1833</value>
+							<value>183</value>
 						</attribute>
 						<reference id="id-0067-000000a1" kind="DataType" role="DataType" guid="{F36703CB-01F3-4152-B82D-7263450372F2}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -2594,7 +2594,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>1000000</value>
+							<value>100000</value>
 						</attribute>
 						<reference id="id-0067-000000a4" kind="DataType" role="DataType" guid="{6A140058-2FA3-40d8-B573-D62CA3A256AC}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -3146,7 +3146,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>917</value>
+							<value>91</value>
 						</attribute>
 						<reference id="id-0067-000000bc" kind="DataType" role="DataType" guid="{5CFB028E-40E0-4b60-9AC0-99EC6AD7511D}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -3173,7 +3173,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>1375</value>
+							<value>137</value>
 						</attribute>
 						<reference id="id-0067-000000bd" kind="DataType" role="DataType" guid="{92709EA9-CA14-427a-9154-CBB378E5AC62}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -3200,7 +3200,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>458</value>
+							<value>46</value>
 						</attribute>
 						<reference id="id-0067-000000be" kind="DataType" role="DataType" guid="{2614203F-EBFE-4616-BE90-97347E8201F5}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -3634,7 +3634,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>779</value>
+							<value>78</value>
 						</attribute>
 						<reference id="id-0067-000000db" kind="DataType" role="DataType" guid="{C2FA4A68-1557-49f1-A2A9-D90C8240D5E6}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -3661,7 +3661,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>850000</value>
+							<value>85000</value>
 						</attribute>
 						<reference id="id-0067-000000dd" kind="DataType" role="DataType" guid="{6E5BBB14-B355-4f78-8220-F1EAB8F0753E}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -3688,7 +3688,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>2337</value>
+							<value>234</value>
 						</attribute>
 						<reference id="id-0067-000000de" kind="DataType" role="DataType" guid="{CA7FFCF8-D4D3-4797-A401-8F2787E74F4C}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -4098,7 +4098,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>962</value>
+							<value>96</value>
 						</attribute>
 						<reference id="id-0067-0000010a" kind="DataType" role="DataType" guid="{BDAB73DE-9902-4fff-ACA8-C382219BBF84}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -4233,7 +4233,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>1050000</value>
+							<value>105000</value>
 						</attribute>
 						<reference id="id-0067-00000111" kind="DataType" role="DataType" guid="{97DD0316-D5BC-4ce0-A05E-33C07F61C9B8}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -4260,7 +4260,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>1444</value>
+							<value>144</value>
 						</attribute>
 						<reference id="id-0067-00000112" kind="DataType" role="DataType" guid="{9C11DA74-49AF-42f8-9647-B9A33D9BB5E1}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -4785,7 +4785,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>481</value>
+							<value>48</value>
 						</attribute>
 						<reference id="id-0067-0000012d" kind="DataType" role="DataType" guid="{C69F9758-F5AD-4b87-ACF4-3D9A5BFECD0C}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -4973,7 +4973,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>344</value>
+							<value>34</value>
 						</attribute>
 						<reference id="id-0067-0000013e" kind="DataType" role="DataType" guid="{A7908AF0-B3C2-470e-9EBD-A58D0377A3E4}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -5108,7 +5108,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>687</value>
+							<value>69</value>
 						</attribute>
 						<reference id="id-0067-00000143" kind="DataType" role="DataType" guid="{4A6001EC-D92C-41fa-9A52-D9328F1D99E6}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -5135,7 +5135,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>750000</value>
+							<value>75000</value>
 						</attribute>
 						<reference id="id-0067-00000145" kind="DataType" role="DataType" guid="{0CC9DEA0-1E3E-4213-81CE-362718085FFA}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -5162,7 +5162,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>1719</value>
+							<value>172</value>
 						</attribute>
 						<reference id="id-0067-00000146" kind="DataType" role="DataType" guid="{E097603D-86F0-4cf2-98D1-D91B20E4AF0E}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -5848,7 +5848,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>642</value>
+							<value>64</value>
 						</attribute>
 						<reference id="id-0067-00000172" kind="DataType" role="DataType" guid="{08A89C20-F92A-4fc8-A93C-B5959B5165D3}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -5983,7 +5983,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>1925</value>
+							<value>193</value>
 						</attribute>
 						<reference id="id-0067-00000177" kind="DataType" role="DataType" guid="{FB237202-D484-4fdf-A35C-49FECE195E9D}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -6010,7 +6010,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>1400000</value>
+							<value>140000</value>
 						</attribute>
 						<reference id="id-0067-00000179" kind="DataType" role="DataType" guid="{B4DECB05-5A8A-495f-85D3-CC59069F8558}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -6037,7 +6037,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>4491</value>
+							<value>449</value>
 						</attribute>
 						<reference id="id-0067-0000017a" kind="DataType" role="DataType" guid="{C0B80F2A-7012-41cc-B75A-57738004D811}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -6810,7 +6810,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>412</value>
+							<value>41</value>
 						</attribute>
 						<reference id="id-0067-000001af" kind="DataType" role="DataType" guid="{D80CD849-2C63-432b-B57F-559E708F3872}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -6837,7 +6837,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>2475</value>
+							<value>246</value>
 						</attribute>
 						<reference id="id-0067-000001b0" kind="DataType" role="DataType" guid="{9D534419-E6A7-44fe-8DE7-80A89B260587}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -6864,7 +6864,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>900000</value>
+							<value>90000</value>
 						</attribute>
 						<reference id="id-0067-000001b1" kind="DataType" role="DataType" guid="{406D6993-767E-4675-B076-031C3EB17688}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -7553,7 +7553,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>2.23</value>
+						<value>22.3</value>
 					</attribute>
 					<reference id="id-0067-0000002d" kind="DataType" role="DataType" guid="{B7676BD3-D9ED-442b-BEE8-D2938B4E0A9E}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -7580,7 +7580,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>2</value>
+						<value>20</value>
 					</attribute>
 					<reference id="id-0067-0000002e" kind="DataType" role="DataType" guid="{D5104136-2C3A-49f2-8F67-F0FAAC843514}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -7607,7 +7607,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>5</value>
+						<value>50</value>
 					</attribute>
 					<reference id="id-0067-0000002f" kind="DataType" role="DataType" guid="{9EDC00C1-D607-4c8b-BF25-49CDF60542D6}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -7885,7 +7885,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.053</value>
+						<value>10.53</value>
 					</attribute>
 					<reference id="id-0067-00000092" kind="DataType" role="DataType" guid="{4A0D267A-D126-45b9-9A50-9B678EAD4B2D}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -7912,7 +7912,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.334</value>
+						<value>13.34</value>
 					</attribute>
 					<reference id="id-0067-00000096" kind="DataType" role="DataType" guid="{2E7BC137-C155-45a8-8E75-CB28EC02B51A}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -7939,7 +7939,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1</value>
+						<value>10</value>
 					</attribute>
 					<reference id="id-0067-00000098" kind="DataType" role="DataType" guid="{32092A73-DCCD-4676-BDA5-FA761AF2E268}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -8495,7 +8495,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1</value>
+						<value>10</value>
 					</attribute>
 					<reference id="id-0067-000000c5" kind="DataType" role="DataType" guid="{4790D4B8-7EFB-4952-B811-E15D5D85E01C}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -8522,7 +8522,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.25</value>
+						<value>12.5</value>
 					</attribute>
 					<reference id="id-0067-000000c9" kind="DataType" role="DataType" guid="{9161F463-52B1-4b27-BE5C-2AA1536F5259}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -8549,7 +8549,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>0.84</value>
+						<value>8.4</value>
 					</attribute>
 					<reference id="id-0067-000000cb" kind="DataType" role="DataType" guid="{CE6202EC-18B7-4a29-AD2B-BFFFFB611836}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -8812,7 +8812,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.334</value>
+						<value>13.34</value>
 					</attribute>
 					<reference id="id-0067-000000ff" kind="DataType" role="DataType" guid="{6F4F6E37-7F6C-450b-8344-628B26040A96}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -8839,7 +8839,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.175</value>
+						<value>11.75</value>
 					</attribute>
 					<reference id="id-0067-00000105" kind="DataType" role="DataType" guid="{9EABA0C1-AE6C-4cf4-AA7C-CB48BD9010C8}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -8866,7 +8866,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.175</value>
+						<value>11.75</value>
 					</attribute>
 					<reference id="id-0067-00000106" kind="DataType" role="DataType" guid="{04CFADCB-25A8-4824-8E6B-51E21D2B4C6E}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9029,7 +9029,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.112</value>
+						<value>11.12</value>
 					</attribute>
 					<reference id="id-0067-00000133" kind="DataType" role="DataType" guid="{C5E89954-EAC6-4d2c-BABC-DCA9679E466B}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9056,7 +9056,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>0.952</value>
+						<value>9.52</value>
 					</attribute>
 					<reference id="id-0067-00000139" kind="DataType" role="DataType" guid="{BF716E1F-3D31-40fe-810B-04E3672DF8FF}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9083,7 +9083,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>0.909</value>
+						<value>9.09</value>
 					</attribute>
 					<reference id="id-0067-0000013a" kind="DataType" role="DataType" guid="{FD53C051-A45D-49f7-A749-32360D2C7F5E}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9334,7 +9334,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>2</value>
+						<value>20</value>
 					</attribute>
 					<reference id="id-0067-00000167" kind="DataType" role="DataType" guid="{DCE72101-4444-4f6e-8E2D-A71DB8196B00}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9361,7 +9361,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.334</value>
+						<value>13.34</value>
 					</attribute>
 					<reference id="id-0067-0000016d" kind="DataType" role="DataType" guid="{62FD927D-1F73-40dc-B929-EBF9139B2FDA}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9388,7 +9388,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.25</value>
+						<value>12.5</value>
 					</attribute>
 					<reference id="id-0067-0000016e" kind="DataType" role="DataType" guid="{02D40B16-BBE3-4d0f-BAAF-17B42F589566}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9607,7 +9607,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1</value>
+						<value>10</value>
 					</attribute>
 					<reference id="id-0067-0000019b" kind="DataType" role="DataType" guid="{8E365966-2276-4359-BBA6-7053A7881D94}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9634,7 +9634,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>0.714</value>
+						<value>7.14</value>
 					</attribute>
 					<reference id="id-0067-000001a1" kind="DataType" role="DataType" guid="{F59FF529-21DC-4f21-B456-7CC23C2BAA03}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9661,7 +9661,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>0.667</value>
+						<value>6.67</value>
 					</attribute>
 					<reference id="id-0067-000001a2" kind="DataType" role="DataType" guid="{E78DC337-57CD-4fe4-9CD8-4CDC9E20DBE5}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9868,7 +9868,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.667</value>
+						<value>16.67</value>
 					</attribute>
 					<reference id="id-0067-000001be" kind="DataType" role="DataType" guid="{6D9E6B36-2C35-4703-8F2F-1962AE095D5A}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9895,7 +9895,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1.112</value>
+						<value>11.12</value>
 					</attribute>
 					<reference id="id-0067-000001c4" kind="DataType" role="DataType" guid="{6ABACCA0-4484-4cb4-B25D-9E1FAAA3CA39}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>
@@ -9922,7 +9922,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="DataValue">
-						<value>1</value>
+						<value>10</value>
 					</attribute>
 					<reference id="id-0067-000001c5" kind="DataType" role="DataType" guid="{71BAB441-12E4-4443-9395-A3490CBD7C58}" relid="0x1" referred="id-0066-00000006">
 						<name>DataType</name>

@@ -1,3 +1,39 @@
+Mon Mar  3 16:01:41 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Tester/Interactive_IA_Tester.cpp:
+
+        Made cosmetic mods.
+
+        * examples/E2E_Task/Model/E2E_Tasks.xme:
+
+        Updated the model.
+
+        * examples/E2E_Task/Subtask/Subtask.mpc:
+        * examples/E2E_Task/Subtask/Subtask_exec.cpp:
+
+        Updated debug statements in these files.
+
+        * examples/E2E_Task/Trigger/Trigger.mpc:
+        * examples/E2E_Task/Trigger/Trigger_exec.h:
+        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
+        * examples/E2E_Task/Trigger/Metrics.h:
+
+        Added the monitor to measure the deadline throughput and miss
+        ratio.
+
+        * examples/E2E_Task/descriptors/Domain.cdd:
+        * examples/E2E_Task/descriptors/Task1.cdp:
+        * examples/E2E_Task/descriptors/Task2.cdp:
+        * examples/E2E_Task/descriptors/Task3.cdp:
+        * examples/E2E_Task/descriptors/Task4.cdp:
+        * examples/E2E_Task/descriptors/Task5.cdp:
+        * examples/E2E_Task/descriptors/Task6.cdp:
+        * examples/E2E_Task/descriptors/Task7.cdp:
+        * examples/E2E_Task/descriptors/Task8.cdp:
+        * examples/E2E_Task/descriptors/run_all.pl:
+
+        Updated these files.
+
 Thu Feb 28 20:05:06 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * examples/E2E_Task/Workload:

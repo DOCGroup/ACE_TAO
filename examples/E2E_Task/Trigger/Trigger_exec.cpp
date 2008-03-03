@@ -2,6 +2,7 @@
 #include "ciao/CIAO_common.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"
+#include "RT.h"
 
 namespace CIAO
 {
@@ -13,12 +14,17 @@ namespace CIAO
         : period_ (1000),
           load_ (1.0),
           ID_ (::CORBA::string_dup ("CIAO::RACE::Task")),
-          active_ (false)
+          active_ (false),
+          monitor_ (new PerfMon (*this, 1000000))
       {
+        // Set RT priorities for the process.
+        set_priority ();
+
       }
 
       Trigger_exec_i::~Trigger_exec_i (void)
       {
+        delete this->monitor_;
       }
 
 
@@ -27,8 +33,8 @@ namespace CIAO
       {
         while (this->active_)
           {
-            ACE_DEBUG ((LM_DEBUG, "\n%s::Trigger: Pushing test event\n",
-                        this->ID_.in ()));
+//             ACE_DEBUG ((LM_DEBUG, "\n%s::Trigger: Pushing test event\n",
+//                         this->ID_.in ()));
 
             Test_var ev = new OBV_CIAO::RACE::Test;
             ev->load (this->load_);
@@ -46,7 +52,6 @@ namespace CIAO
                 return -1;
               }
 
-
             // Measure the time taken to execute the invocation.
             this->timer_.elapsed_microseconds (this->elapsed_time_);
 
@@ -62,17 +67,29 @@ namespace CIAO
                         period / 1000,
                         this->elapsed_time_ / 1000));
 
+            // Now update the performance metrics.
+            this->metrics_.total_count_++;
+
             // Both period and elapsed_time_ are in to usec.
-            if (period  > this->elapsed_time_)
+            if (period  >= this->elapsed_time_)
               {
                 // Sleep for the remaining time period.
-                interval.set (0, period - this->elapsed_time_ );
+                interval.set (0,
+                              static_cast <suseconds_t>
+                              (period - this->elapsed_time_));
 
+              }
+            else
+              {
+                // If the elapsed time is grater than the period, then this
+                // taks has missed its deadline.
+                this->metrics_.miss_count_++;
               }
             //            ACE_DEBUG ((LM_DEBUG, "Sleeping for %f seconds.\n",
             //                        interval.msec () /1000.0));
             ACE_OS::sleep (interval);
           }
+        return 0;
       }
 
       ::CORBA::Boolean
@@ -86,7 +103,17 @@ namespace CIAO
         return true;
       }
 
+      Performance
+      Trigger_exec_i::metrics ()
+      {
+        Performance metrics = this->metrics_;
+        // Reset the current metrics.
+        this->metrics_.miss_count_ = 0;
+        this->metrics_.total_count_ = 0;
 
+        // Return the metrics collected during the previous iteration.
+        return metrics;
+      }
 
       ::CORBA::Long
       Trigger_exec_i::period ()
@@ -155,13 +182,19 @@ namespace CIAO
       void
       Trigger_exec_i::ciao_postactivate ()
       {
-        // Now activate th   e active object.
+        // Now start the active object.
         if (this->activate () != 0)
           {
             ACE_ERROR ((LM_ERROR, "Trigger_exec: Error will activating the "
                         "periodic task!\n"));
           }
         this->active_ = true;
+        // Now start the performance monitor.
+        if (this->monitor_->activate () != 0)
+          {
+            ACE_ERROR ((LM_ERROR, "Trigger_exec: Error will activating the "
+                        "performance monitor!\n"));
+          }
       }
 
       void
@@ -180,6 +213,35 @@ namespace CIAO
       Trigger_exec_i::ccm_remove ()
       {
         // Your code here.
+      }
+
+      //==================================================================
+      // Performance Monitor Implementation Class: PerfMon
+      //==================================================================
+
+      PerfMon::PerfMon (Trigger_exec_i &trigger,
+                        ACE_hrtime_t period)
+        : trigger_ (trigger),
+          period_ (period)
+      {}
+
+      PerfMon::~PerfMon ()
+      {}
+
+      int
+      PerfMon::svc ()
+      {
+        ACE_Time_Value interval (0, 0);
+        interval.set (0, static_cast <suseconds_t> (this->period_));
+        while (true)
+          {
+            Performance metrics = this->trigger_.metrics ();
+            ACE_DEBUG ((LM_DEBUG, "DMR = %f\tThroughput = %f\n",
+                        (metrics.miss_count_ * 1.0) / metrics.total_count_,
+                        (metrics.total_count_ * 1000000.0) / this->period_));
+            ACE_OS::sleep (interval);
+          }
+        return 0;
       }
 
       //==================================================================
