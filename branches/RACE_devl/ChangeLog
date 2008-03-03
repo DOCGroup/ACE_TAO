@@ -1,3 +1,9 @@
+Mon Mar  3 21:06:11 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
+
+        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
+
+        Made cosmetic mods.
+
 Mon Mar  3 20:57:36 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
 
         * Controller/EUCON/Controller.cpp:

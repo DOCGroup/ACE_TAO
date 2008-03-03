@@ -122,23 +122,17 @@ namespace CIAO
 
         this->metrics_mutex_.release ();
 
-
-        ACE_DEBUG ((LM_DEBUG, "DMR = %f\tThroughput = %f\n",
-                    (metrics.miss_count_ * 1.0) / metrics.total_count_,
-                    (metrics.total_count_ * 1000000.0) / elapsed_time));
-
-
         std::stringstream msg;
         msg << (metrics.miss_count_ * 1.0) / metrics.total_count_
             << "\t"
             << (metrics.total_count_ * 1000000.0) / elapsed_time
             << "\t"
-            << rate;
+            << rate
+            << std::endl;
+
+
         this->logger_->log (msg.str ());
 
-        ACE_DEBUG ((LM_DEBUG, "%s::Trigger: Got rate! New rate is %f\n",
-                    this->ID_.in (),
-                    rate));
         this->mutex_.acquire ();
         // We multiply by 1000000 since the period is specified in usecs.
         this->period_ = static_cast <ACE_hrtime_t> ((1.0 / rate) * 1000000);
