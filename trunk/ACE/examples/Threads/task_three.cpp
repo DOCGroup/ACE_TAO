@@ -180,7 +180,7 @@ handler (int)
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR **)
+ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
   if (argc > 1)
     {

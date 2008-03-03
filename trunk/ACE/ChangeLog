@@ -1,3 +1,44 @@
+Mon Mar  3 10:49:28 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/JAWS/clients/WebSTONE/src/cgi-send.c:
+        * apps/JAWS/clients/WebSTONE/src/genrand.c:
+        * apps/JAWS/clients/WebSTONE/src/webmaster.c:
+        * contrib/utility/Example/CommandLine/Foo/command.cpp:
+        * contrib/utility/Example/ExH/BadCast/bad_cast.cpp:
+        * contrib/utility/Example/ExH/Compound/compound.cpp:
+        * contrib/utility/Example/ExH/HelloWorld/hello_world.cpp:
+        * contrib/utility/Example/ExH/LogicToSystem/logic_to_system.cpp:
+        * contrib/utility/Example/Hetero/Container/container.cpp:
+        * contrib/utility/Example/Introspection/InheritanceTree/inheritance_tree.cpp:
+        * contrib/utility/Example/Introspection/Traversal/driver.cpp:
+        * contrib/utility/Test/ExH/Converter/converter.cpp:
+        * contrib/utility/Test/ExH/Inline/inline.cpp:
+        * contrib/utility/Test/ExH/Logic/DescriptiveException/descriptive_exception.cpp:
+        * contrib/utility/Test/ExH/System/DescriptiveException/descriptive_exception.cpp:
+        * contrib/utility/Test/Introspection/Inline/inline.cpp:
+        * contrib/utility/Test/Synch/Inline/inline.cpp:
+        * etc/xlc_dummy.cpp:
+        * examples/Reactor/Proactor/test_aiocb.cpp:
+        * examples/Reactor/Proactor/test_aiosig.cpp:
+
+          Disable fuzz's check_for_improper_main_declaration check on these files.
+          These files don't use ACE.
+
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * examples/Reactor/WFMO_Reactor/Registration.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+        * examples/Threads/task_three.cpp:
+
+          Use the proper form of ACE_TMAIN. Namely, the argv parameter
+          should be "ACE_TCHAR *argv[]" instead of "ACE_TCHAR **argv"
+          or "ACE_TCHAR *[]" instead of "ACE_TCHAR **"
+
+        * apps/JAWS3/bench/average.cpp:
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
 Mon Mar  3 08:58:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_openvms.GNU:
