@@ -157,7 +157,7 @@ run_final_test (void)
 }
 
 int
-main (int /* argc */, char* /* argv */ [])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_Thread_Manager mgr;
 

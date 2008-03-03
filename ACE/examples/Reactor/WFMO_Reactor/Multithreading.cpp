@@ -257,7 +257,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 }
 #else /* !ACE_WIN32 */
 int
-ACE_TMAIN (int, ACE_TCHAR **)
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }
