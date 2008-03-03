@@ -75,7 +75,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>450000</long>
+          <long>45000</long>
         </value>
       </value>
     </configProperty>
@@ -115,7 +115,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>619</long>
+          <long>62</long>
         </value>
       </value>
     </configProperty>
@@ -144,7 +144,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>619</long>
+          <long>62</long>
         </value>
       </value>
     </configProperty>
@@ -184,7 +184,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>206</long>
+          <long>21</long>
         </value>
       </value>
     </configProperty>
@@ -224,7 +224,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>206</long>
+          <long>21</long>
         </value>
       </value>
     </configProperty>
@@ -390,7 +390,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>2.23</double>
+        <double>22.3</double>
       </value>
     </value>
   </infoProperty>
@@ -401,18 +401,18 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>2</double>
+        <double>20</double>
       </value>
     </value>
   </infoProperty>
   <infoProperty>
-    <name>max_rate</name>
+   <name>max_rate</name>
     <value>
       <type>
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>5</double>
+        <double>50</double>
       </value>
     </value>
   </infoProperty>
@@ -427,6 +427,5 @@
       </value>
     </value>
   </infoProperty>
-
 
 </Deployment:deploymentPlan>

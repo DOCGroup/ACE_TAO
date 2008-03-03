@@ -32,8 +32,8 @@ parse_args (int argc, char *argv[])
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Usage:  %s"
-                             "-k <Conductor IOR> "
-                             "(default is file://Conductor_Component.ior)\n",
+                             "-k <Interactive IA IOR> "
+                             "(default is file://Interactive_IA_Component.ior)\n",
                              "-f <Deployment plan filename>\n",
                              "-r <redeploy>\n",
                             argv [0]),

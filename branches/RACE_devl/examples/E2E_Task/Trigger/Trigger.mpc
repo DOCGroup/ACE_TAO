@@ -68,7 +68,8 @@ project(Trigger_exec) : ciao_component_dnc {
   avoids += ace_for_tao
   after   += Trigger_cidl_gen Trigger_stub
   sharedname = Trigger_exec
-  includes += ../Base
+  includes += ../Base \
+              ../utils
 
   libs += Trigger_stub \
           Event_Types_stub
@@ -81,12 +82,15 @@ project(Trigger_exec) : ciao_component_dnc {
   Source_Files {
     TriggerEC.cpp
     Trigger_exec.cpp
+    ../utils/RT.cpp
   }
 
   Header_Files {
     TriggerEC.h
     Trigger_exec.h
     Trigger_exec_export.h
+    QoS.h
+    ../utils/RT.h
   }
 
   Inline_Files {
