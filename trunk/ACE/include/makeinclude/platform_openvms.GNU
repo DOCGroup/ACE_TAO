@@ -3,7 +3,7 @@
 # for OpenVMS GNV
 
 ACE_OPENVMS = 1
-versioned_so = 0
+versioned_so ?= 0
 exceptions ?= 1
 debug ?= 1
 optimize ?= 0
@@ -55,10 +55,9 @@ else
 endif
 
 ifeq ($(debug),1)
- LDFLAGS         += -g -threads
-else
- LDFLAGS         += -threads
+ LDFLAGS         += -g
 endif
+LDFLAGS         += -threads
 DCCFLAGS        += -g
 OCCFLAGS        += -O
 
@@ -75,7 +74,9 @@ else
   ARFLAGS         = -c
   SOFLAGS         = -shared -auto_symvec
 endif
-LIBS            += -lpthread
+ifeq ($(pthread),1)
+  LIBS            += -lpthread
+endif
 
 CC              = cc
 CXX             = cxx
