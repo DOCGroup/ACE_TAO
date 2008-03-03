@@ -1,3 +1,8 @@
+Mon Mar  3 07:30:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Don't set INSLIB
+
 Mon Mar  3 07:00:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:

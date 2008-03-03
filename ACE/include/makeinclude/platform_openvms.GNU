@@ -84,7 +84,7 @@ DLD             = $(CXX)
 SOVERSION       =
 SOEXT           = exe
 EXEEXT          = .exe
-INSLIB          = $(ACE_ROOT)/lib
+
 ifeq ($(HOSTTYPE),ia64)
   REALCLEAN_FILES += $(SYMVEC_OPT_FILE) $(CLEANUP_VSHLIB_NO_VER:%.exe=%.DSF) \
 	$(CLEANUP_BIN:%=%.DSF) $(basename $(BIN))
