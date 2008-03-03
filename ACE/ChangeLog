@@ -1,3 +1,13 @@
+Mon Mar  3 11:10:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.lib.GNU:
+          Use 1 for VXWORKSLINK instead of true. Added footprint=1
+          as flag to specify that you are doing a footprint build
+
 Mon Mar  3 10:49:28 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * apps/JAWS/clients/WebSTONE/src/cgi-send.c:

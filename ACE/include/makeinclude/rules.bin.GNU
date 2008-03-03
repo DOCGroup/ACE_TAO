@@ -38,7 +38,7 @@ CHORUSLINK ?=
 VXWORKSLINK ?=
 using_aix_vacpp ?=
 
-ifeq ($(VXWORKSLINK),true)
+ifeq ($(VXWORKSLINK),1)
 $(BIN): $(DEFAULTRULE)
 	mv $(DEFAULTRULE) $@
 else # !VXWORKSLINK

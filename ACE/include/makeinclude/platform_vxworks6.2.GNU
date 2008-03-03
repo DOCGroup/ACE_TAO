@@ -160,7 +160,7 @@ endif
 
 ifneq ($(VX_LIB_BUILD),1)
   ifeq ($(rtp),0)
-    VXWORKSLINK = true
+    VXWORKSLINK = 1
   endif
   ifeq ($(VX_APP_BUILD),1)
     ## set variables for VxWorks linktarget identification
@@ -202,7 +202,7 @@ else
   include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 endif
 
-ifeq ("$(VXWORKSLINK)","true")
+ifeq ($(VXWORKSLINK),1)
   # prevent possible clash with static LIB rules
   # in VxWorks make includes and rules.lib.GNU
   override ARCHIVE =
@@ -253,7 +253,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 ifeq ("$(templates)","automatic")
 ifeq ($(repo),1)
-ifeq ("$(VXWORKSLINK)","true")
+ifeq ($(VXWORKSLINK),1)
   ifeq ($(VX_APP_BUILD),1)
 	ifneq ($(SHARED_LIBS),1)
       LD_PARTIAL += -frepo
@@ -326,7 +326,7 @@ else
 endif
 endif
 
-ifeq ("$(VXWORKSLINK)","true")
+ifeq ($(VXWORKSLINK),1)
 
   ifeq ($(repo),1)
     ifeq ($(SHARED_LIBS),1)
