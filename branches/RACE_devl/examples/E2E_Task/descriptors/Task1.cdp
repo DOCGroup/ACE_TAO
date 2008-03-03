@@ -98,6 +98,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>8100</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>5400</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>ID</name>
       <value>
         <type>
@@ -134,6 +156,28 @@
         </type>
         <value>
           <string>Subtask.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>8100</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>5400</long>
         </value>
       </value>
     </configProperty>
@@ -178,6 +222,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>1800</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>2700</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>iterations</name>
       <value>
         <type>
@@ -214,6 +280,28 @@
         </type>
         <value>
           <string>Subtask.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>1800</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>2700</long>
         </value>
       </value>
     </configProperty>

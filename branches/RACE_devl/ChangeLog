@@ -1,3 +1,40 @@
+Mon Mar  3 20:57:36 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
+
+        * Controller/EUCON/Controller.cpp:
+
+        Updated the debug statements.
+
+        * descriptors/NodeDetails.dat:
+
+        Updated this file.
+
+        * examples/E2E_Task/Subtask/Subtask.mpc:
+        * examples/E2E_Task/Subtask/Subtask_exec.cpp:
+        * examples/E2E_Task/Trigger/Trigger.mpc:
+        * examples/E2E_Task/Trigger/Trigger_exec.h:
+        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
+
+        Enhanced the trigger and subtask implementation to use the logger.
+
+
+        * examples/E2E_Task/descriptors/Task1.cdp:
+
+        * examples/E2E_Task/utils/App_utils.mpc:
+        * examples/E2E_Task/utils/Logger.h:
+        * examples/E2E_Task/utils/Logger.cpp:
+        * examples/E2E_Task/utils/Logger_export.h:
+        * examples/E2E_Task/utils/RACE_utils.h:
+        * examples/E2E_Task/utils/RACE_utils.cpp:
+
+        Checking in the initial implementation of the application logger.
+
+        * examples/E2E_Task/utils/RT.h:
+        * examples/E2E_Task/utils/RT.cpp:
+
+        Updated these files.
+
+
+
 Mon Mar  3 16:08:18 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * examples/E2E_Task/utils:

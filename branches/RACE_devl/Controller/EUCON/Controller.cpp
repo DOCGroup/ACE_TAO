@@ -159,6 +159,8 @@ namespace CIAO
       {
         std::stringstream msg;
         msg << "Entering register_string ()\n";
+        this->logger_.log (msg.str());
+        msg.str ("");
         if (this->initialized_)
           {
             if (!this->active_)
@@ -168,7 +170,7 @@ namespace CIAO
                 this->populate_task (opstring, task);
                 this->tasks_.push_back (task);
                 this->dump_task (task);
-                msg << "done!\nSuccessfully registered string with ID:"
+                msg << "\nSuccessfully registered string with ID:"
                     << opstring.ID.in () << "\n";
                 ID = CORBA::string_dup(opstring.ID.in ());
                 this->logger_.log (msg.str());
@@ -243,7 +245,7 @@ namespace CIAO
                       this->tasks_[itr].delta_rate;
                     this->opstrings_[itr].rate.currRate =
                       this->tasks_[itr].curr_rate;
-                    rates << this->tasks_[itr].curr_rate 
+                    rates << this->tasks_[itr].curr_rate
                           << "\t"
                           << this->tasks_[itr].delta_rate
                           << "\t";
@@ -293,7 +295,6 @@ namespace CIAO
 
         for (::CORBA::ULong i = 0; i < nodes.length(); ++i)
           {
-
             this->populate_node (nodes[i], node);
             // Now that the node structure has been fully populated, we add
             // it to the doamin.
@@ -301,7 +302,9 @@ namespace CIAO
             msg << "Added node: " << nodes [i].name.in()
                 << " to the doamin structure.\n";
           }
-        this->logger_.log (msg.str());
+
+        //        std::string util (std::endl);
+        this->util_logger_.log (std::string ("\n"));
         this->domain_ = temp_domain;
         return true;
       }
@@ -353,8 +356,9 @@ namespace CIAO
                             value >>= resource.set_point;
                             msg << "Obtained set point! Value is: "
                                 << resource.set_point << "\n";
-                            ACE_DEBUG ((LM_DEBUG, "\n%f\t", resource.set_point)); 
-                            util << resource.set_point;
+                            ACE_DEBUG ((LM_DEBUG, "\n%f\t",
+                                        resource.set_point));
+
                           }
                       }
                     else if (ACE_OS::strcmp (props [k].name.in (),
@@ -366,16 +370,20 @@ namespace CIAO
                           {
                             value >>= resource.util;
 
-                            // Temporary hack! We are multiplying by 
+                            // Temporary hack! We are multiplying by
                             // the number of physical processors!
                             //resource.util *= 4;
                             msg << "Obtained curr util! Value is: "
                                 << resource.util << "\n";
-                            ACE_DEBUG ((LM_DEBUG, "%f\n", resource.util)); 
-                            util << "\t" << resource.util << "\t";
+                            ACE_DEBUG ((LM_DEBUG, "%f\n", resource.util));
+
                           }
                       }
                   }
+
+                // Dump these values to a file.
+                util << resource.set_point << "\t";
+                util << resource.util << "\t";
                 // Now that we have populated the resource info, we add it
                 // to the node.
                 r_node.resources.push_back (resource);
@@ -384,7 +392,6 @@ namespace CIAO
               }
           }
         msg << "Leaving populate_node ()\n";
-        util << "\n";
         this->logger_.log (msg.str ());
         this->util_logger_.log (util.str());
       }

@@ -4,7 +4,7 @@ namespace CIAO
 {
   namespace RACE
   {
-    int set_priority ()
+    int RT_Utils::set_priority ()
     {
       int priority =
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)

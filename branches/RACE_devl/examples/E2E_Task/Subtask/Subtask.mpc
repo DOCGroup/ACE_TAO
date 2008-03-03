@@ -61,10 +61,15 @@ project(Subtask_stub) : ciao_client_dnc {
 
 project(Subtask_exec) : ciao_component_dnc {
   avoids += ace_for_tao
-  after   += Subtask_cidl_gen Subtask_stub
+  after   += Subtask_cidl_gen \
+             Subtask_stub \
+             App_utils
+
   sharedname = Subtask_exec
   libs += Subtask_stub \
-          Event_Types_stub
+          Event_Types_stub \
+          App_utils
+
   includes += ../Base\
               ../utils
 
@@ -76,14 +81,12 @@ project(Subtask_exec) : ciao_component_dnc {
   Source_Files {
     SubtaskEC.cpp
     Subtask_exec.cpp
-    ../utils/RT.cpp
   }
 
   Header_Files {
     SubtaskEC.h
     Subtask_exec.h
     Subtask_exec_export.h
-    ../utils/RT.h
   }
 
   Inline_Files {

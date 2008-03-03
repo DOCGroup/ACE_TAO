@@ -12,8 +12,8 @@ namespace CIAO
         :iterations_ (1000),
          ID_ (::CORBA::string_dup ("CIAO::RACE::Subtaks"))
       {
-        // Ser RT priority.
-        set_priority ();
+        // Set RT priorities for the process.
+        RT_Utils::set_priority ();
 
       }
 

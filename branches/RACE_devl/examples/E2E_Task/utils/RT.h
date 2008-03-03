@@ -4,12 +4,17 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/Log_Msg.h"
+#include "Logger_export.h"
 
 namespace CIAO
 {
   namespace RACE
   {
-      int set_priority ();
+    class LOGGER_Export RT_Utils
+    {
+      public:
+      static int set_priority ();
+    };
   }
 }
 
