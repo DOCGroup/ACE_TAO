@@ -43,14 +43,6 @@ NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
 Deployment::Application_ptr
 NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
                                           Deployment::Connections_out providedReference)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException
-                   , ::Deployment::ResourceNotAvailable
-                   , ::Deployment::StartError
-                   , ::Deployment::InvalidProperty
-                   , ::Deployment::InvalidNodeExecParameter
-                   , ::Deployment::InvalidComponentExecParameter
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplicationManager_impl::startLaunch - started\n"));
 
@@ -82,14 +74,10 @@ ACE_THROW_SPEC ( (
 
 void
 NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr application)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StopError
-                 ))
 {
   ACE_DEBUG ( (LM_TRACE, "[%M] NodeApplicationManager_Impl::destroyApplication - started\n"));
 
-  try 
+  try
   {
     this->redirection_.unregister (this->node_name_, this->plan_.UUID.in());
 

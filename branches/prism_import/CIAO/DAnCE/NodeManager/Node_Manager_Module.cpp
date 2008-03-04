@@ -162,7 +162,6 @@ CORBA::Object_ptr
 DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
                                          int argc,
                                          ACE_TCHAR *argv[])
-ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   try
     {
@@ -178,20 +177,20 @@ ACE_THROW_SPEC ( (CORBA::SystemException))
           this->orb_ = CORBA::ORB::_nil();
           this->domain_nc_ = CosNaming::NamingContext::_nil();
         }
-      
+
       DAnCE::Node_Manager::SOptions options;
       if (!DAnCE::Node_Manager::parse_args (argc, argv, options))
         return CORBA::Object::_nil ();
 
-      try 
+      try
       {
         CORBA::Object_var obj = orb->resolve_initial_references ("ProcessDestinationNC");
-        if (CORBA::is_nil(obj)) 
+        if (CORBA::is_nil(obj))
           {
             ACE_ERROR((LM_ERROR, "[%M] ProcessDestinationNC can not be resolved. RIR returned nil.\n"));
             return CORBA::Object::_nil();
           }
-      
+
         CosNaming::NamingContext_var pdnc = CosNaming::NamingContext::_narrow(obj.in());
         if (CORBA::is_nil(pdnc.in()))
           {
@@ -209,7 +208,7 @@ ACE_THROW_SPEC ( (CORBA::SystemException))
         ACE_ERROR((LM_ERROR, "[%M] ProcessDestinationNC can not be retrieved. Unknown exception.\n"));
         return CORBA::Object::_nil();
       }
-      
+
       CORBA::ValueFactory_var vf = new Components::Cookie_init();
       vf = orb->register_value_factory ("IDL:omg.org/Components/Cookie:1.0", vf.in());
 
@@ -251,7 +250,7 @@ ACE_THROW_SPEC ( (CORBA::SystemException))
         }
 
       // Resolve DomainNC
-      
+
       if (CORBA::is_nil(this->orb_.in()))
         {
           try

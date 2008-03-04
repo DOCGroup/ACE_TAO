@@ -38,46 +38,22 @@ namespace DAnCE
         ::Deployment::TargetManager_ptr manager,
         ::Deployment::Logger_ptr log,
         ::CORBA::Long updateInterval
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                       ));
+      );
 
       virtual void leaveDomain (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                       ));
+      );
 
       virtual ::Deployment::NodeApplicationManager_ptr preparePlan (
         const ::Deployment::DeploymentPlan & plan,
         ::Deployment::ResourceCommitmentManager_ptr resourceCommitment
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::PlanError
-                       ));
+      );
 
       virtual void destroyManager (
         ::Deployment::NodeApplicationManager_ptr appManager
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StopError,
-                         ::Deployment::InvalidReference
-                       ));
+      );
 
       virtual ::Deployment::Resources * getDynamicResources (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                       ));
+      );
 
       const char* getName();
 

@@ -50,14 +50,6 @@ DomainApplicationManager_Impl::~DomainApplicationManager_Impl()
 Deployment::Application_ptr
 DomainApplicationManager_Impl::startLaunch (const Deployment::Properties & configProperty,
                                             Deployment::Connections_out providedReference)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException
-                   , ::Deployment::ResourceNotAvailable
-                   , ::Deployment::StartError
-                   , ::Deployment::InvalidProperty
-                   , ::Deployment::InvalidNodeExecParameter
-                   , ::Deployment::InvalidComponentExecParameter
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplicationManager_impl::startLaunch - started\n"));
 
@@ -76,7 +68,7 @@ ACE_THROW_SPEC ( (
 
   PortableServer::ObjectId_var id = this->poa_->activate_object (app);
   this->runningApp_.push_back(app);
-  
+
   ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplicationManager_impl::startLaunch - finished\n"));
   CORBA::Object_var ref = this->poa_->id_to_reference (id);
   return Deployment::DomainApplication::_narrow (ref.in ());
@@ -84,10 +76,6 @@ ACE_THROW_SPEC ( (
 
 void
 DomainApplicationManager_Impl::destroyApplication (Deployment::Application_ptr application)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StopError
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplicationManager_impl::destroyApplication - started\n"));
 
@@ -118,11 +106,7 @@ ACE_THROW_SPEC ( (
 
 ::Deployment::Applications *
 DomainApplicationManager_Impl::getApplications (
-  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 )
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplicationManager_impl::getApplications - started\n"));
 
@@ -145,11 +129,7 @@ ACE_THROW_SPEC ( (
 
 ::Deployment::DeploymentPlan *
 DomainApplicationManager_Impl::getPlan (
-  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 )
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplicationManager_impl::getPlan - started\n"));
 

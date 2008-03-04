@@ -45,11 +45,6 @@ namespace DAnCE
   void
   DomainApplication_Impl::finishLaunch (const Deployment::Connections & connections,
                                         CORBA::Boolean start)
-  ACE_THROW_SPEC ( (
-                     ::CORBA::SystemException,
-                     ::Deployment::StartError,
-                     ::Deployment::InvalidConnection
-                   ))
   {
     ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_impl::finishLaunch - started, connections length is %d\n", connections.length()));
     for (TApp2Mgr::iterator iter = this->node_applications_.begin();
@@ -63,10 +58,6 @@ namespace DAnCE
 
   void
   DomainApplication_Impl::start ()
-  ACE_THROW_SPEC ( (
-                     ::CORBA::SystemException,
-                     ::Deployment::StartError
-                   ))
   {
     ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_impl::start - started\n"));
     for (TApp2Mgr::iterator iter = this->node_applications_.begin();

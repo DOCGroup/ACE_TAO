@@ -36,14 +36,7 @@ ExecutionManager_Impl::~ExecutionManager_Impl()
 ExecutionManager_Impl::preparePlan (
   const ::Deployment::DeploymentPlan & plan,
   ::Deployment::ResourceCommitmentManager_ptr /*resourceCommitment*/
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
 )
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::ResourceNotAvailable,
-                   ::Deployment::PlanError,
-                   ::Deployment::StartError
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ExecutionManager_Impl::preparePlan - started\n"));
   // Checkin is plan already at work
@@ -79,11 +72,7 @@ ACE_THROW_SPEC ( (
 
 ::Deployment::DomainApplicationManagers *
 ExecutionManager_Impl::getManagers (
-  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 )
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ExecutionManager_Impl::getManagers - started\n"));
 
@@ -111,12 +100,7 @@ ACE_THROW_SPEC ( (
 void
 ExecutionManager_Impl::destroyManager (
   ::Deployment::DomainApplicationManager_ptr appManager
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
 )
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StopError
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ExecutionManager_Impl::destroyManager - started\n"));
 

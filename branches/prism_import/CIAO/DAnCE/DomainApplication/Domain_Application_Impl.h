@@ -60,21 +60,12 @@ namespace DAnCE
       */
       virtual void
       finishLaunch (const Deployment::Connections & connections,
-                    CORBA::Boolean start)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidConnection
-                       ));
+                    CORBA::Boolean start);
       /**
       * Starts the application. Raises the StartError exception if
       * starting the application fails.
       */
-      virtual void start ()
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError
-                       ));
+      virtual void start ();
 
     private:
       TApp2Mgr node_applications_;

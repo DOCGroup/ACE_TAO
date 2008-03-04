@@ -59,11 +59,7 @@ namespace DAnCE
         ::PortableServer::POA_ptr adapter,
         const char * operation,
         ::PortableServer::ServantLocator::Cookie & the_cookie
-      )
-      ACE_THROW_SPEC ( (
-                         CORBA::SystemException,
-                         ::PortableServer::ForwardRequest
-                       ));
+      );
 
       virtual void postinvoke (
         const ::PortableServer::ObjectId & /*oid*/,
@@ -72,9 +68,7 @@ namespace DAnCE
         ::PortableServer::ServantLocator::Cookie /*the_cookie*/,
         ::PortableServer::Servant /*the_servant*/
       )
-      ACE_THROW_SPEC ( (
-                         CORBA::SystemException
-                       )) {};
+      {};
 
       void start_register (const ACE_CString& plan);
 

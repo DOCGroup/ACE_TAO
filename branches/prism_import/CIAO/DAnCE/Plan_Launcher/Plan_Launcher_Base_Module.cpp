@@ -21,7 +21,6 @@ CORBA::Object_ptr
 DAnCE_Plan_Launcher_Base_Module::create_object (CORBA::ORB_ptr orb,
                                                 int argc,
                                                 ACE_TCHAR *argv[])
-ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   try
     {

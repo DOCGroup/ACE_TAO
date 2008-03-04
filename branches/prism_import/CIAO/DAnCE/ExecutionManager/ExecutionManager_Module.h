@@ -53,8 +53,7 @@ class DAnCE_ExecutionManager_Module_Export DAnCE_ExecutionManager_Module
     /// of a DAnCE_NodeManager_Module object.
     virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                              int argc,
-                                             ACE_TCHAR *argv [])
-    ACE_THROW_SPEC ( (CORBA::SystemException));
+                                             ACE_TCHAR *argv []);
 
   private:
     /// Storage for ExecutionManager servant.

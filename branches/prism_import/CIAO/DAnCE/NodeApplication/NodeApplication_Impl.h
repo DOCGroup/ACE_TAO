@@ -110,43 +110,21 @@ namespace DAnCE
       virtual ~NodeApplication_Impl();
 
       //TODO Add throw specification
-      void init()
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                       ));
+      void init();
 
       virtual void finishLaunch (
         const Deployment::Connections & providedReference,
         ::CORBA::Boolean start
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidConnection
-                       ));
+      );
 
       virtual void start (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError
-                       ));
+      );
 
       Deployment::Connections * getAllConnections()
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::InvalidProperty
-                       ))
       ;
 
       //TODO Exception specification should be customized
-      void initComponents()
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidProperty
-                       ));
+      void initComponents();
     private:
       enum ERequestType
       {
@@ -162,93 +140,40 @@ namespace DAnCE
         eComponent
       };
 
-      EInstanceType getInstanceType (const Deployment::Properties& prop) const
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::InvalidProperty
-                       ));
+      EInstanceType getInstanceType (const Deployment::Properties& prop) const;
 
       void createConfigValues (const Deployment::Properties& prop,
                                const ERequestType request,
-                               Components::ConfigValues& cfg) const
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::InvalidProperty
-                       ));
+                               Components::ConfigValues& cfg) const;
 
       void createConfigValues(const Deployment::Properties& prop,
-      Components::ConfigValues& cfg) const
-  ACE_THROW_SPEC((
-          ::CORBA::SystemException,
-          ::Deployment::InvalidProperty
-      ));
+      Components::ConfigValues& cfg) const;
 
-      void createContainer (unsigned int index)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidProperty
-                       ));
+      void createContainer (unsigned int index);
 
-      void createHome (unsigned int index)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidProperty
-                       ));
+      void createHome (unsigned int index);
 
-      void createComponent (unsigned int index)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidProperty
-                       ));
+      void createComponent (unsigned int index);
 
       Components::Cookie* connectReceptacle (Components::CCMObject_ptr inst,
                                              const ACE_CString& port_name,
-                                             CORBA::Object_ptr facet)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidConnection
-                       ));
+                                             CORBA::Object_ptr facet);
 
       Components::Cookie* connectReceptacleExt (Components::CCMObject_ptr inst,
                                                 const ACE_CString& port_name,
-                                                CORBA::Object_ptr facet)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidConnection
-                       ));
+                                                CORBA::Object_ptr facet);
 
       void connectEmitter (Components::CCMObject_ptr inst,
                            const ACE_CString& port_name,
-                           CORBA::Object_ptr consumer)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidConnection
-                       ));
+                           CORBA::Object_ptr consumer);
 
       void connectEmitterExt (Components::CCMObject_ptr inst,
                               const ACE_CString& port_name,
-                              CORBA::Object_ptr consumer)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidConnection,
-                         ::Components::InvalidName
-                       ));
+                              CORBA::Object_ptr consumer);
 
       Components::Cookie* connectPublisher (Components::CCMObject_ptr inst,
                                             const ACE_CString& port_name,
-                                            CORBA::Object_ptr consumer)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StartError,
-                         ::Deployment::InvalidConnection
-                       ));
+                                            CORBA::Object_ptr consumer);
 
       CORBA::ORB_var orb_;
       PortableServer::POA_var poa_;

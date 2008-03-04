@@ -42,7 +42,7 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
               throw Deployment_Failure ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - failed to retrieve EM object");
             }
         }
-      try 
+      try
        {
          this->em_ = ::DAnCE::ExecutionManagerDaemon::_narrow (obj.in());
        }
@@ -51,7 +51,7 @@ Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl(CORBA::ORB_ptr orb, int argc,
           ACE_ERROR((LM_ERROR, "[%M] Failed to retrieve EM object from \"%s\"\n", this->em_ior_.c_str()));
           throw Deployment_Failure ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - failed to retrieve EM object");
         }
-     
+
       if (CORBA::is_nil (this->em_.in()))
         {
           ACE_ERROR ( (LM_ERROR, "[%M] Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - failed to get an execution manager.\n"));
@@ -329,7 +329,7 @@ void Plan_Launcher_Base_Impl::teardown_plan(
       dam->destroyApplication(apps[i]);
     }
   this->destroy_dam(dam);
-  
+
   ACE_DEBUG ( (LM_DEBUG, "[%M] Plan_Launcher_Base_Impl::teardown_plan - [success]\n"));
 }
 
@@ -372,7 +372,7 @@ void Plan_Launcher_Base_Impl::parse_args(int argc, ACE_TCHAR *argv[])
     }
   ACE_DEBUG ( (LM_TRACE, "\"\n"));
 
-  ACE_Get_Opt get_opt(argc, argv, 
+  ACE_Get_Opt get_opt(argc, argv,
   ACE_TEXT ("k:d:w:t:a:qx:h"), 0);
   get_opt.long_option("em-ior", 'k', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option("read-cdr-plan", 'd', ACE_Get_Opt::ARG_REQUIRED);
@@ -486,7 +486,7 @@ void Plan_Launcher_Base_Impl::stop_plan()
           ACE_ERROR ( (LM_ERROR, "[%M] stop_plan - tear down assembly failed: unknown plan uuid.\n"));
         }
     }
-  
+
   if (!is_empty (this->dam_ior_))
     {
       stopped = true;
@@ -505,7 +505,7 @@ void Plan_Launcher_Base_Impl::stop_plan()
           this->teardown_plan(dam.in());
         }
     }
-  
+
   if (0 < this->cdr_plan_urls_.size())
     {
       stopped = true;
@@ -520,7 +520,7 @@ void Plan_Launcher_Base_Impl::stop_plan()
             }
         }
     }
-  
+
   if (!stopped && 0 == this->xml_plan_urls_.size())
     {
       ACE_TRACE((LM_TRACE, "[%M] Stopping plan all running plans.\n"));
@@ -608,7 +608,6 @@ void Plan_Launcher_Base_Impl::create_external_connections(
 
 Deployment::DeploymentPlan*Plan_Launcher_Base_Impl::read_cdr_plan_file(
     const char *cdr_plan_uri)
-ACE_THROW_SPEC((Deployment_Failure))
 {
   Deployment::DeploymentPlan* res = 0;
   try
@@ -648,7 +647,6 @@ ACE_THROW_SPEC((Deployment_Failure))
 
 void Plan_Launcher_Base_Impl::write_cdr_plan_file(const char * filename,
     const Deployment::DeploymentPlan & plan)
-ACE_THROW_SPEC((Deployment_Failure))
 {
   try
     {

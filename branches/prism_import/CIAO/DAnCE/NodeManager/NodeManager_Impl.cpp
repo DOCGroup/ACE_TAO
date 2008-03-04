@@ -43,11 +43,7 @@ namespace DAnCE
     ::Deployment::TargetManager_ptr /*manager*/,
     ::Deployment::Logger_ptr /*log*/,
     ::CORBA::Long /*updateInterval*/
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
-  ACE_THROW_SPEC ( (
-                     ::CORBA::SystemException
-                   ))
   {
     ACE_DEBUG ( (LM_DEBUG, "[%M] NodeManager_impl::joinDomain - started\n"));
     // Method will be implemented on next developemnt stage
@@ -56,11 +52,7 @@ namespace DAnCE
 
   void
   NodeManager_Impl::leaveDomain (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
   )
-  ACE_THROW_SPEC ( (
-                     ::CORBA::SystemException
-                   ))
   {
     ACE_DEBUG ( (LM_DEBUG, "[%M] NodeManager_impl::leaveDomain - started\n"));
     // Method will be implemented on next development stage
@@ -71,13 +63,7 @@ namespace DAnCE
   NodeManager_Impl::preparePlan (
     const ::Deployment::DeploymentPlan & plan,
     ::Deployment::ResourceCommitmentManager_ptr /*resourceCommitment*/
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
-  ACE_THROW_SPEC ( (
-                     ::CORBA::SystemException,
-                     ::Deployment::StartError,
-                     ::Deployment::PlanError
-                   ))
   {
     ACE_DEBUG ( (LM_DEBUG, "[%M] NodeManager_impl::preparePlan - started for node %s and plan %s\n", this->name_.c_str(), plan.UUID.in()));
     // resourceCommitment will be used on next development stage
@@ -114,13 +100,7 @@ namespace DAnCE
   void
   NodeManager_Impl::destroyManager (
     ::Deployment::NodeApplicationManager_ptr appManager
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
-  ACE_THROW_SPEC ( (
-                     ::CORBA::SystemException,
-                     ::Deployment::StopError,
-                     ::Deployment::InvalidReference
-                   ))
   {
     ACE_DEBUG ( (LM_DEBUG, "[%M] NodeManager_impl::destroyManager - started\n"));
 
@@ -147,11 +127,7 @@ namespace DAnCE
 
   ::Deployment::Resources *
   NodeManager_Impl::getDynamicResources (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
   )
-  ACE_THROW_SPEC ( (
-                     ::CORBA::SystemException
-                   ))
   {
     ACE_DEBUG ( (LM_DEBUG, "[%M] NodeManager_impl::getDynamicResources - started\n"));
     // Method will be implemented on next development stage

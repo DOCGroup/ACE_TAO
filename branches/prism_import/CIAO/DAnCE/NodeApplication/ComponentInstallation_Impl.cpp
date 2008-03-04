@@ -18,11 +18,6 @@ ComponentInstallation_Impl::~ComponentInstallation_Impl()
 
 void
 ComponentInstallation_Impl::install (const char * implUUID,    const char * component_loc)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Components::Deployment::InvalidLocation,
-                   ::Components::Deployment::InstallationFailure
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentInstallation_Impl::install - started\n"));
 
@@ -44,11 +39,6 @@ ACE_THROW_SPEC ( (
 
 void
 ComponentInstallation_Impl::replace (const char * , const char *)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Components::Deployment::InvalidLocation,
-                   ::Components::Deployment::InstallationFailure
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentInstallation_Impl::replace - started\n"));
   ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentInstallation_Impl::replace - finished\n"));
@@ -56,11 +46,6 @@ ACE_THROW_SPEC ( (
 
 void
 ComponentInstallation_Impl::remove (const char *)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Components::Deployment::UnknownImplId,
-                   ::Components::RemoveFailure
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentInstallation_Impl::remove - started\n"));
   ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentInstallation_Impl::remove - finished\n"));
@@ -68,11 +53,6 @@ ACE_THROW_SPEC ( (
 
 char *
 ComponentInstallation_Impl::get_implementation (const char * implUUID)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Components::Deployment::UnknownImplId,
-                   ::Components::Deployment::InstallationFailure
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentInstallation_Impl::get_implementation - started\n"));
 
@@ -97,12 +77,6 @@ ComponentInstallation_Impl::get_valuetypefactory_location (
   const char * implUUID,
   const char * repid
 )
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Components::Deployment::UnknownImplId,
-                   ::CdmwDeployment::UnknownValuetype,
-                   ::Components::Deployment::InstallationFailure
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentInstallation_Impl::get_valuetypefactory_location - started\n"));
   ACE_CString key = ComponentInstallation_Impl::valuefactory_key (implUUID, repid);
@@ -128,11 +102,6 @@ ComponentInstallation_Impl::install_valuetypefactory_location (
   const char * repid,
   const char * loc
 )
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Components::Deployment::InvalidLocation,
-                   ::Components::Deployment::InstallationFailure
-                 ))
 {
   ACE_CString key = ComponentInstallation_Impl::valuefactory_key (implUUID, repid);
   if (0 != this->locations_.find (key))
