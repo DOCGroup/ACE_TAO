@@ -1,3 +1,15 @@
+Tue Mar  4 10:10:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Table.{h,cpp,inl}:
+          Removed obsolete methods and members
+
+        * tao/PI/Interceptor_List_T.{h,cpp}:
+          Const changes
+
+        * tao/Policy_Validator.h:
+        * tao/TAO_Server_Request.h:
+          Layout changes
+
 Mon Mar  3 14:52:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Generator_Parser.h:

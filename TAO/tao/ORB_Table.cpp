@@ -23,9 +23,7 @@ TAO::ORB_Table::ORB_Table (void)
   : lock_ (),
     first_orb_not_default_ (false),
     table_ (TAO_DEFAULT_ORB_TABLE_SIZE),
-    first_orb_ (0),
-    orbs_ (0),
-    num_orbs_ (0)
+    first_orb_ (0)
 {
 }
 

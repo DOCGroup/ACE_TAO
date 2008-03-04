@@ -78,10 +78,9 @@ namespace TAO
     /// Return the interceptor in sequence element @a index.
     InterceptorType_ptr_type interceptor (size_t index);
 
-    size_t size (void);
+    size_t size (void) const;
 
   private:
-
     typedef ACE_Array_Base<RegisteredInterceptor > RegisteredArray;
 
     /// Dynamic array of registered interceptors.
