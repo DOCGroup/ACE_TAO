@@ -123,7 +123,7 @@ CdmwBE_init (int & /* argc */, char * /* argv */ [])
 }
 
 void
-CdmwBE_post_init (char * /* files */ [], long /* nfiles */)
+CdmwBE_post_init (const char * /* files */ [], long /* nfiles */)
 {
 }
 

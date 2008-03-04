@@ -21,6 +21,7 @@
 #include "ciao/CCM_KeylessCCMHomeC.h"
 #include "ciao/ComponentsC.h"
 #include "Cdmw/CDMW_IDLC.h"
+#include "ComponentServer/ComponentServerC.h"
 #include "Deployment/Deployment_NodeApplicationS.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "Deployment/DeploymentC.h"

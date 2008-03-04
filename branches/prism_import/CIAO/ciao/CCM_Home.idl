@@ -47,6 +47,10 @@ module Components
     void remove_component (in CCMObject comp)
       raises (RemoveFailure);
   };
+  
+  // @@ Added by wotte for continued compatibility with
+  // OFCCM
+  typedef sequence<CCMHome> CCMHomes;
 };
 
 #endif /* CCM_HOME_IDL */

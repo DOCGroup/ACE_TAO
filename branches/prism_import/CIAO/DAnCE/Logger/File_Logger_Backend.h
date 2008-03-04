@@ -38,7 +38,7 @@ namespace DAnCE
 
       virtual int close (void);
 
-      virtual int log (ACE_Log_Record &log_record);
+      virtual ssize_t log (ACE_Log_Record &log_record);
 
     private:
       FILE * fh_;

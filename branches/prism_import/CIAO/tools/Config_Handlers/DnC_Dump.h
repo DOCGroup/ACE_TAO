@@ -23,6 +23,7 @@
 
 namespace Deployment
 {
+
 /**
 * @class DnC_Dump
 *
@@ -36,7 +37,7 @@ public:
 static void dump (const char* caption,
 const ::CORBA::StringSeq &str_seq);
 
-static void dump (const char* caption, const TAO_String_Manager& str);
+ static void dump (const char* caption, const TAO::String_Manager& str);
 
 static void dump (const char* caption, const CORBA::Boolean& val);
 

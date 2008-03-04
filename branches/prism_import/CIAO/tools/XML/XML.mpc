@@ -1,0 +1,14 @@
+// $Id$
+
+project (CIAO_XML_Utils) : acelib, xerces, ciaodll {
+  sharedname   += CIAO_XML_Utils
+  dynamicflags  = CIAO_XML_UTILS_BUILD_DLL
+  macros       += XML_USE_PTHREADS
+  includes      += ..
+
+  Source_Files {
+    XML_Error_Handler.cpp
+    XercesString.cpp
+    XML_Schema_Resolver.cpp
+  }
+}

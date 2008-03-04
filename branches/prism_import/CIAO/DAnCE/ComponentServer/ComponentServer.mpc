@@ -1,0 +1,42 @@
+// -*- MPC -*-
+// $Id$
+
+project(DAnCE_ComponentServer_IDL) : taoidldefaults, anytypecode {
+  idlflags     += -Wb,stub_export_macro=DAnCE_ComponentServer_stub_Export
+  idlflags     += -Wb,stub_export_include=DAnCE_ComponentServer_stub_export.h
+  idlflags     += -Wb,skel_export_macro=DAnCE_ComponentServer_svnt_Export
+  idlflags     += -Wb,skel_export_include=DAnCE_ComponentServer_svnt_export.h
+
+  custom_only = 1
+
+  IDL_Files {
+    ComponentServer.idl
+  }
+}
+
+project(DAnCE_ComponentServer_stub) : taolib_with_idl, tao_output, messaging, ciao_client_dnc,  anytypecode, ciaodll  {
+  dynamicflags = DANCE_COMPONENTSERVER_STUB_BUILD_DLL
+  after += DAnCE_ComponentServer_IDL
+
+  Header_Files {
+    DAnCE_ComponentServer_stub
+    ComponentServerC.h
+  }
+
+  Source_Files {
+    ComponentServerC.cpp
+  }
+}
+
+project(DAnCE_ComponentServer_svnt) : taolib_with_idl, tao_output, messaging, dance_component_server_stub,  anytypecode, ciaodll  {
+  dynamicflags = DANCE_COMPONENTSERVER_SKEL_BUILD_DLL
+
+  Header_Files {
+    DAnCE_ComponentServer_skel
+    ComponentServerS.h
+  }
+
+  Source_Files {
+    ComponentServerS.cpp
+  }
+}

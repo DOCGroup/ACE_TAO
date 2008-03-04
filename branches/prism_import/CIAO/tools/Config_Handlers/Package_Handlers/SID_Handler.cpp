@@ -125,7 +125,7 @@ namespace CIAO
 
         // @@MAJO This is not a good way of binding reverse IDREFS.
         std::auto_ptr <ACE_Utils::UUID> safe_uuid (
-          ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ());
+          ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
         ACE_CString uuid ( safe_uuid->to_string ()->c_str ());
 
         //        ACE_ERROR ((LM_ERROR, "*** Binding to %s\n",
