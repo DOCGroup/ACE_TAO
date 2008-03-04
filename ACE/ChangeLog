@@ -1,3 +1,8 @@
+Tue Mar  4 05:54:22 UTC 2008  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/svn_props.py:
+          Automatically set default properties when svn complains. 
+
 Mon Mar  3 11:22:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
