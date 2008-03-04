@@ -30,8 +30,7 @@ namespace DAnCE
         virtual ~Plan_Launcher_Impl () {};
 
         void execute();
-        static ::Deployment::DeploymentPlan* load_xml_plan (const char *deployment_plan_uri)
-        ACE_THROW_SPEC((Deployment_Failure));
+        static ::Deployment::DeploymentPlan* load_xml_plan (const char *deployment_plan_uri);
 
       protected:
         virtual void stop_plan();

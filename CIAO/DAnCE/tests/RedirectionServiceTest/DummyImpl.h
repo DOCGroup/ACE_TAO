@@ -13,11 +13,7 @@ namespace Test
         DummyImpl() : helloSentence ("A dummy hello sentence.") {};
 
         virtual char * sayHello (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-        )
-        ACE_THROW_SPEC ( (
-                           ::CORBA::SystemException
-                         ));
+        );
 
       private:
         const char * helloSentence;

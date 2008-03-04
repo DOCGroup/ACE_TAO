@@ -44,35 +44,15 @@ namespace DAnCE
 
       virtual Deployment::Application_ptr
       startLaunch (const Deployment::Properties & configProperty,
-                   Deployment::Connections_out providedReference)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                         , ::Deployment::ResourceNotAvailable
-                         , ::Deployment::StartError
-                         , ::Deployment::InvalidProperty
-                         , ::Deployment::InvalidNodeExecParameter
-                         , ::Deployment::InvalidComponentExecParameter
-                       ));
+                   Deployment::Connections_out providedReference);
 
-      virtual void destroyApplication (Deployment::Application_ptr)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                         , ::Deployment::StopError
-                       ));
+      virtual void destroyApplication (Deployment::Application_ptr);
 
       virtual ::Deployment::Applications * getApplications (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                       ));
+      );
 
       virtual ::Deployment::DeploymentPlan * getPlan (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                       ));
+      );
 
       void dump_connections (const ::Deployment::Connections & connections) const;
 

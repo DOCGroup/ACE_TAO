@@ -60,32 +60,20 @@ namespace DAnCE
        */
       virtual ::Components::Deployment::ComponentServer_ptr create_component_server (
         const ::Components::ConfigValues & config
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Components::CreateFailure,
-                         ::Components::Deployment::InvalidConfiguration
-                       ));
+      );
 
       //
       // IDL:omg.org/Components/Deployment/ServerActivator/remove_component_server:1.0
       //
       virtual void remove_component_server (
         ::Components::Deployment::ComponentServer_ptr server
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Components::RemoveFailure
-                       ));
+      );
 
       //
       // IDL:omg.org/Components/Deployment/ServerActivator/get_component_servers:1.0
       //
       virtual ::Components::Deployment::ComponentServers * get_component_servers (
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                       ));
+      );
 
 
 
@@ -101,11 +89,7 @@ namespace DAnCE
 
 
     private:
-      void initializeComponentServer (::Components::Deployment::ComponentServer_ptr server)
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Components::CreateFailure
-                       ));
+      void initializeComponentServer (::Components::Deployment::ComponentServer_ptr server);
 
     };
 

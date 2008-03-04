@@ -1,18 +1,61 @@
+Tue Mar  4 05:10:21 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.h:
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/NodeApplication/ComponentInstallation_Impl.h:
+        * DAnCE/NodeApplication/ComponentInstallation_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplication/ServerActivator_Impl.h:
+        * DAnCE/NodeApplication/ServerActivator_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.h:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp:
+        * DAnCE/RedirectionService/CCMObjectLocator.h:
+        * DAnCE/RedirectionService/CCMObjectLocator.cpp:
+        * DAnCE/tests/MocksTest/MockObjectHome.h:
+        * DAnCE/tests/MocksTest/MockObjectHome.cpp:
+        * DAnCE/tests/NameServiceTest/DummyImpl.h:
+        * DAnCE/tests/NameServiceTest/DummyImpl.cpp:
+        * DAnCE/tests/ObjectLocatorTest/DummyImpl.h:
+        * DAnCE/tests/ObjectLocatorTest/DummyImpl.cpp:
+        * DAnCE/tests/RedirectionServiceTest/DummyImpl.h:
+        * DAnCE/tests/RedirectionServiceTest/DummyImpl.cpp:
+
+          Removed emulated exception macros using rm_exception_macros.pl
+        
 Tue Mar  4 03:48:11 UTC 2008  William Otte  <wotte@william-ottes-macbook-pro.local>
 
         * DAnCE:
         * tools:
         * docs/schema:
-        
+
           Imports from OFDAnCE.
-        
+
 Tue Mar  4 03:24:45 UTC 2008  William Otte  <wotte@william-ottes-macbook-pro.local>
 
         * DAnCE:
         * tools:
         * docs/schema:
         * MPC/config:
-        
+
           Remove to make way for versions from OFDAnCE.
 
 Wed Feb 27 16:07:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
@@ -31,7 +74,7 @@ Wed Feb 27 16:07:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * CIDLC/cidlc.cpp:
 
           Disable check_for_improper_main_declaration fuzz check on these
-          files. The files have no dependency on ACE, thus they shouldn't 
+          files. The files have no dependency on ACE, thus they shouldn't
           use ACE_TMAIN.
 
 Thu Feb 21 02:34:37 CST 2008  Johnny Willemsen  <jwillemsen@remedy.nl>

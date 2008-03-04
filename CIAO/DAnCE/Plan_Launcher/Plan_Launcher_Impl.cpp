@@ -19,7 +19,6 @@ namespace Plan_Launcher
 
 ::Deployment::DeploymentPlan *Plan_Launcher_Impl::load_xml_plan(
     const char *deployment_plan_uri)
-ACE_THROW_SPEC((Deployment_Failure))
 {
   ACE_DEBUG ( (LM_TRACE, "[%M] load_xml_plan - Parsing plan \"%s\"...\n", deployment_plan_uri));
 

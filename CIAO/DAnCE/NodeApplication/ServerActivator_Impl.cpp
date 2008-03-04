@@ -64,11 +64,6 @@ ServerActivator_Impl::~ServerActivator_Impl()
 
 ::Components::Deployment::ComponentServer_ptr
 ServerActivator_Impl::create_component_server (const ::Components::ConfigValues & config)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Components::CreateFailure,
-                   ::Components::Deployment::InvalidConfiguration
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::create_component_server - started\n"));
 
@@ -166,10 +161,6 @@ ACE_THROW_SPEC ( (
 
 void
 ServerActivator_Impl::remove_component_server (::Components::Deployment::ComponentServer_ptr server)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Components::RemoveFailure
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::remove_component_server - started\n"));
 
@@ -206,9 +197,6 @@ ACE_THROW_SPEC ( (
 
 ::Components::Deployment::ComponentServers *
 ServerActivator_Impl::get_component_servers ()
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::get_component_servers - started\n"));
 
@@ -231,10 +219,6 @@ ACE_THROW_SPEC ( (
 
 void
 ServerActivator_Impl::initializeComponentServer (::Components::Deployment::ComponentServer_ptr server)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Components::CreateFailure
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] ServerActivator_Impl::initializeComponentServer - started\n"));
 

@@ -176,7 +176,6 @@ CORBA::Object_ptr
 DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
                                               int argc,
                                               ACE_TCHAR *argv[])
-ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   ACE_DEBUG ( (LM_TRACE, "[%M] DAnCE_ExecutionManager_Module::create_object starting...\n"));
 

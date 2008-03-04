@@ -132,9 +132,6 @@ NodeApplication_Impl::~NodeApplication_Impl()
 
 void
 NodeApplication_Impl::init()
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::init - started\n"));
 
@@ -165,12 +162,7 @@ ACE_THROW_SPEC ( (
 
 void
 NodeApplication_Impl::start (
-  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 )
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::start - started\n"));
   for (TComponents::iterator iter = this->components_.begin();
@@ -196,11 +188,6 @@ ACE_THROW_SPEC ( (
 
 void
 NodeApplication_Impl::createHome (unsigned int index)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidProperty
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createHome - started\n"));
 
@@ -412,11 +399,6 @@ ACE_THROW_SPEC ( (
 
 void
 NodeApplication_Impl::createContainer (unsigned int index)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidProperty
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createContainer - started\n"));
 
@@ -486,11 +468,6 @@ ACE_THROW_SPEC ( (
 
 void
 NodeApplication_Impl::createComponent (unsigned int index)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidProperty
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createComponent - started\n"));
 
@@ -572,11 +549,6 @@ ACE_THROW_SPEC ( (
 
 void
 NodeApplication_Impl::initComponents()
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidProperty
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::initComponents - started\n"));
 
@@ -584,7 +556,7 @@ ACE_THROW_SPEC ( (
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::initComponents - this->plan_.instance.length() = %u\n", this->plan_.instance.length()));
   for (unsigned int i = 0; i < this->plan_.instance.length(); i++)
     {
-      try 
+      try
       {
       switch (this->getInstanceType (this->plan_.instance[i].configProperty))
         {
@@ -616,10 +588,6 @@ ACE_THROW_SPEC ( (
 
 NodeApplication_Impl::EInstanceType
 NodeApplication_Impl::getInstanceType (const Deployment::Properties& prop) const
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::InvalidProperty
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::getInstanceType - started\n"));
 
@@ -643,10 +611,6 @@ void
 NodeApplication_Impl::createConfigValues (const Deployment::Properties& prop,
                                           const ERequestType request,
                                           Components::ConfigValues& cfg) const
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::InvalidProperty
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createConfigValues - started\n"));
 
@@ -848,10 +812,6 @@ ACE_THROW_SPEC ( (
 
 Deployment::Connections*
 NodeApplication_Impl::getAllConnections()
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::InvalidProperty
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::getAllConnections - started\n"));
 
@@ -968,11 +928,6 @@ ACE_THROW_SPEC ( (
 void
 NodeApplication_Impl::finishLaunch (const Deployment::Connections & providedReference,
                                     ::CORBA::Boolean start)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidConnection
-                 ))
 {
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::finishLaunch - started for connection \n"));
   ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::finishLaunch - started for connections sequence with length: %d\n", providedReference.length()));
@@ -1123,11 +1078,6 @@ Components::Cookie*
 NodeApplication_Impl::connectReceptacle (Components::CCMObject_ptr inst,
                                          const ACE_CString& port_name,
                                          CORBA::Object_ptr facet)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidConnection
-                 ))
 {
   Components::Cookie* res = 0;
   try
@@ -1163,11 +1113,6 @@ Components::Cookie*
 NodeApplication_Impl::connectReceptacleExt (Components::CCMObject_ptr inst,
                                             const ACE_CString& port_name,
                                             CORBA::Object_ptr facet)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidConnection
-                 ))
 {
   Components::Cookie* res = 0;
   try
@@ -1203,11 +1148,6 @@ void
 NodeApplication_Impl::connectEmitter (Components::CCMObject_ptr inst,
                                       const ACE_CString& port_name,
                                       CORBA::Object_ptr consumer)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidConnection
-                 ))
 {
   Components::EventConsumerBase_var event = Components::EventConsumerBase::_unchecked_narrow (consumer);
   try
@@ -1237,12 +1177,6 @@ void
 NodeApplication_Impl::connectEmitterExt (Components::CCMObject_ptr inst,
                                          const ACE_CString& port_name,
                                          CORBA::Object_ptr consumer)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidConnection,
-                   ::Components::InvalidName
-                 ))
 {
   Components::EventConsumerBase_var event = Components::EventConsumerBase::_unchecked_narrow (consumer);
   try
@@ -1267,11 +1201,6 @@ Components::Cookie*
 NodeApplication_Impl::connectPublisher (Components::CCMObject_ptr inst,
                                         const ACE_CString& port_name,
                                         CORBA::Object_ptr consumer)
-ACE_THROW_SPEC ( (
-                   ::CORBA::SystemException,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidConnection
-                 ))
 {
   Components::Cookie* res = 0;
   Components::EventConsumerBase_var event = Components::EventConsumerBase::_unchecked_narrow (consumer);
@@ -1301,10 +1230,6 @@ ACE_THROW_SPEC ( (
 
 void NodeApplication_Impl::createConfigValues(
     const Deployment::Properties& prop, Components::ConfigValues& cfg) const
-ACE_THROW_SPEC((
-        ::CORBA::SystemException,
-        ::Deployment::InvalidProperty
-    ))
 {
   ACE_CString cdmw_name = "cdmw.config.";
   CORBA::ULong len = prop.length();

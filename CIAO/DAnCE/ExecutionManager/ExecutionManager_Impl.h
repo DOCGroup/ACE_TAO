@@ -40,39 +40,19 @@ namespace DAnCE
       virtual ::Deployment::DomainApplicationManager_ptr preparePlan (
         const ::Deployment::DeploymentPlan & plan,
         ::Deployment::ResourceCommitmentManager_ptr resourceCommitment
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::ResourceNotAvailable,
-                         ::Deployment::PlanError,
-                         ::Deployment::StartError
-                       ));
+      );
 
       virtual ::Deployment::DomainApplicationManagers * getManagers (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                       ));
+      );
 
       virtual void destroyManager (
         ::Deployment::DomainApplicationManager_ptr manager
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException,
-                         ::Deployment::StopError
-                       ));
+      );
 
       // This one derived from ExecutionManagerDaemon interface
       // for shutdowning DAnCE agent
       virtual void shutdown (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
-      ACE_THROW_SPEC ( (
-                         ::CORBA::SystemException
-                       ))
       {
         this->orb_->shutdown();
       };

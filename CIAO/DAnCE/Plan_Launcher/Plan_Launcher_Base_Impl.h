@@ -47,11 +47,9 @@ public:
   void execute();
 
   static Deployment::DeploymentPlan* read_cdr_plan_file(
-      const char *deployment_plan_uri)
-  ACE_THROW_SPEC((Deployment_Failure));
+      const char *deployment_plan_uri);
   static void write_cdr_plan_file(const char * filename,
-      const Deployment::DeploymentPlan & plan)
-  ACE_THROW_SPEC((Deployment_Failure));
+      const Deployment::DeploymentPlan & plan);
 
 protected:
 

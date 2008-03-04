@@ -43,10 +43,6 @@ namespace DAnCE
     const char * ,
     ::PortableServer::ServantLocator::Cookie &
   )
-  ACE_THROW_SPEC ( (
-                     CORBA::SystemException,
-                     ::PortableServer::ForwardRequest
-                   ))
   {
     CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
     ACE_CString path = s.in();
