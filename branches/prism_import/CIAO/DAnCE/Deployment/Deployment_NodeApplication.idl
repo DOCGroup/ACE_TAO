@@ -1,0 +1,19 @@
+// $Id$
+
+#ifndef DEPLOYMENT_NODEAPPLICATION_IDL
+#define DEPLOYMENT_NODEAPPLICATION_IDL
+
+#include "DAnCE/Deployment/Deployment_Application.idl"
+#include "DAnCE/Deployment/Deployment_Core.idl"
+//#include "DAnCE/Deployment/Deployment_Container.idl"
+//#include "DAnCE/Deployment/Deployment_Events.idl"
+
+module Deployment {
+	//@! in DOCGroup NodeApplication has a lot extensions and additional types
+	interface NodeApplication :
+		Application
+	{
+	};
+};
+#endif /* DEPLOYMENT_NODEAPPLICATION_IDL */
+	

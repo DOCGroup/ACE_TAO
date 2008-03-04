@@ -1,0 +1,47 @@
+//$Id$
+
+project (CIAO_Events_XML_Generation) : xscdefaults {
+   requires += xsc dummy_label
+
+   xscflags += --cxx-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.cpp
+   xscflags += --cxx-header-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.h
+   xscflags += --cxx-export-symbol CIAO_Events_Handlers_Export
+   xscflags += --cxx-namespace-regex  <%quote%>%.*vanderbilt.*%CIAO/Config_Handlers%<%quote%>
+   xscflags += --cxx-export-header CIAO_Events_Handlers_Export.h
+   xscflags += --search-path "$(CIAO_ROOT)/docs/schema"
+   
+   custom_only = 1
+
+   XSC_Files {
+        gendir = .
+        $(CIAO_ROOT)/docs/schema/CIAOEvents.xsd
+   }
+}
+
+project (CIAO_Events_Handlers) : acelib, ciao_config_handlers_base, ciao_events_dnc, dance_deployment_stub {
+  sharedname = CIAO_Events_Handlers
+  dynamicflags   = CIAO_EVENTS_HANDLERS_BUILD_DLL
+  macros   += XML_USE_PTHREADS
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  requires += dummy_label
+  after += CIAO_Events_XML_Generation 
+  Source_Files {
+    CIAOEvents.cpp
+    CIAOEvents_Handler.cpp
+  }
+
+  Header_Files {
+  }
+}
+
+project (CIAO_Events_Handlers_Tests) : ciao_config_handlers_base, ciao_server_dnc {
+  exename = test
+  after    += CIAO_Events_Handlers
+  macros   += XML_USE_PTHREADS
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  libs     += CIAO_Events_Handlers
+  requires += dummy_label
+  Source_Files {
+    test.cpp
+  }
+}

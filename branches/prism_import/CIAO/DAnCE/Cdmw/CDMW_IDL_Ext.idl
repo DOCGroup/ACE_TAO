@@ -1,0 +1,50 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../..  \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Deployment.idl
+ */
+
+#if !defined (CDMW_IDL_EXT)
+#define CDMW_IDL_EXT
+
+#include "DAnCE/Cdmw/CDMW_IDL.idl"
+#include "ciao/CCM_KeylessCCMHome.idl"
+
+#pragma prefix "thalesgroup.com"
+
+/**
+* This module describes interfaces and data types of the CDMW
+* CCM ComponentServer.
+*/
+module CdmwCcmComponentServer
+{
+   /** 
+   * IDL interface of CDMW ComponentServers
+   */
+    interface ComponentServer : Components::Deployment::ComponentServer
+    {        
+        void set_component_installation(
+            in Components::Deployment::ComponentInstallation component_installation);
+        void set_server_activator(
+            in Components::Deployment::ServerActivator server_activator);
+    };
+
+};  // end module CdmwCcmComponentServer
+
+module CdmwCcmCif
+{
+   interface KeylessCCMHome : Components::KeylessCCMHome
+   {
+       Components::CCMObject create_component_with_config_values(in Components::ConfigValues config)
+           raises (Components::CreateFailure);
+   };
+   
+};  // end module CdmwCcmCif
+#endif /* CDMW_IDL_EXT */

@@ -1,0 +1,25 @@
+
+project (*RedirectionServiceTestServer): dance, taoserver, iortable, naming_serv, dance_redirection_service, dance_logger  {
+	exename = RedirectionServiceTestServer
+
+	IDL_Files {
+   		Dummy.idl
+  	}
+
+	Source_Files {
+		srv_main.cpp
+   		DummyC.cpp
+   		DummyS.cpp
+   		DummyImpl.cpp
+  	}
+}
+
+project (*RedirectionServiceTestClient): dance, taoclient, naming, dance_logger {
+	after = *RedirectionServiceTestServer
+	exename = RedirectionServiceTestClient
+
+	Source_Files {
+		clt_main.cpp
+		DummyC.cpp
+   	}
+}

@@ -1,0 +1,149 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../..  \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Deployment.idl
+ */
+
+#if !defined (CDMW_IDL)
+#define CDMW_IDL
+
+#include "ciao/CCM_Home.idl"
+#include "ciao/CCM_KeylessCCMHome.idl"
+#include "ciao/CCM_Navigation.idl"
+#include "ciao/CCM_StandardConfigurator.idl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+/* Cdmw stuff, should be moved */
+
+  const unsigned long CDMW_VID = 0x5448000;
+
+  const FeatureName PROCESS_DESTINATION    = "ProcessDestination";
+  const FeatureName COMPONENT_KIND         = "ComponentKind";
+  const FeatureName SERVANT_LIFETIME       = "ServantLifeTime";
+  const FeatureName THREADING_POLICY       = "ThreadingPolicy";
+  const FeatureName HOME_REPOSITORY_ID     = "HomeRepositoryId";
+  const FeatureName HOME_SERVANT_CLASSNAME = "HomeServantClassName";
+  const FeatureName COMPONENT_NAME         = "ComponentName";
+  const FeatureName USES_PORT_TIMEOUTS     = "UsesPortTimeouts";
+  const FeatureName VALUETYPE_FACTORY_DEPENDENCIES = "ValuetypeFactoryDependencies";
+  const FeatureName FAULT_TOLERANCE_REPLICATION_STYLE = "FaultToleranceReplicationStyle";
+  const FeatureName FAULT_TOLERANCE_GROUP_NAME     = "FaultToleranceGroupName";
+  const FailureReason CREATE_FAILURE_BASE = CDMW_VID | 0x400;
+
+  const FailureReason COMPONENT_SERVER_NOT_FOUND       = CREATE_FAILURE_BASE | 26;
+  const FailureReason COMPONENT_SERVER_ALREADY_CREATED = CREATE_FAILURE_BASE | 27;
+  const FailureReason UNKNOWN_COMPONENT_SERVER         = CREATE_FAILURE_BASE | 29;
+
+  module Deployment
+  {
+    typedef string UUID;
+    typedef string Location;
+
+    typedef FailureReason InvalidConfigurationReason;
+    const InvalidConfigurationReason UnknownConfigValueName = 0;
+    const InvalidConfigurationReason InvalidConfigValueType = 1;
+    const InvalidConfigurationReason ConfigValueRequired = 2;
+    const InvalidConfigurationReason ConfigValueNotExpected = 3;
+
+    exception InvalidConfiguration
+    {
+      InvalidConfigurationReason reason;
+      FeatureName name;
+    };
+
+    exception UnknownImplId { };
+
+    exception InvalidLocation { };
+
+    exception ImplEntryPointNotFound { };
+
+    exception InstallationFailure
+    {
+      FailureReason reason;
+    };
+
+    interface ComponentServer;
+    typedef sequence<ComponentServer> ComponentServers;
+
+    interface ServerActivator
+    {
+      ComponentServer create_component_server(in ConfigValues config)
+                                raises(::Components::CreateFailure, 
+                                       ::Components::Deployment::InvalidConfiguration);
+
+      void remove_component_server(in ComponentServer server)
+                               raises(::Components::RemoveFailure);
+
+      ComponentServers get_component_servers();
+    };
+
+    interface Container;
+    typedef sequence<Container> Containers;
+
+    interface ComponentServer
+    {
+      readonly attribute ConfigValues configuration;
+
+      ServerActivator get_server_activator();
+      Container create_container(in ConfigValues config)
+                         raises (::Components::CreateFailure, 
+                                 ::Components::Deployment::InvalidConfiguration);
+
+      void remove_container(in Container cref) raises (::Components::RemoveFailure);
+
+      Containers get_containers();
+
+       void remove() raises (::Components::RemoveFailure);
+    };
+
+    interface Container
+    {
+      readonly attribute ConfigValues configuration;
+
+      ComponentServer get_component_server();
+
+      CCMHome install_home(in UUID id,
+                           in string entrypt,
+                           in ConfigValues config)
+                      raises (::Components::Deployment::UnknownImplId,
+                              ::Components::Deployment::ImplEntryPointNotFound,
+                              ::Components::Deployment::InstallationFailure,
+                              ::Components::Deployment::InvalidConfiguration);
+
+      void remove_home(in CCMHome href) raises (::Components::RemoveFailure);
+
+      CCMHomes get_homes();
+
+      void remove() raises (::Components::RemoveFailure);
+    };
+
+    interface ComponentInstallation
+    {
+      void install(in UUID implUUID, in Location component_loc)
+              raises (InvalidLocation, InstallationFailure);
+
+      void replace(in UUID implUUID, in Location component_loc)
+              raises (InvalidLocation, InstallationFailure);
+
+      void remove(in UUID implUUID)
+              raises (UnknownImplId, RemoveFailure);
+
+      Location get_implementation(in UUID implUUID)
+              raises(UnknownImplId, InstallationFailure);
+    };
+
+  };
+
+};
+
+#endif /* CDMW_IDL */

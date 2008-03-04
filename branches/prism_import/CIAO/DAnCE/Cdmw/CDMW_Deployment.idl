@@ -1,0 +1,68 @@
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../..  \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Deployment.idl
+ */
+
+#if !defined (CDMW_DEPLOYMENT_EXT)
+#define CDMW_DEPLOYMENT_EXT
+
+#include "DAnCE/Cdmw/CDMW_IDL.idl"
+
+#pragma prefix "thalesgroup.com"
+
+module CdmwDeployment {
+  struct ValuetypeFactoryDescription {
+    /**
+     * The repository id of the valuetype created by the factory.
+     */
+    CORBA::RepositoryId repid;
+
+    /**
+     * The entrypoint for creation of an instance of this valuetype factory.
+     */
+    string factory_entrypoint;
+  };
+  typedef sequence<ValuetypeFactoryDescription> ValuetypeFactoryDescriptionSeq;
+
+  /**
+  * Exception raised by CdmwDeployment::ComponentInstallation when the
+  * location of an unknown valuetype is requested.
+  */
+  exception UnknownValuetype {};
+  interface ComponentInstallation: Components::Deployment::ComponentInstallation {
+
+        /**
+         * Returns the location of the valuetypefactory packaged with the component
+         * implementation 'implUUID' and which cretaes specified valuetypes.
+         *
+         * @param  implUUID  The UUID of the component implementation with which
+         *                   the valuetype factory was packaged
+         * @param  repid  The repository id of the valuetype created by the
+         *                valuetype factory.
+         *
+         * @throws  org.omg.Components.Deployment.UnknownImplId
+         *          If the imlUUID parameter doesn't correspond to a previously
+         *          installed installed component package.
+         * @throws  UnknownValuetype
+         *          If the component package doesn't specify a valuetype factory
+         *          for the valuetype repository id.
+         * @throws  org.omg.Components.Deployment.InstallationFailure
+         *          If the valuetype factory cannot be retrieved.
+         */
+        Components::Deployment::Location
+        get_valuetypefactory_location(in Components::Deployment::UUID implUUID,
+                                      in CORBA::RepositoryId repid)
+            raises (Components::Deployment::UnknownImplId,
+                    UnknownValuetype,
+                    Components::Deployment::InstallationFailure);
+
+    };
+
+}; /* End Cdmw */
+#endif /* CDMW_DEPLOYMENT_EXT */

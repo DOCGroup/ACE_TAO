@@ -1,0 +1,9 @@
+
+project(Starter) : taoexe, dance_exe, dance_logger, messaging, naming, iortable {
+  exename = dance
+
+  Source_Files {
+    Starter.cpp
+  }
+}
+

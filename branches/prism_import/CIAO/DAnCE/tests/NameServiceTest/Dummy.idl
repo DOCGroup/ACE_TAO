@@ -1,0 +1,13 @@
+
+#ifndef DUMMY_IDL
+#define DUMMY_IDL
+
+module NameServiceTest
+{
+	interface Dummy {
+		string sayHello();
+	};
+};
+
+#endif /* DUMMY_IDL */
+

@@ -1,0 +1,13 @@
+// -*- MPC -*-
+// $Id$
+
+project : dance_lib, naming, dance_node_application_manager, dance_node_application, dance_deployment_svnt, dance_deployment_stub, dynamicinterface {
+  sharedname   = DAnCE_NodeManager
+  dynamicflags = NODEMANAGER_BUILD_DLL
+    
+  Source_Files {
+    NodeManager_Impl.cpp
+    Node_Manager_Module.cpp
+  }
+}
+
