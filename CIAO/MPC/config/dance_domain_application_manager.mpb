@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : dance, dance_domain_application {
+  after += DomainApplicationManager
+  libs  += DAnCE_DomainApplicationManager
+}

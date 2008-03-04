@@ -1,3 +1,39 @@
+Tue Mar  4 05:39:19 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciao_config_manager.mpb:
+        * MPC/config/ciao_domainapplicationmanager_dnc.mpb:
+        * MPC/config/ciao_executionmanager_stub.mpb:
+        * MPC/config/ciao_nodeapplication.mpb:
+        * MPC/config/ciao_nodemanager_stub.mpb:
+        * MPC/config/ciao_noop_configurator.mpb:
+        * MPC/config/ciao_servant_dnc.mpb:
+        * MPC/config/ciao_server_dnc.mpb:
+        * MPC/config/ciaodll.mpb:
+        * MPC/config/dance_cdmw_idl.mpb:
+        * MPC/config/dance_deployment_stub.mpb:
+        * MPC/config/dance_deployment_svnt.mpb:
+        * MPC/config/dance_domain_application.mpb:
+        * MPC/config/dance_domain_application_manager.mpb:
+        * MPC/config/dance_exe.mpb:
+        * MPC/config/dance_executionmanager_stub.mpb:
+        * MPC/config/dance_extension_stub.mpb:
+        * MPC/config/dance_lib.mpb:
+        * MPC/config/dance_logger.mpb:
+        * MPC/config/dance_mocks.mpb:
+        * MPC/config/dance_node_application.mpb:
+        * MPC/config/dance_node_application_manager.mpb:
+        * MPC/config/dance_node_manager.mpb:
+        * MPC/config/dance_nodemanager_stub.mpb:
+        * MPC/config/dance_redirection_service.mpb:
+        * MPC/config/dance_utils.mpb:
+        
+          Pulled necessary mpb files from OFDAnCE to allow generation of
+          makefiles.
+
+        * ciao/CCM_Core.mpc:
+        
+          ciao_deployment_*.mpb changes to dance_deployment_*.mpb.
+
 Tue Mar  4 05:19:46 UTC 2008  William Otte  <wotte@william-ottes-macbook-pro.local>
 
         * MPC/config:
@@ -45,7 +81,7 @@ Tue Mar  4 05:10:21 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/tests/RedirectionServiceTest/DummyImpl.cpp:
 
           Removed emulated exception macros using rm_exception_macros.pl
-        
+
 Tue Mar  4 03:48:11 UTC 2008  William Otte  <wotte@william-ottes-macbook-pro.local>
 
         * DAnCE:

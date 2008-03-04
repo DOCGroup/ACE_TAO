@@ -191,7 +191,7 @@ project (CIAO_Server) : orbsvcslib, orbsvcs_output \
                         , utils \
                         , ciao_container_dnc \
                         , ciao_client_dnc \
-                        , ciao_deployment_svnt \
+                        , dance_deployment_svnt \
                         , avoids_minimum_corba \
                         , avoids_corba_e_compact \
                         , avoids_corba_e_micro \
