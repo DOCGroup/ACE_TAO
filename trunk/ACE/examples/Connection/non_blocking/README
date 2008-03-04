@@ -1,0 +1,28 @@
+This code illustrates how to write a single set of source code (for a
+client and server) and then parameterize in the desired IPC mechanism.
+In this case, the IPC mechanisms include sockets, TLI, and STREAM
+pipes.  The single set of source code is located in CPP-acceptor.cpp
+(which is the server) and CPP-connector.cpp (which is the non-blocking
+client).
+
+Here's how I typically run these tests:
+
+% test_sock_acceptor localhost:10020 &
+starting up daemon ./test_sock_acceptor
+starting server addr 127.0.0.1:10020 on handle 5
+client addr 127.0.0.1:10003 on handle 6
+hello
+
+% test_sock_connector localhost:10020
+starting up daemon ./test_sock_connector
+activating 5
+in handle_output
+please enter input..: hello
+in handle_output
+
+There are a number of other options that you can provide.  Please see
+the source code for details.
+
+Note that only the sock tests work on all platforms.  The other tests
+reply on features (in particular, non-blocking connections and TLI)
+that are mostly found on UNIX platforms.
