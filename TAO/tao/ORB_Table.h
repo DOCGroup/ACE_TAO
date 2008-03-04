@@ -99,8 +99,6 @@ namespace TAO
     int unbind (const char *orb_id);
     //@}
 
-    ::TAO_ORB_Core * const * get_orbs (size_t& num_orbs);
-
     /// Obtain the first ORB for the @c ORB_Core_instance()
     /// implementation.
     ::TAO_ORB_Core * first_orb (void);
@@ -146,16 +144,6 @@ namespace TAO
 
     /// The first ORB created by the user
     ::TAO_ORB_Core * first_orb_;
-
-    /// List of orbs for get_orbs call
-    /**
-     * @todo ORB_Table::orbs_ appears to be unused.  Remove it?
-     */
-    ::TAO_ORB_Core ** orbs_;
-
-    /// Number of ORBs in the table.
-    size_t num_orbs_;
-
   };
 
   // -----------------------------------------------
@@ -190,9 +178,7 @@ namespace TAO
     ::TAO_ORB_Core * core (void) const { return this->core_; }
 
   private:
-
     ::TAO_ORB_Core * core_;
-
   };
 
 }

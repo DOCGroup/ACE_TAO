@@ -137,9 +137,7 @@ public:
   const char *operation (void) const;
 
   /// Set the operation name.
-  void operation (const char *operation,
-                  size_t length,
-                  int release);
+  void operation (const char *operation, size_t length, int release);
 
   /// Return the length of the operation.
   size_t operation_length (void) const;
