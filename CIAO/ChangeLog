@@ -1,3 +1,12 @@
+Tue Mar  4 03:24:45 UTC 2008  William Otte  <wotte@william-ottes-macbook-pro.local>
+
+        * DAnCE:
+        * tools:
+        * docs/schema:
+        * MPC/config:
+        
+          Remove to make way for versions from OFDAnCE.
+
 Wed Feb 27 16:07:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
