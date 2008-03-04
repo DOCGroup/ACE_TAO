@@ -1,0 +1,38 @@
+# file      : BuildRules/Object.gcc.post.rules
+# author    : Boris Kolpackov <boris@kolpackov.net>
+# copyright : Copyright (c) 2002-2003 Boris Kolpackov
+# license   : http://kolpackov.net/license.html
+
+
+#
+# Note: normally you wouldn't want to change anything below.
+#
+
+#
+# Pattern rules catalog.
+# {
+
+# Defined pattern rule to build .o from .cpp
+%.o : %.cpp
+	$(CXX) $(CXX_PREPROCESS_FLAGS) $(CXX_COMPILE_FLAGS) -MD -MP -MT $(@:.o=.d) -MF $(@:.o=.d) -c $< -o $@
+
+# }
+
+# Defines the rule to build object files from c++ translation units.
+.PHONY : object
+object : $(cxx_translation_units:.cpp=.o)
+
+# Defines a phony target to clean all that's been generated
+.PHONY : clean
+clean :
+	-rm -f $(cxx_translation_units:.cpp=.o)
+	-rm -f $(cxx_translation_units:.cpp=.d)
+
+
+# Include dependencies for c++ translation units.
+-include $(cxx_translation_units:.cpp=.d)
+
+
+# The following catch-all rule will skip unknown targets
+%:: ;@:
+# $Id$

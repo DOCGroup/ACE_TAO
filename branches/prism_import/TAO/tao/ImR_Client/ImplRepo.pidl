@@ -1,0 +1,176 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file   ImplRepo.pidl
+ *
+ * $Id$
+ *
+ * This file was used to generate the code in ImplRepo{A,C,S}.{h,inl,cpp}
+ *
+ * The command used to generate code from this file is:
+ *
+ *   tao_idl -Ssi -Gp -Gd -I$(TAO_ROOT) -Wb,export_macro=TAO_IMR_Client_Export -Wb,export_include=imr_client_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
+ *
+ */
+//=============================================================================
+
+#include "tao/ImR_Client/ServerObject.pidl"
+
+module ImplementationRepository
+{
+  // = Exceptions
+
+  /// Object already bound in the Implementation Repository
+  exception AlreadyRegistered {};
+
+  /// The server could not be restarted.
+  exception CannotActivate
+  {
+    string reason;
+  };
+
+  /// Object not found in the Implementation Repository
+  exception NotFound {};
+
+  /// One environment variable/value pair.
+  struct EnvironmentVariable
+  {
+    string name;
+    string value;
+  };
+
+  /// Complete Environment.
+  typedef sequence<EnvironmentVariable> EnvironmentList;
+
+  /// The type of Activation
+  enum ActivationMode {NORMAL, MANUAL, PER_CLIENT, AUTO_START};
+
+  /// Options used to start up the server.
+  struct StartupOptions
+  {
+    /// Startup command (program name and arguments).
+    string command_line;
+
+    /// Environment Variables.
+    EnvironmentList environment;
+
+    /// Working directory.
+    string working_directory;
+
+    /// Activation Mode
+    ActivationMode activation;
+
+    /// Name of the activator
+    string activator;
+
+    /// Number of retries allowed
+    long start_limit;
+  };
+
+  struct ServerInformation
+  {
+    /// Server name.
+    string server;
+
+    /// How to start up the server.
+    StartupOptions startup;
+
+    /// This is used in places that require a partial IOR with
+    /// just the ObjectKey missing.
+    string partial_ior;
+  };
+
+  typedef sequence <ServerInformation> ServerInformationList;
+
+  /**
+    * @brief The Server Information Iterator Interface
+    *
+    * Interface for iterating over servers returned with
+    * Administration::list ().
+    */
+  interface ServerInformationIterator
+  {
+    /// This operation returns at most the requested number of
+    /// servers.
+    /// If how_many == 0, then returns all servers
+    boolean next_n (in unsigned long how_many,
+                    out ServerInformationList servers);
+
+    /// This operation destroys the iterator.
+    void destroy ();
+  };
+
+  /**
+    * @brief The Implementation Repository Administration Interface
+    *
+    * This interface exports all the administration functionality of
+    * the Implementation Repository.
+    */
+  interface Administration
+  {
+    /// Activate server that is named <server>.
+    ///
+    /// The <NotFound> exception is raised when <server> is not found
+    /// in the Implementation Repository.  The <CannotActivate> exception
+    /// is raised when <server> is found in the Repository but could not be
+    /// activated.
+    void activate_server (in string server)
+      raises (NotFound, CannotActivate);
+
+    /// Add/Update the the <server>
+    /// The <NotFound> exception is raised when the activator specified
+    /// in the options is not registered.
+    void add_or_update_server (in string server, in StartupOptions options)
+      raises(NotFound);
+
+    /// Remove <server> from the Implementation Repository.
+    ///
+    /// The <NotFound> exception is raised when <server> is not found
+    /// in the Implementation Repository.
+    void remove_server (in string server)
+      raises (NotFound);
+
+    /// Tries to shutdown the server, first gracefully, then ungracefully.
+    ///
+    /// The <NotFound> exception is raised when <server> is not found
+    /// in the Implementation Repository.
+    void shutdown_server (in string server)
+      raises (NotFound);
+
+    /// Used to notify the Implementation Repository that <server> is alive
+    /// and well at <partial_ior>.
+    ///
+    /// The <NotFound> exception is raised when <server> is not found
+    /// in the Implementation Repository.
+    void server_is_running (in string server,
+                            in string partial_ior,
+                            in ServerObject server_object)
+      raises (NotFound);
+
+    /// Used to tell the Implementation Repository that <server> is shutting
+    /// down.
+    ///
+    /// The <NotFound> exception is raised when <server> is not found
+    /// in the Implementation Repository.
+
+    void server_is_shutting_down (in string server)
+      raises (NotFound);
+
+    /// Returns the startup information for a given <server>.
+    void find (in string server, out ServerInformation info);
+
+    /// Returns at most <how_many> servers in <server_list>.  If there
+    /// are additional servers, they can be received through the
+    /// <server_iterator>.  If there are no more servers, then
+    /// <server_iterator> is null.
+    /// If how_many == 0, then returns all servers.
+    void list (in unsigned long how_many,
+               out ServerInformationList server_list,
+               out ServerInformationIterator server_iterator);
+
+    /// Shutdown the ImR, optionally shutting down registered
+    /// activators and servers first.
+    oneway void shutdown(in boolean activators, in boolean servers);
+  };
+};

@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project (*Test) : taoclient {   
+   Source_Files {
+      TestC.cpp
+      test.cpp
+   }
+}

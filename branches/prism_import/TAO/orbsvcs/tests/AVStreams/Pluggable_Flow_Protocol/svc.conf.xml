@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<!-- Converted from ./orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <dynamic id="AV_Default_Resource_Factory" type="Service_Object">
+   <initializer path="TAO_AV" init="_make_TAO_AV_Default_Resource_Factory"/>
+ </dynamic>
+ <dynamic id="TimeStamp_Protocol_Factory" type="Service_Object">
+   <initializer path="TAO_TS" init="_make_TimeStamp_Protocol_Factory"/>
+ </dynamic>
+ <static id="AV_Default_Resource_Factory" params="-AVFlowProtocolFactory TimeStamp_Protocol_Factory"/>
+ <dynamic id="UDP_Factory" type="Service_Object">
+   <initializer path="TAO_AV" init="_make_TAO_AV_UDP_Factory"/>
+ </dynamic>
+ <static id="AV_Default_Resource_Factory" params="-AVTransportFactory UDP_Factory"/>
+</ACE_Svc_Conf>

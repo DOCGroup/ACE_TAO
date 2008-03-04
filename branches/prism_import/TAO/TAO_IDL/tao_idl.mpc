@@ -1,0 +1,184 @@
+// -*- MPC -*-
+// $Id$
+
+project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, preproc {
+  exename      = tao_idl
+  libs        += TAO_IDL_BE TAO_IDL_FE
+  install      = $(ACE_ROOT)/bin
+  after       += TAO_IDL_BE TAO_IDL_FE gperf
+
+  specific (automake) {
+    includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe $(TAO_ROOT)
+    macros      += TAO_IDL_INCLUDE_DIR=\"\\"$(includedir)/tao\\"\"
+  } else {
+    includes    += include be_include fe ..
+  }
+
+  specific {
+    // Override the template value for optimize.  Building the exe
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objecs
+    // within the code.
+    optimize =
+  }
+
+  verbatim(gnuace, local) {
+    ifeq ($(TAO_IDL_PREPROCESSOR),)
+      ifeq ($(ACE_CC_PREPROCESSOR),)
+        CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
+      else
+        CPPFLAGS += -DACE_CC_PREPROCESSOR=\\\"$(subst \\,\\,$(ACE_CC_PREPROCESSOR))\\\"
+      endif
+    else
+      CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
+    endif
+  }
+
+  Source_Files {
+    driver/drv_args.cpp
+    tao_idl.cpp
+  }
+
+  Header_Files {
+    include/drv_extern.h
+  }
+}
+
+
+project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile, tao_vc8warnings {
+  sharedname   = TAO_IDL_BE
+  libs        += TAO_IDL_FE
+  dynamicflags = TAO_IDL_BE_BUILD_DLL
+  after       += TAO_IDL_FE
+
+  specific (automake) {
+    includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe
+  } else {
+    includes    += include be_include fe
+  }
+
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objecs
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    be
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+
+project(TAO_IDL_FE) : acelib, conv_lib, tao_output, crosscompile {
+  sharedname   = TAO_IDL_FE
+  dynamicflags = TAO_IDL_FE_BUILD_DLL
+
+  specific (automake) {
+    includes    += $(srcdir)/include $(srcdir)/fe
+  } else {
+    includes    += include fe
+  }
+
+  specific {
+    // Override the template value for optimize.  Building the frontend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).  This is due to the use of addresses of static objecs
+    // within the code.
+    optimize =
+  }
+
+  Source_Files {
+    fe
+    ast
+    util
+    narrow
+  }
+
+  Header_Files {
+    include
+  }
+
+  verbatim(gnuace, local) {
+    fe/fe_lookup.cpp: fe/keywords.dat
+    "	echo '\/\/ $$I''d$$' > $@"
+    "	echo '' >> $@"
+    "	echo '#include \"fe_private.h\"' >> $@"
+    "	echo '#include \"ace/OS_NS_string.h\"' >> $@"
+    "	echo '' >> $@"
+    "	$(ACE_ROOT)/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ | \\"
+    "	sed -e 's/,}/,0}/g' \\"
+    "	    -e 's/\\*str == \\*s && !strncmp/len == static_cast<unsigned int> (ACE_OS::strlen (s)) \\&\\& *str == *s \\&\\& !ACE_OS::strncmp/g' \\"
+    "	>> $@"
+
+    fe/lex.yy.cpp: fe/idl.ll
+    "	@echo 'WARNING: Potentially outdated $@'"
+    "	@echo '         either touch(1) the file or explicitly'"
+    "	@echo '         generate it using:'"
+    "	@echo '    make lex.yy'"
+
+    .PHONY: lex.yy
+    lex.yy:
+    "ifeq ($(notdir $(LEX)), flex)"
+    "	$(LEX) -L -t fe/idl.ll | \\"
+    "	sed -e 's/yy/tao_yy/g' \\"
+    "	    -e 's/YY/TAO_YY/g' \\"
+    "	    -e 's/ NULL/ 0/g' \\"
+    "	    -e 's/	/        /g' \\"
+    "	    -e 's/  *$$\/\/g' \\"
+    "	    -e 's/TAO_YY_BREAK break;/TAO_YY_BREAK ACE_NOTREACHED (break;)/g' \\"
+    "	    -e 's/ECHO/TAO_YY_ECHO/' \\"
+    "	    -e 's/fread\([^\)]*\)/static_cast<int> (&)/g' \\"
+    "	    -e 's/\\$$Hea''der.*\\$$/$$I''d$$/' \\"
+    "	    -e 's@#include <stdio\.h>@#include \"ace/os_include/os_stdio.h\"@' \\"
+    "	    -e 's@#include <unistd\.h>@#include \"ace/os_include/os_ctype.h\"@' \\"
+    "	    -e '/#include </d' \\"
+    "	> fe/lex.yy.cpp"
+    "	(cd fe; patch < lex.yy.cpp.diff)"
+    "else"
+    "	@echo 'ERROR: You must use flex 2.5.4 or higher to process this file'"
+    "	@/bin/false"
+    "endif"
+
+    fe/y.tab.cpp: fe/idl.yy
+    "	@echo 'WARNING: Potentially outdated $@'"
+    "	@echo '         either touch(1) the file or explicitly'"
+    "	@echo '         generate it using:'"
+    "	@echo '    make y.tab'"
+
+    .PHONY: y.tab
+    y.tab: fe/idl.yy
+    "ifeq ($(notdir $(YACC)), bison)"
+    "	$(YACC) -y -l -d fe/idl.yy"
+    "	sed -e 's/char \\*getenv/char *ace_foo/g' \\"
+    "	    -e 's/= getenv/= ACE_OS::getenv/g' \\"
+    "	    -e 's/int yynew_state,/int,/g' \\"
+    "	    -e 's/int yyold_state,/int,/g' \\"
+    "	    -e 's/int yyrule_num,/int,/g' \\"
+    "	    -e 's/\\(YYDEBUG_DISCARD_TOKEN.*int\\) yytoken_num/\\1/g' \\"
+    "	    -e 's/yynewerror:\/\/g' \\"
+    "	    -e 's/yy/tao_yy/g' \\"
+    "	    -e 's/YY/TAO_YY/g' \\"
+    "	    -e 's/	/        /g' \\"
+    "	    -e 's/  *$$\/\/g' \\"
+    "	    -e 's/y\\.tab\\.c/y.tab.cpp/g' \\"
+    "	    -e 's%\\(#pragma ident\\)%\/\/ \\1%' < y.tab.c > /tmp/$(USER).Y"
+    "	sed -e 's/yy/tao_yy/g' \\"
+    "	    -e 's/YY/TAO_YY/g' < y.tab.h > /tmp/$(USER).YH"
+    "	echo '\/\/ $$I''d$$' > fe/y.tab.cpp"
+    "	cat /tmp/$(USER).Y >> fe/y.tab.cpp"
+    "	echo '\/\/ $$I''d$$' > fe/y.tab.h"
+    "	cat /tmp/$(USER).YH >> fe/y.tab.h"
+    "	$(RM) /tmp/$(USER).Y /tmp/$(USER).YH y.tab.c y.tab.h"
+    "	(cd fe; patch < y.tab.cpp.diff)"
+    "else"
+    "	@echo 'ERROR: You must use bison 1.875b or higher to process this file'"
+    "	@/bin/false"
+    "endif"
+  }
+}

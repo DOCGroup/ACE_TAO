@@ -1,0 +1,93 @@
+//$Id$
+project : taolib, tao_output, install, core_anytypecode, tao_versioning_idl_defaults {
+  sharedname   = TAO_PortableServer
+  dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
+
+  Source_Files {
+    PortableServer
+  }
+
+  Header_Files {
+    PortableServer
+  }
+
+  Inline_Files {
+    PortableServer
+  }
+
+  Template_Files {
+    PortableServer/Servant_var.cpp
+    PortableServer/*_T.cpp
+  }
+
+  Resource_Files {
+    PortableServer
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GA \
+                -Wb,export_macro=TAO_PortableServer_Export \
+                -Wb,export_include=tao/PortableServer/portableserver_export.h \
+                -o PortableServer
+    idlflags -= -Sa -St
+    PortableServer/ForwardRequest.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GA -Sal \
+                -Wb,export_macro=TAO_PortableServer_Export \
+                -Wb,export_include=tao/PortableServer/portableserver_export.h \
+                -o PortableServer
+    idlflags -= -Sa -St
+    PortableServer/AdapterActivator.pidl
+    PortableServer/IdAssignmentPolicy.pidl
+    PortableServer/IdUniquenessPolicy.pidl
+    PortableServer/ImplicitActivationPolicy.pidl
+    PortableServer/LifespanPolicy.pidl
+    PortableServer/RequestProcessingPolicy.pidl
+    PortableServer/ServantActivator.pidl
+    PortableServer/ServantLocator.pidl
+    PortableServer/ServantManager.pidl
+    PortableServer/ServantRetentionPolicy.pidl
+    PortableServer/ThreadPolicy.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb \
+                -Wb,export_macro=TAO_PortableServer_Export \
+                -Wb,export_include=tao/PortableServer/portableserver_export.h \
+                -o PortableServer
+    idlflags -= -Sa -St
+    PortableServer/POAManager.pidl
+    PortableServer/POAManagerFactory.pidl
+    PortableServer/POA.pidl
+    PortableServer/PS_Current.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Sci -SS -Sorb -Sa -GX \
+                -Wb,export_macro=TAO_PortableServer_Export \
+                -Wb,export_include=tao/PortableServer/portableserver_export.h \
+                -Wb,unique_include=tao/PortableServer/PortableServer.h \
+                -o PortableServer
+    PortableServer/PortableServer_include.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Sci -SS -Sorb -Sa -GX \
+                -Wb,export_macro=TAO_PortableServer_Export \
+                -Wb,export_include=tao/PortableServer/portableserver_export.h \
+                -Wb,include_guard=TAO_PORTABLESERVER_SAFE_INCLUDE \
+                -Wb,safe_include=tao/PortableServer/PortableServer.h \
+                -o PortableServer
+    PortableServer/PortableServer.pidl
+  }
+
+  PIDL_Files {
+    PortableServer
+  }
+
+  Pkgconfig_Files {
+    PortableServer/TAO_PortableServer.pc.in
+  }
+}

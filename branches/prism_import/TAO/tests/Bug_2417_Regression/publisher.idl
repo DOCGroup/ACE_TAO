@@ -1,0 +1,10 @@
+// $Id$
+
+#include "subscriber.idl"
+
+interface Publisher
+{
+	void subscribe(in Subscriber _subscriber);
+
+	oneway void shutdown ();
+};

@@ -1,0 +1,22 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver, dynamicinterface, avoids_minimum_corba,avoids_corba_e_compact, avoids_corba_e_micro {
+  IDL_Files {
+  }
+  Source_Files {
+    Roundtrip.cpp
+      server.cpp
+  }
+}
+
+project(*Client): taoclient, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+  verbatim(gnuace, macros) {
+    REALCLEAN_FILES += TestS.cpp
+    }
+}
+

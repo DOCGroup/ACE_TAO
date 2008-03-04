@@ -1,0 +1,74 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Main): taoserver, messaging, gen_ostream {
+  exename = main
+  idlflags += -GC -GH -Gd -GT
+
+  IDL_Files {
+    array.idl
+    Bug_2350_Regression.idl
+    Bug_2577_Regression.idl
+    Bug_2582_Regression.idl
+    Bug_2583_Regression.idl
+    Bug_2616_Regression.idl
+    Bug_2619_Regression.idl
+    enum_in_struct.idl
+    full.idl
+    fwd.idl
+    gperf.idl
+    including.idl
+    interface.idl
+    included.idl
+    nested_scope.idl
+
+    old_array.idl
+    old_constants.idl
+    old_sequence.idl
+    simple.idl
+    simple2.idl
+    old_struct.idl
+    old_union.idl
+    old_union2.idl
+
+    params.idl
+    reopened_modules.idl
+    sequence.idl
+    struct.idl
+    reopen_include1.idl
+    reopen_include2.idl
+    typeprefix.idl
+    union.idl
+  }
+
+  IDL_Files {
+    idlflags += -GA
+    anonymous.idl
+    array_only.idl
+    constants.idl
+    generic_object.idl
+    keywords.idl
+    
+    dif2.idl
+    inherit.idl
+    module.idl
+    primtypes.idl
+    
+    pragma.idl
+    repo_id_mod.idl
+    typedef.idl
+    typecode.idl
+    valuetype.idl
+  }
+
+  Source_Files {
+    main.cpp
+    *C.cpp
+    *S.cpp
+    *A.cpp
+  }
+
+  Template_Files {
+    *S_T.cpp
+  }
+}

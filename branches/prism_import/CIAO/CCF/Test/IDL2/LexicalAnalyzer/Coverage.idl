@@ -1,0 +1,25 @@
+// file      : CCF/Test/IDL2/LexicalAnalyzer/Coverage.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+// This file is supposed to cover an IDL2 lexical structure and intended
+// for IDL2 lexer regression testing.
+//
+
+abstract interface FA;
+
+abstract interface A
+{
+  void foo (in long l, out boolean b, inout FA fa);
+};
+
+module M
+{
+  interface I
+  {
+  };
+};
+
+local interface L : ::A, M::I
+{
+};
