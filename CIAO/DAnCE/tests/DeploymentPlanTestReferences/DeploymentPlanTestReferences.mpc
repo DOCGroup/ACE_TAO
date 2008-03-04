@@ -1,0 +1,9 @@
+
+project : dance, taolib, tao_output, xerces, ciao_config_handlers, dance_logger {
+  exename   = DeploymentPlanTestReferences
+
+  Source_Files {
+    test.cpp
+  }
+}
+

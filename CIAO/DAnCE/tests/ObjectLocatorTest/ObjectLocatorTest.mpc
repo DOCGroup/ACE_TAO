@@ -1,0 +1,26 @@
+
+project (ObjectLocatorTestServer): dance, taoserver, iortable, dance_redirection_service, dance_logger {
+	exename = ObjectLocatorTestServer
+
+	IDL_Files {
+   		Dummy.idl
+  	}
+
+	Source_Files {
+		srv_main.cpp
+   		DummyC.cpp
+   		DummyS.cpp
+   		DummyImpl.cpp
+  	}
+}
+
+project (ObjectLocatorTestClient): dance, taoclient, anytypecode, dance_logger {
+
+	after  += ObjectLocatorTestServer
+	exename = ObjectLocatorTestClient
+
+	Source_Files {
+		clt_main.cpp
+		DummyC.cpp
+   	}
+}

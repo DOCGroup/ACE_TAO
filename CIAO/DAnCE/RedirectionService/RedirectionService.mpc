@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib, tao_output, iortable, naming_serv, dance_logger {
+  sharedname   = DAnCE_RedirectionService
+  dynamicflags += REDIRECTIONSERVICE_BUILD_DLL
+    
+  Source_Files {
+    RedirectionService.cpp
+    NameServiceRedirection.cpp
+    CCMObjectLocator.cpp
+  }
+}
+

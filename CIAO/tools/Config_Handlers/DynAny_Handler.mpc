@@ -1,0 +1,21 @@
+// $Id$
+
+project (XSC_DynAny_Handler) : xerces, dynamicany, typecodefactory, ciao_client_dnc, ciao_config_handlers_base, ciaodll, dance, ifr_client {
+  after += XSC_XML_Handlers
+  libs += XSC_XML_Handlers
+  dynamicflags += DYNANY_HANDLER_BUILD_DLL
+  macros += XML_USE_PTHREADS
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+
+  Source_Files {
+    DynAny_Handler/DynAny_Handler.cpp
+    DynAny_Handler/DynEnum_Handler.cpp
+    DynAny_Handler/DynSequence_Handler.cpp
+    DynAny_Handler/DynStruct_Handler.cpp
+    DynAny_Handler/DynAlias_Handler.cpp
+  }
+
+  Header_Files {
+    DynAny_Handler_Export.h
+  }
+}

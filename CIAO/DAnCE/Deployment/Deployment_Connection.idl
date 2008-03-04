@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef DEPLOYMENT_CONNECTION_IDL
+#define DEPLOYMENT_CONNECTION_IDL
+
+#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
+//@! From DOCGroup source
+//#include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
+
+module Deployment
+{
+	typedef sequence < Object > Endpoints;
+	//@! in DOCGroup this struct seriously extended
+	struct Connection {
+		string name;
+		Endpoints endpoint;
+	};
+
+	typedef sequence < Connection > Connections;
+};
+#endif /* DEPLOYMENT_CONNECTION_IDL */

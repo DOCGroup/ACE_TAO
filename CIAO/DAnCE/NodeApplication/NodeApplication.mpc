@@ -1,0 +1,23 @@
+// -*- MPC -*-
+// $Id$
+
+project(NodeApplication): dance_lib, dynamicinterface, naming, ciao_client_dnc, dance_deployment_stub, dance_deployment_svnt, dance_redirection_service, dance_cdmw_idl, dance_logger, iortable, naming_serv {
+  sharedname   = DAnCE_NodeApplication
+  dynamicflags = NODEAPPLICATION_BUILD_DLL
+    
+  Source_Files {
+    ComponentInstallation_Impl.cpp
+    ServerActivator_Impl.cpp
+    NodeApplication_Impl.cpp
+    ComponentAttributesSetter.cpp
+  }
+  Header_Files {
+    ComponentInstallation_Impl.h
+    ServerActivator_Impl.h
+    NodeApplication_Impl.h
+    ComponentAttributesSetter.h  
+  }
+}
+
+    
+

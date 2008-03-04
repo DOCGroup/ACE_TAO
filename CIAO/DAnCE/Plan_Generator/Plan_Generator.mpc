@@ -1,0 +1,23 @@
+// -*- MPC -*-
+//$Id$
+
+project (Plan_Generator): dance_lib, ciao_component_dnc {
+  sharedname = Plan_Generator
+  after += RepositoryManager
+  requires += dummy_label
+  
+  dynamicflags = PLAN_GENERATOR_IMPL_BUILD_DLL
+
+  Source_Files {
+    Plan_Generator_Impl.cpp
+    PCVisitorBase.cpp
+    PCVisitor.cpp
+  }
+
+  Header_Files {
+    Plan_Generator_Impl.h
+    PCVisitor.h
+    PCVisitorBase.h
+    Plan_Generator_Impl_Export.h
+  }
+}
