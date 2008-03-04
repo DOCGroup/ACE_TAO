@@ -49,7 +49,6 @@ namespace CORBA
  *  for the policies in the POA. This class seems so much useful for
  *  passing policy information between different loaded libraries.
  */
-
 class TAO_Export TAO_Policy_Validator
 {
 public:
@@ -88,10 +87,9 @@ public:
    */
   void add_validator (TAO_Policy_Validator *validator);
 
-
- /**
-  * Accessor for the stored ORB core reference
-  */
+  /**
+   * Accessor for the stored ORB core reference
+   */
  TAO_ORB_Core & orb_core() const;
 
 protected:

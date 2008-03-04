@@ -34,7 +34,7 @@ namespace TAO
 
   template <typename InterceptorType, typename DetailsType>
   size_t
-  Interceptor_List<InterceptorType,DetailsType>::size (void)
+  Interceptor_List<InterceptorType,DetailsType>::size (void) const
   {
     return this->interceptors_.size ();
   }
@@ -166,7 +166,7 @@ namespace TAO
         details.apply_policies(policies);
 
         /// Increase the length of the Interceptor sequence by one.
-        const size_t new_len = old_len + 1;
+        size_t const new_len = old_len + 1;
         this->interceptors_.size (new_len);
 
         // Add the interceptor
