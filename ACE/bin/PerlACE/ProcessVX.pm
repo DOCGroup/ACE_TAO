@@ -127,29 +127,42 @@ sub iboot_cycle_power {
     my $ipal_command_series = (defined $iboot_outlet) ? ['E', 'D'] : ['f', 'n'];
 
     foreach my $ipal_cmd (@$ipal_command_series) {
-      $iboot = IO::Socket::INET->new ("$iboot_host");
-      if  ($iboot) {
-        # if ACE_RUN_VX_IBOOT_OUTLET is defined, we're using
-        # the iBootBar, and we're using the iPAL Protocol
-        # to communicate with the iBootBar
-        if (defined $iboot_outlet) {
-          $iboot->send ("\e".$iboot_passwd."\e".$iboot_outlet.$ipal_cmd);
+      my $retries = 3;
+      my $is_open = 0;
+      while ($retries--) {
+        $iboot = IO::Socket::INET->new ("$iboot_host");
+        if ($iboot) {
+          # if ACE_RUN_VX_IBOOT_OUTLET is defined, we're using
+          # the iBootBar, and we're using the iPAL Protocol
+          # to communicate with the iBootBar
+          if (defined $iboot_outlet) {
+            $iboot->send ("\e".$iboot_passwd."\e".$iboot_outlet.$ipal_cmd);
+          }
+          else  {
+            $iboot->send ("\e".$iboot_passwd."\e$ipal_cmd\r");
+          }
+          $iboot->recv ($text,128);
+          print "iBoot is currently: $text\n" if ($v);
+          $iboot->close();
+          if ($text eq "OFF" || $text eq "ON") {
+            $is_open = 1;
+            last;
+          }
+          else {
+            print "iBoot is $text; sleeping then retrying\n" if ($v);
+            sleep(5);
+          }
         }
-        else  {
-          $iboot->send ("\e".$iboot_passwd."\e$ipal_cmd\r");
+        else {
+          print "ERROR: FAILED to execute 'reboot' command!\n";
         }
-        $iboot->recv ($text,128);
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-          print "iBoot is currently: $text\n";
-        }
-        close $iboot;
       }
-      else {
-        print "ERROR: FAILED to execute 'reboot' command!\n";
+      if (!$is_open) {
+        print "Unable to reboot using $iboot_host.\n" if ($v);
+        return 0;
       }
     }
   }
-
 }
 
 sub reboot {

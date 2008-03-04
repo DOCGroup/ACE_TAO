@@ -1,7 +1,14 @@
+Tue Mar  4 09:27:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ProcessVX.pm:
+          Added a retry to the iPass protocol code, in a full test run
+          we sometimes see that the reboot has failed. With this retry
+          we hopefully get rid of those false test failures
+
 Tue Mar  4 05:54:22 UTC 2008  William Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/svn_props.py:
-          Automatically set default properties when svn complains. 
+          Automatically set default properties when svn complains.
 
 Mon Mar  3 11:22:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
