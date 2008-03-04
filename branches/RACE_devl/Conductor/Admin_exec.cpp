@@ -18,14 +18,17 @@ namespace CIAO
             {
               this->DB_ = context->get_connection_DB ();
               this->OA_ = context->get_connection_OA ();
-              this->Controller_Admin_ = context->get_connection_controllerAdmin();
-              this->Controller_Ops_ = context->get_connection_controlOperations();
+              this->Controller_Admin_ =
+                context->get_connection_controllerAdmin();
+              this->Controller_Ops_ =
+                context->get_connection_controlOperations();
             }
           catch (CORBA::Exception &ex)
             {
               std::string msg = "Exception caught::Admin_exec:: "
                                 "Error while resolving references to "
-                                "DAnCE_OA/RACE_Data_Base/Controller_Admin/Controlelr_Ops "
+                                "DAnCE_OA/RACE_Data_Base/"
+                                "Controller_Admin/Controlelr_Ops "
                                 "objects!\n";
               msg += ex._info ().c_str();
               this->logger_.log (msg);
@@ -92,18 +95,19 @@ namespace CIAO
           try
             {
               if (this->OA_->deploy_string (opstring))
-              {                  
+              {
                 msg << "Successfully deployed string. "
-                  << "Now trying to register with the controller\n"; 
+                  << "Now trying to register with the controller\n";
                 if (this->Controller_Ops_->register_string (opstring, ID))
                 {
-                  msg << "Successfully resitered with the controller.\n";                      
+                  msg << "Successfully resitered with the controller.\n";
                 }
                 else
                 {
-                  msg << "Oops! Error while resiterering with the controller.\n";                      
+                  msg << "Oops! Error while resiterering with "
+                    "the controller.\n";
                 }
-                this->DB_->add_string (opstring);
+                //this->DB_->add_string (opstring);
                 this->logger_.log (msg.str());
                 return true;
               }
@@ -171,7 +175,7 @@ namespace CIAO
         {
           try
             {
-              this->DB_->remove_string (ID);
+              // this->DB_->remove_string (ID);
               this->OA_->tear_down_string (ID);
               return true;
             }
@@ -192,7 +196,7 @@ namespace CIAO
           msg << "Admin_exec_1::init_system:"
               << "Trying to initialize the controller.\n";
           if (this->Controller_Admin_->init_controller())
-          { 
+          {
             msg << "Successfully initialized the controller.\n";
             this->logger_.log(msg.str());
             return true;
@@ -212,7 +216,7 @@ namespace CIAO
           msg << "Admin_exec_1::start_system:"
               << "Trying to start the controller.\n";
           if (this->Controller_Admin_->start_controller())
-          { 
+          {
             msg << "Successfully started the controller.\n";
             this->logger_.log(msg.str());
             return true;
@@ -223,7 +227,7 @@ namespace CIAO
             this->logger_.log(msg.str());
             return false;
           }
-        }          
+        }
       }
     }
   }

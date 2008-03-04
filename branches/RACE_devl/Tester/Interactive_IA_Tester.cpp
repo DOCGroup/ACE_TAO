@@ -1,5 +1,6 @@
 #include "RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_AdapterC.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 // IOR file of the Interactive Input Adapter.
 const char * ior = 0;
@@ -33,7 +34,7 @@ parse_args (int argc, char *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Usage:  %s"
                              "-k <Interactive IA IOR> "
-                             "(default is file://Interactive_IA_Component.ior)\n",
+                             "(default:file://Interactive_IA_Component.ior)\n",
                              "-f <Deployment plan filename>\n",
                              "-r <redeploy>\n",
                             argv [0]),
@@ -88,8 +89,25 @@ main (int argc, char *argv[])
       if (filename)
       {
         ::CORBA::String_var id;
-        admin->deploy_plan (filename, id.out());
-        admin->start_system();
+        if (admin->deploy_plan (filename, id.out()))
+          {
+            ACE_DEBUG ((LM_DEBUG, "Plan %s has been successfully deployed.\n",
+                    id.in ()));
+
+        //        admin->start_system();
+            ACE_OS::sleep (10);
+            if (admin->tear_down_plan (id.in ()))
+              {
+                ACE_DEBUG ((LM_DEBUG, "Plan %s has been successfully "
+                            "torn down.\n", id.in ()));
+                ACE_OS::sleep (10);
+                if (admin->deploy_plan (filename, id.out()))
+                  {
+                    ACE_DEBUG ((LM_DEBUG, "Again Plan %s has been "
+                                "successfully deployed.\n", id.in ()));
+                  }
+              }
+          }
       }
 
       orb->destroy ();
