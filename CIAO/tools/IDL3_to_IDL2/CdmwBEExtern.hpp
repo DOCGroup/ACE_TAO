@@ -100,7 +100,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern CDMW_IDL3_TO_IDL2_BE_Export CdmwBEGlobalData *cdmw_be_global;
 
 extern CDMW_IDL3_TO_IDL2_BE_Export int CdmwBE_init (int &, char*[]);
-extern CDMW_IDL3_TO_IDL2_BE_Export void CdmwBE_post_init (char *[], long);
+extern CDMW_IDL3_TO_IDL2_BE_Export void CdmwBE_post_init (const char *[], long);
 extern CDMW_IDL3_TO_IDL2_BE_Export void CdmwBE_version (void);
 extern CDMW_IDL3_TO_IDL2_BE_Export void CdmwBE_produce (void);
 extern CDMW_IDL3_TO_IDL2_BE_Export void CdmwBE_cleanup (void);

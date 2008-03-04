@@ -33,7 +33,7 @@ namespace DAnCE
     return 0;
   }
 
-  int
+  ssize_t
   File_Logger_Backend::log (ACE_Log_Record &log_record)
   {
     int res = log_record.print (0, ACE_Log_Msg::VERBOSE, this->fh_);

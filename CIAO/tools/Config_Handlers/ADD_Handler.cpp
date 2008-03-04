@@ -160,7 +160,7 @@ namespace CIAO
 
         // Generate a UUID to use for the IDREF.
         ACE_Utils::UUID uuid;
-        ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+        ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
         ACE_CString add_id ("_");
         add_id += *uuid.to_string ();
 

@@ -72,6 +72,7 @@ project (CIAO_Client) : taolib_with_idl, tao_output, valuetype, ifr_client {
     CCM_PrimaryKeyBaseC.cpp
     Client_init.cpp
     ComponentsC.cpp
+    ConfigValue.cpp
   }
 
   Header_Files {
@@ -195,6 +196,7 @@ project (CIAO_Server) : orbsvcslib, orbsvcs_output \
                         , avoids_minimum_corba \
                         , avoids_corba_e_compact \
                         , avoids_corba_e_micro \
+                        , dance_component_server_svnt \
 {
   includes     += $(CIAO_ROOT)
   sharedname   =  CIAO_Server

@@ -1,6 +1,6 @@
 // $Id$
 
-project : ciao_xml_utils, dynamicany, typecodefactory, exceptions, ciao_events_dnc {
+project : ciao_xml_utils, dynamicany, typecodefactory, exceptions {
   after += XSC_XML_Handlers
   libs  += XSC_XML_Handlers
   macros   += XML_USE_PTHREADS

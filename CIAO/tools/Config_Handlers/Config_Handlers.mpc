@@ -31,7 +31,7 @@ project (XSC_XML_Generation) : xscdefaults {
   }
 }
 
-project (XSC_XML_Handlers) : acelib, xerces, ciaodll {
+project (XSC_XML_Handlers) : acelib, xerces, ciaodll, ciao_xml_utils {
   sharedname    += XSC_XML_Handlers
   dynamicflags  = XSC_XML_HANDLERS_BUILD_DLL
   macros       += XML_USE_PTHREADS

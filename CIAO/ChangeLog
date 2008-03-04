@@ -1,3 +1,74 @@
+Tue Mar  4 22:29:37 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.eduC>
+
+        * DAnCE/Cdmw/CDMW_Deployment.idl:
+        * DAnCE/Cdmw/CDMW_IDL.idl:
+        * DAnCE/Cdmw/CDMW_IDL.mpc:
+        * DAnCE/Cdmw/CDMW_IDL_Ext.idl:
+        * DAnCE/ComponentServer:
+        * DAnCE/ComponentServer/ComponentServer.idl:
+        * DAnCE/ComponentServer/ComponentServer.mpc:
+        * DAnCE/ComponentServer/DAnCE_ComponentServer_stub_export.h:
+        * DAnCE/ComponentServer/DAnCE_ComponentServer_svnt_export.h:
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/ServerActivator_Impl.h:
+        * MPC/config/dance_component_server.mpb:
+        * MPC/config/dance_component_server_stub.mpb:
+        * ciao/Session_Container.cpp:
+
+          Refactored generic component server interface into its
+          own directory and IDL files. 
+        
+        * DAnCE/Logger/File_Logger_Backend.h:
+        * DAnCE/Logger/File_Logger_Backend.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * tools/Config_Handlers/ADD_Handler.cpp:
+        * tools/Config_Handlers/Config_Handlers.mpc:
+        * tools/Config_Handlers/DnC_Dump.h:
+        * tools/Config_Handlers/DnC_Dump.cpp:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        * tools/Config_Handlers/MDD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp:
+        
+          Changes necessary to cope with changes in ACE/TAO.
+        
+        * MPC/config/dance_deployment_stub.mpb:
+        * MPC/config/dance_deployment_svnt.mpb:
+
+          Pulled over from OFDAnCE.
+        
+        * ciao/CCM_Core.mpc:
+        * ciao/CCM_Home.idl:
+        * ciao/ConfigValue.h:
+        * ciao/ConfigValue.cpp:
+
+          Add an IDL type and config value factory from OFDAnCE.
+        
+
+        * tools/IDL3_to_IDL2/CdmwBE.cpp:
+        * tools/IDL3_to_IDL2/CdmwBEExtern.hpp:
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        
+          Some changes here I can't figure out, need Jeff to look.
+          Disabled until then.
+        
+        * tools/XML:
+        * tools/XML/CIAO_XML_Utils_Export.h:
+        * tools/XML/XML.mpc:
+        * tools/XML/XML_Error_Handler.h:
+        * tools/XML/XML_Error_Handler.cpp:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XML_Schema_Resolver.cpp:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+        * MPC/config/ciao_config_handlers.mpb:
+        * MPC/config/ciao_config_handlers_base.mpb:
+
+          Pulled XML utils over from OFDAnCE, missed in initial import. 
+        
 Tue Mar  4 05:39:19 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_config_manager.mpb:
@@ -26,12 +97,12 @@ Tue Mar  4 05:39:19 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * MPC/config/dance_nodemanager_stub.mpb:
         * MPC/config/dance_redirection_service.mpb:
         * MPC/config/dance_utils.mpb:
-        
+
           Pulled necessary mpb files from OFDAnCE to allow generation of
           makefiles.
 
         * ciao/CCM_Core.mpc:
-        
+
           ciao_deployment_*.mpb changes to dance_deployment_*.mpb.
 
 Tue Mar  4 05:19:46 UTC 2008  William Otte  <wotte@william-ottes-macbook-pro.local>

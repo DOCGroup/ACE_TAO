@@ -30,7 +30,7 @@ namespace Deployment
   }
 
   // Dumps a string
-  void DnC_Dump::dump (const char* caption, const TAO_String_Manager& str)
+  void DnC_Dump::dump (const char* caption, const TAO::String_Manager& str)
   {
     ACE_DEBUG ((LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
                 caption, str.in()));

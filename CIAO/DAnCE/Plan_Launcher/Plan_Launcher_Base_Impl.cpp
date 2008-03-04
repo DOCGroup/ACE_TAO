@@ -529,7 +529,7 @@ void Plan_Launcher_Base_Impl::stop_plan()
       ::Deployment::DomainApplicationManager_var dapp_mgr;
       for (size_t i = 0; i < mgrs->length(); ++i)
         {
-          this->teardown_plan((*mgrs) [i]._retn());
+          this->teardown_plan((*mgrs) [i]);
         }
     }
 }

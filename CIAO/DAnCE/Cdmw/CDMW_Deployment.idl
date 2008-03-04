@@ -13,6 +13,7 @@
 #define CDMW_DEPLOYMENT_EXT
 
 #include "DAnCE/Cdmw/CDMW_IDL.idl"
+#include "ComponentServer/ComponentServer.idl"
 
 #pragma prefix "thalesgroup.com"
 

@@ -3,6 +3,6 @@
 
 project : dance_deployment_stub, portableserver, ciao_events_dnc {
   after += Deployment_svnt
-  libs  += CIAO_Deployment_svnt
+  libs  += DAnCE_Deployment_svnt
   idlflags += -I$(CIAO_ROOT)/DAnCE
 }

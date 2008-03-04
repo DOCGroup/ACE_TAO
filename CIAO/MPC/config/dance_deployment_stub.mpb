@@ -3,7 +3,7 @@
 
 project : ciao_client_dnc, ciao_events_base_dnc, messaging {
   after += Deployment_stub
-  libs  += CIAO_Deployment_stub
+  libs  += DAnCE_Deployment_stub
   includes += $(CIAO_ROOT)/DAnCE
   idlflags += -I$(CIAO_ROOT)/DAnCE
   requires += threads

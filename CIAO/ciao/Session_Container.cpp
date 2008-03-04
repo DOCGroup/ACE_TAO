@@ -6,6 +6,8 @@
 #include "DAnCE/Deployment/Deployment_CoreC.h"
 #include "CIAO_common.h"
 
+#include "ComponentServer/ComponentServerS.h"
+
 #include "tao/Utils/PolicyList_Destroyer.h"
 
 #if !defined (__ACE_INLINE__)
@@ -256,9 +258,9 @@ namespace CIAO
                         "ERROR: %s\n",
                         exception.c_str ()));
 
-            throw Deployment::UnknownImplId (
+            throw Components::Deployment::UnknownImplId (/*
              "Session_Container::ciao_install_home",
-             exception.c_str ());
+             exception.c_str ()*/);
           }
 
         if (executor_dll.open (exe_dll_name,
@@ -274,9 +276,9 @@ namespace CIAO
                         "ERROR in opening the executor DLL [%s] \n",
                         exe_dll_name));
 
-            throw Deployment::UnknownImplId (
+            throw Components::Deployment::UnknownImplId (/*
               "Session_Container::ciao_install_home",
-              error.c_str ());
+              error.c_str () */);
           }
 
         if (servant_dll.open (sv_dll_name,
@@ -292,9 +294,9 @@ namespace CIAO
                         "ERROR in opening the servant DLL [%s] \n",
                         sv_dll_name));
 
-            throw Deployment::UnknownImplId (
+            throw Components::Deployment::UnknownImplId ( /*
               "Session_Container::ciao_install_home",
-              error.c_str ());
+              error.c_str () */);
           }
 
         if (exe_entrypt == 0 || sv_entrypt == 0)
@@ -322,9 +324,9 @@ namespace CIAO
                 error += sv_dll_name;
               }
 
-            throw Deployment::ImplEntryPointNotFound (
+            throw Components::Deployment::ImplEntryPointNotFound ( /*
               "Session_Container::ciao_install_home",
-              error.c_str ());
+              error.c_str ()*/);
           }
 
         // We have to do this casting in two steps because the C++
@@ -344,7 +346,7 @@ namespace CIAO
             || static_entrypts_maps_->home_creator_funcptr_map_ == 0
             || static_entrypts_maps_->home_servant_creator_funcptr_map_ == 0)
           {
-            throw Deployment::ImplEntryPointNotFound ();
+            throw Components::Deployment::ImplEntryPointNotFound ();
           }
 
         ACE_CString exe_entrypt_str (exe_entrypt);
@@ -375,18 +377,18 @@ namespace CIAO
             error += sv_dll_name;
           }
 
-        throw Deployment::ImplEntryPointNotFound (
+        throw Components::Deployment::ImplEntryPointNotFound ( /*
           "SessionContainer::ciao_install_home",
-          error.c_str ());
+          error.c_str () */);
       }
 
     Components::HomeExecutorBase_var home_executor = hcreator ();
 
     if (CORBA::is_nil (home_executor.in ()))
       {
-        throw Deployment::InstallationFailure (
+        throw Components::Deployment::InstallationFailure ( /*
           "SessionContainer::ciao_install_home",
-          "Executor entrypoint failed to create a home.");
+          "Executor entrypoint failed to create a home." */);
       }
 
     PortableServer::Servant home_servant = screator (home_executor.in (),
@@ -395,9 +397,9 @@ namespace CIAO
 
     if (home_servant == 0)
       {
-        throw Deployment::InstallationFailure (
+        throw Components::Deployment::InstallationFailure (/*
           "SessionContainer::ciao_install_home",
-          "Servant entrypoing failed to create a home.");
+          "Servant entrypoing failed to create a home."*/);
       }
 
     PortableServer::ServantBase_var safe (home_servant);
