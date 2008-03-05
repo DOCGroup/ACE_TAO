@@ -1276,7 +1276,7 @@ DEFBUF *    install_macro(
         dp->parmnames = (char *)dp + sizeof (DEFBUF) + s_name;
         dp->repl = dp->parmnames + s_parmnames;
         if (mcpp_mode == STD)
-	  ACE_OS::memcpy( dp->parmnames, parmnames, s_parmnames);
+          ACE_OS::memcpy( dp->parmnames, parmnames, s_parmnames);
     } else {
         dp->repl = (char *)dp + sizeof (DEFBUF) + s_name;
     }

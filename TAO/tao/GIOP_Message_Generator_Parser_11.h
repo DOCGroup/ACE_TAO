@@ -32,7 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  the 1.0 class.
  *
  */
-class TAO_Export TAO_GIOP_Message_Generator_Parser_11
+class TAO_GIOP_Message_Generator_Parser_11
   : public TAO_GIOP_Message_Generator_Parser_10
 {
 public:

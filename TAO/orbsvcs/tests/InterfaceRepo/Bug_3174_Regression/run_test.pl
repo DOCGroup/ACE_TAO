@@ -19,7 +19,7 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("../../../IFR_Service/IFR_Service", "-o $iorfilebase");
 }
 else {
-    $SV = new PerlACE::Process (""../../../IFR_Service/IFR_Service", "-o $iorfile");
+    $SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", "-o $iorfile");
 }
 
 print STDERR "Starting IFR Service\n";
