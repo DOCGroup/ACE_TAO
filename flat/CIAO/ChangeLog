@@ -1,3 +1,15 @@
+Wed Mar  5 16:06:07 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/RedirectionService/CCMObjectLocator.cpp:
+        * DAnCE/Starter/Starter.cpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/XMI.cpp:
+
+          Warning fixes. 
+        
 Tue Mar  4 22:29:37 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.eduC>
 
         * DAnCE/Cdmw/CDMW_Deployment.idl:
@@ -17,8 +29,8 @@ Tue Mar  4 22:29:37 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.eduC>
         * ciao/Session_Container.cpp:
 
           Refactored generic component server interface into its
-          own directory and IDL files. 
-        
+          own directory and IDL files.
+
         * DAnCE/Logger/File_Logger_Backend.h:
         * DAnCE/Logger/File_Logger_Backend.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
@@ -29,29 +41,29 @@ Tue Mar  4 22:29:37 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.eduC>
         * tools/Config_Handlers/IDD_Handler.cpp:
         * tools/Config_Handlers/MDD_Handler.cpp:
         * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp:
-        
+
           Changes necessary to cope with changes in ACE/TAO.
-        
+
         * MPC/config/dance_deployment_stub.mpb:
         * MPC/config/dance_deployment_svnt.mpb:
 
           Pulled over from OFDAnCE.
-        
+
         * ciao/CCM_Core.mpc:
         * ciao/CCM_Home.idl:
         * ciao/ConfigValue.h:
         * ciao/ConfigValue.cpp:
 
           Add an IDL type and config value factory from OFDAnCE.
-        
+
 
         * tools/IDL3_to_IDL2/CdmwBE.cpp:
         * tools/IDL3_to_IDL2/CdmwBEExtern.hpp:
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
-        
+
           Some changes here I can't figure out, need Jeff to look.
           Disabled until then.
-        
+
         * tools/XML:
         * tools/XML/CIAO_XML_Utils_Export.h:
         * tools/XML/XML.mpc:
@@ -67,8 +79,8 @@ Tue Mar  4 22:29:37 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.eduC>
         * MPC/config/ciao_config_handlers.mpb:
         * MPC/config/ciao_config_handlers_base.mpb:
 
-          Pulled XML utils over from OFDAnCE, missed in initial import. 
-        
+          Pulled XML utils over from OFDAnCE, missed in initial import.
+
 Tue Mar  4 05:39:19 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_config_manager.mpb:

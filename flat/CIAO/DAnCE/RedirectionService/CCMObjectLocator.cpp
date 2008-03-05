@@ -193,7 +193,7 @@ namespace DAnCE
   ACE_CString
   CCMObjectLocator::TreeNode::splitPath (ACE_CString & path, bool first)
   {
-    ssize_t pos = first
+    size_t pos = first
                   ? path.find (CCMObjectLocator::TreeNode::delimiter_)
                   : path.rfind (CCMObjectLocator::TreeNode::delimiter_);
     /*    if ( 0 == pos )

@@ -170,7 +170,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
               {
                 ACE_CString nodename;
                 Node node;
-                ssize_t pos = s.find("=");
+                size_t pos = s.find("=");
                 if (ACE_CString::npos != pos)
                   {
                     nodename = s.substring(0, pos);
@@ -415,7 +415,7 @@ void Starter::generateObjectKey(const char * keyargs)
   // node
   if (pos_start < (ssize_t) args.length())
     {
-      ssize_t pos_end = args.find(' ', pos_start);
+      size_t pos_end = args.find(' ', pos_start);
       if (ACE_CString::npos == pos_end)
         {
           node = args.substring(pos_start);
@@ -431,7 +431,7 @@ void Starter::generateObjectKey(const char * keyargs)
   // plan
   if (pos_start < (ssize_t) args.length())
     {
-      ssize_t pos_end = args.find(' ', pos_start);
+      size_t pos_end = args.find(' ', pos_start);
       if (ACE_CString::npos == pos_end)
         {
           plan = args.substring(pos_start);
@@ -447,7 +447,7 @@ void Starter::generateObjectKey(const char * keyargs)
   // component
   if (pos_start < (ssize_t) args.length())
     {
-      ssize_t pos_end = args.find(' ', pos_start);
+      size_t pos_end = args.find(' ', pos_start);
       if (ACE_CString::npos == pos_end)
         {
           component = args.substring(pos_start);
@@ -463,7 +463,7 @@ void Starter::generateObjectKey(const char * keyargs)
   // port
   if (pos_start < (ssize_t) args.length())
     {
-      ssize_t pos_end = args.find(' ', pos_start);
+      size_t pos_end = args.find(' ', pos_start);
       if (ACE_CString::npos == pos_end)
         {
           port = args.substring(pos_start);
@@ -530,7 +530,7 @@ void Starter::generateObjectKey(const char * node, const char * plan,
   CORBA::Object_var o = myPOA->create_reference_with_id(oid.in(),
       "IDL:omg.org/CORBA/Object:1.0");
   s = this->orb_->object_to_string(o);
-  ssize_t pos = s.find(delim);
+  size_t pos = s.find(delim);
   if (ACE_CString::npos != pos)
     {
       s = s.substr(pos + 1);
@@ -709,7 +709,7 @@ void
 Starter::argCopyForNaming (int & c, char **& v)
   {
     int total_sz = 2;
-    for (ssize_t pos = this->optNSOptions_.find (' ');
+    for (size_t pos = this->optNSOptions_.find (' ');
         ACE_CString::npos != pos;
         pos = this->optNSOptions_.find (' ', pos + 1))
       {
