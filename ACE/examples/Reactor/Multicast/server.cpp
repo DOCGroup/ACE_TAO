@@ -238,7 +238,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 }
 #else
 int
-main (int, char *argv[])
+ACE_TMAIN(int, ACE_TCHAR *argv[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "error: %s must be run on a platform that support IP multicast\n",

@@ -51,7 +51,7 @@ server (void)
 }
 
 int
-main (int, char *argv[])
+ACE_TMAIN(int, ACE_TCHAR *argv[])
 {
   switch (ACE_OS::fork ())
     {

@@ -29,7 +29,7 @@
 usage ()
 {
   echo "Usage: `basename $0` [--base=<dir>] [--name=<name>] [--compiler=compiler]"
-  ech "        <input_file> <destination_directory> [target_file]"
+  echo "       <input_file> <destination_directory> [target_file]"
   echo "       [Footprint|Compilation] [<date>] [<fudge_factor>]"
   echo ""
   echo "--base       This option can be used to set the base root directory to"

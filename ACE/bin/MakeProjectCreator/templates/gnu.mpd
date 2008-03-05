@@ -392,7 +392,7 @@ endif
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-ifeq ($(VXWORKSLINK),true)
+ifeq ($(VXWORKSLINK),1)
 include $(TGT_DIR)/h/make/rules.$(PRJ_TYPE)
 endif
 
@@ -428,7 +428,7 @@ endif
 <%endif%>
 <%endfor%>
 <%if(libpaths)%>
-ifeq ($(VXWORKSLINK),true)
+ifeq ($(VXWORKSLINK),1)
 LDLIBPATH     =<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 else
 LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
@@ -633,7 +633,7 @@ endif
 <%endif%>
 <%if(exename)%>
 
-ifneq ($(VXWORKSLINK),true)
+ifneq ($(VXWORKSLINK),1)
 <%if(libs && libpaths)%>
 ifeq ($(static_libs_only), 1)
   ifeq ($(use_dep_libs), 1)

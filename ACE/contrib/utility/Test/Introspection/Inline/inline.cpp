@@ -8,6 +8,8 @@
 // (notably missing inline specifier).
 //
 
+/* FUZZ: disable check_for_improper_main_declaration */
+
 #include "Utility/Introspection/Introspection.hpp"
 
 int
