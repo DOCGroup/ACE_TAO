@@ -157,7 +157,7 @@ run_final_test (void)
 }
 
 int
-main (int /* argc */, char* /* argv */ [])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_Thread_Manager mgr;
 
@@ -188,7 +188,7 @@ main (int /* argc */, char* /* argv */ [])
 
 #else
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads not supported on this platform\n"), -1);

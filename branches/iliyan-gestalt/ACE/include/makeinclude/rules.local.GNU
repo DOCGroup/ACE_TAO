@@ -108,12 +108,12 @@ $(VDIR)%.o: %.c
 	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cpp
+$(VDIR)%.o: %.C
 	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.C
+$(VDIR)%.o: %.cpp
 	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}

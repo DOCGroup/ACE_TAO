@@ -128,7 +128,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
     return -1;
@@ -201,7 +201,7 @@ main (int argc, char* argv[])
 
 #else
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads not supported on this platform\n"), -1);

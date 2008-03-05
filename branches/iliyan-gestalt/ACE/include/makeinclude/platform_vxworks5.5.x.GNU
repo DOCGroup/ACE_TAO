@@ -136,7 +136,7 @@ else
 endif
 
 ifneq ($(VX_LIB_BUILD),1)
-  VXWORKSLINK = true
+  VXWORKSLINK = 1
   ifeq ($(VX_APP_BUILD),1)
     ## set variables for VxWorks linktarget identification
     PRJ_FILE = $(basename $(notdir $(BIN_UNCHECKED))).vxworks
@@ -159,7 +159,7 @@ include $(TARGET_DIR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 ## make sure we don't use that stupid, crippled vxrm.bat script.
 override RM=rm -f
 
-ifeq ("$(VXWORKSLINK)","true")
+ifeq ($(VXWORKSLINK), 1)
   # prevent possible clash with static LIB rules
   # in VxWorks make includes and rules.lib.GNU
   override ARCHIVE =
@@ -216,7 +216,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 ifeq ("$(templates)","automatic")
 	ifdef repo
-		ifeq ("$(VXWORKSLINK)","true")
+                ifeq ($(VXWORKSLINK),1)
   		ifeq ($(VX_APP_BUILD),1)
 				ifneq ($(SHARED_LIBS),1)
       	LD_PARTIAL += -frepo
@@ -278,7 +278,7 @@ CCFLAGS         += $(C++FLAGS)
 
 PIC              =
 
-ifeq ("$(VXWORKSLINK)","true")
+ifeq ($(VXWORKSLINK),1)
 
   ifdef repo
     ifeq ($(SHARED_LIBS),1)

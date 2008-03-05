@@ -139,7 +139,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 }
 #else /* !ACE_WIN32 */
 int
-ACE_TMAIN (int, ACE_TCHAR **)
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }

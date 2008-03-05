@@ -1,3 +1,154 @@
+Tue Mar  4 09:27:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ProcessVX.pm:
+          Added a retry to the iPass protocol code, in a full test run
+          we sometimes see that the reboot has failed. With this retry
+          we hopefully get rid of those false test failures
+
+Tue Mar  4 05:54:22 UTC 2008  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/svn_props.py:
+          Automatically set default properties when svn complains.
+
+Mon Mar  3 11:22:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Just single line comments
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Check VXWORKSLINK for 1
+
+Mon Mar  3 11:10:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.lib.GNU:
+          Use 1 for VXWORKSLINK instead of true. Added footprint=1
+          as flag to specify that you are doing a footprint build
+
+Mon Mar  3 10:49:28 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/JAWS/clients/WebSTONE/src/cgi-send.c:
+        * apps/JAWS/clients/WebSTONE/src/genrand.c:
+        * apps/JAWS/clients/WebSTONE/src/webmaster.c:
+        * contrib/utility/Example/CommandLine/Foo/command.cpp:
+        * contrib/utility/Example/ExH/BadCast/bad_cast.cpp:
+        * contrib/utility/Example/ExH/Compound/compound.cpp:
+        * contrib/utility/Example/ExH/HelloWorld/hello_world.cpp:
+        * contrib/utility/Example/ExH/LogicToSystem/logic_to_system.cpp:
+        * contrib/utility/Example/Hetero/Container/container.cpp:
+        * contrib/utility/Example/Introspection/InheritanceTree/inheritance_tree.cpp:
+        * contrib/utility/Example/Introspection/Traversal/driver.cpp:
+        * contrib/utility/Test/ExH/Converter/converter.cpp:
+        * contrib/utility/Test/ExH/Inline/inline.cpp:
+        * contrib/utility/Test/ExH/Logic/DescriptiveException/descriptive_exception.cpp:
+        * contrib/utility/Test/ExH/System/DescriptiveException/descriptive_exception.cpp:
+        * contrib/utility/Test/Introspection/Inline/inline.cpp:
+        * contrib/utility/Test/Synch/Inline/inline.cpp:
+        * etc/xlc_dummy.cpp:
+        * examples/Reactor/Proactor/test_aiocb.cpp:
+        * examples/Reactor/Proactor/test_aiosig.cpp:
+
+          Disable fuzz's check_for_improper_main_declaration check on these files.
+          These files don't use ACE.
+
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * examples/Reactor/WFMO_Reactor/Registration.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+        * examples/Threads/task_three.cpp:
+
+          Use the proper form of ACE_TMAIN. Namely, the argv parameter
+          should be "ACE_TCHAR *argv[]" instead of "ACE_TCHAR **argv"
+          or "ACE_TCHAR *[]" instead of "ACE_TCHAR **"
+
+        * apps/JAWS3/bench/average.cpp:
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+Mon Mar  3 08:58:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Improved this file
+
+Mon Mar  3 07:30:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Don't set INSLIB
+
+Mon Mar  3 07:00:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+          Rearranged some rules so that C files are compiled with the
+          C compiler on OpenVMS
+
+Mon Mar  3 06:57:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ProcessVX.pm:
+          Added support to specify a custom password for the iBoot
+
+Sun Mar  2 20:04:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ProcessVX.pm:
+          Integrated some OCI changes for the iBoot
+
+Sun Mar  2 19:32:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Use ACE_ROOT as defailt root test directory instead of the current
+          directory
+
+Sun Mar  2 18:53:12 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ASNMP/agent/main.cpp:
+        * ace/Svc_Conf_y.cpp:
+        * apps/JAWS3/jaws3/main.cpp:
+        * examples/Mem_Map/IO-tests/test_io.cpp:
+        * examples/Reactor/Multicast/client.cpp:
+        * examples/Reactor/Multicast/server.cpp:
+        * examples/Reactor/Proactor/test_aiocb_ace.cpp:
+        * examples/System_V_IPC/SV_Shared_Memory/SV_Shared_Memory_Test.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/createfile.cpp:
+        * netsvcs/clients/Tokens/collection/collection.cpp:
+        * netsvcs/clients/Tokens/collection/rw_locks.cpp:
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+        * netsvcs/clients/Tokens/rw_lock/rw_locks.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+        * performance-tests/Misc/test_guard.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * examples/Mem_Map/IO-tests/Mem_Map_IO_Tests.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
+        * apps/JAWS/clients/WebSTONE/src/webclient.c:
+        * contrib/utility/Example/CommandLine/Foo/foo.cpp:
+        * performance-tests/Synch-Benchmarks/context.c:
+        * performance-tests/TTCP/C/new-ttcp.cpp:
+        * tests/Unload_libACE.cpp:
+
+          Disable fuzz's check_for_improper_main_declaration check on these files.
+          These files don't use ACE.
+
+Sat Mar  1 19:09:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Added -r as option to specify an alternate root test directory
+          instead of the current directory. Combined this with -l we can
+          then run perl scripts for testing project code.
+
 Thu Feb 28 16:08:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
@@ -109,7 +260,7 @@ Thu Feb 21 15:25:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Feb 21 02:34:37 CST 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.6.3 released.
+        * ACE version 5.6.3 released.
 
 Local Variables:
 mode: change-log

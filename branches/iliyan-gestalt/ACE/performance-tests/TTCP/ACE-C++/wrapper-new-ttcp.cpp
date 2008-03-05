@@ -216,7 +216,7 @@ char *title = 0;
 int new_line = 0;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_SOCK_Stream connection_stream;
   int c;
@@ -449,9 +449,9 @@ main (int argc, char *argv[])
       if (connection_stream.send_n ((char *) &session_control_buf,
                                     sizeof (Session_Control_Message))
           != sizeof (Session_Control_Message))
-        ACE_ERROR_RETURN ((LM_ERROR, 
-                           "%p send session control failed\n", 
-                           "ttcp"), 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p send session control failed\n",
+                           "ttcp"),
                           -1);
 
       long ack;
@@ -461,9 +461,9 @@ main (int argc, char *argv[])
           send_result = connection_stream.send_n ((char *) message_buf,
                                                   total_msg_len);
           if (send_result != total_msg_len)
-            ACE_ERROR_RETURN ((LM_ERROR, 
+            ACE_ERROR_RETURN ((LM_ERROR,
                                "%p only sent %d of %d bytes on call %d\n",
-                               "ttcp", send_result, total_msg_len, numCalls + 1), 
+                               "ttcp", send_result, total_msg_len, numCalls + 1),
                               -1);
           numCalls++;
           nbytes += data_buf_len;
@@ -485,7 +485,7 @@ main (int argc, char *argv[])
           != sizeof (Session_Control_Message))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p recv session control failed\n",
-                           "ttcp"), 
+                           "ttcp"),
                           -1);
 
       ACE_DEBUG ((LM_DEBUG, "received session control message"
@@ -501,7 +501,7 @@ main (int argc, char *argv[])
         {
           if (connection_stream.recv_n ((char *) message_buf, sizeof (long))
               != sizeof (long))
-            ACE_ERROR_RETURN ((LM_ERROR, 
+            ACE_ERROR_RETURN ((LM_ERROR,
                                "%p recv data control failed\n",
                                "ttcp"),
                               -1);
@@ -517,7 +517,7 @@ main (int argc, char *argv[])
               != sizeof cnt)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p send ack failed\n",
-                               "ttcp"), 
+                               "ttcp"),
                               -1);
         }
       printf("Server finished. \n");

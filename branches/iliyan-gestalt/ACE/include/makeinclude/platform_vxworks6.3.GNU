@@ -29,6 +29,7 @@ endif
 xerces ?= 0
 aio ?= 0
 versioned_so ?= 0
+footprint ?= 0
 
 ifeq ($(static_libs),1)
   shared_libs = 0
@@ -160,7 +161,7 @@ endif
 
 ifneq ($(VX_LIB_BUILD),1)
   ifeq ($(rtp),0)
-    VXWORKSLINK = true
+    VXWORKSLINK ?= 1
   endif
   ifeq ($(VX_APP_BUILD),1)
     ## set variables for VxWorks linktarget identification
@@ -231,7 +232,11 @@ else
 endif
 endif
 
-ifeq ("$(VXWORKSLINK)","true")
+ifeq ($(footprint),1)
+  LD_PARTIALFLAGS += -Xlinker -M -Xlinker -Map -Xlinker $@.map
+endif
+
+ifeq ($(VXWORKSLINK), 1)
   # prevent possible clash with static LIB rules
   # in VxWorks make includes and rules.lib.GNU
   override ARCHIVE =
@@ -248,7 +253,12 @@ ifeq ("$(VXWORKSLINK)","true")
     endif
   else
     LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH) $(LD_PARTIALFLAGS)
-    PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS) $(VLDLIBS) $(ACE_SHLIBS) $(LIBS)
+    ifeq ($(footprint),0)
+      PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS) $(VLDLIBS) $(ACE_SHLIBS) $(LIBS)
+    else
+      PRJ_OBJS_FOR_LD_PARTIAL=$(VSHOBJS) $(VLDLIBS) $(ACE_SHLIBS) $(LIBS)
+      LD_PARTIAL_LAST_FLAGS += $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS) $(VLDLIBS)
+    endif
   endif
   PRJ_OBJS_FOR_LD=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
   PRJ_OBJS_FOR_NM=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
@@ -282,7 +292,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 ifeq ("$(templates)","automatic")
 ifeq ($(repo),1)
-ifeq ("$(VXWORKSLINK)","true")
+ifeq ($(VXWORKSLINK), 1)
   ifeq ($(VX_APP_BUILD),1)
 	ifneq ($(SHARED_LIBS),1)
           LD_PARTIAL += -frepo
@@ -347,7 +357,7 @@ endif
 
 CCFLAGS         += $(C++FLAGS)
 
-ifeq ("$(VXWORKSLINK)","true")
+ifeq ($(VXWORKSLINK), 1)
 
   ifeq ($(repo),1)
     ifeq ($(SHARED_LIBS),1)

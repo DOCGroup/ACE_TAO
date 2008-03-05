@@ -1,4 +1,7 @@
 /* $Id$ */
+
+/* FUZZ: disable check_for_improper_main_declaration */
+
 #include <stdio.h>
 // @(#)context.c 1.1 10/18/96
 

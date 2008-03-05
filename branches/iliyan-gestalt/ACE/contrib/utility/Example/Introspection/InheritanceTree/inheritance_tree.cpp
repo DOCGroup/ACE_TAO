@@ -6,7 +6,8 @@
 // Note: This example is by no means complete. In fact properly printing
 // arbitrary C++ inheritance tree is a non-trivial task. If you would like
 // to improve this example please feel free to send your results back ;-).
-//
+
+/* FUZZ: disable check_for_improper_main_declaration */
 
 #include "Hierarchy.hpp"
 

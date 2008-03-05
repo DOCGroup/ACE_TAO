@@ -12,21 +12,21 @@
 //    This program helps you to test the <aio_*> calls on a
 //    platform.
 //
-//    Before running this test, make sure the platform can 
+//    Before running this test, make sure the platform can
 //    support POSIX <aio_> calls, using
 //    ACE_ROOT/tests/Aio_Platform_Test.
-// 
+//
 //    This program tests the AIOCB (AIO Control Blocks) based
 //    completion approach which uses <aio_suspend> for completion
-//    querying. 
-// 
+//    querying.
+//
 //    If this test is successful, ACE_POSIX_AIOCB_PROACTOR
 //    can be used on this platform.
-// 
+//
 // = COMPILE and RUN
 //    % make
 //    % ./test_aiocb_ace
-// 
+//
 // = AUTHOR
 //    Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
@@ -95,7 +95,7 @@ Test_Aio::init (void)
   // Open the output file.
   this->out_fd_ = ACE_OS::open ("test_aio.log",
                                 O_RDWR | O_CREAT | O_TRUNC,
-                                0666); 
+                                0666);
   if (this->out_fd_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error: Opening file\n"),
@@ -106,7 +106,7 @@ Test_Aio::init (void)
   ACE_DEBUG ((LM_DEBUG,
               "The buffer : %s\n",
               this->buffer_write_));
-  
+
   // Allocate memory for the read buffer.
   ACE_NEW_RETURN (this->buffer_read_,
                   char [ACE_OS::strlen (this->buffer_write_)],
@@ -134,14 +134,14 @@ Test_Aio::do_aio (void)
   //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
   this->aiocb_write_->aio_sigevent.sigev_value.sival_ptr =
     (void *) this->aiocb_write_;
-  
+
   // Fire off the aio write.
   if (aio_write (this->aiocb_write_) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "aio_write"),
                       -1);
-  
+
   // = Read from that file.
 
   // Setup AIOCB.
@@ -162,7 +162,7 @@ Test_Aio::do_aio (void)
                        "%p\n",
                        "aio_read"),
                       -1);
-  
+
   // Wait for the completion on aio_suspend.
   struct aiocb *list_aiocb[2];
   list_aiocb [0] = this->aiocb_write_;
@@ -180,7 +180,7 @@ Test_Aio::do_aio (void)
                   "Result of <aio_suspend> : %d\n",
                   return_val));
 
-      // Analyze return and error values.     
+      // Analyze return and error values.
       if (to_finish > 1)
         {
           if (aio_error (list_aiocb [1]) != EINPROGRESS)
@@ -198,7 +198,7 @@ Test_Aio::do_aio (void)
                 }
             }
           else
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "aio_error says aio 1 is in progress\n"));
         }
 
@@ -218,20 +218,20 @@ Test_Aio::do_aio (void)
             }
         }
       else
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "aio_error says aio 0 is in progress\n"));
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Both the AIO operations done.\n"
               "The buffer is : %s\n",
               this->buffer_read_));
-  
+
   return 0;
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 
   ACE_UNUSED_ARG (argc);
@@ -244,16 +244,16 @@ main (int argc, char **argv)
                        "AIOCB test failed:\n"
                        "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n"),
                       -1);
-  
+
   if (test_aio.do_aio () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "AIOCB test failed:\n"
                        "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n"),
                       -1);
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "AIOCB test successful:\n"
               "ACE_POSIX_AIOCB_PROACTOR should work in this platform\n"));
-  
+
   return 0;
 }
