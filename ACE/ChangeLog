@@ -1,3 +1,9 @@
+Wed Mar  5 07:54:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run the parallel connect strategy test on VxWorks 5.5, the
+          command length of the shell is not long enough.
+
 Tue Mar  4 09:27:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ProcessVX.pm:
