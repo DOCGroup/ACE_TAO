@@ -1,3 +1,9 @@
+Wed Mar  5 19:18:25 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/WindowsMultiInstanceMonitor.cpp:
+        
+          Moved #include of Windows system file inside #ifdef guard.
+
 Wed Mar  5 19:14:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/Constraint_Visitor.h:

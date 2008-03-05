@@ -1,13 +1,13 @@
 // $Id$
 
-#include <pdhmsg.h>
-
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
 
 #include "MonitorControl/WindowsMultiInstanceMonitor.h"
 
 #if defined (ACE_WIN32)
+
+#include <pdhmsg.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
