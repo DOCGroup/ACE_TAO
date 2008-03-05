@@ -31,7 +31,8 @@ namespace XMI
 
   Extension::
   Extension (::XMI::Extension const& s)
-  :
+    :
+    XSCRT::Type (),
   xmi_id_ (s.xmi_id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.xmi_id_) : 0),
   label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
   uuid_ (s.uuid_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.uuid_) : 0),

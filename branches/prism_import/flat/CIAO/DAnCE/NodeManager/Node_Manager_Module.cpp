@@ -400,7 +400,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       // Parsing Node name and node manager ior file name
       ACE_CString node_name = options.node_managers_[0].c_str ();
       ACE_CString node_file;
-      ssize_t npos = node_name.find (' ');
+      size_t npos = node_name.find (' ');
       if (ACE_CString::npos != npos)
         {
           node_file = node_name.substring (npos + 1, node_name.length() - npos + 1);

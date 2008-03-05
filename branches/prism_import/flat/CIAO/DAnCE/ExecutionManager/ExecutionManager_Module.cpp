@@ -316,7 +316,7 @@ DAnCE_ExecutionManager_Module::create_object (CORBA::ORB_ptr orb,
       ACE_DEBUG ( (LM_TRACE, "[%M] DAnCE_ExecutionManager_Module::create_object - before processing --node-mgr options(%u).\n", options.node_managers_.size()));
       for (size_t i = 0; i < options.node_managers_.size(); ++i)
         {
-          ssize_t pos = options.node_managers_[i].find ('=');
+          size_t pos = options.node_managers_[i].find ('=');
           ACE_CString node_name = options.node_managers_[i];
           ACE_CString nm_ior;
 

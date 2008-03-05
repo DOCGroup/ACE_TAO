@@ -33,7 +33,7 @@ namespace CIAO
 
     IdRef::
     IdRef (::CIAO::Config_Handlers::IdRef const& s)
-    :
+      : XSCRT::Type (),
     href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
     idref_ (s.idref_.get () ? new ::XMLSchema::IDREF< ACE_TCHAR > (*s.idref_) : 0),
     regulator__ ()

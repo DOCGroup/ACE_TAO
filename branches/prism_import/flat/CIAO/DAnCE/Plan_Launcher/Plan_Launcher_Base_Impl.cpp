@@ -719,7 +719,7 @@ Plan_Launcher_Base_Impl::expand_env_vars (const char * s)
     ssize_t pos_done = 0;
     while (pos_done < (ssize_t) src.length())
       {
-        ssize_t pos_start = src.find ('$', pos_done);
+        size_t pos_start = src.find ('$', pos_done);
         if (ACE_CString::npos == pos_start)
           {
             res += src.substring (pos_done);
