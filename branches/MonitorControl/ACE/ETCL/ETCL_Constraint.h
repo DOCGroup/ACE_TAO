@@ -25,7 +25,7 @@
 #include "ace/CDR_Base.h"
 
 #include "etcl_export.h"
-#include "ETCL_Macros.h"
+#include "ETCL_macros.h"
 
 BEGIN_VERSIONED_NAMESPACE_MACRO
 
