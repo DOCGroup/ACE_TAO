@@ -19,7 +19,7 @@
 
 #include "ace/OS.h"
 
-#include "ETCL_Macros.h"
+#include "ETCL_macros.h"
 
 #ifdef __cplusplus
 

@@ -1,3 +1,9 @@
+Wed Mar  5 18:48:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ETCL/ETCL_l.cpp:
+        
+          One more #include case error.
+
 Wed Mar  5 18:46:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ETCL/ETCL_Constraint_Visitor.h:
