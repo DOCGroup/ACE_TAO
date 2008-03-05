@@ -18,7 +18,7 @@
 #include /**/ "ace/pre.h"
 
 #include "etcl_export.h"
-#include "ETCL_Macros.h"
+#include "ETCL_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

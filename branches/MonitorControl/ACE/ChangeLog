@@ -1,3 +1,10 @@
+Wed Mar  5 18:46:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ETCL/ETCL_Constraint_Visitor.h:
+        * ETCL/ETCL_Interpreter.h:
+        
+          More #include case errors.
+
 Wed Mar  5 18:43:10 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ETCL/ETCL_Constraint.h:
