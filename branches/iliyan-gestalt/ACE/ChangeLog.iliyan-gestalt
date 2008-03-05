@@ -1,3 +1,20 @@
+Wed Mar  5 19:31:36 UTC 2008  Iliyan Jeliazkov  <fi326c@ociweb.com>
+
+        * ace/ARGV.h:
+        * ace/ARGV.cpp:
+
+        Introducing a ctor that takes the number of parameters in argv
+        thus eliminating the requirement to have argv 0-terminated.  This
+        requirement can be a hard to satisfy in cases where the argv has
+        been "manualy constructed", i.e. not provided by the OS
+        environment.
+
+        * ace/OS_NS_unistd.h:
+        * ace/OS_NS_unistd.cpp:
+
+        Introducing new argv_to_string which takes an explicit argc
+        argument and relaxes the requirement on argv (to be 0-terminated).
+
 Mon Mar  3 00:25:37 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Dynamic_Service.h:

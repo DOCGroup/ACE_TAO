@@ -116,6 +116,33 @@ public:
   /**
    * Initializes the argument vector from a set of arguments. Any environment
    * variable references are translated (if applicable) during execution of
+   * this method. In contrast with ACE_ARGV_T(CHAR_TYPE *[], bool, bool), this
+   * ctor does not require argv to be 0-terminated as the number of arguments
+   * is provided explicitely.
+   *
+   * @param argc  The number of arguments in the argv array.
+   *
+   * @param argv  An array of tokens to initialize the object with. All needed
+   *              data is copied from @a argv during this call; the pointers
+   *              in @a argv are not needed after this call, and the memory
+   *              referred to by @a argv is not referenced by this object.
+   *
+   * @param substitute_env_args  If non-zero, any element of @a argv that is
+   *              an environment variable reference (e.g., @c $VAR) will have
+   *              its environment variable value in the resultant vector
+   *              in place of the environment variable name.
+   *
+   * @param quote_args  If non-zero each argument @a argv[i] needs to
+   *                    be enclosed in double quotes ('"').
+   */
+  explicit ACE_ARGV_T (int argc,
+                       CHAR_TYPE *argv[],
+                       bool substitute_env_args = true,
+                       bool quote_args = false);
+
+  /**
+   * Initializes the argument vector from a set of arguments. Any environment
+   * variable references are translated (if applicable) during execution of
    * this method.
    *
    * @param argv  An array of tokens to initialize the object with. The
