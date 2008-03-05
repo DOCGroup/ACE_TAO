@@ -48,7 +48,7 @@ public:
   }
 };
 
-int main (int argc, char *argv [])
+int main (int /* argc */, char * /* argv */ [])
 {
   /// Set the timer for # of threads check at 2000 msecs (2 sec).
   ADD_PERIODIC_MONITOR (BYTES_RECEIVED_MONITOR, 2000);

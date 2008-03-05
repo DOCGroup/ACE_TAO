@@ -53,9 +53,7 @@ public:
   }
 };
 
-using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
-
-int main (int argc, char *argv [])
+int main (int /* argc */, char * /* argv */ [])
 {
   /// Creates these future group members without automatic update.
   ADD_MANUAL_MONITOR (BYTES_SENT_MONITOR);

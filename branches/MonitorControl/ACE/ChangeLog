@@ -1,3 +1,15 @@
+Wed Mar  5 19:29:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
+        * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp:
+        * MonitorControl/examples/Constraint/constraint.cpp:
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp:
+        * MonitorControl/examples/Num_Threads/num_threads.cpp:
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp:
+        * MonitorControl/examples/Group/group.cpp:
+        
+          Commented out unused args.
+
 Wed Mar  5 19:18:25 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/WindowsMultiInstanceMonitor.cpp:

@@ -38,7 +38,7 @@ public:
   }
 };
 
-int main (int argc, char *argv [])
+int main (int /* argc */, char * /* argv */ [])
 {
   /// Create a message queue with a built-in monitor (since ACE was
   /// compiled with monitors enabled) and add the monitor to the

@@ -38,7 +38,7 @@ public:
   }
 };
 
-int main (int argc, char *argv [])
+int main (int /* argc */, char * /* argv */ [])
 {
   /// Set the timer for memory usage check at 2000 msecs (2 sec).
   ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, 2000);

@@ -38,7 +38,7 @@ public:
   }
 };
 
-int main (int argc, char *argv [])
+int main (int /* argc */, char * /* argv */ [])
 {
   /// The Admin class will own the reactor and destroy it. We are
   /// passing a vanilla reactor to show how it works, but in real
