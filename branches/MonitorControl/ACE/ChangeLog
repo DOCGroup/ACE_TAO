@@ -1,3 +1,9 @@
+Wed Mar  5 18:54:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ETCL/ETCL_Constraint.inl:
+        
+          Commented out unused args.
+
 Wed Mar  5 18:48:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ETCL/ETCL_l.cpp:

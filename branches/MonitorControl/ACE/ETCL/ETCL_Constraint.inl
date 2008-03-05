@@ -31,12 +31,12 @@ ETCL_Union_Value::ETCL_Union_Value (void)
 {}
 
 ACE_INLINE
-ETCL_Union_Value::ETCL_Union_Value (int sign,
-                                    ETCL_Constraint *integer)
+ETCL_Union_Value::ETCL_Union_Value (int /* sign */,
+                                    ETCL_Constraint * /* integer */)
 {}
 
 ACE_INLINE
-ETCL_Union_Value::ETCL_Union_Value (ETCL_Constraint *string)
+ETCL_Union_Value::ETCL_Union_Value (ETCL_Constraint * /* string */)
 {}
 
 // ****************************************************************
@@ -46,8 +46,8 @@ ETCL_Union_Pos::ETCL_Union_Pos (void)
 {}
     
 ACE_INLINE
-ETCL_Union_Pos::ETCL_Union_Pos (ETCL_Constraint *union_value,
-                                ETCL_Constraint *component)
+ETCL_Union_Pos::ETCL_Union_Pos (ETCL_Constraint * /* union_value */,
+                                ETCL_Constraint * /* component */)
 {}
     
 // ****************************************************************
@@ -106,8 +106,8 @@ ETCL_Component::ETCL_Component (void)
 {}
 
 ACE_INLINE
-ETCL_Component::ETCL_Component (ETCL_Constraint *identifier,
-                                ETCL_Constraint *component)
+ETCL_Component::ETCL_Component (ETCL_Constraint * /* identifier */,
+                                ETCL_Constraint * /* component */)
 {}
 
 // ****************************************************************
@@ -117,7 +117,7 @@ ETCL_Dot::ETCL_Dot (void)
 {}
 
 ACE_INLINE
-ETCL_Dot::ETCL_Dot (ETCL_Constraint *component)
+ETCL_Dot::ETCL_Dot (ETCL_Constraint * /* component */)
 {}
 
 // ****************************************************************
@@ -127,7 +127,7 @@ ETCL_Eval::ETCL_Eval (void)
 {}
 
 ACE_INLINE
-ETCL_Eval::ETCL_Eval (ETCL_Constraint *component)
+ETCL_Eval::ETCL_Eval (ETCL_Constraint * /* component */)
 {}
 
 // ****************************************************************
@@ -137,7 +137,7 @@ ETCL_Default::ETCL_Default (void)
 {}
 
 ACE_INLINE
-ETCL_Default::ETCL_Default (ETCL_Constraint *component)
+ETCL_Default::ETCL_Default (ETCL_Constraint * /* component */)
 {}
 
 // ****************************************************************
@@ -147,7 +147,7 @@ ETCL_Exist::ETCL_Exist (void)
 {}
 
 ACE_INLINE
-ETCL_Exist::ETCL_Exist (ETCL_Constraint *component)
+ETCL_Exist::ETCL_Exist (ETCL_Constraint * /* component */)
 {}
 
 // ****************************************************************
@@ -209,7 +209,7 @@ ETCL_Preference::ETCL_Preference (void)
 {}
 
 ACE_INLINE
-ETCL_Preference::ETCL_Preference (int type,
-                                  ETCL_Constraint *subexpr)
+ETCL_Preference::ETCL_Preference (int /* type */,
+                                  ETCL_Constraint * /* subexpr */)
 {}
 
