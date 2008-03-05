@@ -24,8 +24,8 @@ namespace ACE
 
       /// Stores value and timestamp with thread-safety.
       this->receive (this->value_.doubleValue);
-    }
 #endif
+    }
 
 //#if defined (linux)
     void

@@ -1,8 +1,20 @@
+Wed Mar  5 19:09:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/PacketsReceivedMonitor.cpp:
+        * MonitorControl/BytesSentMonitor.cpp:
+        
+          Moved improperly placed #endifs
+
 Wed Mar  5 19:04:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/BytesReceivedMonitor.cpp:
           
           Moved improperly place #endif.
+          
+        * MonitorControl/BytesSentMonitor.h:
+        * MonitorControl/BytesSentMonitor.cpp:
+        
+          Partial Linux implementation.
 
 Wed Mar  5 19:00:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
