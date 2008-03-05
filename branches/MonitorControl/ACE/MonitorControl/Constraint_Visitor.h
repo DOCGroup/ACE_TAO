@@ -22,7 +22,7 @@
 #include "ace/CDR_Base.h"
 #include "ace/MonitorControl_Types.h"
 
-#include "Etcl/ETCL_Constraint.h"
+#include "ETCL/ETCL_Constraint.h"
 #include "ETCL/ETCL_Constraint_Visitor.h"
 
 #include "MonitorControl/MonitorControl_export.h"
