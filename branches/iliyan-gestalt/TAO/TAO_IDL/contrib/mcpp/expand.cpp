@@ -385,7 +385,7 @@ static DEFBUF * def_special(
             diag_macro( CWARN
                     , "Line number %.0s\"%ld\" is out of range"     /* _W1_ */
                     , 0, src_line, 0, defp, 0);
-	ACE_OS::sprintf( defp->repl, "%ld", src_line);      /* Re-define    */
+        ACE_OS::sprintf( defp->repl, "%ld", src_line);      /* Re-define    */
         break;
     case DEF_NOARGS - 4:                    /* __FILE__             */
         for (file = infile; file != 0; file = file->parent) {

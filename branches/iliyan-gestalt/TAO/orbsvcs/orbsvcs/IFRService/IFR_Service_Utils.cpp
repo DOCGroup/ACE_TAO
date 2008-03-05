@@ -349,7 +349,7 @@ TAO_IFR_Server::create_repository (void)
   size_t ior_size = ACE_OS::strlen (ifr_ior) + 1; 
   ssize_t result = ACE_OS::write (fd, ifr_ior, ior_size);
   
-  if (result != ior_size)
+  if (result != static_cast<ssize_t> (ior_size))
     {
       ACE_OS::unlink (ior_filename);
       ACE_OS::close (fd);

@@ -1038,8 +1038,8 @@ if (ACE_OS::rename (tmp_file, t_file) != 0)
  if (mcpp_lib_main (DRV_argcount, tmp_arglist) != 0)
    {
      ACE_ERROR ((LM_ERROR,
-		 "%s: mcpp preprocessor execution failed\n",
-		 idl_global->prog_name ()));
+                 "%s: mcpp preprocessor execution failed\n",
+                 idl_global->prog_name ()));
      throw Bailout ();
    }
 
