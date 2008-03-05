@@ -88,7 +88,7 @@ int main (int /* argc */, char * /* argv */ [])
     }
 
   /// A quick test of the registry's name cache.
-  MonitorControl_Types::NameList &mc_names =
+  MonitorControl_Types::NameList mc_names =
     Monitor_Point_Registry::instance ()->names ();
 
   cout << "stored in monitor point registry:" << endl << endl;

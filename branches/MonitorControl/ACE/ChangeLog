@@ -1,3 +1,9 @@
+Wed Mar  5 19:36:58 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/examples/Group/group.cpp:
+        
+          Fixed error in assigning a temporary to a non-const reference.
+
 Wed Mar  5 19:29:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
