@@ -26,7 +26,7 @@ BE_init (int & /* argc */, char * /*argv */ [])
 }
 
 TAO_IDL3_TO_IDL2_BE_Export void
-BE_post_init (const char * /* files */ [], long /* nfiles */)
+BE_post_init (char * /* files */ [], long /* nfiles */)
 {
 }
 

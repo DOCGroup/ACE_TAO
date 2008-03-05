@@ -1,8 +1,19 @@
+Wed Mar  5 16:48:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/CdmwBE.cpp:
+        * tools/IDL3_to_IDL2/CdmwBEExtern.hpp:
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/IDL3_to_IDL2/be_extern.h:
+        * tools/IDL3_to_IDL2/be_init.cpp:
+
+          Fixed to comply with new interfaces exptected by the IDL
+          compiler.  Thanks to Jeff Parsons for the fixes.
+        
 Wed Mar  5 16:09:13 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ChangeLog:
-        
-          Cleared out non-branch changelog entries. 
+
+          Cleared out non-branch changelog entries.
 
 Wed Mar  5 16:06:07 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
@@ -14,8 +25,8 @@ Wed Mar  5 16:06:07 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/Basic_Deployment_Data.cpp:
         * tools/Config_Handlers/XMI.cpp:
 
-          Warning fixes. 
-        
+          Warning fixes.
+
 Tue Mar  4 22:29:37 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.eduC>
 
         * DAnCE/Cdmw/CDMW_Deployment.idl:
