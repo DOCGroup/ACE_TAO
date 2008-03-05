@@ -127,6 +127,29 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *argv[],
 }
 
 template <typename CHAR_TYPE>
+ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (int argc,
+                                   CHAR_TYPE *argv[],
+                                   bool substitute_env_args,
+                                   bool quote_arg)
+  : substitute_env_args_ (substitute_env_args),
+    iterative_ (false),
+    argc_ (0),
+    argv_ (0),
+    buf_ (0),
+    length_ (0),
+    queue_ ()
+{
+  ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T int,CHAR_TYPE*[] to CHAR_TYPE[]");
+
+  this->argc_ = ACE_OS::argv_to_string (argc,
+                                        argv,
+                                        this->buf_,
+                                        substitute_env_args,
+                                        quote_arg);
+}
+
+
+template <typename CHAR_TYPE>
 ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
                                    CHAR_TYPE *second_argv[],
                                    bool substitute_env_args,

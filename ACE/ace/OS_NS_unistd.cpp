@@ -46,13 +46,31 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
   if (argv == 0 || argv[0] == 0)
     return 0;
 
+  int argc;
+  for (argc = 0; argv[argc] != 0; ++argc)
+    continue;
+
+  return argv_to_string (argc,
+                         argv,
+                         buf,
+                         substitute_env_args,
+                         quote_args);
+}
+
+int
+ACE_OS::argv_to_string (int argc,
+                        ACE_TCHAR **argv,
+                        ACE_TCHAR *&buf,
+                        bool substitute_env_args,
+                        bool quote_args)
+{
+  if (argc <= 0 || argv == 0 || argv[0] == 0)
+    return 0;
+
   size_t buf_len = 0;
 
   // Determine the length of the buffer.
 
-  int argc;
-  for (argc = 0; argv[argc] != 0; ++argc)
-    continue;
   ACE_TCHAR **argv_p = argv;
 
   for (int i = 0; i < argc; ++i)
