@@ -26,6 +26,31 @@ namespace ACE
       this->receive (this->value_.doubleValue);
     }
 #endif
+
+//#if defined (linux)
+    void
+    BytesSentMonitor<true>::access_proc_stat (void)
+    {
+      this->file_ptr_ = ACE_OS::fopen ("/proc/net/dev", "r");
+      
+      if (this->file_ptr_ == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "bytes sent - opening /proc/net/dev failed\n"));
+          return;
+        }
+        
+      void* dummy = ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_);
+          ACE_DEBUG ((LM_DEBUG, "1st dummy: %s\n", buf_));
+      dummy = ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_);
+          ACE_DEBUG ((LM_DEBUG, "2nd dummy: %s\n", buf_));
+      
+      while (ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_) != 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "%s\n", buf_));
+        }
+    }
+//#endif
   }
 }
 

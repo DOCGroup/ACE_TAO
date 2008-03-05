@@ -1,6 +1,12 @@
+Wed Mar  5 19:04:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/BytesReceivedMonitor.cpp:
+          
+          Moved improperly place #endif.
+
 Wed Mar  5 19:00:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * ETCL_include/ETCL_include.h:
+        * ETCL/ETCL_include/ETCL_include.h:
         
           Added newline at the end of the file.
 
