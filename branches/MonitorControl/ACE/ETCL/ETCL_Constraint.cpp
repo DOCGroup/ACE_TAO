@@ -22,7 +22,7 @@ ETCL_Constraint::~ETCL_Constraint (void)
 }
 
 int
-ETCL_Constraint::accept (ETCL_Constraint_Visitor *visitor)
+ETCL_Constraint::accept (ETCL_Constraint_Visitor * /* visitor */)
 {
   return 0;
 }

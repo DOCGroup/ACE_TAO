@@ -58,8 +58,8 @@ ETCL_Component_Pos::ETCL_Component_Pos (void)
 
 ACE_INLINE
 ETCL_Component_Pos::ETCL_Component_Pos (
-    ETCL_Constraint *integer,
-    ETCL_Constraint *component
+    ETCL_Constraint * /* integer */,
+    ETCL_Constraint * /* component */
   )
 {}
 
@@ -71,8 +71,8 @@ ETCL_Component_Assoc::ETCL_Component_Assoc (void)
 
 ACE_INLINE
 ETCL_Component_Assoc::ETCL_Component_Assoc (
-    ETCL_Constraint *identifier,
-    ETCL_Constraint *component
+    ETCL_Constraint * /* identifier */,
+    ETCL_Constraint * /* component */
   )
 {}
 
@@ -84,8 +84,8 @@ ETCL_Component_Array::ETCL_Component_Array (void)
 
 ACE_INLINE
 ETCL_Component_Array::ETCL_Component_Array (
-    ETCL_Constraint *integer,
-    ETCL_Constraint *component
+    ETCL_Constraint * /* integer */,
+    ETCL_Constraint * /* component */
   )
 {}
 
@@ -96,7 +96,7 @@ ETCL_Special::ETCL_Special (void)
 {}
 
 ACE_INLINE
-ETCL_Special::ETCL_Special (int type)
+ETCL_Special::ETCL_Special (int /* type */)
 {}
 
 // ****************************************************************
