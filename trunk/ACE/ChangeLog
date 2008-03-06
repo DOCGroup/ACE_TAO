@@ -1,3 +1,9 @@
+Thu Mar  6 16:49:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.lib.GNU:
+          Rearranged some rules to make sure c/C files are compiled with the
+          C compiler on OpenVMS
+
 Thu Mar  6 13:10:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_openvms.GNU:
