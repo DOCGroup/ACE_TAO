@@ -54,9 +54,9 @@ namespace ACE
     class MONITORCONTROL_Export BytesSentMonitor<true>
       : public MonitorPoint<true>
 #if defined (ACE_WIN32)
-      , public WindowsMultiInstanceMonitor
+        , public WindowsMultiInstanceMonitor
 #elif defined (linux)
-      , public LinuxNetworkInterfaceMonitor
+        , public LinuxNetworkInterfaceMonitor
 #endif
     {
     public:

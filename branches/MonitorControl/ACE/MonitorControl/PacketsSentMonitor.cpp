@@ -13,6 +13,9 @@ namespace ACE
 #if defined (ACE_WIN32)
       , WindowsMultiInstanceMonitor (
           "\\Network Interface(*)\\Packets Sent/sec")
+#elif defined (linux)
+        , LinuxNetworkInterfaceMonitor (
+            " %*[^:]: %*u %*u %*u %*u %*u %*u %*u %*u %*u %lu")
 #endif
     {}
 
@@ -24,6 +27,11 @@ namespace ACE
 
       /// Stores value and timestamp with thread-safety.
       this->receive (this->value_.doubleValue);
+#elif defined (linux)
+      this->lin_update ();
+
+      /// Stores value and timestamp with thread-safety.
+      this->receive (static_cast<double> (this->value_));
 #endif
     }
   }

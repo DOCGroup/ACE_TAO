@@ -24,6 +24,8 @@
 
 #if defined (ACE_WIN32)
 #include "MonitorControl/WindowsMultiInstanceMonitor.h"
+#elif defined (linux)
+#include "MonitorControl/LinuxNetworkInterfaceMonitor.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -52,7 +54,9 @@ namespace ACE
     class MONITORCONTROL_Export BytesReceivedMonitor<true>
       : public MonitorPoint<true>
 #if defined (ACE_WIN32)
-      , public WindowsMultiInstanceMonitor
+        , public WindowsMultiInstanceMonitor
+#elif defined (linux)
+        , public LinuxNetworkInterfaceMonitor
 #endif
     {
     public:

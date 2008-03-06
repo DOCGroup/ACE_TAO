@@ -11,8 +11,11 @@ namespace ACE
     BytesReceivedMonitor<true>::BytesReceivedMonitor (void)
       : MonitorPoint<true> ("BytesReceived")
 #if defined (ACE_WIN32)
-      , WindowsMultiInstanceMonitor (
-          "\\Network Interface(*)\\Bytes Received/sec")
+        , WindowsMultiInstanceMonitor (
+            "\\Network Interface(*)\\Bytes Received/sec")
+#elif defined (linux)
+        , LinuxNetworkInterfaceMonitor (
+            " %*[^:]: %lu %*u %*u %*u %*u %*u %*u %*u %*u %*u")
 #endif
     {}
 
@@ -24,6 +27,11 @@ namespace ACE
 
       /// Stores value and timestamp with thread-safety.
       this->receive (this->value_.doubleValue);
+#elif defined (linux)
+      this->lin_update ();
+
+      /// Stores value and timestamp with thread-safety.
+      this->receive (static_cast<double> (this->value_));
 #endif
     }
   }

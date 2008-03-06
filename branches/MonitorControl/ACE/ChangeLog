@@ -1,3 +1,16 @@
+Thu Mar  6 20:46:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/PacketsSentMonitor.h:
+        * MonitorControl/BytesReceivedMonitor.cpp:
+        * MonitorControl/PacketsReceivedMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.cpp:
+        * MonitorControl/BytesReceivedMonitor.h:
+        * MonitorControl/PacketsReceivedMonitor.h:
+        * MonitorControl/BytesSentMonitor.h:
+        
+          Refactored code from these monitors into the newly added
+          LinuxNetworkInterfaceMonitor mixin class.
+
 Thu Mar  6 19:30:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/LinuxNetworkInterfaceMonitor.h:
