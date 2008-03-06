@@ -24,6 +24,8 @@
 
 #if defined (ACE_WIN32)
 #include "MonitorControl/WindowsMultiInstanceMonitor.h"
+#elif defined (linux)
+#include "MonitorControl/LinuxNetworkInterfaceMonitor.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -53,6 +55,8 @@ namespace ACE
       : public MonitorPoint<true>
 #if defined (ACE_WIN32)
       , public WindowsMultiInstanceMonitor
+#elif defined (linux)
+      , public LinuxNetworkInterfaceMonitor
 #endif
     {
     public:
@@ -60,15 +64,6 @@ namespace ACE
 
       /// Implementation of the pure virtual method.
       virtual void update (void);
-      
-    private:
-#if defined (linux)
-      static const unsigned long MAX_INTERFACES = 10UL;
-      ACE_UINT64 sent_array_[MAX_INTERFACES];
-      ACE_UINT64 start_;
-      FILE *file_ptr_;
-      char buf_[1024];
-#endif
     };
   }
 }

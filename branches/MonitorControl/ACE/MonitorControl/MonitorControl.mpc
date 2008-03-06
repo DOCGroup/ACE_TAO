@@ -11,6 +11,7 @@ project(MonitorControl) : acelib, ace_etcl {
     Constraint_Interpreter.cpp
     Constraint_Visitor.cpp
     CPULoadMonitor.cpp
+    LinuxNetworkInterfaceMonitor.cpp
     MemoryUsageMonitor.cpp
     MonitorGroup.cpp
     MonitorPoint.cpp

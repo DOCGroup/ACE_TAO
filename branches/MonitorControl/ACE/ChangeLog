@@ -1,3 +1,21 @@
+Thu Mar  6 19:30:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/LinuxNetworkInterfaceMonitor.h:
+        * MonitorControl/LinuxNetworkInterfaceMonitor.cpp:
+        
+          New files, defining a base class for all network interface
+          monitors implemented on Linux.
+          
+        * MonitorControl/MonitorControl.mpc:
+        
+          Added new files to project.
+          
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/BytesSentMonitor.h:
+        
+          Added the new class above as a base class, guard by a check
+          for Linux platform, factored out code into the base class.
+
 Thu Mar  6 03:53:16 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/BytesSentMonitor.{h,cpp}:
