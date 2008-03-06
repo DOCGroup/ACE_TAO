@@ -1,3 +1,9 @@
+Thu Mar  6 03:53:16 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/BytesSentMonitor.{h,cpp}:
+        
+          Finished Linux implementation.
+
 Wed Mar  5 19:36:58 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/Group/group.cpp:

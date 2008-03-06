@@ -62,15 +62,13 @@ namespace ACE
       virtual void update (void);
       
     private:
-//#if defined (linux)
-      void access_proc_stat (void);
-//#endif
-
-    private:
-//#if defined (linux)
+#if defined (linux)
+      static const unsigned long MAX_INTERFACES = 10UL;
+      ACE_UINT64 sent_array_[MAX_INTERFACES];
+      ACE_UINT64 start_;
       FILE *file_ptr_;
       char buf_[1024];
-//#endif
+#endif
     };
   }
 }
