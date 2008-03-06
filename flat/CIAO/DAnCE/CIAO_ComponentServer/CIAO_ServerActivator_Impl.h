@@ -41,8 +41,7 @@ namespace CIAO
       
       virtual
       ::Components::Deployment::ComponentServer_ptr 
-      create_component_server (
-			       const ::Components::ConfigValues & config);
+      create_component_server (const ::Components::ConfigValues & config);
       
       virtual
       void remove_component_server (::Components::Deployment::ComponentServer_ptr server);

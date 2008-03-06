@@ -57,6 +57,9 @@
 #  include "ace/Trace.h"
 #endif /* CIAO_NTRACE */
 
+// default information printed with CIAO logging messages.
+#define CLINFO "(%P|%t) [%M] - %T - "
+
 namespace CIAO
 {
   /**

@@ -3,8 +3,8 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  */
 
-#ifndef CIAO_COMPONENTSERVER_H_
-#define CIAO_COMPONENTSERVER_H_
+#ifndef CIAO_COMPONENTSERVER_IMPL_H_
+#define CIAO_COMPONENTSERVER_IMPL_H_
 
 #include "CIAO_ComponentServerS.h"
 
@@ -12,34 +12,42 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <ace/String_Base.h>
+
 namespace CIAO
 {
   namespace Deployment
   {
-    class  CIAO_ServerActivator_i
-      : public virtual POA_Components::Deployment::CIAO::ServerActivator
+    class  CIAO_ComponentServer_i
+      : public virtual POA_Components::Deployment::CIAO::ComponentServer
     {
     public:
       // Constructor 
-      CIAO_ServerActivator_i (void);
+      CIAO_ComponentServer_i (const ACE_CString &uuid);
       
       // Destructor 
-      virtual ~CIAO_ServerActivator_i (void);
+      virtual ~CIAO_ComponentServer_i (void);
       
       virtual
-      void component_server_callback (::Components::Deployment::CIAO::ComponentServer_ptr serverref,
-				      const char * server_UUID,
-				      ::Components::ConfigValues_out config);
+      void shutdown (void);
       
       virtual
-      ::Components::Deployment::ComponentServer_ptr
-      create_component_server (const ::Components::ConfigValues & config);
+      ::Components::ConfigValues * configuration (void);
       
       virtual
-      void remove_component_server (::Components::Deployment::ComponentServer_ptr server);
-  
+      ::Components::Deployment::ServerActivator_ptr get_server_activator (void);
+      
       virtual
-      ::Components::Deployment::ComponentServers * get_component_servers (void);
+      ::Components::Deployment::Container_ptr create_container (const ::Components::ConfigValues & config);
+      
+      virtual
+      void remove_container (::Components::Deployment::Container_ptr cref);
+      
+      virtual
+      ::Components::Deployment::Containers * get_containers (void);
+      
+      virtual
+      void remove (void);
     };
   }
 }
