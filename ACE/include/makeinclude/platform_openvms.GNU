@@ -13,8 +13,9 @@ ssl ?= 0
 rwho ?= 0
 buildbits ?= 32
 
-VDIR            = obj/
-VSHDIR          = shobj/
+VDIR            ?= obj/
+VSHDIR          ?= shobj/
+PRELINK_TYPE    ?= USE_OLB
 
 LN_S = cp -p
 DEFFLAGS        +=
@@ -38,7 +39,7 @@ ifeq ($(HOSTTYPE),ia64)
     endif
   endif
 else
-  LDFLAGS         += -Wl/PRELINK=USE_OLB
+  LDFLAGS         += -Wl/PRELINK=$(PRELINK_TYPE)/MAP/CROSS
 endif
 
 ifeq ($(debug),1)

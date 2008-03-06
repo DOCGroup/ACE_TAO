@@ -1,3 +1,8 @@
+Thu Mar  6 13:10:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Improved this file
+
 Thu Mar  6 10:33:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_openvms.GNU:
