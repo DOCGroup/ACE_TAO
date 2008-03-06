@@ -1,0 +1,4 @@
+project : dance_component_server_stub {
+   after += CIAO_ComponentServer_stub
+   libs += CIAO_ComponentServer_stub
+}

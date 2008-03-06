@@ -39,6 +39,7 @@ workspace {
   ciaosvcs
   DAnCE
   tools/Config_Handlers
+  tools/XML
   
   exclude {
     DAnCE/tests
