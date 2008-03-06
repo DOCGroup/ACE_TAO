@@ -13,19 +13,6 @@ ssl ?= 0
 rwho ?= 0
 buildbits ?= 32
 
-ifeq ($(static_libs),1)
-  override shared_libs =
-  override static_libs_only = 1
-  ifneq ($(findstring -lACE_SSL,$(LDLIBS)),)
-    override LDLIBS = $(PLATFORM_SSL_LIBS)
-  else
-    override LDLIBS =
-  endif
-else
-  override static_libs =
-  override shared_libs = 1
-endif
-
 VDIR            = obj/
 VSHDIR          = shobj/
 
