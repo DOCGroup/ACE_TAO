@@ -1,3 +1,9 @@
+Thu Mar  6 18:24:12 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance_component_server_svnt.mpb:
+
+          Adding this long missing base project.
+        
 Thu Mar  6 17:45:05 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/CIAO_ComponentServer/CIAO_CS_Client.idl:
@@ -9,26 +15,26 @@ Thu Mar  6 17:45:05 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/CIAO_ComponentServer/CIAO_Container_Impl.cpp:
         * DAnCE/CIAO_ComponentServer/CIAO_ServerActivator_Impl.h:
         * DAnCE/CIAO_ComponentServer/CIAO_ServerActivator_Impl.cpp:
-        
+
           Component Server implementation, no-op implementations
           for all servants.
-        
+
         * DAnCE/ComponentServer/ComponentServer_Client.idl:
-        
-          Added newline at end of file. 
-        
+
+          Added newline at end of file.
+
         * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
-        
-          Warning fix. 
-        
+
+          Warning fix.
+
         * MPC/config/ciao.mpb:
         * MPC/config/ciao_exe.mpb:
         * MPC/config/ciao_lib.mpb:
-        
-          Added ciao base projects to mirror dance base projects of similar name. 
+
+          Added ciao base projects to mirror dance base projects of similar name.
           They are currently identical, but will be changed when the directory
-          restructuring proposal comes to consensus. 
-        
+          restructuring proposal comes to consensus.
+
         * ciao/CIAO_Logger:
         * ciao/CIAO_Logger/CIAOLoggerFactory.h:
         * ciao/CIAO_Logger/CIAO_Logger_Export.h:
@@ -37,13 +43,13 @@ Thu Mar  6 17:45:05 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/CIAO_Logger/Logger.mpc:
         * ciao/CIAO_Logger/Logger_Service.h:
         * ciao/CIAO_Logger/Logger_Service.cpp:
-        
+
           CIAO logger based on logger implemented for DAnCE.
-        
+
         * ciao/CIAO_common.h:
-        
+
           Added CLINFO define, which provides the default decorators
-          for all CIAO logging messages. 
+          for all CIAO logging messages.
 
 Thu Mar  6 05:52:09 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
