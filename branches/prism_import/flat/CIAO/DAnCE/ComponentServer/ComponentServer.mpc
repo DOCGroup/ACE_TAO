@@ -11,6 +11,8 @@ project(DAnCE_ComponentServer_IDL) : taoidldefaults, anytypecode {
 
   IDL_Files {
     ComponentServer.idl
+    ComponentServer_Base.idl
+    ComponentServer_Client.idl
   }
 }
 
@@ -19,24 +21,33 @@ project(DAnCE_ComponentServer_stub) : taolib_with_idl, tao_output, messaging, ci
   after += DAnCE_ComponentServer_IDL
 
   Header_Files {
-    DAnCE_ComponentServer_stub
+    DAnCE_ComponentServer_stub_export.h
     ComponentServerC.h
+    ComponentServer_ClientC.h
+    ComponentServer_BaseC.h
   }
 
   Source_Files {
     ComponentServerC.cpp
+    ComponentServer_ClientC.cpp
+    ComponentServer_BaseC.cpp
   }
 }
 
 project(DAnCE_ComponentServer_svnt) : taolib_with_idl, tao_output, messaging, dance_component_server_stub,  anytypecode, ciaodll  {
-  dynamicflags = DANCE_COMPONENTSERVER_SKEL_BUILD_DLL
+  dynamicflags = DANCE_COMPONENTSERVER_SVNT_BUILD_DLL
 
   Header_Files {
-    DAnCE_ComponentServer_skel
+    DAnCE_ComponentServer_svnt_export.h
     ComponentServerS.h
+    ComponentServer_ClientS.h
+    ComponentServer_BaseS.h
   }
 
   Source_Files {
     ComponentServerS.cpp
+    ComponentServer_ClientS.cpp
+    ComponentServer_BaseS.cpp
   }
 }
+

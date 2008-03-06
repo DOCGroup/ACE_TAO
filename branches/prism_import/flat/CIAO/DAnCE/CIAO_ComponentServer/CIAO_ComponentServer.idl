@@ -1,0 +1,53 @@
+/**
+ * @file CIAO_ComponentServer.idl
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ *
+ * A couple CIAO-specific extensions to the component server
+ * interfaces.
+ */
+
+#ifndef CIAO_COMPONENTSERVER_IDL_
+#define CIAO_COMPONENTSERVER_IDL_
+
+#include "DAnCE/ComponentServer/ComponentServer.idl"
+
+module Components
+{
+  module Deployment
+  {
+    module CIAO
+    {
+      interface ComponentServer : ::Components::Deployment::ComponentServer
+      {
+      };
+
+      typedef sequence<CCMObject> CCMObjects;
+      
+      /**
+       * @interface CIAO_Container
+       * @brief CIAO specific extensions to the component server interface.
+       */
+      interface Container : Components::Deployment::Container
+      {
+	/// Instruct the container to install a component without
+	/// an explicit home.
+	CCMObject install_component (in UUID id,
+					      in string entrypt,
+					      in ConfigValues config)
+	  raises (::Components::Deployment::UnknownImplId,
+		  ::Components::Deployment::ImplEntryPointNotFound,
+		  ::Components::Deployment::InstallationFailure,
+		  ::Components::Deployment::InvalidConfiguration);
+	
+	/// Instruct the container to remove a component installed
+	/// without an explicit home.  If the component was installed
+	/// with an explicit home, this operation will fail.
+	void remove_component (in CCMObject cref)
+	  raises (::Components::RemoveFailure);
+	
+	CCMObjects get_components ();
+      };
+    };
+  };
+};
+#endif /* CIAO_COMPONENTSERVER_IDL_ */
