@@ -110,7 +110,7 @@ $(VDIR)%.o: %.c
 
 $(VDIR)%.o: %.C
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
 $(VDIR)%.o: %.cpp
@@ -140,6 +140,14 @@ $(VDIR)%.rc.o: %.rc
 # Otherwise, the .$(SOEXT) and .$(OBJEXT) are built via the same rule.
 # SOLINK is required for the repository under gcc.
 ifndef SOLINK
+$(VSHDIR)%.$(OBJEXT): %.c
+	$(mk_obj_out_dir)
+	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+
+$(VSHDIR)%.$(OBJEXT): %.C
+	$(mk_obj_out_dir)
+	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+
 # I added the "Executable Shared Object (ESO)" define to separate between
 # normal shared object files and executable shared object files (the kind
 # that the service configurator needs to be able to function).
@@ -154,6 +162,10 @@ $(VSHDIR)%.$(SOEXT): %.cpp
 	$(SOBUILD)
   endif # ESOBUILD
 
+$(VSHDIR)%.$(OBJEXT): %.cc
+	$(mk_obj_out_dir)
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+
   ifeq ($(split), 1)
 $(VSHDIR)%.$(OBJEXT): %.cpp
 	$(mk_obj_out_dir)
@@ -167,21 +179,9 @@ $(VSHDIR)%.$(OBJEXT): %.cpp
 
   endif # split
 
-$(VSHDIR)%.$(OBJEXT): %.cc
-	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
-
-$(VSHDIR)%.$(OBJEXT): %.C
-	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
-
 $(VSHDIR)%.$(OBJEXT): %.cxx
 	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
-
-$(VSHDIR)%.$(OBJEXT): %.c
-	$(mk_obj_out_dir)
-	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
   ifneq (,$(COMPILE.rc))
 $(VSHDIR)%.rc.$(OBJEXT): %.rc
