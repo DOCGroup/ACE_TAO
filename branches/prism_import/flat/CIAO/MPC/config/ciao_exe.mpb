@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project : ciao {
+  install = $(ACE_ROOT)/bin
+}

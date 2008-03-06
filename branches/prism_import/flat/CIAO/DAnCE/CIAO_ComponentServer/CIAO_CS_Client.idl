@@ -25,7 +25,8 @@ module Components
 	void component_server_callback (in ComponentServer serverref,
 					in string server_UUID,
 					out ConfigValues config);
-	
+        
+        void configuration_complete (in string server_UUID);
       };
     };
   };
