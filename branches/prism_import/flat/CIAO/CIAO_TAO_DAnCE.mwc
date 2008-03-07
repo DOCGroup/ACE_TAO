@@ -14,6 +14,7 @@ workspace {
   $(TAO_ROOT)/tao/Valuetype.mpc
   $(TAO_ROOT)/tao/AnyTypeCode.mpc
   $(TAO_ROOT)/tao/DynamicAny.mpc
+  $(TAO_ROOT)/tao/DynamicInterface.mpc
   $(TAO_ROOT)/tao/IFR_Client.mpc
   $(TAO_ROOT)/tao/TypeCodeFactory.mpc
   $(TAO_ROOT)/tao/CodecFactory.mpc

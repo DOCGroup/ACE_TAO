@@ -7,6 +7,7 @@
 #ifndef XML_TYPEDEFS_H
 #define XML_TYPEDEFS_H
 
+#include "XSC_XML_Handlers_Export.h"
 #include "XML/XML_Helper.h"
 #include "XML/XML_Schema_Resolver.h"
 #include "XML/XML_Error_Handler.h"
@@ -15,7 +16,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class XML_Helper
+    class XSC_XML_Handlers_Export XML_Helper
     {
     public:
       typedef CIAO::XML::Environment_Resolver PATH_RESOLVER;
