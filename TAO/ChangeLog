@@ -1,3 +1,43 @@
+Fri Mar  7 13:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.cpp:
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.h:
+        * tao/BiDir_GIOP/BiDirPolicy_Validator.h:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.h:
+        * tao/Service_Context_Handler.cpp:
+        * tao/Service_Context_Handler.h:
+        * tao/Service_Context_Handler_Registry.cpp:
+        * tao/Service_Context_Handler_Registry.h:
+        * tao/tao.mpc:
+          Made the handling of service contexts pluggable. Previously
+          the core of TAO did know how to handle the IOP::BI_DIR_IIOP
+          service context. Introduced a new Service Context Handler
+          base class from which concrete handlers are derived, these
+          handlers are then registered with the service context handler
+          registry for a certain context id. This way the BiDIR
+          library handles the BiDIR service context. The future
+          compression support can now also be implemented without
+          that the core knows much about this. The next step is to
+          refactor the adding of the bidir service context to a message
+          in such a way that it is pluggable.
+
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+          Check the return value of several streaming operators
+
+        * tao/Object.{h,cpp}:
+          Disable the _request operation with CORBA/e
+
+        * tao/LocalObject.{h,cpp}:
+          Disabled a few operations with CORBA/e
+
+        * tao/Service_Callbacks.h:
+        * tao/Service_Context.cpp:
+        * tao/Service_Context.h:
+        * tao/Service_Context.inl:
+          Layout changes
+
 Tue Mar  4 10:10:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Table.{h,cpp,inl}:
