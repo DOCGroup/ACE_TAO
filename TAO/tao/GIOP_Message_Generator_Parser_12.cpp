@@ -30,7 +30,8 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
     TAO_OutputCDR &msg)
 {
   // First the request id
-  msg << opdetails.request_id ();
+  if (!(msg << opdetails.request_id ()))
+    return false;
 
   CORBA::Octet const response_flags = opdetails.response_flags ();
 
@@ -256,7 +257,6 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
       // Notice that there are no memory allocations involved
       // here!
-
       request.operation (input.rd_ptr (),
                          length - 1,
                          0 /* TAO_ServerRequest does NOT own string */);
@@ -285,10 +285,10 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
       return -1;
     }
 
-  // Check an process if BiDir contexts are available
-  if (request.orb_core ()->bidir_giop_policy ())
+  if (req_service_info.length() > 0)
     {
-      this->check_bidirectional_context (request);
+      request.orb_core ()->service_context_registry ().
+        process_service_contexts (request);
     }
 
   if (input.length () > 0)
@@ -423,7 +423,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
             if (TAO_debug_level)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+                            ACE_TEXT ("(%N |%l) Unable to handle this request\n")));
               }
             return false;
           }
@@ -432,7 +432,8 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
     case TAO_Target_Specification::Profile_Addr:
       {
         // As this is a union send in the discriminant first
-        msg << GIOP::ProfileAddr;
+        if (!(msg << GIOP::ProfileAddr))
+          return false;
 
         // Get the profile
         const IOP::TaggedProfile *pfile = spec.profile ();
@@ -440,7 +441,8 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
         if (pfile)
           {
             // Marshall in the object key
-            msg << *pfile;
+            if (!(msg << *pfile))
+              return false;
           }
         else
           {
@@ -478,7 +480,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
             if (TAO_debug_level)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+                            ACE_TEXT ("(%N |%l) Unable to handle this request\n")));
               }
             return false;
           }
@@ -494,45 +496,6 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
     }
 
   return true;
-}
-
-
-bool
-TAO_GIOP_Message_Generator_Parser_12::check_bidirectional_context (
-    TAO_ServerRequest &request)
-{
-  TAO_Service_Context &service_context = request.request_service_context ();
-
-  // Check whether we have the BiDir service context info available in
-  // the ServiceContextList
-  if (service_context.is_service_id (IOP::BI_DIR_IIOP))
-    {
-      return this->process_bidir_context (service_context,
-                                          request.transport ());
-    }
-
-  return false;
-}
-
-bool
-TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
-    TAO_Service_Context &service_context,
-    TAO_Transport *transport)
-{
-  // Get the context info
-  IOP::ServiceContext context;
-  context.context_id = IOP::BI_DIR_IIOP;
-
-  if (service_context.get_context (context) != 1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) Context info not found \n")),
-                        false);
-
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (
-                      context.context_data.get_buffer ()),
-                    context.context_data.length ());
-
-  return transport->tear_listen_point_list (cdr);
 }
 
 size_t

@@ -192,6 +192,8 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     ServerRequestInterceptor_Adapter_Factory.cpp
     Service_Callbacks.cpp
     Service_Context.cpp
+    Service_Context_Handler.cpp
+    Service_Context_Handler_Registry.cpp
     Services_Activate.cpp
     ServicesC.cpp
     ShortSeqC.cpp
@@ -422,7 +424,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Object_T.h
     Object_Reference_Sequence_Element_T.h
     Object_Reference_Const_Sequence_Element_T.h
-    Objref_VarOut_T.h    
+    Objref_VarOut_T.h
     Object_Reference_Traits_Base_T.h
     Object_Reference_Traits_T.h
     OctetSeqC.h

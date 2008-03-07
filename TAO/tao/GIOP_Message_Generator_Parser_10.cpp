@@ -26,10 +26,12 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
     TAO_OutputCDR &msg)
 {
   // Write the service context list
-  msg << opdetails.request_service_info ();
+  if (!(msg << opdetails.request_service_info ()))
+    return false;
 
   // The request ID
-  msg << opdetails.request_id ();
+  if (!(msg << opdetails.request_id ()))
+    return false;
 
   CORBA::Octet const response_flags = opdetails.response_flags ();
 
@@ -149,11 +151,13 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
 {
   // Write the service context list.
 #if (TAO_HAS_MINIMUM_CORBA == 1)
-  output << reply.service_context_notowned ();
+  if (!(output << reply.service_context_notowned ()))
+    return false;
 #else
   if (reply.is_dsi_ == false)
     {
-      output << reply.service_context_notowned ();
+      if (!(output << reply.service_context_notowned ()))
+        return false;
     }
   else
     {
@@ -162,8 +166,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       // force the appropriate padding.
       // But first we take it out any of them..
       CORBA::ULong count = 0;
-      IOP::ServiceContextList &svc_ctx =
-        reply.service_context_notowned ();
+      IOP::ServiceContextList &svc_ctx = reply.service_context_notowned ();
       CORBA::ULong const l = svc_ctx.length ();
       CORBA::ULong i;
 
@@ -181,7 +184,9 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       ++count;
 
       // Now marshal the rest of the service context objects
-      output << count;
+      if (!(output << count))
+        return false;
+
       for (i = 0; i != l; ++i)
         {
           if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
@@ -189,7 +194,8 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
               continue;
             }
 
-          output << svc_ctx[i];
+          if (!(output << svc_ctx[i]))
+            return false;
         }
 
     }
@@ -327,14 +333,12 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   // Get the input CDR in the request class
   TAO_InputCDR & input = *request.incoming ();
 
-  IOP::ServiceContextList &service_info =
-    request.request_service_info ();
+  IOP::ServiceContextList &service_info = request.request_service_info ();
 
-  if ( ! (input >> service_info))
+  if (!(input >> service_info))
     return -1;
 
-  CORBA::Boolean hdr_status =
-    (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
   CORBA::ULong req_id = 0;
 
@@ -400,8 +404,6 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   return hdr_status ? 0 : -1;
 }
 
-
-
 int
 TAO_GIOP_Message_Generator_Parser_10::parse_locate_header (
     TAO_GIOP_Locate_Request_Header &request)
@@ -409,11 +411,9 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_header (
   // Get the stream
   TAO_InputCDR &msg = request.incoming_stream ();
 
-  CORBA::Boolean hdr_status = true;
-
   // Get the request id
   CORBA::ULong req_id = 0;
-  hdr_status = msg.read_ulong (req_id);
+  CORBA::Boolean hdr_status = msg.read_ulong (req_id);
 
   // Store it in the Locate request classes
   request.request_id (req_id);
@@ -424,15 +424,13 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_header (
   return hdr_status ? 0 : -1;
 }
 
-
-
 int
 TAO_GIOP_Message_Generator_Parser_10::parse_reply (
     TAO_InputCDR &cdr,
     TAO_Pluggable_Reply_Params &params)
 {
   // Read the service context list first
-  if ( ! (cdr >> params.svc_ctx_))
+  if (!(cdr >> params.svc_ctx_))
     {
       if (TAO_debug_level > 0)
         {
@@ -444,8 +442,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_reply (
     }
 
   // Call the base class for further processing
-  if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr,
-                                                      params) == -1)
+  if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr, params) == -1)
     return -1;
 
   return 0;

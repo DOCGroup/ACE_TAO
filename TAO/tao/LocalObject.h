@@ -76,7 +76,6 @@ namespace CORBA
 
     /// Throws NO_IMPLEMENT.
     virtual CORBA::Object_ptr _get_component (void);
-#endif
 
     /// Get the repository id.
     virtual char * _repository_id (void);
@@ -100,6 +99,7 @@ namespace CORBA
     /// Throws NO_IMPLEMENT.
     virtual CORBA::Request_ptr _request (const char * operation);
 
+#endif
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
