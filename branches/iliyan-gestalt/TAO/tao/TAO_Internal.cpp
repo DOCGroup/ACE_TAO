@@ -203,10 +203,10 @@ namespace
   TAO::ORB::open_global_services (int argc,
                                   char **argv)
   {
-    // Count of the number of (times we did this for all) ORBs.
-    static int orb_init_count = 0;
-
     {
+      // Count of the number of (times we did this for all) ORBs.
+      static int orb_init_count = 0;
+
       // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
       // from being called within a static object CTOR.
       ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
@@ -258,7 +258,7 @@ namespace
     // Will expand the environment variables, if any were used. Is this a good thing?
     // I guess it provides greater flexibility for deployment, so let's leave it. Will
     // also quote arguments.
-    ACE_ARGV copyargv (argv, true, true);
+    ACE_ARGV copyargv (argc, argv, true, true);
 
     // Adjust to proper TCHAR type
     int tmpargc = argc;
