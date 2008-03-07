@@ -280,12 +280,14 @@ namespace CIAO
       // Now update the current domain.
 //       ACE_DEBUG ((LM_DEBUG, "Obtained resource data from node monitors."
 //                   "\nNow updating the current domain!\n"));
-      this->current_domain_.node.length (this->node_info_map_.size ());
-      std::map<std::string, ::Deployment::Node>::iterator itr = this->node_info_map_.begin ();
-      CORBA::ULong i = 0;
-      for (;itr != this->node_info_map_.end (); ++itr, ++i)
+
+      //      this->current_domain_.node.length (this->node_info_map_.size ());
+      //std::map<std::string, ::Deployment::Node>::iterator itr = this->node_info_map_.begin ();
+
+      for (CORBA::ULong i = 0; i < this->initial_domain_.node.length (); ++i)
         {
-          this->current_domain_.node [i] = (*itr).second;
+          this->current_domain_.node [i] = this->node_info_map_
+                                           [this->initial_domain_.node[i].name.in ()];
         }
 
       return this->current_domain_;

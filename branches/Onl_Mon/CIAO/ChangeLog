@@ -1,3 +1,13 @@
+Fri Mar  7 21:04:59 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
+
+        * DAnCE/NodeManager/CIAO_Monitor.cpp:
+        * DAnCE/TM_Daemon/DomainDataManager.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.cpp:
+
+        The ordering of the nodes in the domain structure returned when
+        the get_intial_domain and get_snapshot methods were called were
+        different. This is a bug, and this was fixed.
+
 Wed Jan 16 20:13:56 UTC 2008  Nishanth Shankaran  <nshankar@nospam.com>
 
         * DAnCE/NodeManager/CIAO_Monitor.cpp:

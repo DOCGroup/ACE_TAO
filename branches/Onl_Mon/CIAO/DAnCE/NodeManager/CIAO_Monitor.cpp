@@ -75,10 +75,10 @@ int CIAO::CIAO_Monitor::stop ()
   CORBA::Any any;
   any <<= current_load;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P) CIAO_Monitor::get_current_data [%s]:"
-              " :-The current load is %f\n",
-              current_domain_->node[0].name.in (),
-              current_load));
+//   ACE_DEBUG ((LM_DEBUG, "(%P) CIAO_Monitor::get_current_data [%s]:"
+//               " :-The current load is %f\n",
+//               current_domain_->node[0].name.in (),
+//               current_load));
 
   // here insert the util value, in the right position
 

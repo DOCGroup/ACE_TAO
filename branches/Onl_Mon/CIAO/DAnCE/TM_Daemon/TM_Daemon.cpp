@@ -32,7 +32,7 @@ namespace CIAO
       CORBA::Object_var object = poa->id_to_reference (id.in ());
       this->handler_  = Onl_Monitor::AMI_NM_MonitorHandler::_narrow (object.in ());
 
-      this->manager_->start_monitor_qos (this->handler_);
+      //      this->manager_->start_monitor_qos (this->handler_);
       //      ACE_DEBUG ((LM_DEBUG, "Created the Daemon!\n"));
 
     }
@@ -75,8 +75,11 @@ namespace CIAO
     Daemon_impl::getSnapshot ()
     {
       ACE_DEBUG ((LM_DEBUG, "In getSnapshot!\n"));
+//       ::Deployment::Domain_var domain = new
+//           ::Deployment::Domain ();
       ::Deployment::Domain_var domain = new
           ::Deployment::Domain (this->manager_->get_all_data (this->handler_));
+
 //       std::map<std::string, ::Deployment::Node> temp =
 //         this->manager_->get_all_data (this->handler_);
 
