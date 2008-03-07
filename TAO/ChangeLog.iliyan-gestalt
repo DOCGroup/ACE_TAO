@@ -1,3 +1,15 @@
+Fri Mar  7 21:10:50 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+        Additional work required to make possible passing the argc to
+        ARGV because often when a command line is hand-crafted it is not
+        0-terminated, as expected by ARGV.
+
+        * tests/Bug_2936_Regression/PersistentPOA.cpp:
+
+        Fixing (what seems to be) a bad ownership transfer of Object's.
+
 Mon Mar  3 21:20:36 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Internal.cpp:
