@@ -36,6 +36,7 @@
 #include "tao/Invocation_Utils.h"
 #include "tao/Adapter_Registry.h"
 #include "tao/ORB_Core_TSS_Resources.h"
+#include "tao/Service_Context_Handler_Registry.h"
 #include "ace/Array_Map.h"
 
 #include "ace/Thread_Manager.h"
@@ -199,6 +200,8 @@ public:
   /// this ORB core. Tries to load the PI library if it is not loaded
   /// yet
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry (void);
+
+  TAO_Service_Context_Registry &service_context_registry (void);
 
   /// Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
@@ -1183,6 +1186,9 @@ protected:
 
   /// Registry containing all orb initializers
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_;
+
+  /// Registry containing all service context handlers
+  TAO_Service_Context_Registry service_context_registry_;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
   /// Cached pointer/reference to the PICurrent object.
