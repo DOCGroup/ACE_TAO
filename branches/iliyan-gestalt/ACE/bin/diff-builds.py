@@ -29,12 +29,14 @@ class AbstractParser (HTMLParser):
         
         iscached = True
         if not access (cachepath, F_OK):
-            print "(info) Create dirs=%s" % (cachepath)
+            if self.verbose_ > 2:
+                print "(info) Create dirs=%s" % (cachepath)
             makedirs (cachepath)
             iscached = False
 
         if not access (c, F_OK):
-            print "(info) Create cache file=%s" % (c)
+            if self.verbose_ > 2:
+                print "(info) Create cache file=%s" % (c)
             open (c, 'a').close()
             iscached = False
 
@@ -99,7 +101,7 @@ class AbstractParser (HTMLParser):
                 
             f = self.cached (url)
             try:
-                print "(debug) Opening %s ..." % url
+#                print "(debug) Opening %s ..." % url
                 self.feed(f.read())
             finally:
  #               print "(debug) Closing %s ..." % url
@@ -698,6 +700,6 @@ def testDaylyLog():
 
 if __name__ == '__main__':
 #    sys.exit (sample())
-#    sys.exit (main())
-    pdb.run ("main()");
+    sys.exit (main())
+#    pdb.run ("main()");
 #    pdb.run ("testDaylyLog()")
