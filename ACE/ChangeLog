@@ -1,3 +1,25 @@
+Thu Mar  6 16:49:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.lib.GNU:
+          Rearranged some rules to make sure c/C files are compiled with the
+          C compiler on OpenVMS
+
+Thu Mar  6 13:10:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Improved this file
+
+Thu Mar  6 10:33:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Removed restriction that only a shared or static build can be done
+
+Wed Mar  5 07:54:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run the parallel connect strategy test on VxWorks 5.5, the
+          command length of the shell is not long enough.
+
 Tue Mar  4 09:27:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ProcessVX.pm:

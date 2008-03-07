@@ -13,21 +13,9 @@ ssl ?= 0
 rwho ?= 0
 buildbits ?= 32
 
-ifeq ($(static_libs),1)
-  override shared_libs =
-  override static_libs_only = 1
-  ifneq ($(findstring -lACE_SSL,$(LDLIBS)),)
-    override LDLIBS = $(PLATFORM_SSL_LIBS)
-  else
-    override LDLIBS =
-  endif
-else
-  override static_libs =
-  override shared_libs = 1
-endif
-
-VDIR            = obj/
-VSHDIR          = shobj/
+VDIR            ?= obj/
+VSHDIR          ?= shobj/
+PRELINK_TYPE    ?= USE_OLB
 
 LN_S = cp -p
 DEFFLAGS        +=
@@ -51,7 +39,7 @@ ifeq ($(HOSTTYPE),ia64)
     endif
   endif
 else
-  LDFLAGS         += -Wl/PRELINK=USE_OLB
+  LDFLAGS         += -Wl/PRELINK=$(PRELINK_TYPE)/MAP/CROSS
 endif
 
 ifeq ($(debug),1)
