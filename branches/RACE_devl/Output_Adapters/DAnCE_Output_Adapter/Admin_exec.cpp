@@ -3,6 +3,7 @@
 #include "Config_Handlers/DP_Handler.h"
 #include "Config_Handlers/Utils/XML_Helper.h"
 #include "Config_Handlers/Deployment.hpp"
+#include "Config_Handlers/DnC_Dump.h"
 #include <sstream>
 
 namespace CIAO
@@ -77,7 +78,7 @@ namespace CIAO
               // XML_HELPER->write_DOM (the_xsc, dom_out.c_str());
               // delete the_xsc;
               // Now do the remaining stuff.
-
+              //              Deployment::DnC_Dump::dump (plan);
               ACE_CString uuid (this->launcher_.launch_plan (plan));
               std::string msg;
               if (uuid.c_str () == 0)
@@ -294,7 +295,7 @@ namespace CIAO
                 {
                   msg << "DANCE_OA::tear_down_string(): "
                       <<   "successfully torn down plan with UUID "
-                      << ID 
+                      << ID
                       << std::endl;
                   this->logger_.log (msg.str());
                   return true;

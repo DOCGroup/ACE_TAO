@@ -183,15 +183,15 @@ namespace CIAO
         }
 
         ::CORBA::Boolean
-        Admin_exec_i::start_system()
+        Admin_exec_i::start_controller()
         {
           std::stringstream msg;
-          msg << "Admin_exec_i::start_system (): "
-              << "Trying to start the system.\n";
+          msg << "Admin_exec_i::start_controller (): "
+              << "Trying to start the controller.\n";
           this->logger_.log (msg.str ());
           try
             {
-              bool ret = this->conductor_->start_system();
+              bool ret = this->conductor_->start_controller ();
               if (ret)
                 {
                   msg << "Done!\n";
@@ -200,14 +200,47 @@ namespace CIAO
                 }
               else
                 {
-                  msg << "Oops! Error while starting the system!\n";
+                  msg << "Oops! Error while starting the controller!\n";
                   this->logger_.log (msg.str ());
                   return false;
                 }
             }
           catch (UnknownID &ex)
             {
-              msg << "\nException caught::start_system::"
+              msg << "\nException caught::start_controller::"
+                  << ex._info ().c_str();
+              this->logger_.log (msg.str ());
+              return false;
+            }
+        }
+
+
+        ::CORBA::Boolean
+        Admin_exec_i::stop_controller()
+        {
+          std::stringstream msg;
+          msg << "Admin_exec_i::stop_controller (): "
+              << "Trying to stop the controller.\n";
+          this->logger_.log (msg.str ());
+          try
+            {
+              bool ret = this->conductor_->stop_controller();
+              if (ret)
+                {
+                  msg << "Done!\n";
+                  this->logger_.log (msg.str ());
+                  return true;
+                }
+              else
+                {
+                  msg << "Oops! Error while stopping the controller!\n";
+                  this->logger_.log (msg.str ());
+                  return false;
+                }
+            }
+          catch (UnknownID &ex)
+            {
+              msg << "\nException caught::stop_controller::"
                   << ex._info ().c_str();
               this->logger_.log (msg.str ());
               return false;

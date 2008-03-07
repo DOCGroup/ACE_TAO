@@ -38,15 +38,17 @@ namespace CIAO
           const ::CIAO::RACE::OperationalString & opstring,
           ::CORBA::String_out ID);
 
-        /*virtual ::CORBA::Boolean
+        virtual ::CORBA::Boolean
         unregister_string (
-          const char * ID);*/
+          const char * ID);
 
         virtual int svc ();
 
       protected:
 
         // Helper methods.
+
+        virtual void control_action ();
 
         virtual bool populate_domain_info
           (const ::Deployment::Domain& domain);

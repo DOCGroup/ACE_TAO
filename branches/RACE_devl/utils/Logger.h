@@ -1,12 +1,12 @@
-// $Id:$
+// $Id$
 
 /**
-* @file Logger.h
-*
-* This file defines RACE logger.
-*
-* @author Nishanth Shankaran <nshankar@nospam.com>
-*/
+ * @file Logger.h
+ *
+ * This file defines RACE logger.
+ *
+ * @author Nishanth Shankaran <nshankar@nospam.com>
+ */
 
 #ifndef RACE_LOGGER_H
 #define RACE_LOGGER_H
@@ -16,22 +16,22 @@
 
 namespace CIAO
 {
-	namespace RACE
-	{
-		class LOGGER_Export Logger
-		{
-		public:
-			Logger(const char* filename);
+  namespace RACE
+  {
+    class LOGGER_Export Logger
+    {
+      public:
+      Logger(const char* filename);
 
-			virtual ~Logger(void);
+      virtual ~Logger(void);
 
-			virtual void log (::std::string msg);
+      virtual void log (::std::string msg);
 
 
-		private:
-			FILE *log_file_;
+      private:
+      FILE *log_file_;
 
-		};
-	}
+    };
+  }
 }
 #endif /* RACE_LOGGER_H */

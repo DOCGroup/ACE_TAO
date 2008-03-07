@@ -25,6 +25,17 @@
     <source/>
     <implementation>_65FF80E8-893E-416A-B056-03DB270D9D00</implementation>
     <configProperty>
+      <name>subtasks</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>4</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>ComponentIOR</name>
       <value>
         <type>
@@ -489,7 +500,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>20</double>
+        <double>15</double>
       </value>
     </value>
   </infoProperty>

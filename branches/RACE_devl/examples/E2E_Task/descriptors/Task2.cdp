@@ -79,6 +79,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>subtasks</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>3</long>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance id="PICML_default_xme_file.ComponentImplementations.Task2.TaskAssembly.Subtask1">
@@ -94,6 +105,28 @@
         </type>
         <value>
           <string>Subtask.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>17100</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>20900</long>
         </value>
       </value>
     </configProperty>
@@ -138,6 +171,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>12825</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>15675</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>ID</name>
       <value>
         <type>
@@ -174,6 +229,28 @@
         </type>
         <value>
           <string>Subtask.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>4275</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>5225</long>
         </value>
       </value>
     </configProperty>
@@ -358,7 +435,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>13.34</double>
+        <double>20</double>
       </value>
     </value>
   </infoProperty>
@@ -369,7 +446,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>10</double>
+        <double>5</double>
       </value>
     </value>
   </infoProperty>

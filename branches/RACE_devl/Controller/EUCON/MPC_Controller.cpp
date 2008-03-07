@@ -17,8 +17,22 @@
 
 
 MPC_Controller::MPC_Controller()
- : m_task_num(0), m_subtask_num(0), m_proc_num(0)
-{lib_flag = 0;}
+  : m_task_num(0), m_subtask_num(0), m_proc_num(0), lib_flag (0)
+{
+  // Call application and library initialization. Perform this
+  // initialization before calling any API functions or
+  // Compiler-generated libraries by Matlab.
+  if (!mclInitializeApplication(NULL,0) || !liblsqInitialize())
+    {
+      std::cerr << "could not initialize the library properly"
+                << std::endl;
+    }
+  else
+    {
+      lib_flag = 1;
+    }
+
+}
 
 MPC_Controller::~MPC_Controller() {
 
@@ -51,20 +65,11 @@ int MPC_Controller::init_domain(CIAO::RACE::Domain dom){
 //initialize the matlab environment and the data information for lsqlin solver
 int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 
-	// Call application and library initialization. Perform this 
-    // initialization before calling any API functions or
-    // Compiler-generated libraries by Matlab.
-	if (!mclInitializeApplication(NULL,0) || 
-		!liblsqInitialize())
-	{
-		std::cerr << "could not initialize the library properly"
-				   << std::endl;
-		lib_flag = 0;
-		return -1;
-	}
-
-	lib_flag = 1;
-	int i,j,k;
+  if (lib_flag != 1)
+    {
+      return -1;
+    }
+  int i,j,k;
 
 	m_task_num = tasks.size();
 
@@ -80,13 +85,13 @@ int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 	m_R = mwArray(PREDICTION_HORIZON*m_proc_num, 1, mxDOUBLE_CLASS, mxREAL);
 	m_Rptr = new double[PREDICTION_HORIZON*m_proc_num];
 	m_R.GetData(m_Rptr,PREDICTION_HORIZON*m_proc_num);
-	
+
 	m_R_Chgs = mwArray(m_task_num, 1, mxDOUBLE_CLASS, mxREAL);
 	m_rate_chgs = new double[m_task_num];
 	rccPtr = new double[m_task_num];
 	memset(m_rate_chgs, 0, m_task_num*sizeof(double));
 	memset(rccPtr, 0, m_task_num*sizeof(double));
-	
+
 	m_F = mwArray(CONTROL_HORIZON*m_task_num*2, 1, mxDOUBLE_CLASS, mxREAL);
 	m_Fptr = new double[CONTROL_HORIZON*m_task_num*2];
 	m_F.GetData(m_Fptr,CONTROL_HORIZON*m_task_num*2);
@@ -95,12 +100,12 @@ int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 	Hptr = new double[m_proc_num*PREDICTION_HORIZON*m_task_num*CONTROL_HORIZON];
 	H0.GetData(Hptr,m_proc_num*PREDICTION_HORIZON*m_task_num*CONTROL_HORIZON);
 	HW = mwArray(m_task_num*CONTROL_HORIZON, m_task_num*CONTROL_HORIZON, mxDOUBLE_CLASS, mxREAL);
-	
+
 	H = mwArray(m_proc_num*PREDICTION_HORIZON+m_task_num*CONTROL_HORIZON, m_task_num*CONTROL_HORIZON, mxDOUBLE_CLASS, mxREAL);
 
 	A = mwArray(2*CONTROL_HORIZON*m_task_num,CONTROL_HORIZON*m_task_num,mxDOUBLE_CLASS, mxREAL);
 
-	
+
 	B = mwArray(CONTROL_HORIZON*m_task_num*2, 1, mxDOUBLE_CLASS, mxREAL);
 	BB = mwArray(2*CONTROL_HORIZON*m_task_num,m_task_num, mxDOUBLE_CLASS, mxREAL);
 
@@ -143,11 +148,11 @@ int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 		for (int j=0; j< m_proc_num*m_task_num; j++)
 			Yptr[i*m_proc_num*m_task_num+j] *= i+1;
 	}
-    
+
 	rowmajor_to_colmajor(Yptr, m_proc_num*PREDICTION_HORIZON, m_task_num);
-	
+
 	//The data is copied in column-major order
-    Y.SetData(Yptr, m_proc_num*PREDICTION_HORIZON*m_task_num);	
+    Y.SetData(Yptr, m_proc_num*PREDICTION_HORIZON*m_task_num);
 	rowmajor_to_colmajor(Yptr, m_task_num, m_proc_num*PREDICTION_HORIZON);
 	// --------------------- end of computation of matrix Y ---------------
 
@@ -172,8 +177,8 @@ int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 	rowmajor_to_colmajor(Hptr, m_proc_num*PREDICTION_HORIZON, m_task_num*CONTROL_HORIZON);
 	H0.SetData(Hptr,m_proc_num*PREDICTION_HORIZON*m_task_num*CONTROL_HORIZON);
 	rowmajor_to_colmajor(Hptr, m_task_num*CONTROL_HORIZON, m_proc_num*PREDICTION_HORIZON);
-	
-	// matrix of  weights 
+
+	// matrix of  weights
 	double* HWptr;
 	HWptr = new double[m_task_num*CONTROL_HORIZON*m_task_num*CONTROL_HORIZON];
 	HW.GetData(HWptr,m_task_num*CONTROL_HORIZON*m_task_num*CONTROL_HORIZON);
@@ -200,7 +205,7 @@ int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 			}
 		}
 	}
-	
+
 	double temp1,temp2,temp3;
 	temp3 = 2.0;
 	for (k=0; k<m_task_num; k++)
@@ -225,16 +230,16 @@ int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 	return 0;
 }
 
-std::vector<CIAO::RACE::Task> 
+std::vector<CIAO::RACE::Task>
 MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::Task> tasks)
 {
 	if(lib_flag == 0)
 		return tasks;
 	int num = 0;
 	int i,j;
-	
+
 	// ---------- vector X(k) assignment ------------
-	//extract current util from domain. 
+	//extract current util from domain.
 	//Assume the order of the nodes vector in the domain structure is fixed for the whole program
 	std::vector<CIAO::RACE::Node>::iterator it;
 	for (it = dom.nodes.begin(); it != dom.nodes.end(); it++)
@@ -244,11 +249,11 @@ MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::T
 		for (j=0; j<m_proc_num; j++)
 			m_Xptr[i*m_proc_num+j] = m_Xptr[j];
 
-	
-	
+
+
 	//The data is copied in column-major order
-    m_X.SetData(m_Xptr, m_proc_num*PREDICTION_HORIZON);	
-	
+    m_X.SetData(m_Xptr, m_proc_num*PREDICTION_HORIZON);
+
 	// -----------vector U(k) assignment ----------------
 	memcpy(m_Uptr, m_rate_chgs, m_task_num*sizeof(double));
 	/*
@@ -280,7 +285,7 @@ MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::T
 
     //------------ below code handles the Constraint A on the formulation -----------------
 	//period in ms
-	double l_period, h_period; 
+	double l_period, h_period;
 	//rate in 1/1000Hz
 	double rate;
 	std::vector<CIAO::RACE::Task>::iterator it_t;
@@ -303,10 +308,10 @@ MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::T
 		num++;
 	}
 	for (i=CONTROL_HORIZON; i<2*CONTROL_HORIZON; i++)
-		memcpy((void*)(m_Fptr + i*m_task_num), (void*)(m_Fptr + CONTROL_HORIZON*m_task_num), 
+		memcpy((void*)(m_Fptr + i*m_task_num), (void*)(m_Fptr + CONTROL_HORIZON*m_task_num),
 			m_task_num*sizeof(double));
 
-	
+
 	m_F.SetData(m_Fptr,CONTROL_HORIZON*m_task_num*2);
 
 
@@ -327,7 +332,7 @@ MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::T
 
 	B = matrix_multiple(BB,m_U,2*CONTROL_HORIZON*m_task_num,m_task_num,m_task_num,1);
 	B = matrix_minus(m_F,B,2*CONTROL_HORIZON*m_task_num,1,2*CONTROL_HORIZON*m_task_num,1);
-	
+
 
 	// call lsqlin_simple2 function from liblsq.dll(compiler-generated library) to compute the least square optimiztion
 	lsqlin_simple2(1,m_R_Chgs,H,E,A,B);
@@ -367,7 +372,7 @@ void MPC_Controller::new_matrix_multiple(double* out,double* in1,double* in2, in
 	if(c1 != r2){
 		std::cout << "dimensions of in1 and in2 do not match " <<std::endl;
 		return;
-		
+
 	}
 	int i,j,k;
 	int num = 0;
@@ -378,7 +383,7 @@ void MPC_Controller::new_matrix_multiple(double* out,double* in1,double* in2, in
 			for(k = 0; k < c1; k ++){
 				a = in1[i*c1+k];
 				b = in2[k*c2+j];
-				c += a*b; 
+				c += a*b;
 			}
 			out[num++] = c;
 		}
@@ -390,7 +395,7 @@ mwArray MPC_Controller::matrix_multiple(mwArray in1,mwArray in2, int r1,int c1,i
 	if(c1 != r2){
 		std::cout << "dimensions of in1 and in2 do not match " <<std::endl;
 		return mwArray();
-		
+
 	}
 	int i,j,k;
 	double a,b,c;
@@ -401,7 +406,7 @@ mwArray MPC_Controller::matrix_multiple(mwArray in1,mwArray in2, int r1,int c1,i
 			for(k = 1; k <= c1; k ++){
 				a = in1(i,k);
 				b = in2(k,j);
-				c += a*b; 
+				c += a*b;
 			}
 			out(i,j) = c;
 		}
@@ -414,7 +419,7 @@ mwArray MPC_Controller::matrix_minus(mwArray in1,mwArray in2, int r1,int c1,int 
 	if((c1 != c2)&&(r1 != r2)){
 		std::cout << "dimensions of in1 and in2 do not match " <<std::endl;
 		return mwArray();
-		
+
 	}
 	int i,j;
 	double a,b,c;
@@ -427,7 +432,7 @@ mwArray MPC_Controller::matrix_minus(mwArray in1,mwArray in2, int r1,int c1,int 
 			out(i,j) = c;
 		}
 	}
-	return out;	
+	return out;
 }
 void MPC_Controller::array_minus(double* in1,double* in2, int len){
 	for(int i = 0; i < len; i ++){
@@ -445,7 +450,7 @@ void MPC_Controller::array_plus(double* in1, double* in2, int len){
 mwArray MPC_Controller::matrix_plus(mwArray in1,mwArray in2, int r1,int c1,int r2,int c2){
 	if((c1 != c2)&&(r1 != r2)){
 		std::cout << "dimensions of in1 and in2 do not match " <<std::endl;
-		return mwArray();		
+		return mwArray();
 	}
 	int i,j;
 	double a,b,c;
@@ -458,14 +463,14 @@ mwArray MPC_Controller::matrix_plus(mwArray in1,mwArray in2, int r1,int c1,int r
 			out(i,j) = c;
 		}
 	}
-	return out;	
+	return out;
 }
 
 //out = [in1;in2];
 mwArray MPC_Controller::matrix_row_join(mwArray in1,mwArray in2,int r1,int c1,int r2,int c2){
 	if(c1 != c2){
 		std::cout << "dimensions of in1 and in2 do not match " <<std::endl;
-		return mwArray();		
+		return mwArray();
 	}
 	int i,j;
 	double a,b;

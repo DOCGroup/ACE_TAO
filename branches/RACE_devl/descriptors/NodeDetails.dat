@@ -3,4 +3,4 @@ one            corbaloc:iiop:blade29.isislab.vanderbilt.edu:30000/NodeManager
 two            corbaloc:iiop:blade30.isislab.vanderbilt.edu:30000/NodeManager
 three          corbaloc:iiop:blade31.isislab.vanderbilt.edu:30000/NodeManager
 four           corbaloc:iiop:blade32.isislab.vanderbilt.edu:30000/NodeManager
-five           corbaloc:iiop:blade33.isislab.vanderbilt.edu:30000/NodeManager
+five           corbaloc:iiop:blade36.isislab.vanderbilt.edu:30000/NodeManager

@@ -1,33 +1,49 @@
 #include "RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_AdapterC.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include <sstream>
 
 // IOR file of the Interactive Input Adapter.
 const char * ior = 0;
 const char * filename = 0;
 bool redeploy = false;
+bool start = false;
+size_t min = 1;
+size_t max = 5;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:f:r");
+  ACE_Get_Opt get_opts (argc, argv, "k:f:rm:M:s");
   int c = 0;
 
   while ((c = get_opts ()) != -1)
     {
       switch (c)
         {
-        case 'k':
-          ior = get_opts.opt_arg ();
-	        break;
+          case 'k':
+            ior = get_opts.opt_arg ();
+            break;
 
-        case 'f':
-	        filename = get_opts.opt_arg ();
-	        break;
-        case 'r':
-	        redeploy = true;
-	        break;
+          case 'f':
+            filename = get_opts.opt_arg ();
+            break;
 
+          case 'r':
+            redeploy = true;
+            break;
+
+          case 's':
+            start = true;
+            break;
+
+          case 'm':
+            min = static_cast <size_t> (strtod (get_opts.opt_arg (),0));
+            break;
+
+          case 'M':
+            max = static_cast <size_t> (strtod (get_opts.opt_arg (),0));
+            break;
 
         case '?':  // display help for use of the server.
         default:
@@ -35,8 +51,11 @@ parse_args (int argc, char *argv[])
                             "Usage:  %s"
                              "-k <Interactive IA IOR> "
                              "(default:file://Interactive_IA_Component.ior)\n",
-                             "-f <Deployment plan filename>\n",
+                             "-f <Path to the deployment plan directory>\n",
                              "-r <redeploy>\n",
+                             "-s <start controller>\n",
+                             "-m <min>\n",
+                             "-M <max>\n",
                             argv [0]),
                             -1);
           break;
@@ -88,26 +107,53 @@ main (int argc, char *argv[])
 
       if (filename)
       {
-        ::CORBA::String_var id;
-        if (admin->deploy_plan (filename, id.out()))
+        for (size_t i = min; i <= max; ++i)
           {
-            ACE_DEBUG ((LM_DEBUG, "Plan %s has been successfully deployed.\n",
-                    id.in ()));
-
-        //        admin->start_system();
-            ACE_OS::sleep (10);
-            if (admin->tear_down_plan (id.in ()))
+            std::stringstream name;
+            name << filename
+                 << i
+                 << ".cdp";
+            CORBA::String_var id;
+            if (admin->deploy_plan (name.str ().c_str (), id.out()))
               {
                 ACE_DEBUG ((LM_DEBUG, "Plan %s has been successfully "
-                            "torn down.\n", id.in ()));
-                ACE_OS::sleep (10);
-                if (admin->deploy_plan (filename, id.out()))
-                  {
-                    ACE_DEBUG ((LM_DEBUG, "Again Plan %s has been "
-                                "successfully deployed.\n", id.in ()));
-                  }
+                            "deployed.\n", id.in ()));
               }
           }
+        if (start)
+        {
+          admin->start_controller ();
+        }
+
+
+//         ACE_OS::sleep (10);
+//         admin->stop_controller ();
+
+//             if (filename2)
+//               {
+//                 ACE_OS::sleep (10);
+//                 admin->stop_controller ();
+//                 if (admin->deploy_plan (filename2, id.out()))
+//                   {
+//                     ACE_DEBUG ((LM_DEBUG, "Plan %s has been "
+//                                 "successfully deployed.\n", id.in ()));
+//                   }
+//                 admin->start_controller ();
+//               }
+
+//             if (admin->tear_down_plan (id.in ()))
+//               {
+//                 ACE_DEBUG ((LM_DEBUG, "Plan %s has been successfully "
+//                             "torn down.\n", id.in ()));
+//                 ACE_OS::sleep (10);
+//                 if (admin->deploy_plan (filename, id.out()))
+//                   {
+//                     ACE_DEBUG ((LM_DEBUG, "Again Plan %s has been "
+//                                 "successfully deployed.\n", id.in ()));
+//                   }
+//               }
+//             admin->start_controller ();
+//           }
       }
 
       orb->destroy ();
