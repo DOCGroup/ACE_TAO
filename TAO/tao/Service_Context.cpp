@@ -212,7 +212,7 @@ TAO_Service_Context::encode (TAO_OutputCDR& cdr) const
 int
 TAO_Service_Context::decode (TAO_InputCDR& cdr)
 {
-  if ((cdr >> this->service_context_) == 0)
+  if (!(cdr >> this->service_context_))
     {
       return 0;
     }

@@ -448,6 +448,12 @@ TAO_ORB_Core::orbinitializer_registry ()
   return this->orbinitializer_registry_;
 }
 
+ACE_INLINE TAO_Service_Context_Registry &
+TAO_ORB_Core::service_context_registry (void)
+{
+  return this->service_context_registry_;
+}
+
 ACE_INLINE TAO::PolicyFactory_Registry_Adapter *
 TAO_ORB_Core::policy_factory_registry ()
 {

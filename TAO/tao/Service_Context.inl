@@ -22,20 +22,17 @@ TAO_Service_Context::service_info (void) const
   return this->service_context_;
 }
 
-
 ACE_INLINE void
 TAO_Service_Context::set_context (IOP::ServiceId id, TAO_OutputCDR &cdr)
 {
-  this->set_context_i (id,
-                       cdr);
+  this->set_context_i (id, cdr);
 }
 
 ACE_INLINE void
 TAO_Service_Context::set_context (IOP::ServiceContext &context,
                                   TAO_OutputCDR &cdr)
 {
-  this->set_context_i (context,
-                       cdr);
+  this->set_context_i (context, cdr);
 }
 
 ACE_INLINE bool

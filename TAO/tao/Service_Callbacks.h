@@ -74,11 +74,11 @@ public:
   virtual ~TAO_Service_Callbacks (void);
 
   /// Select the profile from MProfile as the needs of the services
-  /// may be. Return the profile in <pfile>
+  /// may be. Return the profile in @a pfile
   virtual CORBA::Boolean select_profile (const TAO_MProfile &mprofile,
                                          TAO_Profile *&pfile);
 
-  /// Check whether <obj> is nil or not.
+  /// Check whether @a obj is nil or not.
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);
 
 
@@ -90,25 +90,21 @@ public:
   virtual CORBA::ULong hash_ft (TAO_Profile *p,
                                 CORBA::ULong m);
 
-  // Verify if condition is given for LOCATION_FORWARD_PERM reply
+  /// Verify if condition is given for LOCATION_FORWARD_PERM reply
   virtual CORBA::Boolean is_permanent_forward_condition (const CORBA::Object_ptr obj,
                                                          const TAO_Service_Context &service_context) const;
-
-
 
   /// Allow the service layer to decide whether the COMM_FAILURE
   /// exception should be thrown or a reinvocation is needed
   virtual TAO::Invocation_Status raise_comm_failure (
       IOP::ServiceContextList &clist,
-      TAO_Profile *profile
-     );
+      TAO_Profile *profile);
 
   /// Allow the service layer to decide whether the TRANSIENT
   /// exception should be thrown or a reinvocation is needed
   virtual TAO::Invocation_Status raise_transient_failure (
       IOP::ServiceContextList &clist,
-      TAO_Profile *profile
-     );
+      TAO_Profile *profile);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
