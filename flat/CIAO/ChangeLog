@@ -1,9 +1,37 @@
+Fri Mar  7 03:39:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO_TAO_DAnCE.mwc:
+        
+          Added DII libraries for attribute setter. 
+
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.idl:
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.mpc:
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer_Impl.h:
+        * DAnCE/Cdmw/CDMW_IDL.idl:
+        * DAnCE/ComponentServer/ComponentServer.idl:
+        * DAnCE/ComponentServer/ComponentServer_Client.idl:
+        * DAnCE/DomainApplication/DomainApplication.mpc:
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/Logger/File_Logger_Backend.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplication/ServerActivator_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Starter/Starter.cpp:
+        * ciao/CIAO_Logger/File_Logger_Backend.h:
+        * ciao/CIAO_Logger/File_Logger_Backend.cpp:
+        * tools/Config_Handlers/XML_Typedefs.h:
+
+          VC8 compiler error/warnings.
+        
 Thu Mar  6 18:24:12 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dance_component_server_svnt.mpb:
 
           Adding this long missing base project.
-        
+
 Thu Mar  6 17:45:05 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/CIAO_ComponentServer/CIAO_CS_Client.idl:

@@ -32,6 +32,7 @@ int main(int argc, ACE_TCHAR * argv[])
     {
       Starter starter (argc, argv);
       starter.execute();
+      return 0;
     }
   catch (ACE_CString & e)
     {
@@ -45,6 +46,7 @@ int main(int argc, ACE_TCHAR * argv[])
     {
       ACE_ERROR ( (LM_ERROR, "[%M] dance starter failed with an unknown exception.\n"));
     }
+  return -1;
 }
 
 namespace DAnCE

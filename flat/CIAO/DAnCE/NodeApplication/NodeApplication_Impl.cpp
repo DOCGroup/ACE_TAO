@@ -175,7 +175,7 @@ NodeApplication_Impl::start (
           (*iter).int_id_->configuration_complete();
           ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::start - configuration_complete finished\n"));
         }
-      catch (::Components::InvalidConfiguration& e)
+      catch (::Components::InvalidConfiguration& )
         {
           ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::start - Components::CCMObject_var::configuration_complete() returned ::Components::InvalidConfiguration exception.\n"));
           throw ::Deployment::StartError();
@@ -230,12 +230,12 @@ NodeApplication_Impl::createHome (unsigned int index)
       this->installation_->install (uuid.c_str(), location.c_str());
       ACE_ERROR ( (LM_DEBUG, "[%M] NodeApplication_impl::createHome - ComponentInstallation::install succesfull\n"));
     }
-  catch (::Components::Deployment::InvalidLocation& e)
+  catch (::Components::Deployment::InvalidLocation& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createHome - ComponentInstallation_var::install() returned ::Components::Deployment::InvalidLocation exception\n"));
       throw ::Deployment::InvalidProperty();
     }
-  catch (::Components::Deployment::InstallationFailure& e)
+  catch (::Components::Deployment::InstallationFailure& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createHome - ComponentInstallation_var::install() returned ::Components::Deployment::InstallationFailure exception\n"));
       throw ::Deployment::StartError();
@@ -281,12 +281,12 @@ NodeApplication_Impl::createHome (unsigned int index)
                 location.c_str ());
               ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createHome - ComponentInstallation::install_valuetypefactory_location succesfull\n"));
             }
-          catch (::Components::Deployment::InvalidLocation& e)
+          catch (::Components::Deployment::InvalidLocation& )
             {
               ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createHome - ComponentInstallation_var::install_valuetypefactory_location() returned ::Components::Deployment::InvalidLocation exception\n"));
               throw ::Deployment::InvalidProperty();
             }
-          catch (::Components::Deployment::InstallationFailure& e)
+          catch (::Components::Deployment::InstallationFailure& )
             {
               ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createHome - ComponentInstallation_var::install_valuetypefactory_location() returned ::Components::Deployment::InstallationFailure exception\n"));
               throw ::Deployment::StartError();
@@ -369,24 +369,24 @@ NodeApplication_Impl::createHome (unsigned int index)
                                      config_values);
       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createHome - home installed\n"));
     }
-  catch (::Components::Deployment::UnknownImplId& e)
+  catch (::Components::Deployment::UnknownImplId& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createHome - Container::install_home() returned ::Components::Deployment::UnknownImplId exception\n"));
       throw ::Deployment::InvalidProperty();
     }
-  catch (::Components::Deployment::ImplEntryPointNotFound& e)
+  catch (::Components::Deployment::ImplEntryPointNotFound& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createHome - Container::install_home() returned ::Components::Deployment::ImplEntryPointNotFound exception\n"));
       throw ::Deployment::InvalidProperty();
     }
-  catch (::Components::Deployment::InstallationFailure& e)
+  catch (::Components::Deployment::InstallationFailure &e)
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createHome - Container::install_home() returned "
                    "::Components::Deployment::InstallationFailure exception with code %#x\n"
                    , e.reason));
       throw ::Deployment::StartError();
     }
-  catch (::Components::Deployment::InvalidConfiguration& e)
+  catch (::Components::Deployment::InvalidConfiguration &e)
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createHome - Container::install_home() returned ::Components::Deployment::InvalidConfiguration exception. Name: %s. Reason: 0x%X\n", e.name.in(), e.reason));
       throw ::Deployment::InvalidProperty();
@@ -431,12 +431,12 @@ NodeApplication_Impl::createContainer (unsigned int index)
       compServer = this->activator_->create_component_server (config_values);
       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createContainer - component server created\n"));
     }
-  catch (::Components::CreateFailure& e)
+  catch (::Components::CreateFailure& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createContainer - Components::Deployment::ServerActivator_var::create_component_server() returned ::Components::CreateFailure exception\n"));
       throw ::Deployment::StartError();
     }
-  catch (::Components::Deployment::InvalidConfiguration& e)
+  catch (::Components::Deployment::InvalidConfiguration& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createContainer - Components::Deployment::ServerActivator_var::create_component_server() returned ::Components::Deployment::InvalidConfiguration exception\n"));
       throw ::Deployment::InvalidProperty();
@@ -452,12 +452,12 @@ NodeApplication_Impl::createContainer (unsigned int index)
       this->containers_.rebind (processDest.c_str(), compServer->create_container (config_values));
       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createContainer - container created\n"));
     }
-  catch (::Components::CreateFailure& e)
+  catch (::Components::CreateFailure& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createContainer - ::Components::Deployment::ComponentServer_var::create_container() returned ::Components::CreateFailure exception\n"));
       throw Deployment::StartError();
     }
-  catch (::Components::Deployment::InvalidConfiguration& e)
+  catch (::Components::Deployment::InvalidConfiguration& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createContainer - ::Components::Deployment::ComponentServer_var::create_container() returned ::Components::Deployment::InvalidConfiguration exception\n"));
       throw ::Deployment::InvalidProperty();
@@ -536,7 +536,7 @@ NodeApplication_Impl::createComponent (unsigned int index)
                                                          this->orb_.in());
       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::createComponent - component attributes have been setted\n"));
     }
-  catch (::Components::CreateFailure& e)
+  catch (::Components::CreateFailure& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::createComponent - CdmwCcmCif::KeylessCCMHome_var::create_component_with_config_values() returned ::Components::CreateFailure exception\n"));
       throw ::Deployment::StartError();
@@ -880,7 +880,7 @@ NodeApplication_Impl::getAllConnections()
                       //app_node.addChild(path.c_str(), obj->provide_facet(facet_name));
                       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::getAllConnections - provide_facet finished\n"));
                     }
-                  catch (::Components::InvalidName& e)
+                  catch (::Components::InvalidName& )
                     {
                       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::getAllConnections - Components::CCMObject_var::provide_facet() returned ::Components::InvalidName exception\n"));
                       throw ::Deployment::InvalidProperty();
@@ -902,7 +902,7 @@ NodeApplication_Impl::getAllConnections()
                       //app_node.addChild(path.c_str(), obj->get_consumer(this->plan_.connection[i].internalEndpoint[j].portName));
                       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::getAllConnections - get_consumer finished\n"));
                     }
-                  catch (::Components::InvalidName& e)
+                  catch (::Components::InvalidName& )
                     {
                       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::getAllConnections - Components::CCMObject_var::get_consumer() returned ::Components::InvalidName exception\n"));
                       throw ::Deployment::InvalidProperty();
@@ -1086,22 +1086,22 @@ NodeApplication_Impl::connectReceptacle (Components::CCMObject_ptr inst,
       res = inst->connect (port_name.c_str(), facet);
       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::finishLaunch - connect finished\n"));
     }
-  catch (::Components::InvalidName& e)
+  catch (::Components::InvalidName& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect() returned ::Components::InvalidName exception\n"));
       throw ::Deployment::StartError();
     }
-  catch (::Components::InvalidConnection& e)
+  catch (::Components::InvalidConnection& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect() returned ::Components::InvalidConnection exception\n"));
       throw ::Deployment::InvalidConnection();
     }
-  catch (::Components::AlreadyConnected& e)
+  catch (::Components::AlreadyConnected& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception\n"));
       throw ::Deployment::InvalidConnection();
     }
-  catch (::Components::ExceededConnectionLimit& e)
+  catch (::Components::ExceededConnectionLimit& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect() returned ::Components::ExceededConnectionLimit exception\n"));
       throw ::Deployment::InvalidConnection();
@@ -1121,22 +1121,22 @@ NodeApplication_Impl::connectReceptacleExt (Components::CCMObject_ptr inst,
       res = inst->connect (port_name.c_str(), facet);
       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::finishLaunch - connect finished\n"));
     }
-  catch (::Components::InvalidName& e)
+  catch (::Components::InvalidName& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect() returned ::Components::InvalidName exception\n"));
       throw ::Deployment::StartError();
     }
-  catch (::Components::InvalidConnection& e)
+  catch (::Components::InvalidConnection& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect() returned ::Components::InvalidConnection exception\n"));
       throw ::Deployment::InvalidConnection();
     }
-  catch (::Components::AlreadyConnected& e)
+  catch (::Components::AlreadyConnected& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect() returned ::Components::AlreadyConnected exception\n"));
       //throw ::Deployment::InvalidConnection();
     }
-  catch (::Components::ExceededConnectionLimit& e)
+  catch (::Components::ExceededConnectionLimit& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect() returned ::Components::ExceededConnectionLimit exception\n"));
       throw ::Deployment::InvalidConnection();
@@ -1156,17 +1156,17 @@ NodeApplication_Impl::connectEmitter (Components::CCMObject_ptr inst,
       inst->connect_consumer (port_name.c_str(), event);
       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::finishLaunch - connect_consumer finished\n"));
     }
-  catch (::Components::InvalidName& e)
+  catch (::Components::InvalidName& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect_consumer() returned ::Components::InvalidName exception\n"));
       throw ::Deployment::StartError();
     }
-  catch (::Components::AlreadyConnected& e)
+  catch (::Components::AlreadyConnected& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect_consumer() returned ::Components::AlreadyConnected exception\n"));
       throw ::Deployment::InvalidConnection();
     }
-  catch (::Components::InvalidConnection& e)
+  catch (::Components::InvalidConnection& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect_consumer() returned ::Components::InvalidConnection exception\n"));
       throw ::Deployment::InvalidConnection();
@@ -1185,12 +1185,12 @@ NodeApplication_Impl::connectEmitterExt (Components::CCMObject_ptr inst,
       inst->connect_consumer (port_name.c_str(), event);
       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::finishLaunch - connect_consumer finished\n"));
     }
-  catch (::Components::AlreadyConnected& e)
+  catch (::Components::AlreadyConnected& )
     {
       ACE_DEBUG ( (LM_WARNING, "NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect_consumer() returned ::Components::AlreadyConnected exception\n"));
       //throw ::Deployment::InvalidConnection();
     }
-  catch (::Components::InvalidConnection& e)
+  catch (::Components::InvalidConnection& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::connect_consumer() returned ::Components::InvalidConnection exception\n"));
       throw ::Deployment::InvalidConnection();
@@ -1210,17 +1210,17 @@ NodeApplication_Impl::connectPublisher (Components::CCMObject_ptr inst,
       res = inst->subscribe (port_name.c_str(), event);
       ACE_DEBUG ( (LM_DEBUG, "[%M] NodeApplication_impl::finishLaunch - subscribe finished\n"));
     }
-  catch (::Components::InvalidName& e)
+  catch (::Components::InvalidName& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::subscribe() returned ::Components::InvalidName exception\n"));
       throw ::Deployment::StartError();
     }
-  catch (::Components::InvalidConnection& e)
+  catch (::Components::InvalidConnection& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::subscribe() returned ::Components::InvalidConnection exception\n"));
       throw ::Deployment::InvalidConnection();
     }
-  catch (::Components::ExceededConnectionLimit& e)
+  catch (::Components::ExceededConnectionLimit& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] NodeApplication_impl::finishLaunch - Components::CCMObject_var::subscribe() returned ::Components::ExceededCOnnectionLimit exception\n"));
       throw ::Deployment::InvalidConnection();

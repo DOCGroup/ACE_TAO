@@ -3,7 +3,7 @@
 
 project(ExecutionManager): dance_lib, taolib, tao_output, utils, strategies, naming, dance_executionmanager_stub, dance_node_manager, dance_domain_application_manager, dance_deployment_svnt  {
   sharedname = DAnCE_ExecutionManager
-  dynamicflags = EXECUTION_MANAGER_BUILD_DLL 
+  dynamicflags = EXECUTIONMANAGER_BUILD_DLL DANCE_EXECUTIONMANAGER_MODULE_BUILD_DLL
     
   Source_Files {
     $(CIAO_ROOT)/DAnCE/Interfaces/ExecutionManagerDaemonS.cpp

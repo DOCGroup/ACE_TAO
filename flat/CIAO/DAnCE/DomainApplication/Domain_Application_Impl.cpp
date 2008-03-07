@@ -5,12 +5,12 @@
 #include "ace/streams.h"
 
 namespace DAnCE
-  {
+{
 
   DomainApplication_Impl::DomainApplication_Impl (TNam2Nm & nams,
                                                   const Deployment::Properties & configProperty,
                                                   Deployment::Connections& conn)
-      : nams_ (nams)
+    : nams_ (nams)
   {
     ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl constructor\n"));
     this->startLaunch (configProperty);
@@ -21,24 +21,24 @@ namespace DAnCE
   {
     ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl destructor started.\n"));
     try
-    {
-      for (TApp2Mgr::iterator iter = this->node_applications_.begin();
-           iter != this->node_applications_.end();
-           ++iter)
-        {
-          (*iter).int_id_->destroyApplication ( (*iter).ext_id_.in());
-        }
-      this->node_applications_.unbind_all();
-    }
+      {
+	for (TApp2Mgr::iterator iter = this->node_applications_.begin();
+	     iter != this->node_applications_.end();
+	     ++iter)
+	  {
+	    (*iter).int_id_->destroyApplication ( (*iter).ext_id_.in());
+	  }
+	this->node_applications_.unbind_all();
+      }
     catch (CORBA::Exception &e)
-    {
-      ACE_ERROR((LM_ERROR, "[%M] DomainApplication_Impl::~DomainApplication_Imp failed with a CORBA exception %s(%s) \"%s\"\n"
-          , e._name(), e._rep_id(), e._info().c_str()));
-    }
+      {
+	ACE_ERROR((LM_ERROR, "[%M] DomainApplication_Impl::~DomainApplication_Imp failed with a CORBA exception %s(%s) \"%s\"\n"
+		   , e._name(), e._rep_id(), e._info().c_str()));
+      }
     catch(...)
-    {
-      ACE_ERROR((LM_ERROR, "[%M] DomainApplication_Impl::~DomainApplication_Imp failed with an exception.\n"));
-    }
+      {
+	ACE_ERROR((LM_ERROR, "[%M] DomainApplication_Impl::~DomainApplication_Imp failed with an exception.\n"));
+      }
     ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl destructor finished.\n"));
   }
 

@@ -5,7 +5,7 @@
 
 #ifndef COMPONENTSERVER_CLIENT_IDL_
 #define COMPONENTSERVER_CLIENT_IDL_
-
+/*
 module Components
 {
   typeprefix Components "omg.org";
@@ -16,9 +16,9 @@ module Components
     typedef sequence<ComponentServer> ComponentServers;
   };
 };
-
+*/
 #include "ComponentServer_Base.idl"
-#include "ComponentServer.idl"
+ //#include "ComponentServer.idl"
 
 module Components
 {
@@ -26,6 +26,9 @@ module Components
 
   module Deployment
   {
+    interface ComponentServer;
+    typedef sequence<ComponentServer> ComponentServers;
+    
     interface ComponentInstallation
     {
       void install(in UUID implUUID, in Location component_loc)

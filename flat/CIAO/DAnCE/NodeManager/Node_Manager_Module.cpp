@@ -339,7 +339,7 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
             }
           else if (options.process_ns_)
             {
-              int argc_ns = 1;
+              const int argc_ns = 1;
               char* argv_ns[argc_ns];
               argv_ns[0] = argv[0];
               naming_obj = orb->resolve_initial_references ("NameService");

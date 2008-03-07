@@ -13,12 +13,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <ace/String_Base.h>
+#include "CIAO_ComponentServer_svnt_export.h"
 
 namespace CIAO
 {
   namespace Deployment
   {
-    class  CIAO_ComponentServer_i
+    class  CIAO_ComponentServer_svnt_Export CIAO_ComponentServer_i
       : public virtual POA_Components::Deployment::CIAO::ComponentServer
     {
     public:

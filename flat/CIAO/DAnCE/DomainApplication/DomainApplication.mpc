@@ -4,7 +4,7 @@
 
 project: dance_lib, taolib, tao_output, dance_deployment_stub, dance_deployment_svnt, dance_logger {
   sharedname   = DAnCE_DomainApplication
-  dynamicflags = DOMAINAPPLICATION_BUILD_DLL
+  dynamicflags = DOMAIN_APPLICATION_BUILD_DLL
 
   Source_Files {
     Domain_Application_Impl.cpp

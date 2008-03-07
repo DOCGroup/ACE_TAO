@@ -3,8 +3,7 @@
 
 #include "ace/Log_Msg_Backend.h"
 #include "DAnCE_Logger_Export.h"
-#include "ace/SStringfwd.h"
-#include "ace/String_Base.h"
+#include "ace/SString.h"
 
 namespace DAnCE
   {

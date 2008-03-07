@@ -112,21 +112,21 @@ ServerActivator_Impl::create_component_server (const ::Components::ConfigValues 
     {
       obj = this->naming_->resolve (name);
     }
-  catch (CosNaming::NamingContext::NotFound& ex)
+  catch (CosNaming::NamingContext::NotFound& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - NotFound exception rised."
                    "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%s)\n"
                    , processDest.c_str()));
       throw ::Components::CreateFailure();
     }
-  catch (CosNaming::NamingContext::CannotProceed& ex)
+  catch (CosNaming::NamingContext::CannotProceed& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - NotFound exception rised."
                    "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%s)\n"
                    , processDest.c_str()));
       throw ::Components::CreateFailure();
     }
-  catch (CosNaming::NamingContext::InvalidName& ex)
+  catch (CosNaming::NamingContext::InvalidName& )
     {
       ACE_ERROR ( (LM_ERROR, "[%M] ServerActivator_Impl::create_component_server - NotFound exception rised."
                    "(Name : CDMW/SERVICES/ASSEMBLYANDDEPLOYMENT/%s)\n"

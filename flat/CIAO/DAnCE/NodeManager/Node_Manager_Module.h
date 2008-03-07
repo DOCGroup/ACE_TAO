@@ -38,7 +38,7 @@ namespace DAnCE
  * @brief The shared object that is instantiated when the node manager
  *        module/library is dynamically loaded.
  *
- * This class runs the execution manager instance
+ * This class runs the node manager instance
  */
 class DAnCE_NodeManager_Module_Export DAnCE_NodeManager_Module
       : public TAO_Object_Loader

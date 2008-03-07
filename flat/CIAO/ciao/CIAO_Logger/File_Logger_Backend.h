@@ -2,9 +2,10 @@
 #define FILE_LOGGER_BACKEND_H_
 
 #include "ace/Log_Msg_Backend.h"
+#include "ace/SString.h"
+//#include "ace/String_Base.h"
+
 #include "CIAO_Logger_Export.h"
-#include "ace/SStringfwd.h"
-#include "ace/String_Base.h"
 
 namespace CIAO
   {

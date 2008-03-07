@@ -13,19 +13,20 @@
 
 #if !defined (COMPONENTSERVER_IDL)
 #define COMPONENTSERVER_IDL
-
+/*
 module Components
 {
   typeprefix Components "omg.org";
 
   module Deployment
   {
-    interface ServerActivator;
+  
   };
 };
+*/
 
 #include "ComponentServer_Base.idl"
-#include "ComponentServer_Client.idl"
+ //#include "ComponentServer_Client.idl"
 
 module Components
 {
@@ -35,6 +36,7 @@ module Components
   {
     interface Container;
     typedef sequence<Container> Containers;
+    interface ServerActivator;
 
     interface ComponentServer
     {

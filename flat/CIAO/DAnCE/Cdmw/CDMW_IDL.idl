@@ -19,6 +19,8 @@
 #include "ciao/CCM_Navigation.idl"
 #include "ciao/CCM_StandardConfigurator.idl"
 
+#include "DAnCE/ComponentServer/ComponentServer_Client.idl"
+
 module Components
 {
   typeprefix Components "omg.org";

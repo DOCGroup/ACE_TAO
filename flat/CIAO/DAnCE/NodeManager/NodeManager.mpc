@@ -3,7 +3,7 @@
 
 project : dance_lib, naming, dance_node_application_manager, dance_node_application, dance_deployment_svnt, dance_deployment_stub, dynamicinterface {
   sharedname   = DAnCE_NodeManager
-  dynamicflags = NODEMANAGER_BUILD_DLL
+  dynamicflags = NODEMANAGER_BUILD_DLL DANCE_NODEMANAGER_MODULE_BUILD_DLL
     
   Source_Files {
     NodeManager_Impl.cpp

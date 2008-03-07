@@ -6,7 +6,7 @@
 #include "ciao/CIAO_common.h"
 
 namespace CIAO
-  {
+{
 
   int
   File_Logger_Backend::open (const ACE_TCHAR *)
