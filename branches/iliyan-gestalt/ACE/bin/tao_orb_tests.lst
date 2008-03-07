@@ -341,8 +341,8 @@ TAO/tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl: !STATIC !ST !CORBA_E_M
 TAO/tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl: !ST !CORBA_E_MICRO !LynxOS !LabVIEW_RT
 TAO/tests/CSD_Collocation/run_test.pl: !ST !CORBA_E_COMPACT !CORBA_E_MICRO !MINIMUM !LynxOS !LabVIEW_RT
 TAO/tests/Permanent_Forward/run_test.pl: !LabVIEW_RT
-TAO/tests/Parallel_Connect_Strategy/run_test.pl: !QUICK !LabVIEW_RT
-TAO/tests/Parallel_Connect_Strategy/run_test.pl -quick : QUICK !LabVIEW_RT
+TAO/tests/Parallel_Connect_Strategy/run_test.pl: !QUICK !LabVIEW_RT !VxWorks55
+TAO/tests/Parallel_Connect_Strategy/run_test.pl -quick : QUICK !LabVIEW_RT !VxWorks55
 TAO/tests/DII_Collocation_Tests/oneway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/DII_Collocation_Tests/twoway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Compression/run_test.pl: ZLIB !LabVIEW_RT
