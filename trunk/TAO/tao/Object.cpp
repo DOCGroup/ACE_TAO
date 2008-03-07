@@ -444,6 +444,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
 }
 #endif
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 CORBA::Request_ptr
 CORBA::Object::_request (const char *operation)
 {
@@ -452,8 +453,7 @@ CORBA::Object::_request (const char *operation)
     {
       TAO_Dynamic_Adapter *dynamic_adapter =
         ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance (
-            TAO_ORB_Core::dynamic_adapter_name ()
-          );
+            TAO_ORB_Core::dynamic_adapter_name ());
 
       return dynamic_adapter->request (
                                   this,
@@ -465,6 +465,7 @@ CORBA::Object::_request (const char *operation)
       throw ::CORBA::NO_IMPLEMENT ();
     }
 }
+#endif
 
 // NON_EXISTENT ... send a simple call to the object, which will
 // either elicit a false response or a OBJECT_NOT_EXIST exception.  In

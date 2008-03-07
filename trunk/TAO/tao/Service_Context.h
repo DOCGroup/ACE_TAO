@@ -122,9 +122,9 @@ public:
   /// Return the underlying service context list
   IOP::ServiceContextList &service_info (void);
 
-  // @note This method is only for backward comptiblity. We
-  // need to get this removed once RT folks have their service
-  // addition info done through this interface
+  /// @note This method is only for backward comptiblity. We
+  /// need to get this removed once RT folks have their service
+  /// addition info done through this interface
   const IOP::ServiceContextList &service_info (void) const;
 
 private:

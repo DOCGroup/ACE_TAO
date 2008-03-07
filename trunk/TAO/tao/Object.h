@@ -185,7 +185,6 @@ namespace CORBA
                                   CORBA::ContextList_ptr ctxtlist,
                                   CORBA::Request_ptr &request,
                                   CORBA::Flags req_flags);
-#endif
 
     // The default implementation of this method uses the same simple,
     // multi-protocol remote invocation interface as is assumed by the
@@ -194,6 +193,7 @@ namespace CORBA
 
     /// DII operation to create a request.
     virtual CORBA::Request_ptr _request (const char *operation);
+#endif
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
