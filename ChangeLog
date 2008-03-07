@@ -1,3 +1,9 @@
+Fri Mar  7 22:11:51 UTC 2008  Nishanth Shankaran  <nshankar@nosoam.com>
+
+        * examples/E2E_Task/Model/E2E_Tasks.xme:
+
+        Updated the model.
+
 Fri Mar  7 22:08:24 UTC 2008  Nishanth Shankaran  <nshankar@nosoam.com>
 
         * Conductor/Admin_exec.h:
