@@ -36,6 +36,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>19000</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>21000</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>iterations</name>
       <value>
         <type>
@@ -119,6 +141,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>subtasks</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>5</long>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance id="PICML_default_xme_file.ComponentImplementations.Task3.TaskAssembly.Subtask2">
@@ -134,6 +167,28 @@
         </type>
         <value>
           <string>Subtask.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>14250</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>15750</long>
         </value>
       </value>
     </configProperty>
@@ -178,6 +233,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>4750</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>5250</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>iterations</name>
       <value>
         <type>
@@ -218,6 +295,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>9500</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>10500</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>ID</name>
       <value>
         <type>
@@ -254,6 +353,28 @@
         </type>
         <value>
           <string>Subtask.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>4750</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>5250</long>
         </value>
       </value>
     </configProperty>
@@ -466,7 +587,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>12.5</double>
+        <double>25</double>
       </value>
     </value>
   </infoProperty>
@@ -477,7 +598,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>8.4</double>
+        <double>5</double>
       </value>
     </value>
   </infoProperty>

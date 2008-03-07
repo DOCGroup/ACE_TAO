@@ -50,9 +50,11 @@ namespace CIAO
           virtual ::CORBA::Boolean tear_down_string (const char * ID)
             throw (UnknownID);
 
-          virtual ::CORBA::Boolean init_system ();            
+          virtual ::CORBA::Boolean init_system ();
 
-          virtual ::CORBA::Boolean start_system();            
+          virtual ::CORBA::Boolean start_controller();
+
+          virtual ::CORBA::Boolean stop_controller();
 
           private:
           /// Object reference of the data base admin object.

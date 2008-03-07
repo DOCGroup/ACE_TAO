@@ -36,6 +36,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>4655</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>51450</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>ID</name>
       <value>
         <type>
@@ -76,6 +98,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>6650</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>7350</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>iterations</name>
       <value>
         <type>
@@ -112,6 +156,28 @@
         </type>
         <value>
           <string>Subtask.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>19950</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>22050</long>
         </value>
       </value>
     </configProperty>
@@ -196,6 +262,17 @@
         </type>
         <value>
           <double>1</double>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>subtasks</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>3</long>
         </value>
       </value>
     </configProperty>
@@ -347,7 +424,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>10</double>
+        <double>30</double>
       </value>
     </value>
   </infoProperty>
@@ -369,7 +446,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>6.67</double>
+        <double>5</double>
       </value>
     </value>
   </infoProperty>

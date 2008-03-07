@@ -62,8 +62,17 @@ namespace CIAO
                     this->system_utility_->getInitialDomain ();
                 this->populate_domain_info (domain.in());
 
-                this->initialized_ = true;
-                msg << "Successfully initialized the controller.\n";
+                // Now activate the active object.
+                if (this->activate () != 0)
+                  {
+                    msg << "Could not initialize the periodic task!\n";
+                    this->initialized_ = false;
+                  }
+                else
+                  {
+                    this->initialized_ = true;
+                    msg << "Successfully initialized the controller.\n";
+                  }
               }
             catch (::CORBA::Exception &ex)
               {
@@ -101,14 +110,9 @@ namespace CIAO
                     if (this->appActuator_->init (this->opstrings_))
                       {
                         msg << "done!\n";
-                        // Now activate the active object.
-                        if (this->activate () != 0)
-                          {
-                            msg << "Could not initialize the periodic task!\n";
-                            this->active_ = false;
-                          }
-                        msg << "Successfully started the controller.\n";
+                        // Now activate the controller.
                         this->active_ = true;
+                        msg << "Successfully started the controller.\n";
                       }
                     else
                       {
@@ -146,7 +150,8 @@ namespace CIAO
         std::stringstream msg;
         msg << "Trying to stop the controller.... ";
         this->active_ = false;
-        ACE_Thread_Manager::instance ()->wait ();
+
+        //        ACE_Thread_Manager::instance ()->wait ();
         msg << "done!\n";
         this->logger_.log (msg.str());
         return true;
@@ -204,10 +209,143 @@ namespace CIAO
           }
       }
 
+      ::CORBA::Boolean
+      Controller::unregister_string (const char * ID)
+      {
+
+        std::stringstream msg;
+        msg << "Entering unregister_string ()\n";
+        this->logger_.log (msg.str());
+        msg.str ();
+        if (!this->active_)
+          {
+            // First try to remove the task corresponding to this ID from
+            // the internal task_ vector.
+
+
+            // We use this vaiable to locate the position of the task in
+            // the internal opstring_ CORBA::Sequence.
+            int pos = -1;
+            int i = 0;
+            for (std::vector<::CIAO::RACE::Task>::iterator
+                   itr = this->tasks_.begin ();
+                 itr != this->tasks_.end ();
+                 itr ++, ++i)
+              {
+                if (ACE_OS::strcmp ((*itr).UUID.c_str (), ID) == 0)
+                  {
+                    pos = i;
+                    msg << "Found ID "
+                        << ID
+                        << "within internal task vector!\n"
+                        << "Now removing it....";
+                    // Now remove the element.
+                    this->tasks_.erase (itr);
+                    msg << "done!\n";
+                    break;
+                  }
+              }
+            this->logger_.log (msg.str());
+            msg.str ();
+            // Now that we have removed the task from the task_ vector, we
+            // need to remove it from the internal opstring_ sequence as
+            // well.
+
+            // If the position is != -1, then we have found the task
+            // position.
+            if (pos >= 0)
+              {
+                msg << "Removing task from internal opstring sequence...";
+
+                for (::CORBA::ULong i = pos;
+                     i < this->opstrings_.length () - 1;
+                     ++i)
+                  {
+                    this->opstrings_ [i] = this->opstrings_ [i + 1];
+                  }
+                this->opstrings_.length (this->opstrings_.length () - 1);
+                msg << "done!\n";
+                this->logger_.log (msg.str());
+                return true;
+              }
+            else
+              {
+                msg << "Given ID "
+                    << ID
+                    << "is not registered with the controller!\n";
+                this->logger_.log (msg.str());
+                return false;
+              }
+          }
+        else
+          {
+            msg << "\nCan not unregister an opsting while the "
+                << "controller is active.\n";
+            msg << "First deactive the controller, and then try "
+                << "unregistering a string.\n";
+            this->logger_.log (msg.str());
+            return false;
+          }
+      }
+
+
+      void
+      Controller::control_action ()
+      {
+
+        // Invoke the MPC controller.
+        this->tasks_ =
+          this->controller_.control_period
+          (this->domain_,this->tasks_);
+
+        // Now we update our internal opstrings
+        // sequence and dump out the new rates.
+        std::stringstream msg, rates;
+        for (size_t itr = 0;
+             (itr < this->tasks_.size() &&
+              itr < this->opstrings_.length());
+             ++itr)
+          {
+            msg << "Delta rate for task: "
+                << this->tasks_[itr].UUID.c_str()
+                << " is: "
+                << this->tasks_[itr].delta_rate
+                << "\n";
+
+            // Update the rates.
+            this->tasks_[itr].curr_rate +=
+              this->tasks_[itr].delta_rate;
+
+            this->opstrings_[itr].rate.currRate =
+              this->tasks_[itr].curr_rate;
+
+            // Dump the rates to a file.
+            rates << this->tasks_[itr].curr_rate
+                  << "\t"
+                  << this->tasks_[itr].delta_rate
+                  << "\t";
+          }
+        rates << "\n";
+        this->rate_logger_.log (rates.str());
+        ACE_DEBUG ((LM_DEBUG, "%s", msg.str ().c_str ()));
+
+        // Invoke the application effector to modify the
+        // application execution rate.
+        if (!this->appActuator_->modifyApplications
+            (this->opstrings_))
+          {
+            msg << "Error while invoking effector!\n"
+                << "Bailing out.....\n";
+          }
+        this->logger_.log (msg.str ());
+
+      }
+
+
       int
       Controller::svc ()
       {
-        while (this->active_)
+        while (this->initialized_)
           {
             std::stringstream msg;
             std::stringstream rates;
@@ -223,47 +361,12 @@ namespace CIAO
                 this->populate_domain_info (domain.in());
                 msg <<  "Parsing complete!\n";
                 this->logger_.log (msg.str ());
-                msg.str ("");
-                this->tasks_ =
-                  this->controller_.control_period
-                  (this->domain_,this->tasks_);
-
-                // Now we update our internal opstrings
-                // sequence and dump out the new rates.
-                for (size_t itr = 0;
-                     (itr < this->tasks_.size() &&
-                      itr < this->opstrings_.length());
-                     ++itr)
+                // We perform the control action only if the controller is
+                // active.
+                if (this->active_)
                   {
-                    msg << "Delta rate for task: "
-                        << this->tasks_[itr].UUID.c_str()
-                        << " is: "
-                        << this->tasks_[itr].delta_rate
-                        << "\n";
-                    ACE_DEBUG ((LM_DEBUG, "%s", msg.str ().c_str ()));
-                    this->tasks_[itr].curr_rate +=
-                      this->tasks_[itr].delta_rate;
-                    this->opstrings_[itr].rate.currRate =
-                      this->tasks_[itr].curr_rate;
-                    rates << this->tasks_[itr].curr_rate
-                          << "\t"
-                          << this->tasks_[itr].delta_rate
-                          << "\t";
+                    this->control_action ();
                   }
-                 rates << "\n";
-                // Invoke the application effector to modify the
-                // application execution rate.
-                if (!this->appActuator_->modifyApplications
-                    (this->opstrings_))
-                  {
-                    msg << "Error while invoking effector!\n"
-                        << "Bailing out.....\n";
-                    this->logger_.log (msg.str ());
-                    return -1;
-                  }
-
-                this->logger_.log (msg.str ());
-                this->rate_logger_.log (rates.str());
                 ACE_OS::sleep (this->interval_);
               }
             catch (::CORBA::Exception &ex)
@@ -302,8 +405,6 @@ namespace CIAO
             msg << "Added node: " << nodes [i].name.in()
                 << " to the doamin structure.\n";
           }
-
-        //        std::string util (std::endl);
         this->util_logger_.log (std::string ("\n"));
         this->domain_ = temp_domain;
         return true;
@@ -316,6 +417,10 @@ namespace CIAO
       {
         std::stringstream msg;
         std::stringstream util;
+
+        // Set formatting.
+        util.setf (ios::fixed, ios::floatfield);
+        util.precision (5);
 
         msg << "Entering populate_node ()\n";
         msg << "Workin on node: " << d_node.name.in() << "...\n";
@@ -382,8 +487,12 @@ namespace CIAO
                   }
 
                 // Dump these values to a file.
-                util << resource.set_point << "\t";
-                util << resource.util << "\t";
+                util << d_node.name.in()
+                     << "\t"
+                     << resource.set_point
+                     << "\t"
+                     << resource.util
+                     << "\t";
                 // Now that we have populated the resource info, we add it
                 // to the node.
                 r_node.resources.push_back (resource);

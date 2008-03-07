@@ -28,12 +28,16 @@ namespace CIAO
         ApplicationActuator_exec_i::init
         (const ::CIAO::RACE::OperationalStrings & opstrings)
         {
-          ACE_DEBUG ((LM_DEBUG, "In "
-                      "ApplicationActuator_exec_i::init ().\n"));
-          //          return true;
+
           std::stringstream msg ;
           bool ret = false;
           msg << "Entering ApplicationActuator_exec_i::init ().\n";
+          this->logger_.log (msg.str());
+          msg.str ();
+
+          // First clear the local callback_map.
+          this->callback_map_.unbind_all ();
+
           if (this->resolve_naming_service ())
             {
               ret = this->populate_callback_map (opstrings);
@@ -193,7 +197,7 @@ namespace CIAO
                           << "callback object.\n";
                       // Now inserting the objref into the internal hashtable.
                       ACE_CString str (opstrings[itr].ID.in());
-                      if (this->callback_map_.bind (str, callback) != 0)
+                      if (this->callback_map_.rebind (str, callback) < 0)
                         {
                           msg << "Error while inserting it into the map!\n";
                           this->logger_.log (msg.str ());

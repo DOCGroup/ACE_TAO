@@ -36,6 +36,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>20400</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>30600</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>ID</name>
       <value>
         <type>
@@ -72,6 +94,28 @@
         </type>
         <value>
           <string>Subtask.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>6800</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>10200</long>
         </value>
       </value>
     </configProperty>
@@ -156,6 +200,17 @@
         </type>
         <value>
           <double>1</double>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>subtasks</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>2</long>
         </value>
       </value>
     </configProperty>
@@ -293,7 +348,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>13.34</double>
+        <double>30</double>
       </value>
     </value>
   </infoProperty>
@@ -315,7 +370,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>11.75</double>
+        <double>10</double>
       </value>
     </value>
   </infoProperty>

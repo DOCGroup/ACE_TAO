@@ -50,7 +50,10 @@ namespace CIAO
             tear_down_plan (const char * ID);
 
           virtual ::CORBA::Boolean
-            start_system ();
+            start_controller ();
+
+          virtual ::CORBA::Boolean
+            stop_controller ();
 
 
           protected:

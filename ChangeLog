@@ -1,3 +1,51 @@
+Fri Mar  7 22:08:24 UTC 2008  Nishanth Shankaran  <nshankar@nosoam.com>
+
+        * Conductor/Admin_exec.h:
+        * Conductor/Admin_exec.cpp:
+        * Conductor/Conductor.idl:
+
+        Added capabilities to unregister opstrings.
+
+        * Controller/EUCON/Controller.h:
+        * Controller/EUCON/Controller.cpp:
+        * Controller/EUCON/MPC_Controller.cpp:
+        * Controller/EUCON/Operations_exec.cpp:
+        * Effectors/EUCON/ApplicationActuator_exec.cpp:
+
+        Added capabilities to register and unregister strings while the
+        controller in running.
+
+
+        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.h:
+        * Input_Adapters/Interactive_Input_Adapter/Admin_exec.cpp:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        Added capabilities to unregister opstrings.
+
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
+
+        Made cosmetic mods.
+
+        * Tester/Interactive_IA_Tester.cpp:
+
+        Updated this file to deploy multiple plans.
+
+        * descriptors/NodeDetails.dat:
+        * examples/E2E_Task/descriptors/Task1.cdp:
+        * examples/E2E_Task/descriptors/Task2.cdp:
+        * examples/E2E_Task/descriptors/Task3.cdp:
+        * examples/E2E_Task/descriptors/Task4.cdp:
+        * examples/E2E_Task/descriptors/Task5.cdp:
+        * examples/E2E_Task/descriptors/Task6.cdp:
+        * examples/E2E_Task/descriptors/Task7.cdp:
+        * examples/E2E_Task/descriptors/Task8.cdp:
+
+        Updated these files.
+
+        * utils/Logger.h:
+        * utils/Logger.cpp:
+
+        Updated the logger.
+
 Tue Mar  4 19:29:50 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
 
         * Conductor/Admin_exec.cpp:

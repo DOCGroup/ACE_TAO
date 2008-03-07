@@ -38,9 +38,11 @@ module CIAO
         boolean tear_down_plan (in UUID ID)
           raises (UnknownID);
 
-        /// Kick start the system.
-        boolean start_system ();
+        /// Start the controller.
+        boolean start_controller ();
 
+        /// Stop the controller.
+        boolean stop_controller ();
       };
 
       component Interactive_IA_Component : Input_Adapter_Base

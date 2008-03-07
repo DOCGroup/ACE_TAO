@@ -32,8 +32,7 @@ namespace CIAO
         Control_Operations_exec_i::unregister_string (
           const char * ID)
         {
-          return false;
-          //return this->controller_->unregister_string (ID);
+          return this->controller_->unregister_string (ID);
         }
 
       }

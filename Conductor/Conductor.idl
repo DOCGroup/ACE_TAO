@@ -48,7 +48,10 @@ module CIAO
         boolean init_system();
 
         /// Start the controller.
-        boolean start_system();
+        boolean start_controller();
+        
+        /// Stop the controller.
+        boolean stop_controller();
 
       };
 

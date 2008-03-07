@@ -36,6 +36,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>4275</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>4725</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>ID</name>
       <value>
         <type>
@@ -72,6 +94,28 @@
         </type>
         <value>
           <string>Subtask.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>BCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>25650</long>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>WCET</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>28350</long>
         </value>
       </value>
     </configProperty>
@@ -156,6 +200,17 @@
         </type>
         <value>
           <string>Task8</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>subtasks</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>2</long>
         </value>
       </value>
     </configProperty>
@@ -275,6 +330,7 @@
     </execParameter>
   </artifact>
 
+
   <infoProperty>
     <name>Effector_ID</name>
     <value>
@@ -293,7 +349,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>16.67</double>
+        <double>20</double>
       </value>
     </value>
   </infoProperty>
@@ -315,7 +371,7 @@
         <kind>tk_double</kind>
       </type>
       <value>
-        <double>10</double>
+        <double>5</double>
       </value>
     </value>
   </infoProperty>

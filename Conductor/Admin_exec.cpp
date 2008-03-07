@@ -104,8 +104,8 @@ namespace CIAO
                 }
                 else
                 {
-                  msg << "Oops! Error while resiterering with "
-                    "the controller.\n";
+                  msg << "Oops! Error while registering with "
+                      << "the controller.\n";
                 }
                 //this->DB_->add_string (opstring);
                 this->logger_.log (msg.str());
@@ -173,20 +173,37 @@ namespace CIAO
         Admin_exec_i::tear_down_string (const char * ID)
           throw (UnknownID)
         {
+          std::stringstream msg;
+          msg << "In Admin_exec_i::tear_down_string with ID = "
+              << ID
+              << std::endl;
           try
             {
-              // this->DB_->remove_string (ID);
-              this->OA_->tear_down_string (ID);
-              return true;
+                msg << "Trying to unregister the string with the controller\n";
+                if (this->Controller_Ops_->unregister_string (ID))
+                {
+                  msg << "Successfully unresitered the string "
+                      << "with the controller.\n";
+                }
+                else
+                {
+                  msg << "Oops! Error while unregistering the string with "
+                      << "the controller.\n";
+                }
+
+                // this->DB_->remove_string (ID);
+                msg << "Now removing the string form the system....";
+                this->OA_->tear_down_string (ID);
+                msg << "done!\n";
+                this->logger_.log (msg.str ());
+                return true;
             }
           catch (UnknownID &ex)
             {
-              std::string msg = "Given string ID is not know to RACE. ID:";
-              msg += ID;
-              this->logger_.log (msg);
+              msg << "Given string ID is not know to RACE!\n";
+              this->logger_.log (msg.str ());
               throw ex;
             }
-          return false;
         }
 
         ::CORBA::Boolean
@@ -210,10 +227,10 @@ namespace CIAO
         }
 
         ::CORBA::Boolean
-        Admin_exec_i::start_system ()
+        Admin_exec_i::start_controller ()
         {
           std::stringstream msg;
-          msg << "Admin_exec_1::start_system:"
+          msg << "Admin_exec_1::start_controller:"
               << "Trying to start the controller.\n";
           if (this->Controller_Admin_->start_controller())
           {
@@ -224,6 +241,26 @@ namespace CIAO
           else
           {
             msg << "Error while starting the controller.\n";
+            this->logger_.log(msg.str());
+            return false;
+          }
+        }
+
+        ::CORBA::Boolean
+        Admin_exec_i::stop_controller ()
+        {
+          std::stringstream msg;
+          msg << "Admin_exec_1::stop_controller:"
+              << "Trying to stop the controller.\n";
+          if (this->Controller_Admin_->stop_controller())
+          {
+            msg << "Successfully stopped the controller.\n";
+            this->logger_.log(msg.str());
+            return true;
+          }
+          else
+          {
+            msg << "Error while stopping the controller.\n";
             this->logger_.log(msg.str());
             return false;
           }

@@ -27,7 +27,7 @@ namespace CIAO
       }
     }
 
-    void 
+    void
       Logger::log (std::string msg)
     {
       if (this->log_file_ != 0)
