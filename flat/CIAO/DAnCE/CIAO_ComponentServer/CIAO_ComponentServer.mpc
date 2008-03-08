@@ -29,10 +29,13 @@ project(CIAO_ComponentServer_Impl) : dance_component_server_svnt, ciao_component
   Source_Files {
      CIAO_ComponentServer_Impl.cpp
      CIAO_ComponentServerS.cpp
+     Server_Configurator.cpp
+     CIAO_Container_Impl.cpp
+     Configurator_Factory.cpp
   }     
 }
 
-project(CIAO_ComponentServer_exe) : dance_component_server_svnt, portableserver, ciao_componentserver_svnt, \
+project(CIAO_ComponentServer_exe) : dance_component_server_svnt, portableserver, ciao_componentserver_svnt, ciao_server_dnc,\
 				    messaging, anytypecode, ciaoexe {
   exename = CIAO_ComponentServer
   after += CIAO_ComponentServer_Impl

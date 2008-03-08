@@ -9,15 +9,21 @@
 
 #include <ace/Log_Msg.h>
 #include <ace/Get_Opt.h>
+#include <ace/Sched_Params.h>
 #include <tao/ORB.h>
 #include <tao/Object.h>
 #include <tao/CORBA_methods.h>
 #include <tao/PortableServer/PortableServer.h>
+#include <tao/ORB_Core.h>
 #include <ciao/CIAO_common.h>
 #include <ciao/CIAO_Logger/CIAOLoggerFactory.h>
+#include <ciao/Server_init.h>
+
 
 #include "CIAO_ComponentServer_Impl.h"
 #include "CIAO_CS_ClientC.h"
+#include "Configurator_Factory.h"
+#include "Server_Configurator.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
@@ -49,8 +55,10 @@ namespace CIAO
   namespace Deployment
   {
     ComponentServer::ComponentServer (int argc, ACE_TCHAR **argv)
-      : orb_ (CORBA::ORB_init (argc, argv)),
-        log_level_ (5)
+      : orb_ (0),
+        log_level_ (5),
+        uuid_ (""),
+        callback_ior_str_ ("")
     {
       CIAO_TRACE ("CIAO_ComponentServer::CIAO_ComponentServer ()");
       
@@ -58,29 +66,41 @@ namespace CIAO
       this->set_log_level ();
       
       ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Creating server object\n"));
-      this->parse_args (argc, argv);
+      Configurator_Factory cf;
+      this->configurator_.reset (cf (argc, argv));
       
-      CIAOLoggerFactory
-        *clf = ACE_Dynamic_Service<CIAOLoggerFactory>::instance ("CIAO_Logger_Backend_Factory");
-      if (clf)
-        {
-          ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServeR: Replacing logger backend"));
-          ACE_Log_Msg_Backend * backend = clf->get_logger_backend(this->orb_);
-          backend->open(0);
-          ACE_Log_Msg::msg_backend (backend);
-          ACE_Log_Msg * ace = ACE_Log_Msg::instance();
-          ace->clr_flags(ace->flags());
-          ace->set_flags(ACE_Log_Msg::CUSTOM);
-        }
+      this->configurator_->create_config_managers ();
+      
+      this->configurator_->pre_orb_initialize ();
+      ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Creasting ORB\n"));
+      this->orb_ = CORBA::ORB_init (argc, argv);
+      this->configurator_->post_orb_initialize (this->orb_.in ());
+      
+      this->parse_args (argc, argv);
+      this->configure_logging_backend ();
+      
+      CIAO::Server_init (this->orb_.in ());
       
       ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer object created.\n"));
     }
     
-    void 
-    ComponentServer::run (void)
+    int 
+    ComponentServer::svc (void)
     {
       CIAO_TRACE ("ComponentServer::run");
       
+      ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Activating the root POA\n"));
+      CORBA::Object_var object =
+        this->orb_->resolve_initial_references ("RootPOA");
+      
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (object.in ());
+      
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager ();
+      
+      poa_manager->activate ();
+
       ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: resolving callback IOR\n"));
       CORBA::Object_ptr obj = this->orb_->string_to_object (this->callback_ior_str_.c_str ());
       ServerActivator_var sa (ServerActivator::_narrow (obj));
@@ -93,7 +113,7 @@ namespace CIAO
       
       ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Creating server implementation object\n"));
       CIAO::Deployment::CIAO_ComponentServer_i *ci_srv = 0;
-      ACE_NEW_NORETURN (ci_srv, CIAO_ComponentServer_i (this->uuid_));
+      ACE_NEW_NORETURN (ci_srv, CIAO_ComponentServer_i (this->uuid_, this->orb_.in ()));
       
       if (ci_srv == 0)
         {
@@ -127,6 +147,8 @@ namespace CIAO
       ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Configuration received\n"));
       // @@WO: Probably need to do something with these config values.
       
+      ci_srv->init (sa.in (), config._retn ());
+      
       ACE_DEBUG ((LM_NOTICE, CLINFO "CIAO_ComponentServer: Configuration complete for component server %s\n",
                   this->uuid_.c_str ()));
       
@@ -134,6 +156,66 @@ namespace CIAO
       
       this->orb_->run ();
       ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: ORB Event loop completed.\n"));
+      
+      root_poa->destroy (1, 1);
+      
+      this->orb_->destroy ();
+      
+      return 0;
+    }
+    
+    void 
+    ComponentServer::run (void)
+    {
+      CIAO_TRACE ("ComponentServer::run");
+      
+      this->check_supported_priorities ();
+      
+      if (this->configurator_->rt_support ())
+        {
+          ACE_DEBUG ((LM_DEBUG, CLINFO "ComponentServer::run - Starting ORB with RT support\n"));
+          
+          // spawn a thread
+          // Task activation flags.
+          long flags =
+            THR_NEW_LWP |
+            THR_JOINABLE |
+            this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
+          
+          // Activate task.
+          int result =
+            this->activate (flags);
+          if (result == -1)
+            {
+              if (errno == EPERM)
+                {
+                  ACE_ERROR ((LM_EMERGENCY, CLINFO
+                              "ComponentServer::run - Cannot create thread with scheduling policy %s\n"
+                              "because the user does not have the appropriate privileges, terminating program. "
+                              "Check svc.conf options and/or run as root\n",
+                              sched_policy_name (this->orb_->orb_core ()->orb_params ()->ace_sched_policy ())));
+                  throw Error ("Unable to start RT support due to permissions problem.");
+                }
+              else
+                throw Error ("Unknown error while spawning ORB thread.");
+            }
+
+          // Wait for task to exit.
+          result =
+            this->wait ();
+
+          if (result != -1)
+            throw Error ("Unknown error waiting for ORB thread to complete");
+          
+          ACE_DEBUG ((LM_INFO, CLINFO "ComponentServer::run - ORB thread completed, terminating ComponentServer %s\n",
+                      this->uuid_.c_str ()));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, CLINFO "ComponentServer::run - Starting ORB without RT support\n"));
+          this->svc ();
+          ACE_DEBUG ((LM_INFO, CLINFO "ComponentServer::run - ORB has shutdown, terminating ComponentServer \n"));
+        }
     }
     
     void 
@@ -275,6 +357,71 @@ namespace CIAO
                   "\t-c|--callback-ior <string ior>\t\tSets callback url for the spawning ServerActivator.\n"));
     }
     
+    const char *
+    ComponentServer::sched_policy_name (int sched_policy)
+    {
+      const char *name = 0;
+      
+      switch (sched_policy)
+        {
+        case ACE_SCHED_OTHER:
+          name = "SCHED_OTHER";
+          break;
+        case ACE_SCHED_RR:
+          name = "SCHED_RR";
+          break;
+        case ACE_SCHED_FIFO:
+          name = "SCHED_FIFO";
+          break;
+        }
+      
+      return name;
+    }
+    
+    /// The following check is taken from $(TAO_ROOT)/tests/RTCORBA/
+    void
+    ComponentServer::check_supported_priorities (void)
+    {
+      CIAO_TRACE ("NodeApplication_Core::check_supported_priorities");
+      
+      int const sched_policy =
+        this->orb_->orb_core ()->orb_params ()->ace_sched_policy ();
+      
+      // Check that we have sufficient priority range to run,
+      // i.e., more than 1 priority level.
+      int const max_priority =
+        ACE_Sched_Params::priority_max (sched_policy);
+      int const min_priority =
+        ACE_Sched_Params::priority_min (sched_policy);
+      
+      if (max_priority == min_priority)
+        {
+          ACE_DEBUG ((LM_DEBUG, CLINFO
+                      "CIAO_ComponentServer: Not enough priority levels with the %s scheduling policy\n"
+                      "on this platform to run, terminating ....\n"
+                      "Check svc.conf options\n",
+                      sched_policy_name (sched_policy)));
+          
+          throw Error ("Bad scheduling policy.");
+        }
+    }
+    
+    void 
+    ComponentServer::configure_logging_backend (void)
+    {
+      CIAOLoggerFactory
+        *clf = ACE_Dynamic_Service<CIAOLoggerFactory>::instance ("CIAO_Logger_Backend_Factory");
+      if (clf)
+        {
+          ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServeR: Replacing logger backend"));
+          ACE_Log_Msg_Backend * backend = clf->get_logger_backend(this->orb_);
+          backend->open(0);
+          ACE_Log_Msg::msg_backend (backend);
+          ACE_Log_Msg * ace = ACE_Log_Msg::instance();
+          ace->clr_flags(ace->flags());
+          ace->set_flags(ACE_Log_Msg::CUSTOM);
+        }
+    }
   }
 }
 

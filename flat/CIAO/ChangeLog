@@ -1,3 +1,27 @@
+Sat Mar  8 19:45:47 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.h:
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.cpp:
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.mpc:
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer_Impl.h:
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer_Impl.cpp:
+        * DAnCE/CIAO_ComponentServer/CIAO_Container_Impl.h:
+        * DAnCE/CIAO_ComponentServer/CIAO_Container_Impl.cpp:
+        * DAnCE/CIAO_ComponentServer/ComponentServer_Configurator_export.h:
+        * DAnCE/CIAO_ComponentServer/Config_Manager.h:
+        * DAnCE/CIAO_ComponentServer/Configurator_Factory.h:
+        * DAnCE/CIAO_ComponentServer/Configurator_Factory.cpp:
+        * DAnCE/CIAO_ComponentServer/Server_Configurator.h:
+        * DAnCE/CIAO_ComponentServer/Server_Configurator.cpp:
+
+          Fleshed out the container implementation a bit, pulled in some elements for
+          RTCORBA configuration from the trunk NodeApplication.
+        
+        * ciao/CCM_Core.mpc:
+        * ciao/CIAO_ServerResources.idl:
+
+          Server resources IDL pulled in from trunk.
+        
 Fri Mar  7 03:39:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
