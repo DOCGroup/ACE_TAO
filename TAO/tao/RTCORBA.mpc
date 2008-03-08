@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, tao_output, install, pi, tao_versioning_idl_defaults {
+project(RTCORBA) : taolib, tao_output, install, pi, tao_versioning_idl_defaults {
   sharedname   = TAO_RTCORBA
   dynamicflags = TAO_RTCORBA_BUILD_DLL
   requires    += rt_corba

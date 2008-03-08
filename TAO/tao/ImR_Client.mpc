@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, tao_output, install, portableserver, tao_versioning_idl_defaults {
+project(ImR_Client) : taolib, tao_output, install, portableserver, tao_versioning_idl_defaults {
   sharedname   = TAO_ImR_Client
   dynamicflags = TAO_IMR_CLIENT_BUILD_DLL
 

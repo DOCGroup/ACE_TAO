@@ -90,6 +90,12 @@ CORBA::LocalObject::_non_existent (void)
   return false;
 }
 
+char *
+CORBA::LocalObject::_repository_id (void)
+{
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
+}
+
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
 void
 CORBA::LocalObject::_create_request (CORBA::Context_ptr,
@@ -119,12 +125,6 @@ CORBA::Request_ptr
 CORBA::LocalObject::_request (const char *)
 {
   throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
-}
-
-char *
-CORBA::LocalObject::_repository_id (void)
-{
-  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 CORBA::Object_ptr

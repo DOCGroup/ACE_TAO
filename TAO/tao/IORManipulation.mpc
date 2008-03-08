@@ -1,6 +1,6 @@
 //$Id$
 
-project : taolib, tao_output, install, core_anytypecode, tao_versioning_idl_defaults {
+project(IORManipulation) : taolib, tao_output, install, core_anytypecode, tao_versioning_idl_defaults {
   sharedname   = TAO_IORManip
   dynamicflags = TAO_IORMANIP_BUILD_DLL
 

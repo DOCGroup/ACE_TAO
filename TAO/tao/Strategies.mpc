@@ -1,6 +1,6 @@
 //$Id$
 
-project : taolib, tao_output, install, pi, core_anytypecode, core_strategies, tao_versioning_idl_defaults {
+project(Strategies) : taolib, tao_output, install, pi, core_anytypecode, core_strategies, tao_versioning_idl_defaults {
   sharedname   = TAO_Strategies
   dynamicflags = TAO_STRATEGIES_BUILD_DLL
 

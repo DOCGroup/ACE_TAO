@@ -1,6 +1,6 @@
 //$Id$
 
-project : install, tao_output, valuetype, tao_versioning_idl_defaults {
+project(DynamicAny) : install, tao_output, valuetype, tao_versioning_idl_defaults {
   sharedname    = TAO_DynamicAny
   dynamicflags  = TAO_DYNAMICANY_BUILD_DLL
 
