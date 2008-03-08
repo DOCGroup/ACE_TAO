@@ -70,15 +70,15 @@ namespace CORBA
     /// Always returns false.
     virtual CORBA::Boolean _non_existent (void);
 
+    /// Get the repository id.
+    virtual char * _repository_id (void);
+
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
     /// Gets info about object from the Interface Repository.
     virtual CORBA::InterfaceDef_ptr _get_interface (void);
 
     /// Throws NO_IMPLEMENT.
     virtual CORBA::Object_ptr _get_component (void);
-
-    /// Get the repository id.
-    virtual char * _repository_id (void);
 
     virtual void _create_request (CORBA::Context_ptr ctx,
                                   const char * operation,

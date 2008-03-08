@@ -1,3 +1,44 @@
+Sat Mar  8 07:12:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode.mpc:
+        * tao/BiDir_GIOP.mpc:
+        * tao/CodecFactory.mpc:
+        * tao/Codeset.mpc:
+        * tao/Compression.mpc:
+        * tao/CSD_Framework.mpc:
+        * tao/CSD_ThreadPool.mpc:
+        * tao/DiffServPolicy.mpc:
+        * tao/DynamicAny.mpc:
+        * tao/DynamicInterface.mpc:
+        * tao/EndpointPolicy.mpc:
+        * tao/IFR_Client.mpc:
+        * tao/ImR_Client.mpc:
+        * tao/IORInterceptor.mpc:
+        * tao/IORManipulation.mpc:
+        * tao/IORTable.mpc:
+        * tao/Messaging.mpc:
+        * tao/ObjRefTemplate.mpc:
+        * tao/PI.mpc:
+        * tao/PI_Server.mpc:
+        * tao/PortableServer.mpc:
+        * tao/RTCORBA.mp:
+        * tao/RTPortableServer.mpc:
+        * tao/RTScheduler.mpc:
+        * tao/SmartProxies.mpc:
+        * tao/Strategies.mpc:
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+        * tao/TypeCodeFactory.mpc:
+        * tao/Valuetype.mpc:
+        * tao/ZlibCompressor.mpc:
+          Explicitly specify the project name, on VMS the filenames
+          are returned lower case and MPC compares project names
+          case sensitive.
+
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.h:
+          _repository_id must be available with CORBA/e
+
 Fri Mar  7 13:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:

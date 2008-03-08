@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, tao_output, install, pi, tao_versioning_idl_defaults {
+project(BiDir_GIOP) : taolib, tao_output, install, pi, tao_versioning_idl_defaults {
   sharedname   = TAO_BiDirGIOP
   dynamicflags = TAO_BIDIRGIOP_BUILD_DLL
 
