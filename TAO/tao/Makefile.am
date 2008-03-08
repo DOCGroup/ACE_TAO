@@ -937,6 +937,8 @@ libTAO_la_SOURCES = \
   Server_Strategy_Factory.cpp \
   Service_Callbacks.cpp \
   Service_Context.cpp \
+  Service_Context_Handler.cpp \
+  Service_Context_Handler_Registry.cpp \
   ServicesC.cpp \
   Services_Activate.cpp \
   ShortSeqC.cpp \
@@ -1383,6 +1385,8 @@ nobase_include_HEADERS = \
   Service_Callbacks.h \
   Service_Context.h \
   Service_Context.inl \
+  Service_Context_Handler.h \
+  Service_Context_Handler_Registry.h \
   Services.pidl \
   Services.pidl \
   ServicesC.h \
@@ -2538,6 +2542,7 @@ libTAO_BiDirGIOP_la_SOURCES = \
   BiDir_GIOP/BiDirPolicy_Validator.cpp \
   BiDir_GIOP/BiDir_ORBInitializer.cpp \
   BiDir_GIOP/BiDir_PolicyFactory.cpp \
+  BiDir_GIOP/BiDir_Service_Context_Handler.cpp \
   BiDir_GIOP/BiDir_Policy_i.cpp
 
 libTAO_BiDirGIOP_la_LDFLAGS = \
@@ -2559,6 +2564,7 @@ nobase_include_HEADERS += \
   BiDir_GIOP/BiDirPolicy_Validator.h \
   BiDir_GIOP/BiDir_ORBInitializer.h \
   BiDir_GIOP/BiDir_PolicyFactory.h \
+  BiDir_GIOP/BiDir_Service_Context_Handler.h \
   BiDir_GIOP/BiDir_Policy_i.h \
   BiDir_GIOP/bidirgiop_export.h
 
