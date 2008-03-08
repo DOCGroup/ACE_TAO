@@ -1,6 +1,6 @@
 //$Id$
 
-project : taolib, tao_output, install, tao_versioning_idl_defaults, nolink_codecfactory {
+project(Codeset) : taolib, tao_output, install, tao_versioning_idl_defaults, nolink_codecfactory {
   sharedname   = TAO_Codeset
   dynamicflags = TAO_CODESET_BUILD_DLL
   pch_header   =
