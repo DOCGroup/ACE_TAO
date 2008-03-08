@@ -2,11 +2,15 @@
 
 #include <ciao/CIAO_common.h>
 
+#include "CIAO_Container_Impl.h"
+
 namespace CIAO
 {
   namespace Deployment
   {
-    CIAO_ComponentServer_i::CIAO_ComponentServer_i (const ACE_CString &/*uuid*/)
+    CIAO_ComponentServer_i::CIAO_ComponentServer_i (const ACE_CString &uuid, CORBA::ORB_ptr orb)
+      : uuid_ (uuid),
+        orb_ (CORBA::ORB::_duplicate (orb))
     {
       CIAO_TRACE("CIAO_ComponentServer_i::CIAO_ComponentServer_i");
     }
@@ -22,6 +26,15 @@ namespace CIAO
     CIAO_ComponentServer_i::shutdown (void)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::shutdown");
+      
+      ACE_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer_i::shutdown: ORB shutdown request received at %s.\n",
+                  this->uuid_.c_str ()));
+      
+      if (this->containers_->length () != 0)
+        ACE_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::shutdown: ComponentServer %s still managing %u containers!\n",
+                    this->uuid_.c_str (), this->containers_->length ()));
+      
+      this->orb_->shutdown ();
     }
       
       
@@ -29,7 +42,7 @@ namespace CIAO
     CIAO_ComponentServer_i::configuration (void)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::configuration");
-      return 0;
+      return this->config_values_.out ();
     }
       
       
@@ -37,22 +50,75 @@ namespace CIAO
     CIAO_ComponentServer_i::get_server_activator (void)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::get_server_activator");
-      return 0;
+      return this->serv_act_.in ();
     }
       
       
     ::Components::Deployment::Container_ptr 
-    CIAO_ComponentServer_i::create_container (const ::Components::ConfigValues & /*config*/)
+    CIAO_ComponentServer_i::create_container (const ::Components::ConfigValues & config)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::create_container");
-      return 0;
+      
+      try
+        {
+          ACE_DEBUG ((LM_INFO, "CIAO_ComponentServer_i::create_container: Request received with %u config values\n",
+                      config.length ()));
+
+          CIAO_Container_i *cont = 0;
+          ACE_NEW_THROW_EX (cont, CIAO_Container_i (config), CORBA::NO_MEMORY ());
+          
+          PortableServer::ServantBase_var safe_config = cont;
+          Components::Deployment::Container_var cont_var = cont->_this  ();
+          
+          CORBA::ULong len = this->containers_->length () + 1;
+          this->containers_->length (len);
+          this->containers_[len] = cont_var;
+          
+          ACE_DEBUG ((LM_INFO, "CIAO_ComponentServer_i::create_container: Container successfully cresated, "
+                      "this server now manages %u containers.\n",
+                      len));
+          
+          return this->containers_[len].in ();
+        }
+      catch (ACE_bad_alloc &)
+        {
+          ACE_ERROR ((LM_CRITICAL, "CIAO_ComponentServer_Impl: Out of memory exception whilst creating container.\n"));
+        }
+      
+      catch (...)
+        {
+          ACE_ERROR ((LM_ERROR, "CIAO_ComponentServer_Impl: Caught unknown exception\n"));
+        }
+      
+      throw Components::CreateFailure ();
     }
+    
       
       
     void 
-    CIAO_ComponentServer_i::remove_container (::Components::Deployment::Container_ptr /*cref*/)
+    CIAO_ComponentServer_i::remove_container (::Components::Deployment::Container_ptr cref)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::remove_container");
+      
+      ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: remove request received.\n"));
+      
+      try
+        {
+          for (CORBA::ULong i = 0; i < this->containers_->length (); ++i)
+            {
+              if (this->containers_[i]->_is_equivalent (cref))
+                {
+                  ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: Found container, invoking remove....\n"));
+                  cref->remove ();
+                  ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: Remove completed, destroying object...\n"));
+                }
+            }
+        }
+      catch (...)
+        {
+          ACE_ERROR ((LM_ERROR, "CIAO_ComponentServer_i::remove_container: Error: Unknown exception caught while removing a container.\n"));
+        }
+      throw Components::RemoveFailure ();
     }
       
       
@@ -60,7 +126,7 @@ namespace CIAO
     CIAO_ComponentServer_i::get_containers (void)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::get_containers");
-      return 0;
+      return this->containers_;
     }
       
       
@@ -68,6 +134,14 @@ namespace CIAO
     CIAO_ComponentServer_i::remove (void)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::remove");
+    }
+    
+    void 
+    CIAO_ComponentServer_i::init (::Components::Deployment::ServerActivator_ptr sa,
+                                  Components::ConfigValues *cvs)
+    {
+      this->serv_act_ = ::Components::Deployment::ServerActivator::_duplicate(sa);
+      this->config_values_ = cvs;
     }
   }
 }

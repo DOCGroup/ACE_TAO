@@ -1,6 +1,7 @@
 #include "CIAO_Container_Impl.h"
 
 #include <ace/Log_Msg.h>
+#include <ciao/CIAO_common.h>
 
 
 namespace CIAO
@@ -8,29 +9,35 @@ namespace CIAO
   namespace Deployment
   {
           // Constructor 
-    CIAO_Container_i::CIAO_Container_i (void)
+    CIAO_Container_i::CIAO_Container_i (const Components::ConfigValues &config)
+      : config_ (config.length ())
     {
       CIAO_TRACE("CIAO_Container_i::CIAO_Container_i");
+      
+      for (CORBA::ULong i = 0; i < config.length (); ++i)
+        {
+          this->config_[i] = config[i];
+        }
     }
     
   
     // Destructor 
     CIAO_Container_i::~CIAO_Container_i (void)
     {
-      CIAO_DEBUG("CIAO_Container_i::~CIAO_Container_i");
+      CIAO_TRACE("CIAO_Container_i::~CIAO_Container_i");
     }
     
     ::Components::CCMObject_ptr
-    CIAO_Container_i::install_component (const char * id,
-                                         const char * entrypt,
-                                         const ::Components::ConfigValues & config)
+    CIAO_Container_i::install_component (const char * /*id*/,
+                                         const char * /*entrypt*/,
+                                         const ::Components::ConfigValues & /*config*/)
     {
       CIAO_TRACE("CIAO_Container_i::install_component");
       return 0;
     }
     
     void 
-    CIAO_Container_i::remove_component (::Components::CCMObject_ptr cref)
+    CIAO_Container_i::remove_component (::Components::CCMObject_ptr /*cref*/)
     {
       CIAO_TRACE("CIAO_Container_i::remove_component");
     }
@@ -57,16 +64,16 @@ namespace CIAO
     }
     
     ::Components::CCMHome_ptr 
-    CIAO_Container_i::install_home (const char * id,
-                                    const char * entrypt,
-                                    const ::Components::ConfigValues & config)
+    CIAO_Container_i::install_home (const char * /*id*/,
+                                    const char * /*entrypt*/,
+                                    const ::Components::ConfigValues & /*config*/)
     {
       CIAO_TRACE("CIAO_Container_i::install_home");
-      return  *;
+      return  0;
     }
     
     void 
-    CIAO_Container_i::remove_home (::Components::CCMHome_ptr href)
+    CIAO_Container_i::remove_home (::Components::CCMHome_ptr /*href*/)
     {
       CIAO_TRACE("CIAO_Container_i::remove_home");
     }

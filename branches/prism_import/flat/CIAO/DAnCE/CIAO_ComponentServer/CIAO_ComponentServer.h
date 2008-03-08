@@ -10,18 +10,23 @@
 #define CIAO_COMPONENTSERVER_H_
 
 #include <ace/String_Base.h>
+#include <ace/Task.h>
 #include <tao/ORB.h>
+
 
 namespace CIAO
 {
   namespace Deployment
   {  
-    class ComponentServer
+    class ComponentServer_Configurator;
+    
+
+    class ComponentServer : ACE_Task_Base
     {
     public:
       ComponentServer (int argc, ACE_TCHAR **argv);
       
-      void run (void);
+      int svc (void);
       
       struct Error
       {
@@ -30,6 +35,8 @@ namespace CIAO
         ACE_CString err_;
       };
       
+      void run (void);
+      
     private:
       void parse_args (int argc, ACE_TCHAR **argv);
       
@@ -37,12 +44,20 @@ namespace CIAO
       
       void set_log_level (void);
       
+      void configure_logging_backend (void);
+      
       void usage (void);
+      
+      const char * sched_policy_name (int sched_policy);
+      
+      void check_supported_priorities (void);
+      
       
       CORBA::ORB_var orb_;
       int log_level_;
       ACE_CString uuid_;
       ACE_CString callback_ior_str_;
+      auto_ptr<ComponentServer_Configurator> configurator_;
       
     };
   }

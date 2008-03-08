@@ -12,6 +12,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "CIAO_ComponentServer_svnt_export.h"
+
 namespace CIAO
 {
   namespace Deployment
@@ -20,13 +22,12 @@ namespace CIAO
      * @class CIAO_Container
      * @brief Implements external interface for CIAO container. 
      */
-    class  CIAO_Container_i
+    class CIAO_ComponentServer_svnt_Export  CIAO_Container_i
       : public virtual POA_Components::Deployment::CIAO::Container
     {
     public:
       // Constructor 
-      CIAO_Container_i (void);
-  
+      CIAO_Container_i (const Components::ConfigValues &config);
       // Destructor 
       virtual ~CIAO_Container_i (void);
   
@@ -60,6 +61,9 @@ namespace CIAO
   
       virtual
       void remove (void);
+      
+    private:
+      Components::ConfigValues config_;
     };
   }
 }

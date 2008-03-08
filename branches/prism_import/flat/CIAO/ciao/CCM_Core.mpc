@@ -135,6 +135,7 @@ project (CIAO_Container) : orbsvcslib, orbsvcs_output \
     CCM_SessionSynchronization.idl
     CCM_HomeRegistration.idl
     CCM_HomeExecutorBase.idl
+    CIAO_ServerResources.idl
   }
 
   Source_Files {
@@ -177,6 +178,7 @@ project (CIAO_Container) : orbsvcslib, orbsvcs_output \
     CIAO_UpgradeableContextC.cpp
     Cookies.cpp
     ComponentsS.cpp
+    CIAO_ServerResourcesC.cpp
   }
 
   Header_Files {

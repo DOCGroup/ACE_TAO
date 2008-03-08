@@ -8,6 +8,8 @@
 
 #include "CIAO_ComponentServerS.h"
 
+#include "CIAO_ComponentServer_svnt_export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -24,7 +26,7 @@ namespace CIAO
     {
     public:
       // Constructor 
-      CIAO_ComponentServer_i (const ACE_CString &uuid);
+      CIAO_ComponentServer_i (const ACE_CString &uuid, CORBA::ORB_ptr orb);
       
       // Destructor 
       virtual ~CIAO_ComponentServer_i (void);
@@ -49,6 +51,18 @@ namespace CIAO
       
       virtual
       void remove (void);
+      
+      void init (::Components::Deployment::ServerActivator_ptr sa,
+                 Components::ConfigValues *cvs);
+      
+    private:
+      ACE_CString uuid_;
+      CORBA::ORB_ptr orb_;
+      ::Components::Deployment::ServerActivator_var serv_act_;
+      Components::ConfigValues_var config_values_;
+      
+      ::Components::Deployment::Containers_var containers_;
+      
     };
   }
 }
