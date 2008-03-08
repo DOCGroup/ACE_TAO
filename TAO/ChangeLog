@@ -1,3 +1,8 @@
+Sat Mar  8 07:15:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Added new files
+
 Sat Mar  8 07:12:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode.mpc:
