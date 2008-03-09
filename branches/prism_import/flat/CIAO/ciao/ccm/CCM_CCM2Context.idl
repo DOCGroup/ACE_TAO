@@ -1,0 +1,45 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../.. -I ../../orbsvcs/orbsvcs \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Container_Ex.idl
+ */
+
+#if !defined (CCM_2CONTEXT_IDL)
+#define CCM_2CONTEXT_IDL
+
+#include "ccm/CCM_Container.idl"
+#include "ccm/CCM_HomeRegistration.idl"
+#include <CosPersistentState.idl>
+
+// *************** Extended Container Interfaces ***************
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  typedef CosPersistentState::CatalogBase CatalogBase;
+  typedef CosPersistentState::_TypeId _TypeId;
+
+  exception PolicyMismatch {};
+  exception PersistenceNotAvailable {};
+
+  local interface CCM2Context : CCMContext
+  {
+    HomeRegistration get_home_registration ();
+
+    void req_passivate ()
+      raises (PolicyMismatch);
+
+    CatalogBase get_persistence (in _TypeId catalog_type_id)
+      raises (PersistenceNotAvailable);
+  };
+
+};
+#endif /* CCM_2CONTEXT_IDL */

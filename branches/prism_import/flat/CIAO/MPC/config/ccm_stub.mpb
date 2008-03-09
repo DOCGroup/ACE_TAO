@@ -1,0 +1,6 @@
+project : ifr_client, valuetype, pi, codecfactory, ciao_vcwarnings, tao_output {
+  after += CCM_stub
+  includes   += $(CIAO_ROOT) $(CIAO_ROOT)/ciao
+  idlflags += -I$(CIAO_ROOT) -I$(CIAO_ROOT)/ciao
+  libs     += CCM_stub
+}
