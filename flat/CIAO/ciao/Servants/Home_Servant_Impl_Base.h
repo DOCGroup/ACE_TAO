@@ -18,13 +18,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CIAO_Server_Export.h"
+#include "CIAO_Servant_Impl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CCM_HomeS.h"
+#include <ccm/CCM_HomeS.h>
 
 namespace CIAO
 {
@@ -38,7 +38,7 @@ namespace CIAO
    * Holds the non-template parts of its child class
    * Home_Servant_Impl.
    */
-  class CIAO_SERVER_Export Home_Servant_Impl_Base
+  class CIAO_Servant_Impl_Export Home_Servant_Impl_Base
     : public virtual POA_Components::CCMHome
   {
   public:

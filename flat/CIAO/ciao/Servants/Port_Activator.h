@@ -14,13 +14,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/CIAO_Server_Export.h"
+#include "CIAO_Servant_Impl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PortableServer.h"
+#include <tao/PortableServer/PortableServer.h>
 
 namespace CIAO
 {
@@ -35,7 +35,7 @@ namespace CIAO
    * polymorphism for facet and consumer servant activations.
    *
    */
-  class CIAO_SERVER_Export Port_Activator
+  class CIAO_Servant_Impl_Export Port_Activator
   {
   public:
     enum Type

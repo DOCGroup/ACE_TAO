@@ -1,4 +1,4 @@
-project : dance_component_server_stub {
+project : ccm_componentserver_stub {
    after += DAnCE_ComponentServer_svnt
    libs += DAnCE_ComponentServer_svnt
 }

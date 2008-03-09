@@ -18,13 +18,13 @@
 
 # include /**/ "ace/pre.h"
 
-#include "CIAO_Server_Export.h"
+#include "CIAO_Servant_Impl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CCM_StandardConfiguratorS.h"
+#include "ccm/CCM_StandardConfiguratorS.h"
 
 namespace CIAO
 {
@@ -43,7 +43,7 @@ namespace CIAO
    * in setting the initial values of component attributes that are
    * defined in the meta data.
    */
-  class CIAO_SERVER_Export StandardConfigurator_Impl
+  class CIAO_Servant_Impl_Export StandardConfigurator_Impl
     : public virtual POA_Components::StandardConfigurator
   {
   public:

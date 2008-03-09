@@ -4,7 +4,10 @@
 #define CIAO_HOME_SERVANT_IMPL_T_C
 
 #include "Home_Servant_Impl_T.h"
-#include "CIAO_common.h"
+#include <ccm/CCM_ObjectC.h>
+#include <ccm/CCM_EnterpriseComponentC.h>
+#include <ciao/CIAO_common.h>
+
 
 namespace CIAO
 {
@@ -62,8 +65,8 @@ namespace CIAO
     Components::CCMObject_var ccm_obj_var = Components::CCMObject::_nil ();
     if (objref_map_.find (oid.in (), ccm_obj_var) != 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
-        return;
+        ACE_ERROR ((LM_WARNING, CLINFO "Home_Servant_Impl<>::remove_component - Invalid component object reference\n"));
+        throw Components::RemoveFailure ();
       }
 
     typedef typename COMP_SVNT::_stub_type stub_type;
@@ -77,10 +80,7 @@ namespace CIAO
 
     _ciao_comp->remove ();
 
-    if (CIAO::debug_level () > 3)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Removed the component\n"));
-      }
+    ACE_DEBUG ((LM_INFO, CLINFO "Home_Servant_Impl<>::remove_component - Removed the component\n"));
   }
 
   template <typename BASE_SKEL,
@@ -97,7 +97,7 @@ namespace CIAO
     Components::CCMObject_var ccm_obj_ptr;
     if (objref_map_.unbind (oid, ccm_obj_ptr) != 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
+        ACE_ERROR ((LM_ERROR, CLINFO "Home_Servant_Impl<>::update_component_map - Invalid component object reference\n"));
         return;
       }
 
@@ -133,6 +133,7 @@ namespace CIAO
 
     if (this->executor_.in () == 0)
       {
+	ACE_ERROR ((LM_ERROR, CLINFO "Home_Servant_Impl<>:create - nil executor reference\n"));
         throw CORBA::INTERNAL ();
       }
 
@@ -166,13 +167,13 @@ namespace CIAO
 
     typedef typename COMP_SVNT::_stub_type stub_type;
     COMP_SVNT *svt = 0;
-    ACE_NEW_RETURN (svt,
-                    COMP_SVNT (exe,
-                               home.in (),
-                               this->ins_name_,
-                               this,
-                               this->container_),
-                    stub_type::_nil ());
+    ACE_NEW_THROW_EX (svt,
+		      COMP_SVNT (exe,
+				 home.in (),
+				 this->ins_name_,
+				 this,
+				 this->container_),
+		      CORBA::NO_MEMORY ());
 
     PortableServer::ServantBase_var safe (svt);
     PortableServer::ObjectId_var oid;

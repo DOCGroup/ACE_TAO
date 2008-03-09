@@ -1,4 +1,4 @@
-project : ciao_client_dnc {
+project : ccm_stub {
    after += DAnCE_ComponentServer_stub
    libs += DAnCE_ComponentServer_stub
    includes += $(CIAO_ROOT)/DAnCE
