@@ -14,7 +14,7 @@
 #define CIAO_PORT_ACTIVATOR_T_H
 #include /**/ "ace/pre.h"
 
-#include "ciao/Port_Activator.h"
+#include "ciao/Servants/Port_Activator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

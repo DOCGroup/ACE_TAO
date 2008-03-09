@@ -5,20 +5,8 @@
 
 #ifndef COMPONENTSERVER_CLIENT_IDL_
 #define COMPONENTSERVER_CLIENT_IDL_
-/*
-module Components
-{
-  typeprefix Components "omg.org";
 
-  module Deployment
-  {
-    interface ComponentServer;
-    typedef sequence<ComponentServer> ComponentServers;
-  };
-};
-*/
 #include "ComponentServer_Base.idl"
- //#include "ComponentServer.idl"
 
 module Components
 {

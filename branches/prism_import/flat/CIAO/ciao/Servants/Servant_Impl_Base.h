@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CIAO_Server_Export.h"
+#include "CIAO_Servant_Impl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,12 +27,13 @@
 #include "Home_Servant_Impl_Base.h"
 #include "Servant_Activator.h"
 
-#include "CCM_ContainerC.h"
-#include "CCM_ObjectS.h"
-#include "CCM_StandardConfiguratorC.h"
+#include <ace/Hash_Map_Manager_T.h>
+#include <ace/Array_Map.h>
+#include <ccm/CCM_ContainerC.h>
+#include <ccm/CCM_ObjectS.h>
+#include <ccm/CCM_StandardConfiguratorC.h>
 
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Array_Map.h"
+
 
 namespace CIAO
 {
@@ -46,7 +47,7 @@ namespace CIAO
    * Holds the non-template parts of its child class
    * Servant_Impl.
    */
-  class CIAO_SERVER_Export Servant_Impl_Base
+  class CIAO_Servant_Impl_Export Servant_Impl_Base
     : public virtual POA_Components::CCMObject
   {
   public:

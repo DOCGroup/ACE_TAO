@@ -4,7 +4,7 @@
 #define CIAO_SERVANT_IMPL_T_C
 
 #include "Servant_Impl_T.h"
-#include "CCM_EntityContextC.h"
+#include <ccm/CCM_EntityContextC.h>
 
 namespace CIAO
 {

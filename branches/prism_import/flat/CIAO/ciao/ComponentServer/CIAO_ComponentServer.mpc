@@ -12,8 +12,8 @@ project(CIAO_ComponentServer_IDL) : taoidldefaults, anytypecode {
   }
 }
 
-project(CIAO_ComponentServer_stub) : dance_component_server_stub, taolib_with_idl, tao_output, \
-				     messaging, ciao_client_dnc,  anytypecode, ciaodll, ciao_client_dnc  {
+project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, taolib_with_idl, tao_output, \
+				     messaging,  anytypecode, ciaodll  {
   after += CIAO_ComponentServer_IDL
   dynamicflags = CIAO_COMPONENTSERVER_STUB_BUILD_DLL
 
@@ -23,8 +23,7 @@ project(CIAO_ComponentServer_stub) : dance_component_server_stub, taolib_with_id
   }
 }
 
-project(CIAO_ComponentServer_svnt) : dance_component_server_svnt, ciao_componentserver_stub, portableserver, \
-				   ciao_container_dnc    {
+project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentserver_stub, portableserver {
  
   dynamicflags =   CIAO_COMPONENTSERVER_SVNT_BUILD_DLL
   after += CIAO_Basic_Configurator
@@ -38,7 +37,7 @@ project(CIAO_ComponentServer_svnt) : dance_component_server_svnt, ciao_component
   }     
 }
 
-project(CIAO_ComponentServer_exe) : dance_component_server_svnt, portableserver, ciao_componentserver_svnt, ciao_server_dnc,\
+project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_componentserver_svnt, \
 				    messaging, anytypecode, ciaoexe {
   exename = CIAO_ComponentServer
   after += CIAO_ComponentServer_Impl

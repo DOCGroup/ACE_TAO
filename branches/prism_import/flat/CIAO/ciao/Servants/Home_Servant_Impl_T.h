@@ -25,8 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Key_Adapters.h"
-#include "ace/Hash_Map_Manager_T.h"
+#include <ace/Hash_Map_Manager_T.h>
+#include <tao/PortableServer/Key_Adapters.h>
 
 namespace CIAO
 {

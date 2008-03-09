@@ -39,6 +39,9 @@
 #  endif
 #endif /* CIAO_NTRACE */
 
+// default information printed with CIAO logging messages.
+#define CLINFO "(%P|%t) [%M] - %T - "
+
 #if (CIAO_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
 #    define CIAO_TRACE(X)
@@ -53,32 +56,9 @@
 #  if !defined (ACE_HAS_TRACE)
 #    define ACE_HAS_TRACE
 #  endif /* ACE_HAS_TRACE */
-#  define CIAO_TRACE(X) ACE_TRACE_IMPL(X)
+#  define CIAO_TRACE(X) ACE_TRACE_IMPL(CLINFO X)
 #  include "ace/Trace.h"
 #endif /* CIAO_NTRACE */
-
-// default information printed with CIAO logging messages.
-#define CLINFO "(%P|%t) [%M] - %T - "
-
-namespace CIAO
-{
-  /**
-   * Return the debug level.  The debug level of CIAO is control by
-   * an environment variable "CIAO_DEBUG_LEVEL".  It should be an int
-   * value.  If it is not defined, the default debug level is 0.  The
-   * value of debug value is evaluated on its first use and the value
-   * is then cached.  The actual implementation of this function is in
-   * Client_init.cpp.
-   *
-   * Some recommendation for using the debug_level
-   *
-   *    > 0 : For component users.  Component developers are encouraged
-   *          to develop their own
-   *   > 10 : For CIAO tools
-   *   > 20 : For CIAO core.
-   */
-  CIAO_CLIENT_Export int debug_level (void);
-}
 
 #include /**/ "ace/post.h"
 

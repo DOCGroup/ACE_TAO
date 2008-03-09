@@ -15,16 +15,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/CIAO_Server_Export.h"
+#include "CIAO_Servant_Impl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ServantActivatorC.h"
-#include "tao/LocalObject.h"
+#include <ace/Array_Base.h>
+#include <tao/PortableServer/ServantActivatorC.h>
+#include <tao/LocalObject.h>
 
-#include "ace/Array_Base.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -48,7 +48,7 @@ namespace CIAO
    * right one (yes a linear algorithm is used), calls activate () on
    * it which returns the servant for *that* port.
    */
-  class CIAO_SERVER_Export Servant_Activator
+  class CIAO_Servant_Impl_Export Servant_Activator
     : public virtual PortableServer::ServantActivator,
       public virtual TAO_Local_RefCounted_Object
   {
@@ -65,16 +65,14 @@ namespace CIAO
      * methods, please PortableServer documentation. This is probably
      * not the place to document what these mean.
      */
-    virtual PortableServer::Servant incarnate (
-      const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa);
+    virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
+					       PortableServer::POA_ptr poa);
 
-    virtual void etherealize (
-      const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr adapter,
-      PortableServer::Servant servant,
-      CORBA::Boolean cleanup_in_progress,
-      CORBA::Boolean remaining_activations);
+    virtual void etherealize (const PortableServer::ObjectId &oid,
+			      PortableServer::POA_ptr adapter,
+			      PortableServer::Servant servant,
+			      CORBA::Boolean cleanup_in_progress,
+			      CORBA::Boolean remaining_activations);
 
     /// Local helper methods
     bool register_port_activator (Port_Activator *pa);

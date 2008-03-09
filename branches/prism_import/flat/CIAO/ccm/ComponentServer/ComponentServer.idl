@@ -13,20 +13,8 @@
 
 #if !defined (COMPONENTSERVER_IDL)
 #define COMPONENTSERVER_IDL
-/*
-module Components
-{
-  typeprefix Components "omg.org";
-
-  module Deployment
-  {
-  
-  };
-};
-*/
 
 #include "ComponentServer_Base.idl"
- //#include "ComponentServer_Client.idl"
 
 module Components
 {
