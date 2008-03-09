@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, tao_output, install, core_anytypecode, avoids_corba_e_micro, tao_versioning_idl_defaults, gen_ostream {
+project(Valuetype) : taolib, tao_output, install, core_anytypecode, avoids_corba_e_micro, tao_versioning_idl_defaults, gen_ostream {
   sharedname    = TAO_Valuetype
   dynamicflags  = TAO_VALUETYPE_BUILD_DLL
 

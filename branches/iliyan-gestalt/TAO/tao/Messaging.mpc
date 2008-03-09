@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, tao_output, install, portableserver, pi, valuetype, tao_versioning_idl_defaults {
+project(Messaging) : taolib, tao_output, install, portableserver, pi, valuetype, tao_versioning_idl_defaults {
   sharedname   = TAO_Messaging
   dynamicflags = TAO_MESSAGING_BUILD_DLL
 

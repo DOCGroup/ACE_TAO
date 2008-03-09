@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, tao_output, install, ifr_client, tao_versioning_idl_defaults {
+project(TypeCodeFactory) : taolib, tao_output, install, ifr_client, tao_versioning_idl_defaults {
   sharedname   = TAO_TypeCodeFactory
   dynamicflags = TAO_TYPECODEFACTORY_BUILD_DLL
 

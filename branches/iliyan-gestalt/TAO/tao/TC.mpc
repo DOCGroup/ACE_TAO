@@ -1,6 +1,6 @@
 //$Id$
 
-project(*) : taolib_with_idl, tao_output, tao_versioning_idl_defaults, install, interceptors, pi {
+project(TC) : taolib_with_idl, tao_output, tao_versioning_idl_defaults, install, interceptors, pi {
 
   requires    += transport_current
   sharedname   = TAO_TC
