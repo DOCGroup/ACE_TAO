@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../.. -I ../../orbsvcs/orbsvcs \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Container.idl
+ */
+
+//#define CIAO_HAS_IMPORT_KEYWORD
+
+#if !defined (CCM_SESSIONCONTEXT_IDL)
+#define CCM_SESSIONCONTEXT_IDL
+
+#include "ccm/CCM_Context.idl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  local interface SessionContext : CCMContext
+  {
+    Object get_CCM_object()
+      raises (IllegalState);
+  };
+};
+#endif /* CCM_SESSIONCONTEXT_IDL */

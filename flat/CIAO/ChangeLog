@@ -1,12 +1,274 @@
+Sun Mar  9 16:47:24 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ccm_configvalue.mpb:
+        * MPC/config/ccm_cookie.mpb:
+        * MPC/config/ccm_stub.mpb:
+        * MPC/config/ccm_svnt.mpb:
+          
+          New base projects for the refactord CCM idls and valuetypes. 
+
+        * ciao/CIAO_Utils.h:
+        * ciao/CIAO_Utils.cpp:
+        * ciao/CIAO_Utils_export.h:
+        
+          Utility functions useful just about everywhere. 
+
+        * ciao/Logger:  
+          
+           Renamed from CIAO_Logger
+        
+        * ciao/CCM_Core.mpc:
+        * ciao/CIAO_Core.mpc:
+        * ciao/Containers:
+        * ciao/Containers/Container_Base.h:
+        * ciao/Containers/Container_Base.inl:
+        * ciao/Containers/Container_Base.cpp:
+        * ciao/Containers/Session:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.inl:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Containers/Swapping:
+        * ciao/Containers/Swapping/Dynamic_Component_Activator.h:
+        * ciao/Containers/Swapping/Dynamic_Component_Activator.inl:
+        * ciao/Containers/Swapping/Dynamic_Component_Activator.cpp:
+        * ciao/Containers/Swapping/Swapping_Container.h:
+        * ciao/Containers/Swapping/Swapping_Container.inl:
+        * ciao/Containers/Swapping/Swapping_Container.cpp:
+        * ciao/Contexts:
+        * ciao/Contexts/Context_Impl_Base.h:
+        * ciao/Contexts/Context_Impl_Base.inl:
+        * ciao/Contexts/Context_Impl_Base.cpp:
+        * ciao/Contexts/Context_Impl_T.h:
+        * ciao/Contexts/Context_Impl_T.cpp:
+        * ciao/Contexts/Swapping:
+        * ciao/Contexts/Swapping/CIAO_UpgradeableContext.idl:
+        * ciao/Contexts/Swapping/Upgradeable_Context_Impl_T.h:
+        * ciao/Contexts/Swapping/Upgradeable_Context_Impl_T.cpp:
+        * ciao/Servants:
+        * ciao/Servants/Home_Servant_Impl_Base.h:
+        * ciao/Servants/Home_Servant_Impl_Base.cpp:
+        * ciao/Servants/Home_Servant_Impl_T.h:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+        * ciao/Servants/Port_Activator.h:
+        * ciao/Servants/Port_Activator.inl:
+        * ciao/Servants/Port_Activator.cpp:
+        * ciao/Servants/Port_Activator_T.h:
+        * ciao/Servants/Port_Activator_T.cpp:
+        * ciao/Servants/Servant_Activator.h:
+        * ciao/Servants/Servant_Activator.cpp:
+        * ciao/Servants/Servant_Impl_Base.h:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_T.h:
+        * ciao/Servants/Servant_Impl_T.cpp:
+        * ciao/Servants/Servant_Impl_Utils_T.cpp:
+        * ciao/Servants/StandardConfigurator_Impl.h:
+        * ciao/Servants/StandardConfigurator_Impl.cpp:
+        * ciao/Servants/Swapping:
+        * ciao/Servants/Swapping/CIAO_SwapExec.idl:
+        * ciao/Servants/Swapping/Dynamic_Component_Servant_Base.h:
+        * ciao/Servants/Swapping/Dynamic_Component_Servant_Base.cpp:
+        * ciao/Servants/Swapping/Dynamic_Component_Servant_T.h:
+        * ciao/Servants/Swapping/Dynamic_Component_Servant_T.cpp:
+        * ciao/Servants/Swapping/Swapping_Servant_Home_Impl_Base.h:
+        * ciao/Servants/Swapping/Swapping_Servant_Home_Impl_Base.cpp:
+        * ciao/Servants/Swapping/Swapping_Servant_Home_Impl_T.h:
+        * ciao/Servants/Swapping/Swapping_Servant_Home_Impl_T.cpp:
+        * ciao/Valuetype_Factories:
+        * ciao/Valuetype_Factories/ConfigValue.h:
+        * ciao/Valuetype_Factories/ConfigValue.cpp:
+        * ciao/Valuetype_Factories/ConfigValue_Export.h:
+        * ciao/Valuetype_Factories/Cookie_Export.h:
+        * ciao/Valuetype_Factories/Cookies.h:
+        * ciao/Valuetype_Factories/Cookies.inl:
+        * ciao/Valuetype_Factories/Cookies.cpp:
+        * ciao/Valuetype_Factories/Factories.mpc:
+        
+          Refactoring of the directory structure bloodbath.  MPC files will come in
+          next commit.
+        
+        * ciao/ccm/CCM.mpc:
+        * ciao/ccm/CCM_Base.idl:
+        * ciao/ccm/CCM_CCM2Context.idl:
+        * ciao/ccm/CCM_CCMException.idl:
+        * ciao/ccm/CCM_Component.idl:
+        * ciao/ccm/CCM_ComponentId.idl:
+        * ciao/ccm/CCM_Configurator.idl:
+        * ciao/ccm/CCM_Container.idl:
+        * ciao/ccm/CCM_Container_Ex.idl:
+        * ciao/ccm/CCM_Context.idl:
+        * ciao/ccm/CCM_Cookie.idl:
+        * ciao/ccm/CCM_EnterpriseComponent.idl:
+        * ciao/ccm/CCM_Entity2Context.idl:
+        * ciao/ccm/CCM_EntityComponent.idl:
+        * ciao/ccm/CCM_EntityContext.idl:
+        * ciao/ccm/CCM_Enumeration.idl:
+        * ciao/ccm/CCM_EventBase.idl:
+        * ciao/ccm/CCM_EventConsumerBase.idl:
+        * ciao/ccm/CCM_Events.idl:
+        * ciao/ccm/CCM_ExecutorLocator.idl:
+        * ciao/ccm/CCM_Home.idl:
+        * ciao/ccm/CCM_HomeConfiguration.idl:
+        * ciao/ccm/CCM_HomeExecutorBase.idl:
+        * ciao/ccm/CCM_HomeFinder.idl:
+        * ciao/ccm/CCM_HomeRegistration.idl:
+        * ciao/ccm/CCM_KeylessCCMHome.idl:
+        * ciao/ccm/CCM_Navigation.idl:
+        * ciao/ccm/CCM_Object.idl:
+        * ciao/ccm/CCM_PrimaryKeyBase.idl:
+        * ciao/ccm/CCM_ProxyHomeRegistration.idl:
+        * ciao/ccm/CCM_Receptacle.idl:
+        * ciao/ccm/CCM_Session2Context.idl:
+        * ciao/ccm/CCM_SessionComponent.idl:
+        * ciao/ccm/CCM_SessionContext.idl:
+        * ciao/ccm/CCM_SessionSynchronization.idl:
+        * ciao/ccm/CCM_StandardConfigurator.idl:
+        * ciao/ccm/CCM_StateIdFactory.idl:
+        * ciao/ccm/CCM_Stub_Export.h:
+        * ciao/ccm/CCM_Svnt_Export.h:
+        * ciao/ccm/CCM_Transaction.idl:
+        * ciao/ccm/Components.idl:
+        * ciao/ccm/CosPersistentState.idl:
+        * ciao/ccm/Security.idl:
+        * ciao/ccm/extension:
+        
+          All spec defined IDLs were moved to ccm subdirectory.
+        
+        * ciao/CCM_Base.idl:
+        * ciao/CCM_CCM2Context.idl:
+        * ciao/CCM_CCMException.idl:
+        * ciao/CCM_Component.idl:
+        * ciao/CCM_ComponentId.idl:
+        * ciao/CCM_Configurator.idl:
+        * ciao/CCM_Container.idl:
+        * ciao/CCM_Container_Ex.idl:
+        * ciao/CCM_Context.idl:
+        * ciao/CCM_Cookie.idl:
+        * ciao/CCM_EnterpriseComponent.idl:
+        * ciao/CCM_Entity2Context.idl:
+        * ciao/CCM_EntityComponent.idl:
+        * ciao/CCM_EntityContext.idl:
+        * ciao/CCM_Enumeration.idl:
+        * ciao/CCM_EventBase.idl:
+        * ciao/CCM_EventConsumerBase.idl:
+        * ciao/CCM_Events.idl:
+        * ciao/CCM_ExecutorLocator.idl:
+        * ciao/CCM_Home.idl:
+        * ciao/CCM_HomeConfiguration.idl:
+        * ciao/CCM_HomeExecutorBase.idl:
+        * ciao/CCM_HomeFinder.idl:
+        * ciao/CCM_HomeRegistration.idl:
+        * ciao/CCM_KeylessCCMHome.idl:
+        * ciao/CCM_Navigation.idl:
+        * ciao/CCM_Object.idl:
+        * ciao/CCM_PrimaryKeyBase.idl:
+        * ciao/CCM_ProxyHomeRegistration.idl:
+        * ciao/CCM_Receptacle.idl:
+        * ciao/CCM_Session2Context.idl:
+        * ciao/CCM_SessionComponent.idl:
+        * ciao/CCM_SessionContext.idl:
+        * ciao/CCM_SessionSynchronization.idl:
+        * ciao/CCM_StandardConfigurator.idl:
+        * ciao/CCM_StateIdFactory.idl:
+        * ciao/CCM_Transaction.idl:
+        * ciao/CIAO_Logger:
+        * ciao/CIAO_Logger/CIAOLoggerFactory.h:
+        * ciao/CIAO_Logger/CIAO_Logger_Export.h:
+        * ciao/CIAO_Logger/File_Logger_Backend.h:
+        * ciao/CIAO_Logger/File_Logger_Backend.cpp:
+        * ciao/CIAO_Logger/Logger.mpc:
+        * ciao/CIAO_Logger/Logger_Service.h:
+        * ciao/CIAO_Logger/Logger_Service.cpp:
+        * ciao/CIAO_SwapExec.idl:
+        * ciao/CIAO_UpgradeableContext.idl:
+        * ciao/Components.idl:
+        * ciao/ConfigValue.h:
+        * ciao/ConfigValue.cpp:
+        * ciao/Container_Base.h:
+        * ciao/Container_Base.inl:
+        * ciao/Container_Base.cpp:
+        * ciao/Context_Impl_Base.h:
+        * ciao/Context_Impl_Base.inl:
+        * ciao/Context_Impl_Base.cpp:
+        * ciao/Context_Impl_T.h:
+        * ciao/Context_Impl_T.cpp:
+        * ciao/Cookies.h:
+        * ciao/Cookies.inl:
+        * ciao/Cookies.cpp:
+        * ciao/CosPersistentState.idl:
+        * ciao/Dynamic_Component_Activator.h:
+        * ciao/Dynamic_Component_Activator.inl:
+        * ciao/Dynamic_Component_Activator.cpp:
+        * ciao/Dynamic_Component_Servant_Base.h:
+        * ciao/Dynamic_Component_Servant_Base.cpp:
+        * ciao/Dynamic_Component_Servant_T.h:
+        * ciao/Dynamic_Component_Servant_T.cpp:
+        * ciao/Home_Servant_Impl_Base.h:
+        * ciao/Home_Servant_Impl_Base.cpp:
+        * ciao/Home_Servant_Impl_T.h:
+        * ciao/Home_Servant_Impl_T.cpp:
+        * ciao/Object_Set_T.h:
+        * ciao/Object_Set_T.inl:
+        * ciao/Object_Set_T.cpp:
+        * ciao/Port_Activator.h:
+        * ciao/Port_Activator.inl:
+        * ciao/Port_Activator.cpp:
+        * ciao/Port_Activator_T.h:
+        * ciao/Port_Activator_T.cpp:
+        * ciao/Security.idl:
+        * ciao/Servant_Activator.h:
+        * ciao/Servant_Activator.cpp:
+        * ciao/Servant_Impl_Base.h:
+        * ciao/Servant_Impl_Base.cpp:
+        * ciao/Servant_Impl_T.h:
+        * ciao/Servant_Impl_T.cpp:
+        * ciao/Servant_Impl_Utils_T.cpp:
+        * ciao/Session_Container.h:
+        * ciao/Session_Container.inl:
+        * ciao/Session_Container.cpp:
+        * ciao/StandardConfigurator_Impl.h:
+        * ciao/StandardConfigurator_Impl.cpp:
+        * ciao/Swapping_Container.h:
+        * ciao/Swapping_Container.inl:
+        * ciao/Swapping_Container.cpp:
+        * ciao/Swapping_Servant_Home_Impl_Base.h:
+        * ciao/Swapping_Servant_Home_Impl_Base.cpp:
+        * ciao/Swapping_Servant_Home_Impl_T.h:
+        * ciao/Swapping_Servant_Home_Impl_T.cpp:
+        * ciao/Upgradeable_Context_Impl_T.h:
+        * ciao/Upgradeable_Context_Impl_T.cpp:
+        * ciao/extension:
+        * ciao/extension/CCM_ClientContainerInterceptor.idl:
+        * ciao/extension/CCM_ClientContainerInterceptorRegistration.idl:
+        * ciao/extension/CCM_ContainerClientRequestInfo.idl:
+        * ciao/extension/CCM_ContainerInterceptor.idl:
+        * ciao/extension/CCM_ContainerRequestInfo.idl:
+        * ciao/extension/CCM_ContainerServantRequestInfo.idl:
+        * ciao/extension/CCM_ContainerServerRequestInfo.idl:
+        * ciao/extension/CCM_ContainerStubRequestInfo.idl:
+        * ciao/extension/CCM_ExtensionComponent.idl:
+        * ciao/extension/CCM_ExtensionContext.idl:
+        * ciao/extension/CCM_InvalidRegistration.idl:
+        * ciao/extension/CCM_QoS.idl:
+        * ciao/extension/CCM_ServantContainerInterceptor.idl:
+        * ciao/extension/CCM_ServantContainerInterceptorRegistration.idl:
+        * ciao/extension/CCM_ServerContainerInterceptor.idl:
+        * ciao/extension/CCM_ServerContainerInterceptorRegistration.idl:
+        * ciao/extension/CCM_StubContainerInterceptor.idl:
+        * ciao/extension/CCM_StubContainerInterceptorRegistration.idl:
+        * ciao/extension/ExtensionContext.h:
+        * ciao/extension/ExtensionContext.cpp:
+
+          Removed these files.
+
 Sun Mar  9 05:25:41 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.cpp:
         * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.mpc:
         * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer_Impl.cpp:
         * DAnCE/CIAO_ComponentServer/Configurator_Factory.cpp:
-        
-          Updates for moves below. 
-        
+
+          Updates for moves below.
+
         * DAnCE/CIAO_ComponentServer/Configurators:
         * DAnCE/CIAO_ComponentServer/Configurators/Basic_Config_Manager_export.h:
         * DAnCE/CIAO_ComponentServer/Configurators/Basic_Configurator_export.h:
@@ -28,24 +290,24 @@ Sun Mar  9 05:25:41 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/CIAO_ComponentServer/Configurators/RTNodeApp_Configurator.cpp:
         * DAnCE/CIAO_ComponentServer/Configurators/Server_Configurator.h:
         * DAnCE/CIAO_ComponentServer/Configurators/Server_Configurator.cpp:
-        
+
           Moved all configurator related logic to subdirectory; imported
           config managers from trunk.
-        
+
         * MPC/config/ciao_componentserver_svnt.mpb:
         * MPC/config/ciao_config_manager.mpb:
         * MPC/config/ciao_servant_dnc.mpb:
         * MPC/config/ciao_server_dnc.mpb:
         * MPC/config/dance_deployment_stub.mpb:
         * MPC/config/dance_deployment_svnt.mpb:
-        
+
           Removed dependencies on events, as it won't work anyway until it is
-          re-implemented. 
-        
+          re-implemented.
+
         * ciao/CIAO_ServerResources.idl:
-        
-          Renamed DAnCE namespace to Deployment to be consistent. 
-        
+
+          Renamed DAnCE namespace to Deployment to be consistent.
+
         * DAnCE/CIAO_ComponentServer/ComponentServer_Configurator_export.h:
         * DAnCE/CIAO_ComponentServer/Config_Manager.h:
         * DAnCE/CIAO_ComponentServer/Server_Configurator.h:
