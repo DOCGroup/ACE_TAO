@@ -6,16 +6,13 @@
 #ifndef CIAO_COMPONENTSERVER_IMPL_H_
 #define CIAO_COMPONENTSERVER_IMPL_H_
 
-#include "CIAO_ComponentServerS.h"
-
-#include "CIAO_ComponentServer_svnt_export.h"
+#include "ciao/ComponentServer/CIAO_ComponentServerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <ace/String_Base.h>
-#include "CIAO_ComponentServer_svnt_export.h"
 
 namespace CIAO
 {
@@ -26,7 +23,7 @@ namespace CIAO
     {
     public:
       // Constructor 
-      CIAO_ComponentServer_i (const ACE_CString &uuid, CORBA::ORB_ptr orb);
+      CIAO_ComponentServer_i (const ACE_CString &uuid, CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
       
       // Destructor 
       virtual ~CIAO_ComponentServer_i (void);
@@ -57,7 +54,8 @@ namespace CIAO
       
     private:
       ACE_CString uuid_;
-      CORBA::ORB_ptr orb_;
+      CORBA::ORB_var orb_;
+      PortableServer::POA_var poa_;
       ::Components::Deployment::ServerActivator_var serv_act_;
       Components::ConfigValues_var config_values_;
       

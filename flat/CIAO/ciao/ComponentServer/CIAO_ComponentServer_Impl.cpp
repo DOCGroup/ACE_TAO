@@ -9,9 +9,11 @@ namespace CIAO
 {
   namespace Deployment
   {
-    CIAO_ComponentServer_i::CIAO_ComponentServer_i (const ACE_CString &uuid, CORBA::ORB_ptr orb)
+    CIAO_ComponentServer_i::CIAO_ComponentServer_i (const ACE_CString &uuid, CORBA::ORB_ptr orb, 
+						    PortableServer::POA_ptr poa)
       : uuid_ (uuid),
-        orb_ (CORBA::ORB::_duplicate (orb))
+        orb_ (CORBA::ORB::_duplicate (orb)),
+	poa_ (PortableServer::POA::_duplicate (poa))
     {
       CIAO_TRACE("CIAO_ComponentServer_i::CIAO_ComponentServer_i");
     }
@@ -64,9 +66,14 @@ namespace CIAO
         {
           ACE_DEBUG ((LM_INFO, "CIAO_ComponentServer_i::create_container: Request received with %u config values\n",
                       config.length ()));
+	  
+	  CORBA::PolicyList policies;
+	  const char *name = "";
 
           CIAO_Container_i *cont = 0;
-          ACE_NEW_THROW_EX (cont, CIAO_Container_i (config), CORBA::NO_MEMORY ());
+          ACE_NEW_THROW_EX (cont, 
+			    CIAO_Container_i (config, 0, name, &policies, this->orb_.in (), this->poa_.in ()), 
+			    CORBA::NO_MEMORY ());
           
           PortableServer::ServantBase_var safe_config = cont;
           Components::Deployment::Container_var cont_var = cont->_this  ();

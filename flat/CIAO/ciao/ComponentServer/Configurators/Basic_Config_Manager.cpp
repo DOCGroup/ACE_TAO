@@ -1,6 +1,6 @@
 // $Id$
 
-#include "NAConfig_Manager.h"
+#include "Basic_Config_Manager.h"
 #include "ciao/CIAO_common.h"
 #include "ace/SString.h"
 #include "tao/SystemException.h"

@@ -9,8 +9,8 @@
 #ifndef CIAO_COMPONENTSERVER_IDL_
 #define CIAO_COMPONENTSERVER_IDL_
 
-#include "ciao/CCM_Object.idl"
-#include "DAnCE/ComponentServer/ComponentServer.idl"
+#include <ccm/CCM_Object.idl>
+#include <ccm/ComponentServer/ComponentServer.idl>
 
 module Components
 {

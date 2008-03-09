@@ -9,7 +9,7 @@
 #ifndef CIAO_COMPONENTSERVER_IDL_
 #define CIAO_COMPONENTSERVER_IDL_
 
-#include "DAnCE/ComponentServer/ComponentServer_Client.idl"
+#include <ccm/ComponentServer/ComponentServer_Client.idl>
 
 module Components
 {

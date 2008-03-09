@@ -1,4 +1,4 @@
-project(CIAO_Container_Base) : ciaodll, ccm_svnt {
+project(CIAO_Container_Base) : ciao_lib, ccm_svnt {
   dynamicflags += CONTAINER_BASE_BUILD_DLL
 
   Source_Files {
@@ -12,7 +12,7 @@ project(CIAO_Container_Base) : ciaodll, ccm_svnt {
   }
 }
 
-project(CIAO_Session_Container) : ciaodll, ciao_container_base, utils, \
+project(CIAO_Session_Container) : ciao_lib, ciao_container_base, utils, \
 				ccm_componentserver_stub, ciao_servant_activator {
   dynamicflags += SESSION_CONTAINER_BUILD_DLL
  

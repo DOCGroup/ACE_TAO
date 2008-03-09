@@ -9,21 +9,24 @@ project(CIAO_ComponentServer_IDL) : taoidldefaults, anytypecode {
   IDL_Files {
     CIAO_CS_Client.idl
     CIAO_ComponentServer.idl
+    CIAO_ServerResources.idl
   }
 }
 
 project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, taolib_with_idl, tao_output, \
-				     messaging,  anytypecode, ciaodll  {
+				     messaging,  anytypecode, ciao_lib  {
   after += CIAO_ComponentServer_IDL
   dynamicflags = CIAO_COMPONENTSERVER_STUB_BUILD_DLL
 
   Source_Files {
     CIAO_ComponentServerC.cpp
     CIAO_CS_ClientC.cpp
+    CIAO_ServerResourcesC.cpp
   }
 }
 
-project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentserver_stub, portableserver {
+project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
+				   ciao_session_container {
  
   dynamicflags =   CIAO_COMPONENTSERVER_SVNT_BUILD_DLL
   after += CIAO_Basic_Configurator
@@ -32,16 +35,15 @@ project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentser
   Source_Files {
      CIAO_ComponentServer_Impl.cpp
      CIAO_ComponentServerS.cpp
+     CIAO_ServerResourcesS.cpp
      CIAO_Container_Impl.cpp
      Configurator_Factory.cpp
   }     
 }
 
 project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_componentserver_svnt, \
-				    messaging, anytypecode, ciaoexe {
+				    messaging, anytypecode, ciao_server, ciaoexe {
   exename = CIAO_ComponentServer
-  after += CIAO_ComponentServer_Impl
-  libs += CIAO_ComponentServer_Impl
   
   Source_Files {
     CIAO_ComponentServer.cpp

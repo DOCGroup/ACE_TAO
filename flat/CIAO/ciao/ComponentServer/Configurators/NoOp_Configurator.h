@@ -14,7 +14,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <ciao/CCM_StandardConfiguratorC.h>
+#include <ccm/CCM_StandardConfiguratorC.h>
 
 #include "Server_Configurator.h"
 #include "NoOp_Configurator_export.h"

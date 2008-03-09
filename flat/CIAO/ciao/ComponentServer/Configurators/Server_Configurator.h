@@ -22,7 +22,7 @@
 
 #include <ace/DLL.h>
 #include <ace/Auto_Ptr.h>
-#include <ciao/CCM_StandardConfiguratorC.h>
+#include <ccm/CCM_StandardConfiguratorC.h>
 #include "ComponentServer_Configurator_export.h"
 #include "Config_Manager.h"
 

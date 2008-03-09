@@ -19,7 +19,7 @@ namespace CIAO
   Session_Container::serial_number_ (0);
   
   Session_Container::Session_Container (CORBA::ORB_ptr o,
-                                        Deployment::Container_Impl *container_impl,
+                                        Deployment::CIAO_Container_i *container_impl,
                                         bool static_config_flag,
                                         const Static_Config_EntryPoints_Maps* maps,
 					const char *name,

@@ -28,7 +28,7 @@ namespace CIAO
         }
       
       if (this->static_entrypts_maps_ == 0)
-	
+	{
 	  ACE_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with dynamic linkage\n"));
 	  this->container_.reset (new CIAO::Session_Container (this->orb_.in (), this, false,
 							       0, name, policies));

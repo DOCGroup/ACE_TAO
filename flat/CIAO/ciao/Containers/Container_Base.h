@@ -34,7 +34,7 @@ namespace CIAO
   
   namespace Deployment
   {
-    class Container_Impl;
+    class CIAO_Container_i;
   }
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
@@ -64,7 +64,7 @@ namespace CIAO
       };
 
     Container (CORBA::ORB_ptr o);
-    Container (CORBA::ORB_ptr o, Deployment::Container_Impl *container_impl);
+    Container (CORBA::ORB_ptr o, Deployment::CIAO_Container_i *container_impl);
 
     virtual ~Container (void) = 0;
 
@@ -128,7 +128,7 @@ namespace CIAO
     PortableServer::POA_var facet_cons_poa_;
 
     PortableServer::POA_var home_servant_poa_;
-    Deployment::Container_Impl *container_impl_;
+    Deployment::CIAO_Container_i *container_impl_;
     ::CIAO::REC_POL_MAP rec_pol_map_;
     
   private:

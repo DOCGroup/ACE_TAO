@@ -17,7 +17,8 @@ namespace CIAO
   {
   }
 
-  Container::Container (CORBA::ORB_ptr o, Deployment::Container_Impl *container_impl)
+  Container::Container (CORBA::ORB_ptr o, 
+			Deployment::CIAO_Container_i *container_impl)
     : orb_ (CORBA::ORB::_duplicate (o)),
       container_impl_ (container_impl)
   {
