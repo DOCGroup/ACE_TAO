@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Container_Base.h"
-#include "CIAO_common.h"
+#include "ciao/CIAO_common.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Container_Base.inl"
@@ -17,7 +17,7 @@ namespace CIAO
   {
   }
 
-  Container::Container (CORBA::ORB_ptr o, Container_Impl *container_impl)
+  Container::Container (CORBA::ORB_ptr o, Deployment::Container_Impl *container_impl)
     : orb_ (CORBA::ORB::_duplicate (o)),
       container_impl_ (container_impl)
   {
@@ -34,8 +34,8 @@ namespace CIAO
     
     if (this->rec_pol_map_.find (name, policy_list) != 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "Unable to find policies "
+        ACE_ERROR ((LM_WARNING, CLINFO
+                    "Container::Ger_receptacle_policy - Unable to find policies "
                     "for the receptacle %s\n",
                     name));
         policy_list.length (0);

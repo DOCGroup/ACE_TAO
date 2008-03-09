@@ -18,17 +18,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/CIAO_Server_Export.h"
+#include "ciao/Containers/Container_Base_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/CCM_ContainerC.h"
-
-#include "tao/PortableServer/PortableServer.h"
-
-#include "ace/Hash_Map_Manager_T.h"
+#include <ace/Hash_Map_Manager_T.h>
+#include <tao/PortableServer/PortableServer.h>
+#include <ccm/CCM_ContainerC.h>
 
 namespace CIAO
 {
@@ -56,7 +54,7 @@ namespace CIAO
    * Perhaps we can use local interface to define these interfaces as
    * we will also get reference counting automatically.
    */
-  class CIAO_SERVER_Export Container
+  class Container_Base_Export Container
   {
   public:
     enum OA_Type
@@ -88,8 +86,8 @@ namespace CIAO
     CORBA::PolicyList get_receptacle_policy (const char *name);
 
     /// Initialize the container with a name.
-    virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *more_policies = 0) = 0;
+    virtual void init (const char *name = 0,
+		       const CORBA::PolicyList *more_policies = 0) = 0;
 
     /// Install a new home
     virtual Components::CCMHome_ptr ciao_install_home (

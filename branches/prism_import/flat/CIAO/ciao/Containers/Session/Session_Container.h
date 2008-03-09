@@ -18,20 +18,25 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/CIAO_Server_Export.h"
+#include "ciao/Containers/Session/Session_Container_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Container_Base.h"
-
-#include "tao/PortableServer/Servant_Base.h"
+#include <tao/PortableServer/Servant_Base.h>
+#include "ciao/Containers/Container_Base.h"
 
 namespace CIAO
 {
   class Session_Container;
   class Servant_Activator;
+  class Home_Servant_Impl_Base;
+  
+  namespace Deployment
+  {
+    class Container_Impl;
+  }
 
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
   typedef ::PortableServer::Servant (*ServantFactory) (
@@ -76,7 +81,7 @@ namespace CIAO
   COMPONENTSERVANTCREATOR_FUNCPTR_MAP;
 
     
-  struct Static_Config_EntryPoints_Maps
+  struct Session_Container_Export Static_Config_EntryPoints_Maps
   {
     /// Map of home creator entry point name and func ptr
     HOMECREATOR_FUNCPTR_MAP* home_creator_funcptr_map_;
@@ -91,11 +96,11 @@ namespace CIAO
     COMPONENTSERVANTCREATOR_FUNCPTR_MAP* component_servant_creator_funcptr_map_;
   };
 
-  class CIAO_SERVER_Export Session_Container : public Container
+  class Session_Container_Export Session_Container : public Container
   {
   public:
     Session_Container (CORBA::ORB_ptr o,
-                       Container_Impl *container_impl,
+                       Deployment::Container_Impl *container_impl,
                        bool static_config_flag = false,
                        const Static_Config_EntryPoints_Maps* static_entrypts_maps =0,
 		       const char *name = 0,

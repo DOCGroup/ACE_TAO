@@ -1,13 +1,26 @@
-project(CIAO_Servant_Impl) : ccm_svnt, portableserver {
+project(CIAO_Servant_Activator) : ccm_svnt, portableserver {
+   dynamicflags = CIAO_SERVANT_ACTIVATOR_BUILD_DLL
+
+   Source_Files {
+    Port_Activator.cpp
+    Port_Activator_T.cpp
+    Servant_Activator.cpp
+   }
+
+   Header_Files {
+     Port_Activator.h
+     Port_Activator_T.h
+     Servant_Activator.h
+   }
+}
+
+project(CIAO_Servant_Impl) : ciao_servant_activator {
 
    dynamicflags = CIAO_SERVANT_IMPL_BUILD_DLL
 
    Source_Files {
      Home_Servant_Impl_Base.cpp
      Home_Servant_Impl_T.cpp
-     Port_Activator.cpp
-     Port_Activator_T.cpp
-     Servant_Activator.cpp
      Servant_Impl_Base.cpp
      Servant_Impl_T.cpp
      Servant_Impl_Utils_T.cpp
@@ -18,9 +31,6 @@ project(CIAO_Servant_Impl) : ccm_svnt, portableserver {
      CIAO_Servant_Impl_export.h
      Home_Servant_Impl_Base.h
      Home_Servant_Impl_T.h
-     Port_Activator.h
-     Port_Activator_T.h
-     Servant_Activator.h
      Servant_Impl_Base.h
      Servant_Impl_T.h
      StandardConfigurator_Impl.h

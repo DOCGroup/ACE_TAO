@@ -1,9 +1,88 @@
+Sun Mar  9 21:12:29 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Containers/Container_Base.h:
+        * ciao/Containers/Container_Base.cpp:
+        * ciao/Containers/Container_Base_export.h:
+        * ciao/Containers/Containers.mpc:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Containers/Session/Session_Container_export.h:
+        * ciao/Contexts/Context.mpc:
+        * ciao/Contexts/Context_Impl_Base.h:
+        * ciao/Contexts/Context_Impl_Base.cpp:
+        * ciao/Contexts/Context_Impl_export.h:
+        * MPC/config/ciao_session_container.mpb
+        * MPC/config/ciao_container_base.mpb
+        
+         MPC file, changes to logging, new, and guard macros
+          to comply with new CIAO style guidelines. 
+        
+        * ciao/Servants/Servants.mpc:
+        * MPC/config/ciao_servant_activator.mpb
+
+         Split activator out to its own lib. 
+
+Sun Mar  9 20:38:52 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ccm/ComponentServer:
+        * ccm/ComponentServer/ComponentServer.idl:
+        * ccm/ComponentServer/ComponentServer.mpc:
+        * ccm/ComponentServer/ComponentServer_Base.idl:
+        * ccm/ComponentServer/ComponentServer_Client.idl:
+        * MPC/config/ccm_componentserver_stub.mpb:
+        * MPC/config/ccm_componentserver_svnt.mpb:
+
+          Moved ComponentServer IDLS from DAnCE to CCM.
+
+        * ciao/CIAO_common.h:
+
+          Removed ciao_debug_level, the full range of debug message levels
+          should be used instead.
+
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+
+          Updated to reflect ComponentServer move above.
+
+        * ciao/Servants/CIAO_Servant_Impl_export.h:
+        * ciao/Servants/Home_Servant_Impl_Base.h:
+        * ciao/Servants/Home_Servant_Impl_T.h:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+        * ciao/Servants/Port_Activator.h:
+        * ciao/Servants/Port_Activator_T.h:
+        * ciao/Servants/Servant_Activator.h:
+        * ciao/Servants/Servant_Activator.cpp:
+        * ciao/Servants/Servant_Impl_Base.h:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_T.cpp:
+        * ciao/Servants/Servant_Impl_Utils_T.cpp:
+        * ciao/Servants/Servants.mpc:
+        * ciao/Servants/StandardConfigurator_Impl.h:
+
+          MPC file, changes to logging, and updated
+          to use _THROW_EX versions of new and guard macros.
+
+        * docs/CIAO_Style_Guide.txt:
+
+          Some additional style requirements for CIAO.
+
+        * DAnCE/ComponentServer:
+        * DAnCE/ComponentServer/ComponentServer.idl:
+        * DAnCE/ComponentServer/ComponentServer.mpc:
+        * DAnCE/ComponentServer/ComponentServer_Base.idl:
+        * DAnCE/ComponentServer/ComponentServer_Client.idl:
+        * DAnCE/ComponentServer/DAnCE_ComponentServer_stub_export.h:
+        * DAnCE/ComponentServer/DAnCE_ComponentServer_svnt_export.h:
+        * MPC/config/dance_component_server_stub.mpb:
+        * MPC/config/dance_component_server_svnt.mpb:
+
+          Removed these files.
+
 Sun Mar  9 17:04:55 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ccm_stub.mpb:
-        
-          Updated to comply with previous commit. 
-        
+
+          Updated to comply with previous commit.
+
 Sun Mar  9 16:59:05 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer:

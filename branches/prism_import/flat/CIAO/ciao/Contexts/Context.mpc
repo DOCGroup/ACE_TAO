@@ -1,0 +1,14 @@
+project(CIAO_Context_Impl) : ccm_svnt {
+   Source_Files {
+     Context_Impl_Base.cpp
+     Context_Impl_T.cpp
+   }
+   Header_Files {
+     Context_Impl_Base.h
+     Context_Impl_T.h
+     Context_Impl_export.h
+   }
+   Inline_Files {
+     Context_Impl_Base.cpp
+   }
+}
