@@ -1,0 +1,4 @@
+project : ciao_componentserver_stub {
+     after += CIAO_ComponentServer_svnt
+   libs += CIAO_ComponentServer_svnt
+}

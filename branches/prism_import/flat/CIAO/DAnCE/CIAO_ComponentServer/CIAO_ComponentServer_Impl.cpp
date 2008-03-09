@@ -2,6 +2,7 @@
 
 #include <ciao/CIAO_common.h>
 
+#include "CIAO_CS_ClientC.h"
 #include "CIAO_Container_Impl.h"
 
 namespace CIAO

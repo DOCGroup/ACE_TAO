@@ -1,0 +1,47 @@
+project(CIAO_Basic_Configurator) : ciaodll, ciao_container_dnc {
+
+  Source_Files {
+    Server_Configurator.cpp
+  }
+  Header_Files {
+    Server_Configurator.h
+  }
+}
+
+project(CIAO_NoOp_Configurator) : ciaodll, ciao_client_dnc {
+  after += CIAO_Basic_Configurator
+  libs += CIAO_Basic_Configurator
+
+  Source_Files {
+    NoOp_Configurator.cpp
+  }
+
+  Header_Files {
+    NoOp_Configurator.h
+  }
+}
+
+
+project(CIAO_Basic_Config_Manager) : ciaodll, ciao_config_manager, diffservpolicy {
+ 
+  Source_Files {
+    NAConfig_Manager.cpp
+  }
+  
+  Header_Files {
+    NAConfig_Manager.h
+    Config_Manager.h
+  }
+}
+
+project(CIAO_RT_Config_Manager) : ciaodll, diffservpolicy, ciao_config_manager, \
+				negotiate_codesets, rtportableserver, rtcorba {
+
+  Source_Files { 
+    RTConfig_Manager.cpp
+  }
+  Header_Files {
+    RTConfig_Manager.h
+    Config_Manager.h
+  }
+}

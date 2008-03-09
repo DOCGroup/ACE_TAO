@@ -1,3 +1,58 @@
+Sun Mar  9 05:25:41 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.cpp:
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.mpc:
+        * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer_Impl.cpp:
+        * DAnCE/CIAO_ComponentServer/Configurator_Factory.cpp:
+        
+          Updates for moves below. 
+        
+        * DAnCE/CIAO_ComponentServer/Configurators:
+        * DAnCE/CIAO_ComponentServer/Configurators/Basic_Config_Manager_export.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/Basic_Configurator_export.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/ComponentServer_Configurator_export.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/Config_Manager.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/Config_Manager.cpp:
+        * DAnCE/CIAO_ComponentServer/Configurators/Configurators.mpc:
+        * DAnCE/CIAO_ComponentServer/Configurators/NAConfig_Manager.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/NAConfig_Manager.inl:
+        * DAnCE/CIAO_ComponentServer/Configurators/NAConfig_Manager.cpp:
+        * DAnCE/CIAO_ComponentServer/Configurators/NoOp_Configurator.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/NoOp_Configurator.cpp:
+        * DAnCE/CIAO_ComponentServer/Configurators/NoOp_Configurator_export.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/RTConfig_Manager.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/RTConfig_Manager.inl:
+        * DAnCE/CIAO_ComponentServer/Configurators/RTConfig_Manager.cpp:
+        * DAnCE/CIAO_ComponentServer/Configurators/RTNA_Configurator_Export.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/RTNodeApp_Configurator.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/RTNodeApp_Configurator.cpp:
+        * DAnCE/CIAO_ComponentServer/Configurators/Server_Configurator.h:
+        * DAnCE/CIAO_ComponentServer/Configurators/Server_Configurator.cpp:
+        
+          Moved all configurator related logic to subdirectory; imported
+          config managers from trunk.
+        
+        * MPC/config/ciao_componentserver_svnt.mpb:
+        * MPC/config/ciao_config_manager.mpb:
+        * MPC/config/ciao_servant_dnc.mpb:
+        * MPC/config/ciao_server_dnc.mpb:
+        * MPC/config/dance_deployment_stub.mpb:
+        * MPC/config/dance_deployment_svnt.mpb:
+        
+          Removed dependencies on events, as it won't work anyway until it is
+          re-implemented. 
+        
+        * ciao/CIAO_ServerResources.idl:
+        
+          Renamed DAnCE namespace to Deployment to be consistent. 
+        
+        * DAnCE/CIAO_ComponentServer/ComponentServer_Configurator_export.h:
+        * DAnCE/CIAO_ComponentServer/Config_Manager.h:
+        * DAnCE/CIAO_ComponentServer/Server_Configurator.h:
+        * DAnCE/CIAO_ComponentServer/Server_Configurator.cpp:
+
+          Removed these files.
+
 Sat Mar  8 19:45:47 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.h:
@@ -16,17 +71,17 @@ Sat Mar  8 19:45:47 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Fleshed out the container implementation a bit, pulled in some elements for
           RTCORBA configuration from the trunk NodeApplication.
-        
+
         * ciao/CCM_Core.mpc:
         * ciao/CIAO_ServerResources.idl:
 
           Server resources IDL pulled in from trunk.
-        
+
 Fri Mar  7 03:39:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
-        
-          Added DII libraries for attribute setter. 
+
+          Added DII libraries for attribute setter.
 
         * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.idl:
         * DAnCE/CIAO_ComponentServer/CIAO_ComponentServer.mpc:
@@ -49,7 +104,7 @@ Fri Mar  7 03:39:10 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/XML_Typedefs.h:
 
           VC8 compiler error/warnings.
-        
+
 Thu Mar  6 18:24:12 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dance_component_server_svnt.mpb:

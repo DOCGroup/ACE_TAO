@@ -23,13 +23,16 @@ project(CIAO_ComponentServer_stub) : dance_component_server_stub, taolib_with_id
   }
 }
 
-project(CIAO_ComponentServer_Impl) : dance_component_server_svnt, ciao_componentserver_stub, portableserver {
+project(CIAO_ComponentServer_svnt) : dance_component_server_svnt, ciao_componentserver_stub, portableserver, \
+				   ciao_container_dnc    {
  
   dynamicflags =   CIAO_COMPONENTSERVER_SVNT_BUILD_DLL
+  after += CIAO_Basic_Configurator
+  libs += CIAO_Basic_Configurator
+
   Source_Files {
      CIAO_ComponentServer_Impl.cpp
      CIAO_ComponentServerS.cpp
-     Server_Configurator.cpp
      CIAO_Container_Impl.cpp
      Configurator_Factory.cpp
   }     
