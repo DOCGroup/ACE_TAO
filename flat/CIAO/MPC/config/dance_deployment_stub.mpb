@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_client_dnc, ciao_events_base_dnc, messaging {
+project : ciao_client_dnc, messaging {
   after += Deployment_stub
   libs  += DAnCE_Deployment_stub
   includes += $(CIAO_ROOT)/DAnCE

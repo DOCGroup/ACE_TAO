@@ -3,6 +3,7 @@
 #include "Server_Configurator.h"
 #include <ace/Log_Msg.h>
 #include <ciao/CIAO_common.h>
+#include <ciao/CIAO_ServerResourcesC.h>
 
 namespace CIAO
 {
@@ -34,10 +35,10 @@ namespace CIAO
     int
     ComponentServer_Configurator::create_config_managers (void)
     {
-      typedef CIAO::Config_Manager * (*na_intelligent_designer)(void);
-      typedef CIAO::Config_Manager * (*rtna_intelligent_designer)(void);
-      CIAO::Config_Manager* ptr = 0;
-      CIAO::Config_Manager* rt_ptr = 0;
+      typedef CIAO::Deployment::Config_Manager * (*na_intelligent_designer)(void);
+      typedef CIAO::Deployment::Config_Manager * (*rtna_intelligent_designer)(void);
+      CIAO::Deployment::Config_Manager* ptr = 0;
+      CIAO::Deployment::Config_Manager* rt_ptr = 0;
 
       int retval = this->config_dll_.open (ACE_DLL_PREFIX ACE_TEXT ("CIAO_NA_Configurator"),
                                            ACE_DEFAULT_SHLIB_MODE,
@@ -170,7 +171,7 @@ namespace CIAO
         {
           if (ACE_OS::strcmp ("CIAOServerResources", properties[i]->name ()) == 0)
             {
-              const CIAO::DAnCE::ServerResource *svr_resource;
+              const ServerResource *svr_resource;
               if (properties[i]->value () >>= svr_resource)
                 {
                   (*this->na_config_manager_.get ()).

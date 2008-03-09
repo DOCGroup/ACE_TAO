@@ -23,7 +23,7 @@
 #include "CIAO_ComponentServer_Impl.h"
 #include "CIAO_CS_ClientC.h"
 #include "Configurator_Factory.h"
-#include "Server_Configurator.h"
+#include "Configurators/Server_Configurator.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {

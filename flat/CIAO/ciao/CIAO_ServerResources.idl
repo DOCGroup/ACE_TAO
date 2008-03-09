@@ -15,7 +15,7 @@
 
 module CIAO
 {
-  module DAnCE
+  module Deployment
   {
     /**
      * @brief A single command line argument corresponds to a string as
