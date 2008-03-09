@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, tao_output, install, extra_anytypecode, tao_versioning_idl_defaults, nolink_codecfactory, gen_ostream {
+project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, tao_versioning_idl_defaults, nolink_codecfactory, gen_ostream {
   sharedname   = TAO_AnyTypeCode
   dynamicflags = TAO_ANYTYPECODE_BUILD_DLL
 

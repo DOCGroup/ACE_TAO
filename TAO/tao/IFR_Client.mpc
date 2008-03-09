@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, tao_output, install, core_anytypecode, tao_versioning_idl_defaults {
+project(IFR_Client) : taolib, tao_output, install, core_anytypecode, tao_versioning_idl_defaults {
   sharedname   = TAO_IFR_Client
   dynamicflags = TAO_IFR_CLIENT_BUILD_DLL
 

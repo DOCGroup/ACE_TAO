@@ -1,6 +1,6 @@
 //$Id$
 
-project : taolib, tao_output, install, tao_versioning_idl_defaults {
+project(IORTable) : taolib, tao_output, install, tao_versioning_idl_defaults {
   sharedname   = TAO_IORTable
   dynamicflags = TAO_IORTABLE_BUILD_DLL
 

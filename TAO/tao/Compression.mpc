@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, tao_output, install, tao_versioning_idl_defaults {
+project(Compression) : taolib, tao_output, install, tao_versioning_idl_defaults {
   sharedname   = TAO_Compression
   dynamicflags = TAO_COMPRESSION_BUILD_DLL
 
