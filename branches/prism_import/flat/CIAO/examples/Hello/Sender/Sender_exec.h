@@ -165,6 +165,9 @@ namespace CIDL_Sender_Impl
     virtual ::Components::EnterpriseComponent_ptr
     create ();
   };
+  
+  extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent
+    create_Hello_Sender_Impl (void);
 
   extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_SenderHome_Impl (void);

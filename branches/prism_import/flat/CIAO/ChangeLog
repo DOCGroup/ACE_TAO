@@ -1,12 +1,25 @@
+Sun Mar  9 16:59:05 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer:
+        * DAnCE/CIAO_ComponentServer:
+
+          Moved CIAO component server to ciao source tree, where it should be.
+        
+        * ciao/ccm
+        * ccm
+        
+          Moved CCM idl directory to root, to better indicate its non-dependency
+          on CIAO, the CCM implementation.
+
 Sun Mar  9 16:56:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/CIAO_ComponentServer/CIAO_Container_Impl.h:
         * DAnCE/CIAO_ComponentServer/CIAO_Container_Impl.cpp:
-        
+
           Additional fleshing of the Container implementation, note this is
           not expected to compile, simply being committed to complete the
           directory structure refactoring.
-        
+
 Sun Mar  9 16:47:24 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ccm_configvalue.mpb:
