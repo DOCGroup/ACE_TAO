@@ -12,6 +12,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <ciao/Containers/Session/Session_Container.h>
+
 #include "CIAO_ComponentServer_svnt_export.h"
 
 namespace CIAO
@@ -28,7 +30,9 @@ namespace CIAO
     public:
       // Constructor 
       CIAO_Container_i (const Components::ConfigValues &config,
-			const Static_Config_EntryPoints_Maps*,
+			const Static_Config_EntryPoints_Maps *,
+			const char *,
+			const CORBA::PolicyList *,
 			CORBA::ORB_ptr,
 			PortableServer::POA_ptr);
       // Destructor 

@@ -1,0 +1,27 @@
+project(CIAO_Client) : ccm_stub, ciao_lib {
+  dynamicflags = CIAO_CLIENT_BUILD_DLL
+
+  Source_Files {
+    Client_init.cpp
+  }
+  Header_Files {
+    Client_init.h
+    CIAO_Client_Export.h
+  }
+}
+
+project(CIAO_Server) : ccm_stub, naming, ccm_cookie, ccm_configvalue, ciao_lib {
+  dynamicflags = CIAO_SERVER_BUILD_DLL
+   
+  Source_Files { 
+    Server_init.cpp
+  }
+  Header_Files {
+    CIAO_Server_Export.h
+    Server_init.h
+  }
+}
+
+
+
+    

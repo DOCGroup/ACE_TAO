@@ -3,7 +3,7 @@
 #include "Server_Configurator.h"
 #include <ace/Log_Msg.h>
 #include <ciao/CIAO_common.h>
-#include <ciao/CIAO_ServerResourcesC.h>
+#include <ciao/ComponentServer/CIAO_ServerResourcesC.h>
 
 namespace CIAO
 {

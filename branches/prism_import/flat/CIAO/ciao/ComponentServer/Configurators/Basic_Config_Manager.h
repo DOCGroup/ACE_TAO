@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    NAConfig_Manager.h
+ *  @file    Basic_Config_Manager.h
  *
  *  $Id$
  *
@@ -23,7 +23,7 @@
 #include <ace/Null_Mutex.h>
 #include <ace/SString.h>
 #include <ace/Hash_Map_Manager_T.h>
-#include <ciao/CIAO_ServerResourcesC.h>
+#include <ciao/ComponentServer/CIAO_ServerResourcesC.h>
 
 #include "Config_Manager.h"
 #include "Basic_Config_Manager_Export.h" 

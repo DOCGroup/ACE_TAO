@@ -16,7 +16,7 @@
 #include <tao/PortableServer/PortableServer.h>
 #include <tao/ORB_Core.h>
 #include <ciao/CIAO_common.h>
-#include <ciao/CIAO_Logger/CIAOLoggerFactory.h>
+#include <ciao/Logger/CIAOLoggerFactory.h>
 #include <ciao/Server_init.h>
 
 
@@ -113,7 +113,7 @@ namespace CIAO
       
       ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Creating server implementation object\n"));
       CIAO::Deployment::CIAO_ComponentServer_i *ci_srv = 0;
-      ACE_NEW_NORETURN (ci_srv, CIAO_ComponentServer_i (this->uuid_, this->orb_.in ()));
+      ACE_NEW_NORETURN (ci_srv, CIAO_ComponentServer_i (this->uuid_, this->orb_.in (), root_poa.in ()));
       
       if (ci_srv == 0)
         {

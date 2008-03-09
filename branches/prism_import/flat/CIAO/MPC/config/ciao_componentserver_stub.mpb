@@ -1,4 +1,4 @@
-project : dance_component_server_stub {
+project : ccm_componentserver_stub {
    after += CIAO_ComponentServer_stub
    libs += CIAO_ComponentServer_stub
 }

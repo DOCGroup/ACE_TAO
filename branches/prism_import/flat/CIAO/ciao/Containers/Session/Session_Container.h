@@ -35,7 +35,7 @@ namespace CIAO
   
   namespace Deployment
   {
-    class Container_Impl;
+    class CIAO_Container_i;
   }
 
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
@@ -100,7 +100,7 @@ namespace CIAO
   {
   public:
     Session_Container (CORBA::ORB_ptr o,
-                       Deployment::Container_Impl *container_impl,
+                       Deployment::CIAO_Container_i *container_impl,
                        bool static_config_flag = false,
                        const Static_Config_EntryPoints_Maps* static_entrypts_maps =0,
 		       const char *name = 0,

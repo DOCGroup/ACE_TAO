@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_container_dnc {
+project {//: ciao_container_base {
 }

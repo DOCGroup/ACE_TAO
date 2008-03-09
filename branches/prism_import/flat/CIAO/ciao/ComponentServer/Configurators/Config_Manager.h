@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <ciao/CIAO_ServerResourcesC.h>
+#include <ciao/ComponentServer/CIAO_ServerResourcesC.h>
 
 namespace CIAO
 {

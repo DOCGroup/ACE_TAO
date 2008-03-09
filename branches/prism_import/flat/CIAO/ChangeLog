@@ -1,3 +1,69 @@
+Sun Mar  9 22:28:28 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciao_client.mpb:
+        * MPC/config/ciao_componentserver_stub.mpb:
+        * MPC/config/ciao_componentserver_svnt.mpb:
+        * MPC/config/ciao_config_manager.mpb:
+        * MPC/config/ciao_container_base.mpb:
+        * MPC/config/ciao_server.mpb:
+        * MPC/config/ciao_session_container.mpb:
+        
+          MPC build fixes.
+        
+        * ciao/CIAO.mpc:
+        * ciao/Client_init.cpp:
+
+        * ciao/ComponentServer/CIAO_CS_Client.idl:
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.idl:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.h:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.h:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ServerResources.idl:
+        * ciao/ComponentServer/Configurators/Basic_Config_Manager.h:
+        * ciao/ComponentServer/Configurators/Basic_Config_Manager.inl:
+        * ciao/ComponentServer/Configurators/Basic_Config_Manager.cpp:
+        * ciao/ComponentServer/Configurators/Config_Manager.h:
+        * ciao/ComponentServer/Configurators/Configurators.mpc:
+        * ciao/ComponentServer/Configurators/NoOp_Configurator.h:
+        * ciao/ComponentServer/Configurators/RTConfig_Manager.h:
+        * ciao/ComponentServer/Configurators/Server_Configurator.h:
+        * ciao/ComponentServer/Configurators/Server_Configurator.cpp:
+        * ciao/Valuetype_Factories/Factories.mpc:
+        
+          Compile fixes for previous refactoring. 
+        
+        * ciao/Containers/Container_Base.h:
+        * ciao/Containers/Container_Base.cpp:
+        * ciao/Containers/Containers.mpc:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        
+          Updated forward declarations to handle new component server.
+
+        * ciao/Server_init.h:
+        * ciao/Server_init.cpp:
+        
+          Merged functions from CIAO_Utils.
+          
+        * MPC/config/ciao_client_dnc.mpb:
+        * MPC/config/ciao_container_dnc.mpb:
+        * MPC/config/ciao_server_dnc.mpb:
+        * MPC/config/ciaodll.mpb:
+        * ciao/CCM_Core.mpc:
+        * ciao/CIAO_Core.mpc:
+        * ciao/CIAO_ServerResources.idl:
+        * ciao/CIAO_Utils.h:
+        * ciao/CIAO_Utils.cpp:
+        * ciao/CIAO_Utils_export.h:
+        * ciao/ComponentServer/Configurators/NAConfig_Manager.h:
+        * ciao/ComponentServer/Configurators/NAConfig_Manager.inl:
+        * ciao/ComponentServer/Configurators/NAConfig_Manager.cpp:
+
+          Removed these files.
+
 Sun Mar  9 21:12:29 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Container_Base.h:
@@ -13,14 +79,14 @@ Sun Mar  9 21:12:29 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Contexts/Context_Impl_export.h:
         * MPC/config/ciao_session_container.mpb
         * MPC/config/ciao_container_base.mpb
-        
+
          MPC file, changes to logging, new, and guard macros
-          to comply with new CIAO style guidelines. 
-        
+          to comply with new CIAO style guidelines.
+
         * ciao/Servants/Servants.mpc:
         * MPC/config/ciao_servant_activator.mpb
 
-         Split activator out to its own lib. 
+         Split activator out to its own lib.
 
 Sun Mar  9 20:38:52 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 

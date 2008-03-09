@@ -1,4 +1,4 @@
-project : ciao_componentserver_stub {
+project : ciao_componentserver_stub, ciao_session_container {
      after += CIAO_ComponentServer_svnt
-   libs += CIAO_ComponentServer_svnt
+     libs += CIAO_ComponentServer_svnt
 }

@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : acelib, ace_for_tao, tao_output, taodefaults, pidl {
-  libout = $(ACE_ROOT)/lib
-  libpaths += $(ACE_ROOT)/lib
-}
-
