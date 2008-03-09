@@ -8,9 +8,17 @@ namespace CIAO
 {
   namespace Deployment
   {
-          // Constructor 
-    CIAO_Container_i::CIAO_Container_i (const Components::ConfigValues &config)
-      : config_ (config.length ())
+    // Constructor 
+    CIAO_Container_i::CIAO_Container_i (const Components::ConfigValues &config,
+					const Static_Config_EntryPoints_Maps *static_entrypts,
+					const char *name,
+					const CORBA::PolicyList *policies,
+					CORBA::ORB_ptr orb,
+					PortableServer::POA_ptr poa)
+      : orb_ (CORBA::ORB::_duplicate (orb)),
+	poa_ (PortableServer::POA::_duplicate (poa)),
+	config_ (config.length ()),
+	static_entrypts_maps_ (static_entrypts)
     {
       CIAO_TRACE("CIAO_Container_i::CIAO_Container_i");
       
@@ -18,6 +26,20 @@ namespace CIAO
         {
           this->config_[i] = config[i];
         }
+      
+      if (this->static_entrypts_maps_ == 0)
+	
+	  ACE_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with dynamic linkage\n"));
+	  this->container_.reset (new CIAO::Session_Container (this->orb_.in (), this, false,
+							       0, name, policies));
+	}
+      else
+	{
+	  ACE_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with static linkage\n"));
+	  this->container_.reset (new CIAO::Session_Container (this->orb_.in (), this, true, 
+							       this->static_entrypts_maps_,
+							       name, policies));
+	}
     }
     
   
@@ -91,6 +113,11 @@ namespace CIAO
       CIAO_TRACE("CIAO_Container_i::remove");
     }
     
-
+    PortableServer::POA_ptr 
+    CIAO_Container_i::_default_POA (void)
+    {
+      CIAO_TRACE ("CIAO_Container_i::_default_POA");
+      return PortableServer::POA::_duplicate (this->poa_.in ());      
+    }
   }
 }
