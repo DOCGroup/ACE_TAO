@@ -1,22 +1,31 @@
+Sun Mar  9 16:56:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/CIAO_ComponentServer/CIAO_Container_Impl.h:
+        * DAnCE/CIAO_ComponentServer/CIAO_Container_Impl.cpp:
+        
+          Additional fleshing of the Container implementation, note this is
+          not expected to compile, simply being committed to complete the
+          directory structure refactoring.
+        
 Sun Mar  9 16:47:24 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ccm_configvalue.mpb:
         * MPC/config/ccm_cookie.mpb:
         * MPC/config/ccm_stub.mpb:
         * MPC/config/ccm_svnt.mpb:
-          
-          New base projects for the refactord CCM idls and valuetypes. 
+
+          New base projects for the refactord CCM idls and valuetypes.
 
         * ciao/CIAO_Utils.h:
         * ciao/CIAO_Utils.cpp:
         * ciao/CIAO_Utils_export.h:
-        
-          Utility functions useful just about everywhere. 
 
-        * ciao/Logger:  
-          
+          Utility functions useful just about everywhere.
+
+        * ciao/Logger:
+
            Renamed from CIAO_Logger
-        
+
         * ciao/CCM_Core.mpc:
         * ciao/CIAO_Core.mpc:
         * ciao/Containers:
@@ -82,10 +91,10 @@ Sun Mar  9 16:47:24 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Valuetype_Factories/Cookies.inl:
         * ciao/Valuetype_Factories/Cookies.cpp:
         * ciao/Valuetype_Factories/Factories.mpc:
-        
+
           Refactoring of the directory structure bloodbath.  MPC files will come in
           next commit.
-        
+
         * ciao/ccm/CCM.mpc:
         * ciao/ccm/CCM_Base.idl:
         * ciao/ccm/CCM_CCM2Context.idl:
@@ -130,9 +139,9 @@ Sun Mar  9 16:47:24 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/ccm/CosPersistentState.idl:
         * ciao/ccm/Security.idl:
         * ciao/ccm/extension:
-        
+
           All spec defined IDLs were moved to ccm subdirectory.
-        
+
         * ciao/CCM_Base.idl:
         * ciao/CCM_CCM2Context.idl:
         * ciao/CCM_CCMException.idl:
