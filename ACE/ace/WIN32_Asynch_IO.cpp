@@ -462,6 +462,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
 
     // Make as many iovec as needed to fit all of msg_space.
     size_t wr_ptr_offset = 0;
+
     while (msg_space > 0 && iovcnt < ACE_IOV_MAX)
       {
         u_long this_chunk_length;
@@ -888,6 +889,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
 
     // Make as many iovec as needed to fit all of msg_len.
     size_t rd_ptr_offset = 0;
+
     while (msg_len > 0 && iovcnt < ACE_IOV_MAX)
       {
         u_long this_chunk_length;
@@ -3304,6 +3306,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
 
     // Make as many iovec as needed to fit all of msg_len.
     size_t wr_ptr_offset = 0;
+
     while (msg_space > 0 && iovcnt < ACE_IOV_MAX)
       {
         u_long this_chunk_length;
@@ -3620,46 +3623,40 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
   {
     size_t msg_len = msg->length ();
 
-    // OS should process zero length block correctly
-    // if ( msg_len == 0 )
-    //   ACE_ERROR_RETURN ((LM_ERROR,
-    //                      ACE_TEXT ("ACE_WIN32_Asynch_Write_Dgram::send:")
-    //                      ACE_TEXT ("Zero-length message block\n")),
-    //                     -1);
-
     bytes_to_write += msg_len;
 
     // Make as many iovec as needed to fit all of msg_len.
     size_t rd_ptr_offset = 0;
-    while (msg_len > 0 && iovcnt < ACE_IOV_MAX)
-      {
-        u_long this_chunk_length;
-        if (msg_len > ULONG_MAX)
-          this_chunk_length = ULONG_MAX;
-        else
-          this_chunk_length = static_cast<u_long> (msg_len);
-        // Collect the data in the iovec.
-        iov[iovcnt].iov_base = msg->rd_ptr () + rd_ptr_offset;
-        iov[iovcnt].iov_len  = this_chunk_length;
-        msg_len -= this_chunk_length;
-        rd_ptr_offset += this_chunk_length;
 
-        // Increment iovec counter if there's more to do.
-        if (msg_len > 0)
-          iovcnt++;
+    do
+      {
+        if (msg_len >= 0 && iovcnt < ACE_IOV_MAX)
+          {
+            u_long this_chunk_length;
+            if (msg_len > ULONG_MAX)
+              this_chunk_length = ULONG_MAX;
+            else
+              this_chunk_length = static_cast<u_long> (msg_len);
+
+            // Collect the data in the iovec.
+            iov[iovcnt].iov_base = msg->rd_ptr () + rd_ptr_offset;
+            iov[iovcnt].iov_len  = this_chunk_length;
+            msg_len -= this_chunk_length;
+            rd_ptr_offset += this_chunk_length;
+
+            // Increment iovec counter if there's more to do.
+            if (msg_len > 0)
+              iovcnt++;
+          }
       }
+    while (msg_len > 0 && iovcnt < ACE_IOV_MAX);
+
     if (msg_len > 0)       // Ran out of iovecs before msg_space exhausted
       {
         errno = ERANGE;
         return -1;
       }
   }
-
-  if ( bytes_to_write == 0 )
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("ACE_WIN32_Asynch_Write_Dgram::send:")
-                         ACE_TEXT ("Attempt to write 0 bytes\n")),
-                        -1);
 
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Write_Dgram_Result *result = 0;
