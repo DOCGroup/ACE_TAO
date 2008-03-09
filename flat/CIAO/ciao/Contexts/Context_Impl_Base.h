@@ -18,13 +18,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CIAO_Server_Export.h"
+#include "Context_Impl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/CCM_ContainerC.h"
+#include "ccm/CCM_ContainerC.h"
 
 namespace Components
 {
@@ -50,7 +50,7 @@ namespace CIAO
    * Holds the non-template parts of its child class
    * Context_Impl.
    */
-  class CIAO_SERVER_Export Context_Impl_Base
+  class Context_Impl_Export Context_Impl_Base
     : public virtual Components::CCMContext
   {
   public:

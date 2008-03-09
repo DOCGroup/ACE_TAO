@@ -1,0 +1,5 @@
+project : ciao_container_base, utils, \
+   ccm_componentserver_stub, ciao_servant_activator {
+  libs += CIAO_Session_Container
+  after += CIAO_Session_Container
+}

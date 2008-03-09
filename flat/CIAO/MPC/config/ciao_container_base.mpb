@@ -1,0 +1,4 @@
+project : ccm_svnt {
+  after += CIAO_Container_Base
+  libs += CIAO_Container_Base
+}

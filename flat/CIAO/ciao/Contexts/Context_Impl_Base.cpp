@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Context_Impl_Base.h"
-#include "Container_Base.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Context_Impl_Base.inl"

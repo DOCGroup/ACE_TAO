@@ -1,14 +1,11 @@
 // $Id$
 
 #include "Session_Container.h"
-#include "Servant_Activator.h"
 
-#include "DAnCE/Deployment/Deployment_CoreC.h"
-#include "CIAO_common.h"
-
-#include "ComponentServer/ComponentServerS.h"
-
-#include "tao/Utils/PolicyList_Destroyer.h"
+#include <tao/Utils/PolicyList_Destroyer.h>
+#include <ciao/CIAO_common.h>
+#include <ciao/Servants/Servant_Activator.h>
+#include <ccm/ComponentServer/ComponentServer_BaseC.h>
 
 #if !defined (__ACE_INLINE__)
 # include "Session_Container.inl"
@@ -19,20 +16,19 @@ namespace CIAO
   ///////////////////////////////////////////////////////////////
 
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long>
-    Session_Container::serial_number_ (0);
-
+  Session_Container::serial_number_ (0);
+  
   Session_Container::Session_Container (CORBA::ORB_ptr o,
-                                        Container_Impl *container_impl,
+                                        Deployment::Container_Impl *container_impl,
                                         bool static_config_flag,
                                         const Static_Config_EntryPoints_Maps* maps,
 					const char *name,
-					const CORBA::PolicyList *more_policies
-					)
-  : Container (o, container_impl),
-    number_ (0),
-    static_config_flag_ (static_config_flag),
-    static_entrypts_maps_ (maps),
-    sa_ (0)
+					const CORBA::PolicyList *more_policies)
+    : Container (o, container_impl),
+      number_ (0),
+      static_config_flag_ (static_config_flag),
+      static_entrypts_maps_ (maps),
+      sa_ (0)
   {
     this->init (name, more_policies);
   }
@@ -79,9 +75,9 @@ namespace CIAO
 
     if (CORBA::is_nil (poa_object.in ()))
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           CLINFO "CIAO::Session_Container: Unable to initialize the POA.\n"),
-                          -1);
+        ACE_ERROR ((LM_ERROR, CLINFO
+		    "CIAO::Session_Container: Unable to initialize the POA.\n"));
+	throw Components::CreateFailure ();		   
       }
 
     PortableServer::POA_var root_poa =
@@ -101,8 +97,6 @@ namespace CIAO
       root_poa->the_POAManager ();
 
     poa_manager->activate ();
-
-    return 0;
   }
 
   void
@@ -157,7 +151,7 @@ namespace CIAO
     // Servant Manager Policy
     policies[1] =
       root->create_request_processing_policy (
-        PortableServer::USE_SERVANT_MANAGER);
+					      PortableServer::USE_SERVANT_MANAGER);
 
     // Servant Retention Policy
     policies[2] =
@@ -256,15 +250,13 @@ namespace CIAO
                 exception = "Null component servant DLL name";
               }
 
-            ACE_ERROR ((LM_ERROR,
-                        "CIAO (%P|%t) Session_Container.cpp -"
+            ACE_ERROR ((LM_ERROR, CLINFO
+                        "Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
                         "ERROR: %s\n",
                         exception.c_str ()));
 
-            throw Components::Deployment::UnknownImplId (/*
-             "Session_Container::ciao_install_home",
-             exception.c_str ()*/);
+            throw Components::Deployment::UnknownImplId ();
           }
 
         if (executor_dll.open (exe_dll_name,
@@ -274,15 +266,15 @@ namespace CIAO
             ACE_CString error ("Failed to open executor DLL: ");
             error += exe_dll_name;
 
-            ACE_ERROR ((LM_ERROR,
-                        "CIAO (%P|%t) Session_Container.cpp -"
+            ACE_ERROR ((LM_ERROR, CLINFO
+                        "Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
                         "ERROR in opening the executor DLL [%s] \n",
                         exe_dll_name));
 
             throw Components::Deployment::UnknownImplId (/*
-              "Session_Container::ciao_install_home",
-              error.c_str () */);
+							   "Session_Container::ciao_install_home",
+							   error.c_str () */);
           }
 
         if (servant_dll.open (sv_dll_name,
@@ -292,15 +284,15 @@ namespace CIAO
             ACE_CString error ("Failed to open executor DLL: ");
             error += sv_dll_name;
 
-            ACE_ERROR ((LM_ERROR,
-                        "CIAO (%P|%t) Session_Container.cpp -"
+            ACE_ERROR ((LM_ERROR, CLINFO
+                        "Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
                         "ERROR in opening the servant DLL [%s] \n",
                         sv_dll_name));
 
             throw Components::Deployment::UnknownImplId ( /*
-              "Session_Container::ciao_install_home",
-              error.c_str () */);
+							    "Session_Container::ciao_install_home",
+							    error.c_str () */);
           }
 
         if (exe_entrypt == 0 || sv_entrypt == 0)
@@ -309,8 +301,8 @@ namespace CIAO
 
             if (exe_entrypt == 0)
               {
-                ACE_ERROR ((LM_ERROR,
-                            "CIAO (%P|%t) Session_Container.cpp -"
+                ACE_ERROR ((LM_ERROR, CLINFO
+                            "Session_Container.cpp -"
                             "Session_Container::ciao_install_home -"
                             "ERROR in opening the executor entry point "
                             "for executor DLL [%s] \n",
@@ -319,8 +311,8 @@ namespace CIAO
               }
             else
               {
-                ACE_ERROR ((LM_ERROR,
-                            "CIAO (%P|%t) Session_Container.cpp -"
+                ACE_ERROR ((LM_ERROR, CLINFO
+                            "Session_Container.cpp -"
                             "Session_Container::ciao_install_home -"
                             "ERROR in opening the servant entry point "
                             "for servant DLL [%s] \n",
@@ -328,9 +320,7 @@ namespace CIAO
                 error += sv_dll_name;
               }
 
-            throw Components::Deployment::ImplEntryPointNotFound ( /*
-              "Session_Container::ciao_install_home",
-              error.c_str ()*/);
+            throw Components::Deployment::ImplEntryPointNotFound ();
           }
 
         // We have to do this casting in two steps because the C++
@@ -380,19 +370,21 @@ namespace CIAO
             error += " invalid in dll ";
             error += sv_dll_name;
           }
-
-        throw Components::Deployment::ImplEntryPointNotFound ( /*
-          "SessionContainer::ciao_install_home",
-          error.c_str () */);
+	
+	ACE_ERROR ((LM_ERROR, CLINFO
+		    "Session_Container::ciao_install_home - Error:%s\n",
+		    error.c_str ()));
+		    
+        throw Components::Deployment::ImplEntryPointNotFound ();
       }
 
     Components::HomeExecutorBase_var home_executor = hcreator ();
 
     if (CORBA::is_nil (home_executor.in ()))
       {
-        throw Components::Deployment::InstallationFailure ( /*
-          "SessionContainer::ciao_install_home",
-          "Executor entrypoint failed to create a home." */);
+	ACE_ERROR ((LM_ERROR, CLINFO
+		    "Session_Container::Ciao_install_hoe - Home executor factory failed. \n"));
+        throw Components::Deployment::InstallationFailure ();
       }
 
     PortableServer::Servant home_servant = screator (home_executor.in (),
@@ -401,9 +393,9 @@ namespace CIAO
 
     if (home_servant == 0)
       {
-        throw Components::Deployment::InstallationFailure (/*
-          "SessionContainer::ciao_install_home",
-          "Servant entrypoing failed to create a home."*/);
+	ACE_ERROR ((LM_ERROR, CLINFO
+		    "Session_Container::ciao_install_home - Home servant factory failed.\n"));
+        throw Components::Deployment::InstallationFailure ();
       }
 
     PortableServer::ServantBase_var safe (home_servant);
@@ -485,7 +477,7 @@ namespace CIAO
 
   void
   Session_Container::add_servant_to_map (PortableServer::ObjectId &,
-                                      Dynamic_Component_Servant_Base*)
+					 Dynamic_Component_Servant_Base*)
   {
     CIAO_TRACE ("Session_Container::add_servant_to_map");
   }
