@@ -1,13 +1,19 @@
+Sun Mar  9 17:04:55 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ccm_stub.mpb:
+        
+          Updated to comply with previous commit. 
+        
 Sun Mar  9 16:59:05 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer:
         * DAnCE/CIAO_ComponentServer:
 
           Moved CIAO component server to ciao source tree, where it should be.
-        
+
         * ciao/ccm
         * ccm
-        
+
           Moved CCM idl directory to root, to better indicate its non-dependency
           on CIAO, the CCM implementation.
 
