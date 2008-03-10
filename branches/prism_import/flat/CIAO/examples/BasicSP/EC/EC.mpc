@@ -34,7 +34,7 @@ project(EC_lem_gen) : ciaocidldefaults, taoidldefaults {
 
 }
 
-project(EC_stub): ciao_client_dnc {
+project(EC_stub): ccm_stub {
   after += BasicSP_stub EC_stub_gen
   sharedname = EC_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -61,7 +61,7 @@ project(EC_stub): ciao_client_dnc {
 
 }
 
-project(EC_exec) : ciao_component_dnc {
+project(EC_exec) : ciao_executor {
   after      += EC_stub EC_lem_gen BasicSP_exec
 
   sharedname = EC_exec
@@ -89,7 +89,7 @@ project(EC_exec) : ciao_component_dnc {
   }
 }
 
-project(EC_svnt) : ciao_servant_dnc {
+project(EC_svnt) : ciao_servant {
   after += BasicSP_svnt EC_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
 
@@ -118,7 +118,7 @@ project(EC_svnt) : ciao_servant_dnc {
 
 }
 
-project (EC_client) : ciao_client_dnc {
+project (EC_client) : ccm_stub {
   after += EC_stub
   exename = client
   libs += EC_stub BasicSP_stub
@@ -141,7 +141,7 @@ project (EC_client) : ciao_client_dnc {
 
 }
 
-project (EC_controller) : ciao_client_dnc {
+project (EC_controller) : ccm_stub {
   after += EC_stub
   exename = controller
   includes += $(CIAO_ROOT)/examples/BasicSP

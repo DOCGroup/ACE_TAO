@@ -1,6 +1,6 @@
 //$Id$
 
-project(TSEC_CheckPoint_stub): ciao_client_dnc, event {
+project(TSEC_CheckPoint_stub): ccm_stub, event {
   avoids += ace_for_tao
   after  += ENW_stub
   libpaths += ../interfaces
@@ -23,7 +23,7 @@ project(TSEC_CheckPoint_stub): ciao_client_dnc, event {
   }
 }
 
-project(TSEC_CheckPoint_svnt) : ciao_servant_dnc, event {
+project(TSEC_CheckPoint_svnt) : ciao_servant, event {
   avoids += ace_for_tao
   after +=  TSEC_CheckPoint_stub
   after +=  ENW_skel ENW_stub
@@ -54,7 +54,7 @@ project(TSEC_CheckPoint_svnt) : ciao_servant_dnc, event {
 }
 
 
-project(TSEC_CheckPoint_exec) : ciao_component_dnc, event, ciao_server_dnc {
+project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt {
   avoids += ace_for_tao
   after   += TSEC_CheckPoint_svnt
   after   += ENW_skel ENW_stub
@@ -83,7 +83,7 @@ project(TSEC_CheckPoint_exec) : ciao_component_dnc, event, ciao_server_dnc {
 }
 
 
-project(TSEC_CheckPoint_controller) : ciao_client_dnc, valuetype, event {
+project(TSEC_CheckPoint_controller) : ccm_stub, valuetype, event {
   avoids += ace_for_tao
   exename = controller
   after += TSEC_CheckPoint_stub

@@ -14,7 +14,7 @@ project(Null_Interface_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Null_Interface_stub) : ciao_client_dnc {
+project(Null_Interface_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Null_Interface_idl_gen 
   libs  += 
@@ -40,7 +40,7 @@ project(Null_Interface_stub) : ciao_client_dnc {
 }
 
 
-project(Null_Interface_skel) : ciao_component_dnc {
+project(Null_Interface_skel) : ciao_executor {
   avoids += ace_for_tao
   after      +=  Null_Interface_stub
   sharedname  = Null_Interface_skel

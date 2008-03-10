@@ -14,7 +14,7 @@ project(Benchmark_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Benchmark_stub) : ciao_client_dnc {
+project(Benchmark_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Benchmark_idl_gen 
   libs  += 
@@ -40,7 +40,7 @@ project(Benchmark_stub) : ciao_client_dnc {
 }
 
 
-project(Benchmark_skel) : ciao_component_dnc {
+project(Benchmark_skel) : ciao_executor {
   avoids += ace_for_tao
   after      +=  Benchmark_stub
   sharedname  = Benchmark_skel
@@ -66,7 +66,7 @@ project(Benchmark_skel) : ciao_component_dnc {
   }
 }
 
-project (Benchmark_server) : taoserver, strategies, ciao_component_dnc {
+project (Benchmark_server) : taoserver, strategies, ciao_executor {
   exename = server
   after += Benchmark_skel
   libs  += Benchmark_skel Benchmark_stub

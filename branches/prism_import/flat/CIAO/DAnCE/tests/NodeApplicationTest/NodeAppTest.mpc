@@ -1,6 +1,6 @@
 // $Id$
 
-project(NodeAppTest_RoundTrip_stub): ciao_client_dnc {
+project(NodeAppTest_RoundTrip_stub): ccm_stub {
   sharedname = NodeAppTest_RoundTrip_stub
   after += CIAO_DnC_Server
   requires += dummy_label
@@ -28,7 +28,7 @@ project(NodeAppTest_RoundTrip_stub): ciao_client_dnc {
   }
 }
 
-//project(NodeAppTest_RoundTrip_svnt) : ciao_servant_dnc {
+//project(NodeAppTest_RoundTrip_svnt) : ciao_servant {
 //  after += NodeAppTest_RoundTrip_stub
 //  sharedname  = NodeAppTest_RoundTrip_svnt
 
@@ -63,7 +63,7 @@ project(NodeAppTest_RoundTrip_stub): ciao_client_dnc {
 //  }
 //}
 
-//project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc, ciao_events_dnc, ciao_server_dnc {
+//project(NodeAppTest_RoundTrip_exec) : ciao_executor, ciao_events_dnc, ccm_svnt {
 //  after += NodeAppTest_RoundTrip_stub NodeAppTest_RoundTrip_svnt
 
 //  sharedname = NodeAppTest_RoundTrip_exec

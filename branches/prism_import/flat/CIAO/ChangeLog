@@ -1,18 +1,110 @@
+Mon Mar 10 00:57:38 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc:
+        * DAnCE/Plan_Generator/Plan_Generator.mpc:
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc:
+        * DAnCE/TargetManager/TM_Client.mpc:
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/tests/NodeApplicationManager-NodeApplication/NodeApplicationManager-NodeApplication.mpc:
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
+        * DAnCE/tests/NodeManager-NodeApplicationManager/NodeManager-NodeApplicationManager.mpc:
+        * MPC/config/dance_mocks.mpb:
+        * MPC/config/dance_node_application.mpb:
+        * bin/generate_component_mpc.pl:
+        * ccm/ComponentServer/ComponentServer.mpc:
+        * ciao/CIAO.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/Containers/Containers.mpc:
+        * ciao/Contexts/Context.mpc:
+        * ciao/Servants/Servants.mpc:
+        * ciao/Valuetype_Factories/Factories.mpc:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/BasicSP.mpc:
+        * examples/BasicSP/EC/EC.mpc:
+        * examples/Display/Display_Base/Display_Base.mpc:
+        * examples/Display/GPS/GPS.mpc:
+        * examples/Display/NavDisplay/NavDisplay.mpc:
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * examples/Display/RateGen/RateGen.mpc:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Hello/Sender/Sender.mpc:
+        * examples/Null_Component/Null_Component.mpc:
+        * examples/Null_Component/Null_Interface.mpc:
+        * examples/Null_Component/StaticDAnCEApp.mpc:
+        * examples/Swapping/Hello_Base/Hello_Base.mpc:
+        * examples/Swapping/Receiver/Receiver.mpc:
+        * examples/Swapping/Sender/Sender.mpc:
+        * performance-tests/Benchmark/Benchmark.mpc:
+        * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
+        * performance-tests/Protocols/Controller/Controller.mpc:
+        * performance-tests/Protocols/Receiver/Receiver.mpc:
+        * performance-tests/Protocols/Sender/Sender.mpc:
+        * performance-tests/Protocols/common/Protocols.mpc:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint.mpc:
+        * tests/Bug_2130_Regression/interfaces/ENW.mpc:
+        * tests/CIDL/CodeGen/Basic.mpc:
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+        * tests/IDL3/Components/ComplexComponent/Attributes/Attributes.mpc:
+        * tests/IDL3/Components/ComplexComponent/EventSink/EventSink.mpc:
+        * tests/IDL3/Components/ComplexComponent/EventSource/EventSource.mpc:
+        * tests/IDL3/Components/ComplexComponent/Facets/Facets.mpc:
+        * tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles.mpc:
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent.mpc:
+        * tests/IDL3/Events/Abstract/Abstract.mpc:
+        * tests/IDL3/Events/Any/Any.mpc:
+        * tests/IDL3/Events/Regular/Regular.mpc:
+        * tests/IDL3/Homes/Attributes/HomeAttributes.mpc:
+        * tests/IDL3/Homes/Basic/Basic.mpc:
+        * tests/IDL3/Homes/Factory/Factory.mpc:
+        * tests/IDL3/Homes/Finder/Finder.mpc:
+        * tests/IDL3/Homes/Inheritance/Inheritance.mpc:
+        * tests/IDL3/ImpliedIDL/All/all.mpc:
+        * tests/IDL3/ImpliedIDL/Components/Basic/ICBasic.mpc:
+        * tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink.mpc:
+        * tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource.mpc:
+        * tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles.mpc:
+        * tests/IDL3/ImpliedIDL/Events/Events.mpc:
+        * tests/IDL3/ImpliedIDL/Homes/Homes.mpc:
+        * tests/IDL3/Lookup/lookup_test.mpc:
+        * tests/Minimum/Minimum_Base/Minimum_Base.mpc:
+        * tests/Minimum/Receiver/Receiver.mpc:
+        * tests/Minimum/Sender/Sender.mpc:
+        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc:
+        * tools/Config_Handlers/Config_Handlers.mpc:
+        * tools/Config_Handlers/DynAny_Handler.mpc:
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc:
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc:
+        * tools/XML/XML.mpc:
+        
+          Adjusting for the deep-sixing of ciao_server_dnc, ciao_component_dnc,
+          and ciao_client_dnc.  This probably breaks a bunch of stuff.
+        
 Mon Mar 10 00:37:35 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/ExecutorMappingGenerator.cpp:
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
-          Updates for ccm refactoring. 
-        
+
+          Updates for ccm refactoring.
+
         * MPC/config/ccm_stub.mpb:
         * MPC/config/ciao_events_base_dnc.mpb:
         * MPC/config/ciao_events_dnc.mpb:
         * MPC/config/dance_deployment_stub.mpb:
-        
-          MPC generation errors. 
-        
+
+          MPC generation errors.
+
 Sun Mar  9 22:28:28 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_client.mpb:
@@ -27,7 +119,6 @@ Sun Mar  9 22:28:28 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/CIAO.mpc:
         * ciao/Client_init.cpp:
-
         * ciao/ComponentServer/CIAO_CS_Client.idl:
         * ciao/ComponentServer/CIAO_ComponentServer.cpp:
         * ciao/ComponentServer/CIAO_ComponentServer.idl:

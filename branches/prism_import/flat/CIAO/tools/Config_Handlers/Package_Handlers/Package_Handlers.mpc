@@ -42,7 +42,7 @@ project (Package_Config_Handlers) : acelib, dance_deployment_stub, ciao_config_h
 
 }
 
-project (Package_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handlers, ifr_client {
+project (Package_Config_Handlers_Tests) : dance_deployment_stub, ciao_config_handlers, ifr_client {
   exename = test
   macros   += XML_USE_PTHREADS
   avoids   += ace_for_tao

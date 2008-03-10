@@ -32,7 +32,7 @@ project(Stock_Base_StockDistributor_cidl_gen) : ciaocidldefaults, taoidldefaults
   }
 }
 
-project(Stock_Base_StockDistributor_stub) : ciao_client_dnc {
+project(Stock_Base_StockDistributor_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Stock_Base_StockDistributor_idl_gen Stock_Base_stub
   libs  += Stock_Base_stub
@@ -57,7 +57,7 @@ project(Stock_Base_StockDistributor_stub) : ciao_client_dnc {
   }
 }
 
-project(Stock_Base_StockDistributor_exec) : ciao_component_dnc {
+project(Stock_Base_StockDistributor_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += Stock_Base_StockDistributor_cidl_gen Stock_Base_StockDistributor_stub
   sharedname = StockDistributor_exec
@@ -85,7 +85,7 @@ project(Stock_Base_StockDistributor_exec) : ciao_component_dnc {
 }
 
 
-project(Stock_Base_StockDistributor_svnt) : ciao_servant_dnc {
+project(Stock_Base_StockDistributor_svnt) : ciao_servant {
   avoids += ace_for_tao
   after      += Stock_Base_skel Stock_Base_StockDistributor_exec
   sharedname  = StockDistributor_svnt
@@ -118,7 +118,7 @@ project(Stock_Base_StockDistributor_svnt) : ciao_servant_dnc {
   }
 }
 
-project (Stock_Base_StockDistributorDriver) : ciao_client_dnc, valuetype {
+project (Stock_Base_StockDistributorDriver) : ccm_stub, valuetype {
   avoids += ace_for_tao
   exename = StockDistributorDriver
   after += Stock_Base_StockDistributor_stub

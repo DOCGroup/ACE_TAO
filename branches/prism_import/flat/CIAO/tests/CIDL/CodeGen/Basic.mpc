@@ -14,7 +14,7 @@ project(Basic_idl_gen) : taoidldefaults, anytypecode {
   }
 }
 
-project(Basic_stub) : ciao_client_dnc {
+project(Basic_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Basic_idl_gen 
   libs  += 
@@ -40,7 +40,7 @@ project(Basic_stub) : ciao_client_dnc {
 }
 
 
-project(Basic_skel) : ciao_component_dnc {
+project(Basic_skel) : ciao_executor {
   avoids += ace_for_tao
   after      +=  Basic_stub
   sharedname  = Basic_skel

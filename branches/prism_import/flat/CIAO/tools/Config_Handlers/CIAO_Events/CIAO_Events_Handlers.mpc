@@ -34,7 +34,7 @@ project (CIAO_Events_Handlers) : acelib, ciao_config_handlers_base, ciao_events_
   }
 }
 
-project (CIAO_Events_Handlers_Tests) : ciao_config_handlers_base, ciao_server_dnc {
+project (CIAO_Events_Handlers_Tests) : ciao_config_handlers_base, ccm_stub {
   exename = test
   after    += CIAO_Events_Handlers
   macros   += XML_USE_PTHREADS

@@ -31,7 +31,7 @@ project (XSC_XML_Generation) : xscdefaults {
   }
 }
 
-project (XSC_XML_Handlers) : acelib, xerces, ciaodll, ciao_xml_utils {
+project (XSC_XML_Handlers) : acelib, xerces, ciao_lib, ciao_xml_utils {
   sharedname    += XSC_XML_Handlers
   dynamicflags  = XSC_XML_HANDLERS_BUILD_DLL
   macros       += XML_USE_PTHREADS
@@ -64,7 +64,7 @@ project (XSC_XML_Handlers) : acelib, xerces, ciaodll, ciao_xml_utils {
 
 }
 
-project (XSC_Config_Handlers) : dance_deployment_stub, ciao_config_handlers_base, ciaodll, dance {
+project (XSC_Config_Handlers) : dance_deployment_stub, ciao_config_handlers_base, ciao_lib, dance {
   after += XSC_DynAny_Handler \
            XSC_Config_Handlers_Common
 	   
@@ -106,7 +106,7 @@ project (XSC_Config_Handlers) : dance_deployment_stub, ciao_config_handlers_base
 
 }
 
-project (XSC_Config_Handlers_Common) : dance_deployment_stub, ciao_config_handlers_base, ciaodll, dance {
+project (XSC_Config_Handlers_Common) : dance_deployment_stub, ciao_config_handlers_base, ciao_lib, dance {
   after += XSC_DynAny_Handler
   sharedname = XSC_Config_Handlers_Common
   dynamicflags = CONFIG_HANDLERS_COMMON_BUILD_DLL
@@ -124,7 +124,7 @@ project (XSC_Config_Handlers_Common) : dance_deployment_stub, ciao_config_handle
     Any_Handler.cpp
   }
 }
-project (XSC_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handlers, ifr_client {
+project (XSC_Config_Handlers_Tests) : dance_deployment_stub, ciao_config_handlers, ifr_client {
   requires += dummy_label
   includes += $(CIAO_ROOT)/tools/Config_Handlers
   exename = test
