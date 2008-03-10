@@ -19,8 +19,6 @@
 // Globally visible macros, type decls, and extern var decls for
 // Service Configurator utility.
 
-#include "ace/Obstack.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

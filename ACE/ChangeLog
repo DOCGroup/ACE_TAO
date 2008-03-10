@@ -1,3 +1,10 @@
+Mon Mar 10 22:27:09 UTC 2008  Nanbor Wang  <nanbor@wakefield.txcorp.com>
+
+        * ace/Svc_Conf.h: Removed redundant inclusion of Obstack.h.  It is
+          included later in Svc_Conf_Param.h.  Removing this extra
+          inclusion allows us to build on MacOS Leopard with optimization
+          enabled.
+
 Mon Mar 10 15:35:02 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.{h cpp} (log): For %C, clearly note that it always prints
