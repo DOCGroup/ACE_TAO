@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : valuetype, messaging, portableserver {
+project : valuetype, messaging, portableserver, avoids_minimum_corba, avoids_corba_e_compact {
   after    += DynamicInterface
   libs     += TAO_DynamicInterface
 }
