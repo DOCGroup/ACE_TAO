@@ -1,3 +1,14 @@
+Mon Mar 10 17:41:46 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ccm.mpb:
+        * MPC/config/ccm_executor.mpb:
+        * MPC/config/ciao_client_dnc.mpb:
+        * MPC/config/ciao_executor.mpb:
+        * MPC/config/ciao_servant.mpb:
+        * MPC/config/dance_component_server_svnt.mpb:
+        
+          MPC files which should have been in previous commit. 
+        
 Mon Mar 10 15:45:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
@@ -21,18 +32,18 @@ Mon Mar 10 15:45:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl:
         * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp:
         * tools/XML/XML.mpc:
-        
+
           Changes to fix compilation from previous refactoring
-        
+
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
         * ciao/ComponentServer/CIAO_Container_Impl.cpp:
         * ciao/Containers/Containers.mpc:
-        
-          Addidional container implementation. 
-        
+
+          Addidional container implementation.
+
         * ciao/Server_init.h:
         * ciao/Server_init.cpp:
-        
+
           ditched the CaMelCaSe in the name utility class.
 
 Mon Mar 10 00:57:38 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
