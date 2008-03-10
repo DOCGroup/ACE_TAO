@@ -1,3 +1,18 @@
+Mon Mar 10 00:37:35 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Updates for ccm refactoring. 
+        
+        * MPC/config/ccm_stub.mpb:
+        * MPC/config/ciao_events_base_dnc.mpb:
+        * MPC/config/ciao_events_dnc.mpb:
+        * MPC/config/dance_deployment_stub.mpb:
+        
+          MPC generation errors. 
+        
 Sun Mar  9 22:28:28 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_client.mpb:
@@ -7,9 +22,9 @@ Sun Mar  9 22:28:28 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * MPC/config/ciao_container_base.mpb:
         * MPC/config/ciao_server.mpb:
         * MPC/config/ciao_session_container.mpb:
-        
+
           MPC build fixes.
-        
+
         * ciao/CIAO.mpc:
         * ciao/Client_init.cpp:
 
@@ -32,22 +47,22 @@ Sun Mar  9 22:28:28 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/ComponentServer/Configurators/Server_Configurator.h:
         * ciao/ComponentServer/Configurators/Server_Configurator.cpp:
         * ciao/Valuetype_Factories/Factories.mpc:
-        
-          Compile fixes for previous refactoring. 
-        
+
+          Compile fixes for previous refactoring.
+
         * ciao/Containers/Container_Base.h:
         * ciao/Containers/Container_Base.cpp:
         * ciao/Containers/Containers.mpc:
         * ciao/Containers/Session/Session_Container.h:
         * ciao/Containers/Session/Session_Container.cpp:
-        
+
           Updated forward declarations to handle new component server.
 
         * ciao/Server_init.h:
         * ciao/Server_init.cpp:
-        
+
           Merged functions from CIAO_Utils.
-          
+
         * MPC/config/ciao_client_dnc.mpb:
         * MPC/config/ciao_container_dnc.mpb:
         * MPC/config/ciao_server_dnc.mpb:
