@@ -489,7 +489,7 @@ public:
    *  - 'b': print a ssize_t value
    *  - 'B': print a size_t value
    *  - 'c': print a character
-   *  - 'C': print a character string
+   *  - 'C': print a char* character string (also see s and W)
    *  - 'i', 'd': print a decimal number
    *  - 'I': indent according to nesting depth (obtained from
    *         ACE_Trace::get_nesting_indent()).
@@ -511,13 +511,13 @@ public:
    *  - 'R': print return status
    *  - 'S': print out the appropriate _sys_siglist entry corresponding
    *         to var-argument.
-   *  - 's': print out a character string
+   *  - 's': prints a ACE_TCHAR* character string (also see C and W)
    *  - 'T': print timestamp in hour:minute:sec:usec format.
    *  - 'D': print timestamp as Weekday Month day year hour:minute:sec.usec
    *  - 't': print thread id (1 if single-threaded)
    *  - 'u': print as unsigned int
    *  - 'w': prints a wide character
-   *  - 'W': print a wide character string
+   *  - 'W': prints a wchar_t* character string (also see C and s)
    *  - 'x': print as a hex number
    *  - 'X': print as a hex number
    *  - 'z': print an ACE_OS::WChar character
