@@ -1,3 +1,15 @@
+Mon Mar 10 08:02:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dynamicinterface.mpb:
+          DII is not available with minimum corba and corba/e
+
+        * tao/DynamicInterface.mpc:
+          Use regular base prject
+
+        * tao/DynamicInterface/Context.h:
+        * tao/IIOP_Transport.cpp:
+          Layout changes
+
 Sat Mar  8 07:15:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:
