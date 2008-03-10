@@ -32,7 +32,7 @@ project(Hello_Receiver_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Hello_Receiver_stub) : ciao_client_dnc {
+project(Hello_Receiver_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Hello_Receiver_idl_gen Hello_Base_stub
   libs  += Hello_Base_stub
@@ -57,7 +57,7 @@ project(Hello_Receiver_stub) : ciao_client_dnc {
   }
 }
 
-project(Hello_Receiver_exec) : ciao_component_dnc {
+project(Hello_Receiver_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += Hello_Receiver_cidl_gen Hello_Receiver_stub
   sharedname = Hello_Receiver_exec
@@ -85,7 +85,7 @@ project(Hello_Receiver_exec) : ciao_component_dnc {
 }
 
 
-project(Hello_Receiver_svnt) : ciao_servant_dnc {
+project(Hello_Receiver_svnt) : ciao_servant {
   avoids += ace_for_tao
   after      += Hello_Base_skel Hello_Receiver_exec
   sharedname  = Hello_Receiver_svnt

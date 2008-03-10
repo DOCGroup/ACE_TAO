@@ -4,7 +4,7 @@
 
 // Valuetype library must be linked for this project.
 // Please don't remove.
-//project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_base_dnc, ciao_client_dnc, messaging, ciaodll {
+//project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_base_dnc, ccm_stub, messaging, ciao_lib {
 project(Deployment_stub) : taolib_with_idl, tao_output, valuetype, ifr_client, messaging, dance_lib, dance_logger {
   sharedname   =  DAnCE_Deployment_stub
 

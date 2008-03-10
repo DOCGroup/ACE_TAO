@@ -33,7 +33,7 @@ project(BMDisplay_lem_gen) : ciaocidldefaults, taoidldefaults {
   }
 
 }
-project(BMDisplay_stub): ciao_client_dnc {
+project(BMDisplay_stub): ccm_stub {
   after += BasicSP_stub BMDisplay_stub_gen
   sharedname = BMDisplay_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -62,7 +62,7 @@ project(BMDisplay_stub): ciao_client_dnc {
 
 
 
-project(BMDisplay_exec) : ciao_component_dnc {
+project(BMDisplay_exec) : ciao_executor {
   after      += BMDisplay_stub BMDisplay_lem_gen BasicSP_exec
 
   sharedname = BMDisplay_exec
@@ -94,7 +94,7 @@ project(BMDisplay_exec) : ciao_component_dnc {
 }
 
 
-project(BMDisplay_svnt) : ciao_servant_dnc {
+project(BMDisplay_svnt) : ciao_servant {
   after += BasicSP_svnt BMDisplay_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
 

@@ -33,7 +33,7 @@ project(Swapping_Hello_Sender_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Swapping_Hello_Sender_stub): ciao_client_dnc {
+project(Swapping_Hello_Sender_stub): ccm_stub {
   avoids += ace_for_tao
   after += Swapping_Hello_Base_stub \
            Swapping_Hello_Sender_idl_gen
@@ -58,7 +58,7 @@ project(Swapping_Hello_Sender_stub): ciao_client_dnc {
   }
 }
 
-project(Swapping_Hello_Sender_svnt) : ciao_servant_dnc {
+project(Swapping_Hello_Sender_svnt) : ciao_servant {
   avoids += ace_for_tao
   after += Swapping_Hello_Base_skel \
            Swapping_Hello_Sender_stub \
@@ -95,7 +95,7 @@ project(Swapping_Hello_Sender_svnt) : ciao_servant_dnc {
   }
 }
 
-project(Swapping_Hello_Sender_exec) : ciao_component_dnc {
+project(Swapping_Hello_Sender_exec) : ciao_executor {
   avoids += ace_for_tao
   after   += Swapping_Hello_Sender_svnt
   sharedname = Swapping_Sender_exec
@@ -119,7 +119,7 @@ project(Swapping_Hello_Sender_exec) : ciao_component_dnc {
   }
 }
 
-project(Swapping_Hello_Sender_exec_1) : ciao_component_dnc {
+project(Swapping_Hello_Sender_exec_1) : ciao_executor {
   avoids += ace_for_tao
   after   += Swapping_Hello_Sender_exec
   sharedname = Swapping_Sender_exec_1
@@ -144,7 +144,7 @@ project(Swapping_Hello_Sender_exec_1) : ciao_component_dnc {
   }
 }
 
-project(Swapping_Hello_Sender_exec_2) : ciao_component_dnc {
+project(Swapping_Hello_Sender_exec_2) : ciao_executor {
   avoids += ace_for_tao
   after   += Swapping_Hello_Sender_exec
   sharedname = Swapping_Sender_exec_2
@@ -172,7 +172,7 @@ project(Swapping_Hello_Sender_exec_2) : ciao_component_dnc {
   }
 }
 
-project (Swapping_Hello_Starter) : ciao_client_dnc, valuetype {
+project (Swapping_Hello_Starter) : ccm_stub, valuetype {
   avoids += ace_for_tao
   exename = Upgradeable_starter
   after += Swapping_Hello_Sender_stub

@@ -1,6 +1,6 @@
 // $Id$
 
-project(EventAny_local): ciao_client_dnc {
+project(EventAny_local): ccm_stub {
   exename = EventAny
   idlflags += -SS
 

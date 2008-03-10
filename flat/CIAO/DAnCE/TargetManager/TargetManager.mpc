@@ -1,6 +1,6 @@
 // $Id$
 
-project(CIAO_TargetManager_stub):  dance_lib, ciao_client_dnc, dance_deployment_stub, dance_nodemanager_stub {
+project(CIAO_TargetManager_stub):  dance_lib, ccm_stub, dance_deployment_stub, dance_nodemanager_stub {
   sharedname = TargetManager_stub
   idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \
               -Wb,stub_export_include=TargetManager_stub_export.h \
@@ -22,7 +22,7 @@ project(CIAO_TargetManager_stub):  dance_lib, ciao_client_dnc, dance_deployment_
   }
 }
 
-//project(CIAO_TargetManager_svnt) : ciao_servant_dnc, ciao_targetmanager_stub {
+//project(CIAO_TargetManager_svnt) : ciao_servant, ciao_targetmanager_stub {
 //  sharedname  = TargetManager_svnt
 
 //  idlflags  +=  -Wb,export_macro=TARGETMANAGER_SVNT_Export \
@@ -48,7 +48,7 @@ project(CIAO_TargetManager_stub):  dance_lib, ciao_client_dnc, dance_deployment_
 //}
 
 
-//project(CIAO_TargetManager_exec) : ciao_component_dnc, ciao_domainapplicationmanager_dnc, ciao_targetmanager_svnt {
+//project(CIAO_TargetManager_exec) : ciao_executor, ciao_domainapplicationmanager_dnc, ciao_targetmanager_svnt {
 //  sharedname = TargetManager_exec
 
 //  dynamicflags   = TARGETMANAGER_EXEC_BUILD_DLL

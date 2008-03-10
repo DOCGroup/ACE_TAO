@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance, dance_redirection_service, dance_cdmw_idl, ciao_client_dnc, dance_logger, iortable, naming_serv {
+project : dance, dance_redirection_service, dance_cdmw_idl, ccm_stub, dance_logger, iortable, naming_serv {
   after += NodeApplication
   libs  += DAnCE_NodeApplication CIAO_Client
 }

@@ -34,7 +34,7 @@ project(BMDevice_lem_gen) : ciaocidldefaults, taoidldefaults {
 
 }
 
-project(BMDevice_stub): ciao_client_dnc {
+project(BMDevice_stub): ccm_stub {
   after += BasicSP_stub BMDevice_stub_gen
   sharedname = BMDevice_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
@@ -62,7 +62,7 @@ project(BMDevice_stub): ciao_client_dnc {
 
 }
 
-project(BMDevice_exec) : ciao_component_dnc {
+project(BMDevice_exec) : ciao_executor {
   after      += BMDevice_stub BMDevice_lem_gen BasicSP_exec
 
   sharedname = BMDevice_exec
@@ -90,7 +90,7 @@ project(BMDevice_exec) : ciao_component_dnc {
   }
 }
 
-project(BMDevice_svnt) : ciao_servant_dnc {
+project(BMDevice_svnt) : ciao_servant {
   after += BasicSP_svnt BMDevice_exec
   includes += $(CIAO_ROOT)/examples/BasicSP
 

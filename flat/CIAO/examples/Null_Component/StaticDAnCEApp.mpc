@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Null_Component_StaticDAnCEApp): ciao_static_dnc_app, iortable {
+project(Null_Component_StaticDAnCEApp): iortable, taoidldefaults {
   after    += Null_Component_svnt
   exename   = StaticDAnCEApp
 

@@ -2,7 +2,7 @@
 
 // Client.mpc,v 1.6 2005/02/18 09:07:06 jwillemsen Exp
 
-project(TMClient): ciao_client_dnc,dance_deployment_stub, ciao_events_dnc, ciao_targetmanager_stub {
+project(TMClient): ccm_stub ,dance_deployment_stub, ciao_events_dnc, ciao_targetmanager_stub {
   avoids += prism
   
   IDL_Files {

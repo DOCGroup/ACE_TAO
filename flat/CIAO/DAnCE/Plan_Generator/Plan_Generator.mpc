@@ -1,7 +1,7 @@
 // -*- MPC -*-
 //$Id$
 
-project (Plan_Generator): dance_lib, ciao_component_dnc {
+project (Plan_Generator): dance_lib, ciao_executor {
   sharedname = Plan_Generator
   after += RepositoryManager
   requires += dummy_label

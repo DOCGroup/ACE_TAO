@@ -48,7 +48,7 @@ project (RT_CCM_Config_Handlers) : acelib, dance_deployment_stub, ciao_config_ha
   }
 }
 
-//project (RT-CCM_Config_Handlers_Tests) : ciao_component_dnc, xerces {
+//project (RT-CCM_Config_Handlers_Tests) : ciao_executor, xerces {
 //  requires += dummy_label
 //  exename = rt-ccm-test
 //  after    += RT-CCM-Handlers

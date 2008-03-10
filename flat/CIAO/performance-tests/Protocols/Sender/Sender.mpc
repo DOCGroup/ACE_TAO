@@ -32,7 +32,7 @@ project(Protocols_Sender_cidl_gen) : ciaocidldefaults, taoidldefaults {
   }
 }
 
-project(Protocols_Sender_stub) : ciao_client_dnc {
+project(Protocols_Sender_stub) : ccm_stub {
   avoids += ace_for_tao
   after += Protocols_Sender_idl_gen Protocols_stub
   libs  += Protocols_stub
@@ -57,7 +57,7 @@ project(Protocols_Sender_stub) : ciao_client_dnc {
   }
 }
 
-project(Protocols_Sender_exec) : ciao_component_dnc, rtcorba {
+project(Protocols_Sender_exec) : ciao_executor, rtcorba {
   avoids += ace_for_tao
   after   += Protocols_Sender_cidl_gen Protocols_Sender_stub
   sharedname = Protocols_Sender_exec
@@ -88,7 +88,7 @@ project(Protocols_Sender_exec) : ciao_component_dnc, rtcorba {
 }
 
 
-project(Protocols_Sender_svnt) : ciao_servant_dnc {
+project(Protocols_Sender_svnt) : ciao_servant {
   avoids += ace_for_tao
   after      += Protocols_skel Protocols_Sender_exec
   sharedname  = Protocols_Sender_svnt

@@ -1,6 +1,7 @@
 // $Id$
 
-project (XSC_DynAny_Handler) : xerces, dynamicany, typecodefactory, ciao_client_dnc, ciao_config_handlers_base, ciaodll, dance, ifr_client {
+project (XSC_DynAny_Handler) : xerces, dynamicany, typecodefactory, dance_deployment_stub, \
+	ciao_config_handlers_base, ciao_lib, dance, ifr_client {
   after += XSC_XML_Handlers
   libs += XSC_XML_Handlers
   dynamicflags += DYNANY_HANDLER_BUILD_DLL
