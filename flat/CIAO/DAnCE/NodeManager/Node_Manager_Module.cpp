@@ -10,7 +10,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/orbsvcs/Naming/Naming_Loader.h"
 #include "ciao/CIAO_common.h"
-#include "ciao/Cookies.h"
+#include "ciao/Valuetype_Factories/Cookies.h"
 
 #include "Node_Manager_Module.h"
 #include "NodeManager_Impl.h"

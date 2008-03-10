@@ -3,7 +3,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "tao/ORB_Core.h"
 #include "ace/Sched_Params.h"
-#include "ciao/CCM_ObjectC.h"
+#include "ccm/CCM_ObjectC.h"
 #include "ace/Env_Value_T.h"
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
@@ -717,7 +717,7 @@ Plan_Launcher_Base_Impl::expand_env_vars (const char * s)
     ACE_CString src = s;
     ACE_CString res;
     size_t pos_done = 0;
-    while (pos_done < (ssize_t) src.length())
+    while (pos_done < (size_t) src.length())
       {
         size_t pos_start = src.find ('$', pos_done);
         if (ACE_CString::npos == pos_start)
@@ -734,9 +734,9 @@ Plan_Launcher_Base_Impl::expand_env_vars (const char * s)
                 pos_done = pos_start;
               }
 
-            ssize_t pos_end = src.length();
+            size_t pos_end = src.length();
 
-            ssize_t p;
+            size_t p;
 
             p = src.find (' ', pos_start + 1);
             if (ACE_CString::npos != p && pos_end > p) pos_end = p;

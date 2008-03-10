@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(DAnCE_ComponentServer_IDL) : taoidldefaults, anytypecode {
+project(CCM_ComponentServer_IDL) : taoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_macro=DAnCE_ComponentServer_stub_Export
   idlflags     += -Wb,stub_export_include=DAnCE_ComponentServer_stub_export.h
   idlflags     += -Wb,skel_export_macro=DAnCE_ComponentServer_svnt_Export
@@ -16,9 +16,9 @@ project(DAnCE_ComponentServer_IDL) : taoidldefaults, anytypecode {
   }
 }
 
-project(DAnCE_ComponentServer_stub) : taolib_with_idl, tao_output, messaging, ccm_stub,  anytypecode, ciao_lib  {
+project(CCM_ComponentServer_stub) : taolib_with_idl, tao_output, messaging, ccm_stub,  anytypecode, ciao_lib  {
   dynamicflags = DANCE_COMPONENTSERVER_STUB_BUILD_DLL
-  after += DAnCE_ComponentServer_IDL
+  after += CCM_ComponentServer_IDL
 
   Header_Files {
     DAnCE_ComponentServer_stub_export.h
@@ -34,7 +34,7 @@ project(DAnCE_ComponentServer_stub) : taolib_with_idl, tao_output, messaging, cc
   }
 }
 
-project(DAnCE_ComponentServer_svnt) : taolib_with_idl, tao_output, messaging, ccm_componentserver_stub,  anytypecode, ciao_lib  {
+project(CCM_ComponentServer_svnt) : taolib_with_idl, tao_output, messaging, ccm_componentserver_stub,  anytypecode, ciao_lib  {
   dynamicflags = DANCE_COMPONENTSERVER_SVNT_BUILD_DLL
 
   Header_Files {

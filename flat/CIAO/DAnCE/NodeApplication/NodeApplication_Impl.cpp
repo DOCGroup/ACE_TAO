@@ -5,8 +5,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/streams.h"
 
-#include "ciao/ConfigValue.h"
-#include "ciao/CCM_ObjectC.h"
+#include "ciao/Valuetype_Factories/ConfigValue.h"
+#include "ccm/CCM_ObjectC.h"
 #include "Cdmw/CDMW_IDL_ExtC.h"
 #include "Deployment/Deployment_BaseC.h"
 #include "Deployment/Deployment_ApplicationC.h"

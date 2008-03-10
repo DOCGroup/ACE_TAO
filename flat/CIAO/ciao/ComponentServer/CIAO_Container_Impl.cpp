@@ -2,12 +2,18 @@
 
 #include <ace/Log_Msg.h>
 #include <ciao/CIAO_common.h>
+#include <ciao/Server_init.h>
+#include <ccm/CCM_HomeC.h>
 
 
 namespace CIAO
 {
   namespace Deployment
   {
+    namespace
+    {
+      const char *register_naming = "edu.dre.vanderbilt.RegisterNaming";
+    }
     // Constructor 
     CIAO_Container_i::CIAO_Container_i (const Components::ConfigValues &config,
 					const Static_Config_EntryPoints_Maps *static_entrypts,
@@ -86,11 +92,69 @@ namespace CIAO
     }
     
     ::Components::CCMHome_ptr 
-    CIAO_Container_i::install_home (const char * /*id*/,
-                                    const char * /*entrypt*/,
-                                    const ::Components::ConfigValues & /*config*/)
+    CIAO_Container_i::install_home (const char * id,
+                                    const char * entrypt,
+                                    const ::Components::ConfigValues & config)
     {
       CIAO_TRACE("CIAO_Container_i::install_home");
+      
+      if (id == 0)
+	{
+	  ACE_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
+		      "No home ID provided\n"));
+	  throw ::Components::Deployment::InvalidConfiguration ();
+	}
+      
+      if (entrypt == 0)
+	{
+	  ACE_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
+		      "No executor entrypoint found.\n"));
+	  throw ::Components::Deployment::InvalidConfiguration ();
+	}
+
+      ACE_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_home - "
+		  "Attempting to install home with id [%s]\n",
+		  id));
+
+      CIAO::Utility::CONFIGVALUE_MAP cm;
+      ACE_DEBUG ((LM_TRACE, CLINFO 
+		  "CIAO_Container_i::install_home - "
+		  "Extracting ConfigValues from sequence of length [%u]\n",
+		  config.length ()));
+      CIAO::Utility::build_config_values_map (cm, config);
+      ACE_DEBUG ((LM_TRACE, CLINFO
+		  "CIAO_Container_i::install_home - "
+		  "Extraction resulted in map of [%u] values", cm.current_size ()));
+
+
+      // extract config values here...
+            
+      //ACE_DEBUG ((LM_DEBUG, CLINFO "CIAO_Container_i::install_home - ",
+      //"Executor entrypoint [%s], servant entrypoint [%s], servant library [%s]\n",
+      //entrypt, svnt_entrypt.in (), svnt_library.in ()));
+      
+      Components::CCMHome_var home = this->container_->ciao_install_home ("","","","", "");
+
+      CORBA::Any val;
+      
+      if (cm.find (register_naming, val) == 0)
+	{
+          const char *str_val;
+          
+	  if (val >>= str_val)
+	    {
+	      
+	      ACE_DEBUG ((LM_NOTICE, CLINFO
+			  "CIAO_Container_i::install_home - "
+			  "Home with ID [%s] registered in naming service with name [%s]\n",
+			  id, str_val));
+	    }
+	  else
+	    ACE_ERROR ((LM_WARNING, CLINFO
+			"CIAO_Container_i::install_home - "
+			"Warning: Extraction of Naming Service value failed!\n"));
+	}
+
       return  0;
     }
     
