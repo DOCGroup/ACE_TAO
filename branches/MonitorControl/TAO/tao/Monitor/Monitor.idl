@@ -1,0 +1,34 @@
+module Monitor
+{
+  interface MC
+  {
+    struct Data
+    {
+      /// The number of samples currently taken into account
+      TimeBase::TimeT timestamp;
+      double value;
+    };
+
+    typedef string Name;
+    typedef CORBA::StringSeq NameList;
+    typedef sequence<Data> DataList
+
+    exception InvalidName {
+      NameList names;
+    };
+
+    NameList get_statistic_names ();
+
+    Data get_statistic (in Name name)
+      raises (InvalidName);
+
+    DataList get_statistics (in NameList names)
+      raises (InvalidName);
+
+    DataList get_and_clear_statistics (in NameList names)
+      raises (InvalidName);
+
+    void clear_statistics (in NameList names)
+      raises (InvalidName);
+  };
+};
