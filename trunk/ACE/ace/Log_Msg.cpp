@@ -1673,9 +1673,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   }
                   break;
 
-                case 'C':         // Char string, Unicode for Win32/WCHAR
+                case 'C':         // Narrow-char string
                   {
-                    ACE_TCHAR *cstr = va_arg (argp, ACE_TCHAR *);
+                    char *cstr = va_arg (argp, char *);
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                     ACE_OS::strcpy (fp, ACE_TEXT ("S"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
@@ -1683,10 +1683,15 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
                     if (can_check)
                       this_len = ACE_OS::snprintf
-                        (bp, bspace, format, cstr ? cstr : ACE_TEXT ("(null)"));
+                        (bp,
+                         bspace,
+                         format,
+                         cstr ? cstr : ACE_TEXT_ALWAYS_CHAR ("(null)"));
                     else
                       this_len = ACE_OS::sprintf
-                        (bp, format, cstr ? cstr : ACE_TEXT ("(null)"));
+                        (bp,
+                         format,
+                         cstr ? cstr : ACE_TEXT_ALWAYS_CHAR ("(null)"));
                     ACE_UPDATE_COUNT (bspace, this_len);
                   }
                   break;
