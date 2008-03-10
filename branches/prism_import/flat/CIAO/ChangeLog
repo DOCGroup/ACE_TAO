@@ -1,3 +1,40 @@
+Mon Mar 10 15:45:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO_TAO_DAnCE.mwc:
+
+        * DAnCE/Cdmw/CDMW_Deployment.idl:
+        * DAnCE/Cdmw/CDMW_IDL.idl:
+        * DAnCE/Cdmw/CDMW_IDL.mpc:
+        * DAnCE/Cdmw/CDMW_IDL_Ext.idl:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/Logger/Logger.mpc:
+        * DAnCE/NodeApplication/ComponentAttributesSetter.h:
+        * DAnCE/NodeApplication/ComponentInstallation_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        * MPC/config/ccm_componentserver_stub.mpb:
+        * MPC/config/ccm_componentserver_svnt.mpb:
+        * ccm/ComponentServer/ComponentServer.mpc:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl:
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp:
+        * tools/XML/XML.mpc:
+        
+          Changes to fix compilation from previous refactoring
+        
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/Containers/Containers.mpc:
+        
+          Addidional container implementation. 
+        
+        * ciao/Server_init.h:
+        * ciao/Server_init.cpp:
+        
+          ditched the CaMelCaSe in the name utility class.
+
 Mon Mar 10 00:57:38 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Core.mpc:
@@ -86,10 +123,10 @@ Mon Mar 10 00:57:38 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc:
         * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc:
         * tools/XML/XML.mpc:
-        
+
           Adjusting for the deep-sixing of ciao_server_dnc, ciao_component_dnc,
           and ciao_client_dnc.  This probably breaks a bunch of stuff.
-        
+
 Mon Mar 10 00:37:35 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/ExecutorMappingGenerator.cpp:

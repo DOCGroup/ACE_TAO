@@ -89,6 +89,9 @@ namespace CIAO
 	    ACE_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Error binding value for %s, ignoring.\n",
 			config[i]->name ()));
 	  }
+	ACE_DEBUG ((LM_TRACE, CLINFO
+		    "build_config_values_map: Bound value for config value %s\n", 
+		    config[i]->name ()));
       }
   }
     
@@ -115,9 +118,50 @@ namespace CIAO
     // --------------------------------------------------------------
     //             Implementation of NameUtility class
     // --------------------------------------------------------------
+    bool NameUtility::bind_name (const char *namestr, 
+				 CORBA::Object_ptr obj,
+				 CosNaming::NamingContextExt_var &root)
+    {
+      if (namestr == 0)
+	{
+	  ACE_ERROR ((LM_WARNING, CLINFO
+		      "NameUtility::bind_name - "
+		      "called with null name, aborting registration. \n"));
+	  return false;
+	}
+
+      CosNaming::Name name;
+      NameUtility::create_name (namestr, name);
+      
+      if (name.length () > 1)
+	{
+	  // This name has contexts, create them.
+	  name.length (name.length () - 1);
+	  Utility::NameUtility::create_context_path (root.in (), name);
+	  name.length (name.length () + 1);
+	}
+      
+      return NameUtility::bind_object_path (root.in (), name, obj);
+    }
+
+    void 
+    NameUtility::create_name (const char *namestr, CosNaming::Name &name)
+    {
+      ACE_Auto_Basic_Array_Ptr<char> namebfr (ACE::strnew (namestr));
+      ACE_Tokenizer tok (namebfr.get ());
+      
+      tok.delimiter ('/');
+      
+      for (char *p = tok.next (); p; p=tok.next ())
+	{
+	  CORBA::ULong pos = name.length ();
+	  name.length (pos + 1);
+	  name[pos].id = CORBA::string_dup (p);
+	}
+    }
     
-    void NameUtility::CreateContextPath (const CosNaming::NamingContextExt_ptr nc,
-                                         const CosNaming::Name& name)
+    void NameUtility::create_context_path (const CosNaming::NamingContextExt_ptr nc,
+                                           const CosNaming::Name& name)
     {
       bool isNotFound = false;
       CORBA::ULong lengthMissing = 0;
@@ -128,22 +172,26 @@ namespace CIAO
       try
         {
           tmpCtxVar = nc->bind_new_context (name);
-          ACE_DEBUG ((LM_DEBUG, "Bound Context.\n\n"));
+          ACE_DEBUG ((LM_TRACE, CLINFO
+		      "NameUtility::CreateContextPath - Bound Context.\n\n"));
         }
       catch (const CosNaming::NamingContext::AlreadyBound&)
         {
-          ACE_DEBUG ((LM_DEBUG, "Context Already Bound.\n\n"));
+          ACE_DEBUG ((LM_TRACE, CLINFO
+		      "NameUtility::CreateContextPath - Context Already Bound.\n\n"));
         }
       catch (const CosNaming::NamingContext::NotFound& nf)
         {
-          ACE_DEBUG ((LM_DEBUG, "Context not found.\n\n"));
+          ACE_DEBUG ((LM_TRACE, CLINFO
+		      "NameUtility::CreateContextPath - Context not found.\n\n"));
           isNotFound = true;
           lengthMissing = nf.rest_of_name.length ();
         }
 
       if (lengthMissing == name.length ())
         {
-          ACE_ERROR ((LM_ERROR, "Null name length.\n\n"));
+          ACE_ERROR ((LM_ERROR, CLINFO 
+		      "NameUtility::CreateContextPath - Null name length.\n\n"));
         }
 
       if (isNotFound)
@@ -159,25 +207,27 @@ namespace CIAO
                     tmpName[i] = name[i];
 
                     CORBA::String_var newSCName = nc->to_string (tmpName);
-                    ACE_DEBUG ((LM_DEBUG,
-                                "What's left of the name:%s\n",
+                    ACE_DEBUG ((LM_TRACE, CLINFO
+                                "NameUtility::CreateContextPath - What's left of the name:%s\n",
                                 newSCName.in ()));
                   }
 
                 tmpCtxVar = nc->bind_new_context (tmpName);
-                ACE_DEBUG ((LM_DEBUG, "Bound New Context.\n"));
+                ACE_DEBUG ((LM_TRACE, CLINFO 
+			    "NameUtility::CreateContextPath - Bound New Context.\n"));
               }
           }
     }
 
     //---------------------------------------------------------------------------------------------
-    void NameUtility::BindObjectPath (const CosNaming::NamingContextExt_ptr nc,
-                                      const CosNaming::Name& name,
-                                      const CORBA::Object_ptr obj)
+    bool NameUtility::bind_object_path (const CosNaming::NamingContextExt_ptr nc,
+                                        const CosNaming::Name& name,
+                                        const CORBA::Object_ptr obj)
     {
       CosNaming::Name tmpName;
       CORBA::String_var newSCName = nc->to_string (name);
-      ACE_DEBUG ((LM_DEBUG, "The name is: %s\n", newSCName.in ()));
+      ACE_DEBUG ((LM_TRACE, CLINFO 
+		  "NameUtility::BindObjectPath - The name is: %s\n", newSCName.in ()));
 
       try
         {
@@ -186,16 +236,24 @@ namespace CIAO
 
       catch (const CosNaming::NamingContext::NotFound&)
         {
-          ACE_DEBUG ((LM_DEBUG, "Name not found, doing new bind.\n"));
+          ACE_DEBUG ((LM_TRACE, CLINFO 
+		      "NameUtility::BindObjectPath - Name not found, doing new bind.\n"));
           nc->bind (name, obj);
         }
+      catch (...)
+        {
+          ACE_ERROR ((LM_ERROR, CLINFO
+                      "NameUtility::BindObjectPath - Caught exception while binding name in nameing service.\n"));
+          return false;
+        }
+      return true;
     }
 
     //---------------------------------------------------------------------------------------------
     CosNaming::BindingList *
-    NameUtility::listBindings (const CosNaming::NamingContext_ptr nc,
-                               const CosNaming::Name& name,
-                               CORBA::ULong max_list_size)
+    NameUtility::list_bindings (const CosNaming::NamingContext_ptr nc,
+                                const CosNaming::Name& name,
+                                CORBA::ULong max_list_size)
     {
       CosNaming::BindingList_var basicListV;
       CosNaming::BindingIterator_var bIterV;
@@ -215,7 +273,8 @@ namespace CIAO
         
       if (CORBA::is_nil (tmpContextV.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "listBindings: Nil context.\n"));
+          ACE_ERROR ((LM_ERROR, CLINFO
+		      "NameUtility::listBindings: Nil context.\n"));
           return 0;
         }
 
@@ -253,7 +312,7 @@ namespace CIAO
 
     //---------------------------------------------------------------------------------------------
     void
-    NameUtility::recursiveUnbind (const CosNaming::NamingContext_ptr nc,
+    NameUtility::recursive_unbind (const CosNaming::NamingContext_ptr nc,
                                   const CosNaming::Name& name)
     {
       CORBA::Object_var objV;
@@ -264,8 +323,8 @@ namespace CIAO
       
       if (CORBA::is_nil (tmpContextV.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
-                      "recursiveUnbind: Nil context reference.\n"));
+          ACE_ERROR ((LM_ERROR, CLINFO
+                      "NameUtility::recursiveUnbind - Nil context reference.\n"));
           return;
         }
 
@@ -273,9 +332,9 @@ namespace CIAO
       CosNaming::Name tmpName;
       tmpName.length (0);
 
-      blV = NameUtility::listBindings(tmpContextV.in (),
-                                      tmpName,
-                                      10000);  // 'max_list_size'
+      blV = NameUtility::list_bindings (tmpContextV.in (),
+                                        tmpName,
+                                        10000);  // 'max_list_size'
 
       for (CORBA::ULong i = 0; i < blV->length (); ++i)
         {
@@ -287,7 +346,7 @@ namespace CIAO
             }
           else if ((*blV)[i].binding_type==CosNaming::ncontext)
             {
-              NameUtility::recursiveUnbind(tmpContextV.in (), tmpName);
+              NameUtility::recursive_unbind (tmpContextV.in (), tmpName);
             }
         }
         

@@ -14,12 +14,12 @@
 #if !defined (CDMW_IDL)
 #define CDMW_IDL
 
-#include "ciao/CCM_Home.idl"
-#include "ciao/CCM_KeylessCCMHome.idl"
-#include "ciao/CCM_Navigation.idl"
-#include "ciao/CCM_StandardConfigurator.idl"
+#include "ccm/CCM_Home.idl"
+#include "ccm/CCM_KeylessCCMHome.idl"
+#include "ccm/CCM_Navigation.idl"
+#include "ccm/CCM_StandardConfigurator.idl"
 
-#include "DAnCE/ComponentServer/ComponentServer_Client.idl"
+#include "ccm/ComponentServer/ComponentServer_Client.idl"
 
 module Components
 {

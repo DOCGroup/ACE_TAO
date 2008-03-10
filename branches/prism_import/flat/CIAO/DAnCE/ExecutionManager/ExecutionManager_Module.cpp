@@ -9,7 +9,7 @@
 #include "tao/IORTable/IORTable.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ciao/CIAO_common.h"
-#include "ciao/Cookies.h"
+#include "ciao/Valuetype_Factories/Cookies.h"
 #include "ExecutionManager_Module.h"
 #include "ExecutionManager_Impl.h"
 #include "RedirectionService/RedirectionService.h"

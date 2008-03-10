@@ -16,7 +16,7 @@
 #define COMPONENTINSTALLATION_IMPL_H_
 
 #include "ace/Map_Manager.h"
-#include "ciao/CCM_ComponentC.h"
+#include "ccm/CCM_ComponentC.h"
 
 #include "Cdmw/CDMW_DeploymentS.h"
 #include "tao/ORB.h"

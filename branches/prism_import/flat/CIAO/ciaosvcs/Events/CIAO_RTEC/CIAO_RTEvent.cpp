@@ -69,11 +69,8 @@ namespace CIAO
   RTEventService::connect_event_supplier (
     Supplier_Config_ptr supplier_config)
   {
-    if (CIAO::debug_level () > 9)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "CIAO::RTEventService::connect_event_supplier\n"));
-      }
+    ACE_DEBUG ((LM_TRACE, CLINFO
+                "CIAO::RTEventService::connect_event_supplier\n"));
 
     RTEvent_Supplier_Config_ptr rt_config =
       RTEvent_Supplier_Config::_narrow (supplier_config);
@@ -120,10 +117,8 @@ namespace CIAO
   RTEventService::connect_event_consumer (
     Consumer_Config_ptr consumer_config)
   {
-    if (CIAO::debug_level () > 9)
-      {
-        ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventService::connect_event_consumer\n"));
-      }
+    ACE_DEBUG ((LM_TRACE, CLINFO 
+                "CIAO::RTEventService::connect_event_consumer\n"));
 
     RTEvent_Consumer_Config_ptr rt_config =
       RTEvent_Consumer_Config::_narrow (consumer_config);
@@ -207,11 +202,8 @@ namespace CIAO
   void
   RTEventService::push_event (Components::EventBase * /* ev */)
   {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "------CIAO::RTEventService::push_event------\n"));
-      }
+        ACE_DEBUG ((LM_TRACE, CLINFO
+                    "CIAO::RTEventService::push_event\n"));
   }
 
   void
@@ -219,11 +211,8 @@ namespace CIAO
                                    const char * source_id,
                                    CORBA::TypeCode_ptr tc)
   {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "------CIAO::RTEventService::ciao_push_event------\n"));
-      }
+    ACE_DEBUG ((LM_TRACE, CLINFO
+                "CIAO::RTEventService::ciao_push_event\n"));
     RtecEventComm::EventSet events (1);
     events.length (1);
 
@@ -271,12 +260,9 @@ namespace CIAO
   void
   RTEventService::create_rt_event_channel (const char * /* ec_name */)
   {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "CIAO::EventService_Factory_impl::"
-                    "create_rt_event_channel\n"));
-      }
+    ACE_DEBUG ((LM_TRACE, CLINFO
+                "CIAO::EventService_Factory_impl::"
+                "create_rt_event_channel\n"));
 
     TAO_EC_Default_Factory::init_svcs ();
 
@@ -493,10 +479,8 @@ namespace CIAO
   void
   RTEventServiceConsumer_impl::push (const RtecEventComm::EventSet& events)
   {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::push\n"));
-      }
+    ACE_DEBUG ((LM_TRACE, CLINFO
+                "CIAO::RTEventServiceConsumer_impl::push\n"));
 
     for (CORBA::ULong i = 0; i < events.length (); ++i)
       {
@@ -539,12 +523,9 @@ namespace CIAO
   void
   RTEventServiceConsumer_impl::disconnect_push_consumer (void)
   {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "CIAO::RTEventServiceConsumer_impl::"
-                    "disconnect_push_consumer\n"));
-      }
+    ACE_DEBUG ((LM_TRACE, CLINFO
+                "CIAO::RTEventServiceConsumer_impl::"
+                "disconnect_push_consumer\n"));
 
     PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
     this->poa_->deactivate_object (oid);
@@ -564,21 +545,16 @@ namespace CIAO
 
   RTEvent_Supplier_Config_impl::~RTEvent_Supplier_Config_impl (void)
   {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "RTEvent_Supplier_Config_impl::"
-                    "~RTEvent_Supplier_Config_impl\n"));
-      }
+    ACE_DEBUG ((LM_TRACE,
+                "RTEvent_Supplier_Config_impl::"
+                "~RTEvent_Supplier_Config_impl\n"));
   }
 
   void
   RTEvent_Supplier_Config_impl::supplier_id (const char * supplier_id)
   {
-  if (CIAO::debug_level () > 10)
-    {
-      ACE_DEBUG ((LM_DEBUG, "supplier's id: %s\n", supplier_id));
-    }
+    ACE_DEBUG ((LM_DEBUG, CLINFO
+                "RTEvent_Supplier_Config_impl::supplier_id::supplier's id: %s\n", supplier_id));
 
     this->supplier_id_ = supplier_id;
 
@@ -695,12 +671,9 @@ namespace CIAO
   void
   RTEvent_Consumer_Config_impl::consumer_id (const char * consumer_id)
   {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "RTEvent_Consumer_Config_impl::set_consumer_id:%s\n",
-                    consumer_id));
-      }
+    ACE_DEBUG ((LM_DEBUG, CLINFO
+                "RTEvent_Consumer_Config_impl::set_consumer_id:%s\n",
+                consumer_id));
 
     this->consumer_id_ = consumer_id;
   }
@@ -727,11 +700,8 @@ namespace CIAO
   Components::EventConsumerBase_ptr
   RTEvent_Consumer_Config_impl::consumer (void)
   {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "RTEvent_Consumer_Config_impl::get_consumer\n"));
-      }
+    ACE_DEBUG ((LM_TRACE,
+                "RTEvent_Consumer_Config_impl::get_consumer\n"));
 
     return Components::EventConsumerBase::_duplicate (this->consumer_.in ());
   }
@@ -751,10 +721,7 @@ namespace CIAO
   void
   RTEvent_Consumer_Config_impl::destroy (void)
   {
-    if (CIAO::debug_level () > 10)
-      {
-        ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::destroy\n"));
-      }
+    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::destroy\n"));
 
     PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
     this->poa_->deactivate_object (oid);

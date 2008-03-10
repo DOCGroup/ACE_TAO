@@ -7,7 +7,7 @@
 //#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/ORB_Core.h"
 #include "ace/Sched_Params.h"
-#include "ciao/CCM_ObjectC.h"
+#include "ccm/CCM_ObjectC.h"
 
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"

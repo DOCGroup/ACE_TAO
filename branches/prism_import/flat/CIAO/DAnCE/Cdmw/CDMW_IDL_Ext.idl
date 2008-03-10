@@ -15,8 +15,8 @@
 #define CDMW_IDL_EXT
 
 #include "DAnCE/Cdmw/CDMW_IDL.idl"
-#include "ciao/CCM_KeylessCCMHome.idl"
-#include "ComponentServer/ComponentServer.idl"
+#include "ccm/CCM_KeylessCCMHome.idl"
+#include "ccm/ComponentServer/ComponentServer.idl"
 
 #pragma prefix "thalesgroup.com"
 

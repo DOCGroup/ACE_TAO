@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
     
-project(Cdmw_IDL) : taolib_with_idl, tao_output, messaging, dance_component_server_svnt,  anytypecode  {
+project(Cdmw_IDL) : taolib_with_idl, tao_output, messaging, ccm_componentserver_svnt,  anytypecode  {
     sharedname   = DAnCE_Cdmw_IDL
     dynamicflags = DANCE_CDMW_IDL_BUILD_DLL
     idlflags     += -Wb,export_include=DAnCE_Cdmw_IDL_export.h -Wb,export_macro=DAnCE_Cdmw_IDL_Export

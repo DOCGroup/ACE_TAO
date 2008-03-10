@@ -18,7 +18,7 @@
 //#include "ComponentAttributesSetter_Export.h"
 #include "NodeApplication_Export.h"
 #include "Deployment/Deployment_BaseC.h"
-#include "ciao/CCM_ObjectC.h"
+#include "ccm/CCM_ObjectC.h"
 
 class NodeApplication_Export ComponentAttributesSetter
   {
