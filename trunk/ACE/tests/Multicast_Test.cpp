@@ -760,9 +760,10 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
         buf[0] = 0;
       else
         ACE_OS::sprintf (buf, "%s/%d", address, port);
-      //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sending (%s)\n"), buf));
+
       if (socket.send (buf, ACE_OS::strlen (buf),addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Send to %s, %p\n"),
+                           address,
                            ACE_TEXT ("send_dgram - error calling send on ")
                            ACE_TEXT ("ACE_SOCK_Dgram.")), -1);
       addr.set_port_number (++port);
