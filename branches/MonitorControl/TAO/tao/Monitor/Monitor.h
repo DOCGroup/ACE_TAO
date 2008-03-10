@@ -10,12 +10,12 @@
  */
 // ===================================================================
 
-#ifndef TAO_PI_H
-#define TAO_PI_H
+#ifndef TAO_MONITOR_H
+#define TAO_MONITOR_H
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PI/pi_export.h"
+#include "tao/Monitor/monitor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,10 +26,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class TAO_PI_Init
+ * @class TAO_Monitor_Init
  *
  */
-class TAO_PI_Export TAO_PI_Init
+class TAO_Monitor_Export TAO_Monitor_Init
 {
 public:
 
@@ -41,23 +41,16 @@ public:
 // only do this for static builds, it causes a circular
 // dependency for dynamic builds.
 static int
-TAO_Requires_PI_Initializer =
-  TAO_PI_Init::Initializer ();
+TAO_Requires_Monitor_Initializer =
+  TAO_Monitor_Init::Initializer ();
 #endif /* TAO_AS_STATIC_LIBS */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#define TAO_PI_SAFE_INCLUDE
-#include "tao/PI/ORBInitInfoC.h"
-#include "tao/PI/PolicyFactoryC.h"
-#include "tao/PI/ORBInitializerC.h"
-#include "tao/PI/InterceptorC.h"
-#include "tao/PI/ClientRequestInfoC.h"
-#include "tao/PI/ClientRequestInterceptorC.h"
-#include "tao/PI/PICurrentC.h"
-#include "tao/PI/ProcessingModePolicyC.h"
+#define TAO_MONITOR_SAFE_INCLUDE
+#include "tao/Monitor/MonitorC.h"
 #undef TAO_PI_SAFE_INCLUDE
 
-#endif  /* TAO_PI_H */
+#endif  /* TAO_MONITOR_H */
