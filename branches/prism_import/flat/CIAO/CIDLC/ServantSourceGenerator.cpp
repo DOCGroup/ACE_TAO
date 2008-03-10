@@ -4193,10 +4193,10 @@ ServantSourceEmitter::pre (TranslationUnit&)
   bool swapping = (swap_option == "upgradeable");
 
   os << "#include \"" << file_name << "\"" << endl
-     << "#include \"ciao/Cookies.h\"" << endl
-     << "#include \"ciao/Servant_Activator.h\"" << endl
-     << (swapping ? "#include \"ciao/Dynamic_Component_Activator.h\"\n" : "")
-     << "#include \"ciao/Port_Activator_T.h\"" << endl
+     << "#include \"ciao/Valuetype_Factories/Cookies.h\"" << endl
+     << "#include \"ciao/Servants/Servant_Activator.h\"" << endl
+     << (swapping ? "#include \"ciao/Servants/Swapping/Dynamic_Component_Activator.h\"\n" : "")
+     << "#include \"ciao/Servants/Port_Activator_T.h\"" << endl
      << "#include \"tao/SystemException.h\"" << endl
      << "#include \"ace/SString.h\"" << endl << endl;
 }

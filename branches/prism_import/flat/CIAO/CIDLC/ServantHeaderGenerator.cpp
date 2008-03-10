@@ -1528,16 +1528,16 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   string swap_option = cl_.get_value ("custom-container", "");
   bool swapping = (swap_option == "upgradeable");
 
-  os << "#include \"ciao/"
-     << (swapping ? "Swapping_Container.h" : "Session_Container.h")
+  os << "#include \"ciao/Containers/"
+     << (swapping ? "Swapping/Swapping_Container.h" : "Session/Session_Container.h")
      << "\"" << endl
-     << "#include \"ciao/"
-     << (swapping ? "Upgradeable_Context_Impl_T.h"
+     << "#include \"ciao/Contexts/"
+     << (swapping ? "Swapping/Upgradeable_Context_Impl_T.h"
                   : "Context_Impl_T.h")
      << "\"" << endl
-     << "#include \"ciao/Servant_Impl_T.h\"" << endl
-     << "#include \"ciao/"
-     << (swapping ? "Swapping_Servant_Home_Impl_T.h"
+     << "#include \"ciao/Servants/Servant_Impl_T.h\"" << endl
+     << "#include \"ciao/Servants/"
+     << (swapping ? "Swapping/Swapping_Servant_Home_Impl_T.h"
                   : "Home_Servant_Impl_T.h")
      << "\"" << endl << endl;
 }

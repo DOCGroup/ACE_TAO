@@ -1928,7 +1928,7 @@ generate (CommandLine const& cl,
   }
 
   {
-    os << "#include \"ciao/CCM_Container.idl\"" << endl;
+    os << "#include \"ccm/CCM_Container.idl\"" << endl;
 
     if (cl.get_value ("lem-force-all", false) && !file_name.empty ())
     {
