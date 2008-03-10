@@ -1,3 +1,22 @@
+Mon Mar 10 22:27:09 UTC 2008  Nanbor Wang  <nanbor@wakefield.txcorp.com>
+
+        * ace/Svc_Conf.h: Removed redundant inclusion of Obstack.h.  It is
+          included later in Svc_Conf_Param.h.  Removing this extra
+          inclusion allows us to build on MacOS Leopard with optimization
+          enabled.
+
+Mon Mar 10 15:35:02 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.{h cpp} (log): For %C, clearly note that it always prints
+          a narrow-char string, and adjust the va_arg to match. Thanks to
+          Russell Morra for reporting this issue.
+
+Mon Mar 10 13:20:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Multicast_Test.cpp:
+          When sending fails, print the ip address we are using in the error
+          message.
+
 Sat Mar  8 16:23:57 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/WIN32_Asynch_IO.cpp (send): Enhanced the code to allow sends
