@@ -1,3 +1,12 @@
+Tue Mar 11 04:08:21 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/OS_NS_unistd.cpp:
+
+        ACE_OS::argv_to_string is limited in its choice of what to quote
+        when quoting is required. It must quote not only when the arg
+        contains a space, but also if it is an empty string or some other
+        common control characters.
+
 Wed Mar  5 19:31:36 UTC 2008  Iliyan Jeliazkov  <fi326c@ociweb.com>
 
         * ace/ARGV.h:
