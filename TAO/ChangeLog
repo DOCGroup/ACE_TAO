@@ -1,3 +1,11 @@
+Tue Mar 11 18:51:10 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * TAO_IDL/ast/ast_interface.cpp:
+
+          The -Cw option generated a warning message instead of an error,
+          but it had the same end result: a premature exit from a method
+          call. This has been fixed.
+
 Mon Mar 10 08:02:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dynamicinterface.mpb:
