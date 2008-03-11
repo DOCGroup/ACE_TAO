@@ -121,7 +121,7 @@ public:
 
   // Check if we have redefined any of our parents' operations or attributes,
   // and check if there is such a clash among the parents
-  virtual bool redef_clash (void);
+  bool redef_clash (void);
 
   // Accessors for the member.
   bool home_equiv (void) const;
