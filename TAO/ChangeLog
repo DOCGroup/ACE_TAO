@@ -1,3 +1,10 @@
+Tue Mar 11 19:46:44 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+          The IFR now throws an exception when referenced types are
+          unknown, rather than crashing without an error.
+
 Tue Mar 11 18:51:10 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
 
         * TAO_IDL/ast/ast_interface.cpp:
