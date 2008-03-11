@@ -1,3 +1,8 @@
+Tue Mar 11 12:24:43 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Svc_Conf.h: Add #include "ace/config.h" so a setting for
+          ACE_LACKS_PRAGMA_ONCE can be seen. Fixes compile warnings.
+
 Tue Mar 11 12:20:02 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.cpp (log): Fixed compile error. No need to use
