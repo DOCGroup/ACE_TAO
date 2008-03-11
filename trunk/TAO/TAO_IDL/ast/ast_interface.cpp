@@ -1494,7 +1494,7 @@ AST_Interface::redef_clash (void)
                                               *group2_member,
                                               group2_member_item
                                             );
-                      return 1;
+                      return true;
                     }
                   else if (pid1->case_compare_quiet (pid2) == true)
                     {
@@ -1506,6 +1506,7 @@ AST_Interface::redef_clash (void)
                               group1_member_item,
                               group2_member_item
                             );
+                          return true;
                         }
                       else
                         {
@@ -1516,15 +1517,13 @@ AST_Interface::redef_clash (void)
                               group2_member_item
                             );
                         }
-
-                      return 1;
                     }
                 } // end of FOR (group2_member_items)
             } // end of FOR (group2_iter)
         } // end of FOR (group1_member_items)
     } // end of FOR (group1_iter)
 
-  return 0;
+  return false;
 }
 
 // Look through inherited interfaces.
