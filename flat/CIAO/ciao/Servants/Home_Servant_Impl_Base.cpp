@@ -1,11 +1,12 @@
 // $Id$
 
 #include "Home_Servant_Impl_Base.h"
+#include "ciao/Containers/Container_Base.h"
 
 namespace CIAO
 {
-  Home_Servant_Impl_Base::Home_Servant_Impl_Base (Session_Container * c)
-    : container_ (c)
+  Home_Servant_Impl_Base::Home_Servant_Impl_Base (Container_ptr c)
+    : container_ (Container::_duplicate(c))
   {
   }
 

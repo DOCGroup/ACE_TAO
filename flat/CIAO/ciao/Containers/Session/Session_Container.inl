@@ -9,5 +9,5 @@ CIAO::Session_Container::get_objref (PortableServer::Servant p)
 ACE_INLINE CIAO::Servant_Activator *
 CIAO::Session_Container::ports_servant_activator (void) const
 {
-  return this->sa_;
+  return Servant_Activator::_duplicate(this->sa_.in ());
 }

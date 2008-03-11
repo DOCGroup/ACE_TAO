@@ -18,7 +18,7 @@ namespace CIAO
   Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::Port_Activator_T (
       const char *oid,
       const char *name,
-      Port_Activator::Type t,
+      Port_Activator_Types::Type t,
       EXEC *e,
       CONTEXT *c,
       COMP_SERV *cc)
@@ -56,7 +56,7 @@ namespace CIAO
     // side.
     if (ACE_OS::strcmp (this->oid_.in (), str.in ()) == 0)
       {
-        if (this->executor_ == 0 && this->t_ == Port_Activator::Facet)
+        if (this->executor_ == 0 && this->t_ == Port_Activator_Types::FACET)
           {
             CORBA::Object_var tmp =
               this->comp_serv_->get_facet_executor (this->name_.in ());

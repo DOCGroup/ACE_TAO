@@ -5,12 +5,12 @@ ACE_RCSID (ciao,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "Port_Activator.inl"
+# include "Port_Activator_i.inl"
 #endif /* __ACE_INLINE__ */
 
 namespace CIAO
 {
-  Port_Activator::Port_Activator (const char *oid,
+  Port_Activator_i::Port_Activator_i (const char *oid,
                                   const char *name,
                                   Type t)
     : oid_ (oid),
@@ -19,7 +19,7 @@ namespace CIAO
   {
   }
 
-  Port_Activator::~Port_Activator (void)
+  Port_Activator_i::~Port_Activator_i (void)
   {
   }
 }

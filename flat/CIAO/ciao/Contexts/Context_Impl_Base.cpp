@@ -6,6 +6,8 @@
 # include "Context_Impl_Base.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ciao/Containers/Container_BaseC.h"
+
 namespace CIAO
 {
   Context_Impl_Base::Context_Impl_Base (void)
@@ -18,9 +20,9 @@ namespace CIAO
   }
 
   Context_Impl_Base::Context_Impl_Base (Components::CCMHome_ptr home,
-                                        Session_Container * c)
+                                        Container_ptr c)
     : home_ (Components::CCMHome::_duplicate (home)),
-      container_ (c)
+      container_ (Container::_duplicate (c))
   {
   }
 

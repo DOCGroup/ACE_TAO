@@ -4,7 +4,7 @@
 
 #include <tao/Utils/PolicyList_Destroyer.h>
 #include <ciao/CIAO_common.h>
-#include <ciao/Servants/Servant_Activator.h>
+#include <ciao/Containers/Servant_Activator.h>
 #include <ccm/ComponentServer/ComponentServer_BaseC.h>
 
 #if !defined (__ACE_INLINE__)
@@ -24,7 +24,7 @@ namespace CIAO
                                         const Static_Config_EntryPoints_Maps* maps,
 					const char *name,
 					const CORBA::PolicyList *more_policies)
-    : Container (o, container_impl),
+    : Container_i (o, container_impl),
       number_ (0),
       static_config_flag_ (static_config_flag),
       static_entrypts_maps_ (maps),
@@ -50,7 +50,7 @@ namespace CIAO
         this->home_servant_poa_->destroy (1, 1);
       }
 
-    delete this->sa_;
+    // delete this->sa_;
   }
 
   void
@@ -167,22 +167,24 @@ namespace CIAO
                         poa_manager.in (),
                         policies);
 
-    ACE_NEW_THROW_EX (this->sa_,
-                      Servant_Activator (this->orb_.in ()),
+    Servant_Activator_i *sa;
+    ACE_NEW_THROW_EX (sa,
+                      Servant_Activator_i (this->orb_.in ()),
                       CORBA::NO_MEMORY ());
+    this->sa_ = sa;
 
-    this->facet_cons_poa_->set_servant_manager (this->sa_);
+    this->facet_cons_poa_->set_servant_manager (this->sa_.in ());
   }
 
   CORBA::Object_ptr
   Session_Container::install_servant (PortableServer::Servant p,
-                                      Container::OA_Type t)
+                                      Container_Types::OA_Type t)
   {
     CIAO_TRACE ("Session_Container::install_servant");
 
     PortableServer::POA_ptr tmp = 0;
 
-    if (t == Container::Component)
+    if (t == Container_Types::COMPONENT_t)
       {
         tmp = this->component_poa_.in ();
       }
@@ -199,8 +201,8 @@ namespace CIAO
   }
 
   CORBA::Object_ptr
-  Session_Container::install_component (PortableServer::Servant p,
-                                        PortableServer::ObjectId_out oid)
+  Session_Container::install_component_servant (PortableServer::Servant p,
+                                                PortableServer::ObjectId_out oid)
   {
     CIAO_TRACE ("Session_Container::install_component");
     PortableServer::ObjectId_var id =
@@ -221,14 +223,13 @@ namespace CIAO
   //   exceptions--> rethrow of new exceptions is needed.
   //                                            --Tao
   Components::CCMHome_ptr
-  Session_Container::ciao_install_home (const char *exe_dll_name,
-                                        const char *exe_entrypt,
-                                        const char *sv_dll_name,
-                                        const char *sv_entrypt,
-                                        const char *ins_name)
+  Session_Container::install_home (const char *primary_artifact,
+                                   const char *entry_point,
+                                   const char *nameconst)
   {
     CIAO_TRACE ("Session_Container::ciao_install_home");
-
+    throw CORBA::NO_IMPLEMENT ();
+    /*
     HomeFactory hcreator = 0;
     ServantFactory screator = 0;
 
@@ -272,9 +273,7 @@ namespace CIAO
                         "ERROR in opening the executor DLL [%s] \n",
                         exe_dll_name));
 
-            throw Components::Deployment::UnknownImplId (/*
-							   "Session_Container::ciao_install_home",
-							   error.c_str () */);
+            throw Components::Deployment::UnknownImplId ();
           }
 
         if (servant_dll.open (sv_dll_name,
@@ -290,9 +289,7 @@ namespace CIAO
                         "ERROR in opening the servant DLL [%s] \n",
                         sv_dll_name));
 
-            throw Components::Deployment::UnknownImplId ( /*
-							    "Session_Container::ciao_install_home",
-							    error.c_str () */);
+            throw Components::Deployment::UnknownImplId ();
           }
 
         if (exe_entrypt == 0 || sv_entrypt == 0)
@@ -407,25 +404,26 @@ namespace CIAO
       Components::CCMHome::_narrow (objref.in ());
 
     return homeref._retn ();
+    */
   }
 
   void
-  Session_Container::ciao_uninstall_home (Components::CCMHome_ptr homeref)
+  Session_Container::uninstall_home (Components::CCMHome_ptr homeref)
   {
     CIAO_TRACE ("Session_Container::ciao_uninstall_home");
 
-    this->uninstall (homeref, Container::Component);
+    this->uninstall (homeref, Container_Types::COMPONENT_t);
   }
 
   void
   Session_Container::uninstall (CORBA::Object_ptr objref,
-                                Container::OA_Type t)
+                                Container_Types::OA_Type t)
   {
     CIAO_TRACE ("Session_Container::uninstall");
 
     PortableServer::POA_ptr tmp = 0;
 
-    if (t == Container::Component)
+    if (t == Container_Types::COMPONENT_t)
       {
         tmp = this->component_poa_.in ();
       }
@@ -442,12 +440,12 @@ namespace CIAO
 
   void
   Session_Container::uninstall (PortableServer::Servant svt,
-                                Container::OA_Type t)
+                                Container_Types::OA_Type t)
   {
     CIAO_TRACE ("Session_Container::uninstall");
     PortableServer::POA_ptr tmp = 0;
 
-    if (t == Container::Component)
+    if (t == Container_Types::COMPONENT_t)
       {
         tmp = this->component_poa_.in ();
       }
@@ -504,13 +502,13 @@ namespace CIAO
   CORBA::Object_ptr
   Session_Container::generate_reference (const char *obj_id,
                                          const char *repo_id,
-                                         Container::OA_Type t)
+                                         Container_Types::OA_Type t)
   {
     CIAO_TRACE ("Session_Container::generate_reference");
 
     PortableServer::POA_ptr tmp = 0;
 
-    if (t == Container::Component)
+    if (t == Container_Types::COMPONENT_t)
       {
         tmp = this->component_poa_.in ();
       }

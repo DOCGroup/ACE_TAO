@@ -1,15 +1,15 @@
 #include "Servant_Activator.h"
-#include "Port_Activator.h"
 
+#include <tao/PortableServer/PortableServer_Functions.h>
 #include <ciao/CIAO_common.h>
 
 ACE_RCSID (ciao,
-           Servant_Activator,
+           Servant_Activator_i,
            "$Id$")
 
 namespace CIAO
 {
-  Servant_Activator::Servant_Activator (CORBA::ORB_ptr o)
+  Servant_Activator_i::Servant_Activator_i (CORBA::ORB_ptr o)
     : orb_ (CORBA::ORB::_duplicate (o)),
       // @@ TODO, avoid this magic number
       pa_ (64),
@@ -17,10 +17,10 @@ namespace CIAO
   {
   }
 
-  Servant_Activator::~Servant_Activator (void)
+  Servant_Activator_i::~Servant_Activator_i (void)
   {
-    CIAO_TRACE ("Servant_Activator::~Servant_Activator");
-
+    CIAO_TRACE ("Servant_Activator_i::~Servant_Activator_i");
+    /* _var should take care of this now.
     {
       ACE_GUARD (TAO_SYNCH_MUTEX,
 		 guard,
@@ -35,13 +35,14 @@ namespace CIAO
           delete tmp;
         }
     }
+    */
   }
 
   bool
-  Servant_Activator::update_port_activator (
+  Servant_Activator_i::update_port_activator (
     const PortableServer::ObjectId &oid)
   {
-    CIAO_TRACE ("Servant_Activator::update_port_activator");
+    CIAO_TRACE ("Servant_Activator_i::update_port_activator");
 
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
@@ -54,7 +55,7 @@ namespace CIAO
       
       for (size_t t = 0; t != sz; ++t)
         {
-          Port_Activator *&tmp = this->pa_[t];
+          Port_Activator_var tmp = this->pa_[t];
           
           if (ACE_OS::strcmp (tmp->oid (), str.in ()) == 0)
             {
@@ -67,16 +68,16 @@ namespace CIAO
   }
 
   PortableServer::Servant
-  Servant_Activator::incarnate (const PortableServer::ObjectId &oid,
-                                PortableServer::POA_ptr)
+  Servant_Activator_i::incarnate (const PortableServer::ObjectId &oid,
+                                  PortableServer::POA_ptr)
   {
-    CIAO_TRACE ("Servant_Activator::incarnate");
+    CIAO_TRACE ("Servant_Activator_i::incarnate");
 
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
 
     ACE_DEBUG ((LM_INFO, CLINFO
-		"Servant_Activator::incarnate, "
+		"Servant_Activator_i::incarnate, "
 		"Attempting to activate port name [%s] \n",
 		str.in ()));
 
@@ -87,7 +88,7 @@ namespace CIAO
 			  CORBA::NO_RESOURCES ());
 
       size_t const sz = this->slot_index_;
-      Port_Activator *tmp = 0;
+      Port_Activator_var tmp;
 
       for (size_t t = 0; t != sz; ++t)
         {
@@ -99,7 +100,7 @@ namespace CIAO
           if (tmp == 0)
             {
                 ACE_ERROR ((LM_ERROR, CLINFO
-                            "Servant_Activator::incarnate (),"
+                            "Servant_Activator_i::incarnate (),"
                             " value from the array is null \n"));
               continue;
             }
@@ -111,7 +112,7 @@ namespace CIAO
               // lock held. Oh well, let us get some sense of sanity in
               // CIAO to do think about these.
 	      ACE_DEBUG ((LM_INFO, CLINFO
-			  "Servant_Activator::incarnate - Activating Port %s\n",
+			  "Servant_Activator_i::incarnate - Activating Port %s\n",
 			  str.in ()));
 	      
               return this->pa_[t]->activate (oid);
@@ -123,7 +124,7 @@ namespace CIAO
   }
 
   void
-  Servant_Activator::etherealize (const PortableServer::ObjectId &oid,
+  Servant_Activator_i::etherealize (const PortableServer::ObjectId &oid,
                                   PortableServer::POA_ptr ,
                                   PortableServer::Servant servant,
                                   CORBA::Boolean ,
@@ -137,17 +138,18 @@ namespace CIAO
 
     for (size_t t = 0; t != sz; ++t)
       {
-        if (this->pa_.get (tmp, t) == -1)
+        Port_Activator_var pa;
+        if (this->pa_.get (pa, t) == -1)
           {
             ACE_ERROR ((LM_ERROR, CLINFO
-			"Servant_Activator::etherealize - Could not get Port Activator\n"));
+			"Servant_Activator_i::etherealize - Could not get Port Activator\n"));
             continue;
           }
 
         if (tmp == 0)
           {
             ACE_ERROR ((LM_ERROR, CLINFO
-			"Servant_Activator::etherealize - Port Activator is NULL\n"));
+			"Servant_Activator_i::etherealize - Port Activator is NULL\n"));
             continue;
           }
           
@@ -155,7 +157,7 @@ namespace CIAO
                             str.in ()) == 0)
           {
             ACE_DEBUG ((LM_INFO, CLINFO
-                        "Servant_Activator::etherealize - Deactivating Port %s\n",
+                        "Servant_Activator_i::etherealize - Deactivating Port %s\n",
                         str.in ()));
             this->pa_[t]->deactivate (servant);
           }
@@ -163,7 +165,7 @@ namespace CIAO
   }
 
   bool
-  Servant_Activator::register_port_activator (Port_Activator *pa)
+  Servant_Activator_i::register_port_activator (Port_Activator *pa)
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       guard,
@@ -182,7 +184,7 @@ namespace CIAO
         ++this->slot_index_;
 
 	ACE_DEBUG ((LM_INFO, CLINFO
-		    "Servant_Activator::"
+		    "Servant_Activator_i::"
 		    "register_port_activator"
 		    " with port name [%s],"
 		    " the slot_index_ is [%d] \n",

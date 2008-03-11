@@ -40,7 +40,9 @@ namespace Components
 
 namespace CIAO
 {
-  class Session_Container;
+  class Container;
+  typedef Container *Container_ptr;
+  typedef TAO_Objref_Var_T<Container> Container_var;
 
   /**
    * @class Context_Impl_Base
@@ -58,7 +60,7 @@ namespace CIAO
     /// the compilers want it, have to sort this out in detail.
     Context_Impl_Base (void);
 
-    Context_Impl_Base (Components::CCMHome_ptr home, Session_Container * c);
+    Context_Impl_Base (Components::CCMHome_ptr home, Container_ptr c);
 
     virtual ~Context_Impl_Base (void);
 
@@ -80,7 +82,7 @@ namespace CIAO
 
     // CIAO-specific.
 
-    CIAO::Session_Container *_ciao_the_Container (void) const;
+    CIAO::Container_ptr _ciao_the_Container (void) const;
 
     // Accessors for the private member.
     const char *_ciao_instance_id (void) const;
@@ -88,7 +90,7 @@ namespace CIAO
 
   protected:
     Components::CCMHome_var home_;
-    Session_Container *container_;
+    Container_var container_;
 
   private:
     CORBA::String_var ciao_instance_id_;

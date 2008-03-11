@@ -1176,7 +1176,7 @@ namespace
       os << t.name () << "_Context::"
          << t.name () << "_Context (" << endl
          << "::Components::CCMHome_ptr h," << endl
-         << "::CIAO::Session_Container *c," << endl
+         << "::CIAO::Container_ptr c," << endl
          << t.name () << "_Servant *sv)" << endl
          << "  : ::CIAO::Context_Impl_Base (h, c), " << endl
          << "    ::CIAO::Context_Impl<" << endl
@@ -1956,10 +1956,13 @@ namespace
            << "this->context_," << endl
            << "this)," << endl
            << "::CORBA::NO_MEMORY ());" << endl;
-
-        os << "::CIAO::Servant_Activator *sa = " << endl
+        
+        os << "PortableServer::ServantBase_var safe_tmp = tmp;" << endl
+           << "CIAO_Port_Activator_var pa = tmp._this ();" << endl;
+        
+        os << "::CIAO::CIAO_Servant_Activator_var sa = " << endl
            << "this->container_->ports_servant_activator ();" << endl
-           << "if (!sa->register_port_activator (tmp))" << endl
+           << "if (!sa->register_port_activator (pa._retn ()))" << endl
            << "{"
            << "return ";
 
@@ -2266,8 +2269,11 @@ namespace
            << "this->context_," << endl
            << "this)," << endl
            << "::CORBA::NO_MEMORY ());" << endl;
+        
+        os << "PortableServer::ServantBase_var safe_tmp = tmp;" << endl
+           << "CIAO_Port_Activator_var pa = tmp._this ();" << endl;
 
-        os << "::CIAO::Servant_Activator *sa =" << endl
+        os << "::CIAO::Servant_Activator_var *sa =" << endl
            << "  this->container_->ports_servant_activator ();" << endl
            << "if (!sa->register_port_activator (tmp))" << endl
            << "{"
@@ -2819,7 +2825,7 @@ namespace
          << "::Components::CCMHome_ptr h," << endl
          << "const char *ins_name," << endl
          << "::CIAO::Home_Servant_Impl_Base *hs," << endl
-         << "::CIAO::Session_Container *c)" << endl
+         << "::CIAO::Container_ptr c)" << endl
          << "  : ::CIAO::Servant_Impl_Base "
          << "(h, hs, c)," << endl
          << "    ::CIAO::Servant_Impl<" << endl
@@ -3820,7 +3826,7 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "const char *ins_name," << endl
-         << "::CIAO::Session_Container *c)" << endl
+         << "::CIAO::Container_ptr c)" << endl
          << "  : ::CIAO::Home_Servant_Impl_Base (c)," << endl
          << "    ::CIAO::";
 
@@ -4053,7 +4059,7 @@ namespace
          << endl
          << "create" << name << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
-         << "::CIAO::Session_Container *c," << endl
+         << "::CIAO::Container_ptr c," << endl
          << "const char *ins_name)" << endl
          << "{"
          << t.scoped_name ().scope_name () << "::CCM_"
@@ -4194,7 +4200,7 @@ ServantSourceEmitter::pre (TranslationUnit&)
 
   os << "#include \"" << file_name << "\"" << endl
      << "#include \"ciao/Valuetype_Factories/Cookies.h\"" << endl
-     << "#include \"ciao/Servants/Servant_Activator.h\"" << endl
+     << "#include \"ciao/Containers/CIAO_Servant_ActivatorC.h\"" << endl
      << (swapping ? "#include \"ciao/Servants/Swapping/Dynamic_Component_Activator.h\"\n" : "")
      << "#include \"ciao/Servants/Port_Activator_T.h\"" << endl
      << "#include \"tao/SystemException.h\"" << endl

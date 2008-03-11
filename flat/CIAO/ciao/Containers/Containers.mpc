@@ -1,11 +1,12 @@
-project(CIAO_Container_Base) : ciao_lib, ccm_svnt {
+project(CIAO_Container_Base) : ciao_lib, ccm_svnt, ciao_servant_activator, ciao_port_activator_stub  {
   dynamicflags += CONTAINER_BASE_BUILD_DLL
 
   IDL_Files {
-//    Contaiber_Base.idl
+     Container_Base.idl
   }
   Source_Files {
     Container_Base.cpp
+    Servant_Activator.cpp
   }
   Inline_Files {
     Container_Base.inl
@@ -15,9 +16,22 @@ project(CIAO_Container_Base) : ciao_lib, ccm_svnt {
   }
 }
 
+project(CIAO_Servant_Activator_stub) : ciao_lib, portableserver, taoidldefaults {
+   dynamicflags = CIAO_SERVANT_ACTIVATOR_BUILD_DLL
+   idlflags  += -Wb,stub_export_include=CIAO_Servant_Activator_export.h
+   idlflags  += -Wb,stub_export_macro=CIAO_Servant_Activator_Export
+   idlflags  += -SS
+
+   IDL_Files {
+     CIAO_Servant_Activator.idl
+   }                                
+   
+   Source_Files {
+   }
+}
 project(CIAO_Session_Container) : ciao_lib, ciao_container_base, utils, \
 				ccm_componentserver_stub, ciao_servant_activator {
-  dynamicflags += SESSION_CONTAINER_BUILD_DLL
+  dynamicflags = SESSION_CONTAINER_BUILD_DLL
 
   IDL_Files {
 //    Session/Session_Container.idl
