@@ -1,3 +1,8 @@
+Tue Mar 11 12:20:02 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (log): Fixed compile error. No need to use
+          ACE_TEXT_ALWAYS_CHAR for a char* literal.
+
 Mon Mar 10 22:27:09 UTC 2008  Nanbor Wang  <nanbor@wakefield.txcorp.com>
 
         * ace/Svc_Conf.h: Removed redundant inclusion of Obstack.h.  It is
