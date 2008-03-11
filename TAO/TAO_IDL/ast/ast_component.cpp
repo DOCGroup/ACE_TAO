@@ -223,18 +223,5 @@ AST_Component::ast_accept (ast_visitor *visitor)
   return visitor->visit_component (this);
 }
 
-bool
-AST_Component::redef_clash (void)
-{
-  if (this->AST_Interface::redef_clash ())
-    {
-      return 1;
-    }
-
-  return 0;
-}
-
-
-
 IMPL_NARROW_FROM_DECL(AST_Component)
 IMPL_NARROW_FROM_SCOPE(AST_Component)
