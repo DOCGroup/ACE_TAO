@@ -4,17 +4,17 @@
 
 #include "StandardConfigurator_Impl.h"
 #include <ciao/CIAO_common.h>
-#include <ciao/Containers/Session/Session_Container.h>
+#include <ciao/Containers/Container_BaseC.h>
 
 
 namespace CIAO
 {
   Servant_Impl_Base::Servant_Impl_Base (Components::CCMHome_ptr home,
                                         Home_Servant_Impl_Base *home_servant,
-                                        Session_Container * c)
+                                        Container_ptr c)
     : home_ (Components::CCMHome::_duplicate (home)),
       home_servant_ (home_servant),
-      container_ (c)
+      container_ (Container::_duplicate (c))
   {
   }
 
@@ -59,7 +59,7 @@ namespace CIAO
       for (CORBA::ULong i = 0; i < facet_len; ++i)
       {
         PortableServer::ObjectId_var facet_id =
-          this->container_->the_facet_cons_POA ()->reference_to_id (
+          this->container_->the_facet_POA ()->reference_to_id (
             facets[i]->facet_ref ());
 
         CIAO::Servant_Activator *sa =
@@ -67,7 +67,7 @@ namespace CIAO
 
         sa->update_port_activator (facet_id.in ());
 
-        this->container_->the_facet_cons_POA ()->deactivate_object (
+        this->container_->the_facet_POA ()->deactivate_object (
           facet_id);
       }
 
@@ -82,14 +82,14 @@ namespace CIAO
       for (CORBA::ULong j = 0; j < consumer_len; ++j)
       {
         PortableServer::ObjectId_var cons_id =
-          this->container_->the_facet_cons_POA ()->reference_to_id (
+          this->container_->the_facet_POA ()->reference_to_id (
             consumers[j]->consumer ());
 
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
         sa->update_port_activator (cons_id.in ());
 
-        this->container_->the_facet_cons_POA ()->deactivate_object (
+        this->container_->the_facet_POA ()->deactivate_object (
           cons_id);
       }
 
@@ -103,7 +103,7 @@ namespace CIAO
 
       PortableServer::ObjectId_var oid;
 
-      this->container_->uninstall_component (ccmobjref.in (), oid.out ());
+      this->container_->uninstall_managed_component (ccmobjref.in (), oid.out ());
 
       if (this->home_servant_)
 	this->home_servant_->update_component_map (oid);

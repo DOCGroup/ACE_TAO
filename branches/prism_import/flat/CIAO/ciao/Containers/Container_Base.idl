@@ -1,0 +1,57 @@
+/**
+ * @file Container_Base.idl
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ *
+ * Container local interface.
+ */
+
+#include "tao/PortableServer/PortableServer_include.pidl"
+#include "ccm/CCM_Home.idl"
+#include "ciao/Containers/CIAO_Servant_Activator.idl"
+
+module CIAO
+{
+  module Container_Types
+  {
+    enum OA_Type
+    {
+      COMPONENT_t,
+      FACET_CONSUMER_t
+    };
+  };
+    
+  local interface Container 
+  {
+    CORBA::PolicyList get_receptacle_policy (in string name);
+    
+    Components::CCMHome install_home (in string primary_artifact,
+                                       in string entry_point,
+                                       in string name);
+    
+    void uninstall_home (in Components::CCMHome homeptr);
+    
+    Components::CCMObject install_component (in string primary_artifact,
+                                             in string entry_point,
+                                             in string name);
+    
+    
+    void uninstall_component (in Components::CCMObject compptr);
+
+    Components::CCMObject install_managed_component (in PortableServer::Servant svnt, 
+                                                     out PortableServer::ObjectId oid);
+    
+    void uninstall_managed_component (in Components::CCMObject compptr, out PortableServer::ObjectId oid);
+    
+    Servant_Activator ports_servant_activator ();
+    
+    Object generate_reference (in string obj_id,
+                               in string repo_id,
+                               in Container_Types::OA_Type type);
+    
+    Object get_objref (in PortableServer::Servant p);
+    
+    PortableServer::POA the_POA ();
+    
+    PortableServer::POA the_facet_POA ();
+  };
+};

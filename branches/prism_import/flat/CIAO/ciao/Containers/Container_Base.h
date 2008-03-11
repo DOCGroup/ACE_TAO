@@ -25,8 +25,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <ace/Hash_Map_Manager_T.h>
+#include <tao/LocalObject.h>
 #include <tao/PortableServer/PortableServer.h>
 #include <ccm/CCM_ContainerC.h>
+
+#include "ciao/Containers/Container_BaseC.h"
 
 namespace CIAO
 {
@@ -54,62 +57,61 @@ namespace CIAO
    * Perhaps we can use local interface to define these interfaces as
    * we will also get reference counting automatically.
    */
-  class Container_Base_Export Container
+  class Container_Base_Export Container_i : 
+    public virtual Container,
+    public virtual TAO_Local_RefCounted_Object
   {
   public:
-    enum OA_Type
-      {
-        Component,
-        Facet_Consumer
-      };
+    Container_i (CORBA::ORB_ptr o);
+    Container_i (CORBA::ORB_ptr o, Deployment::CIAO_Container_i *container_impl);
 
-    Container (CORBA::ORB_ptr o);
-    Container (CORBA::ORB_ptr o, Deployment::CIAO_Container_i *container_impl);
+    virtual ~Container_i (void) = 0;
 
-    virtual ~Container (void) = 0;
+    /// Initialize the container with a name.
+    virtual void init (const char *name = 0,
+		       const CORBA::PolicyList *more_policies = 0) = 0;
 
     /// Get component's POA.
     /**
      * This operation does *NOT* increase the reference count of the
      * POA. Look at the const qualifier in the method.
      */
-    PortableServer::POA_ptr the_POA (void) const;
-    PortableServer::POA_ptr the_facet_cons_POA (void) const;
-
-    /// Get a reference to the underlying ORB.
-    CORBA::ORB_ptr the_ORB (void) const;
-
-    /// Set the policy map for all the receptacles hosted in this container.
-    void set_receptacle_policy_map (::CIAO::REC_POL_MAP &rec_pol_map);
+    virtual PortableServer::POA_ptr the_POA (void) const;
+    virtual PortableServer::POA_ptr the_facet_cons_POA (void) const;
 
     /// get the receptacle policy given the receptacle name
-    CORBA::PolicyList get_receptacle_policy (const char *name);
-
-    /// Initialize the container with a name.
-    virtual void init (const char *name = 0,
-		       const CORBA::PolicyList *more_policies = 0) = 0;
+    CORBA::PolicyList * get_receptacle_policy (const char *name);
 
     /// Install a new home
-    virtual Components::CCMHome_ptr ciao_install_home (
-      const char *exe_dll_name,
-      const char *exe_entrypt,
-      const char *sv_dll_name,
-      const char *sv_entrypt,
-      const char *ins_name) = 0;
+    virtual Components::CCMHome_ptr install_home (const char *primary_artifact,
+                                                  const char *entry_point,
+                                                  const char *name) = 0;
 
     // Uninstall a servant for component or home.
-    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref) = 0;
+    virtual void uninstall_home (Components::CCMHome_ptr homeref) = 0;
+    
+    virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
+                                                     const char *entry_point,
+                                                     const char *name) = 0;
+
+    virtual void uninstall_component (Components::CCMObject_ptr compref) = 0;
+
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p) = 0;
 
     // Uninstall a servant for component.
-    virtual void uninstall_component (::Components::CCMObject_ptr objref,
-                                      PortableServer::ObjectId_out oid) = 0;
+    virtual void uninstall_component_servant (::Components::CCMObject_ptr objref,
+                                              PortableServer::ObjectId_out oid) = 0;
 
     virtual void add_servant_to_map (PortableServer::ObjectId &oid,
                                      Dynamic_Component_Servant_Base* servant) = 0;
 
     virtual void delete_servant_from_map (PortableServer::ObjectId &oid) = 0;
 
-    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p) = 0;
+    /// Get a reference to the underlying ORB.
+    CORBA::ORB_ptr the_ORB (void) const;
+
+    /// Set the policy map for all the receptacles hosted in this container.
+    void set_receptacle_policy_map (::CIAO::REC_POL_MAP &rec_pol_map);
 
   protected:
     /// Reference to the ORB
@@ -128,12 +130,14 @@ namespace CIAO
     PortableServer::POA_var facet_cons_poa_;
 
     PortableServer::POA_var home_servant_poa_;
+
     Deployment::CIAO_Container_i *container_impl_;
+
     ::CIAO::REC_POL_MAP rec_pol_map_;
     
   private:
     /// Not allowed to be used
-    Container (void);
+    Container_i (void);
   };
 }
 

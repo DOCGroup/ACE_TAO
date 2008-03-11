@@ -96,7 +96,7 @@ namespace CIAO
     COMPONENTSERVANTCREATOR_FUNCPTR_MAP* component_servant_creator_funcptr_map_;
   };
 
-  class Session_Container_Export Session_Container : public Container
+  class Session_Container_Export Session_Container : public Container_i
   {
   public:
     Session_Container (CORBA::ORB_ptr o,
@@ -120,15 +120,20 @@ namespace CIAO
      *
      * @retval Home objref of the installed home.
      */
-    virtual Components::CCMHome_ptr ciao_install_home (
-      const char *exe_dll_name,
-      const char *exe_entrypt,
-      const char *sv_dll_name,
-      const char *sv_entrypt,
-      const char *ins_name);
+    /// Install a new home
+    virtual Components::CCMHome_ptr install_home (const char *primary_artifact,
+                                                  const char *entry_point,
+                                                  const char *name);
+    
+    // Uninstall a servant for component or home.
+    virtual void uninstall_home (Components::CCMHome_ptr homeref);
+    
+    virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
+                                                     const char *entry_point,
+                                                     const char *name);
+    
+    virtual void uninstall_component (Components::CCMObject_ptr compref);
 
-    /// Uninstall a servant for component or home.
-    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref);
 
     /// Uninstall a servant for component.
     virtual void uninstall_component (::Components::CCMObject_ptr objref,
@@ -136,20 +141,20 @@ namespace CIAO
 
     /// Install a servant for component or home.
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
-                                               Container::OA_Type t);
+                                               Container_Types::OA_Type t);
 
     /// Install a component servant.
-    CORBA::Object_ptr install_component (PortableServer::Servant p,
-                                         PortableServer::ObjectId_out oid);
+    CORBA::Object_ptr install_component_servant (PortableServer::Servant p,
+                                                 PortableServer::ObjectId_out oid);
 
     /// Get an object reference to a component or home from the servant.
     virtual CORBA::Object_ptr get_objref (PortableServer::Servant p);
 
     /// Uninstall a servant for component or home.
-    void uninstall (CORBA::Object_ptr objref, Container::OA_Type t);
+    void uninstall (CORBA::Object_ptr objref, Container_Types::OA_Type t);
 
     /// Uninstall a servant for component or home.
-    void uninstall (PortableServer::Servant svt, Container::OA_Type t);
+    void uninstall (PortableServer::Servant svt, Container_Types::OA_Type t);
 
     virtual void add_servant_to_map (PortableServer::ObjectId &oid,
                                      Dynamic_Component_Servant_Base* servant);
@@ -173,7 +178,7 @@ namespace CIAO
     /// an object id string.
     CORBA::Object_ptr generate_reference (const char *obj_id,
                                           const char *repo_id,
-                                          Container::OA_Type t);
+                                          Container_Types::OA_Type t);
 
     /// Return the servant activator factory that activates the
     /// servants for facets and consumers.
@@ -214,7 +219,7 @@ namespace CIAO
 
     /// The servant activator factory used to activate facets and
     /// consumer servants.
-    Servant_Activator *sa_;
+    Servant_Activator_var sa_;
   };
 }
 

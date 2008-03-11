@@ -28,7 +28,9 @@
 
 namespace CIAO
 {
-  class Session_Container;
+  class Container;
+  typedef Container *Container_ptr;
+  typedef TAO_Objref_Var_T<Container> Container_var;
 
   /**
    * @class Home_Servant_Impl_Base
@@ -42,7 +44,7 @@ namespace CIAO
     : public virtual POA_Components::CCMHome
   {
   public:
-    Home_Servant_Impl_Base (Session_Container * c);
+    Home_Servant_Impl_Base (Container_ptr c);
 
     virtual ~Home_Servant_Impl_Base (void);
 
@@ -56,7 +58,7 @@ namespace CIAO
     update_component_map (PortableServer::ObjectId &oid) = 0;
 
   protected:
-    Session_Container *container_;
+    Container_var container_;
     
   private:
     /// Not to be used

@@ -1,4 +1,4 @@
-project : ccm_svnt, portableserver {
-   libs += CIAO_Servant_Activator
-   after += CIAO_Servant_Activator
+project : portableserver {
+   libs += CIAO_Servant_Activator_stub
+   after += CIAO_Servant_Activator_stub
 }

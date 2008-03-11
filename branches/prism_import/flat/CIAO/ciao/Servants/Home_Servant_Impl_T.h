@@ -30,7 +30,9 @@
 
 namespace CIAO
 {
-  class Session_Container;
+  class Container;
+  typedef Container *Container_ptr;
+  
 
   /**
    * @class Home_Servant_Impl
@@ -49,7 +51,7 @@ namespace CIAO
   {
   public:
     Home_Servant_Impl (typename EXEC::_ptr_type exe,
-                       Session_Container * c,
+                       Container_ptr c,
                        const char *ins_name);
 
     virtual ~Home_Servant_Impl (void);

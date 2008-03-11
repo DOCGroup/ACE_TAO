@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Home_Servant_Impl_Base.h"
-#include "Servant_Activator.h"
+#include "ciao/Containers/CIAO_Servant_ActivatorC.h"
 
 #include <ace/Hash_Map_Manager_T.h>
 #include <ace/Array_Map.h>
@@ -37,7 +37,9 @@
 
 namespace CIAO
 {
-  class Session_Container;
+  class Container;
+  typedef Container *Container_ptr;
+  typedef TAO_Objref_Var_T<Container> Container_var;
 
   /**
    * @class Servant_Impl_Base
@@ -53,7 +55,7 @@ namespace CIAO
   public:
     Servant_Impl_Base (Components::CCMHome_ptr home,
                        Home_Servant_Impl_Base *home_servant,
-                       Session_Container * c);
+                       Container_ptr  c);
 
     virtual ~Servant_Impl_Base (void);
 
@@ -195,7 +197,7 @@ namespace CIAO
     ReceptacleTable receptacle_table_;
     Components::CCMHome_var home_;
     Home_Servant_Impl_Base *home_servant_;
-    Session_Container * container_;
+    Container_var container_;
 
   private:
     /// For internal locking of table reads and writes.

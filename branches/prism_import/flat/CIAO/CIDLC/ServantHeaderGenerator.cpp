@@ -431,7 +431,7 @@ namespace
 
       os << t.name () << "_Context (" << endl
          << "::Components::CCMHome_ptr h," << endl
-         << "::CIAO::Session_Container *c," << endl
+         << "::CIAO::Container_ptr c," << endl
          << t.name () << "_Servant *sv);" << endl;
 
       os << "virtual ~" << t.name () << "_Context (void);"
@@ -877,7 +877,7 @@ namespace
          << "::Components::CCMHome_ptr h," << endl
          << "const char *ins_name," << endl
          << "::CIAO::Home_Servant_Impl_Base *hs," << endl
-         << "::CIAO::Session_Container *c);" << endl;
+         << "::CIAO::Container_ptr c);" << endl;
 
       os << "virtual ~" << t.name () << "_Servant (void);" << endl;
 
@@ -1122,7 +1122,7 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "const char *ins_name," << endl
-         << "::CIAO::Session_Container *c);" << endl;
+         << "::CIAO::Container_ptr c);" << endl;
 
       os << "virtual ~" << t.name () << "_Servant (void);" << endl;
 
@@ -1332,7 +1332,7 @@ namespace
          << " ::PortableServer::Servant" << endl
          << "create" << name << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
-         << "CIAO::Session_Container *c," << endl
+         << "CIAO::Container_ptr c," << endl
          << "const char *ins_name);" << endl;
     }
 
@@ -1529,7 +1529,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   bool swapping = (swap_option == "upgradeable");
 
   os << "#include \"ciao/Containers/"
-     << (swapping ? "Swapping/Swapping_Container.h" : "Session/Session_Container.h")
+     << (swapping ? "Swapping/Swapping_Container.h" : "Container_BaseC.h")
      << "\"" << endl
      << "#include \"ciao/Contexts/"
      << (swapping ? "Swapping/Upgradeable_Context_Impl_T.h"

@@ -38,24 +38,23 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT,
             typename COMP_SERV>
-  class Port_Activator_T : public virtual Port_Activator
+  class Port_Activator_T : public virtual Port_Activator_i
   {
   public:
     typedef SERV SERVANT;
 
     Port_Activator_T (const char *oid,
                       const char *name,
-                      Port_Activator::Type t,
+                      Port_Activator_Types::Type t,
                       EXEC *e,
                       CONTEXT *c,
                       COMP_SERV *cs);
 
     /// Template method from the base class, please see the base class
     /// documentation for details.
-    PortableServer::Servant activate (
-        const PortableServer::ObjectId &oid);
+    virtual PortableServer::Servant activate (const PortableServer::ObjectId &oid);
 
-    void deactivate (const PortableServer::Servant servant);
+    virtual void deactivate (const PortableServer::Servant servant);
 
   private:
     /// The executor

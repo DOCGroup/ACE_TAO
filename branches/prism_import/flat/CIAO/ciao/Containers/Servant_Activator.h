@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CIAO_Servant_Impl_export.h"
+#include "CIAO_Servant_Activator_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,6 +25,8 @@
 #include <tao/PortableServer/ServantActivatorC.h>
 #include <tao/LocalObject.h>
 
+
+#include "ciao/Containers/CIAO_Servant_ActivatorC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -48,17 +50,19 @@ namespace CIAO
    * right one (yes a linear algorithm is used), calls activate () on
    * it which returns the servant for *that* port.
    */
-  class CIAO_Servant_Impl_Export Servant_Activator
-    : public virtual PortableServer::ServantActivator,
+  class CIAO_Servant_Activator_Export Servant_Activator_i
+    : public virtual ::CIAO::Servant_Activator,
       public virtual TAO_Local_RefCounted_Object
   {
   public:
-    Servant_Activator (CORBA::ORB_ptr o);
+    Servant_Activator_i (CORBA::ORB_ptr o);
 
-    virtual ~Servant_Activator (void);
+    virtual ~Servant_Activator_i (void);
 
-    bool update_port_activator (const PortableServer::ObjectId &oid);
-
+    virtual ::CORBA::Boolean  update_port_activator (const PortableServer::ObjectId &oid);
+    
+    virtual ::CORBA::Boolean  register_port_activator (::CIAO::Port_Activator_ptr pa);
+        
     /// Template methods overridden to get callbacks.
     /**
      * If you would like to know the details of the following two
@@ -75,7 +79,6 @@ namespace CIAO
 			      CORBA::Boolean remaining_activations);
 
     /// Local helper methods
-    bool register_port_activator (Port_Activator *pa);
 
   private:
     /// Pointer to our ORB
@@ -83,7 +86,7 @@ namespace CIAO
 
     /// @@ This should be changed at some point of time so that we
     /// don't  land up with a linear algorithm
-    typedef ACE_Array_Base<Port_Activator *> Port_Activators;
+    typedef ACE_Array_Base<Port_Activator_var> Port_Activators;
 
     /// Array of port activators
     Port_Activators pa_;

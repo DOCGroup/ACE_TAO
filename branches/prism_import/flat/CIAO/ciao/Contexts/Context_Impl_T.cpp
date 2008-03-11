@@ -12,7 +12,7 @@ namespace CIAO
             typename COMP>
   Context_Impl<BASE_CTX, SVNT, COMP>::Context_Impl (
       Components::CCMHome_ptr the_home,
-      Session_Container *c,
+      Container_ptr c,
       SVNT *sv)
     : Context_Impl_Base (the_home, c),
       servant_ (sv)

@@ -54,7 +54,8 @@ namespace Components
 
 namespace CIAO
 {
-  class Session_Container;
+  class Container;
+  typedef Container *Container_ptr;
 
   /**
    * @class Context_Impl
@@ -73,7 +74,7 @@ namespace CIAO
   {
   public:
     Context_Impl (Components::CCMHome_ptr the_home,
-                  Session_Container *c,
+                  Container_ptr c,
                   SVNT *sv);
 
     virtual ~Context_Impl (void);

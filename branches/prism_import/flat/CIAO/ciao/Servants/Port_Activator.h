@@ -21,11 +21,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <tao/PortableServer/PortableServer.h>
+#include "ciao/Servants/CIAO_Port_ActivatorC.h"
 
 namespace CIAO
 {
   /**
-   * @class Port_Activator
+   * @class Port_Activator_i
    *
    * @brief Base class for port activations
    *
@@ -35,18 +36,13 @@ namespace CIAO
    * polymorphism for facet and consumer servant activations.
    *
    */
-  class CIAO_Servant_Impl_Export Port_Activator
+  class CIAO_Servant_Impl_Export Port_Activator_i :
+    public virtual Port_Activator
   {
   public:
-    enum Type
-      {
-        Facet,
-        Sink
-      };
+    Port_Activator_i (const char *oid, const char *name, Port_Activator_Types::Type t);
 
-    Port_Activator (const char *oid, const char *name, Type t);
-
-    virtual ~Port_Activator (void);
+    virtual ~Port_Activator_i (void);
 
     /// Return the oid of port that this activator encapulates.
     const char* oid (void) const;
@@ -77,7 +73,7 @@ namespace CIAO
     CORBA::String_var name_;
 
     /// What type of port is it, a consumer or facet.
-    Type const t_;
+    Port_Activator_Types::Type const t_;
   };
 }
 

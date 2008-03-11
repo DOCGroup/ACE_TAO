@@ -1,3 +1,69 @@
+Tue Mar 11 06:34:45 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Containers/CIAO_Servant_Activator.idl:
+        * ciao/Containers/CIAO_Servant_Activator_export.h:
+        * ciao/Containers/Container_Base.h:
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Container_Base.inl:
+        * ciao/Containers/Container_Base.cpp:
+        * ciao/Containers/Containers.mpc:
+        * ciao/Containers/Servant_Activator.h:
+        * ciao/Containers/Servant_Activator.cpp:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.inl:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Contexts/Context_Impl_Base.h:
+        * ciao/Contexts/Context_Impl_Base.inl:
+        * ciao/Contexts/Context_Impl_Base.cpp:
+        * ciao/Contexts/Context_Impl_T.h:
+        * ciao/Contexts/Context_Impl_T.cpp:
+        * ciao/Servants/CIAO_Port_Activator.idl:
+        * ciao/Servants/CIAO_Port_Activator_export.h:
+        * ciao/Servants/Home_Servant_Impl_Base.h:
+        * ciao/Servants/Home_Servant_Impl_Base.cpp:
+        * ciao/Servants/Home_Servant_Impl_T.h:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+        * ciao/Servants/Port_Activator.h:
+        * ciao/Servants/Port_Activator.inl:
+        * ciao/Servants/Port_Activator.cpp:
+        * ciao/Servants/Port_Activator_T.h:
+        * ciao/Servants/Port_Activator_T.cpp:
+        * ciao/Servants/Servant_Impl_Base.h:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_T.h:
+        * ciao/Servants/Servant_Impl_T.cpp:
+        * ciao/Servants/Servants.mpc:
+        
+          Refactored the container interface in substantial ways.  First, the containers should
+          now be implemented as locality constrained objects based on the Container_Base.idl
+          interface.  This interface now contains _all_ methods that are used by servants during
+          deployment and teardown, as well as interfaces intended to be used by the external container
+          interface to initiate copmonent and home installations.
+        
+          The goal here is to remove any need to have component servants dependent on specific container
+          implementation at all.
+        
+          Note that there is still quite some implementation required here - new methods and changes to
+          old ones.  Everything at least compiles, which is a start. 
+        
+          Changes to existing clients of the internal container interface should be plug-n-pray,
+          modulo changing pointer to vars.
+        
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Codegen changes for above. Servants for Hello and BasicSP compile. 
+        
+        * MPC/config/ciao_port_activator_stub.mpb:
+        * MPC/config/ciao_servant_activator.mpb:
+
+          Base projects for above. 
+
+        * ciao/Servants/Servant_Activator.h:
+        * ciao/Servants/Servant_Activator.cpp:
+
+          Moved to container directory.
+
 Mon Mar 10 17:41:46 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ccm.mpb:
@@ -6,9 +72,9 @@ Mon Mar 10 17:41:46 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * MPC/config/ciao_executor.mpb:
         * MPC/config/ciao_servant.mpb:
         * MPC/config/dance_component_server_svnt.mpb:
-        
-          MPC files which should have been in previous commit. 
-        
+
+          MPC files which should have been in previous commit.
+
 Mon Mar 10 15:45:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
