@@ -99,8 +99,14 @@ ACE_OS::argv_to_string (int argc,
             }
         }
 #endif /* ACE_LACKS_ENV */
+      // If must quote, we only do it if the arg contains spaces, or
+      // is empty. Perhaps a check for other c | ord(c) <= 32 is in
+      // order?
       if (quote_args
-          && ACE_OS::strchr (argv_p[i], ACE_TEXT (' ')) != 0)
+          && (ACE_OS::strchr (argv_p[i], ACE_TEXT (' ')) != 0
+              || ACE_OS::strchr (argv_p[i], ACE_TEXT ('\t')) != 0
+              || ACE_OS::strchr (argv_p[i], ACE_TEXT ('\n')) != 0
+              || *argv_p[i] == 0))
         {
           if (argv_p == argv)
             {
