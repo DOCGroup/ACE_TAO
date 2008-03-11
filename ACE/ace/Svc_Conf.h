@@ -15,6 +15,7 @@
 #define ACE_SVC_CONF_H
 
 #include /**/ "ace/pre.h"
+#include "ace/config.h"   // Need to see ACE_LACKS_PRAGMA_ONCE
 
 // Globally visible macros, type decls, and extern var decls for
 // Service Configurator utility.
