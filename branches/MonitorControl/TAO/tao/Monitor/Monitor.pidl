@@ -1,3 +1,6 @@
+#include "tao/TimeBase.pidl"
+#include "tao/StringSeq.pidl"
+
 module Monitor
 {
   interface MC
@@ -11,7 +14,7 @@ module Monitor
 
     typedef string Name;
     typedef CORBA::StringSeq NameList;
-    typedef sequence<Data> DataList
+    typedef sequence<Data> DataList;
 
     exception InvalidName {
       NameList names;
@@ -19,7 +22,7 @@ module Monitor
 
     NameList get_statistic_names ();
 
-    Data get_statistic (in Name name)
+    Data get_statistic (in Name the_name)
       raises (InvalidName);
 
     DataList get_statistics (in NameList names)

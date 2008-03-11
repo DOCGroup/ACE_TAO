@@ -51,6 +51,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_MONITOR_SAFE_INCLUDE
 #include "tao/Monitor/MonitorC.h"
-#undef TAO_PI_SAFE_INCLUDE
+#undef TAO_MONITOR_SAFE_INCLUDE
 
 #endif  /* TAO_MONITOR_H */

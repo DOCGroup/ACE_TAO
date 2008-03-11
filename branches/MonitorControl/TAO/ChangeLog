@@ -1,3 +1,20 @@
+Tue Mar 11 18:13:30 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Monitor/Monitor.mpc:
+        
+          - Fixed typo in dynamic flag argument.
+          - tweaked IDL compiler command line options.
+          - added 'portableserver' to base project list,
+            so the MC interface can be accessed remotely.
+            
+        * tao/Monitor/Monitor.h:
+        
+          Fixed typo in safe include guard.
+          
+        * tao/Monitor/Monitor.pidl:
+        
+          Added necessary includes of TAO .pidl files.
+
 Mon Mar 10 11:22:23 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Monitor/Monitor.idl:
