@@ -250,9 +250,9 @@ ACE_FoxReactor::reset_timeout (void)
 
   if (max_wait_time != 0)
     {
-      float t = max_wait_time->sec ()
+      float t = max_wait_time->sec () +
         max_wait_time->usec () / 1000000.0F;
-      fxapp->addTimeout (t*1000, this, 0);
+      fxapp->addTimeout (this, 0, t*1000);
     }
 }
 

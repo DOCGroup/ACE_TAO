@@ -1,8 +1,14 @@
+Wed Mar 12 07:07:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FoxReactor/FoxReactor.cpp:
+          Fixed compile errors, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
 Wed Mar 12 06:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mwc:
         * bin/MakeProjectCreator/config/global.features:
-          Added fox reactor, thanks to  Thomas Girard
+          Added fox reactor, thanks to Thomas Girard
           <thomas dot g dot girard at free dot fr> for reporting this
 
 Wed Mar 12 06:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
