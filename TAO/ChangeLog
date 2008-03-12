@@ -1,3 +1,9 @@
+Wed Mar 12 11:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ForResource/TAO_FoxResource_Export.h:
+          Corrected this file, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
 Wed Mar 12 07:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/FoxResource/FoxResource_Loader.h:
