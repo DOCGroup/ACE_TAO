@@ -1122,7 +1122,7 @@ TAO_IFR_Service_Utils::reference_to_path (CORBA::IRObject_ptr obj)
   if (CORBA::is_nil (obj))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "reference_to_path - NULL object; check the include "
+                  "reference_to_path - null object; check the include "
                   "order of IDL\n"));
 
       throw CORBA::INTF_REPOS ();
