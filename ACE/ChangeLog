@@ -1,3 +1,10 @@
+Wed Mar 12 06:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mwc:
+        * bin/MakeProjectCreator/config/global.features:
+          Added fox reactor, thanks to  Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
 Wed Mar 12 06:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/ace.m4:
