@@ -520,6 +520,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_QT_REACTOR
  ACE_ENABLE_TK_REACTOR
  ACE_ENABLE_XT_REACTOR
+ ACE_ENABLE_FOX_REACTOR
 
  # placeholder for WxWindows/wxWidgets support
  AM_CONDITIONAL([BUILD_WXWINDOWS], false)
@@ -1578,4 +1579,58 @@ AM_CONDITIONAL([BUILD_TAO_XTRESOURCE],
                [test X$ace_user_enable_xt_reactor = Xyes])
 ])
 
+# ACE_PATH_FOX
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_PATH_FOX],
+[AC_ARG_WITH([fox-config],
+ AS_HELP_STRING([--with-fox-config=DIR],
+                [path to fox-config [[automatic]]]),
+ [ ac_fox_config_dir="${withval}" ])
+ if test X"${ac_fox_config_dir}" = X; then
+   AC_PATH_PROG([FOXCONFIG], [fox-config], [], [])
+ else
+  AC_MSG_CHECKING([whether fox-config exists in ${ac_fox_config_dir}])
+   if test -f "${ac_fox_config_dir}/fox-config"; then
+     FOXCONFIG="${ac_fox_config_dir}/fox-config"
+     AC_MSG_RESULT([yes])
+   else
+     AC_MSG_RESULT([no])
+   fi
+ fi
+ if test X"${FOXCONFIG}" != X; then
+   ACE_FOX_CPPFLAGS=`$FOXCONFIG --cflags 2>/dev/null`
+   ACE_FOX_LIBS=`$FOXCONFIG --libs 2>/dev/null`
+   AC_SUBST(ACE_FOX_CPPFLAGS)
+   AC_SUBST(ACE_FOX_LIBS)
+ fi
+])
 
+# ACE_ENABLE_FOX_REACTOR
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_FOX_REACTOR],
+[AC_REQUIRE([ACE_PATH_FOX])
+AC_ARG_ENABLE([fox-reactor],
+               AS_HELP_STRING([--enable-fox-reactor],
+                              [build support for the FoxReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+                   AS_IF([test X"${FOXCONFIG}" != X],
+                         [ace_user_enable_fox_reactor=yes],
+                         [AC_MSG_ERROR([ACE_FoxReactor cannot be enabled: fox-config not found.])])
+                   ;;
+                 no)
+                   ace_user_enable_fox_reactor=no
+                   ;;
+                 *)
+                   AC_MSG_ERROR([bad value ${enableval} for --enable-fox-reactor])
+                  ;;
+              esac],
+               [
+                 ace_user_enable_fox_reactor=no
+               ])
+AM_CONDITIONAL([BUILD_FOX], [test X$ace_user_enable_fox_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_FOXREACTOR],
+               [test X$ace_user_enable_fox_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_FOXRESOURCE],
+               [test X$ace_user_enable_fox_reactor = Xyes])
+])
