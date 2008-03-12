@@ -1683,15 +1683,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
                     if (can_check)
                       this_len = ACE_OS::snprintf
-                        (bp,
-                         bspace,
-                         format,
-                         cstr ? cstr : ACE_TEXT_ALWAYS_CHAR ("(null)"));
+                        (bp, bspace, format, cstr ? cstr : "(null)");
                     else
                       this_len = ACE_OS::sprintf
-                        (bp,
-                         format,
-                         cstr ? cstr : ACE_TEXT_ALWAYS_CHAR ("(null)"));
+                        (bp, format, cstr ? cstr : "(null)");
                     ACE_UPDATE_COUNT (bspace, this_len);
                   }
                   break;

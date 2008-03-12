@@ -1,3 +1,64 @@
+Wed Mar 12 15:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX.pm:
+          Fix retry mechanism for the iBoot bar
+
+Wed Mar 12 12:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/ace.m4:
+          Added support for fox, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this.
+          This fixes bugzilla 3147
+
+Wed Mar 12 11:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FoxReactor/FoxReactor.{h,cpp}:
+          Removed check for ACE_HAS_FOX
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Changed fox handling, matches the other reactors. Thanks to
+          Thomas Girard <thomas dot g dot girard at free dot fr> for
+          reporting this. This resolves bugzilla 3248
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+          Added support for Visual Age 9
+
+Wed Mar 12 11:53:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FoxReactor/FoxReactor.h:
+          Added missing include, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
+Wed Mar 12 07:07:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FoxReactor/FoxReactor.cpp:
+          Fixed compile errors, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
+Wed Mar 12 06:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mwc:
+        * bin/MakeProjectCreator/config/global.features:
+          Added fox reactor, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
+Wed Mar 12 06:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/ace.m4:
+          Added enable-aio, enable-ipo and fixed gperf handling.
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
+Tue Mar 11 12:24:43 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Svc_Conf.h: Add #include "ace/config.h" so a setting for
+          ACE_LACKS_PRAGMA_ONCE can be seen. Fixes compile warnings.
+
+Tue Mar 11 12:20:02 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (log): Fixed compile error. No need to use
+          ACE_TEXT_ALWAYS_CHAR for a char* literal.
+
 Mon Mar 10 22:27:09 UTC 2008  Nanbor Wang  <nanbor@wakefield.txcorp.com>
 
         * ace/Svc_Conf.h: Removed redundant inclusion of Obstack.h.  It is

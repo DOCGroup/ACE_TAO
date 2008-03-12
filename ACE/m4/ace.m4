@@ -352,6 +352,25 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
     ace_user_enable_pthreads=yes
   ])
 
+ AC_ARG_ENABLE([aio],
+  AS_HELP_STRING(--enable-aio,enable aio support [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_aio=yes
+      ;;
+    no)
+      ace_user_enable_aio=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-aio])
+      ;;
+   esac
+  ],
+  [
+    ace_user_enable_aio=yes
+  ])
+
  AC_ARG_ENABLE([uithreads],
   AS_HELP_STRING(--enable-uithreads,enable UNIX International thread support [[[no]]]),
   [
@@ -501,6 +520,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_QT_REACTOR
  ACE_ENABLE_TK_REACTOR
  ACE_ENABLE_XT_REACTOR
+ ACE_ENABLE_FOX_REACTOR
 
  # placeholder for WxWindows/wxWidgets support
  AM_CONDITIONAL([BUILD_WXWINDOWS], false)
@@ -534,7 +554,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
      AC_MSG_WARN([existing gperf may be overwritten during installation])
     ],[])
  fi
- AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_enable_gperf = Xyes])
+ AM_CONDITIONAL([BUILD_GPERF], [test X$ace_user_enable_gperf = Xyes])
 
  ACE_ENABLE_QOS
  ACE_ENABLE_SSL
@@ -713,6 +733,22 @@ dnl    fi
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-fast])
+      ;;
+   esac
+  ],)
+
+ AC_ARG_ENABLE([ipo],
+  AS_HELP_STRING(--enable-ipo,enable -ipo flag (e.g. Intel C++) [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ACE_CXXFLAGS="$ACE_CXXFLAGS -ipo"
+      ACE_CFLAGS="$ACE_CFLAGS -ipo"
+      ;;
+    no)
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ipo])
       ;;
    esac
   ],)
@@ -1198,7 +1234,7 @@ AC_DEFUN([ACE_PATH_QT],
 # ACE_PATH_TCL
 #---------------------------------------------------------------------------
 # Find Tcl Libraries, flags, etc.
-AC_DEFUN([ACE_PATH_TCL], 
+AC_DEFUN([ACE_PATH_TCL],
 [AC_ARG_WITH([tclconfig],
  AS_HELP_STRING([--with-tclconfig=DIR],
                 [path to tclConfig.sh [[automatic]]]),
@@ -1230,7 +1266,7 @@ AC_DEFUN([ACE_PATH_TCL],
 # ACE_PATH_TK
 #---------------------------------------------------------------------------
 # Find Tk Libraries, flags, etc.
-AC_DEFUN([ACE_PATH_TK], 
+AC_DEFUN([ACE_PATH_TK],
 [AC_REQUIRE([ACE_PATH_TCL])
  AC_ARG_WITH([tkconfig],
  AS_HELP_STRING([--with-tkconfig=DIR],
@@ -1328,7 +1364,7 @@ dnl AC_ARG_WITH([zlib_include],
 dnl   AS_HELP_STRING([--with-zlib-include=DIR],
 dnl 		 [specify exact include dir for zlib headers]),
 dnl   [ace_zlib_include="$withval"])
-dnl 
+dnl
 dnl AC_ARG_WITH([zlib_libdir],
 dnl   AS_HELP_STRING([--with-zlib-libdir=DIR],
 dnl 		 [specify exact include dir for zlib libraries]),
@@ -1383,7 +1419,7 @@ dnl AC_ARG_WITH([zzip_include],
 dnl   AS_HELP_STRING([--with-zzip-include=DIR],
 dnl 		 [specify exact include dir for zzip headers]),
 dnl   [ace_zzip_include="$withval"])
-dnl 
+dnl
 dnl AC_ARG_WITH([zzip_libdir],
 dnl   AS_HELP_STRING([--with-zzip-libdir=DIR],
 dnl 		 [specify exact include dir for zzip libraries]),
@@ -1543,4 +1579,58 @@ AM_CONDITIONAL([BUILD_TAO_XTRESOURCE],
                [test X$ace_user_enable_xt_reactor = Xyes])
 ])
 
+# ACE_PATH_FOX
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_PATH_FOX],
+[AC_ARG_WITH([fox-config],
+ AS_HELP_STRING([--with-fox-config=DIR],
+                [path to fox-config [[automatic]]]),
+ [ ac_fox_config_dir="${withval}" ])
+ if test X"${ac_fox_config_dir}" = X; then
+   AC_PATH_PROG([FOXCONFIG], [fox-config], [], [])
+ else
+  AC_MSG_CHECKING([whether fox-config exists in ${ac_fox_config_dir}])
+   if test -f "${ac_fox_config_dir}/fox-config"; then
+     FOXCONFIG="${ac_fox_config_dir}/fox-config"
+     AC_MSG_RESULT([yes])
+   else
+     AC_MSG_RESULT([no])
+   fi
+ fi
+ if test X"${FOXCONFIG}" != X; then
+   ACE_FOX_CPPFLAGS=`$FOXCONFIG --cflags 2>/dev/null`
+   ACE_FOX_LIBS=`$FOXCONFIG --libs 2>/dev/null`
+   AC_SUBST(ACE_FOX_CPPFLAGS)
+   AC_SUBST(ACE_FOX_LIBS)
+ fi
+])
 
+# ACE_ENABLE_FOX_REACTOR
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_FOX_REACTOR],
+[AC_REQUIRE([ACE_PATH_FOX])
+AC_ARG_ENABLE([fox-reactor],
+               AS_HELP_STRING([--enable-fox-reactor],
+                              [build support for the FoxReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+                   AS_IF([test X"${FOXCONFIG}" != X],
+                         [ace_user_enable_fox_reactor=yes],
+                         [AC_MSG_ERROR([ACE_FoxReactor cannot be enabled: fox-config not found.])])
+                   ;;
+                 no)
+                   ace_user_enable_fox_reactor=no
+                   ;;
+                 *)
+                   AC_MSG_ERROR([bad value ${enableval} for --enable-fox-reactor])
+                  ;;
+              esac],
+               [
+                 ace_user_enable_fox_reactor=no
+               ])
+AM_CONDITIONAL([BUILD_FOX], [test X$ace_user_enable_fox_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_FOXREACTOR],
+               [test X$ace_user_enable_fox_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_FOXRESOURCE],
+               [test X$ace_user_enable_fox_reactor = Xyes])
+])

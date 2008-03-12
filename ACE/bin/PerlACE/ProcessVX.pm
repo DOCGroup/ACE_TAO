@@ -144,13 +144,26 @@ sub iboot_cycle_power {
           $iboot->recv ($text,128);
           print "iBoot is currently: $text\n" if ($v);
           $iboot->close();
-          if ($text eq "OFF" || $text eq "ON") {
-            $is_open = 1;
-            last;
+          if (defined $iboot_outlet) {
+            $text = substr $text, $iboot_outlet - 1, 1;
+            if ($text eq "0" || $text eq "1") {
+              $is_open = 1;
+              last;
+            }
+            else {
+              print "iBoot is $text; sleeping then retrying\n" if ($v);
+              sleep(5);
+            }
           }
-          else {
-            print "iBoot is $text; sleeping then retrying\n" if ($v);
-            sleep(5);
+          else  {
+            if ($text eq "OFF" || $text eq "ON") {
+              $is_open = 1;
+              last;
+            }
+            else {
+              print "iBoot is $text; sleeping then retrying\n" if ($v);
+              sleep(5);
+            }
           }
         }
         else {
