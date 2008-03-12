@@ -25,8 +25,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_FOX)
-
 #include "ace/Select_Reactor.h"
 #include "ace/FoxReactor/ACE_FoxReactor_export.h"
 
@@ -108,8 +106,6 @@ private:
   ACE_FoxReactor (const ACE_FoxReactor &);
   ACE_FoxReactor &operator = (const ACE_FoxReactor &);
 };
-
-#endif /* ACE_HAS_FL */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_FOXREACTOR_H */
