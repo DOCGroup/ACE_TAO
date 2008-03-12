@@ -352,6 +352,25 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
     ace_user_enable_pthreads=yes
   ])
 
+ AC_ARG_ENABLE([aio],
+  AS_HELP_STRING(--enable-aio,enable aio support [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_aio=yes
+      ;;
+    no)
+      ace_user_enable_aio=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-aio])
+      ;;
+   esac
+  ],
+  [
+    ace_user_enable_aio=yes
+  ])
+
  AC_ARG_ENABLE([uithreads],
   AS_HELP_STRING(--enable-uithreads,enable UNIX International thread support [[[no]]]),
   [
@@ -534,7 +553,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
      AC_MSG_WARN([existing gperf may be overwritten during installation])
     ],[])
  fi
- AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_enable_gperf = Xyes])
+ AM_CONDITIONAL([BUILD_GPERF], [test X$ace_user_enable_gperf = Xyes])
 
  ACE_ENABLE_QOS
  ACE_ENABLE_SSL
@@ -713,6 +732,22 @@ dnl    fi
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-fast])
+      ;;
+   esac
+  ],)
+
+ AC_ARG_ENABLE([ipo],
+  AS_HELP_STRING(--enable-ipo,enable -ipo flag (e.g. Intel C++) [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ACE_CXXFLAGS="$ACE_CXXFLAGS -ipo"
+      ACE_CFLAGS="$ACE_CFLAGS -ipo"
+      ;;
+    no)
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ipo])
       ;;
    esac
   ],)
@@ -1198,7 +1233,7 @@ AC_DEFUN([ACE_PATH_QT],
 # ACE_PATH_TCL
 #---------------------------------------------------------------------------
 # Find Tcl Libraries, flags, etc.
-AC_DEFUN([ACE_PATH_TCL], 
+AC_DEFUN([ACE_PATH_TCL],
 [AC_ARG_WITH([tclconfig],
  AS_HELP_STRING([--with-tclconfig=DIR],
                 [path to tclConfig.sh [[automatic]]]),
@@ -1230,7 +1265,7 @@ AC_DEFUN([ACE_PATH_TCL],
 # ACE_PATH_TK
 #---------------------------------------------------------------------------
 # Find Tk Libraries, flags, etc.
-AC_DEFUN([ACE_PATH_TK], 
+AC_DEFUN([ACE_PATH_TK],
 [AC_REQUIRE([ACE_PATH_TCL])
  AC_ARG_WITH([tkconfig],
  AS_HELP_STRING([--with-tkconfig=DIR],
@@ -1328,7 +1363,7 @@ dnl AC_ARG_WITH([zlib_include],
 dnl   AS_HELP_STRING([--with-zlib-include=DIR],
 dnl 		 [specify exact include dir for zlib headers]),
 dnl   [ace_zlib_include="$withval"])
-dnl 
+dnl
 dnl AC_ARG_WITH([zlib_libdir],
 dnl   AS_HELP_STRING([--with-zlib-libdir=DIR],
 dnl 		 [specify exact include dir for zlib libraries]),
@@ -1383,7 +1418,7 @@ dnl AC_ARG_WITH([zzip_include],
 dnl   AS_HELP_STRING([--with-zzip-include=DIR],
 dnl 		 [specify exact include dir for zzip headers]),
 dnl   [ace_zzip_include="$withval"])
-dnl 
+dnl
 dnl AC_ARG_WITH([zzip_libdir],
 dnl   AS_HELP_STRING([--with-zzip-libdir=DIR],
 dnl 		 [specify exact include dir for zzip libraries]),
