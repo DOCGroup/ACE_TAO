@@ -2,7 +2,8 @@ Wed Mar 12 12:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/ace.m4:
           Added support for fox, thanks to Thomas Girard
-          <thomas dot g dot girard at free dot fr> for reporting this
+          <thomas dot g dot girard at free dot fr> for reporting this.
+          This fixes bugzilla 3147
 
 Wed Mar 12 11:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
