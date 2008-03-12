@@ -92,6 +92,8 @@ ace_xtreactor    = 1
 ace_tkreactor    = 1
 // Use FlReactor
 ace_flreactor    = 1
+// Use FoxReactor
+ace_flreactor    = 1
 
 // Features for TAO support for various GUI libraries
 // Use QtResources for TAO
@@ -102,6 +104,8 @@ tao_xtresource    = 1
 tao_tkresource    = 1
 // Use FlResources for TAO
 tao_flresource    = 1
+// Use FoxResources for TAO
+tao_foxresource    = 1
 
 //Use the ZIP_Wrapper feature for when using the ZIP wrapper classes
 ZIP_Wrapper = 0

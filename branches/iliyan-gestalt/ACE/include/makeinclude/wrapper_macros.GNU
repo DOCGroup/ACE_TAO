@@ -63,6 +63,7 @@
 #                   trio, see http://sourceforge.net/projects/ctrio/
 #  xt               Build with Xt (X11 Toolkit) support.
 #  fl               Build with FlTk (Fast Light Toolkit) support.
+#  fox              Build with Fox Toolkit support.
 #  tk               Build with Tk (Tcl/Tk) support.
 #  qt               Build with Qt (Trolltech Qt) support.
 #  ssl              Build with OpenSSL support.
@@ -550,18 +551,18 @@ ifneq ($(gtk_reactor),)
   ACE_MAKE_OPTIONS += gtk_reactor
 endif # gtk_reactor
 
-ifeq ($(fox_reactor),0)
-  override fox_reactor =
-endif # fox_reactor
+fox ?=
+ifeq ($(fox),0)
+  override fox =
+endif # fox
 
-ifneq ($(fox_reactor),)
-  override ace_with_x11=1
-  override ace_with_gl=1
-  CPPFLAGS += -DACE_HAS_FOX $(PLATFORM_FOX_CPPFLAGS)
-  LIBS += $(PLATFORM_FOX_LIBS)
-  LDFLAGS += $(PLATFORM_FOX_LDFLAGS)
-  ACE_MAKE_OPTIONS += fox_reactor
-endif # fox_reactor
+ifneq ($(fox),)
+  override x11=1
+  override gl=1
+  override ace_foxreactor=1
+  override tao_foxresource=1
+  ACE_MAKE_OPTIONS += fox
+endif #fox
 
 QTDIR ?=
 ifneq ($(QTDIR),)
