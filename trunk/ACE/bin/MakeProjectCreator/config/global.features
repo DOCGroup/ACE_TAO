@@ -93,7 +93,7 @@ ace_tkreactor    = 1
 // Use FlReactor
 ace_flreactor    = 1
 // Use FoxReactor
-ace_flreactor    = 1
+ace_foxreactor   = 1
 
 // Features for TAO support for various GUI libraries
 // Use QtResources for TAO
