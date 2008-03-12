@@ -1,3 +1,9 @@
+Wed Mar 12 13:43:34 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+          Fixed a comment that was triggering an error in the fuzz build.
+
 Wed Mar 12 12:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:
