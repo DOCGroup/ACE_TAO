@@ -1,3 +1,52 @@
+Wed Mar 12 13:43:34 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+          Fixed a comment that was triggering an error in the fuzz build.
+
+Wed Mar 12 12:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added support for fox, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
+Wed Mar 12 11:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ForResource/TAO_FoxResource_Export.h:
+          Corrected this file, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
+Wed Mar 12 07:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/FoxResource/FoxResource_Loader.h:
+          Added missing fox include, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
+Tue Mar 11 20:25:13 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/ast/ast_component.cpp:
+
+          Removed AST_Component override of redef_clash(), it does
+          nothing but call the base class version in AST_Interface.
+          Also made the AST_Interface version non-virtual.
+
+Tue Mar 11 19:46:44 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+          The IFR now throws an exception when referenced types are
+          unknown, rather than crashing without an error.
+
+Tue Mar 11 18:51:10 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * TAO_IDL/ast/ast_interface.cpp:
+
+          The -Cw option generated a warning message instead of an error,
+          but it had the same end result: a premature exit from a method
+          call. This has been fixed.
+
 Mon Mar 10 08:02:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dynamicinterface.mpb:

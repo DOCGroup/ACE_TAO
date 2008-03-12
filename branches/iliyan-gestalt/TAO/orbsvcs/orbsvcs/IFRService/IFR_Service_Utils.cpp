@@ -1119,6 +1119,15 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
 char *
 TAO_IFR_Service_Utils::reference_to_path (CORBA::IRObject_ptr obj)
 {
+  if (CORBA::is_nil (obj))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "reference_to_path - null object; check the include "
+                  "order of IDL\n"));
+
+      throw CORBA::INTF_REPOS ();
+    }
+
   PortableServer::ObjectId object_id;
   TAO::ObjectKey object_key =
     obj->_stubobj ()->profile_in_use ()->object_key ();
