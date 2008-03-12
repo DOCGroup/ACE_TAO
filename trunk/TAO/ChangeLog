@@ -1,9 +1,15 @@
+Wed Mar 12 07:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/FoxResource/FoxResource_Loader.h:
+          Added missing fox include, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
 Tue Mar 11 20:25:13 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_interface.h:
         * TAO_IDL/include/ast_component.h:
         * TAO_IDL/ast/ast_component.cpp:
-        
+
           Removed AST_Component override of redef_clash(), it does
           nothing but call the base class version in AST_Interface.
           Also made the AST_Interface version non-virtual.
