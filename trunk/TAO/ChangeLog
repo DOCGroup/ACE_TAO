@@ -1,3 +1,9 @@
+Wed Mar 12 12:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added support for fox, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
 Wed Mar 12 11:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ForResource/TAO_FoxResource_Export.h:
