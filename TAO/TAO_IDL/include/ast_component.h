@@ -80,10 +80,6 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-  // Check if we have redefined any of our parents' operations or attributes,
-  // and check if there is such a clash among the parents
-  virtual bool redef_clash (void);
-
 private:
   AST_Component *pd_base_component;
   ACE_Unbounded_Queue<port_description> pd_provides;

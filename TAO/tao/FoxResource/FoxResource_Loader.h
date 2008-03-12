@@ -24,6 +24,8 @@
 
 #include "tao/Versioned_Namespace.h"
 
+#include <fox/fx.h>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
