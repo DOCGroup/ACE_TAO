@@ -28,6 +28,7 @@
 #if defined (ACE_HAS_FOX)
 
 #include "ace/Select_Reactor.h"
+#include "ace/FoxReactor/ACE_FoxReactor_export.h"
 
 #include <fox/fx.h>
 
