@@ -4,8 +4,6 @@
 
 ACE_RCSID(ace, FoxReactor, "$Id$")
 
-#if defined (ACE_HAS_FOX)
-
 #include "ace/Synch_T.h"
 
 FXDEFMAP(ACE_FoxReactor) ACE_FoxReactorMap[]={
@@ -279,9 +277,9 @@ ACE_FoxReactor::reset_timer_interval
 
 long
 ACE_FoxReactor::schedule_timer (ACE_Event_Handler *event_handler,
-                             const void *arg,
-                             const ACE_Time_Value &delay,
-                             const ACE_Time_Value &interval)
+                                const void *arg,
+                                const ACE_Time_Value &delay,
+                                const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_FoxReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
@@ -317,8 +315,8 @@ ACE_FoxReactor::cancel_timer (ACE_Event_Handler *handler,
 
 int
 ACE_FoxReactor::cancel_timer (long timer_id,
-                           const void **arg,
-                           int dont_call_handle_close)
+                              const void **arg,
+                              int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_FoxReactor::cancel_timer");
 
@@ -332,6 +330,4 @@ ACE_FoxReactor::cancel_timer (long timer_id,
       return 0;
     }
 }
-
-#endif /* ACE_HAS_FOX */
 

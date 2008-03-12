@@ -1,3 +1,16 @@
+Wed Mar 12 11:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FoxReactor/FoxReactor.{h,cpp}:
+          Removed check for ACE_HAS_FOX
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Changed fox handling, matches the other reactors. Thanks to
+          Thomas Girard <thomas dot g dot girard at free dot fr> for
+          reporting this. This resolves bugzilla 3248
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+          Added support for Visual Age 9
+
 Wed Mar 12 11:53:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FoxReactor/FoxReactor.h:
