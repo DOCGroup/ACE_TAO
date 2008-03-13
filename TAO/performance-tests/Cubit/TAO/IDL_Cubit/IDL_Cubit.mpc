@@ -3,14 +3,13 @@
 
 project(*IDL): taoidldefaults, strategies {
   idlflags += -Gd
-
   IDL_Files {
     cubit.idl
   }
   custom_only = 1
 }
 
-project(*Server): taoserver, utils, strategies, avoids_corba_e_micro, avoids_ace_for_tao {
+project(IDL_Cubit_Server): taoserver, utils, strategies, avoids_corba_e_micro, avoids_ace_for_tao {
   after += *IDL
   Source_Files {
     cubitC.cpp
@@ -21,7 +20,6 @@ project(*Server): taoserver, utils, strategies, avoids_corba_e_micro, avoids_ace
     Cubit_Server.cpp
     server.cpp
   }
-
   IDL_Files {
   }
 }
