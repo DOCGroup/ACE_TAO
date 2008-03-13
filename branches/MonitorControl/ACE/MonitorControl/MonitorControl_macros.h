@@ -111,6 +111,11 @@ typedef ACE_VERSIONED_NAMESPACE_NAME::DISABLED_PACKETS_RECEIVED_MONITOR
     ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance ( \
       "MC_ADMINMANAGER")->admin ().reactor ()->end_reactor_event_loop (); \
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Thread_Manager::instance ()->wait ()
+  
+#define ADD_PERIODIC_QUERY(HANDLER,QUERY,INTERVAL_SEC) \
+  ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service< \
+    ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance ( \
+      "MC_ADMINMANAGER")->admin ().auto_query (HANDLER, QUERY, INTERVAL_SEC)
 
 #include /**/ "ace/post.h"
 

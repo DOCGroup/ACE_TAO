@@ -7,11 +7,22 @@
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
 
-class Trigger : public Control_Action
+/// Two control actions that will be associated with two different 
+/// constraints on the same monitor.
+
+class Trigger8k : public Control_Action
 {
   virtual void execute (const char* /* command */)
   {
-    ACE_DEBUG ((LM_DEBUG, "Total bytes received is above threshhold\n"));
+    ACE_DEBUG ((LM_DEBUG, "Total bytes received is above 8k\n"));
+  }
+};
+
+class Trigger16k : public Control_Action
+{
+  virtual void execute (const char* /* command */)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Total bytes received is above 16k\n"));
   }
 };
 
@@ -59,16 +70,27 @@ int main (int /* argc */, char * /* argv */ [])
   ACE::MonitorControl::Monitor_Base *bytes_monitor =
     mgr->admin ().monitor_point ("BytesReceived");
     
-  bytes_monitor->constraint ("value > 8192");
-  
-  Trigger trigger;
-  bytes_monitor->control_action (&trigger);
-
+  /// Add two constraints, each with its own triggered action.
+   
+  Trigger8k trigger8k;
+  bytes_monitor->constraints ("value > 8192", &trigger8k);
+    
+  Trigger16k trigger16k;
+  bytes_monitor->constraints ("value > 16384", &trigger16k);
+    
+  /// Create a query and register it to be called periodically.  
+  MonitorQuery query ("BytesReceived");
+  MonitorPointAutoQuery *auto_query = new MonitorPointAutoQuery;
+  ACE_Event_Handler_var safety (auto_query); 
+  ADD_PERIODIC_QUERY (auto_query, &query, 2);
+    
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
   START_PERIODIC_MONITORS;
 
-  /// Run the monitor checker in a separate thread.
+  /// Run the monitor checker in a separate thread. This class will
+  /// fetch the monitor's value directly, and its output will be
+  /// separate from the output from triggered actions.
   MonitorChecker monitor_checker;
   monitor_checker.activate ();
 

@@ -29,6 +29,8 @@ namespace ACE
 {
   namespace MonitorControl
   {
+    class MonitorQuery;
+    
     /**
      * @class MonitorPointAutoUpdater
      *
@@ -97,6 +99,13 @@ namespace ACE
       bool monitor_point (Monitor_Base* monitor_point,
                           unsigned long auto_update_msec);
       Monitor_Base* monitor_point (const char* name);
+      
+      /// Works similarly to monitor_point() above, but registers our
+      /// auto_query_ member's handle_timeout() method with the reactor,
+      /// instead of our auto_updater_'s handle_timeout().
+      void auto_query (ACE_Event_Handler* handler,
+                       MonitorQuery* query,
+                       unsigned long auto_query_sec);
                               
       /// Same as for monitor points, except that a different registry
       /// is used, and there is no registration with the reactor. These

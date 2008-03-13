@@ -15,6 +15,7 @@ project(MonitorControl) : acelib, ace_etcl {
     MemoryUsageMonitor.cpp
     MonitorGroup.cpp
     MonitorPoint.cpp
+    MonitorQuery.cpp
     NumThreadsMonitor.cpp
     PacketsReceivedMonitor.cpp
     PacketsSentMonitor.cpp

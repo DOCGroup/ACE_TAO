@@ -29,6 +29,8 @@ namespace ACE
 {
   namespace MonitorControl
   {
+    class Control_Action;
+  
     struct ACE_Export MonitorControl_Types
     {
       /**
@@ -41,11 +43,22 @@ namespace ACE
         double value_;
       };
 
+      /**
+       * @brief Bundles the constrain string with its associated
+       *        trigger action.
+       */
+      struct Constraint
+      {
+        ACE_CString expr;
+        Control_Action* control_action;
+      };
+      
 #if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
       // Borland C++ Builder 6 and earlier don't handle the second template
       // argument correctly. We have to pass it explicitly
       typedef ACE_Vector<Data, ACE_VECTOR_DEFAULT_SIZE> DataList;
       typedef ACE_Vector<ACE_CString, ACE_VECTOR_DEFAULT_SIZE> NameList;
+      typedef ACE_Vector<Constraint, ACE_VECTOR_DEFAULT_SIZE> ConstraintList;
 #else
       /**
        * @brief Used by the admin class as a container for the data from
@@ -57,6 +70,11 @@ namespace ACE
        * @brief Used in various places to pass around a set of string names.
        */
       typedef ACE_Vector<ACE_CString> NameList;
+      
+      /**
+       * @brief Holder for a monitor point's constraints.
+       */
+      typedef ACE_Vector<Constraint> ConstraintList;
 #endif
     };
 

@@ -21,6 +21,22 @@ namespace ACE
     Monitor_Base::~Monitor_Base (void)
     {
     }
+    
+    void
+    Monitor_Base::constraints (const char* expression,
+                               Control_Action* action)
+    {
+      MonitorControl_Types::Constraint constraint;
+      constraint.expr = expression;
+      constraint.control_action = action;
+      (void) this->constraints_.push_back (constraint);
+    }
+    
+    Monitor_Base::CONSTRAINTS&
+    Monitor_Base::constraints (void)
+    {
+      return this->constraints_;
+    }
 
     MonitorControl_Types::Data
     Monitor_Base::retrieve (void)

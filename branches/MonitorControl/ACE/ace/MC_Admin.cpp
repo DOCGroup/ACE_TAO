@@ -85,6 +85,18 @@ namespace ACE
       return Monitor_Point_Registry::instance ()->get (name_str);
     }
     
+    void
+    MC_Admin::auto_query (ACE_Event_Handler* handler,
+                          MonitorQuery* query,
+                          unsigned long period_secs)
+    {
+      ACE_Time_Value tv (period_secs);
+      this->reactor_->schedule_timer (handler,
+                                      query,
+                                      ACE_Time_Value::zero,
+                                      tv);
+    }
+    
     bool
     MC_Admin::control_action (Control_Action* /* control_action */)
     {

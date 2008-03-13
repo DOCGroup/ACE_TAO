@@ -49,13 +49,6 @@ namespace ACE
       MonitorPoint (const char* name);
     
       /// Meaningful implementation of member function.
-      virtual void constraint (const char* constraint);
-      
-      /// Meaningful implementation of member function.
-      virtual void control_action (Control_Action *action,
-                                   const char* command = 0);
-
-      /// Meaningful implementation of member function.
       virtual void receive (double data);
       
       /// Meaningful implementation of member function.
@@ -63,11 +56,6 @@ namespace ACE
       
       /// Meaningful implementation of member function.
       virtual void clear (void);
-      
-    private:
-      Constraint_Interpreter interpreter_;
-      Control_Action *control_action_;
-      ACE_CString command_;
     };
   }
 }
