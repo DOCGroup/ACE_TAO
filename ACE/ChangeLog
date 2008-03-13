@@ -1,3 +1,8 @@
+Thu Mar 13 12:41:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Fixed support for buildbits=32/64
+
 Wed Mar 12 19:49:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the gperf change below, breaks all autoconf builds

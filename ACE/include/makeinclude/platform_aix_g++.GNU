@@ -51,10 +51,10 @@ CXX            = g++
 
 CFLAGS          += -W -Wall -mcpu=common -DACE_AIX_VERS=$(AIX_VERS)
 ifeq ($(buildbits),32)
-  CFLAGS    += -m32
+  CFLAGS    += -maix32
 endif
 ifeq ($(buildbits),64)
-  CFLAGS    += -m64
+  CFLAGS    += -maix64
 endif
 DCFLAGS         += -g
 DLD             = $(CXX)
