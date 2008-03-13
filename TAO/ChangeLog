@@ -1,3 +1,9 @@
+Thu Mar 13 09:31:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp:
+          Get the acceptor filter in the constructor and then check it
+          when we need it.
+
 Wed Mar 12 13:43:34 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
