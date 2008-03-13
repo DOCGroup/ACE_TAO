@@ -1462,8 +1462,7 @@ TAO_Root_POA::is_poa_generated (CORBA::Object_ptr reference,
 }
 
 PortableServer::ObjectId *
-TAO_Root_POA::reference_to_id (CORBA::Object_ptr reference
-                               )
+TAO_Root_POA::reference_to_id (CORBA::Object_ptr reference)
 {
   // Make sure that the reference is valid.
   if (CORBA::is_nil (reference))
@@ -1478,9 +1477,7 @@ TAO_Root_POA::reference_to_id (CORBA::Object_ptr reference
   // reference was not created by this POA, the WrongAdapter exception
   // is raised.
   PortableServer::ObjectId system_id;
-  bool const is_generated = this->is_poa_generated (reference,
-                                                    system_id
-                                                   );
+  bool const is_generated = this->is_poa_generated (reference, system_id);
 
   if (!is_generated)
     {
@@ -1495,8 +1492,7 @@ TAO_Root_POA::reference_to_id (CORBA::Object_ptr reference
 }
 
 PortableServer::Servant
-TAO_Root_POA::find_servant (const PortableServer::ObjectId &system_id
-                            )
+TAO_Root_POA::find_servant (const PortableServer::ObjectId &system_id)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
     find_servant (system_id);
@@ -1512,16 +1508,14 @@ TAO_Root_POA::unbind_using_user_id (const PortableServer::ObjectId &user_id)
 void
 TAO_Root_POA::cleanup_servant (
   PortableServer::Servant servant,
-  const PortableServer::ObjectId &user_id
-  )
+  const PortableServer::ObjectId &user_id)
 {
   this->active_policy_strategies_.request_processing_strategy()->
     cleanup_servant (servant, user_id);
 }
 
 PortableServer::Servant
-TAO_Root_POA::id_to_servant_i (const PortableServer::ObjectId &id
-                               )
+TAO_Root_POA::id_to_servant_i (const PortableServer::ObjectId &id)
 {
 
   PortableServer::Servant servant =
@@ -1548,8 +1542,7 @@ TAO_Root_POA::id_to_servant_i (const PortableServer::ObjectId &id
 }
 
 PortableServer::Servant
-TAO_Root_POA::user_id_to_servant_i (const PortableServer::ObjectId &id
-                                    )
+TAO_Root_POA::user_id_to_servant_i (const PortableServer::ObjectId &id)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
     user_id_to_servant (id);
@@ -1557,8 +1550,7 @@ TAO_Root_POA::user_id_to_servant_i (const PortableServer::ObjectId &id
 
 CORBA::Object_ptr
 TAO_Root_POA::id_to_reference_i (const PortableServer::ObjectId &id,
-                                 bool indirect
-                                 )
+                                 bool indirect)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
     id_to_reference (id, indirect);
@@ -1580,16 +1572,14 @@ TAO_Root_POA::locate_servant_i (const char *operation,
                                 const PortableServer::ObjectId &system_id,
                                 TAO::Portable_Server::Servant_Upcall &servant_upcall,
                                 TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                                bool &wait_occurred_restart_call
-                                )
+                                bool &wait_occurred_restart_call)
 {
   return this->active_policy_strategies_.request_processing_strategy()->
     locate_servant (operation,
                     system_id,
                     servant_upcall,
                     poa_current_impl,
-                    wait_occurred_restart_call
-                   );
+                    wait_occurred_restart_call);
 }
 
 /* static */
@@ -2376,8 +2366,7 @@ TAO_Root_POA::the_activator (void)
 }
 
 void
-TAO_Root_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator
-                             )
+TAO_Root_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator)
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD;
