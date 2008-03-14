@@ -49,12 +49,12 @@ AIX_VERS := $(AIX_MAJOR_VERS)0$(AIX_MINOR_VERS)
 CC             = gcc
 CXX            = g++
 
-CFLAGS          += -W -Wall -mcpu=common -DACE_AIX_VERS=$(AIX_VERS)
+CFLAGS          += -W -Wall -DACE_AIX_VERS=$(AIX_VERS)
 ifeq ($(buildbits),32)
-  CFLAGS    += -m32
+  CFLAGS    += -maix32
 endif
 ifeq ($(buildbits),64)
-  CFLAGS    += -m64
+  CFLAGS    += -maix64
 endif
 DCFLAGS         += -g
 DLD             = $(CXX)

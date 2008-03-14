@@ -1,3 +1,23 @@
+Fri Mar 14 09:30:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Don't use -mcpu=common, that is an ancient default of AIX 5.1
+
+Thu Mar 13 12:41:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Fixed support for buildbits=32/64
+
+Wed Mar 12 19:49:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the gperf change below, breaks all autoconf builds
+
+        Wed Mar 12 06:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * m4/ace.m4:
+          Added enable-aio, enable-ipo and fixed gperf handling.
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
 Wed Mar 12 15:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
