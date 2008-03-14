@@ -53,7 +53,7 @@ class TAO_Codeset_Descriptor_Base;
  *
  */
 class TAO_Export TAO_Codeset_Parameters
-  : ACE_Copy_Disabled
+  : public ACE_Copy_Disabled
 {
 public:
   TAO_Codeset_Parameters (void);

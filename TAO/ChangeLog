@@ -1,3 +1,8 @@
+Fri Mar 14 13:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.h:
+          Fixed Visual Age 6 warning
+
 Fri Mar 14 11:18:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Optimized_Connection/Optimized_Connection.mpc:
