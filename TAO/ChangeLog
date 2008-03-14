@@ -1,3 +1,12 @@
+Fri Mar 14 11:18:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Optimized_Connection/Optimized_Connection.mpc:
+        * tests/DSI_AMH/DSI_AMH.mpc:
+        * tests/Bug_2702_Regression/CloseConnection.mpc:
+        * tests/Bug_2122_Regression/Bug_2122_Regression.mpc:
+        * orbsvcs/tests/Bug_2800_Regression/Bug_2800_Regression.mpc:
+          Added custom idl project to resolve problems on OpenVMS
+
 Thu Mar 13 09:31:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Root_POA.cpp:
