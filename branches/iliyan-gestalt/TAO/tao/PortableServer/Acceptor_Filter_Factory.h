@@ -58,7 +58,6 @@ public:
 
   /// Static initializer ensures the factory is loaded
   static int initialize (void);
-
 };
 
 
