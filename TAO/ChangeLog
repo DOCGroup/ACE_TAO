@@ -1,3 +1,9 @@
+Fri Mar 14 14:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IOP.pidl:
+          Added an empty pragma prefix so that the Visual Age preprocessor
+          not drops these files
+
 Fri Mar 14 14:55:35 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * orbsvcs/tests/Notify/Persistent_POA/run_test.pl:
