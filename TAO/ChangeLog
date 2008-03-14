@@ -1,3 +1,11 @@
+Fri Mar 14 14:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PI_include.pidl:
+        * tao/RTScheduling/RTScheduler_include.pidl:
+        * tao/CodecFactory/IOP_Codec_include.pidl:
+          Added an empty pragma prefix so that the Visual Age preprocessor
+          not drops these files
+
 Fri Mar 14 13:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_resource.h:

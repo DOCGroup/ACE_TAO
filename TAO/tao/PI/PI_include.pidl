@@ -11,6 +11,8 @@
 #ifndef _PI_INCLUDE_IDL_
 #define _PI_INCLUDE_IDL_
 
+#pragma prefix ""
+
 ///FUZZ: disable check_for_include/
 #include "tao/PI/ORBInitInfo.pidl"
 #include "tao/PI/PolicyFactory.pidl"
