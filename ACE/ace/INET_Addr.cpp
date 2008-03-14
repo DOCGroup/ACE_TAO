@@ -390,7 +390,7 @@ ACE_INET_Addr::set (u_short port_number,
 #  else
       hostent hentry;
       ACE_HOSTENT_DATA buf;
-      int h_error;  // Not the same as errno!
+      int h_error = 0;  // Not the same as errno!
 
       hostent *hp = ACE_OS::gethostbyname_r (host_name, &hentry,
                                              buf, &h_error);
