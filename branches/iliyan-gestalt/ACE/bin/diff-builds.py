@@ -12,31 +12,55 @@ from os import stat, access, F_OK, makedirs, remove
 from os.path import split, expanduser
 from shutil import copyfileobj
 
+class Logger:
+    """
+    Simple logging facility
+    """
+    def __init__ (self, verbosity):
+        self.verbosity = verbosity
+
+    def debug (self, message):
+        if self.verbosity > 1:
+            print message
+
+    def info (self, message):
+        if self.verbosity > 0:
+            print message
+
+    def warn (self, message):
+        if self.verbosity > 0:
+            print message
+
+    def error (self, message):
+        print message
+
+
 ## Abstract base class implementing basic bookkeeping tasks
 ## like maintaing context information about the tags we care
 ## about, etc.
 
 class AbstractParser (HTMLParser):
 
-    def __init__ (self, baseurl=None):
+    def __init__ (self, baseurl=None, logger=None):
         HTMLParser.__init__ (self)
         self.base_url = baseurl
         self.context = []
-        self.verbose_ = 3
+        if logger == None:
+            self.log = Logger (0)
+        else:
+            self.log = logger
 
     def opencached (self, url, c):
         (cachepath, cachefile) = split (c)
         
         iscached = True
         if not access (cachepath, F_OK):
-            if self.verbose_ > 2:
-                print "(info) Create dirs=%s" % (cachepath)
+            self.log.info ("Create dirs=%s" % (cachepath))
             makedirs (cachepath)
             iscached = False
 
         if not access (c, F_OK):
-            if self.verbose_ > 2:
-                print "(info) Create cache file=%s" % (c)
+            self.log.info ("Create cache file=%s" % (c))
             open (c, 'a').close()
             iscached = False
 
@@ -77,8 +101,7 @@ class AbstractParser (HTMLParser):
             lastcached = gmtime (st.st_mtime)
 
             if lastmod > lastcached or st.st_size < 1: 
-                if self.verbose_ > 2:
-                    print "(debug) Caching, url=%s" % (url)
+                self.log.debug ("Caching, url=%s" % (url))
 
                 tgt = open (c, 'w+')
                 try:
@@ -86,8 +109,7 @@ class AbstractParser (HTMLParser):
                 finally:
                     tgt.close ()
             else:
-                if self.verbose_ > 2:
-                    print "(debug) Using cached url=%s" % (url)
+                self.log.debug ("Using cached url=%s" % (url))
         finally:
             f.close()
 
@@ -101,10 +123,8 @@ class AbstractParser (HTMLParser):
                 
             f = self.cached (url)
             try:
-#                print "(debug) Opening %s ..." % url
                 self.feed(f.read())
             finally:
- #               print "(debug) Closing %s ..." % url
                 f.close()
         finally:
             self.close()
@@ -174,8 +194,8 @@ class Build:
 
 class IndexParser (AbstractParser):
 
-    def __init__ (self, baseurl, filter_group, filter_build):
-        AbstractParser.__init__ (self, baseurl)
+    def __init__ (self, baseurl, filter_group, filter_build, logger=None):
+        AbstractParser.__init__ (self, baseurl, logger)
         self.group_name = []
         self.build = []
         self.column = -1
@@ -197,7 +217,6 @@ class IndexParser (AbstractParser):
                 href = attrs['href']
                 url = urljoin(self.base_url, href)
                 if self.column == 0:
-  #                  print "\n(debug) adding build for: %s" % url
                     self.build.append (Build (self.current_group, url))
                 elif self.column == 5:
                     if href.find ('Brief'):
@@ -219,7 +238,6 @@ class IndexParser (AbstractParser):
 
 
     def addGroup (self, g):
- #       print "(debug) group: %s" % g
         self.current_group = g
         if len (self.filter_group) > 0 and not g in self.filter_group:
             pass
@@ -252,8 +270,8 @@ class IndexParser (AbstractParser):
 
 class DatesParser (AbstractParser):
 
-    def __init__ (self, baseurl):
-        AbstractParser.__init__ (self, baseurl)
+    def __init__ (self, baseurl, logger=None):
+        AbstractParser.__init__ (self, baseurl, logger)
         self.timestamp = []
         self.timestamp_url = []
         self.column = -1
@@ -302,8 +320,8 @@ class DatesParser (AbstractParser):
 
 class HistoryParser (AbstractParser):
 
-    def __init__ (self, baseurl):
-        AbstractParser.__init__ (self, baseurl)
+    def __init__ (self, baseurl, logger=None):
+        AbstractParser.__init__ (self, baseurl, logger)
         self.timestamp = []
         self.build_log_index = []
         self.column = -1
@@ -362,8 +380,8 @@ class HistoryParser (AbstractParser):
 
 class DailyParser (AbstractParser):
 
-    def __init__ (self, baseurl):
-        AbstractParser.__init__ (self, baseurl)
+    def __init__ (self, baseurl, logger=None):
+        AbstractParser.__init__ (self, baseurl, logger)
         self.section = []
         self.errors = []
         self.warnings = []
@@ -427,8 +445,8 @@ class DailyParser (AbstractParser):
 
 class BriefParser (AbstractParser):
 
-    def __init__ (self, baseurl):
-        AbstractParser.__init__ (self, baseurl)
+    def __init__ (self, baseurl, logger=None):
+        AbstractParser.__init__ (self, baseurl, logger)
         self.failed = []
         self.ready = False
 
@@ -444,7 +462,6 @@ class BriefParser (AbstractParser):
 
 
 
-
 def format_date (t):
     if t == None or len (t) != 9:
         return '(unknown)'
@@ -452,6 +469,10 @@ def format_date (t):
         return strftime("%Y-%m-%d %H:%M", t)
 
 def parse_date (s):
+
+    if s == None:
+        return None
+
     timeformats = [ 
         '%a, %d %b %Y %H:%M:%S %Z',
         '%Y_%m_%d %H:%M',
@@ -548,8 +569,9 @@ def main ():
                       + "[default=doc]")
 
     (options, builds) = parser.parse_args()
-    
-    print "builds=%s" % (builds)
+    log = Logger(options.verbose)
+
+    log.debug ("Builds=%s" % (builds))
     
     for key in scoreboards.keys():
         if options.scoreboard.startswith (key):
@@ -563,18 +585,18 @@ def main ():
 
     # what do we need to do?
     if options.islist:
-        ip = IndexParser (options.scoreboard, options.groups, builds)
+        ip = IndexParser (options.scoreboard, options.groups, builds, log)
         ip.parse ()
         
         for i in range (len (ip.build)):
-            print "%s [%s]" % (ip.build[i].name, ip.build[i].group)
+            log.info ("%s [%s]" % (ip.build[i].name, ip.build[i].group))
  
-            hp = HistoryParser (ip.build[i].historyurl)
+            hp = HistoryParser (ip.build[i].historyurl, log)
             parse_with_retry (hp, ip.build[i].historyurl)
 
 
     elif options.isdiff:
-        ip = IndexParser (options.scoreboard, options.groups, builds)
+        ip = IndexParser (options.scoreboard, options.groups, builds, log)
         ip.parse ()
         
         ## Determine build times and brief test error's URL for each build
@@ -582,69 +604,69 @@ def main ():
         testlogs = []
         times = []
         for i in range (len (ip.build)):
-            print "(%d) build=%s, group=%s" % (i, ip.build[i].name, ip.build[i].group)
+            log.info ("(%d) build=%s, group=%s" % (i, ip.build[i].name, ip.build[i].group))
 
             ## index page may have the builds in different order
             order.append (find_index (builds, ip.build[i].name))
 
-            hp = HistoryParser (ip.build[i].historyurl) 
+            hp = HistoryParser (ip.build[i].historyurl, log) 
             parse_with_retry (hp, ip.build[i].historyurl) 
             
-            print "options.dates %s" % options.dates
+            log.debug ("options.dates %s" % options.dates)
 
             btimes = diff_dates (options.dates, hp.timestamp)
-            print "build: %s, times:  %s" % (ip.build[i].name, 
-                              [format_date(t) for t in btimes])
+            log.debug ("build: %s, times:  %s" % (ip.build[i].name, 
+                                                  [format_date(t) for t in btimes]))
                                    
             if None in btimes:
-                print "error: %s dates %s not in %s" % (ip.build[i].name, 
-                                                        [format_date(t) for t in btimes],
-                                                        [format_date(t) for t in hp.timestamp])
+                log.error ("%s dates %s not in %s" % (ip.build[i].name, 
+                                                      [format_date(t) for t in btimes],
+                                                      [format_date(t) for t in hp.timestamp]))
             else:
                 times.append (btimes)
 
                 log_abbrev_index = [find_index (hp.timestamp, btimes[0]),
                                     find_index (hp.timestamp, btimes[1])]
 
-                print "info: timestamp indexes [%d, %d]" % (log_abbrev_index[0],
-                                                  log_abbrev_index[1])
+                log.info ("timestamp indexes [%d, %d]" % (log_abbrev_index[0],
+                                                          log_abbrev_index[1]))
 
-                dp0 = DailyParser (hp.build_log_index[log_abbrev_index[0]])
+                dp0 = DailyParser (hp.build_log_index[log_abbrev_index[0]], log)
                 dp0.parse()
                 
 #                print "info: %s -> %s" % (format_date (btimes[0]),
 #                                          dp0.brief_url[5])
 
-                dp1 = DailyParser (hp.build_log_index[log_abbrev_index[1]])
+                dp1 = DailyParser (hp.build_log_index[log_abbrev_index[1]], log)
                 dp1.parse()
 #                print "info: %s -> %s" % (format_date (btimes[1]),
 #                                               dp1.brief_url[5])
 
                 testlogs.append ([dp0.briefurl('test'), dp1.briefurl('test')])
                 
-        print "testlogs=%s\n" % testlogs
-        print "times=%s\n" % times
-        print "order=%s\n" % order
+        log.debug ("testlogs=%s\n" % testlogs)
+        log.debug ("times=%s\n" % times)
+        log.debug ("order=%s\n" % order)
 
         if len (ip.build) > 1:
             (first, second) = order
             l = [testlogs[first][1], testlogs[second][1]]
             t = [times[first][1], times[second][1]]
 
-            print "l=%s\n" % l
-            print "t=%s\n" % t
+            log.debug ("l=%s\n" % l)
+            log.debug ("t=%s\n" % t)
 
-            bp0 = BriefParser (l[0])
+            bp0 = BriefParser (l[0], log)
             bp0.parse()
 
-            print "info: %s -> %s" % (format_date (t[0]),
-                                      bp0.failed)
+            log.info ("%s -> %s" % (format_date (t[0]),
+                                    bp0.failed))
 
-            bp1 = BriefParser (l[1])
+            bp1 = BriefParser (l[1], log)
             bp1.parse()
 
-            print "info: %s -> %s" % (format_date (t[1]),
-                                      bp1.failed)
+            log.info ("%s -> %s" % (format_date (t[1]),
+                                    bp1.failed))
 
             for l in unified_diff (bp0.failed, bp1.failed, 
                                    l[0], l[1], 
