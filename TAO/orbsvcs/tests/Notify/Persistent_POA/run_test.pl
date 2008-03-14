@@ -9,6 +9,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use strict;
 
+PerlACE::add_lib_path ('../lib');
+
 my $ior = PerlACE::LocalFile("supplier.ior");
 my $namingior = PerlACE::LocalFile("naming.ior");
 my $notifyior = PerlACE::LocalFile("notify.ior");

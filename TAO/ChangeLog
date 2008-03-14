@@ -1,3 +1,8 @@
+Fri Mar 14 14:55:35 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/tests/Notify/Persistent_POA/run_test.pl:
+          Add test lib path.
+
 Fri Mar 14 14:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/PI_include.pidl:
