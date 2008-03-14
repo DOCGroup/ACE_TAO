@@ -11,6 +11,8 @@
 #ifndef _IOP_CODEC_INCLUDE_IDL_
 #define _IOP_CODEC_INCLUDE_IDL_
 
+#pragma prefix ""
+
 ///FUZZ: disable check_for_include/
 #include "tao/CodecFactory/IOP_Codec.pidl"
 
