@@ -12,8 +12,9 @@ distrib ?= 0
 exceptions ?= 1
 optimize ?= 1
 threads ?= 1
-buildbits ?= native
+buildbits ?= 32
 with_ld ?= aix
+no_hidden_visibility ?= 1
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
