@@ -1,3 +1,8 @@
+Fri Mar 14 09:30:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Don't use -mcpu=common, that is an ancient default of AIX 5.1
+
 Thu Mar 13 12:41:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix_g++.GNU:
