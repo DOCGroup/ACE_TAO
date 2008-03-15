@@ -1,3 +1,27 @@
+Fri Mar 14 14:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IOP.pidl:
+          Added an empty pragma prefix so that the Visual Age preprocessor
+          not drops these files
+
+Fri Mar 14 14:55:35 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/tests/Notify/Persistent_POA/run_test.pl:
+          Add test lib path.
+
+Fri Mar 14 14:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PI_include.pidl:
+        * tao/RTScheduling/RTScheduler_include.pidl:
+        * tao/CodecFactory/IOP_Codec_include.pidl:
+          Added an empty pragma prefix so that the Visual Age preprocessor
+          not drops these files
+
+Fri Mar 14 13:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.h:
+          Fixed Visual Age 6 warning
+
 Fri Mar 14 11:18:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Optimized_Connection/Optimized_Connection.mpc:

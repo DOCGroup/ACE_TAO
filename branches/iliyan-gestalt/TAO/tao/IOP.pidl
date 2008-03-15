@@ -28,6 +28,8 @@
 #ifndef TAO_IOP_PIDL
 #define TAO_IOP_PIDL
 
+#pragma prefix ""
+
 #include "tao/IOP_IOR.pidl"
 
 #endif  /* TAO_IOP_PIDL */
