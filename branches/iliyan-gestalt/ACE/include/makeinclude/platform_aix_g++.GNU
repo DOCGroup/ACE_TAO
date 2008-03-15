@@ -12,8 +12,9 @@ distrib ?= 0
 exceptions ?= 1
 optimize ?= 1
 threads ?= 1
-buildbits ?= native
+buildbits ?= 32
 with_ld ?= aix
+no_hidden_visibility ?= 1
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
@@ -55,6 +56,8 @@ ifeq ($(buildbits),32)
 endif
 ifeq ($(buildbits),64)
   CFLAGS    += -maix64
+  LDFLAGS   += -maix64
+  ARFLAGS   += -X64
 endif
 DCFLAGS         += -g
 DLD             = $(CXX)
@@ -81,7 +84,7 @@ else
 endif
 
 LIBS           += -lxti -ldl
-ARFLAGS         = cruv
+ARFLAGS        += cruv
 RANLIB          = ranlib
 
 # Test for template instantiation, add to SOFLAGS if versioned_so set,
