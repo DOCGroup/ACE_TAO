@@ -1,3 +1,11 @@
+Mon Mar 17 10:42:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/Persistent_POA.{h,cpp}:
+          Removed
+
+        * orbsvcstests/Notify/Bug_3252_Regression/Bug_3252_Regression.mpc:
+          Updated
+
 Mon Mar 17 09:02:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Bug_3252_Regression/*:
