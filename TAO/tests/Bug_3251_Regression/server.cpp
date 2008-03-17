@@ -57,7 +57,7 @@ ACE_TMAIN(int argc, ACE_TCHAR ** argv)
     );
     if(0 != result)
     {
-      ACE_ERRROR ((LM_ERROR, ACE_TEXT ("Error: serviceConfig.open failed\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: serviceConfig.open failed\n")));
       return result;
     }
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.open done\n")));
