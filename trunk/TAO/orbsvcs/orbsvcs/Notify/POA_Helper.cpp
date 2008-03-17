@@ -20,7 +20,7 @@ TAO_Notify_POA_Helper::TAO_Notify_POA_Helper (void)
 {
 }
 
-TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper ()
+TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper (void)
 {
 }
 
@@ -95,15 +95,16 @@ TAO_Notify_POA_Helper::set_persistent_policy (PortableServer::POA_ptr parent_poa
 
 
 void
-TAO_Notify_POA_Helper::create_i (PortableServer::POA_ptr parent_poa, const char* poa_name, CORBA::PolicyList &policy_list)
+TAO_Notify_POA_Helper::create_i (
+  PortableServer::POA_ptr parent_poa,
+  const char* poa_name,
+  CORBA::PolicyList &policy_list)
 {
   PortableServer::POAManager_var manager =
     parent_poa->the_POAManager ();
 
   // Create the child POA.
-  this->poa_ = parent_poa->create_POA (poa_name,
-                                       manager.in (),
-                                       policy_list);
+  this->poa_ = parent_poa->create_POA (poa_name, manager.in (), policy_list);
 
   if (DEBUG_LEVEL > 0)
     {
@@ -164,11 +165,9 @@ TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& i
     }
 
   // Convert CORBA::Long to ObjectId
-  PortableServer::ObjectId_var oid =
-    this->long_to_ObjectId (id);
+  PortableServer::ObjectId_var oid = this->long_to_ObjectId (id);
 
-  poa_->activate_object_with_id (oid.in (),
-                                 servant);
+  poa_->activate_object_with_id (oid.in (), servant);
 
   return poa_->id_to_reference (oid.in ());
 }
@@ -184,11 +183,9 @@ TAO_Notify_POA_Helper::activate_with_id (PortableServer::Servant servant, CORBA:
   this->id_factory_.set_last_used (id);
 
   // Convert CORBA::Long to ObjectId
-  PortableServer::ObjectId_var oid =
-    this->long_to_ObjectId (id);
+  PortableServer::ObjectId_var oid = this->long_to_ObjectId (id);
 
-  poa_->activate_object_with_id (oid.in (),
-                                 servant);
+  poa_->activate_object_with_id (oid.in (), servant);
 
   return poa_->id_to_reference (oid.in ());
 }
@@ -197,8 +194,7 @@ void
 TAO_Notify_POA_Helper::deactivate (CORBA::Long id) const
 {
   // Convert CORBA::Long to ObjectId
-  PortableServer::ObjectId_var oid =
-    this->long_to_ObjectId (id);
+  PortableServer::ObjectId_var oid = this->long_to_ObjectId (id);
 
   poa_->deactivate_object (oid.in ());
 }
@@ -207,8 +203,7 @@ CORBA::Object_ptr
 TAO_Notify_POA_Helper::id_to_reference (CORBA::Long id) const
 {
   // Convert CORBA::Long to ObjectId
-  PortableServer::ObjectId_var oid =
-    this->long_to_ObjectId (id);
+  PortableServer::ObjectId_var oid = this->long_to_ObjectId (id);
 
   return poa_->id_to_reference (oid.in ());
 }
