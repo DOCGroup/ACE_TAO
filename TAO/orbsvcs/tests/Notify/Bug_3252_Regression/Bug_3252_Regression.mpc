@@ -1,0 +1,18 @@
+// $Id$
+
+project(*server): notification_serv, taoexe {
+  exename=server
+  libs += Bug_3252
+  Source_Files {
+    server.cpp
+  }
+}
+
+project: portableserver {
+  sharedname = Bug_3252
+  dynamicflags += BUG_3252_BUILD_DLL
+  Source_Files {
+    DllOrb.cpp
+    PersistentPoa.cpp
+  }
+}
