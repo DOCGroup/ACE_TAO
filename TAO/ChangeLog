@@ -1,3 +1,8 @@
+Mon Mar 17 09:02:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3251_Regression/*:
+          New test for bugzilla 3251
+
 Fri Mar 14 14:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IOP.pidl:
