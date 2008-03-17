@@ -5,8 +5,8 @@
 
 #include "ace/Barrier.h"
 #include "ace/Task.h"
+#include "ace/Auto_Ptr.h"
 #include "tao/ORB.h"
-#include "tao/Auto_Ptr.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "bug_3252_export.h"
