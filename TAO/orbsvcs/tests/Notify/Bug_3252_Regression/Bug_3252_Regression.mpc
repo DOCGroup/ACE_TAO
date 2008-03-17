@@ -13,6 +13,5 @@ project: portableserver {
   dynamicflags += BUG_3252_BUILD_DLL
   Source_Files {
     DllOrb.cpp
-    PersistentPoa.cpp
   }
 }
