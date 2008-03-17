@@ -18,7 +18,7 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR ** argv)
 {
   int result = 0;
-#if defined (ACE_HAS_FORK)
+#if !defined (ACE_LACKS_FORK)
   ACE_Sig_Action sigUSR2((ACE_SignalHandler) shutdown, SIGUSR2);
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("SIGUSR2 shutdown handler installed\n")));
   ACE_UNUSED_ARG(sigUSR2);
