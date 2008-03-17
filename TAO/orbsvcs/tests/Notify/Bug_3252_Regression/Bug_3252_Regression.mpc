@@ -10,7 +10,7 @@ project(*server): notification_serv, taoexe {
 
 project: portableserver {
   sharedname = Bug_3252
-  dynamicflags += BUG_3252_BUILD_DLL
+  dynamicflags += BUG_3252_REGRESSION_BUILD_DLL
   Source_Files {
     DllOrb.cpp
   }
