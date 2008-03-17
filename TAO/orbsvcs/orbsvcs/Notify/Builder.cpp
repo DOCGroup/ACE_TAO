@@ -166,7 +166,7 @@ TAO_Notify_Builder::~TAO_Notify_Builder ()
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_Builder::build_filter_factory (void)
+TAO_Notify_Builder::build_filter_factory (PortableServer::POA_ptr poa)
 {
   TAO_Notify_FilterFactory* ff = ACE_Dynamic_Service<TAO_Notify_FilterFactory>::instance ("TAO_Notify_FilterFactory");
 
@@ -177,9 +177,7 @@ TAO_Notify_Builder::build_filter_factory (void)
                         CORBA::NO_MEMORY ());
     }
 
-  PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
-
-  return ff->create (default_poa);
+  return ff->create (poa);
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr

@@ -581,7 +581,7 @@ TAO_Repository_i::create_sections (void)
                                    1, // It doesn't exist so create it.
                                    this->pkinds_key_);
 
-      u_int num_pkinds = this->num_pkinds ();
+      u_int const num_pkinds = this->num_pkinds ();
 
       for (u_int i = 0; i < num_pkinds; ++i)
         {

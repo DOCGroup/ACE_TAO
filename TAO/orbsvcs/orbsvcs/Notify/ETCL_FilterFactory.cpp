@@ -8,7 +8,8 @@ ACE_RCSID(Notify, TAO_Notify_ETCL_FilterFactory, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ETCL_FilterFactory::TAO_Notify_ETCL_FilterFactory (void)
+TAO_Notify_ETCL_FilterFactory::TAO_Notify_ETCL_FilterFactory (void) :
+  filter_poa_ (PortableServer::POA::_nil ())
 {
 }
 
@@ -17,13 +18,19 @@ TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_ETCL_FilterFactory::create (PortableServer::POA_var& filter_poa)
+TAO_Notify_ETCL_FilterFactory::create (PortableServer::POA_ptr filter_poa)
 {
-  this->filter_poa_ = filter_poa; // save the filter poa.
+  this->filter_poa_ = PortableServer::POA::_duplicate(filter_poa); // save the filter poa.
 
   PortableServer::ServantBase_var servant_var (this);
 
-  return _this ();
+  PortableServer::ObjectId_var id = filter_poa->activate_object (this);
+
+  CORBA::Object_var object = filter_poa->id_to_reference (id.in ());
+
+  CosNotifyFilter::FilterFactory_var filter = CosNotifyFilter::FilterFactory::_narrow (object.in ());
+
+  return filter._retn();
 }
 
 CosNotifyFilter::Filter_ptr
@@ -35,12 +42,11 @@ TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
       ACE_OS::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
     throw CosNotifyFilter::InvalidGrammar ();
 
-
   // Create the RefCounted servant.
   TAO_Notify_ETCL_Filter* filter = 0;
 
   ACE_NEW_THROW_EX (filter,
-                    TAO_Notify_ETCL_Filter (),
+                    TAO_Notify_ETCL_Filter (this->filter_poa_.in ()),
                     CORBA::NO_MEMORY ());
 
   PortableServer::ServantBase_var filter_var (filter);
@@ -56,8 +62,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
 
 CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_ETCL_FilterFactory::create_mapping_filter (const char * /*constraint_grammar*/,
-                                                  const CORBA::Any & /*default_value*/
-                                                  )
+                                                      const CORBA::Any & /*default_value*/)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

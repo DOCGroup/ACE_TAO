@@ -177,6 +177,9 @@ private:
   /// SupplierAdmin Container.
   ACE_Auto_Ptr< TAO_Notify_SupplierAdmin_Container > sa_container_;
 
+  /// The default filter factory.
+  CosNotifyFilter::FilterFactory_var default_filter_factory_;
+
   /// Release
   virtual void release (void);
 };
