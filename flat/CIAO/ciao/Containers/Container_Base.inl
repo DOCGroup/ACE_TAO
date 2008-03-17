@@ -3,13 +3,13 @@
 namespace CIAO
 {
   ACE_INLINE PortableServer::POA_ptr
-  Container_i::the_POA (void) const
+  Container_i::the_POA (void)
   {
     return this->component_poa_.in ();
   }
 
   ACE_INLINE PortableServer::POA_ptr
-  Container_i::the_facet_cons_POA (void) const
+  Container_i::the_port_POA (void)
   {
     return this->facet_cons_poa_.in ();
   }

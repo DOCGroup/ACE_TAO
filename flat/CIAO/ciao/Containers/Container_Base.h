@@ -76,8 +76,8 @@ namespace CIAO
      * This operation does *NOT* increase the reference count of the
      * POA. Look at the const qualifier in the method.
      */
-    virtual PortableServer::POA_ptr the_POA (void) const;
-    virtual PortableServer::POA_ptr the_facet_cons_POA (void) const;
+    virtual PortableServer::POA_ptr the_POA (void);
+    virtual PortableServer::POA_ptr the_port_POA (void);
 
     /// get the receptacle policy given the receptacle name
     CORBA::PolicyList * get_receptacle_policy (const char *name);
@@ -85,22 +85,31 @@ namespace CIAO
     /// Install a new home
     virtual Components::CCMHome_ptr install_home (const char *primary_artifact,
                                                   const char *entry_point,
+                                                  const char *servant_artifact,
+                                                  const char *servant_entrypoint,
                                                   const char *name) = 0;
 
     // Uninstall a servant for component or home.
     virtual void uninstall_home (Components::CCMHome_ptr homeref) = 0;
     
     virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
-                                                     const char *entry_point,
-                                                     const char *name) = 0;
+                                                         const char *entry_point,
+                                                         const char *servant_artifact,
+                                                         const char *servant_entrypoint,
+                                                         const char *name) = 0;
 
     virtual void uninstall_component (Components::CCMObject_ptr compref) = 0;
 
-    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p) = 0;
-
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p) = 0;
+    
+    virtual CORBA::Object_ptr install_servant (PortableServer::Servant objref,
+                                               Container_Types::OA_Type type,
+                                               PortableServer::ObjectId_out oid) = 0;
+    
     // Uninstall a servant for component.
-    virtual void uninstall_component_servant (::Components::CCMObject_ptr objref,
-                                              PortableServer::ObjectId_out oid) = 0;
+    virtual void uninstall_servant (PortableServer::Servant objref,
+                                    Container_Types::OA_Type type,
+                                    PortableServer::ObjectId_out oid) = 0;
 
     virtual void add_servant_to_map (PortableServer::ObjectId &oid,
                                      Dynamic_Component_Servant_Base* servant) = 0;
