@@ -77,7 +77,7 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  ma_barrier_ = std::auto_ptr < ACE_Thread_Barrier >(
+  ma_barrier_ = auto_ptr < ACE_Thread_Barrier >(
     new ACE_Thread_Barrier(threadCnt + 1)
   );
 
