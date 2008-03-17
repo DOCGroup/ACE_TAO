@@ -15,6 +15,7 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -60,6 +61,15 @@ namespace TAO
   class TAO_Export Transport_Cache_Manager
   {
   public:
+    // results of a find
+    enum Find_Result
+    {
+      CACHE_FOUND_NONE,
+      CACHE_FOUND_CONNECTING,
+      CACHE_FOUND_BUSY,
+      CACHE_FOUND_AVAILABLE
+    };
+
     // Some useful typedef's
     typedef ACE_Hash_Map_Manager_Ex <Cache_ExtId,
                                      Cache_IntId,
@@ -86,34 +96,44 @@ namespace TAO
     /// Add the transport to the cache.
     /**
      * The transport has the property definition based on which caching
-     * can be done. This method marks the transport
-     * <CODE>ACE_RECYCLABLE_BUSY </CODE> which helps the threads
-     * opening up connections to use the  transport immediately.
+     * can be done. This method sets the cache entry status.  By
+     * default the status is set to <CODE>ENTRY_IDLE_BUT_NOT_PURGABLE</CODE>
      */
     int cache_transport (TAO_Transport_Descriptor_Interface *prop,
-                         TAO_Transport *transport);
+                         TAO_Transport *transport,
+                         Cache_Entries_State state = ENTRY_IDLE_BUT_NOT_PURGABLE);
 
-    /// Similar to the one above, but the transport is left in <CODE>
-    /// ENTRY_IDLE_AND_PURGABLE</CODE> state.
+    /// this is just a shortcut for cache_transport with a third argument of
+    /// <CODE>ENTRY_IDLE_AND_PURGABLE</CODE>
+    /// @@TODO: it should be replaced with a direct call to cache_transport,
+    /// but that would require changes to all *_Connection_Handler so I'm
+    /// deferring this for now. (wilsond@ociweb.com)
     int cache_idle_transport (TAO_Transport_Descriptor_Interface *prop,
-                              TAO_Transport *transport);
+                         TAO_Transport *transport);
 
     /// Check the Transport Cache to check whether the connection exists
     /// in the Cache and return the connection
-    int find_transport (TAO_Transport_Descriptor_Interface *prop,
-                        TAO_Transport *&transport);
+    Find_Result find_transport (
+      TAO_Transport_Descriptor_Interface *prop,
+      TAO_Transport *&transport,
+      size_t & busy_count);
 
     /// Remove entries from the cache depending upon the strategy.
     int purge (void);
 
     /// Purge the entry from the Cache Map
-    int purge_entry (HASH_MAP_ENTRY *&);
+    int purge_entry (HASH_MAP_ENTRY *& entry);
 
     /// Mark the entry as invalid for use but keep it in cache.
-    void mark_invalid (HASH_MAP_ENTRY *&);
+    void mark_invalid (HASH_MAP_ENTRY * entry);
+
+    /// Mark the entry as connected.
+    void mark_connected (HASH_MAP_ENTRY * entry, bool state);
 
     /// Make the entry idle and ready for use.
-    int make_idle (HASH_MAP_ENTRY *&entry);
+    int make_idle (HASH_MAP_ENTRY *entry);
+
+    void set_entry_state (HASH_MAP_ENTRY *entry, TAO::Cache_Entries_State state);
 
     /// Mark the entry as touched. This call updates the purging
     /// strategy policy information.
@@ -152,16 +172,16 @@ namespace TAO
 
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
     /// implementation function find_i.
-    int find (const Cache_ExtId &key,
-              Cache_IntId &value);
+    Find_Result find (
+      TAO_Transport_Descriptor_Interface *prop,
+      TAO_Transport *&transport,
+      size_t & busy_count);
 
     /**
      * Non-Locking version and actual implementation of bind ()
      * call. Calls bind on the Hash_Map_Manager that it holds. If the
      * bind succeeds, it adds the Hash_Map_Entry in to the
-     * Transport for its reference. If the bind fails because
-     * of an exiting entry, this method calls the get_last_index_bind
-     * ().
+     * Transport for its reference.
      */
     int bind_i (Cache_ExtId &ext_id,
                 Cache_IntId &int_id);
@@ -172,11 +192,13 @@ namespace TAO
      * Hash_Map_Manager. If the find succeeds, it calls the
      * get_idle_transport ().
      */
-    int find_i (const Cache_ExtId &key,
-                Cache_IntId &value);
+    Find_Result find_i (
+      TAO_Transport_Descriptor_Interface *prop,
+      TAO_Transport *&transport,
+      size_t & busy_count);
 
     /// Non-locking version and actual implementation of make_idle ().
-    int make_idle_i (HASH_MAP_ENTRY *&entry);
+    int make_idle_i (HASH_MAP_ENTRY *entry);
 
     /// Non-locking version and actual implementation of close ()
     int close_i (Connection_Handler_Set &handlers);
@@ -185,27 +207,18 @@ namespace TAO
     int purge_entry_i (HASH_MAP_ENTRY *&entry);
 
     /// Mark the entry as invalid for use but keep it in cache.
-    void mark_invalid_i (HASH_MAP_ENTRY *&);
+    void mark_invalid_i (HASH_MAP_ENTRY *entry);
 
   private:
-    /**
-     * This is called by the bind () call when a bind fails with a
-     * available entry. When a new connection is created in TAO with an
-     * already existing endpoint, in addition to an exisitng one, we
-     * mark the connections with an index. This method, finds out the
-     * last highest index and binds the entry with an index = (last
-     * highest index + 1).
-     */
-    int get_last_index_bind (Cache_ExtId &key,
-                             Cache_IntId &val,
-                             HASH_MAP_ENTRY *&entry);
+  /**
+   * Tries to find if the <int_id_> in entry is available for use.
+   */
+    bool is_entry_available (const HASH_MAP_ENTRY &entry);
 
   /**
-   * Tries to find if the <int_id_> in entry is idle for use. If it is
-   * idle it is immediately markes as busy and returns a value of
-   * 1, else it returns a value of 0
+   * Tries to find if the <int_id_> in entry is connect pending
    */
-    bool is_entry_idle (HASH_MAP_ENTRY *&entry);
+    bool is_entry_connecting (const HASH_MAP_ENTRY &entry);
 
 #if !defined(ACE_LACKS_QSORT)
     /// Used by qsort
@@ -221,16 +234,6 @@ namespace TAO
     /// a sorted order.
     int fill_set_i (DESCRIPTOR_SET& sorted_set);
 
-    /// Wait for connections if we have reached the limit on the number
-    /// of muxed connections. If not (ie. if we dont use a muxed
-    /// connection or if we have not reached the limit) this just
-    /// behaves as a no-op. <extid> has all the information about the
-    /// connection that is being searched.
-    int wait_for_connection (Cache_ExtId &extid);
-
-    /// Is the wakeup useful todo some work?
-    int is_wakeup_useful (Cache_ExtId &extid);
-
     /// Non-locking version of blockable_client_transports ().
     bool blockable_client_transports_i (Connection_Handler_Set &handlers);
 
@@ -244,23 +247,10 @@ namespace TAO
     /// The hash map that has the connections
     HASH_MAP cache_map_;
 
-    /// The condition variable
-    CONDITION *condition_;
+    TAO_SYNCH_MUTEX cache_map_mutex_;
 
     /// The lock that is used by the cache map
     ACE_Lock *cache_lock_;
-
-    /// Number of allowed muxed connections
-    CORBA::ULong muxed_number_;
-
-    /// Number of threads waiting for connections
-    int no_waiting_threads_;
-
-    /// This is for optimization purposes. In a situation where number
-    /// of threads are waiting for connections, the last connection that
-    /// is put back is cached here. This should prevent all th threads
-    /// trying to search for their required entry.
-    Cache_ExtId *last_entry_returned_;
   };
 
 }

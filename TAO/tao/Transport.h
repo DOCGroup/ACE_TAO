@@ -330,6 +330,10 @@ public:
    */
   bool queue_is_empty (void);
 
+  /// Register with the reactor via the wait strategy
+  bool register_if_necessary (void);
+
+
   /// Added event handler to the handlers set.
   /**
    * Called by the cache when the cache is closing.
