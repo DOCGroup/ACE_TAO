@@ -77,7 +77,7 @@ namespace CIAO
 
       PortableServer::POA_var poa_;
       
-      ACE_Auto_Ptr<CIAO::Container> container_;
+      CIAO::Container_var container_;
 
       Components::ConfigValues config_;
       

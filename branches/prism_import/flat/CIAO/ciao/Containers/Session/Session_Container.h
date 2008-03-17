@@ -39,17 +39,13 @@ namespace CIAO
   }
 
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
-  typedef ::PortableServer::Servant (*ServantFactory) (
-    ::Components::HomeExecutorBase_ptr p,
-    ::CIAO::Session_Container *c,
-    const char *ins_name);
-  
-  typedef ::Components::EnterpriseComponent (*ComponentFactory) (void);
+  typedef ::PortableServer::Servant (*HomeServantFactory) (::Components::HomeExecutorBase_ptr p,
+                                                           ::CIAO::Container_ptr c,
+                                                           const char *ins_name);
+  typedef ::Components::EnterpriseComponent_ptr (*ComponentFactory) (void);
   typedef ::PortableServer::Servant (*ComponentServantFactory) (::Components::EnterpriseComponent_ptr,
-								::Components::CCMHome_ptr,
-								const char *,
-								::CIAO::Home_Servant_Impl_Base *,
-								::CIAO::Session_Container *);
+                                                                const char *,
+								::CIAO::Container_ptr );
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   HomeFactory,
@@ -59,7 +55,7 @@ namespace CIAO
     HOMECREATOR_FUNCPTR_MAP;
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                  ServantFactory,
+                                  HomeServantFactory,
                                   ACE_Hash<ACE_CString>,
                                   ACE_Equal_To<ACE_CString>,
                                   ACE_Null_Mutex>
@@ -123,29 +119,30 @@ namespace CIAO
     /// Install a new home
     virtual Components::CCMHome_ptr install_home (const char *primary_artifact,
                                                   const char *entry_point,
+                                                  const char *servant_artifact,
+                                                  const char *servant_entrypoint,
                                                   const char *name);
     
-    // Uninstall a servant for component or home.
     virtual void uninstall_home (Components::CCMHome_ptr homeref);
     
     virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
-                                                     const char *entry_point,
-                                                     const char *name);
+                                                         const char *entry_point,
+                                                         const char *servant_artifact,
+                                                         const char *servant_entrypoint,
+                                                         const char *name);
     
     virtual void uninstall_component (Components::CCMObject_ptr compref);
 
 
-    /// Uninstall a servant for component.
-    virtual void uninstall_component (::Components::CCMObject_ptr objref,
-                                      PortableServer::ObjectId_out oid);
+    /// Uninstall a servant 
+    virtual void uninstall_servant (PortableServer::Servant objref,
+                                    Container_Types::OA_Type type,
+                                    PortableServer::ObjectId_out oid);
 
     /// Install a servant for component or home.
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
-                                               Container_Types::OA_Type t);
-
-    /// Install a component servant.
-    CORBA::Object_ptr install_component_servant (PortableServer::Servant p,
-                                                 PortableServer::ObjectId_out oid);
+                                               Container_Types::OA_Type type,
+                                               PortableServer::ObjectId_out oid);
 
     /// Get an object reference to a component or home from the servant.
     virtual CORBA::Object_ptr get_objref (PortableServer::Servant p);
@@ -182,7 +179,7 @@ namespace CIAO
 
     /// Return the servant activator factory that activates the
     /// servants for facets and consumers.
-    Servant_Activator *ports_servant_activator (void) const;
+    ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
 
   private:
     

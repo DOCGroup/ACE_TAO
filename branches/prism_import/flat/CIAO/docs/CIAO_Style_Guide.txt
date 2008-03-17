@@ -23,19 +23,24 @@ any CIAO executable with --log-level.
 
 Examples of usage:
 LM_TRACE should be used for gratuitous tracing flow of execution
-messages, and insignificant debug falues.  LM_DEBUG should be used to
-report significant debugging values and configuration parameters.
-LM_INFO should be used to report subactions (e.g. activiation of
-ports, establishment of connections), and LM_NOTICE should be used to
-report significant actions (e.g., component installation complete,
-container creation).
+messages, and insignificant debug values.  Feel free to be as detailed
+as possible here, the purpose is to make our lives easier when users
+are having problems. LM_DEBUG should be used to report significant
+debugging values and configuration parameters.  LM_INFO should be used
+to report subactions (e.g. activiation of ports, establishment of
+connections), and LM_NOTICE should be used to report significant
+actions (e.g., component installation complete, container creation).
 
 Debug messages should begin with "ClassName::MethodName - ". 
 There is a macro in CIAO_common.h called CLINFO.  This macro expands
 to a set of default log message decorators, and should be prepended to
 any and all debug messages and error messages, e.g.:
 
-ACE_DEBUG((LM_INFO, CLINFO "Servant_Activator::etherialize - Your message here"));
+ACE_DEBUG((LM_INFO, CLINFO 
+           "Servant_Activator::etherialize - Your message here"));
+
+It is VERY IMPORTANT to follow this format for EVERY MESSAGE to make
+it easier to filter and make sense of logging output.
 
 All methods (no exceptions!) must have a CIAO_TRACE statement at the
 beginning.

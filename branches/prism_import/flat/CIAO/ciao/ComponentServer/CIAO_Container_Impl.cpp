@@ -36,15 +36,15 @@ namespace CIAO
       if (this->static_entrypts_maps_ == 0)
 	{
 	  ACE_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with dynamic linkage\n"));
-	  this->container_.reset (new CIAO::Session_Container (this->orb_.in (), this, false,
-							       0, name, policies));
+	  this->container_ = new CIAO::Session_Container (this->orb_.in (), this, false,
+                                                          0, name, policies);
 	}
       else
 	{
 	  ACE_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with static linkage\n"));
-	  this->container_.reset (new CIAO::Session_Container (this->orb_.in (), this, true, 
-							       this->static_entrypts_maps_,
-							       name, policies));
+	  this->container_ = new CIAO::Session_Container (this->orb_.in (), this, true, 
+                                                          this->static_entrypts_maps_,
+                                                          name, policies);
 	}
     }
     
@@ -133,7 +133,7 @@ namespace CIAO
       //"Executor entrypoint [%s], servant entrypoint [%s], servant library [%s]\n",
       //entrypt, svnt_entrypt.in (), svnt_library.in ()));
       
-      Components::CCMHome_var home = this->container_->ciao_install_home ("","","","", "");
+      Components::CCMHome_var home = this->container_->install_home ("","","","", "");
 
       CORBA::Any val;
       
