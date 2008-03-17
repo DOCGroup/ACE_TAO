@@ -1,0 +1,33 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Bug_1495_Regression
+//
+// = FILENAME
+//    test.idl
+//
+// = DESCRIPTION
+//   Simple IDL file to test regression of bug 1495
+//
+// = AUTHORS
+//   Will Otte <wotte@dre.vanderbilt.edu>
+//
+// ============================================================================
+
+module Bug1495_Regression
+{
+  // Use "long long" to support platforms with 64-bit thread IDs.
+  typedef long long ThreadId;
+
+  /// A test idl to check Bug 1495
+  interface Bug1495
+  {
+    /// get the thread id of the thread that services this request.
+    void get_thread_id (out ThreadId thread_id);
+
+    /// Shutdown the ORB.
+    oneway void shutdown ();
+  };
+};

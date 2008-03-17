@@ -1,0 +1,128 @@
+// -*- MPC -*-
+// $Id$
+
+
+// Valuetype library must be linked for this project.
+// Please don't remove.
+project(Deployment_stub) : taolib_with_idl, tao_output, valuetype, ifr_client, ciao_events_base_dnc, ciao_client_dnc, messaging {
+  sharedname   =  CIAO_Deployment_stub
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
+  idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
+  idlflags     += -Wb,skel_export_macro=Deployment_svnt_Export
+  idlflags     += -Wb,skel_export_include=Deployment_svnt_export.h
+
+  dynamicflags =  DEPLOYMENT_STUB_BUILD_DLL
+
+  IDL_Files {
+    idlflags += -SS -Sci
+    Deployment_Packaging_Data.idl
+    Deployment_PlanError.idl
+  }
+
+  IDL_Files {
+    idlflags += -SS
+    Deployment_Base.idl
+    Deployment_Connection.idl
+    Deployment_Data.idl
+    Deployment_DeploymentPlan.idl
+    Deployment_TargetData.idl
+    Deployment_Events.idl
+    CIAO_ServerResources.idl
+  }
+
+  IDL_Files {
+    idlflags += -GC
+    Deployment_ApplicationManager.idl
+    Deployment_NodeApplicationManager.idl
+  }
+
+  IDL_Files {
+    idlflags += -GH
+    Deployment_DomainApplicationManager.idl
+  }
+
+  IDL_Files {
+    Deployment_ResourceCommitmentManager.idl
+    Deployment_TargetManager.idl
+    CIAO_NodeApplication_CallBack.idl
+    Deployment_Core.idl
+    Deployment_NodeApplication.idl
+    Deployment_Application.idl
+    Deployment_Container.idl
+    Deployment.idl
+    Deployment_NodeManager.idl
+    Deployment_DomainApplication.idl
+    Deployment_ExecutionManager.idl
+    Deployment_RepositoryManager.idl
+  }
+
+  Source_Files {
+    Deployment_CoreC.cpp
+    Deployment_BaseC.cpp
+    Deployment_ConnectionC.cpp
+    Deployment_DataC.cpp
+    Deployment_DeploymentPlanC.cpp
+    Deployment_TargetDataC.cpp
+    Deployment_NodeApplicationC.cpp
+    Deployment_ApplicationC.cpp
+    Deployment_ContainerC.cpp
+    Deployment_Packaging_DataC.cpp
+    Deployment_PlanErrorC.cpp
+    DeploymentC.cpp
+    Deployment_TargetManagerC.cpp
+    Deployment_NodeManagerC.cpp
+    Deployment_NodeApplicationManagerC.cpp
+    Deployment_ApplicationManagerC.cpp
+    Deployment_DomainApplicationManagerC.cpp
+    Deployment_DomainApplicationC.cpp
+    Deployment_ExecutionManagerC.cpp
+    Deployment_RepositoryManagerC.cpp
+    Deployment_ResourceCommitmentManagerC.cpp
+    CIAO_NodeApplication_CallBackC.cpp
+    CIAO_ServerResourcesC.cpp
+    Deployment_EventsC.cpp
+  }
+}
+
+
+// CIAO_DnC_Client library must be linked for this project.
+// Please don't remove.
+project(Deployment_svnt) : taolib_with_idl, tao_output, portableserver, valuetype, ifr_client, ciao_deployment_stub, ciao_events_dnc, ciao_client_dnc, naming {
+  sharedname   =  CIAO_Deployment_svnt
+  dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
+  idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
+  idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
+  idlflags     += -Wb,skel_export_macro=Deployment_svnt_Export
+  idlflags     += -Wb,skel_export_include=Deployment_svnt_export.h
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Deployment_CoreS.cpp
+    Deployment_ApplicationS.cpp
+    Deployment_NodeApplicationS.cpp
+    Deployment_ContainerS.cpp
+    DeploymentS.cpp
+    Deployment_RepositoryManagerS.cpp
+    Deployment_NodeManagerS.cpp
+    Deployment_NodeApplicationManagerS.cpp
+    Deployment_ApplicationManagerS.cpp
+    Deployment_DomainApplicationManagerS.cpp
+    Deployment_DomainApplicationS.cpp
+    Deployment_ExecutionManagerS.cpp
+    NodeApp_CB_Impl.cpp
+    Deployment_TargetManagerS.cpp
+    CIAO_NodeApplication_CallBackS.cpp
+    Deployment_ResourceCommitmentManagerS.cpp
+  }
+
+}
+

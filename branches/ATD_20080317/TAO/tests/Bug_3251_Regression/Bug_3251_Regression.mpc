@@ -1,0 +1,18 @@
+// $Id$
+
+project(*server) : taoserver, threads {
+  after += *lib
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*lib): taolib, portableserver, threads {
+  libout = .
+  sharedname = Bug_3251
+  dynamicflags += BUG_3251_BUILD_DLL
+  Source_Files {
+    DllOrb.cpp
+    PersistentPoa.cpp
+  }
+}

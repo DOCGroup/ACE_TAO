@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib, compression, zlib {
+  requires += zlib
+  after   += ZlibCompressor
+  libs    += TAO_ZlibCompressor
+}
