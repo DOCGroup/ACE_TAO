@@ -1,0 +1,24 @@
+Mon Mar 17 19:10:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+        * tests/AMI/run_test.pl:
+        * tests/BiDirectional/run_test.pl:
+        * tests/Bug_1361_Regression/Echo.cpp:
+        * tests/Bug_1361_Regression/client.cpp:
+        * tests/Bug_1476_Test/client.cpp:
+
+          Initial commit of Dale's changes for Bug 2935.

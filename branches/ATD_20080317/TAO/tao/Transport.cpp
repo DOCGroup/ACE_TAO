@@ -209,9 +209,6 @@ TAO_Transport::~TAO_Transport (void)
       // When we have a not connected transport we could have buffered
       // messages on this transport which we have to cleanup now.
       this->cleanup_queue_i();
-
-      // Cleanup our cache entry
-      this->purge_entry();
     }
 
   // Release the partial message block, however we may
@@ -322,6 +319,33 @@ TAO_Transport::send_message_shared (TAO_Stub *stub,
 bool
 TAO_Transport::post_connect_hook (void)
 {
+  return true;
+}
+
+bool
+TAO_Transport::register_if_necessary (void)
+{
+  if (this->is_connected_ &&
+      ! this->wait_strategy ()->is_registered () &&
+      this->wait_strategy ()->register_handler () != 0)
+    {
+      // Registration failures.
+
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      (void) this->purge_entry ();
+
+      // Close the handler.
+      (void) this->close_connection ();
+
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) IIOP_Connector [%d]::register_if_necessary, ")
+                    ACE_TEXT ("could not register the transport ")
+                    ACE_TEXT ("in the reactor.\n"),
+                    this->id ()));
+      return false;
+    }
   return true;
 }
 
@@ -2606,7 +2630,14 @@ TAO_Transport::messaging_init (TAO_GIOP_Message_Version const &version)
 void
 TAO_Transport::pre_close (void)
 {
+  // @TODO: something needs to be done with is_connected_. Checking it is
+  // guarded by a mutex, but setting it is not. Until the need for mutexed
+  // protection is required, the transport cache is holding its own copy
+  // of the is_connected_ flag, so that during cache lookups the cache
+  // manager doesn't need to be burdened by the lock in is_connected().
   this->is_connected_ = false;
+  this->transport_cache_manager().mark_connected(this->cache_map_entry_,
+                                                 false);
   this->purge_entry ();
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->handler_lock_));
@@ -2619,43 +2650,48 @@ TAO_Transport::post_open (size_t id)
 {
   this->id_ = id;
 
-  {
-    ACE_GUARD_RETURN (ACE_Lock,
-                      ace_mon,
-                      *this->handler_lock_,
-                      false);
-    this->is_connected_ = true;
-  }
-
   // When we have data in our outgoing queue schedule ourselves
   // for output
-  if (this->queue_is_empty_i ())
-    return true;
-
-  // If the wait strategy wants us to be registered with the reactor
-  // then we do so. If registeration is required and it succeeds,
-  // #REFCOUNT# becomes two.
-  if (this->wait_strategy ()->register_handler () != 0)
+  if (!this->queue_is_empty_i ())
     {
-      // Registration failures.
+      // If the wait strategy wants us to be registered with the reactor
+      // then we do so. If registeration is required and it succeeds,
+      // #REFCOUNT# becomes two.
+      if (this->wait_strategy ()->register_handler () != 0)
+        {
+          // Registration failures.
 
-      // Purge from the connection cache, if we are not in the cache, this
-      // just does nothing.
-      (void) this->purge_entry ();
+          // Purge from the connection cache, if we are not in the cache, this
+          // just does nothing.
+          (void) this->purge_entry ();
 
-      // Close the handler.
-      (void) this->close_connection ();
+          // Close the handler.
+          (void) this->close_connection ();
 
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-           ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_connect , ")
-           ACE_TEXT ("could not register the transport ")
-           ACE_TEXT ("in the reactor.\n"),
-           this->id ()));
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open , ")
+               ACE_TEXT ("could not register the transport ")
+               ACE_TEXT ("in the reactor.\n"),
+               this->id ()));
 
-      return false;
+          return false;
+        }
     }
 
+  // @TODO: something needs to be done with is_connected_. Checking it is
+  // guarded by a mutex, but setting it is not. Until the need for mutexed
+  // protection is required, the transport cache is holding its own copy
+  // of the is_connected_ flag, so that during cache lookups the cache
+  // manager doesn't need to be burdened by the lock in is_connected().
+  this->is_connected_ = true;
+  this->transport_cache_manager ().mark_connected (this->cache_map_entry_,
+                                                   true);
+
+  // update transport cache to make this entry available
+  this->transport_cache_manager ().set_entry_state (
+    this->cache_map_entry_,
+    TAO::ENTRY_IDLE_BUT_NOT_PURGABLE);
   return true;
 }
 
