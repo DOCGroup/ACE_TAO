@@ -15,7 +15,7 @@ static void shutdown(int)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR ** argv)
+ACE_TMAIN(int, ACE_TCHAR ** argv)
 {
   int result = 0;
 #if !defined (ACE_LACKS_FORK)
@@ -125,7 +125,6 @@ ACE_TMAIN(int argc, ACE_TCHAR ** argv)
     return 1;
   } /* end of else */
 #else
-  ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Fork not available\n")));
 #endif
