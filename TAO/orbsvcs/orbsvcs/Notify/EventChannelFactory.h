@@ -68,12 +68,8 @@ public:
   virtual void _add_ref (void);
   virtual void _remove_ref (void);
 
-  /// Remove <channel> from the <ec_container_>
+  /// Remove @a channel from the <ec_container_>
   virtual void remove (TAO_Notify_EventChannel* channel);
-
-  /// Accesor for the default filter factory shared by all EC's.
-  virtual CosNotifyFilter::FilterFactory_ptr get_default_filter_factory (
-    );
 
   /// This method is called by the Notify_Service when the event channel
   /// is automatically created and bound in the name service.
@@ -98,7 +94,7 @@ public:
 
   //-- Topology_Parent
 
-  virtual bool is_persistent () const;
+  virtual bool is_persistent (void) const;
 
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual bool change_to_parent (void);
@@ -118,15 +114,11 @@ public:
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position);
-  virtual TAO_Notify_Object::ID get_id () const;
-
+  virtual TAO_Notify_Object::ID get_id (void) const;
 
 private:
 
   /// = Data Members
-
-  /// The default filter factory.
-  CosNotifyFilter::FilterFactory_var default_filter_factory_;
 
   /// = NotifyExt methods
   virtual void destroy (void);
@@ -148,15 +140,12 @@ protected:
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr create_channel (
       const CosNotification::QoSProperties & initial_qos,
       const CosNotification::AdminProperties & initial_admin,
-      CosNotifyChannelAdmin::ChannelID_out id
-    );
+      CosNotifyChannelAdmin::ChannelID_out id);
 
-  virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (
-    );
+  virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (void);
 
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
-      CosNotifyChannelAdmin::ChannelID id
-    );
+      CosNotifyChannelAdmin::ChannelID id);
 
 private:
   typedef TAO_Notify_Container_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Container;

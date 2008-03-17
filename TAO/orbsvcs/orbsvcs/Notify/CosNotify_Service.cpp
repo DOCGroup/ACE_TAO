@@ -226,7 +226,7 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
   if (TAO_Notify_PROPERTIES::instance()->separate_dispatching_orb())
     {
       // got here by way of svc.conf. no second orb supplied so create one
-      if (0 == TAO_Notify_PROPERTIES::instance()->dispatching_orb())
+      if (CORBA::is_nil (TAO_Notify_PROPERTIES::instance()->dispatching_orb()))
         {
           ACE_DEBUG ((LM_DEBUG, "No dispatching orb supplied. Creating default one.\n"));
 

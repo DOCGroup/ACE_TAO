@@ -2,7 +2,9 @@
 
 #include "orbsvcs/Notify/EventChannelFactory.h"
 
-ACE_RCSID(Notify, TAO_Notify_EventChannelFactory, "$Id$")
+ACE_RCSID(Notify,
+          TAO_Notify_EventChannelFactory,
+          "$Id$")
 
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Factory.h"
@@ -62,8 +64,7 @@ TAO_Notify_EventChannelFactory::~TAO_Notify_EventChannelFactory ()
 void
 TAO_Notify_EventChannelFactory::destroy (void)
 {
-  int result = this->shutdown ();
-  if ( result == 1)
+  if (this->shutdown () == 1)
     return;
 
   TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
@@ -79,9 +80,6 @@ void
 TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 {
   ACE_ASSERT (this->ec_container_.get() == 0);
-
-  this->default_filter_factory_ =
-    TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory ();
 
   // Init ec_container_
   TAO_Notify_EventChannel_Container* ecc = 0;
@@ -149,20 +147,12 @@ TAO_Notify_EventChannelFactory::remove (TAO_Notify_EventChannel* event_channel)
 int
 TAO_Notify_EventChannelFactory::shutdown (void)
 {
-  int sd_ret = TAO_Notify_Object::shutdown ();
-
-  if (sd_ret == 1)
+  if (TAO_Notify_Object::shutdown () == 1)
     return 1;
 
   this->ec_container().shutdown ();
 
   return 0;
-}
-
-CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_EventChannelFactory::get_default_filter_factory (void)
-{
-  return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
