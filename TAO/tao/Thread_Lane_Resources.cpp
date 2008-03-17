@@ -493,7 +493,6 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
              leader_follower.lock ());
 
   ACE_Reactor *reactor = leader_follower.reactor ();
-  TAO_Resource_Factory *resource_factory = this->orb_core_.resource_factory ();
 
   // Wakeup all the threads waiting blocked in the event loop, this
   // does not guarantee that they will all go away, but reduces the
@@ -503,7 +502,7 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
   // they finish, when the last one does it will shutdown the reactor
   // for us.  Meanwhile no new requests will be accepted because the
   // POA will not process them.
-  if (resource_factory && !resource_factory->drop_replies_during_shutdown () &&
+  if (!this->orb_core_.resource_factory ()->drop_replies_during_shutdown () &&
       leader_follower.has_clients ())
     {
       reactor->wakeup_all_threads ();
