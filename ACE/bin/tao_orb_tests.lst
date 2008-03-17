@@ -119,6 +119,7 @@ TAO/tests/Bug_3154_Regression/run_test.pl: !NO_IFR !LabVIEW_RT
 TAO/tests/Bug_3163_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_3171_Regression/run_test.pl: !ST !MINIMUM !NO_MESSAGING !LabVIEW_RT
 TAO/tests/Bug_3198_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
+TAO/tests/Bug_3251_Regression/run_test.pl: !ST !LabVIEW_RT
 TAO/tests/DIOP/run_test.pl: !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/DIOP/run_test_ipv6.pl: IPV6 !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LabVIEW_RT
