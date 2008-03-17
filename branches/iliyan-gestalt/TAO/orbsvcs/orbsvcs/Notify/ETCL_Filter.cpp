@@ -12,8 +12,9 @@ ACE_RCSID(Notify,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (void)
-  :constraint_expr_ids_ (0)
+TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa)
+  : constraint_expr_ids_ (0),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
@@ -42,12 +43,12 @@ TAO_Notify_ETCL_Filter::constraint_grammar (void)
 }
 
 void
-TAO_Notify_ETCL_Filter::add_constraints_i (const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq
-                                       )
+TAO_Notify_ETCL_Filter::add_constraints_i (
+  const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq)
 {
   for (CORBA::ULong index = 0; index < constraint_info_seq.length (); ++index)
     {
-      TAO_Notify_Constraint_Expr* notify_constr_expr;
+      TAO_Notify_Constraint_Expr* notify_constr_expr = 0;
 
       ACE_NEW_THROW_EX (notify_constr_expr,
                         TAO_Notify_Constraint_Expr (),
@@ -75,8 +76,8 @@ TAO_Notify_ETCL_Filter::add_constraints_i (const CosNotifyFilter::ConstraintInfo
 }
 
 CosNotifyFilter::ConstraintInfoSeq*
-TAO_Notify_ETCL_Filter::add_constraints (const CosNotifyFilter::ConstraintExpSeq& constraint_list
-                                )
+TAO_Notify_ETCL_Filter::add_constraints (
+  const CosNotifyFilter::ConstraintExpSeq& constraint_list)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -117,9 +118,9 @@ TAO_Notify_ETCL_Filter::add_constraints (const CosNotifyFilter::ConstraintExpSeq
 }
 
 void
-TAO_Notify_ETCL_Filter::modify_constraints (const CosNotifyFilter::ConstraintIDSeq & del_list,
-                                   const CosNotifyFilter::ConstraintInfoSeq & modify_list
-                                   )
+TAO_Notify_ETCL_Filter::modify_constraints (
+  const CosNotifyFilter::ConstraintIDSeq & del_list,
+  const CosNotifyFilter::ConstraintInfoSeq & modify_list)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -197,8 +198,8 @@ TAO_Notify_ETCL_Filter::modify_constraints (const CosNotifyFilter::ConstraintIDS
 }
 
 CosNotifyFilter::ConstraintInfoSeq*
-TAO_Notify_ETCL_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list
-                                )
+TAO_Notify_ETCL_Filter::get_constraints (
+  const CosNotifyFilter::ConstraintIDSeq & id_list)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -305,11 +306,9 @@ TAO_Notify_ETCL_Filter::destroy (void)
 
   this->remove_all_constraints_i ();
 
-  PortableServer::POA_var my_POA = _default_POA ();
+  PortableServer::ObjectId_var refTemp = poa_->servant_to_id (this);
 
-  PortableServer::ObjectId_var refTemp = my_POA->servant_to_id (this);
-
-  my_POA->deactivate_object (refTemp.in ());
+  poa_->deactivate_object (refTemp.in ());
 }
 
 CORBA::Boolean
@@ -319,8 +318,8 @@ TAO_Notify_ETCL_Filter::match (const CORBA::Any & /*filterable_data */)
 }
 
 CORBA::Boolean
-TAO_Notify_ETCL_Filter::match_structured (const CosNotification::StructuredEvent & filterable_data
-                                 )
+TAO_Notify_ETCL_Filter::match_structured (
+  const CosNotification::StructuredEvent & filterable_data)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -361,16 +360,14 @@ TAO_Notify_ETCL_Filter::match_typed (
 
 CosNotifyFilter::CallbackID
 TAO_Notify_ETCL_Filter::attach_callback (
-                                CosNotifyComm::NotifySubscribe_ptr /* callback */
-                                )
+  CosNotifyComm::NotifySubscribe_ptr /* callback */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 void
 TAO_Notify_ETCL_Filter::detach_callback (
-                                CosNotifyFilter::CallbackID /* callback */
-                                )
+  CosNotifyFilter::CallbackID /* callback */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

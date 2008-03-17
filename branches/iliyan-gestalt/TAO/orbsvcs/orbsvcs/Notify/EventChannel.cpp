@@ -47,6 +47,7 @@ TAO_Notify_EventChannel::TAO_Notify_EventChannel (void)
   : ecf_ (0)
   , ca_container_ (0)
   , sa_container_ (0)
+  , default_filter_factory_ (CosNotifyFilter::FilterFactory::_nil ())
 {
 }
 
@@ -109,6 +110,10 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 
   this->set_admin (initial_admin);
 
+  PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
+  this->default_filter_factory_ =
+    TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (default_poa.in());
+
   // Note originally default admins were allocated here, bt this caused problems
   // attempting to save the topology changes before the Event Channel was completely
   // constructed and linked to the ECF.
@@ -165,6 +170,9 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
 
   this->set_qos (default_ec_qos);
 
+  PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
+  this->default_filter_factory_ =
+    TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (default_poa.in ());
 }
 
 
@@ -188,8 +196,7 @@ TAO_Notify_EventChannel::release (void)
 }
 
 void
-TAO_Notify_EventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID
-                                        , bool )
+TAO_Notify_EventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID, bool)
 { }
 
 int
@@ -214,8 +221,7 @@ TAO_Notify_EventChannel::destroy (void)
 {
   TAO_Notify_EventChannel::Ptr guard( this );
 
-  int result = this->shutdown ();
-  if ( result == 1)
+  if (this->shutdown () == 1)
     return;
 
   this->ecf_->remove (this);
@@ -225,6 +231,8 @@ TAO_Notify_EventChannel::destroy (void)
 
   this->sa_container_.reset( 0 );
   this->ca_container_.reset( 0 );
+
+  this->default_filter_factory_ = CosNotifyFilter::FilterFactory::_nil();
 }
 
 void
@@ -306,16 +314,15 @@ TAO_Notify_EventChannel::default_supplier_admin (void)
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (this->default_supplier_admin_.in ());
 }
 
-::CosNotifyFilter::FilterFactory_ptr TAO_Notify_EventChannel::default_filter_factory (void)
+::CosNotifyFilter::FilterFactory_ptr
+TAO_Notify_EventChannel::default_filter_factory (void)
 {
-  return this->ecf_->get_default_filter_factory ();
+  return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
 }
 
 ::CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_Notify_EventChannel::new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                                        CosNotifyChannelAdmin::AdminID_out id
-                                        )
-
+                                        CosNotifyChannelAdmin::AdminID_out id)
 {
   ::CosNotifyChannelAdmin::ConsumerAdmin_var ca =
     TAO_Notify_PROPERTIES::instance()->builder()->build_consumer_admin (this, op, id);
@@ -325,8 +332,7 @@ TAO_Notify_EventChannel::new_for_consumers (CosNotifyChannelAdmin::InterFilterGr
 
 ::CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_EventChannel::new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                                        CosNotifyChannelAdmin::AdminID_out id
-                                        )
+                                        CosNotifyChannelAdmin::AdminID_out id)
 {
   ::CosNotifyChannelAdmin::SupplierAdmin_var sa =
     TAO_Notify_PROPERTIES::instance()->builder()->build_supplier_admin (this, op, id);
@@ -400,8 +406,7 @@ TAO_Notify_EventChannel::for_suppliers (void)
 
 void
 TAO_Notify_EventChannel::validate_qos (const CosNotification::QoSProperties & /*required_qos*/,
-                                   CosNotification::NamedPropertyRangeSeq_out /*available_qos*/
-                                   )
+                                   CosNotification::NamedPropertyRangeSeq_out /*available_qos*/)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

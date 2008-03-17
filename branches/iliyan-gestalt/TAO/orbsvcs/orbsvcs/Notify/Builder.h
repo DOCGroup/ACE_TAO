@@ -60,8 +60,8 @@ public:
                                , const char* factory_name = 0);
 
   /// Build the Filter Factory.
-  virtual CosNotifyFilter::FilterFactory_ptr build_filter_factory (
-    );
+  virtual CosNotifyFilter::FilterFactory_ptr
+  build_filter_factory (PortableServer::POA_ptr poa);
 
   /// Build EventChannel.
   virtual CosNotifyChannelAdmin::EventChannel_ptr
@@ -70,7 +70,6 @@ public:
                        , const CosNotification::AdminProperties & initial_admin
                        , CosNotifyChannelAdmin::ChannelID_out id
                        , const char* ec_name = 0);
-
 
   virtual TAO_Notify_EventChannel *
   build_event_channel (TAO_Notify_EventChannelFactory* ecf
@@ -143,21 +142,17 @@ public:
   build_proxy (TAO_Notify_SupplierAdmin* sa);
 
   /// Apply Reactive concurrency.
-  virtual void apply_reactive_concurrency (
-      TAO_Notify_Object& object
-    );
+  virtual void apply_reactive_concurrency (TAO_Notify_Object& object);
 
   /// Apply Thread Pools.
   virtual void apply_thread_pool_concurrency (
       TAO_Notify_Object& object,
-      const NotifyExt::ThreadPoolParams& tp_params
-    );
+      const NotifyExt::ThreadPoolParams& tp_params);
 
   /// Apply Thread Pools with Lanes.
   virtual void apply_lane_concurrency (
       TAO_Notify_Object& object,
-      const NotifyExt::ThreadPoolLanesParams& tpl_params
-    );
+      const NotifyExt::ThreadPoolLanesParams& tpl_params);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
