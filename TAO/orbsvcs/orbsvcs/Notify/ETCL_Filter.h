@@ -44,10 +44,10 @@ class TAO_Notify_Serv_Export TAO_Notify_ETCL_Filter
 {
 public:
   /// Constuctor
-  TAO_Notify_ETCL_Filter (void);
+  TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa);
 
   /// Destructor
-  virtual ~TAO_Notify_ETCL_Filter ();
+  virtual ~TAO_Notify_ETCL_Filter (void);
 
 protected:
   virtual char * constraint_grammar (void);
@@ -108,6 +108,8 @@ private:
   CONSTRAINT_EXPR_LIST;
 
   CONSTRAINT_EXPR_LIST constraint_expr_list_;
+
+  PortableServer::POA_var poa_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

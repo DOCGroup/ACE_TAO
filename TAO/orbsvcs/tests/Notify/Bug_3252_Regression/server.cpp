@@ -5,16 +5,13 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 
-
 #include "tao/corba.h"
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/Notify/CosNotify_Service.h"
 
-
 #include "DllOrb.h"
-
 
 char const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testDllOrb",
@@ -177,7 +174,7 @@ ACE_TMAIN(int, ACE_TCHAR ** argv)
   }
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.open done\n")));
 
-  for(int i = 0; i < 2; ++i)
+  for(int i = 0; i < 5; ++i)
   {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("loadOrb ...\n")));
     result = loadOrb(serviceConfig);

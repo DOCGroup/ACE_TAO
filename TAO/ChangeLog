@@ -1,3 +1,43 @@
+Mon Mar 17 13:39:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+          Changed build_filter_factory to accept a POA_ptr instead
+          of retrieving it here
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+          Use CORBA::is_nil to check for a nil object reference
+
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
+          Store the POA used to activate the filter, use it then
+          when cleaning up
+
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
+        * orbsvcs/orbsvcs/Notify/FilterFactory.h:
+          Don't use _this but the POA passed. Also changed the
+          signatures of some methods to get the regular memory
+          management
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+          Create a filter factory for each event channel instead
+          of a global singleton
+
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+          Removed the global event filter factory
+
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+          Layout changes
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+          Use 5 load/unload iterations
+
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+          Const change
+
 Mon Mar 17 10:42:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Bug_3252_Regression/Persistent_POA.{h,cpp}:
