@@ -1,3 +1,10 @@
+Tue Mar 18 23:08:36 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ofccm:
+        * ofccm/NodeApplication:
+
+          Copy of the OFCCM compatible NodeApplication logic.
+        
 Tue Mar 18 22:29:19 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/ExecImplHeaderGenerator.cpp:
@@ -14,17 +21,17 @@ Tue Mar 18 22:29:19 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Containers/Session/Session_Container.cpp:
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
         * ciao/Containers/Containers.mpc:
-        
-          Removed ciao_{post,pre}activate, and addressed some fallout from the
-          container refactoring. 
 
-        * ccm/CCM_SessionComponent.idl:        
-          
+          Removed ciao_{post,pre}activate, and addressed some fallout from the
+          container refactoring.
+
+        * ccm/CCM_SessionComponent.idl:
+
           Added configuration_complete to this local interface.  The CCM spec does not
           have this operation defined, only having it on the executor locator, which is not
           a required way to implement executors (and, I believe, excluded by LWCCM!).
-        
-        
+
+
         * DAnCE/TargetManager/TargetManager_exec.h:
         * DAnCE/TargetManager/TargetManager_exec.cpp:
         * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
@@ -87,8 +94,8 @@ Tue Mar 18 22:29:19 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/Minimum/Sender/Sender_exec.cpp:
 
           Fallout from removing ciao_{pre,post}activate and replacing it with
-          standards based configuration_complete. 
-        
+          standards based configuration_complete.
+
 Mon Mar 17 03:49:06 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_servant_activator.mpb:
