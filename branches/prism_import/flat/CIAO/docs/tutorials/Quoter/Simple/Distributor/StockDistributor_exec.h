@@ -163,10 +163,7 @@ namespace CIDL_StockDistributor_Impl
     ::Components::SessionContext_ptr ctx);
 
     virtual void
-    ciao_preactivate ();
-
-    virtual void
-    ciao_postactivate ();
+    configuration_complete ();
 
     virtual void
     ccm_activate ();

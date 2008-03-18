@@ -11,8 +11,8 @@ ACE_RCSID (ciao,
 namespace CIAO
 {
   Port_Activator_i::Port_Activator_i (const char *oid,
-                                  const char *name,
-                                  Type t)
+                                      const char *name,
+                                      Port_Activator_Types::Type t)
     : oid_ (oid),
       name_ (name),
       t_ (t)

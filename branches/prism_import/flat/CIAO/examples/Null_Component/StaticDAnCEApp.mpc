@@ -4,7 +4,7 @@
 project(Null_Component_StaticDAnCEApp): iortable, taoidldefaults {
   after    += Null_Component_svnt
   exename   = StaticDAnCEApp
-
+  requires += dummy_label
   libs     += Null_Interface_stub
   libs     += Null_Interface_skel
   libs     += Null_Component_stub

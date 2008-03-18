@@ -19,8 +19,7 @@ namespace CIAO
     )
     : Servant_Impl_Base (home, home_servant, c),
       activated_ (false),
-      pre_activated_ (false),
-      post_activated_ (false),
+      configuration_completed_ (false),
       executor_ (EXEC::_duplicate (exe))
   {
   }
@@ -143,11 +142,7 @@ namespace CIAO
   {
     if (this->is_activated () == 0)
       {
-        this->ciao_preactivate ();
-
         this->ciao_activate ();
-
-        this->ciao_postactivate ();
       }
   }
 
@@ -155,7 +150,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   void
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_preactivate (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::configuration_complete (
     )
   {
     ::Components::SessionComponent_var temp =
@@ -165,10 +160,10 @@ namespace CIAO
 
     if (! ::CORBA::is_nil (temp.in ()))
       {
-        if (this->pre_activated_ == 0)
+        if (this->configuration_completed_ == 0)
           {
-            this->pre_activated_ = 1;
-            temp->ciao_preactivate ();
+            this->configuration_completed_ = 1;
+            temp->configuration_complete ();
           }
       }
   }
@@ -190,28 +185,6 @@ namespace CIAO
           {
             this->activated_ = 1;
             temp->ccm_activate ();
-          }
-      }
-  }
-
-  template <typename BASE_SKEL,
-            typename EXEC,
-            typename CONTEXT>
-  void
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_postactivate (
-    )
-  {
-    ::Components::SessionComponent_var temp =
-      ::Components::SessionComponent::_narrow (
-          this->executor_.in ()
-        );
-
-    if (! ::CORBA::is_nil (temp.in ()))
-      {
-        if (this->post_activated_ == 0)
-          {
-            this->post_activated_ = 1;
-            temp->ciao_postactivate ();
           }
       }
   }
@@ -242,9 +215,7 @@ namespace CIAO
     if (! ::CORBA::is_nil (temp.in ()))
       temp->ccm_passivate ();
 
-    this->pre_activated_ = 0;
     this->activated_ = 0;
-    this->post_activated_ = 0;
   }
 }
 

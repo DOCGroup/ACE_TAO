@@ -470,11 +470,11 @@ Impl::TSEC_CheckPoint_exec_i::push_lifeTokenIn
 //-------------------------------------------------------------------
 
 void
-Impl::TSEC_CheckPoint_exec_i::ciao_preactivate
+Impl::TSEC_CheckPoint_exec_i::configuration_complete
 (
 )
 {
-  ACE_DEBUG( ( LM_DEBUG, "Impl::TSEC_CheckPoint_exec_i::ciao_preactivate\n" ) );
+  ACE_DEBUG( ( LM_DEBUG, "Impl::TSEC_CheckPoint_exec_i::configuration_complete\n" ) );
 }
 
 
@@ -505,18 +505,6 @@ Impl::TSEC_CheckPoint_exec_i::ccm_activate
   _isActivated = true;
 }
 
-
-//-------------------------------------------------------------------
-// Operation
-//-------------------------------------------------------------------
-
-void
-Impl::TSEC_CheckPoint_exec_i::ciao_postactivate
-(
-)
-{
-  ACE_DEBUG( ( LM_DEBUG, "Impl::TSEC_CheckPoint_exec_i::ciao_postactivate\n" ) );
-}
 
 
 //-------------------------------------------------------------------

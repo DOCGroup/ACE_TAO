@@ -49,13 +49,10 @@ namespace MyImpl
     set_session_context (Components::SessionContext_ptr ctx);
 
     virtual void
-    ciao_preactivate (void);
+    configuration_complete (void);
 
     virtual void
     ccm_activate (void);
-
-    virtual void
-    ciao_postactivate (void);
 
     virtual void
     ccm_passivate (void);

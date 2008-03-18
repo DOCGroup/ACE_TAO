@@ -272,12 +272,7 @@ namespace CIDL_StockDistributor_Impl
   }
 
   void
-  StockDistributor_exec_i::ciao_preactivate ()
-  {
-  }
-
-  void
-  StockDistributor_exec_i::ciao_postactivate ()
+  StockDistributor_exec_i::configuration_complete ()
   {
   }
 

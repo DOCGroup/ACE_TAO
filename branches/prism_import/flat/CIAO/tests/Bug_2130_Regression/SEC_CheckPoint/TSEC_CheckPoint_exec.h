@@ -162,18 +162,13 @@ namespace Impl
       Components::SessionContext_ptr ctx
     );
 
-    virtual void ciao_preactivate
+    virtual void configuration_complete
     (
     );
 
     virtual void ccm_activate
     (
     );
-
-    virtual void ciao_postactivate
-    (
-    );
-
 
     virtual void ccm_passivate
     (

@@ -22,7 +22,7 @@ namespace CIAO
       EXEC *e,
       CONTEXT *c,
       COMP_SERV *cc)
-    : Port_Activator (oid, name, t)
+    : Port_Activator_i (oid, name, t)
     , executor_ (e)
     , context_ (c)
     , comp_serv_ (cc)

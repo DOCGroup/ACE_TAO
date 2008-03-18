@@ -84,13 +84,7 @@ namespace CIDL_Null_Component_Impl
   }
 
   void
-  Null_Component_exec_i::ciao_preactivate ()
-  {
-    // Your code here.
-  }
-
-  void
-  Null_Component_exec_i::ciao_postactivate ()
+  Null_Component_exec_i::configuration_complete ()
   {
     // Your code here.
   }

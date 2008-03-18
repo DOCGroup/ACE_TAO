@@ -130,12 +130,7 @@ namespace CIDL_StockBroker_Impl
   }
 
   void
-  StockBroker_exec_i::ciao_preactivate ()
-  {
-  }
-
-  void
-  StockBroker_exec_i::ciao_postactivate ()
+  StockBroker_exec_i::configuration_complete ()
   {
   }
 

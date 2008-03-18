@@ -69,13 +69,10 @@ namespace CIAO
    // CIAO-specific operations.
 
     void
-    ciao_preactivate ();
+    configuration_complete ();
 
     void
     ciao_activate ();
-
-    void
-    ciao_postactivate ();
 
     /// @@NOTE: The busted operation.
     void
@@ -90,8 +87,7 @@ namespace CIAO
   protected:
 
     CORBA::Boolean activated_;
-    CORBA::Boolean pre_activated_;
-    CORBA::Boolean post_activated_;
+    CORBA::Boolean configuration_completed_;
 
     /// Initialized in this constructor.
     typename EXEC::_var_type executor_;

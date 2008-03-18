@@ -101,7 +101,7 @@ MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ciao_preactivate (void)
+MyImpl::NavDisplayGUI_exec_impl::configuration_complete (void)
 {
 }
 
@@ -140,11 +140,6 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate (void)
                   "LEAVE: MyImpl::NavDisplayGUI_exec_impl::"
                   "ccm_activate\n"));
     }
-}
-
-void
-MyImpl::NavDisplayGUI_exec_impl::ciao_postactivate (void)
-{
 }
 
 void

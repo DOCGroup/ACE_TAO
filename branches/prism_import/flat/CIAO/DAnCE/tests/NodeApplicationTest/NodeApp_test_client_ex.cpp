@@ -110,7 +110,6 @@ main (int argc, char *argv[])
         }
 
       // initialize the component
-      roundtrip_var->ciao_postactivate ();
 
       //get the provided facets info.
       Components::FacetDescriptions_var facets_info =

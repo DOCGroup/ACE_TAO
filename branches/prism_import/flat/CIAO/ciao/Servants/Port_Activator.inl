@@ -2,10 +2,10 @@
 
 namespace CIAO
 {
-  ACE_INLINE const char*
-  Port_Activator_i::oid (void) const
+  ACE_INLINE char*
+  Port_Activator_i::oid (void) 
   {
-    return this->oid_.in ();
+    return CORBA::string_dup(this->oid_.in ());
   }
 
   ACE_INLINE void
@@ -14,9 +14,9 @@ namespace CIAO
     this->oid_ = oid;
   }
 
-  ACE_INLINE const char*
-  Port_Activator_i::name (void) const
+  ACE_INLINE char*
+  Port_Activator_i::name (void)
   {
-    return this->name_.in ();
+    return CORBA::string_dup(this->name_.in ());
   }
 }

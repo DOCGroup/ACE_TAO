@@ -306,9 +306,7 @@ namespace
          << "set_session_context (" << endl
          << STRS[COMP_SC] << "_ptr ctx);" << endl;
 
-      os << "virtual void ciao_preactivate ();" << endl;
-
-      os << "virtual void ciao_postactivate ();" << endl;
+      os << "virtual void configuration_complete ();" << endl;
 
       os << "virtual void ccm_activate ();" << endl;
 

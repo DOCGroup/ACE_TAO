@@ -649,10 +649,17 @@ namespace CIAO
     return componentref._retn ();
   }
   
+  void 
+  Session_Container::uninstall (CORBA::Object_ptr objref, Container_Types::OA_Type y)
+  {
+    CIAO_TRACE ("Session_Container::uninstall_home");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+  
   void
   Session_Container::uninstall_home (Components::CCMHome_ptr homeref)
   {
-    CIAO_TRACE ("Session_Container::ciao_uninstall_home");
+    CIAO_TRACE ("Session_Container::uninstall_home");
 
     this->uninstall (homeref, Container_Types::HOME_t);
   }
@@ -660,7 +667,7 @@ namespace CIAO
   void
   Session_Container::uninstall_component (Components::CCMObject_ptr homeref)
   {
-    CIAO_TRACE ("Session_Container::ciao_uninstall_home");
+    CIAO_TRACE ("Session_Container::uninstall_component");
 
     this->uninstall (homeref, Container_Types::COMPONENT_t);
   }
@@ -670,7 +677,7 @@ namespace CIAO
                                         Container_Types::OA_Type t,
                                         PortableServer::ObjectId_out oid)
   {
-    CIAO_TRACE ("Session_Container::uninstall");
+    CIAO_TRACE ("Session_Container::uninstall_servant");
 
     PortableServer::POA_ptr tmp = 0;
 

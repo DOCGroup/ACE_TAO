@@ -30,7 +30,10 @@ module Components
   {
     void set_session_context ( in SessionContext ctx)
       raises (CCMException);
-
+    
+    void configuration_complete ()
+      raises (CCMException);
+    
     void ccm_activate()
       raises (CCMException);
 
@@ -38,24 +41,6 @@ module Components
       raises (CCMException);
 
     void ccm_remove ()
-      raises (CCMException);
-
-    /**
-     * This method is invoked before ccm_activate () is called. All
-     * components in the assembly get this callback before the
-     * ccm_activate () is called.
-     * @note CIAO specific
-     */
-    void ciao_preactivate ()
-      raises (CCMException);
-
-    /**
-     * This method is invoked after ccm_activate () is called. All
-     * components in the assembly get this callback after the
-     * ccm_activate () is called.
-     * @note CIAO specific
-     */
-    void ciao_postactivate ()
       raises (CCMException);
   };
 };

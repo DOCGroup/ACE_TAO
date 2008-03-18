@@ -59,10 +59,10 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_2_i::ciao_preactivate ()
+  Sender_exec_2_i::configuration_complete ()
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Sender_exec_2_i::ciao_preactivate\n"));
+                "Sender_exec_2_i::configuration_complete\n"));
   }
 
   void

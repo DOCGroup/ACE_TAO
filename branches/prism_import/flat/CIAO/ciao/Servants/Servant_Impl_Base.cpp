@@ -59,7 +59,7 @@ namespace CIAO
       for (CORBA::ULong i = 0; i < facet_len; ++i)
       {
         PortableServer::ObjectId_var facet_id =
-          this->container_->the_facet_POA ()->reference_to_id (
+          this->container_->the_port_POA ()->reference_to_id (
             facets[i]->facet_ref ());
 
         CIAO::Servant_Activator *sa =
@@ -67,7 +67,7 @@ namespace CIAO
 
         sa->update_port_activator (facet_id.in ());
 
-        this->container_->the_facet_POA ()->deactivate_object (
+        this->container_->the_port_POA ()->deactivate_object (
           facet_id);
       }
 
@@ -82,14 +82,14 @@ namespace CIAO
       for (CORBA::ULong j = 0; j < consumer_len; ++j)
       {
         PortableServer::ObjectId_var cons_id =
-          this->container_->the_facet_POA ()->reference_to_id (
+          this->container_->the_port_POA ()->reference_to_id (
             consumers[j]->consumer ());
 
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
         sa->update_port_activator (cons_id.in ());
 
-        this->container_->the_facet_POA ()->deactivate_object (
+        this->container_->the_port_POA ()->deactivate_object (
           cons_id);
       }
 
@@ -103,7 +103,9 @@ namespace CIAO
 
       PortableServer::ObjectId_var oid;
 
-      this->container_->uninstall_managed_component (ccmobjref.in (), oid.out ());
+      this->container_->uninstall_servant (this,
+                                           Container_Types::COMPONENT_t,
+                                           oid.out ());
 
       if (this->home_servant_)
 	this->home_servant_->update_component_map (oid);
