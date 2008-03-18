@@ -175,6 +175,11 @@ sub generate_test_file
   return $file;
 }
 
+sub is_labview_rt_test()
+{
+    return ($PerlACE::LabVIEW_RT_Test);
+}
+
 sub is_vxworks_test()
 {
     return ($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test);

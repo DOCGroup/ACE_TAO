@@ -21,7 +21,6 @@ sub new
     my $proto = shift;
     my $class = ref ($proto) || $proto;
     my $self = {};
-
     my $targethost;
     if (defined $ENV{'ACE_RUN_LVRT_TGTHOST'}) {
         $targethost = $ENV{'ACE_RUN_LVRT_TGTHOST'};
@@ -55,6 +54,17 @@ sub new
     return $self;
 }
 
+sub DESTROY
+{
+    my $self = shift;
+
+    # See if there's a log; hopefully any reboots have already been done.
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "LVRT target checking for remaining log...\n";
+    }
+    $self->GetStderrLog();
+}
+
 ##################################################################
 
 sub LocalFile ($)
@@ -74,13 +84,26 @@ sub DeleteFile ($)
     $self->{FTP}->delete($file);
 }
 
+sub GetFile ($)
+{
+    # Use FTP to retrieve the file from the target; should still be open.
+    my $self = shift;
+    my $remote_file = shift;
+    my $local_file = shift;
+    $self->{FTP}->ascii();
+    if ($self->{FTP}->get($remote_file, $local_file)) {
+        return 0;
+    }
+    return -1;
+}
+
 sub WaitForFileTimed ($)
 {
     my $self = shift;
     my $file = shift;
     my $timeout = shift;
     my $targetport = 8888;
-    my $target = new Net::Telnet(Timeout => 600, Errmode => 'return');
+    my $target = new Net::Telnet(Errmode => 'return');
     if (!$target->open(Host => $self->{TGTHOST}, Port => $targetport)) {
         print STDERR "ERROR: target $self->{TGTHOST}:$targetport: ",
                       $target->errmsg(), "\n";
@@ -92,7 +115,9 @@ sub WaitForFileTimed ($)
     }
     $target->print("$cmdline");
     my $reply;
-    $reply = $target->getline();
+    # Add a small comms delay factor to the timeout
+    $timeout = $timeout + 2;
+    $reply = $target->getline(Timeout => $timeout);
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print "<- $reply\n";
     }
@@ -116,7 +141,7 @@ sub GetStderrLog ($)
     # Tell the target to snapshot the stderr log; if there is one, copy
     # it up here and put it out to our stderr.
     my $targetport = 8888;
-    my $target = new Net::Telnet(Timeout => 600, Errmode => 'return');
+    my $target = new Net::Telnet(Errmode => 'return');
     if (!$target->open(Host => $self->{TGTHOST}, Port => $targetport)) {
         print STDERR "ERROR: target $self->{TGTHOST}:$targetport: ",
                       $target->errmsg(), "\n";

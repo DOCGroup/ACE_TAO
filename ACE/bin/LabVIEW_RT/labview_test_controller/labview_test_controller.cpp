@@ -332,7 +332,22 @@ int
 Test::run (void)
 {
   this->running_ = true;
-  this->status_ = (this->entry_) (this->argc_, this->argv_);
+  try
+    {
+      this->status_ = (this->entry_) (this->argc_, this->argv_);
+    }
+  catch (...)
+    {
+      // Try to note this exception then save the log file before bailing out.
+      DWORD bl;
+      char msg[256];
+      sprintf (msg, "Exception in %s caught by labview_test_controller\n",
+               this->name_);
+      WriteFile (logf, msg, (DWORD)strlen(msg), &bl, 0);
+      FlushFileBuffers (logf);
+      CloseHandle (logf);
+      throw;
+    }
   this->running_ = false;
   // It's possible to cleanup() here; however, that would introduce a race
   // with start() following beginthreadex(). So do all the cleanup on user
