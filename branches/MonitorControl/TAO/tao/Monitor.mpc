@@ -32,7 +32,7 @@ project (Monitor): portableserver, install, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -SS -Sci -Sa -St \
+    idlflags += -Sa -St \
                 -Wb,unique_include=tao/Monitor/Monitor.h
     Monitor/Monitor_include.pidl
   }
