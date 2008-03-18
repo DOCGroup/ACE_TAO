@@ -46,12 +46,13 @@ Monitor_Impl::get_statistic (const char * the_name)
   /// Call on the administrator class to look up the desired monitors.
   ACE::MonitorControl::Monitor_Base *monitor =
     mgr->admin ().monitor_point (the_name);
+  MonitorControl_Types::Data d;
 
   ::Monitor::MC::Data data;
 
   if (monitor != 0)
     {
-      MonitorControl_Types::Data d = monitor->retrieve ();
+      monitor->retrieve (d);
       data.value = d.value_;
 //      data.timestamp = d.timestamp_;
     }
@@ -70,6 +71,7 @@ Monitor_Impl::get_statistics (const ::Monitor::MC::NameList & names)
   /// Get an instance of the MC service singleton.
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  MonitorControl_Types::Data d;
 
   for (CORBA::ULong index = 0; index < names.length (); index++)
     {
@@ -78,10 +80,9 @@ Monitor_Impl::get_statistics (const ::Monitor::MC::NameList & names)
         mgr->admin ().monitor_point (names[index]);
 
      ::Monitor::MC::Data data;
-
      if (monitor != 0)
       {
-        MonitorControl_Types::Data d = monitor->retrieve ();
+        monitor->retrieve (d);
         data.value = d.value_;
 //      data.timestamp = d.timestamp_;
       }
@@ -101,7 +102,7 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::MC::NameList & names)
   /// Get an instance of the MC service singleton.
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-
+  MonitorControl_Types::Data d;
   for (CORBA::ULong index = 0; index < names.length (); index++)
     {
       /// Call on the administrator class to look up the desired monitors.
@@ -112,7 +113,7 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::MC::NameList & names)
 
      if (monitor != 0)
       {
-        MonitorControl_Types::Data d = monitor->retrieve_and_clear ();
+        monitor->retrieve_and_clear (d);
         data.value = d.value_;
 //      data.timestamp = d.timestamp_;
       }
