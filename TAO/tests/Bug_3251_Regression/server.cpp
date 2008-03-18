@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 
 static volatile bool bShutdown = false;
-static void shutdown(int)
+static void shutdown_func(int)
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Shutdown requested\n")));
   bShutdown = true;
@@ -19,7 +19,7 @@ ACE_TMAIN(int, ACE_TCHAR ** argv)
 {
   int result = 0;
 #if !defined (ACE_LACKS_FORK)
-  ACE_Sig_Action sigUSR2((ACE_SignalHandler) shutdown, SIGUSR2);
+  ACE_Sig_Action sigUSR2((ACE_SignalHandler) shutdown_func, SIGUSR2);
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("SIGUSR2 shutdown handler installed\n")));
   ACE_UNUSED_ARG(sigUSR2);
 
