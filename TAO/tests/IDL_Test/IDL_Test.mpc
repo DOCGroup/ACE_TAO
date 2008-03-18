@@ -5,6 +5,12 @@ project(*Main): taoserver, messaging, gen_ostream {
   exename = main
   idlflags += -GC -GH -Gd -GT
 
+  verbatim(gnuace, macros) {
+    ifeq ($(OSTYPE),VMS)
+      CCFLAGS += -Wc/DISTINGUISH_NESTED_ENUMS
+    endif
+  }
+
   IDL_Files {
     array.idl
     Bug_2350_Regression.idl
@@ -48,12 +54,12 @@ project(*Main): taoserver, messaging, gen_ostream {
     constants.idl
     generic_object.idl
     keywords.idl
-    
+
     dif2.idl
     inherit.idl
     module.idl
     primtypes.idl
-    
+
     pragma.idl
     repo_id_mod.idl
     typedef.idl
