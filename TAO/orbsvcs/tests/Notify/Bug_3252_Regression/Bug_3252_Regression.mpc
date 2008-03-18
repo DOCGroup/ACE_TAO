@@ -8,7 +8,7 @@ project(*server): notification_serv, taoexe, threads {
   }
 }
 
-project: portableserver, threads {
+project: portableserver, threads, avoids_corba_e_micro {
   sharedname = Bug_3252
   dynamicflags += BUG_3252_REGRESSION_BUILD_DLL
   Source_Files {
