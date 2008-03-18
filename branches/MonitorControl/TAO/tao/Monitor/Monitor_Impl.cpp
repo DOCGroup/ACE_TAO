@@ -134,7 +134,7 @@ Monitor_Impl::clear_statistics (const ::Monitor::MC::NameList & names)
       ACE::MonitorControl::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
-     ::Monitor::MC::Data data;
+//     ::Monitor::MC::Data data;
 
      if (monitor != 0)
       {
