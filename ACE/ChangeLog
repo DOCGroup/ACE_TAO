@@ -1,3 +1,8 @@
+Tue Mar 18 07:33:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Removed -Wc/DISTINGUISH_NESTED_ENUMS, only needed for one test
+
 Mon Mar 14 09:17:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
