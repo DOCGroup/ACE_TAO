@@ -23,7 +23,7 @@ CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -names_as_is_short
 ifeq ($(HOSTTYPE),ia64)
   CCFLAGS         += -msg_disable intoverflow -msg_disable reftemporary -msg_disable intsignchange
 else
-  CCFLAGS         += -msg_disable intoverflow,reftemporary,intsignchange -Wc/DISTINGUISH_NESTED_ENUMS
+  CCFLAGS         += -msg_disable intoverflow,reftemporary,intsignchange
 endif
 CCFLAGS         += -Wc/template=auto
 
