@@ -62,15 +62,84 @@ Monitor_Impl::get_statistic (const char * the_name)
 ::Monitor::MC::DataList *
 Monitor_Impl::get_statistics (const ::Monitor::MC::NameList & names)
 {
+  ::Monitor::MC::DataList *datalist = 0;
+  ACE_NEW_THROW_EX (datalist,
+                    ::Monitor::MC::DataList (names.length ()),
+                    CORBA::NO_MEMORY ());
+
+  /// Get an instance of the MC service singleton.
+  MC_ADMINMANAGER* mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+
+  for (CORBA::ULong index = 0; index < names.length (); index++)
+    {
+      /// Call on the administrator class to look up the desired monitors.
+      ACE::MonitorControl::Monitor_Base *monitor =
+        mgr->admin ().monitor_point (names[index]);
+
+     ::Monitor::MC::Data data;
+
+     if (monitor != 0)
+      {
+        MonitorControl_Types::Data d = monitor->retrieve ();
+        data.value = d.value_;
+//      data.timestamp = d.timestamp_;
+      }
+     (*datalist)[index] = data;
+    }
+  return datalist;
 }
 
 ::Monitor::MC::DataList *
 Monitor_Impl::get_and_clear_statistics (const ::Monitor::MC::NameList & names)
 {
+  ::Monitor::MC::DataList *datalist = 0;
+  ACE_NEW_THROW_EX (datalist,
+                    ::Monitor::MC::DataList (names.length ()),
+                    CORBA::NO_MEMORY ());
+
+  /// Get an instance of the MC service singleton.
+  MC_ADMINMANAGER* mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+
+  for (CORBA::ULong index = 0; index < names.length (); index++)
+    {
+      /// Call on the administrator class to look up the desired monitors.
+      ACE::MonitorControl::Monitor_Base *monitor =
+        mgr->admin ().monitor_point (names[index]);
+
+     ::Monitor::MC::Data data;
+
+     if (monitor != 0)
+      {
+        MonitorControl_Types::Data d = monitor->retrieve ();
+        data.value = d.value_;
+//      data.timestamp = d.timestamp_;
+      }
+     (*datalist)[index] = data;
+    }
+  return datalist;
 }
 
 void
 Monitor_Impl::clear_statistics (const ::Monitor::MC::NameList & names)
 {
+  /// Get an instance of the MC service singleton.
+  MC_ADMINMANAGER* mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+
+  for (CORBA::ULong index = 0; index < names.length (); index++)
+    {
+      /// Call on the administrator class to look up the desired monitors.
+      ACE::MonitorControl::Monitor_Base *monitor =
+        mgr->admin ().monitor_point (names[index]);
+
+     ::Monitor::MC::Data data;
+
+     if (monitor != 0)
+      {
+        monitor->clear ();
+      }
+    }
 }
 
