@@ -29,7 +29,8 @@ public:
           {
             ACE_OS::sleep (2);
 
-            MonitorControl_Types::Data data = memory_monitor->retrieve ();
+            MonitorControl_Types::Data data;
+            memory_monitor->retrieve (data);
             MC_Test_Utilities::display_memory_usage (data);
           }
       }

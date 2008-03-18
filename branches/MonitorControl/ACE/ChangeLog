@@ -1,3 +1,23 @@
+Tue Mar 18 14:53:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Base.cpp
+        * ace/Monitor_Base.h
+        * ace/MonitorControl_Types.h
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp
+        * MonitorControl/examples/Constraint/constraint.cpp
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp
+        * MonitorControl/examples/Group/group.cpp
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp
+        * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp
+        * MonitorControl/examples/Num_Threads/num_threads.cpp
+        * MonitorControl/MonitorQuery.cpp
+          Changed the retrieve and retrieve_and_clear methods to
+          have an argument by reference instead of return value so
+          that we have to do less copies of the data
+
+        * MonitorControl/LinuxNetworkInterfaceMonitor.h
+          Fixed bcb warning
+
 Tue Mar 18 14:19:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Monitor_Base.cpp:

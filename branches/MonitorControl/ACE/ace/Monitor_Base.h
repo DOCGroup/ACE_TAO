@@ -48,7 +48,7 @@ namespace ACE
     public:
       typedef MonitorControl_Types::ConstraintList CONSTRAINTS;
       typedef CONSTRAINTS::Iterator CONSTRAINT_ITERATOR;
-      
+
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.
       virtual void update (void) = 0;
@@ -58,7 +58,7 @@ namespace ACE
 
       /// Updates the monitor's data if it is an integer size.
       virtual void receive (size_t value) = 0;
-        
+
       /// Accessors for the constraint list.
       void constraints (const char* expression,
                         Control_Action* action = 0);
@@ -68,9 +68,9 @@ namespace ACE
       virtual void clear (void) = 0;
 
       /// Data accessor.
-      MonitorControl_Types::Data retrieve (void) const;
+      void retrieve (MonitorControl_Types::Data& data) const;
 
-      MonitorControl_Types::Data retrieve_and_clear (void);
+      void retrieve_and_clear (MonitorControl_Types::Data& data);
 
     protected:
       Monitor_Base (void);
@@ -78,13 +78,13 @@ namespace ACE
       virtual ~Monitor_Base (void);
 
     /// @@@ (JP) To keep overhead down for system monitors, we
-    /// may want to remove these from here and duplicate them, in 
+    /// may want to remove these from here and duplicate them, in
     /// MonitorPoint<true> and in a new class below this
     /// one and above the ACE-specific monitors.
     protected:
       MonitorControl_Types::Data data_;
       mutable ACE_SYNCH_MUTEX mutex_;
-      
+
       CONSTRAINTS constraints_;
     };
   }

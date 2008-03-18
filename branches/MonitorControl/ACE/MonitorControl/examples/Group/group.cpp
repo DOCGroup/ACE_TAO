@@ -37,13 +37,14 @@ public:
       {
         ACE_OS::sleep (2);
 
-        MonitorControl_Types::Data data = cpu_monitor->retrieve ();
+        MonitorControl_Types::Data data;
+        cpu_monitor->retrieve (data);
         MC_Test_Utilities::display_cpu_load (data);
 
-        data = memory_monitor->retrieve ();
+        memory_monitor->retrieve (data);
         MC_Test_Utilities::display_memory_usage (data);
 
-        data = bytes_monitor->retrieve ();
+        bytes_monitor->retrieve (data);
         MC_Test_Utilities::display_bytes_sent (data);
 
         cout << endl;

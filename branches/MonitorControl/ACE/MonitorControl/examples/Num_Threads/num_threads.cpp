@@ -39,7 +39,8 @@ public:
           {
             ACE_OS::sleep (2);
 
-            MonitorControl_Types::Data data = thread_monitor->retrieve ();
+            MonitorControl_Types::Data data;
+            thread_monitor->retrieve (data);
             MC_Test_Utilities::display_num_threads (data);
           }
       }

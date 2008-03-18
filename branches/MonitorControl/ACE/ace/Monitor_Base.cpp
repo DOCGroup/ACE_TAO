@@ -21,7 +21,7 @@ namespace ACE
     Monitor_Base::~Monitor_Base (void)
     {
     }
-    
+
     void
     Monitor_Base::constraints (const char* expression,
                                Control_Action* action)
@@ -31,34 +31,30 @@ namespace ACE
       constraint.control_action = action;
       (void) this->constraints_.push_back (constraint);
     }
-    
+
     Monitor_Base::CONSTRAINTS&
     Monitor_Base::constraints (void)
     {
       return this->constraints_;
     }
 
-    MonitorControl_Types::Data
-    Monitor_Base::retrieve (void) const
+    void
+    Monitor_Base::retrieve (MonitorControl_Types::Data& data) const
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                        guard,
-                        this->mutex_,
-                        this->data_);
-      MonitorControl_Types::Data copy = this->data_;
-      return copy;
+      ACE_GUARD (ACE_SYNCH_MUTEX,
+                 guard,
+                 this->mutex_);
+      data = this->data_;
     }
 
-    MonitorControl_Types::Data
-    Monitor_Base::retrieve_and_clear (void)
+    void
+    Monitor_Base::retrieve_and_clear (MonitorControl_Types::Data& data)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                        guard,
-                        this->mutex_,
-                        this->data_);
-      MonitorControl_Types::Data copy = this->data_;
+      ACE_GUARD (ACE_SYNCH_MUTEX,
+                 guard,
+                 this->mutex_);
+      data = this->data_;
       this->clear ();
-      return copy;
     }
   }
 }

@@ -7,7 +7,7 @@
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
 
-/// Two control actions that will be associated with two different 
+/// Two control actions that will be associated with two different
 /// constraints on the same monitor.
 
 class Trigger8k : public Control_Action
@@ -50,7 +50,8 @@ public:
           {
             ACE_OS::sleep (2);
 
-            MonitorControl_Types::Data data = bytes_monitor->retrieve ();
+            MonitorControl_Types::Data data;
+            bytes_monitor->retrieve (data);
             MC_Test_Utilities::display_bytes_received (data);
           }
       }
@@ -69,21 +70,21 @@ int main (int /* argc */, char * /* argv */ [])
 
   ACE::MonitorControl::Monitor_Base *bytes_monitor =
     mgr->admin ().monitor_point ("BytesReceived");
-    
+
   /// Add two constraints, each with its own triggered action.
-   
+
   Trigger8k trigger8k;
   bytes_monitor->constraints ("value > 8192", &trigger8k);
-    
+
   Trigger16k trigger16k;
   bytes_monitor->constraints ("value > 16384", &trigger16k);
-    
-  /// Create a query and register it to be called periodically.  
+
+  /// Create a query and register it to be called periodically.
   MonitorQuery query ("BytesReceived");
   MonitorPointAutoQuery *auto_query = new MonitorPointAutoQuery;
-  ACE_Event_Handler_var safety (auto_query); 
+  ACE_Event_Handler_var safety (auto_query);
   ADD_PERIODIC_QUERY (auto_query, &query, 2);
-    
+
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
   START_PERIODIC_MONITORS;

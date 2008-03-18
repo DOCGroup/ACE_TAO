@@ -41,12 +41,12 @@ namespace ACE
     {
     protected:
       LinuxNetworkInterfaceMonitor (const char *scan_format);
-    
+
       void lin_update (void);
-      
+
     protected:
       ACE_UINT64 value_;
-      
+
     private:
       static const unsigned long MAX_INTERFACES = 10UL;
       ACE_UINT64 value_array_[MAX_INTERFACES];
@@ -58,8 +58,8 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
-
 #endif /* defined (linux) */
+
+#include /**/ "ace/post.h"
 
 #endif // LINUXNETWORKINTERFACEMONITOR_H

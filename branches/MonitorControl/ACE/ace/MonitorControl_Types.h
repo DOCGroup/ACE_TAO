@@ -30,13 +30,13 @@ namespace ACE
   namespace MonitorControl
   {
     class Control_Action;
-  
+
     struct ACE_Export MonitorControl_Types
     {
       /**
        * @brief An instance is contained by each enabled monitor point.
        */
-      struct Data
+      struct ACE_Export Data
       {
         Data (void);
         ACE_Time_Value timestamp_;
@@ -52,7 +52,7 @@ namespace ACE
         ACE_CString expr;
         Control_Action* control_action;
       };
-      
+
 #if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
       // Borland C++ Builder 6 and earlier don't handle the second template
       // argument correctly. We have to pass it explicitly
@@ -70,7 +70,7 @@ namespace ACE
        * @brief Used in various places to pass around a set of string names.
        */
       typedef ACE_Vector<ACE_CString> NameList;
-      
+
       /**
        * @brief Holder for a monitor point's constraints.
        */
