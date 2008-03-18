@@ -68,34 +68,8 @@ module Components
     /// CIAO specific
     StandardConfigurator get_standard_configurator ( );
 
-    /// CIAO specific operations to have some control on when and how
-    /// to activate  components.
-    /**
-     * This is all from our work on ARMS where we needed to know whether
-     * every component has been configured, say for example to use
-     * logging in the assembly which could in turn be provided by a
-     * component. To get around all this we are adding some methods on
-     * this till we think of some standard way to do this. The problem
-     * is that the deployer should be able to call this as opposed to
-     * the home calling it as soon as the component is created.
-     *
-     * All these operations are called in the order mentioned, ie. the
-     * deployer calls ciao_preactivate () on all components, then
-     * ciao_activate and then ciao_postactivate (). The speciality is
-     * that these operations would be invoked on every target object
-     * before the next call is made. It is similar to the way
-     * portable interceptors work, trying to get everything onto the
-     * flow stack, but differ in the intention.
-     */
-    void ciao_preactivate ()
-      raises (InvalidConfiguration);
-
     /// CIAO specific
     void ciao_activate ()
-      raises (InvalidConfiguration);
-
-    /// CIAO specific
-    void ciao_postactivate ()
       raises (InvalidConfiguration);
 
     /// CIAO specific

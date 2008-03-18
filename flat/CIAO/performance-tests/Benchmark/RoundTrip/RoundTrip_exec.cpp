@@ -76,7 +76,7 @@ MyImpl::RoundTrip_exec_i::set_session_context (
 }
 
 void
-MyImpl::RoundTrip_exec_i::ciao_preactivate ()
+MyImpl::RoundTrip_exec_i::configuration_complete ()
 {
 }
 
@@ -89,12 +89,6 @@ MyImpl::RoundTrip_exec_i::ccm_activate ()
 
   // Starting method!
   //set_priority();
-}
-
-void
-MyImpl::RoundTrip_exec_i::ciao_postactivate ()
-{
-
 }
 
 void

@@ -440,13 +440,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ciao_preactivate ()" << endl
-         << "{"
-         << STRS[YCH]
-         << "}";
-
-      os << "void" << endl
-         << t.name () << "_exec_i::ciao_postactivate ()" << endl
+         << t.name () << "_exec_i::configuration_copmlete ()" << endl
          << "{"
          << STRS[YCH]
          << "}";

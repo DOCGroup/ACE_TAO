@@ -23,7 +23,7 @@ project(Swapping_Hello_Receiver_cidl_gen) : ciaocidldefaults, taoidldefaults {
   idlflags += -Wb,export_macro=RECEIVER_SVNT_Export \
               -Wb,export_include=Receiver_svnt_export.h \
               -SS
-              
+  requires += dummy_label              
   CIDL_Files {
     Receiver.cidl
   }
@@ -40,7 +40,7 @@ project(Swapping_Hello_Receiver_stub): ccm_stub {
   sharedname = Swapping_Receiver_stub
   dynamicflags   = RECEIVER_STUB_BUILD_DLL
   libs += Swapping_Hello_Base_stub
-
+  requires += dummy_label
   IDL_Files {
   }
 

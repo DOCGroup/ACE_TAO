@@ -44,7 +44,7 @@ MyImpl::RoundTripClient_exec_i::set_session_context (
 
 //Start the collocated test here
 void
-MyImpl::RoundTripClient_exec_i::ciao_preactivate ()
+MyImpl::RoundTripClient_exec_i::configuration_complete ()
 {
 }
 
@@ -53,11 +53,6 @@ MyImpl::RoundTripClient_exec_i::ccm_activate ()
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTripClient_exec_i::ccm_activate\n"));
-}
-
-void
-MyImpl::RoundTripClient_exec_i::ciao_postactivate ()
-{
 }
 
 void

@@ -63,13 +63,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::ciao_preactivate ()
-  {
-    // Your code here.
-  }
-
-  void
-  Sender_exec_i::ciao_postactivate ()
+  Sender_exec_i::configuration_complete ()
   {
     // Your code here.
   }

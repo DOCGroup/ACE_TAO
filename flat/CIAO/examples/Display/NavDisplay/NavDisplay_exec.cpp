@@ -47,12 +47,8 @@ void
 MyImpl::NavDisplay_exec_impl::set_session_context (
   Components::SessionContext_ptr ctx)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplay_exec_impl::set_session_context\n"));
-    }
-
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::NavDisplay_exec_impl::set_session_context\n"));
   this->context_ =
     HUDisplay::CCM_NavDisplay_Context::_narrow (ctx);
 
@@ -64,43 +60,22 @@ MyImpl::NavDisplay_exec_impl::set_session_context (
 }
 
 void
-MyImpl::NavDisplay_exec_impl::ciao_preactivate (void)
+MyImpl::NavDisplay_exec_impl::configuration_complete (void)
 {
 }
 
 void
 MyImpl::NavDisplay_exec_impl::ccm_activate (void)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplay_exec_impl::ccm_activate\n"));
-    }
-}
-
-void
-MyImpl::NavDisplay_exec_impl::ciao_postactivate (void)
-{
-}
-
-void
-MyImpl::NavDisplay_exec_impl::ccm_passivate (void)
-{
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplay_exec_impl::ccm_passivate\n"));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::NavDisplay_exec_impl::ccm_activate\n"));
 }
 
 void
 MyImpl::NavDisplay_exec_impl::ccm_remove (void)
 {
-  if (CIAO::debug_level () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::NavDisplay_exec_impl::ccm_remove\n"));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              "MyImpl::NavDisplay_exec_impl::ccm_remove\n"));
 }
 
 /// Default ctor.

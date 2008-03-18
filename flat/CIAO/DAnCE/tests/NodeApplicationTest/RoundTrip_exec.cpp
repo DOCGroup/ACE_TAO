@@ -76,22 +76,13 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ciao_preactivate ()
+  RoundTrip_exec_i::configuration_complete ()
   {
     if (CIAO::debug_level () > 0)
       {
-        ACE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::ciao_preactivate\n"));
+        ACE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::configuration_complete\n"));
       }
 
-  }
-
-  void
-  RoundTrip_exec_i::ciao_postactivate ()
-  {
-    if (CIAO::debug_level () > 0)
-      {
-        ACE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::ciao_postactivate\n"));
-      }
   }
 
   RoundTripHome_exec_i::RoundTripHome_exec_i ()

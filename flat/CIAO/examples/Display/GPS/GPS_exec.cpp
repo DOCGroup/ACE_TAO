@@ -1,7 +1,7 @@
 // $Id$
 
 #include "GPS_exec.h"
-#include "CIAO_common.h"
+#include "ciao/CIAO_common.h"
 
 #include "ace/OS_NS_time.h"
 
@@ -76,8 +76,7 @@ MyImpl::GPS_exec_i::posy ()
 void
 MyImpl::GPS_exec_i::set_session_context (Components::SessionContext_ptr ctx)
 {
-  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::set_session_context\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::set_session_context\n"));
 
   this->context_ =
     HUDisplay::CCM_GPS_Context::_narrow (ctx);
@@ -88,34 +87,26 @@ MyImpl::GPS_exec_i::set_session_context (Components::SessionContext_ptr ctx)
 }
 
 void
-MyImpl::GPS_exec_i::ciao_preactivate ()
+MyImpl::GPS_exec_i::configuration_complete ()
 {
 }
 
 void
 MyImpl::GPS_exec_i::ccm_activate ()
 {
-  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_activate\n"));
-}
-
-void
-MyImpl::GPS_exec_i::ciao_postactivate ()
-{
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_activate\n"));
 }
 
 void
 MyImpl::GPS_exec_i::ccm_passivate ()
 {
-  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_passivate\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_passivate\n"));
 }
 
 void
 MyImpl::GPS_exec_i::ccm_remove ()
 {
-  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_remove\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_remove\n"));
 }
 
 /// Default ctor.

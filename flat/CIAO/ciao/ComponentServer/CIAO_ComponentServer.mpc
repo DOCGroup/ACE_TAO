@@ -42,7 +42,7 @@ project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentser
 }
 
 project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_componentserver_svnt, \
-				    messaging, anytypecode, ciao_server, ciaoexe {
+				    messaging, anytypecode, ciao_server, ciaoexe, ciao_session_container{
   exename = CIAO_ComponentServer
   libs += CIAO_Basic_Configurator
   after += CIAO_Basic_Configurator

@@ -179,7 +179,9 @@ namespace CIAO
     PortableServer::ObjectId_var oid;
 
     CORBA::Object_var objref =
-      this->container_->install_managed_component (svt, oid.out ());
+      this->container_->install_servant (svt, 
+                                         Container_Types::COMPONENT_t,
+                                         oid.out ());
 
     typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type ho = stub_type::_narrow (objref.in ());
