@@ -1,3 +1,12 @@
+Tue Mar 18 20:47:25 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/AMH_Exceptions/run_test.pl:
+        * tests/Param_Test/run_test.pl:
+        * tests/Hello/run_test.pl:
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+        * tests/CallbackTest/run_test.pl: On LabVIEW RT, run the server part on
+          the target and the client on the host.
+
 Tue Mar 18 15:07:23 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_3251_Regression/DllOrb.cpp:
