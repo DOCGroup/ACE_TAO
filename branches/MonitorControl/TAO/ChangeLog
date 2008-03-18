@@ -1,3 +1,8 @@
+Tue Mar 18 13:40:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/Monitor_Impl.cpp:
+          Implemented some methods
+
 Tue Mar 18 13:20:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Monitor/Monitor.mpc:
