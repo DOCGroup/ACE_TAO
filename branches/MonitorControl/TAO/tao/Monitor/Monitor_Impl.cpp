@@ -112,7 +112,7 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::MC::NameList & names)
 
      if (monitor != 0)
       {
-        MonitorControl_Types::Data d = monitor->retrieve ();
+        MonitorControl_Types::Data d = monitor->retrieve_and_clear ();
         data.value = d.value_;
 //      data.timestamp = d.timestamp_;
       }
