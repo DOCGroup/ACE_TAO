@@ -19,18 +19,20 @@ foreach $i (@ARGV) {
 }
 
 my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+my $host = new PerlACE::TestTarget;
 
 $iorbase = "server.ior";
 $iorfile = $target->LocalFile ("$iorbase");
 $target->DeleteFile($iorfile);
+$host->DeleteFile($iorbase);
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o $iorbase");
 }
 else {
-    $SV = $target->CreateProcess ("server", "-ORBdebuglevel $debug_level -ORBid hello_server -o $iorfile");
+    $SV = $target->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $iorfile");
 }
-$CL = $target->CreateProcess ("client", " -ORBid hello_client -k file://$iorfile");
+$CL = $host->CreateProcess ("client", "-k file://$iorbase");
     
 $server = $SV->Spawn ();
 
@@ -42,6 +44,12 @@ if ($server != 0) {
 if ($target->WaitForFileTimed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+} 
+
+if ($target->GetFile ($iorfile, $iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 } 
@@ -62,7 +70,7 @@ if ($server != 0) {
 
 $target->GetStderrLog();
 
-#unlink $iorfile;
 $target->DeleteFile($iorfile);
+$host->DeleteFile ($iorbase);
 
 exit $status;
