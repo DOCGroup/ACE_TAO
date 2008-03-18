@@ -7,6 +7,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+$target = PerlACE::TestTarget::create_target($PerlACE::TestConfig) || die "Create target failed\n";
 
 $status = 0;
 $debug_level = '0';
