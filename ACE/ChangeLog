@@ -1,3 +1,24 @@
+Tue Mar 18 20:17:55 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * bin/PerlACE/ProcessLVRT.pm:
+        * bin/PerlACE/TestTarget_LVRT.pm: Handle timeouts to the target better
+          and smarten up the way it gets log files from a failed target.
+
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_LVRT.pm: Add a GetFile() method to get a file
+          from the target to the local machine. By default, it does nothing.
+          It's meant for use by targets that don't necessarily have locally
+          accessible file systems, such as LabVIEW RT.
+
+        * bin/Run_Test.pm:
+        * bin/PerlACE/Process_Win32.pm: Add support for running tests on
+          LabVIEW RT similarly to the way they're done on VxWorks; TAO tests
+          run the server on the target and the client on the host.
+
+        * bin/LabVIEW_RT/labview_test_controller/labview_test_controller.cpp:
+          Catch exceptions and try to report it to stderr before the machine
+          locks up, dies, etc.
+
 Tue Mar 18 07:33:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_openvms.GNU:
