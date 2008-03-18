@@ -1,3 +1,15 @@
+Tue Mar 18 07:29:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted this change of yesterday
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+          Set explicit project name to resolve issues on VMS
+
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.h:
+          Layout changes
+
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.{h,cpp}:
+          Updated because of interface changes of yesterday
+
 Mon Mar 17 15:39:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
