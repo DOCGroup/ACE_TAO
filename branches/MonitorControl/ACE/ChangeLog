@@ -1,7 +1,13 @@
+Tue Mar 18 14:19:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Base.cpp:
+        * ace/Monitor_Base.h:
+          Added retrieve_and_clear method, made retrieve fully thread safe
+
 Tue Mar 18 14:22:06 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorControl.h:
-        
+
           Added include of MonitorControl_macros.h needed to build
           TAO Monitor library.
 

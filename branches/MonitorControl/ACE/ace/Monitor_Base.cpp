@@ -39,13 +39,26 @@ namespace ACE
     }
 
     MonitorControl_Types::Data
-    Monitor_Base::retrieve (void)
+    Monitor_Base::retrieve (void) const
     {
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                         guard,
                         this->mutex_,
                         this->data_);
-      return this->data_;
+      MonitorControl_Types::Data copy = this->data_;
+      return copy;
+    }
+
+    MonitorControl_Types::Data
+    Monitor_Base::retrieve_and_clear (void)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                        guard,
+                        this->mutex_,
+                        this->data_);
+      MonitorControl_Types::Data copy = this->data_;
+      this->clear ();
+      return copy;
     }
   }
 }

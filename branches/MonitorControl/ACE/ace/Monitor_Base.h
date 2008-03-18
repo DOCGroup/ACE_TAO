@@ -32,7 +32,7 @@ namespace ACE
   namespace MonitorControl
   {
     class Control_Action;
-  
+
     /**
      * @class Monitor_Base
      *
@@ -68,7 +68,9 @@ namespace ACE
       virtual void clear (void) = 0;
 
       /// Data accessor.
-      MonitorControl_Types::Data retrieve (void);
+      MonitorControl_Types::Data retrieve (void) const;
+
+      MonitorControl_Types::Data retrieve_and_clear (void);
 
     protected:
       Monitor_Base (void);
@@ -81,7 +83,7 @@ namespace ACE
     /// one and above the ACE-specific monitors.
     protected:
       MonitorControl_Types::Data data_;
-      ACE_SYNCH_MUTEX mutex_;
+      mutable ACE_SYNCH_MUTEX mutex_;
       
       CONSTRAINTS constraints_;
     };
