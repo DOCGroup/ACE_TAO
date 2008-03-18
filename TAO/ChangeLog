@@ -1,3 +1,10 @@
+Tue Mar 18 15:07:23 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_3251_Regression/DllOrb.cpp:
+
+          Use ACE_auto_ptr_reset instead of auto_ptr::reset() for compatibility
+          with older std library implementations.
+
 Tue Mar 18 09:41:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_helper.cpp:
