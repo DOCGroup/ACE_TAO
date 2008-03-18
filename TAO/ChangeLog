@@ -1,3 +1,9 @@
+Tue Mar 18 09:41:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_helper.cpp:
+          Print the TAO_IDL version in the header of the generated files.
+          This fixes bugzilla 3255
+
 Tue Mar 18 09:24:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Object_Map.h:
