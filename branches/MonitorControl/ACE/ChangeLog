@@ -1,3 +1,8 @@
+Tue Mar 18 13:34:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MonitorControl/MonitorControl_macros.h:
+          Corrected some incorrect macros
+
 Thu Mar 13 17:23:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorQuery.h:
@@ -57,7 +62,7 @@ Thu Mar  6 20:46:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/BytesReceivedMonitor.h:
         * MonitorControl/PacketsReceivedMonitor.h:
         * MonitorControl/BytesSentMonitor.h:
-        
+
           Refactored code from these monitors into the newly added
           LinuxNetworkInterfaceMonitor mixin class.
 
@@ -65,30 +70,30 @@ Thu Mar  6 19:30:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/LinuxNetworkInterfaceMonitor.h:
         * MonitorControl/LinuxNetworkInterfaceMonitor.cpp:
-        
+
           New files, defining a base class for all network interface
           monitors implemented on Linux.
-          
+
         * MonitorControl/MonitorControl.mpc:
-        
+
           Added new files to project.
-          
+
         * MonitorControl/BytesSentMonitor.cpp:
         * MonitorControl/BytesSentMonitor.h:
-        
+
           Added the new class above as a base class, guard by a check
           for Linux platform, factored out code into the base class.
 
 Thu Mar  6 03:53:16 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/BytesSentMonitor.{h,cpp}:
-        
+
           Finished Linux implementation.
 
 Wed Mar  5 19:36:58 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/Group/group.cpp:
-        
+
           Fixed error in assigning a temporary to a non-const reference.
 
 Wed Mar  5 19:29:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -100,75 +105,75 @@ Wed Mar  5 19:29:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/examples/Num_Threads/num_threads.cpp:
         * MonitorControl/examples/Memory_Usage/memory_usage.cpp:
         * MonitorControl/examples/Group/group.cpp:
-        
+
           Commented out unused args.
 
 Wed Mar  5 19:18:25 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/WindowsMultiInstanceMonitor.cpp:
-        
+
           Moved #include of Windows system file inside #ifdef guard.
 
 Wed Mar  5 19:14:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/Constraint_Visitor.h:
-        
+
           Fixed case error in #include.
 
 Wed Mar  5 19:09:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/PacketsReceivedMonitor.cpp:
         * MonitorControl/BytesSentMonitor.cpp:
-        
+
           Moved improperly placed #endifs
 
 Wed Mar  5 19:04:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/BytesReceivedMonitor.cpp:
-          
+
           Moved improperly place #endif.
-          
+
         * MonitorControl/BytesSentMonitor.h:
         * MonitorControl/BytesSentMonitor.cpp:
-        
+
           Partial Linux implementation.
 
 Wed Mar  5 19:00:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ETCL/ETCL_include/ETCL_include.h:
-        
+
           Added newline at the end of the file.
 
 Wed Mar  5 18:59:16 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ETCL/ETCL_Constraint.inl:
         * ETCL/ETCL_Constraint.cpp:
-        
+
           Commented out unused args.
 
 Wed Mar  5 18:54:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ETCL/ETCL_Constraint.inl:
-        
+
           Commented out unused args.
 
 Wed Mar  5 18:48:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ETCL/ETCL_l.cpp:
-        
+
           One more #include case error.
 
 Wed Mar  5 18:46:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ETCL/ETCL_Constraint_Visitor.h:
         * ETCL/ETCL_Interpreter.h:
-        
+
           More #include case errors.
 
 Wed Mar  5 18:43:10 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ETCL/ETCL_Constraint.h:
-        
+
           Fixed case error in #include.
 
 Mon Mar  3 21:10:11 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -208,17 +213,17 @@ Mon Mar  3 18:26:01 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/MonitorPoint_T.h:
         * MonitorControl/MonitorPoint.cpp:
         * MonitorControl/MonitorPoint_T.cpp:
-        
+
           Added control_action() method to attach an application-defined
           action to a monitor point.
-          
+
         * MonitorControl/Constraint_Visitor.h:
         * MonitorControl/Constraint_Visitor.cpp:
-        
+
           Implemented the methods necessary to evaluate a constraint.
-          
+
         * MonitorControl/examples/Constraint/constraint.cpp:
-        
+
           Added code to define a control action and attach it to the
           BytesSent monitor point, triggered each time the monitor
           point is updated and its associated constraint is satisfied.
@@ -227,7 +232,7 @@ Fri Feb 29 22:54:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ace_mc.mpb:
 
-          New file, base project for anything using the 
+          New file, base project for anything using the
           MonitorControl library.
 
         * MonitorControl/examples/Bytes_Sent/Bytes_Sent.mpc:
@@ -272,11 +277,11 @@ Fri Feb 29 22:54:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Feb 29 21:38:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ace_etcl.mpb:
-        
+
           New file, overlooked in the checkin
-          
+
           Fri Feb 29 21:28:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
-          
+
           which is a base project for anything using the ACE ETCL
           library, used now in ACE_ROOT/MonitorControl/MonitorControl.mpc.
 
@@ -286,27 +291,27 @@ Fri Feb 29 21:28:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/Constraint_Visitor.h:
         * MonitorControl/Constraint_Visitor.cpp:
         * MonitorControl/Constraint_Interpreter.h:
-        
+
           New files, partially implemented 'backend' and 'driver',
           specific to MonitorControl, using the ACE_ETCL 'frontend'
           parser.
-        
+
         * MonitorControl/MonitorControl.mpc:
-        
+
           Added new files to the project.
-          
+
         * MonitorControl/MonitorPoint.cpp(constraint):
-        
+
           Left a comment in the (unimplemented) method.
 
 Fri Feb 29 18:52:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ACE_ETCL/*:
-        
+
           Renamed this directory ETCL.
-          
+
         * ETCL/ACE_ETCL.mpc:
-        
+
           Renamed this file ETCL.mpc. The project name is still
           ACE_ETCL however, since MPC doesn't like even global
           clashes in project names. The library name is unchanged
@@ -317,18 +322,18 @@ Thu Feb 28 16:21:52 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/MC_Generic_Registry.h:
         * ace/MC_Generic_Registry.cpp:
-        
+
           Removed name cache, using iterator over contained hash map
           to compose a list of names for each call to names().
-          
+
         * MonitorControl/MonitorGroup_T.h:
         * MonitorControl/MonitorGroup_T.cpp:
-        
+
           Removed class member current_member_, using a temporary
           instead.
-          
+
         * MonitorControl/examples/MC_Test_Utilities.cpp:
-        
+
           Evened up indentation of output for all monitor points.
 
 Thu Feb 28 10:42:55 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
