@@ -109,6 +109,14 @@ sub Executable
       if (PerlACE::is_vxworks_test()) {
           $executable = PerlACE::VX_HostFile ($executable);
       }
+      # LabVIEW RT host-run test pieces are fetched the same as VxWorks -
+      # using the relative path from TAO_ROOT appended to HOST_ROOT. Also,
+      # the -ExeSubDir option is ignored - that's telling where to find the
+      # target files.
+      if (PerlACE::is_labview_rt_test()) {
+          $executable = PerlACE::VX_HostFile ($executable);
+          $self->{IGNOREEXESUBDIR} = 1;
+      }
     }
 
     if ($self->{IGNOREEXESUBDIR} == 0) {
