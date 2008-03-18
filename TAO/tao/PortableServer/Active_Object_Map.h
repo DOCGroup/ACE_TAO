@@ -129,7 +129,7 @@ public:
                                                 CORBA::Short &priority);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is identical to <system_id>.
+  /// @a user_id is identical to @c system_id.
   /**
    * @retval -1 Entry is not found or is deactivated.
    * @retval 0 Entry is found.
@@ -138,12 +138,12 @@ public:
                                 TAO_Active_Object_Map_Entry *&entry);
 
   /// Can be used with any policy.  When the SYSTEM_ID policy is used,
-  /// the <system_id> is identical to <user_id>.
+  /// the @a system_id is identical to @a user_id.
   int find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
                                     PortableServer::ObjectId_out user_id);
 
   /// Can be used with any policy.  When the SYSTEM_ID policy is used,
-  /// the <system_id> is identical to <user_id>.
+  /// the @a system_id is identical to @a user_id.
   int find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
                                     PortableServer::ObjectId &user_id);
 
@@ -251,28 +251,28 @@ public:
                                  bool &deactivated) = 0;
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// @a user_id is actually @c system_id.
   virtual int unbind_using_user_id (const PortableServer::ObjectId &user_id) = 0;
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// @a user_id is actually @c system_id.
   virtual int find_user_id_using_servant (PortableServer::Servant servant,
                                           PortableServer::ObjectId_out user_id) = 0;
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// <user_id> is actually @a system_id.
   virtual int find_system_id_using_servant (PortableServer::Servant servant,
                                             PortableServer::ObjectId_out system_id,
                                             CORBA::Short &priority) = 0;
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// @a user_id is actually @c system_id.
   virtual int bind_using_user_id (PortableServer::Servant servant,
                                   const PortableServer::ObjectId &user_id,
                                   CORBA::Short priority,
                                   TAO_Active_Object_Map_Entry *&entry) = 0;
 
-  /// Are there any remaining activations of <servant> in the active
+  /// Are there any remaining activations of @a servant in the active
   /// object map?  Can be used with any policy.
   virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant) = 0;
 
@@ -301,28 +301,28 @@ public:
                                  bool &deactivated);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// @a user_id is actually @c system_id.
   virtual int unbind_using_user_id (const PortableServer::ObjectId &user_id);
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// @a user_id is actually @c system_id.
   virtual int find_user_id_using_servant (PortableServer::Servant servant,
                                           PortableServer::ObjectId_out user_id);
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// <user_id> is actually @a system_id.
   virtual int find_system_id_using_servant (PortableServer::Servant servant,
                                             PortableServer::ObjectId_out system_id,
                                             CORBA::Short &priority);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// @a user_id is actually @c system_id.
   virtual int bind_using_user_id (PortableServer::Servant servant,
                                   const PortableServer::ObjectId &user_id,
                                   CORBA::Short priority,
                                   TAO_Active_Object_Map_Entry *&entry);
 
-  /// Are there any remaining activations of <servant> in the active
+  /// Are there any remaining activations of @a servant in the active
   /// object map?  Can be used with any policy.
   virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant);
 };
@@ -344,28 +344,28 @@ public:
                                  bool &deactivated);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// @a user_id is actually @c system_id.
   virtual int unbind_using_user_id (const PortableServer::ObjectId &user_id);
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// @a user_id is actually @c system_id.
   virtual int find_user_id_using_servant (PortableServer::Servant servant,
                                           PortableServer::ObjectId_out user_id);
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// <user_id> is actually @a system_id.
   virtual int find_system_id_using_servant (PortableServer::Servant servant,
                                             PortableServer::ObjectId_out system_id,
                                             CORBA::Short &priority);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// @a user_id is actually @c system_id.
   virtual int bind_using_user_id (PortableServer::Servant servant,
                                   const PortableServer::ObjectId &user_id,
                                   CORBA::Short priority,
                                   TAO_Active_Object_Map_Entry *&entry);
 
-  /// Are there any remaining activations of <servant> in the active
+  /// Are there any remaining activations of @a servant in the active
   /// object map?  Can be used with any policy.
   virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant);
 };
