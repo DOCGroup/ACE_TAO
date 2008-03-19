@@ -1,5 +1,5 @@
 //$Id$
-project : taolib_with_idl, csd_threadpool, avoids_corba_e_micro {
+project(CSD_TP_Test_Lib) : taolib_with_idl, csd_threadpool, avoids_corba_e_micro {
   sharedname   = CSD_TP_Test
   dynamicflags = CSD_TP_TEST_BUILD_DLL
   idlflags  += -Wb,export_macro=CSD_TP_Test_Export \
