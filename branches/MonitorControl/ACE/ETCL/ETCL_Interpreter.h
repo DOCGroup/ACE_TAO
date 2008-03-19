@@ -17,15 +17,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "etcl_export.h"
-#include "ETCL_macros.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
+
+#include "etcl_parser_export.h"
+#include "ETCL_macros.h"
 
 BEGIN_VERSIONED_NAMESPACE_MACRO
 
@@ -38,7 +38,7 @@ class ETCL_Constraint;
  * Its build tree method invokes the yacc parser to parse a constraint
  * or preference string.
  */
-class ETCL_EXPORT_MACRO ETCL_Interpreter
+class ETCL_PARSER_EXPORT_MACRO ETCL_Interpreter
 {
 protected:
   // = Initialization and termination methods.

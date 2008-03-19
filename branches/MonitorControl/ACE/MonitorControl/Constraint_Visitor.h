@@ -68,20 +68,8 @@ namespace ACE
 
       virtual int visit_literal (ETCL_Literal_Constraint *);
       virtual int visit_identifier (ETCL_Identifier *);
-      virtual int visit_union_value (ETCL_Union_Value *);
-      virtual int visit_union_pos (ETCL_Union_Pos *);
-      virtual int visit_component_pos (ETCL_Component_Pos *);
-      virtual int visit_component_assoc (ETCL_Component_Assoc *);
-      virtual int visit_component_array (ETCL_Component_Array *);
-      virtual int visit_special (ETCL_Special *);
-      virtual int visit_component (ETCL_Component *);
-      virtual int visit_dot (ETCL_Dot *);
-      virtual int visit_eval (ETCL_Eval *);
-      virtual int visit_default (ETCL_Default *);
-      virtual int visit_exist (ETCL_Exist *);
       virtual int visit_unary_expr (ETCL_Unary_Expr *);
       virtual int visit_binary_expr (ETCL_Binary_Expr *);
-      virtual int visit_preference (ETCL_Preference *);
       
     private:
       /// Sub-methods for visit_binary_expr().

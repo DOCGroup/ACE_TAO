@@ -10,21 +10,18 @@
  */
 //=============================================================================
 
-#ifndef ETCL_CONSTRAINT_VISITOR_H
-#define ETCL_CONSTRAINT_VISITOR_H
+#ifndef ACE_ETCL_CONSTRAINT_VISITOR_H
+#define ACE_ETCL_CONSTRAINT_VISITOR_H
 
 #include /**/ "ace/pre.h"
-
-#include "etcl_export.h"
-#include "ETCL_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Versioned_Namespace.h"
+#include "ace_etcl_export.h"
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ETCL_Literal_Constraint;
 class ETCL_Identifier;
@@ -43,31 +40,31 @@ class ETCL_Unary_Expr;
 class ETCL_Binary_Expr;
 class ETCL_Preference;
 
-class ETCL_EXPORT_MACRO ETCL_Constraint_Visitor
+class ACE_ETCL_Export ETCL_Constraint_Visitor
 {
 public:
   virtual ~ETCL_Constraint_Visitor (void);
 
-  virtual int visit_literal (ETCL_Literal_Constraint *) = 0;
-  virtual int visit_identifier (ETCL_Identifier *) = 0;
-  virtual int visit_union_value (ETCL_Union_Value *) = 0;
-  virtual int visit_union_pos (ETCL_Union_Pos *) = 0;
-  virtual int visit_component_pos (ETCL_Component_Pos *) = 0;
-  virtual int visit_component_assoc (ETCL_Component_Assoc *) = 0;
-  virtual int visit_component_array (ETCL_Component_Array *) = 0;
-  virtual int visit_special (ETCL_Special *) = 0;
-  virtual int visit_component (ETCL_Component *) = 0;
-  virtual int visit_dot (ETCL_Dot *) = 0;
-  virtual int visit_eval (ETCL_Eval *) = 0;
-  virtual int visit_default (ETCL_Default *) = 0;
-  virtual int visit_exist (ETCL_Exist *) = 0;
-  virtual int visit_unary_expr (ETCL_Unary_Expr *) = 0;
-  virtual int visit_binary_expr (ETCL_Binary_Expr *) = 0;
-  virtual int visit_preference (ETCL_Preference *) = 0;
+  virtual int visit_literal (ETCL_Literal_Constraint *);
+  virtual int visit_identifier (ETCL_Identifier *);
+  virtual int visit_union_value (ETCL_Union_Value *);
+  virtual int visit_union_pos (ETCL_Union_Pos *);
+  virtual int visit_component_pos (ETCL_Component_Pos *);
+  virtual int visit_component_assoc (ETCL_Component_Assoc *);
+  virtual int visit_component_array (ETCL_Component_Array *);
+  virtual int visit_special (ETCL_Special *);
+  virtual int visit_component (ETCL_Component *);
+  virtual int visit_dot (ETCL_Dot *);
+  virtual int visit_eval (ETCL_Eval *);
+  virtual int visit_default (ETCL_Default *);
+  virtual int visit_exist (ETCL_Exist *);
+  virtual int visit_unary_expr (ETCL_Unary_Expr *);
+  virtual int visit_binary_expr (ETCL_Binary_Expr *);
+  virtual int visit_preference (ETCL_Preference *);
 };
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // ETCL_CONSTRAINT_VISITOR_H
+#endif // ACE_ETCL_CONSTRAINT_VISITOR_H

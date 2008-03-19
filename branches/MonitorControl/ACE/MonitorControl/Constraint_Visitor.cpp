@@ -64,72 +64,6 @@ namespace ACE
     }
     
     int
-    Constraint_Visitor::visit_union_value (ETCL_Union_Value *)
-    {
-      return 0;
-    }
-    
-    int
-    Constraint_Visitor::visit_union_pos (ETCL_Union_Pos *)
-    {
-      return 0;
-    }
-    
-    int
-    Constraint_Visitor::visit_component_pos (ETCL_Component_Pos *)
-    {
-      return 0;
-    }
-    
-    int
-    Constraint_Visitor::visit_component_assoc (ETCL_Component_Assoc *)
-    {
-      return 0;
-    }
-    
-    int
-    Constraint_Visitor::visit_component_array (ETCL_Component_Array *)
-    {
-      return 0;
-    }
-    
-    int
-    Constraint_Visitor::visit_special (ETCL_Special *)
-    {
-      return 0;
-    }
-    
-    int
-    Constraint_Visitor::visit_component (ETCL_Component *)
-    {
-      return 0;
-    }
-    
-    int
-    Constraint_Visitor::visit_dot (ETCL_Dot *)
-    {
-      return 0;
-    }
-    
-    int
-    Constraint_Visitor::visit_eval (ETCL_Eval *)
-    {
-      return 0;
-    }
-    
-    int
-    Constraint_Visitor::visit_default (ETCL_Default *)
-    {
-      return 0;
-    }
-    
-    int
-    Constraint_Visitor::visit_exist (ETCL_Exist *)
-    {
-      return 0;
-    }
-    
-    int
     Constraint_Visitor::visit_unary_expr (ETCL_Unary_Expr *unary_expr)
     {
       ETCL_Constraint *subexpression = unary_expr->subexpr ();
@@ -199,12 +133,6 @@ namespace ACE
         }
     }
     
-    int
-    Constraint_Visitor::visit_preference (ETCL_Preference *)
-    {
-      return 0;
-    }
-
     int
     Constraint_Visitor::visit_or (ETCL_Binary_Expr *binary)
     {

@@ -8,7 +8,7 @@
 
 BEGIN_VERSIONED_NAMESPACE_MACRO
 
-ACE_SYNCH_MUTEX ETCL_Interpreter::parserMutex__;
+ETCL_PARSER_EXPORT_MACRO ACE_SYNCH_MUTEX ETCL_Interpreter::parserMutex__;
 
 ETCL_Interpreter::ETCL_Interpreter (void)
   : root_ (0)

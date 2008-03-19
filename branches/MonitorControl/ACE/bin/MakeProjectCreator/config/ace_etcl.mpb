@@ -4,5 +4,4 @@
 project {
   after += ACE_ETCL
   libs += ACE_ETCL
-  includes += $(ACE_ROOT)/ETCL/ETCL_include
 }

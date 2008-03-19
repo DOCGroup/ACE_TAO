@@ -1,3 +1,41 @@
+Wed Mar 19 22:58:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ETCL/ETCL.mpc:
+
+          Split the parser, lexer and interpreter files
+          into a separate build (ACE_ETCL_Parser).
+
+        * bin/MakeProjectCreator/config/ace_etcl_parser.mpb:
+
+          Added this base project for convenience.
+
+        * ETCL/ace_etcl_export.h:
+
+          New file, export file for the original ETCL build.
+
+        * ETCL/ETCL_include/etcl_export.h:
+
+          Renamed this file etcl_parser_export.h.
+
+        * ETCL/ETCL_include/etcl_parser_export.h:
+
+          Renamed from etcl_export.h.
+
+        * bin/MakeProjectCreator/config/ace_etcl.mpb:
+        * ETCL/ETCL_Constraint.h:
+        * ETCL/ETCL_include/ETCL_macros.h:
+        * ETCL/ETCL_Constraint_Visitor.cpp:
+        * ETCL/ETCL_Interpreter.cpp:
+        * ETCL/ETCL_Constraint_Visitor.h:
+        * ETCL/ETCL_Interpreter.h:
+        * ETCL/ETCL_Constraint.cpp:
+        * ETCL/ETCL_Constraint.inl:
+        * MonitorControl/Constraint_Visitor.h:
+        * MonitorControl/MonitorControl.mpc:
+        * MonitorControl/Constraint_Visitor.cpp:
+
+          Updates propagated from the above changes.
+
 Tue Mar 18 14:53:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Monitor_Base.cpp

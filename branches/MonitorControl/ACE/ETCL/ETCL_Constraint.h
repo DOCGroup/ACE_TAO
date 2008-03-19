@@ -11,30 +11,27 @@
  */
 //=============================================================================
 
-#ifndef ETCL_CONSTRAINT_H
-#define ETCL_CONSTRAINT_H
+#ifndef ACE_ETCL_CONSTRAINT_H
+#define ACE_ETCL_CONSTRAINT_H
 
 #include /**/ "ace/pre.h"
-
-#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
 #include "ace/CDR_Base.h"
 
-#include "etcl_export.h"
-#include "ETCL_macros.h"
+#include "ace_etcl_export.h"
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef unsigned short Literal_Type;
-#define TAO_UNKNOWN 999
+typedef unsigned long Literal_Type;
 
 class ETCL_Constraint_Visitor;
 
-class ETCL_EXPORT_MACRO ETCL_Constraint
+class ACE_ETCL_Export ETCL_Constraint
 {
 public:
   /// Constructor and destructor
@@ -42,11 +39,24 @@ public:
   virtual ~ETCL_Constraint (void);
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
+
+protected:
+  enum
+  {
+    ACE_ETCL_STRING,
+    ACE_ETCL_DOUBLE,
+    ACE_ETCL_UNSIGNED,
+    ACE_ETCL_SIGNED,
+    ACE_ETCL_INTEGER,
+    ACE_ETCL_BOOLEAN,
+    ACE_ETCL_COMPONENT,
+    ACE_ETCL_UNKNOWN
+  };
 };
 
 // ****************************************************************
 
-class ETCL_EXPORT_MACRO ETCL_Literal_Constraint
+class ACE_ETCL_Export ETCL_Literal_Constraint
   : public ETCL_Constraint
 {
 public:
@@ -140,12 +150,12 @@ protected:
   } op_;
 
   /// The actual types of the ETCL_Literal_Constraint.
-  unsigned short type_;
+  Literal_Type type_;
 };
 
 // ****************************************************************
 
-class ETCL_EXPORT_MACRO ETCL_Identifier : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Identifier : public ETCL_Constraint
 {
 public:
   ETCL_Identifier (const char *value);
@@ -163,7 +173,7 @@ private:
 
 // ****************************************************************
 
-class ETCL_EXPORT_MACRO ETCL_Union_Value : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Union_Value : public ETCL_Constraint
 {
 public:
   ETCL_Union_Value (void);
@@ -172,7 +182,7 @@ public:
   ETCL_Union_Value (ETCL_Constraint *string);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Union_Pos : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Union_Pos : public ETCL_Constraint
 {
 public:
   ETCL_Union_Pos (void);
@@ -180,7 +190,7 @@ public:
                   ETCL_Constraint *component);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Component_Pos : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Component_Pos : public ETCL_Constraint
 {
 public:
   ETCL_Component_Pos (void);
@@ -188,7 +198,7 @@ public:
                       ETCL_Constraint *component);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Component_Assoc : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Component_Assoc : public ETCL_Constraint
 {
 public:
   ETCL_Component_Assoc (void);
@@ -196,7 +206,7 @@ public:
                         ETCL_Constraint *component);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Component_Array : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Component_Array : public ETCL_Constraint
 {
 public:
   ETCL_Component_Array (void);
@@ -204,14 +214,14 @@ public:
                         ETCL_Constraint *component);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Special : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Special : public ETCL_Constraint
 {
 public:
   ETCL_Special (void);
   ETCL_Special (int type);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Component : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Component : public ETCL_Constraint
 {
 public:
   ETCL_Component (void);
@@ -219,35 +229,35 @@ public:
                   ETCL_Constraint *component);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Dot : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Dot : public ETCL_Constraint
 {
 public:
   ETCL_Dot (void);
   ETCL_Dot (ETCL_Constraint *component);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Eval : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Eval : public ETCL_Constraint
 {
 public:
   ETCL_Eval (void);
   ETCL_Eval (ETCL_Constraint *component);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Default : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Default : public ETCL_Constraint
 {
 public:
   ETCL_Default (void);
   ETCL_Default (ETCL_Constraint *component);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Exist : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Exist : public ETCL_Constraint
 {
 public:
   ETCL_Exist (void);
   ETCL_Exist (ETCL_Constraint *component);
 };
 
-class ETCL_EXPORT_MACRO ETCL_Unary_Expr : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Unary_Expr : public ETCL_Constraint
 {
 public:
   ETCL_Unary_Expr (int type,
@@ -265,7 +275,7 @@ private:
   ETCL_Constraint *subexpr_;
 };
 
-class ETCL_EXPORT_MACRO ETCL_Binary_Expr : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Binary_Expr : public ETCL_Constraint
 {
 public:
   ETCL_Binary_Expr (int type,
@@ -286,7 +296,7 @@ private:
   ETCL_Constraint *rhs_;
 };
 
-class ETCL_EXPORT_MACRO ETCL_Preference : public ETCL_Constraint
+class ACE_ETCL_Export ETCL_Preference : public ETCL_Constraint
 {
 public:
   ETCL_Preference (void);
@@ -294,7 +304,7 @@ public:
                    ETCL_Constraint *subexpr = 0);
 };
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ETCL_Constraint.inl"
@@ -302,4 +312,4 @@ END_VERSIONED_NAMESPACE_MACRO
 
 #include /**/ "ace/post.h"
 
-#endif // ETCL_CONSTRAINT_H
+#endif // ACE_ETCL_CONSTRAINT_H
