@@ -343,7 +343,7 @@ namespace
       polList.length (1);
 
       polList[0] = orb->create_policy(Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-				      anyObjectVal);
+              anyObjectVal);
 
       CORBA::Object_var obj2 = obj->_set_policy_overrides(polList, CORBA::SET_OVERRIDE);
       polList[0]->destroy();
@@ -623,7 +623,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                  else
-		   rtt.set(ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (*argv)), 0);
+                   rtt.set(ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (*argv)), 0);
                 }
               else
                 {
