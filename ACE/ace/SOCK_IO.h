@@ -42,9 +42,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * operation times out, -1 is returned with @c errno == ETIME.
  * If it succeeds the number of bytes transferred is returned.
  * Methods with the extra @a flags argument will always result in
- * <send> getting called. Methods without the extra @a flags
- * argument will result in <send> getting called on Win32
- * platforms, and <write> getting called on non-Win32 platforms.
+ * @c send getting called. Methods without the extra @a flags
+ * argument will result in @c send getting called on Win32
+ * platforms, and @c write getting called on non-Win32 platforms.
  */
 class ACE_Export ACE_SOCK_IO : public ACE_SOCK
 {
@@ -78,7 +78,7 @@ public:
    * buffer to read.  This method determines how much data is in the
    * socket, allocates a buffer of this size, reads in the data, and
    * returns the number of bytes read.  The caller is responsible for
-   * deleting the member in the <iov_base> field of <io_vec> using
+   * deleting the member in the <iov_base> field of @a io_vec using
    * delete [] io_vec->iov_base.
    */
   ssize_t recvv (iovec *io_vec,
@@ -88,7 +88,7 @@ public:
   ssize_t recv (size_t n,
                 ...) const;
 
-  /// Recv @a n bytes via Win32 <ReadFile> using overlapped I/O.
+  /// Recv @a n bytes via Win32 @c ReadFile using overlapped I/O.
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
@@ -104,7 +104,7 @@ public:
                 size_t n,
                 const ACE_Time_Value *timeout = 0) const;
 
-  /// Send an <iovec> of size @a n to the connected socket.
+  /// Send an @c iovec of size @a n to the connected socket.
   ssize_t sendv (const iovec iov[],
                  int n,
                  const ACE_Time_Value *timeout = 0) const;
