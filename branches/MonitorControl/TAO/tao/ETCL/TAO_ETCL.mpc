@@ -1,0 +1,51 @@
+// -*- MPC -*-
+// $Id$
+
+project(TAO_ETCL) : dynamicany, ace_etcl, install {
+  sharedname   = TAO_ETCL
+  dynamicflags = TAO_ETCL_BUILD_DLL
+  includes += $(ACE_ROOT)/ETCL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TAO_ETCL_Constraint.cpp
+  }
+
+  Header_Files {
+    TAO_ETCL_Constraint.h
+    tao_etcl_export.h
+  }
+
+  Inline_Files {
+    TAO_ETCL_Constraint.inl
+  }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_ETCL.pc.in
+  }
+}
+
+project(TAO_ETCL_Parser) : taolib, tao_etcl, install {
+  sharedname   = TAO_ETCL_Parser
+  dynamicflags = TAO_ETCL_PARSER_BUILD_DLL
+  includes += ETCL_include
+  
+  Source_Files {
+    $(ACE_ROOT)/ETCL/ETCL_Interpreter.cpp
+    $(ACE_ROOT)/ETCL/ETCL_l.cpp
+    $(ACE_ROOT)/ETCL/ETCL_y.cpp
+  }
+
+  Header_Files {
+    $(ACE_ROOT)/ETCL/ETCL_Interpreter.h
+    $(ACE_ROOT)/ETCL/ETCL_y.h
+    ETCL_include/ETCL_macros.h
+    ETCL_include/ETCL_include.h
+    ETCL_include/etcl_parser_export.h
+  }
+}

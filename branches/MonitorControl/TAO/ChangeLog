@@ -1,3 +1,34 @@
+Wed Mar 19 23:12:09 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/tao_etcl.mpb:
+        * MPC/config/tao_etcl_parser.mpb:
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.inl:
+        * tao/ETCL/tao_etcl_export.h:
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+        * tao/ETCL/TAO_ETCL.mpc:
+        * tao/ETCL/ETCL_include:
+        * tao/ETCL/ETCL_include/EtCL_include.h:
+        * tao/ETCL/ETCL_include/ETCL_macros.h:
+        * tao/ETCL/ETCL_include/etcl_parser_export.h:
+
+          New files, defining the build of the TAO
+          ETCL libraries. The TAO_ETCL library contains
+          the constraint file and its classes inherits
+          from the corresponding ACE_ETCL classes.
+          The TAO_ETCL_Parser library
+          rebuilds the same source files as
+          ACE_ETCL_Parser, but with different includes.
+
+        * tao/Monitor.mpc:
+
+          Added new base project for the ETCL libs.
+
+        * TAO_ACE.mwc:
+
+          Added the ACE MonitorControl and ETCL
+          directories.
+
 Tue Mar 18 14:42:15 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Monitor/Monitor_Impl.cpp:

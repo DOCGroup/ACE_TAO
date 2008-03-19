@@ -1,5 +1,5 @@
 //$Id$
-project (Monitor): portableserver, install, tao_versioning_idl_defaults, ace_mc {
+project (Monitor): portableserver, tao_etcl_parser, install, tao_versioning_idl_defaults, ace_mc {
   sharedname   = TAO_Monitor
   dynamicflags = TAO_MONITOR_BUILD_DLL
   idlflags += -Gp -Gd \
