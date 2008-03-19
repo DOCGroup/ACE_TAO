@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Roundtrip *roundtrip_impl;
+      Roundtrip *roundtrip_impl = 0;
       ACE_NEW_RETURN (roundtrip_impl,
                       Roundtrip (orb.in ()),
                       1);

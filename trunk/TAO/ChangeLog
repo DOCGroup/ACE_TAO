@@ -1,3 +1,15 @@
+Wed Mar 19 14:54:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+          Set project name
+
+        * tests/DII_AMI_Forward/DII_AMI_Forward.mpc:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+          Simplified this file
+
+        * tests/DSI_AMH/server.cpp:
+          Initialise pointer with 0
+
 Wed Mar 19 14:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Latency/DSI/DSI.mpc:

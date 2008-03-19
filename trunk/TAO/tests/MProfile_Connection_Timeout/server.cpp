@@ -94,7 +94,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_OS::fclose (output_file);
         }
 
-
       // RUn the event loop if needed
       if (orb_run)
         {
