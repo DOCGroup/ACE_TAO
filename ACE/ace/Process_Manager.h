@@ -318,8 +318,7 @@ public:
    * @retval 0 on success, -1 on failure, and ACE_INVALID_PID when the
    * specified @a pid is not managed by this ACE_Process_Manager.
    */
-  int set_scheduler (const ACE_Sched_Params &params,
-                     pid_t pid);
+  int set_scheduler (const ACE_Sched_Params &params, pid_t pid);
 
   /**
    * Sets the scheduling parameters for all the processes managed by
@@ -328,7 +327,7 @@ public:
    *
    * @retval 0 on success, -1 on failure.
    */
-  int set_scheduler_all (const ACE_Sched_Params &);
+  int set_scheduler_all (const ACE_Sched_Params &params);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -398,7 +397,7 @@ private:
     /// Describes the process itself.
     ACE_Process *process_;
 
-    /// function to call when process exits
+    /// Function to call when process exits
     ACE_Event_Handler *exit_notify_;
 
     /// Dump the state of an object.
@@ -409,12 +408,12 @@ private:
   int resize (size_t);
 
   /// Locate the index of the table slot occupied by @a process_id.
-  /// Returns -1 if @a process_id is not in the <process_table_>
+  /// Returns -1 if @a process_id is not in the @c process_table_
   ssize_t find_proc (pid_t process_id);
 
 #if defined (ACE_WIN32)
   /// Locate the index of the table slot occupied by @a process_handle.
-  /// Returns ~0 if @a process_handle is not in the <process_table_>
+  /// Returns ~0 if @a process_handle is not in the @c process_table_
   ssize_t find_proc (ACE_HANDLE process_handle);
 #endif /* ACE_WIN32 */
 
@@ -426,7 +425,7 @@ private:
 
   /**
    * Append information about a process, i.e., its <process_id> in the
-   * <process_table_>.  Each entry is added at the end, growing the
+   * @c process_table_.  Each entry is added at the end, growing the
    * table if necessary.
    * Register @a event_handler to be called back when the process exits.
    */
@@ -463,7 +462,7 @@ private:
   static bool delete_instance_;
 
 #if defined (ACE_HAS_THREADS)
-  /// This lock protects access/ops on <process_table_>.
+  /// This lock protects access/ops on @c process_table_.
   ACE_Recursive_Thread_Mutex lock_;
 #endif /* ACE_HAS_THREADS */
 };
