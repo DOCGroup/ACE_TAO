@@ -1,3 +1,11 @@
+Wed Mar 19 08:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/nsdell.cpp:
+        * utils/nslist/nslist.cpp:
+        * utils/nslist/nslist.mpc:
+          Improved these utilities to work better when servers are not
+          responding
+
 Tue Mar 18 20:47:25 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/AMH_Exceptions/run_test.pl:

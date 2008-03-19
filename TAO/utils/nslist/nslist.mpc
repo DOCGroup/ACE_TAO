@@ -9,7 +9,7 @@ project(nsadd): namingexe, install {
   }
 }
 
-project(nsdel): namingexe, install {
+project(nsdel): namingexe, install, svc_utils, messaging {
   install = $(ACE_ROOT)/bin
   exename = nsdel
   Source_Files {
@@ -17,7 +17,7 @@ project(nsdel): namingexe, install {
   }
 }
 
-project(nslist): namingexe, install {
+project(nslist): namingexe, install, svc_utils, messaging {
   install = $(ACE_ROOT)/bin
   exename = nslist
   Source_Files {
