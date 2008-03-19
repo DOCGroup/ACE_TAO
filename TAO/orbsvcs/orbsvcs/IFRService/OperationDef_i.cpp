@@ -228,6 +228,17 @@ TAO_OperationDef_i::params_i (void)
         TAO_IFR_Service_Utils::path_to_idltype (type_path,
                                                 this->repo_);
 
+      // We have an undefined interface
+      if (impl == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Encountered undefined parameter type "
+                                "for variable: %s\n"),
+                      name.c_str ()));
+
+          throw CORBA::INTF_REPOS ();
+        }
+
       retval[i].type = impl->type_i ();
 
       CORBA::Object_var obj =
