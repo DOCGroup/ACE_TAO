@@ -1,3 +1,8 @@
+Wed Mar 19 14:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Latency/DSI/DSI.mpc:
+          Added custom idl project
+
 Wed Mar 19 08:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/nslist/nsdell.cpp:
