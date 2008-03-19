@@ -1,3 +1,10 @@
+Wed Mar 19 15:16:46 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+
+          Updated to throw an exception instead of crashing when the IFR
+          encounters an incomplete type during a query operation.
+
 Wed Mar 19 14:54:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
