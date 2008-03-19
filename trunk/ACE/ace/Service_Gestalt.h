@@ -42,7 +42,6 @@ class ACE_DLL;
 
 class ACE_Static_Svc_Descriptor;
 class ACE_Svc_Conf_Param;
-class ACE_Service_Gestalt;
 
 /**
  * @class ACE_Service_Gestalt

@@ -1455,7 +1455,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int sema_wait (ACE_sema_t *s,
                  ACE_Time_Value *tv);
-
   //@}
 
   //@{ @name A set of wrappers for System V semaphores.

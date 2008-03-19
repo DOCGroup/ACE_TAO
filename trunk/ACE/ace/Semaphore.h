@@ -160,11 +160,11 @@ public:
 protected:
   ACE_sema_t semaphore_;
 
-  /// Keeps track of whether <remove> has been called yet to avoid
-  /// multiple <remove> calls, e.g., explicitly and implicitly in the
+  /// Keeps track of whether remove() has been called yet to avoid
+  /// multiple remove() calls, e.g., explicitly and implicitly in the
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
+  /// remove () on the same object, which is a bad idea anyway...
   bool removed_;
 
 private:
