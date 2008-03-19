@@ -49,7 +49,7 @@ namespace
       polList.length (1);
 
       polList[0] = orb->create_policy(Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-				      anyObjectVal);
+               anyObjectVal);
 
       CORBA::Object_var obj2 = obj->_set_policy_overrides(polList, CORBA::SET_OVERRIDE);
       polList[0]->destroy();
