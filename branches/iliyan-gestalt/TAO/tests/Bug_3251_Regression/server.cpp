@@ -10,7 +10,7 @@
 static volatile bool bShutdown = false;
 static void shutdown(int)
 {
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Shutdown requested\n")));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Shutdown requested\n")));
   bShutdown = true;
 }
 
@@ -20,23 +20,26 @@ ACE_TMAIN(int, ACE_TCHAR ** argv)
   int result = 0;
 #if !defined (ACE_LACKS_FORK)
   ACE_Sig_Action sigUSR2((ACE_SignalHandler) shutdown, SIGUSR2);
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("SIGUSR2 shutdown handler installed\n")));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) SIGUSR2 shutdown handler installed\n")));
   ACE_UNUSED_ARG(sigUSR2);
 
   pid_t pid = -1;
   pid = ACE_OS::fork();
+  ACE_Log_Msg::instance ()->sync (argv[0]); // Make %P|%t work right
+
   if (pid == 0) // child
   {
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("child waiting\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) child waiting\n")));
     ACE_OS::sleep(5);
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("signaling parent\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) signaling parent\n")));
     result = ACE_OS::kill(ACE_OS::getppid(), SIGUSR2);
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("signaled parent\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) signaled parent\n")));
+    //    ACE_OS::sleep (100000);
     return 0;
   }
   else if (pid > 0) // parent
   {
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("parent using ACE_Service_Config\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) parent using ACE_Service_Config, pid=%d\n"), pid));
     ACE_Service_Config serviceConfig;
 
     char signum[64];
@@ -57,12 +60,12 @@ ACE_TMAIN(int, ACE_TCHAR ** argv)
     );
     if(0 != result)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: serviceConfig.open failed\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error: serviceConfig.open failed\n")));
       return result;
     }
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.open done\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) serviceConfig.open done\n")));
 
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.process_file ...\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) serviceConfig.process_file ...\n")));
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     result = serviceConfig.process_file("Bug_3251.conf");
 #else
@@ -70,10 +73,10 @@ ACE_TMAIN(int, ACE_TCHAR ** argv)
 #endif
     if(0 != result)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: serviceConfig.process_file failed\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error: serviceConfig.process_file failed\n")));
       return result;
     }
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.process_file done\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) serviceConfig.process_file done\n")));
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("run_event_loop ...\n")));
     while(!bShutdown)
@@ -90,38 +93,38 @@ ACE_TMAIN(int, ACE_TCHAR ** argv)
       {
         ACE_DEBUG ((
           LM_INFO,
-          ACE_TEXT ("run_event_loop failed (%s, %d)\n"),
+          ACE_TEXT ("(%P|%t) run_event_loop failed (%s, %d)\n"),
           ACE_OS::strerror(ACE_OS::last_error()),
           ACE_OS::last_error()
         ));
       }
     }
 
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("run_event_loop done\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) run_event_loop done\n")));
 
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.fini_svcs ...\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) serviceConfig.fini_svcs ...\n")));
     result = serviceConfig.fini_svcs();
     if(0 != result)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: serviceConfig.fini_svcs failed\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error: serviceConfig.fini_svcs failed\n")));
       return result;
     }
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.fini_svcs done\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) serviceConfig.fini_svcs done\n")));
 
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.close ...\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) serviceConfig.close ...\n")));
     result = serviceConfig.close();
     if(0 != result)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: serviceConfig.close failed\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error: serviceConfig.close failed\n")));
       return result;
     }
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.close done\n")));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) serviceConfig.close done\n")));
 
     return result;
   } /* end of if */
   else // fork failed
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("fork failed\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error: fork failed\n")));
     return 1;
   } /* end of else */
 #else
