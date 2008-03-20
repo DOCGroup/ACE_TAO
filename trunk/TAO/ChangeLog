@@ -1,3 +1,10 @@
+Thu Mar 20 14:09:06 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/DllOrb.cpp:
+
+          Same fix as my previous commit, applied to this copy of DllOrb.cpp:
+          Tue Mar 18 15:07:23 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
 Wed Mar 19 15:16:46 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
 
         * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
