@@ -46,16 +46,14 @@ public:
 
   ///= TAO_Notify_Tests_FilterFactory methods.
 
-  virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_var& filter_poa);
+  virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_ptr filter_poa);
 
   ///= CosNotifyFilter::FilterFactory methods
 
-  virtual CosNotifyFilter::Filter_ptr create_filter (const char * constraint_grammar
-                                                     );
+  virtual CosNotifyFilter::Filter_ptr create_filter (const char * constraint_grammar);
 
   virtual CosNotifyFilter::MappingFilter_ptr create_mapping_filter (const char * constraint_grammar,
-                                                                    const CORBA::Any & default_value
-                                                                    );
+                                                                    const CORBA::Any & default_value);
 
 protected:
   /// The POA in which to activate the Filters.

@@ -10,7 +10,10 @@ use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
 $target = PerlACE::TestTarget::create_target($PerlACE::TestConfig) || die "Create target failed\n";
-$iorfile = $target->LocalFile ("server.ior");
+$host = new PerlACE::TestTarget;
+
+$iorbase = "server.ior";
+$iorfile = $target->LocalFile ($iorbase);
 
 $invocation = "sii";
 $num = 5;
@@ -18,6 +21,7 @@ $debug = "";
 $status = 0;
 
 $target->DeleteFile($iorfile);
+$host->DeleteFile($iorbase);
 
 # Parse the arguments
 
@@ -71,10 +75,11 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $SV = $target->CreateProcess ("server", "$debug -o $iorfile");
 }
-$CL = $target->CreateProcess ("client");
+$CL = $host->CreateProcess ("client");
 
 foreach $type (@types) {
     $target->DeleteFile($iorfile); # Ignore errors
+    $host->DeleteFile($iorbase);
 
     print STDERR "==== Testing $type === wait....\n";
 
@@ -92,8 +97,13 @@ foreach $type (@types) {
             exit 1;
         }
 
-        $CL->Arguments ("$debug -f $iorfile  -i $invocation -t $type -n $num -x");
+        if ($target->GetFile ($iorfile, $iorbase) == -1) {
+            print STDERR "ERROR: cannot retrieve file <$iorfile>\n";
+            $SV->Kill (); $SV->TimedWait (1);
+            exit 1;
+        }
 
+        $CL->Arguments ("$debug -f $iorbase  -i $invocation -t $type -n $num -x");
         $client = $CL->SpawnWaitKill (60);
 
         if ($client != 0) {
@@ -107,9 +117,12 @@ foreach $type (@types) {
             print STDERR "ERROR: server returned $server\n";
             $status = 1;
         }
+
+        $target->GetStderrLog();
     }
 
     $target->DeleteFile($iorfile);
+    $host->DeleteFile($iorbase);
 
     print STDERR "==== Test for $type finished ===\n";
 }

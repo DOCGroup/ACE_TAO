@@ -1,3 +1,86 @@
+Wed Mar 19 15:16:46 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+
+          Updated to throw an exception instead of crashing when the IFR
+          encounters an incomplete type during a query operation.
+
+Wed Mar 19 14:54:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+          Set project name
+
+        * tests/DII_AMI_Forward/DII_AMI_Forward.mpc:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+          Simplified this file
+
+        * tests/DSI_AMH/server.cpp:
+          Initialise pointer with 0
+
+Wed Mar 19 14:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Latency/DSI/DSI.mpc:
+          Added custom idl project
+
+Wed Mar 19 08:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/nsdell.cpp:
+        * utils/nslist/nslist.cpp:
+        * utils/nslist/nslist.mpc:
+          Improved these utilities to work better when servers are not
+          responding
+
+Tue Mar 18 20:47:25 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/AMH_Exceptions/run_test.pl:
+        * tests/Param_Test/run_test.pl:
+        * tests/Hello/run_test.pl:
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+        * tests/CallbackTest/run_test.pl: On LabVIEW RT, run the server part on
+          the target and the client on the host.
+
+Tue Mar 18 15:07:23 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_3251_Regression/DllOrb.cpp:
+
+          Use ACE_auto_ptr_reset instead of auto_ptr::reset() for compatibility
+          with older std library implementations.
+
+Tue Mar 18 09:41:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_helper.cpp:
+          Print the TAO_IDL version in the header of the generated files.
+          This fixes bugzilla 3255
+
+Tue Mar 18 09:24:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.h:
+          Doxygen changes
+
+Tue Mar 18 07:33:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          For OpenVMS add -Wc/DISTINGUISH_NESTED_ENUMS to the compiler
+          flags which is only required for one of the generated files
+          in this test
+
+Tue Mar 18 07:29:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted this change of yesterday
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+          Set explicit project name to resolve issues on VMS
+
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.h:
+          Layout changes
+
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.{h,cpp}:
+          Updated because of interface changes of yesterday
+
+Mon Mar 17 15:39:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+          Set explicit project name to resolve issues on VMS
+
 Mon Mar 17 13:39:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Builder.cpp:

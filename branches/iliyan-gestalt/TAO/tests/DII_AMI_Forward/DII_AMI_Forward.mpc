@@ -3,19 +3,14 @@
 //
 
 
-project (*Client): dynamicinterface, avoids_minimum_corba {
-  exename = client
-
+project (*Client): taoclient, dynamicinterface {
   Source_Files {
     client.cpp
     DII_ReplyHandler.cpp
   }
 }
 
-project (*Server): messaging, pi_server, portableserver, avoids_minimum_corba {
-
-  exename = server
-
+project (*Server): messaging, pi_server, taoserver, avoids_minimum_corba {
   IDL_Files {
     test.idl
   }

@@ -1,14 +1,14 @@
 // $Id$
 
-project(*server): notification_serv, taoexe {
+project(*server): notification_serv, taoexe, threads {
   exename=server
-  libs += Bug_3252
   Source_Files {
     server.cpp
   }
 }
 
-project: portableserver {
+project: portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  libout = .
   sharedname = Bug_3252
   dynamicflags += BUG_3252_REGRESSION_BUILD_DLL
   Source_Files {
