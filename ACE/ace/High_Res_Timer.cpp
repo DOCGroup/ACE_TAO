@@ -88,7 +88,7 @@ ACE_High_Res_Timer::get_cpuinfo (void)
   // this code assumes an order to the /proc/cpuinfo contents.  The
   // BogoMips rating had better come after CPU type and model info.
 #if !defined (__alpha__)
-  int supported = 0;
+  bool supported = false;
 #endif /* __alpha__ */
 
   FILE *cpuinfo = ACE_OS::fopen (ACE_TEXT ("/proc/cpuinfo"),
@@ -131,12 +131,11 @@ ACE_High_Res_Timer::get_cpuinfo (void)
                                    "Alpha",
                                    5) == 0)
                 {
-                  supported = 1;
-                  // ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" recognized Alpha chip...")));
+                  supported = true;
                 }
             }
           // Pentium CPU model?
-          else if (supported == 0
+          else if (!supported
                    && ::sscanf (buf, "model name : Pentium %s\n", arg) == 1)
             {
               // But if we don't have the right kind of Intel chip,
@@ -146,8 +145,7 @@ ACE_High_Res_Timer::get_cpuinfo (void)
                   || ACE_OS::strcmp (arg, "IV") == 0
                   || ACE_OS::strcmp (arg, "Pro") == 0)
                 {
-                  supported = 1;
-                  // ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" recognized Pentium Pro/II chip...")));
+                  supported = true;
                 }
             }
           else if (::sscanf (buf, "cpu MHz : %lf\n", &mhertz) == 1)
