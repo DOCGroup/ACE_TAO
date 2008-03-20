@@ -1,3 +1,10 @@
+Thu Mar 20 15:34:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+
+          Changed the ACE_LD_DECORATOR_STR macro to use $(LIBMODIFIER)
+          instead of $(ILIBMODIFIER) for the bmake project type.
+
 Thu Mar 20 12:42:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Addr.h:
