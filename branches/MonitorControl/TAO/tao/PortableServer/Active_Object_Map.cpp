@@ -3,6 +3,11 @@
 #include "tao/PortableServer/Active_Object_Map.h"
 #include "tao/PortableServer/Active_Object_Map_Entry.h"
 
+#if defined (TAO_ENABLE_MONITORS)
+#include "ace/MC_Admin_Manager.h"
+#include "ace/Dynamic_Service.h"
+#endif /* TAO_ENABLE_MONITORS */
+
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Active_Object_Map.inl"
 #endif /* __ACE_INLINE__ */
@@ -22,8 +27,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 size_t TAO_Active_Object_Map::system_id_size_ = 0;
 
 void
-TAO_Active_Object_Map::set_system_id_size
-  (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
+TAO_Active_Object_Map::set_system_id_size (
+  const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
 {
   if (TAO_Active_Object_Map::system_id_size_ == 0)
     {
@@ -33,8 +38,7 @@ TAO_Active_Object_Map::set_system_id_size
             {
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
             case TAO_LINEAR:
-              TAO_Active_Object_Map::system_id_size_ =
-                sizeof (CORBA::ULong);
+              TAO_Active_Object_Map::system_id_size_ = sizeof (CORBA::ULong);
               break;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -57,13 +61,11 @@ TAO_Active_Object_Map::set_system_id_size
             {
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
             case TAO_LINEAR:
-              TAO_Active_Object_Map::system_id_size_ =
-                sizeof (CORBA::ULong);
+              TAO_Active_Object_Map::system_id_size_ = sizeof (CORBA::ULong);
               break;
 
             case TAO_DYNAMIC_HASH:
-              TAO_Active_Object_Map::system_id_size_ =
-                sizeof (CORBA::ULong);
+              TAO_Active_Object_Map::system_id_size_ = sizeof (CORBA::ULong);
               break;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -77,17 +79,22 @@ TAO_Active_Object_Map::set_system_id_size
     }
 }
 
-TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
-                                              int unique_id_policy,
-                                              int persistent_id_policy,
-                                              const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
-  : user_id_map_ (0),
-    servant_map_ (0),
-    id_uniqueness_strategy_ (0),
-    lifespan_strategy_ (0),
-    id_assignment_strategy_ (0),
-    id_hint_strategy_ (0),
-    using_active_maps_ (false)
+TAO_Active_Object_Map::TAO_Active_Object_Map (
+    int user_id_policy,
+    int unique_id_policy,
+    int persistent_id_policy,
+    const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &
+      creation_parameters)
+  : user_id_map_ (0)
+  , servant_map_ (0)
+  , id_uniqueness_strategy_ (0)
+  , lifespan_strategy_ (0)
+  , id_assignment_strategy_ (0)
+  , id_hint_strategy_ (0)
+  , using_active_maps_ (false)
+#if defined (TAO_ENABLE_MONITORS)
+  , monitor_ ("Root POA Monitor")
+#endif /* TAO_ENABLE_MONITORS */
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);
 
@@ -112,7 +119,8 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
     }
 
   // Give ownership to the auto pointer.
-  auto_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
+  auto_ptr<TAO_Id_Uniqueness_Strategy>
+    new_id_uniqueness_strategy (id_uniqueness_strategy);
 
   TAO_Lifespan_Strategy *lifespan_strategy = 0;
 
@@ -165,12 +173,14 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
                         CORBA::NO_MEMORY ());
 #else
       ACE_ERROR ((LM_ERROR,
-                  "System Id Assignment with multiple not supported with CORBA/e\n"));
+                  "System Id Assignment with multiple "
+                  "not supported with CORBA/e\n"));
 #endif
     }
 
   // Give ownership to the auto pointer.
-  auto_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
+  auto_ptr<TAO_Id_Assignment_Strategy>
+    new_id_assignment_strategy (id_assignment_strategy);
 
   TAO_Id_Hint_Strategy *id_hint_strategy = 0;
   if ((user_id_policy
@@ -180,7 +190,8 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
       this->using_active_maps_ = true;
 
       ACE_NEW_THROW_EX (id_hint_strategy,
-                        TAO_Active_Hint_Strategy (creation_parameters.active_object_map_size_),
+                        TAO_Active_Hint_Strategy (
+                          creation_parameters.active_object_map_size_),
                         CORBA::NO_MEMORY ());
     }
   else
@@ -201,12 +212,14 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
         case TAO_LINEAR:
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
           ACE_NEW_THROW_EX (sm,
-                            servant_linear_map (creation_parameters.active_object_map_size_),
+                            servant_linear_map (
+                              creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
           break;
 #else
           ACE_ERROR ((LM_ERROR,
-                      "linear option for -ORBUniqueidPolicyReverseDemuxStrategy "
+                      "linear option for "
+                      "-ORBUniqueidPolicyReverseDemuxStrategy "
                       "not supported with minimum POA maps. "
                       "Ingoring option to use default... \n"));
           /* FALL THROUGH */
@@ -215,7 +228,8 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
         case TAO_DYNAMIC_HASH:
         default:
           ACE_NEW_THROW_EX (sm,
-                            servant_hash_map (creation_parameters.active_object_map_size_),
+                            servant_hash_map (
+                              creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
           break;
         }
@@ -233,7 +247,8 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
         case TAO_LINEAR:
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
           ACE_NEW_THROW_EX (uim,
-                            user_id_linear_map (creation_parameters.active_object_map_size_),
+                            user_id_linear_map (
+                              creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
           break;
 #else
@@ -305,6 +320,12 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
   this->id_hint_strategy_ = new_id_hint_strategy.release ();
   this->servant_map_ = new_servant_map.release ();
   this->user_id_map_ = new_user_id_map.release ();
+  
+#if defined (TAO_ENABLE_MONITORS)
+  MC_ADMINMANAGER *mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  mgr->admin ().monitor_point (&this->monitor_, 0);
+#endif /* TAO_ENABLE_MONITORS */
 }
 
 TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
@@ -326,27 +347,37 @@ TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
   delete this->id_hint_strategy_;
   delete this->servant_map_;
   delete this->user_id_map_;
+ 
+#if defined (TAO_ENABLE_MONITORS)
+  size_t empty = 0UL; 
+  this->monitor_.receive (empty);
+#endif /* TAO_ENABLE_MONITORS */
 }
 
 bool
-TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_id,
-                                          CORBA::Short priority,
-                                          bool &priorities_match,
-                                          bool &deactivated)
+TAO_Active_Object_Map::is_user_id_in_map (
+  const PortableServer::ObjectId &user_id,
+  CORBA::Short priority,
+  bool &priorities_match,
+  bool &deactivated)
 {
   TAO_Active_Object_Map_Entry *entry = 0;
   bool result = false;
   int const find_result = this->user_id_map_->find (user_id, entry);
+  
   if (find_result == 0)
     {
       if (entry->servant_ == 0)
         {
           if (entry->priority_ != priority)
-            priorities_match = false;
+            {
+              priorities_match = false;
+            }
         }
       else
         {
           result = true;
+          
           if (entry->deactivated_)
             {
               deactivated = true;
@@ -364,7 +395,8 @@ TAO_Id_Uniqueness_Strategy::~TAO_Id_Uniqueness_Strategy (void)
 }
 
 void
-TAO_Id_Uniqueness_Strategy::set_active_object_map (TAO_Active_Object_Map *active_object_map)
+TAO_Id_Uniqueness_Strategy::set_active_object_map (
+  TAO_Active_Object_Map *active_object_map)
 {
   this->active_object_map_ = active_object_map;
 }
@@ -379,6 +411,7 @@ TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
   if (result == 0)
     {
       result = 1;
+      
       if (entry->deactivated_)
         {
           deactivated = true;
@@ -393,20 +426,32 @@ TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
 }
 
 int
-TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
-                                            const PortableServer::ObjectId &user_id,
-                                            CORBA::Short priority,
-                                            TAO_Active_Object_Map_Entry *&entry)
+TAO_Unique_Id_Strategy::bind_using_user_id (
+  PortableServer::Servant servant,
+  const PortableServer::ObjectId &user_id,
+  CORBA::Short priority,
+  TAO_Active_Object_Map_Entry *&entry)
 {
-  int result = this->active_object_map_->user_id_map_->find (user_id, entry);
+  int result =
+    this->active_object_map_->user_id_map_->find (user_id, entry);
+  
   if (result == 0)
     {
       if (servant != 0)
         {
           entry->servant_ = servant;
 
-          result = this->active_object_map_->servant_map_->bind (entry->servant_,
-                                                                 entry);
+          result =
+            this->active_object_map_->servant_map_->bind (entry->servant_,
+                                                          entry);
+                                                                 
+#if defined (TAO_ENABLE_MONITORS)
+          if (result == 0)
+            {
+              this->active_object_map_->monitor_.receive (
+                this->active_object_map_->servant_map_->current_size ());
+            }
+#endif /* TAO_ENABLE_MONITORS */
         }
     }
   else
@@ -422,18 +467,33 @@ TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
 
       if (result == 0)
         {
-          result = this->active_object_map_->user_id_map_->bind (entry->user_id_,
-                                                                 entry);
+          result =
+            this->active_object_map_->user_id_map_->bind (entry->user_id_,
+                                                          entry);
           if (result == 0)
             {
               if (servant != 0)
-                result = this->active_object_map_->servant_map_->bind (entry->servant_,
-                                                                       entry);
+                {
+                  result =
+                    this->active_object_map_->servant_map_->bind (
+                      entry->servant_,
+                      entry);
+                }
+                                                                 
               if (result != 0)
                 {
-                  this->active_object_map_->user_id_map_->unbind (entry->user_id_);
-                  this->active_object_map_->id_hint_strategy_->unbind (*entry);
+                  this->active_object_map_->user_id_map_->unbind (
+                    entry->user_id_);
+                  this->active_object_map_->id_hint_strategy_->unbind (
+                    *entry);
                   delete entry;
+                }
+              else
+                {
+#if defined (TAO_ENABLE_MONITORS)
+                  this->active_object_map_->monitor_.receive (
+                    this->active_object_map_->servant_map_->current_size ());
+#endif /* TAO_ENABLE_MONITORS */
                 }
             }
           else
@@ -443,14 +503,17 @@ TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
             }
         }
       else
-        delete entry;
+        {
+          delete entry;
+        }
     }
 
   return result;
 }
 
 int
-TAO_Unique_Id_Strategy::unbind_using_user_id (const PortableServer::ObjectId &user_id)
+TAO_Unique_Id_Strategy::unbind_using_user_id (
+  const PortableServer::ObjectId &user_id)
 {
   TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->user_id_map_->unbind (user_id,
@@ -458,41 +521,61 @@ TAO_Unique_Id_Strategy::unbind_using_user_id (const PortableServer::ObjectId &us
   if (result == 0)
     {
       if (entry->servant_ != 0)
-        result = this->active_object_map_->servant_map_->unbind (entry->servant_);
+        {
+          result =
+            this->active_object_map_->servant_map_->unbind (entry->servant_);
+        }
+        
+      if (result == 0)
+        {
+          result =
+            this->active_object_map_->id_hint_strategy_->unbind (*entry);
+
+#if defined (TAO_ENABLE_MONITORS)
+          this->active_object_map_->monitor_.receive (
+            this->active_object_map_->servant_map_->current_size ());
+#endif /* TAO_ENABLE_MONITORS */
+        }
 
       if (result == 0)
-        result =
-          this->active_object_map_->id_hint_strategy_->unbind (*entry);
-
-      if (result == 0)
-        delete entry;
+        {
+          delete entry;
+        }
     }
+    
   return result;
 }
 
 int
-TAO_Unique_Id_Strategy::find_user_id_using_servant (PortableServer::Servant servant,
-                                                    PortableServer::ObjectId_out user_id)
+TAO_Unique_Id_Strategy::find_user_id_using_servant (
+  PortableServer::Servant servant,
+  PortableServer::ObjectId_out user_id)
 {
   TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->servant_map_->find (servant, entry);
+  
   if (result == 0)
     {
       if (entry->deactivated_)
-        result = -1;
+        {
+          result = -1;
+        }
       else
-        ACE_NEW_RETURN (user_id,
-                        PortableServer::ObjectId (entry->user_id_),
-                        -1);
+        {
+          ACE_NEW_RETURN (user_id,
+                          PortableServer::ObjectId (entry->user_id_),
+                          -1);
+        }
     }
 
   return result;
 }
 
 int
-TAO_Unique_Id_Strategy::find_system_id_using_servant (PortableServer::Servant servant,
-                                                      PortableServer::ObjectId_out system_id,
-                                                      CORBA::Short &priority)
+TAO_Unique_Id_Strategy::find_system_id_using_servant (
+  PortableServer::Servant servant,
+  PortableServer::ObjectId_out system_id,
+  CORBA::Short &priority)
 {
   TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->servant_map_->find (servant,
@@ -500,13 +583,19 @@ TAO_Unique_Id_Strategy::find_system_id_using_servant (PortableServer::Servant se
   if (result == 0)
     {
       if (entry->deactivated_)
-        result = -1;
+        {
+          result = -1;
+        }
       else
         {
-          result = this->active_object_map_->id_hint_strategy_->system_id (system_id,
-                                                                           *entry);
+          result =
+            this->active_object_map_->id_hint_strategy_->system_id (
+              system_id,
+              *entry);
           if (result == 0)
-            priority = entry->priority_;
+            {
+              priority = entry->priority_;
+            }
         }
     }
 
@@ -514,7 +603,8 @@ TAO_Unique_Id_Strategy::find_system_id_using_servant (PortableServer::Servant se
 }
 
 CORBA::Boolean
-TAO_Unique_Id_Strategy::remaining_activations (PortableServer::Servant servant)
+TAO_Unique_Id_Strategy::remaining_activations (
+  PortableServer::Servant servant)
 {
   ACE_UNUSED_ARG (servant);
 
@@ -532,16 +622,21 @@ TAO_Multiple_Id_Strategy::is_servant_in_map (PortableServer::Servant, bool &)
 }
 
 int
-TAO_Multiple_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
-                                              const PortableServer::ObjectId &user_id,
-                                              CORBA::Short priority,
-                                              TAO_Active_Object_Map_Entry *&entry)
+TAO_Multiple_Id_Strategy::bind_using_user_id (
+  PortableServer::Servant servant,
+  const PortableServer::ObjectId &user_id,
+  CORBA::Short priority,
+  TAO_Active_Object_Map_Entry *&entry)
 {
-  int result = this->active_object_map_->user_id_map_->find (user_id, entry);
+  int result =
+    this->active_object_map_->user_id_map_->find (user_id, entry);
+    
   if (result == 0)
     {
       if (servant != 0)
-        entry->servant_ = servant;
+        {
+          entry->servant_ = servant;
+        }
     }
   else
     {
@@ -557,23 +652,34 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
 
       if (result == 0)
         {
-          result = this->active_object_map_->user_id_map_->bind (entry->user_id_,
-                                                                 entry);
+          result =
+            this->active_object_map_->user_id_map_->bind (entry->user_id_,
+                                                          entry);
           if (result != 0)
             {
               this->active_object_map_->id_hint_strategy_->unbind (*entry);
               delete entry;
             }
+          else
+            {
+#if defined (TAO_ENABLE_MONITORS)
+              this->active_object_map_->monitor_.receive (
+                this->active_object_map_->user_id_map_->current_size ());
+#endif /* TAO_ENABLE_MONITORS */
+            }
         }
       else
-        delete entry;
+        {
+          delete entry;
+        }
     }
 
   return result;
 }
 
 int
-TAO_Multiple_Id_Strategy::unbind_using_user_id (const PortableServer::ObjectId &user_id)
+TAO_Multiple_Id_Strategy::unbind_using_user_id (
+  const PortableServer::ObjectId &user_id)
 {
   TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->user_id_map_->unbind (user_id,
@@ -583,35 +689,45 @@ TAO_Multiple_Id_Strategy::unbind_using_user_id (const PortableServer::ObjectId &
       result = this->active_object_map_->id_hint_strategy_->unbind (*entry);
 
       if (result == 0)
-        delete entry;
+        {
+          delete entry;
+        }
+        
+#if defined (TAO_ENABLE_MONITORS)
+              this->active_object_map_->monitor_.receive (
+                this->active_object_map_->user_id_map_->current_size ());
+#endif /* TAO_ENABLE_MONITORS */
     }
 
   return result;
 }
 
 int
-TAO_Multiple_Id_Strategy::find_user_id_using_servant (PortableServer::Servant,
-                                                      PortableServer::ObjectId_out)
+TAO_Multiple_Id_Strategy::find_user_id_using_servant (
+  PortableServer::Servant,
+  PortableServer::ObjectId_out)
 {
   return -1;
 }
 
 int
-TAO_Multiple_Id_Strategy::find_system_id_using_servant (PortableServer::Servant,
-                                                        PortableServer::ObjectId_out,
-                                                        CORBA::Short &)
+TAO_Multiple_Id_Strategy::find_system_id_using_servant (
+  PortableServer::Servant,
+  PortableServer::ObjectId_out,
+  CORBA::Short &)
 {
   return -1;
 }
 
 CORBA::Boolean
-TAO_Multiple_Id_Strategy::remaining_activations (PortableServer::Servant servant)
+TAO_Multiple_Id_Strategy::remaining_activations (
+  PortableServer::Servant servant)
 {
-  TAO_Active_Object_Map::user_id_map::iterator end
-    = this->active_object_map_->user_id_map_->end ();
+  TAO_Active_Object_Map::user_id_map::iterator end =
+    this->active_object_map_->user_id_map_->end ();
 
-  for (TAO_Active_Object_Map::user_id_map::iterator iter
-         = this->active_object_map_->user_id_map_->begin ();
+  for (TAO_Active_Object_Map::user_id_map::iterator iter =
+         this->active_object_map_->user_id_map_->begin ();
        iter != end;
        ++iter)
     {
@@ -619,7 +735,9 @@ TAO_Multiple_Id_Strategy::remaining_activations (PortableServer::Servant servant
       TAO_Active_Object_Map_Entry *entry = map_pair.second ();
 
       if (entry->servant_ == servant)
-        return 1;
+        {
+          return 1;
+        }
     }
 
   return 0;
@@ -631,27 +749,35 @@ TAO_Lifespan_Strategy::~TAO_Lifespan_Strategy (void)
 }
 
 void
-TAO_Lifespan_Strategy::set_active_object_map (TAO_Active_Object_Map *active_object_map)
+TAO_Lifespan_Strategy::set_active_object_map (
+  TAO_Active_Object_Map *active_object_map)
 {
   this->active_object_map_ = active_object_map;
 }
 
 int
-TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                                  const PortableServer::ObjectId &user_id,
-                                                                  PortableServer::Servant &servant,
-                                                                  TAO_Active_Object_Map_Entry *&entry)
+TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (
+  const PortableServer::ObjectId &system_id,
+  const PortableServer::ObjectId &user_id,
+  PortableServer::Servant &servant,
+  TAO_Active_Object_Map_Entry *&entry)
 {
   int result = this->active_object_map_->id_hint_strategy_->find (system_id,
                                                                   entry);
   if (result == 0)
     {
       if (entry->deactivated_)
-        result = -1;
+        {
+          result = -1;
+        }
       else if (entry->servant_ == 0)
-        result = -1;
+        {
+          result = -1;
+        }
       else
-        servant = entry->servant_;
+        {
+          servant = entry->servant_;
+        }
     }
   else
     {
@@ -660,16 +786,24 @@ TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (const Portable
       if (result == 0)
         {
           if (entry->deactivated_)
-            result = -1;
+            {
+              result = -1;
+            }
           else if (entry->servant_ == 0)
-            result = -1;
+            {
+              result = -1;
+            }
           else
-            servant = entry->servant_;
+            {
+              servant = entry->servant_;
+            }
         }
     }
 
   if (result == -1)
-    entry = 0;
+    {
+      entry = 0;
+    }
 
   return result;
 }
@@ -678,39 +812,56 @@ TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (const Portable
 
 #if !defined (CORBA_E_MICRO)
 int
-TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                                   const PortableServer::ObjectId &user_id,
-                                                                   PortableServer::Servant &servant,
-                                                                   TAO_Active_Object_Map_Entry *&entry)
+TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id (
+  const PortableServer::ObjectId &system_id,
+  const PortableServer::ObjectId &user_id,
+  PortableServer::Servant &servant,
+TAO_Active_Object_Map_Entry *&entry)
 {
-  int result = this->active_object_map_->id_hint_strategy_->find (system_id,
-                                                                  entry);
-  if (result == 0 &&
-      user_id == entry->user_id_)
+  int result =
+    this->active_object_map_->id_hint_strategy_->find (system_id,
+                                                       entry);
+  if (result == 0 && user_id == entry->user_id_)
     {
       if (entry->deactivated_)
-        result = -1;
+        {
+          result = -1;
+        }
       else if (entry->servant_ == 0)
-        result = -1;
+        {
+          result = -1;
+        }
       else
-        servant = entry->servant_;
+        {
+          servant = entry->servant_;
+        }
     }
   else
     {
-      result = this->active_object_map_->user_id_map_->find (user_id, entry);
+      result =
+        this->active_object_map_->user_id_map_->find (user_id, entry);
+      
       if (result == 0)
         {
           if (entry->deactivated_)
-            result = -1;
+            {
+              result = -1;
+            }
           else if (entry->servant_ == 0)
-            result = -1;
+            {
+              result = -1;
+            }
           else
-            servant = entry->servant_;
+            {
+              servant = entry->servant_;
+            }
         }
     }
 
   if (result == -1)
-    entry = 0;
+    {
+      entry = 0;
+    }
 
   return result;
 }
@@ -721,7 +872,8 @@ TAO_Id_Assignment_Strategy::~TAO_Id_Assignment_Strategy (void)
 }
 
 void
-TAO_Id_Assignment_Strategy::set_active_object_map (TAO_Active_Object_Map *active_object_map)
+TAO_Id_Assignment_Strategy::set_active_object_map (
+  TAO_Active_Object_Map *active_object_map)
 {
   this->active_object_map_ = active_object_map;
 }
@@ -737,16 +889,18 @@ TAO_User_Id_Strategy::bind_using_system_id (PortableServer::Servant,
 #endif
 
 int
-TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Servant servant,
-                                                             CORBA::Short priority,
-                                                             TAO_Active_Object_Map_Entry *&entry)
+TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
+  PortableServer::Servant servant,
+  CORBA::Short priority,
+  TAO_Active_Object_Map_Entry *&entry)
 {
   ACE_NEW_RETURN (entry,
                   TAO_Active_Object_Map_Entry,
                   -1);
 
-  int result = this->active_object_map_->user_id_map_->bind_create_key (entry,
-                                                                        entry->user_id_);
+  int result =
+    this->active_object_map_->user_id_map_->bind_create_key (entry,
+                                                             entry->user_id_);
   if (result == 0)
     {
       entry->servant_ = servant;
@@ -757,14 +911,24 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Ser
       if (result == 0)
         {
           if (servant != 0)
-            result = this->active_object_map_->servant_map_->bind (entry->servant_,
-                                                                   entry);
+            {
+              result =
+                this->active_object_map_->servant_map_->bind (entry->servant_,
+                                                              entry);
+            }
 
           if (result != 0)
             {
               this->active_object_map_->user_id_map_->unbind (entry->user_id_);
               this->active_object_map_->id_hint_strategy_->unbind (*entry);
               delete entry;
+            }
+          else
+            {
+#if defined (TAO_ENABLE_MONITORS)
+              this->active_object_map_->monitor_.receive (
+                this->active_object_map_->servant_map_->current_size ());
+#endif /* TAO_ENABLE_MONITORS */
             }
         }
       else
@@ -774,22 +938,26 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Ser
         }
     }
   else
-    delete entry;
+    {
+      delete entry;
+    }
 
   return result;
 }
 
 #if !defined (CORBA_E_MICRO)
 int
-TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (PortableServer::Servant servant,
-                                                               CORBA::Short priority,
-                                                               TAO_Active_Object_Map_Entry *&entry)
+TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
+  PortableServer::Servant servant,
+  CORBA::Short priority,
+  TAO_Active_Object_Map_Entry *&entry)
 {
   ACE_NEW_RETURN (entry,
                   TAO_Active_Object_Map_Entry,
                   -1);
-  int result = this->active_object_map_->user_id_map_->bind_create_key (entry,
-                                                                        entry->user_id_);
+  int result =
+    this->active_object_map_->user_id_map_->bind_create_key (entry,
+                                                             entry->user_id_);
   if (result == 0)
     {
       entry->servant_ = servant;
@@ -802,9 +970,16 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (PortableServer::S
           this->active_object_map_->user_id_map_->unbind (entry->user_id_);
           delete entry;
         }
+    
+#if defined (TAO_ENABLE_MONITORS)
+      this->active_object_map_->monitor_.receive (
+        this->active_object_map_->user_id_map_->current_size ());
+#endif /* TAO_ENABLE_MONITORS */
     }
   else
-    delete entry;
+    {
+      delete entry;
+    }
 
   return result;
 }
@@ -828,8 +1003,9 @@ TAO_Active_Hint_Strategy::~TAO_Active_Hint_Strategy (void)
 }
 
 int
-TAO_Active_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
-                                       PortableServer::ObjectId &user_id)
+TAO_Active_Hint_Strategy::recover_key (
+  const PortableServer::ObjectId &system_id,
+  PortableServer::ObjectId &user_id)
 {
   return this->system_id_map_.recover_key (system_id,
                                            user_id);

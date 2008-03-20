@@ -1,3 +1,28 @@
+Thu Mar 20 20:01:58 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/Active_Object_Map_Monitor.h:
+        * tao/PortableServer/Active_Object_Map_Monitor.cpp:
+        
+          New files, defining a monitor for the size of the POA's
+          Active Object Map.
+          
+        * tao/PortableServer/Active_Object_Map.h:
+        * tao/PortableServer/Active_Object_Map.inl:
+        * tao/PortableServer/Active_Object_Map.cpp:
+        
+          Integrated the new Active Object Map size monitor, and
+          made cosmetic changes.
+          
+        * tao/orbconf.h:
+        
+          Added TAO_ENABLE_MONITORS, conditionally defined based on
+          the definition of ACE_ENABLE_MONITORS, but separately
+          definable as well.
+          
+        * tao/Monitor/Monitor_Impl.h:
+        
+          Minor cosmetic changes.
+
 Wed Mar 19 23:12:09 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/tao_etcl.mpb:

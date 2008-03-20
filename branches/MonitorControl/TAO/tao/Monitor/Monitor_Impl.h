@@ -4,6 +4,7 @@
 
 #ifndef TAO_MONITOR_IMPL_H
 #define TAO_MONITOR_IMPL_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Monitor/MonitorS.h"
@@ -29,7 +30,7 @@ public:
 
   virtual void clear_statistics (const ::Monitor::MC::NameList & names);
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 };
@@ -37,4 +38,5 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_MONITOR_IMPL_H */
