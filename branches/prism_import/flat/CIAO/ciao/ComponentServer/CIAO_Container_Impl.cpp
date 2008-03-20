@@ -35,13 +35,13 @@ namespace CIAO
       
       if (this->static_entrypts_maps_ == 0)
 	{
-	  ACE_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with dynamic linkage\n"));
+	  CIAO_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with dynamic linkage\n"));
 	  this->container_ = new CIAO::Session_Container (this->orb_.in (), this, false,
                                                           0, name, policies);
 	}
       else
 	{
-	  ACE_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with static linkage\n"));
+	  CIAO_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with static linkage\n"));
 	  this->container_ = new CIAO::Session_Container (this->orb_.in (), this, true, 
                                                           this->static_entrypts_maps_,
                                                           name, policies);
@@ -100,36 +100,36 @@ namespace CIAO
       
       if (id == 0)
 	{
-	  ACE_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
+	  CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
 		      "No home ID provided\n"));
 	  throw ::Components::Deployment::InvalidConfiguration ();
 	}
       
       if (entrypt == 0)
 	{
-	  ACE_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
+	  CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_Container_i::install_home - "
 		      "No executor entrypoint found.\n"));
 	  throw ::Components::Deployment::InvalidConfiguration ();
 	}
 
-      ACE_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_home - "
+      CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_home - "
 		  "Attempting to install home with id [%s]\n",
 		  id));
 
       CIAO::Utility::CONFIGVALUE_MAP cm;
-      ACE_DEBUG ((LM_TRACE, CLINFO 
+      CIAO_DEBUG ((LM_TRACE, CLINFO 
 		  "CIAO_Container_i::install_home - "
 		  "Extracting ConfigValues from sequence of length [%u]\n",
 		  config.length ()));
       CIAO::Utility::build_config_values_map (cm, config);
-      ACE_DEBUG ((LM_TRACE, CLINFO
+      CIAO_DEBUG ((LM_TRACE, CLINFO
 		  "CIAO_Container_i::install_home - "
 		  "Extraction resulted in map of [%u] values", cm.current_size ()));
 
 
       // extract config values here...
             
-      //ACE_DEBUG ((LM_DEBUG, CLINFO "CIAO_Container_i::install_home - ",
+      //CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_Container_i::install_home - ",
       //"Executor entrypoint [%s], servant entrypoint [%s], servant library [%s]\n",
       //entrypt, svnt_entrypt.in (), svnt_library.in ()));
       
@@ -144,13 +144,13 @@ namespace CIAO
 	  if (val >>= str_val)
 	    {
 	      
-	      ACE_DEBUG ((LM_NOTICE, CLINFO
+	      CIAO_DEBUG ((LM_NOTICE, CLINFO
 			  "CIAO_Container_i::install_home - "
 			  "Home with ID [%s] registered in naming service with name [%s]\n",
 			  id, str_val));
 	    }
 	  else
-	    ACE_ERROR ((LM_WARNING, CLINFO
+	    CIAO_ERROR ((LM_WARNING, CLINFO
 			"CIAO_Container_i::install_home - "
 			"Warning: Extraction of Naming Service value failed!\n"));
 	}

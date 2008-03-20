@@ -46,7 +46,7 @@ namespace CIAO
 
       if (0 != retval)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          CIAO_ERROR_RETURN ((LM_ERROR,
                              CLINFO "ComponentServer_Configurator: %p\n",
                              "dll.open"),
                             0);
@@ -64,7 +64,7 @@ namespace CIAO
 
       if (0 == config_id)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          CIAO_ERROR_RETURN ((LM_ERROR,
                              CLINFO "ComponentServer_Configurator: %p",
                              "dll.symbol"),
                             0);
@@ -74,7 +74,7 @@ namespace CIAO
 
       if (0 == ptr)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          CIAO_ERROR_RETURN ((LM_ERROR,
                              CLINFO "ComponentServer_Configurator: Error creating ComponentServer_Configurator\n"),
                             0);
         }
@@ -89,7 +89,7 @@ namespace CIAO
 
           if (0 != rt_retval)
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              CIAO_ERROR_RETURN ((LM_ERROR,
                                  "%p\n",
                                  "dll.open"),
                                 0);
@@ -107,7 +107,7 @@ namespace CIAO
 
           if (0 == rt_config_id)
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              CIAO_ERROR_RETURN ((LM_ERROR,
                                  CLINFO "ComponentServer_Configurator: %p",
                                  "dll.symbol"),
                                 0);
@@ -117,7 +117,7 @@ namespace CIAO
 
           if (0 == rt_ptr)
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
+              CIAO_ERROR_RETURN ((LM_ERROR,
                                  CLINFO "ComponentServer_Configurator: Error creating RTComponentServer_Configurator\n"),
                                 0);
             }
@@ -131,7 +131,7 @@ namespace CIAO
     int
     ComponentServer_Configurator::pre_orb_initialize ()
     {
-      ACE_DEBUG ((LM_TRACE,CLINFO  "ComponentServer_Configurator::pre_orb_init\n"));
+      CIAO_DEBUG ((LM_TRACE,CLINFO  "ComponentServer_Configurator::pre_orb_init\n"));
 
       (*this->na_config_manager_.get ()).pre_orb_initialize ();
       if (this->rt_support_)
@@ -145,7 +145,7 @@ namespace CIAO
     int
     ComponentServer_Configurator::post_orb_initialize (CORBA::ORB_ptr o)
     {
-      ACE_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Configurator::post_orb_init\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Configurator::post_orb_init\n"));
       this->orb_ = CORBA::ORB::_duplicate (o);
 
       (*this->na_config_manager_.get ()).init (this->orb_.in ());
@@ -185,7 +185,7 @@ namespace CIAO
                 }
               else
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR,
+                  CIAO_ERROR_RETURN ((LM_ERROR,
                                      CLINFO "ERROR: ComponentServer_Configurator::"
                                      "init_resource_manager unable to extract"
                                      "CIAOServerResources\n"), -1);
@@ -252,7 +252,7 @@ namespace CIAO
                 }
               else
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR,
+                  CIAO_ERROR_RETURN ((LM_ERROR,
                                      CLINFO "ERROR: ComponentServer_Configurator:"
                                      "find_container_policies unable to extract"
                                      "ContainerPolicySet\n"), 0);

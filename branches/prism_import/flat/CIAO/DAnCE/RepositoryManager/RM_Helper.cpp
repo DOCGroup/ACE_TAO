@@ -64,7 +64,7 @@ RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_path)
   // Open the files
   ACE_HANDLE from_handle = ACE_OS::open (from_path, O_RDONLY);
   if (from_handle == ACE_INVALID_HANDLE)
-      ACE_ERROR_RETURN ((LM_ERROR,
+      DANCE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("[RM::copy_from_disk_to_disk] file open error")),
                           0);
@@ -75,7 +75,7 @@ RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_path)
 
   ACE_HANDLE to_handle = ACE_OS::open (to_path, O_CREAT | O_TRUNC | O_WRONLY);
   if (to_handle == ACE_INVALID_HANDLE)
-      ACE_ERROR_RETURN ((LM_ERROR,
+      DANCE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("[RM::copy_from_disk_to_disk] file creation error")),
                           0);
@@ -100,7 +100,7 @@ RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_path)
     mb = new ACE_Message_Block (length);
 
     if (ACE_OS::read_n (from_handle, mb->wr_ptr (), length) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("%p\n"),
                             ACE_TEXT ("[RM::copy_from_disk_to_disk] file read error")),
                             0);
@@ -113,7 +113,7 @@ RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_path)
       if (ACE_OS::write_n (to_handle, curr->rd_ptr (), curr->length ()) == -1)
       {
         mb->release ();
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("%p\n"),
                             ACE_TEXT ("[RM::copy_from_disk_to_disk] file write error")),
                             0);
@@ -150,7 +150,7 @@ bool RM_Helper::write_to_disk (
   // Open a file handle to the local filesystem
   ACE_HANDLE handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
   if (handle == ACE_INVALID_HANDLE)
-      ACE_ERROR_RETURN ((LM_ERROR,
+      DANCE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("[RM::write_to_disk] file creation error")),
                           false);
@@ -158,7 +158,7 @@ bool RM_Helper::write_to_disk (
   // Write the data to the file
   for (ACE_Message_Block * curr = &mb; curr != 0; curr = curr->cont ())
     if (ACE_OS::write_n (handle, curr->rd_ptr(), curr->length()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("write error")),
                           false);
@@ -191,7 +191,7 @@ bool RM_Helper::write_pc_to_disk (
   // Open a file handle to the local filesystem
   ACE_HANDLE const handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
   if (handle == ACE_INVALID_HANDLE)
-      ACE_ERROR_RETURN ((LM_ERROR,
+      DANCE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("[RM::write_to_disk] file creation error")),
                          false);
@@ -199,7 +199,7 @@ bool RM_Helper::write_pc_to_disk (
   // write the data to the file
   for (ACE_Message_Block * curr = &mb; curr != 0; curr = curr->cont ())
     if (ACE_OS::write_n (handle, curr->rd_ptr(), curr->length()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("write error")),
                           0);
@@ -225,7 +225,7 @@ RM_Helper::read_pc_from_disk (
   // Open the file
   ACE_HANDLE const handle = ACE_OS::open (full_path, O_RDONLY);
   if (handle == ACE_INVALID_HANDLE)
-      ACE_ERROR_RETURN ((LM_ERROR,
+      DANCE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("[RM::read_mb_from_disk] file open error")),
                           0);
@@ -240,7 +240,7 @@ RM_Helper::read_pc_from_disk (
   if (check != file_info.st_size)
   {
     length = 0;
-    ACE_ERROR_RETURN ((LM_ERROR,
+    DANCE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("[RM::read_mb_from_disk] file length error")),
                           0);
@@ -251,7 +251,7 @@ RM_Helper::read_pc_from_disk (
   ACE_NEW_RETURN (mb, ACE_Message_Block (length + 1), 0);
 
   if (ACE_OS::read_n (handle, mb->wr_ptr (), length) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                ACE_TEXT ("[RM::read_mb_from_disk] file read error")),
                            0);

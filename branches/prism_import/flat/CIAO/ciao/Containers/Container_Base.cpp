@@ -39,7 +39,7 @@ namespace CIAO
     
     if (this->rec_pol_map_.find (name, policy_list) != 0)
       {
-        ACE_ERROR ((LM_WARNING, CLINFO
+        CIAO_ERROR ((LM_WARNING, CLINFO
                     "Container_i::Ger_receptacle_policy - Unable to find policies "
                     "for the receptacle %s\n",
                     name));

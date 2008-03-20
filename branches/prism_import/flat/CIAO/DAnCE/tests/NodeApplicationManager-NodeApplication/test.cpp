@@ -34,7 +34,7 @@ int main (int argc, char * argv[])
   catch (const CORBA::Exception &e)
     {
       e._tao_print_exception ("DAnCE_NodeManager::main\t\n");
-      ACE_ERROR((LM_ERROR, "[%M] Uncaught CORBA exception\n"));
+      DANCE_ERROR((LM_ERROR, "[%M] Uncaught CORBA exception\n"));
       return 1;
     }
   catch (...)

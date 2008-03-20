@@ -55,7 +55,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CIAO::Static_NodeManager_Impl *static_node_manager_impl;
       // Create and install the CIAO Daemon servant
 
-      ACE_DEBUG ((LM_DEBUG, "creating static_node_manager\n"));
+      DANCE_DEBUG ((LM_DEBUG, "creating static_node_manager\n"));
 
       static_node_manager_impl =
         new CIAO::Static_NodeManager_Impl("NodeManager",
@@ -75,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         IORTable::Table::_narrow (table_object.in ());
 
       if (CORBA::is_nil (adapter.in ()))
-          ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
+          DANCE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
 
       CIAO::NodeManagerDaemon_var manager =
         static_node_manager_impl->_this ();

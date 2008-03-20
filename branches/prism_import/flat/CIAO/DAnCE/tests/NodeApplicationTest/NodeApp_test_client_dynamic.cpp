@@ -23,7 +23,7 @@ parse_args (int argc, char *argv[])
 
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s \n"
                            "-k <ComponentServer ior> \n"
                            "\n",
@@ -55,14 +55,14 @@ main (int argc, char *argv[])
 
       if (CORBA::is_nil (node_app.in ()))
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
+          DANCE_ERROR_RETURN ((LM_DEBUG,
                              "Nil nodeapplication reference <%s>\n",
                              ior),
                             1);
         }
 
 
-      ACE_DEBUG((LM_DEBUG, "[%M] Try installing Home and Component\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try installing Home and Component\n"));
 
       Deployment::ComponentImplementationInfo info;
 
@@ -104,27 +104,27 @@ main (int argc, char *argv[])
 
       if (CORBA::is_nil (roundtrip_var.in ()))
        {
-         ACE_ERROR_RETURN ((LM_DEBUG,
+         DANCE_ERROR_RETURN ((LM_DEBUG,
                             "Nil RoundTrip reference\n"),
                             1);
        }
 
       // Invoke Operation on the Interface
-      ACE_DEBUG((LM_DEBUG, "[%M] Try cube_long operation on the Interface \n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try cube_long operation on the Interface \n"));
       CORBA::Long input = 1L;
       CORBA::Long output =
         roundtrip_var->cube_long (input);
 
       if (input == output)
-        ACE_DEBUG((LM_DEBUG, "[%M] Retrun values matched!!\n"));
+        DANCE_DEBUG((LM_DEBUG, "[%M] Retrun values matched!!\n"));
       else
       {
-        ACE_DEBUG((LM_DEBUG, "[%M] Return values did not match: failure\n"));
+        DANCE_DEBUG((LM_DEBUG, "[%M] Return values did not match: failure\n"));
         ACE_OS::exit (1);
       }
 
       // Install another set of components
-      ACE_DEBUG((LM_DEBUG, "[%M] Try installing another component dynamically\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try installing another component dynamically\n"));
 
       // Modifying the component instance name since it must be unique
       (node_info.impl_infos[0]).impl_infos[0].component_instance_name =
@@ -134,16 +134,16 @@ main (int argc, char *argv[])
 
       assert (comp_info_new->length () == 1); //return 1 component objeref
 
-      ACE_DEBUG((LM_DEBUG, "[%M] Try removing the second component and its home\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try removing the second component and its home\n"));
       node_app->remove_component ("NodeAppTest_RoundTrip");
-      ACE_DEBUG((LM_DEBUG, "[%M] Component and Home removed successfully\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Component and Home removed successfully\n"));
 
-      ACE_DEBUG((LM_DEBUG, "[%M] =====Try removing all remaining components and homes\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] =====Try removing all remaining components and homes\n"));
       node_app->remove ();
-      ACE_DEBUG((LM_DEBUG, "[%M] =====Components and Homes removed successfully\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] =====Components and Homes removed successfully\n"));
 
       orb->destroy ();
-      ACE_DEBUG((LM_DEBUG, "[%M] =====Test success!!\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] =====Test success!!\n"));
     }
   catch (const CORBA::Exception& ex)
     {

@@ -23,6 +23,7 @@
 #include "DAnCELoggerFactory.h"
 #include "tao/Object_Loader.h"
 #include "tao/IORTable/IORTable.h"
+#include "DAnCE/Logger/Log_Macros.h"
 
 using namespace DAnCE;
 
@@ -36,15 +37,15 @@ int main(int argc, ACE_TCHAR * argv[])
     }
   catch (ACE_CString & e)
     {
-      ACE_ERROR ( (LM_ERROR, "[%M] dance starter failed with an exception : \"%s\"\n", e.c_str()));
+      DANCE_ERROR ( (LM_ERROR, "[%M] dance starter failed with an exception : \"%s\"\n", e.c_str()));
     }
   catch (CORBA::Exception & e)
     {
-      ACE_ERROR ( (LM_ERROR, "[%M] dance starter failed with an CORBA exception : \"%s\"\n", e._info().c_str()));
+      DANCE_ERROR ( (LM_ERROR, "[%M] dance starter failed with an CORBA exception : \"%s\"\n", e._info().c_str()));
     }
   catch (...)
     {
-      ACE_ERROR ( (LM_ERROR, "[%M] dance starter failed with an unknown exception.\n"));
+      DANCE_ERROR ( (LM_ERROR, "[%M] dance starter failed with an unknown exception.\n"));
     }
   return -1;
 }
@@ -60,14 +61,14 @@ Starter::Starter(int argc, ACE_TCHAR * argv[]) :
 {
   this->getLogLevel(argc, argv);
   this->setLogLevel();
-  ACE_DEBUG ( (LM_TRACE, "[%M] Creating starter...\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Creating starter...\n"));
   this->parseArgs(argc, argv);
 
   DAnCELoggerFactory
       * dlf = ACE_Dynamic_Service<DAnCELoggerFactory>::instance ("DAnCE_Logger_Backend_Factory");
   if (dlf)
     {
-      ACE_DEBUG ( (LM_TRACE, "[%M] Replacing logger backend.\n"));
+      DANCE_DEBUG ( (LM_TRACE, "[%M] Replacing logger backend.\n"));
       ACE_Log_Msg_Backend * backend = dlf->get_logger_backend(this->orb_);
       backend->open(0);
       ACE_Log_Msg::msg_backend (backend);
@@ -75,17 +76,17 @@ Starter::Starter(int argc, ACE_TCHAR * argv[]) :
       ace->clr_flags(ace->flags());
       ace->set_flags(ACE_Log_Msg::CUSTOM);
     }
-  ACE_DEBUG ( (LM_TRACE, "[%M] Starter was created successfully.\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Starter was created successfully.\n"));
 }
 
 Starter::~Starter()
 {
-  ACE_DEBUG ( (LM_TRACE, "[%M] Starter::~Starter - starting ...\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::~Starter - starting ...\n"));
 /*  TAO_Object_Loader
       * loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("ExecutionManager_Loader");
   if (0 != loader)
     {
-      ACE_DEBUG ( (LM_TRACE, "[%M] Starter::~Starter - removing EM ...\n"));
+      DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::~Starter - removing EM ...\n"));
       loader = 0;
       ACE_Service_Config::remove ("ExecutionManager_Loader");
     }
@@ -93,13 +94,13 @@ Starter::~Starter()
       = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("NodeManager_Loader");
   if (0 != loader)
     {
-      ACE_DEBUG ( (LM_TRACE, "[%M] Starter::~Starter - removing NM ...\n"));
+      DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::~Starter - removing NM ...\n"));
       loader = 0;
       ACE_Service_Config::remove ("NodeManager_Loader");
     }
 
   this->orb_._retn()->destroy(); */
-  ACE_DEBUG ( (LM_TRACE, "[%M] Starter::~Starter - completed.\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::~Starter - completed.\n"));
 }
 
 void Starter::getLogLevel(int argc, ACE_TCHAR* argv[])
@@ -118,7 +119,7 @@ void Starter::getLogLevel(int argc, ACE_TCHAR* argv[])
               }
             else
               {
-                ACE_ERROR ( (LM_WARNING, "--log-level without argument. Using default.\n"));
+                DANCE_ERROR ( (LM_WARNING, "--log-level without argument. Using default.\n"));
               }
           }
       }
@@ -126,7 +127,7 @@ void Starter::getLogLevel(int argc, ACE_TCHAR* argv[])
 
 void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
 {
-  ACE_DEBUG ( (LM_TRACE, "[%M] Parsing starter's arguments...\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Parsing starter's arguments...\n"));
 
   ACE_Get_Opt opts(argc, argv, "p::n:e::c::r::il:hg:x:d:qk:w:t:a:", 1, 0,
       ACE_Get_Opt::RETURN_IN_ORDER);
@@ -153,17 +154,17 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
   ACE_CString s;
   while ( (c = opts ()) != -1)
     {
-      ACE_DEBUG((LM_TRACE, "[%M] Option : \"%s\" with argument \"%s\"\n", opts.last_option(), opts.opt_arg()));
+      DANCE_DEBUG((LM_TRACE, "[%M] Option : \"%s\" with argument \"%s\"\n", opts.last_option(), opts.opt_arg()));
       switch (c)
         {
           case '?':
-            ACE_ERROR ( (LM_ERROR, "[%M] Wrong option \"%s\" or this option is requred attribute!\n", opts.last_option()));
+            DANCE_ERROR ( (LM_ERROR, "[%M] Wrong option \"%s\" or this option is requred attribute!\n", opts.last_option()));
             this->usage();
             throw ACE_CString("Error parsing starter arguments");
             break;
           case 'p':
             this->optNS_ = true;
-            ACE_DEBUG ( (LM_TRACE, "[%M] Naming will be started.\n"));
+            DANCE_DEBUG ( (LM_TRACE, "[%M] Naming will be started.\n"));
             this->optNSFile_ = opts.opt_arg();
             break;
           case 'n':
@@ -181,7 +182,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
                     node.obj = this->orb_->string_to_object(objstr.c_str());
                     if (CORBA::is_nil (node.obj))
                       {
-                        ACE_ERROR ( (LM_ERROR, "[%M] Failed create object for node \"%s\"\n", nodename.c_str()));
+                        DANCE_ERROR ( (LM_ERROR, "[%M] Failed create object for node \"%s\"\n", nodename.c_str()));
                         throw ACE_CString ("Invalid IOR in --node-mgr option");
                       }
                       */
@@ -189,18 +190,18 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
                 else
                   {
                     nodename = s;
-                    ACE_DEBUG ( (LM_TRACE, "[%M] Node \"%s\" will be started.\n", nodename.c_str()));
+                    DANCE_DEBUG ( (LM_TRACE, "[%M] Node \"%s\" will be started.\n", nodename.c_str()));
                     if (opts.optind < opts.argc_&& '-' != (s = opts.argv_[opts.optind])[0])
                       {
                         ++opts.optind;
                         node.iorfile_ = s;
-                        ACE_DEBUG ( (LM_TRACE, "[%M] and its IOR will be written to file \"%s\".\n", node.iorfile_.c_str()));
+                        DANCE_DEBUG ( (LM_TRACE, "[%M] and its IOR will be written to file \"%s\".\n", node.iorfile_.c_str()));
                       }
                     
                   }
                 if (0 == this->nodes_.find(nodename))
                   {
-                    ACE_ERROR((LM_ERROR, "[%M] Duplication of NM name \"%s\"\n", nodename.c_str()));
+                    DANCE_ERROR((LM_ERROR, "[%M] Duplication of NM name \"%s\"\n", nodename.c_str()));
                     this->usage();
                     throw ACE_CString("Duplication of NM name");
                   }
@@ -208,7 +209,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
               }
             else
               {
-                ACE_ERROR ( (LM_ERROR, "[%M] --node-mgr option without arguments.\n"));
+                DANCE_ERROR ( (LM_ERROR, "[%M] --node-mgr option without arguments.\n"));
                 this->usage();
                 throw ACE_CString ("--node-mgr option without arguments.");
               }
@@ -216,11 +217,11 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
           case 'e':
             if (this->optEM_)
               {
-                ACE_DEBUG((LM_WARNING, "[%M] ExecutionManager option is encountered more than once. Second and following ignored.\n"));
+                DANCE_DEBUG((LM_WARNING, "[%M] ExecutionManager option is encountered more than once. Second and following ignored.\n"));
                 break;
               }
             this->optEM_ = true;
-            ACE_DEBUG ( (LM_TRACE, "[%M] ExecutionManager will be started.\n"));
+            DANCE_DEBUG ( (LM_TRACE, "[%M] ExecutionManager will be started.\n"));
             this->optEMFile_ = opts.opt_arg();
             break;
           case 'l':
@@ -231,7 +232,7 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
               }
             else
               {
-                ACE_ERROR ( (LM_WARNING, "--log-level without argument. Using default.\n"));
+                DANCE_ERROR ( (LM_WARNING, "--log-level without argument. Using default.\n"));
               }
             break;
           case 'h':
@@ -239,19 +240,19 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
             break;
           case 'x':
             this->optPL_ = true;
-            ACE_DEBUG ( (LM_TRACE, "[%M] PlanLauncher will be started.\n"));
+            DANCE_DEBUG ( (LM_TRACE, "[%M] PlanLauncher will be started.\n"));
             break;
           case 'd':
           case 'q':
             this->optPLB_ = true;
-            ACE_DEBUG ( (LM_TRACE, "[%M] PlanLauncherBase will be started.\n"));
+            DANCE_DEBUG ( (LM_TRACE, "[%M] PlanLauncherBase will be started.\n"));
             break;
           case 'g':
-            ACE_DEBUG ( (LM_TRACE, "[%M] Object key will be generated.\n"));
+            DANCE_DEBUG ( (LM_TRACE, "[%M] Object key will be generated.\n"));
             this->optGenObjKey_ = opts.opt_arg();
             if (0 == this->optGenObjKey_.length())
               {
-                ACE_ERROR ( (LM_ERROR, "[%M] --gen-object-key without argument. Doing nothing.\n"));
+                DANCE_ERROR ( (LM_ERROR, "[%M] --gen-object-key without argument. Doing nothing.\n"));
               }
             break;
           case 0: // long options that do not have short
@@ -261,33 +262,33 @@ void Starter::parseArgs(int argc, ACE_TCHAR * argv[])
                 this->optNSOptions_ = opts.opt_arg();
                 if (0 == this->optNSOptions_.length())
                   {
-                    ACE_ERROR ( (LM_ERROR, "[%M] --process-ns-options without argument\n"));
+                    DANCE_ERROR ( (LM_ERROR, "[%M] --process-ns-options without argument\n"));
                   }
               }
             else
               {
                 if (!isPossibleOption(s.c_str()))
                   {
-                    ACE_ERROR((LM_ERROR, "[%M] Invalid option : %s\n", s.c_str()));
+                    DANCE_ERROR((LM_ERROR, "[%M] Invalid option : %s\n", s.c_str()));
                   }
               }
             break;
           default:
             if (!isPossibleOption(opts.last_option()))
               {
-                ACE_ERROR((LM_ERROR, "[%M] Invalid option : %s\n", opts.last_option()));
+                DANCE_ERROR((LM_ERROR, "[%M] Invalid option : %s\n", opts.last_option()));
                 this->usage();
               }
             break;
         }//switch
     }//while
 
-  ACE_DEBUG ( (LM_TRACE, "[%M] Parsing starter's arguments completed.\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Parsing starter's arguments completed.\n"));
 }
 
 void Starter::execute()
 {
-  ACE_DEBUG ( (LM_TRACE, "[%M] Executing starter...\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Executing starter...\n"));
   bool orb_run = false;
 
   // Generate object key
@@ -337,19 +338,19 @@ void Starter::execute()
 
   if (orb_run)
     {
-      ACE_DEBUG ( (LM_TRACE, "[%M] Running starter's ORB...\n"));
+      DANCE_DEBUG ( (LM_TRACE, "[%M] Running starter's ORB...\n"));
       this->orb_->run();
     }
   else
     {
-      ACE_DEBUG ( (LM_TRACE, "[%M] Skipping starter's ORB->run.\n"));
+      DANCE_DEBUG ( (LM_TRACE, "[%M] Skipping starter's ORB->run.\n"));
     }
-  ACE_DEBUG ( (LM_TRACE, "[%M] Executing starter has completed.\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Executing starter has completed.\n"));
 }
 
 void Starter::usage()
 {
-  ACE_ERROR ( (LM_EMERGENCY, "Usage : dance <options>\n"
+  DANCE_ERROR ( (LM_EMERGENCY, "Usage : dance <options>\n"
           "Options :\n"
           "\t-l|--log-level <log level> - sets log level (default 5). 1 - most detailed.\n"
           "\t-g|--gen-object-key \"<NODE_NAME> <PLAN_ID> <COMPONENT_ID> [<PORT_NAME>]\" - generates a corbaloc URL\n"
@@ -402,7 +403,7 @@ void Starter::setLogLevel()
       new_mask |= LM_EMERGENCY;
     }
   ACE_Log_Msg::instance()->priority_mask(new_mask, ACE_Log_Msg::PROCESS);
-  ACE_DEBUG ( (LM_TRACE, "[%M] Logging level is set to %i\n", this->optLogLevel_));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Logging level is set to %i\n", this->optLogLevel_));
 }
 
 void Starter::generateObjectKey(const char * keyargs)
@@ -481,7 +482,7 @@ void Starter::generateObjectKey(const char * keyargs)
   // check
   if (0 == node.length() || 0 == plan.length() || 0 == component.length())
     {
-      ACE_ERROR ( (LM_ERROR, "[%M] Invalid object attributes received : \"s\"\n", args.c_str()));
+      DANCE_ERROR ( (LM_ERROR, "[%M] Invalid object attributes received : \"s\"\n", args.c_str()));
       this->usage();
       return;
     }
@@ -493,7 +494,7 @@ void Starter::generateObjectKey(const char * keyargs)
 void Starter::generateObjectKey(const char * node, const char * plan,
     const char * component, const char * port)
 {
-  ACE_DEBUG ( (LM_TRACE, "[%M] Starter::generateObjectKey starting...\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::generateObjectKey starting...\n"));
   CORBA::Boolean prev_format = this->orb_->_use_omg_ior_format();
   this->orb_->_use_omg_ior_format(false);
   // warning : parent POA supposed to be RootPOA
@@ -539,13 +540,13 @@ void Starter::generateObjectKey(const char * node, const char * plan,
     }
   else
     {
-      ACE_ERROR ( (LM_WARNING, "Failed to cut off the host specific part of URL.\n"));
+      DANCE_ERROR ( (LM_WARNING, "Failed to cut off the host specific part of URL.\n"));
     }
-  ACE_DEBUG ( (LM_TRACE, "[%M] Starter::generateObjectKey printing result : %s\n", s.c_str()));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::generateObjectKey printing result : %s\n", s.c_str()));
   ACE_OS::printf ("%s\n", s.c_str());
   
   this->orb_->_use_omg_ior_format(prev_format);
-  ACE_DEBUG ( (LM_TRACE, "[%M] Starter::generateObjectKey completed.\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Starter::generateObjectKey completed.\n"));
 }
 
 void Starter::write_IOR(const char * ior_file_name, const char* ior)
@@ -556,18 +557,18 @@ void Starter::write_IOR(const char * ior_file_name, const char* ior)
     {
       ACE_OS::fprintf (ior_output_file_, "%s", ior);
       ACE_OS::fclose (ior_output_file_);
-      ACE_DEBUG ( (LM_DEBUG, "[%M] ior was written into file \"%s\"\n", ior_file_name));
+      DANCE_DEBUG ( (LM_DEBUG, "[%M] ior was written into file \"%s\"\n", ior_file_name));
     }
   else
     {
-      ACE_ERROR ( (LM_ERROR, "[%M] Unable to open IOR output file %s : %m\n",
+      DANCE_ERROR ( (LM_ERROR, "[%M] Unable to open IOR output file %s : %m\n",
               ior_file_name));
     }
 }
 
 void Starter::initNaming()
 {
-  ACE_DEBUG ( (LM_TRACE, "[%M] Starting naming...\n"));
+  DANCE_DEBUG ( (LM_TRACE, "[%M] Starting naming...\n"));
   TAO_Object_Loader
       * loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("Naming_Loader");
   if (0 == loader)
@@ -578,13 +579,13 @@ void Starter::initNaming()
       ACE_Service_Config::process_directive(directive.c_str());
     }
     
-    ACE_DEBUG ( (LM_TRACE, "[%M] Putting ior to file if necessary...\n"));
+    DANCE_DEBUG ( (LM_TRACE, "[%M] Putting ior to file if necessary...\n"));
     if (0 < this->optNSFile_.length())
       {
         CORBA::Object_var obj = this->orb_->resolve_initial_references("NameService");
         if (CORBA::is_nil(obj))
           {
-            ACE_ERROR((LM_ERROR, "[%M] Failed to rir \"NameService\" after creation to write it to file.\n"));
+            DANCE_ERROR((LM_ERROR, "[%M] Failed to rir \"NameService\" after creation to write it to file.\n"));
           }
         else
           {
@@ -596,7 +597,7 @@ void Starter::initNaming()
     IORTable::Table_var table = IORTable::Table::_narrow (table_object.in ());
     if (CORBA::is_nil (table.in()))
       {
-        ACE_ERROR ( (LM_ERROR, "[%M] Failed to register Naming in IORTable.Nil IORTable\n"));
+        DANCE_ERROR ( (LM_ERROR, "[%M] Failed to register Naming in IORTable.Nil IORTable\n"));
         return;
       }
     try
@@ -605,15 +606,15 @@ void Starter::initNaming()
       }
     catch (...)
       {
-        ACE_ERROR ( (LM_ERROR, "[%M] Failed to register Naming in IORTable with \"NameService\". Exception is caught.\n"));
+        DANCE_ERROR ( (LM_ERROR, "[%M] Failed to register Naming in IORTable with \"NameService\". Exception is caught.\n"));
       }*/
-    ACE_DEBUG ( (LM_TRACE, "[%M] Starting naming completed.\n"));
+    DANCE_DEBUG ( (LM_TRACE, "[%M] Starting naming completed.\n"));
   }
 
 CORBA::Object_ptr
 Starter::initNodeManager (const char * node)
   {
-    ACE_DEBUG ( (LM_TRACE, "[%M] Starting NodeManager \"%s\"...\n", node));
+    DANCE_DEBUG ( (LM_TRACE, "[%M] Starting NodeManager \"%s\"...\n", node));
     TAO_Object_Loader * loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("NodeManager_Loader");
     if (0 == loader)
       {
@@ -626,7 +627,7 @@ Starter::initNodeManager (const char * node)
       }
     if (0 == loader)
       {
-        ACE_ERROR ( (LM_ERROR, "[%M] Failed to load node manager \"%s\".\n", node));
+        DANCE_ERROR ( (LM_ERROR, "[%M] Failed to load node manager \"%s\".\n", node));
         throw ACE_CString ("Failed to load NodeManager.");
       }
     int c = 0;
@@ -636,17 +637,17 @@ Starter::initNodeManager (const char * node)
     this->releaseArgs (c, v);
     if (CORBA::is_nil(res.in()))
       {
-        ACE_ERROR ( (LM_ERROR, "[%M] Failed to create node manager \"%s\".\n", node));
+        DANCE_ERROR ( (LM_ERROR, "[%M] Failed to create node manager \"%s\".\n", node));
         throw ACE_CString ("Failed to create NodeManager.");
       }
-    ACE_DEBUG ( (LM_TRACE, "[%M] Starting NodeManager \"%s\" completed.\n", node));
+    DANCE_DEBUG ( (LM_TRACE, "[%M] Starting NodeManager \"%s\" completed.\n", node));
     return res._retn();
   }
 
 CORBA::Object_ptr
 Starter::initExecutionManager()
   {
-    ACE_DEBUG ( (LM_TRACE, "[%M] Starting ExecutionManager...\n"));
+    DANCE_DEBUG ( (LM_TRACE, "[%M] Starting ExecutionManager...\n"));
     ACE_Service_Config::process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE ("ExecutionManager_Loader"
             , "DAnCE_ExecutionManager"
@@ -655,7 +656,7 @@ Starter::initExecutionManager()
     TAO_Object_Loader * loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("ExecutionManager_Loader");
     if (0 == loader)
       {
-        ACE_ERROR ( (LM_ERROR, "[%M] Failed to load execution manager .\n"));
+        DANCE_ERROR ( (LM_ERROR, "[%M] Failed to load execution manager .\n"));
         throw ACE_CString ("Failed to load ExecutionManager.");
       }
     int c = 0;
@@ -665,10 +666,10 @@ Starter::initExecutionManager()
     this->releaseArgs (c, v);
     if (CORBA::is_nil(em.in()))
       {
-        ACE_ERROR ( (LM_ERROR, "[%M] Failed to create execution manager.\n"));
+        DANCE_ERROR ( (LM_ERROR, "[%M] Failed to create execution manager.\n"));
         throw ACE_CString ("Failed to create ExecutionManager.");
       }
-    ACE_DEBUG ( (LM_TRACE, "[%M] Starting ExecutionManager completed.\n"));
+    DANCE_DEBUG ( (LM_TRACE, "[%M] Starting ExecutionManager completed.\n"));
     return em._retn();
   }
 
@@ -677,7 +678,7 @@ Starter::runPlanLauncher()
   {
     if (this->optPL_)
       {
-        ACE_DEBUG ( (LM_TRACE, "[%M] Starting PlanLauncher...\n"));
+        DANCE_DEBUG ( (LM_TRACE, "[%M] Starting PlanLauncher...\n"));
         ACE_Service_Config::process_directive (
             ACE_DYNAMIC_SERVICE_DIRECTIVE ("PlanLauncher_Loader"
                 , "DAnCE_Plan_Launcher"
@@ -686,7 +687,7 @@ Starter::runPlanLauncher()
       }
     else
       {
-        ACE_DEBUG ( (LM_TRACE, "[%M] Starting PlanLauncherBase...\n"));
+        DANCE_DEBUG ( (LM_TRACE, "[%M] Starting PlanLauncherBase...\n"));
         ACE_Service_Config::process_directive (
             ACE_DYNAMIC_SERVICE_DIRECTIVE ("PlanLauncher_Loader"
                 , "DAnCE_Plan_Launcher_Base"
@@ -696,7 +697,7 @@ Starter::runPlanLauncher()
     TAO_Object_Loader * loader = ACE_Dynamic_Service<TAO_Object_Loader>::instance ("PlanLauncher_Loader");
     if (0 == loader)
       {
-        ACE_ERROR ( (LM_ERROR, "[%M] Failed to load plan launcher.\n"));
+        DANCE_ERROR ( (LM_ERROR, "[%M] Failed to load plan launcher.\n"));
         throw ACE_CString ("Failed to load PlanLauncher.");
       }
     int c = 0;
@@ -704,7 +705,7 @@ Starter::runPlanLauncher()
     this->argCopyForPL (c, v);
     loader->create_object (this->orb_, c, v);
     this->releaseArgs (c, v);
-    ACE_DEBUG ( (LM_TRACE, "[%M] Starting PlanLauncher(Base) completed.\n"));
+    DANCE_DEBUG ( (LM_TRACE, "[%M] Starting PlanLauncher(Base) completed.\n"));
   }
 
 void
@@ -866,7 +867,7 @@ Starter::argCopyForEM (int & c, char **& v)
           }
         else
           {
-            ACE_ERROR((LM_ERROR, "[%M] No IOR for node \"%s\"\n", (*it).ext_id_.c_str()));
+            DANCE_ERROR((LM_ERROR, "[%M] No IOR for node \"%s\"\n", (*it).ext_id_.c_str()));
             continue;
           }
         v[c++] = CORBA::string_dup (s.c_str());

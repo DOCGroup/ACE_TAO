@@ -49,15 +49,15 @@ int main (int argc, char * argv[])
 
     redirection.registration_start (node_name, app_name);
     redirection.registration (node_name, app_name, inst_name, port_name, dummy_obj.in());
-    ACE_DEBUG((LM_DEBUG, "[%M] Registration for port have finished.\n\n"));
+    DANCE_DEBUG((LM_DEBUG, "[%M] Registration for port have finished.\n\n"));
     redirection.registration (node_name, app_name, inst_name, /*CORBA::Object::_nil()*/dummy_obj.in());
-    ACE_DEBUG((LM_DEBUG, "[%M] Registration for component have finished.\n\n"));
+    DANCE_DEBUG((LM_DEBUG, "[%M] Registration for component have finished.\n\n"));
     redirection.registration_finish (node_name, app_name);
     orb->run();
   }
 //    catch (...)
 //    {
-//        ACE_ERROR((LM_ERROR, "[%M] An error has occured."));
+//        DANCE_ERROR((LM_ERROR, "[%M] An error has occured."));
 //    }
 }
 

@@ -86,7 +86,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (rm.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
+          DANCE_ERROR_RETURN ((LM_ERROR,
                              "Unable to acquire RepositoryManagerDaemon's objref\n"),
                             -1);
         }
@@ -194,7 +194,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
         catch (...)
         {
-          ACE_ERROR((LM_ERROR, "[%M] (%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
+          DANCE_ERROR((LM_ERROR, "[%M] (%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
 
           throw Deployment::PackageError ();
         }

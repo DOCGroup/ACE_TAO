@@ -80,16 +80,16 @@ namespace CIAO
 	
 	if (retval == 1)
 	  {
-	    ACE_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Duplicate value for %s encountered, "
+	    CIAO_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Duplicate value for %s encountered, "
 			"old value overwritten.\n",
 			config[i]->name ()));
 	  }
 	else if (retval == -1)
 	  {
-	    ACE_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Error binding value for %s, ignoring.\n",
+	    CIAO_ERROR ((LM_WARNING, CLINFO "build_config_values_map: Error binding value for %s, ignoring.\n",
 			config[i]->name ()));
 	  }
-	ACE_DEBUG ((LM_TRACE, CLINFO
+	CIAO_DEBUG ((LM_TRACE, CLINFO
 		    "build_config_values_map: Bound value for config value %s\n", 
 		    config[i]->name ()));
       }
@@ -124,7 +124,7 @@ namespace CIAO
     {
       if (namestr == 0)
 	{
-	  ACE_ERROR ((LM_WARNING, CLINFO
+	  CIAO_ERROR ((LM_WARNING, CLINFO
 		      "NameUtility::bind_name - "
 		      "called with null name, aborting registration. \n"));
 	  return false;
@@ -172,17 +172,17 @@ namespace CIAO
       try
         {
           tmpCtxVar = nc->bind_new_context (name);
-          ACE_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG ((LM_TRACE, CLINFO
 		      "NameUtility::CreateContextPath - Bound Context.\n\n"));
         }
       catch (const CosNaming::NamingContext::AlreadyBound&)
         {
-          ACE_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG ((LM_TRACE, CLINFO
 		      "NameUtility::CreateContextPath - Context Already Bound.\n\n"));
         }
       catch (const CosNaming::NamingContext::NotFound& nf)
         {
-          ACE_DEBUG ((LM_TRACE, CLINFO
+          CIAO_DEBUG ((LM_TRACE, CLINFO
 		      "NameUtility::CreateContextPath - Context not found.\n\n"));
           isNotFound = true;
           lengthMissing = nf.rest_of_name.length ();
@@ -190,7 +190,7 @@ namespace CIAO
 
       if (lengthMissing == name.length ())
         {
-          ACE_ERROR ((LM_ERROR, CLINFO 
+          CIAO_ERROR ((LM_ERROR, CLINFO 
 		      "NameUtility::CreateContextPath - Null name length.\n\n"));
         }
 
@@ -207,13 +207,13 @@ namespace CIAO
                     tmpName[i] = name[i];
 
                     CORBA::String_var newSCName = nc->to_string (tmpName);
-                    ACE_DEBUG ((LM_TRACE, CLINFO
+                    CIAO_DEBUG ((LM_TRACE, CLINFO
                                 "NameUtility::CreateContextPath - What's left of the name:%s\n",
                                 newSCName.in ()));
                   }
 
                 tmpCtxVar = nc->bind_new_context (tmpName);
-                ACE_DEBUG ((LM_TRACE, CLINFO 
+                CIAO_DEBUG ((LM_TRACE, CLINFO 
 			    "NameUtility::CreateContextPath - Bound New Context.\n"));
               }
           }
@@ -226,7 +226,7 @@ namespace CIAO
     {
       CosNaming::Name tmpName;
       CORBA::String_var newSCName = nc->to_string (name);
-      ACE_DEBUG ((LM_TRACE, CLINFO 
+      CIAO_DEBUG ((LM_TRACE, CLINFO 
 		  "NameUtility::BindObjectPath - The name is: %s\n", newSCName.in ()));
 
       try
@@ -236,13 +236,13 @@ namespace CIAO
 
       catch (const CosNaming::NamingContext::NotFound&)
         {
-          ACE_DEBUG ((LM_TRACE, CLINFO 
+          CIAO_DEBUG ((LM_TRACE, CLINFO 
 		      "NameUtility::BindObjectPath - Name not found, doing new bind.\n"));
           nc->bind (name, obj);
         }
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR ((LM_ERROR, CLINFO
                       "NameUtility::BindObjectPath - Caught exception while binding name in nameing service.\n"));
           return false;
         }
@@ -273,7 +273,7 @@ namespace CIAO
         
       if (CORBA::is_nil (tmpContextV.in ()))
         {
-          ACE_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR ((LM_ERROR, CLINFO
 		      "NameUtility::listBindings: Nil context.\n"));
           return 0;
         }
@@ -323,7 +323,7 @@ namespace CIAO
       
       if (CORBA::is_nil (tmpContextV.in ()))
         {
-          ACE_ERROR ((LM_ERROR, CLINFO
+          CIAO_ERROR ((LM_ERROR, CLINFO
                       "NameUtility::recursiveUnbind - Nil context reference.\n"));
           return;
         }

@@ -184,13 +184,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     Worker worker (orb.in ());
     if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
                          DAnCE::RepositoryManager::nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate worker threads\n"),
                            1);
 
     worker.thr_mgr ()->wait ();
 
-    ACE_DEBUG((LM_DEBUG, "[%M] event loop finished\n"));
+    DANCE_DEBUG((LM_DEBUG, "[%M] event loop finished\n"));
 
     // done
     return 0;

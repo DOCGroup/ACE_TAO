@@ -11,7 +11,7 @@ namespace CIAO
   int
   File_Logger_Backend::open (const ACE_TCHAR *)
   {
-    ACE_DEBUG ( (LM_DEBUG, CLINFO "Setting logger's output to file \"%s\"", this->filename_.c_str()));
+    CIAO_DEBUG ( (LM_DEBUG, CLINFO "Setting logger's output to file \"%s\"", this->filename_.c_str()));
     this->fh_ = ACE_OS::fopen (this->filename_.c_str(), "w");
     if (0 == this->fh_)
       {

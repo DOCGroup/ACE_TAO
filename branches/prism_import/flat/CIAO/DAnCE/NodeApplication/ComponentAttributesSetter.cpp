@@ -7,6 +7,7 @@
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include <tao/DynamicInterface/Context.h>
 #include <tao/DynamicInterface/Request.h>
+#include "DAnCE/Logger/Log_Macros.h"
 
 //bool read_config_value( const ACE_CString & name,
 //                        const Deployment::Properties & prop,
@@ -43,7 +44,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
                                                    const Deployment::Properties& prop,
                                                    CORBA::ORB_ptr orb)
 {
-  ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentAttributesSetter::SetComponentAttributes - started\n"));
+  DANCE_DEBUG ( (LM_DEBUG, "[%M] ComponentAttributesSetter::SetComponentAttributes - started\n"));
   for (unsigned int i = 0; i < prop.length(); i++)
     {
       ACE_CString name = prop[i].name.in();
@@ -51,7 +52,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
         {
           continue;
         }
-      ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentAttributesSetter::SetComponentAttributes - check attribute name %C\n", name.c_str()));
+      DANCE_DEBUG ( (LM_DEBUG, "[%M] ComponentAttributesSetter::SetComponentAttributes - check attribute name %C\n", name.c_str()));
       ACE_CString method = "_set_";
       method += prop[i].name.in();
       CORBA::NVList_var argList;
@@ -64,7 +65,7 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
       CORBA::Any* value = argValue->value();
       const char* szvalue;
       *value >>= szvalue;
-      ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentAttributesSetter::SetComponentAttributes - set attribute value to %C\n", szvalue));
+      DANCE_DEBUG ( (LM_DEBUG, "[%M] ComponentAttributesSetter::SetComponentAttributes - set attribute value to %C\n", szvalue));
       try
         {
           obj->_create_request (CORBA::Context::_nil(),
@@ -85,5 +86,5 @@ ComponentAttributesSetter::SetComponentAttributes (ACE_CString /*componentName*/
         }
       //Question - How exceptions will be processed, rised by invoked method
     }
-  ACE_DEBUG ( (LM_DEBUG, "[%M] ComponentAttributesSetter::SetComponentAttributes - finished\n"));
+  DANCE_DEBUG ( (LM_DEBUG, "[%M] ComponentAttributesSetter::SetComponentAttributes - finished\n"));
 }

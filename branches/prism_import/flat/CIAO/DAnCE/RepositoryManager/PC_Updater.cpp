@@ -200,7 +200,7 @@ void PC_Updater::clear_list ()
       iter++;
     }
 
-    ACE_ERROR((LM_ERROR, "[%M] [PC_Updater::update] Unable to update: %s!\n",
+    DANCE_ERROR((LM_ERROR, "[%M] [PC_Updater::update] Unable to update: %s!\n",
                location));
 
     this->success_ = false;

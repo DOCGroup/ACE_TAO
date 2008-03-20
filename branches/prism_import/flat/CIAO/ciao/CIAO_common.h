@@ -30,35 +30,7 @@
         if (prev_factory) prev_factory->_remove_ref (); \
         factory->_remove_ref ();      }
 
-// By default tracing is turned off.
-#if !defined (CIAO_NTRACE)
-#  if !defined (ACE_NTRACE)
-#    define CIAO_NTRACE 1
-#  else
-#    define CIAO_NTRACE ACE_NTRACE
-#  endif
-#endif /* CIAO_NTRACE */
-
-// default information printed with CIAO logging messages.
-#define CLINFO "(%P|%t) [%M] - %T - "
-
-#if (CIAO_NTRACE == 1)
-#  if !defined (ACE_NTRACE)
-#    define CIAO_TRACE(X)
-#  else
-#    if (ACE_NTRACE == 0)
-#      error CIAO_TRACE cannot be disabled if ACE_TRACE is enabled
-#    else
-#      define CIAO_TRACE(X)
-#    endif
-#  endif
-#else
-#  if !defined (ACE_HAS_TRACE)
-#    define ACE_HAS_TRACE
-#  endif /* ACE_HAS_TRACE */
-#  define CIAO_TRACE(X) ACE_TRACE_IMPL(CLINFO X)
-#  include "ace/Trace.h"
-#endif /* CIAO_NTRACE */
+#include "ciao/Logger/Log_Macros.h"
 
 #include /**/ "ace/post.h"
 

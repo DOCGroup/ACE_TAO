@@ -35,11 +35,11 @@ namespace CIAO
     Basic_Config_Manager::init_resources
     (const ServerResource &server_resource)
     {
-      ACE_DEBUG ((LM_DEBUG,"Basic_Config_Manager::init_resources\n"));
+      CIAO_DEBUG ((LM_DEBUG,"Basic_Config_Manager::init_resources\n"));
 
       if (CORBA::is_nil (this->orb_.in()))
 	{
-	  ACE_ERROR ((LM_ERROR,
+	  CIAO_ERROR ((LM_ERROR,
 		      "Basic_Config_Manager has not been properly initialized\n"));
 	  throw CORBA::INTERNAL ();
 	}
@@ -82,14 +82,14 @@ namespace CIAO
 	      if (this->policy_map_.bind (sets[i].Id.in (),
 					  policy_list) != 0)
 		{
-		  ACE_ERROR ((LM_ERROR,
+		  CIAO_ERROR ((LM_ERROR,
 			      "Error binding Policy_Set with name: %s\n",
 			      sets[i].Id.in ()));
 		  throw CORBA::INTERNAL ();
 		}
 	      else
 		{
-		  ACE_DEBUG ((LM_DEBUG,
+		  CIAO_DEBUG ((LM_DEBUG,
 			      "Basic_Config_Manager::init_resource"
 			      " added policy set : %s with %d policies\n",
 			      sets[i].Id.in (), array_index));
@@ -97,7 +97,7 @@ namespace CIAO
 	    }
 	  else
 	    {
-	      ACE_DEBUG ((LM_DEBUG,
+	      CIAO_DEBUG ((LM_DEBUG,
 			  "Basic_Config_Manager::init_resource"
 			  " added policy set : %s with %d policies\n",
 			  sets[i].Id.in (), array_index));
@@ -110,7 +110,7 @@ namespace CIAO
     {
       if (name == 0)
 	{
-	  ACE_ERROR ((LM_ERROR,
+	  CIAO_ERROR ((LM_ERROR,
 		      "Invalid name string found in "
 		      "Basic_Config_Manager::policy_exists\n"));
 	  throw CORBA::INTERNAL ();
@@ -131,7 +131,7 @@ namespace CIAO
     {
       if (name == 0)
 	{
-	  ACE_DEBUG ((LM_DEBUG,
+	  CIAO_DEBUG ((LM_DEBUG,
 		      "Invalid name string found in find_policies_by_name\n"));
 	  throw CORBA::INTERNAL ();
 	}
@@ -142,7 +142,7 @@ namespace CIAO
 
       if (this->policy_map_.find (name, entry) != 0)
 	{
-	  ACE_DEBUG ((LM_DEBUG,
+	  CIAO_DEBUG ((LM_DEBUG,
 		      "Unable to find a PolicyList named %s\n",
 		      name));
 	  retv = 0;
@@ -183,7 +183,7 @@ namespace CIAO
 	    retv = nw_priority._retn ();
 
 	    if (! CORBA::is_nil (retv.in ()))
-	      ACE_DEBUG ((LM_DEBUG,
+	      CIAO_DEBUG ((LM_DEBUG,
 			  "NAConfigManager::Create NetworkPriority policy: %d\n",
 			  nw_tmp.nw_priority_model));
 	  }
@@ -207,7 +207,7 @@ namespace CIAO
 	    retv = cnw_priority._retn ();
 
 	    if (! CORBA::is_nil (retv.in ()))
-	      ACE_DEBUG ((LM_DEBUG,
+	      CIAO_DEBUG ((LM_DEBUG,
 			  "NAConfigManager::Create NetworkPriority policy \n"));
 	  }
 	  break;

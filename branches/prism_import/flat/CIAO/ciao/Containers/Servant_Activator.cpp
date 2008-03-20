@@ -76,7 +76,7 @@ namespace CIAO
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
 
-    ACE_DEBUG ((LM_INFO, CLINFO
+    CIAO_DEBUG ((LM_INFO, CLINFO
 		"Servant_Activator_i::incarnate, "
 		"Attempting to activate port name [%s] \n",
 		str.in ()));
@@ -99,7 +99,7 @@ namespace CIAO
 
           if (tmp == 0)
             {
-                ACE_ERROR ((LM_ERROR, CLINFO
+                CIAO_ERROR ((LM_ERROR, CLINFO
                             "Servant_Activator_i::incarnate (),"
                             " value from the array is null \n"));
               continue;
@@ -111,7 +111,7 @@ namespace CIAO
               // We should try avoiding making outbound calls with the
               // lock held. Oh well, let us get some sense of sanity in
               // CIAO to do think about these.
-	      ACE_DEBUG ((LM_INFO, CLINFO
+	      CIAO_DEBUG ((LM_INFO, CLINFO
 			  "Servant_Activator_i::incarnate - Activating Port %s\n",
 			  str.in ()));
 	      
@@ -141,14 +141,14 @@ namespace CIAO
         Port_Activator_var pa;
         if (this->pa_.get (pa, t) == -1)
           {
-            ACE_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_ERROR, CLINFO
 			"Servant_Activator_i::etherealize - Could not get Port Activator\n"));
             continue;
           }
 
         if (tmp == 0)
           {
-            ACE_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_ERROR, CLINFO
 			"Servant_Activator_i::etherealize - Port Activator is NULL\n"));
             continue;
           }
@@ -156,7 +156,7 @@ namespace CIAO
         if (ACE_OS::strcmp (tmp->oid (),
                             str.in ()) == 0)
           {
-            ACE_DEBUG ((LM_INFO, CLINFO
+            CIAO_DEBUG ((LM_INFO, CLINFO
                         "Servant_Activator_i::etherealize - Deactivating Port %s\n",
                         str.in ()));
             this->pa_[t]->deactivate (servant);
@@ -183,7 +183,7 @@ namespace CIAO
       {
         ++this->slot_index_;
 
-	ACE_DEBUG ((LM_INFO, CLINFO
+	CIAO_DEBUG ((LM_INFO, CLINFO
 		    "Servant_Activator_i::"
 		    "register_port_activator"
 		    " with port name [%s],"

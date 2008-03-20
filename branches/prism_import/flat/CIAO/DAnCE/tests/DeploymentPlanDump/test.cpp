@@ -7,7 +7,7 @@ int main (int argc, char * argv[])
     {
       if (argc < 1)
         {
-          ACE_ERROR((LM_ERROR, "[%M] Incorrect count of arguments. Path to deployment plan has not been specified.\n"));
+          DANCE_ERROR((LM_ERROR, "[%M] Incorrect count of arguments. Path to deployment plan has not been specified.\n"));
           return 1;
         }
       CIAO::Config_Handlers::XML_File_Intf file (argv[1]);
@@ -24,7 +24,7 @@ int main (int argc, char * argv[])
     }
   catch (...)
     {
-      ACE_ERROR((LM_ERROR, "[%M] Unexpected exception\n"));
+      DANCE_ERROR((LM_ERROR, "[%M] Unexpected exception\n"));
       return 1;
     }
 

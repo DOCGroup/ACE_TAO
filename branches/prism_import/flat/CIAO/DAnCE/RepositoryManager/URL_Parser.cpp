@@ -91,7 +91,7 @@ bool URL_Parser::parseURL (char* url)
 
 void URL_Parser::Error (void)
 {
-  ACE_DEBUG((LM_DEBUG, "[%M] ./http_client -u http://hostname:port/filename [-d]\n"));
+  DANCE_DEBUG((LM_DEBUG, "[%M] ./http_client -u http://hostname:port/filename [-d]\n"));
 }
 
 URL_Parser::~URL_Parser()

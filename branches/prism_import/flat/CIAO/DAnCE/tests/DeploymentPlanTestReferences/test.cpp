@@ -8,7 +8,7 @@ int main (int argc, char * argv[])
     {
       if (argc < 1)
         {
-          ACE_ERROR((LM_ERROR, "[%M] Incorrect count of arguments. Path to deployment plan has not been specified.\n"));
+          DANCE_ERROR((LM_ERROR, "[%M] Incorrect count of arguments. Path to deployment plan has not been specified.\n"));
           return 1;
         }
       //parsing plan
@@ -22,7 +22,7 @@ int main (int argc, char * argv[])
         {
           if (plan->instance[i].implementationRef > plan->implementation.length() - 1)
             {
-              ACE_ERROR((LM_ERROR, "[%M] incorrect implementationRef in instance %s.\n", plan->instance[i].name.in()));
+              DANCE_ERROR((LM_ERROR, "[%M] incorrect implementationRef in instance %s.\n", plan->instance[i].name.in()));
               return 1;
             }
         }
@@ -34,7 +34,7 @@ int main (int argc, char * argv[])
             {
               if (plan->implementation[i].artifactRef[0] > plan->artifact.length() - 1)
                 {
-                  ACE_ERROR((LM_ERROR, "[%M] incorrect artifactRef in the implementation %s.\n", plan->implementation[i].name.in()));
+                  DANCE_ERROR((LM_ERROR, "[%M] incorrect artifactRef in the implementation %s.\n", plan->implementation[i].name.in()));
                   return 1;
                 }
             }
@@ -42,7 +42,7 @@ int main (int argc, char * argv[])
     }
   catch (...)
     {
-      ACE_ERROR((LM_ERROR, "[%M] Unexpected exception"));
+      DANCE_ERROR((LM_ERROR, "[%M] Unexpected exception"));
       return 1;
     }
 

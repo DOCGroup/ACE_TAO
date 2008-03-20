@@ -61,7 +61,7 @@ int main (int argc, char * argv[])
     }
   catch (...)
     {
-      ACE_ERROR((LM_ERROR, "[%M] An error has occured."));
+      DANCE_ERROR((LM_ERROR, "[%M] An error has occured."));
     }
 }
 
