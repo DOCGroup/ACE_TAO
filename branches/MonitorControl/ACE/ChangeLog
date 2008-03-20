@@ -1,3 +1,19 @@
+Thu Mar 20 19:58:36 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_T.h:
+        * ace/ace.mpc:
+        * MonitorControl/examples/Bytes_Sent/Bytes_Sent.mpc:
+        * MonitorControl/examples/Constraint/Constraint.mpc:
+        * MonitorControl/examples/CPU_Load/CPU_Load.mpc:
+        * MonitorControl/examples/Num_Threads/Num_Threads.mpc:
+        * MonitorControl/examples/Memory_Usage/Memory_Usage.mpc:
+        * MonitorControl/examples/Group/Group.mpc:
+        
+          Changed ENABLE_ACE_MACROS to ACE_ENABLE_MACROS for
+          consistency, added it to config.h and removed it from
+          all MPC files where it appeared.
+
 Thu Mar 20 19:39:04 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_Monitor.h:

@@ -19,11 +19,11 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Guard_T.h"
 
-#if defined (ENABLE_ACE_MONITORS)
+#if defined (ACE_ENABLE_MONITORS)
 #include "ace/Message_Queue_Monitor.h"
 #include "ace/MC_Admin_Manager.h"
 #include "ace/Dynamic_Service.h"
-#endif /* ENABLE_ACE_MONITORS */
+#endif /* ACE_ENABLE_MONITORS */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -483,7 +483,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-#if defined (ENABLE_ACE_MONITORS)
+#if defined (ACE_ENABLE_MONITORS)
   void register_monitor (void);
 #endif
 
@@ -604,7 +604,7 @@ protected:
   ACE_SYNCH_CONDITION_T not_full_cond_;
   
   /// Sends the size of the queue whenever it changes.
-#if defined (ENABLE_ACE_MONITORS)
+#if defined (ACE_ENABLE_MONITORS)
   ACE::MonitorControl::Message_Queue_Monitor monitor_;
 #endif
 

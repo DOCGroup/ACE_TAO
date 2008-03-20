@@ -6,7 +6,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL
-  macros      += ENABLE_ACE_MONITORS
 
   Source_Files(ACE_COMPONENTS) {
     ACE.cpp
