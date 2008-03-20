@@ -62,7 +62,7 @@ namespace DAnCE
 
       if (CORBA::is_nil (this->rm_.in ()))
         {
-          ACE_ERROR((LM_ERROR, "[%M] (%P|%t) CIAO_PlanGenerator: nil Repository "
+          DANCE_ERROR((LM_ERROR, "[%M] (%P|%t) CIAO_PlanGenerator: nil Repository "
             "Manager reference, narrow failed\n"));
           return false;
         }
@@ -77,7 +77,7 @@ namespace DAnCE
     {
       if (CORBA::is_nil (rm_.in ()))
         {
-          ACE_ERROR((LM_ERROR, "[%M] (%P|%t) CIAO_Repoman: nil Execution\n"));
+          DANCE_ERROR((LM_ERROR, "[%M] (%P|%t) CIAO_Repoman: nil Execution\n"));
           return false;
         }
 
@@ -127,7 +127,7 @@ namespace DAnCE
     {
       if (CORBA::is_nil (rm_.in ()))
         {
-          ACE_ERROR((LM_ERROR, "[%M] (%P|%t) CIAO_Repoman: nil Execution\n"));
+          DANCE_ERROR((LM_ERROR, "[%M] (%P|%t) CIAO_Repoman: nil Execution\n"));
           return false;
         }
 

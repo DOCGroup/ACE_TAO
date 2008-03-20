@@ -75,7 +75,7 @@ namespace CIAO
 
     if (CORBA::is_nil (poa_object.in ()))
       {
-        ACE_ERROR ((LM_ERROR, CLINFO
+        CIAO_ERROR ((LM_ERROR, CLINFO
 		    "CIAO::Session_Container: Unable to initialize the POA.\n"));
 	throw Components::CreateFailure ();		   
       }
@@ -221,15 +221,15 @@ namespace CIAO
 
     if (this->static_config_flag_ == false)
       {
-        ACE_DEBUG ((LM_DEBUG, CLINFO
+        CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_home - "
                     "Loading home [%s] from shared libraries\n",
                     name));
-        ACE_DEBUG ((LM_DEBUG, CLINFO
+        CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_home - "
                     "Executor library [%s] with entrypoint [%s]\n",
                     primary_artifact, entry_point));
-        ACE_DEBUG ((LM_DEBUG, CLINFO
+        CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_home - "
                     "Servant library [%s] with entrypoint [%s]\n",
                     servant_artifact, servant_entrypoint));
@@ -250,7 +250,7 @@ namespace CIAO
                 exception = "Null component servant DLL name";
               }
 
-            ACE_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
                         "ERROR: %s\n",
@@ -266,7 +266,7 @@ namespace CIAO
             ACE_CString error ("Failed to open executor DLL: ");
             error += primary_artifact;
 
-            ACE_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
                         "ERROR in opening the executor DLL [%s] \n",
@@ -275,7 +275,7 @@ namespace CIAO
             throw Components::Deployment::UnknownImplId ();
           }
         
-        ACE_DEBUG ((LM_TRACE, CLINFO
+        CIAO_DEBUG ((LM_TRACE, CLINFO
                     "Session_Container::install_home - Executor DLL successfully opened\n"));
         
         if (servant_dll.open (servant_artifact,
@@ -285,7 +285,7 @@ namespace CIAO
             ACE_CString error ("Failed to open executor DLL: ");
             error += servant_artifact;
 
-            ACE_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
                         "ERROR in opening the servant DLL [%s] \n",
@@ -294,7 +294,7 @@ namespace CIAO
             throw Components::Deployment::UnknownImplId ();
           }
         
-        ACE_DEBUG ((LM_TRACE, CLINFO
+        CIAO_DEBUG ((LM_TRACE, CLINFO
                     "Session_Container::install_home - Servant DLL successfully openend.\n"));
         
         if (entry_point == 0 || servant_entrypoint == 0)
@@ -303,7 +303,7 @@ namespace CIAO
 
             if (entry_point == 0)
               {
-                ACE_ERROR ((LM_ERROR, CLINFO
+                CIAO_ERROR ((LM_ERROR, CLINFO
                             "Session_Container.cpp -"
                             "Session_Container::ciao_install_home -"
                             "ERROR in opening the executor entry point "
@@ -313,7 +313,7 @@ namespace CIAO
               }
             else
               {
-                ACE_ERROR ((LM_ERROR, CLINFO
+                CIAO_ERROR ((LM_ERROR, CLINFO
                             "Session_Container.cpp -"
                             "Session_Container::ciao_install_home -"
                             "ERROR in opening the servant entry point "
@@ -338,7 +338,7 @@ namespace CIAO
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, CLINFO
+        CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_home - Loading statically linked home [%s]\n",
                     name));
 
@@ -346,7 +346,7 @@ namespace CIAO
             || static_entrypts_maps_->home_creator_funcptr_map_ == 0
             || static_entrypts_maps_->home_servant_creator_funcptr_map_ == 0)
           {
-            ACE_DEBUG ((LM_ERROR, CLINFO,
+            CIAO_DEBUG ((LM_ERROR, CLINFO,
                         "Session_Container::install_home - ERROR: Static entrypoint "
                         "maps are null or imcomplete.\n"));            
             throw Components::Deployment::ImplEntryPointNotFound ();
@@ -378,25 +378,25 @@ namespace CIAO
             error += servant_artifact;
           }
 	
-	ACE_ERROR ((LM_ERROR, CLINFO
+	CIAO_ERROR ((LM_ERROR, CLINFO
 		    "Session_Container::ciao_install_home - Error:%s\n",
 		    error.c_str ()));
 		    
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
     
-    ACE_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO,
                 "Session_Container::install_home - Loading home executor\n"));
     Components::HomeExecutorBase_var home_executor = hcreator ();
 
     if (CORBA::is_nil (home_executor.in ()))
       {
-	ACE_ERROR ((LM_ERROR, CLINFO
+	CIAO_ERROR ((LM_ERROR, CLINFO
 		    "Session_Container::Ciao_install_hoe - Home executor factory failed. \n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
-    ACE_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO,
                 "Session_Container::install_home - Loading home servant\n"));
     PortableServer::Servant home_servant = screator (home_executor.in (),
                                                      this,
@@ -404,14 +404,14 @@ namespace CIAO
 
     if (home_servant == 0)
       {
-	ACE_ERROR ((LM_ERROR, CLINFO
+	CIAO_ERROR ((LM_ERROR, CLINFO
 		    "Session_Container::ciao_install_home - Home servant factory failed.\n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
     PortableServer::ServantBase_var safe (home_servant);
 
-    ACE_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO,
                 "Session_Container::install_home - Installing home servant\n"));
     
     PortableServer::ObjectId_var oid;
@@ -422,7 +422,7 @@ namespace CIAO
     Components::CCMHome_var homeref =
       Components::CCMHome::_narrow (objref.in ());
 
-    ACE_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO,
                 "Session_Container::install_home - Home successfully created with name\n"));
     
     return homeref._retn ();
@@ -442,15 +442,15 @@ namespace CIAO
 
     if (this->static_config_flag_ == false)
       {
-        ACE_DEBUG ((LM_DEBUG, CLINFO
+        CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_component - "
                     "Loading component [%s] from shared libraries\n",
                     name));
-        ACE_DEBUG ((LM_DEBUG, CLINFO
+        CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_component - "
                     "Executor library [%s] with entrypoint [%s]\n",
                     primary_artifact, entry_point));
-        ACE_DEBUG ((LM_DEBUG, CLINFO
+        CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_component - "
                     "Servant library [%s] with entrypoint [%s]\n",
                     servant_artifact, servant_entrypoint));
@@ -471,7 +471,7 @@ namespace CIAO
                 exception = "Null component servant DLL name";
               }
 
-            ACE_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_component -"
                         "ERROR: %s\n",
@@ -487,7 +487,7 @@ namespace CIAO
             ACE_CString error ("Failed to open executor DLL: ");
             error += primary_artifact;
 
-            ACE_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_component -"
                         "ERROR in opening the executor DLL [%s] \n",
@@ -496,7 +496,7 @@ namespace CIAO
             throw Components::Deployment::UnknownImplId ();
           }
         
-        ACE_DEBUG ((LM_TRACE, CLINFO
+        CIAO_DEBUG ((LM_TRACE, CLINFO
                     "Session_Container::install_component - Executor DLL successfully opened\n"));
         
         if (servant_dll.open (servant_artifact,
@@ -506,7 +506,7 @@ namespace CIAO
             ACE_CString error ("Failed to open executor DLL: ");
             error += servant_artifact;
 
-            ACE_ERROR ((LM_ERROR, CLINFO
+            CIAO_ERROR ((LM_ERROR, CLINFO
                         "Session_Container.cpp -"
                         "Session_Container::ciao_install_component -"
                         "ERROR in opening the servant DLL [%s] \n",
@@ -515,7 +515,7 @@ namespace CIAO
             throw Components::Deployment::UnknownImplId ();
           }
         
-        ACE_DEBUG ((LM_TRACE, CLINFO
+        CIAO_DEBUG ((LM_TRACE, CLINFO
                     "Session_Container::install_component - Servant DLL successfully openend.\n"));
         
         if (entry_point == 0 || servant_entrypoint == 0)
@@ -524,7 +524,7 @@ namespace CIAO
 
             if (entry_point == 0)
               {
-                ACE_ERROR ((LM_ERROR, CLINFO
+                CIAO_ERROR ((LM_ERROR, CLINFO
                             "Session_Container.cpp -"
                             "Session_Container::ciao_install_component -"
                             "ERROR in opening the executor entry point "
@@ -534,7 +534,7 @@ namespace CIAO
               }
             else
               {
-                ACE_ERROR ((LM_ERROR, CLINFO
+                CIAO_ERROR ((LM_ERROR, CLINFO
                             "Session_Container.cpp -"
                             "Session_Container::ciao_install_component -"
                             "ERROR in opening the servant entry point "
@@ -559,7 +559,7 @@ namespace CIAO
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, CLINFO
+        CIAO_DEBUG ((LM_DEBUG, CLINFO
                     "Session_Container::install_component - Loading statically linked component [%s]\n",
                     name));
 
@@ -567,7 +567,7 @@ namespace CIAO
             || static_entrypts_maps_->component_creator_funcptr_map_ == 0
             || static_entrypts_maps_->component_servant_creator_funcptr_map_ == 0)
           {
-            ACE_DEBUG ((LM_ERROR, CLINFO,
+            CIAO_DEBUG ((LM_ERROR, CLINFO,
                         "Session_Container::install_component - ERROR: Static entrypoint "
                         "maps are null or imcomplete.\n"));            
             throw Components::Deployment::ImplEntryPointNotFound ();
@@ -599,25 +599,25 @@ namespace CIAO
             error += servant_artifact;
           }
 	
-	ACE_ERROR ((LM_ERROR, CLINFO
+	CIAO_ERROR ((LM_ERROR, CLINFO
 		    "Session_Container::ciao_install_component - Error:%s\n",
 		    error.c_str ()));
 		    
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
     
-    ACE_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO,
                 "Session_Container::install_component - Loading component executor\n"));
     Components::EnterpriseComponent_var component_executor = ccreator ();
 
     if (CORBA::is_nil (component_executor.in ()))
       {
-	ACE_ERROR ((LM_ERROR, CLINFO
+	CIAO_ERROR ((LM_ERROR, CLINFO
 		    "Session_Container::Ciao_install_hoe - Component executor factory failed. \n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
-    ACE_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO,
                 "Session_Container::install_component - Loading component servant\n"));
     PortableServer::Servant component_servant = screator (component_executor.in (),
                                                           name,
@@ -625,14 +625,14 @@ namespace CIAO
 
     if (component_servant == 0)
       {
-	ACE_ERROR ((LM_ERROR, CLINFO
+	CIAO_ERROR ((LM_ERROR, CLINFO
 		    "Session_Container::ciao_install_component - Component servant factory failed.\n"));
         throw Components::Deployment::InstallationFailure ();
       }
 
     PortableServer::ServantBase_var safe (component_servant);
 
-    ACE_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO,
                 "Session_Container::install_component - Installing component servant\n"));
     
     PortableServer::ObjectId_var oid;
@@ -643,7 +643,7 @@ namespace CIAO
     Components::CCMObject_var componentref =
       Components::CCMObject::_narrow (objref.in ());
 
-    ACE_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO,
                 "Session_Container::install_component - Component successfully created\n"));
     
     return componentref._retn ();

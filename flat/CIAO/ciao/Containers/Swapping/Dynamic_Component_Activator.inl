@@ -18,7 +18,7 @@ namespace CIAO
     
     if (this->servant_map_.unbind (oid, servant) != 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "Invalid object reference\n"));
+        CIAO_DEBUG ((LM_DEBUG, "Invalid object reference\n"));
       }
   }
 }

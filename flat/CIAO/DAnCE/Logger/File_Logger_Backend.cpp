@@ -3,6 +3,7 @@
 #include "ace/OS.h"
 #include "ace/Log_Record.h"
 #include "ace/Log_Msg.h"
+#include "Log_Macros.h"
 
 namespace DAnCE
   {
@@ -10,7 +11,7 @@ namespace DAnCE
   int
   File_Logger_Backend::open (const ACE_TCHAR *)
   {
-    ACE_DEBUG ( (LM_DEBUG, "[%M] Setting logger's output to file \"%s\"", this->filename_.c_str()));
+    DANCE_DEBUG ((LM_DEBUG, "[%M] Setting logger's output to file \"%s\"", this->filename_.c_str()));
     this->fh_ = ACE_OS::fopen (this->filename_.c_str(), "w");
     if (0 == this->fh_)
       {

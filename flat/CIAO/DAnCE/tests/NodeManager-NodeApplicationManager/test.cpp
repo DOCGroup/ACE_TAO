@@ -21,14 +21,14 @@ int main (int argc, char * argv[])
 
       Deployment::DeploymentPlan plan;
       Deployment::NodeApplicationManager_ptr nam_ptr = nm->preparePlan (plan, Deployment::ResourceCommitmentManager::_nil());
-      ACE_DEBUG((LM_DEBUG, "[%M] Plan prepared\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Plan prepared\n"));
 
       nm->destroyManager (nam_ptr);
-      ACE_DEBUG((LM_DEBUG, "[%M] NodeApplicationManager object destroyed\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] NodeApplicationManager object destroyed\n"));
     }
   catch (const CORBA::Exception &)
     {
-      ACE_ERROR((LM_ERROR, "[%M] Uncaught CORBA exception\n"));
+      DANCE_ERROR((LM_ERROR, "[%M] Uncaught CORBA exception\n"));
       return 1;
     }
   catch (...)

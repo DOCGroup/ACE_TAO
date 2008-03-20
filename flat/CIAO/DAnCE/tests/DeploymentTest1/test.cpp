@@ -18,7 +18,7 @@ int main (int argc, char * argv[])
       file.add_search_path ("TAO_ROOT", "/docs/schema/");
       auto_ptr<Deployment::DeploymentPlan> pplan (file.release_plan());
 
-      ACE_DEBUG((LM_DEBUG, "[%M] Test starts.\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Test starts.\n"));
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       char * ior = "file://execution_manager.ior";
@@ -34,9 +34,9 @@ int main (int argc, char * argv[])
         {
           throw 0;
         }
-      ACE_DEBUG((LM_DEBUG, "[%M] preparePlan\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] preparePlan\n"));
       Deployment::DomainApplicationManager_var dam = em->preparePlan (*pplan, Deployment::ResourceCommitmentManager::_nil());
-      ACE_DEBUG((LM_DEBUG, "[%M] startLaunch\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] startLaunch\n"));
       //call startLaunch
       Deployment::Properties dp;
       Deployment::Connections_var dc;
@@ -44,17 +44,17 @@ int main (int argc, char * argv[])
       Deployment::DomainApplication_var da = Deployment::DomainApplication::_narrow (na);
       if (CORBA::is_nil (da))
         {
-          ACE_DEBUG((LM_DEBUG, "[%M] narrow fails\n"));
+          DANCE_DEBUG((LM_DEBUG, "[%M] narrow fails\n"));
         }
-      ACE_DEBUG((LM_DEBUG, "[%M] finishLaunch\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] finishLaunch\n"));
       da->finishLaunch (dc.in(), true);
-      ACE_DEBUG((LM_DEBUG, "[%M] Test succeded!\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Test succeded!\n"));
 
     }
   catch (const CORBA::Exception &e)
     {
       e._tao_print_exception ("DeploymentTest1::main\t\n");
-      ACE_ERROR((LM_ERROR, "[%M] Uncaught CORBA exception\n"));
+      DANCE_ERROR((LM_ERROR, "[%M] Uncaught CORBA exception\n"));
       return 1;
     }
   catch (...)

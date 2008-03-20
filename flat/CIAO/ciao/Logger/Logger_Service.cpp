@@ -10,7 +10,7 @@ namespace CIAO
   int
   Logger_Service::init (int argc, ACE_TCHAR * argv[])
   {
-    //ACE_DEBUG((LM_DEBUG, "[%M] Changing the logging backend.\n"));
+    //CIAO_DEBUG((LM_DEBUG, "[%M] Changing the logging backend.\n"));
     ACE_Get_Opt get_opts (argc, argv, "f:", 1, 0, ACE_Get_Opt::RETURN_IN_ORDER);
     get_opts.long_option ("log-file", 'f', ACE_Get_Opt::ARG_REQUIRED);
     int c;

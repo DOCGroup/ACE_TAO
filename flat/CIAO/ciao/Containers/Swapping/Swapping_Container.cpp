@@ -65,7 +65,7 @@ namespace CIAO
 
     if (CORBA::is_nil (poa_object.in ()))
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
+        CIAO_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           -1);
       }

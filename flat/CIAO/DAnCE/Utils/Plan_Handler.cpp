@@ -242,15 +242,15 @@ namespace DAnCE
 
     for (CORBA::ULong i = 0; i < instance.length(); ++i)
     {
-      ACE_DEBUG((LM_DEBUG, "[%M] \nInstance no. %d\n", i));
-      ACE_DEBUG((LM_DEBUG, "[%M] \tName: %s\n", instance[i].name.in()));
-      ACE_DEBUG((LM_DEBUG, "[%M] \tNode: %s\n", instance[i].node.in()));
+      DANCE_DEBUG((LM_DEBUG, "[%M] \nInstance no. %d\n", i));
+      DANCE_DEBUG((LM_DEBUG, "[%M] \tName: %s\n", instance[i].name.in()));
+      DANCE_DEBUG((LM_DEBUG, "[%M] \tNode: %s\n", instance[i].node.in()));
 
-      ACE_DEBUG((LM_DEBUG, "[%M] \tImplementationRef: %d\n", instance[i].implementationRef));
-      ACE_DEBUG((LM_DEBUG, "[%M] \tNumber of properties: %d\n", instance[i].configProperty.length()));
+      DANCE_DEBUG((LM_DEBUG, "[%M] \tImplementationRef: %d\n", instance[i].implementationRef));
+      DANCE_DEBUG((LM_DEBUG, "[%M] \tNumber of properties: %d\n", instance[i].configProperty.length()));
 
       for (CORBA::ULong k = 0; k < instance[i].configProperty.length(); k++)
-          ACE_DEBUG((LM_DEBUG, "[%M] \t\tName: %s\n", instance[i].configProperty[k].name.in()));
+          DANCE_DEBUG((LM_DEBUG, "[%M] \t\tName: %s\n", instance[i].configProperty[k].name.in()));
     }
   }
 
@@ -262,90 +262,90 @@ namespace DAnCE
 
     for (CORBA::ULong i = 0; i < connection.length(); ++i)
       {
-        ACE_DEBUG((LM_DEBUG, "[%M] \nConnection no. %d\n", i));
-        ACE_DEBUG((LM_DEBUG, "[%M] \tName: %s\n", connection[i].name.in()));
+        DANCE_DEBUG((LM_DEBUG, "[%M] \nConnection no. %d\n", i));
+        DANCE_DEBUG((LM_DEBUG, "[%M] \tName: %s\n", connection[i].name.in()));
 
-        ACE_DEBUG((LM_DEBUG, "[%M] \tNo of deployRequirements: %d\n", 
+        DANCE_DEBUG((LM_DEBUG, "[%M] \tNo of deployRequirements: %d\n", 
                     connection[i].deployRequirement.length()));
 
         for (CORBA::ULong j = 0; j < connection[i].deployRequirement.length(); ++j)
         {
-           ACE_DEBUG((LM_DEBUG, 
+           DANCE_DEBUG((LM_DEBUG, 
                        "\t\tDeploy Requirement %d:\n", 
                        j+1));
-           ACE_DEBUG((LM_DEBUG, 
+           DANCE_DEBUG((LM_DEBUG, 
                        "\t\t\tResource Type: %s\n", 
                        connection[i].deployRequirement[j].resourceType.in()));
-           ACE_DEBUG((LM_DEBUG, 
+           DANCE_DEBUG((LM_DEBUG, 
                        "\t\t\tName: %s\n",
                        connection[i].deployRequirement[j].name.in()));
-           ACE_DEBUG((LM_DEBUG, 
+           DANCE_DEBUG((LM_DEBUG, 
                        "\t\t\tNo of Properties: %d\n",
                        connection[i].deployRequirement[j].property.length()));
            for (CORBA::ULong k = 0; k < connection[i].deployRequirement[j].property.length(); ++k)
            {
-              ACE_DEBUG((LM_DEBUG, "[%M] \t\t\tProperty %d:\n", k+1));
-              ACE_DEBUG((LM_DEBUG, 
+              DANCE_DEBUG((LM_DEBUG, "[%M] \t\t\tProperty %d:\n", k+1));
+              DANCE_DEBUG((LM_DEBUG, 
                           "\t\t\t\tName: %s\n", 
                           connection[i].deployRequirement[j].property[k].name.in()));
            }
         }
 
-        ACE_DEBUG((LM_DEBUG, 
+        DANCE_DEBUG((LM_DEBUG, 
                     "\tNo of externalEndpoints: %d\n",
                     connection[i].externalEndpoint.length()));
         for (CORBA::ULong j = 0; j < connection[i].externalEndpoint.length(); j++)
-           ACE_DEBUG((LM_DEBUG, 
+           DANCE_DEBUG((LM_DEBUG, 
                        "\t\tPortname %d: %s\n", j+1,
                        connection[i].externalEndpoint[j].portName.in()));
 
-        ACE_DEBUG((LM_DEBUG, 
+        DANCE_DEBUG((LM_DEBUG, 
                     "\tNo of internalEndpoints: %d\n",
                     connection[i].internalEndpoint.length()));
         for (CORBA::ULong j = 0; j < connection[i].internalEndpoint.length(); j++)
           {
-            ACE_DEBUG((LM_DEBUG, "[%M] \t\tInternalEndpoint %d:\n", j+1));
-            ACE_DEBUG((LM_DEBUG, "[%M] \t\t\tPortname: %s\n", connection[i].internalEndpoint[j].portName.in()));
-            ACE_DEBUG((LM_DEBUG,  "\t\t\tProvider: %d\n", connection[i].internalEndpoint[j].provider));
+            DANCE_DEBUG((LM_DEBUG, "[%M] \t\tInternalEndpoint %d:\n", j+1));
+            DANCE_DEBUG((LM_DEBUG, "[%M] \t\t\tPortname: %s\n", connection[i].internalEndpoint[j].portName.in()));
+            DANCE_DEBUG((LM_DEBUG,  "\t\t\tProvider: %d\n", connection[i].internalEndpoint[j].provider));
 
               if (connection[i].internalEndpoint[j].kind == ::Deployment::Facet || 
                 connection[i].internalEndpoint[j].kind == ::Deployment::SimplexReceptacle)
-                ACE_DEBUG((LM_DEBUG, 
+                DANCE_DEBUG((LM_DEBUG, 
                             "\t\t\tKind: %s\n", 
                           (connection[i].internalEndpoint[j].kind == ::Deployment::Facet) ? 
                           "Facet" : "SimplexReceptacle"));
             else
-                ACE_DEBUG((LM_DEBUG, 
+                DANCE_DEBUG((LM_DEBUG, 
                             "\t\t\tKind: %d\n",
                             connection[i].internalEndpoint[j].kind));
 
-            ACE_DEBUG((LM_DEBUG, 
+            DANCE_DEBUG((LM_DEBUG, 
                         "\t\t\tInstanceRef: %ld",
                         (long) connection[i].internalEndpoint[j].instanceRef));
-            ACE_DEBUG((LM_DEBUG, "[%M] \tInstanceName: %s\n", 
+            DANCE_DEBUG((LM_DEBUG, "[%M] \tInstanceName: %s\n", 
                         deployment_plan.instance[connection[i].internalEndpoint[j].instanceRef].name.in()));
           }
 
-        ACE_DEBUG((LM_DEBUG, 
+        DANCE_DEBUG((LM_DEBUG, 
                     "\tNo of externalReferenceEndpoints: %d\n",
                     connection[i].externalReference.length()));
         for (CORBA::ULong  j = 0; j < connection[i].externalReference.length(); ++j)
-           ACE_DEBUG((LM_DEBUG, 
+           DANCE_DEBUG((LM_DEBUG, 
                        "\t\tLocation %d: %s\n", 
                        j+1,
                        connection[i].externalReference[j].location.in()));
 
-        ACE_DEBUG((LM_DEBUG, 
+        DANCE_DEBUG((LM_DEBUG, 
                     "\tNo of deployedResources: %d\n",
                     connection[i].deployedResource.length()));
         for (CORBA::ULong j = 0; j < connection[i].deployedResource.length(); j++)
           {
-            ACE_DEBUG((LM_DEBUG, 
+            DANCE_DEBUG((LM_DEBUG, 
                         "\t\tTargetName: %s\n",
                         connection[i].deployedResource[j].targetName.in()));
-            ACE_DEBUG((LM_DEBUG, "[%M] \t\tRequirementName: %s\n",
+            DANCE_DEBUG((LM_DEBUG, "[%M] \t\tRequirementName: %s\n",
                         connection[i].deployedResource[j].requirementName.in()));
-            ACE_DEBUG((LM_DEBUG, "[%M] \t\tResourceName: %s\n",
+            DANCE_DEBUG((LM_DEBUG, "[%M] \t\tResourceName: %s\n",
                         connection[i].deployedResource[j].resourceName.in()));
           }
       }

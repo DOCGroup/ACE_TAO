@@ -3,6 +3,7 @@
 #include "Domain_Application_Impl.h"
 #include "ace/Log_Msg.h"
 #include "ace/streams.h"
+#include "DAnCE/Logger/Log_Macros.h"
 
 namespace DAnCE
 {
@@ -12,14 +13,14 @@ namespace DAnCE
                                                   Deployment::Connections& conn)
     : nams_ (nams)
   {
-    ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl constructor\n"));
+    DANCE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl constructor\n"));
     this->startLaunch (configProperty);
     conn = this->connections_;
   }
 
   DomainApplication_Impl::~DomainApplication_Impl()
   {
-    ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl destructor started.\n"));
+    DANCE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl destructor started.\n"));
     try
       {
 	for (TApp2Mgr::iterator iter = this->node_applications_.begin();
@@ -32,41 +33,41 @@ namespace DAnCE
       }
     catch (CORBA::Exception &e)
       {
-	ACE_ERROR((LM_ERROR, "[%M] DomainApplication_Impl::~DomainApplication_Imp failed with a CORBA exception %s(%s) \"%s\"\n"
+	DANCE_ERROR((LM_ERROR, "[%M] DomainApplication_Impl::~DomainApplication_Imp failed with a CORBA exception %s(%s) \"%s\"\n"
 		   , e._name(), e._rep_id(), e._info().c_str()));
       }
     catch(...)
       {
-	ACE_ERROR((LM_ERROR, "[%M] DomainApplication_Impl::~DomainApplication_Imp failed with an exception.\n"));
+	DANCE_ERROR((LM_ERROR, "[%M] DomainApplication_Impl::~DomainApplication_Imp failed with an exception.\n"));
       }
-    ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl destructor finished.\n"));
+    DANCE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl destructor finished.\n"));
   }
 
   void
   DomainApplication_Impl::finishLaunch (const Deployment::Connections & connections,
                                         CORBA::Boolean start)
   {
-    ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_impl::finishLaunch - started, connections length is %d\n", connections.length()));
+    DANCE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_impl::finishLaunch - started, connections length is %d\n", connections.length()));
     for (TApp2Mgr::iterator iter = this->node_applications_.begin();
          iter != this->node_applications_.end();
          ++iter)
       {
         (*iter).ext_id_->finishLaunch (connections, start);
       }
-    ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_impl::finishLaunch - finished\n"));
+    DANCE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_impl::finishLaunch - finished\n"));
   }
 
   void
   DomainApplication_Impl::start ()
   {
-    ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_impl::start - started\n"));
+    DANCE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_impl::start - started\n"));
     for (TApp2Mgr::iterator iter = this->node_applications_.begin();
          iter != this->node_applications_.end();
          ++iter)
       {
         (*iter).ext_id_->start ();
       }
-    ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_impl::start - finished\n"));
+    DANCE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_impl::start - finished\n"));
   }
 
   void
@@ -81,12 +82,12 @@ namespace DAnCE
         //Deployment::NodeApplication_ptr na = Deployment::NodeApplication::_narrow (a);
         if (CORBA::is_nil (na))
           {
-            ACE_ERROR ( (LM_ERROR, "[%M] DAnCE (%P|%t) DomainApplication_Impl.cpp -"
+            DANCE_ERROR ( (LM_ERROR, "[%M] DAnCE (%P|%t) DomainApplication_Impl.cpp -"
                          "DomainApplication_Impl::startLaunch -"
                          "ERROR while calling startLaunch on node managers.\n"));
             throw Deployment::StartError();
           }
-        ACE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl::startLaunch - NodeApplication_ptr received\n"));
+        DANCE_DEBUG ( (LM_DEBUG, "[%M] DomainApplication_Impl::startLaunch - NodeApplication_ptr received\n"));
         this->node_applications_.bind (na, (*iter).ext_id_);
 
         size_t before = this->connections_.length();

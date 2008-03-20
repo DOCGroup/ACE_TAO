@@ -43,7 +43,7 @@ namespace CIDL_RoundTrip_Impl
   {
     if (CIAO::debug_level () > 0)
       {
-        ACE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::set_session_context\n"));
+        DANCE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::set_session_context\n"));
       }
   }
 
@@ -52,7 +52,7 @@ namespace CIDL_RoundTrip_Impl
   {
     if (CIAO::debug_level () > 0)
       {
-        ACE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::ccm_activate\n"));
+        DANCE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::ccm_activate\n"));
       }
 
   }
@@ -62,7 +62,7 @@ namespace CIDL_RoundTrip_Impl
   {
     if (CIAO::debug_level () > 0)
       {
-        ACE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::ccm_passivate\n"));
+        DANCE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::ccm_passivate\n"));
       }
   }
 
@@ -71,7 +71,7 @@ namespace CIDL_RoundTrip_Impl
   {
     if (CIAO::debug_level () > 0)
       {
-        ACE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::ccm_remove\n"));
+        DANCE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::ccm_remove\n"));
       }
   }
 
@@ -80,7 +80,7 @@ namespace CIDL_RoundTrip_Impl
   {
     if (CIAO::debug_level () > 0)
       {
-        ACE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::configuration_complete\n"));
+        DANCE_DEBUG((LM_DEBUG, "[%M] RoundTrip_exec_i::configuration_complete\n"));
       }
 
   }
@@ -112,7 +112,7 @@ namespace CIDL_RoundTrip_Impl
   {
     if (CIAO::debug_level () > 0)
       {
-        ACE_DEBUG((LM_DEBUG, "[%M] Creating Round_trip impl\n"));
+        DANCE_DEBUG((LM_DEBUG, "[%M] Creating Round_trip impl\n"));
       }
 
     return new RoundTripHome_exec_i ();

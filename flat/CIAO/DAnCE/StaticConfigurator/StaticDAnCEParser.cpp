@@ -29,7 +29,7 @@
 static void
 usage (const ACE_TCHAR* program)
 {
-  ACE_ERROR((LM_ERROR, 
+  DANCE_ERROR((LM_ERROR, 
               ACE_TEXT ("Usage: %s -p <package URI>\n"),
               program));
 }
@@ -70,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
 
 //CHANGE(vt){
-  ACE_ERROR_RETURN ((LM_ERROR,
+  DANCE_ERROR_RETURN ((LM_ERROR,
                   "DAnCE (%P|%t) StaticParser -"
                   "Failed to parse package file (no xml parser)\n"), 1);
   //CIAO::Config_Handlers::XML_File_Intf intf (package_url);
@@ -86,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (node_impl_info.ptr() == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      DANCE_ERROR_RETURN ((LM_ERROR,
                   "DAnCE (%P|%t) StaticParser -"
                   "Failed to create Node Implementation Infos!\n"), 1);
 
@@ -103,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       num_components = impl_infos[i].impl_infos.length ();
       for (j = 0; j < num_components; ++j)
         {
-          ACE_DEBUG((LM_DEBUG, "[%M] The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+          DANCE_DEBUG((LM_DEBUG, "[%M] The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
                       impl_infos[i].impl_infos[j].component_instance_name.in (),
                       impl_infos[i].impl_infos[j].executor_dll.in (),
                       impl_infos[i].impl_infos[j].executor_entrypt.in (),

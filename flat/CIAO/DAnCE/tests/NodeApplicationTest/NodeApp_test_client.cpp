@@ -33,7 +33,7 @@ int parse_args (int argc, char *argv[])
 
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s \n"
                            "-k <NodeApplication ior> \n"
                            "-n <The number of component instances> \n"
@@ -56,7 +56,7 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::ULong comp_num (comp_number);
-      ACE_DEBUG((LM_DEBUG, "[%M] CompNum: %d\n",comp_num));
+      DANCE_DEBUG((LM_DEBUG, "[%M] CompNum: %d\n",comp_num));
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
@@ -71,7 +71,7 @@ main (int argc, char *argv[])
 
       if (CORBA::is_nil (node_app.in ()))
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
+          DANCE_ERROR_RETURN ((LM_DEBUG,
                              "Nil nodeapplication reference <%s>\n", ior),
                             1);
         }
@@ -116,7 +116,7 @@ main (int argc, char *argv[])
           ACE_CString tmp = buf;
           
           // Add the names and entry points of each of the DLLs
-          ACE_DEBUG((LM_DEBUG, "[%M] The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+          DANCE_DEBUG((LM_DEBUG, "[%M] The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
             container_info_1.impl_infos[i].component_instance_name.in (),
             container_info_1.impl_infos[i].executor_dll.in (),
             container_info_1.impl_infos[i].executor_entrypt.in (),
@@ -163,7 +163,7 @@ main (int argc, char *argv[])
           ACE_CString tmp = "NodeAppTest_RoundTrip:";
           
           // Add the names and entry points of each of the DLLs
-          ACE_DEBUG((LM_DEBUG, "[%M] The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+          DANCE_DEBUG((LM_DEBUG, "[%M] The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
             container_info_2.impl_infos[i].component_instance_name.in (),
             container_info_2.impl_infos[i].executor_dll.in (),
             container_info_2.impl_infos[i].executor_entrypt.in (),
@@ -173,7 +173,7 @@ main (int argc, char *argv[])
 
       // container_info.container_config is not set for now
 
-      ACE_DEBUG((LM_DEBUG, "[%M] Try installing Homes and Components\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try installing Homes and Components\n"));
 
       // Create a NodeImplementationInfo sequence
       Deployment::NodeImplementationInfo node_info;
@@ -193,20 +193,20 @@ main (int argc, char *argv[])
 
           if (CORBA::is_nil (comp_list[i].in ()))
             {
-              ACE_ERROR_RETURN ((LM_DEBUG,
+              DANCE_ERROR_RETURN ((LM_DEBUG,
                                  "Nil RoundTripHome reference: %s \n",
                                  comp_info[i].component_instance_name.in ()),
                                 1);
             }
         }
 
-      ACE_DEBUG((LM_DEBUG, "[%M] Installation finished successfully.\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Installation finished successfully.\n"));
 
       // Before we can start we have to start.
       node_app->start ();
 
       // Invoke Operation on the components
-      ACE_DEBUG((LM_DEBUG, "[%M] Try cube_long operation on the Interface \n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try cube_long operation on the Interface \n"));
 
       for (i = 0; i < comp_num; ++i)
         {
@@ -218,25 +218,25 @@ main (int argc, char *argv[])
 
           if (input*input*input == output)
             {
-              ACE_DEBUG((LM_DEBUG, "[%M] Return values matched!! on Component: %d \n",
+              DANCE_DEBUG((LM_DEBUG, "[%M] Return values matched!! on Component: %d \n",
                           i));
             }
           else
             {
-              ACE_DEBUG((LM_DEBUG, "[%M] Return values did not match: on Component: %d \n",
+              DANCE_DEBUG((LM_DEBUG, "[%M] Return values did not match: on Component: %d \n",
                           i));
               ACE_OS::exit (1);
             }
         }
 
-      ACE_DEBUG((LM_DEBUG, "[%M] Try removing everything\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try removing everything\n"));
       node_app->remove ();
 
-      ACE_DEBUG((LM_DEBUG, "[%M] Homes and components removed successfully\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Homes and components removed successfully\n"));
 
       orb->destroy ();
 
-      ACE_DEBUG((LM_DEBUG, "[%M] Test success!!\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Test success!!\n"));
     }
   catch (const CORBA::Exception& ex)
     {

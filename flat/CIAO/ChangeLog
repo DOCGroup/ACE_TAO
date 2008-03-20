@@ -1,3 +1,98 @@
+Thu Mar 20 13:04:53 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/Deployment_RepositoryManager.idl:
+        * DAnCE/bin/integ_deployment.xsl:
+         
+          Added missing newlines at end of file.
+        
+        * DAnCE/Logger/Logger_Service.cpp:
+         
+          Added DANCE_ logging macros to match ACE_, so we can later have
+          DAnCE use a log handler that is separate from ACE.
+        
+        * DAnCE/Logger/File_Logger_Backend.cpp:
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/NodeApplication/ComponentAttributesSetter.cpp:
+        * DAnCE/NodeApplication/ComponentInstallation_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplication/ServerActivator_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Module.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Module.cpp:
+        * DAnCE/RedirectionService/CCMObjectLocator.cpp:
+        * DAnCE/RedirectionService/NameServiceRedirection.cpp:
+        * DAnCE/RedirectionService/RedirectionService.cpp:
+        * DAnCE/RepositoryManager/PC_Updater.cpp:
+        * DAnCE/RepositoryManager/RM_Helper.cpp:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+        * DAnCE/Starter/Starter.cpp:
+        * DAnCE/StaticConfigurator/StaticDAnCEApp.cpp.tmpl:
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/Utils/Plan_Handler.cpp:
+        * DAnCE/tests/DeploymentPlanDump/test.cpp:
+        * DAnCE/tests/DeploymentPlanTestReferences/test.cpp:
+        * DAnCE/tests/DeploymentTest1/test.cpp:
+        * DAnCE/tests/MocksTest/plCommand.In:
+        * DAnCE/tests/MocksTest/run_test.pl:
+        * DAnCE/tests/NameServiceTest/clt_main.cpp:
+        * DAnCE/tests/NameServiceTest/srv_main.cpp:
+        * DAnCE/tests/NodeApplicationManager-NodeApplication/test.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+        * DAnCE/tests/NodeApplicationTest/RoundTrip_exec.cpp:
+        * DAnCE/tests/NodeManager-NodeApplicationManager/test.cpp:
+        * DAnCE/tests/ObjectLocatorTest/clt_main.cpp:
+        * DAnCE/tests/ObjectLocatorTest/srv_main.cpp:
+        * DAnCE/tests/RedirectionServiceTest/clt_main.cpp:
+        * DAnCE/tests/RedirectionServiceTest/srv_main.cpp:
+        
+          Use DANCE_ debug and error macros for diagnostics. 
+
+        * ciao/Logger/Logger_Service.cpp:
+        
+          Created CIAO_ debug/error macros, so the ciao logger can be replaced
+          later to not use the default ACE logger. 
+        
+        * ciao/Logger/File_Logger_Backend.cpp:
+        * ciao/CIAO_common.h:
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.idl:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/Configurators/Basic_Config_Manager.cpp:
+        * ciao/ComponentServer/Configurators/RTConfig_Manager.cpp:
+        * ciao/ComponentServer/Configurators/RTNodeApp_Configurator.cpp:
+        * ciao/ComponentServer/Configurators/Server_Configurator.cpp:
+        * ciao/Containers/CIAO_Servant_Activator.idl:
+        * ciao/Containers/Container_Base.cpp:
+        * ciao/Containers/Servant_Activator.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Containers/Swapping/Dynamic_Component_Activator.inl:
+        * ciao/Containers/Swapping/Swapping_Container.cpp:
+        * ciao/Servants/CIAO_Port_Activator.idl:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Server_init.cpp:
+        
+          Use CIAO_ error/debug macros instead of ACE.
+        
 Thu Mar 20 10:53:58 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication.mpc:
@@ -7,7 +102,7 @@ Thu Mar 20 10:53:58 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Servants/Servants.mpc:
 
           Linking/compile errors that didn't crop up until a realclean.
-        
+
 Tue Mar 18 23:08:36 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ofccm:

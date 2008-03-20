@@ -23,7 +23,7 @@ parse_args (int argc, char *argv[])
 
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
+        DANCE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s \n"
                            "-k <NodeApplication ior> \n"
                            "\n",
@@ -55,14 +55,14 @@ main (int argc, char *argv[])
 
       if (CORBA::is_nil (node_app.in ()))
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
+          DANCE_ERROR_RETURN ((LM_DEBUG,
                              "Nil NodeApplication reference <%s>\n",
                              ior),
                             1);
         }
 
 
-      ACE_DEBUG((LM_DEBUG, "[%M] Try installing Home and Component\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try installing Home and Component\n"));
 
       Deployment::ComponentImplementationInfo info;
 
@@ -104,7 +104,7 @@ main (int argc, char *argv[])
 
       if (CORBA::is_nil (roundtrip_var.in ()))
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
+          DANCE_ERROR_RETURN ((LM_DEBUG,
                              "Nil RoundTrip reference\n"),
                             1);
         }
@@ -117,24 +117,24 @@ main (int argc, char *argv[])
 
       if ( facets_info->length () != 2 )
         {
-          ACE_DEBUG((LM_DEBUG, "[%M] Didn't get 2 facet back! but only %d\n",
+          DANCE_DEBUG((LM_DEBUG, "[%M] Didn't get 2 facet back! but only %d\n",
                      facets_info->length ()));
           return 1;
         }
 
       // Invoke Operation on the Interface
-      ACE_DEBUG((LM_DEBUG, "[%M] Try cube_long operation on the Interface \n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try cube_long operation on the Interface \n"));
 
       for (i = 0; i < 2; ++i )
         {
           NodeAppTest::LatencyTest_var latency_var
             = NodeAppTest::LatencyTest::_narrow ( (facets_info[i]->facet_ref ()));
-          ACE_DEBUG((LM_DEBUG, "[%M] Calling on facet %s\n", (facets_info[i]->name ())));
+          DANCE_DEBUG((LM_DEBUG, "[%M] Calling on facet %s\n", (facets_info[i]->name ())));
 
 
           if ( CORBA::is_nil (latency_var.in ()) )
             {
-              ACE_DEBUG((LM_DEBUG, "[%M] get nil latency ref for facet%d\n", i));
+              DANCE_DEBUG((LM_DEBUG, "[%M] get nil latency ref for facet%d\n", i));
               return 1;
             }
 
@@ -143,20 +143,20 @@ main (int argc, char *argv[])
             latency_var->cube_long (input);
 
           if (input == output)
-            ACE_DEBUG((LM_DEBUG, "[%M] Retrun values matched!!\n"));
+            DANCE_DEBUG((LM_DEBUG, "[%M] Retrun values matched!!\n"));
           else
             {
-              ACE_DEBUG((LM_DEBUG, "[%M] Return values did not match: failure\n"));
+              DANCE_DEBUG((LM_DEBUG, "[%M] Return values did not match: failure\n"));
               ACE_OS::exit (1);
             }
         }
 
-      ACE_DEBUG((LM_DEBUG, "[%M] Try removing test component and its home\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Try removing test component and its home\n"));
       node_app->remove ();
-      ACE_DEBUG((LM_DEBUG, "[%M] Component and Home removed successfully\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Component and Home removed successfully\n"));
 
       orb->destroy ();
-      ACE_DEBUG((LM_DEBUG, "[%M] Test success!!\n"));
+      DANCE_DEBUG((LM_DEBUG, "[%M] Test success!!\n"));
     }
   catch (const CORBA::Exception& ex)
     {

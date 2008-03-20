@@ -30,11 +30,11 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_ComponentServer_i::shutdown");
       
-      ACE_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer_i::shutdown: ORB shutdown request received at %s.\n",
+      CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer_i::shutdown: ORB shutdown request received at %s.\n",
                   this->uuid_.c_str ()));
       
       if (this->containers_->length () != 0)
-        ACE_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::shutdown: ComponentServer %s still managing %u containers!\n",
+        CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::shutdown: ComponentServer %s still managing %u containers!\n",
                     this->uuid_.c_str (), this->containers_->length ()));
       
       this->orb_->shutdown ();
@@ -64,7 +64,7 @@ namespace CIAO
       
       try
         {
-          ACE_DEBUG ((LM_INFO, "CIAO_ComponentServer_i::create_container: Request received with %u config values\n",
+          CIAO_DEBUG ((LM_INFO, "CIAO_ComponentServer_i::create_container: Request received with %u config values\n",
                       config.length ()));
 	  
 	  CORBA::PolicyList policies;
@@ -82,7 +82,7 @@ namespace CIAO
           this->containers_->length (len);
           this->containers_[len] = cont_var;
           
-          ACE_DEBUG ((LM_INFO, "CIAO_ComponentServer_i::create_container: Container successfully cresated, "
+          CIAO_DEBUG ((LM_INFO, "CIAO_ComponentServer_i::create_container: Container successfully cresated, "
                       "this server now manages %u containers.\n",
                       len));
           
@@ -90,12 +90,12 @@ namespace CIAO
         }
       catch (ACE_bad_alloc &)
         {
-          ACE_ERROR ((LM_CRITICAL, "CIAO_ComponentServer_Impl: Out of memory exception whilst creating container.\n"));
+          CIAO_ERROR ((LM_CRITICAL, "CIAO_ComponentServer_Impl: Out of memory exception whilst creating container.\n"));
         }
       
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, "CIAO_ComponentServer_Impl: Caught unknown exception\n"));
+          CIAO_ERROR ((LM_ERROR, "CIAO_ComponentServer_Impl: Caught unknown exception\n"));
         }
       
       throw Components::CreateFailure ();
@@ -108,7 +108,7 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_ComponentServer_i::remove_container");
       
-      ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: remove request received.\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: remove request received.\n"));
       
       try
         {
@@ -116,15 +116,15 @@ namespace CIAO
             {
               if (this->containers_[i]->_is_equivalent (cref))
                 {
-                  ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: Found container, invoking remove....\n"));
+                  CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: Found container, invoking remove....\n"));
                   cref->remove ();
-                  ACE_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: Remove completed, destroying object...\n"));
+                  CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: Remove completed, destroying object...\n"));
                 }
             }
         }
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, "CIAO_ComponentServer_i::remove_container: Error: Unknown exception caught while removing a container.\n"));
+          CIAO_ERROR ((LM_ERROR, "CIAO_ComponentServer_i::remove_container: Error: Unknown exception caught while removing a container.\n"));
         }
       throw Components::RemoveFailure ();
     }
