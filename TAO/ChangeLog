@@ -1,3 +1,8 @@
+Thu Mar 20 18:29:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/nslist.cpp:
+          Fixed argument not used warning
+
 Thu Mar 20 14:09:06 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_3252_Regression/DllOrb.cpp:
