@@ -14,13 +14,15 @@ use PerlACE::TestTarget;
 # Amount of delay (in seconds) between starting a server and a client.
 $sleeptime = $PerlACE::wait_interval_for_process_creation;
 
-$target = PerlACE::TestTarget::create_target($PerlACE::TestConfig) || die "Create target failed\n";
+my $target = PerlACE::TestTarget::create_target($PerlACE::TestConfig) || die "Create target failed\n";
+my $host = new PerlACE::TestTarget;
 
 # File used to pass AMH server ior to its clients.
 # This file name is hard-coded in the server.cpp and client.cpp files
-$iorfile = $target->LocalFile("test.ior");
+$iorbase = "test.ior";
+$iorfile = $target->LocalFile("$iorbase");
 $target->DeleteFile($iorfile);
-#unlink $iorfile;
+$host->DeleteFile($iorbase);
 
 if (PerlACE::is_vxworks_test()) {
     $AMH = new PerlACE::ProcessVX ("server", "");
@@ -30,8 +32,7 @@ else {
 #    $AMH = new PerlACE::Process ("server", "");
 }
 
-$CL = $target->CreateProcess ("client", "");
-#$CL = new PerlACE::Process ("client", "");
+$CL = $host->CreateProcess ("client", "");
 
 # Run the AMH server.
 $AMH->Spawn ();
@@ -44,6 +45,11 @@ if ($target->WaitForFileTimed ($iorfile, $sleeptime) == -1) {
     exit 1;
 }
 
+if ($target->GetFile ($iorfile, $iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$iorfile>\n";
+    $AMH->Kill (); $AMH->TimedWait (1);
+    exit 1;
+} 
 
 # Run client.
 $client = $CL->SpawnWaitKill (30);
@@ -56,6 +62,8 @@ if ($amhserver != 0) {
     $status = 1;
 }
 
+$target->GetStderrLog();
 #unlink $iorfile;
+$host->DeleteFile($iorbase);
 $target->DeleteFile ($iorfile);
 exit $status;

@@ -102,7 +102,7 @@ int loadNotify(ACE_Service_Config & r_serviceConfig)
   }
   catch(CORBA::Exception const & rc_ex)
   {
-    ACE_PRINT_TAO_EXCEPTION(rc_ex, "Unexpected CORBA Exception: ");
+    rc_ex._tao_print_exception ("Unexpected CORBA Exception: ");
     return -1;
   }
   catch(...)

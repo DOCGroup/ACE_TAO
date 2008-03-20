@@ -10,18 +10,21 @@ use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
 my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+my $host = new PerlACE::TestTarget;
 
+$iorbase = "server.ior";
 $iorfile = $target->LocalFile ("server.ior");
 $target->DeleteFile ($iorfile);
+$host->DeleteFile ($iorbase);
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
 }
 else {
-    $SV = $target->CreateProcess ("server", "-ORBid Callback_server -o $iorfile");
+    $SV = $target->CreateProcess ("server", "-o $iorfile");
 }
-$CL = $target->CreateProcess ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
+$CL = $host->CreateProcess ("client", "-k file://$iorbase -ORBDottedDecimalAddresses 1");
 
 $SV->Spawn ();
 
@@ -31,6 +34,12 @@ if ($target->WaitForFileTimed ($iorfile,
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
+
+if ($target->GetFile ($iorfile, $iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+} 
 
 $client = $CL->SpawnWaitKill (60);
 
@@ -50,5 +59,6 @@ if ($server != 0) {
 
 $target->GetStderrLog();
 $target->DeleteFile ($iorfile);
+$host->DeleteFile($iorbase);
 
 exit $status;

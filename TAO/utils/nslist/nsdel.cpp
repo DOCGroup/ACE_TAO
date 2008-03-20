@@ -19,10 +19,48 @@
 // ================================================================
 
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/Messaging/Messaging.h"
+#include "tao/PolicyC.h"
+#include "ace/Time_Value.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/Argv_Type_Converter.h"
+
+//============================================================================
+namespace
+{
+  //==========================================================================
+  CORBA::Object_ptr
+  set_rtt(CORBA::ORB_ptr orb, CORBA::Object_ptr obj, ACE_Time_Value const& rtt)
+  {
+    if (rtt != ACE_Time_Value::zero)
+    {
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+      TimeBase::TimeT roundTripTimeoutVal;
+      ORBSVCS_Time::Time_Value_to_TimeT(roundTripTimeoutVal, rtt);
+
+      CORBA::Any anyObjectVal;
+      anyObjectVal <<= roundTripTimeoutVal;
+      CORBA::PolicyList polList (1);
+      polList.length (1);
+
+      polList[0] = orb->create_policy(Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+               anyObjectVal);
+
+      CORBA::Object_var obj2 = obj->_set_policy_overrides(polList, CORBA::SET_OVERRIDE);
+      polList[0]->destroy();
+      return obj2._retn();
+#else
+      ACE_DEBUG ((LM_DEBUG, "RTT not supported in TAO build.\n"));
+#endif
+    }
+    return obj;
+  }
+} // end of local unnamed namespace
 
 int
 ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
@@ -34,8 +72,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
     {
       // Contact the orb
       ACE_Argv_Type_Converter argcon (argcw, argvw);
-      orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
-                             "");
+      orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv ());
 
       // Scan through the command line options
       bool
@@ -53,6 +90,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         kindsep = '.',
         ctxsep[] = "/",
         *name = 0;
+      ACE_Time_Value
+        rtt = ACE_Time_Value::zero;
 
       if (0 < argc)
         {
@@ -99,7 +138,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       failed = true;
                     }
                   else
-                    name = ACE_TEXT_ALWAYS_CHAR (*++argv);
+                    name = ACE_TEXT_ALWAYS_CHAR (*(++argv));
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxsep")))
                 {
@@ -109,7 +148,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                   "Error: --ctxsep requires a character\n"));
                       failed = true;
                     }
-                  else if (1 != ACE_OS::strlen(*++argv))
+                  else if (1 != ACE_OS::strlen(*(++argv)))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ctxsep takes a single character (not %s)\n", *argv));
@@ -126,7 +165,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                   "Error: --kindsep requires a character\n"));
                       failed = true;
                     }
-                  else if (1 != ACE_OS::strlen(*++argv))
+                  else if (1 != ACE_OS::strlen(*(++argv)))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --kindsep takes a single character (not %s)\n", *argv));
@@ -134,6 +173,23 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     }
                   else
                     kindsep = ACE_TEXT_ALWAYS_CHAR (*argv)[0];
+                }
+              else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--rtt")))
+                {
+                  if (rtt != ACE_Time_Value::zero)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --rtt given more than once\n"));
+                      failed = true;
+                    }
+                  else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --rtt requires a number\n"));
+                      failed = true;
+                    }
+                 else
+                  rtt.set(ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (*argv)), 0);
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--destroy")))
                 {
@@ -157,7 +213,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       "  --ctxsep  <character>\n"
                       "  --kindsep <character>\n"
                       "  --destroy\n"
-                      "  --quiet\n\n"
+                      "  --quiet\n"
+                      "  --rtt <seconds> {Sets the relative round trip timeout policy}\n\n",
                       "where <name> uses the --ctxsep character (defaults to /)\n"
                       "to separate sub-contexts and --kindsep (defaults to .)\n"
                       "to separate ID & Kind. Will destroy a naming context\n"
@@ -177,6 +234,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       else
         nc_obj = orb->resolve_initial_references ("NameService");
 
+      nc_obj = set_rtt(orb.in(), nc_obj.in (), rtt);
       CosNaming::NamingContext_var root_nc =
         CosNaming::NamingContext::_narrow (nc_obj.in ());
 
@@ -206,28 +264,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
       // Attempt to locate the object and destroy/unbind it
       CORBA::Object_var
-        obj = root_nc->resolve( the_name );
-      CosNaming::NamingContext_var this_nc =
-        CosNaming::NamingContext::_narrow (obj.in ());
-      if (!CORBA::is_nil (this_nc.in ()))
-        {
-          if (destroy)
-            {
-              if (!quiet)
-                ACE_DEBUG ((LM_DEBUG,"Destroying\n"));
-              this_nc->destroy( );
-            }
-          else if (!quiet)
-            {
-              CORBA::String_var str =
-                orb->object_to_string (obj.in ());
-              ACE_DEBUG ((LM_DEBUG,
-                         "\n*** Possiably Orphaned Naming Context ***\n%s\n\n", str.in()));
-            }
-        }
-      else if (destroy && !quiet)
-        ACE_DEBUG ((LM_DEBUG,"Can't Destroy object, it is not a naming context!\n"));
-      root_nc->unbind (the_name );
+        obj = root_nc->resolve (the_name);
+      root_nc->unbind (the_name);
       if (!quiet)
         {
           unsigned int index;
@@ -248,6 +286,59 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                        the_name[index].kind.in()));
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
+
+      if (!quiet || destroy) {
+        bool failure = false;
+        try {
+          obj = set_rtt(orb.in (), obj.in (), rtt);
+          CosNaming::NamingContext_var this_nc =
+          CosNaming::NamingContext::_narrow (obj.in ());
+          if (!CORBA::is_nil (this_nc.in ()))
+            {
+              if (destroy)
+                {
+                  if (!quiet)
+                    ACE_DEBUG ((LM_DEBUG,"Destroying\n"));
+                  this_nc->destroy( );
+                }
+              else if (!quiet)
+                {
+                  CORBA::String_var str =
+                    orb->object_to_string (obj.in ());
+                  ACE_DEBUG ((LM_DEBUG,
+                    "\n*** Possiably Orphaned Naming Context ***\n%s\n\n", str.in()));
+                }
+            }
+          else if (destroy && !quiet)
+            ACE_DEBUG ((LM_DEBUG,"Can't Destroy object, it is not a naming context!\n"));
+        }
+      catch (const CORBA::OBJECT_NOT_EXIST&)
+        {
+          if (!quiet)
+            ACE_DEBUG ((LM_DEBUG, "{Object does not exist!}\n"));
+          failure = true;
+        }
+      catch (const CORBA::TRANSIENT&)
+        {
+          if (!quiet)
+            ACE_DEBUG ((LM_DEBUG, "{Object is transient!}\n"));
+          failure = true;
+        }
+      catch (const CORBA::TIMEOUT&)
+        {
+          if (!quiet)
+            ACE_DEBUG ((LM_DEBUG, "{Operation timed out!}\n"));
+          failure = true;
+        }
+
+        if (failure && !quiet)
+          if (destroy) {
+            ACE_DEBUG ((LM_DEBUG, "Failed to destroy context.\n"));
+          }
+          else {
+            ACE_DEBUG ((LM_DEBUG, "Failed to check for orphaned naming context.\n"));
+          }
+      }
     }
   catch (const CosNaming::NamingContext::NotFound& nf)
     {

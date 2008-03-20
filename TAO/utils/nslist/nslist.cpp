@@ -15,10 +15,15 @@
 
 #include "ace/SString.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "tao/Endpoint.h"
 #include "tao/Profile.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Constants.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/Messaging/Messaging.h"
+#include "tao/PolicyC.h"
+#include "ace/Time_Value.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Argv_Type_Converter.h"
@@ -39,9 +44,12 @@ namespace
     sizeMyTree,         // Initialised by main to strlen (myTree)
     sizeMyNode,         // Initialised by main to strlen (myNode)
     maxDepth= 0;        // Limit to display depth (default unlimited)
+  ACE_Time_Value
+    rtt = ACE_Time_Value::zero; // relative roundtrip timeout for ctx
 
   void list_context (const CosNaming::NamingContext_ptr,
                      int level);
+  CORBA::Object_ptr set_rtt(CORBA::Object_ptr obj);
 
   //==========================================================================
   class NestedNamingContexts
@@ -205,16 +213,27 @@ namespace
           {
             ACE_DEBUG ((LM_DEBUG, ": Naming context"));
 
+            obj = set_rtt(obj.in ());
+
             CosNaming::NamingContext_var xc;
             try
               {
                 xc = CosNaming::NamingContext::_narrow (obj.in ());
               }
-            catch (const CORBA::OBJECT_NOT_EXIST& not_used)
+            catch (const CORBA::OBJECT_NOT_EXIST&)
               {
-                 ACE_UNUSED_ARG (not_used);
-                 xc= 0;
+                xc= 0;
                 ACE_DEBUG ((LM_DEBUG, " {Destroyed}"));
+              }
+            catch (const CORBA::TRANSIENT&)
+              {
+                 xc= 0;
+                 ACE_DEBUG ((LM_DEBUG, " {Transient context IOR}"));
+              }
+            catch (const CORBA::TIMEOUT& not_used)
+              {
+                 xc= 0;
+                 ACE_DEBUG ((LM_DEBUG, " {Operation on conext IOR timed out}"));
               }
 
             if (const int backwards= NestedNamingContexts::hasBeenSeen (xc.in ()))
@@ -306,6 +325,35 @@ namespace
 
     NestedNamingContexts::remove ();
   }
+
+  //==========================================================================
+  CORBA::Object_ptr
+  set_rtt(CORBA::Object_ptr obj)
+  {
+    if (rtt != ACE_Time_Value::zero)
+    {
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+      TimeBase::TimeT roundTripTimeoutVal;
+      ORBSVCS_Time::Time_Value_to_TimeT(roundTripTimeoutVal, rtt);
+
+
+      CORBA::Any anyObjectVal;
+      anyObjectVal <<= roundTripTimeoutVal;
+      CORBA::PolicyList polList (1);
+      polList.length (1);
+
+      polList[0] = orb->create_policy(Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+              anyObjectVal);
+
+      CORBA::Object_var obj2 = obj->_set_policy_overrides(polList, CORBA::SET_OVERRIDE);
+      polList[0]->destroy();
+      return obj2._retn();
+#else
+      ACE_DEBUG ((LM_DEBUG, "RTT not supported in TAO build.\n"));
+#endif
+    }
+    return obj;
+  }
 } // end of local unnamed namespace
 
 //============================================================================
@@ -316,8 +364,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
     {
       // Contact the orb
       ACE_Argv_Type_Converter argcon (argcw, argvw);
-      orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
-                             "");
+      orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv ());
 
       // Scan through the command line options
       bool
@@ -497,7 +544,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                  "Error: --ctxsep requires a character\n"));
                       failed = true;
                     }
-                  else if (1 != ACE_OS::strlen(*++argv))
+                  else if (1 != ACE_OS::strlen(*(++argv)))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ctxsep takes a single character (not %s)\n", *argv));
@@ -521,7 +568,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                  "Error: --kindsep requires a character\n"));
                       failed = true;
                     }
-                  else if (1 != ACE_OS::strlen(*++argv))
+                  else if (1 != ACE_OS::strlen(*(++argv)))
                     {
                        ACE_DEBUG ((LM_DEBUG,
                                   "Error: --kindsep takes a single character (not %s)\n", *argv));
@@ -545,7 +592,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                  "Error: --max given more than once\n"));
                       failed = true;
                     }
-                  else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*++argv)[0]))
+                  else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --max requires a number\n"));
@@ -560,6 +607,23 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     }
                   else
                      maxDepth= ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (*argv));
+                }
+              else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--rtt")))
+                {
+                  if (rtt != ACE_Time_Value::zero)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --rtt given more than once\n"));
+                      failed = true;
+                    }
+                  else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*(++argv))[0]))
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --rtt requires a number\n"));
+                      failed = true;
+                    }
+                 else
+                   rtt.set(ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (*argv)), 0);
                 }
               else
                 {
@@ -585,6 +649,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
             "  --ctxsep  <character> {<name> Context separation character, default /}\n"
             "  --kindsep <character> {<name> ID/Kind separation character, default .}\n"
             "  --max <number>        {If given, limits displayed sub-context depth}\n",
+            "  --rtt <seconds>       {If given, sets the relative round trip timeout policy}\n",
             pname));
           orb->destroy ();
           return 1;
@@ -600,6 +665,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         obj = orb->string_to_object (nameService);
       else
         obj = orb->resolve_initial_references ("NameService");
+
+      obj = set_rtt(obj.in ());
 
       CosNaming::NamingContext_var root_nc =
         CosNaming::NamingContext::_narrow (obj.in ());
