@@ -230,7 +230,7 @@ namespace
                  xc= 0;
                  ACE_DEBUG ((LM_DEBUG, " {Transient context IOR}"));
               }
-            catch (const CORBA::TIMEOUT& not_used)
+            catch (const CORBA::TIMEOUT&)
               {
                  xc= 0;
                  ACE_DEBUG ((LM_DEBUG, " {Operation on conext IOR timed out}"));
