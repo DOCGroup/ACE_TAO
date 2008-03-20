@@ -62,6 +62,15 @@ sub DeleteFile ($)
     unlink $file;
 }
 
+sub GetFile ($)
+{
+    # On local host, the file is already there.
+    my $self = shift;
+    my $remote_file = shift;
+    my $local_file = shift;
+    return 0;
+}
+
 sub WaitForFileTimed ($)
 {
     my $self = shift;

@@ -42,13 +42,13 @@ class ACE_Export ACE_SOCK : public ACE_IPC_SAP
 {
 public:
 
-  /// Wrapper around the <setsockopt> system call.
+  /// Wrapper around the @c setsockopt system call.
   int set_option (int level,
                   int option,
                   void *optval,
                   int optlen) const;
 
-  /// Wrapper around the <getsockopt> system call.
+  /// Wrapper around the @c getsockopt system call.
   int get_option (int level,
                   int option,
                   void *optval,

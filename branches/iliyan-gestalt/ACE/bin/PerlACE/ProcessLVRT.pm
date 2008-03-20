@@ -81,18 +81,18 @@ sub DESTROY
         $self->Kill ();
     }
 
-    # Reboot if needed; set up clean for the next test.
-    if ($self->{NEED_REBOOT} == 1 && $self->{REBOOT_CMD}) {
-        print STDERR "Attempting to reboot target...\n";
-        system ($self->{REBOOT_CMD});
-        sleep ($self->{REBOOT_TIME});
-    }
-
     if (defined $self->{FTP}) {
         $self->{FTP}->close;
     }
     if (defined $self->{TARGET}) {
         $self->{TARGET}->close;
+    }
+
+    # Reboot if needed; set up clean for the next test.
+    if ($self->{NEED_REBOOT} == 1 && $self->{REBOOT_CMD}) {
+        print STDERR "Attempting to reboot target...\n";
+        system ($self->{REBOOT_CMD});
+        sleep ($self->{REBOOT_TIME});
     }
 }
 
@@ -208,7 +208,7 @@ sub Spawn ()
     $self->{FTP}->binary();
     $self->{FTP}->put($program);
 
-    $self->{TARGET} = new Net::Telnet(Timeout => 600, Errmode => 'return');
+    $self->{TARGET} = new Net::Telnet(Errmode => 'return');
     if (!$self->{TARGET}->open(Host => $targethost, Port => $targetport)) {
         print STDERR "ERROR: target $targethost:$targetport: ",
                       $self->{TARGET}->errmsg(), "\n";
@@ -246,24 +246,26 @@ sub WaitKill ($)
 
     my $status = $self->TimedWait ($timeout);
 
+    $self->{RUNNING} = 0;
+
+    # If the test timed out, the target is probably toast. Don't bother
+    # trying to get the log file - just reboot and get back to work.
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
         $self->{NEED_REBOOT} = 1;
         $self->Kill ();
     }
-
-    $self->{RUNNING} = 0;
-
-    # Now get the log file from the test, and delete the test from the target.
-    # The FTP session should still be open.
-    my $program = $self->Executable ();
-    my $logname = basename($program,".dll") . ".log";
-    $program = basename($program);
-    $self->{FTP}->delete($program);
-    $self->{FTP}->cwd("\\ni-rt\\system\\log");
-    $self->{FTP}->get($logname,"log\\$logname");
-    $self->{FTP}->delete($logname);
-
+    else {
+        # Now get the log file from the test, and delete the test from
+        # the target. The FTP session should still be open.
+        my $program = $self->Executable ();
+        my $logname = basename($program,".dll") . ".log";
+        $program = basename($program);
+        $self->{FTP}->delete($program);
+        $self->{FTP}->cwd("\\ni-rt\\system\\log");
+        $self->{FTP}->get($logname,"log\\$logname");
+        $self->{FTP}->delete($logname);
+    }
     return $status;
 }
 
@@ -325,7 +327,7 @@ sub Wait ($)
             print "-> wait\n";
         }
         $self->{TARGET}->print("wait");
-        my $reply = $self->{TARGET}->getline();
+        my $reply = $self->{TARGET}->getline(Timeout => 300);
         $self->{RUNNING} = 0;
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
           print "<- $reply\n";
