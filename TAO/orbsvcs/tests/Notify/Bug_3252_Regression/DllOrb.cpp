@@ -111,7 +111,7 @@ DllOrb::fini (void)
     wait();
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("wait() done\n")));
 
-    ma_barrier_.reset();
+    ACE_auto_ptr_reset (ma_barrier_, static_cast<ACE_Thread_Barrier *> (0));
   }
   catch (...)
   {
