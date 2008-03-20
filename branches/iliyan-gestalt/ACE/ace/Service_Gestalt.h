@@ -469,7 +469,7 @@ protected:
  *
  * Helps to resolve an issue with hybrid services, i.e. dynamic
  * services, accompanied by static services in the same DLL.  Only
- * automatic instances of SDG are supposed to exist. Those are
+ * automatic instances of this class are supposed to exist. Those are
  * created during (dynamic) service initialization and serve to:
  *
  * (a) Ensure the service we are loading is ordered last in the
@@ -495,7 +495,6 @@ private:
   ACE_Service_Repository & repo_;
   size_t repo_begin_;
   ACE_TCHAR const * const name_;
-  ACE_Service_Type const * dummy_;
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Guard< ACE_Recursive_Thread_Mutex > repo_monitor_;
 #endif
