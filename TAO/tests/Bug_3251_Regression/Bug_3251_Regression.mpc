@@ -10,7 +10,7 @@ project(*server) : taoserver {
 project(*lib): taolib, portableserver {
   libout = .
   sharedname = Bug_3251
-  dynamicflags += BUG_3251_BUILD_DLL
+  dynamicflags += BUG_3251_REGRESSION_BUILD_DLL
   Source_Files {
     DllOrb.cpp
     PersistentPoa.cpp
