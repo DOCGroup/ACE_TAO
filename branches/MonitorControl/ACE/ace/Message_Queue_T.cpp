@@ -940,7 +940,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
   , not_full_cond_ (lock_)
 #if defined (ENABLE_ACE_MONITORS)
   , monitor_ ("MQ monitor")
-#endif
+#endif /* ENABLE_ACE_MONITORS */
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue");
 

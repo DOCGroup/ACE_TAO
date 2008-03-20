@@ -11,14 +11,17 @@ namespace ACE
   namespace MonitorControl
   {
     Message_Queue_Monitor::Message_Queue_Monitor (void)
-    {}
+    {
+    }
         
     Message_Queue_Monitor::Message_Queue_Monitor (const char* name)
       : Monitor_Base (name)
-    {}
+    {
+    }
     
     Message_Queue_Monitor::~Message_Queue_Monitor (void)
-    {}
+    {
+    }
     
     void
     Message_Queue_Monitor::update (void)
@@ -26,26 +29,9 @@ namespace ACE
     }
     
     void
-    Message_Queue_Monitor::constraint (
-      const char* /* constraint */)
-    {
-      // TODO - this will require some reshuffling of stuff 
-      // between MonitorPoint and ACE.
-    }
-    
-    void
-    Message_Queue_Monitor::control_action (Control_Action * /* action */,
-                                           const char* /* command */)
-    {
-      // TODO
-    }
-    
-    void
     Message_Queue_Monitor::receive (double value)
     {
-      ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-      this->data_.timestamp_ = ACE_OS::gettimeofday ();
-      this->data_.value_ = value;
+      // No reason to call this overload.
     }
     
     void

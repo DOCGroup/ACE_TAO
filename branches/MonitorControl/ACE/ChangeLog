@@ -1,3 +1,16 @@
+Thu Mar 20 19:39:04 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_Monitor.h:
+        * ace/Message_Queue_Monitor.cpp:
+        
+          Removed constraint() and control_action() methods that have
+          been subsumed by constraints() in the base class.
+          
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_T.h:
+        
+          Added #if defined argument in comments to corresponding #endifs.
+
 Wed Mar 19 22:58:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ETCL/ETCL.mpc:

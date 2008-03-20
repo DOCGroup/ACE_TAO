@@ -23,7 +23,7 @@
 #include "ace/Message_Queue_Monitor.h"
 #include "ace/MC_Admin_Manager.h"
 #include "ace/Dynamic_Service.h"
-#endif
+#endif /* ENABLE_ACE_MONITORS */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
