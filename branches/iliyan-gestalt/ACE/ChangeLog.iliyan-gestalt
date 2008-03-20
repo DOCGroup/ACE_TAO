@@ -1,18 +1,25 @@
 Thu Mar 20 19:42:06 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
-        The legacy implementation of the SR ordered the services, based on the time of insertion. Later this was changed
-        because the new DLL unloading functionality caused crashes as services dependent on a DLL were being unloaded
-        prematurely. The change was based on Service_Type_Dynamic_Guard stack based instances, capturing the intended
-        position of a DLL-based service. As the DLL service loaded, it was purposedly inserted at the saved position.
-        Combined with a reversing the order of finalization, that _almost_ worked.
+        The legacy implementation of the SR ordered the services, based on
+        the time of insertion. Later this was changed because the new DLL
+        unloading functionality caused crashes as services dependent on a
+        DLL were being unloaded prematurely. The change was based on
+        Service_Type_Dynamic_Guard stack based instances, capturing the
+        intended position of a DLL-based service. As the DLL service
+        loaded, it was purposely inserted at the saved position.  Combined
+        with a reversing the order of finalization, that _almost_ worked.
 
-        Later, the concept was enhanced with a mechanism that relies on the DLL_Handle's reference counting to keep
-        a DLL mapped in memory until any dependent services were finalized. This eliminated the need to artificially
-        reorder the services, but the code to do that remained active.
+        Later, the concept was enhanced with a mechanism that relies on
+        the DLL_Handle's reference counting to keep a DLL mapped in memory
+        until any dependent services were finalized. This eliminated the
+        need to artificially reorder the services, but the code to do that
+        remained active.
 
-        However, inserting the first DLL service before any dependents, caused its finalization to be performed last. This
-        prevents the service itself from being able to refer to its own dependent services (if any). The problem was
-        illustrated by Bug #3251. This change removes the artificial reordering of dependent services.
+        However, inserting the first DLL service before any dependents,
+        caused its finalization to be performed last. This prevents the
+        service itself from being able to refer to its own dependent
+        services (if any). The problem was illustrated by Bug #3251. This
+        change removes the artificial reordering of dependent services.
 
         * ace/Service_Gestalt.h:
         * ace/Service_Gestalt.cpp:
@@ -22,9 +29,10 @@ Thu Mar 20 19:42:06 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * ace/Service_Repository.h:
         * ace/Service_Repository.cpp:
 
-        Simplified relocate_i() and fixed an error that was causing it to choose incorrect ranges of service indexes to relocate.
-        Eliminated the boolean static_only parameter as it was always being set to true.
-
+        Simplified relocate_i() and fixed an error that was causing it to
+        choose incorrect ranges of service indexes to relocate.
+        Eliminated the boolean static_only parameter as it was always
+        being set to true.
 
 Tue Mar 11 04:08:21 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
