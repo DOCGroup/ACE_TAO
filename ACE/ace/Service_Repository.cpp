@@ -291,8 +291,7 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
 int
 ACE_Service_Repository::relocate_i (size_t begin,
                                     size_t end,
-                                    const ACE_DLL& adll,
-                                    bool static_only)
+                                    const ACE_DLL& adll)
 {
   ACE_SHLIB_HANDLE new_handle = adll.get_handle (0);
 
@@ -302,20 +301,21 @@ ACE_Service_Repository::relocate_i (size_t begin,
         const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
       ACE_SHLIB_HANDLE old_handle =  type->dll ().get_handle (0);
-      if (static_only && old_handle != ACE_SHLIB_INVALID_HANDLE)
-        continue;
-
+      if (old_handle == ACE_SHLIB_INVALID_HANDLE && new_handle != old_handle)
+      {
 #ifndef ACE_NLOGGING
-    if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) SR::relocate, repo=%@ [%d] (size=%d): name=%s - DLL from=%d to=%d\n"),
+        if (ACE::debug ())
+            ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("ACE (%P|%t) SR::relocate dependent, repo=%@ [%d] (size=%d)")
+            ACE_TEXT (": name=%s, handle: %d -> %d\n"),
                     this, i, this->total_size_, type->name (),
                     old_handle,
                     new_handle));
 #else
   ACE_UNUSED_ARG (new_handle);
 #endif
-      type->dll (adll);
+        type->dll (adll); // ups the refcount on adll
+      }
     }
 
   return 0;
@@ -353,50 +353,54 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 
     // Check to see if this is a duplicate.
     for (i = 0; i < this->current_size_; i++)
-      if (ACE_OS::strcmp (sr->name (),
+    {
+        if (ACE_OS::strcmp (sr->name (),
                           this->service_vector_[i]->name ()) == 0)
-        break;
+        {
+            // Replacing an existing entry
+            return_value = 0;
+            // Check for self-assignment...
+            if (sr != this->service_vector_[i])
+            {
+                s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+                this->service_vector_[i] = sr;
+            }
 
-    // Replacing an existing entry
-    if (i < this->current_size_)
-      {
-        return_value = 0;
-        // Check for self-assignment...
-        if (sr != this->service_vector_[i])
-          {
-            s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
-            this->service_vector_[i] = sr;
-          }
-      }
-    // Adding a new entry.
-    else if (i < this->total_size_)
+            break;
+        }
+    }
+
+    // Adding an entry.
+    if (i >= this->total_size_)
+    {
+        return_value = -1; // no space left
+    }
+    else if (s == 0)
       {
         this->service_vector_[i] = sr;
         this->current_size_++;
         return_value = 0;
-      }
 
 #ifndef ACE_NLOGGING
     if (ACE::debug ())
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ACE (%P|%t) SR::insert")
-                  ACE_TEXT (" - repo=%@ [%d] (%d), name=%s")
-                  ACE_TEXT (", type=%@, object=%@, active=%d\n"),
+                  ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d] (%d),")
+                  ACE_TEXT (" name=%s (new), type=%@, object=%@, active=%d\n"),
                   this, i, this->total_size_, sr->name(), sr->type (),
                   (sr->type () != 0) ? sr->type ()->object () : 0,
                   sr->active ()));
 #endif
+      }
   }
 
-  // Delete outside the lock
+  // If necessary, delete outside the lock
   if (s != 0)
     {
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) SR::insert")
-                    ACE_TEXT (" - destroying (replacing), repo=%@ [%d] (%d), name=%s")
-                    ACE_TEXT (", type=%@, object=%@, active=%d\n"),
+                    ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d] (%d),")
+                    ACE_TEXT (" name=%s (replaced), type=%@, object=%@, active=%d\n"),
                     this, i, this->total_size_, s->name(), s->type (),
                     (s->type () != 0) ? s->type ()->object () : 0,
                     s->active ()));

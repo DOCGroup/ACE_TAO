@@ -190,8 +190,7 @@ private:
 
   int relocate_i (size_t begin,
                   size_t end,
-                  const ACE_DLL &adll,
-                  bool static_only = true);
+                  const ACE_DLL &adll);
 
   /// Contains all the configured services.
   const ACE_Service_Type **service_vector_;
