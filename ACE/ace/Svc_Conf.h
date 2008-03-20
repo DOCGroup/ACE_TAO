@@ -15,16 +15,13 @@
 #define ACE_SVC_CONF_H
 
 #include /**/ "ace/pre.h"
-#include "ace/config.h"   // Need to see ACE_LACKS_PRAGMA_ONCE
 
-// Globally visible macros, type decls, and extern var decls for
-// Service Configurator utility.
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
 #include "ace/Parse_Node.h"
 
 #include "ace/Svc_Conf_Param.h"
