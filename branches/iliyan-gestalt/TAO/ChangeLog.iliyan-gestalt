@@ -11,17 +11,17 @@ Thu Mar 20 02:14:11 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * tests/Bug_3251_Regression/PersistentPoa.h:
         * tests/Bug_3251_Regression/server.cpp:
 
-        Added some changes to make it compile (but not test anything) on Windows. Also added a
-        call to sync (after fork) so we get the correct values for PID in
-        the child.
+        Added some changes to make it compile (but not test anything) on
+	Windows. Also added a call to sync (after fork) so we get the
+	correct values for PID in the child.
 
 Fri Mar  7 21:10:50 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Internal.cpp:
 
-        Additional work required to make possible passing the argc to
-        ARGV because often when a command line is hand-crafted it is not
-        0-terminated, as expected by ARGV.
+        Additional work required to make possible passing the argc to ARGV
+	because often when a command line is hand-crafted it is not
+	0-terminated, as expected by ARGV.
 
         * tests/Bug_2936_Regression/PersistentPOA.cpp:
 
