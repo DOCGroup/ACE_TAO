@@ -39,24 +39,12 @@ int PersistentPoa::init (int argc, char *argv[])
     CORBA::Object_var v_poa = mv_orb->resolve_initial_references("RootPOA");
     mv_rootPOA = PortableServer::POA::_narrow(v_poa.in ());
 
-    // Threading policy
-    CORBA::Policy_var v_threadingPolicy =
-      mv_rootPOA->create_thread_policy(PortableServer::ORB_CTRL_MODEL);
-
-    // Lifespan policy
-    CORBA::Policy_var v_lifespanPolicy =
-      mv_rootPOA->create_lifespan_policy(PortableServer::PERSISTENT);
-
-    // ID assignment policy
-    CORBA::Policy_var v_idAssignmentPolicy =
-      mv_rootPOA->create_id_assignment_policy(PortableServer::USER_ID);
-
     // Policies for the new POA
     CORBA::PolicyList policies(3);
     policies.length (3);
-    policies[0] = v_threadingPolicy.in();
-    policies[1] = v_lifespanPolicy.in();
-    policies[2] = v_idAssignmentPolicy.in();
+    policies[0] = mv_rootPOA->create_thread_policy(PortableServer::ORB_CTRL_MODEL);
+    policies[1] = mv_rootPOA->create_lifespan_policy(PortableServer::PERSISTENT);
+    policies[2] = mv_rootPOA->create_id_assignment_policy(PortableServer::USER_ID);
 
     mv_thisPOA = mv_rootPOA->create_POA(
       m_poaName.c_str(),
