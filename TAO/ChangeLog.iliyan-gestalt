@@ -1,3 +1,9 @@
+Thu Mar 20 20:21:19 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/run_tests_all.pl:
+
+        Fixed a bug that was preventing it from running.
+
 Thu Mar 20 02:14:11 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Bug_3251_Regression/Bug_3251.conf:
@@ -5,7 +11,7 @@ Thu Mar 20 02:14:11 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * tests/Bug_3251_Regression/PersistentPoa.h:
         * tests/Bug_3251_Regression/server.cpp:
 
-        Added some changes to makee it compile on Windows. Also added a
+        Added some changes to make it compile (but not test anything) on Windows. Also added a
         call to sync (after fork) so we get the correct values for PID in
         the child.
 
