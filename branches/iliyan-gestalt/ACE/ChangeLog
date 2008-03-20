@@ -1,3 +1,24 @@
+Thu Mar 20 15:34:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+
+          Changed the ACE_LD_DECORATOR_STR macro to use $(LIBMODIFIER)
+          instead of $(ILIBMODIFIER) for the bmake project type.
+
+Thu Mar 20 12:42:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Addr.h:
+          Layout change
+
+        * ace/High_Res_Timer.cpp:
+          Changed supported flag to a bool
+
+        * ace/INET_Addr.h:
+          Doxygen change
+
+        * ace/Svc_Conf.h:
+          Moved regular include before pragma once
+
 Wed Mar 19 13:45:00 UTC 2008  Simon Massey  <simon.massey@prismtech.com>
 
         * ace/tao_orb_tests.lst:

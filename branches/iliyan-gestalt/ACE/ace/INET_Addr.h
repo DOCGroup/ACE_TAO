@@ -294,7 +294,7 @@ public:
   /**
    * Return the "dotted decimal" Internet address representation of
    * the hostname storing it in the @a addr (which is assumed to be
-   * <addr_size> bytes long).  This version is reentrant.
+   * @a addr_size bytes long).  This version is reentrant.
    */
   const char *get_host_addr (char *addr, int addr_size) const;
 
