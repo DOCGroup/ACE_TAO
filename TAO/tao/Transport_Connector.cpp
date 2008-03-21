@@ -509,6 +509,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         return 0;
                     }
                 }
+
                 // In either success or failure cases of wait_for_transport, the
                 // ref counter in corresponding to the ref counter added by
                 // find_transport is decremented.
@@ -678,43 +679,53 @@ TAO_Connector::wait_for_connection_completion (
                       "transport [%d], wait done result = %d\n",
                       transport->id (), result));
         }
-    // There are three possibilities when wait() returns: (a)
-    // connection succeeded; (b) connection failed; (c) wait()
-    // failed because of some other error.  It is easy to deal with
-    // (a) and (b).  (c) is tricky since the connection is still
-    // pending and may get completed by some other thread.  The
-    // following code deals with (c).
 
-    if (result == -1)
-      {
-        if (errno == ETIME)
-          {
-            if (TAO_debug_level > 2)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "TAO (%P|%t) - Transport_Connector::"
-                            "wait_for_connection_completion, "
-                            "transport [%d], Connection timed out.\n",
-                            transport->id ()));
-              }
-          }
-        else
-          {
-            // The wait failed for some other reason.
-            // Report that making the connection failed, don't print errno
-            // because we touched the reactor and errno could be changed
-            if (TAO_debug_level > 2)
-              {
-                ACE_ERROR ((LM_ERROR,
-                            "TAO (%P|%t) - Transport_Connector::"
-                            "wait_for_connection_completion, "
-                  "transport [%d], wait for completion failed (%d) %p\n",
-                  transport->id (), errno, ""));
-              }
-            TAO_Connection_Handler *con = transport->connection_handler ();
-            result = this->check_connection_closure (con);
-          }
-      }
+      // There are three possibilities when wait() returns: (a)
+      // connection succeeded; (b) connection failed; (c) wait()
+      // failed because of some other error.  It is easy to deal with
+      // (a) and (b).  (c) is tricky since the connection is still
+      // pending and may get completed by some other thread.  The
+      // following code deals with (c).
+
+      if (result == -1)
+        {
+          if (errno == ETIME)
+            {
+              if (timeout == 0)
+                {
+                  // There was an error during connecting and the errno was
+                  // ETIME.  We didn't pass in a timeout, so there's
+                  // something wrong with this transport.  So, it must be
+                  // purged.
+                  transport->purge_entry ();
+                }
+
+              if (TAO_debug_level > 2)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t) - Transport_Connector::"
+                              "wait_for_connection_completion, "
+                              "transport [%d], Connection timed out.\n",
+                              transport->id ()));
+                }
+            }
+          else
+            {
+              // The wait failed for some other reason.
+              // Report that making the connection failed, don't print errno
+              // because we touched the reactor and errno could be changed
+              if (TAO_debug_level > 2)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "TAO (%P|%t) - Transport_Connector::"
+                              "wait_for_connection_completion, "
+                    "transport [%d], wait for completion failed (%d) %p\n",
+                    transport->id (), errno, ""));
+                }
+              TAO_Connection_Handler *con = transport->connection_handler ();
+              result = this->check_connection_closure (con);
+            }
+        }
     }
 
   if (result == -1)
