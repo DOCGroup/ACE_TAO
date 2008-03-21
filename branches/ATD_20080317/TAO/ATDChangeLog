@@ -1,3 +1,10 @@
+Fri Mar 21 14:59:25 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Transport_Connector.cpp:
+
+          Purge the transport if there was no timeout supplied, but a
+          timeout error occurs during connection.
+
 Mon Mar 17 19:10:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
