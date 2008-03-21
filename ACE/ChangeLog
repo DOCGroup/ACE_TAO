@@ -1,3 +1,40 @@
+Fri Mar 21 16:12:53 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_unistd.cpp (num_processors_online): Count the online
+          processors for Windows, not just the number present.
+
+        * tests/OS_Test.cpp: Sanity-check the num_processors_online() value.
+
+Fri Mar 21 15:10:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FoxReactor/FoxReactor.cpp:
+          Fix 64bit issues, this fixes bugzilla 3248
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
+Fri Mar 21 10:46:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/ace.m4:
+          Changed gperf check
+
+        * apps/Makefile.aml:
+          Updated gperf check. This fixes bugzilla 3249.
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
+Fri Mar 21 10:06:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks.h:
+          If ACE_VXWORKS is not defined try to figure out which vxworks
+          version we are using based on some vxworks version defines
+
+        * ace/Select_Reactor_Base.h:
+          Doxygen changes and made the constructor of
+          ACE_Select_Reactor_Handler_Repository_Iterator explicit
+
+        * ace/Process.{h,cpp}:
+          Layout change
+
 Thu Mar 20 15:34:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:

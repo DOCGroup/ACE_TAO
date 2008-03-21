@@ -333,9 +333,10 @@ ACE_Process::spawn (ACE_Process_Options &options)
       ACE_OS::dup2 (saved_stderr, ACE_STDERR);
   }
 
-  if (this->child_id_ == ACE_INVALID_PID) {
-    errno = my_errno_;
-  }
+  if (this->child_id_ == ACE_INVALID_PID)
+    {
+      errno = my_errno_;
+    }
 
   return this->child_id_;
 #else /* ACE_WIN32 */
@@ -354,7 +355,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
           && ACE_OS::setpgid (0,
                               options.getgroup ()) < 0)
         {
-#if !defined (ACE_HAS_THREADS) 
+#if !defined (ACE_HAS_THREADS)
           // We can't emit this log message because ACE_ERROR(), etc.
           // will invoke async signal unsafe functions, which results
           // in undefined behavior in threaded programs.

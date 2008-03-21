@@ -554,7 +554,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
      AC_MSG_WARN([existing gperf may be overwritten during installation])
     ],[])
  fi
- AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_enable_gperf = Xyes])
+ AM_CONDITIONAL([BUILD_GPERF], [test X$ace_user_enable_gperf = Xyes])
 
  ACE_ENABLE_QOS
  ACE_ENABLE_SSL
