@@ -1,3 +1,12 @@
+Fri Mar 21 15:29:56 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+        
+          Replaced ace_etcl base project with ace_etcl_parser, which
+          in turn inherits from ace_etcl. Any builds linking to
+          MonitorControl need to also link to both ACE_ETCL-related
+          libs.
+
 Fri Mar 21 15:19:57 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_Monitor.cpp:
