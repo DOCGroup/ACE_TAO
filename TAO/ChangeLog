@@ -1,3 +1,14 @@
+Fri Mar 21 15:43:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3251_Regression/server.cpp:
+          Fixed warnings in vxworks build
+
+Fri Mar 21 15:41:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/nslist.cpp:
+        * utils/nslist/nsdel.cpp:
+          Added missign duplicate calls
+
 Thu Mar 20 18:29:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/nslist/nslist.cpp:

@@ -336,7 +336,6 @@ namespace
       TimeBase::TimeT roundTripTimeoutVal;
       ORBSVCS_Time::Time_Value_to_TimeT(roundTripTimeoutVal, rtt);
 
-
       CORBA::Any anyObjectVal;
       anyObjectVal <<= roundTripTimeoutVal;
       CORBA::PolicyList polList (1);
@@ -352,7 +351,7 @@ namespace
       ACE_DEBUG ((LM_DEBUG, "RTT not supported in TAO build.\n"));
 #endif
     }
-    return obj;
+    return CORBA::Object::_duplicate(obj);
   }
 } // end of local unnamed namespace
 
