@@ -1,3 +1,10 @@
+Fri Mar 21 15:10:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FoxReactor/FoxReactor.cpp:
+          Fix 64bit issues, this fixes bugzilla 3248
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
 Fri Mar 21 10:46:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/ace.m4:
