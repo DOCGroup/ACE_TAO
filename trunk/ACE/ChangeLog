@@ -1,3 +1,13 @@
+Fri Mar 21 10:46:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/ace.m4:
+          Changed gperf check
+
+        * apps/Makefile.aml:
+          Updated gperf check. This fixes bugzilla 3249.
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
 Fri Mar 21 10:06:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks.h:
