@@ -336,7 +336,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/ETCL/ETCL_Constraint.inl"
+#include "TAO_ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_ETCL_CONSTRAINT_H */

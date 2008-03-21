@@ -1,3 +1,9 @@
+Fri Mar 21 16:14:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+        
+          Fixed include of wrong inline file.
+
 Thu Mar 20 20:01:58 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/Active_Object_Map_Monitor.h:
