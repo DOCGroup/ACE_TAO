@@ -1,3 +1,9 @@
+Fri Mar 21 17:04:03 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        
+          Corrected include of AnyTypeCode_methods.h.
+
 Fri Mar 21 16:46:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ETCL/TAO_ETCL_Constraint.cpp:
