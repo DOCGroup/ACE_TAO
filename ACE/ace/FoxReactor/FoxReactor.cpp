@@ -123,32 +123,31 @@ long ACE_FoxReactor::onFileEvents(FXObject* ob, FXSelector se, void* handle){
   ACE_Select_Reactor_Handle_Set dispatch_set;
   bool f=false;
   if(sel==SEL_IO_READ){
-    dispatch_set.rd_mask_.set_bit(ACE_HANDLE(handle));
+    dispatch_set.rd_mask_.set_bit(ACE_HANDLE(reinterpret_cast<FXival>(handle)));
     f=true;
   }
   else
   if(sel==SEL_IO_WRITE){
-    dispatch_set.wr_mask_.set_bit(ACE_HANDLE(handle));
+    dispatch_set.wr_mask_.set_bit(ACE_HANDLE(reinterpret_cast<FXival>(handle)));
     f=true;
   }
   else
   if(sel==SEL_IO_EXCEPT){
-    dispatch_set.ex_mask_.set_bit(ACE_HANDLE(handle));
+    dispatch_set.ex_mask_.set_bit(ACE_HANDLE(reinterpret_cast<FXival>(handle)));
     f=true;
   };
   if(f) dispatch (1, dispatch_set);
+}
 
-};
-
-long ACE_FoxReactor::onTimerEvents(FXObject* ob, FXSelector sel, void* handle){
+long ACE_FoxReactor::onTimerEvents(FXObject* ob, FXSelector sel, void* handle)
+{
   // Deal with any timer events
   ACE_Select_Reactor_Handle_Set handle_set;
   this->dispatch (0, handle_set );
 
   // Set next timeout signal
   this->reset_timeout ();
-
-};
+}
 
 int
 ACE_FoxReactor::register_handler_i (ACE_HANDLE handle,
@@ -190,14 +189,11 @@ ACE_FoxReactor::register_handler_i (const ACE_Handle_Set &handles,
                                  ACE_Event_Handler *handler,
                                  ACE_Reactor_Mask mask)
 {
-  return ACE_Select_Reactor::register_handler_i (handles,
-                                                 handler,
-                                                 mask);
+  return ACE_Select_Reactor::register_handler_i (handles, handler, mask);
 }
 
 int
-ACE_FoxReactor::remove_handler_i (ACE_HANDLE handle,
-                               ACE_Reactor_Mask mask)
+ACE_FoxReactor::remove_handler_i (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_FoxReactor::remove_handler_i");
 
@@ -225,16 +221,14 @@ ACE_FoxReactor::remove_handler_i (ACE_HANDLE handle,
   fxapp->removeInput ((int)handle,condition); // ACE_reinterpret_cast(int,handle));
 
   // Now let the reactor do its work.
-  return ACE_Select_Reactor::remove_handler_i (handle,
-                                               mask);
+  return ACE_Select_Reactor::remove_handler_i (handle, mask);
 }
 
 int
 ACE_FoxReactor::remove_handler_i (const ACE_Handle_Set &handles,
                                ACE_Reactor_Mask mask)
 {
-  return ACE_Select_Reactor::remove_handler_i (handles,
-                                             mask);
+  return ACE_Select_Reactor::remove_handler_i (handles, mask);
 }
 
 // The following function ensures there's an Fox timeout for the first
