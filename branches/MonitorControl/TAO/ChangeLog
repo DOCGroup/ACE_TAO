@@ -1,3 +1,22 @@
+Fri Mar 21 16:46:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        
+          Added include of AnyTypeCode_methods.h, needed by gcc,
+          and added explicit call to base class constructor in the
+          copy constructor of TAO_ETCL_Literal_Constraint, also
+          needed by gcc.
+          
+        * tao/ETCL/TAO_ETCL.mpc:
+        
+          Added complete path to 'includes' item and header files
+          in TAO_ETCL_Parser project.
+          
+        * tao/ETCL/ETCL_include/EtCL_include.h:
+        * tao/ETCL/ETCL_include/ETCL_include.h:
+        
+          Renamed file, originally misnamed because of a typo.
+
 Fri Mar 21 16:14:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ETCL/TAO_ETCL_Constraint.h:

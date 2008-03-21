@@ -19,7 +19,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
   const TAO_ETCL_Literal_Constraint & lit)
-  : any_ (0)
+  : ETCL_Literal_Constraint (),
+    any_ (0)
 {
   this->copy (lit);
 }
