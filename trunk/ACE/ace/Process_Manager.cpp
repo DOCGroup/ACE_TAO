@@ -519,7 +519,6 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
   // If we have a Reactor, then we're supposed to reap Processes
   // automagically.  Get a handle to this new Process and tell the
   // Reactor we're interested in <handling_input> on it.
-
   ACE_Reactor * const r = this->reactor ();
   if (r != 0)
     r->register_handler (this, proc->gethandle ());

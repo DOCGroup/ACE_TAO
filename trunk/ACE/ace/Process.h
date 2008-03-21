@@ -580,7 +580,6 @@ protected:
   ACE_Handle_Set handles_passed_;
   /// Handle duplicates made for the child process.
   ACE_Handle_Set dup_handles_;
-
 };
 
 
