@@ -234,7 +234,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       else
         nc_obj = orb->resolve_initial_references ("NameService");
 
-      nc_obj = set_rtt(orb.in(), nc_obj.in (), rtt);
+//      nc_obj = set_rtt(orb.in(), nc_obj.in (), rtt);
       CosNaming::NamingContext_var root_nc =
         CosNaming::NamingContext::_narrow (nc_obj.in ());
 
@@ -290,7 +290,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       if (!quiet || destroy) {
         bool failure = false;
         try {
-          obj = set_rtt(orb.in (), obj.in (), rtt);
+//          obj = set_rtt(orb.in (), obj.in (), rtt);
           CosNaming::NamingContext_var this_nc =
           CosNaming::NamingContext::_narrow (obj.in ());
           if (!CORBA::is_nil (this_nc.in ()))
