@@ -1,3 +1,16 @@
+Fri Mar 21 10:06:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks.h:
+          If ACE_VXWORKS is not defined try to figure out which vxworks
+          version we are using based on some vxworks version defines
+
+        * ace/Select_Reactor_Base.h:
+          Doxygen changes and made the constructor of
+          ACE_Select_Reactor_Handler_Repository_Iterator explicit
+
+        * ace/Process.{h,cpp}:
+          Layout change
+
 Thu Mar 20 15:34:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
