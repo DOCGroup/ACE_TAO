@@ -1,3 +1,20 @@
+Fri Mar 21 21:13:32 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        Trying to be frugal and save space by packing the SR after a call
+        to remove() causes problems with relocating dependent
+        services. For the relocation to work, we cache the index where the
+        next service will be inserted. If something, in the mean time
+        removes a service (and packs the storage) it might prevent some
+        services from relocation. In turn, it causes finalization problems
+        because the non-relocated services may end up in prematurely
+        unmapped memory. See TAO/tests/DLL_ORB for use case.
+
+        * ace/Service_Repository.cpp:
+
+        Changed remove() to eliminate the "packing" code and updated the
+        few other methods, which assumed there are no "gaps" in the
+        service storage.
+
 Thu Mar 20 19:42:06 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         The legacy implementation of the SR ordered the services, based on
