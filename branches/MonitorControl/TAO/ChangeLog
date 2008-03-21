@@ -1,3 +1,10 @@
+Fri Mar 21 17:33:04 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Monitor.mpc:
+        
+          Fixed case error in IDL compiler export_include command line
+          option.
+
 Fri Mar 21 17:06:32 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ETCL/ETCL_include/ETCL_include.h:

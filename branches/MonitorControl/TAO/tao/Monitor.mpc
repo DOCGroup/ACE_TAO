@@ -4,7 +4,7 @@ project (Monitor): portableserver, tao_etcl_parser, install, tao_versioning_idl_
   dynamicflags = TAO_MONITOR_BUILD_DLL
   idlflags += -Gp -Gd \
               -Wb,export_macro=TAO_Monitor_Export \
-              -Wb,export_include=tao/Monitor/monitor_export.h \
+              -Wb,export_include=tao/Monitor/Monitor_export.h \
               -o Monitor
 
   Source_Files {
