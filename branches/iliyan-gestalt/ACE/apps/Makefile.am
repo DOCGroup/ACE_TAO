@@ -10,7 +10,7 @@
 
 OPTDIRS =
 
-if COMPILE_GPERF
+if BUILD_GPERF
 OPTDIRS += gperf
 endif
 

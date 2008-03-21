@@ -409,7 +409,15 @@ ACE_OS::num_processors_online (void)
 #elif defined (ACE_WIN32)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
-  return sys_info.dwNumberOfProcessors;
+  long active_processors = 0;
+  DWORD_PTR mask = sys_info.dwActiveProcessorMask;
+  while (mask != 0)
+    {
+      if (mask & 1)
+        ++active_processors;
+      mask >>= 1;
+    }
+  return active_processors;
 #elif defined (_SC_NPROCESSORS_ONLN)
   return ::sysconf (_SC_NPROCESSORS_ONLN);
 #elif defined (ACE_HAS_SYSCTL)

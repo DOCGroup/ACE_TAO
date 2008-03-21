@@ -8,8 +8,30 @@
 #define ACE_CONFIG_VXWORKS_H
 #include /**/ "ace/pre.h"
 
+// If ACE_VXWORKS is not defined try to figure out the VxWorks version
 #if !defined (ACE_VXWORKS)
-# error You must define ACE_VXWORKS
+# include "vxWorks.h"
+# if !defined (_WRS_VXWORKS_MAJOR) && !defined (_WRS_VXWORKS_MINOR)
+#  error You must define ACE_VXWORKS
+# else
+#  if (_WRS_VXWORKS_MAJOR == 6)
+#   if (_WRS_VXWORKS_MINOR == 0)
+#    define ACE_VXWORKS 0x600
+#   elif (_WRS_VXWORKS_MINOR == 1)
+#    define ACE_VXWORKS 0x610
+#   elif (_WRS_VXWORKS_MINOR == 2)
+#    define ACE_VXWORKS 0x620
+#   elif (_WRS_VXWORKS_MINOR == 3)
+#    define ACE_VXWORKS 0x630
+#   elif (_WRS_VXWORKS_MINOR == 4)
+#    define ACE_VXWORKS 0x640
+#   elif (_WRS_VXWORKS_MINOR == 5)
+#    define ACE_VXWORKS 0x650
+#   elif (_WRS_VXWORKS_MINOR == 6)
+#    define ACE_VXWORKS 0x660
+#   endif
+#  endif
+# endif
 #endif /* ! ACE_VXWORKS */
 
 #if (ACE_VXWORKS == 0x551)
