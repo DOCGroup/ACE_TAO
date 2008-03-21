@@ -174,16 +174,16 @@ public:
   virtual ACE_HANDLE notify_handle (void);
 
   /// Handle one of the notify call on the @c handle. This could be
-  /// because of a thread trying to unblock the <Reactor_Impl>
+  /// because of a thread trying to unblock the Reactor_Impl
   virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
 
   /// Read one of the notify call on the @a handle into the
   /// @a buffer. This could be because of a thread trying to unblock
-  /// the <Reactor_Impl>
+  /// the Reactor_Impl
   virtual int read_notify_pipe (ACE_HANDLE handle,
                                 ACE_Notification_Buffer &buffer);
 
-  /// Verify whether the buffer has dispatchable info  or not.
+  /// Verify whether the buffer has dispatchable info or not.
   virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
 
   /// Called back by the ACE_Select_Reactor when a thread wants to
@@ -192,9 +192,9 @@ public:
 
   /**
    * Set the maximum number of times that the
-   * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-   * dispatch the <ACE_Event_Handlers> that are passed in via the
-   * notify pipe before breaking out of its <recv> loop.  By default,
+   * ACE_Select_Reactor_Notify::handle_input() method will iterate and
+   * dispatch the ACE_Event_Handlers that are passed in via the
+   * notify pipe before breaking out of its @c recv loop.  By default,
    * this is set to -1, which means "iterate until the pipe is empty."
    * Setting this to a value like "1 or 2" will increase "fairness"
    * (and thus prevent starvation) at the expense of slightly higher
@@ -204,9 +204,9 @@ public:
 
   /**
    * Get the maximum number of times that the
-   * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-   * dispatch the <ACE_Event_Handlers> that are passed in via the
-   * notify pipe before breaking out of its <recv> loop.
+   * ACE_Select_Reactor_Notify::handle_input() method will iterate and
+   * dispatch the ACE_Event_Handlers that are passed in via the
+   * notify pipe before breaking out of its recv loop.
    */
   virtual int max_notify_iterations (void);
 
@@ -231,7 +231,7 @@ protected:
   /**
    * Keep a back pointer to the ACE_Select_Reactor.  If this value
    * if NULL then the ACE_Select_Reactor has been initialized with
-   * <disable_notify_pipe>.
+   * disable_notify_pipe.
    */
   ACE_Select_Reactor_Impl *select_reactor_;
 
@@ -244,9 +244,9 @@ protected:
 
   /**
    * Keeps track of the maximum number of times that the
-   * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-   * dispatch the <ACE_Event_Handlers> that are passed in via the
-   * notify pipe before breaking out of its <recv> loop.  By default,
+   * ACE_Select_Reactor_Notify::handle_input() method will iterate and
+   * dispatch the ACE_Event_Handlers that are passed in via the
+   * notify pipe before breaking out of its recv loop.  By default,
    * this is set to -1, which means "iterate until the pipe is empty."
    */
   int max_notify_iterations_;
@@ -417,7 +417,7 @@ public:
     ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
 
   // = Initialization method.
-  ACE_Select_Reactor_Handler_Repository_Iterator (
+  explicit ACE_Select_Reactor_Handler_Repository_Iterator (
     ACE_Select_Reactor_Handler_Repository const * s);
 
   // = Iteration methods.
