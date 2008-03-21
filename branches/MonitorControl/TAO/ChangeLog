@@ -1,3 +1,11 @@
+Fri Mar 21 17:57:22 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Monitor/Monitor_Impl.cpp:
+        
+          Fixed compile errors resulting from assignment of an
+          ACE_Time_Value struct directly to TimeBase::TimeT, which
+          is a CORBA::ULongLong.
+
 Fri Mar 21 17:33:04 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Monitor.mpc:

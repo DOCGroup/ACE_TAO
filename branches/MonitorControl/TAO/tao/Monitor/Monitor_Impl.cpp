@@ -54,7 +54,9 @@ Monitor_Impl::get_statistic (const char * the_name)
     {
       monitor->retrieve (d);
       data.value = d.value_;
-//      data.timestamp = d.timestamp_;
+      ACE_UINT64 usecs;
+      d.timestamp_.to_usec (usecs);
+      data.timestamp = usecs;
     }
 
   return data;
@@ -84,7 +86,9 @@ Monitor_Impl::get_statistics (const ::Monitor::MC::NameList & names)
       {
         monitor->retrieve (d);
         data.value = d.value_;
-//      data.timestamp = d.timestamp_;
+        ACE_UINT64 usecs;
+        d.timestamp_.to_usec (usecs);
+        data.timestamp = usecs;
       }
      (*datalist)[index] = data;
     }
@@ -103,22 +107,27 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::MC::NameList & names)
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
   MonitorControl_Types::Data d;
+  
   for (CORBA::ULong index = 0; index < names.length (); index++)
     {
       /// Call on the administrator class to look up the desired monitors.
       ACE::MonitorControl::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
-     ::Monitor::MC::Data data;
+      ::Monitor::MC::Data data;
 
-     if (monitor != 0)
-      {
-        monitor->retrieve_and_clear (d);
-        data.value = d.value_;
-//      data.timestamp = d.timestamp_;
-      }
-     (*datalist)[index] = data;
+      if (monitor != 0)
+        {
+          monitor->retrieve_and_clear (d);
+          data.value = d.value_;
+          ACE_UINT64 usecs;
+          d.timestamp_.to_usec (usecs);
+          data.timestamp = usecs;
+        }
+      
+      (*datalist)[index] = data;
     }
+    
   return datalist;
 }
 
@@ -129,18 +138,16 @@ Monitor_Impl::clear_statistics (const ::Monitor::MC::NameList & names)
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-  for (CORBA::ULong index = 0; index < names.length (); index++)
+  for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
       ACE::MonitorControl::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
-//     ::Monitor::MC::Data data;
-
-     if (monitor != 0)
-      {
-        monitor->clear ();
-      }
+      if (monitor != 0)
+        {
+          monitor->clear ();
+        }
     }
 }
 
