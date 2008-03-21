@@ -58,7 +58,7 @@ namespace
       ACE_DEBUG ((LM_DEBUG, "RTT not supported in TAO build.\n"));
 #endif
     }
-    return obj;
+    return CORBA::Object::_duplicate(obj);
   }
 } // end of local unnamed namespace
 
