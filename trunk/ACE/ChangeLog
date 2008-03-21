@@ -1,3 +1,10 @@
+Fri Mar 21 16:12:53 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_unistd.cpp (num_processors_online): Count the online
+          processors for Windows, not just the number present.
+
+        * tests/OS_Test.cpp: Sanity-check the num_processors_online() value.
+
 Fri Mar 21 15:10:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FoxReactor/FoxReactor.cpp:

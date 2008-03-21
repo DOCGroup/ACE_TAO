@@ -935,6 +935,14 @@ cpu_info_test (void)
                   number_processors_online));
     }
 
+  if ((number_processors_online != -1 && number_processors != -1) &&
+      number_processors_online > number_processors)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%d online processors; should be <= %d\n"),
+                       number_processors_online,
+                       number_processors),
+                      -1);
+
   return 0;
 }
 
