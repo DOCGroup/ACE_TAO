@@ -29,7 +29,7 @@ namespace ACE
     }
     
     void
-    Message_Queue_Monitor::receive (double value)
+    Message_Queue_Monitor::receive (double /* value */)
     {
       // No reason to call this overload.
     }
