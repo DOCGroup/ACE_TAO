@@ -213,7 +213,7 @@ namespace
           {
             ACE_DEBUG ((LM_DEBUG, ": Naming context"));
 
-            obj = set_rtt(obj.in ());
+//            obj = set_rtt(obj.in ());
 
             CosNaming::NamingContext_var xc;
             try
@@ -335,7 +335,6 @@ namespace
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
       TimeBase::TimeT roundTripTimeoutVal;
       ORBSVCS_Time::Time_Value_to_TimeT(roundTripTimeoutVal, rtt);
-
 
       CORBA::Any anyObjectVal;
       anyObjectVal <<= roundTripTimeoutVal;
@@ -666,7 +665,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       else
         obj = orb->resolve_initial_references ("NameService");
 
-      obj = set_rtt(obj.in ());
+//      obj = set_rtt(obj.in ());
 
       CosNaming::NamingContext_var root_nc =
         CosNaming::NamingContext::_narrow (obj.in ());
