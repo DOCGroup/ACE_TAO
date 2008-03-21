@@ -7,12 +7,14 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 
+#if !defined (ACE_LACKS_FORK)
 static volatile bool bShutdown = false;
 static void shutdown_func(int)
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Shutdown requested\n")));
   bShutdown = true;
 }
+#endif
 
 int
 ACE_TMAIN(int, ACE_TCHAR ** argv)
