@@ -1,3 +1,9 @@
+Fri Mar 21 18:14:09 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Monitor/Monitor_Impl.cpp:
+        
+          Fixed some 'may be used uninitialized' warnings from gcc.
+
 Fri Mar 21 17:57:22 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Monitor/Monitor_Impl.cpp:
