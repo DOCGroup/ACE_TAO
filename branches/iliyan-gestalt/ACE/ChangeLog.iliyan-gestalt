@@ -1,3 +1,11 @@
+Sat Mar 22 04:27:10 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Object.cpp:
+        * ace/Service_Repository.cpp:
+        * ace/Service_Types.cpp:
+
+        Improved logging and layout changes
+
 Fri Mar 21 21:13:32 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         Trying to be frugal and save space by packing the SR after a call
