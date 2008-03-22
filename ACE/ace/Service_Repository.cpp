@@ -197,7 +197,7 @@ ACE_Service_Repository::close (void)
 #ifndef ACE_NLOGGING
       if(ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SR::close, this=%@, size=%d\n"),
+                    ACE_TEXT ("(%P|%t) SR::close - repo=%@, size=%d\n"),
                     this,
                     this->current_size_));
 #endif
@@ -215,9 +215,11 @@ ACE_Service_Repository::close (void)
 #ifndef ACE_NLOGGING
           if(ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) SR::close, this=%@, delete so[%d]=%@ (%s)\n"),
-                        this, i,
-                        s, s->name ()));
+                        ACE_TEXT ("(%P|%t) SR::close - repo=%@ [%d], name=%s, object=%@\n"),
+                        this,
+                        i,
+                        s->name (),
+                        s));
 #endif
 
           --this->current_size_;
@@ -355,19 +357,22 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   ACE_Service_Type *s = 0;
   size_t i = 0;
 
-  // Establish scope for the service vector manipulation (i.e. locking)
+  // Establish scope for locking while manipulating the service
+  // storage
   {
     // @TODO: Do we need a recursive mutex here?
-    ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+    ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
+                              ace_mon,
+                              this->lock_,
+                              -1));
 
     // Check to see if this is a duplicate.
     for (i = 0; i < this->current_size_; i++)
       {
+        // Replacing an existing entry?
         if (this->service_vector_[i] != 0 // skip any gaps
-            && ACE_OS::strcmp (sr->name (),
-                               this->service_vector_[i]->name ()) == 0)
+            && ACE_OS::strcmp (sr->name (), this->service_vector_[i]->name ()) == 0)
           {
-            // Replacing an existing entry
             return_value = 0;
 
             // Check for self-assignment...
@@ -391,33 +396,27 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
         this->service_vector_[i] = sr;
         this->current_size_++;
         return_value = 0;
-
-#ifndef ACE_NLOGGING
-        if (ACE::debug ())
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d] (%d),")
-                      ACE_TEXT (" name=%s (new), type=%@, object=%@, active=%d\n"),
-                      this, i, this->total_size_, sr->name(), sr->type (),
-                      (sr->type () != 0) ? sr->type ()->object () : 0,
-                      sr->active ()));
-#endif
       }
   }
 
-  // If necessary, delete outside the lock
-  if (s != 0)
-    {
 #ifndef ACE_NLOGGING
-      if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d] (%d),")
-                    ACE_TEXT (" name=%s (replaced), type=%@, object=%@, active=%d\n"),
-                    this, i, this->total_size_, s->name(), s->type (),
-                    (s->type () != 0) ? s->type ()->object () : 0,
-                    s->active ()));
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d] (%d),")
+                ACE_TEXT (" name=%s (%s) (type=%@, object=%@, active=%d)\n"),
+                this,
+                i,
+                this->total_size_,
+                sr->name(),
+                (return_value == 0 ? ((s==0) ? "new" : "replacing") : "failed"),
+                sr->type (),
+                (sr->type () != 0) ? sr->type ()->object () : 0,
+                sr->active ()));
 #endif
-      delete s;
-    }
+
+  // If necessary, delete but outside the lock. (s may be 0, but
+  // that's okay, too)
+  delete s;
 
   if (return_value == -1)
     ACE_OS::last_error (ENOSPC);
@@ -425,7 +424,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   return return_value;
 }
 
-// Re-resume a service that was previously suspended.
+// Resume a service that was previously suspended.
 int
 ACE_Service_Repository::resume (const ACE_TCHAR name[],
                                 const ACE_Service_Type **srp)

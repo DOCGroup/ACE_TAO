@@ -58,11 +58,6 @@ int
 ACE_Service_Type_Impl::fini (void) const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
-  if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) ST::fini - destroying %s, flags = %d\n"),
-                this->name_,
-                this->flags_));
 
   delete [] const_cast <ACE_TCHAR *> (this->name_);
   (const_cast <ACE_Service_Type_Impl *> (this))->name_ = 0;
