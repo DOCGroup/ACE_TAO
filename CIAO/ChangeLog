@@ -1,3 +1,10 @@
+Sun Mar 23 01:55:11 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+
+          Add CIDLC to these workspaces. 
+        
 Wed Feb 27 16:07:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
@@ -14,7 +21,7 @@ Wed Feb 27 16:07:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * CIDLC/cidlc.cpp:
 
           Disable check_for_improper_main_declaration fuzz check on these
-          files. The files have no dependency on ACE, thus they shouldn't 
+          files. The files have no dependency on ACE, thus they shouldn't
           use ACE_TMAIN.
 
 Thu Feb 21 02:34:37 CST 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
