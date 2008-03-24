@@ -144,11 +144,9 @@ int loadOrb(ACE_Service_Config & r_serviceConfig)
 
 
 int
-ACE_TMAIN(int, ACE_TCHAR ** argv)
+ACE_TMAIN(int, ACE_TCHAR **argv)
 {
   int result = 0;
-
-  ACE_Service_Config serviceConfig;
 
   char signum[64];
   ACE_OS::sprintf(signum, "%d", SIGUSR1);
@@ -158,80 +156,65 @@ ACE_TMAIN(int, ACE_TCHAR ** argv)
   args.add("-s");
   args.add(signum);
 
-  result = serviceConfig.open (
-    args.argc(),
-    args.argv(),
-    ACE_DEFAULT_LOGGER_KEY,
-    1, // ignore_static_svcs = 1,
-    1, // ignore_default_svc_conf_file = 0,
-    0  // ignore_debug_flag = 0
-  );
+  ACE_Service_Config &serviceConfig = *ACE_Service_Config::singleton ();
+
+  result = serviceConfig.open (args.argc(),
+                               args.argv(),
+                               ACE_DEFAULT_LOGGER_KEY,
+                               true, // ignore_static_svcs = 1,
+                               true, // ignore_default_svc_conf_file = 0,
+                               false  // ignore_debug_flag = 0
+                               );
 
   if(0 != result)
-  {
-    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("serviceConfig.open failed\n")));
-    return result;
-  }
+    {
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("serviceConfig.open failed\n")));
+      return result;
+    }
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.open done\n")));
 
+
+
   for(int i = 0; i < 5; ++i)
-  {
+    {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("loadOrb ...\n")));
     result = loadOrb(serviceConfig);
     if(0 != result)
-    {
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("loadOrb failed\n")));
-      return result;
-    }
+      {
+        ACE_DEBUG ((LM_ERROR, ACE_TEXT ("loadOrb failed\n")));
+        return result;
+      }
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("loadOrb done\n")));
 
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("loadNotify ...\n")));
     result = loadNotify(serviceConfig);
     if(0 != result)
-    {
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("loadNotify failed\n")));
+      {
+        ACE_DEBUG ((LM_ERROR, ACE_TEXT ("loadNotify failed\n")));
       return result;
-    }
+      }
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("loadNotify done\n")));
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("unloadNotify ...\n")));
     result = unloadNotify(serviceConfig);
     if(0 != result)
-    {
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("unloadNotify failed\n")));
-      return result;
-    }
+      {
+        ACE_DEBUG ((LM_ERROR, ACE_TEXT ("unloadNotify failed\n")));
+        return result;
+      }
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("unloadNotify done\n")));
 
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("unloadOrb ...\n")));
     result = unloadOrb(serviceConfig);
     if(0 != result)
-    {
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("unloadOrb failed\n")));
-      return result;
-    }
+      {
+        ACE_DEBUG ((LM_ERROR, ACE_TEXT ("unloadOrb failed\n")));
+        return result;
+      }
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("unloadOrb done\n")));
-  }
-
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.fini_svcs ...\n")));
-  result = serviceConfig.fini_svcs();
-  if(0 != result)
-  {
-    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("serviceConfig.fini_svcs failed\n")));
-    return result;
-  }
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.fini_svcs done\n")));
-
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.close ...\n")));
-  result = serviceConfig.close();
-  if(0 != result)
-  {
-    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("serviceConfig.close failed\n")));
-    return result;
-  }
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("serviceConfig.close done\n")));
+    }
 
   return 0;
 }
