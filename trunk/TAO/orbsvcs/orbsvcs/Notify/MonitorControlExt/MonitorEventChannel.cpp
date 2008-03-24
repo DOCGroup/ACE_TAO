@@ -231,7 +231,7 @@ TAO_MonitorEventChannel::TAO_MonitorEventChannel (const char* name)
 
 TAO_MonitorEventChannel::~TAO_MonitorEventChannel (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->names_mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->names_mutex_);
   TAO_Statistic_Registry* instance =
     TAO_Statistic_Registry::instance ();
   size_t size = this->stat_names_.size ();
@@ -270,7 +270,7 @@ TAO_MonitorEventChannel::register_statistic(
   bool added = instance->add (stat);
   if (added)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->names_mutex_, added);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->names_mutex_, added);
       this->stat_names_.push_back (name);
     }
   return added;
@@ -290,7 +290,7 @@ TAO_MonitorEventChannel::unregister_statistic(
   bool removed = instance->remove (name);
   if (removed)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->names_mutex_, removed);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->names_mutex_, removed);
       this->remove_list_name(this->stat_names_, name);
     }
   return removed;
@@ -305,7 +305,7 @@ TAO_MonitorEventChannel::map_supplier_proxy (
     throw NotifyMonitoringExt::NameMapError ();
 
   ACE_CString full = this->name_ + "/" + name;
-  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->supplier_mutex_);
+  ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->supplier_mutex_);
   if (this->is_duplicate_name (this->supplier_map_, full))
     throw NotifyMonitoringExt::NameAlreadyUsed ();
 
@@ -324,7 +324,7 @@ TAO_MonitorEventChannel::map_supplier_proxy (
     TAO_Control_Registry::instance ();
   if (cinstance->add (rcsc))
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->names_mutex_);
+      ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->names_mutex_);
       this->control_names_.push_back (full);
     }
   else
@@ -344,7 +344,7 @@ TAO_MonitorEventChannel::map_consumer_proxy (
     throw NotifyMonitoringExt::NameMapError ();
 
   ACE_CString full = this->name_ + "/" + name;
-  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->consumer_mutex_);
+  ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->consumer_mutex_);
   if (this->is_duplicate_name (this->consumer_map_, full))
     throw NotifyMonitoringExt::NameAlreadyUsed ();
 
@@ -363,7 +363,7 @@ TAO_MonitorEventChannel::map_consumer_proxy (
     TAO_Control_Registry::instance ();
   if (cinstance->add (rcsc))
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->names_mutex_);
+      ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->names_mutex_);
       this->control_names_.push_back (full);
     }
   else
@@ -381,7 +381,7 @@ TAO_MonitorEventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
   ACE_CString name;
   if (is_supplier)
     {
-      ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->supplier_mutex_);
+      ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->supplier_mutex_);
       // It may seem like a good idea to throw a
       // NotifyMonitoringExt::NameMapError() exception if we can't unbind the
       // id from the map, but we can't.  This method is called indirectly
@@ -393,7 +393,7 @@ TAO_MonitorEventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
     }
   else
     {
-      ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->consumer_mutex_);
+      ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->consumer_mutex_);
       // The same goes for this one too.
       this->consumer_map_.unbind (id, name);
     }
@@ -404,7 +404,7 @@ TAO_MonitorEventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
         TAO_Control_Registry::instance ();
       cinstance->remove(name);
 
-      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->names_mutex_);
+      ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->names_mutex_);
       this->remove_list_name (this->control_names_, name);
     }
 }
@@ -413,7 +413,7 @@ void
 TAO_MonitorEventChannel::remove_consumeradmin (
                                    CosNotifyChannelAdmin::ProxyID id)
 {
-  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->consumeradmin_mutex_);
+  ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->consumeradmin_mutex_);
   this->consumeradmin_map_.unbind (id);
 }
 
@@ -421,7 +421,7 @@ void
 TAO_MonitorEventChannel::remove_supplieradmin (
                                    CosNotifyChannelAdmin::ProxyID id)
 {
-  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->supplieradmin_mutex_);
+  ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->supplieradmin_mutex_);
   this->supplieradmin_map_.unbind (id);
 }
 
@@ -649,7 +649,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         CORBA::NO_MEMORY ());
       if (cinstance->add (sd))
         {
-          ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->names_mutex_);
+          ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->names_mutex_);
           this->control_names_.push_back (this->name_);
         }
       else
@@ -702,7 +702,7 @@ TAO_MonitorEventChannel::named_new_for_consumers (
           full += name;
         }
 
-      ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard,
+      ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard,
                               this->consumeradmin_mutex_,
                               CosNotifyChannelAdmin::ConsumerAdmin::_nil ());
       if (this->is_duplicate_name (this->consumeradmin_map_, full))
@@ -758,7 +758,7 @@ TAO_MonitorEventChannel::named_new_for_suppliers (
           full += name;
         }
 
-      ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard,
+      ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard,
                               this->supplieradmin_mutex_,
                               CosNotifyChannelAdmin::SupplierAdmin::_nil ());
       if (this->is_duplicate_name (this->supplieradmin_map_, full))
@@ -791,7 +791,7 @@ TAO_MonitorEventChannel::get_consumers (TAO_Statistic::List* names)
           CORBA::ULong plen = proxys->length ();
           if (plen > 0)
             {
-              ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard,
+              ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard,
                                      this->supplier_mutex_, 0);
 
               for(CORBA::ULong i = 0; i < plen; i++)
@@ -835,7 +835,7 @@ TAO_MonitorEventChannel::get_suppliers (TAO_Statistic::List* names)
           CORBA::ULong plen = proxys->length ();
           if (plen > 0)
             {
-              ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard,
+              ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard,
                                      this->consumer_mutex_, 0);
 
               for(CORBA::ULong i = 0; i < plen; i++)
@@ -864,7 +864,7 @@ TAO_MonitorEventChannel::get_suppliers (TAO_Statistic::List* names)
 size_t
 TAO_MonitorEventChannel::get_consumeradmins (TAO_Statistic::List* names)
 {
-  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard,
+  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard,
                          this->consumeradmin_mutex_, 0);
 
   CosNotifyChannelAdmin::AdminIDSeq_var admin_ids =
@@ -875,7 +875,7 @@ TAO_MonitorEventChannel::get_consumeradmins (TAO_Statistic::List* names)
 size_t
 TAO_MonitorEventChannel::get_supplieradmins (TAO_Statistic::List* names)
 {
-  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard,
+  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard,
                          this->supplieradmin_mutex_, 0);
 
   CosNotifyChannelAdmin::AdminIDSeq_var admin_ids =
@@ -1001,7 +1001,7 @@ TAO_MonitorEventChannel::determine_slowest_consumer (
           CORBA::ULong plen = proxys->length ();
           if (plen > 0)
             {
-              ACE_READ_GUARD (ACE_SYNCH_RW_MUTEX,
+              ACE_READ_GUARD (TAO_SYNCH_RW_MUTEX,
                               guard, this->supplier_mutex_);
               for(CORBA::ULong i = 0; i < plen; i++)
                 {
