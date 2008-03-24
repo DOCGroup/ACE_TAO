@@ -64,7 +64,7 @@ private:
                                TAO_NS_Generic*,
                                ACE_SYNCH_NULL_MUTEX> Map;
 
-  mutable ACE_SYNCH_RW_MUTEX mutex_;
+  mutable TAO_SYNCH_RW_MUTEX mutex_;
   Map map_;
   NameList name_cache_;
 };
