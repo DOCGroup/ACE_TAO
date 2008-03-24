@@ -1,3 +1,17 @@
+Mon Mar 24 16:21:30 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_Thread.cpp (event_timedwait): Fixed this code so that
+          it will treat 0 using "wait indefinitely" semantics for Windows
+          and all other OS platforms.  Thanks to Paul Carter <pcarter at
+          scires dot com> for contributing this.
+
+Mon Mar 24 16:13:51 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Manual_Event_Test.cpp (worker): Added a test to ensure
+          that a null pointer works properly for the
+          ACE_Manual_Event::wait() method.  Thanks to Paul Carter <pcarter
+          at scires dot com> for contributing this.
+
 Mon Mar 24 15:43:28 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/MakeProjectCreator/config/MPC.cfg:
