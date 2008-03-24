@@ -77,14 +77,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   while ((c = get_opt ()) != -1)
     switch (c)
-    {
-    case 'w':
-      n_workers = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      {
+      case 'w':
+        n_workers = ACE_OS::atoi (get_opt.opt_arg ());
+        break;
+      default:
+        print_usage_and_die ();
+        break;
+      }
 }
 
 // Worker tries to acquire the semaphore, hold it for a while, and
@@ -93,14 +93,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static void *
 worker (void *)
 {
-  if (evt.wait() == -1)
+  if (evt.wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("Failed waiting for pulse()")),
+                       ACE_TEXT (" (%P|%t) %p\n"),
+                       ACE_TEXT ("Failed waiting for pulse ()")),
                       0);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) awake\n")));
+              ACE_TEXT (" (%P|%t) awake\n")));
 
   if (++n_awoken < n_workers)
     {
@@ -113,43 +113,53 @@ worker (void *)
       if (evt.wait (&tv) == -1)
         {
           // verify that we have ETIME
-          if (ACE_OS::last_error() == ETIME)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) timeout\n")));
+          if (ACE_OS::last_error () == ETIME)
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) timeout\n")));
           else
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) wait failed %p\n"),
+                        ACE_TEXT (" (%P|%t) wait failed %p\n"),
                         ACE_TEXT ("but not with ETIME")));
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) awake in time\n")));
+                      ACE_TEXT (" (%P|%t) awake in time\n")));
 
           if (++n_awoken2 >= (n_workers/2))
-            evt.reset();    // reset signal (rest times out)
+            evt.reset ();    // reset signal (rest times out)
+        }
+
+      // Check to ensure that an "infinite timeout" will work.
+      if (evt.wait (0) == -1)
+        {
+          //FUZZ: disable check_for_lack_ACE_OS
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (" (%P|%t) %p\n"),
+                      ACE_TEXT ("Failed waiting for signal ()\n")));
+          //FUZZ: enable check_for_lack_ACE_OS
         }
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) last awake; send signal\n")));
+                  ACE_TEXT (" (%P|%t) last awake; send signal\n")));
       // last one wakes others
-      if (evt.signal() == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("signal")));
+      if (evt.signal () == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT (" (%P|%t) %p\n"), ACE_TEXT ("signal")));
 
       ACE_OS::sleep (ACE_Time_Value (0, 200 * 1000 * 100));  // 200 msec
     }
 
-  if (evt.wait() == -1)
+  if (evt.wait () == -1)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Failed waiting for signal()\n")));
+                  ACE_TEXT (" (%P|%t) %p\n"),
+                  ACE_TEXT ("Failed waiting for signal ()\n")));
       //FUZZ: enable check_for_lack_ACE_OS
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) worker finished\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) worker finished\n")));
 
   return 0;
 }
@@ -179,7 +189,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   ACE_OS::sleep (5);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("sending pulse()\n")));
+              ACE_TEXT ("sending pulse ()\n")));
 
   // Release the all workers.
   if (evt.pulse () == -1)
@@ -193,7 +203,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("sending signal()\n")));
+              ACE_TEXT ("sending signal ()\n")));
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Signal
@@ -204,9 +214,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
                       1);
 
   ACE_Thread_Manager::instance ()->wait ();
-
 #else
-
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_INFO,
