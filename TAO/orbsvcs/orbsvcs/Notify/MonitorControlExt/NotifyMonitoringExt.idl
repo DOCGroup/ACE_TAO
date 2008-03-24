@@ -44,6 +44,18 @@ module NotifyMonitoringExt
   /// This corresponds to the EventChannel supplier names
   const string EventChannelSupplierNames = "SupplierNames";
 
+  /// This corresponds to the EventChannel consumer admin count
+  const string EventChannelConsumerAdminCount = "ConsumerAdminCount";
+
+  /// This corresponds to the EventChannel supplier admin count
+  const string EventChannelSupplierAdminCount = "SupplierAdminCount";
+
+  /// This corresponds to the EventChannel consumer admin names
+  const string EventChannelConsumerAdminNames = "ConsumerAdminNames";
+
+  /// This corresponds to the EventChannel supplier admin names
+  const string EventChannelSupplierAdminNames = "SupplierAdminNames";
+
   /// This corresponds to the EventChannel queue size
   const string EventChannelQueueSize = "QueueSize";
 
@@ -83,6 +95,25 @@ module NotifyMonitoringExt
                            in string name)
       raises (CosNotifyChannelAdmin::AdminLimitExceeded,
               NameAlreadyUsed,
+              NameMapError);
+  };
+
+  interface EventChannel: CosNotifyChannelAdmin::EventChannel
+  {
+    CosNotifyChannelAdmin::ConsumerAdmin
+      named_new_for_consumers(
+                    in CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                    out CosNotifyChannelAdmin::AdminID id,
+                    in string name)
+      raises (NameAlreadyUsed,
+              NameMapError);
+
+    CosNotifyChannelAdmin::SupplierAdmin
+      named_new_for_suppliers(
+                    in CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                    out CosNotifyChannelAdmin::AdminID id,
+                    in string name)
+      raises (NameAlreadyUsed,
               NameMapError);
   };
 

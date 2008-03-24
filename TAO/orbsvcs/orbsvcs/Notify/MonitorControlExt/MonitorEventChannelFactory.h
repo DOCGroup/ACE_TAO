@@ -43,6 +43,8 @@ public:
                    const CosNotification::AdminProperties& initial_admin,
                    CosNotifyChannelAdmin::ChannelID_out id);
 
+  /// Hook into the remove() call from the base class and remove it from
+  /// our map before passing control back to the base.
   virtual void remove (TAO_Notify_EventChannel* channel);
 
   // This is public to allow the Unbinder class access

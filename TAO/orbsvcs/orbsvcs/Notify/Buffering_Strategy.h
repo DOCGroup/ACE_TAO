@@ -72,6 +72,17 @@ public:
   /// Provide the time value of the oldest event in the queue.
   ACE_Time_Value oldest_event (void);
 
+  /// This interface allows tracking of the queue size
+  class TAO_Notify_Serv_Export Tracker
+  {
+  public:
+    virtual ~Tracker (void);
+    virtual void update_queue_count (size_t count) = 0;
+  };
+
+  /// Set the tracker object.  This strategy does not own the tracker.
+  void set_tracker (Tracker* tracker);
+
 private:
 
   /// Apply the Order Policy and queue. return -1 on error.
@@ -115,6 +126,9 @@ private:
 
   /// Flag to shutdown.
   bool shutdown_;
+
+  /// Optional queue tracker
+  Tracker* tracker_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

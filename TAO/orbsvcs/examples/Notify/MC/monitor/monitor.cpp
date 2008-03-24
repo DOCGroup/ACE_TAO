@@ -4,7 +4,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_ctype.h"
 
-const ACE_TCHAR* monitor_ior = 0;
+static const ACE_TCHAR* monitor_ior = 0;
+static const char* shutdown_cmd = "shutdown";
+static const char* rm_consumer = "remove_consumer";
+static const char* rm_supplier = "remove_supplier";
+static const char* rm_consumeradmin = "remove_consumeradmin";
+static const char* rm_supplieradmin = "remove_supplieradmin";
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -38,10 +43,51 @@ sorter (const void* a, const void* b)
   return ACE_OS::strcmp (left, right);
 }
 
+bool
+process_command(CosNotification::NotificationServiceMonitorControl_ptr nsm,
+                char* buf, const char* command)
+{
+  if (ACE_OS::strstr(buf, command) == buf)
+    {
+      const char* name = buf + ACE_OS::strlen (command);
+      bool space = false;
+      size_t i = 0;
+      while (ACE_OS::ace_isspace (name[i]))
+        {
+          space = true;
+          i++;
+        }
+      if (space)
+        {
+          try
+            {
+              const char* start = name + i;
+              if (ACE_OS::strcmp (command, shutdown_cmd) == 0)
+                nsm->shutdown_event_channel (start);
+              else if (ACE_OS::strcmp (command, rm_consumer) == 0)
+                nsm->remove_consumer (start);
+              else if (ACE_OS::strcmp (command, rm_supplier) == 0)
+                nsm->remove_supplier (start);
+              else if (ACE_OS::strcmp (command, rm_consumeradmin) == 0)
+                nsm->remove_consumeradmin (start);
+              else if (ACE_OS::strcmp (command, rm_supplieradmin) == 0)
+                nsm->remove_supplieradmin (start);
+            }
+          catch (const CORBA::Exception& ex)
+            {
+              ACE_OS::strcat (buf, ": ");
+              ex._tao_print_exception (buf);
+            }
+          return true;
+        }
+    }
+
+  return false;
+}
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  static const char* shutdown = "shutdown";
   int status = 0;
   try
     {
@@ -109,14 +155,22 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
             }
           else if (ACE_OS::strcmp (rl, "help") == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "names    - Get a list of currently "
-                                    "available statistic names.\n"
-                                    "quit     - Exit the monitor.\n"
-                                    "shutdown - Shut down an event "
-                                    "channel with the given name.\n"
-                                    "<statistic name> - Return the "
-                                    "information for the specified "
-                                    "statistic.\n"));
+              ACE_DEBUG ((LM_DEBUG,
+                          "names                - Get a list of "
+                          "currently available statistic names.\n"
+                          "quit                 - Exit the monitor.\n"
+                          "remove_consumer      - Remove a consumer "
+                          "with the given name.\n"
+                          "remove_supplier      - Remove a supplier "
+                          "with the given name.\n"
+                          "remove_consumeradmin - Remove a consumer "
+                          "admin with the given name.\n"
+                          "remove_supplieradmin - Remove a supplier "
+                          "admin with the given name.\n"
+                          "shutdown             - Shut down an "
+                          "event channel with the given name.\n"
+                          "<statistic name>     - Return the "
+                          "information for the specified statistic.\n"));
             }
           else if (ACE_OS::strcmp (rl, "names") == 0)
             {
@@ -150,30 +204,17 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
             }
           else
             {
-              if (ACE_OS::strstr(rl, shutdown) == rl)
-                {
-                  const char* name = rl + ACE_OS::strlen (shutdown);
-                  bool space = false;
-                  size_t i = 0;
-                  while (ACE_OS::ace_isspace (name[i]))
-                    {
-                      space = true;
-                      i++;
-                    }
-                  if (space)
-                    {
-                      try
-                        {
-                          nsm->shutdown_event_channel (name + i);
-                        }
-                      catch (const CORBA::Exception& ex)
-                        {
-                          ACE_OS::strcat (rl, ": ");
-                          ex._tao_print_exception (rl);
-                        }
-                      continue;
-                    }
-                }
+              if (process_command (nsm, rl, shutdown_cmd))
+                continue;
+              else if (process_command (nsm, rl, rm_consumer))
+                continue;
+              else if (process_command (nsm, rl, rm_supplier))
+                continue;
+              else if (process_command (nsm, rl, rm_consumeradmin))
+                continue;
+              else if (process_command (nsm, rl, rm_supplieradmin))
+                continue;
+
               try
                 {
                   CosNotification::NotificationServiceMonitorControl::Data_var data =
@@ -183,7 +224,8 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                     {
                       CosNotification::NotificationServiceMonitorControl::Numeric_var
                         num = data->num ();
-                      ACE_DEBUG ((LM_DEBUG, "%g\n", num->last));
+                      ACE_DEBUG ((LM_DEBUG, "Last: %g Average: %g\n",
+                                  num->last, num->average));
                     }
                   else
                     {

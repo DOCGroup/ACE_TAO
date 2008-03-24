@@ -43,10 +43,25 @@ public:
   /// Shut down an event channel by name
   virtual void shutdown_event_channel (const char* name);
 
+  /// Remove a consumer by name
+  virtual void remove_consumer (const char* name);
+
+  /// Remove a supplier by name
+  virtual void remove_supplier (const char* name);
+
+  /// Remove a consumer admin by name
+  virtual void remove_consumeradmin (const char* name);
+
+  /// Remove a supplier admin by name
+  virtual void remove_supplieradmin (const char* name);
+
   /// Call shutdown() on the ORB if one was provided during construction
   virtual void shutdown (void);
 
 private:
+  void send_control_command (const char* name,
+                             const char* cmd);
+
   void get_data (TAO_Statistic_Registry* registry,
                  const char* name,
                  CosNotification::NotificationServiceMonitorControl::Data& data);
