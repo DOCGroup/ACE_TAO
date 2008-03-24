@@ -1,3 +1,9 @@
+Mon Mar 24 21:17:12 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * utils/nslist/Makefile.am:
+
+          Regenerated.
+
 Mon Mar 24 17:28:37 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.h:
