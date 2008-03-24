@@ -1,3 +1,9 @@
+Mon Mar 24 02:25:58 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * COPYING: Updated the license a bit based on feedback from Tom
+          Callaway" <tcallawa at redhat dot com>.  These changes will
+          enable ACE+TAO to be shipped with Fedora.
+
 Fri Mar 21 16:12:53 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_unistd.cpp (num_processors_online): Count the online

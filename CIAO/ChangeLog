@@ -1,3 +1,9 @@
+Mon Mar 24 02:25:23 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * COPYING: Updated the license a bit based on feedback from Tom
+          Callaway" <tcallawa at redhat dot com>.  These changes will
+          enable ACE+TAO to be shipped with Fedora.
+
 Sun Mar 23 01:55:11 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO.mwc:
