@@ -1,11 +1,13 @@
 // $Id$
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
-#include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
+#include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
+#include "orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h"
 #include "orbsvcs/Notify/MonitorControl/Statistic_Registry.h"
 #include "orbsvcs/Notify/MonitorControl/Dynamic_Statistic.h"
 #include "orbsvcs/Notify/MonitorControl/Control_Registry.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"
-#include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/ProxyConsumer.h"
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -14,49 +16,77 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Dynamic Statistic Classes
 // ******************************************************************
 
-class EventChannelConsumers:
+class EventChannelConsumersSuppliers:
   public TAO_Dynamic_Statistic<TAO_MonitorEventChannel>
 {
 public:
-  EventChannelConsumers (TAO_MonitorEventChannel* ec,
-                         const ACE_CString& name,
-                         TAO_Statistic::Information_Type type)
+  EventChannelConsumersSuppliers (TAO_MonitorEventChannel* ec,
+                                  const ACE_CString& name,
+                                  TAO_Statistic::Information_Type type,
+                                  bool is_supplier = false)
   : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                     name.c_str (),
-                                                    type) {
+                                                    type),
+    is_supplier_ (is_supplier) {
   }
   virtual void calculate (void) {
     if (this->type () == TAO_Statistic::TS_LIST)
       {
         TAO_Statistic::List list;
-        this->interf_->get_consumers (&list);
+        if (this->is_supplier_)  
+          this->interf_->get_suppliers (&list);
+        else
+          this->interf_->get_consumers (&list);
         this->receive (list);
       }
     else
-      this->receive (static_cast<double> (this->interf_->get_consumers (0)));
+      { 
+        if (this->is_supplier_)
+          this->receive (static_cast<double> (this->interf_->get_suppliers (0)));
+        else
+          this->receive (static_cast<double> (this->interf_->get_consumers (0)));
+      }
   }
+   
+private:
+  bool is_supplier_;
 };
-class EventChannelSuppliers:
+class EventChannelConsumerSupplierAdmins:
   public TAO_Dynamic_Statistic<TAO_MonitorEventChannel>
 {
 public:
-  EventChannelSuppliers (TAO_MonitorEventChannel* ec,
-                         const ACE_CString& name,
-                         TAO_Statistic::Information_Type type)
+  EventChannelConsumerSupplierAdmins (TAO_MonitorEventChannel* ec,
+                                      const ACE_CString& name,
+                                      TAO_Statistic::Information_Type type,
+                                      bool is_supplier = false)
   : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                     name.c_str (),
-                                                    type) {
+                                                    type),
+    is_supplier_ (is_supplier) {
   }
   virtual void calculate (void) {
     if (this->type () == TAO_Statistic::TS_LIST)
       {
         TAO_Statistic::List list;
-        this->interf_->get_suppliers (&list);
+        if (this->is_supplier_)  
+          this->interf_->get_supplieradmins (&list);
+        else
+          this->interf_->get_consumeradmins (&list);
         this->receive (list);
       }
     else
-      this->receive (static_cast<double> (this->interf_->get_suppliers (0)));
+      { 
+        if (this->is_supplier_)
+          this->receive (
+            static_cast<double> (this->interf_->get_supplieradmins (0)));
+        else
+          this->receive (
+            static_cast<double> (this->interf_->get_consumeradmins (0)));
+      }
   }
+
+private:
+  bool is_supplier_;
 };
 class QueuedEvents:
   public TAO_Dynamic_Statistic<TAO_MonitorEventChannel>
@@ -123,15 +153,70 @@ public:
     ec_ (ec) {
   }
 
-  virtual void execute (const char* command) {
+  virtual bool execute (const char* command) {
     if (ACE_OS::strcmp (command, TAO_NS_CONTROL_SHUTDOWN) == 0)
       {
         this->ec_->destroy ();
       }
+    else
+      {
+        return false;
+      }
+
+    return true;
   }
 
 private:
   TAO_MonitorEventChannel* ec_;
+};
+
+class RemoveConsumerSupplierControl: public TAO_NS_Control
+{
+public:
+  RemoveConsumerSupplierControl (TAO_MonitorEventChannel* ec,
+                                 const ACE_CString& name,
+                                 CosNotifyChannelAdmin::ProxyID id,
+                                 bool is_supplier)
+  : TAO_NS_Control (name.c_str ()),
+    ec_ (ec),
+    id_ (id),
+    is_supplier_ (is_supplier) {
+  }
+
+  virtual bool execute (const char* command) {
+    bool status = true;
+    if (this->is_supplier_)
+      {
+        if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_SUPPLIER) == 0)
+          {
+            status = this->ec_->destroy_supplier (this->id_);
+          }
+        else
+          {
+            // Indicate that the command was unknown
+            return false;
+          }
+      }
+    else
+      {
+        if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_CONSUMER) == 0)
+          {
+            status = this->ec_->destroy_consumer (this->id_);
+          }
+        else
+          {
+            // Indicate that the command was unknown
+            return false;
+          }
+      }
+
+    return status;
+  }
+
+private:
+  TAO_MonitorEventChannel* ec_;
+  CosNotifyChannelAdmin::ProxyID id_;
+  bool is_supplier_;
 };
 
 // ******************************************************************
@@ -146,6 +231,7 @@ TAO_MonitorEventChannel::TAO_MonitorEventChannel (const char* name)
 
 TAO_MonitorEventChannel::~TAO_MonitorEventChannel (void)
 {
+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->names_mutex_);
   TAO_Statistic_Registry* instance =
     TAO_Statistic_Registry::instance ();
   size_t size = this->stat_names_.size ();
@@ -169,6 +255,47 @@ TAO_MonitorEventChannel::name (void) const
   return this->name_;
 }
 
+bool
+TAO_MonitorEventChannel::register_statistic(
+                           const ACE_CString& name,
+                           TAO_Statistic* stat,
+                           TAO_Statistic_Registry* instance)
+{
+  // Allow the caller to provide the registry
+  if (instance == 0)
+    instance = TAO_Statistic_Registry::instance ();
+
+  // Add the statistic to the registry and if it's successful
+  // add the name to the statistic names list.
+  bool added = instance->add (stat);
+  if (added)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->names_mutex_, added);
+      this->stat_names_.push_back (name);
+    }
+  return added;
+}
+
+bool
+TAO_MonitorEventChannel::unregister_statistic(
+                           const ACE_CString& name,
+                           TAO_Statistic_Registry* instance)
+{
+  // Allow the caller to provide the registry
+  if (instance == 0)
+    instance = TAO_Statistic_Registry::instance ();
+
+  // Remove the statistic from the registry and if it's successful
+  // remove the name from the statistic names list.
+  bool removed = instance->remove (name);
+  if (removed)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->names_mutex_, removed);
+      this->remove_list_name(this->stat_names_, name);
+    }
+  return removed;
+}
+
 void
 TAO_MonitorEventChannel::map_supplier_proxy (
                                     CosNotifyChannelAdmin::ProxyID id,
@@ -177,13 +304,35 @@ TAO_MonitorEventChannel::map_supplier_proxy (
   if (name.length () == 0)
     throw NotifyMonitoringExt::NameMapError ();
 
+  ACE_CString full = this->name_ + "/" + name;
   ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->supplier_mutex_);
-  if (this->is_duplicate_name (this->supplier_map_, name))
+  if (this->is_duplicate_name (this->supplier_map_, full))
     throw NotifyMonitoringExt::NameAlreadyUsed ();
 
-  int status = this->supplier_map_.bind (id, name);
-  if (status != 0)
+  if (this->supplier_map_.bind (id, full) != 0)
     throw NotifyMonitoringExt::NameMapError ();
+
+  // The view from the outside sees a supplier proxy as a consumer.
+  // So, we'll register a RemoveConsumerSupplierControl for each supplier
+  // proxy indicating a consumer (false)
+  RemoveConsumerSupplierControl* rcsc = 0;
+  ACE_NEW_THROW_EX (rcsc,
+                    RemoveConsumerSupplierControl (this, full, id, false),
+                    CORBA::NO_MEMORY ());
+
+  TAO_Control_Registry* cinstance =
+    TAO_Control_Registry::instance ();
+  if (cinstance->add (rcsc))
+    {
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->names_mutex_);
+      this->control_names_.push_back (full);
+    }
+  else
+    {
+      delete rcsc;
+      ACE_ERROR ((LM_ERROR, "Unable to add control: %s\n",
+                  full.c_str ()));
+    }
 }
 
 void
@@ -194,43 +343,86 @@ TAO_MonitorEventChannel::map_consumer_proxy (
   if (name.length () == 0)
     throw NotifyMonitoringExt::NameMapError ();
 
+  ACE_CString full = this->name_ + "/" + name;
   ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->consumer_mutex_);
-  if (this->is_duplicate_name (this->consumer_map_, name))
+  if (this->is_duplicate_name (this->consumer_map_, full))
     throw NotifyMonitoringExt::NameAlreadyUsed ();
 
-  int status = this->consumer_map_.bind (id, name);
-  if (status != 0)
+  if (this->consumer_map_.bind (id, full) != 0)
     throw NotifyMonitoringExt::NameMapError ();
+
+  // The view from the outside sees a consumer proxy as a supplier.
+  // So, we'll register a RemoveConsumerSupplierControl for each consumer
+  // proxy indicating a supplier (true)
+  RemoveConsumerSupplierControl* rcsc = 0;
+  ACE_NEW_THROW_EX (rcsc,
+                    RemoveConsumerSupplierControl (this, full, id, true),
+                    CORBA::NO_MEMORY ());
+
+  TAO_Control_Registry* cinstance =
+    TAO_Control_Registry::instance ();
+  if (cinstance->add (rcsc))
+    {
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->names_mutex_);
+      this->control_names_.push_back (full);
+    }
+  else
+    {
+      delete rcsc;
+      ACE_ERROR ((LM_ERROR, "Unable to add control: %s\n",
+                  full.c_str ()));
+    }
 }
 
 void
-TAO_MonitorEventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID id
-                                        , bool is_supplier)
+TAO_MonitorEventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
+                                        bool is_supplier)
 {
-  if (is_supplier) {
-    this->unmap_supplier_proxy (id);
-  }
-  else {
-    this->unmap_consumer_proxy (id);
-  }
+  ACE_CString name;
+  if (is_supplier)
+    {
+      ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->supplier_mutex_);
+      // It may seem like a good idea to throw a
+      // NotifyMonitoringExt::NameMapError() exception if we can't unbind the
+      // id from the map, but we can't.  This method is called indirectly
+      // from CORBA calls (e.g., disconnect_structured_push_supplier) and at
+      // best it will cause a CORBA::UNKNOWN exception and at worst will
+      // cause an unexpected exception call which will cause the program to
+      // abort.
+      this->supplier_map_.unbind (id, name);
+    }
+  else
+    {
+      ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->consumer_mutex_);
+      // The same goes for this one too.
+      this->consumer_map_.unbind (id, name);
+    }
+
+  if (name.length () != 0)
+    {
+      TAO_Control_Registry* cinstance =
+        TAO_Control_Registry::instance ();
+      cinstance->remove(name);
+
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->names_mutex_);
+      this->remove_list_name (this->control_names_, name);
+    }
 }
 
 void
-TAO_MonitorEventChannel::unmap_supplier_proxy
-(CosNotifyChannelAdmin::ProxyID id)
+TAO_MonitorEventChannel::remove_consumeradmin (
+                                   CosNotifyChannelAdmin::ProxyID id)
 {
-  if (this->supplier_map_.unbind (id) != 0) {
-    throw NotifyMonitoringExt::NameMapError ();
-  }
+  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->consumeradmin_mutex_);
+  this->consumeradmin_map_.unbind (id);
 }
 
 void
-TAO_MonitorEventChannel::unmap_consumer_proxy
-(CosNotifyChannelAdmin::ProxyID id)
+TAO_MonitorEventChannel::remove_supplieradmin (
+                                   CosNotifyChannelAdmin::ProxyID id)
 {
-  if (this->consumer_map_.unbind (id) != 0) {
-    throw NotifyMonitoringExt::NameMapError ();
-  }
+  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->supplieradmin_mutex_);
+  this->supplieradmin_map_.unbind (id);
 }
 
 void
@@ -254,10 +446,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         CORBA::NO_MEMORY ());
       ACE_Time_Value tv (ACE_OS::gettimeofday());
       timestamp->receive (tv.sec () + (tv.usec () / 1000000.0));
-      bool added = instance->add (timestamp);
-      if (added)
-        this->stat_names_.push_back (stat_name);
-      else
+      if (!this->register_statistic (stat_name, timestamp, instance))
         {
           delete timestamp;
           ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
@@ -266,16 +455,14 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name +
                   NotifyMonitoringExt::EventChannelConsumerCount;
-      EventChannelConsumers* consumers = 0;
+      EventChannelConsumersSuppliers* consumers = 0;
       ACE_NEW_THROW_EX (consumers,
-                        EventChannelConsumers (this,
+                        EventChannelConsumersSuppliers (
+                                               this,
                                                stat_name.c_str (),
                                                TAO_Statistic::TS_NUMBER),
                         CORBA::NO_MEMORY ());
-      added = instance->add (consumers);
-      if (added)
-        this->stat_names_.push_back (stat_name);
-      else
+      if (!this->register_statistic (stat_name, consumers, instance))
         {
           delete consumers;
           ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
@@ -286,14 +473,12 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                   NotifyMonitoringExt::EventChannelConsumerNames;
       consumers = 0;
       ACE_NEW_THROW_EX (consumers,
-                        EventChannelConsumers (this,
+                        EventChannelConsumersSuppliers (
+                                               this,
                                                stat_name.c_str (),
                                                TAO_Statistic::TS_LIST),
                         CORBA::NO_MEMORY ());
-      added = instance->add (consumers);
-      if (added)
-        this->stat_names_.push_back (stat_name);
-      else
+      if (!this->register_statistic (stat_name, consumers, instance))
         {
           delete consumers;
           ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
@@ -302,16 +487,15 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name +
                   NotifyMonitoringExt::EventChannelSupplierCount;
-      EventChannelSuppliers* suppliers = 0;
+      EventChannelConsumersSuppliers* suppliers = 0;
       ACE_NEW_THROW_EX (suppliers,
-                        EventChannelSuppliers (this,
+                        EventChannelConsumersSuppliers (
+                                               this,
                                                stat_name.c_str (),
-                                               TAO_Statistic::TS_NUMBER),
+                                               TAO_Statistic::TS_NUMBER,
+                                               true),
                         CORBA::NO_MEMORY ());
-      added = instance->add (suppliers);
-      if (added)
-        this->stat_names_.push_back (stat_name);
-      else
+      if (!this->register_statistic (stat_name, suppliers, instance))
         {
           delete suppliers;
           ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
@@ -322,16 +506,81 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                   NotifyMonitoringExt::EventChannelSupplierNames;
       suppliers = 0;
       ACE_NEW_THROW_EX (suppliers,
-                        EventChannelSuppliers (this,
+                        EventChannelConsumersSuppliers (
+                                               this,
+                                               stat_name.c_str (),
+                                               TAO_Statistic::TS_LIST,
+                                               true),
+                        CORBA::NO_MEMORY ());
+      if (!this->register_statistic (stat_name, suppliers, instance))
+        {
+          delete suppliers;
+          ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
+                      stat_name.c_str ()));
+        }
+
+      stat_name = dir_name +
+                  NotifyMonitoringExt::EventChannelConsumerAdminCount;
+      EventChannelConsumerSupplierAdmins* conadmins = 0;
+      ACE_NEW_THROW_EX (conadmins,
+                        EventChannelConsumerSupplierAdmins (
+                                               this,
+                                               stat_name.c_str (),
+                                               TAO_Statistic::TS_NUMBER),
+                        CORBA::NO_MEMORY ());
+      if (!this->register_statistic (stat_name, conadmins, instance))
+        {
+          delete conadmins;
+          ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
+                      stat_name.c_str ()));
+        }
+
+      stat_name = dir_name +
+                  NotifyMonitoringExt::EventChannelConsumerAdminNames;
+      conadmins = 0;
+      ACE_NEW_THROW_EX (conadmins,
+                        EventChannelConsumerSupplierAdmins (
+                                               this,
                                                stat_name.c_str (),
                                                TAO_Statistic::TS_LIST),
                         CORBA::NO_MEMORY ());
-      added = instance->add (suppliers);
-      if (added)
-        this->stat_names_.push_back (stat_name);
-      else
+      if (!this->register_statistic (stat_name, conadmins, instance))
         {
-          delete suppliers;
+          delete conadmins;
+          ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
+                      stat_name.c_str ()));
+        }
+
+      stat_name = dir_name +
+                  NotifyMonitoringExt::EventChannelSupplierAdminCount;
+      EventChannelConsumerSupplierAdmins* supadmins = 0;
+      ACE_NEW_THROW_EX (supadmins,
+                        EventChannelConsumerSupplierAdmins (
+                                               this,
+                                               stat_name.c_str (),
+                                               TAO_Statistic::TS_NUMBER,
+                                               true),
+                        CORBA::NO_MEMORY ());
+      if (!this->register_statistic (stat_name, supadmins, instance))
+        {
+          delete supadmins;
+          ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
+                      stat_name.c_str ()));
+        }
+
+      stat_name = dir_name +
+                  NotifyMonitoringExt::EventChannelSupplierAdminNames;
+      supadmins = 0;
+      ACE_NEW_THROW_EX (supadmins,
+                        EventChannelConsumerSupplierAdmins (
+                                               this,
+                                               stat_name.c_str (),
+                                               TAO_Statistic::TS_LIST,
+                                               true),
+                        CORBA::NO_MEMORY ());
+      if (!this->register_statistic (stat_name, supadmins, instance))
+        {
+          delete supadmins;
           ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
                       stat_name.c_str ()));
         }
@@ -342,10 +591,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         QueuedEvents (this, stat_name.c_str (),
                                       TAO_Statistic::TS_NUMBER, false),
                         CORBA::NO_MEMORY ());
-      added = instance->add (events);
-      if (added)
-        this->stat_names_.push_back (stat_name);
-      else
+      if (!this->register_statistic (stat_name, events, instance))
         {
           delete events;
           ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
@@ -359,10 +605,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         QueuedEvents (this, stat_name.c_str (),
                                       TAO_Statistic::TS_NUMBER, true),
                         CORBA::NO_MEMORY ());
-      added = instance->add (events);
-      if (added)
-        this->stat_names_.push_back (stat_name);
-      else
+      if (!this->register_statistic (stat_name, events, instance))
         {
           delete events;
           ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
@@ -375,10 +618,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         OldestEvent (this, stat_name.c_str (),
                                      TAO_Statistic::TS_TIME),
                         CORBA::NO_MEMORY ());
-      added = instance->add (oldest);
-      if (added)
-        this->stat_names_.push_back (stat_name);
-      else
+      if (!this->register_statistic (stat_name, oldest, instance))
         {
           delete oldest;
           ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
@@ -392,10 +632,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         SlowestConsumers (this, stat_name.c_str (),
                                           TAO_Statistic::TS_LIST),
                         CORBA::NO_MEMORY ());
-      added = instance->add (slowest);
-      if (added)
-        this->stat_names_.push_back (stat_name);
-      else
+      if (!this->register_statistic (stat_name, slowest, instance))
         {
           delete oldest;
           ACE_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
@@ -410,9 +647,11 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         ShutdownControl (this,
                                          this->name_),
                         CORBA::NO_MEMORY ());
-      added = cinstance->add (sd);
-      if (added)
-        this->control_names_.push_back (this->name_);
+      if (cinstance->add (sd))
+        {
+          ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->names_mutex_);
+          this->control_names_.push_back (this->name_);
+        }
       else
         {
           delete sd;
@@ -420,6 +659,118 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                       this->name_.c_str ()));
         }
     }
+}
+
+CosNotifyChannelAdmin::ConsumerAdmin_ptr
+TAO_MonitorEventChannel::new_for_consumers (
+                       CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                       CosNotifyChannelAdmin::AdminID_out id)
+{
+  return this->named_new_for_consumers (op, id, 0);
+}
+
+CosNotifyChannelAdmin::ConsumerAdmin_ptr
+TAO_MonitorEventChannel::named_new_for_consumers (
+                       CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                       CosNotifyChannelAdmin::AdminID_out id,
+                       const char* name)
+{
+  if (name != 0 && name[0] == 0)
+    throw NotifyMonitoringExt::NameMapError ();
+
+  CosNotifyChannelAdmin::ConsumerAdmin_var admin =
+    this->TAO_Notify_EventChannel::new_for_consumers (op, id);
+
+  // WARNING: Internal knowledge of TAO
+  TAO_MonitorConsumerAdmin* low_admin =
+    dynamic_cast<TAO_MonitorConsumerAdmin*> (admin->_servant ());
+  if (low_admin == 0)
+    // This shouldn't happen
+    throw CORBA::INTERNAL ();
+  else
+    {
+      // Build up the full name
+      ACE_CString full = this->name_ + "/";
+      if (name == 0)
+        {
+          char idname[64];
+          ACE_OS::sprintf(idname, "%d", id);
+          full += idname;
+        }
+      else
+        {
+          full += name;
+        }
+
+      ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard,
+                              this->consumeradmin_mutex_,
+                              CosNotifyChannelAdmin::ConsumerAdmin::_nil ());
+      if (this->is_duplicate_name (this->consumeradmin_map_, full))
+        throw NotifyMonitoringExt::NameAlreadyUsed ();
+
+      if (this->consumeradmin_map_.bind (id, full) != 0)
+        throw NotifyMonitoringExt::NameMapError ();
+
+      low_admin->register_stats_controls (this, full);
+    }
+
+  return admin._retn ();
+}
+
+CosNotifyChannelAdmin::SupplierAdmin_ptr
+TAO_MonitorEventChannel::new_for_suppliers (
+                       CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                       CosNotifyChannelAdmin::AdminID_out id)
+{
+  return this->named_new_for_suppliers (op, id, 0);
+}
+
+CosNotifyChannelAdmin::SupplierAdmin_ptr
+TAO_MonitorEventChannel::named_new_for_suppliers (
+                       CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                       CosNotifyChannelAdmin::AdminID_out id,
+                       const char* name)
+{
+  if (name != 0 && name[0] == 0)
+    throw NotifyMonitoringExt::NameMapError ();
+
+  CosNotifyChannelAdmin::SupplierAdmin_var admin =
+    this->TAO_Notify_EventChannel::new_for_suppliers (op, id);
+
+  // WARNING: Internal knowledge of TAO
+  TAO_MonitorSupplierAdmin* low_admin =
+    dynamic_cast<TAO_MonitorSupplierAdmin*> (admin->_servant ());
+  if (low_admin == 0)
+    // This shouldn't happen
+    throw CORBA::INTERNAL ();
+  else
+    {
+      // Build up the full name
+      ACE_CString full = this->name_ + "/";
+      if (name == 0)
+        {
+          char idname[64];
+          ACE_OS::sprintf(idname, "%d", id);
+          full += idname;
+        }
+      else
+        {
+          full += name;
+        }
+
+      ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard,
+                              this->supplieradmin_mutex_,
+                              CosNotifyChannelAdmin::SupplierAdmin::_nil ());
+      if (this->is_duplicate_name (this->supplieradmin_map_, full))
+        throw NotifyMonitoringExt::NameAlreadyUsed ();
+
+      if (this->supplieradmin_map_.bind (id, full) != 0)
+        throw NotifyMonitoringExt::NameMapError ();
+
+      low_admin->register_stats_controls (this, full);
+    }
+
+  return admin._retn ();
 }
 
 size_t
@@ -504,6 +855,56 @@ TAO_MonitorEventChannel::get_suppliers (TAO_Statistic::List* names)
                         }
                     }
                 }
+            }
+        }
+    }
+  return count;
+}
+
+size_t
+TAO_MonitorEventChannel::get_consumeradmins (TAO_Statistic::List* names)
+{
+  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard,
+                         this->consumeradmin_mutex_, 0);
+
+  CosNotifyChannelAdmin::AdminIDSeq_var admin_ids =
+    this->get_all_consumeradmins ();
+  return this->get_admins (this->consumeradmin_map_, admin_ids.in (), names);
+}
+
+size_t
+TAO_MonitorEventChannel::get_supplieradmins (TAO_Statistic::List* names)
+{
+  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard,
+                         this->supplieradmin_mutex_, 0);
+
+  CosNotifyChannelAdmin::AdminIDSeq_var admin_ids =
+    this->get_all_supplieradmins ();
+  return this->get_admins (this->supplieradmin_map_, admin_ids.in (), names);
+}
+
+size_t
+TAO_MonitorEventChannel::get_admins (
+                           TAO_MonitorEventChannel::Map& map,
+                           const CosNotifyChannelAdmin::AdminIDSeq& admin_ids,
+                           TAO_Statistic::List* names)
+{
+  size_t count = 0;
+  CORBA::ULong length = admin_ids.length ();
+  for(CORBA::ULong j = 0; j < length; j++)
+    {
+      if (names == 0)
+        {
+          if (map.find (admin_ids[j]) == 0)
+            count++;
+        }
+      else
+        {
+          ACE_CString name;
+          if (map.find (admin_ids[j], name) == 0)
+            {
+              count++;
+              names->push_back (name);
             }
         }
     }
@@ -618,10 +1019,19 @@ TAO_MonitorEventChannel::determine_slowest_consumer (
 double
 TAO_MonitorEventChannel::get_oldest_event (void)
 {
-  ACE_Time_Value tv (ACE_Time_Value::max_time);
   CosNotifyChannelAdmin::AdminIDSeq_var conadmin_ids =
     this->get_all_consumeradmins ();
   CORBA::ULong length = conadmin_ids->length ();
+
+  // If there are no consumers, we will return the special case indicator
+  if (length == 0)
+    {
+      return 0.0;
+    }
+
+  // Loop through each consumer admins thread pool task and have the
+  // buffering strategy give us the time of the oldest event.
+  ACE_Time_Value tv (ACE_Time_Value::max_time);
   for(CORBA::ULong j = 0; j < length; j++)
     {
       TAO_Notify_ThreadPool_Task* task =
@@ -634,6 +1044,12 @@ TAO_MonitorEventChannel::get_oldest_event (void)
             tv = old;
         }
     }
+
+  // If there was no message in any of the queues, our time value will be
+  // ACE_Time_Value::max_time.  For this situation, we must return the
+  // special case indicator.
+  if (tv == ACE_Time_Value::max_time)
+    return 0.0;
 
   return tv.sec () + (tv.usec () / 1000000.0);
 }
@@ -653,6 +1069,113 @@ TAO_MonitorEventChannel::is_duplicate_name (
         }
       itr.advance ();
     }
+  return false;
+}
+
+void
+TAO_MonitorEventChannel::remove_list_name (
+                             TAO_MonitorEventChannel::NameList& list,
+                             const ACE_CString& name)
+{
+  size_t size = list.size ();
+  for(size_t i = 0; i < size; i++)
+    {
+      if (list[i] == name)
+        {
+          if (size == 1)
+            {
+              list.clear ();
+            }
+          else
+            {
+              if (i != size - 1)
+                {
+                  list[i] = list[size - 1];
+                }
+              list.resize (size - 1, "");
+            }
+          break;
+        }
+    }
+}
+
+bool
+TAO_MonitorEventChannel::destroy_consumer (
+                                       CosNotifyChannelAdmin::ProxyID id)
+{
+  // Since we just have a proxy id, we have to search through all of the
+  // consumer admins.  We have no idea to which the proxy will belong.
+  CosNotifyChannelAdmin::AdminIDSeq_var conadmin_ids =
+    this->get_all_consumeradmins ();
+  CORBA::ULong length = conadmin_ids->length ();
+  for(CORBA::ULong j = 0; j < length; j++)
+    {
+      CosNotifyChannelAdmin::ConsumerAdmin_var admin =
+        this->get_consumeradmin (conadmin_ids[j]);
+      if (!CORBA::is_nil (admin.in ()))
+        {
+          try
+            {
+              CosNotifyChannelAdmin::ProxySupplier_var supplier =
+                            admin->get_proxy_supplier(id);
+              if (!CORBA::is_nil(supplier.in()))
+                {
+                  // WARNING: Internal knowledge of TAO and the
+                  // Notification Service implementation.
+                  TAO_Notify_ProxySupplier* low_proxy =
+                    dynamic_cast<TAO_Notify_ProxySupplier*> (
+                      supplier->_servant ());
+
+                  low_proxy->destroy ();
+                  return true;
+                }
+            }
+          catch(const CosNotifyChannelAdmin::ProxyNotFound&)
+            {
+            }
+        }
+    }
+
+  return false;
+}
+
+bool
+TAO_MonitorEventChannel::destroy_supplier (
+                                       CosNotifyChannelAdmin::ProxyID id)
+{
+  // Since we just have a proxy id, we have to search through all of the
+  // supplier admins.  We have no idea to which the proxy will belong.
+  CosNotifyChannelAdmin::AdminIDSeq_var supadmin_ids =
+    this->get_all_supplieradmins ();
+  CORBA::ULong length = supadmin_ids->length ();
+  for(CORBA::ULong j = 0; j < length; j++)
+    {
+      CosNotifyChannelAdmin::SupplierAdmin_var admin =
+        this->get_supplieradmin (supadmin_ids[j]);
+      if (!CORBA::is_nil (admin.in ()))
+        {
+          try
+            {
+              CosNotifyChannelAdmin::ProxyConsumer_var consumer =
+                            admin->get_proxy_consumer(id);
+              if (!CORBA::is_nil(consumer.in()))
+                {
+                  // WARNING: Internal knowledge of TAO and the
+                  // Notification Service implementation.
+                  TAO_Notify_ProxyConsumer* low_proxy =
+                    dynamic_cast<TAO_Notify_ProxyConsumer*> (
+                      consumer->_servant ());
+
+                  low_proxy->destroy();
+                  return true;
+                }
+            }
+          catch(const CosNotifyChannelAdmin::ProxyNotFound&)
+            {
+            }
+        }
+    }
+
   return false;
 }
 

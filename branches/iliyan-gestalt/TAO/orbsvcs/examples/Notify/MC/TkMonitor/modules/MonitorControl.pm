@@ -338,21 +338,26 @@ sub more {
                            NotifyMonitoringExt::EventChannelQueueElementCount);
       return if (!defined $queuecount);
       $queuecount = $queuecount->last();
+
       if ($concount > 0) {
         $self->{'text'}->insert('end',
                                 "Queue: $queuecount messages");
       }
-      if ($queuecount == 0) {
+
+      my($queuesize) = $self->getStatisticData(
+                           $name . '/' .
+                           NotifyMonitoringExt::EventChannelQueueSize);
+      return if (!defined $queuesize);
+      $queuesize = $queuesize->last();
+
+      ## Since we're not obtaining queuecount and queuesize atomically,
+      ## we have to make sure that there's still something in the queue.
+      if ($queuecount == 0 && $queuesize > 0) {
         if ($concount > 0) {
           $self->{'text'}->insert('end', "\n");
         }
       }
       else {
-        my($queuesize) = $self->getStatisticData(
-                             $name . '/' .
-                             NotifyMonitoringExt::EventChannelQueueSize);
-        return if (!defined $queuesize);
-        $queuesize = $queuesize->last();
         $self->{'text'}->insert('end',
                                 ' approximately totaling ' .
                                 "$queuesize bytes\n\n");

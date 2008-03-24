@@ -6,8 +6,6 @@
 # include "Statistic.inl"
 #endif /* ! __ACE_INLINE__ */
 
-static size_t Growth_Size = 32;
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Statistic::TAO_Statistic (const char* name,
@@ -18,6 +16,8 @@ TAO_Statistic::TAO_Statistic (const char* name,
    minimum_set_ (false),
    minimum_ (0),
    maximum_ (0),
+   sum_ (0),
+   sum_of_squares_ (0),
    last_ (0)
 {
 }
@@ -28,7 +28,7 @@ TAO_Statistic::~TAO_Statistic (void)
   if (this->type_ == TS_LIST)
     for(size_t i = 0; i < this->index_; i++)
       {
-        delete [] this->data_[i].string_;
+        delete [] this->data_[i];
       }
 }
 
@@ -40,21 +40,15 @@ TAO_Statistic::calculate (void)
 void
 TAO_Statistic::receive (double data)
 {
-  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->mutex_);
   if (this->type_ == TS_LIST)
     throw Invalid_Operation();
 
+  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->mutex_);
   if (this->type_ != TS_COUNTER)
     {
-      size_t max = this->data_.max_size();
-      if (this->index_ >= max)
-        {
-          if (this->data_.max_size(max + Growth_Size) == -1)
-            {
-              throw CORBA::NO_MEMORY();
-            }
-        }
-      this->data_[this->index_++].number_ = data;
+      this->sum_ += data;
+      this->sum_of_squares_ += (data * data);
+      ++this->index_;
     }
 
   if (this->type_ == TS_COUNTER)
@@ -88,14 +82,14 @@ TAO_Statistic::receive (const TAO_Statistic::List& data)
   ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->mutex_);
   for(size_t i = 0; i < this->index_; i++)
     {
-      delete [] this->data_[i].string_;
+      delete [] this->data_[i];
     }
 
   this->index_ = data.size ();
   this->data_.max_size (this->index_);
   for(size_t i = 0; i < this->index_; i++)
     {
-      this->data_[i].string_ = CORBA::string_dup (data[i].c_str ());
+      this->data_[i] = CORBA::string_dup (data[i].c_str ());
     }
 }
 
@@ -108,13 +102,15 @@ TAO_Statistic::clear (void)
   if (this->type_ == TS_LIST)
     for(size_t i = 0; i < this->index_; i++)
       {
-        delete [] this->data_[i].string_;
+        delete [] this->data_[i];
       }
 
   this->index_ = 0;
   this->minimum_set_ = false;
   this->minimum_ = 0;
   this->maximum_ = 0;
+  this->sum_ = 0;
+  this->sum_of_squares_ = 0;
   this->last_ = 0;
 }
 
@@ -125,13 +121,7 @@ TAO_Statistic::average (void) const
     throw Invalid_Operation();
 
   ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
-
-  double accum = 0;
-  for(size_t i = 0; i < this->index_; i++)
-    {
-      accum += this->data_[i].number_;
-    }
-  return (this->index_ == 0 ? 0.0 :accum / this->index_);
+  return (this->index_== 0 ? 0.0 : this->sum_ / this->index_);
 }
 
 double
@@ -141,14 +131,7 @@ TAO_Statistic::sum_of_squares (void) const
     throw Invalid_Operation();
 
   ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
-
-  double accum = 0;
-  for(size_t i = 0; i < this->index_; i++)
-    {
-      double data = this->data_[i].number_;
-      accum += (data * data);
-    }
-  return accum;
+  return this->sum_of_squares_;
 }
 
 TAO_Statistic::List
@@ -161,9 +144,10 @@ TAO_Statistic::get_list (void) const
   ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, list);
   for(size_t i = 0; i < this->index_; i++)
     {
-      list.push_back (this->data_[i].string_);
+      list.push_back (this->data_[i]);
     }
   return list;
 
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
