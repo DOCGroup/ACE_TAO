@@ -2,7 +2,7 @@ Mon Mar 24 15:43:28 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/MakeProjectCreator/config/MPC.cfg:
 
-          MPC now can now be configured to recognize ACE_TMAIN as an executable
+          MPC can now be configured to recognize ACE_TMAIN as an executable
           entry point. We no longer need to explicitly state that a project will
           be an executable in the MPC file, MPC will automatically deduce that
           the project is an executable given the presence of ACE_TMAIN.
