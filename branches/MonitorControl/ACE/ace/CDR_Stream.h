@@ -51,6 +51,10 @@
 #include "ace/SStringfwd.h"
 #include "ace/Message_Block.h"
 
+#if defined (ACE_ENABLE_MONITORS)
+#include "CDR_Buffer_Monitor.h"
+#endif /* ACE_ENABLE_MONITORS */
+
 #if defined (GEN_OSTREAM_OPS)
 #include "ace/streams.h"
 #endif /* GEN_OSTREAM_OPS */
@@ -460,6 +464,11 @@ public:
 
   /// Set the underlying GIOP version..
   void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
+  
+#if defined (ACE_ENABLE_MONITORS)  
+  /// Register our buffer size monitor.
+  void register_monitor (void);
+#endif /* ACE_ENABLE_MONITORS */
 
 private:
 
@@ -552,6 +561,10 @@ private:
 
   /// Break-even point for copying.
   size_t const memcpy_tradeoff_;
+  
+#if defined (ACE_ENABLE_MONITORS)
+  ACE::MonitorControl::CDR_Buffer_Monitor monitor_;
+#endif /* ACE_ENABLE_MONITORS */
 
 protected:
   /// GIOP version information
@@ -958,6 +971,11 @@ public:
 
   /// Set the underlying GIOP version..
   void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
+  
+#if defined (ACE_ENABLE_MONITORS)
+  /// Enter out monitor in the global registry for later lookup.
+  void register_monitor (void);
+#endif /* ACE_ENABLE_MONITORS */
 
 protected:
 
@@ -979,6 +997,10 @@ protected:
   /// If not nil, invoke for translation of character and string data.
   ACE_Char_Codeset_Translator *char_translator_;
   ACE_WChar_Codeset_Translator *wchar_translator_;
+  
+#if defined (ACE_ENABLE_MONITORS)
+  ACE::MonitorControl::CDR_Buffer_Monitor monitor_;
+#endif /* ACE_ENABLE_MONITORS */
 
 private:
 

@@ -1,3 +1,31 @@
+Mon Mar 24 20:12:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Size_Monitor.cpp:
+        * ace/Size_Monitor.h:
+        
+          New files defining a common base class for the message queue
+          monitor and the cdr buffer monitor.
+          
+        * ace/CDR_Buffer_Monitor.h:
+        * ace/CDR_Buffer_Monitor.cpp:
+        
+          New files defining an ACE input and output CDR buffer monitor.
+          
+        * ace/ace.mpc:
+        
+          Added new files above to project.
+          
+        * ace/Message_Queue_Monitor.h:
+        * ace/Message_Queue_Monitor.cpp:
+        
+          Removed code factored out into Size_Monitor class.
+          
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+        
+          Integrated CDR buffer monitor with input and output CDR
+          classes.
+
 Fri Mar 21 15:29:56 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ace_mc.mpb:

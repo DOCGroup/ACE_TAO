@@ -2,6 +2,11 @@
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"
 
+#if defined (ACE_ENABLE_MONITORS)
+#include "ace/MC_Admin_Manager.h"
+#include "ace/Dynamic_Service.h"
+#endif /* ACE_ENABLE_MONITORS */
+
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Stream.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -42,6 +47,9 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (true),
      memcpy_tradeoff_ (memcpy_tradeoff),
+#if defined (ACE_ENABLE_MONITORS)
+     monitor_ ("Output CDR Buffer"),
+#endif /* ACE_ENABLE_MONITORS */
      major_version_ (major_version),
      minor_version_ (minor_version),
      char_translator_ (0),
@@ -50,6 +58,10 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
 {
   ACE_CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
+  
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->total_length ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_OutputCDR::ACE_OutputCDR (char *data,
@@ -79,6 +91,9 @@ ACE_OutputCDR::ACE_OutputCDR (char *data,
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (true),
      memcpy_tradeoff_ (memcpy_tradeoff),
+#if defined (ACE_ENABLE_MONITORS)
+     monitor_ ("Output CDR Buffer"),
+#endif /* ACE_ENABLE_MONITORS */
      major_version_ (major_version),
      minor_version_ (minor_version),
      char_translator_ (0),
@@ -87,6 +102,10 @@ ACE_OutputCDR::ACE_OutputCDR (char *data,
   // We cannot trust the buffer to be properly aligned
   ACE_CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
+  
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->total_length ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_OutputCDR::ACE_OutputCDR (ACE_Data_Block *data_block,
@@ -105,6 +124,9 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Data_Block *data_block,
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (true),
      memcpy_tradeoff_ (memcpy_tradeoff),
+#if defined (ACE_ENABLE_MONITORS)
+     monitor_ ("Output CDR Buffer"),
+#endif /* ACE_ENABLE_MONITORS */
      major_version_ (major_version),
      minor_version_ (minor_version),
      char_translator_ (0),
@@ -113,6 +135,10 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Data_Block *data_block,
   // We cannot trust the buffer to be properly aligned
   ACE_CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
+  
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->total_length ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
@@ -128,6 +154,9 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (true),
      memcpy_tradeoff_ (memcpy_tradeoff),
+#if defined (ACE_ENABLE_MONITORS)
+     monitor_ ("Output CDR Buffer"),
+#endif /* ACE_ENABLE_MONITORS */
      major_version_ (major_version),
      minor_version_ (minor_version),
      char_translator_ (0),
@@ -136,6 +165,10 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
   // We cannot trust the buffer to be properly aligned
   ACE_CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
+  
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->total_length ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 /*static*/ void
@@ -224,6 +257,10 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
     }
   this->current_ = this->current_->cont ();
   this->current_is_writable_ = true;
+  
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->total_length ());
+#endif /* ACE_ENABLE_MONITORS */
 
   return this->adjust (size, align, buf);
 }
@@ -795,7 +832,16 @@ ACE_OutputCDR::find (char* loc)
 
   return mb;
 }
-
+\
+#if defined (ACE_ENABLE_MONITORS)
+void
+ACE_OutputCDR::register_monitor (void)
+{
+  MC_ADMINMANAGER *mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  mgr->admin ().monitor_point (&this->monitor_, 0);
+}
+#endif /* ACE_ENABLE_MONITORS */
 
 // ****************************************************************
 
@@ -811,8 +857,15 @@ ACE_InputCDR::ACE_InputCDR (const char *buf,
     minor_version_ (minor_version),
     char_translator_ (0),
     wchar_translator_ (0)
+#if defined (ACE_ENABLE_MONITORS)
+  , monitor_ ("Input CDR Monitor")
+#endif /* ACE_ENABLE_MONITORS */
 {
   this->start_.wr_ptr (bufsiz);
+  
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (bufsiz);
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_InputCDR::ACE_InputCDR (size_t bufsiz,
@@ -826,7 +879,13 @@ ACE_InputCDR::ACE_InputCDR (size_t bufsiz,
     minor_version_ (minor_version),
     char_translator_ (0),
     wchar_translator_ (0)
+#if defined (ACE_ENABLE_MONITORS)
+  , monitor_ ("Input CDR Monitor")
+#endif /* ACE_ENABLE_MONITORS */
 {
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (bufsiz);
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
@@ -834,13 +893,15 @@ ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
                             ACE_CDR::Octet major_version,
                             ACE_CDR::Octet minor_version,
                             ACE_Lock* lock)
-: start_ (0, ACE_Message_Block::MB_DATA, 0, 0, 0, lock),
+  : start_ (0, ACE_Message_Block::MB_DATA, 0, 0, 0, lock),
     good_bit_ (true),
     major_version_ (major_version),
     minor_version_ (minor_version),
     char_translator_ (0),
     wchar_translator_ (0)
-
+#if defined (ACE_ENABLE_MONITORS)
+  , monitor_ ("Input CDR Monitor")
+#endif /* ACE_ENABLE_MONITORS */
 {
   this->reset (data, byte_order);
 }
@@ -857,8 +918,13 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
     minor_version_ (minor_version),
     char_translator_ (0),
     wchar_translator_ (0)
-
+#if defined (ACE_ENABLE_MONITORS)
+  , monitor_ ("Input CDR Monitor")
+#endif /* ACE_ENABLE_MONITORS */
 {
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (data->size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
@@ -875,7 +941,9 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
     minor_version_ (minor_version),
     char_translator_ (0),
     wchar_translator_ (0)
-
+#if defined (ACE_ENABLE_MONITORS)
+  , monitor_ ("Input CDR Monitor")
+#endif /* ACE_ENABLE_MONITORS */
 {
   // Set the read pointer
   this->start_.rd_ptr (rd_pos);
@@ -887,8 +955,11 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
     {
       this->start_.wr_ptr (wr_pos);
     }
-}
 
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (data->size ());
+#endif /* ACE_ENABLE_MONITORS */
+}
 
 ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
                             size_t size,
@@ -901,7 +972,9 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     minor_version_ (rhs.minor_version_),
     char_translator_ (rhs.char_translator_),
     wchar_translator_ (rhs.wchar_translator_)
-
+#if defined (ACE_ENABLE_MONITORS)
+  , monitor_ ("Input CDR Monitor")
+#endif /* ACE_ENABLE_MONITORS */
 {
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
   // Align the base pointer assuming that the incoming stream is also
@@ -922,7 +995,13 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
       this->start_.wr_ptr (newpos + size);
     }
   else
-    this->good_bit_ = false;
+    {
+      this->good_bit_ = false;
+    }
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
@@ -935,7 +1014,9 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     minor_version_ (rhs.minor_version_),
     char_translator_ (rhs.char_translator_),
     wchar_translator_ (rhs.wchar_translator_)
-
+#if defined (ACE_ENABLE_MONITORS)
+  , monitor_ ("Input CDR Monitor")
+#endif /* ACE_ENABLE_MONITORS */
 {
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
   // Align the base pointer assuming that the incoming stream is also
@@ -962,7 +1043,13 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
       this->do_byte_swap_ = (byte_order != ACE_CDR_BYTE_ORDER);
     }
   else
-    this->good_bit_ = false;
+    {
+      this->good_bit_ = false;
+    }
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
@@ -974,6 +1061,9 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
     minor_version_ (rhs.minor_version_),
     char_translator_ (rhs.char_translator_),
     wchar_translator_ (rhs.wchar_translator_)
+#if defined (ACE_ENABLE_MONITORS)
+  , monitor_ ("Input CDR Monitor")
+#endif /* ACE_ENABLE_MONITORS */
 {
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
   char *buf = ACE_ptr_align_binary (rhs.start_.base (),
@@ -986,6 +1076,10 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
   size_t wr_offset = rhs.start_.wr_ptr () - buf;
   this->start_.rd_ptr (rd_offset);
   this->start_.wr_ptr (wr_offset);
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
@@ -996,13 +1090,19 @@ ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
     minor_version_ (x.rhs_.minor_version_),
     char_translator_ (x.rhs_.char_translator_),
     wchar_translator_ (x.rhs_.wchar_translator_)
+#if defined (ACE_ENABLE_MONITORS)
+  , monitor_ ("Input CDR Monitor")
+#endif /* ACE_ENABLE_MONITORS */
 {
-
   this->start_.rd_ptr (x.rhs_.start_.rd_ptr ());
   this->start_.wr_ptr (x.rhs_.start_.wr_ptr ());
 
   ACE_Data_Block* db = this->start_.data_block ()->clone_nocopy ();
   (void) x.rhs_.start_.replace_data_block (db);
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_InputCDR&
@@ -1019,6 +1119,11 @@ ACE_InputCDR::operator= (const ACE_InputCDR& rhs)
       this->major_version_ = rhs.major_version_;
       this->minor_version_ = rhs.minor_version_;
     }
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
+    
   return *this;
 }
 
@@ -1043,12 +1148,21 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
     minor_version_ (rhs.minor_version_),
     char_translator_ (rhs.char_translator_),
     wchar_translator_ (rhs.wchar_translator_)
+#if defined (ACE_ENABLE_MONITORS)
+  , monitor_ ("Input CDR Monitor")
+#endif /* ACE_ENABLE_MONITORS */
 {
   ACE_CDR::mb_align (&this->start_);
   for (const ACE_Message_Block *i = rhs.begin ();
        i != rhs.end ();
        i = i->cont ())
-    this->start_.copy (i->rd_ptr (), i->length ());
+    {
+      this->start_.copy (i->rd_ptr (), i->length ());
+    }
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_CDR::Boolean
@@ -1616,6 +1730,14 @@ ACE_InputCDR::grow (size_t newsize)
 
   ACE_CDR::mb_align (&this->start_);
   this->start_.wr_ptr (newsize);
+  
+#if defined (ACE_ENABLE_MONITORS)
+  if (newsize > this->start_.total_size ())
+    {
+      this->monitor_.receive (newsize);
+    }
+#endif /* ACE_ENABLE_MONITORS */
+
   return 0;
 }
 
@@ -1625,6 +1747,10 @@ ACE_InputCDR::reset (const ACE_Message_Block* data,
 {
   this->reset_byte_order (byte_order);
   ACE_CDR::consolidate (&this->start_, data);
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 void
@@ -1641,6 +1767,10 @@ ACE_InputCDR::steal_from (ACE_InputCDR &cdr)
   this->major_version_ = cdr.major_version_;
   this->minor_version_ = cdr.minor_version_;
   cdr.reset_contents ();
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 void
@@ -1684,16 +1814,24 @@ ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
 
   // Set the read and write pointers.
   if (cdr.start_.size () >= srd_pos)
-    cdr.start_.rd_ptr (srd_pos);
+    {
+      cdr.start_.rd_ptr (srd_pos);
+    }
 
   if (cdr.start_.size () >= swr_pos)
-    cdr.start_.wr_ptr (swr_pos);
+    {
+      cdr.start_.wr_ptr (swr_pos);
+    }
 
   if (this->start_.size () >= drd_pos)
-    this->start_.rd_ptr (drd_pos);
+    {
+      this->start_.rd_ptr (drd_pos);
+    }
 
   if (this->start_.size () >= dwr_pos)
-    this->start_.wr_ptr (dwr_pos);
+    {
+      this->start_.wr_ptr (dwr_pos);
+    }
 
   ACE_CDR::Octet const dmajor = cdr.major_version_;
   ACE_CDR::Octet const dminor = cdr.minor_version_;
@@ -1704,6 +1842,10 @@ ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
 
   this->major_version_ = dmajor;
   this->minor_version_ = dminor;
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_Data_Block *
@@ -1797,6 +1939,10 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
   // Copy the char/wchar translators
   this->char_translator_ = cdr.char_translator_;
   this->wchar_translator_ = cdr.wchar_translator_;
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 
   return db;
 }
@@ -1812,6 +1958,10 @@ ACE_InputCDR::steal_contents (void)
   this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
 
   ACE_CDR::mb_align (&this->start_);
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 
   return block;
 }
@@ -1823,7 +1973,21 @@ ACE_InputCDR::reset_contents (void)
 
   // Reset the flags...
   this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
+    
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
+
+#if defined (ACE_ENABLE_MONITORS)
+void
+ACE_InputCDR::register_monitor (void)
+{
+  MC_ADMINMANAGER *mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  mgr->admin ().monitor_point (&this->monitor_, 0);
+}
+#endif /* ACE_ENABLE_MONITORS */
 
 // --------------------------------------------------------------
 

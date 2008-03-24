@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file Message_Queue_Monitor.h
+ * @file CDR_Buffer_Monitor.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef MESSAGE_QUEUE_MONITOR_H
-#define MESSAGE_QUEUE_MONITOR_H
+#ifndef CDR_BUFFER_MONITOR_H
+#define CDR_BUFFER_MONITOR_H
 
 #include /**/ "ace/pre.h"
 
@@ -27,12 +27,18 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    class ACE_Export Message_Queue_Monitor : public Size_Monitor
+    /**
+     * @class CDR_Buffer_Monitor
+     *
+     * @brief Monitors the size of an input or output CDR stream.
+     *
+     */
+    class ACE_Export CDR_Buffer_Monitor : public Size_Monitor
     {
     public:
-      Message_Queue_Monitor (void);
-      Message_Queue_Monitor (const char* name);
-      virtual ~Message_Queue_Monitor (void);
+      CDR_Buffer_Monitor (void);
+      CDR_Buffer_Monitor (const char* name);
+      virtual ~CDR_Buffer_Monitor (void);
     };
   }
 }
@@ -41,4 +47,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // MESSAGE_QUEUE_MONITOR_H
+#endif // CDR_BUFFER_MONITOR_H

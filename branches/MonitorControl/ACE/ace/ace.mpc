@@ -36,6 +36,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Basic_Types.cpp
     Capabilities.cpp
     CDR_Base.cpp
+    CDR_Buffer_Monitor.cpp
     CDR_Stream.cpp
     CDR_Size.cpp
     Cleanup.cpp
@@ -221,6 +222,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Sig_Adapter.cpp
     Sig_Handler.cpp
     Signal.cpp
+    Size_Monitor.cpp
     SOCK.cpp
     SOCK_Acceptor.cpp
     SOCK_CODgram.cpp
