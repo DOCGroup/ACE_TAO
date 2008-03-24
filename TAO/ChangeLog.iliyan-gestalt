@@ -1,3 +1,30 @@
+Mon Mar 24 19:35:31 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+
+        Closing the SC before exiting ACE_TMAIN causes finalization
+        of (among others) the ORB Resource Factory. At exit however, the
+        ORB table will be finalized _after_ the SC. Any ORB that tries to
+        destroy itself at that point will cause SEGV, because its RF is no
+        longer a valid object.
+
+        This test executable is loading DLL-based services that create
+        their ORBs, but it is also itself a taoexe. This causes many
+        ORB-related services, including a default RF to be inserted via
+        static initializers. This circumvents the destruction order and
+        also prevents the ORB from establishing its own local
+        configuration context, which otherwise would have made a very easy
+        fix possible (using -ORBGestalt local)
+
+        The solution is to remove the explicit SC::open() and SC::close()
+        and leave ORB_init() to do the job for us. The Object Manager will
+        correctly finalize the static services at process exit.
+
+        Alternatively, and perhaps a cleaner solution is to reduce the
+        server executable to a bare-bones aceexe. This eliminates TAO's
+        static initializers and leaves the DLL-based service to manage
+        their own service configuration contexts.
+
 Sat Mar 22 04:25:07 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_1459/Test.cpp:
