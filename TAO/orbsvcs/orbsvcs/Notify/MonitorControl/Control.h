@@ -9,6 +9,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #define TAO_NS_CONTROL_SHUTDOWN "shutdown"
+#define TAO_NS_CONTROL_REMOVE_CONSUMER "remove_consumer"
+#define TAO_NS_CONTROL_REMOVE_SUPPLIER "remove_supplier"
+#define TAO_NS_CONTROL_REMOVE_CONSUMERADMIN "remove_consumeradmin"
+#define TAO_NS_CONTROL_REMOVE_SUPPLIERADMIN "remove_supplieradmin"
 
 class TAO_Notify_MC_Export TAO_NS_Control: public TAO_NS_Generic
 {
@@ -16,8 +20,9 @@ public:
   /// This is here due to virtual functions.
   virtual ~TAO_NS_Control (void);
 
-  /// Execute the control object
-  virtual void execute (const char* command) = 0;
+  /// Execute the control object.  Only return false if the command
+  /// specified is not supported.
+  virtual bool execute (const char* command) = 0;
 
 protected:
   /// Construct a control object.

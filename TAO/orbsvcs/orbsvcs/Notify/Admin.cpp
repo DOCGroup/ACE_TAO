@@ -71,9 +71,12 @@ void
 TAO_Notify_Admin::cleanup_proxy (TAO_Notify_Proxy *proxy
                                  , bool is_supplier)
 {
-  this->remove (proxy);
-
+  // We must clean up the proxy before calling remove.  Doing it in the
+  // opposite order causes us to use invalid memory (through the call of
+  // id() into the proxy).
   ec_->cleanup_proxy (proxy->id(), is_supplier);
+
+  this->remove (proxy);
 }
 
 void

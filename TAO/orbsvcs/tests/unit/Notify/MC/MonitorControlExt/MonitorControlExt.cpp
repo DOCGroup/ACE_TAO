@@ -50,6 +50,10 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       CosNotifyChannelAdmin::EventChannel_var ec =
         monitor_ec_factory->create_named_channel (qos_prop, admin_prop,
                                                   id, ec_name.c_str ());
+      NotifyMonitoringExt::EventChannel_var mec =
+        NotifyMonitoringExt::EventChannel::_narrow (ec);
+      if (CORBA::is_nil (mec.in ()))
+        error ("Unable to narrow the event channel");
 
       try
         {
@@ -104,7 +108,26 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       CosNotifyChannelAdmin::AdminID aid;
       CosNotifyChannelAdmin::SupplierAdmin_var admin =
-        ec->new_for_suppliers (CosNotifyChannelAdmin::AND_OP, aid);
+        mec->named_new_for_suppliers (CosNotifyChannelAdmin::AND_OP, aid,
+                                      "TestSupplierAdmin");
+
+      try
+        {
+          admin =
+            mec->named_new_for_suppliers (CosNotifyChannelAdmin::AND_OP,
+                                          aid, "TestSupplierAdmin");
+          error("Expected a SupplierAdmin "
+                "NotifyMonitoringExt::NameAlreadyUsed exception");
+        }
+      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+        {
+        };
+
+      // We should be able to create another one with the same name
+      admin->destroy ();
+      admin =
+        mec->named_new_for_suppliers (CosNotifyChannelAdmin::AND_OP, aid,
+                                      "TestSupplierAdmin");
 
       NotifyMonitoringExt::SupplierAdmin_var madmin =
         NotifyMonitoringExt::SupplierAdmin::_narrow (admin.in ());
@@ -155,6 +178,79 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       catch (const NotifyMonitoringExt::NameAlreadyUsed&)
         {
           error("Unexpected ProxyConsumer "
+                "NotifyMonitoringExt::NameAlreadyUsed exception");
+        }
+
+      CosNotifyChannelAdmin::ConsumerAdmin_var cadmin =
+        mec->named_new_for_consumers (CosNotifyChannelAdmin::AND_OP, aid,
+                                      "TestConsumerAdmin");
+
+      try
+        {
+          cadmin =
+            mec->named_new_for_consumers (CosNotifyChannelAdmin::AND_OP,
+                                          aid, "TestConsumerAdmin");
+          error("Expected a ConsumerAdmin "
+                "NotifyMonitoringExt::NameAlreadyUsed exception");
+        }
+      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+        {
+        };
+
+      // We should be able to create another one with the same name
+      cadmin->destroy ();
+      cadmin =
+        mec->named_new_for_consumers (CosNotifyChannelAdmin::AND_OP, aid,
+                                      "TestConsumerAdmin");
+
+      NotifyMonitoringExt::ConsumerAdmin_var mcadmin =
+        NotifyMonitoringExt::ConsumerAdmin::_narrow (cadmin.in ());
+      if (CORBA::is_nil (mcadmin.in ()))
+        error("Could not narrow the consumer admin");
+
+      CosNotifyChannelAdmin::ProxySupplier_var supproxy =
+        mcadmin->obtain_named_notification_push_supplier (
+          CosNotifyChannelAdmin::STRUCTURED_EVENT, pid, "consumer");
+
+      try
+        {
+          CosNotifyChannelAdmin::ProxySupplier_var fake =
+            mcadmin->obtain_named_notification_push_supplier
+            (CosNotifyChannelAdmin::STRUCTURED_EVENT, pid, "consumer");
+          error("Expected a ProxySupplier "
+                "NotifyMonitoringExt::NameAlreadyUsed exception");
+        }
+      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+        {
+          // This is expected
+        }
+
+      stat_name = ecf_name + "/" + ec_name + "/" +
+                  ACE_CString (NotifyMonitoringExt::EventChannelConsumerCount);
+      stat = instance->get (stat_name);
+      if (stat == 0)
+        error("Could not find the event channel consumers statistic");
+
+      stat->calculate ();
+      count = stat->last_sample ();
+      if (count != 1)
+        error("Invalid consumer count");
+
+      CosNotifyChannelAdmin::StructuredProxyPushSupplier_var push_supproxy
+        = CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow
+        (supproxy.in());
+      ACE_ASSERT (!CORBA::is_nil (push_supproxy.in()));
+      push_supproxy->disconnect_structured_push_supplier();
+
+      try
+        {
+          CosNotifyChannelAdmin::ProxySupplier_var fake =
+            mcadmin->obtain_named_notification_push_supplier
+            (CosNotifyChannelAdmin::STRUCTURED_EVENT, pid, "consumer");
+        }
+      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+        {
+          error("Unexpected ProxySupplier "
                 "NotifyMonitoringExt::NameAlreadyUsed exception");
         }
 

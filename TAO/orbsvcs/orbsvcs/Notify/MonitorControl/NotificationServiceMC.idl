@@ -67,7 +67,20 @@ module CosNotification
     void clear_statistics (in NameList names)
       raises (InvalidName);
 
+    // Control commands begin here
     void shutdown_event_channel (in string name)
+      raises (InvalidName);
+
+    void remove_consumer (in string name)
+      raises (InvalidName);
+
+    void remove_supplier (in string name)
+      raises (InvalidName);
+
+    void remove_consumeradmin (in string name)
+      raises (InvalidName);
+
+    void remove_supplieradmin (in string name)
       raises (InvalidName);
 
     oneway void shutdown ();

@@ -115,18 +115,51 @@ NotificationServiceMonitor_i::clear_statistics (const CosNotification::Notificat
 void
 NotificationServiceMonitor_i::shutdown_event_channel (const char* name)
 {
+  this->send_control_command (name, TAO_NS_CONTROL_SHUTDOWN);
+}
+
+void
+NotificationServiceMonitor_i::remove_consumer (const char* name)
+{
+  this->send_control_command (name, TAO_NS_CONTROL_REMOVE_CONSUMER);
+}
+
+void
+NotificationServiceMonitor_i::remove_supplier (const char* name)
+{
+  this->send_control_command (name, TAO_NS_CONTROL_REMOVE_SUPPLIER);
+}
+
+void
+NotificationServiceMonitor_i::remove_consumeradmin (const char* name)
+{
+  this->send_control_command (name, TAO_NS_CONTROL_REMOVE_CONSUMERADMIN);
+}
+
+void
+NotificationServiceMonitor_i::remove_supplieradmin (const char* name)
+{
+  this->send_control_command (name, TAO_NS_CONTROL_REMOVE_SUPPLIERADMIN);
+}
+
+void
+NotificationServiceMonitor_i::send_control_command (const char* name,
+                                                    const char* cmd)
+{
   TAO_Control_Registry* instance = TAO_Control_Registry::instance ();
   TAO_NS_Control* control = instance->get (name);
-  if (control == 0)
+
+  // If we didn't find a control object with the given name, or the
+  // execution of the control object failed, we must throw an exception.
+  // The control object execution should only return false when the
+  // command given does not correspond to one that is supported by the
+  // control object.
+  if (control == 0 || !control->execute (cmd))
     {
       CosNotification::NotificationServiceMonitorControl::NameList invalid (1);
       invalid.length (1);
       invalid[0] = name; 
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
-    }
-  else
-    {
-      control->execute (TAO_NS_CONTROL_SHUTDOWN);
     }
 }
 

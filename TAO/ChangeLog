@@ -1,3 +1,72 @@
+Mon Mar 24 12:33:47 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Added an entry for this feature addition.
+
+        * docs/notification/using_monitor_extensions.html:
+
+          Documented the ability to create named consumer and supplier
+          admins.
+
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/MonitorControl.pm:
+
+          Changed to avoid displaying queue size if the queue size is zero.
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+
+          Added commands to remove consumer and supplier admins.
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+
+          Fixed a bug where memory was accessed after it was deleted.
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExt.idl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
+
+          Added a statistic to track the queue size for each ConsumerAdmin.
+          Each time a message is added to or removed from the queue, a queue
+          measurement is taken.  This allows the statistic observer to see  
+          the average queue size for each consumer admin.
+
+          Conversly, the event channel queue size is calculated by adding up
+          all the consumer admin queues and is only accessed when the
+          statistic observer requests it.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMC.idl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+
+          Added the ability to remove individual consumers and suppliers
+          from the event channel.  Technically, the supplier proxy and  
+          consumer proxy are the objects that are removed.
+
+          Added operations to remove consumer and supplier admins through
+          the monitor interface.                                         
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.cpp:
+
+          Added statistics to track the names and counts of consumer and
+          supplier admins.  Also added code to remove consumer and supplier
+          admins by name.
+
+        * orbsvcs/tests/Notify/MC/test_monitor.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Control/Control.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+
+          Updated tests for the changes above.
+
 Mon Mar 24 02:25:48 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * COPYING: Updated the license a bit based on feedback from Tom

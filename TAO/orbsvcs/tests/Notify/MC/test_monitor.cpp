@@ -75,6 +75,13 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       if (num.last != 1)
         ACE_ERROR ((LM_ERROR, "ERROR: There should be only one Consumer\n"));
 
+      str = this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminCount;
+      data = nsm_->get_statistic(str.c_str ());
+      num = data->num ();
+      if (num.last != 1)
+        ACE_ERROR ((LM_ERROR,
+                    "ERROR: There should be only one ConsumerAdmin\n"));
+
       str = this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
       data = nsm_->get_statistic(str.c_str ());
       num = data->num ();
@@ -87,6 +94,13 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       num = data->num ();
       if (num.last != 1)
         ACE_ERROR ((LM_ERROR, "ERROR: There should be only one Supplier\n"));
+
+      str = this->base_ + NotifyMonitoringExt::EventChannelSupplierAdminCount;
+      data = nsm_->get_statistic(str.c_str ());
+      num = data->num ();
+      if (num.last != 1)
+        ACE_ERROR ((LM_ERROR,
+                    "ERROR: There should be only one SupplierAdmin\n"));
       break;
     default:
       ACE_ERROR ((LM_ERROR, "ERROR: Impossible enum value %d\n", proc));
@@ -98,6 +112,7 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
 {
   ACE_CString str;
   CosNotification::NotificationServiceMonitorControl::Data_var data;
+  CosNotification::NotificationServiceMonitorControl::NameList list;
   CosNotification::NotificationServiceMonitorControl::Numeric num;
 
   switch(proc)
@@ -123,6 +138,22 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
       if (num.last == 0)
         ACE_ERROR ((LM_ERROR, "ERROR: There should be at least one "
                               "event queued\n"));
+
+      str = this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminNames;
+      data = nsm_->get_statistic(str.c_str ());
+      list = data->list ();
+      for (CORBA::ULong i = 0; i < list.length (); i++)
+        {
+          str = list[i].in ();
+          str += "/";
+          str += NotifyMonitoringExt::EventChannelQueueSize;
+          data = nsm_->get_statistic(str.c_str ());
+          num = data->num ();
+          ACE_DEBUG ((LM_DEBUG, "Average Queue Size: %f\n", num.average));
+          if (num.average == 0.0)
+            ACE_ERROR ((LM_ERROR, "ERROR: The average should be non-zero\n"));
+        }
+
       break;
     default:
       ACE_ERROR ((LM_ERROR, "ERROR: Impossible enum value %d\n", proc));

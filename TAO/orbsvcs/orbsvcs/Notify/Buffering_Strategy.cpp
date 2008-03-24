@@ -35,6 +35,7 @@ TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
 , local_not_full_ (global_queue_lock_)
 , local_not_empty_ (global_queue_lock_)
 , shutdown_ (false)
+, tracker_ (0)
 {
 }
 
@@ -91,6 +92,10 @@ TAO_Notify_Buffering_Strategy::oldest_event (void)
     }
 
   return tv;
+}
+
+TAO_Notify_Buffering_Strategy::Tracker::~Tracker (void)
+{
 }
 
 int
@@ -160,7 +165,12 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
 
       local_not_empty_.signal ();
     }
-  return ACE_Utils::truncate_cast<int> (this->msg_queue_.message_count ());
+
+  size_t count = this->msg_queue_.message_count ();
+  if (this->tracker_ != 0)
+    this->tracker_->update_queue_count (count);
+
+  return ACE_Utils::truncate_cast<int> (count);
 }
 
 int
@@ -187,6 +197,9 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &me
   if (this->msg_queue_.dequeue (mb) == -1)
     return -1;
 
+  if (this->tracker_ != 0)
+    this->tracker_->update_queue_count (this->msg_queue_.message_count ());
+
   method_request = dynamic_cast<TAO_Notify_Method_Request_Queueable*>(mb);
 
   if (method_request == 0)
@@ -197,6 +210,13 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &me
   global_not_full_.signal();
 
   return 1;
+}
+
+void
+TAO_Notify_Buffering_Strategy::set_tracker (
+                        TAO_Notify_Buffering_Strategy::Tracker* tracker)
+{
+  this->tracker_ = tracker;
 }
 
 int
