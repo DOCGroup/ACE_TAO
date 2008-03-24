@@ -94,8 +94,8 @@ public:
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
 
   // cleanup any proxy resources held by the EC
-  virtual void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id
-			      , bool is_supplier);
+  virtual void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
+                              bool is_supplier);
 
   /// Shutdown
   virtual int shutdown (void);
@@ -103,6 +103,14 @@ public:
 
   /// TAO_Notify_Container_T requires a destroy method
   virtual void destroy (void);
+
+  /// This is public to allow TAO_MonitorConsumerAdmin access.
+  virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
+    get_consumeradmin (CosNotifyChannelAdmin::AdminID id);
+
+  /// This is public to allow TAO_MonitorSupplierAdmin access.
+  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
+    get_supplieradmin (CosNotifyChannelAdmin::AdminID id);
 
 private:
   typedef TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Container;
@@ -143,10 +151,6 @@ protected:
 
   virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
                                                                         CosNotifyChannelAdmin::AdminID_out id);
-
-  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr get_consumeradmin (CosNotifyChannelAdmin::AdminID id);
-
-  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr get_supplieradmin (CosNotifyChannelAdmin::AdminID id);
 
   virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins (void);
 
