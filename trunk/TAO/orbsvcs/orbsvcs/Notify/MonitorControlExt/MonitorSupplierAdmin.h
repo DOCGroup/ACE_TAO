@@ -14,6 +14,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_MonitorEventChannel;
+
 class TAO_Notify_MC_Ext_Export TAO_MonitorSupplierAdmin:
                   public virtual TAO_Notify_SupplierAdmin,
                   public virtual POA_NotifyMonitoringExt::SupplierAdmin
@@ -25,6 +27,10 @@ public:
   /// Remove the statistics for this event channel
   ~TAO_MonitorSupplierAdmin (void);
 
+  /// Register our statistic and control objects 
+  void register_stats_controls (TAO_MonitorEventChannel* mec,
+                                const ACE_CString& name);
+
   virtual CosNotifyChannelAdmin::ProxyConsumer_ptr
     obtain_named_notification_push_consumer (
         CosNotifyChannelAdmin::ClientType ctype,
@@ -35,6 +41,9 @@ public:
     obtain_notification_push_consumer (
         CosNotifyChannelAdmin::ClientType ctype,
         CosNotifyChannelAdmin::ProxyID_out proxy_id);
+
+private:
+  ACE_CString control_name_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

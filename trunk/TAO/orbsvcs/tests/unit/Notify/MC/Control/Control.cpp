@@ -11,8 +11,14 @@ public:
    : TAO_NS_Control (name.c_str ()) {
   }
 
-  virtual void execute (const char* cmd) {
+  virtual bool execute (const char* cmd) {
     command = cmd;
+    if (ACE_OS::strcmp (cmd, TAO_NS_CONTROL_SHUTDOWN) != 0)
+      {
+        return false;
+      }
+
+    return true;
   }
 };
 
@@ -34,7 +40,12 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       if (name != ct.name ())
         error ("The TAO_NS_Control name does not work");
 
-      ct.execute (TAO_NS_CONTROL_SHUTDOWN);
+      if (ct.execute (TAO_NS_CONTROL_REMOVE_CONSUMER))
+        error ("The control object should have returned false");
+
+      if (!ct.execute (TAO_NS_CONTROL_SHUTDOWN))
+        error ("The control object shouldn't have returned false");
+
       if (command != TAO_NS_CONTROL_SHUTDOWN)
         error ("The TAO_NS_Control callback does not work");
     }

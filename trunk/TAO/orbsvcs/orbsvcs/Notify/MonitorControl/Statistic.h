@@ -83,16 +83,13 @@ private:
 
   mutable ACE_SYNCH_RW_MUTEX mutex_;
   size_t index_;
-  union Data {
-    const char* string_;
-    double number_;
-  };
-  ACE_Array_Base<Data> data_;
-
   bool minimum_set_;
   double minimum_;
   double maximum_;
+  double sum_;
+  double sum_of_squares_;
   double last_;
+  ACE_Array_Base<const char*> data_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

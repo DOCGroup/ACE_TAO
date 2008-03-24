@@ -53,6 +53,20 @@ narrowed to a <b>NotifyMonitoringExt::ConsumerAdmin</b>.
     NotifyMonitoringExt::ConsumerAdmin::_narrow(admin.in());
 </pre>
 <p>
+It is also possible to create named ConsumerAdmin objects using the
+following.
+</p>
+<pre>
+  CosNotifyChannelAdmin::AdminID admin_id;
+
+  CosNotifyChannelAdmin::ConsumerAdmin_var admin =
+    ec->named_new_for_consumers(CosNotifyChannelAdmin::OR_OP, admin_id,
+                                "ConsumerAdmin Name");
+
+  NotifyMonitoringExt::ConsumerAdmin_var madmin =
+    NotifyMonitoringExt::ConsumerAdmin::_narrow(admin.in());
+</pre>
+<p>
 Once you have a <b>NotifyMonitoringExt::ConsumerAdmin</b> you can then
 create a named proxy push supplier:
 </p>
@@ -76,6 +90,20 @@ narrowed to a <b>NotifyMonitoringExt::SupplierAdmin</b>.
 
   CosNotifyChannelAdmin::SupplierAdmin_var admin =
     ec->new_for_suppliers(CosNotifyChannelAdmin::AND_OP, admin_id);
+
+  NotifyMonitoringExt::SupplierAdmin_var madmin =
+    NotifyMonitoringExt::SupplierAdmin::_narrow(admin.in());
+</pre>
+<p>
+It is also possible to create named ConsumerAdmin objects using the
+following.
+</p>
+<pre>
+  CosNotifyChannelAdmin::AdminID admin_id;
+
+  CosNotifyChannelAdmin::SupplierAdmin_var admin =
+    ec->named_new_for_suppliers(CosNotifyChannelAdmin::AND_OP, admin_id,
+                                "SupplierAdmin Name");
 
   NotifyMonitoringExt::SupplierAdmin_var madmin =
     NotifyMonitoringExt::SupplierAdmin::_narrow(admin.in());
