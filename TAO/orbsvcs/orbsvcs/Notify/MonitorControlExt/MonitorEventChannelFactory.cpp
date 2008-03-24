@@ -135,7 +135,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
                       stat_name.c_str ()));
         }
 
-      ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->mutex_);
+      ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
       TAO_Statistic* names = instance->get (
                                NotifyMonitoringExt::EventChannelFactoryNames);
       if (names == 0)
@@ -182,7 +182,7 @@ TAO_MonitorEventChannelFactory::create_named_channel (
   ACE_CString sname (this->name_ + "/");
   sname += name;
 
-  ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
+  ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
 
   // Make sure the name isn't already used
   if (this->map_.find (sname) == 0)
@@ -243,7 +243,7 @@ TAO_MonitorEventChannelFactory::create_channel (
   ACE_OS::sprintf(name, "%d", id);
   sname += name;
 
-  ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
+  ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
 
   // Make sure the name isn't already used
   if (this->map_.find (sname) == 0)
@@ -266,7 +266,7 @@ TAO_MonitorEventChannelFactory::remove (TAO_Notify_EventChannel* channel)
     dynamic_cast<TAO_MonitorEventChannel*> (channel);
   if (mec != 0)
     {
-      ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->mutex_);
+      ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
       this->map_.unbind (mec->name ());
     }
   this->TAO_Notify_EventChannelFactory::remove (channel);
@@ -363,7 +363,7 @@ TAO_MonitorEventChannelFactory::get_ecs (
           count++;
           if (names != 0)
             {
-              ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX,
+              ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX,
                                      guard, this->mutex_, 0);
               Map::iterator itr (this->map_);
               Map::value_type* entry = 0;

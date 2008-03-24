@@ -74,7 +74,7 @@ private:
     bool released_;
   };
 
-  ACE_SYNCH_RW_MUTEX mutex_;
+  TAO_SYNCH_RW_MUTEX mutex_;
   ACE_CString name_;
   Map map_;
   ACE_Vector<ACE_CString> stat_names_;

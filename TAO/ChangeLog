@@ -1,3 +1,17 @@
+Mon Mar 24 17:28:37 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.inl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
+
+          Switch from using ACE_SYNCH_* to TAO_SYNCH_* to avoid fuzz errors.
+
 Mon Mar 24 12:33:47 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
@@ -32,7 +46,7 @@ Mon Mar 24 12:33:47 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
           Added a statistic to track the queue size for each ConsumerAdmin.
           Each time a message is added to or removed from the queue, a queue
-          measurement is taken.  This allows the statistic observer to see  
+          measurement is taken.  This allows the statistic observer to see
           the average queue size for each consumer admin.
 
           Conversly, the event channel queue size is calculated by adding up
@@ -47,11 +61,11 @@ Mon Mar 24 12:33:47 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
 
           Added the ability to remove individual consumers and suppliers
-          from the event channel.  Technically, the supplier proxy and  
+          from the event channel.  Technically, the supplier proxy and
           consumer proxy are the objects that are removed.
 
           Added operations to remove consumer and supplier admins through
-          the monitor interface.                                         
+          the monitor interface.
 
         * orbsvcs/orbsvcs/Notify/EventChannel.h:
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h:
