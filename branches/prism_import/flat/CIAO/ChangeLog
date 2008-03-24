@@ -1,15 +1,23 @@
+Mon Mar 24 16:18:46 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Logger/Log_Macros.h:
+        * ciao/Containers/Session/Session_Container.idl:
+        * ciao/Logger/Log_Macros.h:
+        
+          Files missing from previous commit. 
+        
 Thu Mar 20 13:04:53 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_RepositoryManager.idl:
         * DAnCE/bin/integ_deployment.xsl:
-         
+
           Added missing newlines at end of file.
-        
+
         * DAnCE/Logger/Logger_Service.cpp:
-         
+
           Added DANCE_ logging macros to match ACE_, so we can later have
           DAnCE use a log handler that is separate from ACE.
-        
+
         * DAnCE/Logger/File_Logger_Backend.cpp:
         * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
@@ -62,14 +70,14 @@ Thu Mar 20 13:04:53 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/tests/ObjectLocatorTest/srv_main.cpp:
         * DAnCE/tests/RedirectionServiceTest/clt_main.cpp:
         * DAnCE/tests/RedirectionServiceTest/srv_main.cpp:
-        
-          Use DANCE_ debug and error macros for diagnostics. 
+
+          Use DANCE_ debug and error macros for diagnostics.
 
         * ciao/Logger/Logger_Service.cpp:
-        
+
           Created CIAO_ debug/error macros, so the ciao logger can be replaced
-          later to not use the default ACE logger. 
-        
+          later to not use the default ACE logger.
+
         * ciao/Logger/File_Logger_Backend.cpp:
         * ciao/CIAO_common.h:
         * ciao/ComponentServer/CIAO_ComponentServer.cpp:
@@ -90,9 +98,9 @@ Thu Mar 20 13:04:53 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Servants/Home_Servant_Impl_T.cpp:
         * ciao/Servants/Servant_Impl_Base.cpp:
         * ciao/Server_init.cpp:
-        
+
           Use CIAO_ error/debug macros instead of ACE.
-        
+
 Thu Mar 20 10:53:58 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication.mpc:
