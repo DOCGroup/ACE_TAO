@@ -122,20 +122,20 @@ private:
 
   ACE_CString name_;
 
-  mutable ACE_SYNCH_MUTEX names_mutex_;
+  mutable TAO_SYNCH_MUTEX names_mutex_;
   NameList stat_names_;
   NameList control_names_;
 
-  mutable ACE_SYNCH_RW_MUTEX supplier_mutex_;
+  mutable TAO_SYNCH_RW_MUTEX supplier_mutex_;
   Map supplier_map_;
 
-  mutable ACE_SYNCH_RW_MUTEX consumer_mutex_;
+  mutable TAO_SYNCH_RW_MUTEX consumer_mutex_;
   Map consumer_map_;
 
-  mutable ACE_SYNCH_RW_MUTEX supplieradmin_mutex_;
+  mutable TAO_SYNCH_RW_MUTEX supplieradmin_mutex_;
   Map supplieradmin_map_;
 
-  mutable ACE_SYNCH_RW_MUTEX consumeradmin_mutex_;
+  mutable TAO_SYNCH_RW_MUTEX consumeradmin_mutex_;
   Map consumeradmin_map_;
 };
 
