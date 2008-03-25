@@ -902,17 +902,15 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_ENABLE_MONITORS)
-
 template <ACE_SYNCH_DECL> void
 ACE_Message_Queue<ACE_SYNCH_USE>::register_monitor (void)
 {
+#if defined (ACE_ENABLE_MONITORS)
   MC_ADMINMANAGER *mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
   mgr->admin ().monitor_point (&this->monitor_, 0);
+#endif /* ACE_ENABLE_MONITORS */
 }
-
-#endif /* defined (ACE_ENABLE_MONITORS) */
 
 template <ACE_SYNCH_DECL> void
 ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes (size_t new_value)

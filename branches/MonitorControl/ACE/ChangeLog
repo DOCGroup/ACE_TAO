@@ -1,3 +1,17 @@
+Tue Mar 25 17:12:35 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_T.h:
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+        
+          Removed ACE_ENABLE_MONITORS guard from declarations of
+          register_monitor() and moved corresponding guards in the
+          source files to the inside of the method body. This change
+          eliminates the need to recompile application code that
+          calls this method - if monnitors are not enabled, the 
+          call will be a no-op.
+
 Mon Mar 24 20:12:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Size_Monitor.cpp:

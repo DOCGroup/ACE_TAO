@@ -483,9 +483,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-#if defined (ACE_ENABLE_MONITORS)
+  /// Store our monitor in the global registry.
   void register_monitor (void);
-#endif
 
 protected:
   // = Routines that actually do the enqueueing and dequeueing.

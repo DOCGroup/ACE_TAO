@@ -832,16 +832,16 @@ ACE_OutputCDR::find (char* loc)
 
   return mb;
 }
-\
-#if defined (ACE_ENABLE_MONITORS)
+
 void
 ACE_OutputCDR::register_monitor (void)
 {
+#if defined (ACE_ENABLE_MONITORS)
   MC_ADMINMANAGER *mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
   mgr->admin ().monitor_point (&this->monitor_, 0);
-}
 #endif /* ACE_ENABLE_MONITORS */
+}
 
 // ****************************************************************
 
