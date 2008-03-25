@@ -232,7 +232,7 @@ mutex_test_thread (void *args)
   RTCORBA::Mutex_ptr mutex = data->mutex;
   int *shared_var = data->shared_var;
 
-  ACE_OS::srand (ACE_OS::time (0));
+  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0)));
 
   try
     {
