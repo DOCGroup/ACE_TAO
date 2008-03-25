@@ -41,6 +41,9 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                  TAO_DEF_GIOP_MAJOR,
                  TAO_DEF_GIOP_MINOR)
 {
+#if defined (TAO_ENABLE_MONITORS)
+  this->out_stream_.register_monitor ();
+#endif /* TAO_ENABLE_MONITORS */
 }
 
 

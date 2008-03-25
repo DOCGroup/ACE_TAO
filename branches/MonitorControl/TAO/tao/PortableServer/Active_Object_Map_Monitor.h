@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Monitor_Base.h"
+#include "ace/Size_Monitor.h"
 
 #include "tao/Versioned_Namespace.h"
 
@@ -37,25 +37,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  */
 class TAO_PortableServer_Export Active_Object_Map_Monitor
-  : public Monitor_Base
+  : public Size_Monitor
 {
 public:
       Active_Object_Map_Monitor (void);
       Active_Object_Map_Monitor (const char* name);
       virtual ~Active_Object_Map_Monitor (void);
-
-      /// Implemented by the most-derived class. Does the actual
-      /// work of fetching the monitored value.
-      virtual void update (void);
-
-      /// Updates the monitor's data if it is a numeric floating point.
-      virtual void receive (double value);
-
-      /// Updates the monitor's data if it is an integer size.
-      virtual void receive (size_t value);
-
-      /// Reset function.
-      virtual void clear (void);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

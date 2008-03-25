@@ -1,3 +1,22 @@
+Tue Mar 25 18:47:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/GIOP_Message_Base.cpp:
+        
+          Added call to register the monitor of the TAO_OutputCDR
+          member.
+          
+        * tao/PortableServer/Active_Object_Map_Monitor.h:
+        * tao/PortableServer/Active_Object_Map_Monitor.cpp:
+        
+          Changed parent class to the ACE Size_Monitor class.
+          
+        * tao/orbconf.h:
+        
+          Removed line that would allow enabling TAO monitors 
+          independently of ACE monitors. Since the CDR buffer size
+          monitor is actually implemented in ACE, such a combination
+          of options would be inconsistent.
+
 Fri Mar 21 18:14:09 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Monitor/Monitor_Impl.cpp:

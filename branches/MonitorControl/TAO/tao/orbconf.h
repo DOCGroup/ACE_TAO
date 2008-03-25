@@ -240,9 +240,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #  define TAO_ENABLE_MONITORS
 #endif /* ACE_ENABLE_MONITORS */
 
-// Or uncomment to enable TAO monitors independently of ACE monitors
-// #define TAO_ENABLE_MONITORS
-
 // Avoid namespace pollution that's common on older UNIXes...
 #if defined (minor)
 #undef minor
