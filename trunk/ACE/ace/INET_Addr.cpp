@@ -226,10 +226,15 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
   if (port_p == 0) // Assume it's a port number.
     {
       char *endp = 0;
-      u_short port =
-        static_cast<u_short> (ACE_OS::strtol (ip_addr, &endp, 10));
+      long port = ACE_OS::strtol (ip_addr, &endp, 10);
+
       if (*endp == '\0')    // strtol scanned the entire string - all digits
-        result = this->set (port, ACE_UINT32 (INADDR_ANY));
+        {
+          if (port < 0 || port > ACE_MAX_DEFAULT_PORT)
+            result = -1;
+          else
+            result = this->set (u_short (port), ACE_UINT32 (INADDR_ANY));
+        }
       else // port name
         result = this->set (ip_addr, ACE_UINT32 (INADDR_ANY));
     }
@@ -238,9 +243,15 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
       *port_p = '\0'; ++port_p; // skip over ':'
 
       char *endp = 0;
-      u_short port = static_cast<u_short> (ACE_OS::strtol (port_p, &endp, 10));
+      long port = ACE_OS::strtol (port_p, &endp, 10);
+
       if (*endp == '\0')    // strtol scanned the entire string - all digits
-        result = this->set (port, ip_addr, 1, address_family);
+        {
+          if (port < 0 || port > ACE_MAX_DEFAULT_PORT)
+            result = -1;
+          else
+            result = this->set (u_short (port), ip_addr, 1, address_family);
+        }
       else
         result = this->set (port_p, ip_addr);
     }
@@ -422,12 +433,17 @@ static int get_port_number_from_name (const char port_name[],
 {
   // Maybe port_name is directly a port number?
   char *endp = 0;
-  int port_number = static_cast<int> (ACE_OS::strtol (port_name, &endp, 10));
+  long port_number = ACE_OS::strtol (port_name, &endp, 10);
 
-  if (port_number >= 0 && *endp == '\0')
+  if (*endp == '\0')
     {
-      // Ok, port_name was really a number, and nothing else.  We
-      // store that value as the port number.  NOTE: this number must
+      // port_name was really a number, and nothing else.
+
+      // Check for overflow.
+      if (port_number < 0 || port_number > ACE_MAX_DEFAULT_PORT)
+        return -1;
+
+      // Return the port number.  NOTE: this number must
       // be returned in network byte order!
       u_short n = static_cast<u_short> (port_number);
       n = ACE_HTONS (n);

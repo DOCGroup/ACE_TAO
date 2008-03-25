@@ -1,3 +1,20 @@
+Tue Mar 25 09:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+          Detect sockets that are bigger then ACE_MAX_DEFAULT_PORT.
+          Thanks to Patrick Rabau <pr2345 at gmail dot com> for
+          reporting this. This fixes bugzilla 3264
+
+        * tests/INET_Addr_Test.cpp:
+          Added a test for an overflow of the port number
+
+        * ace/Hash_Map_Manager_T.{h,inl}:
+          Changed head argument of the iterators to a bool
+
+        * ace/Reactor.h:
+        * ace/Reactor_Impl.h:
+          Doxygen changes
+
 Tue Mar 25 00:38:33 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
