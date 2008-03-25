@@ -69,6 +69,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #define TAO_OBJID_PICurrent           "PICurrent"
 #define TAO_OBJID_POAMANAGERFACTORY   "POAManagerFactory"
 #define TAO_OBJID_COMPRESSIONMANAGER  "CompressionManager"
+#define TAO_OBJID_MONITOR             "Monitor"
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!

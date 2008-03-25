@@ -917,6 +917,10 @@ CORBA::ORB::resolve_initial_references (const char *name,
     {
       result = this->orb_core ()->resolve_compression_manager ();
     }
+  else if (ACE_OS::strcmp (name, TAO_OBJID_MONITOR) == 0)
+    {
+      result = this->orb_core ()->resolve_monitor ();
+    }
 #if TAO_HAS_INTERCEPTORS == 1
   else if (ACE_OS::strcmp (name, TAO_OBJID_PICurrent) == 0)
     {

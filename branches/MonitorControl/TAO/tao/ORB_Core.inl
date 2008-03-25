@@ -490,6 +490,18 @@ TAO_ORB_Core::resolve_ior_table (void)
   return CORBA::Object::_duplicate (this->ior_table_);
 }
 
+ACE_INLINE CORBA::Object_ptr
+TAO_ORB_Core::resolve_monitor (void)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    CORBA::Object::_nil ());
+  if (CORBA::is_nil (this->monitor_))
+    {
+      this->resolve_monitor_i ();
+    }
+  return CORBA::Object::_duplicate (this->monitor_);
+}
+
 // ****************************************************************
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)

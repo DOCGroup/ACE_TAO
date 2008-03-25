@@ -15,13 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Monitor/Monitor_export.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Monitor/Monitor_export.h"
 #include "tao/Versioned_Namespace.h"
+#include "tao/Object_Loader.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,23 +31,30 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Monitor_Init
  *
  */
-class TAO_Monitor_Export TAO_Monitor_Init
+class TAO_Monitor_Export TAO_Monitor_Init : public TAO_Object_Loader
 {
 public:
-
+  TAO_Monitor_Init (void);
+  
+  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                           int argc,
+                                           ACE_TCHAR *argv []);
+  
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
 };
 
-#if defined (TAO_AS_STATIC_LIBS)
+//#if defined (TAO_AS_STATIC_LIBS)
 // only do this for static builds, it causes a circular
 // dependency for dynamic builds.
 static int
-TAO_Requires_Monitor_Initializer =
-  TAO_Monitor_Init::Initializer ();
-#endif /* TAO_AS_STATIC_LIBS */
+TAO_Requires_Monitor_Initializer = TAO_Monitor_Init::Initializer ();
+//#endif /* TAO_AS_STATIC_LIBS */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_Monitor_Init)
+ACE_FACTORY_DECLARE (TAO_Monitor, TAO_Monitor_Init)
 
 #include /**/ "ace/post.h"
 

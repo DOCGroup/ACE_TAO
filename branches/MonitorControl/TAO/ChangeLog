@@ -1,3 +1,16 @@
+Tue Mar 25 22:09:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ORB_Core.cpp:
+        * tao/objectid.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/Monitor/Monitor.cpp:
+        * tao/Monitor/Monitor.h:
+        
+          Added the Monitor::MC interface to the list of objects
+          available to resolve_initial_references.
+
 Tue Mar 25 18:47:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/GIOP_Message_Base.cpp:
