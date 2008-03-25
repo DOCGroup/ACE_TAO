@@ -1,11 +1,13 @@
-// $Id$
+// $Id:$
 #ifndef BISON_SVC_CONF_TAB_H
 # define BISON_SVC_CONF_TAB_H
 # define ACE_YYSTYPE_IS_DECLARED 1
-/* A Bison parser, made by GNU Bison 2.0.  */
+/* A Bison parser, made by GNU Bison 2.3.  */
 
-/* Skeleton parser for Yacc-like parsing with Bison,
-   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
+/* Skeleton interface for Bison's Yacc-like parsers in C
+
+   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
+   Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,13 +21,21 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place - Suite 330,
-   Boston, MA 02111-1307, USA.  */
+   Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA 02110-1301, USA.  */
 
-/* As a special exception, when this file is copied by Bison into a
-   Bison output file, you may use that output file without restriction.
-   This special exception was added by the Free Software Foundation
-   in version 1.24 of Bison.  */
+/* As a special exception, you may create a larger work that contains
+   part or all of the Bison parser skeleton and distribute that work
+   under terms of your choice, so long as that work isn't itself a
+   parser generator using the skeleton or a modified version thereof
+   as a parser skeleton.  Alternatively, if you modify or redistribute
+   the parser skeleton itself, you may (at your option) remove this
+   special exception, which will cause the skeleton and the resulting
+   Bison output files to be licensed under the GNU General Public
+   License without this special exception.
+
+   This special exception was added by the Free Software Foundation in
+   version 2.2 of Bison.  */
 
 /* Tokens.  */
 #ifndef ACE_YYTOKENTYPE
@@ -49,6 +59,7 @@
      ACE_STRING = 271
    };
 #endif
+/* Tokens.  */
 #define ACE_DYNAMIC 258
 #define ACE_STATIC 259
 #define ACE_SUSPEND 260
@@ -67,14 +78,12 @@
 
 
 
-#if ! defined (ACE_YYSTYPE) && ! defined (ACE_YYSTYPE_IS_DECLARED)
+#if ! defined ACE_YYSTYPE && ! defined ACE_YYSTYPE_IS_DECLARED
 typedef int ACE_YYSTYPE;
 # define ace_yystype ACE_YYSTYPE /* obsolescent; will be withdrawn */
 # define ACE_YYSTYPE_IS_DECLARED 1
 # define ACE_YYSTYPE_IS_TRIVIAL 1
 #endif
-
-
 
 
 

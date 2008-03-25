@@ -1,3 +1,47 @@
+Tue Mar 25 16:44:29 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * examples/ASX/CCM_App/ASX_CCM_App.mpc:
+        * examples/ASX/CCM_App/CCM_App.cpp:
+
+        The DLL names are case-sensitive on *nix. Minor layout changes.
+
+        * ace/Parse_Node.cpp:
+
+        Fixing ACE_Stream_Node::{apply,link} to ensure the modules are linked
+        together and initialized correctly - see bug#2916. Moving the
+        initialization code out of the yacc parser, here.
+
+        * ace/Service_Config.h:
+
+        Making singleton() a public method. Updated comments on static
+        methods to indicate that those are now deprecated and should be
+        avoided in favor of the coresponding instance methods.
+
+        * ace/Service_Gestalt.cpp:
+
+        Renaming a local variable
+
+        * ace/Service_Repository.cpp:
+        * ace/Service_Types.cpp:
+
+        Adding/improved logging to remove_i, fini, close. Layout changes.
+
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp:
+
+        Adding an overloaded yyerror that takes just a string to comply
+        with the changed bison template. Moving the module initialization
+        code out of the parser. See ACE_Stream_Node class.
+
+        * ace/Svc_Conf_Tokens.h:
+
+        Cosmetic changes (generated file)
+
+        * ace/svcconf.mpb:
+
+        Updated for Bison 2.3
+
 Sat Mar 22 04:27:10 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Object.cpp:

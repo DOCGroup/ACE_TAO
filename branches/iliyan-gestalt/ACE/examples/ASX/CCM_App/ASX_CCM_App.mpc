@@ -2,7 +2,7 @@
 // $Id$
 
 project(*Lib) : acelib {
-  sharedname = ccm_app
+  sharedname = CCM_App
   Source_Files {
     CCM_App.cpp
   }

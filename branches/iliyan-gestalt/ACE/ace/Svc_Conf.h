@@ -69,7 +69,8 @@ ACE_YY_DECL;
 /// Name of input stream
 extern FILE *ace_yyin;
 
-/// Error handling routine required by YACC or BISON
+/// Error handling routines required by YACC or BISON
+void ace_yyerror (char const *);
 void ace_yyerror (int yyerrno, int yylineno, char const *);
 
 /// Holds the lexeme for the current token

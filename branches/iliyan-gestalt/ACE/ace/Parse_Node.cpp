@@ -30,14 +30,55 @@ ACE_Stream_Node::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
+#include "ace/ARGV.h"
+
 void
 ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 {
   ACE_TRACE ("ACE_Stream_Node::apply");
 
-  if (config->initialize (this->node_->record (config),
-                          this->node_->parameters ()) == -1)
-    ++yyerrno;
+  const ACE_Service_Type *sst = this->node_->record (config);
+  if (sst == 0)
+    const_cast<ACE_Static_Node *> (this->node_)->apply (config, yyerrno);
+
+  if (yyerrno != 0) return;
+
+  sst = this->node_->record (config);
+  ACE_Stream_Type *st =
+      dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (sst->type ()));
+
+  for (const ACE_Static_Node *module = dynamic_cast<const ACE_Static_Node*> (this->mods_);
+       module != 0;
+       module = dynamic_cast<ACE_Static_Node*> (module->link()))
+    {
+      ACE_ARGV args (module->parameters ());
+
+      const ACE_Service_Type *mst = module->record (config);
+      if (mst == 0)
+        const_cast<ACE_Static_Node *> (module)->apply (config, yyerrno);
+
+      if (yyerrno != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("dynamic initialization failed for Module %s\n"),
+                      module->name ()));
+          ++yyerrno;
+        }
+
+      ACE_Module_Type const * const mt1 =
+        static_cast <ACE_Module_Type const *> (module->record (config)->type());
+
+      ACE_Module_Type *mt = const_cast<ACE_Module_Type *>(mt1);
+
+      if (st->push (mt) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("dynamic initialization failed for Stream %s\n"),
+                      this->node_->name ()));
+          ++yyerrno;
+        }
+
+    }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
@@ -76,7 +117,14 @@ void
 ACE_Parse_Node::link (ACE_Parse_Node *n)
 {
   ACE_TRACE ("ACE_Parse_Node::link");
-  this->next_ = n;
+
+  // Find the last list entry (if any) ...
+  ACE_Parse_Node *t = this;
+  while (t->next_ != 0)
+      t = t->next_;
+
+  // ... and insert n there.
+  t->next_ = n;
 }
 
 ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
@@ -718,7 +766,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Gestalt *config,
   ACE_Static_Svc_Descriptor *ssd = 0;
   if (config->find_static_svc_descriptor (this->function_name_, &ssd) == -1)
     {
-      yyerrno++;
+      ++yyerrno;
       ACE_ERROR_RETURN ((LM_ERROR,
        ACE_TEXT ("(%P|%t) No static service ")
        ACE_TEXT ("registered for function %s\n"),
@@ -728,7 +776,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Gestalt *config,
 
   if (ssd->alloc_ == 0)
     {
-      yyerrno++;
+      ++yyerrno;
 
       if (this->symbol_ == 0)
         {
