@@ -1,3 +1,12 @@
+Tue Mar 25 14:19:31 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          When generating the linker command line for executable linked against
+          static libs, exclude the "libFoo.a" form of the libraries.  They are
+          already accounted for by "-lFoo" arguments.  This resolved Bugzilla
+          Bug #3266.
+
 Tue Mar 25 10:43:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Server_Logging_Handler.cpp:
