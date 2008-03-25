@@ -1,3 +1,9 @@
+Tue Mar 25 10:43:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Server_Logging_Handler.cpp:
+          Corrected static template member instantiation to resolve compile
+          error on OpenVMS Alpha
+
 Tue Mar 25 10:12:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_openvms.GNU:
