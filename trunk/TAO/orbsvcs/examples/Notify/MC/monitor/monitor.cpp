@@ -204,15 +204,15 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
             }
           else
             {
-              if (process_command (nsm, rl, shutdown_cmd))
+              if (process_command (nsm.in (), rl, shutdown_cmd))
                 continue;
-              else if (process_command (nsm, rl, rm_consumer))
+              else if (process_command (nsm.in (), rl, rm_consumer))
                 continue;
-              else if (process_command (nsm, rl, rm_supplier))
+              else if (process_command (nsm.in (), rl, rm_supplier))
                 continue;
-              else if (process_command (nsm, rl, rm_consumeradmin))
+              else if (process_command (nsm.in (), rl, rm_consumeradmin))
                 continue;
-              else if (process_command (nsm, rl, rm_supplieradmin))
+              else if (process_command (nsm.in (), rl, rm_supplieradmin))
                 continue;
 
               try
