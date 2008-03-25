@@ -95,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (seed == 0)
         {
-          seed = ACE_OS::time (0);
+          seed = static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0));
           ACE_DEBUG ((LM_DEBUG, "Seed value is %d\n", seed));
         }
 
