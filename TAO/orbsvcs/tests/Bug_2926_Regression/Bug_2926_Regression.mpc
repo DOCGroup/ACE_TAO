@@ -9,7 +9,7 @@ project (*lib): taolib, portableserver, threads, avoids_corba_e_micro, avoids_co
   }
 }
 
-project (*Server): taoserver, notify, notify_serv, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+project (*Server): taoserver, notify_serv, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
   libs += bug2926
   after += *lib
   Source_Files {
