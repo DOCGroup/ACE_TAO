@@ -11,6 +11,7 @@
 #include "ace/Array_Base.h"
 #include "ace/Vector_T.h"
 #include "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -81,7 +82,7 @@ public:
 private:
   Information_Type type_;
 
-  mutable ACE_SYNCH_RW_MUTEX mutex_;
+  mutable TAO_SYNCH_RW_MUTEX mutex_;
   size_t index_;
   bool minimum_set_;
   double minimum_;

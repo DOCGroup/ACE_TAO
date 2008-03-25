@@ -11,7 +11,7 @@ TAO_Statistic::type (void) const
 ACE_INLINE size_t
 TAO_Statistic::count (void) const
 {
-  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
+  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
   return (this->type_ == TS_COUNTER ? static_cast<size_t> (this->last_) :
                                       this->index_);
 }
@@ -22,7 +22,7 @@ TAO_Statistic::minimum_sample (void) const
   if (this->type_ == TS_LIST)
     throw Invalid_Operation();
 
-  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
+  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
   return this->minimum_;
 }
 
@@ -32,7 +32,7 @@ TAO_Statistic::maximum_sample (void) const
   if (this->type_ == TS_LIST)
     throw Invalid_Operation();
 
-  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
+  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
   return this->maximum_;
 }
 
@@ -42,7 +42,7 @@ TAO_Statistic::last_sample (void) const
   if (this->type_ == TS_LIST)
     throw Invalid_Operation();
 
-  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
+  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
   return this->last_;
 }
 

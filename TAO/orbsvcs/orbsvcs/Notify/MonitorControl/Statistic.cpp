@@ -24,7 +24,7 @@ TAO_Statistic::TAO_Statistic (const char* name,
 
 TAO_Statistic::~TAO_Statistic (void)
 {
-  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->mutex_);
+  ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
   if (this->type_ == TS_LIST)
     for(size_t i = 0; i < this->index_; i++)
       {
@@ -43,7 +43,7 @@ TAO_Statistic::receive (double data)
   if (this->type_ == TS_LIST)
     throw Invalid_Operation();
 
-  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->mutex_);
+  ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
   if (this->type_ != TS_COUNTER)
     {
       this->sum_ += data;
@@ -79,7 +79,7 @@ TAO_Statistic::receive (const TAO_Statistic::List& data)
   if (this->type_ != TS_LIST)
     throw Invalid_Operation();
 
-  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->mutex_);
+  ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
   for(size_t i = 0; i < this->index_; i++)
     {
       delete [] this->data_[i];
@@ -96,7 +96,7 @@ TAO_Statistic::receive (const TAO_Statistic::List& data)
 void
 TAO_Statistic::clear (void)
 {
-  ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->mutex_);
+  ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
   // If the type is a string list, we need to delete the data
   // before we change the index
   if (this->type_ == TS_LIST)
@@ -120,7 +120,7 @@ TAO_Statistic::average (void) const
   if (this->type_ == TS_COUNTER || this->type_ == TS_LIST)
     throw Invalid_Operation();
 
-  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
+  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
   return (this->index_== 0 ? 0.0 : this->sum_ / this->index_);
 }
 
@@ -130,7 +130,7 @@ TAO_Statistic::sum_of_squares (void) const
   if (this->type_ == TS_COUNTER || this->type_ == TS_LIST)
     throw Invalid_Operation();
 
-  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
+  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
   return this->sum_of_squares_;
 }
 
@@ -141,7 +141,7 @@ TAO_Statistic::get_list (void) const
     throw Invalid_Operation();
 
   List list;
-  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, this->mutex_, list);
+  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, list);
   for(size_t i = 0; i < this->index_; i++)
     {
       list.push_back (this->data_[i]);
