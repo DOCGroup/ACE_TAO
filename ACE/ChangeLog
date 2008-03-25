@@ -1,3 +1,10 @@
+Tue Mar 25 18:02:52 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ASNMP/asnmp/wpdu.cpp:
+
+          Added an intermediate integer to avoid type-punned pointer
+          dereferencing.
+
 Tue Mar 25 14:19:31 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
