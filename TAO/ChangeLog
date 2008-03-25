@@ -1,3 +1,11 @@
+Tue Mar 25 18:01:58 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/CDR/allocator.cpp:
+        * tests/OctetSeq/client.cpp:
+        * tests/RTCORBA/RTMutex/server.cpp:
+
+          Added casts to avoid compiler warnings.
+
 Tue Mar 25 17:50:23 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
