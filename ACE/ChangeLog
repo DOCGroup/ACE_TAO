@@ -1,3 +1,9 @@
+Tue Mar 25 10:12:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Disable warnings on IA64 without using GNV, that doesn't work
+          in all cases
+
 Tue Mar 25 09:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/INET_Addr.cpp:
