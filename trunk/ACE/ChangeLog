@@ -1,3 +1,9 @@
+Tue Mar 25 00:38:33 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+
+          Add Configuration.inl to nobase_include_HEADERS.
+
 Mon Mar 24 16:21:30 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_Thread.cpp (event_timedwait): Fixed this code so that
