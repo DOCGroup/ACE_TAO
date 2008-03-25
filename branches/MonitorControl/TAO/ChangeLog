@@ -1,3 +1,16 @@
+Tue Mar 25 22:54:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/objectid.h:
+        
+          Added the new Monitor object id string to
+          TAO_LIST_OF_INITIAL_SERVICES.
+           
+        * tao/MonitorMonitor_Impl.cpp(get_statistic_names):
+        
+          Added code to set the length of the newly created
+          CORBA::StringSeq, and to increment the index when copying
+          from the ACE_Vector.
+
 Tue Mar 25 22:09:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ORB_Core.cpp:

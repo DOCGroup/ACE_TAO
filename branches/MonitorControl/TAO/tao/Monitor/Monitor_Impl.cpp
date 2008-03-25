@@ -5,7 +5,9 @@
 #include "ace/Monitor_Point_Registry.h"
 #include "MonitorControl/MonitorControl.h"
 
-ACE_RCSID(Hello, Hello, "$Id$")
+ACE_RCSID (Monitor,
+           Monitor_Impl,
+           "$Id$")
 
 Monitor_Impl::Monitor_Impl (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -22,11 +24,13 @@ Monitor_Impl::get_statistic_names (void)
   ACE_NEW_THROW_EX (namelist,
                     ::Monitor::MC::NameList (mc_names.size ()),
                     CORBA::NO_MEMORY ());
+                    
+  namelist->length (mc_names.size ());
 
   CORBA::ULong index = 0;
   for (MonitorControl_Types::NameList::Iterator i (mc_names);
        !i.done ();
-       i.advance ())
+       i.advance (), ++index)
     {
       ACE_CString *item = 0;
       i.next (item);
