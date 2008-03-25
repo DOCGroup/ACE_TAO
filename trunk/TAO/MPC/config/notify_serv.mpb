@@ -5,6 +5,5 @@
 
 project : orbsvcslib, notification, event_serv, etcl, dynamicany {
   after     += CosNotification_Serv
-  libs      += TAO_CosNotification_Serv
-  libs      += TAO_CosNotification_Skel
+  libs      += TAO_CosNotification_Serv TAO_CosNotification_Skel
 }
