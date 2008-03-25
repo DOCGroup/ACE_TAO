@@ -98,12 +98,17 @@ wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
    ACE_NEW(iovec_.iov_base, char [iovec_.iov_len]);
 
    // create raw byte stream
+   // The intermediate integer is to avoid type-punned pointer
+   // dereferencing.
+   int out_length = iovec_.iov_len;
    status = cmu_snmp::build( raw_pdu,
                             (unsigned char *)iovec_.iov_base,
-                            (int *) &iovec_.iov_len,
+                            &out_length,
                             target.get_version(),
                             comm_str.data(),
                             comm_str.length());
+   iovec_.iov_len = out_length;
+
    if ( status != 0) {
      valid_flag_ = SNMP_ERROR_WRONG_ENCODING;
      cmu_snmp::free_pdu( raw_pdu);
