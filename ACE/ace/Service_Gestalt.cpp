@@ -274,11 +274,11 @@ ACE_Service_Gestalt::init_i (void)
       // for processing
       FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF,
                                 ACE_TEXT ("r"));
-      bool no_static_svcs_ = (fp == 0);
+      bool skip_static_svcs = (fp == 0);
       if (fp != 0)
         ACE_OS::fclose (fp);
 
-      if (!no_static_svcs_) {
+      if (!skip_static_svcs) {
         // Load the default "svc.conf" entry here if there weren't
         // overriding -f arguments in <parse_args>.
         if (svc_conf_file_queue_->enqueue_tail
@@ -813,6 +813,17 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
 int
 ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
 {
+#ifndef ACE_NLOGGING
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ACE (%P|%t) SG::process_directives_i, ")
+                ACE_TEXT ("repo=%@ - %s\n"),
+                this->repo_,
+                (param->type == ACE_Svc_Conf_Param::SVC_CONF_FILE)
+                ? ACE_TEXT ("<from file>")
+                : param->source.directive));
+#endif
+
   // AC 970827 Skip the heap check because yacc allocates a buffer
   // here which will be reported as a memory leak for some reason.
   ACE_NO_HEAP_CHECK
@@ -828,17 +839,6 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
   // which implies that their finalization will be performed in the
   // correct order, i.e. prior to finalizing the DLL
   ACE_Service_Config_Guard guard (this);
-
-#ifndef ACE_NLOGGING
-  if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SG::process_directives_i, ")
-                ACE_TEXT ("repo=%@ - %s\n"),
-                this->repo_,
-                (param->type == ACE_Svc_Conf_Param::SVC_CONF_FILE)
-                ? ACE_TEXT ("<from file>")
-                : param->source.directive));
-#endif
 
   ::ace_yyparse (param);
 

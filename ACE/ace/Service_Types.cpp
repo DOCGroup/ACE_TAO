@@ -120,7 +120,7 @@ ACE_Service_Object_Type::fini (void) const
   // Call fini() if an only if, the object was successfuly
   // initialized, i.e. init() returned 0. This is necessary to
   // maintain the ctor/dtor-like semantics for init/fini.
-  if (so && initialized_ == 0)
+  if (so != 0 && this->initialized_ == 0)
       so->fini ();
 
   return ACE_Service_Type_Impl::fini ();

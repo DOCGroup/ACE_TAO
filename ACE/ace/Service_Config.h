@@ -263,14 +263,13 @@ protected:
 
   /// = Static interfaces
 
+ public:
  /**
    * Returns the process-wide global singleton instance. It would
    * have been created and will be managed by the Object Manager.
    */
   static ACE_Service_Config* singleton (void);
 
-
- public:
   /**
    * Mutator to set the "global" instance. Intended for use by helper
    * classes like @see ACE_Service_Config_Guard. Stack-based instances
@@ -530,6 +529,7 @@ protected:
    *        for a list of files and here a list of services.
    */
   static int parse_args (int, ACE_TCHAR *argv[]);
+
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
   static ACE_Service_Type *create_service_type  (const ACE_TCHAR *n,
                                                  ACE_Service_Type_Impl *o,
@@ -546,22 +546,25 @@ protected:
 
 protected:
 
-  /// Process service configuration requests that were provided on the
-  /// command-line.  Returns the number of errors that occurred.
+  // @deprecated
+  // Process service configuration requests that were provided on the
+  // command-line.  Returns the number of errors that occurred.
   static int process_commandline_directives (void);
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
-  /// This is the implementation function that process_directives()
-  /// and process_directive() both call.  Returns the number of errors
-  /// that occurred.
+  // @deprecated
+  // This is the implementation function that process_directives()
+  // and process_directive() both call.  Returns the number of errors
+  // that occurred.
   static int process_directives_i (ACE_Svc_Conf_Param *param);
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
   /// Become a daemon.
   static int start_daemon (void);
 
-  /// Add the default statically-linked services to the
-  /// ACE_Service_Repository.
+  // @deprecated
+  // Add the default statically-linked services to the
+  // ACE_Service_Repository.
   static int load_static_svcs (void);
 
 

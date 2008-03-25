@@ -170,30 +170,6 @@ module_list
 module
   : dynamic
     {
-      ACE_Static_Node *svc_type = $<static_node_>1;
-
-      if (svc_type != 0)
-        {
-          ACE_Static_Node *module = $<static_node_>-1;
-
-          ACE_ARGV args (svc_type->parameters ());
-          ACE_Module_Type *mt = ace_get_module (module->record (ACE_SVC_CONF_PARAM->config),
-                                                svc_type->record (ACE_SVC_CONF_PARAM->config),
-                                                ACE_SVC_CONF_PARAM->yyerrno);
-          ACE_Stream_Type *st =
-            dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (module->record (ACE_SVC_CONF_PARAM->config)->type ()));
-
-          if (!st
-              || !mt
-              || mt->init (args.argc (), args.argv ()) == -1
-              || st->push (mt) == -1)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_LIB_TEXT ("dynamic initialization failed for Module %s\n"),
-                          svc_type->name ()));
-              ACE_SVC_CONF_PARAM->yyerrno++;
-            }
-        }
     }
   | static
     {
@@ -317,6 +293,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Prints the error string to standard output.  Cleans up the error
 // messages.
+
+void
+yyerror (char const * s)
+{
+  yyerror (-1, -1, s);
+}
 
 void
 yyerror (int yyerrno, int yylineno, char const * s)
