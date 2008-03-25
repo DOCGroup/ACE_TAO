@@ -1,3 +1,14 @@
+Tue Mar 25 14:13:15 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/notify_serv.mpb:
+
+          Changed the order of Notification_Serv and Notification_Skel so they
+          are in the correct dependency order.
+
+        * orbsvcs/tests/Bug_2926_Regression/Bug_2926_Regression.mpc:
+
+          Removed a redundant base project.
+
 Mon Mar 24 21:17:12 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * utils/nslist/Makefile.am:
