@@ -251,6 +251,14 @@ int run_main (int argc, ACE_TCHAR *argv[])
         }
     }
 
+  if (addr.string_to_addr ("127.0.0.1:72000", AF_INET) != -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ACE_INET_Addr::string_to_addr() ")
+                  ACE_TEXT ("failed to detect port number overflow\n")));
+      status = 1;
+    }
+
   ACE_END_TEST;
 
   return status;

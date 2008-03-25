@@ -494,7 +494,7 @@ public:
    * Suspend @a handles temporarily.
    *
    * Shorthand for calling suspend_handler(ACE_HANDLE) with multiple
-   * <handles>.
+   * @a handles.
    */
   int suspend_handler (const ACE_Handle_Set &handles);
 

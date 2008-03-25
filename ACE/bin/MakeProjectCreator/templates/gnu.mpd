@@ -642,8 +642,9 @@ ifeq ($(static_libs_only), 1)
 endif
 
 <%endif%>
-$(BIN): $(addprefix $(VDIR), $(OBJS)) $(DEPLIBS)
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
+OBJS_REL = $(addprefix $(VDIR), $(OBJS))
+$(BIN): $(OBJS_REL) $(DEPLIBS)
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $(OBJS_REL) $(VLDLIBS) $(POSTLINK)
 endif
 <%endif%>
 

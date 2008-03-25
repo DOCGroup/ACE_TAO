@@ -2961,47 +2961,48 @@ ACE_OS::event_timedwait (ACE_event_t *event,
                          ACE_Time_Value *timeout,
                          int use_absolute_time)
 {
+  if (timeout == 0)
+    // Wait indefinitely.
+    return ACE_OS::event_wait (event);
+
 #if defined (ACE_WIN32)
   DWORD result;
 
-  if (timeout == 0)
-    // Wait forever
-    result = ::WaitForSingleObject (*event, INFINITE);
-  else if (timeout->sec () == 0 && timeout->usec () == 0)
+  if (timeout->sec () == 0 && timeout->usec () == 0)
     // Do a "poll".
     result = ::WaitForSingleObject (*event, 0);
   else
-  {
+    {
       // Wait for upto <relative_time> number of milliseconds.  Note
       // that we must convert between absolute time (which is passed
       // as a parameter) and relative time (which is what
       // WaitForSingleObjects() expects).
       // <timeout> parameter is given in absolute or relative value
       // depending on parameter <use_absolute_time>.
-    int msec_timeout;
-    if (use_absolute_time)
-    {
+      int msec_timeout;
+      if (use_absolute_time)
+        {
           // Time is given in absolute time, we should use
           // gettimeofday() to calculate relative time
-      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+          ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
 
           // Watchout for situations where a context switch has caused
           // the current time to be > the timeout.  Thanks to Norbert
           // Rapp <NRapp@nexus-informatics.de> for pointing this.
-      if (relative_time < ACE_Time_Value::zero)
-        msec_timeout = 0;
+          if (relative_time < ACE_Time_Value::zero)
+            msec_timeout = 0;
+          else
+            msec_timeout = relative_time.msec ();
+        }
       else
-        msec_timeout = relative_time.msec ();
+        // time is given in relative time, just convert it into
+        // milliseconds and use it
+        msec_timeout = timeout->msec ();
+      result = ::WaitForSingleObject (*event, msec_timeout);
     }
-    else
-         // time is given in relative time, just convert it into
-         // milliseconds and use it
-      msec_timeout = timeout->msec ();
-    result = ::WaitForSingleObject (*event, msec_timeout);
-  }
 
   switch (result)
-  {
+    {
     case WAIT_OBJECT_0:
       return 0;
     case WAIT_TIMEOUT:
@@ -3011,7 +3012,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
       // This is a hack, we need to find an appropriate mapping...
       ACE_OS::set_errno_to_last_error ();
       return -1;
-  }
+    }
 #elif defined (ACE_HAS_THREADS)
   int result = 0;
   int error = 0;
@@ -3025,126 +3026,126 @@ ACE_OS::event_timedwait (ACE_event_t *event,
 # else
   if (ACE_OS::sema_wait (&event->lock_) == 0)
 # endif
-  {
-    if (event->eventdata_->is_signaled_ == 1)
-    // event is currently signaled
     {
-      if (event->eventdata_->manual_reset_ == 0)
-      {
-        // AUTO: reset state
-        event->eventdata_->is_signaled_ = 0;
-        event->eventdata_->auto_event_signaled_ = false;
-      }
-    }
-    else
-    // event is currently not signaled
-    {
-      event->eventdata_->waiting_threads_++;
+      if (event->eventdata_->is_signaled_ == 1)
+        // event is currently signaled
+        {
+          if (event->eventdata_->manual_reset_ == 0)
+            {
+              // AUTO: reset state
+              event->eventdata_->is_signaled_ = 0;
+              event->eventdata_->auto_event_signaled_ = false;
+            }
+        }
+      else
+        // event is currently not signaled
+        {
+          event->eventdata_->waiting_threads_++;
 
-      ACE_Time_Value absolute_timeout = *timeout;
+          ACE_Time_Value absolute_timeout = *timeout;
 
-      // cond_timewait() expects absolute time, check
-      // <use_absolute_time> flag.
-      if (use_absolute_time == 0)
-        absolute_timeout += ACE_OS::gettimeofday ();
+          // cond_timewait() expects absolute time, check
+          // <use_absolute_time> flag.
+          if (use_absolute_time == 0)
+            absolute_timeout += ACE_OS::gettimeofday ();
 
-      while (event->eventdata_->is_signaled_ == 0 &&
-             event->eventdata_->auto_event_signaled_ == false)
-      {
+          while (event->eventdata_->is_signaled_ == 0 &&
+                 event->eventdata_->auto_event_signaled_ == false)
+            {
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
     (!defined (ACE_USES_FIFO_SEM) && \
       (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-        if (ACE_OS::cond_timedwait (&event->eventdata_->condition_,
-                                    &event->eventdata_->lock_,
-                                    &absolute_timeout) != 0)
-        {
-          result = -1;
-          error = errno;
-          break;
-        }
+              if (ACE_OS::cond_timedwait (&event->eventdata_->condition_,
+                                          &event->eventdata_->lock_,
+                                          &absolute_timeout) != 0)
+                {
+                  result = -1;
+                  error = errno;
+                  break;
+                }
 
-        if (event->eventdata_->signal_count_ > 0)
-        {
-          event->eventdata_->signal_count_--;
-          break;
-        }
+              if (event->eventdata_->signal_count_ > 0)
+                {
+                  event->eventdata_->signal_count_--;
+                  break;
+                }
 # else
 #   if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
       (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-        if (ACE_OS::mutex_unlock (&event->eventdata_->lock_) != 0)
+              if (ACE_OS::mutex_unlock (&event->eventdata_->lock_) != 0)
 #   else
-        if (ACE_OS::sema_post (&event->lock_) != 0)
+                if (ACE_OS::sema_post (&event->lock_) != 0)
 #   endif
-        {
-          event->eventdata_->waiting_threads_--;
-          return -1;
-        }
+                  {
+                    event->eventdata_->waiting_threads_--;
+                    return -1;
+                  }
 
-        if (ACE_OS::sema_wait(&event->semaphore_, absolute_timeout) !=0)
-        {
-          result = -1;
-          if (errno == ETIMEDOUT) // Semaphores time out with ETIMEDOUT (POSIX)
-            error = ETIME;
-          else
-            error = errno;
-        }
+              if (ACE_OS::sema_wait(&event->semaphore_, absolute_timeout) !=0)
+                {
+                  result = -1;
+                  if (errno == ETIMEDOUT) // Semaphores time out with ETIMEDOUT (POSIX)
+                    error = ETIME;
+                  else
+                    error = errno;
+                }
 
-        bool signalled = false;
-        if (result == 0 && event->eventdata_->signal_count_ > 0)
-        {
-          event->eventdata_->signal_count_--;
-          signalled = true;
-        }
+              bool signalled = false;
+              if (result == 0 && event->eventdata_->signal_count_ > 0)
+                {
+                  event->eventdata_->signal_count_--;
+                  signalled = true;
+                }
 
 #   if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
       (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-        if (ACE_OS::mutex_lock (&event->eventdata_->lock_) != 0)
+              if (ACE_OS::mutex_lock (&event->eventdata_->lock_) != 0)
 #   else
-        if (ACE_OS::sema_wait (&event->lock_) != 0)
+                if (ACE_OS::sema_wait (&event->lock_) != 0)
 #   endif
-        {
-          event->eventdata_->waiting_threads_--;  // yes, I know it's not save
-          return -1;
+                  {
+                    event->eventdata_->waiting_threads_--;  // yes, I know it's not save
+                    return -1;
+                  }
+
+              if (result)
+                break;
+
+              if (event->eventdata_->manual_reset_ == 1 && event->eventdata_->is_signaled_ == 1)
+                if (ACE_OS::sema_post(&event->semaphore_) != 0)
+                  {
+                    result = -1;
+                    error = errno;
+                    break;
+                  }
+
+              if (signalled)
+                break;
+# endif
+            }
+
+          // Reset the auto_event_signaled_ to false now that we have
+          // woken up.
+          if (event->eventdata_->auto_event_signaled_ == true)
+            event->eventdata_->auto_event_signaled_ = false;
+
+          event->eventdata_->waiting_threads_--;
         }
 
-        if (result)
-          break;
-
-        if (event->eventdata_->manual_reset_ == 1 && event->eventdata_->is_signaled_ == 1)
-          if (ACE_OS::sema_post(&event->semaphore_) != 0)
-          {
-            result = -1;
-            error = errno;
-            break;
-          }
-
-        if (signalled)
-          break;
-# endif
-      }
-
-      // Reset the auto_event_signaled_ to false now that we have
-      // woken up.
-      if (event->eventdata_->auto_event_signaled_ == true)
-        event->eventdata_->auto_event_signaled_ = false;
-
-      event->eventdata_->waiting_threads_--;
-    }
-
-    // Now we can let go of the lock.
+      // Now we can let go of the lock.
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && \
         (!defined (ACE_LACKS_MUTEXATTR_PSHARED) || !defined (ACE_LACKS_CONDATTR_PSHARED))) || \
      (!defined (ACE_USES_FIFO_SEM) && \
         (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-    ACE_OS::mutex_unlock (&event->eventdata_->lock_);
+      ACE_OS::mutex_unlock (&event->eventdata_->lock_);
 # else
-    ACE_OS::sema_post (&event->lock_);
+      ACE_OS::sema_post (&event->lock_);
 # endif
 
-    if (result == -1)
-      // Reset errno in case mutex_unlock() also fails...
-      errno = error;
-  }
+      if (result == -1)
+        // Reset errno in case mutex_unlock() also fails...
+        errno = error;
+    }
   else
     result = -1;
   return result;
@@ -3161,13 +3162,15 @@ ACE_OS::event_wait (ACE_event_t *event)
 {
 #if defined (ACE_WIN32)
   switch (::WaitForSingleObject (*event, INFINITE))
-{
-  case WAIT_OBJECT_0:
-    return 0;
-  default:
-    ACE_OS::set_errno_to_last_error ();
-    return -1;
-}
+    {
+    case WAIT_OBJECT_0:
+      return 0;
+    default:
+      {
+        ACE_OS::set_errno_to_last_error ();
+        return -1;
+      }
+    }
 #elif defined (ACE_HAS_THREADS)
   int result = 0;
   int error = 0;
@@ -3181,110 +3184,110 @@ ACE_OS::event_wait (ACE_event_t *event)
 # else
   if (ACE_OS::sema_wait (&event->lock_) == 0)
 # endif
-  {
-    if (event->eventdata_->is_signaled_ == 1)
-    // Event is currently signaled.
     {
-      if (event->eventdata_->manual_reset_ == 0)
-        // AUTO: reset state
-        event->eventdata_->is_signaled_ = 0;
-    }
-    else // event is currently not signaled
-    {
-      event->eventdata_->waiting_threads_++;
+      if (event->eventdata_->is_signaled_ == 1)
+        // Event is currently signaled.
+        {
+          if (event->eventdata_->manual_reset_ == 0)
+            // AUTO: reset state
+            event->eventdata_->is_signaled_ = 0;
+        }
+      else // event is currently not signaled
+        {
+          event->eventdata_->waiting_threads_++;
 
-      while (event->eventdata_->is_signaled_ == 0 &&
-             event->eventdata_->auto_event_signaled_ == false)
-      {
+          while (event->eventdata_->is_signaled_ == 0 &&
+                 event->eventdata_->auto_event_signaled_ == false)
+            {
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
     (!defined (ACE_USES_FIFO_SEM) && \
       (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-        if (ACE_OS::cond_wait (&event->eventdata_->condition_,
-                               &event->eventdata_->lock_) != 0)
-        {
-          result = -1;
-          error = errno;
-          // Something went wrong...
-          break;
-        }
-        if (event->eventdata_->signal_count_ > 0)
-        {
-          event->eventdata_->signal_count_--;
-          break;
-        }
+              if (ACE_OS::cond_wait (&event->eventdata_->condition_,
+                                     &event->eventdata_->lock_) != 0)
+                {
+                  result = -1;
+                  error = errno;
+                  // Something went wrong...
+                  break;
+                }
+              if (event->eventdata_->signal_count_ > 0)
+                {
+                  event->eventdata_->signal_count_--;
+                  break;
+                }
 # else
 #   if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
       (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-        if (ACE_OS::mutex_unlock (&event->eventdata_->lock_) != 0)
+              if (ACE_OS::mutex_unlock (&event->eventdata_->lock_) != 0)
 #   else
-        if (ACE_OS::sema_post (&event->lock_) != 0)
+                if (ACE_OS::sema_post (&event->lock_) != 0)
 #   endif
-        {
-          event->eventdata_->waiting_threads_--;
-          return -1;
-        }
+                  {
+                    event->eventdata_->waiting_threads_--;
+                    return -1;
+                  }
 
-        if (ACE_OS::sema_wait(&event->semaphore_) !=0)
-        {
-          result = -1;
-          error = errno;
-        }
+              if (ACE_OS::sema_wait (&event->semaphore_) !=0)
+                {
+                  result = -1;
+                  error = errno;
+                }
 
-        bool signalled = false;
-        if (result == 0 && event->eventdata_->signal_count_ > 0)
-        {
-          event->eventdata_->signal_count_--;
-          signalled = true;
-        }
+              bool signalled = false;
+              if (result == 0 && event->eventdata_->signal_count_ > 0)
+                {
+                  event->eventdata_->signal_count_--;
+                  signalled = true;
+                }
 
 #   if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
       (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-        if (ACE_OS::mutex_lock (&event->eventdata_->lock_) != 0)
+              if (ACE_OS::mutex_lock (&event->eventdata_->lock_) != 0)
 #   else
-        if (ACE_OS::sema_wait (&event->lock_) != 0)
+                if (ACE_OS::sema_wait (&event->lock_) != 0)
 #   endif
-        {
+                  {
+                    event->eventdata_->waiting_threads_--;
+                    return -1;
+                  }
+
+              if (result)
+                break;
+
+              if (event->eventdata_->manual_reset_ == 1 && event->eventdata_->is_signaled_ == 1)
+                if (ACE_OS::sema_post(&event->semaphore_) != 0)
+                  {
+                    result = -1;
+                    error = errno;
+                    break;
+                  }
+
+              if (signalled)
+                break;
+# endif
+            }
+
+          // Reset it since we have woken up.
+          if (event->eventdata_->auto_event_signaled_ == true)
+            event->eventdata_->auto_event_signaled_ = false;
+
           event->eventdata_->waiting_threads_--;
-          return -1;
         }
 
-        if (result)
-          break;
-
-        if (event->eventdata_->manual_reset_ == 1 && event->eventdata_->is_signaled_ == 1)
-          if (ACE_OS::sema_post(&event->semaphore_) != 0)
-          {
-            result = -1;
-            error = errno;
-            break;
-          }
-
-        if (signalled)
-          break;
-# endif
-    }
-
-    // Reset it since we have woken up.
-    if (event->eventdata_->auto_event_signaled_ == true)
-      event->eventdata_->auto_event_signaled_ = false;
-
-    event->eventdata_->waiting_threads_--;
-  }
-
-  // Now we can let go of the lock.
+      // Now we can let go of the lock.
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && \
         (!defined (ACE_LACKS_MUTEXATTR_PSHARED) || !defined (ACE_LACKS_CONDATTR_PSHARED))) || \
      (!defined (ACE_USES_FIFO_SEM) && \
         (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-    ACE_OS::mutex_unlock (&event->eventdata_->lock_);
+      ACE_OS::mutex_unlock (&event->eventdata_->lock_);
 # else
-    ACE_OS::sema_post (&event->lock_);
+      ACE_OS::sema_post (&event->lock_);
 # endif
 
-  if (result == -1)
-    // Reset errno in case mutex_unlock() also fails...
-    errno = error;
-}
+      if (result == -1)
+        // Reset errno in case mutex_unlock() also fails...
+        errno = error;
+    }
   else
     result = -1;
   return result;
