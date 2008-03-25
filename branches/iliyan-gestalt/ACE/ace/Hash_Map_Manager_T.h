@@ -699,10 +699,10 @@ public:
   typedef typename container_type::difference_type difference_type;
 
   // = Initialization method.
-  /// Contructor.  If head != 0, the iterator constructed is positioned
+  /// Contructor.  If head the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Hash_Map_Const_Iterator_Base_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
-                                       int head);
+                                       bool head);
 
   // = ITERATION methods.
 
@@ -996,7 +996,7 @@ public:
 
   // = Initialization method.
   ACE_Hash_Map_Reverse_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
-                                    int head = 0);
+                                    bool head = false);
 
   // = Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
@@ -1053,7 +1053,7 @@ public:
 
   // = Initialization method.
   ACE_Hash_Map_Const_Reverse_Iterator_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
-                                          int head = 0);
+                                          bool head = false);
 
   // = Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
@@ -1246,7 +1246,7 @@ public:
 
   // = Initialization method.
   ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
-                                 int head = 0);
+                                 bool head = false);
 
   /// Construct from base
   ACE_Hash_Map_Reverse_Iterator (const ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);

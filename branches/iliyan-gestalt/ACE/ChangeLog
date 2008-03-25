@@ -1,3 +1,73 @@
+Tue Mar 25 14:19:31 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          When generating the linker command line for executable linked against
+          static libs, exclude the "libFoo.a" form of the libraries.  They are
+          already accounted for by "-lFoo" arguments.  This resolved Bugzilla
+          Bug #3266.
+
+Tue Mar 25 10:43:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Server_Logging_Handler.cpp:
+          Corrected static template member instantiation to resolve compile
+          error on OpenVMS Alpha
+
+Tue Mar 25 10:12:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Disable warnings on IA64 without using GNV, that doesn't work
+          in all cases
+
+Tue Mar 25 09:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+          Detect sockets that are bigger then ACE_MAX_DEFAULT_PORT.
+          Thanks to Patrick Rabau <pr2345 at gmail dot com> for
+          reporting this. This fixes bugzilla 3264
+
+        * tests/INET_Addr_Test.cpp:
+          Added a test for an overflow of the port number
+
+        * ace/Hash_Map_Manager_T.{h,inl}:
+          Changed head argument of the iterators to a bool
+
+        * ace/Reactor.h:
+        * ace/Reactor_Impl.h:
+          Doxygen changes
+
+Tue Mar 25 00:38:33 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+
+          Add Configuration.inl to nobase_include_HEADERS.
+
+Mon Mar 24 16:21:30 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_Thread.cpp (event_timedwait): Fixed this code so that
+          it will treat 0 using "wait indefinitely" semantics for Windows
+          and all other OS platforms.  Thanks to Paul Carter <pcarter at
+          scires dot com> for contributing this.
+
+Mon Mar 24 16:13:51 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Manual_Event_Test.cpp (worker): Added a test to ensure
+          that a null pointer works properly for the
+          ACE_Manual_Event::wait() method.  Thanks to Paul Carter <pcarter
+          at scires dot com> for contributing this.
+
+Mon Mar 24 15:43:28 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+
+          MPC can now be configured to recognize ACE_TMAIN as an executable
+          entry point. We no longer need to explicitly state that a project will
+          be an executable in the MPC file, MPC will automatically deduce that
+          the project is an executable given the presence of ACE_TMAIN.
+
+          This change above relates to the following change in MPC:
+          Mon Mar 24 15:18:28 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
 Mon Mar 24 02:25:58 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * COPYING: Updated the license a bit based on feedback from Tom

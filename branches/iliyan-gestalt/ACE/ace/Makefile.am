@@ -454,6 +454,7 @@ nobase_include_HEADERS += \
   Condition_Thread_Mutex.h \
   Condition_Thread_Mutex.inl \
   Configuration.h \
+  Configuration.inl \
   Configuration_Import_Export.h \
   Connection_Recycling_Strategy.h \
   Connector.cpp \
