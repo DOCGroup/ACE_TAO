@@ -1,3 +1,11 @@
+Wed Mar 26 22:35:31 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * docs/ORBEndpoint.html:
+        * tao/ORB_Core.h:
+
+          Removed references to ORBListenEndpoint (singular) from comments and
+          HTML documentation.  The option is called ORBListenEndpoints (plural).
+
 Tue Mar 25 18:01:58 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/CDR/allocator.cpp:
