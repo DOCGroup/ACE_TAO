@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         monitor_ec_factory->create_named_channel (qos_prop, admin_prop,
                                                   id, ec_name.c_str ());
       NotifyMonitoringExt::EventChannel_var mec =
-        NotifyMonitoringExt::EventChannel::_narrow (ec);
+        NotifyMonitoringExt::EventChannel::_narrow (ec.in ());
       if (CORBA::is_nil (mec.in ()))
         error ("Unable to narrow the event channel");
 
