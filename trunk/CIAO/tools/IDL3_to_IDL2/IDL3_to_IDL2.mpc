@@ -45,7 +45,7 @@ project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile {
                     $(TAO_ROOT)/TAO_IDL/fe \
                     $(TAO_ROOT)
   libpaths       += $(TAO_ROOT)/TAO_IDL
-  install         = $(ACE_ROOT)/bin
+  exeout          = $(ACE_ROOT)/bin
 
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
@@ -56,8 +56,6 @@ project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile {
     else
       CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
     endif
-
-    VPATH = $(TAO_ROOT)/TAO_IDL $(TAO_ROOT)/TAO_IDL/driver
   }
 
   Source_Files {

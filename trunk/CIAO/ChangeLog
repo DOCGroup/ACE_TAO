@@ -1,3 +1,9 @@
+Wed Mar 26 15:27:44 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+
+          Removed invalid and unneeded VPATH setting with the verbatim section.
+
 Mon Mar 24 02:25:23 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * COPYING: Updated the license a bit based on feedback from Tom
@@ -9,8 +15,8 @@ Sun Mar 23 01:55:11 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * CIAO_TAO.mwc:
         * CIAO_TAO_DAnCE.mwc:
 
-          Add CIDLC to these workspaces. 
-        
+          Add CIDLC to these workspaces.
+
 Wed Feb 27 16:07:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
