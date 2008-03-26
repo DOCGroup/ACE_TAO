@@ -1,3 +1,10 @@
+Wed Mar 26 15:32:01 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Corrected my change from yesterday so that it works properly for
+          executable projects that pull in source files from other directories.
+
 Tue Mar 25 18:02:52 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * ASNMP/asnmp/wpdu.cpp:
