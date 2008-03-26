@@ -258,10 +258,6 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
   this->current_ = this->current_->cont ();
   this->current_is_writable_ = true;
   
-#if defined (ACE_ENABLE_MONITORS)
-  this->monitor_.receive (this->total_length ());
-#endif /* ACE_ENABLE_MONITORS */
-
   return this->adjust (size, align, buf);
 }
 

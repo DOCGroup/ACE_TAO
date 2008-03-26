@@ -1,3 +1,11 @@
+Wed Mar 26 22:00:19 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Stream.inl:
+        * ace/CDR_Stream.cpp:
+        
+          Moved monitor call to where it will get the actual current 
+          total size.
+
 Tue Mar 25 17:12:35 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp:

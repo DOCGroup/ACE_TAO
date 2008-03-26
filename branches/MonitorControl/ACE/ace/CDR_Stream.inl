@@ -456,6 +456,11 @@ ACE_OutputCDR::adjust (size_t size,
       this->current_alignment_ += offset + size;
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
       this->current_->wr_ptr (end);
+      
+#if defined (ACE_ENABLE_MONITORS)
+      this->monitor_.receive (this->total_length ());
+#endif /* ACE_ENABLE_MONITORS */
+
       return 0;
     }
 
