@@ -1,3 +1,21 @@
+Wed Mar 26 22:02:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Monitor/Marshal_Buffer/client.cpp:
+        * examples/Monitor/Marshal_Buffer/marshal_buffer.mpc:
+        * examples/Monitor/Marshal_Buffer/monitor_client.cpp:
+        * examples/Monitor/Marshal_Buffer/server.cpp:
+        * examples/Monitor/Marshal_Buffer/test.idl:
+        * examples/Monitor/Marshal_Buffer/test_i.cpp:
+        * examples/Monitor/Marshal_Buffer/test_i.h:
+        
+          New files comprising an example of the TAO marshaling buffer
+          size monitor.
+          
+        * MPC/config/monitor.mpb:
+        
+          New file defining and MPC base project for applications that
+          require the TAO_Monitor library.
+
 Tue Mar 25 22:54:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/objectid.h:
@@ -5,7 +23,7 @@ Tue Mar 25 22:54:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
           Added the new Monitor object id string to
           TAO_LIST_OF_INITIAL_SERVICES.
            
-        * tao/MonitorMonitor_Impl.cpp(get_statistic_names):
+        * tao/Monitor/Monitor_Impl.cpp(get_statistic_names):
         
           Added code to set the length of the newly created
           CORBA::StringSeq, and to increment the index when copying

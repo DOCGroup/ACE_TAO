@@ -1,0 +1,61 @@
+// -*- MPC -*-
+// $Id$
+
+project(client): taoclient, monitor {
+  IDL_Files {
+    test.idl
+  }
+
+  Source_Files {
+    client.cpp
+    testC.cpp
+  }
+
+  Header_Files {
+    testC.h
+  }
+
+  Inline_Files {
+    testC.inl
+  }
+}
+
+project(server): taoserver {
+  IDL_Files {
+    test.idl
+  }
+
+  Source_Files {
+    server.cpp
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+  }
+
+  Header_Files {
+    testC.h
+    testS.h
+    test_i.h
+  }
+
+  Inline_Files {
+    testC.inl
+    testS.inl
+  }
+}
+
+project(monitor_client): taoexe, monitor {
+  IDL_Files {
+  }
+  
+  Source_Files {
+    monitor_client.cpp
+  }
+  
+  Header_Files {
+  }
+  
+  Inline_Files {
+  }
+}
+
