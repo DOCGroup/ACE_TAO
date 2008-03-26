@@ -954,7 +954,7 @@ protected:
 
   /// Pointer to the list of protocol loaded into this ORB instance.
   /// Helper method to hold the common code part for -ORBEndpoint and
-  /// -ORBListenEndpoint options.
+  /// -ORBListenEndpoints options.
   int set_endpoint_helper (const ACE_CString &lane,
                            const ACE_CString &endpoints);
 
