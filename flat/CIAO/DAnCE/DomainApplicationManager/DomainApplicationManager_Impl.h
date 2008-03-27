@@ -60,11 +60,11 @@ namespace DAnCE
       CORBA::ORB_var orb_;
       PortableServer::POA_var poa_;
       const Deployment::DeploymentPlan plan_;
-      DomainApplication_Impl::TNam2Nm subAppMgr_;
+      DomainApplication_Impl::TNam2Nm sub_app_mgr_;
       TNodeManagers & nodes_;
 
       typedef ACE_Vector<DomainApplication_Impl*> TApplications;
-      TApplications runningApp_;
+      TApplications running_app_;
 
       static void split_plan (const Deployment::DeploymentPlan & plan,
                               TNodePlans & sub_plans);

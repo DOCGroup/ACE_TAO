@@ -1,19 +1,31 @@
+Thu Mar 27 18:13:07 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.h:
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        
+          Logging/format changes, don't expect this to compile, mostly
+          a bookmark before I start the real work. 
+        
 Thu Mar 27 15:09:33 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.h:
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
 
           Formatting and logging changes.  I don't expect this to compile,
-          just bookmarking for future reference. 
-        
+          just bookmarking for future reference.
+
         * MPC/config/ciao_session_container.mpb:
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
         * ciao/ComponentServer/Configurators/Basic_Config_Manager.h:
         * ciao/Servants/Servants.mpc:
         * ciao/Server_init.h:
-        
-          Linux compile error fixes. 
-        
+
+          Linux compile error fixes.
+
 Mon Mar 24 16:18:46 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Logger/Log_Macros.h:
