@@ -275,7 +275,11 @@ SHR_FILTER ?=
 
 # Include this before the below variables to make it possible for
 # platform_macros.GNU to set default values for them.
-include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+ifneq ($(alternate_platform_macros),)
+  include $(alternate_platform_macros)
+else
+  include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+endif # alternate_platform_macros
 
 # Define some variables to silence warnings
 GHS ?=
