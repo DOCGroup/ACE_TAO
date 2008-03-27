@@ -1,8 +1,13 @@
+Thu Mar 27 12:54:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Small change to get the VxWorks shared library build further
+
 Thu Mar 27 12:46:48 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
 
-          Changed ACE_TMAIN to run_main for the non-threaded portion of the 
+          Changed ACE_TMAIN to run_main for the non-threaded portion of the
           #ifdef.  ACE_TMAIN is defined in Main.cpp.
 
 Thu Mar 27 12:37:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
