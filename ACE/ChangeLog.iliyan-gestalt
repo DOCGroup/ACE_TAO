@@ -1,9 +1,18 @@
+Thu Mar 27 21:04:11 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * THANKS:
+        * ace/Service_Gestalt.cpp:
+
+        Adding the patch suggested in bug# 3007. Thanks to Michael Carter
+        <mcarter at swri dot org> for reporting and debugging.
+
 Thu Mar 27 13:42:23 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:
 
         Replacing the use of a "magic" number for the service repository
-        size with the appropriate #define
+        size with the appropriate #
+        define
 
         * ace/String_Base.cpp:
 
