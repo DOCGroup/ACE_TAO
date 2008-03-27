@@ -1,3 +1,10 @@
+Thu Mar 27 12:46:48 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+
+          Changed ACE_TMAIN to run_main for the non-threaded portion of the 
+          #ifdef.  ACE_TMAIN is defined in Main.cpp.
+
 Thu Mar 27 12:37:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * ASNMP/asnmp/snmperrs.h:
