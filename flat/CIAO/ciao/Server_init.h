@@ -75,7 +75,7 @@ namespace CIAO
      */
     
   public:
-    static bool NameUtility::bind_name (const char *namestr, 
+    static bool bind_name (const char *namestr, 
                                         CORBA::Object_ptr obj,
                                         CosNaming::NamingContextExt_var &root);
     

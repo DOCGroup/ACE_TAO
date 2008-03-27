@@ -26,7 +26,7 @@
 #include <ciao/ComponentServer/CIAO_ServerResourcesC.h>
 
 #include "Config_Manager.h"
-#include "Basic_Config_Manager_Export.h" 
+#include "Basic_Config_Manager_export.h" 
 
 namespace CIAO
 {

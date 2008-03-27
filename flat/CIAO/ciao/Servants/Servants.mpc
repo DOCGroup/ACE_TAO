@@ -8,6 +8,7 @@ project(CIAO_Port_Activator_stub) : portableserver, taoidldefaults, ciao_lib {
    }
 
    Source_Files {
+     CIAO_Port_ActivatorC.cpp
    }
 
    Header_Files {
