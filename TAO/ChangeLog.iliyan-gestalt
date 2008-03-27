@@ -141,48 +141,6 @@ Tue Feb 19 02:39:24 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
         Fixed a typo that caused "local" and "global" values for
         -ORBGestalt
 
-Mon Jan  7 21:19:38 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
-
-        * .:
-        * COPYING:
-        * ChangeLog:
-        * orbsvcs/orbsvcs/SSLIOP.mpc:
-        * orbsvcs/orbsvcs/ssliop_params_dup.mpb:
-        * performance-tests/Cubit/TAO/MT_Cubit/client.h:
-        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
-        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.h:
-        * tao/DynamicInterface/DII_Arguments_Converter_Impl.h:
-        * tao/DynamicInterface/DII_Arguments_Converter_Impl.cpp:
-        * tao/DynamicInterface/DII_Invocation_Adapter.h:
-        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
-        * tao/DynamicInterface/Dynamic_Implementation.cpp:
-        * tao/DynamicInterface/Request.cpp:
-        * tao/DynamicInterface/Server_Request.cpp:
-        * tao/DynamicInterface/Unknown_User_Exception.h:
-        * tao/DynamicInterface/Unknown_User_Exception.cpp:
-        * tao/Dynamic_Adapter.h:
-        * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
-        * tao/Messaging/AMI_Arguments_Converter_Impl.h:
-        * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
-        * tao/Messaging/Messaging_ORBInitializer.cpp:
-        * tao/ORB_Core.cpp:
-        * tao/PortableServer/Collocated_Arguments_Converter.h:
-        * tests/Abstract_Interface/client.cpp:
-        * tests/Abstract_Interface/run_test.pl:
-        * tests/Abstract_Interface/server.cpp:
-        * tests/Abstract_Interface/test.idl:
-        * tests/Abstract_Interface/test_i.h:
-        * tests/Abstract_Interface/test_i.cpp:
-        * tests/Bug_2234_Regression/client.cpp:
-        * tests/Bug_3108_Regression/client.cpp:
-        * tests/DII_AMI_Forward/DII_ReplyHandler.cpp:
-        * tests/Multiple/run_test.pl:
-        * utils/catior/catior.cpp:
-
-        Merged revisions 80354, 80359-80363, 80368-80371, 80376-80377,
-        80379-80380, 80382, 80384 via svnmerge from
-        https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk/TAO
-
 Fri Dec 28 22:47:55 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB_Core.h:
