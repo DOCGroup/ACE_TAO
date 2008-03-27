@@ -1,3 +1,39 @@
+Thu Mar 27 19:09:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Diabled 3251/3252 in a static build
+
+Thu Mar 27 16:27:44 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Object_Manager.cpp:
+
+          In Win32 debug builds with ACE_DISABLE_WIN32_ERROR_WINDOWS, also
+          redirect assert messages to stderr instead of GUI message boxes.
+
+Thu Mar 27 16:17:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-bug-process.html:
+        * docs/ACE-development-process.html:
+        * docs/ACE-guidelines.html:
+        * docs/usage-bugzilla.html:
+          Updated bugzilla location
+
+Thu Mar 27 15:52:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/VXTestProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VXTestWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/templates/vxtest.mpd:
+          New MPC generator called vxtest. This will generate the loading
+          of the downloadable kernel modules for an application.
+
+Thu Mar 27 14:07:27 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          #include <byteswap.h> in HAS_BSWAP_{16,32,64} feature tests.
+          Resolves bugzilla issue #3134.
+
 Thu Mar 27 12:54:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
