@@ -1,3 +1,31 @@
+Thu Mar 27 13:15:39 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/diffs/Object_Key.diff:
+
+          Fixed this malformed patch.
+
+Thu Mar 27 12:02:29 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/DllOrb.cpp:
+        * tests/Bug_3251_Regression/DllOrb.cpp:
+
+          Use ACE_auto_ptr_reset() instead of directly assigning to an
+          auto_ptr.  This doesn't work for VxWorks 6.4 (gcc 3.4.4).
+
+Thu Mar 27 11:50:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+
+          Removed build waring from gcc on Solaris.
+
+Wed Mar 26 22:35:31 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * docs/ORBEndpoint.html:
+        * tao/ORB_Core.h:
+
+          Removed references to ORBListenEndpoint (singular) from comments and
+          HTML documentation.  The option is called ORBListenEndpoints (plural).
+
 Tue Mar 25 18:01:58 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/CDR/allocator.cpp:
