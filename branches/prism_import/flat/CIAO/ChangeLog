@@ -1,3 +1,10 @@
+Thu Mar 27 18:30:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+
+        Logging/format changes, don't expect this to compile, mostly
+        a bookmark before I start the real work.
+        
 Thu Mar 27 18:13:07 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.h:
@@ -6,10 +13,10 @@ Thu Mar 27 18:13:07 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
         * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-        
+
           Logging/format changes, don't expect this to compile, mostly
-          a bookmark before I start the real work. 
-        
+          a bookmark before I start the real work.
+
 Thu Mar 27 15:09:33 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.h:
