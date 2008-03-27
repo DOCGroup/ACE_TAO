@@ -249,6 +249,8 @@ ACE_Object_Manager::init (void)
           // This will keep the ACE_Assert window
           _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
           _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDERR );
+          _CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE );
+          _CrtSetReportFile( _CRT_ASSERT, _CRTDBG_FILE_STDERR );
 #endif /* _DEBUG && _MSC_VER || __INTEL_COMPILER */
 
           // The system does not display the critical-error-handler message box

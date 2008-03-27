@@ -1,3 +1,10 @@
+Thu Mar 27 16:27:44 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Object_Manager.cpp:
+
+          In Win32 debug builds with ACE_DISABLE_WIN32_ERROR_WINDOWS, also
+          redirect assert messages to stderr instead of GUI message boxes.
+
 Thu Mar 27 16:17:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-bug-process.html:
