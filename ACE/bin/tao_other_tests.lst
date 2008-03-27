@@ -124,7 +124,7 @@ TAO/orbsvcs/tests/Notify/Basic/run_test_ipv6.pl notify.rt.conf: IPV6 !ST !STATIC
 TAO/orbsvcs/tests/Notify/Blocking/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/Notify/Bug_1385_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/Notify/Bug_2561_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
-TAO/orbsvcs/tests/Notify/Bug_3252_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
+TAO/orbsvcs/tests/Notify/Bug_3252_Regression/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86 !STATIC
 TAO/orbsvcs/tests/Notify/Discarding/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/Notify/MT_Dispatching/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/Notify/Ordering/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
