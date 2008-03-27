@@ -1,3 +1,11 @@
+Thu Mar 27 15:52:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/VXTestProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VXTestWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/templates/vxtest.mpd:
+          New MPC generator called vxtest. This will generate the loading
+          of the downloadable kernel modules for an application.
+
 Thu Mar 27 14:07:27 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
