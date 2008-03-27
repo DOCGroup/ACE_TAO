@@ -1,3 +1,10 @@
+Thu Mar 27 10:36:18 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Make it possible to specify and alternate name / location for
+          platform_macros.GNU. This fixes bug #3269.
+
 Wed Mar 26 15:32:01 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
