@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project {
+project : acelib {
   after += ACE_ETCL
   libs += ACE_ETCL
 }

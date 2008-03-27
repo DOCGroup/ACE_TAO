@@ -1,3 +1,9 @@
+Thu Mar 27 17:23:03 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ace_etcl.mpb:
+        
+          Added acelib as base project.
+
 Wed Mar 26 22:00:19 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/CDR_Stream.inl:
