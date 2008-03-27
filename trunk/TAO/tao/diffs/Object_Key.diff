@@ -1,27 +1,26 @@
---- orig/Object_KeyC.cpp	2005-04-08 10:17:40.978604800 +0200
-+++ Object_KeyC.cpp	2005-04-08 10:17:41.879900800 +0200
-@@ -37,6 +37,10 @@
+--- orig/Object_KeyC.cpp	2008-03-27 08:12:27.000000000 -0500
++++ Object_KeyC.cpp	2008-03-27 08:13:40.000000000 -0500
+@@ -37,6 +37,11 @@
  #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
  #endif /* __BORLANDC__ */
-
+ 
 +#include "ace/ACE.h"
-+#include "ace/Numeric_Limits.h"
 +#include "ace/Truncate.h"
 +#include "ace/OS_NS_string.h"
 +#include "ace/os_include/os_ctype.h"
 +
  // TAO_IDL - Generated from
- // be\be_visitor_arg_traits.cpp:69
-
-@@ -88,2 +95,2 @@
+ // be\be_visitor_arg_traits.cpp:70
+ 
+@@ -90,6 +95,159 @@
  TAO::ObjectKey::~ObjectKey (void)
  {}
-
+ 
 +// Hand crafted.
 +
 +void
-+TAO::ObjectKey::encode_sequence_to_string (char * &str,
-+                                           const TAO::unbounded_value_sequence<CORBA::Octet> &seq)
++TAO::ObjectKey::encode_sequence_to_string (char* & str,
++                                           TAO::unbounded_value_sequence<CORBA::Octet> const & seq)
 +{
 +  // We must allocate a buffer which is (gag) 3 times the length
 +  // of the sequence, which is the length required in the worst-case
@@ -32,13 +31,16 @@
 +  // OR, we could just return this space.  The classic time-space tradeoff,
 +  // and for now we'll let time win out, which means that we only do the
 +  // allocation once.
-+  unsigned int const len = 3 * seq.length (); /* space for zero termination not needed */;
++  CORBA::ULong const seq_len = seq.length ();
++  CORBA::ULong const len = 3 * seq_len; /* space for zero termination
++                                           not needed */
 +  str = CORBA::string_alloc (len);
 +
-+  char *cp = str;
++  char * const eos = str + len;
++  char *       cp  = str;
 +
-+  for (unsigned int i = 0;
-+       cp < (str + len) && i < seq.length();
++  for (CORBA::ULong i = 0;
++       cp < eos && i < seq_len;
 +       ++i)
 +    {
 +      unsigned char bt = seq[i];
@@ -49,8 +51,8 @@
 +        }
 +
 +      *cp++ = '%';
-+      *cp++ = ACE::nibble2hex ((bt >> 4) & 0x0f);
-+      *cp++ = ACE::nibble2hex (bt & 0x0f);
++      *cp++ = static_cast<char> (ACE::nibble2hex ((bt >> 4) & 0x0f));
++      *cp++ = static_cast<char> (ACE::nibble2hex (bt & 0x0f));
 +    }
 +  // Zero terminate
 +  *cp = '\0';
@@ -59,7 +61,7 @@
 +CORBA::Boolean
 +TAO::ObjectKey::is_legal (unsigned char c)
 +{
-+  if (isalnum(c))
++  if (isalnum (c))
 +  {
 +    return true;
 +  }
@@ -74,8 +76,9 @@
 +}
 +
 +void
-+TAO::ObjectKey::decode_string_to_sequence (TAO::unbounded_value_sequence<CORBA::Octet> &seq,
-+                                           const char *str)
++TAO::ObjectKey::decode_string_to_sequence (
++  TAO::unbounded_value_sequence<CORBA::Octet> & seq,
++  char const * str)
 +{
 +  if (str == 0)
 +    {
@@ -90,13 +93,12 @@
 +  // 64-bit MS Windows builds.
 +  CORBA::ULong const len =
 +    ACE_Utils::truncate_cast<CORBA::ULong> (str_len);
-+
-+  char const * const eos = str + len;
++  
++  char const * const eos = str + str_len;
 +  char const *       cp  = str;
 +
-+  // Set the length of the sequence to be as long as
-+  // we'll possibly need...we'll reset it to the actual
-+  // length later.
++  // Set the length of the sequence to be as long as we'll possibly
++  // need...we'll reset it to the actual length later.
 +  seq.length (len);
 +
 +  CORBA::ULong i = 0;
@@ -168,49 +170,32 @@
 +}
 +
  #endif /* end #if !defined */
-
+ 
  // TAO_IDL - Generated from
---- orig/Object_KeyC.h	2005-04-08 10:17:40.978604800 +0200
-+++ Object_KeyC.h	2005-04-08 10:17:41.879900800 +0200
-@@ -117,4 +117,23 @@
-       )
-       : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
+--- orig/Object_KeyC.h	2008-03-27 08:13:22.000000000 -0500
++++ Object_KeyC.h	2008-03-27 08:13:40.000000000 -0500
+@@ -117,6 +117,24 @@
+       : TAO::unbounded_value_sequence<CORBA::Octet> (length, mb) {}
  #endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
-+
+ 
 +    // Hand crafted.
 +
 +    static void encode_sequence_to_string (
-+        char * &str,
-+        const TAO::unbounded_value_sequence<CORBA::Octet> &seq
++        char* & str,
++        TAO::unbounded_value_sequence<CORBA::Octet> const & seq
 +      );
 +    static void decode_string_to_sequence (
 +        TAO::unbounded_value_sequence<CORBA::Octet> &seq,
-+        const char *str
++        char const * str
 +      );
 +    static CORBA::Boolean is_legal (unsigned char c);
 +
 +    /// A special method that gives no regard to how the ORB has
 +    /// configured  the resource factory. This will be used only
 +    /// during Profile decoding and should be safe. This is a solution
-+    /// for the bug report [BUG 1616]
-+    static CORBA::Boolean demarshal_key (ObjectKey &key,
-+                                         TAO_InputCDR &cdr);
++    /// for the bug report [Bug 1616]
++    static CORBA::Boolean demarshal_key (ObjectKey & key,
++                                         TAO_InputCDR & cdr);
    };
-
- #endif /* end #if !defined */
-
-Index: Object_KeyC.cpp
-===================================================================
---- Object_KeyC.cpp	(revision 79001)
-+++ Object_KeyC.cpp	(working copy)
-@@ -130,8 +130,8 @@
-         }
  
-       *cp++ = '%';
--      *cp++ = ACE::nibble2hex ((bt >> 4) & 0x0f);
--      *cp++ = ACE::nibble2hex (bt & 0x0f);
-+      *cp++ = static_cast<char> (ACE::nibble2hex ((bt >> 4) & 0x0f));
-+      *cp++ = static_cast<char> (ACE::nibble2hex (bt & 0x0f));
-     }
-   // Zero terminate
-   *cp = '\0';
+ #endif /* end #if !defined */
