@@ -2,7 +2,7 @@ Thu Mar 27 14:07:27 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
 
-          #include <bytesex.h> in HAS_BSWAP_{16,32,64} feature tests.
+          #include <byteswap.h> in HAS_BSWAP_{16,32,64} feature tests.
           Resolves bugzilla issue #3134.
 
 Thu Mar 27 12:54:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
