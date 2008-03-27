@@ -1,0 +1,5 @@
+# VxWorks test file
+
+<%foreach(reverse(libs))%>
+ld < lib<%lib%>.so
+<%endfor%>
