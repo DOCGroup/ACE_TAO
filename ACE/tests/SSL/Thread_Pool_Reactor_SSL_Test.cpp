@@ -341,7 +341,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
 #else
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_SSL_Test"));
 
