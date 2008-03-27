@@ -535,8 +535,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, looking up dynamic ")
-                ACE_TEXT ("service \'%s\' to initialize\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, name=%s")
+                ACE_TEXT (" - looking up in the repo\n"),
                 this->repo_,
                 stf->name ()));
 #endif
@@ -545,23 +545,19 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
   int const retv = this->repo_->find (stf->name (),
                                       (const ACE_Service_Type **) &srp);
 
-  // If there is an active service already, it must first be removed,
-  // before it could be re-installed.
-  // IJ: This used to be the behavior, before allowing multiple
-  // independent service repositories. Should that still be required?
+  // If there is an active service already, remove it first
+  // before it can be re-installed.
   if (retv >= 0)
     {
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
-        ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
-                           ACE_TEXT (" %s is already initialized.")
-                           ACE_TEXT (" Remove before re-initializing.\n"),
-                           this->repo_,
-                           stf->name ()),
-                          0);
+        ACE_DEBUG ((LM_WARNING,
+                    ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
+                    ACE_LIB_TEXT (" name=%s - removing a pre-existing namesake.\n"),
+                    this->repo_,
+                    stf->name ()));
 #endif
-        return 0;
+      this->repo_->remove (stf->name ());
     }
 
   // If there is an inactive service by that name it may have been
@@ -577,9 +573,9 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
   if (retv == -2 && srp->type () == 0)
     ACE_ERROR_RETURN ((LM_WARNING,
                        ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
-                       ACE_TEXT (" %s is forward-declared.")
-                       ACE_TEXT (" Recursive initialization requests are")
-                       ACE_TEXT (" not supported.\n"),
+                       ACE_TEXT (" name=%s - forward-declared; ")
+                       ACE_TEXT (" recursive initialization requests are")
+                       ACE_TEXT (" ignored.\n"),
                        this->repo_,
                        stf->name ()),
                       -1);
@@ -633,19 +629,24 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SG::initialize - looking up dynamic ")
-                ACE_TEXT (" service %s to initialize, repo=%@\n"),
-                sr->name (), this->repo_));
+                ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, name=%s")
+                ACE_TEXT (" - looking up in the repo\n"),
+                this->repo_,
+                sr->name ()));
 
   ACE_Service_Type *srp = 0;
   if (this->repo_->find (sr->name (),
                          (const ACE_Service_Type **) &srp) >= 0)
-    ACE_ERROR_RETURN ((LM_WARNING,
-                       ACE_TEXT ("ACE (%P|%t) SG::initialize - \'%s\' ")
-                       ACE_TEXT ("has already been installed. ")
-                       ACE_TEXT ("Remove before reinstalling\n"),
-                       sr->name ()),
-                      0);
+    {
+#ifndef ACE_NLOGGING
+      ACE_DEBUG ((LM_WARNING,
+                  ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, name=%s")
+                  ACE_LIB_TEXT (" - removing a pre-existing namesake.\n"),
+                  this->repo_,
+                  sr->name ()));
+#endif
+      this->repo_->remove (sr->name ());
+    }
 
   return this->initialize_i (sr, parameters);
 
@@ -670,8 +671,9 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
       // Not using LM_ERROR here to avoid confusing the test harness
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_TEXT ("ACE (%P|%t) SG::initialize_i ")
-                           ACE_TEXT ("failed for %s: %m\n"),
+                           ACE_TEXT ("ACE (%P|%t) SG::initialize_i -")
+                           ACE_TEXT (" repo=%@, name=%s - remove failed: %m\n"),
+                           this->repo_,
                            sr->name ()),
                           -1);
 #endif
@@ -684,8 +686,9 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
       // Not using LM_ERROR here to avoid confusing the test harness
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_TEXT ("ACE (%P|%t) SG - repository insert ")
-                           ACE_TEXT ("failed for %s: %m\n"),
+                           ACE_TEXT ("ACE (%P|%t) SG::initialize_i -")
+                           ACE_TEXT (" repo=%@, name=%s - insert failed: %m\n"),
+                           this->repo_,
                            sr->name ()),
                           -1);
 #endif
