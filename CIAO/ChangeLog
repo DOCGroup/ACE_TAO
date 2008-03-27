@@ -1,7 +1,14 @@
+Thu Mar 27 18:51:13 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+        
+          Added minizip in ACE/contrib for RM.
+        
 Thu Mar 27 14:12:41 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciaocidldefaults.mpb:
-        
+
           Projects that use CILC should build after CIDLC.
 
 Wed Mar 26 15:27:44 UTC 2008  Adam Mitz  <mitza@ociweb.com>
