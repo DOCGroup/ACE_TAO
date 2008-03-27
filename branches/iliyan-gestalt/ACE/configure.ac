@@ -3445,15 +3445,24 @@ ACE_CHECK_LACKS_FUNCS(bsearch)
 
 ACE_CHECK_HAS_DEFINES([bswap16])
 if test "$ace_cv_defined_bswap16" = no; then
-  ACE_CHECK_HAS_DEFINES([bswap_16])
+  ACE_CHECK_HAS_DEFINES([bswap_16],[],[],[
+#if ACE_HAS_BYTESEX_H
+#include <byteswap.h>
+#endif])
 fi
 ACE_CHECK_HAS_DEFINES([bswap32])
 if test "$ace_cv_defined_bswap32" = no; then
-  ACE_CHECK_HAS_DEFINES([bswap_32])
+  ACE_CHECK_HAS_DEFINES([bswap_32],[],[],[
+#if ACE_HAS_BYTESEX_H
+#include <byteswap.h>
+#endif])
 fi
 ACE_CHECK_HAS_DEFINES([bswap64])
 if test "$ace_cv_defined_bswap64" = no; then
-  ACE_CHECK_HAS_DEFINES([bswap_64])
+  ACE_CHECK_HAS_DEFINES([bswap_64],[],[],[
+#if ACE_HAS_BYTESEX_H
+#include <byteswap.h>
+#endif])
 fi
 
 ACE_CHECK_LACKS_FUNCS(chdir)
