@@ -20,7 +20,7 @@ namespace DAnCE
 
   DomainApplication_Impl::~DomainApplication_Impl()
   {
-    DANCE_TRACE (DLINFO "DomainApplication_Impl::~DomainApplication_Impl()")
+    DANCE_TRACE (DLINFO "DomainApplication_Impl::~DomainApplication_Impl()");
 
     try
       {
@@ -49,7 +49,7 @@ namespace DAnCE
   DomainApplication_Impl::finishLaunch (const Deployment::Connections & connections,
                                         CORBA::Boolean start)
   {
-    DANCE_TRACE (DLINFO "DomainApplication_Impl::finishLaunch")
+    DANCE_TRACE (DLINFO "DomainApplication_Impl::finishLaunch");
     DANCE_DEBUG ((LM_DEBUG, DLINFO "DomainApplication_impl::finishLaunch - "
                   "connections length is %d\n", connections.length()));
     for (TApp2Mgr::iterator iter = this->node_applications_.begin();
@@ -63,7 +63,7 @@ namespace DAnCE
   void
   DomainApplication_Impl::start ()
   {
-    DANCE_TRACE (DLINFO "DomainApplication_Impl::start")
+    DANCE_TRACE (DLINFO "DomainApplication_Impl::start");
     for (TApp2Mgr::iterator iter = this->node_applications_.begin();
          iter != this->node_applications_.end();
          ++iter)

@@ -67,7 +67,7 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
 
   DANCE_DEBUG((LM_TRACE, DLINFO " NodeApplicationManager_impl::startLaunch - "
                "Instructing NodeApplication to initialize components. \n"));
-  this->application_->initComponents();
+  this->application_->init_components();
 
   DANCE_DEBUG((LM_TRACE, DLINFO " NodeApplicationManager_impl::startLaunch - "
                "Collecting connection references\n"));

@@ -49,8 +49,8 @@ namespace DAnCE
   {
     DANCE_TRACE (DLINFO "NodeManager_Impl::joinDomain");
     ACE_DEBUG ((LM_ERROR, DLINFO "NodeManager_Impl::joinDomain - "
-                "joinDomain not implemented\n"))
-      throw CORBA::NO_IMPLEMENT;
+                "joinDomain not implemented\n"));
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   void
@@ -58,8 +58,8 @@ namespace DAnCE
   {
     DANCE_TRACE (DLINFO "NodeManager_Impl::leaveDomain");
     ACE_DEBUG ((LM_ERROR, DLINFO "NodeManager_Impl::leaveDomain - "
-                "leave not implemented\n"))
-      throw CORBA::NO_IMPLEMENT;
+                "leave not implemented\n"));
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   ::Deployment::NodeApplicationManager_ptr
@@ -133,9 +133,9 @@ namespace DAnCE
   ::Deployment::Resources *
   NodeManager_Impl::getDynamicResources ()
   {
-    DANCE_TRACE (DLINFO, "NodeManager_Impl::getDynamicResources ()");
+    DANCE_TRACE (DLINFO "NodeManager_Impl::getDynamicResources ()");
     ACE_DEBUG ((LM_ERROR, DLINFO "NodeManager_Impl::getDynamicResources - "
-                "getDynamicResources not implemented\n"))
+                "getDynamicResources not implemented\n"));
       throw CORBA::NO_IMPLEMENT ();
     return 0;
   }

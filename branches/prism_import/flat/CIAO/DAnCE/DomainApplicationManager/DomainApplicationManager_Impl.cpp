@@ -26,10 +26,10 @@ DomainApplicationManager_Impl::~DomainApplicationManager_Impl()
   DANCE_TRACE(DLINFO "DomainApplicationManager_Impl::~DomainApplicationManager_Impl()");
 
   DANCE_DEBUG ((LM_DEBUG, DLINFO "DomainApplicationManager_Impl::~DomainApplicationManager_Impl - "
-                "Destroying %u applications\n", this->runningApp_.size()));
-  while (0 < this->runningApp_.size())
+                "Destroying %u applications\n", this->running_app_.size()));
+  while (0 < this->running_app_.size())
     {
-      DomainApplication_Impl* p = this->runningApp_[this->runningApp_.size()-1];
+      DomainApplication_Impl* p = this->running_app_[this->running_app_.size()-1];
       Deployment::DomainApplication_var app =
         Deployment::DomainApplication::_narrow (this->poa_->servant_to_reference (p));
       PortableServer::ObjectId_var id = this->poa_->reference_to_id (app);
@@ -38,19 +38,19 @@ DomainApplicationManager_Impl::~DomainApplicationManager_Impl()
       this->poa_->deactivate_object (id);
       DANCE_DEBUG((LM_DEBUG, DLINFO "DomainApplicationManager_impl::~DomainApplicationManager_impl - "
                    "deleting DomainApplication.\n"));
-      this->runningApp_.pop_back();
+      this->running_app_.pop_back();
       delete p;
     }
 
   DANCE_DEBUG ((LM_DEBUG, DLINFO "DomainApplicationManager_Impl::~DomainApplicationManager_Impl - "
-                "Destroying %u managers\n", this->sub_app_mgr__.size()));
-  for (DomainApplication_Impl::TNam2Nm::iterator iter = this->sub_app_mgr__.begin();
-       iter != this->sub_app_mgr__.end();
+                "Destroying %u managers\n", this->sub_app_mgr_.current_size()));
+  for (DomainApplication_Impl::TNam2Nm::iterator iter = this->sub_app_mgr_.begin();
+       iter != this->sub_app_mgr_.end();
        ++iter)
     {
       (*iter).int_id_->destroyManager ( (*iter).ext_id_.in());
     }
-  this->sub_app_mgr__.unbind_all();
+  this->sub_app_mgr_.unbind_all();
 }
 
 Deployment::Application_ptr
@@ -65,7 +65,7 @@ DomainApplicationManager_Impl::startLaunch (const Deployment::Properties & confi
                     CORBA::NO_MEMORY ());
   DomainApplication_Impl* app;
   ACE_NEW_THROW_EX (app,
-                    DomainApplication_Impl (this->sub_app_mgr__, 
+                    DomainApplication_Impl (this->sub_app_mgr_, 
                                             configProperty, 
                                             connections.inout()),
                     CORBA::NO_MEMORY());
@@ -82,7 +82,7 @@ DomainApplicationManager_Impl::startLaunch (const Deployment::Properties & confi
                 "Successfully created DomainApplication\n"));
   DANCE_DEBUG ((LM_TRACE, "DomainApplicationManager_Impl::startLaunch - "
                 "Created %u provided references\n",
-                providedReference.length ()));
+                providedReference->length ()));
 }
 
 void
@@ -138,23 +138,23 @@ DomainApplicationManager_Impl::getApplications ()
 {
   DANCE_TRACE (DLINFO "DomainApplicationManager_Impl::getApplications ()");
 
-  Deployment::Applications* runningApp;
-  ACE_NEW_THROW_EX (runningApp,
+  Deployment::Applications* running_app;
+  ACE_NEW_THROW_EX (running_app,
                     Deployment::Applications(),
                     CORBA::NO_MEMORY());
-  runningApp->length (this->running_app_.size());
+  running_app->length (this->running_app_.size());
   unsigned int index = 0;
   for (size_t i = 0; i < this->running_app_.size(); ++i)
     {
       CORBA::Object_var ref = this->poa_->servant_to_reference (this->running_app_[i]);
-      (*runningApp) [index++] =
+      (*running_app) [index++] =
         Deployment::DomainApplication::_narrow (ref.in ());
     }
 
   DANCE_DEBUG((LM_DEBUG, DLINFO "DomainApplicationManager_impl::getApplications - "
                "Returning %u running applications\n",
-               runningApp.length ()));
-  return runningApp;
+               running_app->length ()));
+  return running_app;
 }
 
 ::Deployment::DeploymentPlan *
@@ -467,7 +467,7 @@ DomainApplicationManager_Impl::preparePlan()
               throw ::Deployment::StartError();
             }
           // We save NAM reference ptr in TNodes vector were it places to var variable
-          this->sub_app_mgr__.bind (nam, nm);
+          this->sub_app_mgr_.bind (nam, nm);
       
           DANCE_DEBUG ((LM_INFO, DLINFO "DomainApplicationManager_Impl::preparePlan - "
                         "Sucessfully prepared node %s for deployment\n",

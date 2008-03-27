@@ -97,7 +97,7 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb
 
 NodeApplication_Impl::~NodeApplication_Impl()
 {
-  DANCE_TRACE(DLINFO "NodeApplication_Impl::~NodeApplication_Impl()")
+  DANCE_TRACE(DLINFO "NodeApplication_Impl::~NodeApplication_Impl()");
 
   using namespace Components;
   ConfigValues config_values;
@@ -125,8 +125,8 @@ NodeApplication_Impl::~NodeApplication_Impl()
         }
       catch (...)
         {
-          DANCE_DEBUG((LM_ERROR, DLINFO
-                       "~NodeApplication_impl - An error has ocured during removing of container \"%s\"\n"
+          DANCE_DEBUG ((LM_ERROR, DLINFO
+                        "~NodeApplication_impl - An error has ocured during removing of container \"%s\"\n",
                        (*iter).ext_id_.c_str()));
         }
     }
