@@ -1,3 +1,10 @@
+Thu Mar 27 19:26:18 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ofccm/Cdmw:
+        * DAnCE/Cdmw:
+        
+          Moved to ofccm specific directory.
+        
 Thu Mar 27 19:09:00 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
@@ -7,7 +14,7 @@ Thu Mar 27 19:09:00 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
 
           Compile fixes, runtime functionality not expected.
-        
+
 Thu Mar 27 18:30:16 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
