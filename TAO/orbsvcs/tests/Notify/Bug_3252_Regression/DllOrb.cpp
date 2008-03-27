@@ -77,9 +77,7 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  ma_barrier_ = auto_ptr < ACE_Thread_Barrier >(
-    new ACE_Thread_Barrier(threadCnt + 1)
-  );
+  ACE_auto_ptr_reset (ma_barrier_, new ACE_Thread_Barrier (threadCnt + 1));
 
   this->activate(
     THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED,
