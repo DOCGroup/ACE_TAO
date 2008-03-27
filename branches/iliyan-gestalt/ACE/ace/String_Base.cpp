@@ -131,7 +131,7 @@ ACE_String_Base<CHAR>::set (const CHAR *s,
                             bool release)
 {
   // Case 1. Going from memory to more memory
-  size_type new_buf_len = len + 1 + sizeof (int);
+  size_type new_buf_len = len + 1;
   if (s != 0 && len != 0 && release && this->buf_len_ < new_buf_len)
     {
       CHAR *temp;
