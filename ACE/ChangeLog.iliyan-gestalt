@@ -1,3 +1,14 @@
+Thu Mar 27 13:42:23 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+
+        Replacing the use of a "magic" number for the service repository
+        size with the appropriate #define
+
+        * ace/String_Base.cpp:
+
+        Discarding an unnecessary change
+
 Tue Mar 25 16:44:29 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * examples/ASX/CCM_App/ASX_CCM_App.mpc:
@@ -75,7 +86,8 @@ Thu Mar 20 19:42:06 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
         DLL were being unloaded prematurely. The change was based on
         Service_Type_Dynamic_Guard stack based instances, capturing the
         intended position of a DLL-based service. As the DLL service
-        loaded, it was purposely inserted at the saved position.  Combined
+        loaded, i
+        t was purposely inserted at the saved position.  Combined
         with a reversing the order of finalization, that _almost_ worked.
 
         Later, the concept was enhanced with a mechanism that relies on

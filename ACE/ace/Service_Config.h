@@ -214,7 +214,7 @@ public:
    * registered when the repository is opened.
    */
   ACE_Service_Config (bool ignore_static_svcs = true,
-                      size_t size = 1024,
+                      size_t size = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE,
                       int signum = SIGHUP);
 
   /**
