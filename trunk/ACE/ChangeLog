@@ -1,3 +1,11 @@
+Thu Mar 27 16:17:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-bug-process.html:
+        * docs/ACE-development-process.html:
+        * docs/ACE-guidelines.html:
+        * docs/usage-bugzilla.html:
+          Updated bugzilla location
+
 Thu Mar 27 15:52:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/VXTestProjectCreator.pm:
