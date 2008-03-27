@@ -30,15 +30,10 @@ main (int argc, char *argv[])
         root_poa->the_POAManager ();
       
       test_impl svnt;
-      
       test_var server = svnt._this ();
       
       CORBA::String_var ior =
 	      orb->object_to_string (server.in ());
-
-      ACE_DEBUG ((LM_DEBUG, 
-                  "Activated as <%s>\n", 
-                  ior.in ()));
 
 	    FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
 
@@ -58,9 +53,9 @@ main (int argc, char *argv[])
       poa_manager->activate ();
       orb->run ();
 
-      // Destroy the POA, waiting until the destruction terminates
-      root_poa->destroy (1, 1);
-
+      /// Destroy the POA, waiting until the destruction terminates,
+      /// then the ORB.
+      root_poa->destroy (TRUE, TRUE);
       orb->destroy ();
     }
   catch (CORBA::Exception &ex)

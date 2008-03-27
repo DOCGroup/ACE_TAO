@@ -10,6 +10,8 @@
 const char *ior_input_file = "file://test.ior";
 const char *monitor_output_file = "monitor.ior";
 
+/// Runs the ORB in a separate thread so we can listen
+/// for calls on our MC interface without blocking.
 class ORB_Runner : public ACE_Task_Base
 {
 private:
@@ -36,6 +38,11 @@ main (int argc, char *argv[])
                                             argv, 
                                             "");
       
+      /// Here we take on aspects of a server role, exposing the
+      /// Monitor interface of our ORB so the monitoring client
+      /// can access it remotely. No need to activate the POA
+      /// manager etc here - it is done in the Object_Loader code
+      /// in the Monitor lib.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("Monitor");
       Monitor::MC_var monitor = Monitor::MC::_narrow (obj.in ());
@@ -57,6 +64,8 @@ main (int argc, char *argv[])
                         ior.in ());
 	    ACE_OS::fclose (output_file);
 	    
+	    /// Call orb->run() in a separate thread so the MC interface can
+	    /// get remote calls.
 	    ORB_Runner orb_runner (orb.in ());
 	    orb_runner.activate ();
 
@@ -74,13 +83,16 @@ main (int argc, char *argv[])
       /// Let the monitor client query a time or two.
       ACE_OS::sleep (2);
       
+      /// Create 1k, 2k and 3k strings to marshal, to force resizing of
+      /// the CDR stream buffer.
       for (int i = 1; i < 4; ++i)
         {
           char *tmp = new char[1024 * i + 1];
           ACE_OS::memset (tmp, 'a', 1024 * i);
           tmp[1024 * i] = '\0';
           CORBA::String_var result = target->test_op (tmp);
-          cout << "got " << ACE_OS::strlen (result.in ()) << " bytes" << endl;
+          cout << "reply to client = " << ACE_OS::strlen (result.in ())
+               << " bytes" << endl;
           delete [] tmp;
       
           ACE_OS::sleep (2);

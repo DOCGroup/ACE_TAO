@@ -1,3 +1,17 @@
+Thu Mar 27 16:46:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Monitor/Marshal_Buffer/client.cpp:
+        * examples/Monitor/Marshal_Buffer/monitor_client.cpp:
+        * examples/Monitor/Marshal_Buffer/server.cpp:
+        * examples/Monitor/Marshal_Buffer/test_i.cpp:
+        
+          Minor changes to output messages.
+          
+        * examples/Monitor/Marshal_Buffer/README:
+        * examples/Monitor/Marshal_Buffer/run_test.pl:
+        
+          New files, de rigeur for all our tests and examples.
+
 Wed Mar 26 22:02:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Monitor/Marshal_Buffer/client.cpp:
