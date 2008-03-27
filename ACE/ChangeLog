@@ -1,3 +1,9 @@
+Thu Mar 27 11:11:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Free_List.cpp:
+          Fixed ambiguous else with GCC 4.3. Thanks to Jules Colding
+          <colding at 42tools dot com> for reporting this
+
 Thu Mar 27 10:36:18 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * include/makeinclude/wrapper_macros.GNU:
