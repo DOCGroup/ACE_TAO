@@ -1,3 +1,9 @@
+Thu Mar 27 11:50:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+
+          Removed build waring from gcc on Solaris.
+
 Wed Mar 26 22:35:31 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * docs/ORBEndpoint.html:

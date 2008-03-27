@@ -93,6 +93,8 @@ print_priority_info (const char *const name)
   } else {
     ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));
   }
+#else
+  ACE_UNUSED_ARG (name);
 #endif /* ACE_HAS_PTHREADS_STD */
 
 #ifdef sun
