@@ -53,9 +53,8 @@ namespace CIAO
         virtual bool populate_domain_info
           (const ::Deployment::Domain& domain);
 
-        virtual void populate_node
-        (const ::Deployment::Node &d_node,
-         ::CIAO::RACE::Node &r_node);
+        virtual ::CIAO::RACE::Node populate_node
+        (const ::Deployment::Node &d_node);
 
         virtual void dump_task (::CIAO::RACE::Task task);
 
@@ -64,6 +63,9 @@ namespace CIAO
          ::CIAO::RACE::Task & task);
 
         virtual int node_ref (const char *node);
+
+        virtual void dump_domain (const CIAO::RACE::Domain &domain);
+
 
 
 
