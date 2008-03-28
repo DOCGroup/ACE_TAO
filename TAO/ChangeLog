@@ -1,3 +1,18 @@
+Fri Mar 28 15:30:12 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Invocation_Base.h:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/ClientRequestInterceptor_Adapter.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/Invocation_Adapter.cpp:
+
+          Changed reply_status to pi_reply_status as agreed in Bug#2377.
+
 Fri Mar 28 14:57:25 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Invocation_Adapter.cpp:

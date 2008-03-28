@@ -138,8 +138,8 @@ TAO_ClientRequestInfo::received_exception (void)
 {
   this->check_validity ();
 
-  if (this->invocation_->reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
-      && this->invocation_->reply_status () != PortableInterceptor::USER_EXCEPTION)
+  if (this->invocation_->pi_reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
+      && this->invocation_->pi_reply_status () != PortableInterceptor::USER_EXCEPTION)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
@@ -554,7 +554,7 @@ TAO_ClientRequestInfo::reply_status (void)
   this->check_validity ();
 
   PortableInterceptor::ReplyStatus const status =
-    this->invocation_->reply_status();
+    this->invocation_->pi_reply_status();
   if (status == -1 || status == PortableInterceptor::UNKNOWN)
     {
       // A reply hasn't been received yet.
@@ -569,7 +569,7 @@ TAO_ClientRequestInfo::forward_reference (void)
 {
   this->check_validity ();
 
-  if (this->invocation_->reply_status() != PortableInterceptor::LOCATION_FORWARD)
+  if (this->invocation_->pi_reply_status() != PortableInterceptor::LOCATION_FORWARD)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
