@@ -122,7 +122,7 @@ public:
   public:
     /// This indicates whether this entry is for I/O or for a regular
     /// event
-    int io_entry_;
+    bool io_entry_;
 
     /// The assosiated <Event_Handler>
     ACE_Event_Handler *event_handler_;
@@ -163,7 +163,7 @@ public:
     void reset (void);
 
     /// Set the structure to these new values
-    void set (int io_entry,
+    void set (bool io_entry,
               ACE_Event_Handler *event_handler,
               ACE_HANDLE io_handle,
               long network_events,
@@ -188,7 +188,7 @@ public:
   {
   public:
     /// This is set when the entry needed to be suspended.
-    int suspend_entry_;
+    bool suspend_entry_;
 
     /// Default constructor
     Current_Info (void);
@@ -197,18 +197,18 @@ public:
     void reset (void);
 
     /// Set the structure to these new values
-    void set (int io_entry,
+    void set (bool io_entry,
               ACE_Event_Handler *event_handler,
               ACE_HANDLE io_handle,
               long network_events,
               bool delete_event,
               bool delete_entry = false,
               ACE_Reactor_Mask close_masks = ACE_Event_Handler::NULL_MASK,
-              int suspend_entry = 0);
+              bool suspend_entry = false);
 
     /// Set the structure to these new values
     void set (Common_Info &common_info,
-              int suspend_entry = 0);
+              bool suspend_entry = false);
 
     /// Dump the state of an object.
     void dump (ACE_HANDLE event_handle) const;
@@ -227,7 +227,7 @@ public:
     ACE_HANDLE event_handle_;
 
     /// This is set when the entry needed to be suspended.
-    int suspend_entry_;
+    bool suspend_entry_;
 
     /// Default constructor
     To_Be_Added_Info (void);
@@ -237,19 +237,19 @@ public:
 
     /// Set the structure to these new values
     void set (ACE_HANDLE event_handle,
-              int io_entry,
+              bool io_entry,
               ACE_Event_Handler *event_handler,
               ACE_HANDLE io_handle,
               long network_events,
               bool delete_event,
               bool delete_entry = false,
               ACE_Reactor_Mask close_masks = ACE_Event_Handler::NULL_MASK,
-              int suspend_entry = 0);
+              bool suspend_entry = false);
 
     /// Set the structure to these new values
     void set (ACE_HANDLE event_handle,
               Common_Info &common_info,
-              int suspend_entry = 0);
+              bool suspend_entry = false);
 
     /// Dump the state of an object.
     void dump (void) const;
@@ -268,7 +268,7 @@ public:
     ACE_HANDLE event_handle_;
 
     /// This is set when the entry needed to be resumed.
-    int resume_entry_;
+    bool resume_entry_;
 
     /// Constructor used for initializing the structure
     Suspended_Info (void);
@@ -278,19 +278,19 @@ public:
 
     /// Set the structure to these new values
     void set (ACE_HANDLE event_handle,
-              int io_entry,
+              bool io_entry,
               ACE_Event_Handler *event_handler,
               ACE_HANDLE io_handle,
               long network_events,
               bool delete_event,
               bool delete_entry = false,
               ACE_Reactor_Mask close_masks = 0,
-              int resume_entry = 0);
+              bool resume_entry = false);
 
     /// Set the structure to these new values
     void set (ACE_HANDLE event_handle,
               Common_Info &common_info,
-              int resume_entry = 0);
+              bool resume_entry = false);
 
     /// Dump the state of an object.
     void dump (void) const;
@@ -316,7 +316,7 @@ public:
 
   /// Insert I/O <Event_Handler> entry into the system. This method
   /// assumes that the lock are head *before* this method is invoked.
-  int bind_i (int io_entry,
+  int bind_i (bool io_entry,
               ACE_Event_Handler *event_handler,
               long network_events,
               ACE_HANDLE io_handle,
@@ -330,7 +330,7 @@ public:
   /// Non-lock-grabbing version of <unbind>
   int unbind_i (ACE_HANDLE,
                 ACE_Reactor_Mask mask,
-                int &changes_required);
+                bool &changes_required);
 
   /// Remove all bindings of <ACE_HANDLE, ACE_Event_Handler> tuples.
   void unbind_all (void);
@@ -353,7 +353,7 @@ public:
   Current_Info *current_info (void) const;
 
   /// Check if changes to the handle set are required.
-  virtual int changes_required (void);
+  virtual bool changes_required (void);
 
   /// Make changes to the handle set
   virtual int make_changes (void);
@@ -383,11 +383,11 @@ public:
 
   /// Temporarily suspend entry
   int suspend_handler_i (ACE_HANDLE handle,
-                         int &changes_required);
+                         bool &changes_required);
 
   /// Resume suspended entry
   int resume_handler_i (ACE_HANDLE handle,
-                        int &changes_required);
+                        bool &changes_required);
 
   /// Deletions and suspensions in current_info_
   int make_changes_in_current_infos (void);
@@ -1011,7 +1011,7 @@ public:
                                ACE_Reactor_Mask masks_to_be_added);
 
   /**
-   * Add @a masks_to_be_added to the <handle>'s entry in WFMO_Reactor.
+   * Add @a masks_to_be_added to the @a handle's entry in WFMO_Reactor.
    * The Event_Handler associated with <handle> must already have been
    * registered with WFMO_Reactor.
    */
