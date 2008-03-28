@@ -22,6 +22,7 @@
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/WFMO_Reactor.h"
+#include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
@@ -43,6 +44,8 @@ public:
   int handle_input (ACE_HANDLE fd);
 
   int handle_output (ACE_HANDLE fd);
+
+  ACE_HANDLE get_handle (void) const;
 
   // We need to add MSG_OOB data transfer to this test to check the
   // order of when <handle_exception> gets called.  I tried with
@@ -82,9 +85,17 @@ Handler::Handler (ACE_Reactor &reactor)
     }
 }
 
+
 Handler::~Handler (void)
 {
   this->pipe_.close ();
+}
+
+
+ACE_HANDLE
+Handler::get_handle (void) const
+{
+  return this->pipe_.read_handle ();
 }
 
 int
@@ -153,14 +164,14 @@ Handler::handle_input (ACE_HANDLE fd)
   return 0;
 }
 
-static void
+static bool
 test_reactor_dispatch_order (ACE_Reactor &reactor)
 {
   Handler handler (reactor);
   if (!handler.ok_)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error initializing test; abort.\n")));
-      return;
+      return false;
     }
 
   bool ok_to_go = true;
@@ -186,8 +197,37 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
       ok_to_go = false;
     }
 
+  // Suspend the handlers - only the timer should be dispatched
+  ACE_Time_Value tv (1);
+  reactor.suspend_handlers ();
+  reactor.run_reactor_event_loop (tv);
+
+  // only the timer should have fired
+  if (handler.dispatch_order_ != 2)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Incorrect number fired %d\n"),
+                  handler.dispatch_order_));
+      ok_to_go = false;
+    }
+
+  // Reset the dispatch_order_ count and schedule another timer
+  handler.dispatch_order_ = 1;
+  if (-1 == reactor.schedule_timer (&handler,
+                                    0,
+                                    ACE_Time_Value (0)))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
+      ok_to_go = false;
+    }
+
+  // Resume the handlers - things should work now
+  reactor.resume_handlers ();
+
   if (ok_to_go)
-    reactor.run_reactor_event_loop ();
+    {
+      reactor.run_reactor_event_loop (tv);
+      reactor.run_reactor_event_loop (tv);
+    }
 
   if (0 != reactor.remove_handler (handler.pipe_.read_handle (),
                                    ACE_Event_Handler::ALL_EVENTS_MASK |
@@ -195,6 +235,15 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("remover_handler pipe")));
+
+  if (handler.dispatch_order_ != 4)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Incorrect number fired %d\n"),
+                  handler.dispatch_order_));
+      ok_to_go = false;
+    }
+
+  return ok_to_go;
 }
 
 int
@@ -202,10 +251,12 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test"));
 
+  int result = 0;
   ACE_Select_Reactor select_reactor_impl;
   ACE_Reactor select_reactor (&select_reactor_impl);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_Select_Reactor\n")));
-  test_reactor_dispatch_order (select_reactor);
+  if (!test_reactor_dispatch_order (select_reactor))
+    ++result;
 
   // Winsock 2 things are needed for WFMO_Reactor.
 #if defined (ACE_WIN32) && \
@@ -214,9 +265,19 @@ run_main (int, ACE_TCHAR *[])
   ACE_WFMO_Reactor wfmo_reactor_impl;
   ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_WFMO_Reactor\n")));
-  test_reactor_dispatch_order (wfmo_reactor);
+  if (!test_reactor_dispatch_order (wfmo_reactor))
+    ++result;
 
 #endif /* ACE_WIN32 && ACE_HAS_WINSOCK2 */
+
+#if defined (ACE_HAS_EVENT_POLL)
+  ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
+  ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
+  if (!test_reactor_dispatch_order (dev_poll_reactor))
+    ++result;
+#endif /* ACE_HAS_EVENT_POLL */
+
 
   ACE_END_TEST;
   return 0;

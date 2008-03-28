@@ -254,9 +254,7 @@ int
 ACE::process_active (pid_t pid)
 {
 #if !defined(ACE_WIN32)
-  int retval = ACE_OS::kill (pid, 0);
-
-  if (retval == 0)
+  if (ACE_OS::kill (pid, 0) == 0)
     return 1;
   else if (errno == ESRCH)
     return 0;
@@ -266,8 +264,7 @@ ACE::process_active (pid_t pid)
   // Create a handle for the given process id.
   ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_QUERY_INFORMATION, FALSE, pid);
-  if (process_handle == ACE_INVALID_HANDLE
-      || process_handle == 0)
+  if (process_handle == ACE_INVALID_HANDLE || process_handle == 0)
     return 0;
   else
     {
@@ -291,7 +288,7 @@ ACE::execname (const ACE_TCHAR *old_name)
   const ACE_TCHAR *suffix = ACE_OS::strrchr (old_name, ACE_TEXT ('.'));
   if (suffix == 0 || ACE_OS::strcasecmp (suffix, ACE_TEXT (".exe")) != 0)
     {
-      ACE_TCHAR *new_name;
+      ACE_TCHAR *new_name = 0;
 
       size_t size =
         ACE_OS::strlen (old_name)
