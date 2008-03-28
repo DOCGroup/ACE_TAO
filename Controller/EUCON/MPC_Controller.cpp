@@ -17,22 +17,8 @@
 
 
 MPC_Controller::MPC_Controller()
-  : m_task_num(0), m_subtask_num(0), m_proc_num(0), lib_flag (0)
-{
-  // Call application and library initialization. Perform this
-  // initialization before calling any API functions or
-  // Compiler-generated libraries by Matlab.
-  if (!mclInitializeApplication(NULL,0) || !liblsqInitialize())
-    {
-      std::cerr << "could not initialize the library properly"
-                << std::endl;
-    }
-  else
-    {
-      lib_flag = 1;
-    }
-
-}
+ : m_task_num(0), m_subtask_num(0), m_proc_num(0)
+{lib_flag = 0;}
 
 MPC_Controller::~MPC_Controller() {
 
@@ -65,11 +51,20 @@ int MPC_Controller::init_domain(CIAO::RACE::Domain dom){
 //initialize the matlab environment and the data information for lsqlin solver
 int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 
-  if (lib_flag != 1)
-    {
-      return -1;
-    }
-  int i,j,k;
+	// Call application and library initialization. Perform this
+    // initialization before calling any API functions or
+    // Compiler-generated libraries by Matlab.
+	if (!mclInitializeApplication(NULL,0) ||
+		!liblsqInitialize())
+	{
+		std::cerr << "could not initialize the library properly"
+				   << std::endl;
+		lib_flag = 0;
+		return -1;
+	}
+
+	lib_flag = 1;
+	int i,j,k;
 
 	m_task_num = tasks.size();
 
@@ -78,6 +73,7 @@ int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 	m_X = mwArray(m_proc_num*PREDICTION_HORIZON, 1, mxDOUBLE_CLASS, mxREAL);
 	m_Xptr = new double[m_proc_num*PREDICTION_HORIZON];
 	m_X.GetData(m_Xptr,m_proc_num*PREDICTION_HORIZON);
+
 	m_U = mwArray(m_task_num, 1, mxDOUBLE_CLASS, mxREAL);
 	m_Uptr = new double[m_task_num];
 	m_U.GetData(m_Uptr,m_task_num);
@@ -88,23 +84,41 @@ int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 
 	m_R_Chgs = mwArray(m_task_num, 1, mxDOUBLE_CLASS, mxREAL);
 	m_rate_chgs = new double[m_task_num];
-	rccPtr = new double[m_task_num];
 	memset(m_rate_chgs, 0, m_task_num*sizeof(double));
+
+        // @@ Not sure what this is for.
+	rccPtr = new double[m_task_num];
 	memset(rccPtr, 0, m_task_num*sizeof(double));
 
 	m_F = mwArray(CONTROL_HORIZON*m_task_num*2, 1, mxDOUBLE_CLASS, mxREAL);
 	m_Fptr = new double[CONTROL_HORIZON*m_task_num*2];
 	m_F.GetData(m_Fptr,CONTROL_HORIZON*m_task_num*2);
 
+        // @@ This is 1.0 H!!!
 	H0 = mwArray(m_proc_num*PREDICTION_HORIZON, m_task_num*CONTROL_HORIZON, mxDOUBLE_CLASS, mxREAL);
 	Hptr = new double[m_proc_num*PREDICTION_HORIZON*m_task_num*CONTROL_HORIZON];
 	H0.GetData(Hptr,m_proc_num*PREDICTION_HORIZON*m_task_num*CONTROL_HORIZON);
+
 	HW = mwArray(m_task_num*CONTROL_HORIZON, m_task_num*CONTROL_HORIZON, mxDOUBLE_CLASS, mxREAL);
 
+        // @@  "H = [H0 ; HW]"
 	H = mwArray(m_proc_num*PREDICTION_HORIZON+m_task_num*CONTROL_HORIZON, m_task_num*CONTROL_HORIZON, mxDOUBLE_CLASS, mxREAL);
 
 	A = mwArray(2*CONTROL_HORIZON*m_task_num,CONTROL_HORIZON*m_task_num,mxDOUBLE_CLASS, mxREAL);
 
+        // @@ Added this to handle the utilization constraint: ui(k) <= Bi (1<=i<=n) - Nishanth
+        utilB = mwArray(m_proc_num*PREDICTION_HORIZON, 1, mxDOUBLE_CLASS, mxREAL);
+        utilBptr = new double[m_proc_num*PREDICTION_HORIZON];
+	utilB.GetData(utilBptr, m_proc_num*PREDICTION_HORIZON);
+
+        consB = mwArray(m_proc_num*PREDICTION_HORIZON, 1, mxDOUBLE_CLASS, mxREAL);
+        consB_temp = mwArray(m_proc_num*PREDICTION_HORIZON, 1, mxDOUBLE_CLASS, mxREAL);
+
+        // @@ This matrix stores [A ; H0]
+        consLeft = mwArray(2*CONTROL_HORIZON*m_task_num + m_proc_num*PREDICTION_HORIZON, CONTROL_HORIZON*m_task_num, mxDOUBLE_CLASS, mxREAL);
+
+        // @@ This matrix stores [B ; consB];
+        consRight = mwArray(CONTROL_HORIZON*m_task_num*2 + m_proc_num*PREDICTION_HORIZON, 1, mxDOUBLE_CLASS, mxREAL);
 
 	B = mwArray(CONTROL_HORIZON*m_task_num*2, 1, mxDOUBLE_CLASS, mxREAL);
 	BB = mwArray(2*CONTROL_HORIZON*m_task_num,m_task_num, mxDOUBLE_CLASS, mxREAL);
@@ -226,6 +240,19 @@ int MPC_Controller::init(std::vector<CIAO::RACE::Task> tasks) {
 	}
 	// ------------------- end of computation of A
 
+	// @@ Added to handle the utilization constraint: ui(k) <= Bi
+	// (1<=i<=n) compute the utilization bound vector. -Nishanth
+        for (i = 0; i < m_proc_num; i ++)
+          {
+            utilBptr[i] = set_points[i];
+          }
+
+	for (i=1; i<PREDICTION_HORIZON; i++)
+		memcpy((void*)(utilBptr + i*m_proc_num), utilBptr, m_proc_num*sizeof(double));
+
+	rowmajor_to_colmajor(utilBptr, m_proc_num*PREDICTION_HORIZON, 1);
+        utilB.SetData(utilBptr,m_proc_num*PREDICTION_HORIZON);
+	//end of added code
 
 	return 0;
 }
@@ -256,10 +283,11 @@ MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::T
 
 	// -----------vector U(k) assignment ----------------
 	memcpy(m_Uptr, m_rate_chgs, m_task_num*sizeof(double));
-
+	/*
 	std::cout << "U "<<std::endl;
 	for (i=0; i<m_task_num; i++)
 		std::cout << m_Uptr[i] << std::endl;
+	*/
 	m_U.SetData(m_Uptr,m_task_num);
 
 	//--------------- reference trajectory vector computation----------------
@@ -273,15 +301,13 @@ MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::T
 			double cpu_util = m_Xptr[j];
 			double cpu_util_setpoint = set_points[j];
 			error = cpu_util_setpoint - cpu_util;
-                        std::cout << "Error in node "
-                                  << j << " = " << error
-                                  << std::endl;
 			m_Rptr[num++] = cpu_util_setpoint - error*ratio;
 		}
 	}
-
-// 	for (i=0; i<PREDICTION_HORIZON*m_proc_num; i++)
-//           std::cout << "Error " << "i = " << m_Rptr[i] << std::endl;
+	/*
+	for (i=0; i<PREDICTION_HORIZON*m_proc_num; i++)
+		std::cout << m_Rptr[i] << std::endl;
+	*/
 	m_R.SetData(m_Rptr,PREDICTION_HORIZON*m_proc_num);
 
     //------------ below code handles the Constraint A on the formulation -----------------
@@ -334,15 +360,37 @@ MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::T
 	B = matrix_multiple(BB,m_U,2*CONTROL_HORIZON*m_task_num,m_task_num,m_task_num,1);
 	B = matrix_minus(m_F,B,2*CONTROL_HORIZON*m_task_num,1,2*CONTROL_HORIZON*m_task_num,1);
 
+        // ***************** add the cpu util constraint, added on April 23, 2005 ****************
+	//utilization constraint
+        // The snipped below computes engEvalString(m_matlab_ep, "consB = utilB - X - Y*U");
+	consB = matrix_minus(utilB,m_X,PREDICTION_HORIZON*m_proc_num,1,PREDICTION_HORIZON*m_proc_num,1);
+	consB_temp = matrix_multiple(Y,m_U,m_proc_num*PREDICTION_HORIZON, m_task_num,m_task_num,1);
+	consB = matrix_minus(consB,consB_temp,PREDICTION_HORIZON*m_proc_num,1,PREDICTION_HORIZON*m_proc_num,1);
+
+
+        // consLeft = [A ; H0]
+	consLeft = matrix_row_join(A, H0,
+                                   2*CONTROL_HORIZON*m_task_num,
+                                   CONTROL_HORIZON*m_task_num,
+                                   m_proc_num*PREDICTION_HORIZON,
+                                   m_task_num*CONTROL_HORIZON);
+
+        // consRight = [B;consB]
+	consRight = matrix_row_join(B, consB,
+                                    CONTROL_HORIZON*m_task_num*2,
+                                    1,
+                                    m_proc_num*PREDICTION_HORIZON,
+                                    1);
 
 	// call lsqlin_simple2 function from liblsq.dll(compiler-generated library) to compute the least square optimiztion
-	lsqlin_simple2(1,m_R_Chgs,H,E,A,B);
+        //	lsqlin_simple2(1,m_R_Chgs,H,E,A,B);
+	lsqlin_simple2(1,m_R_Chgs,H,E,consLeft,consRight);
 
 	//Get the resulted new period
 	m_R_Chgs.GetData(rccPtr,m_task_num);
 	for(i = 0; i < m_task_num; i++){
 		m_rate_chgs[i] += rccPtr[i];
-		//std::cout<< rccPtr[i] << std::endl;
+		std::cout<< rccPtr[i] << std::endl;
 	}
 	i = 0;
 	for (it_t = tasks.begin(); it_t != tasks.end(); it_t++) {
