@@ -358,7 +358,7 @@ public:
   // is within the range of legal handles (i.e., >= 0 && < max_size_).
   bool invalid_handle (ACE_HANDLE handle);
 
-  // Check the @c handle to make sure it's a valid @c ACE_HANDLE that
+  // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
   // within the range of currently registered handles (i.e., >= 0 && <
   // @c max_handlep1_).
   bool handle_in_range (ACE_HANDLE handle);

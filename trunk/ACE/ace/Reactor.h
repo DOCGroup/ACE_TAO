@@ -593,7 +593,7 @@ public:
    * succeeded and 0 if the @a timer_id wasn't found.
    *
    * On successful cancellation, ACE_Event_Handler::handle_close()
-   * will be called with <ACE_Event_Handler::TIMER_MASK>.
+   * will be called with ACE_Event_Handler::TIMER_MASK.
    * ACE_Event_Handler::remove_reference() will also be called.
    */
   virtual int cancel_timer (long timer_id,
@@ -607,7 +607,7 @@ public:
    * multiple times for all timer associated with @a event_handler.
    *
    * ACE_Event_Handler::handle_close() will be called with
-   * <ACE_Event_Handler::TIMER_MASK> only once irrespective of the
+   * ACE_Event_Handler::TIMER_MASK only once irrespective of the
    * number of timers associated with the event handler.
    * ACE_Event_Handler::remove_reference() will also be called once
    * for every timer associated with the event handler.

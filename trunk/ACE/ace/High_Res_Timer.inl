@@ -53,8 +53,7 @@ ACE_High_Res_Timer::gettimeofday (const ACE_OS::ACE_HRTimer_Op op)
 #endif /* ACE_WIN32 */
 
   ACE_Time_Value tv;
-  ACE_High_Res_Timer::hrtime_to_tv (tv,
-                                    ACE_OS::gethrtime (op));
+  ACE_High_Res_Timer::hrtime_to_tv (tv, ACE_OS::gethrtime (op));
   return tv;
 }
 

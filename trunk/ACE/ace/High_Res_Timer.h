@@ -250,7 +250,7 @@ public:
   static ACE_Time_Value gettimeofday (const ACE_OS::ACE_HRTimer_Op =
                                         ACE_OS::ACE_HRTIMER_GETTIME);
 
-  /// Converts an <hrt> to @a tv using global_scale_factor_.
+  /// Converts an @a hrt to @a tv using global_scale_factor_.
   static void hrtime_to_tv (ACE_Time_Value &tv,
                             const ACE_hrtime_t hrt);
 
