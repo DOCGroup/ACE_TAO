@@ -15,6 +15,7 @@
 #include "tao/Stub.h"
 #include "tao/ORB.h"
 #include "tao/Profile.h"
+#include "tao/TAO_Server_Request.h"
 
 ACE_RCSID (IORTable,
            Table_Adapter,
@@ -99,7 +100,7 @@ TAO_Table_Adapter::priority (void) const
 
 int
 TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
-                             TAO_ServerRequest &,
+                             TAO_ServerRequest &request,
                              CORBA::Object_out forward_to)
 {
   TAO_IOR_Table_Impl_var rootref;
@@ -113,8 +114,13 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
     rootref = this->root_;
   }
 
-  return this->find_object (key, forward_to) ? TAO_Adapter::DS_FORWARD
-                                             : TAO_Adapter::DS_MISMATCHED_KEY;
+  if (this->find_object (key, forward_to))
+    {
+      request.forward_location (forward_to);
+      return TAO_Adapter::DS_FORWARD;
+    }
+  else
+    return TAO_Adapter::DS_MISMATCHED_KEY;
 }
 
 const char *

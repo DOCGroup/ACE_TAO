@@ -138,6 +138,9 @@ namespace TAO
     /// Forwarded object reference.
     CORBA::Object_var forwarded_to_;
 
+    /// If we get nil forward reference we need more reliable indication of forwarding.
+    bool is_forwarded_;
+
     /// Is response expected?
     bool response_expected_;
 

@@ -57,6 +57,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     operation_ (0),
     operation_len_ (0),
     release_operation_ (false),
+    is_forwarded_ (false),
     incoming_ (&input),
     outgoing_ (&output),
     response_expected_ (false),
@@ -99,6 +100,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     operation_ (CORBA::string_dup (operation)),
     operation_len_ (operation == 0 ? 0 : ACE_OS::strlen (operation)),
     release_operation_ (true),
+    is_forwarded_ (false),
     incoming_ (0),
     outgoing_ (&output),
     response_expected_ (response_expected),
@@ -133,6 +135,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
     operation_ (details.opname ()),
     operation_len_ (details.opname_len ()),
     release_operation_ (false),
+    is_forwarded_ (false),
     incoming_ (0),
     outgoing_ (0),
     response_expected_ (details.response_flags () == TAO_TWOWAY_RESPONSE_FLAG
@@ -247,7 +250,7 @@ TAO_ServerRequest::init_reply (void)
   reply_params.argument_flag_ = this->argument_flag_;
 
   // Forward exception only.
-  if (!CORBA::is_nil (this->forward_location_.in ()))
+  if (this->is_forwarded_)
     {
       CORBA::Boolean const permanent_forward_condition =
         this->orb_core_->is_permanent_forward_condition (this->forward_location_.in (),

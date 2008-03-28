@@ -1,3 +1,42 @@
+Fri Mar 28 09:07:14 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/Invocation_Base.h:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/Collocated_Invocation.cpp:
+        * tao/ORB_Core.inl:
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Invocation_Base.inl:
+        * tao/Adapter_Registry.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/TAO_Server_Request.inl:
+
+          Fixed a bug in the server side code with incorrect handling
+          of forward request exception that was contstructed with nil
+          object reference. Added throwing of a TRANSIENT exception on
+          the client side in case server forwards to nil object.
+
+        * tests/Bug_3276_Regression/client.cpp:
+        * tests/Bug_3276_Regression/Manager.h:
+        * tests/Bug_3276_Regression/Servant_Locator.cpp:
+        * tests/Bug_3276_Regression/test.idl:
+        * tests/Bug_3276_Regression/test_i.cpp:
+        * tests/Bug_3276_Regression/Manager.cpp:
+        * tests/Bug_3276_Regression/Servant_Locator.h:
+        * tests/Bug_3276_Regression/Bug_3276_Regression.mpc:
+        * tests/Bug_3276_Regression/README:
+        * tests/Bug_3276_Regression/run_test.pl:
+        * tests/Bug_3276_Regression/test_i.h:
+
+          Added a regression test.
+
 Thu Mar 27 18:44:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:

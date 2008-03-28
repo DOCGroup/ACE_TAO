@@ -865,7 +865,7 @@ TAO_GIOP_Message_Base::process_request (
 
 //@@ TAO_DISPATCH_RESOLUTION_OPT_COMMENT_HOOK_END
 
-      if (!CORBA::is_nil (forward_to.in ()))
+      if (request.is_forwarded ())
         {
           CORBA::Boolean const permanent_forward_condition =
               this->orb_core_->is_permanent_forward_condition
@@ -1081,7 +1081,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
           server_request,
           forward_to);
 
-      if (!CORBA::is_nil (forward_to.in ()))
+      if (server_request.is_forwarded ())
         {
           status_info.status = GIOP::OBJECT_FORWARD;
           status_info.forward_location_var = forward_to;
@@ -1103,21 +1103,11 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
         {
           status_info.forward_location_var = server_request.forward_location ();
 
-          if (!CORBA::is_nil (status_info.forward_location_var.in ()))
-            {
-              status_info.status = GIOP::OBJECT_FORWARD;
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
-                          ACE_TEXT ("forwarding\n")));
-            }
-          else
-            {
-              // Normal exception, so the object is not here
-              status_info.status = GIOP::UNKNOWN_OBJECT;
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
-                          ACE_TEXT ("not here\n")));
-            }
+          // Normal exception, so the object is not here
+          status_info.status = GIOP::UNKNOWN_OBJECT;
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
+                      ACE_TEXT ("not here\n")));
         }
     }
 
