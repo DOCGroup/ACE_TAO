@@ -17,7 +17,7 @@ Fri Mar 28 09:17:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           Doxygen changes
 
         * ace/Select_Reactor_Base.inl:
-          Fixed done implementation
+          Fixed done implementation. This fixes bugzilla 3267
 
         * ace/String_Base.cpp:
           Initialise pointer with 0
