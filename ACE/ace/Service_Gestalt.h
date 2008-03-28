@@ -320,7 +320,8 @@ protected:
   /**
    *
    */
-  virtual int parse_args_i (int, ACE_TCHAR *argv[], bool& ignore_default_svc_conf_file);
+  virtual int parse_args_i (int, ACE_TCHAR *argv[],
+                            bool& ignore_default_svc_conf_file);
 
   /**
    * Performs an open without parsing command-line arguments.  The
@@ -448,12 +449,8 @@ protected:
   /// the static_svcs_ list.
   ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
 
-  //@DEBUG:
- public:
-
   /// Support for intrusive reference counting
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> refcnt_;
-
 
  public:
   static void intrusive_add_ref (ACE_Service_Gestalt*);
@@ -495,6 +492,7 @@ private:
   ACE_Service_Repository & repo_;
   size_t repo_begin_;
   ACE_TCHAR const * const name_;
+
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Guard< ACE_Recursive_Thread_Mutex > repo_monitor_;
 #endif

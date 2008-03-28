@@ -1,3 +1,10 @@
+Fri Mar 28 16:13:30 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Dynamic_Service_Base.h:
+        * ace/Service_Gestalt.h:
+
+        Updated following a code-review.
+
 Thu Mar 27 21:04:11 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * THANKS:
