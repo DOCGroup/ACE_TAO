@@ -169,12 +169,19 @@ TAO_ServerRequest::forward_location (CORBA::Object_ptr forward_reference)
 {
   this->forward_location_ =
     CORBA::Object::_duplicate (forward_reference);
+  this->is_forwarded_ = true;
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_ServerRequest::forward_location (void)
 {
   return CORBA::Object::_duplicate (this->forward_location_.in ());
+}
+
+ACE_INLINE bool
+TAO_ServerRequest::is_forwarded (void) const
+{
+  return this->is_forwarded_;
 }
 
 ACE_INLINE GIOP::ReplyStatusType

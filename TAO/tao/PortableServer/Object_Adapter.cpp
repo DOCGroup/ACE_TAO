@@ -757,7 +757,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
           // thrown, then set the forward_to object reference and return
           // with the appropriate return status.
           forward_to.ptr () = request.forward_location ();
-          if (!CORBA::is_nil (request.forward_location ()))
+          if (request.is_forwarded ())
             {
               return TAO_Adapter::DS_FORWARD;
             }
@@ -777,7 +777,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
           // thrown, then set the forward_to object reference and return
           // with the appropriate return status.
           forward_to.ptr () = request.forward_location ();
-          if (!CORBA::is_nil (request.forward_location ()))
+          if (request.is_forwarded ())
             {
               return TAO_Adapter::DS_FORWARD;
             }
@@ -790,6 +790,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
       if (result == TAO_Adapter::DS_FORWARD)
         {
+          request.reply_status (GIOP::LOCATION_FORWARD);
           request.forward_location (forward_to.ptr ());
           if (sri_adapter != 0)
             {

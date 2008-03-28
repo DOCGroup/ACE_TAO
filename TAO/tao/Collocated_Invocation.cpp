@@ -91,10 +91,10 @@ namespace TAO
         s = TAO_INVOKE_SUCCESS;
 
 #if TAO_HAS_INTERCEPTORS == 1
-        if (this->forwarded_to_.in () ||
+        if (this->is_forwarded_ ||
             this->response_expected_ == false)
           {
-            if (this->forwarded_to_.in ())
+            if (this->is_forwarded_)
               this->reply_received (TAO_INVOKE_RESTART);
 
             s = this->receive_other_interception ();
@@ -172,7 +172,7 @@ namespace TAO
       }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-    if (this->forwarded_to_.in () != 0)
+    if (this->is_forwarded_)
       s =  TAO_INVOKE_RESTART;
 
     return s;

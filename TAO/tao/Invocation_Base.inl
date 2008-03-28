@@ -22,6 +22,7 @@ namespace TAO
   Invocation_Base::forwarded_reference (CORBA::Object_ptr o)
   {
     this->forwarded_to_ = CORBA::Object::_duplicate (o);
+    this->is_forwarded_ = true;
   }
 
   ACE_INLINE CORBA::Object_ptr
@@ -33,13 +34,14 @@ namespace TAO
   ACE_INLINE CORBA::Object_ptr
   Invocation_Base::steal_forwarded_reference (void)
   {
+    this->is_forwarded_ = false;
     return this->forwarded_to_._retn ();
   }
 
   ACE_INLINE bool
   Invocation_Base::is_forwarded (void) const
   {
-    return (this->forwarded_to_.in () != 0);
+    return this->is_forwarded_;
   }
 
   ACE_INLINE CORBA::Boolean
