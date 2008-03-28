@@ -22,6 +22,7 @@
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/WFMO_Reactor.h"
+#include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
