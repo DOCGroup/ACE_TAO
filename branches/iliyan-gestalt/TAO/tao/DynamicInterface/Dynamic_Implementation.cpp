@@ -121,7 +121,7 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())
     {
-      if (!CORBA::is_nil (request.forward_location ()))
+      if (request.is_forwarded ())
         {
           request.init_reply ();
           request.tao_send_reply ();

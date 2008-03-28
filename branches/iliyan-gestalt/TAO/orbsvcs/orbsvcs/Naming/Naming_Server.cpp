@@ -2,10 +2,14 @@
 
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "orbsvcs/Naming/Transient_Naming_Context.h"
+
+#if !defined (CORBA_E_MICRO)
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
 #include "orbsvcs/Naming/Flat_File_Persistence.h"
+#endif /* CORBA_E_MICRO */
+
 #include "orbsvcs/CosNamingC.h"
 
 #include "tao/debug.h"
@@ -35,16 +39,18 @@ TAO_Naming_Server::TAO_Naming_Server (void)
   : naming_context_ (),
     ior_multicast_ (0),
     naming_service_ior_ (),
-    context_index_ (0),
     ior_file_name_ (0),
     pid_file_name_ (0),
     context_size_ (ACE_DEFAULT_MAP_SIZE),
+    multicast_ (0),
+#if !defined (CORBA_E_MICRO)
+    context_index_ (0),
     persistence_file_name_ (0),
     base_address_ (TAO_NAMING_BASE_ADDR),
-    multicast_ (0),
     use_storable_context_ (0),
     use_servant_activator_ (false),
     servant_activator_ (0),
+#endif /* CORBA_E_MICRO */
     use_redundancy_(0),
     round_trip_timeout_ (0),
     use_round_trip_timeout_ (0)
@@ -65,16 +71,18 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
   : naming_context_ (),
     ior_multicast_ (0),
     naming_service_ior_ (),
-    context_index_ (0),
     ior_file_name_ (0),
     pid_file_name_ (0),
     context_size_ (ACE_DEFAULT_MAP_SIZE),
+    multicast_ (0),
+#if !defined (CORBA_E_MICRO)
+    context_index_ (0),
     persistence_file_name_ (0),
     base_address_ (TAO_NAMING_BASE_ADDR),
-    multicast_ (0),
     use_storable_context_ (use_storable_context),
     use_servant_activator_ (false),
     servant_activator_ (0),
+#endif /* CORBA_E_MICRO */
     use_redundancy_(0),
     round_trip_timeout_ (0),
     use_round_trip_timeout_ (0)
@@ -168,7 +176,9 @@ TAO_Naming_Server::parse_args (int argc,
 #endif /* TAO_HAS_MINIMUM_POA */
 
   int c;
-  int size, result;
+  int size;
+#if !defined (CORBA_E_MICRO)
+  int result;
 
   // This is declared this way to avoid warnings from
   // some compilers that complain about mismatching types
@@ -178,6 +188,7 @@ TAO_Naming_Server::parse_args (int argc,
 #else
   long int address;
 #endif /* ACE_SIZEOF_VOID_P */
+#endif /* CORBA_E_MICRO */
 
   // Make sure only one persistence option is specified
   int f_opt_used = 0;
@@ -201,6 +212,10 @@ TAO_Naming_Server::parse_args (int argc,
         if (size >= 0)
           this->context_size_ = size;
         break;
+      case 'm':
+        this->multicast_ = ACE_OS::atoi(get_opts.opt_arg ());
+        break;
+#if !defined (CORBA_E_MICRO)
       case 'b':
         result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
 #if ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
@@ -214,9 +229,6 @@ TAO_Naming_Server::parse_args (int argc,
                              "Unable to process <-b> option"),
                             -1);
         this->base_address_ = (void *) address;
-        break;
-      case 'm':
-        this->multicast_ = ACE_OS::atoi(get_opts.opt_arg ());
         break;
       case 'f':
         this->persistence_file_name_ = get_opts.opt_arg ();
@@ -235,19 +247,25 @@ TAO_Naming_Server::parse_args (int argc,
         u_opt_used = 1;
         break;
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* !CORBA_E_MICRO */
       case 'z':
         this->use_round_trip_timeout_ = 1;
         this->round_trip_timeout_ = (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
+#if !defined (ACE_NLOGGING)
         const ACE_TCHAR *reqNonMinCorba=
-#if (TAO_HAS_MINIMUM_POA == 0)
-          ACE_TEXT ("  -u <storable_persistence_directory (not used with -f)> ")
-          ACE_TEXT ("  -r <redundant_persistence_directory> ");
+#if !defined (CORBA_E_MICRO)
+          ACE_TEXT ("-f <persistence_file_name> ")
+#endif /* CORBA_E_MICRO */
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO)
+          ACE_TEXT ("-u <storable_persistence_directory (not used with -f)> ")
+          ACE_TEXT ("-r <redundant_persistence_directory> ");
 #else
           ACE_TEXT ("");
-#endif /* TAO_HAS_MINIMUM_POA */
+#endif /* TAO_HAS_MINIMUM_POA && !CORBA_E_MICRO */
+#endif /* !ACE_NLOGGING */
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s ")
                            ACE_TEXT ("-d ")
@@ -256,7 +274,7 @@ TAO_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-s <context_size> ")
                            ACE_TEXT ("-b <base_address> ")
                            ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
-                           ACE_TEXT ("-f <persistence_file_name> %s")
+                           ACE_TEXT ("%s")
                            ACE_TEXT ("-z <relative round trip timeout> ")
                            ACE_TEXT ("\n"),
                            argv [0], reqNonMinCorba),
@@ -312,6 +330,9 @@ TAO_Naming_Server::init_with_orb (int argc,
 
       poa_manager->activate ();
 
+#if defined (CORBA_E_MICRO)
+      this->ns_poa_ = PortableServer::POA::_duplicate (this->root_poa_);
+#else
       int numPolicies = 2;
 #if (TAO_HAS_MINIMUM_POA == 0)
       if (this->use_storable_context_)
@@ -364,7 +385,21 @@ TAO_Naming_Server::init_with_orb (int argc,
           CORBA::Policy_ptr policy = policies[i];
           policy->destroy ();
         }
+#endif /* CORBA_E_MICRO */
 
+#if defined (CORBA_E_MICRO)
+      result = this->init (orb,
+                           this->ns_poa_.in (),
+                           this->context_size_,
+                           0,
+                           0,
+                           0,
+                           0,
+                           this->multicast_,
+                           false,
+                           this->round_trip_timeout_,
+                           this->use_round_trip_timeout_);
+#else
       result = this->init (orb,
                            this->ns_poa_.in (),
                            this->context_size_,
@@ -376,6 +411,8 @@ TAO_Naming_Server::init_with_orb (int argc,
                            this->use_storable_context_,
                            this->round_trip_timeout_,
                            this->use_round_trip_timeout_);
+#endif /* CORBA_E_MICRO */
+
       if (result == -1)
         return result;
     }
@@ -433,6 +470,11 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 {
   try
     {
+#if defined (CORBA_E_MICRO)
+      ACE_UNUSED_ARG (persistence_location);
+      ACE_UNUSED_ARG (base_addr);
+      ACE_UNUSED_ARG (use_storable_context);
+#else
       if (use_storable_context)
         {
           // In lieu of a fully implemented service configurator version
@@ -510,6 +552,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             this->context_index_->root_context ();
         }
       else
+#endif /* CORBA_E_MICRO */
         {
           //
           // Initialize Transient Naming Service.
@@ -521,11 +564,13 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 
         }
 
+#if !defined (CORBA_E_MICRO)
       // Register with the ORB's resolve_initial_references()
       // mechanism.  Primarily useful for dynamically loaded Name
       // Services.
       orb->register_initial_reference ("NameService",
                                        this->naming_context_.in ());
+#endif /* CORBA_E_MICRO */
 
       // Set the ior of the root Naming Context.
       this->naming_service_ior_=
@@ -700,7 +745,9 @@ TAO_Naming_Server::fini (void)
       delete this->ior_multicast_;
     }
 
+#if !defined (CORBA_E_MICRO)
   delete this->context_index_;
+#endif /* CORBA_E_MICRO */
 
   return 0;
 }
@@ -719,7 +766,8 @@ TAO_Naming_Server::operator-> (void) const
 
 TAO_Naming_Server::~TAO_Naming_Server (void)
 {
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+#if (TAO_HAS_MINIMUM_POA == 0) && \
+    !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   if (this->use_servant_activator_)
     delete this->servant_activator_;
 #endif /* TAO_HAS_MINIMUM_POA */

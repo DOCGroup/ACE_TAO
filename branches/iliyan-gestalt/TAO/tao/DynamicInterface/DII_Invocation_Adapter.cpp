@@ -142,7 +142,7 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
         CORBA::Boolean const permanent_forward =
-            (synch.reply_status() == GIOP::LOCATION_FORWARD_PERM);
+          (synch.pi_reply_status() == GIOP::LOCATION_FORWARD_PERM);
 #else
         CORBA::Boolean const permanent_forward = false;
 #endif

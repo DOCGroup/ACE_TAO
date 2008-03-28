@@ -102,7 +102,7 @@ namespace TAO
     virtual void destroy_interceptors (void) = 0;
 
     /// Convert TAO Invocation status to a PI status
-    virtual PortableInterceptor::ReplyStatus reply_status (
+    virtual PortableInterceptor::ReplyStatus pi_reply_status (
       TAO::Invocation_Base const &invocation_base) = 0;
   };
 

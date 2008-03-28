@@ -208,6 +208,12 @@ public:
   /// Get the forward_location.
   CORBA::Object_ptr forward_location (void);
 
+  /**
+   * Since forward location is allowed to be nil then this is a proper
+   * method to check if the request is being forwarded.
+   */
+  bool is_forwarded (void) const;
+
   /// Get the reply status
   GIOP::ReplyStatusType reply_status (void);
 
@@ -287,6 +293,8 @@ private:
   bool release_operation_;
 
   CORBA::Object_var forward_location_;
+
+  bool is_forwarded_;
 
   /// Incoming stream.
   TAO_InputCDR *incoming_;

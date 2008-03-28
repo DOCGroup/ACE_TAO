@@ -86,7 +86,7 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
                 CORBA::Boolean const is_permanent_forward =
-                  (synch.reply_status() == GIOP::LOCATION_FORWARD_PERM);
+                  (synch.pi_reply_status() == GIOP::LOCATION_FORWARD_PERM);
 #else
                 CORBA::Boolean const is_permanent_forward = false;
 #endif
@@ -130,7 +130,26 @@ namespace TAO
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
-    TAO_Stub *stubobj = effective_target->_stubobj ();
+    TAO_Stub *stubobj = 0;
+
+    bool nil_forward_ref = false;
+    if (CORBA::is_nil (effective_target.in ()))
+      nil_forward_ref = true;
+    else
+      {
+        stubobj =
+          effective_target->_stubobj ();
+
+        if (stubobj && stubobj->base_profiles ().size () == 0)
+          nil_forward_ref = true;
+      }
+
+    if (nil_forward_ref)
+      throw ::CORBA::TRANSIENT (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+          errno),
+        CORBA::COMPLETED_NO);
 
     if (stubobj == 0)
       throw ::CORBA::INTERNAL (
