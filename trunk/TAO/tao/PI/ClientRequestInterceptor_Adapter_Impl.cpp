@@ -152,7 +152,7 @@ namespace TAO
         this->receive_exception (invocation);
 
         PortableInterceptor::ReplyStatus status =
-          this->reply_status (invocation);
+          this->pi_reply_status (invocation);
 
         // Only re-throw the exception if it hasn't been transformed by
         // the receive_exception() interception point (e.g. to a
@@ -221,7 +221,7 @@ namespace TAO
         this->receive_exception (invocation);
 
         PortableInterceptor::ReplyStatus status =
-          this->reply_status (invocation);
+          this->pi_reply_status (invocation);
 
         // Only re-throw the exception if it hasn't been transformed by
         // the receive_exception() interception point (e.g. to a
@@ -265,7 +265,7 @@ namespace TAO
   }
 
   PortableInterceptor::ReplyStatus
-  ClientRequestInterceptor_Adapter_Impl::reply_status (
+  ClientRequestInterceptor_Adapter_Impl::pi_reply_status (
     TAO::Invocation_Base const &invocation_base)
   {
     PortableInterceptor::ReplyStatus reply_status;

@@ -192,7 +192,7 @@ namespace TAO
     /// Invoke status
     TAO::Invocation_Status invoke_status (void) const;
 
-    PortableInterceptor::ReplyStatus reply_status (void) const;
+    PortableInterceptor::ReplyStatus pi_reply_status (void) const;
 
     /// Accessor used to determine if the current invocation is part
     /// of a remote request, and if not, it will be considered to be
