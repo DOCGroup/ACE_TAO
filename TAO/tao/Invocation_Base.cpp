@@ -41,6 +41,7 @@ namespace TAO
                                     bool TAO_INTERCEPTOR (request_is_remote))
     : details_ (details)
     , forwarded_to_ (0)
+    , is_forwarded_ (false)
     , response_expected_ (response_expected)
     , otarget_ (ot)
     , target_ (t)
@@ -104,7 +105,7 @@ namespace TAO
             throw;
           }
 
-        if (this->forwarded_to_.in ())
+        if (this->is_forwarded_)
           return TAO_INVOKE_RESTART;
       }
 
@@ -163,7 +164,7 @@ namespace TAO
             throw;
           }
 
-        if (this->forwarded_to_.in ())
+        if (this->is_forwarded_)
           return TAO_INVOKE_RESTART;
       }
 
@@ -182,7 +183,7 @@ namespace TAO
       {
         this->adapter_->receive_exception (*this);
 
-        if (this->forwarded_to_.in ())
+        if (this->is_forwarded_)
           {
             status = PortableInterceptor::LOCATION_FORWARD;
           }
@@ -222,6 +223,7 @@ namespace TAO
       this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
 
     this->forwarded_to_ = CORBA::Object::_nil ();
+    this->is_forwarded_ = false;
     this->caught_exception_ = exception;
   }
 

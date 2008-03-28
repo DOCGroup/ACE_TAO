@@ -600,8 +600,9 @@ TAO_ORB_Core::is_permanent_forward_condition
   const TAO_Service_Callbacks *service_callback =
       this->fault_tolerance_service ().service_callback ();
 
+  // Since forward location is allowed to be nil then check for it.
   CORBA::Boolean const permanent_forward_condition =
-      service_callback &&
+      service_callback && obj &&
       service_callback->is_permanent_forward_condition (obj,
                                                         service_context);
 
