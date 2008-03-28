@@ -1,3 +1,31 @@
+Fri Mar 28 09:17:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+          Extended this test to also test suspend/resume_handlers and the
+          dev_poll reactor. Thanks to Russell Morra for extending this test
+
+        * ace/ACE.cpp:
+        * ace/High_Res_Timer.inl:
+          Layout changes
+
+        * ace/Hash_Map_Manager_T.cpp:
+          Use prefix increment instead of postfix
+
+        * ace/High_Res_Timer.h:
+        * ace/Reactor.h:
+        * ace/Select_Reactor_Base.h:
+          Doxygen changes
+
+        * ace/Select_Reactor_Base.inl:
+          Fixed done implementation
+
+        * ace/String_Base.cpp:
+          Initialise pointer with 0
+
+        * ace/WFMO_Reactor.{h,cpp,inl}:
+          Bool changes, fixed implementation of suspend_handlers/resume_handlers,
+          the to_be_added set modifications where not done correctly
+
 Thu Mar 27 19:09:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
