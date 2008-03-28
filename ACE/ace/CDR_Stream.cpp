@@ -673,20 +673,24 @@ ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
 char *
 ACE_OutputCDR::write_long_placeholder (void)
 {
-  this->align_write_ptr (ACE_CDR::LONG_SIZE);
-  char *pos = this->current_->wr_ptr ();
-  this->write_long (0);
-  return pos;
+  char *buf = 0;
+  if (this->adjust (ACE_CDR::LONG_SIZE, buf) == 0)
+    *reinterpret_cast<ACE_CDR::ULong*> (buf) = 0;
+  else
+    buf = 0;
+  return buf;
 }
 
 
 char *
 ACE_OutputCDR::write_short_placeholder (void)
 {
-  this->align_write_ptr (ACE_CDR::SHORT_SIZE);
-  char *pos = this->current_->wr_ptr();
-  this->write_short (0);
-  return pos;
+  char *buf = 0;
+  if (this->adjust (ACE_CDR::SHORT_SIZE, buf) == 0)
+    *reinterpret_cast<ACE_CDR::UShort*> (buf) = 0;
+  else
+    buf = 0;
+  return buf;
 }
 
 
