@@ -76,9 +76,9 @@ ACE_INLINE bool
 ACE_Select_Reactor_Handler_Repository_Iterator::done (void) const
 {
 #ifdef ACE_WIN32
-  return this->current_ != this->rep_->event_handlers_.end ();
+  return this->current_ == this->rep_->event_handlers_.end ();
 #else
-  return this->current_ != (this->rep_->event_handlers_.begin ()
+  return this->current_ == (this->rep_->event_handlers_.begin ()
                             + this->rep_->max_handlep1 ());
 #endif /* ACE_WIN32 */
 }

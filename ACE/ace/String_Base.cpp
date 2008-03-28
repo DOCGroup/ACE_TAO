@@ -134,7 +134,7 @@ ACE_String_Base<CHAR>::set (const CHAR *s,
   size_type new_buf_len = len + 1;
   if (s != 0 && len != 0 && release && this->buf_len_ < new_buf_len)
     {
-      CHAR *temp;
+      CHAR *temp = 0;
       ACE_ALLOCATOR (temp,
                      (CHAR *) this->allocator_->malloc (new_buf_len * sizeof (CHAR)));
 
