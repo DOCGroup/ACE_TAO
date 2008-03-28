@@ -395,28 +395,32 @@ namespace CIAO
 
         // For each node in the system domain, populate RACE::Domain info.
         msg << "Obtaining resource info for each node in the domain.\n";
+        this->logger_.log (msg.str ());
+        msg.str ("");
 
         for (::CORBA::ULong i = 0; i < nodes.length(); ++i)
           {
-            this->populate_node (nodes[i], node);
+            ::CIAO::RACE::Node r_node = this->populate_node (nodes[i]);
             // Now that the node structure has been fully populated, we add
             // it to the doamin.
-            temp_domain.nodes.push_back (node);
+            temp_domain.nodes.push_back (r_node);
             msg << "Added node: " << nodes [i].name.in()
                 << " to the doamin structure.\n";
+            this->logger_.log (msg.str ());
+            msg.str ("");
           }
         this->util_logger_.log (std::string ("\n"));
+        this->dump_domain (temp_domain);
         this->domain_ = temp_domain;
         return true;
       }
 
-      void
-      Controller::populate_node
-      (const ::Deployment::Node &d_node,
-       ::CIAO::RACE::Node &r_node)
+      ::CIAO::RACE::Node
+      Controller::populate_node (const ::Deployment::Node &d_node)
       {
         std::stringstream msg;
         std::stringstream util;
+        ::CIAO::RACE::Node r_node;
 
         // Set formatting.
         util.setf (ios::fixed, ios::floatfield);
@@ -461,8 +465,8 @@ namespace CIAO
                             value >>= resource.set_point;
                             msg << "Obtained set point! Value is: "
                                 << resource.set_point << "\n";
-                            ACE_DEBUG ((LM_DEBUG, "\n%f\t",
-                                        resource.set_point));
+//                             ACE_DEBUG ((LM_DEBUG, "\n%f\t",
+//                                         resource.set_point));
 
                           }
                       }
@@ -480,7 +484,7 @@ namespace CIAO
                             //resource.util *= 4;
                             msg << "Obtained curr util! Value is: "
                                 << resource.util << "\n";
-                            ACE_DEBUG ((LM_DEBUG, "%f\n", resource.util));
+//                             ACE_DEBUG ((LM_DEBUG, "%f\n", resource.util));
 
                           }
                       }
@@ -503,6 +507,7 @@ namespace CIAO
         msg << "Leaving populate_node ()\n";
         this->logger_.log (msg.str ());
         this->util_logger_.log (util.str());
+        return r_node;
       }
 
       void
@@ -608,6 +613,24 @@ namespace CIAO
                 << " micro seconds.\n";
           }
 
+        this->logger_.log (msg.str());
+      }
+
+      void Controller::dump_domain (const CIAO::RACE::Domain &domain)
+      {
+        std::stringstream msg;
+        msg << "Domain details...\n";
+	std::vector<CIAO::RACE::Node>::const_iterator it;
+	for (it = domain.nodes.begin(); it != domain.nodes.end(); ++it)
+          {
+            msg << "Node "
+                << (*it).resources[0].UUID.c_str ()
+                << "\tUtil = "
+                << (*it).resources[0].util
+                << "\tSet-point = "
+                << (*it).resources[0].set_point
+                << "\n";
+          }
         this->logger_.log (msg.str());
       }
     }

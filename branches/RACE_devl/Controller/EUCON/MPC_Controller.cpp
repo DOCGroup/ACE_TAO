@@ -256,11 +256,10 @@ MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::T
 
 	// -----------vector U(k) assignment ----------------
 	memcpy(m_Uptr, m_rate_chgs, m_task_num*sizeof(double));
-	/*
+
 	std::cout << "U "<<std::endl;
 	for (i=0; i<m_task_num; i++)
 		std::cout << m_Uptr[i] << std::endl;
-	*/
 	m_U.SetData(m_Uptr,m_task_num);
 
 	//--------------- reference trajectory vector computation----------------
@@ -274,13 +273,15 @@ MPC_Controller::control_period(CIAO::RACE::Domain dom, std::vector<CIAO::RACE::T
 			double cpu_util = m_Xptr[j];
 			double cpu_util_setpoint = set_points[j];
 			error = cpu_util_setpoint - cpu_util;
+                        std::cout << "Error in node "
+                                  << j << " = " << error
+                                  << std::endl;
 			m_Rptr[num++] = cpu_util_setpoint - error*ratio;
 		}
 	}
-	/*
-	for (i=0; i<PREDICTION_HORIZON*m_proc_num; i++)
-		std::cout << m_Rptr[i] << std::endl;
-	*/
+
+// 	for (i=0; i<PREDICTION_HORIZON*m_proc_num; i++)
+//           std::cout << "Error " << "i = " << m_Rptr[i] << std::endl;
 	m_R.SetData(m_Rptr,PREDICTION_HORIZON*m_proc_num);
 
     //------------ below code handles the Constraint A on the formulation -----------------
