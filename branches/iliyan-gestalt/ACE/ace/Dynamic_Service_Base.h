@@ -24,9 +24,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#include "ace/Service_Config.h"
-
 class ACE_Service_Type;
+class ACE_Service_Gestalt;
 
 /**
  * @class ACE_Dynamic_Service_Base
