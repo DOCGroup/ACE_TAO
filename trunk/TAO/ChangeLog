@@ -1,3 +1,10 @@
+Fri Mar 28 14:57:25 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+
+          Use .in() on a var to avoid warnings from gcc.
+
 Fri Mar 28 14:34:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNaming_Serv.mpc:

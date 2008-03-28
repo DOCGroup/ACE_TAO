@@ -359,7 +359,7 @@ namespace TAO
     TAO_Stub *stubobj = 0;
 
     bool nil_forward_ref = false;
-    if (CORBA::is_nil (effective_target))
+    if (CORBA::is_nil (effective_target.in ()))
       nil_forward_ref = true;
     else
       {
