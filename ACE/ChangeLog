@@ -1,3 +1,15 @@
+Fri Mar 28 17:18:50 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/CDR_Stream.cpp (write_long_placeholder, write_short_placeholder):
+          Be careful to adjust and grow the stream's block before taking
+          the pointer that's returned to the user. Thanks to Alain Kocelniak
+          <alain@corys.fr> for this fix.
+
+        * ace/CDR_Stream.h: Note that the placeholder methods return 0 if
+          the method fails due to insufficient memory.
+
+        * THANKS: Added Alain Kocelniak to the Hall of Fame.
+
 Fri Mar 28 15:40:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/unload_libace.mpb:
