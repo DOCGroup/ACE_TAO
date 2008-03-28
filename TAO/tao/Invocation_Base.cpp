@@ -134,7 +134,7 @@ namespace TAO
           }
 
         PortableInterceptor::ReplyStatus const status =
-          this->adapter_->reply_status (*this);
+          this->adapter_->pi_reply_status (*this);
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
@@ -189,7 +189,7 @@ namespace TAO
           }
         else
           {
-            status = this->adapter_->reply_status (*this);
+            status = this->adapter_->pi_reply_status (*this);
           }
       }
 
@@ -208,7 +208,7 @@ namespace TAO
       {
         this->adapter_->receive_exception (*this);
 
-        status = this->adapter_->reply_status (*this);
+        status = this->adapter_->pi_reply_status (*this);
       }
 
     return status;
@@ -228,11 +228,11 @@ namespace TAO
   }
 
   PortableInterceptor::ReplyStatus
-  Invocation_Base::reply_status (void) const
+  Invocation_Base::pi_reply_status (void) const
   {
     if (adapter_ != 0)
       {
-        return this->adapter_->reply_status (*this);
+        return this->adapter_->pi_reply_status (*this);
       }
     else
       {
