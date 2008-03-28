@@ -1,3 +1,10 @@
+Fri Mar 28 15:40:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/unload_libace.mpb:
+
+          Inhert from vc_warnings instead of duplicating part of it's
+          functionality.
+
 Fri Mar 28 09:24:25 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:
