@@ -1,3 +1,9 @@
+Fri Mar 28 09:24:25 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Enabled a test to Bug_3276_Regression.
+
 Fri Mar 28 09:17:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Reactor_Dispatch_Order_Test.cpp:
