@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(CosNaming_Serv) : orbsvcslib, orbsvcs_output, install, naming_skel, messaging_optional, svc_utils, iortable {
+project(CosNaming_Serv) : cosnaming_serv_persistence, orbsvcslib, orbsvcs_output, install, naming_skel, messaging_optional, svc_utils, iortable {
   sharedname   = TAO_CosNaming_Serv
   dynamicflags = TAO_NAMING_SERV_BUILD_DLL
   tagchecks   += Naming
@@ -13,17 +13,10 @@ project(CosNaming_Serv) : orbsvcslib, orbsvcs_output, install, naming_skel, mess
   Source_Files(ORBSVCS_COMPONENTS) {
     Naming {
       Naming/Entries.cpp
-      Naming/Flat_File_Persistence.cpp
       Naming/Hash_Naming_Context.cpp
       Naming/Naming_Context_Interface.cpp
       Naming/Naming_Loader.cpp
       Naming/Naming_Server.cpp
-      Naming/Persistent_Context_Index.cpp
-      Naming/Persistent_Entries.cpp
-      Naming/Persistent_Naming_Context.cpp
-      Naming/Storable.cpp
-      Naming/Storable_Naming_Context.cpp
-      Naming/Storable_Naming_Context_Activator.cpp
       Naming/Transient_Naming_Context.cpp
     }
   }

@@ -171,10 +171,14 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   PortableServer::ServantBase_var s = context;
 
   // Register the new context with the POA.
+#if defined (CORBA_E_MICRO)
+  PortableServer::ObjectId_var id = poa->activate_object (context);
+#else
   PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId (poa_id);
 
   poa->activate_object_with_id (id.in (), context);
+#endif /* CORBA_E_MICRO */
 
   result = context->_this ();
 
@@ -306,11 +310,16 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
                        "%s_%d",
                        this->poa_id_.c_str (),
                        this->counter_++);
+#if defined (CORBA_E_MICRO)
+      PortableServer::ObjectId_var id =
+        this->poa_->activate_object (bind_iter);
+#else
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId (poa_id);
 
       this->poa_->activate_object_with_id (id.in (),
                                            bind_iter);
+#endif /* CORBA_E_MICRO */
 
       bi = bind_iter->_this ();
     }

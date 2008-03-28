@@ -1,3 +1,19 @@
+Fri Mar 28 14:34:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/cosnaming_serv_persistence.mpb:
+
+          Pulled the persistence related files into it's own base project
+          that's only enabled with the 'corba_e_micro' feature is disabled.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+
+          Made modifications to allow the server library to compile when
+          'corba_e_micro' is enabled.  All persistence is disabled in this
+          case.  It requires more functionality than is provided by the POA.
+
 Fri Mar 28 09:07:14 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/GIOP_Message_Base.cpp:
