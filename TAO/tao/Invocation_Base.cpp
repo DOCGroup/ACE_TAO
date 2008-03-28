@@ -41,6 +41,7 @@ namespace TAO
                                     bool TAO_INTERCEPTOR (request_is_remote))
     : details_ (details)
     , forwarded_to_ (0)
+    , is_forwarded_ (false)
     , response_expected_ (response_expected)
     , otarget_ (ot)
     , target_ (t)
@@ -104,7 +105,7 @@ namespace TAO
             throw;
           }
 
-        if (this->forwarded_to_.in ())
+        if (this->is_forwarded_)
           return TAO_INVOKE_RESTART;
       }
 
@@ -133,7 +134,7 @@ namespace TAO
           }
 
         PortableInterceptor::ReplyStatus const status =
-          this->adapter_->reply_status (*this);
+          this->adapter_->pi_reply_status (*this);
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
@@ -163,7 +164,7 @@ namespace TAO
             throw;
           }
 
-        if (this->forwarded_to_.in ())
+        if (this->is_forwarded_)
           return TAO_INVOKE_RESTART;
       }
 
@@ -182,13 +183,13 @@ namespace TAO
       {
         this->adapter_->receive_exception (*this);
 
-        if (this->forwarded_to_.in ())
+        if (this->is_forwarded_)
           {
             status = PortableInterceptor::LOCATION_FORWARD;
           }
         else
           {
-            status = this->adapter_->reply_status (*this);
+            status = this->adapter_->pi_reply_status (*this);
           }
       }
 
@@ -207,7 +208,7 @@ namespace TAO
       {
         this->adapter_->receive_exception (*this);
 
-        status = this->adapter_->reply_status (*this);
+        status = this->adapter_->pi_reply_status (*this);
       }
 
     return status;
@@ -222,15 +223,16 @@ namespace TAO
       this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
 
     this->forwarded_to_ = CORBA::Object::_nil ();
+    this->is_forwarded_ = false;
     this->caught_exception_ = exception;
   }
 
   PortableInterceptor::ReplyStatus
-  Invocation_Base::reply_status (void) const
+  Invocation_Base::pi_reply_status (void) const
   {
     if (adapter_ != 0)
       {
-        return this->adapter_->reply_status (*this);
+        return this->adapter_->pi_reply_status (*this);
       }
     else
       {

@@ -1,0 +1,31 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Client): taoclient, anytypecode, avoids_minimum_corba, pi {
+  exename = client
+
+  IDL_Files {
+    test.idl
+  }
+
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+
+project(*Manager): taoserver, avoids_minimum_corba {
+  exename = manager
+  after += *Client
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    Servant_Locator.cpp
+    Manager.cpp
+  }
+}

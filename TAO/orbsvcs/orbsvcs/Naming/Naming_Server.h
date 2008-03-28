@@ -28,9 +28,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if !defined (CORBA_E_MICRO)
 // Forward decl;
 class TAO_Persistent_Context_Index;
 class TAO_Storable_Naming_Context_Activator;
+#endif /* !CORBA_E_MICRO */
 
 /**
  * @class TAO_Naming_Server
@@ -166,13 +168,6 @@ protected:
   /// The IOR string of the root naming context.
   CORBA::String_var naming_service_ior_;
 
-  /**
-   * Pointer to the object used to create/initialize
-   * the Naming Service when local persistent Naming Service is
-   * desired.
-   */
-  TAO_Persistent_Context_Index *context_index_;
-
   /// The ORB
   CORBA::ORB_var orb_;
 
@@ -196,6 +191,17 @@ protected:
    */
   size_t context_size_;
 
+  /// If not zero multicast is enabled.
+  int multicast_;
+
+#if !defined (CORBA_E_MICRO)
+  /**
+   * Pointer to the object used to create/initialize
+   * the Naming Service when local persistent Naming Service is
+   * desired.
+   */
+  TAO_Persistent_Context_Index *context_index_;
+
   /// Path to the file to be used to store/read in Naming Service
   /// persistent state.
   const ACE_TCHAR *persistence_file_name_;
@@ -203,9 +209,6 @@ protected:
   /// Address to be used for memory mapping Naming Service state file,
   /// identified by the <persistence_file_name_>.
   void *base_address_;
-
-  /// If not zero multicast is enabled.
-  int multicast_;
 
   /// If not zero use flat file persistence
   int use_storable_context_;
@@ -220,6 +223,7 @@ protected:
    * init_with_orb() and init_new_naming().
    */
   TAO_Storable_Naming_Context_Activator *servant_activator_;
+#endif /* !CORBA_E_MICRO */
 
   /**
    * If not zero support redundant naming servers.

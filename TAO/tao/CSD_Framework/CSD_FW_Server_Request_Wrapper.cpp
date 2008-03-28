@@ -177,6 +177,10 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   // ACTION: Assignment performs reference-counted copy of object ref.
   clone_obj->forward_location_ = request->forward_location_;
 
+  // TYPE: bool
+  // ACTION: Primitive data type assignment
+  clone_obj->is_forwarded_ = request->is_forwarded_;
+
   // TYPE: TAO_InputCDR*
   // ACTION: This *must* be "cloned".
   if (request->incoming_ != 0)

@@ -104,7 +104,7 @@ namespace TAO
 
     virtual void destroy_interceptors (void);
 
-    virtual PortableInterceptor::ReplyStatus reply_status (
+    virtual PortableInterceptor::ReplyStatus pi_reply_status (
       TAO::Invocation_Base const &invocation_base);
 
   protected:

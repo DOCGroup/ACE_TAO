@@ -6,6 +6,7 @@
 #include "tao/Adapter.h"
 #include "tao/SystemException.h"
 #include "tao/debug.h"
+#include "tao/TAO_Server_Request.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -118,7 +119,7 @@ TAO_Adapter_Registry::dispatch (TAO::ObjectKey &key,
         }
     }
 
-  if (CORBA::is_nil (forward_to))
+  if (!request.is_forwarded ())
     {
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }

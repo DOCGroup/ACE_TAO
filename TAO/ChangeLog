@@ -1,3 +1,80 @@
+Fri Mar 28 15:30:12 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Invocation_Base.h:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/ClientRequestInterceptor_Adapter.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/Invocation_Adapter.cpp:
+
+          Changed reply_status to pi_reply_status as agreed in Bug#2377.
+
+Fri Mar 28 14:57:25 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+
+          Use .in() on a var to avoid warnings from gcc.
+
+Fri Mar 28 14:34:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/cosnaming_serv_persistence.mpb:
+
+          Pulled the persistence related files into it's own base project
+          that's only enabled with the 'corba_e_micro' feature is disabled.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+
+          Made modifications to allow the server library to compile when
+          'corba_e_micro' is enabled.  All persistence is disabled in this
+          case.  It requires more functionality than is provided by the POA.
+
+Fri Mar 28 09:07:14 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/Invocation_Base.h:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/Collocated_Invocation.cpp:
+        * tao/ORB_Core.inl:
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Invocation_Base.inl:
+        * tao/Adapter_Registry.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/TAO_Server_Request.inl:
+
+          Fixed a bug in the server side code with incorrect handling
+          of forward request exception that was contstructed with nil
+          object reference. Added throwing of a TRANSIENT exception on
+          the client side in case server forwards to nil object.
+
+        * tests/Bug_3276_Regression/client.cpp:
+        * tests/Bug_3276_Regression/Manager.h:
+        * tests/Bug_3276_Regression/Servant_Locator.cpp:
+        * tests/Bug_3276_Regression/test.idl:
+        * tests/Bug_3276_Regression/test_i.cpp:
+        * tests/Bug_3276_Regression/Manager.cpp:
+        * tests/Bug_3276_Regression/Servant_Locator.h:
+        * tests/Bug_3276_Regression/Bug_3276_Regression.mpc:
+        * tests/Bug_3276_Regression/README:
+        * tests/Bug_3276_Regression/run_test.pl:
+        * tests/Bug_3276_Regression/test_i.h:
+
+          Added a regression test.
+
 Thu Mar 27 18:44:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:

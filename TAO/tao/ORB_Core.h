@@ -38,12 +38,12 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/Service_Context_Handler_Registry.h"
 #include "ace/Array_Map.h"
-
+ 
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/TSS_T.h"
 
-#include "ace/Service_Object.h"
+#include "ace/Service_Config.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Data_Block;
