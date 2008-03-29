@@ -1,3 +1,13 @@
+Sat Mar 29 08:16:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+          Dev_Poll reactor displays other bugs, so disable this part of
+          the test
+
+        * ace/Select_Reactor_Base.cpp:
+          Position the iterator on the first element that is none zero, fixes
+          crashing of the reactor_dispatch_order_test on non windows platforms
+
 Fri Mar 28 17:18:50 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/CDR_Stream.cpp (write_long_placeholder, write_short_placeholder):
