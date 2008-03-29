@@ -270,7 +270,7 @@ run_main (int, ACE_TCHAR *[])
 
 #endif /* ACE_WIN32 && ACE_HAS_WINSOCK2 */
 
-#if defined (ACE_HAS_EVENT_POLL)
+#if 0
   ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
   ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
