@@ -1,3 +1,64 @@
+Sun Mar 30 19:54:23 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This is the first step of merging the changes from the gestalt
+          refactoring branch. It includes only changes that are merely
+          peripheral, without impacting the actual configuration mechanism
+          - yet.
+
+        * ace/ARGV.h:
+        * ace/ARGV.cpp:
+
+          Introducing a ctor that takes the number of parameters in argv,
+          thus eliminating the requirement to have argv 0-terminated.  This
+          requirement can be a hard to satisfy in cases where the argv has
+          been "manualy constructed", i.e. not provided by the OS
+          environment.
+
+        * ace/Intrusive_Auto_Ptr.h:
+        * ace/Intrusive_Auto_Ptr.inl:
+        * ace/Intrusive_Auto_Ptr.cpp:
+
+          Added an intrusive auto pointer implementation. It is a reference
+          counted auto pointer that can be used for types with explicit
+          reference management implementations.
+
+        * ace/OS_NS_unistd.h:
+        * ace/OS_NS_unistd.cpp:
+
+          Introducing new argv_to_string which takes an explicit argc
+          argument and relaxes the requirement on argv (to be 0-terminated).
+
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.inl:
+
+          Adding a mechanism that provides a correct conversion to boolean
+          for smart pointers, which preserves the smantics of "if (ap) ..."
+          without the unwanted side effects. Credit goes to Andrei
+          Alexandrescu's Modern C++ Design book.
+
+        * ace/Service_Types.cpp:
+
+          Cosmetics: adding this-> to member references.
+
+        * examples/ASX/CCM_App/ASX_CCM_App.mpc:
+        * examples/ASX/CCM_App/CCM_App.cpp:
+
+          Fixing a problem that precludes the test from running correctly
+          on *nix - the DLL names are not case-insensitive. Minor layout
+          changes.
+
+        * tests/Intrusive_Auto_Ptr_Test.cpp:
+
+          A test for the new auto ptr.
+
+        * tests/Bug_2980_Regression_Dll.cpp:
+        * tests/Bug_2980_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Addded a test for bug 2980. Thanks to Lothar Werzinger <lothar
+          at tradescape biz> for contributing the code.
+
 Sun Mar 30 18:54:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Win32.pm:
