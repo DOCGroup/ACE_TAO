@@ -411,6 +411,18 @@ ACE_Select_Reactor_Handler_Repository_Iterator::ACE_Select_Reactor_Handler_Repos
     : rep_ (s),
       current_ (s->event_handlers_.begin ())
 {
+#ifndef ACE_WIN32
+  // Don't use ACE_Array_Base::end() since it may be larger than
+  // event_handlers[max_handlep1_].
+  const_base_iterator const end =
+    &this->rep_->event_handlers_[this->rep_->max_handlep1 ()];
+
+  // Advance to the next element containing a non-zero event handler.
+  // There's no need to do this for the Windows case since the hash
+  // map will only contain non-zero event handlers.
+  while (this->current_ != end && (*(this->current_) == 0))
+    ++this->current_;
+#endif
 }
 
 // Pass back the <next_item> that hasn't been seen in the Set.
