@@ -301,6 +301,9 @@ public:
    * replace ().
    * These methods align the stream's write pointer properly prior to
    * writing the placeholder.
+   *
+   * @retval Pointer to the placeholder; 0 if there is not enough space
+   *         in the stream and memory could not be allocated.
    */
   char* write_long_placeholder (void);
   char* write_short_placeholder (void);
