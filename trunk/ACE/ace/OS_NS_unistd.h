@@ -64,6 +64,13 @@ namespace ACE_OS
 
   // used by ARGV::argv_to_string() and ACE_OS::fork_exec()
   extern ACE_Export
+  int argv_to_string (int argc,
+                      ACE_TCHAR **argv,
+                      ACE_TCHAR *&buf,
+                      bool substitute_env_args = true,
+                      bool quote_args = false);
+
+  extern ACE_Export
   int argv_to_string (ACE_TCHAR **argv,
                       ACE_TCHAR *&buf,
                       bool substitute_env_args = true,
