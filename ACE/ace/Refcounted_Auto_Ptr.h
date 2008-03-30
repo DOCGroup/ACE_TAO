@@ -85,7 +85,7 @@ public:
   /// ACE_Refcounted_Auto_Ptr_Rep. An ACE_Refcounted_Auto_Ptr_Rep
   /// is created if necessary.
   void operator = (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
-  
+
   /// Equality operator that returns @c true if both
   /// ACE_Refcounted_Auto_Ptr objects point to the same underlying
   /// representation. It does not compare the actual pointers.
@@ -103,7 +103,7 @@ public:
 
   /// Accessor method.
   X &operator *() const;
-  
+
   /// Check rep easily.
   bool operator !() const;
 

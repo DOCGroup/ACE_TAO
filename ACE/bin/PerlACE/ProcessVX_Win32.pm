@@ -245,6 +245,7 @@ sub Spawn ()
         $cmdline = $program . $PerlACE::ProcessVX::ExeExt . ' ' . $self->{ARGUMENTS};
         if (defined $self->{ARGUMENTS}) {
             ($arguments = $self->{ARGUMENTS})=~ s/\"/\\\"/g;
+            ($arguments = $self->{ARGUMENTS})=~ s/\'/\\\'/g;
             $arguments = ",\"" . $arguments . "\"";
         }
         @cmds[$cmdnr++] = 'ace_vx_rc = vx_execae(ace_main' . $arguments . ')';
