@@ -947,6 +947,25 @@ cpu_info_test (void)
 }
 
 int
+last_error_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing last_error method\n")));
+
+  ACE_OS::last_error (ETIME);
+
+  int const l_error = ACE_OS::last_error ();
+  if (l_error != ETIME)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Last error returned %d instead of ETIME"),
+                            l_error));
+      return 1;
+    }
+
+  ACE_OS::last_error (0);
+}
+
+int
 pagesize_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -1027,6 +1046,9 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = log2_test ()) != 0)
+      status = result;
+
+  if ((result = last_error_test ()) != 0)
       status = result;
 
   ACE_END_TEST;
