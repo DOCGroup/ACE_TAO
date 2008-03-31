@@ -963,6 +963,8 @@ last_error_test (void)
     }
 
   ACE_OS::last_error (0);
+
+  return 0;
 }
 
 int
