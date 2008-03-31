@@ -1,3 +1,5 @@
+// $Id$
+
 #include <iostream>
 #include <assert.h>
 
@@ -100,7 +102,7 @@ int main(int argc, char ** argv)
 
 #  ifdef USE_THREAD
   pthread_t tid1;
-  result = pthread_create(&tid1, NULL, &loadDll, 0);
+  result = pthread_create(&tid1, 0, &loadDll, 0);
   if (result != 0)
   {
     printf ("pthread_create() failed: %d\n", result);
@@ -115,7 +117,7 @@ int main(int argc, char ** argv)
 
 #  ifdef USE_THREAD
   pthread_t tid2;
-  result = pthread_create(&tid2, NULL, &unloadDll, 0);
+  result = pthread_create(&tid2, 0, &unloadDll, 0);
   if (result != 0)
   {
     printf ("pthread_create() failed: %d\n", result);
