@@ -135,7 +135,7 @@ sub modify_libpath {
         $reldir = 'Kokyu';
       }
     }
-    $str =~ s!$libname!\$(top_builddir)/$reldir/$libname!;
+    $str =~ s!$libname!\$(ACE_BUILDDIR)/$reldir/$libname!;
     return $str;
   }
   elsif ($libname =~ /^lib(tao|kokyu)/i) {
