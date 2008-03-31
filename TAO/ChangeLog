@@ -1,3 +1,13 @@
+Mon Mar 31 18:20:01 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Client.cpp:
+        * tests/Oneway_Send_Timeouts/Server.cpp:
+        * tests/Oneway_Send_Timeouts/Server_Task.h:
+        * tests/Oneway_Send_Timeouts/Test_i.h:
+        * tests/Oneway_Send_Timeouts/Test_i.cpp:
+        * tests/Oneway_Send_Timeouts/main.cpp:
+          Thread cleanup fixes.
+
 Mon Mar 31 15:55:18 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/GIOP_Message_Base.cpp:

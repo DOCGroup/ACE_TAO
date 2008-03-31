@@ -6,12 +6,15 @@
 #include "ace/OS_NS_unistd.h"
 
 Test_i::Test_i (CORBA::ORB_ptr orb)
-  : sleep_ (false), unsleep_ (true)
+  : sleep_ (false), unsleep_ (true), shutdown_ (false)
   , orb_ (CORBA::ORB::_duplicate (orb))
 { }
 
 Test_i::~Test_i ()
 {
+  if (!shutdown_) {
+    this->shutdown ();
+  }
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) ~Test_i>\n"));
 }
 
@@ -79,5 +82,6 @@ void
 Test_i::shutdown ()
 {
   orb_->shutdown (0);
+  shutdown_ = true;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::shutdown>\n"));
 }
