@@ -1,3 +1,10 @@
+Mon Mar 31 12:09:20 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Always reference Kokyu libraries from $(ACE_BUILDDIR) instead of
+          $(top_builddir) so that it will work from both ACE and TAO.
+
 Mon Mar 31 11:00:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2980_Regression_Dll.cpp:
