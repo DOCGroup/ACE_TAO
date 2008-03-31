@@ -20,7 +20,7 @@ unlink $nsior;
 
 $NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://roon.dre.vanderbilt.edu:40000 -o ns.ior");
 
-$NS->SpawnWaitKill (5000);
+$NS->SpawnWaitKill (9999999);
 
  print STDERR "Starting Naming Service\n";
 

@@ -1,3 +1,59 @@
+Mon Mar 31 15:46:24 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
+
+        * Controller/EUCON/MPC_Controller.cpp:
+
+        * Tester/Interactive_IA_Tester.cpp:
+
+        * descriptors/NodeDetails.dat:
+        * descriptors/RACE.cdp:
+        * descriptors/run_NS.pl:
+
+        * examples/E2E_Task/Model/Baseline.xme:
+        * examples/E2E_Task/Model/E2E_Tasks.xme:
+
+        * examples/E2E_Task/Trigger/Trigger_exec.h:
+        * examples/E2E_Task/Trigger/Trigger_exec.cpp:
+
+        * examples/E2E_Task/descriptors/baseline:
+
+        * examples/E2E_Task/descriptors/baseline/average:
+        * examples/E2E_Task/descriptors/baseline/best:
+        * examples/E2E_Task/descriptors/baseline/worst:
+
+        * examples/E2E_Task/descriptors/baseline/worst/WTask1.cdp:
+        * examples/E2E_Task/descriptors/baseline/worst/WTask2.cdp:
+        * examples/E2E_Task/descriptors/baseline/worst/WTask3.cdp:
+        * examples/E2E_Task/descriptors/baseline/worst/WTask4.cdp:
+        * examples/E2E_Task/descriptors/baseline/worst/WTask5.cdp:
+
+        * examples/E2E_Task/descriptors/scanario:
+
+        * examples/E2E_Task/descriptors/scanario/Domain.cdd:
+        * examples/E2E_Task/descriptors/scanario/NodeDetails.dat:
+        * examples/E2E_Task/descriptors/scanario/Task1.cdp:
+        * examples/E2E_Task/descriptors/scanario/Task2.cdp:
+        * examples/E2E_Task/descriptors/scanario/Task3.cdp:
+        * examples/E2E_Task/descriptors/scanario/Task4.cdp:
+        * examples/E2E_Task/descriptors/scanario/Task5.cdp:
+        * examples/E2E_Task/descriptors/scanario/Task6.cdp:
+        * examples/E2E_Task/descriptors/scanario/Task7.cdp:
+        * examples/E2E_Task/descriptors/scanario/Task8.cdp:
+        * examples/E2E_Task/descriptors/scanario/run_all.pl:
+
+        * examples/E2E_Task/descriptors/Domain.cdd:
+        * examples/E2E_Task/descriptors/NodeDetails.dat:
+        * examples/E2E_Task/descriptors/Task1.cdp:
+        * examples/E2E_Task/descriptors/Task2.cdp:
+        * examples/E2E_Task/descriptors/Task3.cdp:
+        * examples/E2E_Task/descriptors/Task4.cdp:
+        * examples/E2E_Task/descriptors/Task5.cdp:
+        * examples/E2E_Task/descriptors/Task6.cdp:
+        * examples/E2E_Task/descriptors/Task7.cdp:
+        * examples/E2E_Task/descriptors/Task8.cdp:
+        * examples/E2E_Task/descriptors/run_all.pl:
+
+          Removed these files.
+
 Fri Mar  7 22:11:51 UTC 2008  Nishanth Shankaran  <nshankar@nosoam.com>
 
         * examples/E2E_Task/Model/E2E_Tasks.xme:

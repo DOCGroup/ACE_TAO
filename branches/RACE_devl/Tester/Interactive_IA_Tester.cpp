@@ -107,6 +107,7 @@ main (int argc, char *argv[])
 
       if (filename)
       {
+        admin->stop_controller ();
         for (size_t i = min; i <= max; ++i)
           {
             std::stringstream name;
