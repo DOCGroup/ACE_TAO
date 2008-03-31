@@ -200,8 +200,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 #if TAO_HAS_INTERCEPTORS == 1
   // Don't bother marshaling inout/out/return values if an interceptor
   // caused a location forward.
- CORBA::Object_var forward_to_end = server_request.forward_location ();
-  if (CORBA::is_nil (forward_to_end.in ()))
+  if (!server_request.is_forwarded ())
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     {
       if (server_request.outgoing ())

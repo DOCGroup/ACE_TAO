@@ -56,6 +56,7 @@ namespace TAO
     void upcall (
       CORBA::Object_ptr obj,
       CORBA::Object_out forward_obj,
+      bool & is_forwarded,
       TAO::Argument ** args,
       int num_args,
       const char * op,
