@@ -82,6 +82,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
+      server_request.reply_status (GIOP::LOCATION_FORWARD);
       (void) this->send_other (server_request,
                                args,
                                nargs,
@@ -149,6 +150,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
+      server_request.reply_status (GIOP::LOCATION_FORWARD);
       (void) this->send_other (server_request,
                                args,
                                nargs,
@@ -213,6 +215,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
+      server_request.reply_status (GIOP::LOCATION_FORWARD);
       (void) this->send_other (server_request,
                                args,
                                nargs,
@@ -281,6 +284,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
+      server_request.reply_status (GIOP::LOCATION_FORWARD);
       this->send_other (server_request,
                         args,
                         nargs,
@@ -392,6 +396,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
+      server_request.reply_status (GIOP::LOCATION_FORWARD);
       this->send_other (server_request,
                         args,
                         nargs,
@@ -483,6 +488,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
+      server_request.reply_status (GIOP::LOCATION_FORWARD);
       this->send_other (server_request,
                         args,
                         nargs,
