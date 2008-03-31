@@ -1,3 +1,14 @@
+Mon Mar 31 18:56:40 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.inl:
+        * ace/Refcounted_Auto_Ptr.cpp:
+
+          Reverting the changes because a) they are not really necessary
+          for the refactoring of the service config, and; b) the AIX
+          compiler appears to not deal well with implicit conversion
+          definitions, to template member types.
+
 Mon Mar 31 16:15:17 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/tests.mpc:
