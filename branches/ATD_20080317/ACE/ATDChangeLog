@@ -1,0 +1,10 @@
+Mon Mar 31 15:46:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Acceptor.cpp:
+        * ace/Connector.cpp:
+        * ace/Strategies_T.cpp:
+
+          When calling close() after a failed open() call, pass one as the
+          flags instead of zero.  This gives an indication of the situation
+          and allows for different things to be done in the situation where
+          an open fails.

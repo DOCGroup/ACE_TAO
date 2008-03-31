@@ -197,7 +197,7 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_ha
     result = -1;
 
   if (result == -1)
-    svc_handler->close (0);
+    svc_handler->close (1);
 
   return result;
 }
@@ -252,7 +252,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
     return this->inherited::activate_svc_handler (svc_handler, arg);
 
   if (result == -1)
-    svc_handler->close (0);
+    svc_handler->close (1);
 
   return result;
 }

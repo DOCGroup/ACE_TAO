@@ -294,7 +294,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
       ACE_Errno_Guard error(errno);
 
       // Close down handler to avoid memory leaks.
-      svc_handler->close (0);
+      svc_handler->close (1);
 
       return -1;
     }
