@@ -23,6 +23,7 @@ namespace CIAO
   {
     namespace CIDL_Trigger
     {
+
       class TRIGGER_EXEC_Export Trigger_exec_i
         : public virtual Trigger_Exec,
           public virtual TAO_Local_RefCounted_Object,
@@ -34,11 +35,17 @@ namespace CIAO
 
         virtual ~Trigger_exec_i (void);
 
+        virtual ::CIAO::RACE::CCM_ScienceData_ptr get_data_in ();
+
         virtual int svc ();
 
-        virtual ::CORBA::Long period ();
+        virtual ::CORBA::Double rate ();
 
-        virtual void period (::CORBA::Long period);
+        virtual void rate (::CORBA::Double rate);
+
+        virtual ::CORBA::Long subtasks ();
+
+        virtual void subtasks (::CORBA::Long subtasks);
 
         virtual ::CORBA::Double load ();
 
@@ -63,36 +70,74 @@ namespace CIAO
 
         virtual void ccm_remove ();
 
+        protected:
+
+        // Helper methods.
+
+        void update_priority ();
+
         private:
         ::CIAO::RACE::CCM_Trigger_Context_var context_;
 
-        // Task period specified in usecs.
-        ACE_hrtime_t period_;
-
-        // Task ID.
-        ::CORBA::String_var ID_;
+        // Task rate specified in Hz.
+        ::CORBA::Double rate_;
 
         // Load coefficient.
         double load_;
+
+        // Number of subtasks in this task.
+        size_t subtasks_;
+
+
+        // Task ID.
+        ::CORBA::String_var ID_;
 
         // Indicates whether the active object has been activated or not.
         bool active_;
 
         /// Timer used to calculate the throughput.
-        ACE_High_Res_Timer timer_;
+        ACE_High_Res_Timer tp_timer_;
 
-        // Mutex for the period variable.
+        /// Timer used to calculate the e-2-e response time.
+        ACE_High_Res_Timer response_timer_;
+
+
+        // Mutex for the rate variable.
         ACE_Mutex mutex_;
 
         // Mutex for the metrics variable.
         ACE_Mutex metrics_mutex_;
 
         // Performance metrics.
-        Performance metrics_;
+        Metrics metrics_;
 
         // Logger.
         Logger *logger_;
+
+        // Priority of the task.
+        size_t priority_;
+
+        friend class ScienceData_exec_i;
       };
+
+      class TRIGGER_EXEC_Export ScienceData_exec_i
+        : public virtual ::CIAO::RACE::CCM_ScienceData,
+          public virtual TAO_Local_RefCounted_Object
+      {
+        public:
+
+        ScienceData_exec_i (Trigger_exec_i & component);
+
+        virtual ~ScienceData_exec_i (void);
+
+        virtual void push_data (const ::CIAO::RACE::Message & msg);
+
+        private:
+        Trigger_exec_i & component_;
+      };
+
+
+
 
       class TRIGGER_EXEC_Export Trigger_Factory_exec_i
         : public virtual Trigger_Factory_Exec,

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project SYSTEM "mga.dtd">
 
-<project guid="{B6F3F915-D6E7-42C7-A108-5DADB08BD48C}" cdate="Tue Feb 26 12:23:42 2008" mdate="Tue Feb 26 12:23:42 2008" version="" metaguid="{525FE668-6953-4C7B-B381-780F8B2C3343}" metaversion="" metaname="PICML">
-	<name>PICML_default_xme_file</name>
+<project guid="{647BD34D-255D-4415-A3D1-58AC31A2801F}" cdate="Tue Feb 26 12:23:42 2008" mdate="Tue Feb 26 12:23:42 2008" version="" metaguid="{525FE668-6953-4C7B-B381-780F8B2C3343}" metaversion="" metaname="PICML">
+	<name>Application</name>
 	<comment></comment>
 	<author></author>
 	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0x2" kind="RootFolder" guid="{7B20D32D-3B9F-47b3-B946-3D499BB321AE}">
-		<name>PICML_default_xme_file</name>
+		<name>Application</name>
 		<folder id="id-006a-00000002" relid="0x2" childrelidcntr="0x3" kind="InterfaceDefinitions" guid="{B3C18AA3-70FA-488d-BC92-5D2D2FB61C18}">
 			<name>InterfaceDefinitions</name>
 			<model id="id-0065-00000001" kind="File" guid="{9A446BAA-BBF3-404a-A546-7CDB1AD64C0A}" relid="0x1" childrelidcntr="0x1">
-				<name>Event_Types</name>
+				<name>Application_Base</name>
 				<attribute kind="PrefixTag" status="meta">
 					<value></value>
 				</attribute>
 				<attribute kind="path">
-					<value>Event_Types</value>
+					<value>Application_Base</value>
 				</attribute>
 				<model id="id-0065-00000002" kind="Package" role="Package" guid="{E9D60B29-91B1-4193-8570-241327C900A9}" relid="0x1" childrelidcntr="0x1">
 					<name>CIAO</name>
@@ -37,7 +37,7 @@
 					<attribute kind="VersionTag" status="meta">
 						<value></value>
 					</attribute>
-					<model id="id-0065-00000003" kind="Package" role="Package" guid="{92DD542F-9857-4395-988C-2E1428A56B5B}" relid="0x1" childrelidcntr="0x1">
+					<model id="id-0065-00000003" kind="Package" role="Package" guid="{92DD542F-9857-4395-988C-2E1428A56B5B}" relid="0x1" childrelidcntr="0x3">
 						<name>RACE</name>
 						<regnode name="PartRegs" isopaque="yes">
 							<value></value>
@@ -57,14 +57,68 @@
 						<attribute kind="VersionTag" status="meta">
 							<value></value>
 						</attribute>
-						<model id="id-0065-00000004" kind="Event" role="Event" guid="{59F9DEC2-025A-4715-AE35-CA3C1EC7DB94}" relid="0x1" childrelidcntr="0x2">
-							<name>Test</name>
-							<regnode name="PartRegs" isopaque="yes">
+						<model id="id-0065-000001be" kind="Aggregate" role="Aggregate" guid="{08C6DD6C-B57E-4e43-9F1F-4CF3B377FC2C}" relid="0x2" childrelidcntr="0x3">
+							<name>Message</name>
+							<regnode name="PartRegs" status="undefined">
 								<value></value>
-								<regnode name="InterfaceDefinition" isopaque="yes">
+								<regnode name="InterfaceDefinition" status="undefined">
 									<value></value>
 									<regnode name="Position" isopaque="yes">
-										<value>518,318</value>
+										<value>226,352</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-000002be" kind="Member" role="Member" guid="{1913A6DC-638E-421e-9DE8-2DA726D5BD8E}" relid="0x1" referred="id-0066-00000003">
+								<name>task_ID</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>700,434</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+							<reference id="id-0067-000002bf" kind="Member" role="Member" guid="{ADB6680F-CEA4-4af6-BA4E-0C30705EAC72}" relid="0x2" referred="id-0066-00000006">
+								<name>load</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>334,201</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+							<reference id="id-0067-000002c0" kind="Member" role="Member" guid="{DBCD8D98-A603-47f2-ACA4-6D1C6E8AD790}" relid="0x3" referred="id-0066-00000007">
+								<name>priority</name>
+								<regnode name="PartRegs" status="undefined">
+									<value></value>
+									<regnode name="InterfaceDefinition" status="undefined">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>324,639</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<model id="id-0065-000001bf" kind="Object" role="Object" guid="{BEB365F5-8B1C-4357-A7BC-C09A220B8157}" relid="0x3" childrelidcntr="0x1">
+							<name>ScienceData</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="InterfaceDefinition" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>569,331</value>
 									</regnode>
 								</regnode>
 							</regnode>
@@ -80,30 +134,39 @@
 							<attribute kind="abstract" status="meta">
 								<value>false</value>
 							</attribute>
-							<reference id="id-0067-00000010" kind="Member" role="Member" guid="{5A78C400-3C9C-41a6-8DB0-C4AE15696B3D}" relid="0x1" referred="id-0066-00000006">
-								<name>load</name>
-								<regnode name="PartRegs" isopaque="yes">
+							<attribute kind="local" status="meta">
+								<value>false</value>
+							</attribute>
+							<model id="id-0065-000001c0" kind="OnewayOperation" role="OnewayOperation" guid="{A8C8DEF8-5B39-4f5e-9E0C-F0D98C6E727D}" relid="0x1" childrelidcntr="0x1">
+								<name>push_data</name>
+								<regnode name="PartRegs" status="undefined">
 									<value></value>
-									<regnode name="InterfaceDefinition" isopaque="yes">
+									<regnode name="InterfaceDefinition" status="undefined">
 										<value></value>
 										<regnode name="Position" isopaque="yes">
-											<value>334,201</value>
+											<value>464,401</value>
 										</regnode>
 									</regnode>
 								</regnode>
-							</reference>
-							<reference id="id-0067-00000011" kind="Member" role="Member" guid="{1376CCE0-D14D-4a5b-AA11-C4DDED838C8B}" relid="0x2" referred="id-0066-00000003">
-								<name>task_ID</name>
-								<regnode name="PartRegs" isopaque="yes">
+								<attribute kind="SpecifyIdTag" status="meta">
 									<value></value>
-									<regnode name="InterfaceDefinition" isopaque="yes">
+								</attribute>
+								<attribute kind="VersionTag" status="meta">
+									<value></value>
+								</attribute>
+								<reference id="id-0067-000002d3" kind="InParameter" role="InParameter" guid="{2FA1800A-E1CB-483f-B5C0-0E6DF39CD0E3}" relid="0x1" referred="id-0065-000001be">
+									<name>msg</name>
+									<regnode name="PartRegs" status="undefined">
 										<value></value>
-										<regnode name="Position" isopaque="yes">
-											<value>700,434</value>
+										<regnode name="InterfaceDefinition" status="undefined">
+											<value></value>
+											<regnode name="Position" isopaque="yes">
+												<value>352,527</value>
+											</regnode>
 										</regnode>
 									</regnode>
-								</regnode>
-							</reference>
+								</reference>
+							</model>
 						</model>
 					</model>
 				</model>
@@ -156,7 +219,7 @@
 						<attribute kind="VersionTag" status="meta">
 							<value></value>
 						</attribute>
-						<model id="id-0065-00000008" kind="Component" role="Component" guid="{0688F2BF-D00F-4a43-8DBD-0456CC377BB2}" relid="0x1" childrelidcntr="0x4">
+						<model id="id-0065-00000008" kind="Component" role="Component" guid="{0688F2BF-D00F-4a43-8DBD-0456CC377BB2}" relid="0x1" childrelidcntr="0x6">
 							<name>Subtask</name>
 							<regnode name="PartRegs" isopaque="yes">
 								<value></value>
@@ -239,14 +302,20 @@
 									</regnode>
 								</reference>
 							</model>
-							<reference id="id-0067-00000001" kind="OutEventPort" role="OutEventPort" guid="{81227BE1-4F55-4b07-BD80-85C01E93218E}" relid="0x1" referred="id-0065-00000004">
-								<name>test_out</name>
-								<regnode name="PartRegs" isopaque="yes">
+							<reference id="id-0067-000002d4" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{FE8A6A10-788D-47d4-8506-1B731AD52D5F}" relid="0x5" referred="id-0065-000001bf">
+								<name>data_out</name>
+								<regnode name="PartRegs" status="undefined">
 									<value></value>
-									<regnode name="InterfaceDefinition" isopaque="yes">
+									<regnode name="Behavior" status="undefined">
 										<value></value>
 										<regnode name="Position" isopaque="yes">
-											<value>986,104</value>
+											<value>975,296</value>
+										</regnode>
+									</regnode>
+									<regnode name="InterfaceDefinition" status="undefined">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>975,296</value>
 										</regnode>
 									</regnode>
 								</regnode>
@@ -262,24 +331,27 @@
 								<attribute kind="exclusiveUser" status="meta">
 									<value>false</value>
 								</attribute>
+								<attribute kind="multiple_connections" status="meta">
+									<value>false</value>
+								</attribute>
 								<attribute kind="optional" status="meta">
 									<value>false</value>
 								</attribute>
-								<attribute kind="out_event_port_type" status="meta">
-									<value>DirectConnect</value>
-								</attribute>
-								<attribute kind="single_destination">
-									<value>true</value>
-								</attribute>
 							</reference>
-							<reference id="id-0067-00000002" kind="InEventPort" role="InEventPort" guid="{D7E0AFEE-30F6-40bc-AC64-E147173C20F7}" relid="0x2" referred="id-0065-00000004">
-								<name>test_in</name>
-								<regnode name="PartRegs" isopaque="yes">
+							<reference id="id-0067-000002f0" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{1193E767-BC66-4925-86AB-625912D7256C}" relid="0x6" referred="id-0065-000001bf">
+								<name>data_in</name>
+								<regnode name="PartRegs" status="undefined">
 									<value></value>
-									<regnode name="InterfaceDefinition" isopaque="yes">
+									<regnode name="Behavior" status="undefined">
 										<value></value>
 										<regnode name="Position" isopaque="yes">
-											<value>41,69</value>
+											<value>51,79</value>
+										</regnode>
+									</regnode>
+									<regnode name="InterfaceDefinition" status="undefined">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>51,79</value>
 										</regnode>
 									</regnode>
 								</regnode>
@@ -335,7 +407,7 @@
 						<regnode name="InterfaceDefinition" isopaque="yes">
 							<value></value>
 							<regnode name="Position" isopaque="yes">
-								<value>334,201</value>
+								<value>328,195</value>
 							</regnode>
 						</regnode>
 					</regnode>
@@ -389,7 +461,7 @@
 						<attribute kind="VersionTag" status="meta">
 							<value></value>
 						</attribute>
-						<model id="id-0065-0000000f" kind="Component" role="Component" guid="{4AF0E311-92A8-46cc-B736-E115818F8D13}" relid="0x1" childrelidcntr="0x5">
+						<model id="id-0065-0000000f" kind="Component" role="Component" guid="{4AF0E311-92A8-46cc-B736-E115818F8D13}" relid="0x1" childrelidcntr="0x7">
 							<name>Trigger</name>
 							<regnode name="PartRegs" isopaque="yes">
 								<value></value>
@@ -532,14 +604,56 @@
 									</regnode>
 								</reference>
 							</model>
-							<reference id="id-0067-00000004" kind="OutEventPort" role="OutEventPort" guid="{BF1A0CBF-BAB5-4c37-BB14-E46A0C4C0122}" relid="0x1" referred="id-0065-00000004">
-								<name>test_out</name>
-								<regnode name="PartRegs" isopaque="yes">
+							<reference id="id-0067-000002c1" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{24F2661A-7A8C-457b-B6A1-DD0BE99202E4}" relid="0x6" referred="id-0065-000001bf">
+								<name>data_out</name>
+								<regnode name="PartRegs" status="undefined">
 									<value></value>
-									<regnode name="InterfaceDefinition" isopaque="yes">
+									<regnode name="Behavior" status="undefined">
 										<value></value>
 										<regnode name="Position" isopaque="yes">
-											<value>937,391</value>
+											<value>828,317</value>
+										</regnode>
+									</regnode>
+									<regnode name="InterfaceDefinition" status="undefined">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>828,317</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="SpecifyIdTag" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="VersionTag" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="exclusiveProvider" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="exclusiveUser" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="multiple_connections" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="optional" status="meta">
+									<value>false</value>
+								</attribute>
+							</reference>
+							<reference id="id-0067-000002ca" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{D557149F-F0AC-42e1-8401-56A74CE906D6}" relid="0x7" referred="id-0065-000001bf">
+								<name>data_in</name>
+								<regnode name="PartRegs" status="undefined">
+									<value></value>
+									<regnode name="Behavior" status="undefined">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>44,114</value>
+										</regnode>
+									</regnode>
+									<regnode name="InterfaceDefinition" status="undefined">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>69,111</value>
 										</regnode>
 									</regnode>
 								</regnode>
@@ -557,12 +671,6 @@
 								</attribute>
 								<attribute kind="optional" status="meta">
 									<value>false</value>
-								</attribute>
-								<attribute kind="out_event_port_type" status="meta">
-									<value>DirectConnect</value>
-								</attribute>
-								<attribute kind="single_destination">
-									<value>true</value>
 								</attribute>
 							</reference>
 						</model>
@@ -896,7 +1004,7 @@
 			</model>
 			<model id="id-0065-00000020" kind="ComponentImplementationContainer" guid="{E2DEBAB7-3810-4166-A1A2-0D9FE6C81E15}" relid="0x1" childrelidcntr="0x1">
 				<name>Task1</name>
-				<model id="id-0065-00000021" kind="ComponentAssembly" role="ComponentAssembly" guid="{C0DD3E0E-50DE-4168-AD86-211FF232722C}" relid="0x1" childrelidcntr="0x39">
+				<model id="id-0065-00000021" kind="ComponentAssembly" role="ComponentAssembly" guid="{C0DD3E0E-50DE-4168-AD86-211FF232722C}" relid="0x1" childrelidcntr="0x3e">
 					<name>TaskAssembly</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -984,8 +1092,29 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-0000001e" kind="OutEventPort" role="OutEventPort" guid="{339BA4FC-6D21-4a28-B1A1-EE081C725D2C}" derivedfrom="id-0067-00000004" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002c9" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{7F2279F8-61E2-4b51-B3FB-2C44457E82DF}" derivedfrom="id-0067-000002c1" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-000002d2" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{622A65DB-6FAC-48df-9CD5-C95D0B5C2D96}" derivedfrom="id-0067-000002ca" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -1000,12 +1129,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -1056,8 +1179,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000022" kind="OutEventPort" role="OutEventPort" guid="{04DD3A5D-8CB5-4f8d-82F6-41923E4B1B7F}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002dd" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{F5223A26-71AE-4233-A673-BBC882E840AF}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -1070,18 +1193,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-00000024" kind="InEventPort" role="InEventPort" guid="{84E3E791-BEA2-46cd-800E-2CA4A7A53E48}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002f9" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{E1B21B3B-BA7C-422a-88E0-E316D4E34C09}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -1281,8 +1401,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000033" kind="InEventPort" role="InEventPort" guid="{1B7C0A2F-8D9E-4abb-84D1-2386D876E845}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002dc" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{CC7CE760-9C89-4cf9-B939-D49DAF7703AF}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -1293,14 +1413,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-00000034" kind="OutEventPort" role="OutEventPort" guid="{9DA37201-F6F5-420d-8FDB-5F2F89C10CD4}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002f8" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{4C39E292-ED59-4ad8-A177-35300ABB1895}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -1315,12 +1438,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -1371,8 +1488,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000037" kind="InEventPort" role="InEventPort" guid="{C25DC34F-506E-4e21-B848-F04D3494B7B9}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002e3" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{EF861003-00FE-450b-B33F-BD97AE4BC25B}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -1383,14 +1500,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-00000038" kind="OutEventPort" role="OutEventPort" guid="{9EEF6244-447F-4b73-A6C0-1F67FCC22C1C}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002ff" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{180418A3-A4E3-41dc-8D00-4D2CB4BC9D35}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -1405,12 +1525,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -1461,8 +1575,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-0000003b" kind="InEventPort" role="InEventPort" guid="{04FC44C4-68AF-4de2-BB45-F6A64FA16DE9}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002e4" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{AD52C8D9-DFF8-42c3-96E4-8C64D6D49ED7}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -1473,14 +1587,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-0000003c" kind="OutEventPort" role="OutEventPort" guid="{57AB4AF0-4D64-4f69-B0B1-441B252CE89A}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-00000300" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{3DC6BC48-C61A-4a1e-A46D-B1BF2924F1A5}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -1495,12 +1612,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -1886,26 +1997,6 @@
 						<connpoint role="src" target="id-0065-0000003c"/>
 						<connpoint role="dst" target="id-0065-00000041"/>
 					</connection>
-					<connection id="id-0068-0000002f" kind="emit" role="emit" guid="{DD159CA8-6C89-4d3b-8522-9F98FF067996}" relid="0x26">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-00000022"/>
-						<connpoint role="dst" target="id-0067-00000033"/>
-					</connection>
-					<connection id="id-0068-00000030" kind="emit" role="emit" guid="{DA2D4BD0-D19E-46ec-98B7-2836A006D2E6}" relid="0x27">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-00000034"/>
-						<connpoint role="dst" target="id-0067-00000037"/>
-					</connection>
-					<connection id="id-0068-00000031" kind="emit" role="emit" guid="{24E10819-0AD1-40fe-A974-8A142D700EF0}" relid="0x28">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-00000038"/>
-						<connpoint role="dst" target="id-0067-0000003b"/>
-					</connection>
-					<connection id="id-0068-00000032" kind="emit" role="emit" guid="{2FC9C1E2-D783-48d9-A057-2739012BD111}" relid="0x29">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-0000001e"/>
-						<connpoint role="dst" target="id-0067-00000024"/>
-					</connection>
 					<connection id="id-0068-00000071" kind="AssemblyConfigProperty" role="AssemblyConfigProperty" guid="{32D937DA-CE9F-493b-A9D6-D1AB5171AB3B}" relid="0x2b">
 						<name>AssemblyConfigProperty</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -1977,11 +2068,36 @@
 						<connpoint role="src" target="id-0065-000001ae"/>
 						<connpoint role="dst" target="id-0065-000001b6"/>
 					</connection>
+					<connection id="id-0068-0000013f" kind="invoke" role="invoke" guid="{47459AB1-BA88-4fbe-917A-F97866DEA668}" relid="0x3a">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002c9"/>
+						<connpoint role="dst" target="id-0067-000002f9"/>
+					</connection>
+					<connection id="id-0068-00000140" kind="invoke" role="invoke" guid="{8BCB15FB-11B0-4d11-9B78-5BE7BD8F2D63}" relid="0x3b">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002dd"/>
+						<connpoint role="dst" target="id-0067-000002f8"/>
+					</connection>
+					<connection id="id-0068-00000141" kind="invoke" role="invoke" guid="{81BA6B20-63EF-465b-BCF3-5F87A07817F3}" relid="0x3c">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002dc"/>
+						<connpoint role="dst" target="id-0067-000002ff"/>
+					</connection>
+					<connection id="id-0068-00000142" kind="invoke" role="invoke" guid="{BCA389E8-B9B1-43b5-9F53-5F1234F22E16}" relid="0x3d">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002e3"/>
+						<connpoint role="dst" target="id-0067-00000300"/>
+					</connection>
+					<connection id="id-0068-00000143" kind="invoke" role="invoke" guid="{470031CE-900B-4159-ABD0-C958DFA2E308}" relid="0x3e">
+						<name>invoke</name>
+						<connpoint role="dst" target="id-0067-000002d2"/>
+						<connpoint role="src" target="id-0067-000002e4"/>
+					</connection>
 				</model>
 			</model>
 			<model id="id-0065-00000059" kind="ComponentImplementationContainer" guid="{49BE22D6-71A5-42d7-B34C-E2EDFC879F37}" relid="0x2" childrelidcntr="0x2">
 				<name>Task2</name>
-				<model id="id-0065-0000005b" kind="ComponentAssembly" role="ComponentAssembly" guid="{3E574E5F-A4CA-446d-9A0B-996440A07080}" relid="0x2" childrelidcntr="0x3b">
+				<model id="id-0065-0000005b" kind="ComponentAssembly" role="ComponentAssembly" guid="{3E574E5F-A4CA-446d-9A0B-996440A07080}" relid="0x2" childrelidcntr="0x3f">
 					<name>TaskAssembly</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -2123,8 +2239,29 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000057" kind="OutEventPort" role="OutEventPort" guid="{A115C163-EACA-48e4-A263-3B37BD2210C1}" derivedfrom="id-0067-00000004" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002c8" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{95FFD549-7B40-4f98-994D-D09B1330D3C1}" derivedfrom="id-0067-000002c1" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-000002d1" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{78870877-2DEB-4cd6-AF31-7E3B075EAD62}" derivedfrom="id-0067-000002ca" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -2139,12 +2276,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -2195,8 +2326,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-0000005a" kind="InEventPort" role="InEventPort" guid="{2B4F5F0B-6600-444e-80E9-B84F99BE2B04}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002e0" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{919B1546-0D04-4ece-9D9C-054106550C40}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -2207,14 +2338,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-0000005b" kind="OutEventPort" role="OutEventPort" guid="{C2588BD3-2074-44fb-81B3-015FC91D2134}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002fc" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{F6816B4F-60B3-4122-92E5-A2EE91BFDF3A}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -2229,12 +2363,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -2366,8 +2494,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000061" kind="InEventPort" role="InEventPort" guid="{2FBF8CC9-26F6-4582-9C97-C4E5D995A9C8}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002e5" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{1E89CC87-36D7-4362-A732-848BE9801AAE}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -2378,14 +2506,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-00000062" kind="OutEventPort" role="OutEventPort" guid="{07AAD837-9B35-4040-9CB7-7159274701F2}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-00000301" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{2DE4BFE0-5C90-44f9-B41B-08E1ADC34961}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -2400,12 +2531,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -2456,8 +2581,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000068" kind="InEventPort" role="InEventPort" guid="{DC1893B9-1A71-4d90-9969-3E545C69424B}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002d5" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{C37A2762-FEB7-42af-9E86-B544DB5A55C2}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -2468,14 +2593,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-0000006b" kind="OutEventPort" role="OutEventPort" guid="{9DED4A8E-1033-4f4e-9C19-4B11B1AA3E5D}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002f1" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{70FAAA44-39DD-404a-9C4A-03C927C32C7B}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -2490,12 +2618,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -2867,11 +2989,6 @@
 						<connpoint role="dst" target="id-0065-0000005c"/>
 						<connpoint role="src" target="id-0065-00000060"/>
 					</connection>
-					<connection id="id-0068-0000003b" kind="emit" role="emit" guid="{31DA2A93-B99E-431d-BD8E-35708C19FD98}" relid="0x29">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-00000057"/>
-						<connpoint role="dst" target="id-0067-0000005a"/>
-					</connection>
 					<connection id="id-0068-0000003c" kind="AttributeValue" role="AttributeValue" guid="{016FD9A0-0659-4615-B808-5E32C0984338}" relid="0x10">
 						<name>AttributeValue</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -2927,16 +3044,6 @@
 						</regnode>
 						<connpoint role="src" target="id-0065-00000069"/>
 						<connpoint role="dst" target="id-0065-00000072"/>
-					</connection>
-					<connection id="id-0068-00000045" kind="emit" role="emit" guid="{001F4ADB-5F17-4699-BEC2-38B6DD90022C}" relid="0x26">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-0000005b"/>
-						<connpoint role="dst" target="id-0067-00000061"/>
-					</connection>
-					<connection id="id-0068-00000047" kind="emit" role="emit" guid="{0B0D5EF2-8EA3-4fdf-99A1-F4EE51B7297B}" relid="0x27">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-00000062"/>
-						<connpoint role="dst" target="id-0067-00000068"/>
 					</connection>
 					<connection id="id-0068-00000048" kind="AttributeValue" role="AttributeValue" guid="{52014418-9E4B-4d17-9C2E-81E3E76D00A1}" relid="0x2b">
 						<name>AttributeValue</name>
@@ -2998,11 +3105,31 @@
 						<connpoint role="src" target="id-0065-000001af"/>
 						<connpoint role="dst" target="id-0065-000001b7"/>
 					</connection>
+					<connection id="id-0068-00000144" kind="invoke" role="invoke" guid="{FE024395-10C7-4dc0-B849-9E1F054A19D0}" relid="0x3c">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002c8"/>
+						<connpoint role="dst" target="id-0067-000002fc"/>
+					</connection>
+					<connection id="id-0068-00000145" kind="invoke" role="invoke" guid="{185E92F8-C3CC-434b-80F2-67D3515284FA}" relid="0x3d">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002e0"/>
+						<connpoint role="dst" target="id-0067-00000301"/>
+					</connection>
+					<connection id="id-0068-00000146" kind="invoke" role="invoke" guid="{E5540371-D2C2-43e4-A1D7-06CE76B325D4}" relid="0x3e">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002e5"/>
+						<connpoint role="dst" target="id-0067-000002f1"/>
+					</connection>
+					<connection id="id-0068-00000147" kind="invoke" role="invoke" guid="{1BD5B0A1-C4B0-4d7f-B8D2-66722A409531}" relid="0x3f">
+						<name>invoke</name>
+						<connpoint role="dst" target="id-0067-000002d1"/>
+						<connpoint role="src" target="id-0067-000002d5"/>
+					</connection>
 				</model>
 			</model>
 			<model id="id-0065-00000084" kind="ComponentImplementationContainer" guid="{0138FDCD-C2D8-40bf-B773-0B95B664BD08}" relid="0x3" childrelidcntr="0x1">
 				<name>Task3</name>
-				<model id="id-0065-00000085" kind="ComponentAssembly" role="ComponentAssembly" guid="{3022B53C-472B-47c6-9988-99C53F7C04F7}" relid="0x1" childrelidcntr="0x4a">
+				<model id="id-0065-00000085" kind="ComponentAssembly" role="ComponentAssembly" guid="{3022B53C-472B-47c6-9988-99C53F7C04F7}" relid="0x1" childrelidcntr="0x50">
 					<name>TaskAssembly</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -3201,8 +3328,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000000a7" kind="InEventPort" role="InEventPort" guid="{057DF8E9-E6E3-4353-BC99-92EFB47ED37D}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002d7" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{5A0A4D54-D535-47de-BF3B-BF7BFEA6D3E2}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3213,14 +3340,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-000000a8" kind="OutEventPort" role="OutEventPort" guid="{AFC86D93-E31F-4383-AC4D-B2F92FA146A3}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002f3" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{AE697138-74BE-4450-ADD5-011683CDE6C3}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3235,12 +3365,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -3315,8 +3439,29 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000000ac" kind="OutEventPort" role="OutEventPort" guid="{C551C60E-9E06-42a3-83A0-04C422003BF5}" derivedfrom="id-0067-00000004" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002c7" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{7F00C198-A609-4f65-B80B-DCD1D7A389FE}" derivedfrom="id-0067-000002c1" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-000002d0" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{A60E4E38-4205-462b-921D-C48B5260B26A}" derivedfrom="id-0067-000002ca" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3331,12 +3476,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -3468,8 +3607,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000000b2" kind="InEventPort" role="InEventPort" guid="{EDA677B0-6BD2-41da-8B41-1F9D10B3A35D}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002ee" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{9C6EC937-E12F-4962-B1AE-A5C5869EFB17}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3480,14 +3619,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-000000b3" kind="OutEventPort" role="OutEventPort" guid="{E4F7FD9C-29A3-4485-8A10-BCA4A9AB4489}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-0000030a" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{9FD533E0-C22F-4304-BEBA-617884D36B35}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3502,12 +3644,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -3558,8 +3694,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000000b4" kind="OutEventPort" role="OutEventPort" guid="{8B2E1D56-4B1E-48c2-909C-36BFFEC2C3FF}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002e9" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{BEFD565A-4C12-4c24-AA75-EF97F7C43D72}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3572,18 +3708,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-000000b5" kind="InEventPort" role="InEventPort" guid="{9E6D58FE-1452-4c31-A728-60B2ACBB2758}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-00000305" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{8156CE1B-733F-4974-A973-11116E0A37E0}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3648,8 +3781,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000000b8" kind="InEventPort" role="InEventPort" guid="{2DBBD62A-03F4-49df-86DD-4C3BE4046F76}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002e7" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{9BF5DF46-369D-47d3-94AE-08A4F4981884}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3660,14 +3793,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-000000bb" kind="OutEventPort" role="OutEventPort" guid="{D944D441-9F13-448e-9A0A-64802457D08D}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-00000303" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{ADA9B329-E7E1-498f-A672-955C78482FA4}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3682,12 +3818,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -3819,8 +3949,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000000c1" kind="InEventPort" role="InEventPort" guid="{8AD7CDC9-0F07-4ba1-B7B9-1D28104DB231}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002ed" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{562A231B-EA8C-4108-8A30-472C21342084}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3831,14 +3961,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-000000c2" kind="OutEventPort" role="OutEventPort" guid="{BC60BD42-6439-40b6-9D09-72BAF08A4724}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-00000309" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{5C2BE1A6-8B68-4d2f-86B1-550FD8B70E1F}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -3853,12 +3986,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -4279,26 +4406,6 @@
 						<connpoint role="dst" target="id-0065-00000094"/>
 						<connpoint role="src" target="id-0065-0000009a"/>
 					</connection>
-					<connection id="id-0068-00000062" kind="emit" role="emit" guid="{8011B1AF-0603-4762-B1EC-2C817AF3280E}" relid="0x26">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-000000a8"/>
-						<connpoint role="dst" target="id-0067-000000b2"/>
-					</connection>
-					<connection id="id-0068-00000063" kind="emit" role="emit" guid="{19F5C026-E160-4621-BD74-B88DCD606714}" relid="0x27">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-000000b3"/>
-						<connpoint role="dst" target="id-0067-000000b8"/>
-					</connection>
-					<connection id="id-0068-00000064" kind="emit" role="emit" guid="{BC918F84-347E-4c20-A12F-D3665B0403E4}" relid="0x28">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-000000b5"/>
-						<connpoint role="src" target="id-0067-000000bb"/>
-					</connection>
-					<connection id="id-0068-00000065" kind="emit" role="emit" guid="{30DA26BF-2D7F-4583-8386-D39752B40042}" relid="0x29">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-000000a7"/>
-						<connpoint role="src" target="id-0067-000000ac"/>
-					</connection>
 					<connection id="id-0068-00000066" kind="AttributeValue" role="AttributeValue" guid="{16F2D015-2E53-49cb-8E05-1B3DC3B9F676}" relid="0x2b">
 						<name>AttributeValue</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -4314,11 +4421,6 @@
 						</regnode>
 						<connpoint role="src" target="id-0065-00000099"/>
 						<connpoint role="dst" target="id-0065-000000a0"/>
-					</connection>
-					<connection id="id-0068-00000068" kind="emit" role="emit" guid="{2EB1EEB7-CF36-4fc3-8BFB-F6BB16E50A45}" relid="0x2f">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-000000b4"/>
-						<connpoint role="dst" target="id-0067-000000c1"/>
 					</connection>
 					<connection id="id-0068-00000069" kind="AttributeValue" role="AttributeValue" guid="{60B24250-E145-4f06-9D62-AC0DFB162961}" relid="0x31">
 						<name>AttributeValue</name>
@@ -4414,11 +4516,41 @@
 						<connpoint role="src" target="id-0065-000001b0"/>
 						<connpoint role="dst" target="id-0065-000001b8"/>
 					</connection>
+					<connection id="id-0068-00000139" kind="invoke" role="invoke" guid="{B6488197-74BA-4d7d-BADE-EB8BF4699DFD}" relid="0x4b">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002c7"/>
+						<connpoint role="dst" target="id-0067-000002f3"/>
+					</connection>
+					<connection id="id-0068-0000013a" kind="invoke" role="invoke" guid="{70454176-8E2B-4f8b-AFD6-F0EAC4E3B873}" relid="0x4c">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002d7"/>
+						<connpoint role="dst" target="id-0067-0000030a"/>
+					</connection>
+					<connection id="id-0068-0000013b" kind="invoke" role="invoke" guid="{84669771-A8D2-44e2-8594-9DF6D8ECEBB9}" relid="0x4d">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002ee"/>
+						<connpoint role="dst" target="id-0067-00000303"/>
+					</connection>
+					<connection id="id-0068-0000013c" kind="invoke" role="invoke" guid="{E7CA7CD6-5856-4f97-9F60-FE52B77782A9}" relid="0x4e">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002e7"/>
+						<connpoint role="dst" target="id-0067-00000305"/>
+					</connection>
+					<connection id="id-0068-0000013d" kind="invoke" role="invoke" guid="{4F4DA898-63F2-4cc0-9E74-459A9334AC17}" relid="0x4f">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002e9"/>
+						<connpoint role="dst" target="id-0067-00000309"/>
+					</connection>
+					<connection id="id-0068-0000013e" kind="invoke" role="invoke" guid="{D57D813D-53D3-4f25-9B5B-6FC432F93B35}" relid="0x50">
+						<name>invoke</name>
+						<connpoint role="dst" target="id-0067-000002d0"/>
+						<connpoint role="src" target="id-0067-000002ed"/>
+					</connection>
 				</model>
 			</model>
 			<model id="id-0065-000000ad" kind="ComponentImplementationContainer" guid="{E48F6ED9-D23D-4c23-A107-0B42B0D98183}" relid="0x4" childrelidcntr="0x1">
 				<name>Task4</name>
-				<model id="id-0065-000000ae" kind="ComponentAssembly" role="ComponentAssembly" guid="{4D1E7AFF-086D-47da-8614-D4D3748BA363}" relid="0x1" childrelidcntr="0x3f">
+				<model id="id-0065-000000ae" kind="ComponentAssembly" role="ComponentAssembly" guid="{4D1E7AFF-086D-47da-8614-D4D3748BA363}" relid="0x1" childrelidcntr="0x42">
 					<name>TaskAssembly</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -4698,8 +4830,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000000e1" kind="OutEventPort" role="OutEventPort" guid="{04935795-DDE1-4139-BFC9-CCE967553CFB}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002ea" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{83E9A270-38D9-42db-B39F-758ED465DBEB}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -4712,18 +4844,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-000000e2" kind="InEventPort" role="InEventPort" guid="{E3225EC1-1751-4ab4-88B8-EB2E472435C5}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-00000306" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{D2D161A2-8855-4927-86BB-977CEAD89404}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -4788,8 +4917,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000000ea" kind="OutEventPort" role="OutEventPort" guid="{F24C26C3-D21F-4285-8F5B-FBF94591F30B}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002e2" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{48F2A3C1-6293-42b3-A2FA-72028906A862}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -4802,18 +4931,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-000000eb" kind="InEventPort" role="InEventPort" guid="{B3C75DFA-B633-474c-9CC9-FF18208B893B}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002fe" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{133C07E3-948E-446e-AB1E-893A2771EAC9}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -4902,8 +5028,29 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000000f1" kind="OutEventPort" role="OutEventPort" guid="{BA1D18E9-1625-413d-A273-24EEB38ED3A0}" derivedfrom="id-0067-00000004" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002c6" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{AD95A80E-CD55-4fd6-A17C-5208F51B557B}" derivedfrom="id-0067-000002c1" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-000002cf" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{3852EE5A-F4D3-407f-AE9A-72236DECE5DF}" derivedfrom="id-0067-000002ca" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -4918,12 +5065,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -5115,11 +5256,6 @@
 						<connpoint role="dst" target="id-0065-000000b6"/>
 						<connpoint role="src" target="id-0065-000000c7"/>
 					</connection>
-					<connection id="id-0068-0000007b" kind="emit" role="emit" guid="{342BA7F6-81B9-446e-980B-855A1514E67A}" relid="0x29">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-000000e2"/>
-						<connpoint role="src" target="id-0067-000000f1"/>
-					</connection>
 					<connection id="id-0068-0000007f" kind="AttributeValue" role="AttributeValue" guid="{D699D3C9-220D-4408-8522-7548D29F251C}" relid="0x13">
 						<name>AttributeValue</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -5135,11 +5271,6 @@
 						</regnode>
 						<connpoint role="dst" target="id-0065-000000b3"/>
 						<connpoint role="src" target="id-0065-000000c8"/>
-					</connection>
-					<connection id="id-0068-00000083" kind="emit" role="emit" guid="{0698D0C9-A78E-40ca-BF21-5D808A1A04D6}" relid="0x26">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-000000e1"/>
-						<connpoint role="dst" target="id-0067-000000eb"/>
 					</connection>
 					<connection id="id-0068-00000084" kind="AttributeValue" role="AttributeValue" guid="{C38FED40-268B-4678-A8EE-C9F39C18BDED}" relid="0x1f">
 						<name>AttributeValue</name>
@@ -5194,11 +5325,26 @@
 						<connpoint role="src" target="id-0065-000001b2"/>
 						<connpoint role="dst" target="id-0065-000001b9"/>
 					</connection>
+					<connection id="id-0068-00000148" kind="invoke" role="invoke" guid="{431D7326-E2E6-48a2-9AD7-82C1F82556A5}" relid="0x40">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002c6"/>
+						<connpoint role="dst" target="id-0067-00000306"/>
+					</connection>
+					<connection id="id-0068-00000149" kind="invoke" role="invoke" guid="{AC1387B2-1F69-4684-8CD4-499613413276}" relid="0x41">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002ea"/>
+						<connpoint role="dst" target="id-0067-000002fe"/>
+					</connection>
+					<connection id="id-0068-0000014a" kind="invoke" role="invoke" guid="{5A2A7FCA-972D-46c9-93BD-0AAAA9EF3438}" relid="0x42">
+						<name>invoke</name>
+						<connpoint role="dst" target="id-0067-000002cf"/>
+						<connpoint role="src" target="id-0067-000002e2"/>
+					</connection>
 				</model>
 			</model>
 			<model id="id-0065-000000d4" kind="ComponentImplementationContainer" guid="{E218A983-3688-4697-A3BF-0F7FA20AF4EC}" relid="0x5" childrelidcntr="0x1">
 				<name>Task5</name>
-				<model id="id-0065-000000d5" kind="ComponentAssembly" role="ComponentAssembly" guid="{E50D1420-6F36-45fd-86A0-076A7278E20A}" relid="0x1" childrelidcntr="0x46">
+				<model id="id-0065-000000d5" kind="ComponentAssembly" role="ComponentAssembly" guid="{E50D1420-6F36-45fd-86A0-076A7278E20A}" relid="0x1" childrelidcntr="0x4b">
 					<name>TaskAssembly</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -5478,8 +5624,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000115" kind="OutEventPort" role="OutEventPort" guid="{C016C5E2-F81B-48a8-B0DF-B4739F1259D8}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002da" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{3C337801-1CC3-4ff1-A598-BC1EB21C5478}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -5492,18 +5638,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-00000116" kind="InEventPort" role="InEventPort" guid="{4390589F-D6DF-445c-A49E-240A227383AC}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002f6" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{292EA343-A690-4bb0-A786-457A1E54B74F}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -5568,8 +5711,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000118" kind="OutEventPort" role="OutEventPort" guid="{0827372A-D062-45e3-84D6-34772C080174}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002d9" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{C81101D7-45BB-4785-8395-DC4CC0A378A2}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -5582,18 +5725,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-0000011b" kind="InEventPort" role="InEventPort" guid="{0F97A211-BCCC-499d-8650-DA4DA2D28A22}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002f5" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{3055A039-F20D-4914-B481-4BF6D6FE7E29}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -5685,8 +5825,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-0000011e" kind="OutEventPort" role="OutEventPort" guid="{D0A91EA6-A9DE-4e80-8AC2-46780145C9BA}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002e8" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{E35724DF-9915-49dd-8351-411A5414E793}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -5699,18 +5839,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-0000011f" kind="InEventPort" role="InEventPort" guid="{D445AFDA-C52B-43f4-AE04-44EC32968DB1}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-00000304" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{03D2DEBE-EA5D-48a8-9CE8-7D8A0291CACF}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -5775,8 +5912,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000121" kind="InEventPort" role="InEventPort" guid="{29A8EA41-82B3-4827-BDAB-346FAE9526C4}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002e6" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{72A8FC45-A4ED-4e1a-BD38-1D3E27DB2BD3}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -5787,14 +5924,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-00000122" kind="OutEventPort" role="OutEventPort" guid="{07221252-752F-417a-AA94-48056BDEC642}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-00000302" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{1BFFA437-5B2E-4270-A350-5A7A0840E2F3}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -5809,12 +5949,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -5889,8 +6023,29 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000125" kind="OutEventPort" role="OutEventPort" guid="{73DB0604-A0F0-4bc0-B572-23008A9B7FE2}" derivedfrom="id-0067-00000004" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002c5" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{55D2AD7E-5DCF-4003-9DC5-C96F928589F3}" derivedfrom="id-0067-000002c1" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-000002ce" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{3E83EC17-C3EB-4e5c-A414-6D25C90F86A8}" derivedfrom="id-0067-000002ca" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -5905,12 +6060,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -6222,16 +6371,6 @@
 						<connpoint role="dst" target="id-0065-000000dd"/>
 						<connpoint role="src" target="id-0065-000000ee"/>
 					</connection>
-					<connection id="id-0068-00000092" kind="emit" role="emit" guid="{BDF437F7-58AD-4067-8A81-8976B079AA64}" relid="0x28">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-00000118"/>
-						<connpoint role="dst" target="id-0067-00000121"/>
-					</connection>
-					<connection id="id-0068-00000093" kind="emit" role="emit" guid="{6E8CF531-86D4-481e-AA74-653A175F2C2B}" relid="0x29">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-00000116"/>
-						<connpoint role="src" target="id-0067-00000125"/>
-					</connection>
 					<connection id="id-0068-00000094" kind="AttributeValue" role="AttributeValue" guid="{60FB78B1-E415-4cae-84E1-F8A11B78AC8B}" relid="0x20">
 						<name>AttributeValue</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -6264,11 +6403,6 @@
 						<connpoint role="dst" target="id-0065-000000e6"/>
 						<connpoint role="src" target="id-0065-000000ec"/>
 					</connection>
-					<connection id="id-0068-00000099" kind="emit" role="emit" guid="{268017F2-62CB-4c89-9C57-15005A3EF241}" relid="0x27">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-0000011b"/>
-						<connpoint role="src" target="id-0067-0000011e"/>
-					</connection>
 					<connection id="id-0068-0000009a" kind="AttributeValue" role="AttributeValue" guid="{27AD2163-D19C-4ae3-A35A-4ADCAA195743}" relid="0x12">
 						<name>AttributeValue</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -6276,11 +6410,6 @@
 						</regnode>
 						<connpoint role="dst" target="id-0065-000000da"/>
 						<connpoint role="src" target="id-0065-000000ef"/>
-					</connection>
-					<connection id="id-0068-0000009b" kind="emit" role="emit" guid="{F24FE124-F4BF-40b2-9EDB-3E71E3CF9E36}" relid="0x26">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-00000115"/>
-						<connpoint role="dst" target="id-0067-0000011f"/>
 					</connection>
 					<connection id="id-0068-0000009c" kind="AttributeValue" role="AttributeValue" guid="{9AD78759-721E-4b4c-8843-DED9DA9D3324}" relid="0x1f">
 						<name>AttributeValue</name>
@@ -6366,11 +6495,36 @@
 						<connpoint role="src" target="id-0065-000001b3"/>
 						<connpoint role="dst" target="id-0065-000001ba"/>
 					</connection>
+					<connection id="id-0068-0000014b" kind="invoke" role="invoke" guid="{E470E285-ABA3-4345-937D-B03566127076}" relid="0x47">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002c5"/>
+						<connpoint role="dst" target="id-0067-000002f6"/>
+					</connection>
+					<connection id="id-0068-0000014c" kind="invoke" role="invoke" guid="{34EE0D03-C7F3-4b61-B432-CC4215FC2776}" relid="0x48">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002da"/>
+						<connpoint role="dst" target="id-0067-00000304"/>
+					</connection>
+					<connection id="id-0068-0000014d" kind="invoke" role="invoke" guid="{C945BCC8-766E-495b-9629-6E3073EED236}" relid="0x49">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002e8"/>
+						<connpoint role="dst" target="id-0067-000002f5"/>
+					</connection>
+					<connection id="id-0068-0000014e" kind="invoke" role="invoke" guid="{B5E81CC7-D285-4ae9-A000-A7FAAAD29430}" relid="0x4a">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002d9"/>
+						<connpoint role="dst" target="id-0067-00000302"/>
+					</connection>
+					<connection id="id-0068-0000014f" kind="invoke" role="invoke" guid="{F5068D7A-A5F9-459c-AC2F-97A5D4FB3DEC}" relid="0x4b">
+						<name>invoke</name>
+						<connpoint role="dst" target="id-0067-000002ce"/>
+						<connpoint role="src" target="id-0067-000002e6"/>
+					</connection>
 				</model>
 			</model>
 			<model id="id-0065-000000fb" kind="ComponentImplementationContainer" guid="{F353754C-C9C8-4714-AC67-EEC337CEB811}" relid="0x6" childrelidcntr="0x1">
 				<name>Task6</name>
-				<model id="id-0065-000000fc" kind="ComponentAssembly" role="ComponentAssembly" guid="{F7DBFF2B-609D-4f7a-AA1B-23DE4A32FA07}" relid="0x1" childrelidcntr="0x46">
+				<model id="id-0065-000000fc" kind="ComponentAssembly" role="ComponentAssembly" guid="{F7DBFF2B-609D-4f7a-AA1B-23DE4A32FA07}" relid="0x1" childrelidcntr="0x4b">
 					<name>TaskAssembly</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -6677,8 +6831,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000149" kind="OutEventPort" role="OutEventPort" guid="{42668B2C-8544-4933-90DB-B2853BE81944}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002d6" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{FF09294A-9AA7-4d73-9540-66872D37C5BC}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -6691,18 +6845,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-0000014a" kind="InEventPort" role="InEventPort" guid="{153AE5CB-7596-4f7c-9B64-9B3B5D9AF687}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002f2" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{14B68440-50C5-49ad-A1BE-301B6B602AEE}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -6767,8 +6918,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-0000014c" kind="OutEventPort" role="OutEventPort" guid="{75222BCA-4C64-4dbe-BE6B-D1C6BF3438EF}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002e1" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{3AFFCC67-343A-4e45-AEDA-36019B154C2F}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -6781,18 +6932,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-0000014f" kind="InEventPort" role="InEventPort" guid="{104511B0-5D21-40b2-907A-EE44E9BD169D}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002fd" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{6E296AB4-F5E3-4b65-BAA1-88DCEFBDCE60}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -6884,8 +7032,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000152" kind="OutEventPort" role="OutEventPort" guid="{002C6319-1059-4684-966B-C552B26A3C4A}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002db" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{8E87FD3A-C974-4826-9D4E-C29925520A0E}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -6898,18 +7046,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-00000153" kind="InEventPort" role="InEventPort" guid="{A636CED8-5B86-4783-BFAE-5D41FACA61CA}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002f7" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{1DEC717B-C223-4627-9816-DF8CE1A20111}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -6974,8 +7119,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000155" kind="InEventPort" role="InEventPort" guid="{666B6780-4A6F-4abc-A154-DD241C22E89C}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002eb" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{BAF5E290-3E82-404f-AC1E-DB6992E9ECB6}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -6986,14 +7131,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-00000156" kind="OutEventPort" role="OutEventPort" guid="{614AAFAC-B220-4b02-9C0B-2257304489B0}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-00000307" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{A46F022F-020C-4c11-A799-5356EDC42A56}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -7008,12 +7156,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -7088,8 +7230,29 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000159" kind="OutEventPort" role="OutEventPort" guid="{26E98F90-E559-4d07-9B41-7713E80A9559}" derivedfrom="id-0067-00000004" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002c4" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{F3252B1C-747A-4f3b-A3D8-E68DDD505364}" derivedfrom="id-0067-000002c1" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-000002cd" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{F8D2167A-7783-4529-8018-128046B1925F}" derivedfrom="id-0067-000002ca" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -7104,12 +7267,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -7394,16 +7551,6 @@
 						<connpoint role="dst" target="id-0065-00000104"/>
 						<connpoint role="src" target="id-0065-00000115"/>
 					</connection>
-					<connection id="id-0068-000000ac" kind="emit" role="emit" guid="{DE0ECE15-26CC-469b-B7C8-334E8C193FA0}" relid="0x28">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-0000014c"/>
-						<connpoint role="dst" target="id-0067-00000155"/>
-					</connection>
-					<connection id="id-0068-000000ad" kind="emit" role="emit" guid="{421CD376-6B3F-4bae-A119-57BA22C69B70}" relid="0x29">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-0000014a"/>
-						<connpoint role="src" target="id-0067-00000159"/>
-					</connection>
 					<connection id="id-0068-000000ae" kind="AttributeValue" role="AttributeValue" guid="{3631E493-DFFF-4bb9-B3CC-AD4F2ACDA3F7}" relid="0x20">
 						<name>AttributeValue</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -7436,11 +7583,6 @@
 						<connpoint role="dst" target="id-0065-0000010d"/>
 						<connpoint role="src" target="id-0065-00000113"/>
 					</connection>
-					<connection id="id-0068-000000b3" kind="emit" role="emit" guid="{33C0E61D-9B7B-4911-BA6C-9901B3DDB143}" relid="0x27">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-0000014f"/>
-						<connpoint role="src" target="id-0067-00000152"/>
-					</connection>
 					<connection id="id-0068-000000b4" kind="AttributeValue" role="AttributeValue" guid="{FF241643-B913-462f-9B26-E5EA9AA55F96}" relid="0x12">
 						<name>AttributeValue</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -7448,11 +7590,6 @@
 						</regnode>
 						<connpoint role="dst" target="id-0065-00000101"/>
 						<connpoint role="src" target="id-0065-00000116"/>
-					</connection>
-					<connection id="id-0068-000000b5" kind="emit" role="emit" guid="{AF41AD6F-CAE9-4f15-B4F4-749A09E5909B}" relid="0x26">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-00000149"/>
-						<connpoint role="dst" target="id-0067-00000153"/>
 					</connection>
 					<connection id="id-0068-000000b6" kind="AttributeValue" role="AttributeValue" guid="{B012D6D9-4E0D-4730-BE39-170CC78C4E62}" relid="0x1f">
 						<name>AttributeValue</name>
@@ -7535,11 +7672,36 @@
 						<connpoint role="src" target="id-0065-000001b1"/>
 						<connpoint role="dst" target="id-0065-000001bb"/>
 					</connection>
+					<connection id="id-0068-00000150" kind="invoke" role="invoke" guid="{5FE320A2-0844-4abe-9633-B2897A9E41EB}" relid="0x47">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002c4"/>
+						<connpoint role="dst" target="id-0067-000002f2"/>
+					</connection>
+					<connection id="id-0068-00000151" kind="invoke" role="invoke" guid="{0C67184C-8783-412d-BA05-E97098F413A3}" relid="0x48">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002d6"/>
+						<connpoint role="dst" target="id-0067-000002f7"/>
+					</connection>
+					<connection id="id-0068-00000152" kind="invoke" role="invoke" guid="{DC591BC4-06AC-4618-B25C-91C33301BA06}" relid="0x49">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002db"/>
+						<connpoint role="dst" target="id-0067-000002fd"/>
+					</connection>
+					<connection id="id-0068-00000153" kind="invoke" role="invoke" guid="{F56A4774-7DA2-4d90-A81C-F54703D7B57D}" relid="0x4a">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002e1"/>
+						<connpoint role="dst" target="id-0067-00000307"/>
+					</connection>
+					<connection id="id-0068-00000154" kind="invoke" role="invoke" guid="{21F760B3-4511-46ed-86DD-382A9D2B8204}" relid="0x4b">
+						<name>invoke</name>
+						<connpoint role="dst" target="id-0067-000002cd"/>
+						<connpoint role="src" target="id-0067-000002eb"/>
+					</connection>
 				</model>
 			</model>
 			<model id="id-0065-00000122" kind="ComponentImplementationContainer" guid="{A3CE529C-9773-4718-B5D3-59B6DA83D351}" relid="0x7" childrelidcntr="0x1">
 				<name>Task7</name>
-				<model id="id-0065-00000123" kind="ComponentAssembly" role="ComponentAssembly" guid="{E6F77336-04ED-4bce-8116-AB678ABE2FBB}" relid="0x1" childrelidcntr="0x43">
+				<model id="id-0065-00000123" kind="ComponentAssembly" role="ComponentAssembly" guid="{E6F77336-04ED-4bce-8116-AB678ABE2FBB}" relid="0x1" childrelidcntr="0x47">
 					<name>TaskAssembly</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -7846,8 +8008,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-0000017d" kind="OutEventPort" role="OutEventPort" guid="{6E1A0030-0229-4010-AB0E-5A81CEC34CD4}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002ec" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{39F8BF42-B6BA-4d4c-9C92-A0272471826B}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -7860,18 +8022,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-0000017e" kind="InEventPort" role="InEventPort" guid="{ECDEAE01-4FCF-41c4-B6A7-85A1C212B100}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-00000308" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{3087945C-EBD8-477e-9A97-C5256BC0B547}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -7936,8 +8095,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000180" kind="OutEventPort" role="OutEventPort" guid="{46D32035-12FF-4747-8740-2500A30F9A6E}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002de" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{49D59675-2EBA-405a-AB2F-61F876E524A8}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -7950,18 +8109,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-00000183" kind="InEventPort" role="InEventPort" guid="{20DD3530-8201-45a4-AC26-262DEA0D8698}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002fa" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{513B7BC7-89D9-4f07-AFFC-8179ACCF6E50}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -8026,8 +8182,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-00000186" kind="OutEventPort" role="OutEventPort" guid="{1BE40B24-7A43-4cb4-BC7F-C254FC016735}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002df" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{5747AA8E-94DC-407a-B136-983FF43A22A8}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -8040,18 +8196,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-00000187" kind="InEventPort" role="InEventPort" guid="{06BE2831-6799-4f55-9BAC-01E5D7991B43}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002fb" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{857458DD-0F5B-4668-A36A-FD23ABBDC934}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -8140,8 +8293,29 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-0000018d" kind="OutEventPort" role="OutEventPort" guid="{001FC4BF-9CA3-4bf4-BAAC-C33E8E6DE79C}" derivedfrom="id-0067-00000004" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002c3" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{34B4589B-C7A8-417c-AB3F-24FEF3FECFCF}" derivedfrom="id-0067-000002c1" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-000002cc" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{86B6A897-212C-40f7-89C7-509BD6B4ADC3}" derivedfrom="id-0067-000002ca" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -8156,12 +8330,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -8375,7 +8543,7 @@
 							</regnode>
 						</regnode>
 						<attribute kind="DataValue">
-							<value>4655</value>
+							<value>46550</value>
 						</attribute>
 						<reference id="id-0067-000002a8" kind="DataType" role="DataType" guid="{8346D3F5-1162-4204-9FDA-896E92B8D32A}" relid="0x1" referred="id-0066-00000007">
 							<name>DataType</name>
@@ -8446,11 +8614,6 @@
 						<connpoint role="dst" target="id-0065-0000012b"/>
 						<connpoint role="src" target="id-0065-0000013c"/>
 					</connection>
-					<connection id="id-0068-000000c6" kind="emit" role="emit" guid="{0465E45C-4A01-459b-91E6-18C47ECB1410}" relid="0x29">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-0000017e"/>
-						<connpoint role="src" target="id-0067-0000018d"/>
-					</connection>
 					<connection id="id-0068-000000c7" kind="AttributeValue" role="AttributeValue" guid="{CDC882BA-2DD6-4ae0-AD02-DE692B05BDA2}" relid="0x20">
 						<name>AttributeValue</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -8475,11 +8638,6 @@
 						<connpoint role="dst" target="id-0065-0000012c"/>
 						<connpoint role="src" target="id-0065-00000130"/>
 					</connection>
-					<connection id="id-0068-000000cc" kind="emit" role="emit" guid="{945D6999-D3CA-4450-8888-613712120D98}" relid="0x27">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-00000183"/>
-						<connpoint role="src" target="id-0067-00000186"/>
-					</connection>
 					<connection id="id-0068-000000cd" kind="AttributeValue" role="AttributeValue" guid="{C170C175-89C4-417a-B74F-B0CF067DBC07}" relid="0x12">
 						<name>AttributeValue</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -8487,11 +8645,6 @@
 						</regnode>
 						<connpoint role="dst" target="id-0065-00000128"/>
 						<connpoint role="src" target="id-0065-0000013d"/>
-					</connection>
-					<connection id="id-0068-000000ce" kind="emit" role="emit" guid="{6F40D7A3-FFA3-456d-9786-3AFAF6AFFF6D}" relid="0x26">
-						<name>emit</name>
-						<connpoint role="src" target="id-0067-0000017d"/>
-						<connpoint role="dst" target="id-0067-00000187"/>
 					</connection>
 					<connection id="id-0068-000000cf" kind="AttributeValue" role="AttributeValue" guid="{2509C3C5-DC59-4901-8E57-745273527C18}" relid="0x1f">
 						<name>AttributeValue</name>
@@ -8553,11 +8706,31 @@
 						<connpoint role="src" target="id-0065-000001b5"/>
 						<connpoint role="dst" target="id-0065-000001bc"/>
 					</connection>
+					<connection id="id-0068-00000155" kind="invoke" role="invoke" guid="{352ED9D5-D3A5-4766-820B-38A68DD185FD}" relid="0x44">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002c3"/>
+						<connpoint role="dst" target="id-0067-00000308"/>
+					</connection>
+					<connection id="id-0068-00000156" kind="invoke" role="invoke" guid="{2569204D-A320-4e5d-9F31-7C5C78D63729}" relid="0x45">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002ec"/>
+						<connpoint role="dst" target="id-0067-000002fb"/>
+					</connection>
+					<connection id="id-0068-00000157" kind="invoke" role="invoke" guid="{AE4A9C5E-82DB-4ac7-A24A-792D97F348B7}" relid="0x46">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002df"/>
+						<connpoint role="dst" target="id-0067-000002fa"/>
+					</connection>
+					<connection id="id-0068-00000158" kind="invoke" role="invoke" guid="{157C8484-2CD8-4092-997D-CAF3E9CE9A6F}" relid="0x47">
+						<name>invoke</name>
+						<connpoint role="dst" target="id-0067-000002cc"/>
+						<connpoint role="src" target="id-0067-000002de"/>
+					</connection>
 				</model>
 			</model>
 			<model id="id-0065-00000149" kind="ComponentImplementationContainer" guid="{E565458C-44DC-4c1f-A632-9C27465DE27F}" relid="0x8" childrelidcntr="0x1">
 				<name>Task8</name>
-				<model id="id-0065-0000014a" kind="ComponentAssembly" role="ComponentAssembly" guid="{B945C953-C696-4e7b-A7BD-2D4C8BEE65BC}" relid="0x1" childrelidcntr="0x3f">
+				<model id="id-0065-0000014a" kind="ComponentAssembly" role="ComponentAssembly" guid="{B945C953-C696-4e7b-A7BD-2D4C8BEE65BC}" relid="0x1" childrelidcntr="0x42">
 					<name>TaskAssembly</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -8729,8 +8902,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000001aa" kind="OutEventPort" role="OutEventPort" guid="{793EF750-6E76-4885-9485-9FBC998737EE}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002d8" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{B993356B-B1C0-4f52-BBDD-5E62F18B260A}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -8743,18 +8916,15 @@
 							<attribute kind="exclusiveUser" status="meta">
 								<value>false</value>
 							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
-							</attribute>
 						</reference>
-						<reference id="id-0067-000001ac" kind="InEventPort" role="InEventPort" guid="{C2A24AD7-307C-42ff-8832-81CFEAEB745E}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002f4" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{23684B72-85E5-442b-A6E7-08F2DC916897}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -8927,8 +9097,8 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000001b2" kind="InEventPort" role="InEventPort" guid="{BDD78A48-7E51-499b-B5CB-08DFB048B28C}" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_in</name>
+						<reference id="id-0067-000002ef" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{AB9B7B48-BEFC-4896-BAD0-6205F2B41959}" derivedfrom="id-0067-000002d4" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -8939,14 +9109,17 @@
 								<value>false</value>
 							</attribute>
 							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
 								<value>false</value>
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-000001b4" kind="OutEventPort" role="OutEventPort" guid="{6CD4AA45-7CFC-42d7-82DE-3AE84839AFFE}" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-0000030b" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{704483F9-9810-41ec-89C3-751F5B66D7BE}" derivedfrom="id-0067-000002f0" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -8961,12 +9134,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -9041,8 +9208,29 @@
 								<name>AttributeMember</name>
 							</reference>
 						</model>
-						<reference id="id-0067-000001b9" kind="OutEventPort" role="OutEventPort" guid="{A03C71C7-4FD5-4f2f-80FC-84113A6986B6}" derivedfrom="id-0067-00000004" isinstance="yes" isprimary="no" referred="id-0065-00000004" isbound="yes">
-							<name>test_out</name>
+						<reference id="id-0067-000002c2" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{2019C43F-CBD1-4264-8B0C-90BAD5EDDC06}" derivedfrom="id-0067-000002c1" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_out</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-000002cb" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{61B55DD2-F1FE-4b18-80EF-8CBF9DF38834}" derivedfrom="id-0067-000002ca" isinstance="yes" isprimary="no" referred="id-0065-000001bf" isbound="yes">
+							<name>data_in</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
 							</attribute>
@@ -9057,12 +9245,6 @@
 							</attribute>
 							<attribute kind="optional" status="meta">
 								<value>false</value>
-							</attribute>
-							<attribute kind="out_event_port_type" status="meta">
-								<value>DirectConnect</value>
-							</attribute>
-							<attribute kind="single_destination" status="inherited">
-								<value>true</value>
 							</attribute>
 						</reference>
 					</model>
@@ -9286,16 +9468,6 @@
 						<connpoint role="dst" target="id-0065-0000014b"/>
 						<connpoint role="src" target="id-0065-00000157"/>
 					</connection>
-					<connection id="id-0068-000000df" kind="emit" role="emit" guid="{2FBABD01-EFC0-4e47-BA07-C2C4CB5E4C1F}" relid="0x29">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-000001b2"/>
-						<connpoint role="src" target="id-0067-000001b9"/>
-					</connection>
-					<connection id="id-0068-000000e0" kind="emit" role="emit" guid="{4A49884F-FC3A-418f-8E00-9ADEDAD047D3}" relid="0x26">
-						<name>emit</name>
-						<connpoint role="dst" target="id-0067-000001ac"/>
-						<connpoint role="src" target="id-0067-000001b4"/>
-					</connection>
 					<connection id="id-0068-0000012d" kind="AssemblyConfigProperty" role="AssemblyConfigProperty" guid="{BB293136-3593-4275-A93B-C4F58CA7C8E4}" relid="0x3a">
 						<name>AssemblyConfigProperty</name>
 						<regnode name="autorouterPref" isopaque="yes">
@@ -9326,6 +9498,21 @@
 						</regnode>
 						<connpoint role="src" target="id-0065-000001b4"/>
 						<connpoint role="dst" target="id-0065-000001bd"/>
+					</connection>
+					<connection id="id-0068-00000159" kind="invoke" role="invoke" guid="{76AF56D4-D3BA-43af-A562-28B747FD9F6E}" relid="0x40">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002c2"/>
+						<connpoint role="dst" target="id-0067-0000030b"/>
+					</connection>
+					<connection id="id-0068-0000015a" kind="invoke" role="invoke" guid="{955F1C2C-2776-4132-99F6-0C0210B520F3}" relid="0x41">
+						<name>invoke</name>
+						<connpoint role="src" target="id-0067-000002ef"/>
+						<connpoint role="dst" target="id-0067-000002f4"/>
+					</connection>
+					<connection id="id-0068-0000015b" kind="invoke" role="invoke" guid="{0355F1A4-58B5-48fb-BFC7-A2970869876D}" relid="0x42">
+						<name>invoke</name>
+						<connpoint role="dst" target="id-0067-000002cb"/>
+						<connpoint role="src" target="id-0067-000002d8"/>
 					</connection>
 				</model>
 			</model>
