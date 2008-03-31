@@ -41,8 +41,7 @@ TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv [])
   ACE_Argv_Type_Converter command_line(argc, argv);
 
   this->orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_ASCII_argv(),
-                                "");
+                                command_line.get_ASCII_argv());
 
   CORBA::Object_var object =
     this->orb_->resolve_initial_references("RootPOA");

@@ -72,7 +72,7 @@ TAO_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
         {
         case 't':
           {
-            int time = ACE_OS::atoi (get_opts.opt_arg ());
+            int const time = ACE_OS::atoi (get_opts.opt_arg ());
             if (time >= 0)
               this->time_ = time;
 
