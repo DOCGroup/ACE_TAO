@@ -233,7 +233,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::activate_svc_handler (SVC_HAND
     {
       // Make sure to close down the <svc_handler> to avoid descriptor
       // leaks.
-      svc_handler->close (0);
+      svc_handler->close (1);
       return -1;
     }
   else
