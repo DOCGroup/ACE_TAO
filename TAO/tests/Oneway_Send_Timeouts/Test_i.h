@@ -24,6 +24,7 @@ class Test_i : public virtual POA_Test
  private:
   volatile bool sleep_;
   volatile bool unsleep_;
+  volatile bool shutdown_;
   CORBA::ORB_var orb_;
 };
 

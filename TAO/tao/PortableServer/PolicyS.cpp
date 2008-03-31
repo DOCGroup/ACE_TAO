@@ -273,6 +273,7 @@ void
 POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::dispatch (
     CORBA::Object_ptr obj,
     CORBA::Object_out forward_obj,
+    bool & is_forwarded,
     TAO::Argument ** args,
     int num_args,
     const char * op,
@@ -285,6 +286,7 @@ POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::dispatch (
   collocation_upcall_wrapper.upcall (
     obj,
     forward_obj,
+    is_forwarded,
     args,
     num_args,
     op,

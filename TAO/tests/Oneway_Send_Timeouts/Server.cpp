@@ -16,7 +16,6 @@ void replace (ACE_TCHAR** a, ACE_TCHAR** b)
 
 Server::Server (int , ACE_TCHAR* argv[])
   : init_ (false), shutdown_ (false)
-  , orb_shutdown_ (false), management_orb_shutdown_ (false)
 {
   try {
     ACE_ARGV args_1 (argv);
@@ -46,6 +45,10 @@ Server::Server (int , ACE_TCHAR* argv[])
 
     my_argc--; my_argc--;
     orb_ = CORBA::ORB_init (my_argc, my_argv, "Server");
+    if (CORBA::is_nil (orb_.in())) {
+      ACE_ERROR ((LM_ERROR, "Server::Server> ORB initialization failed.\n"));
+      return;
+    }
 
     my_argv = args_2.argv();
     my_argc = args_2.argc();
@@ -64,6 +67,10 @@ Server::Server (int , ACE_TCHAR* argv[])
     // initialize management ORB
     my_argc--; my_argc--;
     management_orb_ = CORBA::ORB_init (my_argc, my_argv, "Management");
+    if (CORBA::is_nil (orb_.in())) {
+      ACE_ERROR ((LM_ERROR, "Server::Server> Mgmt ORB initialization failed.\n"));
+      return;
+    }
 
     if (!this->parse_args (my_argc, my_argv))
       return;
@@ -145,9 +152,8 @@ Server::run (bool management)
   bool status = true;
 
   try {
-    if (!management) {
+    if (!management && !CORBA::is_nil (orb_.in())) {
       orb_->run ();
-      orb_shutdown_ = true;
     }
   }
   catch( CORBA::Exception& ex) {
@@ -157,9 +163,8 @@ Server::run (bool management)
   }
 
   try {
-    if (management) {
+    if (management && !CORBA::is_nil (management_orb_.in())) {
       management_orb_->run();
-      management_orb_shutdown_ = true;
     }
   }
   catch( CORBA::Exception& ex) {
@@ -180,20 +185,19 @@ Server::shutdown ()
   }
 
   try {
+    if (!CORBA::is_nil (management_orb_.in())) {
     management_orb_->shutdown (1);
-
-    ACE_Time_Value sleep_time;
-    sleep_time.msec (10);
-    while (true) {
-      ACE_OS::sleep (sleep_time);
-      if (management_orb_shutdown_ && orb_shutdown_) {
-        break;
-      }
+      ACE_OS::sleep (1); // Let management thread clear out
     }
+    ACE_auto_ptr_reset (test_i_, (Test_i*)0);
 
+    if (!CORBA::is_nil (orb_.in())) {
     orb_->destroy ();
+    }
     orb_ = CORBA::ORB::_nil();
+    if (!CORBA::is_nil (management_orb_.in())) {
     management_orb_->destroy ();
+    }
     management_orb_ = CORBA::ORB::_nil();
   }
   catch( CORBA::Exception& ex) {

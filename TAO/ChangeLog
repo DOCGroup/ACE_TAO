@@ -1,3 +1,40 @@
+Mon Mar 31 18:20:01 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Client.cpp:
+        * tests/Oneway_Send_Timeouts/Server.cpp:
+        * tests/Oneway_Send_Timeouts/Server_Task.h:
+        * tests/Oneway_Send_Timeouts/Test_i.h:
+        * tests/Oneway_Send_Timeouts/Test_i.cpp:
+        * tests/Oneway_Send_Timeouts/main.cpp:
+          Thread cleanup fixes.
+
+Mon Mar 31 15:55:18 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+        * tao/Collocation_Proxy_Broker.h:
+        * tao/Collocated_Invocation.cpp:
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+
+          Provided additional fix for Bug#2376. In particular added is_forwaded
+          argument to Collocation_Proxy_Broker::dispatch which will indicate a
+          forwarding case. Changed code generation in tao_idl according to the
+          new signature of that dispatch method. Also found another place in
+          Upcall_Wrapper.cpp that assumes that forwarding must be done if a
+          forward reference is not nil. And since TAO_ServerRequest has both
+          pi_reply_status and reply_status features added a code that set to
+          forwarding state each of them if only one changes. So, that if
+          reply_status is set GIOP::LOCATION_FORWARD then pi_reply_status
+          is set to PortableInterceptor::LOCATION_FORWARD immediately after
+          that.
+
 Mon Mar 31 08:45:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:

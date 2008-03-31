@@ -75,11 +75,14 @@ namespace TAO
             dispatcher->dispatch (orb_core,
                                   request,
                                   this->forwarded_to_.out ());
+
+            this->is_forwarded_ = request.is_forwarded ();
           }
         else
           {
             cpb->dispatch (this->effective_target (),
                            this->forwarded_to_.out (),
+                           this->is_forwarded_,
                            this->details_.args (),
                            this->details_.args_num (),
                            this->details_.opname (),
@@ -121,7 +124,7 @@ namespace TAO
           this->handle_any_exception (&ex);
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
-          status == PortableInterceptor::TRANSPORT_RETRY)
+            status == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else
 #endif /* TAO_HAS_INTERCEPTORS */

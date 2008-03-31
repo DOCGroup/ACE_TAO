@@ -38,12 +38,11 @@ class Server_Task : public ACE_Task_Base
 
     if (initializer) {
       server_->run (false);
+      this->force_shutdown (); // servant thread is responsible for shutdown
     }
     else {
       server_->run (true);
     }
-
-    this->force_shutdown ();
 
     return 0;
   }
