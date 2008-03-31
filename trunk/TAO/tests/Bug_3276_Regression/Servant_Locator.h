@@ -5,9 +5,11 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantLocatorC.h"
-#include "tao/ORB.h"
+#include "tao/LocalObject.h"
 
-class Servant_Locator : public PortableServer::ServantLocator
+class Servant_Locator
+  : public PortableServer::ServantLocator
+  , public virtual TAO_Local_RefCounted_Object
 {
 public:
   virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
@@ -25,4 +27,4 @@ public:
   // request.
 };
 
-#endif /* _SERVANT_LOCATOR_H */
+#endif /* _SERVANT_LOCATOR_H_ */

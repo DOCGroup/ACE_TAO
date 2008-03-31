@@ -1,11 +1,18 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Client): taoclient, anytypecode, avoids_minimum_corba, pi {
-  exename = client
-
+project(*idl): taoidldefaults {
   IDL_Files {
     test.idl
+  }
+  custom_only = 1
+}
+
+project(*Client): taoclient, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = client
+  after += *idl
+
+  IDL_Files {
   }
 
   Source_Files {
@@ -14,9 +21,9 @@ project(*Client): taoclient, anytypecode, avoids_minimum_corba, pi {
   }
 }
 
-project(*Manager): taoserver, avoids_minimum_corba {
+project(*Manager): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = manager
-  after += *Client
+  after += *idl
 
   IDL_Files {
   }
