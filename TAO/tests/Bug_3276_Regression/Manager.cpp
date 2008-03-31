@@ -195,11 +195,11 @@ Manager::activate_servant ()
                     Servant_Locator,
                     CORBA::NO_MEMORY ());
 
-  this->servant_locator_.reset (tmp);
+  this->servant_locator_ = tmp;
 
   // Set ServantLocator object as the servant Manager of
   // secondPOA.
-  this->new_poa_var_->set_servant_manager (this->servant_locator_.get ());
+  this->new_poa_var_->set_servant_manager (this->servant_locator_.in ());
 
   // Try to create a reference with user created ID in new_poa
   // which uses ServantLocator.
