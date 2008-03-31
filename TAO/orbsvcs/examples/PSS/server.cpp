@@ -30,10 +30,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Get a reference to the RootPOA
       CORBA::Object_var poa_object =
