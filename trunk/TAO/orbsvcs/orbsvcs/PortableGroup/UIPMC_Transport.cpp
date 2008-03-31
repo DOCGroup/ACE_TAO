@@ -160,7 +160,7 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::send (iovec *iov, int iovcnt,
      bytes_to_send += iov[i].iov_len;
 
   MIOP_Packet fragments[MIOP_MAX_FRAGMENTS];
-  MIOP_Packet *current_fragment;
+  MIOP_Packet *current_fragment = 0;
   int num_fragments = 1;
 
   UIPMC_Message_Block_Data_Iterator mb_iter (iov, iovcnt);
@@ -168,7 +168,7 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::send (iovec *iov, int iovcnt,
   // Initialize the first fragment
   current_fragment = &fragments[0];
   current_fragment->iovcnt = 1;  // The MIOP Header
-  current_fragment->length = MIOP_HEADER_SIZE;
+  current_fragment->length = 0;
 
   // Go through all of the message blocks.
   while (mb_iter.next_block (MIOP_MAX_DGRAM_SIZE - current_fragment->length,
@@ -403,7 +403,7 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::recv (char *buf,
     }
 
   // Trim off the header for now.
-  ssize_t miop_header_size = (MIOP_ID_CONTENT_OFFSET + id_length + 7) & ~0x7;
+  ssize_t const miop_header_size = (MIOP_ID_CONTENT_OFFSET + id_length + 7) & ~0x7;
   if (miop_header_size > n)
     {
       if (TAO_debug_level > 0)
