@@ -1,3 +1,39 @@
+Mon Mar 31 14:52:58 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Intrusive_Auto_Ptr.h:
+        * ace/Intrusive_Auto_Ptr.cpp:
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.inl:
+        * ace/Refcounted_Auto_Ptr.cpp:
+
+          Added preprocessor guards for proper inlining. Qualified
+          the type name in the implementation of opretator
+          unspecified_bool_type () to appease GCC 3.x
+
+Mon Mar 31 13:50:45 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/run_test.lst:
+
+          Adding Intrusive_Auto_Ptr_Test to the list
+
+Mon Mar 31 12:09:20 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Always reference Kokyu libraries from $(ACE_BUILDDIR) instead of
+          $(top_builddir) so that it will work from both ACE and TAO.
+
+Mon Mar 31 11:00:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2980_Regression_Dll.cpp:
+        * tests/Bug_2980_Regression_Test.cpp:
+          Fixed fuzz errors
+
+Mon Mar 31 08:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Added test for ACE_OS::last_error()
+
 Sun Mar 30 19:54:23 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           This is the first step of merging the changes from the gestalt

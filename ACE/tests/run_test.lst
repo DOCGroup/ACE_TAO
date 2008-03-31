@@ -76,6 +76,7 @@ High_Res_Timer_Test: !ACE_FOR_TAO
 INET_Addr_Test: !NO_NETWORK
 IOStream_Test
 Integer_Truncate_Test
+Intrusive_Auto_Ptr_Test
 Lazy_Map_Manager_Test
 Log_Msg_Test: !ACE_FOR_TAO
 Log_Msg_Backend_Test: !ACE_FOR_TAO

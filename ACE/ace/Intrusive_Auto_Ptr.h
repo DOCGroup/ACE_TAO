@@ -145,7 +145,9 @@ bool operator!=(T * a, ACE_Intrusive_Auto_Ptr<U> const & b);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+#if defined (__ACE_INLINE__)
 #include "ace/Intrusive_Auto_Ptr.inl"
+#endif /* __ACE_INLINE __ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Intrusive_Auto_Ptr.cpp"

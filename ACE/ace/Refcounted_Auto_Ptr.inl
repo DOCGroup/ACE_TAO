@@ -95,7 +95,7 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::ACE_Refcounted_Auto_Ptr (X *p)
 }
 
 template <class X, class ACE_LOCK> inline
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator unspecified_bool_type() const
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator typename ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::unspecified_bool_type () const
 {
   return null() ? 0: unspecified_bool;
 }
