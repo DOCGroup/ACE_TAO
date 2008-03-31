@@ -1,3 +1,8 @@
+Mon Mar 31 08:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Added test for ACE_OS::last_error()
+
 Sun Mar 30 19:54:23 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           This is the first step of merging the changes from the gestalt
