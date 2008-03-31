@@ -95,31 +95,10 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::ACE_Refcounted_Auto_Ptr (X *p)
 }
 
 template <class X, class ACE_LOCK> inline
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator typename ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::unspecified_bool_type () const
-{
-  return null() ? 0: unspecified_bool;
-}
-
-
-template <class X, class ACE_LOCK> inline
 ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::ACE_Refcounted_Auto_Ptr (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r)
   : rep_ (AUTO_REFCOUNTED_PTR_REP::attach (((ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &) r).rep_))
 {
 }
-
-template <class X, class ACE_LOCK> inline
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::ACE_Refcounted_Auto_Ptr (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>  *p)
-  : rep_ (AUTO_REFCOUNTED_PTR_REP::attach (p))
-{
-}
-
-template <class X, class ACE_LOCK> inline ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>*
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::rep (void) const
-{
-  return this->rep_;
-}
-
-
 
 template <class X, class ACE_LOCK> inline bool
 ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator== (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r) const
