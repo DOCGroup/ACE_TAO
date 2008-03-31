@@ -1,3 +1,9 @@
+Mon Mar 31 16:15:17 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/tests.mpc:
+
+          Adding Intrusive_Auto_Ptr_Test to the list
+
 Mon Mar 31 14:52:58 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Intrusive_Auto_Ptr.h:
