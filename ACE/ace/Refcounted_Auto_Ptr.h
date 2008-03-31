@@ -46,16 +46,6 @@ template <class X, class ACE_LOCK> class ACE_Refcounted_Auto_Ptr;
 template <class X, class ACE_LOCK>
 class ACE_Refcounted_Auto_Ptr
 {
-protected:
-  /// the ACE_Refcounted_Auto_Ptr_Rep
-  typedef ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> AUTO_REFCOUNTED_PTR_REP;
-
-  /// Used to define a proper boolean conversion
-  typedef ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> RAP;
-  static void unspecified_bool( RAP***){};
-  typedef void (*unspecified_bool_type)( RAP***);
-
-
 public:
 
   // = Initialization and termination methods.
@@ -68,13 +58,6 @@ public:
   /// representation object referenced by @a r.
   /// An ACE_Refcounted_Auto_Ptr_Rep is created if necessary.
   ACE_Refcounted_Auto_Ptr (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
-
-  // Boolean conversion
-  // never throws
-  operator unspecified_bool_type() const;
-
-  ACE_Refcounted_Auto_Ptr (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *);
-  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *rep() const;
 
   /// Destructor. Releases the reference to the underlying representation.
   /// If the release of that reference causes its reference count to reach 0,
@@ -121,7 +104,7 @@ public:
   /// Get the pointer value.
   X *get (void) const;
 
-   /// Get the reference count value.
+  /// Get the reference count value.
   long count (void) const;
 
   /// Returns @c true if this object does not contain a valid pointer.
@@ -131,6 +114,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
+  /// the ACE_Refcounted_Auto_Ptr_Rep
+  typedef ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> AUTO_REFCOUNTED_PTR_REP;
 
   /// Protect operations on the ACE_Refcounted_Auto_Ptr.
   AUTO_REFCOUNTED_PTR_REP *rep_;
@@ -191,7 +176,7 @@ private:
   /// Reference count.
   mutable ACE_Atomic_Op<ACE_LOCK, long> ref_count_;
 
-public:
+private:
   // = Constructor and destructor private.
   ACE_Refcounted_Auto_Ptr_Rep (X *p = 0);
   ~ACE_Refcounted_Auto_Ptr_Rep (void);
@@ -199,9 +184,7 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (__ACE_INLINE__)
 #include "ace/Refcounted_Auto_Ptr.inl"
-#endif /* __ACE_INLINE __ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Refcounted_Auto_Ptr.cpp"
