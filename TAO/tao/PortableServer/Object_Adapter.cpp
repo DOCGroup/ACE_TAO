@@ -791,6 +791,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
       if (result == TAO_Adapter::DS_FORWARD)
         {
           request.reply_status (GIOP::LOCATION_FORWARD);
+          request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
           request.forward_location (forward_to.ptr ());
           if (sri_adapter != 0)
             {
