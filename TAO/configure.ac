@@ -124,10 +124,6 @@ dnl Check the C++ compiler and preprocessor.
 AC_PROG_CXX
 AC_PROG_CXXCPP
 
-dnl Configure libtool
-AC_DISABLE_STATIC
-AC_PROG_LIBTOOL
-
 ACE_CHECK_THREADS
 
 dnl Set the test language as C++
@@ -188,6 +184,33 @@ ACE_PATH_ZLIB
 TAO_ENABLE_EXAMPLES
 TAO_ENABLE_TESTS
 
+dnl The user's/default C++ flags are stored in "CXXFLAGS."  We use
+dnl the variable "ACE_CXXFLAGS" to set the C++ flags we want.  At the end
+dnl of the configuration process we combine ACE_CXXFLAGS and CXXFLAGS
+dnl into CXXFLAGS (e.g., CXXFLAGS="$ACE_CXXFLAGS $CXXFLAGS").  CXXFLAGS
+dnl goes after ACE_CXXFLAGS so that the user's C++ flag command line
+dnl choices always override the configure script's choices.
+ACE_CXXFLAGS=""
+ACE_CFLAGS=""
+
+ACE_SET_COMPILER_FLAGS
+
+dnl Disable building of static libraries by default
+AC_DISABLE_STATIC
+
+dnl Enable Libtool module support
+AC_LIBTOOL_DLOPEN
+
+dnl Enable support for "clean" DLLs.
+AC_LIBTOOL_WIN32_DLL
+
+dnl Check for libtool and turn on Automake processing for Libtool
+AC_PROG_LIBTOOL
+
+CXXFLAGS="$ACE_CXXFLAGS $X_CFLAGS $CXXFLAGS"
+CFLAGS="$ACE_CFLAGS $X_CFLAGS $CFLAGS"
+CPPFLAGS="$ACE_CPPFLAGS $CPPFLAGS"
+LDFLAGS="$ACE_LDFLAGS $LDFLAGS"
 
 dnl
 dnl SECTION 16: AC_CONFIG_FILES([FILE...])
