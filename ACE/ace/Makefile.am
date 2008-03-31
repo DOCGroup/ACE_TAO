@@ -593,6 +593,9 @@ nobase_include_HEADERS += \
   IPC_SAP.inl \
   If_Then_Else.h \
   Init_ACE.h \
+  Intrusive_Auto_Ptr.cpp \
+  Intrusive_Auto_Ptr.h \
+  Intrusive_Auto_Ptr.inl \
   Intrusive_List.cpp \
   Intrusive_List.h \
   Intrusive_List.inl \
