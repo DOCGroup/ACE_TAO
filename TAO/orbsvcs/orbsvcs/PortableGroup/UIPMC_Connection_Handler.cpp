@@ -200,9 +200,9 @@ TAO_UIPMC_Connection_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-TAO_UIPMC_Connection_Handler::close (u_long)
+TAO_UIPMC_Connection_Handler::close (u_long flags)
 {
-  return this->close_handler ();
+  return this->close_handler (flags);
 }
 
 int

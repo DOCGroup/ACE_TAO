@@ -481,7 +481,14 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 int
 TAO_Transport::purge_entry (void)
 {
-  return this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
+  // We must store our entry in a temporary and zero out the data member.
+  // If there is only one reference count on us, we will end up causing
+  // our own destruction.  And we can not be holding a cache map entry if
+  // that happens.
+  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY* entry = this->cache_map_entry_;
+  this->cache_map_entry_ = 0;
+
+  return this->transport_cache_manager ().purge_entry (entry);
 }
 
 int
@@ -2636,8 +2643,8 @@ TAO_Transport::pre_close (void)
   // of the is_connected_ flag, so that during cache lookups the cache
   // manager doesn't need to be burdened by the lock in is_connected().
   this->is_connected_ = false;
-  this->transport_cache_manager().mark_connected(this->cache_map_entry_,
-                                                 false);
+  this->transport_cache_manager ().mark_connected (this->cache_map_entry_,
+                                                   false);
   this->purge_entry ();
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->handler_lock_));

@@ -356,74 +356,73 @@ TAO_Connector::wait_for_transport(TAO::Profile_Transport_Resolver *r,
       return true;
     }
   else if (force_wait || r->blocked_connect ())
-  {
-    if (TAO_debug_level > 2)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-          ACE_TEXT(" waiting on transport [%d]\n"),
-          transport->id () ));
-      }
-    int result = this->active_connect_strategy_->wait (transport, timeout);
-    if (result == -1 && errno == ETIME)
-      {
-        if (TAO_debug_level > 2)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT(" timeout while waiting on transport [%d]\n"),
-            transport->id () ));
-          }
-      }
-    else if(result == -1)
-      {
-        if (TAO_debug_level > 2)
-          {
-            static int complain10times = 10;
-            if (complain10times > 0)
-              {
-                complain10times -= 1;
-                ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-                  ACE_TEXT(" unknown error waiting on transport [%d] (%d)\n"),
-                  transport->id (),
-                  errno));
-              }
-          }
-        // purge from the connection cache.  If we are not in the
-        // cache, this does nothing.
-        transport->purge_entry ();
-
-        // Close the handler.
-        transport->close_connection ();
-
-      }
-    else
-      {
-        if (TAO_debug_level > 5)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-              ACE_TEXT("transport [%d], wait completed ok.\n"),
-              transport->id () ));
-          }
-        return true;
-      }
-  }
-  else
-  {
-    if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-        ACE_TEXT(" Connection not complete [%d]\n"),
-        transport->id () ));
-    }
-    transport->connection_handler ()->reset_state(
-      TAO_LF_Event::LFS_CONNECTION_WAIT);
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+            ACE_TEXT(" waiting on transport [%d]\n"),
+            transport->id () ));
+        }
+      int result = this->active_connect_strategy_->wait (transport, timeout);
+      if (result == -1 && errno == ETIME)
+        {
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+              ACE_TEXT(" timeout while waiting on transport [%d]\n"),
+              transport->id () ));
+            }
+        }
+      else if (result == -1)
+        {
+          if (TAO_debug_level > 2)
+            {
+              static int complain10times = 10;
+              if (complain10times > 0)
+                {
+                  --complain10times;
+                  ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+                    ACE_TEXT(" unknown error waiting on transport [%d] (%d)\n"),
+                    transport->id (),
+                    errno));
+                }
+            }
+          // purge from the connection cache.  If we are not in the
+          // cache, this does nothing.
+          transport->purge_entry ();
 
-    return true;
-  }
+          // Close the handler.
+          transport->close_connection ();
+        }
+      else
+        {
+          if (TAO_debug_level > 5)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+                ACE_TEXT("transport [%d], wait completed ok.\n"),
+                transport->id () ));
+            }
+          return true;
+        }
+    }
+  else
+    {
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+            ACE_TEXT(" Connection not complete [%d]\n"),
+            transport->id () ));
+        }
+      transport->connection_handler ()->reset_state (
+        TAO_LF_Event::LFS_CONNECTION_WAIT);
+
+      return true;
+    }
 
   return false;
 }
@@ -452,7 +451,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                               base_transport,
                               busy_count);
 
-      if (found == TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE )
+      if (found == TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
         {
           // one last check before using the cached connection
           if (base_transport->connection_handler()->error_detected ())
@@ -476,16 +475,17 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                   ACE_DEBUG ((LM_DEBUG,
                               "TAO (%P|%t) - Transport_Connector::connect, "
                               "got an existing %s Transport[%d] in role %s\n",
-                              base_transport->is_connected () ? "connected" : "unconnected",
+                              base_transport->is_connected () ? "connected" :
+                                                                "unconnected",
                               base_transport->id (),
                               cr == TAO::TAO_SERVER_ROLE ? "TAO_SERVER_ROLE" :
                               cr == TAO::TAO_CLIENT_ROLE ? "TAO_CLIENT_ROLE" :
                               "TAO_UNSPECIFIED_ROLE" ));
                 }
-                return base_transport;
+              return base_transport;
             }
         }
-      else if (found == TAO::Transport_Cache_Manager::CACHE_FOUND_CONNECTING )
+      else if (found == TAO::Transport_Cache_Manager::CACHE_FOUND_CONNECTING)
         {
           if (r->blocked_connect ())
             {
@@ -510,10 +510,10 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                     }
                 }
 
-                // In either success or failure cases of wait_for_transport, the
-                // ref counter in corresponding to the ref counter added by
-                // find_transport is decremented.
-                base_transport->remove_reference ();
+              // In either success or failure cases of wait_for_transport, the
+              // ref counter in corresponding to the ref counter added by
+              // find_transport is decremented.
+              base_transport->remove_reference ();
             }
           else
             {
@@ -658,7 +658,7 @@ TAO_Connector::wait_for_connection_completion (
         }
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
-      tcm.cache_transport(&desc, transport, TAO::ENTRY_CONNECTING);
+      tcm.cache_transport (&desc, transport, TAO::ENTRY_CONNECTING);
       if (TAO_debug_level > 2)
         {
             ACE_DEBUG ((LM_DEBUG,
@@ -878,10 +878,10 @@ TAO_Connector::create_connect_strategy (void)
 bool
 TAO_Connector::new_connection_is_ok (size_t busy_count)
 {
-  if (orb_core_ == 0)
+  if (this->orb_core_ == 0)
     return true;
 
-  unsigned int mux_limit = orb_core_->resource_factory ()
+  unsigned int mux_limit = this->orb_core_->resource_factory ()
     ->max_muxed_connections ();
 
   return mux_limit == 0 || busy_count < mux_limit;

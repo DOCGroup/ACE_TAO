@@ -101,7 +101,8 @@ namespace TAO
      */
     int cache_transport (TAO_Transport_Descriptor_Interface *prop,
                          TAO_Transport *transport,
-                         Cache_Entries_State state = ENTRY_IDLE_BUT_NOT_PURGABLE);
+                         Cache_Entries_State state =
+                           ENTRY_IDLE_BUT_NOT_PURGABLE);
 
     /// this is just a shortcut for cache_transport with a third argument of
     /// <CODE>ENTRY_IDLE_AND_PURGABLE</CODE>
@@ -109,7 +110,7 @@ namespace TAO
     /// but that would require changes to all *_Connection_Handler so I'm
     /// deferring this for now. (wilsond@ociweb.com)
     int cache_idle_transport (TAO_Transport_Descriptor_Interface *prop,
-                         TAO_Transport *transport);
+                              TAO_Transport *transport);
 
     /// Check the Transport Cache to check whether the connection exists
     /// in the Cache and return the connection
@@ -133,7 +134,9 @@ namespace TAO
     /// Make the entry idle and ready for use.
     int make_idle (HASH_MAP_ENTRY *entry);
 
-    void set_entry_state (HASH_MAP_ENTRY *entry, TAO::Cache_Entries_State state);
+    /// Modify the state setting on the provided entry.
+    void set_entry_state (HASH_MAP_ENTRY *entry,
+                          TAO::Cache_Entries_State state);
 
     /// Mark the entry as touched. This call updates the purging
     /// strategy policy information.

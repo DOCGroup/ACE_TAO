@@ -135,9 +135,9 @@ TAO_COIOP_Connection_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-TAO_COIOP_Connection_Handler::close (u_long)
+TAO_COIOP_Connection_Handler::close (u_long flags)
 {
-  return this->close_handler ();
+  return this->close_handler (flags);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
