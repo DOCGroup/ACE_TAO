@@ -1,3 +1,13 @@
+Mon Mar 31 08:31:18 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3276_Regression/Manager.h:
+        * tests/Bug_3276_Regression/Manager.cpp:
+        * tests/Bug_3276_Regression/Servant_Locator.h:
+        * tests/Bug_3276_Regression/Bug_3276_Regression.mpc:
+
+          Changed a bit the tests in spirit of TAO and excluded it from
+          corba_e_compact and corba_e_micro builds.
+
 Fri Mar 28 15:30:12 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/Invocation_Base.h:
