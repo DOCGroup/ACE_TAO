@@ -1,3 +1,20 @@
+Mon Mar 31 08:39:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+          Corrected length of MIOP packet_length. This fixes bugzilla 3275. Thanks
+          to Alvaro Vega Garcia <avega at tid dot es> for reporting this
+
+        * orbsvcs/examples/PSS/server.cpp:
+        * orbsvcs/examples/PSS/Simple_Naming.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          No need to specify empty orb name
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          Const change
+
+        * orbsvcvs/tests/Notify/Test_Filter/Test_Filter.mpc:
+          Layout changes
+
 Mon Mar 31 08:31:18 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3276_Regression/Manager.h:
