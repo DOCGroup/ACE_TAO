@@ -1,3 +1,37 @@
+Mon Mar 31 08:45:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Improved TAO autoconf support, fixes bugzilla 3274
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
+Mon Mar 31 08:39:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+          Corrected length of MIOP packet_length. This fixes bugzilla 3275. Thanks
+          to Alvaro Vega Garcia <avega at tid dot es> for reporting this
+
+        * orbsvcs/examples/PSS/server.cpp:
+        * orbsvcs/examples/PSS/Simple_Naming.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          No need to specify empty orb name
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          Const change
+
+        * orbsvcvs/tests/Notify/Test_Filter/Test_Filter.mpc:
+          Layout changes
+
+Mon Mar 31 08:31:18 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3276_Regression/Manager.h:
+        * tests/Bug_3276_Regression/Manager.cpp:
+        * tests/Bug_3276_Regression/Servant_Locator.h:
+        * tests/Bug_3276_Regression/Bug_3276_Regression.mpc:
+
+          Changed a bit the tests in spirit of TAO and excluded it from
+          corba_e_compact and corba_e_micro builds.
+
 Fri Mar 28 15:30:12 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/Invocation_Base.h:

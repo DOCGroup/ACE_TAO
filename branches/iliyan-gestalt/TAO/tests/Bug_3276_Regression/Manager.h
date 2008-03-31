@@ -3,7 +3,6 @@
 #ifndef _MANAGER_H_
 #define _MANAGER_H_
 
-#include "ace/Auto_Ptr.h"
 #include "Servant_Locator.h"
 
 class Manager
@@ -36,7 +35,7 @@ private:
   PortableServer::POA_var new_poa_var_;
   // The new poa that is created.
 
-  ACE_Auto_Ptr<Servant_Locator> servant_locator_;
+  PortableServer::ServantLocator_var servant_locator_;
   // Our servant locator
 
   CORBA::Object_var server_;
