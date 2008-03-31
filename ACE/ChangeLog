@@ -1,3 +1,17 @@
+Mon Mar 31 21:48:58 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Changed to avoid feature test for pthread_getaffinity_np() and
+          pthread_setaffinity_np() if system does not have cpu_set_t. In
+          that case, the pthread functions are amost certainly not
+          compatible.
+
+        * ace/Makefile.am:
+
+          Add Intrusive_Auto_Ptr.cpp, Intrusive_Auto_Ptr.h, and
+          Intrusive_Auto_ptr.inl to nobase_include_HEADERS.
+
 Mon Mar 31 18:56:40 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Refcounted_Auto_Ptr.h:
