@@ -1,3 +1,38 @@
+Mon Mar 31 15:57:58 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/COIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+
+
+          Pass the close() flags on to the close_handler() call.
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.cpp:
+
+          Accept the close flags and remove the transport reference only if
+          there is a connection pending or the open failed bit is not set in
+          the provided flags.
+
+        * tao/IIOP_Connector.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+
+          Clean up style from Adam's review.
+
+        * tao/Transport.cpp:
+
+          Store the cache entry in a temporary in case purging the entry
+          causes the destruction of the transport.
+
 Fri Mar 21 14:59:25 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Transport_Connector.cpp:

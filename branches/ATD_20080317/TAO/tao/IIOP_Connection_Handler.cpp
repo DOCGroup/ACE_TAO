@@ -342,9 +342,9 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 }
 
 int
-TAO_IIOP_Connection_Handler::close (u_long)
+TAO_IIOP_Connection_Handler::close (u_long flags)
 {
-  return this->close_handler ();
+  return this->close_handler (flags);
 }
 
 int

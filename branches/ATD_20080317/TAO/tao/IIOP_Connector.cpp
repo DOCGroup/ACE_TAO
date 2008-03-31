@@ -401,7 +401,7 @@ namespace
       delete [] tlist_;
     }
 
-    operator TAO_Transport** ()
+    operator TAO_Transport** (void)
     {
       return tlist_;
     }

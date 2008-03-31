@@ -92,7 +92,7 @@ namespace TAO
     bool more_to_do = true;
     while (more_to_do)
       {
-         retval = this->cache_map_.bind (ext_id, int_id, entry);
+        retval = this->cache_map_.bind (ext_id, int_id, entry);
         if (retval == 0)
           {
             // The entry has been added to cache succesfully
@@ -112,7 +112,7 @@ namespace TAO
               }
             else
             {
-              ext_id.index (ext_id.index() + 1);
+              ext_id.index (ext_id.index () + 1);
               if (TAO_debug_level > 8)
                 {
                   ACE_DEBUG ((LM_DEBUG,
@@ -121,8 +121,7 @@ namespace TAO
                     ACE_TEXT ("Trying with a new index \n"),
                     int_id.transport ()->id (),
                     ext_id.hash (),
-                    ext_id.index ()
-                    ));
+                    ext_id.index ()));
                 }
             }
           }
@@ -225,8 +224,7 @@ namespace TAO
     while (found != CACHE_FOUND_AVAILABLE && cache_status == 0)
       {
         entry = 0;
-        cache_status  = this->cache_map_.find (key,
-                                        entry);
+        cache_status = this->cache_map_.find (key, entry);
         if (cache_status == 0 && entry)
           {
             if (this->is_entry_available (*entry))
@@ -417,10 +415,9 @@ namespace TAO
   bool
   Transport_Cache_Manager::is_entry_available (const HASH_MAP_ENTRY &entry)
   {
-    Cache_Entries_State entry_state =
-      entry.int_id_.recycle_state ();
+    Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE ||
-        entry_state == ENTRY_IDLE_BUT_NOT_PURGABLE);
+                   entry_state == ENTRY_IDLE_BUT_NOT_PURGABLE);
 
     if (result && entry.int_id_.transport () != 0)
     {
@@ -443,15 +440,15 @@ namespace TAO
   bool
   Transport_Cache_Manager::is_entry_connecting (const HASH_MAP_ENTRY &entry)
   {
-    Cache_Entries_State entry_state =
-      entry.int_id_.recycle_state ();
+    Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_CONNECTING);
+
     if (!result && entry.int_id_.transport () != 0)
-    {
-      // if we're not connected, that counts, too.
-      // Can this happen?  Not sure <wilsond@ociweb.com>
-      result = !entry.int_id_.is_connected_;
-    }
+      {
+        // if we're not connected, that counts, too.
+        // Can this happen?  Not sure <wilsond@ociweb.com>
+        result = !entry.int_id_.is_connected_;
+      }
 
     if (TAO_debug_level  > 8)
       {
