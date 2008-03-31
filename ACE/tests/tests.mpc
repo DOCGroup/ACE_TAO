@@ -490,6 +490,13 @@ project(Integer_Truncate Test) : acetest {
   }
 }
 
+project(Intrusive Auto Ptr Test) : acetest {
+  exename = Intrusive_Auto_Ptr_Test
+  Source_Files {
+    Intrusive_Auto_Ptr_Test.cpp
+  }
+}
+
 project(IOStream Test) : acetest {
   exename = IOStream_Test
   Source_Files {
