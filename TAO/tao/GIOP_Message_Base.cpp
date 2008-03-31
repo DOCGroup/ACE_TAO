@@ -1101,8 +1101,6 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
         }
       else
         {
-          status_info.forward_location_var = server_request.forward_location ();
-
           // Normal exception, so the object is not here
           status_info.status = GIOP::UNKNOWN_OBJECT;
           ACE_DEBUG ((LM_DEBUG,

@@ -82,6 +82,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "dispatch (" << be_idt << be_idt_nl
       << "::CORBA::Object_ptr obj," << be_nl
       << "::CORBA::Object_out forward_obj," << be_nl
+      << "bool & is_forwarded," << be_nl
       << "TAO::Argument ** args," << be_nl
       << "int num_args," << be_nl
       << "const char * op," << be_nl
@@ -93,6 +94,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "collocation_upcall_wrapper.upcall (" << be_idt_nl
       << "obj," << be_nl
       << "forward_obj," << be_nl
+      << "is_forwarded," << be_nl
       << "args," << be_nl
       << "num_args," << be_nl
       << "op," << be_nl

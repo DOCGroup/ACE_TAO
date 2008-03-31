@@ -58,6 +58,7 @@ namespace TAO
 
     virtual void dispatch (CORBA::Object_ptr obj,
                            CORBA::Object_out forward_obj,
+                           bool & is_forwarded,
                            Argument ** args,
                            int num_args,
                            const char * op,

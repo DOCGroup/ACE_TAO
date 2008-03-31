@@ -59,6 +59,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
       << "dispatch (" << be_idt << be_idt_nl
       << "::CORBA::Object_ptr obj," << be_nl
       << "::CORBA::Object_out forward_obj," << be_nl
+      << "bool & is_forwarded," << be_nl
       << "TAO::Argument ** args," << be_nl
       << "int num_args," << be_nl
       << "const char * op," << be_nl

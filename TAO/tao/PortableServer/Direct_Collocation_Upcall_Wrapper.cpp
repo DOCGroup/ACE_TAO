@@ -21,6 +21,7 @@ void
 TAO::Direct_Collocation_Upcall_Wrapper::upcall (
   CORBA::Object_ptr obj,
   CORBA::Object_out forward_obj,
+  bool & is_forwarded,
   TAO::Argument ** args,
   int num_args,
   const char * op,
@@ -47,6 +48,7 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
     {
       forward_obj =
         CORBA::Object::_duplicate (forward_request.forward_reference.in ());
+      is_forwarded = true;
     }
 #else
   ACE_UNUSED_ARG (forward_obj);
