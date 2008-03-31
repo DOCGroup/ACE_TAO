@@ -63,6 +63,7 @@ MyMain::init_server (const ACE_TCHAR* args)
 
   if (!server_task_->ready()) {
     server_task_->force_shutdown ();
+    server_task_->wait ();
     ACE_auto_ptr_reset (server_task_, (Server_Task*)0);
     return false;
   }

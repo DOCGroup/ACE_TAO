@@ -21,6 +21,12 @@ Client::Client (int argc, ACE_TCHAR* argv[])
 
 Client::~Client ()
 {
+  if (!CORBA::is_nil (orb_.in())) {
+    orb_->shutdown (1);
+    orb_->destroy ();
+    orb_ = CORBA::ORB::_nil();
+  }
+
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) ~Client>\n"));
 }
 
@@ -29,6 +35,10 @@ Client::init (int argc, ACE_TCHAR* argv[])
 {
   try {
     orb_ = CORBA::ORB_init (argc, argv, "Client");
+    if (CORBA::is_nil (orb_.in())) {
+      ACE_ERROR ((LM_ERROR, "Client::init> ORB initialization failed.\n"));
+      return false;
+    }
 
     if (!this->parse_args (argc, argv)) {
       return false;
@@ -188,6 +198,11 @@ Client::run ()
 {
   bool status = true;
 
+  if (CORBA::is_nil (orb_.in())) {
+      ACE_ERROR ((LM_ERROR, "Client::run> nil ORB found.\n"));
+      return false;
+    }
+
   try {
     try {
       if (one_way_test_)
@@ -214,10 +229,6 @@ Client::run ()
                   , ex._info().c_str()));
       status = false;
     }
-
-    orb_->shutdown (1);
-    orb_->destroy ();
-    orb_ = CORBA::ORB::_nil();
   }
   catch( CORBA::Exception& ex) {
     ACE_ERROR ((LM_ERROR, "(%P|%t) Client::run> Caught during test shutdown CORBA::Exception %s"
