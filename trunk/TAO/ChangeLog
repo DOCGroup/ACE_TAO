@@ -1,3 +1,10 @@
+Mon Mar 31 08:45:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Improved TAO autoconf support, fixes bugzilla 3274
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
 Mon Mar 31 08:39:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
