@@ -11,9 +11,6 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-# Amount of delay (in seconds) between starting a server and a client.
-$sleeptime = $PerlACE::wait_interval_for_process_creation;
-
 my $target = PerlACE::TestTarget::create_target($PerlACE::TestConfig) || die "Create target failed\n";
 my $host = new PerlACE::TestTarget;
 
@@ -29,7 +26,6 @@ if (PerlACE::is_vxworks_test()) {
 }
 else {
     $AMH = $target->CreateProcess ("server", "");
-#    $AMH = new PerlACE::Process ("server", "");
 }
 
 $CL = $host->CreateProcess ("client", "");
@@ -37,8 +33,7 @@ $CL = $host->CreateProcess ("client", "");
 # Run the AMH server.
 $AMH->Spawn ();
 
-#if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
-if ($target->WaitForFileTimed ($iorfile, $sleeptime) == -1) {
+if ($target->WaitForFileTimed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: File containing AMH Server ior,".
         " <$iorfile>, cannot be found\n";
     $AMH->Kill ();
@@ -63,7 +58,6 @@ if ($amhserver != 0) {
 }
 
 $target->GetStderrLog();
-#unlink $iorfile;
 $host->DeleteFile($iorbase);
 $target->DeleteFile ($iorfile);
 exit $status;

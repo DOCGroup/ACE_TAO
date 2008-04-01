@@ -10,9 +10,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-# Amount of delay (in seconds) between starting a server and a client.
-$sleeptime = $PerlACE::wait_interval_for_process_creation;
-
 # File used to pass AMH server ior to its clients.
 # This file name is hard-coded in the server.cpp and client.cpp files
 $iorfile = PerlACE::LocalFile("test.ior");
@@ -35,7 +32,7 @@ if ($sv != 0) {
    exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: File containing AMH Server ior,".
         " <$iorfile>, cannot be found\n";
     $AMH->Kill ();
