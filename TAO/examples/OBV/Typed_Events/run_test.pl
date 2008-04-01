@@ -16,7 +16,7 @@ $iorfile = PerlACE::LocalFile ("$iorbase");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-  $SV = new PerlACE::Process ("server", "-o $iorbase");
+  $SV = new PerlACE::ProcessVX ("server", "-o $iorbase");
 }
 else {
   $SV = new PerlACE::Process ("server", "-o $iorfile");
