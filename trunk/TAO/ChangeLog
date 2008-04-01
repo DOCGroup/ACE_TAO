@@ -1,3 +1,14 @@
+Tue Apr  1 08:46:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_18/run_test.pl:
+        * examples/Callback_Quoter/run_test.pl:
+        * examples/ior_corbaloc/run_test.pl:
+        * examples/Logging/run_test.pl:
+        * examples/Quoter/run_test.pl:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+        * examples/RTScheduling/MIF_Scheduler/run_test.pl:
+          Improved these scripts
+
 Tue Apr  1 07:34:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMH/Sink_Server/run_test.pl:
