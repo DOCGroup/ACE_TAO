@@ -10,17 +10,17 @@ use PerlACE::Run_Test;
 
 # amount of delay between running the servers
 
-$sleeptime = 2;
 $status = 0;
-$iorfile = PerlACE::LocalFile("test.ior");
+$iorbase = "test.ior";
+$iorfile = PerlACE::LocalFile("$iorbase");
 
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("Scheduler_Interceptor_Server", "-f test.ior");
+    $SV = new PerlACE::ProcessVX ("Scheduler_Interceptor_Server", "-f $iorbase");
 }
 else {
-    $SV = new PerlACE::Process ("Scheduler_Interceptor_Server", "-f test.ior");
+    $SV = new PerlACE::Process ("Scheduler_Interceptor_Server", "-f $iorfile");
 }
 $CL = new PerlACE::Process ("Scheduler_Interceptor_Client", "-f $iorfile");
 
@@ -43,7 +43,7 @@ if ($sender != 0) {
     $status = 1;
 }
 
-$receiver = $SV->TerminateWaitKill (5);
+$receiver = $SV->TerminateWaitKill (15);
 
 if ($receiver != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
