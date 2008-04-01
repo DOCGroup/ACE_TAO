@@ -7,7 +7,7 @@
  *
  * @brief Pre-compiled InvalidSlot
  *
- * This file was used to generate the code in InvalidSlotC.*
+ * This file is used to generate the code in InvalidSlotC.*
  * The command used to generate code is:
  *
  *  tao_idl

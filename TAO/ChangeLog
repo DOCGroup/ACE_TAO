@@ -1,3 +1,75 @@
+Tue Apr  1 12:59:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/AnySeq.pidl
+        * tao/AnyTypeCode/Dynamic.pidl
+        * tao/AnyTypeCode/Dynamic_Parameter.pidl
+        * tao/AnyTypeCode/ValueModifier.pidl
+        * tao/AnyTypeCode/Visibility.pidl
+        * tao/BiDir_GIOP/BiDirPolicy.pidl
+        * tao/CharSeq.pidl
+        * tao/CSD_Framework/CSD_Framework.pidl
+        * tao/DoubleSeq.pidl
+        * tao/EndpointPolicy/EndpointPolicyType.pidl
+        * tao/FloatSeq.pidl
+        * tao/GIOP.pidl
+        * tao/IFR_Client/IFR_Base.pidl
+        * tao/IFR_Client/IFR_Basic.pidl
+        * tao/IFR_Client/IFR_Components.pidl
+        * tao/IFR_Client/IFR_Extended.pidl
+        * tao/IIOP.pidl
+        * tao/IIOP_Endpoints.pidl
+        * tao/ImR_Client/ImplRepo.pidl
+        * tao/ImR_Client/ServerObject.pidl
+        * tao/IORInterceptor/IORInfo.pidl
+        * tao/IORInterceptor/IORInterceptor.pidl
+        * tao/IORManipulation/IOR.pidl
+        * tao/IORTable/IORTable.pidl
+        * tao/LongDoubleSeq.pidl
+        * tao/LongLongSeq.pidl
+        * tao/LongSeq.pidl
+        * tao/Messaging/Messaging.pidl
+        * tao/Messaging/Messaging_No_Impl.pidl
+        * tao/Messaging/Messaging_RT_Policy.pidl
+        * tao/Messaging/Messaging_SyncScope_Policy.pidl
+        * tao/Messaging/Messaging_Types.pidl
+        * tao/Messaging/Pollable.pidl
+        * tao/Messaging_PolicyValue.pidl
+        * tao/Messaging_SyncScope.pidl
+        * tao/Object_Key.pidl
+        * tao/orb_types.pidl
+        * tao/ParameterMode.pidl
+        * tao/PI/ClientRequestInfo.pidl
+        * tao/PI/ClientRequestInterceptor.pidl
+        * tao/PI/Interceptor.pidl
+        * tao/PI/InvalidSlot.pidl
+        * tao/PI/ORBInitializer.pidl
+        * tao/PI/ORBInitInfo.pidl
+        * tao/PI/PIForwardRequest.pidl
+        * tao/PI/RequestInfo.pidl
+        * tao/PI_Server/ServerRequestInfo.pidl
+        * tao/PI_Server/ServerRequestInterceptor.pidl
+        * tao/PortableInterceptor.pidl
+        * tao/PortableServer/POA.pidl
+        * tao/PortableServer/PortableServer.pidl
+        * tao/PortableServer/PS_Forward.pidl
+        * tao/PortableServer/ServantActivator.pidl
+        * tao/PortableServer/ServantLocator.pidl
+        * tao/PortableServer/ServantManager.pidl
+        * tao/RTCORBA/RTCORBA.pidl
+        * tao/RTPortableServer/RTPortableServer.pidl
+        * tao/RTScheduling/RTScheduler.pidl
+        * tao/Services.pidl
+        * tao/ShortSeq.pidl
+        * tao/Strategies/COIOP_Endpoints.pidl
+        * tao/Strategies/sciop_endpoints.pidl
+        * tao/Strategies/uiop_endpoints.pidl
+        * tao/StringSeq.pidl
+        * tao/TimeBase.pidl
+        * tao/UShortSeq.pidl
+        * tao/WCharSeq.pidl
+        * tao/WStringSeq.pidl
+          Updated regeneration instructions
+
 Tue Apr  1 12:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Logging/run_test.pl:

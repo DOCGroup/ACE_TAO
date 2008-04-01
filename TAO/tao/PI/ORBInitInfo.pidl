@@ -7,7 +7,7 @@
  *
  * @brief Pre-compiled IDL source for the ORBInitInfo
  *
- * This file was used to generate the code in ORBInitInfoC.*
+ * This file is used to generate the code in ORBInitInfoC.*
  * The command used to generate code is:
  *
  *  tao_idl

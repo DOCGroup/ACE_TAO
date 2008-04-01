@@ -5,7 +5,7 @@
  *
  * @brief Pre-compiled IDL source for the PortableServer module.
  *
- * This file was used to generate the code in
+ * This file is used to generate the code in
  * ServantActivatorC.{h,inl,cpp}, using the following command:
  *
  * tao_idl.exe \

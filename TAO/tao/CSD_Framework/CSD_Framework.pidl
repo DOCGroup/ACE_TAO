@@ -6,7 +6,7 @@
  *
  * @brief Pre-compiled IDL source for the CSD_Framework module.
  *
- * This file was used to generate the code in
+ * This file is used to generate the code in
  * CSD_FrameworkC.{h,inl,cpp}, using the following command:
  *
  * $ACE_ROOT/bin/tao_idl \

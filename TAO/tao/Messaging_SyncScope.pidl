@@ -4,7 +4,7 @@
  *
  *  $Id$
  *
- * This file was used to generate the code in Messaging_SyncScopeC.{h,inl,cpp}
+ * This file is used to generate the code in Messaging_SyncScopeC.{h,inl,cpp}
  *
  * The command used to generate code from this file is:
  *

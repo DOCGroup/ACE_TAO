@@ -5,7 +5,7 @@
  *
  * $Id$
  *
- * This file was used to generate the code in IFR_BasicC.{h,inl,cpp}.
+ * This file is used to generate the code in IFR_BasicC.{h,inl,cpp}.
  * The original file Interface.idl was split into four pieces, to
  * keep the generated files to a manageable size and reduce build
  * time. This IDL file contains the concrete base interfaces of
@@ -343,7 +343,7 @@ module CORBA
                                     in VersionSpec version,
                                     in IDLType type,
                                     in AttributeMode mode );
-                                    
+
     OperationDef create_operation ( in RepositoryId id,
                                     in Identifier name,
                                     in VersionSpec version,
@@ -398,7 +398,7 @@ module CORBA
   {
   };
 
-  interface ExtAbstractInterfaceDef : AbstractInterfaceDef, 
+  interface ExtAbstractInterfaceDef : AbstractInterfaceDef,
                                       InterfaceAttrExtension
   {
   };
