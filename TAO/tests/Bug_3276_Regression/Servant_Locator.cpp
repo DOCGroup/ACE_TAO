@@ -5,8 +5,6 @@
 #include "testC.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Forwarding, Servant_Locator, "$Id$")
-
 PortableServer::Servant
 Servant_Locator::preinvoke (const PortableServer::ObjectId & /* oid */,
                             PortableServer::POA_ptr /* poa_ptr */,
