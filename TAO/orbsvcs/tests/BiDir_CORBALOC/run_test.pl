@@ -12,10 +12,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-# Amount of delay (in seconds) between starting a server and a client
-# to allow proper server initialization.
-$sleeptime = 10;
-
 # Variables for command-line arguments to client and server
 # executables.
 $ns_orb_port = 12002 + PerlACE::uniqueid ();
