@@ -5,7 +5,7 @@
  *
  * @brief Pre-compiled IDL source for the RTPortableServer module.
  *
- * This file was used to generate the code in RTPortableServerC.{h,cpp}
+ * This file is used to generate the code in RTPortableServerC.{h,cpp}
  * The steps to regenerate the code are as follows:
  *
  *   1. Run the tao_idl compiler on the pidl file.  The command used for

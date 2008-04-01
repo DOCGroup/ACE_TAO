@@ -5,7 +5,7 @@
  *
  * $Id$
  *
- *   This file was used to generate the code in IFR_ComponentsC.{h,inl,cpp}.
+ *   This file is used to generate the code in IFR_ComponentsC.{h,inl,cpp}.
  *   The original file Interface.idl was split into four pieces, to
  *   keep the generated files to a manageable size and reduce build
  *   time. This IDL file contains all the interfaces and other data

@@ -5,7 +5,7 @@
  *
  * $Id$
  *
- * This file was used to generate the code in IFR_BaseC.{h,i,cpp}.
+ * This file is used to generate the code in IFR_BaseC.{h,i,cpp}.
  * The original file Interface.idl was split into four pieces, to
  * keep the generated files to a manageable size and reduce build
  * time. This IDL file contains the abstract base interfaces of

@@ -18,7 +18,7 @@
  *     3.  Added RT_ORB::create_tcp_protocol_properties which seems
  *         to come and go from the formal specification, but is needed.
  *
- *   This file was used to generate the code in RTCORBAC.{h,inl,cpp}.
+ *   This file is used to generate the code in RTCORBAC.{h,inl,cpp}.
  *   The steps to regenerate the code are as follows:
  *
  *   1. Run the tao_idl compiler on the pidl file.  The command used for

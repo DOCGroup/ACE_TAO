@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- * This file was used to generate the code in TimeBase{C,S,S_T}.{h,i,cpp}
+ * This file is used to generate the code in TimeBase{C,S,S_T}.{h,i,cpp}
  *
  * The command used to generate code from this file is:
  *

@@ -7,7 +7,7 @@
  *
  * @brief Pre-compiled RequestInfo
  *
- * This file was used to generate the code in ServerRequestInfoC.*
+ * This file is used to generate the code in ServerRequestInfoC.*
  * The command used to generate code is:
  *
  *  tao_idl
