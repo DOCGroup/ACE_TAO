@@ -1,3 +1,12 @@
+Tue Apr  1 12:51:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/run_test_ipv6.pl:
+        * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
+        * examples/PluggableUDP/tests/SimplePerformance/run_test_ipv6.pl:
+        * tests/DIOP/run_test.pl:
+          Improved these scripts
+
 Tue Apr  1 12:40:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DSI_AMI_Gateway/run_exception_test.pl:
