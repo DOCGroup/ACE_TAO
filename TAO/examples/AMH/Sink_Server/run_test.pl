@@ -11,9 +11,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-# Amount of delay (in seconds) between starting a server and a client.
-$sleeptime = 8;
-
 # Amount of delay (in milliseconds) that the sink-server delays a client reply.
 $reply_delay_time = 11;
 
@@ -21,14 +18,22 @@ $reply_delay_time = 11;
 $iterations = 100;
 
 # File used to pass AMH server ior to its clients.
-$iorfile = PerlACE::LocalFile("amh.ior");
+$iorbase = "amh.ior";
+$iorfile = PerlACE::LocalFile("$iorbase");
 
 unlink $iorfile;
 
 $delay_time = $reply_delay_time*1000; #convert to microseconds
+if (PerlACE::is_vxworks_test()) {
+$AMH = new PerlACE::ProcessVX ("st_server", "-ORBsvcconf st_server" .
+                             "$PerlACE::svcconf_ext".
+                             " -o $iorbase -s $delay_time");
+}
+else {
 $AMH = new PerlACE::Process ("st_server", "-ORBsvcconf st_server" .
                              "$PerlACE::svcconf_ext".
                              " -o $iorfile -s $delay_time");
+}
 $CL = new PerlACE::Process ("client", "-k file://$iorfile -n $iterations");
 
 print STDERR "\n    Starting AMH Sink Server with $reply_delay_time milliseconds delayed response: \n\n";
@@ -36,7 +41,7 @@ print STDERR "\n    Starting AMH Sink Server with $reply_delay_time milliseconds
 # Run the AMH server.
 $AMH->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: File containing AMH Server ior,".
         " <$iorfile>, cannot be found\n";
     $AMH->Kill ();
@@ -51,7 +56,7 @@ print STDERR "\n(Expect less than $evt_per_sec Events/sec) \n\n";
 $client = $CL->SpawnWaitKill (300);
 
 # Clean up.
-$amhserver= $AMH->TerminateWaitKill (5);
+$amhserver= $AMH->TerminateWaitKill (15);
 
 if ($amhserver != 0) {
     print STDERR "ERROR: AMH Server returned $amhserver\n";
