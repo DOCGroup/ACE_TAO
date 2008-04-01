@@ -2,7 +2,7 @@
 
 // TAO specific IDL definition of an octet sequence that we use to represent
 // Object keys inside the POA.
-//   This file was used to generate the code in Object_KeyC.*
+//   This file is used to generate the code in Object_KeyC.*
 //   The command used to generate code is:
 //
 //     tao_idl

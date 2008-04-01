@@ -18,7 +18,7 @@
  *    - addition of the Interceptor::destroy() method
  *    - move of CodecFactory and Codec interfaces to the IOP module
  *
- * This file was used to generate the code in PortableInterceptorC.*
+ * This file is used to generate the code in PortableInterceptorC.*
  * The command used to generate code is:
  *
  *  tao_idl

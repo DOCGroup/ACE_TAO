@@ -13,7 +13,7 @@
  * The following is from orbos/99-12-02 Portable Interceptors spec,
  * the full IDL is downloadable from orbos/99-12-02.
  *
- * This file was used to generate the code in ClientRequestInterceptorC.*
+ * This file is used to generate the code in ClientRequestInterceptorC.*
  * The command used to generate code is:
  *
  *  tao_idl

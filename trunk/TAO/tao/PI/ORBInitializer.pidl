@@ -8,7 +8,7 @@
  * @brief ORBInitializer part of the PortableInterceptor part of the CORBA
  * spec
  *
- * This file was used to generate the code in ORBInitializerC.*
+ * This file is used to generate the code in ORBInitializerC.*
  * The command used to generate code is:
  *
  *  tao_idl

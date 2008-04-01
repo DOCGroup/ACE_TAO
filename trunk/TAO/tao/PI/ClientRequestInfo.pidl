@@ -7,7 +7,7 @@
  *
  * @brief Pre-compiled ClientRequestInfo
  *
- * This file was used to generate the code in ClientRequestInfoC.*
+ * This file is used to generate the code in ClientRequestInfoC.*
  * The command used to generate code is:
  *
  *  tao_idl

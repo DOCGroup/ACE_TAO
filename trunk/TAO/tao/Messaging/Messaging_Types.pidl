@@ -6,19 +6,7 @@
  *
  *  $Id$
  *
- * This file was used to generate the code in
- * Messaging__Types{C}.{h,cpp} and as the name implies is not
- * implemented in TAO, yet.
- *
- * The command used to generate code from this file is:
- *
- *   tao_idl
- *        -o orig -Gp -Gd -GA -Sci -SS
- *        -Wb,export_macro=TAO_Messaging_Export
- *        -Wb,export_include=messaging_export.h
- *        -Wb,pre_include="ace/pre.h"
- *        -Wb,post_include="ace/post.h" -I$(TAO_ROOT)
- *        Messaging_No_Impl.pidl
+ * This file is used to generate the code in Messaging__Types{C}.{h,cpp}
  */
 //=============================================================================
 

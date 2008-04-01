@@ -9,7 +9,7 @@
  * used for transmission of COIOP endpoints.  See COIOP_Profile.*
  * for more details.
  *
- * This file was used to generate the code in
+ * This file is used to generate the code in
  * COIOP_EndpointsC.* The command used to generate code
  * is:
  *

@@ -6,32 +6,9 @@
  *
  *  $Id$
  *
- * This file was used to generate the code in
+ * This file is used to generate the code in
  * Messaging_No_Impl{C}.{h,cpp} and as the name implies is not
  * implemented in TAO, yet.
- *
- * The command used to generate code from this file is:
- *
- *   tao_idl
- *        -o orig -Gp -Gd -GA -Sci -SS
- *        -Wb,export_macro=TAO_Messaging_Export
- *        -Wb,export_include=messaging_export.h
- *        -Wb,pre_include="ace/pre.h"
- *        -Wb,post_include="ace/post.h" -I$(TAO_ROOT)
- *        Messaging_No_Impl.pidl
- *
- * after the file is generated a patch must be applied:
- *
- *   cp orig/Messaging_No_Impl{C}.{h,cpp} .
- *   patch < diffs/Messaging_No_Impl.diff
- *
- * The patch eliminates cycles in the include dependencies.
- *
- * Note: to update the patch file after re-generating the code use:
- *
- *   for i in Messaging_No_Impl{C}.{h,cpp}; do
- *     diff -uBbw orig/$i $i;
- *   done > diffs/Messaging_No_Impl.diff
  */
 //=============================================================================
 
