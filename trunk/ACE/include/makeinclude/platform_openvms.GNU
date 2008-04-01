@@ -32,6 +32,7 @@ ifeq ($(buildbits),64)
 endif
 
 ifeq ($(HOSTTYPE),ia64)
+  ACE_OPENVMS_IA64 = 1
   SYMVEC_OPT_FILE ?= $(LIB_NAME)_symvec.opt
   ifeq ($(PRJ_TYPE),library)
     ifeq ($(shared_libs),1)
