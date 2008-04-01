@@ -17,9 +17,6 @@ use POSIX;
 # Configuration parameters
 ###############################################################
 
-# Amount of delay (in seconds) between starting a server and a client
-# to allow proper server initialization.
-$sleeptime = 10;
 # Number of Event Channel/Application pairs that will be started up.
 $number_of_applications = 3;
 
@@ -73,7 +70,7 @@ sub run_ec
         return 1;
     }
 
-    if (PerlACE::waitforfile_timed ($ior_file, $sleeptime) == -1)
+    if (PerlACE::waitforfile_timed ($ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
     {
         print STDERR "ERROR: cannot find IOR file <$ior_file>\n";
         $ps[$ec_id]->Kill ();

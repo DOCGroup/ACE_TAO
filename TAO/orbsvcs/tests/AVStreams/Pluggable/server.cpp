@@ -143,8 +143,7 @@ main (int argc,
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+                                            argv);
 
       int result =
         parse_args (argc,

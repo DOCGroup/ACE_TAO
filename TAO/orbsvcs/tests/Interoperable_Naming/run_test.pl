@@ -11,10 +11,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-# Amount of delay (in seconds) between starting a server and a client 
-# to allow proper server initialization.
-$sleeptime = 8;
-
 # Variables for command-line arguments to client and server
 # executables
 $iorfile = PerlACE::LocalFile ("ns.ior");
@@ -29,7 +25,7 @@ unlink $iorfile;
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
     $NS->Kill ();
     exit 1;

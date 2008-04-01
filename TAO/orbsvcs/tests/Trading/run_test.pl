@@ -10,7 +10,6 @@ use PerlACE::Run_Test;
 
 $ior = PerlACE::LocalFile ("trading.ior");
 $ready_file = PerlACE::LocalFile ("export_test_ready");
-$sleeptime = 20;
 $port = PerlACE::random_port();
 
 unlink $ior;
@@ -30,7 +29,7 @@ if ($TS->Spawn () == -1) {
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($ior, $sleeptime) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for trading service IOR file\n";
     $TS->Kill ();
     exit 1;

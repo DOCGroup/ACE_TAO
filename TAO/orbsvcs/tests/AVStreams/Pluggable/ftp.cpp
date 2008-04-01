@@ -404,9 +404,7 @@ main (int argc,
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
