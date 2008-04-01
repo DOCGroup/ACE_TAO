@@ -1,3 +1,11 @@
+Tue Apr  1 08:33:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Set ACE_OPENVMS_IA64 on Itanium
+
+        * include/makeinclude/rules.lib.GNU:
+          Only use a special AR rule on OpenVMS IA64
+
 Tue Apr  1 07:38:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Intrusive_Auto_Ptr_Test.cpp:
