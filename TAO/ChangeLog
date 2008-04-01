@@ -1,3 +1,8 @@
+Tue Apr  1 07:26:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/run_test.pl:
+          Also test nsdel
+
 Tue Apr  1 06:55:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/CSD_Strategy/ThreadPool2/ClientApp.cpp:
