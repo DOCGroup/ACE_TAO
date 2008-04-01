@@ -29,7 +29,12 @@ $CL = new PerlACE::Process ("client", "-i file://$iorfile -n 10");
 print STDERR "\n    Starting Load Balancing Server and Identity Server \n\n";
 
 # Run the load balancing server.
-$LB->Spawn ();
+$lbserver = $LB->Spawn ();
+
+if ($lbserver != 0) {
+    print STDERR "ERROR: load_balancer returned $lbserver\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: File containing Load Balancing Service ior,".
