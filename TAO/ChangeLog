@@ -1,3 +1,11 @@
+Tue Apr  1 12:40:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DSI_AMI_Gateway/run_exception_test.pl:
+        * tests/DSI_AMI_Gateway/run_test.pl:
+        * tests/DSI_Gateway/run_exception_test.pl:
+        * tests/DSI_Gateway/run_test.pl:
+          Improved these scripts
+
 Tue Apr  1 10:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTScheduling/Scheduling_Interceptor/run_test.pl:
