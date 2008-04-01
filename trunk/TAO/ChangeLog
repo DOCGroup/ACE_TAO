@@ -1,3 +1,10 @@
+Tue Apr  1 13:17:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Load_Balancing/run_test.pl:
+        * examples/Logging/run_test.pl:
+        * examples/TypeCode_Creation/run_test.pl:
+          Improved these scripts
+
 Tue Apr  1 13:13:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/AMH/Sink_Server/run_test.pl:

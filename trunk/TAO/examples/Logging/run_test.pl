@@ -15,7 +15,12 @@ $status = 0;
 # amount of delay between running the servers
 $sleeptime = 15;
 
-$SV = new PerlACE::Process ("Logging_Service");
+if (PerlACE::is_vxworks_test()) {
+  $SV = new PerlACE::ProcessVX ("Logging_Service");
+}
+else {
+  $SV = new PerlACE::Process ("Logging_Service");
+}
 $CL = new PerlACE::Process ("Logging_Test");
 
 # Start the service
