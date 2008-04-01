@@ -21,6 +21,7 @@ my $NS = new PerlACE::Process ("../../orbsvcs/Naming_Service/Naming_Service");
 my $CL = new PerlACE::Process ("../../orbsvcs/tests/Simple_Naming/client");
 my $LS = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/nslist");
 my $AD = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/nsadd");
+my $DL = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/nsdel");
 my $status = 0;
 
 # We want the nslist and nsadd executables to be found exactly in the path
@@ -80,6 +81,16 @@ sub nsadd
     }
 }
 
+sub nsdel
+{
+    $DL->Arguments("-ORBInitRef NameService=file://$iorfile @_");
+    my $ret = $DL->SpawnWaitKill (60);
+    if ($ret != 0) {
+        print STDERR "ERROR: nsdel returned $ret\n";
+        $status = 1;
+    }
+}
+
 name_server ();
 
 print STDOUT "nslist of starting NS content\n";
@@ -98,6 +109,16 @@ nsadd ("--newcontext --name level1_context/new_lvl2_context/autoadded_lvl3/new_l
 
 print STDOUT "nsadd of a new object at level 4\n";
 nsadd ("--ior file://ns.ior --name level1_context/new_lvl2_context/autoadded_lvl3/new_lvl4_context/new_obj");
+
+print STDOUT "nslist after adding NS content\n";
+nslist ();
+
+print STDOUT "nsdel of the object at level 4\n";
+print STDOUT "Expected to warn about possibly orphaned naming context.\n";
+nsdel ("--name level1_context/new_lvl2_context/autoadded_lvl3/new_lvl4_context/new_obj");
+
+print STDOUT "nsdel of the naming context new_lvl4_context using --destroy\n";
+nsdel ("--name level1_context/new_lvl2_context/autoadded_lvl3/new_lvl4_context --destroy");
 
 print STDOUT "nslist of ending NS content\n";
 nslist ();
