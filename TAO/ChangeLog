@@ -1,3 +1,11 @@
+Tue Apr  1 07:34:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/run_test.pl:
+        * examples/Load_Balancing/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/run_test_ipv6.pl:
+          Updated to support VxWorks
+
 Tue Apr  1 07:26:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/nslist/run_test.pl:
