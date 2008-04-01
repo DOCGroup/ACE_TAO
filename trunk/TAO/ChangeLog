@@ -1,3 +1,11 @@
+Tue Apr  1 14:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocated_Forwarding/run_test.pl:
+          VxWorks updates
+
+        * tests/Collocated_Forwarding/Collocated_Forwarding.mpc:
+          Simplified
+
 Tue Apr  1 14:11:00 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/PortableServer/Object_Adapter.cpp:
