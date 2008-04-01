@@ -1,3 +1,22 @@
+Tue Apr  1 19:14:04 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Throughput/run_test_with_monitors.pl:
+        * performance-tests/Throughput/monitor_client.cpp:
+        
+          New files adding a monitor querying client to the regular
+          TAO throughput test, and a separate script to run the 
+          test with monitor querying.
+          
+        * performance-tests/Throughput/Throughput.mpc:
+        
+          Added new project containing the new source file above.
+          
+        * performance-tests/Throughput/client.cpp:
+        
+          Added command line option to expose the object reference
+          for monitor queries, and code to do so if the option is
+          used.
+
 Mon Mar 31 16:34:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Monitor/*:
