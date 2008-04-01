@@ -1,3 +1,27 @@
+Tue Apr  1 14:11:00 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Fixed a memory leak that was happening because a forward
+          reference was duplicated twice.
+
+        * tests/Collocated_Forwarding/Server_ORBInitializer.h:
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.h:
+        * tests/Collocated_Forwarding/test.idl:
+        * tests/Collocated_Forwarding/server.cpp:
+        * tests/Collocated_Forwarding/test_i.cpp:
+        * tests/Collocated_Forwarding/Collocated_Forwarding.mpc:
+        * tests/Collocated_Forwarding/Server_ORBInitializer.cpp:
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.cpp:
+        * tests/Collocated_Forwarding/run_test.pl:
+        * tests/Collocated_Forwarding/test_i.h:
+          Added a new test for collocated forwarding case.
+          For details see Bug#3276.
+
+        * tests/Bug_3276_Regression/client.cpp:
+        * tests/Bug_3276_Regression/Servant_Locator.cpp:
+        * tests/Bug_3276_Regression/Manager.cpp:
+          Changed main to ACE_TMAIN.
+
 Tue Apr  1 13:17:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Load_Balancing/run_test.pl:
