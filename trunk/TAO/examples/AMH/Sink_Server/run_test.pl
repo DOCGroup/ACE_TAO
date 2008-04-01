@@ -39,7 +39,12 @@ $CL = new PerlACE::Process ("client", "-k file://$iorfile -n $iterations");
 print STDERR "\n    Starting AMH Sink Server with $reply_delay_time milliseconds delayed response: \n\n";
 
 # Run the AMH server.
-$AMH->Spawn ();
+$amh_server = $AMH->Spawn ();
+
+if ($amh_server != 0) {
+    print STDERR "ERROR: server returned $amh_server";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: File containing AMH Server ior,".
@@ -47,7 +52,6 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     $AMH->Kill ();
     exit 1;
 }
-
 
 # Run client.
 print STDERR "\n     Client making $iterations calls to server: \n";
