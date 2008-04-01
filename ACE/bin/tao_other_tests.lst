@@ -34,9 +34,8 @@ TAO/examples/Simple/grid/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC !NO_MESSAGING !Win32
 TAO/examples/Simple/time/run_test.pl: !NO_MESSAGING !Win32 !CORBA_E_MICRO
 TAO/examples/Quoter/run_test.pl: !DISABLE_ToFix_LynxOS_PPC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !VxWorks !VxWorks_RTP
-TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !SUNCC5_1 !ACE_FOR_TAO !VxWorks !VxWorks_RTP
-TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl: !QNX !NO_DIOP !ACE_FOR_TAO !VxWorks !VxWorks_RTP
-TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !LynxOS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
+TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !SUNCC5_1 !ACE_FOR_TAO
+TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p SCTP_SEQ: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO SCTP !LynxOS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS !VxWorks !VxWorks_RTP
@@ -176,9 +175,10 @@ TAO/orbsvcs/examples/Notify/Subscribe/run_test.pl: !ST !NO_MESSAGING !MINIMUM !C
 TAO/orbsvcs/tests/Bug_2925_Regression/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Bug_2925_Regression/run_test_ipv6.pl: IPV6 !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Bug_2377_Regression/run_test_ipv6.pl: IPV6 !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !VxWorks !VxWorks_RTP
-TAO/examples/PluggableUDP/tests/SimplePerformance/run_test_ipv6.pl: IPV6 !QNX !NO_DIOP !ACE_FOR_TAO !VxWorks !VxWorks_RTP
-TAO/examples/PluggableUDP/tests/Performance/run_test.pl: !QNX !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_COMPACT !CORBA_E_MICRO !VxWorks !VxWorks_RTP
-TAO/examples/PluggableUDP/tests/Performance/run_test_ipv6.pl: IPV6 !QNX !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_COMPACT !CORBA_E_MICRO !VxWorks !VxWorks_RTP
+TAO/examples/PluggableUDP/tests/SimplePerformance/run_test_ipv6.pl: IPV6 !QNX !NO_DIOP !ACE_FOR_TAO
+TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl: !QNX !NO_DIOP !ACE_FOR_TAO
+TAO/examples/PluggableUDP/tests/Performance/run_test.pl: !QNX !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/examples/PluggableUDP/tests/Performance/run_test_ipv6.pl: IPV6 !QNX !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/tests/unit/Notify/MC/Control/run_test.pl: !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/unit/Notify/MC/MonitorControlExt/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/unit/Notify/MC/MonitorManager/run_test.pl: !ST !STATIC !VxWorks !VxWorks_RTP
