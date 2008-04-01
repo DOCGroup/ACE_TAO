@@ -67,7 +67,7 @@ Foo_i::op4(CORBA::Long value)
 void
 Foo_i::op5(void)
 {
-  ++this->count_op5_;;
+  ++this->count_op5_;
 }
 
 
