@@ -1,3 +1,23 @@
+Tue Apr  1 08:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/BiDir_CORBALOC/run_test.pl:
+        * orbsvcs/tests/Bug_2800_Regression/run_test_federated.pl:
+        * orbsvcs/tests/Event/Mcast/Complex/run_test.pl:
+        * orbsvcs/tests/Event/Mcast/Simple/run_test.pl:
+        * orbsvcs/tests/Event/Mcast/Two_Way/run_test.pl:
+        * orbsvcs/tests/Interoperable_Naming/run_test.pl:
+        * orbsvcs/tests/Redundant_Naming/run_test.pl:
+        * orbsvcs/tests/Security/ssliop_corbaloc/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+        * orbsvcs/tests/Trading/run_test.pl:
+          Improved these scripts
+
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+          No need to specify empty orb name
+
 Tue Apr  1 08:46:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_18/run_test.pl:

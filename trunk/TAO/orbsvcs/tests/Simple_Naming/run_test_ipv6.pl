@@ -16,10 +16,6 @@ use Cwd;
 ## Save the starting directory
 $startdir = getcwd();
 
-# Amount of delay (in seconds) between starting a server and a client
-# to allow proper server initialization.
-$sleeptime = 10;
-
 $quiet = 0;
 
 # check for -q flag
@@ -48,7 +44,7 @@ sub name_server
 
     $NS->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
+    if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
         $NS->Kill (); 
         exit 1;
