@@ -18,14 +18,13 @@ ClientApp::~ClientApp()
 int
 ClientApp::run(int argc, char* argv[])
 {
-  CORBA::ORB_var orb
-    = CORBA::ORB_init(argc, argv, "");
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
   // * Returns 1 if the usage statement was explicitly requested.
   // * Returns 0 otherwise.
-  int result = this->parse_args(argc, argv);
+  int const result = this->parse_args(argc, argv);
   if (result != 0)
     {
       return result;
@@ -73,7 +72,6 @@ ClientApp::run(int argc, char* argv[])
       {
         ACE_DEBUG((LM_DEBUG,
                   "(%P|%t) ===> Caught FooException - as expected.\n"));
-
       }
     }
 
