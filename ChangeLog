@@ -1,3 +1,30 @@
+Tue Apr  1 00:16:43 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
+
+        * examples/E2E_Task/Model/Baseline.xme:
+
+        Updated the model.
+
+        * examples/E2E_Task/descriptors/baseline/average/ATask1.cdp:
+        * examples/E2E_Task/descriptors/baseline/average/ATask2.cdp:
+        * examples/E2E_Task/descriptors/baseline/average/ATask3.cdp:
+        * examples/E2E_Task/descriptors/baseline/average/ATask4.cdp:
+        * examples/E2E_Task/descriptors/baseline/average/ATask5.cdp:
+        * examples/E2E_Task/descriptors/baseline/average/ATask6.cdp:
+        * examples/E2E_Task/descriptors/baseline/average/ATask7.cdp:
+
+        * examples/E2E_Task/descriptors/baseline/best/BTask1.cdp:
+        * examples/E2E_Task/descriptors/baseline/best/BTask10.cdp:
+        * examples/E2E_Task/descriptors/baseline/best/BTask2.cdp:
+        * examples/E2E_Task/descriptors/baseline/best/BTask3.cdp:
+        * examples/E2E_Task/descriptors/baseline/best/BTask4.cdp:
+        * examples/E2E_Task/descriptors/baseline/best/BTask5.cdp:
+        * examples/E2E_Task/descriptors/baseline/best/BTask6.cdp:
+        * examples/E2E_Task/descriptors/baseline/best/BTask7.cdp:
+        * examples/E2E_Task/descriptors/baseline/best/BTask8.cdp:
+        * examples/E2E_Task/descriptors/baseline/best/BTask9.cdp:
+
+        Added these files.
+
 Mon Mar 31 15:46:24 UTC 2008  Nishanth Shanakran  <nshankar@nospam.com>
 
         * Controller/EUCON/MPC_Controller.cpp:
