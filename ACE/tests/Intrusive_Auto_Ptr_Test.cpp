@@ -71,7 +71,7 @@ One::intrusive_remove_ref (One *one) {
 
 
 
-int run_main (int, ACE_TCHAR *argv[])
+int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Intrusive_Auto_Ptr_Test"));
 

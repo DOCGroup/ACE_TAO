@@ -1,3 +1,8 @@
+Tue Apr  1 07:38:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Intrusive_Auto_Ptr_Test.cpp:
+          Fixed argument not used warning
+
 Tue Apr  1 07:34:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
