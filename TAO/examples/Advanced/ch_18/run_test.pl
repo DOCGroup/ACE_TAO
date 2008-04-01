@@ -13,7 +13,7 @@ require Process;
 $status = 0;
 
 # amount of delay between starting servers and client
-$sleeptime = 5;
+$sleeptime = 15;
 
 
 
