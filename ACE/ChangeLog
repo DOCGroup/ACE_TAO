@@ -1,3 +1,9 @@
+Tue Apr  1 06:54:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled most tests for vxworks and vxworks_rtp, we first need to
+          convert a lot of scripts to support vxworks
+
 Mon Mar 31 21:48:58 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
