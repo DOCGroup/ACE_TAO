@@ -10,14 +10,25 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$iorfile = PerlACE::LocalFile ("obv.ior");
+$iorbase = "obv.ior";
+$iorfile = PerlACE::LocalFile ("$iorbase");
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+  $SV = new PerlACE::Process ("server", "-o $iorbase");
+}
+else {
+  $SV = new PerlACE::Process ("server", "-o $iorfile");
+}
 $CL = new PerlACE::Process ("client", "-f $iorfile");
 
-$SV->Spawn ();
+$server = $SV->Spawn ();
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: timed out waiting for file <$iorfile>\n";
@@ -32,7 +43,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5); 
+$server = $SV->TerminateWaitKill (15); 
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

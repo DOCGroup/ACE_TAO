@@ -19,7 +19,12 @@ $SV = new PerlACE::Process ("Logging_Service");
 $CL = new PerlACE::Process ("Logging_Test");
 
 # Start the service
-$SV->Spawn ();
+$server = $SV->Spawn ();
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    exit 1;
+}
 
 # Give the service time to settle
 sleep $sleeptime;
