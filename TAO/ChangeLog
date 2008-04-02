@@ -1,3 +1,11 @@
+Wed Apr  2 11:47:45 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Collocated_Forwarding/Server_ORBInitializer.h:
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.h:
+        * tests/Collocated_Forwarding/test_i.h:
+
+          Added Id svn keyword to those headers.
+
 Wed Apr  2 11:33:48 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
