@@ -1,3 +1,9 @@
+Wed Apr  2 07:51:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Enabled a few tests on VxWorks again, in the past rebooting a
+          crashed target was problematic but that is not an issue anymore
+
 Tue Apr  1 14:20:34 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:
