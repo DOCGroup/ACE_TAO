@@ -1,3 +1,12 @@
+Wed Apr  2 11:33:48 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+          Fixed a warning.
+
+        * tests/Collocated_Forwarding/Collocated_Forwarding.mpc:
+          Added avoids_minimum_corba, avoids_corba_e_compact, and
+          avoids_corba_e_micro.
+
 Tue Apr  1 14:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocated_Forwarding/run_test.pl:
