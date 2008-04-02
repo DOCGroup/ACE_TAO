@@ -1,3 +1,11 @@
+Wed Apr  2 08:14:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Replaced ACE_HAS_VOIDPTR_GETTIMEOFDAY with
+          ACE_HAS_TIMEZONE_GETTIMEOFDAY, this fixes bugzilla 3145
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
 Wed Apr  2 07:51:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
