@@ -52,6 +52,7 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
     }
 #else
   ACE_UNUSED_ARG (forward_obj);
+  ACE_UNUSED_ARG (is_forwarded);
 #endif /* TAO_HAS_MINIMUM_CORBA && !CORBA_E_COMPACT && !CORBA_E_MICRO*/
 }
 
