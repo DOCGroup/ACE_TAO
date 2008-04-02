@@ -25,7 +25,7 @@ namespace CIAO
      * @brief Implements external interface for CIAO container. 
      */
     class CIAO_ComponentServer_svnt_Export  CIAO_Container_i
-      : public virtual POA_Components::Deployment::CIAO::Container
+      : public virtual POA_CIAO::Deployment::Container
     {
     public:
       // Constructor 
@@ -47,7 +47,7 @@ namespace CIAO
 	void remove_component (::Components::CCMObject_ptr cref);
   
       virtual
-	::Components::Deployment::CIAO::CCMObjects * get_components (void);
+	::CIAO::Deployment::CCMObjects * get_components (void);
   
       virtual
 	::Components::ConfigValues * configuration (void);

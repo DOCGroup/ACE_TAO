@@ -12,45 +12,43 @@
 #include <ccm/CCM_Object.idl>
 #include <ccm/ComponentServer/ComponentServer.idl>
 
-module Components
+module CIAO
 {
   module Deployment
   {
-    module CIAO
+    interface ComponentServer : ::Components::Deployment::ComponentServer
     {
-      interface ComponentServer : ::Components::Deployment::ComponentServer
-      {
-        oneway void shutdown ();
-      };
+      oneway void shutdown ();
+    };
 
-      typedef sequence<CCMObject> CCMObjects;
+    typedef sequence<::Components::CCMObject> CCMObjects;
       
-      /**
-       * @interface CIAO_Container
-       * @brief CIAO specific extensions to the component server interface.
-       */
-      interface Container : Components::Deployment::Container
-      {
-	/// Instruct the container to install a component without
-	/// an explicit home.
-	CCMObject install_component (in UUID id,
-					      in string entrypt,
-					      in ConfigValues config)
-	  raises (::Components::Deployment::UnknownImplId,
-		  ::Components::Deployment::ImplEntryPointNotFound,
-		  ::Components::Deployment::InstallationFailure,
-		  ::Components::Deployment::InvalidConfiguration);
+    /**
+     * @interface CIAO_Container
+     * @brief CIAO specific extensions to the component server interface.
+     */
+    interface Container : Components::Deployment::Container
+    {
+      /// Instruct the container to install a component without
+      /// an explicit home.
+      ::Components::CCMObject install_component (in ::Components::Deployment::UUID id,
+                                                 in string entrypt,
+                                                 in ::Components::ConfigValues config)
+        raises (::Components::Deployment::UnknownImplId,
+                ::Components::Deployment::ImplEntryPointNotFound,
+                ::Components::Deployment::InstallationFailure,
+                ::Components::Deployment::InvalidConfiguration);
 	
-	/// Instruct the container to remove a component installed
-	/// without an explicit home.  If the component was installed
-	/// with an explicit home, this operation will fail.
-	void remove_component (in CCMObject cref)
-	  raises (::Components::RemoveFailure);
+      /// Instruct the container to remove a component installed
+      /// without an explicit home.  If the component was installed
+      /// with an explicit home, this operation will fail.
+      void remove_component (in ::Components::CCMObject cref)
+        raises (::Components::RemoveFailure);
 	
-        /// Returns a sequence of all homeless components.
-	CCMObjects get_components ();
-      };
+      /// Returns a sequence of all homeless components.
+      CCMObjects get_components ();
     };
   };
 };
+
 #endif /* CIAO_COMPONENTSERVER_IDL_ */

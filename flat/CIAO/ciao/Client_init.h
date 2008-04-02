@@ -21,7 +21,10 @@
 #pragma once
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
+#include <ace/Hash_Map_Manager_T.h>
+#include <tao/orbconf.h>
+#include <tao/AnyTypeCode/Any.h>
+#include <ccm/CCM_StandardConfiguratorC.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
@@ -41,6 +44,25 @@ namespace CIAO
    * to register these stuff automatically.
    */
   CIAO_CLIENT_Export int Client_init (CORBA::ORB_ptr o);
+  
+  namespace Utility
+  {
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+				    CORBA::Any,
+				    ACE_Hash<ACE_CString>,
+				    ACE_Equal_To<ACE_CString>,
+				    ACE_Null_Mutex> CONFIGVALUE_MAP;
+  
+    void CIAO_CLIENT_Export build_config_values_map (CONFIGVALUE_MAP &map, 
+                                                     const ::Components::ConfigValues &config);
+  
+    void CIAO_CLIENT_Export build_config_values_sequence (::Components::ConfigValues &config,
+                                                          const CONFIGVALUE_MAP &map);
+    
+    /*void CIAO_SERVER_Export print_config_values (const ::Components::ConfigValues &config,
+                                                 ACE_Log_Priority prio,
+                                                 const char * prefix);*/
+  }
 }
 
 #include /**/ "ace/post.h"
