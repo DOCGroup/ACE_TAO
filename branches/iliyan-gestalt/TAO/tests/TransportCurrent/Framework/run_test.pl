@@ -11,17 +11,6 @@ use PerlACE::Run_Test;
 
 PerlACE::add_lib_path ('../lib');
 
-sub add_path {
-    my($name)  = shift;
-    my($value) = shift;
-    if (defined $ENV{$name}) {
-        $ENV{$name} .= $Config{'path_sep'} . $value
-        }
-    else {
-        $ENV{$name} = $value;
-    }
-}
-
 my $status = 0;
 my $confmod = "";
 

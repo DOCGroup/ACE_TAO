@@ -5,7 +5,7 @@
  *
  * @brief Pre-compiled IDL source for the PortableServer module.
  *
- * This file was used to generate the code in
+ * This file is used to generate the code in
  * PortableServerC.{h,inl,cpp}, using the following command:
  *
  * tao_idl.exe \
@@ -140,17 +140,13 @@ module PortableServer
     ThreadPolicy create_thread_policy (in ThreadPolicyValue value);
 #endif
 #       if  ! defined (CORBA_E_MICRO)
-    LifespanPolicy create_lifespan_policy (
-        in LifespanPolicyValue value
-      );
+    LifespanPolicy create_lifespan_policy (in LifespanPolicyValue value);
 
     IdUniquenessPolicy  create_id_uniqueness_policy (
-        in IdUniquenessPolicyValue value
-      );
+        in IdUniquenessPolicyValue value);
 
     IdAssignmentPolicy  create_id_assignment_policy (
-        in IdAssignmentPolicyValue value
-      );
+        in IdAssignmentPolicyValue value);
 #endif
 #       if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
     ImplicitActivationPolicy create_implicit_activation_policy (

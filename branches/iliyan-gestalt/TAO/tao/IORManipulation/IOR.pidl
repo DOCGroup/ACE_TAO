@@ -5,7 +5,7 @@
  *
  * @brief Pre-compiled IDL source for the TAO_IOP namespace.
  *
- * This file was used to generate the code in IORC.{h,cpp}.
+ * This file is used to generate the code in IORC.{h,cpp}.
  *
  * To regenerate the code use:
  *

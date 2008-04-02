@@ -12,10 +12,6 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use Cwd;
 
-# Amount of delay (in seconds) between starting a server and a client
-# to allow proper server initialization.
-$sleeptime = 10;
-
 $quiet = 0;
 $debug_level = '0';
 

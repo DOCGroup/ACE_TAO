@@ -9,7 +9,7 @@
  * used for transmission of SCIOP Endpoints.  See SCIOP_Profile.*
  * for more details.
  *
- * This file was used to generate the code in
+ * This file is used to generate the code in
  * sciop_endpoints.* The command used to generate code
  * is:
  *

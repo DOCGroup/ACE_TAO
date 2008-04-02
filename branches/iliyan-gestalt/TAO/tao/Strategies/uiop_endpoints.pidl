@@ -8,7 +8,7 @@
  * used for transmission of UIOP Endpoints.  See UIOP_Profile.* for
  * more details.
  *
- * This file was used to generate the code in
+ * This file is used to generate the code in
  * uiop_endpoints.* The command used to generate code
  * is:
  *

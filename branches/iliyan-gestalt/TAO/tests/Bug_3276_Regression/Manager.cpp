@@ -31,7 +31,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -55,7 +55,9 @@ main (int argc, char *argv[])
 
       if (proxy_ior != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "Writing the servant locator object ref out to file %s\n", proxy_ior));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Writing the servant locator object ref out to file %s\n",
+                      proxy_ior));
           output_file = ACE_OS::fopen (proxy_ior, "w");
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,7 +81,9 @@ main (int argc, char *argv[])
       // If the proxy_ior exists, output the ior to it
       if (control_ior != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "Writing the root poa servant server IOR out to file %s\n", control_ior));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Writing the root poa servant server IOR out to file %s\n",
+                      control_ior));
           output_file = ACE_OS::fopen (control_ior, "w");
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,

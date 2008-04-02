@@ -10,9 +10,6 @@ use PerlACE::Run_Test;
 
 PerlACE::add_lib_path ('..');
 
-# amount of delay between running the servers
-
-$sleeptime = 2;
 $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");

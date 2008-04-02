@@ -8,7 +8,7 @@
  *
  * @brief Pre-compiled IDL source for the IORTable module.
  *
- * This file was used to generate the code in
+ * This file is used to generate the code in
  * IORTable{C}.{h,cpp}
  *
  *   The command used to generate code from this file is:

@@ -16,10 +16,6 @@ $TARGETHOSTNAME = "localhost";
 
 $status = 0;
 
-# Amount of delay (in seconds) between starting a server and a client
-# to allow proper server initialization.
-$sleeptime = 8;
-
 @iorfile = ("ns1.ior",
             "ns2.ior",
             "ns2.ior" );
@@ -73,7 +69,7 @@ for($i=0; $i <= $#NS; $i++){
   
   $NS[$i]->Spawn ();
   
-  if (PerlACE::waitforfile_timed ($iorfile[$i], $sleeptime) == -1) {
+  if (PerlACE::waitforfile_timed ($iorfile[$i], $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find IOR file <$iorfile[$i]>\n";
     $NS[$i]->Kill (); 
     exit 1;

@@ -83,7 +83,7 @@ sub run_ec
         return 1;
     }
 
-    if (PerlACE::waitforfile_timed ($ior_file, $sleeptime) == -1)
+    if (PerlACE::waitforfile_timed ($ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
     {
         print STDERR "ERROR: cannot find IOR file <$ior_file>\n";
         $ps[$ec_id]->Kill ();
