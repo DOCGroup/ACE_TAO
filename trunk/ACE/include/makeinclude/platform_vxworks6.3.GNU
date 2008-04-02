@@ -359,6 +359,16 @@ endif
 
 CCFLAGS         += $(C++FLAGS)
 
+no_cflags_ansi ?= 0
+ifeq ($(no_cflags_ansi), 1)
+  CFLAGS := $(filter-out -ansi, $(CFLAGS))
+endif
+
+no_ccflags_ansi ?= 0
+ifeq ($(no_ccflags_ansi), 1)
+  CCFLAGS := $(filter-out -ansi, $(CCFLAGS))
+endif
+
 ifeq ($(VXWORKSLINK), 1)
 
   ifeq ($(repo),1)
