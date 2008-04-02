@@ -81,7 +81,7 @@ public:
     : orb_ (orb)
   {}
   
-  int svc (void)
+  virtual int svc (void)
   {
     this->orb_->run ();
     return 0;
@@ -99,6 +99,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           return 1;
         }
+        
+      ORB_Runner orb_runner (orb.in ());
 
       if (expose_monitors)
         {
@@ -131,7 +133,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     	    
 	        /// Call orb->run() in a separate thread so the MC interface can
 	        /// get remote calls.
-	        ORB_Runner orb_runner (orb.in ());
 	        orb_runner.activate ();
 	      }
 

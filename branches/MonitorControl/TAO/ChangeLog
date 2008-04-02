@@ -1,3 +1,10 @@
+Wed Apr  2 15:41:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Throughput/client.cpp:
+        
+          Moved instantiation of the ACE_Task_Base subclass out of
+          the IF block so it doesn't go out of scope.
+
 Tue Apr  1 19:14:04 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Throughput/run_test_with_monitors.pl:
