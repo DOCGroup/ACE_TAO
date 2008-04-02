@@ -51,11 +51,18 @@ class ACE_Intrusive_Auto_Ptr
 {
 protected:
 
-  /// Used to define a proper boolean conversion
-  static void unspecified_bool( ACE_Intrusive_Auto_Ptr<X>***){};
-  typedef void (*unspecified_bool_type)( ACE_Intrusive_Auto_Ptr<X>***);
+    /// Used to define a proper boolean conversion for "if (sp) ..."
+  static void unspecified_bool(ACE_Intrusive_Auto_Ptr<X>***){};
+  typedef void (*unspecified_bool_type)(ACE_Intrusive_Auto_Ptr<X>***);
 
 public:
+
+  /// Enables "if (sp) ..."
+  operator unspecified_bool_type() const
+    {
+        return rep_ == 0 ? 0: unspecified_bool;
+    }
+
 
   // = Initialization and termination methods.
 
@@ -70,10 +77,6 @@ public:
 
   // Derived class copy ctor
   template<class U> ACE_Intrusive_Auto_Ptr(const ACE_Intrusive_Auto_Ptr<U> & rhs);
-
-  // Boolean conversion
-  // never throws
-  operator unspecified_bool_type() const;
 
   /// Destructor. Releases the reference to the underlying representation.
   /// If the release of that reference causes its reference count to reach 0,
