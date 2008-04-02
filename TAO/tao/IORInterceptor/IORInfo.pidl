@@ -16,7 +16,7 @@
  * has been created to remove the dependency from the rest of module
  * PortableInterceptor.
  *
- * This file was used to generate the code in IORInfoC.*
+ * This file is used to generate the code in IORInfoC.*
  * The command used to generate code is:
  *
  *  tao_idl

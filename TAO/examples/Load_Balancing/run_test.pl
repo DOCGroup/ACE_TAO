@@ -11,25 +11,32 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-# Amount of delay (in seconds) between starting a server and a client
-# to allow proper server initialization.
-$sleeptime = 8;
-
 # File used to pass load balancing service ior to its clients.
-$iorfile = PerlACE::LocalFile("lb.ior");
+$iorbase = "lb.ior";
+$iorfile = PerlACE::LocalFile("$iorbase");
 
 unlink $iorfile;
 
-$LB = new PerlACE::Process ("load_balancer", "-o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+  $LB = new PerlACE::ProcessVX ("load_balancer", "-o $iorbase");
+}
+else {
+  $LB = new PerlACE::Process ("load_balancer", "-o $iorfile");
+}
 $SV = new PerlACE::Process ("server", "-i file://$iorfile");
 $CL = new PerlACE::Process ("client", "-i file://$iorfile -n 10");
 
 print STDERR "\n    Starting Load Balancing Server and Identity Server \n\n";
 
 # Run the load balancing server.
-$LB->Spawn ();
+$lbserver = $LB->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
+if ($lbserver != 0) {
+    print STDERR "ERROR: load_balancer returned $lbserver\n";
+    exit 1;
+}
+
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: File containing Load Balancing Service ior,".
         " <$iorfile>, cannot be found\n";
     $LB->Kill ();
@@ -40,7 +47,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
 # balancing server.
 
 $SV->Spawn ();
-sleep ($sleeptime);
+sleep ($PerlACE::wait_interval_for_process_creation);
 
 
 # Run tests, i.e., run client with different command line options.
@@ -64,14 +71,14 @@ if ($client != 0) {
 }
 
 # Clean up.
-$loadbalancer= $LB->TerminateWaitKill (5);
+$loadbalancer= $LB->TerminateWaitKill (15);
 
 if ($loadbalancer != 0) {
     print STDERR "ERROR: load balancer returned $loadbalancer\n";
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5);
+$server = $SV->TerminateWaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

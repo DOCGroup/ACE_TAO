@@ -3,7 +3,7 @@
 // $Id$
 
 /**
- *   This file was used to generate the code in WStringSeqC.*
+ *   This file is used to generate the code in WStringSeqC.*
  *   The command used to generate code is:
  *
  *     tao_idl

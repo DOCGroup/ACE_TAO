@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$CL = new PerlACE::Process ("create_tc");
+if (PerlACE::is_vxworks_test()) {
+  $CL = new PerlACE::ProcessVX ("create_tc");
+}
+else {
+  $CL = new PerlACE::Process ("create_tc");
+}
 
 $client = $CL->SpawnWaitKill (60);
 

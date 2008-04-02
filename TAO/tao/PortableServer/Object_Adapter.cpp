@@ -382,7 +382,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
   // calling operation's mem-space.
   if (req.collocated() && req.pi_reply_status () == PortableInterceptor::LOCATION_FORWARD)
     {
-      forward_to = CORBA::Object::_duplicate (req.forward_location ());
+      forward_to = req.forward_location ();
       result = TAO_Adapter::DS_FORWARD;
     }
 #endif

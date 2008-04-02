@@ -6,7 +6,7 @@
  *
  * This file contains idl definition for EndpointPolicy type.
  *
- * This file was used to generate the code in
+ * This file is used to generate the code in
  * EndpointPolicyTypeC.* The command used to generate code is:
  * tao_idl
  *          -o orig -GA \

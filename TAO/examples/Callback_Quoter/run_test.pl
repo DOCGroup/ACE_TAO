@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $status = 0;
 $ns_ior = PerlACE::LocalFile ("NameService.ior");
-$sleeptime = 5;
+$sleeptime = 15;
 
 unlink $ns_ior;
 

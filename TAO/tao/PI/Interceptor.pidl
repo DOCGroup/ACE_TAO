@@ -8,7 +8,7 @@
  * @brief Pre-compiled IDL source for the Interceptor
  * components in the ORB.
  *
- * This file was used to generate the code in InterceptorC.*
+ * This file is used to generate the code in InterceptorC.*
  * The command used to generate code is:
  *
  *  tao_idl

@@ -5,7 +5,7 @@
  *
  * $Id$
  *
- *   This file was used to generate the code in CharSeqC.*
+ *   This file is used to generate the code in CharSeqC.*
  */
 
 #ifndef TAO_CORBA_CHAR_SEQ_IDL

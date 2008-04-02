@@ -1,3 +1,236 @@
+Wed Apr  2 12:13:50 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DSI_AMI_Gateway/client.cpp:
+
+          Reworded exception handlers to avoid having the nightly build
+          scoreboard detect expected exceptions as errors. This resolves
+          bug 2879.
+
+Wed Apr  2 11:47:45 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Collocated_Forwarding/Server_ORBInitializer.h:
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.h:
+        * tests/Collocated_Forwarding/test_i.h:
+
+          Added Id svn keyword to those headers.
+
+Wed Apr  2 11:33:48 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+          Fixed a warning.
+
+        * tests/Collocated_Forwarding/Collocated_Forwarding.mpc:
+          Added avoids_minimum_corba, avoids_corba_e_compact, and
+          avoids_corba_e_micro.
+
+Tue Apr  1 14:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocated_Forwarding/run_test.pl:
+          VxWorks updates
+
+        * tests/Collocated_Forwarding/Collocated_Forwarding.mpc:
+          Simplified
+
+Tue Apr  1 14:11:00 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Fixed a memory leak that was happening because a forward
+          reference was duplicated twice.
+
+        * tests/Collocated_Forwarding/Server_ORBInitializer.h:
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.h:
+        * tests/Collocated_Forwarding/test.idl:
+        * tests/Collocated_Forwarding/server.cpp:
+        * tests/Collocated_Forwarding/test_i.cpp:
+        * tests/Collocated_Forwarding/Collocated_Forwarding.mpc:
+        * tests/Collocated_Forwarding/Server_ORBInitializer.cpp:
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.cpp:
+        * tests/Collocated_Forwarding/run_test.pl:
+        * tests/Collocated_Forwarding/test_i.h:
+          Added a new test for collocated forwarding case.
+          For details see Bug#3276.
+
+        * tests/Bug_3276_Regression/client.cpp:
+        * tests/Bug_3276_Regression/Servant_Locator.cpp:
+        * tests/Bug_3276_Regression/Manager.cpp:
+          Changed main to ACE_TMAIN.
+
+Tue Apr  1 13:17:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Load_Balancing/run_test.pl:
+        * examples/Logging/run_test.pl:
+        * examples/TypeCode_Creation/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 13:13:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/run_test.pl:
+        * examples/Buffered_AMI/run_test.pl:
+        * examples/OBV/Typed_Events/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 12:59:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/AnySeq.pidl
+        * tao/AnyTypeCode/Dynamic.pidl
+        * tao/AnyTypeCode/Dynamic_Parameter.pidl
+        * tao/AnyTypeCode/ValueModifier.pidl
+        * tao/AnyTypeCode/Visibility.pidl
+        * tao/BiDir_GIOP/BiDirPolicy.pidl
+        * tao/CharSeq.pidl
+        * tao/CSD_Framework/CSD_Framework.pidl
+        * tao/DoubleSeq.pidl
+        * tao/EndpointPolicy/EndpointPolicyType.pidl
+        * tao/FloatSeq.pidl
+        * tao/GIOP.pidl
+        * tao/IFR_Client/IFR_Base.pidl
+        * tao/IFR_Client/IFR_Basic.pidl
+        * tao/IFR_Client/IFR_Components.pidl
+        * tao/IFR_Client/IFR_Extended.pidl
+        * tao/IIOP.pidl
+        * tao/IIOP_Endpoints.pidl
+        * tao/ImR_Client/ImplRepo.pidl
+        * tao/ImR_Client/ServerObject.pidl
+        * tao/IORInterceptor/IORInfo.pidl
+        * tao/IORInterceptor/IORInterceptor.pidl
+        * tao/IORManipulation/IOR.pidl
+        * tao/IORTable/IORTable.pidl
+        * tao/LongDoubleSeq.pidl
+        * tao/LongLongSeq.pidl
+        * tao/LongSeq.pidl
+        * tao/Messaging/Messaging.pidl
+        * tao/Messaging/Messaging_No_Impl.pidl
+        * tao/Messaging/Messaging_RT_Policy.pidl
+        * tao/Messaging/Messaging_SyncScope_Policy.pidl
+        * tao/Messaging/Messaging_Types.pidl
+        * tao/Messaging/Pollable.pidl
+        * tao/Messaging_PolicyValue.pidl
+        * tao/Messaging_SyncScope.pidl
+        * tao/Object_Key.pidl
+        * tao/orb_types.pidl
+        * tao/ParameterMode.pidl
+        * tao/PI/ClientRequestInfo.pidl
+        * tao/PI/ClientRequestInterceptor.pidl
+        * tao/PI/Interceptor.pidl
+        * tao/PI/InvalidSlot.pidl
+        * tao/PI/ORBInitializer.pidl
+        * tao/PI/ORBInitInfo.pidl
+        * tao/PI/PIForwardRequest.pidl
+        * tao/PI/RequestInfo.pidl
+        * tao/PI_Server/ServerRequestInfo.pidl
+        * tao/PI_Server/ServerRequestInterceptor.pidl
+        * tao/PortableInterceptor.pidl
+        * tao/PortableServer/POA.pidl
+        * tao/PortableServer/PortableServer.pidl
+        * tao/PortableServer/PS_Forward.pidl
+        * tao/PortableServer/ServantActivator.pidl
+        * tao/PortableServer/ServantLocator.pidl
+        * tao/PortableServer/ServantManager.pidl
+        * tao/RTCORBA/RTCORBA.pidl
+        * tao/RTPortableServer/RTPortableServer.pidl
+        * tao/RTScheduling/RTScheduler.pidl
+        * tao/Services.pidl
+        * tao/ShortSeq.pidl
+        * tao/Strategies/COIOP_Endpoints.pidl
+        * tao/Strategies/sciop_endpoints.pidl
+        * tao/Strategies/uiop_endpoints.pidl
+        * tao/StringSeq.pidl
+        * tao/TimeBase.pidl
+        * tao/UShortSeq.pidl
+        * tao/WCharSeq.pidl
+        * tao/WStringSeq.pidl
+          Updated regeneration instructions
+
+Tue Apr  1 12:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Logging/run_test.pl:
+        * examples/OBV/Typed_Events/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 12:51:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/run_test_ipv6.pl:
+        * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
+        * examples/PluggableUDP/tests/SimplePerformance/run_test_ipv6.pl:
+        * tests/DIOP/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 12:40:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DSI_AMI_Gateway/run_exception_test.pl:
+        * tests/DSI_AMI_Gateway/run_test.pl:
+        * tests/DSI_Gateway/run_exception_test.pl:
+        * tests/DSI_Gateway/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 10:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTScheduling/Scheduling_Interceptor/run_test.pl:
+        * tests/AMH_Exceptions/run_test.pl:
+        * tests/AMH_Oneway/run_test.pl:
+        * tests/TransportCurrent/Framework/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 08:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/BiDir_CORBALOC/run_test.pl:
+        * orbsvcs/tests/Bug_2800_Regression/run_test_federated.pl:
+        * orbsvcs/tests/Event/Mcast/Complex/run_test.pl:
+        * orbsvcs/tests/Event/Mcast/Simple/run_test.pl:
+        * orbsvcs/tests/Event/Mcast/Two_Way/run_test.pl:
+        * orbsvcs/tests/Interoperable_Naming/run_test.pl:
+        * orbsvcs/tests/Redundant_Naming/run_test.pl:
+        * orbsvcs/tests/Security/ssliop_corbaloc/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+        * orbsvcs/tests/Trading/run_test.pl:
+          Improved these scripts
+
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+          No need to specify empty orb name
+
+Tue Apr  1 08:46:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_18/run_test.pl:
+        * examples/Callback_Quoter/run_test.pl:
+        * examples/ior_corbaloc/run_test.pl:
+        * examples/Logging/run_test.pl:
+        * examples/Quoter/run_test.pl:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+        * examples/RTScheduling/MIF_Scheduler/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 07:34:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/run_test.pl:
+        * examples/Load_Balancing/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/run_test_ipv6.pl:
+          Updated to support VxWorks
+
+Tue Apr  1 07:26:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/run_test.pl:
+          Also test nsdel
+
+Tue Apr  1 06:55:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool2/ClientApp.cpp:
+          Layout changes
+
+        * examples/CSD_Strategy/ThreadPool2/Foo_i.cpp:
+          Removed not needed semi colon
+
+        * examples/Simple/bank/run_test.pl:
+        * examples/Simple/echo/run_test.pl:
+        * examples/Simple/grid/run_test.pl:
+        * examples/Simple/time-date/run_test.pl:
+        * examples/Simple/time/run_test.pl:
+          Updated to support VxWorks
+
 Mon Mar 31 18:20:01 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Send_Timeouts/Client.cpp:

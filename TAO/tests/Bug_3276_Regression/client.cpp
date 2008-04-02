@@ -39,7 +39,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -84,7 +84,8 @@ main (int argc, char *argv[])
           if (m == TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE &&
               ex.completed () == CORBA::COMPLETED_NO)
             {
-              ACE_DEBUG ((LM_DEBUG, "TRANSIENT caught in client as it was expected.\n"));
+              ACE_DEBUG ((LM_DEBUG,
+                          "TRANSIENT caught in client as it was expected.\n"));
             }
           else
             {
