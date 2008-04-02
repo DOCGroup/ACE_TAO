@@ -15,24 +15,11 @@
 #define CCM_HOME_IDL
 
 #include "tao/IFR_Client/IFR_Base.pidl"
+#include "ccm/CCM_Exceptions.idl"
 
 module Components
 {
   typeprefix Components "omg.org";
-
-  typedef unsigned long FailureReason;
-
-  exception CreateFailure {
-    FailureReason reason;
-  };
-  exception FinderFailure
-  {
-    FailureReason reason;
-  };
-  exception RemoveFailure
-  {
-    FailureReason reason;
-  };
 
   exception DuplicateKeyValue {};
   exception InvalidKey {};

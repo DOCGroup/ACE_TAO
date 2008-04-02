@@ -11,26 +11,24 @@
 
 #include <ccm/ComponentServer/ComponentServer_Client.idl>
 
-module Components
+module CIAO
 {
   module Deployment
   {
-    module CIAO
-    {
       interface ServerActivator : ::Components::Deployment::ServerActivator
       {
 	/// Used by spawned component servers to notify the server
 	/// activator of their object reference and retrieve
 	/// configuration information.
-	void component_server_callback (in ComponentServer serverref,
+	void component_server_callback (in ::Components::Deployment::ComponentServer serverref,
 					in string server_UUID,
-					out ConfigValues config);
+					out ::Components::ConfigValues config);
         
         void configuration_complete (in string server_UUID);
       };
-    };
   };
 };
+
 
 #endif
 

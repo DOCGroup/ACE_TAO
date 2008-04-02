@@ -1,6 +1,14 @@
-project(CIAO_Client) : ccm_stub, ciao_lib {
-  dynamicflags = CIAO_CLIENT_BUILD_DLL
+project(CIAO_Exception_IDL) : taoidldefaults {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Sci -SS
+    CIAO_FailureReasons.idl
+  }
+}
 
+project(CIAO_Client) : ccm_stub, ciao_lib, ccm_cookie, ccm_configvalue {
+  dynamicflags = CIAO_CLIENT_BUILD_DLL
+  after += CIAO_Exception_IDL
   Source_Files {
     Client_init.cpp
   }
@@ -8,9 +16,11 @@ project(CIAO_Client) : ccm_stub, ciao_lib {
     Client_init.h
     CIAO_Client_Export.h
   }
+  IDL_Files {
+  }
 }
 
-project(CIAO_Server) : ccm_stub, naming, ccm_cookie, ccm_configvalue, ciao_lib {
+project(CIAO_Server) : ccm_stub, naming, ciao_client, ciao_lib {
   dynamicflags = CIAO_SERVER_BUILD_DLL
    
   Source_Files { 
@@ -20,8 +30,7 @@ project(CIAO_Server) : ccm_stub, naming, ccm_cookie, ccm_configvalue, ciao_lib {
     CIAO_Server_Export.h
     Server_init.h
   }
+  IDL_Files {
+  }
 }
 
-
-
-    

@@ -7,21 +7,46 @@ project(CIAO_ComponentServer_IDL) : taoidldefaults, anytypecode {
   custom_only=1
   
   IDL_Files {
-    CIAO_CS_Client.idl
     CIAO_ComponentServer.idl
     CIAO_ServerResources.idl
   }
 }
 
+project(CIAO_CS_Client_IDL) : taoidldefaults, anytypecode {
+  idlflags     += -Wb,stub_export_macro=CIAO_ComponentServer_stub_Export
+  idlflags     += -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h
+  idlflags     += -Wb,skel_export_macro=CIAO_CS_Client_svnt_Export
+  idlflags     += -Wb,skel_export_include=CIAO_CS_Client_svnt_export.h
+
+  custom_only=1
+  
+  IDL_Files {
+    CIAO_CS_Client.idl
+  }
+}
+
 project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, taolib_with_idl, tao_output, \
 				     messaging,  anytypecode, ciao_lib  {
-  after += CIAO_ComponentServer_IDL
+  after += CIAO_ComponentServer_IDL CIAO_CS_Client_IDL
   dynamicflags = CIAO_COMPONENTSERVER_STUB_BUILD_DLL
 
   Source_Files {
     CIAO_ComponentServerC.cpp
     CIAO_CS_ClientC.cpp
     CIAO_ServerResourcesC.cpp
+  }
+}
+
+project(CIAO_CS_Client_svnt) : ccm_stub, ciao_componentserver_stub, portableserver {
+  dynamicflags = CIAO_CS_CLIENT_SVNT_BUILD_DLL
+  
+  Source_Files {
+    CIAO_ServerActivator_Impl.cpp
+    CIAO_CS_ClientS.cpp
+  }
+  Header_Files {
+    CIAO_ServerActivator_Impl.h
+    CIAO_CS_ClientS.h
   }
 }
 
@@ -47,6 +72,7 @@ project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ci
   exename = CIAO_ComponentServer
   libs += CIAO_Basic_Configurator
   after += CIAO_Basic_Configurator
+  macros += CIAO_BUILD_COMPONENTSERVER_EXE
   Source_Files {
     CIAO_ComponentServer.cpp
   }

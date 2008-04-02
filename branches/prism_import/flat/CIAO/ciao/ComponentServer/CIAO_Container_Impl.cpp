@@ -3,6 +3,7 @@
 #include <ace/Log_Msg.h>
 #include <ciao/CIAO_common.h>
 #include <ciao/Server_init.h>
+#include <ciao/Client_init.h>
 #include <ccm/CCM_HomeC.h>
 
 
@@ -70,7 +71,7 @@ namespace CIAO
       CIAO_TRACE("CIAO_Container_i::remove_component");
     }
     
-    ::Components::Deployment::CIAO::CCMObjects * 
+    ::CIAO::Deployment::CCMObjects * 
     CIAO_Container_i::get_components (void)
     {
       CIAO_TRACE("CIAO_Container_i::get_components");

@@ -21,10 +21,10 @@ namespace CIAO
     class ComponentServer_Configurator;
     
 
-    class ComponentServer : ACE_Task_Base
+    class ComponentServer_Task : ACE_Task_Base
     {
     public:
-      ComponentServer (int argc, ACE_TCHAR **argv);
+      ComponentServer_Task (int argc, ACE_TCHAR **argv);
       
       int svc (void);
       

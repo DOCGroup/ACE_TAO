@@ -17,6 +17,7 @@ project(CCM_stub) : taolib_with_idl, tao_output, valuetype, ifr_client {
     idlflags += -SS -Sci
     CCM_Base.idl
     CCM_Component.idl
+    CCM_Exceptions.idl
   }
 
   IDL_Files {
@@ -71,6 +72,7 @@ project(CCM_stub) : taolib_with_idl, tao_output, valuetype, ifr_client {
     CCM_CookieC.cpp
     CCM_ObjectC.cpp
     CCM_PrimaryKeyBaseC.cpp
+    CCM_ExceptionsC.cpp
     ComponentsC.cpp
   }
 }

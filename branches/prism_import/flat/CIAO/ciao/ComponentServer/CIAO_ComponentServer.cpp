@@ -25,17 +25,19 @@
 #include "Configurator_Factory.h"
 #include "Configurators/Server_Configurator.h"
 
+#ifdef CIAO_BUILD_COMPONENTSERVER_EXE
+
 int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   CIAO_TRACE ("CIAO_ComponentServer::ACE_TMAIN");
   
   try
     {
-      CIAO::Deployment::ComponentServer cs (argc, argv);
+      CIAO::Deployment::ComponentServer_Task cs (argc, argv);
       cs.run ();
       return 0;
     }
-  catch (CIAO::Deployment::ComponentServer::Error &e)
+  catch (CIAO::Deployment::ComponentServer_Task::Error &e)
     {
       CIAO_DEBUG ((LM_ALERT, CLINFO "CIAO_ComponentServer main: Caught ComponentServer exception: %s\n",
                   e.err_.c_str ()));
@@ -48,19 +50,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
   return -1;
 }
 
-using namespace Components::Deployment::CIAO;
-      
+#endif /* CIAO_BUILD_COMPONENTSERVER_EXE */
+
 namespace CIAO
 {
   namespace Deployment
   {
-    ComponentServer::ComponentServer (int argc, ACE_TCHAR **argv)
+    ComponentServer_Task::ComponentServer_Task (int argc, ACE_TCHAR **argv)
       : orb_ (0),
         log_level_ (5),
         uuid_ (""),
         callback_ior_str_ ("")
     {
-      CIAO_TRACE ("CIAO_ComponentServer::CIAO_ComponentServer ()");
+      CIAO_TRACE ("CIAO_ComponentServer_Task::CIAO_ComponentServer ()");
       
       this->get_log_level (argc, argv);
       this->set_log_level ();
@@ -85,9 +87,9 @@ namespace CIAO
     }
     
     int 
-    ComponentServer::svc (void)
+    ComponentServer_Task::svc (void)
     {
-      CIAO_TRACE ("ComponentServer::run");
+      CIAO_TRACE ("ComponentServer_Task::run");
       
       CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Activating the root POA\n"));
       CORBA::Object_var object =
@@ -165,15 +167,15 @@ namespace CIAO
     }
     
     void 
-    ComponentServer::run (void)
+    ComponentServer_Task::run (void)
     {
-      CIAO_TRACE ("ComponentServer::run");
+      CIAO_TRACE ("ComponentServer_Task::run");
       
       this->check_supported_priorities ();
       
       if (this->configurator_->rt_support ())
         {
-          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer::run - Starting ORB with RT support\n"));
+          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::run - Starting ORB with RT support\n"));
           
           // spawn a thread
           // Task activation flags.
@@ -190,7 +192,7 @@ namespace CIAO
               if (errno == EPERM)
                 {
                   CIAO_ERROR ((LM_EMERGENCY, CLINFO
-                              "ComponentServer::run - Cannot create thread with scheduling policy %s\n"
+                              "ComponentServer_Task::run - Cannot create thread with scheduling policy %s\n"
                               "because the user does not have the appropriate privileges, terminating program. "
                               "Check svc.conf options and/or run as root\n",
                               sched_policy_name (this->orb_->orb_core ()->orb_params ()->ace_sched_policy ())));
@@ -207,21 +209,21 @@ namespace CIAO
           if (result != -1)
             throw Error ("Unknown error waiting for ORB thread to complete");
           
-          CIAO_DEBUG ((LM_INFO, CLINFO "ComponentServer::run - ORB thread completed, terminating ComponentServer %s\n",
+          CIAO_DEBUG ((LM_INFO, CLINFO "ComponentServer_Task::run - ORB thread completed, terminating ComponentServer %s\n",
                       this->uuid_.c_str ()));
         }
       else
         {
-          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer::run - Starting ORB without RT support\n"));
+          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::run - Starting ORB without RT support\n"));
           this->svc ();
-          CIAO_DEBUG ((LM_INFO, CLINFO "ComponentServer::run - ORB has shutdown, terminating ComponentServer \n"));
+          CIAO_DEBUG ((LM_INFO, CLINFO "ComponentServer_Task::run - ORB has shutdown, terminating ComponentServer \n"));
         }
     }
     
     void 
-    ComponentServer::get_log_level (int argc, ACE_TCHAR* argv[])
+    ComponentServer_Task::get_log_level (int argc, ACE_TCHAR* argv[])
     {
-      CIAO_TRACE ("ComponentServer::get_log_level");
+      CIAO_TRACE ("ComponentServer_Task::get_log_level");
 
       ACE_Get_Opt opts(argc, argv, "l:", 1, 0, ACE_Get_Opt::RETURN_IN_ORDER);
       opts.long_option("log-level", 'l', ACE_Get_Opt::ARG_REQUIRED);
@@ -244,7 +246,7 @@ namespace CIAO
     }
     
     void 
-    ComponentServer::set_log_level ()
+    ComponentServer_Task::set_log_level ()
     {
       u_long new_mask = 0;
       if (this->log_level_ <= 1)
@@ -288,9 +290,9 @@ namespace CIAO
     }
     
     void
-    ComponentServer::parse_args (int argc, ACE_TCHAR **argv)
+    ComponentServer_Task::parse_args (int argc, ACE_TCHAR **argv)
     {
-      CIAO_TRACE ("ComponentServer::parse_args");
+      CIAO_TRACE ("ComponentServer_Task::parse_args");
       
       CIAO_DEBUG ((LM_TRACE, "CIAO_ComponentServer - parsing arguments...\n"));
       
@@ -345,9 +347,9 @@ namespace CIAO
     }
     
     void
-    ComponentServer::usage (void)
+    ComponentServer_Task::usage (void)
     {
-      CIAO_TRACE ("ComponentServer::usage");
+      CIAO_TRACE ("ComponentServer_Task::usage");
       
       CIAO_ERROR ((LM_EMERGENCY, "Usage: CIAO_ComponentServer <options>\n"
                   "Options: \n"
@@ -358,7 +360,7 @@ namespace CIAO
     }
     
     const char *
-    ComponentServer::sched_policy_name (int sched_policy)
+    ComponentServer_Task::sched_policy_name (int sched_policy)
     {
       const char *name = 0;
       
@@ -380,7 +382,7 @@ namespace CIAO
     
     /// The following check is taken from $(TAO_ROOT)/tests/RTCORBA/
     void
-    ComponentServer::check_supported_priorities (void)
+    ComponentServer_Task::check_supported_priorities (void)
     {
       CIAO_TRACE ("NodeApplication_Core::check_supported_priorities");
       
@@ -407,7 +409,7 @@ namespace CIAO
     }
     
     void 
-    ComponentServer::configure_logging_backend (void)
+    ComponentServer_Task::configure_logging_backend (void)
     {
       CIAOLoggerFactory
         *clf = ACE_Dynamic_Service<CIAOLoggerFactory>::instance ("CIAO_Logger_Backend_Factory");
