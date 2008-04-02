@@ -25,7 +25,7 @@ Atomic_Op_Test
 Auto_Event_Test
 Auto_IncDec_Test
 Barrier_Test
-Based_Pointer_Test: !STATIC !VxWorks !ACE_FOR_TAO !PHARLAP
+Based_Pointer_Test: !STATIC !ACE_FOR_TAO !PHARLAP
 Basic_Types_Test
 Bound_Ptr_Test: !ACE_FOR_TAO
 Buffer_Stream_Test
@@ -111,7 +111,7 @@ Object_Manager_Test
 Object_Manager_Flipping_Test
 Obstack_Test
 OrdMultiSet_Test
-Pipe_Test: !VxWorks !PHARLAP
+Pipe_Test: !PHARLAP
 Priority_Buffer_Test
 Priority_Reactor_Test: !ACE_FOR_TAO
 Priority_Task_Test: !Unicos
@@ -144,7 +144,7 @@ SOCK_Connector_Test: !NO_NETWORK
 SOCK_Netlink_Test: !ACE_FOR_TAO
 SOCK_Send_Recv_Test: !NO_NETWORK
 SOCK_Test: !NO_NETWORK
-SPIPE_Test: !VxWorks !nsk !ACE_FOR_TAO
+SPIPE_Test: !nsk !ACE_FOR_TAO
 SString_Test: !ACE_FOR_TAO
 SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
 Semaphore_Test: !ACE_FOR_TAO
@@ -171,7 +171,7 @@ Timer_Queue_Reference_Counting_Test
 Timer_Queue_Test: !ACE_FOR_TAO
 Token_Strategy_Test: !ST !nsk
 Tokens_Test: MSVC !DISABLED TOKEN !Unicos
-UPIPE_SAP_Test: !VxWorks !nsk !ACE_FOR_TAO
+UPIPE_SAP_Test: !nsk !ACE_FOR_TAO
 Unbounded_Set_Test
 Upgradable_RW_Test: !ACE_FOR_TAO
 Vector_Test
