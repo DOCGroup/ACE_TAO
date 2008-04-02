@@ -339,8 +339,7 @@
 // Platform/compiler supports global timezone variable.
 #define ACE_HAS_TIMEZONE
 
-// Platform/compiler supports void * as second parameter to gettimeofday().
-#define ACE_HAS_VOIDPTR_GETTIMEOFDAY
+#define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
