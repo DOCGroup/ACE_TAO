@@ -47,7 +47,7 @@ if (PerlACE::waitforfile_timed ($mc_iorfile, $PerlACE::wait_interval_for_process
     exit 1;
 }
 
-sleep (2);
+#sleep (2);
 
 $monitor_client = $MCL->SpawnWaitKill (60);
 

@@ -35,7 +35,7 @@ project(*client): taoclient, strategies, monitor {
   }
 }
 
-project(*monitor_client): taoexe, monitor {
+project(*monitor_client): taoexe, strategies, monitor {
   Source_Files {
     monitor_client.cpp
   }

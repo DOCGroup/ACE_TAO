@@ -1,3 +1,16 @@
+Wed Apr  2 16:16:19 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Thoughput/Throughput.mpc:
+        * performance-tests/Thoughput/monitor_client.cpp:
+        
+          Added include of advanced_resource.h and link to Strategies
+          to allow the monitor client to process the svc.conf file,
+          which it is reading by default.
+          
+        * performance-tests/Thoughput/run_test_with_monitors.pl:
+        
+          Removed sleep statement before spawning monitor client.
+
 Wed Apr  2 15:41:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Throughput/client.cpp:
