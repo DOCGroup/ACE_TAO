@@ -4668,7 +4668,13 @@ dnl Check for Unix98 pthreads extensions
   ACE_CHECK_HAS_FUNCS(pthread_getconcurrency pthread_setconcurrency)
   ACE_CHECK_HAS_FUNCS(pthread_attr_setcreatesuspend_np)
 
+dnl Don't test for pthread_getaffinity_np() or pthread_setaffinity_np() 
+dnl if the system doesn't also have cpu_set_t. The functions are almost
+dnl certainly incompatible with our wrapper facade, as we use a "dummy"
+dnl cpu_set_t defined in ace/os_include/os_sched.h.
+if test "$ac_cv_type_cpu_set_t" = yes; then
   ACE_CHECK_HAS_FUNCS(pthread_getaffinity_np pthread_setaffinity_np)
+fi
 
 dnl Linux's sched_{set,get}affinity interface has changed three times:
 dnl

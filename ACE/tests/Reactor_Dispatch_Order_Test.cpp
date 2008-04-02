@@ -226,7 +226,6 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
   if (ok_to_go)
     {
       reactor.run_reactor_event_loop (tv);
-      reactor.run_reactor_event_loop (tv);
     }
 
   if (0 != reactor.remove_handler (handler.pipe_.read_handle (),

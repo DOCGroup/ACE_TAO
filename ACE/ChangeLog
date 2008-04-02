@@ -1,3 +1,93 @@
+Wed Apr  2 11:06:30 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Enabled a TAO/tests/Collocated_Forwarding on vxworks and
+          vxworks_rtp.
+
+Wed Apr  2 09:05:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Add no_cflags_ansi and no_ccflags_ansi which if set do remove the
+          -ansi compiler flag
+
+Wed Apr  2 08:14:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Replaced ACE_HAS_VOIDPTR_GETTIMEOFDAY with
+          ACE_HAS_TIMEZONE_GETTIMEOFDAY, this fixes bugzilla 3145
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
+Wed Apr  2 07:51:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Enabled a few tests on VxWorks again, in the past rebooting a
+          crashed target was problematic but that is not an issue anymore
+
+Tue Apr  1 14:20:34 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Added a new test for collocated forwarding case.
+
+Tue Apr  1 12:58:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Added OBV typed event test
+
+Tue Apr  1 12:52:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Add the DSI Gateway exception test, they should run, the scoreboard
+          will show if they run
+
+Tue Apr  1 08:33:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Set ACE_OPENVMS_IA64 on Itanium
+
+        * include/makeinclude/rules.lib.GNU:
+          Only use a special AR rule on OpenVMS IA64
+
+Tue Apr  1 07:38:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Intrusive_Auto_Ptr_Test.cpp:
+          Fixed argument not used warning
+
+Tue Apr  1 07:34:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Enabled a few tests for vxworks
+
+Tue Apr  1 07:12:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+          Only run the reactor once, this will lead to the failing of this test
+          when using the WFMO Reactor which seems to be a old issue that needs
+          to get addressed
+
+Tue Apr  1 06:54:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled most tests for vxworks and vxworks_rtp, we first need to
+          convert a lot of scripts to support vxworks
+
+Mon Mar 31 21:48:58 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Changed to avoid feature test for pthread_getaffinity_np() and
+          pthread_setaffinity_np() if system does not have cpu_set_t. In
+          that case, the pthread functions are amost certainly not
+          compatible.
+
+        * ace/Makefile.am:
+
+          Add Intrusive_Auto_Ptr.cpp, Intrusive_Auto_Ptr.h, and
+          Intrusive_Auto_ptr.inl to nobase_include_HEADERS.
+
 Mon Mar 31 18:56:40 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Refcounted_Auto_Ptr.h:

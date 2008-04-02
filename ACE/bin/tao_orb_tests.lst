@@ -242,6 +242,8 @@ TAO/tests/ORB_destroy/run_test.pl: !LabVIEW_RT
 TAO/tests/ORB_shutdown/run_test.pl: !LabVIEW_RT
 TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/DSI_AMI_Gateway/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
+TAO/tests/DSI_Gateway/run_exception_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
+TAO/tests/DSI_AMI_Gateway/run_exception_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/DSI_AMH/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/DII_AMI_Forward/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
@@ -348,3 +350,4 @@ TAO/tests/Parallel_Connect_Strategy/run_test.pl -quick : QUICK !LabVIEW_RT !VxWo
 TAO/tests/DII_Collocation_Tests/oneway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/DII_Collocation_Tests/twoway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Compression/run_test.pl: ZLIB !LabVIEW_RT
+TAO/tests/Collocated_Forwarding/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
