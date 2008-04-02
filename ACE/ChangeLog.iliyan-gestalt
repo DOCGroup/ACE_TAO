@@ -1,3 +1,14 @@
+Wed Apr  2 20:15:56 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Intrusive_Auto_Ptr.h:
+        * ace/Intrusive_Auto_Ptr.inl:
+
+          Correcting a problem with VC71
+
+        * tests/Intrusive_Auto_Ptr_Test.cpp:
+
+          Unused variable
+
 Fri Mar 28 16:13:30 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Dynamic_Service_Base.h:

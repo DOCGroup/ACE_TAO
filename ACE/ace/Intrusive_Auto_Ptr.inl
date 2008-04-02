@@ -23,12 +23,6 @@ ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (const ACE_Intrusive_Auto_Ptr<
     X::intrusive_add_ref (rep_);
 }
 
-template <class X> ACE_INLINE
-ACE_Intrusive_Auto_Ptr<X>::operator unspecified_bool_type() const
-{
-  return rep_ == 0 ? 0: unspecified_bool;
-}
-
 template <class X> ACE_INLINE X *
 ACE_Intrusive_Auto_Ptr<X>::operator-> (void) const
 {
