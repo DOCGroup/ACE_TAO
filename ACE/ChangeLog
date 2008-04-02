@@ -1,3 +1,11 @@
+Wed Apr  2 09:05:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Add no_cflags_ansi and no_ccflags_ansi which if set do remove the
+          -ansi compiler flag
+
 Wed Apr  2 08:14:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
