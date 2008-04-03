@@ -71,7 +71,14 @@ namespace CIAO
       Configurator_Factory cf;
       this->configurator_.reset (cf (argc, argv));
       
-      this->configurator_->create_config_managers ();
+      if (!this->configurator_->create_config_managers ())
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "ComponentServer_Task::ComponentServer_Task - "
+                       "Error configuring ComponentServer configurator, exiting.\n"));
+          throw Error ("Unable to load ComponentServer configurator.");
+        }
+      
       
       this->configurator_->pre_orb_initialize ();
       CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Creasting ORB\n"));
@@ -103,16 +110,6 @@ namespace CIAO
       
       poa_manager->activate ();
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: resolving callback IOR\n"));
-      CORBA::Object_ptr obj = this->orb_->string_to_object (this->callback_ior_str_.c_str ());
-      ServerActivator_var sa (ServerActivator::_narrow (obj));
-      
-      if (CORBA::is_nil (sa.in ()))
-        {
-          CIAO_DEBUG ((LM_ERROR, CLINFO "CIAO_ComponentServer: Failed to narrow callback IOR\n"));
-          throw Error ("Faled to narrow callback IOR");
-        }
-      
       CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Creating server implementation object\n"));
       CIAO::Deployment::CIAO_ComponentServer_i *ci_srv = 0;
       ACE_NEW_NORETURN (ci_srv, CIAO_ComponentServer_i (this->uuid_, this->orb_.in (), root_poa.in ()));
@@ -122,39 +119,62 @@ namespace CIAO
           CIAO_ERROR ((LM_CRITICAL, "CIAO_ComponentServer: Out of memory error while allocating servant."));
           throw Error ("Out of memory whilst allocating servant.");
         }
-      
-      PortableServer::ServantBase_var safe (ci_srv);
-      ComponentServer_var cs (ci_srv->_this ());
 
-      Components::ConfigValues_var config;
+      PortableServer::ServantBase_var safe (ci_srv);
       
-      {  
-        Components::ConfigValues *cf;
-        ACE_NEW_NORETURN (cf, Components::ConfigValues (0));
-        
-        if  (cf == 0)
-          {
-            CIAO_ERROR ((LM_CRITICAL, "CIAO_ComponentServer: Out of memory error while allocating config values."));
+      if (this->callback_ior_str_ != "")
+        {
+          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: resolving callback IOR\n"));
+          CORBA::Object_ptr obj = this->orb_->string_to_object (this->callback_ior_str_.c_str ());
+          ServerActivator_var sa (ServerActivator::_narrow (obj));
+          
+          if (CORBA::is_nil (sa.in ()))
+            {
+              CIAO_DEBUG ((LM_ERROR, CLINFO "CIAO_ComponentServer: Failed to narrow callback IOR\n"));
+              throw Error ("Faled to narrow callback IOR");
+            }
+          
+          ComponentServer_var cs (ci_srv->_this ());
+          
+          Components::ConfigValues_var config;
+          {  
+            Components::ConfigValues *cf;
+            ACE_NEW_NORETURN (cf, Components::ConfigValues (0));
+            
+            if  (cf == 0)
+              {
+                CIAO_ERROR ((LM_CRITICAL, "CIAO_ComponentServer: Out of memory error while allocating config values."));
+              }
+            else config = cf;
           }
-        else config = cf;
-      }
-      
-      
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Calling back to ServerActivator\n"));
-      // Callback to NodeApplication to get configuration
-      sa->component_server_callback (cs.in (),
-                                     this->uuid_.c_str (),
-                                     config.out ());
-      
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Configuration received\n"));
-      // @@WO: Probably need to do something with these config values.
-      
-      ci_srv->init (sa.in (), config._retn ());
-      
-      CIAO_DEBUG ((LM_NOTICE, CLINFO "CIAO_ComponentServer: Configuration complete for component server %s\n",
-                  this->uuid_.c_str ()));
-      
-      sa->configuration_complete (this->uuid_.c_str ());
+
+          // Make callback.
+          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer - "
+                   "Making callback on my ServerActivator\n"));
+          
+          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Calling back to ServerActivator\n"));
+          // Callback to NodeApplication to get configuration
+          sa->component_server_callback (cs.in (),
+                                         this->uuid_.c_str (),
+                                         config.out ());
+          
+          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Configuration received\n"));
+          // @@WO: Probably need to do something with these config values.
+
+          ci_srv->init (sa.in (), config._retn ());
+          
+          CIAO_DEBUG ((LM_NOTICE, CLINFO "CIAO_ComponentServer: Configuration complete for component server %s\n",
+                       this->uuid_.c_str ()));
+          
+          sa->configuration_complete (this->uuid_.c_str ());
+        }
+      else
+        {
+          CIAO_DEBUG ((LM_TRACE, CLINFO
+                       "CIAO_ComponentServer::svc - "
+                       "Initializing ComponentServer without ServantActivator callback\n"));
+          ci_srv->init (0, 0);
+        }
       
       this->orb_->run ();
       CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: ORB Event loop completed.\n"));
@@ -171,12 +191,12 @@ namespace CIAO
     {
       CIAO_TRACE ("ComponentServer_Task::run");
       
-      this->check_supported_priorities ();
-      
       if (this->configurator_->rt_support ())
         {
           CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::run - Starting ORB with RT support\n"));
           
+          this->check_supported_priorities ();
+      
           // spawn a thread
           // Task activation flags.
           long flags =
@@ -294,13 +314,14 @@ namespace CIAO
     {
       CIAO_TRACE ("ComponentServer_Task::parse_args");
       
-      CIAO_DEBUG ((LM_TRACE, "CIAO_ComponentServer - parsing arguments...\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer - parsing arguments...\n"));
       
       ACE_Get_Opt opts (argc, argv, "hu:c:", 1, 0, 
                         ACE_Get_Opt::RETURN_IN_ORDER);
       opts.long_option ("uuid", 'u', ACE_Get_Opt::ARG_REQUIRED);
       opts.long_option ("callback-ior", 'c', ACE_Get_Opt::ARG_REQUIRED);
       opts.long_option ("help", 'h');
+      opts.long_option ("log-level",'l', ACE_Get_Opt::ARG_OPTIONAL);
       
       //int j;
       char c;
@@ -324,6 +345,11 @@ namespace CIAO
                           opts.opt_arg ()));
               this->callback_ior_str_ = opts.opt_arg ();
               break;
+
+            case 'l':
+              {
+                continue;
+              }
               
             case 'h':
               this->usage ();
@@ -343,7 +369,8 @@ namespace CIAO
       if (this->uuid_ == "")
         throw Error ("Option required: -u|--uuid");
       if (this->callback_ior_str_ == "")
-        throw Error ("Option required: -c|--callback-ior");
+        CIAO_ERROR ((LM_WARNING, CLINFO
+                     "ComponentServer_Task::parse_args - Starting ComponentServer without a callback IOR\n"));
     }
     
     void

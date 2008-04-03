@@ -32,7 +32,7 @@ namespace CIAO
       return this->rt_support_;
     }
 
-    int
+    bool
     ComponentServer_Configurator::create_config_managers (void)
     {
       typedef CIAO::Deployment::Config_Manager * (*na_intelligent_designer)(void);
@@ -40,24 +40,25 @@ namespace CIAO
       CIAO::Deployment::Config_Manager* ptr = 0;
       CIAO::Deployment::Config_Manager* rt_ptr = 0;
 
-      int retval = this->config_dll_.open (ACE_DLL_PREFIX ACE_TEXT ("CIAO_NA_Configurator"),
+      int retval = this->config_dll_.open (/*ACE_DLL_PREFIX*/ ACE_TEXT ("CIAO_Basic_Config_Manager"),
                                            ACE_DEFAULT_SHLIB_MODE,
                                            0);
 
       if (0 != retval)
         {
           CIAO_ERROR_RETURN ((LM_ERROR,
-                             CLINFO "ComponentServer_Configurator: %p\n",
+                             CLINFO "ComponentServer_Configurator - Error loading CIAO_Basic_Config_manager DLL:  %p\n",
                              "dll.open"),
-                            0);
+                             false);
         }
 
       // Cast the void* to non-pointer type first - it's not legal to
       // cast a pointer-to-object directly to a pointer-to-function.
       void *void_ptr =
-        this->config_dll_.symbol (ACE_TEXT ("create_na_config_manager"));
-      ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
+        this->config_dll_.symbol (ACE_TEXT ("create_basic_config_manager"));
 
+      ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
+      
       // "id" is for na_intelligent-designer.
       na_intelligent_designer config_id =
         reinterpret_cast<na_intelligent_designer> (tmp);
@@ -65,9 +66,9 @@ namespace CIAO
       if (0 == config_id)
         {
           CIAO_ERROR_RETURN ((LM_ERROR,
-                             CLINFO "ComponentServer_Configurator: %p",
+                             CLINFO "ComponentServer_Configurator - Error loading CIAO_Basic_Configurator entrypoint: %p\n",
                              "dll.symbol"),
-                            0);
+                             false);
         }
 
       ptr = config_id ();
@@ -76,7 +77,7 @@ namespace CIAO
         {
           CIAO_ERROR_RETURN ((LM_ERROR,
                              CLINFO "ComponentServer_Configurator: Error creating ComponentServer_Configurator\n"),
-                            0);
+                             false);
         }
 
       this->na_config_manager_.reset (ptr);
@@ -85,14 +86,14 @@ namespace CIAO
         {
           int rt_retval = this->config_dll_.open (ACE_DLL_PREFIX ACE_TEXT ("CIAO_RTNA_Configurator"),
                                                   ACE_DEFAULT_SHLIB_MODE,
-                                                  0);
+                                                  false);
 
           if (0 != rt_retval)
             {
               CIAO_ERROR_RETURN ((LM_ERROR,
-                                 "%p\n",
+                                 "ComponentServer_Configurator - Error while loading CIAO_RTNA_Configurator: %p\n",
                                  "dll.open"),
-                                0);
+                                 false);
             }
 
           // Cast the void* to non-pointer type first - it's not legal to
@@ -108,9 +109,9 @@ namespace CIAO
           if (0 == rt_config_id)
             {
               CIAO_ERROR_RETURN ((LM_ERROR,
-                                 CLINFO "ComponentServer_Configurator: %p",
+                                 CLINFO "ComponentServer_Configurator: Error while using RTNA entrypoint: %p",
                                  "dll.symbol"),
-                                0);
+                                 false);
             }
 
           rt_ptr = rt_config_id ();
@@ -119,13 +120,13 @@ namespace CIAO
             {
               CIAO_ERROR_RETURN ((LM_ERROR,
                                  CLINFO "ComponentServer_Configurator: Error creating RTComponentServer_Configurator\n"),
-                                0);
+                                 false);
             }
 
           this->rt_config_manager_.reset (rt_ptr);
         }
 
-      return 0;
+      return true;
     }
 
     int

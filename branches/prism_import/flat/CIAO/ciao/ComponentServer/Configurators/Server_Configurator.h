@@ -80,7 +80,7 @@ namespace CIAO
       
       void set_rt_support (void);
 
-      virtual int create_config_managers (void);
+      virtual bool create_config_managers (void);
 
       bool policy_exists (const char *policy_set_id);
 

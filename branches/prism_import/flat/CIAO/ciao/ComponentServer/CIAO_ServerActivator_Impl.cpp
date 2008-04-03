@@ -281,7 +281,7 @@ namespace CIAO
       CORBA::Object_var obj = this->poa_->servant_to_reference (this);
       CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
       
-      options.command_line ("%s -k %s %s",
+      options.command_line ("%s -c %s %s",
                             this->cs_path_.c_str (),
                             ior.in (),
                             cmd_line.c_str ());

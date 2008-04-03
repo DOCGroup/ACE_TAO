@@ -1,35 +1,55 @@
+Thu Apr  3 21:14:56 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/ComponentServer/Configurators/Basic_Config_Manager.cpp:
+        * ciao/ComponentServer/Configurators/Configurators.mpc:
+        * ciao/ComponentServer/Configurators/Server_Configurator.h:
+        * ciao/ComponentServer/Configurators/Server_Configurator.cpp:
+        
+          Fixes necessary to allow the componentserver executable to start up
+          in standalone mode (i.e., without a managing ServerActivator). 
+        
+          Also, the name of the executable has changed to entirely lower-case.
+        
+        * ofccm/NodeApplication/NodeApplication.mpc:
+        
+          Renamed a project to avoid a duplicate name. 
+        
 Wed Apr  2 21:23:12 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ccm/CCM.mpc:
         * ccm/CCM_Exceptions.idl:
         * ccm/CCM_Home.idl:
-        
-          Moved some exceptions to a new file, CCM_Exceptions.idl. 
-        
+
+          Moved some exceptions to a new file, CCM_Exceptions.idl.
+
         * ciao/CIAO.mpc:
         * ciao/CIAO_FailureReasons.idl:
-        
+
           Created IDL representing CIAO failure reasons for inclusion in exceptions
-          thrown from CIAO.  
-        
+          thrown from CIAO.
+
         * MPC/config/ciao_server.mpb:
         * ciao/Client_init.h:
         * ciao/Client_init.cpp:
         * ciao/Server_init.h:
         * ciao/Server_init.cpp:
 
-          Moved a bunch of stuff from Server_init to Client_init, in particular, 
+          Moved a bunch of stuff from Server_init to Client_init, in particular,
           the server init funciton is now implemented in terms of the
-          client's.  Also moved the configvalue map functions over. 
+          client's.  Also moved the configvalue map functions over.
 
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
-        
+
           Fully implemented ServerActivator implementation that spawns new
           processes.  This class is for the most part implemented using
           the template method pattern, with a little effort it could be
-          extended to support other spawning models. 
-        
+          extended to support other spawning models.
+
         * ciao/ComponentServer/CIAO_CS_Client.idl:
         * ciao/ComponentServer/CIAO_CS_Client_svnt_export.h:
         * ciao/ComponentServer/CIAO_ComponentServer.h:
@@ -41,8 +61,8 @@ Wed Apr  2 21:23:12 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/ComponentServer/CIAO_Container_Impl.cpp:
 
           Moved the CIAO-specific derivations of the component
-          server-related interfaces to CIAO::Deployment module. 
-        
+          server-related interfaces to CIAO::Deployment module.
+
 Thu Mar 27 19:26:18 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ofccm/Cdmw:
