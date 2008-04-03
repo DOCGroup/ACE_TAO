@@ -17,8 +17,7 @@ project(Callback_idl_gen) : taoidldefaults, anytypecode {
 project(Callback_stub) : taolib, anytypecode {
   avoids += ace_for_tao
   after += Callback_idl_gen
-  libs  +=
-
+  libout       = $(ACE_ROOT)/lib
   sharedname = Callback_stub
   dynamicflags   = CALLBACK_STUB_BUILD_DLL
 

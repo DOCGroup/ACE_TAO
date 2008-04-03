@@ -6,7 +6,6 @@ workspace {
   utils
   Conductor
   Controller/Base
-  Controller/EUCON
   Tester
   TM_Proxy
   Effectors

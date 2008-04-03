@@ -3,6 +3,7 @@
 
 project(RACE_utils) : acelib {
 
+  libout       = $(ACE_ROOT)/lib
   sharedname = RACE_utils
   dynamicflags   += LOGGER_BUILD_DLL
 

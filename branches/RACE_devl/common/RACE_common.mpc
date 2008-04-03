@@ -1,5 +1,6 @@
 project(RACE_common_stub): anytypecode {
 
+   libout       = $(ACE_ROOT)/lib	
    sharedname = RACE_common_stub
    idlflags += -Wb,stub_export_macro=RACE_COMMON_STUB_Export \
                -Wb,stub_export_include=RACE_common_stub_export.h
