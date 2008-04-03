@@ -1,3 +1,9 @@
+Thu Apr  3 15:15:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+
+          Another "interface" VC8 MFC conflict.
+
 Thu Apr  3 09:40:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
