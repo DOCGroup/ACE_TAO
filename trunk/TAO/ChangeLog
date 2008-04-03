@@ -1,3 +1,11 @@
+Thu Apr  3 01:18:45 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DSI_Gateway/client.cpp:
+
+          Reworded exception handlers to avoid having the nightly build
+          scoreboard detect expected exceptions as errors. This is the
+          same error that was documented in bug 2879.
+
 Wed Apr  2 12:13:50 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DSI_AMI_Gateway/client.cpp:

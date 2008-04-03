@@ -161,7 +161,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const test_exception& ex)
     {
-      ex._tao_print_exception ("Client: exception caught - ");
+      if (test_user_exception == 1)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Client: caught expected user exception: %s\n",
+                    ex._name()));
+      else
+        ex._tao_print_exception ("Client: exception caught - ");
 
       ACE_DEBUG ((LM_DEBUG,
                   "error code: %d\n"
@@ -171,13 +176,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ex.error_message.in (),
                   ex.status_message.in ()));
 
-      return 0;
+      return test_user_exception == 1 ? 0 : 1;
     }
   catch (const CORBA::NO_PERMISSION& ex)
     {
-      ex._tao_print_exception ("Client: exception caught - ");
-
-      return 0;
+      if (test_system_exception == 1)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Client: caught expected system exception: %s\n",
+                    ex._name()));
+      else
+        ex._tao_print_exception ("Client: exception caught - ");
+      return test_system_exception == 1 ? 0 : 1;
     }
   catch (const CORBA::Exception& ex)
     {
