@@ -450,9 +450,11 @@ ifeq ($(shared_libs),1)
   endif
 endif
 <%endif%>
-<%if(staticflags)%>
+<%if(staticflags || exename)%>
 ifeq ($(static_libs),1)
+<%if(staticflags)%>
   CPPFLAGS +=<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
+<%endif%>
 <%if(exename)%>
   ifeq ($(link_groups), 1)
     LDLIBS := -Wl,--start-group $(LDLIBS) -Wl,--end-group
