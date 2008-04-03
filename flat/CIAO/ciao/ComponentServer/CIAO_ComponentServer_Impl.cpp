@@ -9,7 +9,8 @@ namespace CIAO
 {
   namespace Deployment
   {
-    CIAO_ComponentServer_i::CIAO_ComponentServer_i (const ACE_CString &uuid, CORBA::ORB_ptr orb, 
+    CIAO_ComponentServer_i::CIAO_ComponentServer_i (const ACE_CString &uuid, 
+                                                    CORBA::ORB_ptr orb, 
 						    PortableServer::POA_ptr poa)
       : uuid_ (uuid),
         orb_ (CORBA::ORB::_duplicate (orb)),

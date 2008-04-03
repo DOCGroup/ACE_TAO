@@ -225,12 +225,16 @@ namespace CIAO
 using CIAO::Deployment::Config_Manager;
 using CIAO::Deployment::Basic_Config_Manager;
 
-extern "C" Basic_Config_Manager_Export Config_Manager *create_na_config_manager (void);
+extern "C" Basic_Config_Manager_Export Config_Manager *create_basic_config_manager (void);
 
-Config_Manager *
-create_na_config_manager (void)
+extern "C"
 {
-  Basic_Config_Manager *config;
-  ACE_NEW_RETURN (config, Basic_Config_Manager, 0);
-  return config;
+  Config_Manager * 
+  create_basic_config_manager (void)
+  {
+    Basic_Config_Manager *config;
+    ACE_NEW_RETURN (config, Basic_Config_Manager, 0);
+    return config;
+  }
 }
+
