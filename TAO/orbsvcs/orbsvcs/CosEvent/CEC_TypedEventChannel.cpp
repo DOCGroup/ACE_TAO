@@ -257,10 +257,10 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
         this->interface_repository_->lookup_id (interface_);
 
       // Narrow the interface
-      CORBA::InterfaceDef_var interface =
+      CORBA::InterfaceDef_var intface =
         CORBA::InterfaceDef::_narrow (contained.in ());
 
-      if (CORBA::is_nil (interface.in () ))
+      if (CORBA::is_nil (intface.in () ))
         {
           if (TAO_debug_level >= 10)
             {
@@ -274,7 +274,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
         {
           // Obtain the full interface description
           CORBA::InterfaceDef::FullInterfaceDescription_var fid =
-            interface->describe_interface ();
+            intface->describe_interface ();
 
           // Obtain the base interfaces
           this->base_interfaces_ = fid->base_interfaces;
