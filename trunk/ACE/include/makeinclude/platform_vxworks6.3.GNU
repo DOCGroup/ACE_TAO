@@ -232,6 +232,24 @@ else
 endif
 endif
 
+no_cflags_ansi ?= 0
+ifeq ($(no_cflags_ansi), 1)
+  ifeq ("$(TOOL_FAMILY)","gnu")
+    CC_COMPILER := $(filter-out -ansi, $(CC_COMPILER))
+  else
+    CC_COMPILER := $(filter-out -Xansi, $(CC_COMPILER))
+  endif
+endif
+
+no_ccflags_ansi ?= 0
+ifeq ($(no_ccflags_ansi), 1)
+  ifeq ("$(TOOL_FAMILY)","gnu")
+    C++_COMPILER := $(filter-out -ansi, $(C++_COMPILER))
+  else
+    C++_COMPILER := $(filter-out -Xansi, $(C++_COMPILER))
+  endif
+endif
+
 ifeq ($(footprint),1)
   LD_PARTIALFLAGS += -Xlinker -M -Xlinker -Map -Xlinker $@.map
 endif
@@ -358,16 +376,6 @@ ifneq ($(optimize),1)
 endif
 
 CCFLAGS         += $(C++FLAGS)
-
-no_cflags_ansi ?= 0
-ifeq ($(no_cflags_ansi), 1)
-  CFLAGS := $(filter-out -ansi, $(CFLAGS))
-endif
-
-no_ccflags_ansi ?= 0
-ifeq ($(no_ccflags_ansi), 1)
-  CCFLAGS := $(filter-out -ansi, $(CCFLAGS))
-endif
 
 ifeq ($(VXWORKSLINK), 1)
 
