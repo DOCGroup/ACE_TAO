@@ -27,11 +27,12 @@ sub test($)
 {
     (my $executable, my $arguments) = @_;
     chdir ($executable);
+    my $t1;
     if (PerlACE::is_vxworks_test()) {
-      my $t1 = new PerlACE::ProcessVX ("Test", ($arguments ? $arguments : ""));
+      $t1 = new PerlACE::ProcessVX ("Test", ($arguments ? $arguments : ""));
     }
     else {
-      my $t1 = new PerlACE::Process ("Test", ($arguments ? $arguments : ""));
+      $t1 = new PerlACE::Process ("Test", ($arguments ? $arguments : ""));
     }
     print STDERR "\nTest $executable is running ...\n";
     my $status = $t1->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
