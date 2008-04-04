@@ -13,9 +13,7 @@
 #include "bug_3251_export.h"
 
 
-class PersistentPoa
-:
-  public ACE_Service_Object
+class bug_3251_Export PersistentPoa:  public ACE_Service_Object
 {
   // public types and methods
   public:

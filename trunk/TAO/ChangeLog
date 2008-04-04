@@ -1,3 +1,42 @@
+Fri Apr  4 22:15:16 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        This is the first batch of changes related to the refactoring of
+        the service configuration, which aims to eliminate a number of
+        related memory leaks and bugs. The changes are being ported back
+        from the "iliyan-gestalt" branch.
+
+        * orbsvcs/tests/Bug_3216_Regression/run_test.pl:
+
+        Fixed to use $ACE_ROOT instead of '../..', to search for PerlACE.
+
+        * tao/ORBInitializer_Registry.cpp:
+
+        Removing a misplaced call to TAO::ORB::init_orb_globals(). Now
+        that the latter has non-trivial functionality, calling it from an
+        ORB initializer would be wrong.
+
+        * tests/Bug_2735_Regression/server.cpp:
+
+        The argv must be 0-terminated to fulfill the contract with C's
+        argv.
+
+        * tests/Bug_2936_Regression/PersistentPOA.cpp:
+
+        Fixing (what seems to be) a bad ownership transfer of Object's,
+        causing memory leaks.
+
+        * tests/Bug_3251_Regression/Bug_3251.conf:
+        * tests/Bug_3251_Regression/PersistentPoa.h:
+        * tests/Bug_3251_Regression/server.cpp:
+
+        Changes to make it compile (but not test anything) on
+        Windows. Also added a call to sync (after fork) so we get the
+        correct values for PID in the child.
+
+        * tests/ORB_Local_Config/run_tests_all.pl:
+
+        Fixed a bug that was preventing it from running.
+
 Fri Apr  4 10:20:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
