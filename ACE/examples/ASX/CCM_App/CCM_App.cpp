@@ -77,8 +77,9 @@ int
 Test_Task::fini (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("finalizing %s\n"),
-              this->name () ? this->name () : ACE_TEXT ("task")));
+              ACE_TEXT ("finalizing %s (%@)\n"),
+              this->name () ? this->name () : ACE_TEXT ("task"),
+              this));
   return 0;
 }
 
