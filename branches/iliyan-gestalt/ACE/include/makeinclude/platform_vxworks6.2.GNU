@@ -202,6 +202,24 @@ else
   include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 endif
 
+no_cflags_ansi ?= 0
+ifeq ($(no_cflags_ansi), 1)
+  ifeq ("$(TOOL_FAMILY)","gnu")
+    CC_COMPILER := $(filter-out -ansi, $(CC_COMPILER))
+  else
+    CC_COMPILER := $(filter-out -Xansi, $(CC_COMPILER))
+  endif
+endif
+
+no_ccflags_ansi ?= 0
+ifeq ($(no_ccflags_ansi), 1)
+  ifeq ("$(TOOL_FAMILY)","gnu")
+    C++_COMPILER := $(filter-out -ansi, $(C++_COMPILER))
+  else
+    C++_COMPILER := $(filter-out -Xansi, $(C++_COMPILER))
+  endif
+endif
+
 ifeq ($(VXWORKSLINK),1)
   # prevent possible clash with static LIB rules
   # in VxWorks make includes and rules.lib.GNU
@@ -324,16 +342,6 @@ else
     PIC = -fpic
   endif
 endif
-endif
-
-no_cflags_ansi ?= 0
-ifeq ($(no_cflags_ansi), 1)
-  CFLAGS := $(filter-out -ansi, $(CFLAGS))
-endif
-
-no_ccflags_ansi ?= 0
-ifeq ($(no_ccflags_ansi), 1)
-  CCFLAGS := $(filter-out -ansi, $(CCFLAGS))
 endif
 
 ifeq ($(VXWORKSLINK),1)
