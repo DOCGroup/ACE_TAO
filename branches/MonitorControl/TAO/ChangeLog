@@ -1,3 +1,19 @@
+Fri Apr  4 17:24:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Throughput/run_test_with_monitors.pl:
+        
+          Renamed this file as below.
+          
+        * performance-tests/Throughput/run_test_with_monitor_queries.pl:
+        
+          Renamed from original file above.
+          
+        * performance-tests/Throughput/README:
+        
+          Updated documentation with information about enabling and
+          disabling monitors, and using the alternative script file
+          that includes monitor queries in the test execution.
+
 Wed Apr  2 16:16:19 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Thoughput/Throughput.mpc:
