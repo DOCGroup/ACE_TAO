@@ -255,6 +255,25 @@ project(Bug_2975_Regression_Test) : acetest {
   }
 }
 
+project (Bug_2980_Regression_Test) {
+  // The test uses a non-ACE executable, loading an ACE-based DLL
+  after += Bug_2980_Regression_Dll
+  macros += USE_THREAD
+  exename = Bug_2980_Regression_Test
+  Source_Files {
+    Bug_2980_Regression_Test.cpp
+  }
+}
+
+project (Bug_2980_Regression_Dll): acelib {
+  sharedname = Bug_2980_Regression
+  dynamicflags = TEST_OUTPUT_BUILD_DLL
+  Source_Files {
+    Test_Output.cpp
+    Bug_2980_Regression_Dll.cpp
+  }
+}
+
 project(Bug_3102_Regression_Test) : acetest {
   exename = Bug_3102_Regression_Test
   Source_Files {

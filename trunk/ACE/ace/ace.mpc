@@ -311,6 +311,8 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Hash_Multi_Map_Manager_T.cpp
     Hash_Map_With_Allocator_T.cpp
     IOStream_T.cpp
+
+    Intrusive_Auto_Ptr.cpp
     Intrusive_List.cpp
     Intrusive_List_Node.cpp
     LOCK_SOCK_Acceptor.cpp
@@ -361,6 +363,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Condition_T.inl
     Guard_T.inl
     Handle_Gobbler.inl
+    Intrusive_Auto_Ptr.inl
     Lock_Adapter_T.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
@@ -383,6 +386,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Handle_Gobbler.h
     If_Then_Else.h
     IO_Cntl_Msg.h
+    Intrusive_Auto_Ptr.h
     Lock_Adapter_T.h
     Log_Priority.h
     Malloc_Base.h

@@ -86,6 +86,12 @@ ACE_Service_Type::~ACE_Service_Type (void)
 int
 ACE_Service_Type::fini (void)
 {
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ACE (%P|%t) ST::fini - destroying name=%s, dll=%s\n"),
+                this->name_,
+                this->dll_.dll_name_));
+
   if (this->fini_already_called_)
     return 0;
 

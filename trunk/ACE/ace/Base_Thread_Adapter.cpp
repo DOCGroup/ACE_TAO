@@ -14,6 +14,8 @@ ACE_RCSID (ace,
 #  include "ace/OS_NS_Thread.h"
 #endif /* ACE_HAS_TSS_EMULATION */
 
+#include "ace/Service_Config.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INIT_LOG_MSG_HOOK     ACE_Base_Thread_Adapter::init_log_msg_hook_ = 0;
@@ -36,6 +38,7 @@ ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter (
   , arg_ (arg)
   , entry_point_ (entry_point)
   , thr_desc_ (td)
+  , ctx_ (ACE_Service_Config::current())
 {
   ACE_OS_TRACE ("ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter");
 
@@ -63,6 +66,11 @@ ACE_Base_Thread_Adapter::inherit_log_msg (void)
     (*ACE_Base_Thread_Adapter::inherit_log_msg_hook_)(
            this->thr_desc_,
            this->log_msg_attributes_);
+
+  // Initialize the proper configuration context for the new thread
+  // Placed here since inherit_log_msg() gets called from any of our
+  // descendants (before self-destructing)
+  ACE_Service_Config::current (this->ctx_);
 }
 
 void
