@@ -138,40 +138,50 @@ ACE_Service_Repository::fini (void)
 {
   ACE_TRACE ("ACE_Service_Repository::fini");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+
+  if (this->service_vector_ == 0)
+    return 0;
+
   int retval = 0;
 
-  if (this->service_vector_ != 0)
-    {
-      // <fini> the services in reverse order.  Note that if services
-      // were removed from the middle of the repository the order
-      // won't necessarily be maintained since the <remove> method
-      // performs compaction.  However, the common case is not to
-      // remove services, so typically they are deleted in reverse
-      // order.
-
-      // Do not be tempted to use the prefix decrement operator.  We
-      // need to use the postfix decrement operator in this case since
-      // the index is unsigned.
+  // Do not be tempted to use the prefix decrement operator.  Use
+  // postfix decrement operator since the index is unsigned and may
+  // wrap around the 0
       for (size_t i = this->current_size_; i-- != 0; )
         {
+      // <fini> the services in reverse order.
           ACE_Service_Type *s =
             const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
+
 #ifndef ACE_NLOGGING
           if (ACE::debug ())
+        {
+          if (s != 0)
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d), ")
-                          ACE_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d\n"),
-                          this, i, this->total_size_, s->name(), s->type (),
+                        ACE_TEXT ("name=%s, type=%@, object=%@, active=%d\n"),
+                        this,
+                        i,
+                        this->total_size_,
+                        s->name(),
+                        s->type (),
                           (s->type () != 0) ? s->type ()->object () : 0,
                           s->active ()));
+          else
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d) -> 0\n"),
+                        this,
+                        i,
+                        this->total_size_));
+        }
+
 #endif
 
           // Collect any errors.
-          int ret = s->fini ();
-          retval += ret;
+      if (s != 0)
+        retval += s->fini ();
         }
-    }
 
   return (retval == 0) ? 0 : -1;
 }
@@ -184,38 +194,42 @@ ACE_Service_Repository::close (void)
   ACE_TRACE ("ACE_Service_Repository::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  if (this->service_vector_ != 0)
-    {
-      // Delete services in reverse order.  Note that if services were
-      // removed from the middle of the repository the order won't
-      // necessarily be maintained since the <remove> method performs
-      // compaction.  However, the common case is not to remove
-      // services, so typically they are deleted in reverse order.
+  if (this->service_vector_ == 0)
+    return 0;
 
 #ifndef ACE_NLOGGING
       if(ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SR::close, this=%@, size=%d\n"),
+                ACE_TEXT ("(%P|%t) SR::close - repo=%@, size=%d\n"),
                     this,
                     this->current_size_));
 #endif
 
-      // Do not be tempted to use the prefix decrement operator.  We
-      // need to use the postfix decrement operator in this case since
-      // the index is unsigned.
+  // Do not use the prefix decrement operator since the index is
+  // unsigned and may wrap around the 0.
       for (size_t i = this->current_size_; i-- != 0; )
         {
+      // Delete services in reverse order.
+      ACE_Service_Type *s =
+        const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
 #ifndef ACE_NLOGGING
           if(ACE::debug ())
+        {
+          if (s == 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) SR::close, this=%@, delete so[%d]=%@ (%s)\n"),
-                        this, i,
-                        this->service_vector_[i],
-                        this->service_vector_[i]->name ()));
+                        ACE_TEXT ("(%P|%t) SR::close - repo=%@ [%d] -> 0\n"),
+                        this,
+                        i));
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) SR::close - repo=%@ [%d], name=%s, object=%@\n"),
+                          this,
+                          i,
+                          s->name (),
+                          s));
+        }
 #endif
-
-          ACE_Service_Type *s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
           --this->current_size_;
           delete s;
         }
@@ -223,7 +237,6 @@ ACE_Service_Repository::close (void)
       delete [] this->service_vector_;
       this->service_vector_ = 0;
       this->current_size_ = 0;
-    }
 
   return 0;
 }
@@ -255,9 +268,12 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
   size_t i;
 
   for (i = 0; i < this->current_size_; i++)
-    if (ACE_OS::strcmp (name,
+    {
+      if (this->service_vector_[i] != 0 // skip any empty slots
+          && ACE_OS::strcmp (name,
                         this->service_vector_[i]->name ()) == 0)
       break;
+    }
 
   if (i < this->current_size_)
     {
@@ -291,8 +307,7 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
 int
 ACE_Service_Repository::relocate_i (size_t begin,
                                     size_t end,
-                                    const ACE_DLL& adll,
-                                    bool static_only)
+                                    const ACE_DLL& adll)
 {
   ACE_SHLIB_HANDLE new_handle = adll.get_handle (0);
 
@@ -301,21 +316,27 @@ ACE_Service_Repository::relocate_i (size_t begin,
       ACE_Service_Type *type =
         const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
-      ACE_SHLIB_HANDLE old_handle =  type->dll ().get_handle (0);
-      if (static_only && old_handle != ACE_SHLIB_INVALID_HANDLE)
-        continue;
+      if (type == 0) continue; // skip any gaps
 
+      ACE_SHLIB_HANDLE old_handle =  type->dll ().get_handle (0);
+      if (old_handle == ACE_SHLIB_INVALID_HANDLE && new_handle != old_handle)
+        {
 #ifndef ACE_NLOGGING
     if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) SR::relocate, repo=%@ [%d] (size=%d): name=%s - DLL from=%d to=%d\n"),
-                    this, i, this->total_size_, type->name (),
+                        ACE_TEXT ("ACE (%P|%t) SR::relocate - repo=%@ [%d] (size=%d)")
+                        ACE_TEXT (": name=%s, handle: %d -> %d\n"),
+                        this,
+                        i,
+                        this->total_size_,
+                        type->name (),
                     old_handle,
                     new_handle));
 #else
   ACE_UNUSED_ARG (new_handle);
 #endif
-      type->dll (adll);
+          type->dll (adll); // ups the refcount on adll
+    }
     }
 
   return 0;
@@ -334,10 +355,9 @@ ACE_Service_Repository::find (const ACE_TCHAR name[],
 
 
 // Insert the ACE_Service_Type SR into the repository.  Note that
-// services may be inserted either resumed or suspended. Using same name
-// as in an existing service causes the delete () to be called for the old one,
-// i.e. make sure @code sr is allocated on the heap!
-
+// services may be inserted either resumed or suspended. Using same
+// name as in an existing service causes the delete () to be called
+// for the old one, i.e. make sure @code sr is allocated on the heap!
 int
 ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 {
@@ -347,62 +367,66 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   ACE_Service_Type *s = 0;
   size_t i = 0;
 
+  // Establish scope for locking while manipulating the service
+  // storage
   {
     // @TODO: Do we need a recursive mutex here?
-    ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+    ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
+                              ace_mon,
+                              this->lock_,
+                              -1));
 
     // Check to see if this is a duplicate.
     for (i = 0; i < this->current_size_; i++)
-      if (ACE_OS::strcmp (sr->name (),
-                          this->service_vector_[i]->name ()) == 0)
-        break;
-
-    // Replacing an existing entry
-    if (i < this->current_size_)
       {
+        // Replacing an existing entry?
+        if (this->service_vector_[i] != 0 // skip any gaps
+            && ACE_OS::strcmp (sr->name (), this->service_vector_[i]->name ()) == 0)
+          {
         return_value = 0;
+
         // Check for self-assignment...
         if (sr != this->service_vector_[i])
           {
             s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
             this->service_vector_[i] = sr;
           }
+
+            break;
       }
-    // Adding a new entry.
-    else if (i < this->total_size_)
+      }
+
+    // Adding an entry.
+    if (i >= this->total_size_)
+      {
+        return_value = -1; // no space left
+      }
+    else if (s == 0)
       {
         this->service_vector_[i] = sr;
         this->current_size_++;
         return_value = 0;
       }
+  }
 
 #ifndef ACE_NLOGGING
     if (ACE::debug ())
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ACE (%P|%t) SR::insert")
-                  ACE_TEXT (" - repo=%@ [%d] (%d), name=%s")
-                  ACE_TEXT (", type=%@, object=%@, active=%d\n"),
-                  this, i, this->total_size_, sr->name(), sr->type (),
+                ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d] (%d),")
+                ACE_TEXT (" name=%s (%s) (type=%@, object=%@, active=%d)\n"),
+                this,
+                i,
+                this->total_size_,
+                sr->name(),
+                (return_value == 0 ? ((s==0) ? "new" : "replacing") : "failed"),
+                sr->type (),
                   (sr->type () != 0) ? sr->type ()->object () : 0,
                   sr->active ()));
 #endif
-  }
 
-  // Delete outside the lock
-  if (s != 0)
-    {
-#ifndef ACE_NLOGGING
-      if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) SR::insert")
-                    ACE_TEXT (" - destroying (replacing), repo=%@ [%d] (%d), name=%s")
-                    ACE_TEXT (", type=%@, object=%@, active=%d\n"),
-                    this, i, this->total_size_, s->name(), s->type (),
-                    (s->type () != 0) ? s->type ()->object () : 0,
-                    s->active ()));
-#endif
+  // If necessary, delete but outside the lock. (s may be 0, but
+  // that's okay, too)
       delete s;
-    }
 
   if (return_value == -1)
     ACE_OS::last_error (ENOSPC);
@@ -410,8 +434,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   return return_value;
 }
 
-// Re-resume a service that was previously suspended.
-
+// Resume a service that was previously suspended.
 int
 ACE_Service_Repository::resume (const ACE_TCHAR name[],
                                 const ACE_Service_Type **srp)
@@ -477,19 +500,16 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
  *
  * Since the order of services in the Respository matters, we can't
  * simply overwrite the entry being deleted with the last and
- * decrement the <current_size> by 1 - we must "pack" the array.  A
- * good example of why the order matters is a dynamic service, in
- * whose DLL there is at least one static service. In order to prevent
- * SEGV during finalization, those static services must be finalized
- * _before_the dynamic service that owns them. Otherwice the TEXT
- * segment, containing the code for the static service's desructor may
- * be unloaded with the DLL.
+ * decrement the <current_size> by 1.  A good example of why the order
+ * matters is a dynamic service, in whose DLL there is at least one
+ * static service. In order to prevent SEGV during finalization, those
+ * static services must be finalized _before_the dynamic service that
+ * owns them. Otherwice the TEXT segment, containing the code for the
+ * static service's desructor may be unloaded with the DLL.
  *
- * @note: (IJ) The above is not entirely true, since the introduction
- * of the ACE_Service_Dynamic_Guard, which fixes-up any stray static
- * services to hold a reference to the DLL. This allows out-of order
- * removals and perhaps allows to skip packing the repo. I left it in
- * because a packed repo is a lot easier to debug.
+ * Neither can we "pack" the array because this may happen inside the
+ * scope of a Service_Dynamic_Guard, which caches an index where
+ * loading of a DLL started in order to relocate dependent services.
  */
 int
 ACE_Service_Repository::remove_i (const ACE_TCHAR name[], ACE_Service_Type **ps)
@@ -501,11 +521,20 @@ ACE_Service_Repository::remove_i (const ACE_TCHAR name[], ACE_Service_Type **ps)
   // We may need the old ptr - to be delete outside the lock!
   *ps = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
-  // Pack the array
-  --this->current_size_;
-  for (size_t j = i; j < this->current_size_; j++)
-    this->service_vector_[j] = this->service_vector_[j+1];
+#ifndef ACE_NLOGGING
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ACE (%P|%t) SR::remove_i - repo=%@ [%d] (%d),")
+                ACE_TEXT (" name=%s (removed) (type=%@, active=%d)\n"),
+                this,
+                i,
+                this->total_size_,
+                name,
+                *ps,
+                (*ps)->active ()));
+#endif
 
+  this->service_vector_[i] = 0; // simply leave a gap
   return 0;
 }
 
@@ -570,8 +599,11 @@ bool
 ACE_Service_Repository_Iterator::valid (void) const
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::valid");
-  return (this->ignore_suspended_ == 0
-          || this->svc_rep_.service_vector_[this->next_]->active ());
+  if (this->ignore_suspended_ == 0)
+    return (this->svc_rep_.service_vector_[this->next_] != 0); // skip over gaps
+
+  return (this->svc_rep_.service_vector_[this->next_] != 0
+          && this->svc_rep_.service_vector_[this->next_]->active ());
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

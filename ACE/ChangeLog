@@ -1,3 +1,79 @@
+Fri Apr  4 21:43:35 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * THANKS:
+
+          Adding Michael Carter <mcarter at swri dot org> for reporting
+          and debugging bug 3007.
+
+        * ace/Base_Thread_Adapter.h:
+        * ace/Base_Thread_Adapter.cpp:
+
+          Storing a pointer to SG that was current in the parent thread,
+          which enables correct "inheritance" of the SG in the child thread.
+
+        * ace/Parse_Node.h:
+        * ace/Parse_Node.cpp:
+
+          Fixing ACE_Stream_Node::{apply,link} to ensure the modules are linked
+          together and initialized correctly - see bug# 2916. Moving the
+          initialization code out of the yacc parser, here.
+
+        * ace/Service_Object.cpp:
+        * ace/Service_Types.cpp:
+
+          Improving the log output in fini().
+
+        * ace/Service_Repository.h:
+
+          Eliminating an unused parameter static_only from relocate_i()
+
+        * ace/Service_Repository.cpp:
+
+          Simplified relocate_i() and fixed an error that was causing it to
+          choose incorrect ranges of service indexes to relocate.
+          Eliminated the boolean static_only parameter as it was always
+          being set to true.  Changed remove() to eliminate the "packing"
+          code and updated the few other methods, which assumed there are no
+          "gaps" in the service storage.
+
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+
+          Adding an overloaded yyerror that takes just a string to comply
+          with the changed bison template. Moving the module initialization
+          code out of the parser. See ACE_Stream_Node class and bug# 2916.
+
+        * ace/Thread_Adapter.cpp:
+
+          The invoke() method, which runs in the new thread, initializes the
+          thread-specific configuration context. This scheme ensures any
+          newly spawned thread would inherit the spawning thread's service
+          configuration context.
+
+        * ace/ace.mpc:
+
+          Adding Intrusive_Auto_Ptr to the list.
+
+        * ace/svcconf.mpb:
+
+          Updated for the grammar updates, see bug# 2916.
+
+        * examples/ASX/CCM_App/ASX_CCM_App.mpc:
+        * examples/ASX/CCM_App/CCM_App.cpp:
+
+          The DLL names are case-sensitive on *nix. Minor layout changes.
+
+        * tests/Object_Manager_Flipping_Test.cpp:
+
+          Updated to use the Intrusive_Auto_Ptr
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Adding Bug_2980_Regression_Test
+
 Fri Apr  4 18:27:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:
