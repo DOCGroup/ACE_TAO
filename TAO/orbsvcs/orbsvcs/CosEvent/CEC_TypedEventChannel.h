@@ -262,7 +262,7 @@ public:
 
 protected:
   /// Function caches the full interface description from the IFR
-  int cache_interface_description (const char *interface);
+  int cache_interface_description (const char *interface_);
 
   /// Insert a operation/parameter into the IFR cache
   int insert_into_ifr_cache (const char *operation, TAO_CEC_Operation_Params *parameters);

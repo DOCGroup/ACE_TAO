@@ -1,3 +1,23 @@
+Fri Apr  4 10:20:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+
+          Another "interface" VC8 MFC conflict.
+
+Thu Apr  3 15:15:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+
+          Another "interface" VC8 MFC conflict.
+
+Thu Apr  3 09:40:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+
+          Using "interface" as the descriptive name of a parameter seems to
+          cause VC8 (when building with MFC) to assume you mean a struct type
+          and it raises an incorrect systax error.
+
 Thu Apr  3 01:18:45 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DSI_Gateway/client.cpp:
