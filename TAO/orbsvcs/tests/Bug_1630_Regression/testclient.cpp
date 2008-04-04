@@ -39,7 +39,7 @@ int main (int argc, char* argv[])
       //
       CORBA::InterfaceDefSeq baseInterfaces(1) ;
       baseInterfaces.length(0) ;
-      CORBA::InterfaceDef_var interface =
+      CORBA::InterfaceDef_var intface =
          ifr->create_interface( "IDL:interface865:1.0",
                                 "interface865",
                                 "1.0",
@@ -108,7 +108,7 @@ int main (int argc, char* argv[])
       //
       ACE_DEBUG((LM_DEBUG, ". create_operation\n"));
       CORBA::OperationDef_var operation =
-         interface->create_operation( "IDL:interface865/f:1.0",
+         intface->create_operation( "IDL:interface865/f:1.0",
                                       "f",
                                       "1.0",
                                       voidPrimitive.in(),
@@ -204,7 +204,7 @@ int main (int argc, char* argv[])
 
       // Finally destroy the interface.
       //
-      interface->destroy() ;
+      intface->destroy() ;
 
       //orb->destroy();
 
