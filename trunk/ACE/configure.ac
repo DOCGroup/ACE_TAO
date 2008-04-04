@@ -1013,11 +1013,9 @@ AC_CHECK_HEADER([memory],,)
 dnl Check for availablity of "new style" C++ stream headers
 AC_CHECK_HEADERS([iomanip ios iostream istream ostream fstream streambuf],
   ,
-  [AC_DEFINE([ACE_USES_OLD_IOSTREAMS])])
-
-AC_CHECK_HEADER([iostream.h],
-  [AC_CHECK_HEADER([fstream.h],,[AC_DEFINE([ACE_LACKS_IOSTREAM_TOTALLY])])],
-  [AC_DEFINE([ACE_LACKS_IOSTREAM_TOTALLY])])
+  [AC_CHECK_HEADERS([iostream.h fstream.h],
+                    [AC_DEFINE([ACE_USES_OLD_IOSTREAMS])],
+                    [AC_DEFINE([ACE_LACKS_IOSTREAM_TOTALLY])])])
 
 dnl Check if platform needs to #include <regexpr.h> for
 dnl regular expression support
