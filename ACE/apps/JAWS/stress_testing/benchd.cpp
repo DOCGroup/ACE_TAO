@@ -37,7 +37,7 @@ class Handle_Events : public ACE_Event_Handler
 public:
   Handle_Events (u_short udp_port,
 		 const char *ip_addr,
-		 const char *interface,
+		 const char *interface_,
 		 ACE_Reactor &reactor);
   ~Handle_Events (void);
 
@@ -115,7 +115,7 @@ Handle_Events::~Handle_Events (void)
 
 Handle_Events::Handle_Events (u_short udp_port,
 			      const char *ip_addr,
-			      const char *interface,
+			      const char *interface_,
 			      ACE_Reactor &reactor)
 {
   // Create multicast address to listen on.
@@ -124,7 +124,7 @@ Handle_Events::Handle_Events (u_short udp_port,
 
   // subscribe to multicast group.
 
-  if (this->mcast_.subscribe (sockmc_addr, 1, interface) == -1)
+  if (this->mcast_.subscribe (sockmc_addr, 1, interface_) == -1)
     ACE_OS::perror ("can't subscribe to multicast group"), ACE_OS::exit (1);
 
   // Disable loopbacks.

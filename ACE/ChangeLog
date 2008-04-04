@@ -1,3 +1,24 @@
+Thu Apr  3 14:13:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Changed the make variable from which we zap the -ansi and also support
+          this with the diab compiler
+
+Thu Apr  3 09:40:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * apps/JAWS/stress_testing/benchd.cpp:
+
+          Using "interface" as the descriptive name of a parameter seems to
+          cause VC8 (when building with MFC) to assume you mean a struct type
+          and it raises an incorrect systax error.
+
+Thu Apr  3 07:05:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Generate link_groups also when staticflags are not set
+
 Wed Apr  2 21:40:00 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
