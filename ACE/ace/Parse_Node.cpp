@@ -9,6 +9,7 @@
 #include "ace/DLL.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include "ace/ARGV.h"
 
 ACE_RCSID (ace,
            Parse_Node,
@@ -29,8 +30,6 @@ ACE_Stream_Node::dump (void) const
   ACE_TRACE ("ACE_Stream_Node::dump");
 #endif /* ACE_HAS_DUMP */
 }
-
-#include "ace/ARGV.h"
 
 void
 ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
