@@ -30,9 +30,10 @@ feature(ace_svcconf) {
     "Svc_Conf_y.cpp: Svc_Conf.y"
     "ifeq ($(notdir $(YACC)), bison)"
     "	$(YACC) -l -d Svc_Conf.y"
-    "	sed -e 's/char \\*getenv/char *ace_foo/g' \\"    // Eliminates getenv prototype, use ACE's
+    "	sed -e 's/char \\*getenv/char *ace_foo/g' \\"  // Eliminates getenv prototype, use ACE's
     "       -e 's/= getenv/= ACE_OS::getenv/g' \\"     // ... like this - qualified.
     "       -e 's/fprintf/ACE_OS::fprintf/g' \\"       // Use ACE's fprintf, not library's
+    "       -e 's/\t/  /g' \\"                         // Eliminate tabs (replace with 2 spaces)
     "       -e 's/yy/ace_yy/g' \\"
     "       -e 's/->ace_yyerrno/->yyerrno/g' \\"       // These reverse the unwanted ace_ prefix
     "       -e 's/->ace_yylineno/->yylineno/g' \\"     // added by the substitution, above.
@@ -49,8 +50,8 @@ feature(ace_svcconf) {
     "       -e 's/Svc_Conf\\.tab\\.c/Svc_Conf_y.cpp/g' < Svc_Conf.tab.c > /tmp/$@"
     "	cp /tmp/$@ $@"
     "	echo \/\/ '$$I''d:$$' >Svc_Conf_Tokens.h"
-    "	echo '#ifndef BISON_SVC_CONF_TAB_H' >>Svc_Conf_Tokens.h"    // Inclusion protection macros
-    "	echo '# define BISON_SVC_CONF_TAB_H' >>Svc_Conf_Tokens.h"   // ... same ...
+    "	echo '#ifndef BISON_SVC_CONF_TAB_H' >>Svc_Conf_Tokens.h"       // Inclusion protection macros
+    "	echo '# define BISON_SVC_CONF_TAB_H' >>Svc_Conf_Tokens.h"      // ... same ...
     "	echo '# define ACE_YYSTYPE_IS_DECLARED 1' >>Svc_Conf_Tokens.h" // Don't use Svc_Conf_y.cpp's
     "	sed -e 's/yy/ace_yy/g' \\"
     "     -e 's/YY/ACE_YY/g'  <Svc_Conf.tab.h >>Svc_Conf_Tokens.h"
