@@ -87,7 +87,7 @@ void * loadunloadDll(void *pp)
 }
 #endif /* !defined (ACE_WIN32) */
 
-int main(int argc, char ** argv)
+int main(int, char **)
 {
 
 #if defined (WIN32)

@@ -27,6 +27,7 @@
 #include "ace/OS_Memory.h"
 #include "ace/ACE.h"
 #include "ace/Service_Config.h"
+#include "ace/Intrusive_Auto_Ptr.h"
 
 ACE_RCSID(tests, Object_Manager_Flipping_Test, "$Id$")
 
@@ -111,7 +112,7 @@ int run_main (int, ACE_TCHAR *[])
     ACE::init();
     ACE_START_TEST (ACE_TEXT ("Object_Manager_Flipping_Test"));
 
-    ACE_Service_Gestalt_Auto_Ptr p2 (ACE_Service_Config::instance ());
+    ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> p2 (ACE_Service_Config::instance ());
 
     // ACE_ASSERT uses Log_Msg::instance() and needs to be done only
     // after ACE_START_TEST

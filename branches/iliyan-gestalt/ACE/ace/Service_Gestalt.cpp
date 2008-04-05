@@ -148,9 +148,6 @@ ACE_Service_Gestalt::Processed_Static_Svc::~Processed_Static_Svc (void)
   delete [] name_;
 }
 
-// ----------------------------------------
-
-
 void
 ACE_Service_Gestalt::intrusive_add_ref (ACE_Service_Gestalt* g)
 {
@@ -172,7 +169,6 @@ ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
       if (tmp <= 0)  delete g;
       ACE_ASSERT (tmp >= 0);
     }
-
 }
 
 
@@ -212,8 +208,6 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 
   delete this->svc_conf_file_queue_;
   this->svc_conf_file_queue_ = 0;
-
-  //  ACE_DEBUG ((LM_STARTUP, "(%P|%t) ACE_Service_Gestalt::~ACE_Service_Gestalt\n"));
 }
 
 ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
@@ -1239,14 +1233,14 @@ ACE_Service_Gestalt::process_directives (bool ignore_default_svc_conf_file)
     {
       if (*sptr == default_svc_conf && ignore_default_svc_conf_file)
         continue;
-
+      
       int result = this->process_file (sptr->fast_rep ());
       if (result < 0)
         return result;
     }
-
+  
   return 0;
-
+  
 } /* process_directives () */
 
 // Tidy up and perform last rites on a terminating ACE_Service_Gestalt.
