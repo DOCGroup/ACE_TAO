@@ -1,3 +1,13 @@
+Sat Apr  5 12:37:10 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Parse_Node.cpp:
+        * ace/Service_Repository.cpp:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+
+          Reformatting and eliminating ACE_LIB_TEXT
+
 Wed Apr  2 20:15:56 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Intrusive_Auto_Ptr.h:

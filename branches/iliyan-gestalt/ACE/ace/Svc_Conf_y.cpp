@@ -1551,7 +1551,11 @@ ace_yyreduce:
   case 26:
 
     {
+<<<<<<< .working
     ;}
+=======
+            ;}
+>>>>>>> .merge-right.r81240
     break;
 
   case 27:
@@ -2018,7 +2022,11 @@ main (int argc, char *argv[])
 
   // Try to reopen any filename argument to use ACE_YYIN.
   if (argc > 1 && (ace_yyin = freopen (argv[1], "r", stdin)) == 0)
+<<<<<<< .working
     (void) ACE_OS::ACE_OS::fprintf (stderr, ACE_LIB_TEXT ("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
+=======
+    (void) ACE_OS::ACE_OS::fprintf (stderr, ACE_TEXT ("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
+>>>>>>> .merge-right.r81240
 
   return ::ace_yyparse (&param);
 }

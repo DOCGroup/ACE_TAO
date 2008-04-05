@@ -176,12 +176,19 @@ ACE_Service_Repository::fini (void)
                         this->total_size_));
         }
 
+          else
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d) -> 0\n"),
+                        this,
+                        i,
+                        this->total_size_));
+        }
+
 #endif
 
       // Collect any errors.
       if (s != 0)
         retval += s->fini ();
-    }
 
   return (retval == 0) ? 0 : -1;
 }
@@ -212,9 +219,14 @@ ACE_Service_Repository::close (void)
       // Delete services in reverse order.
       ACE_Service_Type *s =
         const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+      // Delete services in reverse order.
+      ACE_Service_Type *s =
+        const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
 #ifndef ACE_NLOGGING
       if(ACE::debug ())
+        {
+          if (s == 0)
         {
           if (s == 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -268,11 +280,20 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
   size_t i;
 
   for (i = 0; i < this->current_size_; i++)
+<<<<<<< .working
     {
       if (this->service_vector_[i] != 0 // skip any empty slots
           && ACE_OS::strcmp (name,
                              this->service_vector_[i]->name ()) == 0)
         break;
+    }
+=======
+    {
+      if (this->service_vector_[i] != 0 // skip any empty slots
+          && ACE_OS::strcmp (name,
+                        this->service_vector_[i]->name ()) == 0)
+      break;
+>>>>>>> .merge-right.r81240
     }
 
   if (i < this->current_size_)
@@ -394,6 +415,8 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 
             break;
           }
+
+        break;
       }
 
     // Adding an entry.
@@ -407,10 +430,9 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
         this->current_size_++;
         return_value = 0;
       }
-  }
 
 #ifndef ACE_NLOGGING
-  if (ACE::debug ())
+    if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d] (%d),")
                 ACE_TEXT (" name=%s (%s) (type=%@, object=%@, active=%d)\n"),
