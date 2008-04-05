@@ -1,4 +1,4 @@
-// $Id$
+// $Id:$
 #ifndef BISON_SVC_CONF_TAB_H
 # define BISON_SVC_CONF_TAB_H
 # define ACE_YYSTYPE_IS_DECLARED 1

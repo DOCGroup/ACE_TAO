@@ -387,6 +387,7 @@ ace_get_module (ACE_Service_Type const * sr,
 }
 
 #if defined (SVC_CONF_Y_DEBUGGING)
+
 // Main driver program.
 
 int
