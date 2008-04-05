@@ -141,7 +141,7 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 ACE_INLINE int
 ACE_Service_Config::process_directives (void)
 {
-  return ACE_Service_Config::current ()->process_directives ();
+  return ACE_Service_Config::current ()->process_directives (false);
 }
 
 ACE_INLINE int

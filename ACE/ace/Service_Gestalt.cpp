@@ -194,7 +194,29 @@ ACE_Service_Gestalt::Processed_Static_Svc::~Processed_Static_Svc (void)
   delete [] name_;
 }
 
-// ----------------------------------------
+void
+ACE_Service_Gestalt::intrusive_add_ref (ACE_Service_Gestalt* g)
+{
+  if (g != 0)
+    {
+      long tmp = ++g->refcnt_;
+      //      printf ("// (%x) ++refcnt=%ld\n", (unsigned int)ACE_OS::thr_self (), tmp);
+      ACE_ASSERT (tmp > 0);
+    }
+}
+
+void
+ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
+{
+  if (g != 0)
+    {
+      long tmp = --g->refcnt_;
+      //      printf ("// (%x) refcnt--=%ld\n", (unsigned int)ACE_OS::thr_self (), tmp);
+      if (tmp <= 0)  delete g;
+      ACE_ASSERT (tmp >= 0);
+    }
+}
+
 
 ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 {
@@ -210,7 +232,7 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SG::dtor - this=%@, pss = %@\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::~SG - this=%@, pss = %@\n"),
                 this, this->processed_static_svcs_));
 #endif
 
@@ -225,8 +247,12 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
           delete *pss;
         }
     }
+
   delete this->processed_static_svcs_;
   this->processed_static_svcs_ = 0;
+
+  delete this->svc_conf_file_queue_;
+  this->svc_conf_file_queue_ = 0;
 }
 
 ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
@@ -1011,7 +1037,7 @@ int
 ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
                              const ACE_TCHAR* /*logger_key*/,
                              bool /*ignore_static_svcs*/,
-                             bool /*ignore_default_svc_conf_file*/,
+                             bool ignore_default_svc_conf_file,
                              bool ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Gestalt::open_i");
@@ -1062,7 +1088,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
       if (this->process_commandline_directives () == -1)
         result = -1;
       else
-        result = this->process_directives ();
+        result = this->process_directives (ignore_default_svc_conf_file);
     }
 
 
@@ -1194,37 +1220,34 @@ ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
 
 
 
-// Process service configuration requests as indicated in the queue of
-// svc.conf files.
+// Process service configuration directives from the files queued for
+// processing
 int
-ACE_Service_Gestalt::process_directives (void)
+ACE_Service_Gestalt::process_directives (bool ignore_default_svc_conf_file)
 {
   ACE_TRACE ("ACE_Service_Gestalt::process_directives");
 
-  int result = 0;
+  if (this->svc_conf_file_queue_ == 0
+      || this->svc_conf_file_queue_->is_empty ())
+    return 0;
 
-  if (this->svc_conf_file_queue_ != 0)
-    {
       ACE_TString *sptr = 0;
+  ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
 
       // Iterate through all the svc.conf files.
       for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
            iter.next (sptr) != 0;
            iter.advance ())
         {
-          int r = this->process_file (sptr->fast_rep ());
+      if (*sptr == default_svc_conf && ignore_default_svc_conf_file)
+        continue;
 
-          if (r < 0)
-            {
-              result = r;
-              break;
+      int result = this->process_file (sptr->fast_rep ());
+      if (result < 0)
+        return result;
             }
 
-          result += r;
-        }
-    }
-
-  return result;
+  return 0;
 
 } /* process_directives () */
 

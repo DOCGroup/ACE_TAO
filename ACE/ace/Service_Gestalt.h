@@ -29,6 +29,7 @@
 #include "ace/Singleton.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Synch_Traits.h"
+#include "ace/Atomic_Op.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -62,14 +63,14 @@ class ACE_Svc_Conf_Param;
  * may or may not be bounded by the lifetime of the gestalt, that owns
  * it. This feature is important for the derived classes and the
  * Service Config in particular.
-
+ *
  */
 class ACE_Export ACE_Service_Gestalt
 {
 private:
-  /**
-   * Not implemented to enforce no copying
-   */
+  ///
+  /// Not implemented to enforce no copying
+  //
   ACE_UNIMPLEMENTED_FUNC (ACE_Service_Gestalt(const ACE_Service_Gestalt&))
   ACE_UNIMPLEMENTED_FUNC (ACE_Service_Gestalt& operator=(const ACE_Service_Gestalt&))
 
@@ -236,7 +237,7 @@ public:
    * provided in the svc.conf file(s).  Returns the number of errors
    * that occurred.
    */
-  int process_directives (void);
+   int process_directives (bool ignore_default_svc_conf_file);
 
   /// Tidy up and perform last rites when ACE_Service_Config is shut
   /// down.  This method calls <close_svcs>.  Returns 0.
@@ -400,6 +401,7 @@ protected:
 
   friend class ACE_Dynamic_Service_Base;
   friend class ACE_Service_Object;
+  friend class ACE_Service_Config;
   friend class ACE_Service_Config_Guard;
 
 protected:
@@ -446,6 +448,13 @@ protected:
   /// the static_svcs_ list.
   ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
 
+  /// Support for intrusive reference counting
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> refcnt_;
+
+ public:
+  static void intrusive_add_ref (ACE_Service_Gestalt*);
+  static void intrusive_remove_ref (ACE_Service_Gestalt*);
+
 }; /* class ACE_Service_Gestalt */
 
 
@@ -456,7 +465,7 @@ protected:
  *
  * Helps to resolve an issue with hybrid services, i.e. dynamic
  * services, accompanied by static services in the same DLL.  Only
- * automatic instances of SDG are supposed to exist. Those are
+ * automatic instances of this class are supposed to exist. Those are
  * created during (dynamic) service initialization and serve to:
  *
  * (a) Ensure the service we are loading is ordered last in the
@@ -483,6 +492,7 @@ private:
   size_t repo_begin_;
   ACE_TCHAR const * const name_;
   ACE_Service_Type const * dummy_;
+
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Guard< ACE_Recursive_Thread_Mutex > repo_monitor_;
 #endif
