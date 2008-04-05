@@ -1,3 +1,8 @@
+Sat Apr  5 13:42:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+          Fixed argument not used warnings
+
 Sat Apr  5 13:36:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Parse_Node.cpp:
