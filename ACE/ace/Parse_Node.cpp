@@ -60,7 +60,7 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
       if (yyerrno != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("dynamic initialization failed for Module %s\n"),
+                      ACE_TEXT ("dynamic initialization failed for Module %s\n"),
                       module->name ()));
           ++yyerrno;
         }
@@ -73,7 +73,7 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
       if (st->push (mt) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("dynamic initialization failed for Stream %s\n"),
+                      ACE_TEXT ("dynamic initialization failed for Stream %s\n"),
                       this->node_->name ()));
           ++yyerrno;
         }
