@@ -1,3 +1,8 @@
+Sat Apr  5 13:36:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Parse_Node.cpp:
+          Moved include out of versioned namespace block
+
 Sat Apr  5 11:50:40 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Parse_Node.cpp:
