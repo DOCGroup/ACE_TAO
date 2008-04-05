@@ -1,3 +1,30 @@
+Sat Apr  5 16:21:50 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.cpp:
+        * ace/Service_Gestalt.h:
+
+          Making SG intrusively refcountable by introducing
+          intrusive_{add,remove}_ref methods and a refcounter. Adding
+          skip_default_svc_conf_file parameter in process_directives.
+
+        * ace/svcconf.mpb:
+        * tests/Object_Manager_Flipping_Test.cpp:
+
+          Reformatting and cleanup.
+
+
+Sat Apr  5 13:42:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+          Fixed argument not used warnings
+
+Sat Apr  5 13:36:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Parse_Node.cpp:
+          Moved include out of versioned namespace block
+
 Sat Apr  5 11:50:40 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Parse_Node.cpp:

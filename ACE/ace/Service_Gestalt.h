@@ -493,6 +493,7 @@ private:
   size_t repo_begin_;
   ACE_TCHAR const * const name_;
 
+
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Guard< ACE_Recursive_Thread_Mutex > repo_monitor_;
 #endif
