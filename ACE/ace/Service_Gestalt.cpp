@@ -199,9 +199,8 @@ ACE_Service_Gestalt::intrusive_add_ref (ACE_Service_Gestalt* g)
 {
   if (g != 0)
     {
-      long tmp = ++g->refcnt_;
-      //      printf ("// (%x) ++refcnt=%ld\n", (unsigned int)ACE_OS::thr_self (), tmp);
-      ACE_ASSERT (tmp > 0);
+      ++g->refcnt_;
+      ACE_ASSERT (g->refcnt_ > 0);
     }
 }
 
@@ -211,7 +210,6 @@ ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
   if (g != 0)
     {
       long tmp = --g->refcnt_;
-      //      printf ("// (%x) refcnt--=%ld\n", (unsigned int)ACE_OS::thr_self (), tmp);
       if (tmp <= 0)  delete g;
       ACE_ASSERT (tmp >= 0);
     }
