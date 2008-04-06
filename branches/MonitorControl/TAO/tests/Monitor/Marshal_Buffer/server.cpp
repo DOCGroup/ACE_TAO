@@ -1,16 +1,16 @@
+// $Id$
+
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 
 const char *ior_output_file = "test.ior";
 
-int 
+int
 main (int argc, char *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-                                            argv, 
-                                            "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -28,10 +28,10 @@ main (int argc, char *argv[])
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
-      
+
       test_impl svnt;
       test_var server = svnt._this ();
-      
+
       CORBA::String_var ior =
 	      orb->object_to_string (server.in ());
 
@@ -45,8 +45,8 @@ main (int argc, char *argv[])
 			                      1);
         }
 
-	    ACE_OS::fprintf (output_file, 
-                        "%s", 
+	    ACE_OS::fprintf (output_file,
+                        "%s",
                         ior.in ());
 	    ACE_OS::fclose (output_file);
 
