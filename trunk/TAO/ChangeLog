@@ -1,3 +1,16 @@
+Sun Apr  6 00:03:27 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * tests/ORB_Local_Config/Separation/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Shared/Test.cpp:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+
+        Changes to account for the intrusive-recounted-ness of
+        ACE_Service_Gestalt instances.
+
 Fri Apr  4 22:15:16 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         This is the first batch of changes related to the refactoring of
