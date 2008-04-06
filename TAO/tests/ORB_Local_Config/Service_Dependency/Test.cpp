@@ -9,6 +9,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Dynamic_Service_Dependency.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Intrusive_Auto_Ptr.h"
 
 #include "Service_Configuration_Per_ORB.h"
 

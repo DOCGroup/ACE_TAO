@@ -4,6 +4,7 @@
 #include "tao/CORBALOC_Parser.h"
 #include "tao/Protocol_Factory.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Intrusive_Auto_Ptr.h"
 
 #include "Service_Configuration_Per_ORB.h"
 

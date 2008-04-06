@@ -4,6 +4,7 @@
 #include "tao/CORBALOC_Parser.h"
 #include "tao/Protocol_Factory.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Intrusive_Auto_Ptr.h"
 
 #include "Service_Configuration_Per_ORB.h"
 
@@ -66,12 +67,12 @@ testReusingGlobals (int , ACE_TCHAR *[])
   svcname = ACE_TEXT ("CORBANAME_Parser");
   ACE_Service_Object* p2 = ACE_Dynamic_Service<ACE_Service_Object>::instance (two.get (), svcname);
 
-  if (p2 == 0) // You should be able to find the same stuff here, too``
+  if (p2 == 0) // You should be able to find the same stuff here, too
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not expected to find %s in the global repo\n"), svcname));
       return -1;
     }
-
+  
   return 0;
 }
 
