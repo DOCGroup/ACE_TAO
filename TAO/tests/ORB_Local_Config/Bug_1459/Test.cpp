@@ -28,7 +28,7 @@ const char argA[] = "AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf";
 // dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:server_key.pem -SSLCertificate PEM:server_cert.pem";
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 
-const char argB[] = "BBB -ORBGestalt LOCAL -ORBSvcConf b.conf";
+const char argB[] = "BBB -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf b.conf";
 
 // dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:client_key.pem -SSLCertificate PEM:client_cert.pem"
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
@@ -76,7 +76,21 @@ testBug1459 (int , ACE_TCHAR *[])
     ACE_UNUSED_ARG (argM);
 #endif /* MORB_AM */
 
+#ifdef MORB_MB
+    int n = 0;
+    ACE_ARGV arg0(argM);
+    n = arg0.argc();
+    CORBA::ORB_var ORBA = CORBA::ORB_init(n, arg0.argv());
+    if (ORBA.in () == 0)
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to get an ORB\n")), -1);
 
+    ACE_ARGV arg1(argB);
+    n = arg1.argc();
+    CORBA::ORB_var ORBB = CORBA::ORB_init(n, arg1.argv());
+#else
+    ACE_UNUSED_ARG (argB);
+    ACE_UNUSED_ARG (argM);
+#endif /* MORB_MB */
 
 #ifdef MORB_MA
     int n = 0;
@@ -89,6 +103,11 @@ testBug1459 (int , ACE_TCHAR *[])
     ACE_ARGV arg1(argA);
     n = arg1.argc();
     CORBA::ORB_var ORBB = CORBA::ORB_init(n, arg1.argv());
+#else
+    ACE_UNUSED_ARG (argA);
+    ACE_UNUSED_ARG (argM);
+#endif /* MORB_MA */
+
     if (ORBB.in () == 0)
       ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to get a second ORB\n")), -1);
 
@@ -126,7 +145,6 @@ testBug1459 (int , ACE_TCHAR *[])
 
     if (error > 0)
       return -1;
-#endif /* MORB_MA */
 
   }
   catch(const CORBA::Exception& ex)

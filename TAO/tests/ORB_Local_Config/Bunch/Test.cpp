@@ -7,6 +7,7 @@
 
 #include "ace/ARGV.h"
 #include "ace/Service_Config.h"
+#include "ace/Intrusive_Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tests, server, "$Id$")
@@ -14,15 +15,13 @@ ACE_RCSID (tests, server, "$Id$")
 
 #include "Service_Configuration_Per_ORB.h"
 
-// @brief The "new" interfaces must be compatible with the "old" ones
-
 int
 testCompatibility (int , ACE_TCHAR *[])
 {
   ACE_TRACE ("testCompatibility");
 
   // This uses the same default ACE_Service_Repository
-  ACE_Service_Gestalt_Test glob;
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> glob (new ACE_Service_Gestalt_Test());
 
   // Use the "old" interface
   if (0 != ACE_Service_Config::process_directive
@@ -37,38 +36,38 @@ testCompatibility (int , ACE_TCHAR *[])
 
   {
     // This uses the same default ACE_Service_Repository
-    ACE_Service_Gestalt_Test one;
+    ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> one (new ACE_Service_Gestalt_Test());
 
     svcname = "CORBANAME_Parser";
 
-    ACE_Service_Object* p20 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, svcname);
-    if ((p20 == 0))
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
+    ACE_Service_Object* p20 = ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
+    if (p20 == 0)
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
     svcname = "CORBALOC_Parser";
 
-    ACE_Service_Object* p21 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, svcname);
+    ACE_Service_Object* p21 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
     if ((p21 == 0))
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
     // Exiting this scope should fini all services in the glob ...
   }
 
   svcname = "CORBANAME_Parser";
 
-  ACE_Service_Object* p20 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, svcname);
+  ACE_Service_Object* p20 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (glob.get (), svcname);
   if ((p20 != 0))
-    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
 
   svcname = "CORBALOC_Parser";
 
-  ACE_Service_Object* p21 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, svcname);
+  ACE_Service_Object* p21 = ACE_Dynamic_Service<ACE_Service_Object>::instance (glob.get (), svcname);
   if ((p21 != 0))
-    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
 
   return 0;
 }
@@ -126,7 +125,7 @@ testTSSGestalt (int , ACE_TCHAR *[])
 
   ACE_Service_Gestalt_Test one (10);  // Localized ones go here
 
-  ACE_Service_Gestalt *global_instance = ACE_Service_Config::instance ();
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> global_instance = ACE_Service_Config::instance ();
 
   // Sanity check
   if (global_instance == &one)
@@ -136,7 +135,7 @@ testTSSGestalt (int , ACE_TCHAR *[])
     // Make one be the ACE_Service_Config::instance () ...
     ACE_Service_Config_Guard temporary (&one);
 
-    ACE_Service_Gestalt *global_instance2 = ACE_Service_Config::instance ();
+    ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> global_instance2 = ACE_Service_Config::instance ();
 
     if (global_instance == global_instance2)
       ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to see a different global from before\n")), -1);
