@@ -1,3 +1,19 @@
+Sun Apr  6 01:53:13 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+
+          Fixing unused variable warning.
+
+        * ace/Svc_Conf_y.cpp:
+        * ace/svcconf.mpb:
+
+          Ensuring there are no TAB characters present in the generated
+          file.
+
+        * tests/run_test.lst:
+
+          Excluding Bug_2980_Regression as it is not runnable on vxWorks.
+
 Sat Apr  5 16:21:50 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.inl:
@@ -13,7 +29,6 @@ Sat Apr  5 16:21:50 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * tests/Object_Manager_Flipping_Test.cpp:
 
           Reformatting and cleanup.
-
 
 Sat Apr  5 13:42:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
