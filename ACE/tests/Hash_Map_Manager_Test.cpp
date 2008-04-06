@@ -21,10 +21,10 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "STL_algorithm_Test_T.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
-#include <algorithm>
 
 ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
 
@@ -65,24 +65,6 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *,
                                          ACE_Hash<const ACE_TCHAR *>,
                                          ACE_Equal_To<const ACE_TCHAR *>,
                                          ACE_Null_Mutex> HASH_STRING_REVERSE_ITER;
-
-
-struct Key_Equal_To
-{
-  Key_Equal_To (const ACE_TCHAR * key)
-    : key_ (key)
-  {
-
-  }
-
-  bool operator () (const HASH_STRING_MAP::value_type & entry)
-  {
-    return ACE_OS::strcmp (entry.ext_id_, this->key_) == 0;
-  }
-
-  // Key of interest.
-  const ACE_TCHAR * key_;
-};
 
 struct String_Table
 {
@@ -199,61 +181,6 @@ int test_two_allocators ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Entry allocator depth: %d.\n"),
               entry_alloc.pool_depth ()));
 
-  return 0;
-}
-
-static void
-print_value (const HASH_STRING_MAP::value_type & entry)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("hash entry: [%s, %s]\n"),
-              entry.ext_id_,
-              entry.int_id_));
-}
-
-static int
-test_STL_algorithm (void)
-{
-  // We are only validating that the container's iterators compile with
-  // the <algorithm> header.
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("starting STL algorithm test\n")));
-
-  // Initialize the hash map for the algorithm test(s).
-  HASH_STRING_MAP hash;
-  const HASH_STRING_MAP & chash = hash;
-
-  for (size_t i = 0; string_table[i].key_ != 0; i ++)
-    {
-      if (hash.bind (string_table[i].key_, string_table[i].value_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p failed for %s \n"),
-                           ACE_TEXT ("bind"),
-                           string_table[i].key_),
-                           -1);
-    }
-
-  // Test the (reverse_)iterator using std::for_each.
-  std::for_each (hash.begin (), hash.end (), &print_value);
-  std::for_each (chash.begin (), chash.end (), &print_value);
-  std::for_each (hash.rbegin (), hash.rend (), &print_value);
-
-  // Test the find operation. Let's see if we can locate all the
-  // keys in the hash map using std::find_if function.
-  for (size_t i = 0; string_table[i].key_ != 0; i ++)
-    {
-      if (std::find_if (hash.begin (),
-                        hash.end (),
-                        Key_Equal_To (string_table[i].key_)) == hash.end ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("`%s' not found\n"),
-                           string_table[i].key_),
-                           -1);
-    }
-
-  // We are finish with the STL algorithm test(s).
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("finished STL algorithm test\n")));
   return 0;
 }
 
@@ -394,7 +321,11 @@ run_test (void)
 
   test_two_allocators();
 
-  test_STL_algorithm ();
+  // Run the STL algorithm test on the hash map.
+  const HASH_STRING_MAP & chash = hash;
+
+  test_STL_algorithm (hash);
+  test_STL_algorithm (chash);
 
   return 0;
 }
