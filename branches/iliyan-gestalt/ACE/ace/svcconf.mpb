@@ -33,7 +33,7 @@ feature(ace_svcconf) {
     "	sed -e 's/char \\*getenv/char *ace_foo/g' \\"  // Eliminates getenv prototype, use ACE's
     "       -e 's/= getenv/= ACE_OS::getenv/g' \\"     // ... like this - qualified.
     "       -e 's/fprintf/ACE_OS::fprintf/g' \\"       // Use ACE's fprintf, not library's
-    "       -e 's/\t/  /g' \\"                         // Eliminate tabs (replace with 2 spaces)
+    "       -e 's/\\t/  /g' \\"                        // Eliminate tabs (replace with 2 spaces)
     "       -e 's/yy/ace_yy/g' \\"
     "       -e 's/->ace_yyerrno/->yyerrno/g' \\"       // These reverse the unwanted ace_ prefix
     "       -e 's/->ace_yylineno/->yylineno/g' \\"     // added by the substitution, above.
