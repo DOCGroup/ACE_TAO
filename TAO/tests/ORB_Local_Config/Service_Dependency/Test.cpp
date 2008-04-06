@@ -9,6 +9,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Dynamic_Service_Dependency.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Intrusive_Auto_Ptr.h"
 
 #include "Service_Configuration_Per_ORB.h"
 
@@ -108,11 +109,13 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
 {
   ACE_TRACE ("testORBInitializer_Registry");
 
-  ACE_Service_Gestalt_Test glob;      // for global service registrations
-  ACE_Service_Gestalt_Test one (10);  // Localized ones go here
+  // for global service registrations
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> glob (new ACE_Service_Gestalt_Test ());
 
-  size_t glob_size = glob.services_count ();
-  size_t loca_size = one.services_count ();
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> one (new ACE_Service_Gestalt_Test (10));
+
+  size_t glob_size = glob->services_count ();
+  size_t loca_size = one->services_count ();
 
   // It is expected to be empty at this point since it is not using
   // the global repo
@@ -125,7 +128,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   // Lookup it up.
   TAO::ORBInitializer_Registry_Adapter* oir =
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-      (&one, "ORBInitializer_Registry");
+    (one.get (), "ORBInitializer_Registry");
 
 #if defined (TAO_AS_STATIC_LIBS)
   if ((oir == 0))
@@ -148,14 +151,14 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
       // output an error then.
   if (oir == 0)
     {
-      one.process_directive (
+      one->process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE("ORBInitializer_Registry",
                                       "TAO_PI",
                                       "_make_ORBInitializer_Registry",
                                       ""));
       oir =
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-          (&one, "ORBInitializer_Registry");
+        (one.get (), "ORBInitializer_Registry");
     }
   if (oir == 0)
     {
@@ -165,12 +168,12 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
 #endif
 
 
-  if (glob_size != glob.services_count ())
+  if (glob_size != glob->services_count ())
     {
       ACE_ERROR ((LM_ERROR,
               "Expected %d local static service registrations, found %d\n",
               glob_size,
-              glob.services_count ()));
+              glob->services_count ()));
       return -1;
     }
 
@@ -181,7 +184,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   // ClientRequestInterceptor_Adapter_Factory and PICurrent_Loader are
   // registred explicitely, while CodecFactory_Loader - indirectly.
 
-  if (loca_size == one.services_count ())
+  if (loca_size == one->services_count ())
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected to find additional services present\n")));
       return -1;
@@ -210,7 +213,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   // Try to instantiate the dynamic service from the local repository ...
   TAO::ORBInitializer_Registry_Adapter* oir2 =
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-      (&one, "ORBInitializer_Registry");
+    (one.get (), "ORBInitializer_Registry");
 
   // Right! That's local.
   if (oir2 == 0)
@@ -227,7 +230,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   // registrations, those may end up in the wrong (global) gestalt and will
   // be in memory, which may not be mapped by finalization time!
   {
-    ACE_Service_Config_Guard guard (&one);
+    ACE_Service_Config_Guard guard (one.get ());
     oir2->init (0,0);
   }
 
@@ -237,7 +240,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
 
   // ... and also one of the dependent static services
   if (0 == ACE_Dynamic_Service <ACE_Service_Object>::instance
-                      (&one, "CodecFactory_Loader"))
+      (one.get (), "CodecFactory_Loader"))
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT ("Expected to find CodecFactory_Loader locally\n")),
                      -1);
@@ -247,7 +250,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
               "(%P|%t) Explicitely dynamic_service PolicyFactory_Loader"
               " (although ORBInitializer_Registry already did it) ...\n"));
 
-  one.process_directive
+  one->process_directive
     (ACE_DYNAMIC_SERVICE_DIRECTIVE("PolicyFactory_Loader",
                                    "TAO_PI",
                                    "_make_TAO_PolicyFactory_Loader",
@@ -255,7 +258,7 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
 
 
   if (0 == ACE_Dynamic_Service <ACE_Service_Object>::instance
-      (&one, "PolicyFactory_Loader"))
+      (one.get (), "PolicyFactory_Loader"))
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT ("Expected to find PolicyFactory_Loader locally\n")),
                      -1);
@@ -285,9 +288,9 @@ testServiceDependency (int , ACE_TCHAR *[])
 
   {
     // Start a block to limit the lifespan of a gestalt
-    ACE_Service_Gestalt_Test one (10);
+    ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> one (new ACE_Service_Gestalt_Test (10));
 
-    int result = one.process_directive
+    int result = one->process_directive
       (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Codeset",
                                      "TAO_Codeset",
                                      "_make_TAO_Codeset_Manager_Factory",
@@ -299,7 +302,7 @@ testServiceDependency (int , ACE_TCHAR *[])
 
     TAO_Codeset_Manager_Factory_Base *factory =
       ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance
-      (&one, "TAO_Codeset");
+      (one.get (), "TAO_Codeset");
 
     if (factory == 0)
       ACE_ERROR_RETURN((LM_ERROR,
@@ -316,7 +319,7 @@ testServiceDependency (int , ACE_TCHAR *[])
     // Stating that a thing depends on that dynamic service. Why?
     // Read on ...
 
-    pdep = new ACE_Dynamic_Service_Dependency (&one, "TAO_Codeset");
+    pdep = new ACE_Dynamic_Service_Dependency (one.get (), "TAO_Codeset");
 
     // This would ordinarily cause the dynamic services to get
     // unloaded and their DLL's unmapped ...
