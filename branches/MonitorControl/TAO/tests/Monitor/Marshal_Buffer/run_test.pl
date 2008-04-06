@@ -16,7 +16,12 @@ $mc_iorfile = PerlACE::LocalFile ("monitor.ior");
 unlink $iorfile;
 unlink $mc_iorfile;
 
-$SV = new PerlACE::Process ("server");
+if (PerlACE::is_vxworks_test()) {
+  $SV = new PerlACE::ProcessVX ("server");
+}
+else {
+  $SV = new PerlACE::Process ("server");
+}
 $CL = new PerlACE::Process ("client");
 $MCL = new PerlACE::Process ("monitor_client");
 

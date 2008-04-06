@@ -1,9 +1,17 @@
 // -*- MPC -*-
 // $Id$
 
-project(client): taoclient, monitor {
+project(*idl): taoidldefaults {
   IDL_Files {
-    test.idl
+    Test.idl
+  }
+  custom_only = 1
+}
+
+
+project(*client): taoclient, monitor {
+  after += *idl
+  IDL_Files {
   }
 
   Source_Files {
@@ -20,9 +28,9 @@ project(client): taoclient, monitor {
   }
 }
 
-project(server): taoserver {
+project(*server): taoserver {
+  after += *idl
   IDL_Files {
-    test.idl
   }
 
   Source_Files {
@@ -47,14 +55,14 @@ project(server): taoserver {
 project(monitor_client): taoexe, monitor {
   IDL_Files {
   }
-  
+
   Source_Files {
     monitor_client.cpp
   }
-  
+
   Header_Files {
   }
-  
+
   Inline_Files {
   }
 }
