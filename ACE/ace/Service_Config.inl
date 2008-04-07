@@ -45,7 +45,6 @@ ACE_Service_Config::open (int argc,
 
 // Handle the command-line options intended for the
 // ACE_Service_Config.
-
 ACE_INLINE int
 ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -54,7 +53,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 
 /// Return the global configuration instance. Allways returns the same
 /// instance
-ACE_INLINE ACE_Service_Gestalt*
+ACE_INLINE ACE_Service_Gestalt *
 ACE_Service_Config::global (void)
 {
   return ACE_Service_Config::singleton()->instance_.get ();
@@ -65,7 +64,7 @@ ACE_Service_Config::global (void)
 /// occasions, it may be a different one. For example,
 /// ACE_Service_Config_Guard provides a way of temporarily replacing
 /// the "current" configuration instance in the context of a thread.
-ACE_INLINE ACE_Service_Gestalt*
+ACE_INLINE ACE_Service_Gestalt *
 ACE_Service_Config::instance (void)
 {
   return ACE_Service_Config::current ();
