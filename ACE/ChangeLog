@@ -1,3 +1,39 @@
+Mon Apr  7 15:21:38 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This the second part of the SC refatoring.  It builds on top of
+          the intrusive refcounting mechanism introduced earlier to improve
+          design and eliminate memory issues (leaks, SEGV on shutdown)
+
+        * ace/Service_Config.cpp (open_i,ACE_Service_Config):
+
+          Moved the implicit configuration file handling from open_i to
+          the SG instance. Eliminated close_svcs() by incorporating its
+          functionality in close().
+
+        * ace/Service_Config.inl:
+        * ace/Service_Config.h (ACE_Service_Config_Guard,ACE_Service_Config):
+
+          Removing the inheritance relationship between Service Config and
+          Service Gestalt. To simplify the memory management, SC becomes an
+          interface to the actual configuration data managed by SG. Coupled
+          with the reference counting of SG instances, this ensures correct
+          memory management in multi-threaded environments where both the
+          TSS and the user code may trigger SG finalization.
+
+          Introducing ACE_Threading_Helper to simplify TSS management
+          (RAII idiom).  Changed ACE_Service_Config_Guard to use the new
+          smart pointer for SG.  Doxygen comments cleanup.
+
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp:
+
+          Fixing unused function definition
+
+        * tests/Bug_2980_Regression_Test.cpp:
+
+          Updating the test to prevent it from breaking vxWorks builds
+          which appear to lack a declaration for dlopen()
+
 Sun Apr  6 01:53:13 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp:

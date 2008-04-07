@@ -44,11 +44,18 @@ ACE_Service_Config::open (int argc,
 
 // Handle the command-line options intended for the
 // ACE_Service_Config.
-
 ACE_INLINE int
 ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 {
   return ACE_Service_Config::current ()->parse_args (argc, argv);
+}
+
+/// Return the global configuration instance. Allways returns the same
+/// instance
+ACE_INLINE ACE_Service_Gestalt *
+ACE_Service_Config::global (void)
+{
+  return ACE_Service_Config::singleton()->instance_.get ();
 }
 
 /// Return the configuration instance, considered "global" in the
@@ -59,27 +66,22 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 ACE_INLINE ACE_Service_Gestalt *
 ACE_Service_Config::instance (void)
 {
-  return ACE_Service_Config::global ()->tss_;
+  return ACE_Service_Config::current ();
 }
 
-/// Return the configuration instance, considered "global" in the
-/// current thread. This may be the same as instance(), but on some
-/// occasions, it may be a different one. For example,
-/// ACE_Service_Config_Guard provides a way of temporarily replacing
-/// the "current" configuration instance in the context of a thread.
-ACE_INLINE ACE_Service_Gestalt *
-ACE_Service_Config::current (void)
-{
-  return ACE_Service_Config::global ()->tss_;
-}
+// This method has changed to return the gestalt instead of the
+// container, underlying the service repository and defined
+// ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor*). This way
+// the existing source code can keep using
+// ACE_Service_Config::static_svcs(), however now it is not necessary
+// to expose the repository storage *and* it is much easier to debug
+// service registration problems.
 
-/// A mutator to set the "current" (TSS) gestalt instance.
 ACE_INLINE ACE_Service_Gestalt*
-ACE_Service_Config::current (ACE_Service_Gestalt *newcurrent)
+ACE_Service_Config::static_svcs (void)
 {
-  return ACE_Service_Config::global ()->tss_.ts_object (newcurrent);
+  return ACE_Service_Config::current ();
 }
-
 
 /// Compare two service descriptors for equality.
 ACE_INLINE bool

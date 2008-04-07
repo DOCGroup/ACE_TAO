@@ -128,10 +128,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Prototypes.
 
 static ACE_Module_Type *ace_get_module (ACE_Service_Type const * sr,
-                                        ACE_Service_Type const * sv,
-                                        int & ace_ace_yyerrno);
-
-static ACE_Module_Type *ace_get_module (ACE_Service_Type const * sr,
                                         ACE_TCHAR const * svc_name,
                                         int & ace_ace_yyerrno);
 
@@ -473,11 +469,11 @@ static const ace_yytype_int8 ace_yyrhs[] =
 /* ACE_YYRLINE[ACE_YYN] -- source line where rule number ACE_YYN was defined.  */
 static const ace_yytype_uint16 ace_yyrline[] =
 {
-       0,    62,    62,    71,    75,    79,    80,    81,    82,    83,
-      84,    88,    98,   105,   112,   119,   126,   130,   130,   137,
-     140,   147,   146,   155,   159,   167,   171,   174,   188,   197,
-     206,   228,   235,   239,   244,   250,   254,   258,   265,   269,
-     273,   280,   281,   285,   286,   287
+       0,    58,    58,    67,    71,    75,    76,    77,    78,    79,
+      80,    84,    94,   101,   108,   115,   122,   126,   126,   133,
+     136,   143,   142,   151,   155,   163,   167,   170,   184,   193,
+     202,   224,   231,   235,   240,   246,   250,   254,   261,   265,
+     269,   276,   277,   281,   282,   283
 };
 #endif
 
@@ -1961,48 +1957,6 @@ ace_get_module (ACE_Service_Type const * sr,
                   svc_name,
                   (sr ? sr->name () : ACE_TEXT ("(nil)"))));
       ++ace_yyerrno;
-    }
-
-  return const_cast<ACE_Module_Type *> (mt);
-}
-
-static ACE_Module_Type *
-ace_get_module (ACE_Service_Type const * sr,
-                ACE_Service_Type const * sv,
-                int & ace_yyerrno)
-{
-  ACE_Stream_Type const * const st =
-    (sr == 0
-     ? 0
-     : static_cast<ACE_Stream_Type const *> (sr->type ()));
-
-  ACE_Module_Type const * const mt =
-    static_cast <ACE_Module_Type const *> (sv->type ());
-
-  ACE_TCHAR const * const module_type_name =
-    (mt ? mt->name () : ACE_TEXT ("(nil)"));
-
-  if (sr == 0 || st == 0 || mt == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
-                  module_type_name,
-                  (sr ? sr->name () : ACE_TEXT ("(nil)"))));
-      ++ace_yyerrno;
-    }
-
-  // Make sure that the Module has the same name as the
-  // Module_Type object from the svc.conf file.
-  ACE_Module<ACE_SYNCH> * const mp =
-    static_cast<ACE_Module<ACE_SYNCH> *> (mt ? mt->object () : 0);
-
-  if (mp && ACE_OS::strcmp (mp->name (), module_type_name) != 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
-                  module_type_name,
-                  mp->name ()));
-      mp->name (module_type_name);
     }
 
   return const_cast<ACE_Module_Type *> (mt);

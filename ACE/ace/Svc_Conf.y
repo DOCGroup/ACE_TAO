@@ -23,10 +23,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Prototypes.
 
 static ACE_Module_Type *ace_get_module (ACE_Service_Type const * sr,
-                                        ACE_Service_Type const * sv,
-                                        int & ace_yyerrno);
-
-static ACE_Module_Type *ace_get_module (ACE_Service_Type const * sr,
                                         ACE_TCHAR const * svc_name,
                                         int & ace_yyerrno);
 
@@ -339,48 +335,6 @@ ace_get_module (ACE_Service_Type const * sr,
                   svc_name,
                   (sr ? sr->name () : ACE_TEXT ("(nil)"))));
       ++yyerrno;
-    }
-
-  return const_cast<ACE_Module_Type *> (mt);
-}
-
-static ACE_Module_Type *
-ace_get_module (ACE_Service_Type const * sr,
-                ACE_Service_Type const * sv,
-                int & yyerrno)
-{
-  ACE_Stream_Type const * const st =
-    (sr == 0
-     ? 0
-     : static_cast<ACE_Stream_Type const *> (sr->type ()));
-
-  ACE_Module_Type const * const mt =
-    static_cast <ACE_Module_Type const *> (sv->type ());
-
-  ACE_TCHAR const * const module_type_name =
-    (mt ? mt->name () : ACE_TEXT ("(nil)"));
-
-  if (sr == 0 || st == 0 || mt == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
-                  module_type_name,
-                  (sr ? sr->name () : ACE_TEXT ("(nil)"))));
-      ++yyerrno;
-    }
-
-  // Make sure that the Module has the same name as the
-  // Module_Type object from the svc.conf file.
-  ACE_Module<ACE_SYNCH> * const mp =
-    static_cast<ACE_Module<ACE_SYNCH> *> (mt ? mt->object () : 0);
-
-  if (mp && ACE_OS::strcmp (mp->name (), module_type_name) != 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
-                  module_type_name,
-                  mp->name ()));
-      mp->name (module_type_name);
     }
 
   return const_cast<ACE_Module_Type *> (mt);
