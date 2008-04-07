@@ -1,3 +1,14 @@
+Mon Apr  7 11:45:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/Monitor_Impl.cpp:
+          Improved list operations
+
+        * tests/Monitor/Marshal_Buffer/monitor_client.cpp:
+          Use ACE_DEBUG
+
+        * tests/Monitor/Marshal_Buffer/run_test.pl:
+          Use double quotes
+
 Mon Apr  7 10:24:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Monitor/Monitor_Impl.cpp:

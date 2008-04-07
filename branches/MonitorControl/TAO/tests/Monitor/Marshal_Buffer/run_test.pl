@@ -23,7 +23,7 @@ else {
   $SV = new PerlACE::Process ("server");
 }
 $CL = new PerlACE::Process ("client");
-$MCL = new PerlACE::Process ("monitor_client", "-p \'Output CDR Buffer\' -i 10");
+$MCL = new PerlACE::Process ("monitor_client", "-p \"Output CDR Buffer\" -i 10");
 
 $SV->Spawn ();
 

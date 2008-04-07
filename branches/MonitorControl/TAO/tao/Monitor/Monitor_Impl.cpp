@@ -77,6 +77,7 @@ Monitor_Impl::get_statistics (const ::Monitor::MC::NameList & names)
   ACE_NEW_THROW_EX (datalist,
                     ::Monitor::MC::DataList (names.length ()),
                     CORBA::NO_MEMORY ());
+  datalist->length (names.length ());
 
   /// Get an instance of the MC service singleton.
   MC_ADMINMANAGER* mgr =
@@ -152,6 +153,8 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::MC::NameList & names)
   ACE_NEW_THROW_EX (datalist,
                     ::Monitor::MC::DataList (names.length ()),
                     CORBA::NO_MEMORY ());
+  datalist->length (names.length ());
+
 
   /// Get an instance of the MC service singleton.
   MC_ADMINMANAGER* mgr =

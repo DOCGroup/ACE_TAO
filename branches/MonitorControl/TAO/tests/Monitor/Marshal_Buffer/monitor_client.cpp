@@ -98,8 +98,8 @@ main (int argc, char *argv[])
                   data = monitor->get_statistics (seq);
                 }
 
-              cout << "client marshal buffer size = " << data[0].value
-                   << " bytes" << endl;
+              Monitor::MC::Data d = data[0];
+              ACE_DEBUG ((LM_DEBUG, "MP <%s>: %d\n", monitor_point, d.value));
 
               ACE_OS::sleep (1);
             }
@@ -109,7 +109,7 @@ main (int argc, char *argv[])
           Monitor::MC::NameList_var list = monitor->get_statistic_names ();
           for (CORBA::ULong index = 0; index < list->length(); ++index)
             {
-              ACE_DEBUG ((LM_DEBUG, "MP: %s\n", list[index].in()));
+              ACE_DEBUG ((LM_DEBUG, "MP: <%s>\n", list[index].in()));
             }
         }
 
