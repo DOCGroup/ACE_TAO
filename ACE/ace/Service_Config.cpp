@@ -15,9 +15,7 @@
 # include "ace/Sig_Adapter.h"
 #endif  /* !ACE_LACKS_UNIX_SIGNALS */
 
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/Log_Msg.h"
@@ -41,27 +39,29 @@ typedef ACE_Unmanaged_Singleton<ACE_Service_Config,
                                 ACE_SYNCH_RECURSIVE_MUTEX> ACE_SERVICE_CONFIG_SINGLETON;
 
 
-///
+/// ctor
 ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
-  : saved_ (ACE_Service_Config::instance ())
+  : saved_ (ACE_Service_Config::current ())
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE (%P|%t) SCG:<ctor=%@>")
                 ACE_TEXT (" - config=%@ repo=%@ superceded by repo=%@\n"),
                 this,
-                this->saved_,
+                this->saved_.get (),
                 this->saved_->repo_,
                 psg->repo_));
 
   // Modify the TSS if the repo has changed
-  if (saved_ != psg)
-      (void)ACE_Service_Config::current (psg);
+  ACE_Service_Config::current (psg);
 }
 
 ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
 {
-  ACE_Service_Config::current (this->saved_);
+  ACE_Service_Gestalt* s = this->saved_.get ();
+  ACE_ASSERT (s != 0);
+
+  ACE_Service_Config::current (s);
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -181,15 +181,15 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE (%P|%t) SC::open_i - this=%@, opened=%d, ")
                 ACE_TEXT ("loadstatics=%d\n"),
-                this, this->is_opened_, this->no_static_svcs_));
+                this, instance_->is_opened_, instance_->no_static_svcs_));
 
   // Guard against reentrant processing. For example,
   // if the singleton gestalt (ubergestalt) was already open,
   // do not open it again...
   // The base class open_i increments this and we are
   // forwarding to it, so we don't have to increment here.
-  if (this->is_opened_ != 0)
-    return ACE_Service_Gestalt::open_i (program_name,
+  if (instance_->is_opened_ != 0)
+    return instance_->open_i (program_name,
                                         logger_key,
                                         ignore_static_svcs,
                                         ignore_default_svc_conf_file,
@@ -199,7 +199,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   // may not be safe, or wise to do an a per instance basis
 
   // Override any defaults, if required
-  this->no_static_svcs_ = ignore_static_svcs;
+  instance_->no_static_svcs_ = ignore_static_svcs;
 
   // Become a daemon before doing anything else.
   if (this->be_a_daemon_)
@@ -232,7 +232,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     // Only use the static <logger_key_> if the caller doesn't
     // override it in the parameter list or if the key supplied is
     // equal to the default static logger key.
-    key = this->logger_key_;
+    key = instance_->logger_key_;
   else
     ACE_SET_BITS (flags, ACE_Log_Msg::LOGGER);
 
@@ -248,7 +248,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 
       // Initialize the Service Repository (this will still work if
       // user forgets to define an object of type ACE_Service_Config).
-      ACE_Service_Repository::instance (ACE_Service_Config::MAX_SERVICES);
+      ACE_Service_Repository::instance (ACE_Service_Gestalt::MAX_SERVICES);
 
       // Initialize the ACE_Reactor (the ACE_Reactor should be the
       // same size as the ACE_Service_Repository).
@@ -275,62 +275,17 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   if (result == -1)
     return -1;
 
-  if (this->init_svc_conf_file_queue () == -1)
-    return -1;
-
-  // Check if the default file exists before attempting to queue it
-  // for processing
-  if (!ignore_default_svc_conf_file)
-    {
-      FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF,
-                                ACE_TEXT ("r"));
-      ignore_default_svc_conf_file = (fp == 0);
-      if (fp != 0)
-        ACE_OS::fclose (fp);
-    }
-
-  if (!ignore_default_svc_conf_file
-      && this->svc_conf_file_queue_->is_empty ())
-    {
-      // Load the default "svc.conf" entry here if there weren't
-      // overriding -f arguments in <parse_args>.
-      if (this->svc_conf_file_queue_->enqueue_tail
-          (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("enqueuing ")
-                             ACE_DEFAULT_SVC_CONF
-                             ACE_TEXT(" file")),
-                            -1);
-        }
-    }
-
-  return ACE_Service_Gestalt::open_i (program_name,
+  return instance_->open_i (program_name,
                                       logger_key,
                                       ignore_static_svcs,
                                       ignore_default_svc_conf_file,
                                       ignore_debug_flag);
 }
 
-// This method has changed to return the gestalt instead of the
-// container, underlying the service repository and defined
-// ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor*). This way
-// the existing source code can keep using
-// ACE_Service_Config::static_svcs(), however now it is not necessary
-// to expose the repository storage *and* it is much easier to debug
-// service registration problems.
-
-ACE_Service_Gestalt *
-ACE_Service_Config::static_svcs (void)
-{
-  return ACE_Service_Config::instance ();
-}
-
 /// Return the global configuration instance. Always returns the same
 /// instance
 ACE_Service_Config *
-ACE_Service_Config::global (void)
+ACE_Service_Config::singleton (void)
 {
   return ACE_SERVICE_CONFIG_SINGLETON::instance ();
 }
@@ -378,15 +333,116 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
 ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
                                         size_t size,
                                         int signum)
-  : ACE_Service_Gestalt (size, false, ignore_static_svcs)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
+  
+  // TODO: Need to find a more customizable way of instantiating the
+  // gestalt but perhaps we should leave this out untill such
+  // customizations are identified.
+  ACE_Service_Gestalt* tmp = 0;
+  ACE_NEW_NORETURN (tmp,
+                    ACE_Service_Gestalt (size, false, ignore_static_svcs));
+  
+  this->instance_ = tmp;
+  this->threadkey_.set (tmp);
+  
+  ACE_Service_Config::signum_ = signum;
+}
+
+ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
+                                        const ACE_TCHAR *logger_key)
+{
+  ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
+  
+  // TODO: Need to find a more customizable way of instantiating the
+  // gestalt but perhaps we should leave this out untill such
+  // customizations are identified.
+  ACE_Service_Gestalt* tmp = 0;
+  ACE_NEW_NORETURN (tmp,
+                    ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
+  
+  this->instance_ = tmp;
+  this->threadkey_.set (tmp);
+  
+  if (this->open (program_name,
+                  logger_key) == -1 && errno != ENOENT)
+    {
+      // Only print out an error if it wasn't the svc.conf file that was
+      // missing.
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) SC failed to open: %p\n"),
+                  program_name));
+    }
+}
+
+ACE_Threading_Helper::ACE_Threading_Helper ()
+  :  key_ (ACE_OS::NULL_key)
+{
 #if defined (ACE_HAS_TSS_EMULATION)
   ACE_Object_Manager::init_tss ();
 #endif
-  this->tss_.ts_object (this);
-  ACE_Service_Config::signum_ = signum;
+
+  if (ACE_Thread::keycreate (&key_, 0, 0) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Failed to create thread key: %p\n"),
+                  ""));
+    }
 }
+
+
+ACE_Threading_Helper::~ACE_Threading_Helper ()
+{
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
+  ACE_OS::thr_key_detach (this->key_, 0);
+  ACE_OS::thr_keyfree (this->key_);
+#else // defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
+
+#endif // defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
+}
+
+void
+ACE_Threading_Helper::set (void* p)
+{
+  if (ACE_Thread::setspecific (key_, p) == -1)
+    ACE_ERROR ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) Service Config failed to set thread key value: %p\n"),
+                       ""));
+}
+
+void*
+ACE_Threading_Helper::get (void)
+{
+  void* temp = 0;
+  if (ACE_Thread::getspecific (key_, &temp) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) Service Config failed to get thread key value: %p\n"),
+                       ""),
+                      0);
+  return temp;
+}
+
+
+/// Return the "global" configuration instance, for the current
+/// thread. This may be the same as instance(), but on some occasions,
+/// it may be a different one. For example, ACE_Service_Config_Guard
+/// provides a way of temporarily replacing the "current"
+/// configuration instance in the context of a thread.
+ACE_Service_Gestalt*
+ACE_Service_Config::current (void)
+{
+  void* temp = ACE_Service_Config::singleton()->threadkey_.get ();
+  ACE_ASSERT (temp != 0);
+  return static_cast<ACE_Service_Gestalt*> (temp);
+}
+
+/// A mutator to set the "current" (TSS) gestalt instance.
+void
+ACE_Service_Config::current (ACE_Service_Gestalt* newcurrent)
+{
+  ACE_Service_Config::singleton()->threadkey_.set (newcurrent);
+}
+
 
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
@@ -446,29 +502,7 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
 }
 
 
-ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
-                                        const ACE_TCHAR *logger_key)
-  : ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false)
-{
-  ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
-#if defined (ACE_HAS_TSS_EMULATION)
-  ACE_Object_Manager::init_tss ();
-#endif
-  this->tss_.ts_object (this);
-  if (this->open (program_name,
-                  logger_key) == -1 && errno != ENOENT)
-    {
-
-      // Only print out an error if it wasn't the svc.conf file that was
-      // missing.
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) SC failed to open: %p\n"),
-                  program_name));
-    }
-}
-
 // Signal handling API to trigger dynamic reconfiguration.
-
 void
 ACE_Service_Config::handle_signal (int sig,
                                    siginfo_t *,
@@ -483,8 +517,7 @@ ACE_Service_Config::handle_signal (int sig,
   ACE_Service_Config::reconfig_occurred_ = 1;
 }
 
-// Trigger the reconfiguration process.
-
+// Trigger reconfiguration to re-read configuration files.
 void
 ACE_Service_Config::reconfigure (void)
 {
@@ -512,27 +545,18 @@ ACE_Service_Config::reconfigure (void)
 int
 ACE_Service_Config::close (void)
 {
-  int const result1 = ACE_Service_Config::instance ()->close ();
+    ACE_Service_Config::singleton ()->instance_->close ();
 
   // Delete the service repository.  All the objects inside the
   // service repository should already have been finalized.
-  int const result2 = ACE_Service_Config::close_svcs ();
+  ACE_Service_Repository::close_singleton ();
 
-  // Do away with the Singleton
+  // Do away with the singleton ACE_Service_Config (calls dtor)
   ACE_SERVICE_CONFIG_SINGLETON::close ();
 
-  return (result1 | result2);
-}
-
-int
-ACE_Service_Config::close_svcs (void)
-{
-  ACE_TRACE ("ACE_Service_Config::close_svcs");
-
-  ACE_Service_Repository::close_singleton ();
-  ACE_Service_Config::current (global ());
   return 0;
 }
+
 
 int
 ACE_Service_Config::fini_svcs (void)
@@ -553,15 +577,10 @@ ACE_Service_Config::fini_svcs (void)
   return result;
 }
 
-// Perform user-specified close activities and remove dynamic memory.
-
+/// Perform user-specified close activities and remove dynamic memory.
 ACE_Service_Config::~ACE_Service_Config (void)
 {
   ACE_TRACE ("ACE_Service_Config::~ACE_Service_Config");
-
-  // We do not want ~ACE_TSS<> to delete this again (single-thread
-  // builds)
-  this->tss_.ts_object (0);
 }
 
 // ************************************************************
