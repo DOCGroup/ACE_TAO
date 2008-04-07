@@ -30,6 +30,9 @@ public:
 
   virtual void clear_statistics (const ::Monitor::MC::NameList & names);
 private:
+
+  void check_names_i (const ::Monitor::MC::NameList & names);
+
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;

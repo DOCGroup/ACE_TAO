@@ -24,7 +24,7 @@ Monitor_Impl::get_statistic_names (void)
   ACE_NEW_THROW_EX (namelist,
                     ::Monitor::MC::NameList (mc_names.size ()),
                     CORBA::NO_MEMORY ());
-                    
+
   namelist->length (mc_names.size ());
 
   CORBA::ULong index = 0;
@@ -50,23 +50,22 @@ Monitor_Impl::get_statistic (const char * the_name)
   /// Call on the administrator class to look up the desired monitors.
   ACE::MonitorControl::Monitor_Base *monitor =
     mgr->admin ().monitor_point (the_name);
-    
+
+  if (monitor == 0)
+    {
+      Monitor::MC::NameList seq;
+      seq.length (1);
+      seq[0] = CORBA::string_dup (the_name);
+      throw ::Monitor::MC::InvalidName (seq);
+    }
+
   MonitorControl_Types::Data d;
   ::Monitor::MC::Data data;
-
-  if (monitor != 0)
-    {
-      monitor->retrieve (d);
-      data.value = d.value_;
-      ACE_UINT64 usecs;
-      d.timestamp_.to_usec (usecs);
-      data.timestamp = usecs;
-    }
-  else
-    {
-      data.value = 0.0;
-      data.timestamp = 0UL;
-    }
+  monitor->retrieve (d);
+  data.value = d.value_;
+  ACE_UINT64 usecs;
+  d.timestamp_.to_usec (usecs);
+  data.timestamp = usecs;
 
   return data;
 }
@@ -82,34 +81,68 @@ Monitor_Impl::get_statistics (const ::Monitor::MC::NameList & names)
   /// Get an instance of the MC service singleton.
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-    
+
   MonitorControl_Types::Data d;
-  ::Monitor::MC::Data data;
-     
+  Monitor::MC::NameList seq;
+
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
       ACE::MonitorControl::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
-        
+
       if (monitor != 0)
         {
-          monitor->retrieve (d);
-          data.value = d.value_;
-          ACE_UINT64 usecs;
-          d.timestamp_.to_usec (usecs);
-          data.timestamp = usecs;
+          if (seq.length () == 0)
+            {
+              ::Monitor::MC::Data data;
+              monitor->retrieve (d);
+              data.value = d.value_;
+              ACE_UINT64 usecs;
+              d.timestamp_.to_usec (usecs);
+              data.timestamp = usecs;
+              (*datalist)[index] = data;
+            }
         }
       else
         {
-          data.value = 0.0;
-          data.timestamp = 0UL;
+          seq.length (seq.length() + 1);
+          seq[seq.length() - 1] = CORBA::string_dup (names[index].in ());
         }
-        
-      (*datalist)[index] = data;
     }
-    
+
+  if (seq.length () > 0)
+  {
+    throw ::Monitor::MC::InvalidName (seq);
+  }
+
   return datalist;
+}
+
+void
+Monitor_Impl::check_names_i (const ::Monitor::MC::NameList & names)
+{
+  MC_ADMINMANAGER* mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+
+  Monitor::MC::NameList seq;
+
+  for (CORBA::ULong index = 0; index < names.length (); ++index)
+    {
+      /// Call on the administrator class to look up the desired monitors.
+      ACE::MonitorControl::Monitor_Base *monitor =
+        mgr->admin ().monitor_point (names[index]);
+      if (!monitor)
+        {
+          seq.length (seq.length() + 1);
+          seq[seq.length() - 1] = CORBA::string_dup (names[index].in ());
+        }
+    }
+
+  if (seq.length () > 0)
+    {
+      throw ::Monitor::MC::InvalidName (seq);
+    }
 }
 
 ::Monitor::MC::DataList *
@@ -123,10 +156,10 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::MC::NameList & names)
   /// Get an instance of the MC service singleton.
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-    
+
   MonitorControl_Types::Data d;
-  ::Monitor::MC::Data data;
-  
+  Monitor::MC::NameList seq;
+
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
@@ -135,21 +168,43 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::MC::NameList & names)
 
       if (monitor != 0)
         {
-          monitor->retrieve_and_clear (d);
-          data.value = d.value_;
-          ACE_UINT64 usecs;
-          d.timestamp_.to_usec (usecs);
-          data.timestamp = usecs;
+          if (seq.length () == 0)
+            {
+              ::Monitor::MC::Data data;
+              monitor->retrieve (d);
+              data.value = d.value_;
+              ACE_UINT64 usecs;
+              d.timestamp_.to_usec (usecs);
+              data.timestamp = usecs;
+              (*datalist)[index] = data;
+            }
         }
       else
         {
-          data.value = 0.0;
-          data.timestamp = 0UL;
+          seq.length (seq.length() + 1);
+          seq[seq.length() - 1] = CORBA::string_dup (names[index].in ());
         }
-      
-      (*datalist)[index] = data;
     }
-    
+
+  if (seq.length () > 0)
+    {
+      throw ::Monitor::MC::InvalidName (seq);
+    }
+  else
+    {
+      for (CORBA::ULong index = 0; index < names.length (); ++index)
+        {
+          /// Call on the administrator class to look up the desired monitors.
+          ACE::MonitorControl::Monitor_Base *monitorb =
+            mgr->admin ().monitor_point (names[index]);
+
+          if (monitorb != 0)
+            {
+              monitorb->clear ();
+            }
+        }
+    }
+
   return datalist;
 }
 
@@ -159,6 +214,8 @@ Monitor_Impl::clear_statistics (const ::Monitor::MC::NameList & names)
   /// Get an instance of the MC service singleton.
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+
+  Monitor::MC::NameList seq;
 
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
@@ -170,6 +227,16 @@ Monitor_Impl::clear_statistics (const ::Monitor::MC::NameList & names)
         {
           monitor->clear ();
         }
+      else
+        {
+          seq.length (seq.length() + 1);
+          seq[seq.length() - 1] = CORBA::string_dup (names[index].in ());
+        }
     }
+
+  if (seq.length () > 0)
+  {
+    throw ::Monitor::MC::InvalidName (seq);
+  }
 }
 

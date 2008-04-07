@@ -55,7 +55,7 @@ main (int argc, char *argv[])
 
       /// Destroy the POA, waiting until the destruction terminates,
       /// then the ORB.
-      root_poa->destroy (TRUE, TRUE);
+      root_poa->destroy (true, true);
       orb->destroy ();
     }
   catch (CORBA::Exception &ex)
