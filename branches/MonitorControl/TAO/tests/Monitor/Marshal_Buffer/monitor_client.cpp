@@ -111,7 +111,7 @@ main (int argc, char *argv[])
                   for (CORBA::ULong valueindex = 0; valueindex < dlist.dlist.length(); valueindex++)
                   {
                     Monitor::MC::Data d = dlist.dlist[valueindex];
-                    ACE_DEBUG ((LM_DEBUG, "\t value <%d>:\n", d.value));
+                    ACE_DEBUG ((LM_DEBUG, "\t value <%A>:\n", d.value));
                   }
                 }
 
