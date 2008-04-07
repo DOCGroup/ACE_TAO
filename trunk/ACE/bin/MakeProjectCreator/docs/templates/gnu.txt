@@ -11,6 +11,7 @@ cidlc_flags = The default flags for the cidl compiler.
 dds = Indicates whether or not this project contains DDS code.
 idl_files = When a Define_Custom(IDL) is used, they will be accessible through this variable name.
 install = This is a synonym for exeout.
+linkflags = Platform specific flags passed during the linking of dynamic libraries and executables.
 tao = Indicates whether or not this project contains TAO code.
 tao_idl = The full path to the idl compiler.
 tao_idl3_to_idl2 = The full path to the idl3 to idl2 compiler.
