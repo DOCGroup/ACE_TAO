@@ -17,8 +17,8 @@
 
 #include /**/ "ace/config-all.h"
 #include "ace/Default_Constants.h"
+#include "ace/Intrusive_Auto_Ptr.h"
 #include "ace/Service_Gestalt.h"
-#include "ace/TSS_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -133,7 +133,37 @@ public:
   bool operator!= (ACE_Static_Svc_Descriptor &) const;
 };
 
+/**
+ * @class ACE_Threading_Helper
+ *
+ * @brief Encapsulates responsibility for allocating, destroying and
+ * manipulating the value, associated with a thread-specific
+ * key. Relates to the ability of the created thread to inherit the
+ * parent thread's gestalt. Designed to be used as an instance member
+ * of @c ACE_Service_Config
+ */
+class ACE_Threading_Helper
+{
+public:
+  ACE_Threading_Helper ();
+  ~ACE_Threading_Helper ();
+
+  void set (void*);
+  void* get (void);
+
+private:
+
+  /**
+   * Key for the thread-specific data Service Configuration keeps
+   * around.  This datum is a simple pointer to the configuration
+   * context (Gestalt).
+   */
+  ACE_thread_key_t key_;
+};
+
 #define ACE_Component_Config ACE_Service_Config
+
+typedef ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> ACE_Service_Gestalt_Auto_Ptr;
 
 /**
  * @class ACE_Service_Config
@@ -166,8 +196,13 @@ public:
  * not eliminated, by _not_ #defining
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER.
  */
-class ACE_Export ACE_Service_Config: public ACE_Service_Gestalt
+class ACE_Export ACE_Service_Config
 {
+
+  // The Instance, or the global (default) configuration context.
+  // The monostate would forward the calls to that instance. The TSS
+  // will point here
+  ACE_Service_Gestalt_Auto_Ptr instance_;
 
 public:
 
@@ -179,7 +214,7 @@ public:
    * registered when the repository is opened.
    */
   ACE_Service_Config (bool ignore_static_svcs = true,
-                      size_t size = ACE_Service_Gestalt::MAX_SERVICES,
+                      size_t size = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE,
                       int signum = SIGHUP);
 
   /**
@@ -222,38 +257,31 @@ protected:
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
 
   /**
-   * A Wrapper for the TSS-stored pointer to the "current"
-   * configuration Gestalt. Static initializers from any DLL loaded
-   * through the SC will find the SC instance through the TSS pointer,
-   * instead of the global singleton. This makes it possible to ensure
-   * that the new services are loaded in the correct Gestalt,
-   * independent of which thread is actually using the SC at the time
-   * to do so.
+   * A helper instance to manage thread-specific key creation
    */
-  ACE_TSS <ACE_Service_Gestalt> tss_;
+  ACE_Threading_Helper threadkey_;
 
   /// = Static interfaces
 
 public:
   /**
-   * Mutator to set the (TSS) global instance. Intended for use by
-   * helper classes like @see ACE_Service_Config_Guard. Stack-based
-   * instances of it can temporarily change which Gestalt is
-   * considered global by any static initializer (especially those in
-   * DLLs, loaded at run-time).
+   * Returns the process-wide global singleton instance. It would
+   * have been created and will be managed by the Object Manager.
    */
-  static ACE_Service_Gestalt* current (ACE_Service_Gestalt*);
+  static ACE_Service_Config* singleton (void);
 
   /**
-   * Returns a process-wide global singleton instance in contrast with
-   * current (), which may return a different instance at different
-   * times, dependent on the context. Use of this method is
-   * discouraged as it allows circumvention of the mechanism for
-   * dynamically loading services. Use with extreme caution!
+   * Mutator for the currently active configuration context instance
+   * (gestalt). Intended for use by helper classes like @see
+   * ACE_Service_Config_Guard. Stack-based instances can be used to
+   * temporarily change which gestalt is seen as global by static
+   * initializers (especially those in DLLs loaded at run-time).
    */
-  static ACE_Service_Config* global (void);
+  static void current (ACE_Service_Gestalt*);
 
-  /// Accessor for the "current" service gestalt
+  /**
+   * Accessor for the "current" service gestalt
+   */
   static ACE_Service_Gestalt* current (void);
 
   /**
@@ -264,8 +292,20 @@ public:
    * through static initializers. Especially important for DLL-based
    * dynamic services, which can contain their own static services and
    * static initializers.
+   *
+   * @deprecated Use current() instead.
    */
   static  ACE_Service_Gestalt* instance (void);
+
+  /**
+   * Returns a process-wide global singleton instance in contrast with
+   * current (), which may return a different instance at different
+   * times, dependent on the context. Modifying this method's return
+   * value is strongly discouraged as it will circumvent the mechanism
+   * for dynamically loading services. If you must, use with extreme
+   * caution!
+   */
+  static ACE_Service_Gestalt* global (void);
 
   /**
    * Performs an open without parsing command-line arguments.  The
@@ -351,13 +391,6 @@ public:
   /// Perform user-specified close hooks and possibly delete all of the
   /// configured services in the <Service_Repository>.
   static int fini_svcs (void);
-
-  /**
-   * Perform user-specified close hooks on all of the configured
-   * services in the Service_Repository, then delete the
-   * Service_Repository itself.  Returns 0.
-   */
-  static int close_svcs (void);
 
   /// True if reconfiguration occurred.
   static int reconfig_occurred (void);
@@ -453,9 +486,9 @@ public:
   /// a string.  Returns the number of errors that occurred.
   static int process_directive (const ACE_TCHAR directive[]);
 
-  /// Process one static service definition.
   /**
-   * Load a new static service into the ACE_Service_Repository.
+   * Process one static service definition.  Load a new static service
+   * into the ACE_Service_Repository.
    *
    * @param ssd Service descriptor, see the document of
    *        ACE_Static_Svc_Descriptor for more details.
@@ -496,6 +529,7 @@ public:
    *        for a list of files and here a list of services.
    */
   static int parse_args (int, ACE_TCHAR *argv[]);
+
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
   static ACE_Service_Type *create_service_type  (const ACE_TCHAR *n,
                                                  ACE_Service_Type_Impl *o,
@@ -512,11 +546,13 @@ public:
 
 protected:
 
+  /// @deprecated 
   /// Process service configuration requests that were provided on the
   /// command-line.  Returns the number of errors that occurred.
   static int process_commandline_directives (void);
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
+  /// @deprecated
   /// This is the implementation function that process_directives()
   /// and process_directive() both call.  Returns the number of errors
   /// that occurred.
@@ -526,8 +562,9 @@ protected:
   /// Become a daemon.
   static int start_daemon (void);
 
-  /// Add the default statically-linked services to the
-  /// ACE_Service_Repository.
+  // @deprecated
+  // Add the default statically-linked services to the
+  // ACE_Service_Repository.
   static int load_static_svcs (void);
 
 
@@ -585,7 +622,7 @@ private:
 class ACE_Export ACE_Service_Config_Guard
 {
 public:
-  ACE_Service_Config_Guard (ACE_Service_Gestalt * psg);
+  ACE_Service_Config_Guard (ACE_Service_Gestalt* psg);
   ~ACE_Service_Config_Guard (void);
 
 private:
@@ -594,7 +631,7 @@ private:
   ACE_Service_Config_Guard& operator= (const ACE_Service_Config_Guard&);
 
 private:
-  ACE_Service_Gestalt* saved_;
+  ACE_Service_Gestalt_Auto_Ptr saved_;
 };
 
 
