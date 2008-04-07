@@ -20,12 +20,10 @@ public:
 
   virtual ::Monitor::MC::NameList * get_statistic_names (void);
 
-  virtual ::Monitor::MC::Data get_statistic (const char * the_name);
-
-  virtual ::Monitor::MC::DataList * get_statistics (
+  virtual ::Monitor::MC::DataListList * get_statistics (
       const ::Monitor::MC::NameList & names);
 
-  virtual ::Monitor::MC::DataList * get_and_clear_statistics (
+  virtual ::Monitor::MC::DataListList * get_and_clear_statistics (
       const ::Monitor::MC::NameList & names);
 
   virtual void clear_statistics (const ::Monitor::MC::NameList & names);

@@ -15,6 +15,12 @@ module Monitor
     typedef string Name;
     typedef CORBA::StringSeq NameList;
     typedef sequence<Data> DataList;
+    struct DataItem
+    {
+      Name itemname;
+      DataList dlist;
+    };
+    typedef sequence<DataItem> DataListList;
 
     exception InvalidName {
       NameList names;
@@ -22,15 +28,25 @@ module Monitor
 
     NameList get_statistic_names ();
 
-    Data get_statistic (in Name the_name)
+    /**
+     * Get the statistics for the given monitor points. If @a names
+     * contains an invalid name an exception is raised with all
+     * invalid names
+     */
+    DataListList get_statistics (in NameList names)
       raises (InvalidName);
 
-    DataList get_statistics (in NameList names)
+    /**
+     * Get and clear the statistics for the given monitor points.
+     * If @a names contains an invalid name no statistics are cleared
+     */
+    DataListList get_and_clear_statistics (in NameList names)
       raises (InvalidName);
 
-    DataList get_and_clear_statistics (in NameList names)
-      raises (InvalidName);
-
+    /**
+     * Clear the statistics for the given monitor points.
+     * If @a names contains an invalid name no statistics are cleared
+     */
     void clear_statistics (in NameList names)
       raises (InvalidName);
   };

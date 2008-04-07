@@ -7,7 +7,7 @@
 #include "tao/Monitor/Monitor.h"
 
 const char *monitor_ior = "file://monitor.ior";
-const char *monitor_point = 0;
+::Monitor::MC::NameList* monitor_point = 0;
 bool mp_clear = false;
 int n_iterations = 1;
 
@@ -24,8 +24,17 @@ parse_args (int argc, char *argv[])
         monitor_ior = get_opts.opt_arg ();
         break;
       case 'p':
-        monitor_point = get_opts.opt_arg ();
-        break;
+        {
+          if (monitor_point == 0)
+            {
+              ACE_NEW_THROW_EX (monitor_point,
+                                ::Monitor::MC::NameList,
+                                CORBA::NO_MEMORY ());
+            }
+          monitor_point->length (monitor_point->length() + 1);
+          (*monitor_point)[monitor_point->length() - 1] = CORBA::string_dup (get_opts.opt_arg ());
+          break;
+        }
       case 'c':
         mp_clear = true;
         break;
@@ -85,21 +94,26 @@ main (int argc, char *argv[])
           /// Access the monitor's value a few times and watch it grow.
           for (int i = 0; i < n_iterations; ++i)
             {
-              Monitor::MC::DataList_var data;
-              Monitor::MC::NameList seq;
-              seq.length (1);
-              seq[0] = CORBA::string_dup (monitor_point);
+              Monitor::MC::DataListList_var data;
               if (mp_clear)
                 {
-                  data = monitor->get_and_clear_statistics (seq);
+                  data = monitor->get_and_clear_statistics (*monitor_point);
                 }
               else
                 {
-                  data = monitor->get_statistics (seq);
+                  data = monitor->get_statistics (*monitor_point);
                 }
 
-              Monitor::MC::Data d = data[0];
-              ACE_DEBUG ((LM_DEBUG, "MP <%s>: %d\n", monitor_point, d.value));
+              for (CORBA::ULong index = 0; index < data->length(); index ++)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "MP <%s>:\n", data[index].itemname));
+                  Monitor::MC::DataItem dlist = data[index];
+                  for (CORBA::ULong valueindex = 0; valueindex < dlist.dlist.length(); valueindex++)
+                  {
+                    Monitor::MC::Data d = dlist.dlist[valueindex];
+                    ACE_DEBUG ((LM_DEBUG, "\t value <%d>:\n", d.value));
+                  }
+                }
 
               ACE_OS::sleep (1);
             }

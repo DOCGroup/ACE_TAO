@@ -40,42 +40,12 @@ Monitor_Impl::get_statistic_names (void)
   return namelist;
 }
 
-::Monitor::MC::Data
-Monitor_Impl::get_statistic (const char * the_name)
-{
-  /// Get an instance of the MC service singleton.
-  MC_ADMINMANAGER* mgr =
-    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-
-  /// Call on the administrator class to look up the desired monitors.
-  ACE::MonitorControl::Monitor_Base *monitor =
-    mgr->admin ().monitor_point (the_name);
-
-  if (monitor == 0)
-    {
-      Monitor::MC::NameList seq;
-      seq.length (1);
-      seq[0] = CORBA::string_dup (the_name);
-      throw ::Monitor::MC::InvalidName (seq);
-    }
-
-  MonitorControl_Types::Data d;
-  ::Monitor::MC::Data data;
-  monitor->retrieve (d);
-  data.value = d.value_;
-  ACE_UINT64 usecs;
-  d.timestamp_.to_usec (usecs);
-  data.timestamp = usecs;
-
-  return data;
-}
-
-::Monitor::MC::DataList *
+::Monitor::MC::DataListList *
 Monitor_Impl::get_statistics (const ::Monitor::MC::NameList & names)
 {
-  ::Monitor::MC::DataList *datalist = 0;
+  ::Monitor::MC::DataListList *datalist = 0;
   ACE_NEW_THROW_EX (datalist,
-                    ::Monitor::MC::DataList (names.length ()),
+                    ::Monitor::MC::DataListList (names.length ()),
                     CORBA::NO_MEMORY ());
   datalist->length (names.length ());
 
@@ -96,13 +66,20 @@ Monitor_Impl::get_statistics (const ::Monitor::MC::NameList & names)
         {
           if (seq.length () == 0)
             {
+              ::Monitor::MC::DataItem *dataitem = 0;
+              ACE_NEW_THROW_EX (dataitem,
+                                ::Monitor::MC::DataItem,
+                                CORBA::NO_MEMORY ());
+              dataitem->itemname = CORBA::string_dup (names[index].in());
+              dataitem->dlist.length (1);
               ::Monitor::MC::Data data;
               monitor->retrieve (d);
               data.value = d.value_;
               ACE_UINT64 usecs;
               d.timestamp_.to_usec (usecs);
               data.timestamp = usecs;
-              (*datalist)[index] = data;
+              (*dataitem).dlist[0] = data;
+              (*datalist)[index] = *dataitem;
             }
         }
       else
@@ -146,15 +123,14 @@ Monitor_Impl::check_names_i (const ::Monitor::MC::NameList & names)
     }
 }
 
-::Monitor::MC::DataList *
+::Monitor::MC::DataListList *
 Monitor_Impl::get_and_clear_statistics (const ::Monitor::MC::NameList & names)
 {
-  ::Monitor::MC::DataList *datalist = 0;
+  ::Monitor::MC::DataListList *datalist = 0;
   ACE_NEW_THROW_EX (datalist,
-                    ::Monitor::MC::DataList (names.length ()),
+                    ::Monitor::MC::DataListList (names.length ()),
                     CORBA::NO_MEMORY ());
   datalist->length (names.length ());
-
 
   /// Get an instance of the MC service singleton.
   MC_ADMINMANAGER* mgr =
@@ -173,13 +149,20 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::MC::NameList & names)
         {
           if (seq.length () == 0)
             {
+              ::Monitor::MC::DataItem *dataitem = 0;
+              ACE_NEW_THROW_EX (dataitem,
+                                ::Monitor::MC::DataItem,
+                                CORBA::NO_MEMORY ());
+              dataitem->itemname = CORBA::string_dup (names[index].in());
+              dataitem->dlist.length (1);
               ::Monitor::MC::Data data;
               monitor->retrieve (d);
               data.value = d.value_;
               ACE_UINT64 usecs;
               d.timestamp_.to_usec (usecs);
               data.timestamp = usecs;
-              (*datalist)[index] = data;
+              (*dataitem).dlist[0] = data;
+              (*datalist)[index] = *dataitem;
             }
         }
       else

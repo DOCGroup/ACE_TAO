@@ -1,3 +1,16 @@
+Mon Apr  7 12:37:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/Monitor.pidl:
+        * tao/Monitor/Monitor_Impl.cpp:
+        * tao/Monitor/Monitor_Impl.h:
+          Assume we always retrieve a list of data to the client for each
+          monitor point. At this moment the list has then always size 1
+
+        * tests/Monitor/Marshal_Buffer/monitor_client.cpp:
+          Support multiple -p arguments, updated for the list changes. Values
+          are printed for 0, have to go through the code again, but this way
+          I can share the code with Jeff
+
 Mon Apr  7 11:45:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Monitor/Monitor_Impl.cpp:
