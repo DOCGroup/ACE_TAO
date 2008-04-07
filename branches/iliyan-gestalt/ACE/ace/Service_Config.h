@@ -271,11 +271,11 @@ protected:
   static ACE_Service_Config* singleton (void);
 
   /**
-   * Mutator to set the "global" instance. Intended for use by helper
-   * classes like @see ACE_Service_Config_Guard. Stack-based instances
-   * of it can be used to temporarily change which Gestalt is seen as
-   * global by any static initializer (especially those in DLLs loaded
-   * at run-time).
+   * Mutator for the currently active configuration context instance
+   * (gestalt). Intended for use by helper classes like @see
+   * ACE_Service_Config_Guard. Stack-based instances can be used to
+   * temporarily change which gestalt is seen as global by static
+   * initializers (especially those in DLLs loaded at run-time).
    */
   static void current (ACE_Service_Gestalt*);
 
@@ -546,16 +546,16 @@ protected:
 
 protected:
 
-  // @deprecated
-  // Process service configuration requests that were provided on the
-  // command-line.  Returns the number of errors that occurred.
+  /// @deprecated 
+  /// Process service configuration requests that were provided on the
+  /// command-line.  Returns the number of errors that occurred.
   static int process_commandline_directives (void);
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
-  // @deprecated
-  // This is the implementation function that process_directives()
-  // and process_directive() both call.  Returns the number of errors
-  // that occurred.
+  /// @deprecated
+  /// This is the implementation function that process_directives()
+  /// and process_directive() both call.  Returns the number of errors
+  /// that occurred.
   static int process_directives_i (ACE_Svc_Conf_Param *param);
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
@@ -622,7 +622,7 @@ private:
 class ACE_Export ACE_Service_Config_Guard
 {
 public:
-  ACE_Service_Config_Guard (ACE_Service_Gestalt*);
+  ACE_Service_Config_Guard (ACE_Service_Gestalt* psg);
   ~ACE_Service_Config_Guard (void);
 
 private:
