@@ -41,6 +41,8 @@ namespace ACE
     MonitorControl_Types::NameList
     MC_Generic_Registry::names (void)
     {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
+
       MonitorControl_Types::NameList name_holder_;
       
       for (Map::CONST_ITERATOR i (this->map_); !i.done (); i.advance ())

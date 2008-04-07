@@ -1,15 +1,23 @@
+Mon Apr  7 10:43:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MC_Generic_Registry.cpp:
+          Added missing guard
+
+        * ace/Size_Monitor.h:
+          Added explicit include of ACE_Export
+
 Thu Mar 27 17:23:03 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ace_etcl.mpb:
-        
+
           Added acelib as base project.
 
 Wed Mar 26 22:00:19 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/CDR_Stream.inl:
         * ace/CDR_Stream.cpp:
-        
-          Moved monitor call to where it will get the actual current 
+
+          Moved monitor call to where it will get the actual current
           total size.
 
 Tue Mar 25 17:12:35 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -18,46 +26,46 @@ Tue Mar 25 17:12:35 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * ace/Message_Queue_T.h:
         * ace/CDR_Stream.h:
         * ace/CDR_Stream.cpp:
-        
+
           Removed ACE_ENABLE_MONITORS guard from declarations of
           register_monitor() and moved corresponding guards in the
           source files to the inside of the method body. This change
           eliminates the need to recompile application code that
-          calls this method - if monnitors are not enabled, the 
+          calls this method - if monnitors are not enabled, the
           call will be a no-op.
 
 Mon Mar 24 20:12:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Size_Monitor.cpp:
         * ace/Size_Monitor.h:
-        
+
           New files defining a common base class for the message queue
           monitor and the cdr buffer monitor.
-          
+
         * ace/CDR_Buffer_Monitor.h:
         * ace/CDR_Buffer_Monitor.cpp:
-        
+
           New files defining an ACE input and output CDR buffer monitor.
-          
+
         * ace/ace.mpc:
-        
+
           Added new files above to project.
-          
+
         * ace/Message_Queue_Monitor.h:
         * ace/Message_Queue_Monitor.cpp:
-        
+
           Removed code factored out into Size_Monitor class.
-          
+
         * ace/CDR_Stream.h:
         * ace/CDR_Stream.cpp:
-        
+
           Integrated CDR buffer monitor with input and output CDR
           classes.
 
 Fri Mar 21 15:29:56 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ace_mc.mpb:
-        
+
           Replaced ace_etcl base project with ace_etcl_parser, which
           in turn inherits from ace_etcl. Any builds linking to
           MonitorControl need to also link to both ACE_ETCL-related
@@ -66,7 +74,7 @@ Fri Mar 21 15:29:56 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Mar 21 15:19:57 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_Monitor.cpp:
-        
+
           Commented out identifier of unused operation parameter.
 
 Thu Mar 20 19:58:36 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -80,7 +88,7 @@ Thu Mar 20 19:58:36 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/examples/Num_Threads/Num_Threads.mpc:
         * MonitorControl/examples/Memory_Usage/Memory_Usage.mpc:
         * MonitorControl/examples/Group/Group.mpc:
-        
+
           Changed ENABLE_ACE_MACROS to ACE_ENABLE_MACROS for
           consistency, added it to config.h and removed it from
           all MPC files where it appeared.
@@ -89,13 +97,13 @@ Thu Mar 20 19:39:04 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_Monitor.h:
         * ace/Message_Queue_Monitor.cpp:
-        
+
           Removed constraint() and control_action() methods that have
           been subsumed by constraints() in the base class.
-          
+
         * ace/Message_Queue_T.cpp:
         * ace/Message_Queue_T.h:
-        
+
           Added #if defined argument in comments to corresponding #endifs.
 
 Wed Mar 19 22:58:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
