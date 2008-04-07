@@ -1,4 +1,3 @@
-#include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 
 #include "tao/Strategies/advanced_resource.h"
@@ -35,15 +34,30 @@ main (int argc, char *argv[])
                              -1);
         }
         
+      Monitor::MC::NameList namelist;
+      namelist.length (1UL);
+      namelist[0] = "Output CDR Buffer";
+        
       /// Access the monitor's value a few times and watch it grow.
       for (int i = 0; i < 8; ++i)
         {
-          Monitor::MC::Data data =
-            monitor->get_statistic ("Output CDR Buffer");
+          Monitor::MC::DataListList_var data =
+            monitor->get_statistics (namelist);
             
-          cout << "client marshal buffer size = " << data.value
-               << " bytes" << endl;
-            
+          for (CORBA::ULong i = 0; i < data->length(); ++i)
+            {
+              ACE_DEBUG ((LM_DEBUG, "MP <%s>:\n", data[i].itemname));
+              Monitor::MC::DataItem dlist = data[i];
+              
+              for (CORBA::ULong j = 0; j < dlist.dlist.length (); ++j)
+                {
+                  Monitor::MC::Data d = dlist.dlist[j];
+                  ACE_DEBUG ((LM_DEBUG,
+                              "\t value <%u>:\n",
+                              static_cast<unsigned int> (d.value)));
+                }
+            }
+
           ACE_OS::sleep (1);
         }
       
