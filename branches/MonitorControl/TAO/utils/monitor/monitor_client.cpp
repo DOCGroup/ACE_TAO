@@ -11,11 +11,13 @@ const char *monitor_ior = "file://monitor.ior";
 ::Monitor::MC::NameList* monitor_point = 0;
 bool mp_clear = false;
 int n_iterations = 1;
+ACE_Time_Value sleep_time = ACE_Time_Value (1);
+
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:p:ci:");
+  ACE_Get_Opt get_opts (argc, argv, "k:p:ci:s:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -42,7 +44,9 @@ parse_args (int argc, char *argv[])
       case 'i':
         n_iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-
+      case 's':
+        sleep_time.set(ACE_OS::atoi (get_opts.opt_arg ()), 0);
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -50,7 +54,8 @@ parse_args (int argc, char *argv[])
                            "-k <ior> "
                            "-p <point> "
                            "-i <iterations> "
-                           "-c clear"
+                           "-c clear "
+                           "-s <sleeptime> "
                            "\n",
                            argv [0]),
                           -1);
@@ -116,7 +121,7 @@ main (int argc, char *argv[])
                   }
                 }
 
-              ACE_OS::sleep (1);
+              ACE_OS::sleep (sleep_time);
             }
         }
       else

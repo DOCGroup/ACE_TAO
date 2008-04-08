@@ -1,3 +1,8 @@
+Tue Apr  8 08:53:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/monitor/monitor_client:
+          Added -s to specify sleep time in seconds
+
 Tue Apr  8 08:40:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Monitor/Marshal_Buffer/client.cpp:
