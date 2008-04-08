@@ -17,7 +17,7 @@ namespace ACE
     MonitorPoint<true>::MonitorPoint (const char* name)
       : Monitor_Base (name)
     {}
-    
+
     void
     MonitorPoint<true>::receive (double data)
     {
@@ -25,16 +25,10 @@ namespace ACE
       this->data_.timestamp_ = ACE_OS::gettimeofday ();
       this->data_.value_ = data;
     }
-    
+
     void
     MonitorPoint<true>::receive (size_t /* data */)
     {
-    }
-    
-    void
-    MonitorPoint<true>::clear (void)
-    {
-      // TODO
     }
   }
 }

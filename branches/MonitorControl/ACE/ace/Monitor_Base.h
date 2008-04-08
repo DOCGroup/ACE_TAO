@@ -65,7 +65,7 @@ namespace ACE
       CONSTRAINTS& constraints (void);
 
       /// Reset function.
-      virtual void clear (void) = 0;
+      void clear (void);
 
       /// Data accessors.
       void retrieve (MonitorControl_Types::Data& data) const;
@@ -78,6 +78,7 @@ namespace ACE
       Monitor_Base (void);
       Monitor_Base (const char* name);
       virtual ~Monitor_Base (void);
+      virtual void clear_i (void);
 
     /// @@@ (JP) To keep overhead down for system monitors, we
     /// may want to remove these from here and duplicate them, in

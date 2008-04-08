@@ -42,13 +42,13 @@ namespace ACE
     class MonitorPoint : public Monitor_Base
     {
     protected:
-      MonitorPoint (const char* name);             
+      MonitorPoint (const char* name);
       virtual ~MonitorPoint (void);
-      
-    public:  
+
+    public:
       /// Attaches an (optional) constraint to this monitor point.
       virtual void constraint (const char* constraint);
-      
+
       /// Attaches an (optional) control action, to be triggered
       /// by satisfaction of the constraint, if any.
       virtual void control_action (Control_Action *action,
@@ -56,12 +56,9 @@ namespace ACE
 
       /// Updates the monitor's data with a double.
       virtual void receive (double data);
-      
+
       /// Updates the monitor's data with an unsigned integer.
       virtual void receive (size_t value);
-      
-      /// Reset function.
-      virtual void clear (void);
     };
   }
 }

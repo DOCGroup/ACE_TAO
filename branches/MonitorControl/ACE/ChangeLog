@@ -1,3 +1,16 @@
+Tue Apr  8 18:34:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Base.cpp:
+        * ace/Monitor_Base.h:
+          Added clear_i, this has to be overridden by derived classes. clear
+          and retrieve_and_clear both call this clear_i
+
+        * Monitor/MonitorPoint.cpp
+        * Monitor/MonitorPoint.h
+        * Monitor/MonitorPoint_T.cpp
+        * Monitor/MonitorPoint_T.h
+          No need to override clear
+
 Tue Apr  8 16:33:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_Monitor.h:

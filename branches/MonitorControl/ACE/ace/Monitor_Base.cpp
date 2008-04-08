@@ -50,21 +50,39 @@ namespace ACE
     }
 
     void
+    Monitor_Base::clear (void)
+    {
+      ACE_GUARD (ACE_SYNCH_MUTEX,
+                 guard,
+                 this->mutex_);
+
+      this->clear_i ();
+    }
+
+    void
+    Monitor_Base::clear_i (void)
+    {
+      this->data_.value_ = 0.0;
+      this->data_.timestamp_ = ACE_Time_Value::zero;
+    }
+
+
+    void
     Monitor_Base::retrieve_and_clear (MonitorControl_Types::Data& data)
     {
       ACE_GUARD (ACE_SYNCH_MUTEX,
                  guard,
                  this->mutex_);
       data = this->data_;
-      this->clear ();
+      this->clear_i ();
     }
-    
+
     void
     Monitor_Base::add_to_registry (unsigned long auto_update_msec)
     {
       MC_ADMINMANAGER *mgr =
         ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-        
+
       if (!mgr->admin ().monitor_point (this, auto_update_msec))
         {
           ACE_ERROR ((LM_ERROR,

@@ -15,40 +15,34 @@ namespace ACE
     MonitorPoint<ENABLED>::MonitorPoint (const char* name)
       : Monitor_Base (name)
     {}
-    
+
     template<bool ENABLED>
     MonitorPoint<ENABLED>::~MonitorPoint (void)
     {}
-    
+
     template<bool ENABLED>
     void
     MonitorPoint<ENABLED>::constraint (
       const char* /* constraint */)
     {
     }
-    
+
     template<bool ENABLED>
     void
     MonitorPoint<ENABLED>::control_action (Control_Action* /* action */,
                                            const char* /* command */)
     {
     }
-    
+
     template<bool ENABLED>
     void
     MonitorPoint<ENABLED>::receive (double /* data */)
     {
     }
-    
+
     template<bool ENABLED>
     void
     MonitorPoint<ENABLED>::receive (size_t /* data */)
-    {
-    }
-    
-    template<bool ENABLED>
-    void
-    MonitorPoint<ENABLED>::clear (void)
     {
     }
   }

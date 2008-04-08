@@ -44,18 +44,15 @@ namespace ACE
       /// version of the monitor point. Note that the virtual method
       /// update() isn't implemented here, but in the class that
       /// inherits from this one.
-      
+
     public:
       MonitorPoint (const char* name);
-    
+
       /// Meaningful implementation of member function.
       virtual void receive (double data);
-      
+
       /// Meaningful implementation of member function.
       virtual void receive (size_t data);
-      
-      /// Meaningful implementation of member function.
-      virtual void clear (void);
     };
   }
 }
