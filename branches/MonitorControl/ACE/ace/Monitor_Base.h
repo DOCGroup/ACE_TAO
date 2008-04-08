@@ -67,10 +67,12 @@ namespace ACE
       /// Reset function.
       virtual void clear (void) = 0;
 
-      /// Data accessor.
+      /// Data accessors.
       void retrieve (MonitorControl_Types::Data& data) const;
-
       void retrieve_and_clear (MonitorControl_Types::Data& data);
+      
+      /// Common to all monitors.
+      void add_to_registry (unsigned long auto_update_msec = 0UL);
 
     protected:
       Monitor_Base (void);

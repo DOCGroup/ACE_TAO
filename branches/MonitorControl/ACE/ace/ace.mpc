@@ -36,7 +36,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Basic_Types.cpp
     Capabilities.cpp
     CDR_Base.cpp
-    CDR_Buffer_Monitor.cpp
     CDR_Stream.cpp
     CDR_Size.cpp
     Cleanup.cpp
@@ -126,7 +125,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     MEM_Stream.cpp
     Message_Block.cpp
     Message_Queue.cpp
-    Message_Queue_Monitor.cpp
     Message_Queue_Vx.cpp
     Method_Request.cpp
     MMAP_Memory_Pool.cpp

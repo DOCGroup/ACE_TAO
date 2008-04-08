@@ -52,7 +52,7 @@
 #include "ace/Message_Block.h"
 
 #if defined (ACE_ENABLE_MONITORS)
-#include "CDR_Buffer_Monitor.h"
+#include "Size_Monitor.h"
 #endif /* ACE_ENABLE_MONITORS */
 
 #if defined (GEN_OSTREAM_OPS)
@@ -466,7 +466,7 @@ public:
   void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
   
   /// Register our buffer size monitor.
-  void register_monitor (void);
+  void register_monitor (const char* id);
 
 private:
 
@@ -561,7 +561,7 @@ private:
   size_t const memcpy_tradeoff_;
   
 #if defined (ACE_ENABLE_MONITORS)
-  ACE::MonitorControl::CDR_Buffer_Monitor monitor_;
+  ACE::MonitorControl::Size_Monitor monitor_;
 #endif /* ACE_ENABLE_MONITORS */
 
 protected:
@@ -971,7 +971,7 @@ public:
   void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
   
   /// Enter out monitor in the global registry for later lookup.
-  void register_monitor (void);
+  void register_monitor (const char* id);
 
 protected:
 
@@ -995,7 +995,7 @@ protected:
   ACE_WChar_Codeset_Translator *wchar_translator_;
   
 #if defined (ACE_ENABLE_MONITORS)
-  ACE::MonitorControl::CDR_Buffer_Monitor monitor_;
+  ACE::MonitorControl::Size_Monitor monitor_;
 #endif /* ACE_ENABLE_MONITORS */
 
 private:

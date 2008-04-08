@@ -30,6 +30,12 @@ namespace ACE
     {
       return this->name_.fast_rep ();
     }
+    
+    void
+    MC_Generic::name (const char* new_name)
+    {
+      this->name_ = new_name;
+    }
   }
 }
 

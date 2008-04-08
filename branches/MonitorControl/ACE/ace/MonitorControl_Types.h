@@ -89,6 +89,7 @@ namespace ACE
     {
     public:
       const char* name (void) const;
+      void name (const char* new_name);
 
     protected:
       MC_Generic (void);

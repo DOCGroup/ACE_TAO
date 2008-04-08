@@ -2,6 +2,8 @@
 
 #include "ace/Monitor_Base.h"
 #include "ace/Guard_T.h"
+#include "ace/MC_Admin_Manager.h"
+#include "ace/Dynamic_Service.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,6 +57,20 @@ namespace ACE
                  this->mutex_);
       data = this->data_;
       this->clear ();
+    }
+    
+    void
+    Monitor_Base::add_to_registry (unsigned long auto_update_msec)
+    {
+      MC_ADMINMANAGER *mgr =
+        ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+        
+      if (!mgr->admin ().monitor_point (this, auto_update_msec))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "monitor point %s registration failed\n",
+                      this->name ()));
+        }
     }
   }
 }

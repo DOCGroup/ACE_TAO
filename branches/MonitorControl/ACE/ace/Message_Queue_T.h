@@ -20,9 +20,7 @@
 #include "ace/Guard_T.h"
 
 #if defined (ACE_ENABLE_MONITORS)
-#include "ace/Message_Queue_Monitor.h"
-#include "ace/MC_Admin_Manager.h"
-#include "ace/Dynamic_Service.h"
+#include "ace/Size_Monitor.h"
 #endif /* ACE_ENABLE_MONITORS */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -484,7 +482,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Store our monitor in the global registry.
-  void register_monitor (void);
+  void register_monitor (const char *id);
 
 protected:
   // = Routines that actually do the enqueueing and dequeueing.
@@ -604,7 +602,7 @@ protected:
   
   /// Sends the size of the queue whenever it changes.
 #if defined (ACE_ENABLE_MONITORS)
-  ACE::MonitorControl::Message_Queue_Monitor monitor_;
+  ACE::MonitorControl::Size_Monitor monitor_;
 #endif
 
 private:

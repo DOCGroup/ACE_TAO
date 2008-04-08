@@ -11,7 +11,6 @@ namespace ACE
   namespace MonitorControl
   {
     Size_Monitor::Size_Monitor (void)
-      : Monitor_Base ("Size_Monitor")
     {
     }
         

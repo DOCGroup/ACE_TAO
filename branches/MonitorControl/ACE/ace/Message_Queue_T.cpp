@@ -903,12 +903,11 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
 }
 
 template <ACE_SYNCH_DECL> void
-ACE_Message_Queue<ACE_SYNCH_USE>::register_monitor (void)
+ACE_Message_Queue<ACE_SYNCH_USE>::register_monitor (const char *id)
 {
 #if defined (ACE_ENABLE_MONITORS)
-  MC_ADMINMANAGER *mgr =
-    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-  mgr->admin ().monitor_point (&this->monitor_, 0);
+  this->monitor_.name (id);
+  this->monitor_.add_to_registry ();
 #endif /* ACE_ENABLE_MONITORS */
 }
 
@@ -936,9 +935,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
                                                      ACE_Notification_Strategy *ns)
   : not_empty_cond_ (lock_)
   , not_full_cond_ (lock_)
-#if defined (ACE_ENABLE_MONITORS)
-  , monitor_ ("MQ monitor")
-#endif /* ACE_ENABLE_MONITORS */
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue");
 

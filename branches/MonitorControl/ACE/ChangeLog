@@ -1,3 +1,37 @@
+Tue Apr  8 16:33:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_Monitor.h:
+        * ace/Message_Queue_Monitor.cpp:
+        * ace/CDR_Buffer_Monitor.cpp:
+        * ace/CDR_Buffer_Monitor.h:
+
+          Removed these files, only the base
+          class Size_Monitor is needed.
+
+        * ace/ace.mpc:
+
+          Removed the above files from the project.
+
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_T.h:
+        * ace/Monitor_Base.cpp:
+        * ace/MonitorControl_Types.h:
+        * ace/Monitor_Base.h:
+        * ace/MonitorControl_Types.cpp:
+        * ace/Size_Monitor.cpp:
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+
+          - Changed the signature of the register_monitor()
+            method in CDR streams and ACE_Message_Queu to
+            take a string parameter that sets the name first.
+
+          - Delayed setting of the monitor name until
+            registration.
+
+          - Factored out registration code from CDR streams
+            and ACE_Message_Queue to Monitor_Base.
+
 Mon Apr  7 10:43:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MC_Generic_Registry.cpp:
