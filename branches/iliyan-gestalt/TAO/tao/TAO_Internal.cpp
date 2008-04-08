@@ -728,6 +728,7 @@ namespace
     ACE_Arg_Shifter arg_shifter (argc, argv);
     CORBA::ULong len = 0;
 
+
     while (arg_shifter.is_anything_left ())
       {
         // Can't interpret this argument.  Move on to the next argument.
@@ -740,7 +741,6 @@ namespace
             // Proceeds only if the configuration file exists.
             FILE * const conf_file =
               ACE_OS::fopen (current_arg, ACE_TEXT ("r"));
-
             if (0 == conf_file)
               {
                 // Assigning EINVAL to errno to make an exception
