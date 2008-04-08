@@ -1,3 +1,10 @@
+Tue Apr  8 20:02:49 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/GIOP_Message_Base.{h,cpp}:
+        
+          Added code to unregister the associated marshaling buffer
+          size monitor when the transport is destroyed.
+
 Tue Apr  8 18:36:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/GIOP_Message_Base.{h,cpp}:

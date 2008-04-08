@@ -40,24 +40,25 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                  fragmentation_strategy_.get (),
                  TAO_DEF_GIOP_MAJOR,
                  TAO_DEF_GIOP_MINOR)
-#if defined (TAO_ENABLE_MONITORS)
-  , monitor_name_ ("OutputCDR_")
-#endif /* TAO_ENABLE_MONITORS */
 {
 #if defined (TAO_ENABLE_MONITORS)
-  char hex_string[9];
+  char hex_string[sizeof (size_t) + 1];
   ACE_OS::sprintf (hex_string,
                    "%8.8X",
                    transport->id ());
-  hex_string[8] = '\0';
-  this->monitor_name_ += hex_string;
-  this->out_stream_.register_monitor (this->monitor_name_.c_str ());
+  hex_string[sizeof (size_t)] = '\0';
+  ACE_CString monitor_name ("OutputCDR_");
+  monitor_name += hex_string;
+  this->out_stream_.register_monitor (monitor_name.c_str ());
 #endif /* TAO_ENABLE_MONITORS */
 }
 
 
 TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 {
+#if defined (TAO_ENABLE_MONITORS)
+  this->out_stream_.unregister_monitor ();
+#endif /* TAO_ENABLE_MONITORS */
 }
 
 void
