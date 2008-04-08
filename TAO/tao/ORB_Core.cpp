@@ -181,7 +181,7 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
 // ****************************************************************
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
-                            ACE_Service_Gestalt* gestalt)
+                            ACE_Service_Gestalt_Auto_Ptr gestalt)
   : protocols_hooks_ (0),
     network_priority_protocols_hooks_ (0),
 #if TAO_USE_LOCAL_MEMORY_POOL == 1
@@ -329,10 +329,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   // This will destroy the service repository for this core
   (void) TAO::ORB::close_services (this->config_);
 
-  if (this->config_ != ACE_Service_Config::global())
-    delete this->config_;
-
-  this->config_ = 0;
 }
 
 int
@@ -1588,12 +1584,10 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
 {
   // @todo The ORBInitializer_Registry is supposed to be a singleton.
 
-  ACE_Service_Gestalt * const config = this->configuration ();
-
   // If not, lookup it up.
   this->orbinitializer_registry_ =
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-      (config,
+      (this->configuration (),
        ACE_TEXT ("ORBInitializer_Registry"));
 
 #if !defined (TAO_AS_STATIC_LIBS)
@@ -1602,14 +1596,14 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
       // output an error then.
   if (this->orbinitializer_registry_ == 0)
     {
-      config->process_directive (
+      this->configuration ()->process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
                                        "TAO_PI",
                                        "_make_ORBInitializer_Registry",
                                        ""));
       this->orbinitializer_registry_ =
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-          (config,
+          (this->configuration (),
            ACE_TEXT ("ORBInitializer_Registry"));
     }
 #endif /* !TAO_AS_STATIC_LIBS */

@@ -1,3 +1,41 @@
+Tue Apr  8 12:04:20 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This is the last batch of changes related to the re-factoring of
+          the service configuration, which aims to eliminate a number of
+          related memory leaks and bugs. The changes are being ported back
+          from the "iliyan-gestalt" branch.
+
+        * tao/ORB.h:
+        * tao/ORB.cpp (ORB_init,init_orb_globals,find_orb_context):
+
+          Modified ORB_init to accept -ORBGestalt command line parameter
+          which specifies which service configuration context the new ORB
+          will use.  Acceptable values (case-insensitive) include "LOCAL"
+          forces the ORB to manage its own, local service configuration
+          context (gestalt).  "GLOBAL" forces the new ORB to use (but not
+          own) the process-global gestalt. The caller can also identify a
+          particular existing ORB, who will share its ownership of a gestalt
+          with the new ORB. The existing ORB ID must be prefixed with "ORB:"
+          and the resulting string as a whole is case-sensitive. Removed
+          init_orb_globals.
+
+        * tao/ORB_Core.h (TAO_ORB_Core):
+        * tao/ORB_Core.inl (configuration):
+        * tao/ORB_Core.cpp (TAO_ORB_Core,orbinitializer_registry_i):
+
+          Modified tor to take a smart pointer for the service
+          configuration. The core now has a smart pointer member which
+          allows us to destroy local service configuration contexts
+          _exactly_ when they are no longer needed and eliminate memory
+          leaks.
+
+        * tao/TAO_Internal.h:
+        * tao/TAO_Internal.cpp (close_services,open_services):
+
+          Updated for the use of smart pointer for the gestalt
+
+        * tests/ORB_Local_Config/Shared/Test.cpp (testReusingGlobals):
+
 Sun Apr  6 00:03:27 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
