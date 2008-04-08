@@ -4,6 +4,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 
+#include "tao/Strategies/advanced_resource.h"
 #include "tao/Monitor/Monitor.h"
 
 const char *monitor_ior = "file://monitor.ior";

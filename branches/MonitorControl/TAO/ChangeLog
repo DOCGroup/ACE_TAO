@@ -1,3 +1,14 @@
+Tue Apr  8 08:14:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/monitor/monitor_client:
+          Use the strategies lib
+
+        * performance-tests/Throughput/monitor_client.cpp:
+          Removed, we have a generic client that can be used
+
+        * performance-tests/Throughput/run_test_with_monitor_queries.pl:
+          Use the generic client with the -p argument
+
 Tue Apr  8 08:08:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Monitor/Marshal_Buffer/monitor_client.cpp:

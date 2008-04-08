@@ -24,7 +24,7 @@ $CL = new PerlACE::Process ("client",
                             " -ORBSvcConf $svc_conf -ORBNoDelay 1"
                             . " -x -m");
                             
-$MCL = new PerlACE::Process ("monitor_client");
+$MCL = new PerlACE::Process ("../../utils/monitor/monitor_client", "-p \"Output CDR Buffer\");
 
 $server = $SV->Spawn ();
 
