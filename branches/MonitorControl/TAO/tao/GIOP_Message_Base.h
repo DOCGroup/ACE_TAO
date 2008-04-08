@@ -258,6 +258,10 @@ protected:
 
   /// Buffer where the request is placed.
   TAO_OutputCDR out_stream_;
+
+#if defined (TAO_ENABLE_MONITORS)
+  ACE_CString monitor_name_;
+#endif /* TAO_ENABLE_MONITORS */
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
