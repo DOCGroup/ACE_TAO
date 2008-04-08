@@ -18,7 +18,7 @@ public:
   /// Constructor
   Monitor_Impl (CORBA::ORB_ptr orb);
 
-  virtual ::Monitor::MC::NameList * get_statistic_names (void);
+  virtual ::Monitor::MC::NameList * get_statistic_names (const char * filter);
 
   virtual ::Monitor::MC::DataListList * get_statistics (
       const ::Monitor::MC::NameList & names);
@@ -26,10 +26,9 @@ public:
   virtual ::Monitor::MC::DataListList * get_and_clear_statistics (
       const ::Monitor::MC::NameList & names);
 
-  virtual void clear_statistics (const ::Monitor::MC::NameList & names);
+  virtual ::Monitor::MC::NameList * clear_statistics (
+    const ::Monitor::MC::NameList & names);
 private:
-
-  void check_names_i (const ::Monitor::MC::NameList & names);
 
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.

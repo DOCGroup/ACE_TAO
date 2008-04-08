@@ -1,3 +1,14 @@
+Tue Apr  8 15:06:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/Monitor.pidl:
+        * tao/Monitor/Monitor_Impl.cpp:
+        * tao/Monitor/Monitor_Impl.h:
+        * tests/monitor/monitor_client.cpp:
+          Removed all exceptions from the IDL, if you retrieve a list of
+          monitor points you get back just the values for the ones you need
+          Getting an exception if one of them is not there is not user
+          friendly especially if we retrieve MP's that can go away again
+
 Tue Apr  8 08:53:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/monitor/monitor_client:

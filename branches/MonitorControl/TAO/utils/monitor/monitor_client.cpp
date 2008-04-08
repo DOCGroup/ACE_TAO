@@ -12,17 +12,20 @@ const char *monitor_ior = "file://monitor.ior";
 bool mp_clear = false;
 int n_iterations = 1;
 ACE_Time_Value sleep_time = ACE_Time_Value (1);
-
+const char * filter = "";
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:p:ci:s:");
+  ACE_Get_Opt get_opts (argc, argv, "k:p:ci:s:f:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'f':
+        filter = get_opts.opt_arg ();
+        break;
       case 'k':
         monitor_ior = get_opts.opt_arg ();
         break;
@@ -56,6 +59,7 @@ parse_args (int argc, char *argv[])
                            "-i <iterations> "
                            "-c clear "
                            "-s <sleeptime> "
+                           "-f <filter> "
                            "\n",
                            argv [0]),
                           -1);
@@ -126,7 +130,7 @@ main (int argc, char *argv[])
         }
       else
         {
-          Monitor::MC::NameList_var list = monitor->get_statistic_names ();
+          Monitor::MC::NameList_var list = monitor->get_statistic_names (filter);
           for (CORBA::ULong index = 0; index < list->length(); ++index)
             {
               ACE_DEBUG ((LM_DEBUG, "MP: <%s>\n", list[index].in()));
