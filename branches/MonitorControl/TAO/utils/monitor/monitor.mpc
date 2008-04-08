@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project(monitor_client): taoexe, monitor {
+  Source_Files {
+    monitor_client.cpp
+  }
+}
+

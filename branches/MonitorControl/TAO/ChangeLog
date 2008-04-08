@@ -1,9 +1,15 @@
+Tue Apr  8 08:08:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Monitor/Marshal_Buffer/monitor_client.cpp:
+        * utils/monitor/monitor_client:
+          Moved the generic monitor client to utils
+
 Mon Apr  7 16:56:06 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Throughput/monitor_client.cpp:
-        
+
           Changes necessitated by
-          
+
           Mon Apr  7 12:37:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr  7 12:37:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
