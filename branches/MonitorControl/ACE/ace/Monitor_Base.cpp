@@ -4,6 +4,7 @@
 #include "ace/Guard_T.h"
 #include "ace/MC_Admin_Manager.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -47,6 +48,22 @@ namespace ACE
                  guard,
                  this->mutex_);
       data = this->data_;
+    }
+
+    void
+    Monitor_Base::receive (size_t value)
+    {
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+      this->data_.timestamp_ = ACE_OS::gettimeofday ();
+      this->data_.value_ = static_cast<double> (value);
+    }
+
+    void
+    Monitor_Base::receive (double data)
+    {
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+      this->data_.timestamp_ = ACE_OS::gettimeofday ();
+      this->data_.value_ = data;
     }
 
     void

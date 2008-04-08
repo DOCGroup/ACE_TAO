@@ -1,3 +1,17 @@
+Tue Apr  8 18:45:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Base.cpp
+        * ace/Monitor_Base.h
+        * ace/Size_Monitor.cpp
+        * ace/Size_Monitor.h
+        * Monitor/MonitorGroup_T.cpp
+        * Monitor/MonitorGroup_T.h
+        * Monitor/MonitorPoint.cpp
+        * Monitor/MonitorPoint.h
+        * Monitor/MonitorPoint_T.cpp
+        * Monitor/MonitorPoint_T.h
+          Moved the receive methos to the Monitor_Base class
+
 Tue Apr  8 18:34:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Monitor_Base.cpp:

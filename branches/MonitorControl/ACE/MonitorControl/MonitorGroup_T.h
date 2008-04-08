@@ -32,28 +32,24 @@ namespace ACE
     {
     public:
       MonitorGroup (const char* name);
-    
+
       void add_member (Monitor_Base* member);
-      
+
       virtual void update (void);
-      
+
       virtual void constraint (const char* constraint);
-      
+
       virtual void control_action (Control_Action* action,
                                    const char* command = 0);
-      
-      virtual void receive (double value);
-      
-      virtual void receive (size_t value);
-      
+
       virtual void clear (void);
-      
+
     private:
       typedef ACE_Unbounded_Queue<Monitor_Base *>
         MEMBERS;
       typedef ACE_Unbounded_Queue_Const_Iterator<Monitor_Base *>
         MEMBERS_ITERATOR;
-        
+
       MEMBERS members_;
     };
   }

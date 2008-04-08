@@ -53,12 +53,6 @@ namespace ACE
       /// by satisfaction of the constraint, if any.
       virtual void control_action (Control_Action *action,
                                    const char* command = 0);
-
-      /// Updates the monitor's data with a double.
-      virtual void receive (double data);
-
-      /// Updates the monitor's data with an unsigned integer.
-      virtual void receive (size_t value);
     };
   }
 }

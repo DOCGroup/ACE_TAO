@@ -54,14 +54,15 @@ namespace ACE
       virtual void update (void) = 0;
 
       /// Updates the monitor's data if it is a numeric floating point.
-      virtual void receive (double value) = 0;
+      virtual void receive (double value);
 
       /// Updates the monitor's data if it is an integer size.
-      virtual void receive (size_t value) = 0;
+      virtual void receive (size_t value);
 
       /// Accessors for the constraint list.
       void constraints (const char* expression,
                         Control_Action* action = 0);
+
       CONSTRAINTS& constraints (void);
 
       /// Reset function.
@@ -70,7 +71,7 @@ namespace ACE
       /// Data accessors.
       void retrieve (MonitorControl_Types::Data& data) const;
       void retrieve_and_clear (MonitorControl_Types::Data& data);
-      
+
       /// Common to all monitors.
       void add_to_registry (unsigned long auto_update_msec = 0UL);
 

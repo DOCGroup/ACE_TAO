@@ -47,12 +47,6 @@ namespace ACE
       /// work of fetching the monitored value.
       virtual void update (void);
 
-      /// Updates the monitor's data if it is a numeric floating point.
-      virtual void receive (double value);
-
-      /// Updates the monitor's data if it is an integer size.
-      virtual void receive (size_t value);
-
       /// Reset function.
       virtual void clear (void);
     };

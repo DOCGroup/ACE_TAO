@@ -47,12 +47,6 @@ namespace ACE
 
     public:
       MonitorPoint (const char* name);
-
-      /// Meaningful implementation of member function.
-      virtual void receive (double data);
-
-      /// Meaningful implementation of member function.
-      virtual void receive (size_t data);
     };
   }
 }

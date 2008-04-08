@@ -33,18 +33,6 @@ namespace ACE
                                            const char* /* command */)
     {
     }
-
-    template<bool ENABLED>
-    void
-    MonitorPoint<ENABLED>::receive (double /* data */)
-    {
-    }
-
-    template<bool ENABLED>
-    void
-    MonitorPoint<ENABLED>::receive (size_t /* data */)
-    {
-    }
   }
 }
 
