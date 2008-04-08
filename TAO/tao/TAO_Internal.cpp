@@ -261,7 +261,7 @@ public:
     // also quote arguments.
     ACE_ARGV copyargv (argc, argv, true, true);
 
-    // Adjust to proper TCHAR type
+    // Adjust to proper type
     int tmpargc = argc;
     ACE_Argv_Type_Converter cvtargv (tmpargc, copyargv.argv());
 
