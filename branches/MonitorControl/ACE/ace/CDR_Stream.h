@@ -465,8 +465,9 @@ public:
   /// Set the underlying GIOP version..
   void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
   
-  /// Register our buffer size monitor.
+  /// Register and unregister our buffer size monitor.
   void register_monitor (const char* id);
+  void unregister_monitor (void);
 
 private:
 
@@ -970,8 +971,9 @@ public:
   /// Set the underlying GIOP version..
   void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
   
-  /// Enter out monitor in the global registry for later lookup.
+  /// Register and unregister our buffer size monitor.
   void register_monitor (const char* id);
+  void unregister_monitor (void);
 
 protected:
 

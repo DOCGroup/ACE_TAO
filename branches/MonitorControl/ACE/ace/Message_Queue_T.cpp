@@ -8,6 +8,7 @@
 #include "ace/Message_Queue.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_stdio.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -903,15 +904,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
 }
 
 template <ACE_SYNCH_DECL> void
-ACE_Message_Queue<ACE_SYNCH_USE>::register_monitor (const char *id)
-{
-#if defined (ACE_ENABLE_MONITORS)
-  this->monitor_.name (id);
-  this->monitor_.add_to_registry ();
-#endif /* ACE_ENABLE_MONITORS */
-}
-
-template <ACE_SYNCH_DECL> void
 ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes (size_t new_value)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes");
@@ -941,6 +933,16 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
   if (this->open (hwm, lwm, ns) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("open")));
+                
+#if defined (ACE_ENABLE_MONITORS)
+  char buf[sizeof (ptrdiff_t) + 1];
+  ACE_OS::sprintf (buf, "%p", this);
+  buf[sizeof (ptrdiff_t)] = '\0';
+  ACE_CString name_str ("Message_Queue_");
+  name_str += buf;
+  this->monitor_.name (name_str.c_str ());
+  this->monitor_.add_to_registry ();
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 template <ACE_SYNCH_DECL>
@@ -950,6 +952,10 @@ ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
   if (this->head_ != 0 && this->close () == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("close")));
+                
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_.remove_from_registry ();
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 template <ACE_SYNCH_DECL> int

@@ -1,8 +1,9 @@
 // $Id$
 
 #include "ace/Monitor_Base.h"
-#include "ace/Guard_T.h"
 #include "ace/MC_Admin_Manager.h"
+#include "ace/Monitor_Point_Registry.h"
+#include "ace/Guard_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_sys_time.h"
 
@@ -104,6 +105,17 @@ namespace ACE
         {
           ACE_ERROR ((LM_ERROR,
                       "monitor point %s registration failed\n",
+                      this->name ()));
+        }
+    }
+    
+    void
+    Monitor_Base::remove_from_registry (void)
+    {
+      if (!Monitor_Point_Registry::instance ()->remove (this->name ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "monitor point %s unregistration failed\n",
                       this->name ()));
         }
     }

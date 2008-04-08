@@ -38,6 +38,30 @@ namespace ACE
       return (status == 0);
     }
     
+    bool
+    MC_Generic_Registry::remove (const char* name)
+    {
+      if (name == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "registry remove: null name\n"),
+                            false);
+        }
+
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
+
+      int const status = this->map_.unbind (name);
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "registry add: map unbind failed\n"),
+                            false);
+        }
+        
+      return (status == 0);
+    }
+    
     MonitorControl_Types::NameList
     MC_Generic_Registry::names (void)
     {

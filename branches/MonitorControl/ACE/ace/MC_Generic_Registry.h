@@ -47,8 +47,11 @@ namespace ACE
     {
     public:
 
-      /// Adds a Statistic or ControlAction to its respecive registry.
+      /// Adds a Statistic or ControlAction to its corresponding registry.
       bool add (MC_Generic* type);
+      
+      /// Removes a Statistic or ControlAction from its registry.
+      bool remove (const char* name);
 
       /// Returns a list of names stored in the registry
       MonitorControl_Types::NameList names (void);

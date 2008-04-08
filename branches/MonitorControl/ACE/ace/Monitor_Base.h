@@ -74,6 +74,7 @@ namespace ACE
 
       /// Common to all monitors.
       void add_to_registry (unsigned long auto_update_msec = 0UL);
+      void remove_from_registry (void);
 
     protected:
       Monitor_Base (void);
