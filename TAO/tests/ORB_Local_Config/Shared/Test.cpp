@@ -67,10 +67,10 @@ testReusingGlobals (int , ACE_TCHAR *[])
   svcname = ACE_TEXT ("CORBANAME_Parser");
   ACE_Service_Object* p2 = ACE_Dynamic_Service<ACE_Service_Object>::instance (two.get (), svcname);
 
-  if (p2 == 0) // You should be able to find the same stuff here, too``
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not expected to find %s in the global repo\n"), svcname));
-        return -1;
+  if (p2 == 0) // You should be able to find the same stuff here, too
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not expected to find %s in the global repo\n"), svcname));
+      return -1;
       }
 
   return 0;
