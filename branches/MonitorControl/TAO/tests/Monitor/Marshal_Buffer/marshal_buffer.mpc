@@ -9,7 +9,7 @@ project(*idl): taoidldefaults {
 }
 
 
-project(*client): taoclient, monitor {
+project(*client): taoclient, monitor, ace_mc {
   after += *idl
   IDL_Files {
   }
@@ -49,21 +49,6 @@ project(*server): taoserver {
   Inline_Files {
     testC.inl
     testS.inl
-  }
-}
-
-project(monitor_client): taoexe, monitor {
-  IDL_Files {
-  }
-
-  Source_Files {
-    monitor_client.cpp
-  }
-
-  Header_Files {
-  }
-
-  Inline_Files {
   }
 }
 

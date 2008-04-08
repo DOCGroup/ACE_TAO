@@ -5,6 +5,8 @@
 #include "ace/Task.h"
 #include "ace/streams.h"
 
+#include "MonitorControl/MonitorControl.h"
+
 #include "tao/Monitor/Monitor.h"
 
 #include "testC.h"
@@ -37,6 +39,11 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+      ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, 1000);
+      ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, 1000);
+      ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, 1000);
+      ADD_PERIODIC_MONITOR (NUM_THREADS_MONITOR, 1000);
 
       /// Here we take on aspects of a server role, exposing the
       /// Monitor interface of our ORB so the monitoring client

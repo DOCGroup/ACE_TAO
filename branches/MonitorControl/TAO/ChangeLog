@@ -1,3 +1,14 @@
+Tue Apr  8 08:40:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+          Also use the ACE MP's
+
+        * tests/Monitor/Marshal_Buffer/marshal_buffer.mpc:
+          Removed monitor_client
+
+        * tests/Monitor/Marshal_Buffer/run_test.pl:
+          Retrieve a few MP values
+
 Tue Apr  8 08:14:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/monitor/monitor_client:
