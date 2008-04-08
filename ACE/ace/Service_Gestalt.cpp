@@ -83,7 +83,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
   // not to ignore any inactive services, since those may be forward
   // declarations
   size_t slot = 0;
-  int const ret = this->repo_.find_i (this->name_, slot, &tmp, false);
+  int const ret = this->repo_.find_i (this->name_, slot, &tmp, true);
 
   // We inserted it (as inactive), so we expect to find it, right?
   if ((ret < 0 && ret != -2) || tmp == 0)
@@ -1231,14 +1231,14 @@ ACE_Service_Gestalt::process_directives (bool ignore_default_svc_conf_file)
     {
       if (*sptr == default_svc_conf && ignore_default_svc_conf_file)
         continue;
-      
+
       int result = this->process_file (sptr->fast_rep ());
       if (result < 0)
         return result;
     }
-  
+
   return 0;
-  
+
 } /* process_directives () */
 
 // Tidy up and perform last rites on a terminating ACE_Service_Gestalt.
