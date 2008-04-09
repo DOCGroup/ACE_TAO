@@ -935,9 +935,11 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
                 ACE_TEXT ("open")));
                 
 #if defined (ACE_ENABLE_MONITORS)
-  char buf[sizeof (ptrdiff_t) + 1];
+  /// Make a unique name using our hex address.
+  const int nibbles = 2 * sizeof (ptrdiff_t);
+  char buf[nibbles + 1];
   ACE_OS::sprintf (buf, "%p", this);
-  buf[sizeof (ptrdiff_t)] = '\0';
+  buf[nibbles] = '\0';
   ACE_CString name_str ("Message_Queue_");
   name_str += buf;
   this->monitor_.name (name_str.c_str ());

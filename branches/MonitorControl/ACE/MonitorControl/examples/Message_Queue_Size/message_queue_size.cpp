@@ -10,24 +10,42 @@
 /// activate() is called on a class instance.
 class MonitorChecker : public ACE_Task_Base
 {
+private:
+  void *addr_;
+  
 public:
+  MonitorChecker (void *addr)
+    : addr_ (addr)
+  {
+  }
+
   int svc (void)
   {
+    /// Reconstruct the monitor's unique name using the queue's hex address.
+    const int nibbles = 2 * sizeof (ptrdiff_t);
+    char buf[nibbles + 1];
+    ACE_OS::sprintf (buf, "%p", this->addr_);
+    buf[nibbles] = '\0';
+    ACE_CString name_str ("Message_Queue_");
+    name_str += buf;
+
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
     ACE::MonitorControl::Monitor_Base *mq_monitor =
-      mgr->admin ().monitor_point ("MQ monitor");
+      mgr->admin ().monitor_point (name_str.c_str ());
 
     if (mq_monitor != 0)
       {
+        ACE_OS::sleep (1);
+        
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
         for (int i = 0; i < 10; ++i)
           {
-            ACE_OS::sleep (2);
+            ACE_OS::sleep (1);
 
             MonitorControl_Types::Data data;
             mq_monitor->retrieve (data);
@@ -46,7 +64,6 @@ int main (int /* argc */, char * /* argv */ [])
   /// registry (some ACE activities create a message queue under
   /// the hood, so we must make the registration explicit).
   ACE_Message_Queue<ACE_NULL_SYNCH> monitored_queue;
-  monitored_queue.register_monitor ();
 
   /// The message string is 11 bytes long so the message queue will
   /// grow and shrink in 11-byte increments.
@@ -54,7 +71,7 @@ int main (int /* argc */, char * /* argv */ [])
   const char *msg = "Hidely Ho!";
 
   /// Run the monitor checker in a separate thread.
-  MonitorChecker monitor_checker;
+  MonitorChecker monitor_checker (&monitored_queue);
   monitor_checker.activate ();
 
   for (int i = 0; i < 10; ++i)

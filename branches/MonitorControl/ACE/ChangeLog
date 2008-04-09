@@ -1,3 +1,15 @@
+Wed Apr  9 14:03:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp:
+        
+          Fixed bug in creation of unique monitor name that was corrupting
+          the stack.
+          
+        * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp:
+        
+          Changed code to reconstruct the monitor name to match changes in
+          how the name is first created.
+
 Wed Apr  9 13:08:48 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MC_Admin.cpp
