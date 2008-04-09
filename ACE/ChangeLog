@@ -1,3 +1,8 @@
+Wed Apr  9 18:24:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run 3171 with CORBA/e micro
+
 Wed Apr  9 11:50:27 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/VXTestProjectCreator.pm:
