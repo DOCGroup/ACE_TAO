@@ -41,7 +41,7 @@ namespace ACE_OS {
   int last_error (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void last_error (int);
+  void last_error (int error);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int set_errno_to_last_error (void);

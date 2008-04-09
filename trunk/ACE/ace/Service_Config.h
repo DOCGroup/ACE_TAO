@@ -142,7 +142,7 @@ public:
  * parent thread's gestalt. Designed to be used as an instance member
  * of @c ACE_Service_Config
  */
-class ACE_Threading_Helper
+class ACE_Export ACE_Threading_Helper
 {
 public:
   ACE_Threading_Helper ();
