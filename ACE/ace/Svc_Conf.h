@@ -32,7 +32,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The following yylex() declarations require support for reentrant
 // parser generation (e.g. from GNU Bison).
-#define ACE_YY_DECL extern "C" int ace_yylex (ACE_YYSTYPE *ace_yylval, void *ACE_YYLEX_PARAM)
+#define YY_DECL extern "C" int ace_yylex (YYSTYPE *ace_yylval, void *YYLEX_PARAM)
 
 // Forward declarations
 class ACE_Location_Node;
@@ -40,9 +40,9 @@ class ACE_Parse_Node;
 class ACE_Static_Node;
 class ACE_Service_Type_Factory;
 
-// The following definition for the ACE_YYSTYPE must occur before
-// ACE_YY_DECL is declared since ACE_YY_DECL expands to function
-// prototypes that use ACE_YYSTYPE.
+// The following definition for the YYSTYPE must occur before
+// YY_DECL is declared since YY_DECL expands to function
+// prototypes that use YYSTYPE.
 typedef union
 {
   int type_;
@@ -51,27 +51,27 @@ typedef union
   ACE_Static_Node *static_node_;
   ACE_Service_Type_Factory *svc_record_;
   ACE_TCHAR *ident_;
-} ACE_YYSTYPE;
+} YYSTYPE;
 
 // Forward declaration
 struct ace_yy_buffer_state;
 
 /// Performs the parsing
-#ifdef ACE_YYPARSE_PARAM
+#ifdef YYPARSE_PARAM
 int ace_yyparse (void *);
 #else
 int ace_yyparse (void);
 #endif
 
 /// Performs the lexical analysis
-ACE_YY_DECL;
+YY_DECL;
 
 /// Name of input stream
 extern FILE *ace_yyin;
 
 /// Error handling routines required by YACC or BISON
-void ace_yyerror (char const *);
-void ace_yyerror (int yyerrno, int yylineno, char const *);
+extern void ace_yyerror (ACE_TCHAR const *);
+extern void ace_yyerror (int yyerrno, int yylineno, ACE_TCHAR const *);
 
 /// Holds the lexeme for the current token
 extern ACE_TCHAR *ace_yytext;
@@ -83,7 +83,7 @@ extern int ace_yyleng;
 
 /// Factory that creates a new ACE_Service_Type_Impl.
 extern ACE_Service_Type_Impl *
-ace_create_service_type (const ACE_TCHAR *,
+ace_create_service_type (ACE_TCHAR const *,
                          int,
                          void *,
                          unsigned int,

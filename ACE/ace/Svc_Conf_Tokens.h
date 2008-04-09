@@ -1,7 +1,7 @@
 // $Id:$
 #ifndef BISON_SVC_CONF_TAB_H
 # define BISON_SVC_CONF_TAB_H
-# define ACE_YYSTYPE_IS_DECLARED 1
+# define YYSTYPE_IS_DECLARED 1
 /* A Bison parser, made by GNU Bison 2.3.  */
 
 /* Skeleton interface for Bison's Yacc-like parsers in C
@@ -38,8 +38,8 @@
    version 2.2 of Bison.  */
 
 /* Tokens.  */
-#ifndef ACE_YYTOKENTYPE
-# define ACE_YYTOKENTYPE
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum ace_yytokentype {
@@ -78,11 +78,11 @@
 
 
 
-#if ! defined ACE_YYSTYPE && ! defined ACE_YYSTYPE_IS_DECLARED
-typedef int ACE_YYSTYPE;
-# define ace_yystype ACE_YYSTYPE /* obsolescent; will be withdrawn */
-# define ACE_YYSTYPE_IS_DECLARED 1
-# define ACE_YYSTYPE_IS_TRIVIAL 1
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+typedef int YYSTYPE;
+# define ace_yystype YYSTYPE /* obsolescent; will be withdrawn */
+# define YYSTYPE_IS_DECLARED 1
+# define YYSTYPE_IS_TRIVIAL 1
 #endif
 
 
