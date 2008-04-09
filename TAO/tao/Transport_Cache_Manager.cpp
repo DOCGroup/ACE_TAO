@@ -386,7 +386,7 @@ namespace TAO
       }
 
     // Remove the entry from the Map
-    int retval = this->cache_map_.unbind (entry);
+    int const retval = this->cache_map_.unbind (entry);
 
     // Set the entry pointer to zero
     entry = 0;
@@ -425,9 +425,7 @@ namespace TAO
       }
 
     // Now do a bind again with the new index
-    return  this->cache_map_.bind (key,
-                                   val,
-                                   entry);
+    return  this->cache_map_.bind (key, val, entry);
   }
 
 
