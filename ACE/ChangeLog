@@ -1,3 +1,20 @@
+Wed Apr  9 02:43:37 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Dynamic_Service.inl (instance):
+          Adjusting interface to take a smart pointer.
+
+        * ace/OS_NS_unistd.cpp (argv_to_string):
+          Adding interpretation for tabs and new line characters as
+          characters to trigger quoting.
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+        * ace/Service_Repository.cpp:
+          Reformatting, updating comments and logging.
+
 Wed Apr  9 01:21:42 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Condition_T.cpp (wait): Fixed a bug where the mutex

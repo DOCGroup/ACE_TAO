@@ -35,17 +35,19 @@ ACE_Service_Gestalt::open (int argc,
                           bool ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Gestalt::open");
+
   this->no_static_svcs_ = ignore_static_svcs;
 
   if (this->parse_args_i (argc,
-                          argv) == -1)
+                          argv,
+                          ignore_default_svc_conf) == -1)
     return -1;
-  else
-    return this->open_i (argv == 0 ? 0 : argv[0],
-                         logger_key,
-                         ignore_static_svcs,
-                         ignore_default_svc_conf,
-                         ignore_debug_flag);
+
+  return this->open_i (argv == 0 ? 0 : argv[0],
+                       logger_key,
+                       ignore_static_svcs,
+                       ignore_default_svc_conf,
+                       ignore_debug_flag);
 }
 
 /// Searches for a service object declaration in the local repo, only
