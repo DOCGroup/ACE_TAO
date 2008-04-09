@@ -99,7 +99,7 @@ namespace CIAO
       this->create_component_server_config_values (*info, config);
       
       // @@TODO: May want to print out configvalues here.
-      ACE_DEBUG ((LM_DEBUG, CLINFO
+      CIAO_DEBUG ((LM_DEBUG, CLINFO
                   "CIAO_ServerActivator_i::component_server_callback - "
                   "Generated %u ConfigValues for ComponentServer %s\n",
                   config->length (), server_UUID));
@@ -110,8 +110,8 @@ namespace CIAO
     {
       CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::configuration_complete");
       
-      CIAO_TRACE ((LM_TRACE, CLINFO
-                   "CIAO_ServerActivator_i::configuration_complete - ",
+      CIAO_DEBUG ((LM_TRACE, CLINFO
+                   "CIAO_ServerActivator_i::configuration_complete - "
                    "Received configuration_complete from ComponentServer %s\n",
                    server_UUID));
       
@@ -204,7 +204,7 @@ namespace CIAO
     ACE_CString
     CIAO_ServerActivator_i::construct_command_line (Server_Info &server)
     {
-      CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::construct_command_line")
+      CIAO_TRACE (CLINFO "CIAO_ServerActivator_i::construct_command_line");
       // Build our command line to launch the compoent server
       ACE_CString cmd_options;
       

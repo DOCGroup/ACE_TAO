@@ -1,3 +1,31 @@
+Wed Apr  9 20:08:07 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciao_exe.mpb:
+        
+          Make sure CIAO executables are installed to CIAO_ROOT/bin
+        
+        * ciao/ComponentServer/CIAO_ComponentServer.h:
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.h:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/ComponentServer/Configurators/Configurators.mpc:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Logger/Log_Macros.h:
+        * ciao/Servants/Port_Activator.cpp:
+
+          Fixes to make the Basic component server test work.
+
+        * tests/CIAO_ComponentServer:
+        * tests/CIAO_ComponentServer/Basic:
+        * tests/CIAO_ComponentServer/Basic/Basic.mpc:
+        * tests/CIAO_ComponentServer/Basic/client.cpp:
+        * tests/CIAO_ComponentServer/Basic/run_test.pl:
+        
+          Simple test that excercises creating and removing containers.
+        
 Thu Apr  3 21:14:56 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ComponentServer.cpp:
@@ -8,16 +36,16 @@ Thu Apr  3 21:14:56 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/ComponentServer/Configurators/Configurators.mpc:
         * ciao/ComponentServer/Configurators/Server_Configurator.h:
         * ciao/ComponentServer/Configurators/Server_Configurator.cpp:
-        
+
           Fixes necessary to allow the componentserver executable to start up
-          in standalone mode (i.e., without a managing ServerActivator). 
-        
+          in standalone mode (i.e., without a managing ServerActivator).
+
           Also, the name of the executable has changed to entirely lower-case.
-        
+
         * ofccm/NodeApplication/NodeApplication.mpc:
-        
-          Renamed a project to avoid a duplicate name. 
-        
+
+          Renamed a project to avoid a duplicate name.
+
 Wed Apr  2 21:23:12 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ccm/CCM.mpc:

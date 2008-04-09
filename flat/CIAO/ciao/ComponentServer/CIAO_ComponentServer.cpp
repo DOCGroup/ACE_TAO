@@ -7,9 +7,12 @@
 
 #include "CIAO_ComponentServer.h"
 
+#include <ace/OS_NS_string.h>
 #include <ace/Log_Msg.h>
 #include <ace/Get_Opt.h>
 #include <ace/Sched_Params.h>
+#include <ace/Trace.h>
+#include <ace/Env_Value_T.h>
 #include <tao/ORB.h>
 #include <tao/Object.h>
 #include <tao/CORBA_methods.h>
@@ -17,6 +20,7 @@
 #include <tao/ORB_Core.h>
 #include <ciao/CIAO_common.h>
 #include <ciao/Logger/CIAOLoggerFactory.h>
+#include <ciao/Logger/Log_Macros.h>
 #include <ciao/Server_init.h>
 
 
@@ -29,6 +33,9 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  // Tracing disabled by default
+  CIAO_DISABLE_TRACE ();
+
   CIAO_TRACE ("CIAO_ComponentServer::ACE_TMAIN");
   
   try
@@ -52,6 +59,23 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
 #endif /* CIAO_BUILD_COMPONENTSERVER_EXE */
 
+bool
+write_IOR (const char * ior_file_name, const char* ior)
+{
+  FILE* ior_output_file_ =
+    ACE_OS::fopen (ior_file_name, "w");
+  
+  if (ior_output_file_)
+    {
+      ACE_OS::fprintf (ior_output_file_,
+                       "%s",
+                       ior);
+      ACE_OS::fclose (ior_output_file_);
+      return true;
+    }
+  return false;
+}
+
 namespace CIAO
 {
   namespace Deployment
@@ -59,18 +83,19 @@ namespace CIAO
     ComponentServer_Task::ComponentServer_Task (int argc, ACE_TCHAR **argv)
       : orb_ (0),
         log_level_ (5),
+        log_enable_tracing_(false),
         uuid_ (""),
         callback_ior_str_ ("")
     {
-      CIAO_TRACE ("CIAO_ComponentServer_Task::CIAO_ComponentServer ()");
-      
+      CIAO_TRACE ("CIAO_ComponentServer_Task::CIAO_ComponentServer_Task ()");
       this->get_log_level (argc, argv);
       this->set_log_level ();
-      
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Creating server object\n"));
+
+      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
+                   "Creating server object\n"));
       Configurator_Factory cf;
       this->configurator_.reset (cf (argc, argv));
-      
+
       if (!this->configurator_->create_config_managers ())
         {
           CIAO_ERROR ((LM_ERROR, CLINFO
@@ -79,26 +104,31 @@ namespace CIAO
           throw Error ("Unable to load ComponentServer configurator.");
         }
       
-      
+
       this->configurator_->pre_orb_initialize ();
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Creasting ORB\n"));
+
+      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
+                   "Creating ORB\n"));
       this->orb_ = CORBA::ORB_init (argc, argv);
+
       this->configurator_->post_orb_initialize (this->orb_.in ());
-      
+
       this->parse_args (argc, argv);
       this->configure_logging_backend ();
       
       CIAO::Server_init (this->orb_.in ());
       
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer object created.\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_Task::CIAO_ComponentServer_Task - "
+                   "CIAO_ComponentServer object created.\n"));
     }
     
     int 
     ComponentServer_Task::svc (void)
     {
-      CIAO_TRACE ("ComponentServer_Task::run");
+      CIAO_TRACE ("ComponentServer_Task::svc");
       
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Activating the root POA\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+                   "Activating the root POA\n"));
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RootPOA");
       
@@ -110,31 +140,41 @@ namespace CIAO
       
       poa_manager->activate ();
 
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Creating server implementation object\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+                   "Creating server implementation object\n"));
       CIAO::Deployment::CIAO_ComponentServer_i *ci_srv = 0;
       ACE_NEW_NORETURN (ci_srv, CIAO_ComponentServer_i (this->uuid_, this->orb_.in (), root_poa.in ()));
       
       if (ci_srv == 0)
         {
-          CIAO_ERROR ((LM_CRITICAL, "CIAO_ComponentServer: Out of memory error while allocating servant."));
+          CIAO_ERROR ((LM_CRITICAL, "ComponentServer_Task::run - "
+                       "Out of memory error while allocating servant."));
           throw Error ("Out of memory whilst allocating servant.");
         }
 
       PortableServer::ServantBase_var safe (ci_srv);
-      
+
+      ComponentServer_var cs (ci_srv->_this ());
+
+      if (this->output_file_ != "")
+        {
+          CORBA::String_var ior = this->orb_->object_to_string (cs.in ());
+          write_IOR (this->output_file_.c_str (), ior.in ());
+        }
+
+
       if (this->callback_ior_str_ != "")
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: resolving callback IOR\n"));
+          CIAO_DEBUG ((LM_TRACE, CLINFO " resolving callback IOR\n"));
           CORBA::Object_ptr obj = this->orb_->string_to_object (this->callback_ior_str_.c_str ());
           ServerActivator_var sa (ServerActivator::_narrow (obj));
           
           if (CORBA::is_nil (sa.in ()))
             {
-              CIAO_DEBUG ((LM_ERROR, CLINFO "CIAO_ComponentServer: Failed to narrow callback IOR\n"));
+              CIAO_DEBUG ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
+                           "Failed to narrow callback IOR\n"));
               throw Error ("Faled to narrow callback IOR");
             }
-          
-          ComponentServer_var cs (ci_srv->_this ());
           
           Components::ConfigValues_var config;
           {  
@@ -143,41 +183,45 @@ namespace CIAO
             
             if  (cf == 0)
               {
-                CIAO_ERROR ((LM_CRITICAL, "CIAO_ComponentServer: Out of memory error while allocating config values."));
+                CIAO_ERROR ((LM_CRITICAL, "ComponentServer_Task::run - "
+                             "Out of memory error while allocating config values."));
               }
             else config = cf;
           }
 
           // Make callback.
-          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer - "
-                   "Making callback on my ServerActivator\n"));
+          CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+                       "Making callback on my ServerActivator\n"));
           
-          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Calling back to ServerActivator\n"));
+          CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+                       "Calling back to ServerActivator\n"));
           // Callback to NodeApplication to get configuration
           sa->component_server_callback (cs.in (),
                                          this->uuid_.c_str (),
                                          config.out ());
           
-          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: Configuration received\n"));
+          CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+                       "Configuration received\n"));
           // @@WO: Probably need to do something with these config values.
 
           ci_srv->init (sa.in (), config._retn ());
           
-          CIAO_DEBUG ((LM_NOTICE, CLINFO "CIAO_ComponentServer: Configuration complete for component server %s\n",
+          CIAO_DEBUG ((LM_NOTICE, CLINFO "ComponentServer_Task::svc - "
+                       "Configuration complete for component server %s\n",
                        this->uuid_.c_str ()));
           
           sa->configuration_complete (this->uuid_.c_str ());
         }
       else
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO
-                       "CIAO_ComponentServer::svc - "
+          CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
                        "Initializing ComponentServer without ServantActivator callback\n"));
           ci_srv->init (0, 0);
         }
       
       this->orb_->run ();
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer: ORB Event loop completed.\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+                   "ORB Event loop completed.\n"));
       
       root_poa->destroy (1, 1);
       
@@ -244,22 +288,40 @@ namespace CIAO
     ComponentServer_Task::get_log_level (int argc, ACE_TCHAR* argv[])
     {
       CIAO_TRACE ("ComponentServer_Task::get_log_level");
-
-      ACE_Get_Opt opts(argc, argv, "l:", 1, 0, ACE_Get_Opt::RETURN_IN_ORDER);
-      opts.long_option("log-level", 'l', ACE_Get_Opt::ARG_REQUIRED);
-      int c = -1;
-      while ( (c = opts ()) != -1)
+      
+      // Get prospective values from the environment first, those given on
+      // command line can override
+      ACE_Env_Value<int> log ("CIAO_LOG_LEVEL", this->log_level_);
+      this->log_level_ = log;
+      
+      ACE_Env_Value<bool> trace ("CIAO_TRACE_ENABLE", this->log_enable_tracing_);
+      this->log_enable_tracing_ = trace;
+      
+      const ACE_TCHAR *shortl = "-l";
+      const ACE_TCHAR *longl = "--log-level";
+      const ACE_TCHAR *tracel = "--trace";
+      const ACE_TCHAR *traces = "-t";
+      
+      // We need to actually FIND the -l option, as the get_opt won't ignore
+      // the ORB options and such. 
+      for (int i = 0; i < argc; ++i)
         {
-          if ( c  == 'l')
+          if (ACE_OS::strncmp (argv[i], traces, 2) == 0 ||
+              ACE_OS::strncmp (argv[i], tracel, 7) == 0)
             {
-              int j = ACE_OS::atoi (opts.opt_arg());
-              if (j != 0)
+              this->log_enable_tracing_ = true;
+              continue;
+            }
+
+          if (ACE_OS::strncmp (argv[i], shortl, 2) == 0 ||
+              ACE_OS::strncmp (argv[i], longl,11 ) == 0)
+            {
+              if ((i + 1) < argc && *argv[i + 1] != '-')
                 {
-                  this->log_level_ = j;
-                }
-              else
-                {
-                  CIAO_ERROR ( (LM_WARNING, CLINFO "--log-level without argument. Using default.\n"));
+                  int level = ACE_OS::atoi (argv[i + 1]);
+
+                  if (level != 0)
+                    this->log_level_ = level;
                 }
             }
         }
@@ -268,7 +330,20 @@ namespace CIAO
     void 
     ComponentServer_Task::set_log_level ()
     {
+      CIAO_TRACE ("ComponentServer_Task::set_log_level ()");
+
+      if (this->log_enable_tracing_)
+        {
+          CIAO_ENABLE_TRACE ();
+          this->log_level_ = 1;
+        }
+      else
+        {
+          CIAO_DISABLE_TRACE ();
+        }
+      
       u_long new_mask = 0;
+
       if (this->log_level_ <= 1)
         {
           new_mask |= LM_TRACE;
@@ -314,49 +389,64 @@ namespace CIAO
     {
       CIAO_TRACE ("ComponentServer_Task::parse_args");
       
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer - parsing arguments...\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::parse_args - parsing arguments...\n"));
       
       ACE_Get_Opt opts (argc, argv, "hu:c:", 1, 0, 
                         ACE_Get_Opt::RETURN_IN_ORDER);
       opts.long_option ("uuid", 'u', ACE_Get_Opt::ARG_REQUIRED);
       opts.long_option ("callback-ior", 'c', ACE_Get_Opt::ARG_REQUIRED);
       opts.long_option ("help", 'h');
-      opts.long_option ("log-level",'l', ACE_Get_Opt::ARG_OPTIONAL);
-      
+      opts.long_option ("log-level",'l', ACE_Get_Opt::ARG_REQUIRED);
+      opts.long_option ("trace",'t', ACE_Get_Opt::NO_ARG);
+      opts.long_option ("output-ior",'o', ACE_Get_Opt::ARG_REQUIRED);
+
       //int j;
       char c;
       ACE_CString s;
       
       while ((c = opts ()) != -1)
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO "Found option: \"%s\" with argument \"%s\"\n",
-                      opts.last_option (), opts.opt_arg ()));
+          CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::parse_args - "
+                       "Found option: \"%s\" with argument \"%s\"\n",
+                       opts.last_option (), opts.opt_arg ()));
           
           switch (c)
             {
             case 'u':
-              CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer: uuid is %s\n",
-                          opts.opt_arg ()));
+              CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::parse_args - "
+                           "uuid is %s\n",
+                           opts.opt_arg ()));
               this->uuid_ = opts.opt_arg ();
               break;
               
             case 'c':
-              CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer: callback ior is %s\n",
+              CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::parse_args - "
+                           "callback ior is %s\n",
                           opts.opt_arg ()));
               this->callback_ior_str_ = opts.opt_arg ();
               break;
 
             case 'l':
               {
-                continue;
+                continue; // no-op, already taken care of
               }
+              
+            case 't':
+              continue; // already taken care of
+              
+            case 'o':
+              CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::parse_args - "
+                           "IOR Output file: %s\n",
+                           opts.opt_arg ()));
+              this->output_file_ = opts.opt_arg ();
+              break;
               
             case 'h':
               this->usage ();
               throw Error ("Command line help requested, bailing out....");
               
             default:
-              CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer: Unknown option: %s\n",
+              CIAO_ERROR ((LM_ERROR, CLINFO " Unknown option: %s\n",
                           opts.last_option ()));
               this->usage ();
               ACE_CString err ("Unknown option ");
@@ -377,13 +467,16 @@ namespace CIAO
     ComponentServer_Task::usage (void)
     {
       CIAO_TRACE ("ComponentServer_Task::usage");
+      // Shouldn't be subject to CIAO's logging policy
+      ACE_ERROR ((LM_EMERGENCY, "Usage: CIAO_ComponentServer <options>\n"
+                   "Options: \n"
+                   "\t-h|--help\t\t\t\tShow help\n"
+                   "\t-l|--log-level <level>\t\t\tSets log level (default 5). 1 - most detailed.\n"
+                   "\t-u|--uuid <uuid> \t\t\tSets UUID of spawned component server (required)\n"
+                   "\t-c|--callback-ior <string ior>\t\tSets callback url for the spawning ServerActivator.\n"
+                   "\t-o|--output-ior <filename>\t\tOutputs the IOR of the component server object to file\n"
+                   ));
       
-      CIAO_ERROR ((LM_EMERGENCY, "Usage: CIAO_ComponentServer <options>\n"
-                  "Options: \n"
-                  "\t-h|--help\t\tShow help\n"
-                  "\t-l|--log-level <level>\t\tSets log level (default 5). 1 - most detailed.\n"
-                  "\t-u|--uuid <uuid> \t\tSets UUID of spawned component server (required)\n"
-                  "\t-c|--callback-ior <string ior>\t\tSets callback url for the spawning ServerActivator.\n"));
     }
     
     const char *
@@ -411,7 +504,7 @@ namespace CIAO
     void
     ComponentServer_Task::check_supported_priorities (void)
     {
-      CIAO_TRACE ("NodeApplication_Core::check_supported_priorities");
+      CIAO_TRACE ("ComponentServer_Task::check_supported_priorities");
       
       int const sched_policy =
         this->orb_->orb_core ()->orb_params ()->ace_sched_policy ();
@@ -425,8 +518,8 @@ namespace CIAO
       
       if (max_priority == min_priority)
         {
-          CIAO_DEBUG ((LM_DEBUG, CLINFO
-                      "CIAO_ComponentServer: Not enough priority levels with the %s scheduling policy\n"
+          CIAO_DEBUG ((LM_DEBUG, CLINFO "ComponentServer_Task::check_supported_priorities - "
+                      " Not enough priority levels with the %s scheduling policy\n"
                       "on this platform to run, terminating ....\n"
                       "Check svc.conf options\n",
                       sched_policy_name (sched_policy)));
@@ -442,7 +535,8 @@ namespace CIAO
         *clf = ACE_Dynamic_Service<CIAOLoggerFactory>::instance ("CIAO_Logger_Backend_Factory");
       if (clf)
         {
-          CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServeR: Replacing logger backend"));
+          CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::configure_logging_backend - "
+                       "Replacing logger backend\n"));
           ACE_Log_Msg_Backend * backend = clf->get_logger_backend(this->orb_);
           backend->open(0);
           ACE_Log_Msg::msg_backend (backend);

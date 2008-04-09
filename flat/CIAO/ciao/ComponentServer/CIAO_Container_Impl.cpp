@@ -34,19 +34,28 @@ namespace CIAO
           this->config_[i] = config[i];
         }
       
-      if (this->static_entrypts_maps_ == 0)
-	{
-	  CIAO_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with dynamic linkage\n"));
-	  this->container_ = new CIAO::Session_Container (this->orb_.in (), this, false,
-                                                          0, name, policies);
-	}
-      else
-	{
-	  CIAO_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with static linkage\n"));
-	  this->container_ = new CIAO::Session_Container (this->orb_.in (), this, true, 
-                                                          this->static_entrypts_maps_,
-                                                          name, policies);
-	}
+      try
+        {
+          if (this->static_entrypts_maps_ == 0)
+            {
+              CIAO_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with dynamic linkage\n"));
+              this->container_ = new CIAO::Session_Container (this->orb_.in (), this, false,
+                                                              0, name, policies);
+            }
+          else
+            {
+              CIAO_DEBUG((LM_DEBUG, CLINFO "CIAO_Container_i: creating Session container with static linkage\n"));
+              this->container_ = new CIAO::Session_Container (this->orb_.in (), this, true, 
+                                                              this->static_entrypts_maps_,
+                                                              name, policies);
+            }
+        }
+      catch (...)
+        {
+          CIAO_ERROR((LM_ERROR, CLINFO "CIAO_Container_i::CIAO_Container_i - "
+                      "Caught exception while allocating container implementation\n"));
+          throw;
+        }
     }
     
   

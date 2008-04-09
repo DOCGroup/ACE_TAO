@@ -64,12 +64,19 @@ namespace CIAO
     if (name == 0)
       {
         this->number_ = ++Session_Container::serial_number_;
+        CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::init - "
+                     "Constructing container name from serial number %u\n",
+                     this->number_));
         ACE_OS::sprintf (buffer,
                          "CIAO::Session_Container-%ld",
                          this->number_);
         name = buffer;
       }
-
+    
+    CIAO_DEBUG ((LM_TRACE, CLINFO "Session_Container::init - "
+                 "Initializing a container with name %s\n",
+                 name));
+    
     CORBA::Object_var poa_object =
       this->orb_->resolve_initial_references ("RootPOA");
 

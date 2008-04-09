@@ -13,6 +13,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <ace/String_Base.h>
+#include <ace/Unbounded_Set_Ex.h>
 
 namespace CIAO
 {
@@ -59,8 +60,19 @@ namespace CIAO
       ::Components::Deployment::ServerActivator_var serv_act_;
       Components::ConfigValues_var config_values_;
       
-      ::Components::Deployment::Containers_var containers_;
+      template<typename T>
+      struct _is_equivalent
+      {
+        bool operator() (const T &a, const T &b) const
+        {
+          return a->_is_equivalent (b);
+        }
+      };
       
+      typedef ACE_Unbounded_Set_Ex <Container_var, 
+        _is_equivalent<Container_var> > CONTAINERS;
+      
+      CONTAINERS containers_;
     };
   }
 }

@@ -14,7 +14,8 @@ namespace CIAO
 						    PortableServer::POA_ptr poa)
       : uuid_ (uuid),
         orb_ (CORBA::ORB::_duplicate (orb)),
-	poa_ (PortableServer::POA::_duplicate (poa))
+	poa_ (PortableServer::POA::_duplicate (poa)),
+        containers_ ()
     {
       CIAO_TRACE("CIAO_ComponentServer_i::CIAO_ComponentServer_i");
     }
@@ -31,12 +32,12 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_ComponentServer_i::shutdown");
       
-      CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer_i::shutdown: ORB shutdown request received at %s.\n",
+      CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer_i::shutdown - ORB shutdown request received at %s.\n",
                   this->uuid_.c_str ()));
       
-      if (this->containers_->length () != 0)
-        CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::shutdown: ComponentServer %s still managing %u containers!\n",
-                    this->uuid_.c_str (), this->containers_->length ()));
+      if (!this->containers_.is_empty ())
+        CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::shutdown - ComponentServer %s still containers!\n",
+                     this->uuid_.c_str ()));
       
       this->orb_->shutdown ();
     }
@@ -65,35 +66,36 @@ namespace CIAO
       
       try
         {
-          CIAO_DEBUG ((LM_INFO, "CIAO_ComponentServer_i::create_container: Request received with %u config values\n",
-                      config.length ()));
+          CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_ComponentServer_i::create_container - Request received with %u config values\n",
+                       config.length ()));
 	  
 	  CORBA::PolicyList policies;
-	  const char *name = "";
+	  const char *name = 0;
 
           CIAO_Container_i *cont = 0;
           ACE_NEW_THROW_EX (cont, 
 			    CIAO_Container_i (config, 0, name, &policies, this->orb_.in (), this->poa_.in ()), 
 			    CORBA::NO_MEMORY ());
+
+          CIAO_DEBUG ((LM_DEBUG, CLINFO "CIAO_ComponentServer_i::create_container - "
+                       "Container servant successfully allocated.\n"));
           
           PortableServer::ServantBase_var safe_config = cont;
-          Components::Deployment::Container_var cont_var = cont->_this  ();
+          CIAO::Deployment::Container_var cont_var = cont->_this  ();
           
-          CORBA::ULong len = this->containers_->length () + 1;
-          this->containers_->length (len);
-          this->containers_[len] = cont_var;
+          this->containers_.insert (CIAO::Deployment::Container::_duplicate(cont_var.in ()));
           
-          CIAO_DEBUG ((LM_INFO, "CIAO_ComponentServer_i::create_container: Container successfully cresated, "
-                      "this server now manages %u containers.\n",
-                      len));
-          
-          return this->containers_[len].in ();
+          CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_ComponentServer_i::create_container - Container successfully activated and stored,"
+                       "now manage %u containers\n",
+                       this->containers_.size ()));
+
+          return cont_var._retn ();
         }
-      catch (ACE_bad_alloc &)
+      catch (CORBA::NO_MEMORY &)
         {
-          CIAO_ERROR ((LM_CRITICAL, "CIAO_ComponentServer_Impl: Out of memory exception whilst creating container.\n"));
+          CIAO_ERROR ((LM_CRITICAL, CLINFO "CIAO_ComponentServer_Impl: Out of memory exception whilst creating container.\n"));
+          throw;
         }
-      
       catch (...)
         {
           CIAO_ERROR ((LM_ERROR, "CIAO_ComponentServer_Impl: Caught unknown exception\n"));
@@ -109,23 +111,60 @@ namespace CIAO
     {
       CIAO_TRACE("CIAO_ComponentServer_i::remove_container");
       
-      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: remove request received.\n"));
+      CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container - remove request received.\n"));
+      
+      if (CORBA::is_nil (cref))
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO 
+                       "CIAO_ComponentServer_i::remove_container - "
+                       "Error: Received nil container reference\n"));
+          throw Components::RemoveFailure ();
+        }
+      
+      
+      if (this->containers_.is_empty ())
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO 
+                       "CIAO_ComponentServer_i::remove_container - "
+                       "Error: I don't manage any containers!\n"));
+          throw Components::RemoveFailure ();
+        }
+      
       
       try
         {
-          for (CORBA::ULong i = 0; i < this->containers_->length (); ++i)
+          CONTAINERS::ITERATOR i (this->containers_.begin ());
+          
+          // @@ TODO: artifact from when this was a sequence, should probably use .find,
+          // which will work properly with the new parameterized set class.
+          for (CONTAINERS::iterator i = this->containers_.begin ();
+               i.done () != 1; i.advance ())
             {
-              if (this->containers_[i]->_is_equivalent (cref))
+              if (CORBA::is_nil (*i))
                 {
-                  CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: Found container, invoking remove....\n"));
+                  ACE_ERROR ((LM_WARNING, CLINFO
+                              "CIAO_ComponentServer_i::remove_container - "
+                              "Managed container reference is nil, skipping.\n"));
+                  continue;
+                }
+                
+              if ((*i)->_is_equivalent (cref))
+                {
+                  CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container - Found container, invoking remove....\n"));
                   cref->remove ();
-                  CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container: Remove completed, destroying object...\n"));
+                  if (this->containers_.remove (*i) != 0)
+                    CIAO_ERROR ((LM_ERROR, CLINFO 
+                                 "CIAO_ComponentServer_i::remove_container - Unable to remove "
+                                 "container reference from internal structure....\n"));
+                  CIAO_DEBUG ((LM_TRACE, CLINFO "CIAO_ComponentServer_i::remove_container - Remove completed, destroying object, "
+                               "now manage %u containers\n", this->containers_.size ()));
+                  return;
                 }
             }
         }
       catch (...)
         {
-          CIAO_ERROR ((LM_ERROR, "CIAO_ComponentServer_i::remove_container: Error: Unknown exception caught while removing a container.\n"));
+          CIAO_ERROR ((LM_ERROR, CLINFO "CIAO_ComponentServer_i::remove_container - Error: Unknown exception caught while removing a container.\n"));
         }
       throw Components::RemoveFailure ();
     }
@@ -135,7 +174,24 @@ namespace CIAO
     CIAO_ComponentServer_i::get_containers (void)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::get_containers");
-      return this->containers_;
+      
+      ::Components::Deployment::Containers *tmp(0);
+      //      tmp = new ::Components::Deployment::Containers ();
+      ACE_NEW_THROW_EX (tmp,
+                        ::Components::Deployment::Containers (this->containers_.size ()),
+                        CORBA::NO_MEMORY ());
+                        
+      ::Components::Deployment::Containers_var retval (tmp);
+      CORBA::ULong pos (0);
+      retval->length (this->containers_.size ());
+
+      for (CONTAINERS::iterator i = this->containers_.begin ();
+           i.done () != 1; i.advance ())
+        {
+          retval[pos++] = ::CIAO::Deployment::Container::_duplicate (*i);
+        }
+      
+      return retval._retn ();
     }
       
       
@@ -143,6 +199,29 @@ namespace CIAO
     CIAO_ComponentServer_i::remove (void)
     {
       CIAO_TRACE("CIAO_ComponentServer_i::remove");
+      
+      bool successful = true;
+      
+      for (CONTAINERS::iterator i = this->containers_.begin ();
+           i.done () != 1; i.advance ())
+        {
+          try
+            {
+              (*i)->remove ();
+            }
+          catch (...)
+            {
+              successful = false;
+              ACE_ERROR ((LM_ERROR, CLINFO
+                          "CIAO_ComponentServer_i::remove - "
+                          "Intercepted exception while trying to remove a container\n"));
+            }
+        }
+      
+      this->containers_.reset ();
+      
+      if (!successful)
+        throw ::Components::RemoveFailure ();
     }
     
     void 

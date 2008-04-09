@@ -19,16 +19,21 @@
 #endif /* CIAO_NTRACE */
 
 // default information printed with CIAO logging messages.
+
 #define CLINFO "(%P|%t) [%M] - %T - "
 
 #if (CIAO_NTRACE == 1)
 #  if !defined (ACE_NTRACE)
-#    define CIAO_TRACE(X)
+#    define CIAO_TRACE(X) do {} while (0)
+#    define CIAO_ENABLE_TRACE(X) do {} while (0)
+#    define CIAO_DISABLE_TRACE(X) do {} while (0)
 #  else
 #    if (ACE_NTRACE == 0)
 #      error CIAO_TRACE cannot be disabled if ACE_TRACE is enabled
 #    else
-#      define CIAO_TRACE(X)
+#      define CIAO_TRACE(X) do {} while (0)
+#      define CIAO_ENABLE_TRACE(X) do {} while (0)
+#      define CIAO_DISABLE_TRACE(X) do {} while (0)
 #    endif
 #  endif
 #else
@@ -36,6 +41,10 @@
 #    define ACE_HAS_TRACE
 #  endif /* ACE_HAS_TRACE */
 #  define CIAO_TRACE(X) ACE_TRACE_IMPL(CLINFO X)
+#  define CIAO_ENABLE_TRACE() ACE_Trace::start_tracing ()
+#  define CIAO_DISABLE_TRACE() ACE_Trace::stop_tracing ()
+#  undef CLINFO // Make log messages indent with tracing.
+#  define CLINFO "%I(%P|%t) [%M] - %T - "
 #  include "ace/Trace.h"
 #endif /* CIAO_NTRACE */
 
