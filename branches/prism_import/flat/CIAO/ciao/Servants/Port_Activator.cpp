@@ -5,7 +5,7 @@ ACE_RCSID (ciao,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "Port_Activator_i.inl"
+# include "Port_Activator.inl"
 #endif /* __ACE_INLINE__ */
 
 namespace CIAO

@@ -9,10 +9,11 @@
 #include <ace/Process_Manager.h>
 #include <ace/Event_Handler.h>
 #include <ace/Condition_T.h>
+#include <ace/OS_NS_sys_wait.h>
 #include <tao/PortableServer/PortableServer.h>
 #include <ciao/Client_init.h>
-#include "ciao/ComponentServer/CIAO_CS_ClientS.h"
-#include "ciao/ComponentServer/CIAO_ComponentServerC.h"
+#include <ciao/ComponentServer/CIAO_CS_ClientS.h>
+#include <ciao/ComponentServer/CIAO_ComponentServerC.h>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -41,10 +42,6 @@ namespace CIAO
 
           // @@ Note that this code is not portable to all OS platforms
           // since it uses print statements within signal handler context.
-          //ACE_DEBUG ((LM_DEBUG,
-          //            "Executed ACE signal handler for signal %S \n",
-          //            sig));
-
           ACE_exitcode status;
           // makes a claal to the underlying os system call
           // -1 to wait for any child process

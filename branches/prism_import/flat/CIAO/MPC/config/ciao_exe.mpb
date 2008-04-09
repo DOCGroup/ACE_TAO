@@ -2,5 +2,5 @@
 // $Id$
 
 project : ciao {
-  install = $(ACE_ROOT)/bin
+  install = $(CIAO_ROOT)/bin
 }

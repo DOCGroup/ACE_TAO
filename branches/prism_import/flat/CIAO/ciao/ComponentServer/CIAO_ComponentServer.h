@@ -55,8 +55,11 @@ namespace CIAO
       
       CORBA::ORB_var orb_;
       int log_level_;
+      bool log_enable_tracing_;
+      
       ACE_CString uuid_;
       ACE_CString callback_ior_str_;
+      ACE_CString output_file_;
       auto_ptr<ComponentServer_Configurator> configurator_;
       
     };
