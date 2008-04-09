@@ -8,7 +8,7 @@
 // platform-specific ones. Luckily, it is only Windows where this
 // test has not been made to work yet ...
 
-#if !(defined (WIN32) || defined (VXWORKS))
+#if !(defined (WIN32) || defined (ACE_VXWORKS))
 
 #include <dlfcn.h>
 #include <pthread.h>
@@ -85,12 +85,12 @@ void * loadunloadDll(void *pp)
 
   return 0;
 }
-#endif /* !(defined (WIN32) || defined (VXWORKS)) */
+#endif /* !(defined (WIN32) || defined (ACE_VXWORKS)) */
 
 int main(int, char **)
 {
 
-#if (defined (WIN32) || defined (VXWORKS))
+#if (defined (WIN32) || defined (ACE_VXWORKS))
 
   printf ("Terminating because this test has not been designed "
     "to run on platforms where WIN32 has been defined.\n");
@@ -132,7 +132,7 @@ int main(int, char **)
 
   printf ("main - leaving\n");
 
-#endif /* (defined (WIN32) || defined (VXWORKS)) */
+#endif /* (defined (WIN32) || defined (ACE_VXWORKS)) */
 
   return 0;
 }
