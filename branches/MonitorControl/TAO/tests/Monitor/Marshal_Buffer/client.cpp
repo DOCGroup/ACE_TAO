@@ -40,10 +40,10 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, 1000);
-      ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, 1000);
-      ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, 1000);
-      ADD_PERIODIC_MONITOR (NUM_THREADS_MONITOR, 1000);
+      ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, ACE_Time_Value(1));
+      ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, ACE_Time_Value(1));
+      ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, ACE_Time_Value(1));
+      ADD_PERIODIC_MONITOR (NUM_THREADS_MONITOR, ACE_Time_Value(1));
 
       /// Here we take on aspects of a server role, exposing the
       /// Monitor interface of our ORB so the monitoring client
