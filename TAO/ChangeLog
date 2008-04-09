@@ -1,3 +1,10 @@
+Wed Apr  9 14:00:34 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB.cpp:
+
+          Fixing a complaint about the use of a implicit temporary with
+          operator=().
+
 Tue Apr  8 12:58:34 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Internal.cpp:
