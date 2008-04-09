@@ -1,3 +1,9 @@
+Tue Apr  8 12:58:34 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Fixing a fuzz complaint
+
 Tue Apr  8 12:04:20 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           This is the last batch of changes related to the re-factoring of
