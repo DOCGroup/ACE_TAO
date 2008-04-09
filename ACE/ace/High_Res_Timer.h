@@ -125,7 +125,7 @@ public:
 #endif /* ACE_HR_SCALE_CONVERSION */
 
   /**
-   * Sets the global_scale_factor to the value in the <env>
+   * Sets the global_scale_factor to the value in the @a env
    * environment variable.  Returns 0 on success, -1 on failure.
    * @note If @a env points to string "0" (value zero), this call will fail.
    * This is basically a no-op on CE because there is no concept of
