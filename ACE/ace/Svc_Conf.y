@@ -5,13 +5,9 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-#include "ace/ARGV.h"
 #include "ace/Module.h"
 #include "ace/Stream.h"
 #include "ace/Service_Types.h"
-#include "ace/OS_NS_string.h"
-
-
 #include "ace/ace_wchar.h"
 
 ACE_RCSID (ace,
@@ -22,14 +18,25 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Prototypes.
 
-static ACE_Module_Type *ace_get_module (ACE_Service_Type const * sr,
-                                        ACE_TCHAR const * svc_name,
-                                        int & ace_yyerrno);
+static ACE_Module_Type *
+  ace_get_module (ACE_Service_Type const * sr,
+                  ACE_TCHAR const * svc_name,
+                  int & ace_yyerrno);
 
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 
 // Force the pretty debugging code to compile.
 // #define YYDEBUG 1
+
+// Bison 2.3 template contains switch statement with a "default:", but
+// without a "case:" label. Suppressing a compiler warning for Visual
+// C++.
+#if defined (_MSC_VER)
+#   pragma warning ( disable : 4065 )
+#endif
+
+// Normalize the message literal's type to match yyerror() prototype
+#define YY_ ACE_TEXT
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -291,7 +298,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // messages.
 
 void
-yyerror (int yyerrno, int yylineno, char const * s)
+yyerror (int yyerrno, int yylineno, ACE_TCHAR const * s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (yyerrno);
@@ -307,7 +314,7 @@ yyerror (int yyerrno, int yylineno, char const * s)
 }
 
 void
-yyerror (char const * s)
+yyerror (ACE_TCHAR const * s)
 {
   yyerror (-1, -1, s);
 }
