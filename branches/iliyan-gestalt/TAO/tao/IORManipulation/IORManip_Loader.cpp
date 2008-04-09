@@ -16,9 +16,7 @@ TAO_IORManip_Loader::TAO_IORManip_Loader (void)
 }
 
 CORBA::Object_ptr
-TAO_IORManip_Loader::create_object (CORBA::ORB_ptr,
-                                    int,
-                                    ACE_TCHAR *[])
+TAO_IORManip_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR *[])
 {
   CORBA::Object_ptr obj;
   ACE_NEW_RETURN (obj,
