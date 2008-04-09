@@ -320,7 +320,8 @@ protected:
   /**
    *
    */
-  virtual int parse_args_i (int, ACE_TCHAR *argv[]);
+  virtual int parse_args_i (int, ACE_TCHAR *argv[],
+                            bool& ignore_default_svc_conf_file);
 
   /**
    * Performs an open without parsing command-line arguments.  The
@@ -491,7 +492,7 @@ private:
   ACE_Service_Repository & repo_;
   size_t repo_begin_;
   ACE_TCHAR const * const name_;
-  ACE_Service_Type const * dummy_;
+
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Guard< ACE_Recursive_Thread_Mutex > repo_monitor_;

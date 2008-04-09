@@ -158,10 +158,12 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
 
   // Collect any argumets that were left
   for (int c = getopt.opt_ind (); c < argc; ++c)
-      superargv.add (argv[c-1], true);
+    superargv.add (argv[c-1], true);
 
-  return this->parse_args_i (superargv.argc (),
-                             superargv.argv ());
+  bool ignore_default_svc_conf_file = false;
+  return instance_->parse_args_i (superargv.argc (),
+                                  superargv.argv (),
+                                  ignore_default_svc_conf_file);
 
 } /* parse_args_i () */
 
@@ -190,10 +192,10 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   // forwarding to it, so we don't have to increment here.
   if (instance_->is_opened_ != 0)
     return instance_->open_i (program_name,
-                                        logger_key,
-                                        ignore_static_svcs,
-                                        ignore_default_svc_conf_file,
-                                        ignore_debug_flag);
+                              logger_key,
+                              ignore_static_svcs,
+                              ignore_default_svc_conf_file,
+                              ignore_debug_flag);
 
   // Check for things we need to do on a per-process basis and which
   // may not be safe, or wise to do an a per instance basis
@@ -276,10 +278,10 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     return -1;
 
   return instance_->open_i (program_name,
-                                      logger_key,
-                                      ignore_static_svcs,
-                                      ignore_default_svc_conf_file,
-                                      ignore_debug_flag);
+                            logger_key,
+                            ignore_static_svcs,
+                            ignore_default_svc_conf_file,
+                            ignore_debug_flag);
 }
 
 /// Return the global configuration instance. Always returns the same
@@ -335,17 +337,17 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
                                         int signum)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
-  
+
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
   // customizations are identified.
   ACE_Service_Gestalt* tmp = 0;
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (size, false, ignore_static_svcs));
-  
+
   this->instance_ = tmp;
   this->threadkey_.set (tmp);
-  
+
   ACE_Service_Config::signum_ = signum;
 }
 
@@ -353,17 +355,17 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
                                         const ACE_TCHAR *logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
-  
+
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
   // customizations are identified.
   ACE_Service_Gestalt* tmp = 0;
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
-  
+
   this->instance_ = tmp;
   this->threadkey_.set (tmp);
-  
+
   if (this->open (program_name,
                   logger_key) == -1 && errno != ENOENT)
     {

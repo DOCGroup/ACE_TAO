@@ -263,8 +263,8 @@ protected:
 
   /// = Static interfaces
 
-public:
-  /**
+ public:
+ /**
    * Returns the process-wide global singleton instance. It would
    * have been created and will be managed by the Object Manager.
    */
@@ -295,7 +295,7 @@ public:
    *
    * @deprecated Use current() instead.
    */
-  static  ACE_Service_Gestalt* instance (void);
+  static ACE_Service_Gestalt* instance (void);
 
   /**
    * Returns a process-wide global singleton instance in contrast with
@@ -421,7 +421,7 @@ public:
   /// idiom for registering static services:
   ///
   ///    ACE_Service_Config::static_svcs ()->insert (...);
-  static ACE_Service_Gestalt *static_svcs (void);
+  static ACE_Service_Gestalt* static_svcs (void);
 
   /// Insert a static service descriptor for processing on open_i(). The
   /// corresponding ACE_STATIC_SVC_* macros were chaged to use this method
@@ -546,7 +546,7 @@ public:
 
 protected:
 
-  /// @deprecated 
+  /// @deprecated
   /// Process service configuration requests that were provided on the
   /// command-line.  Returns the number of errors that occurred.
   static int process_commandline_directives (void);

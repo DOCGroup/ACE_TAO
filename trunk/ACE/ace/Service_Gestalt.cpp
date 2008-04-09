@@ -38,6 +38,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
   (ACE_Service_Repository &r, const ACE_TCHAR *name)
     : repo_ (r)
+    // Relocation starts where the next service will be inserted (if any)
     , repo_begin_ (r.current_size ())
     , name_ (name)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -60,29 +61,15 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
     , repo_monitor_ (r.lock_)
 #endif
 {
+    if (ACE::debug ())
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ACE (%P|%t) STDG::<ctor>, repo=%@")
+                    ACE_TEXT(", name=%s - begining at [%d]\n"),
+                    &this->repo_,
+                    this->name_,
+                    this->repo_begin_));
+
   ACE_ASSERT (this->name_ != 0); // No name?
-  ACE_NEW_NORETURN (this->dummy_, // Allocate the forward declaration ...
-                    ACE_Service_Type (this->name_,  // ... use the same name
-                                      0,            // ... inactive
-                                      ACE_DLL (),   // ... bogus ACE_DLL
-                                      0));          // ... no type_impl
-
-  ACE_ASSERT (this->dummy_ != 0); // No memory?
-
-  if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) STDG::<ctor>, repo=%@ [%d], ")
-                ACE_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - inserting dummy forward\n"),
-                &this->repo_, this->repo_begin_, this->name_, this->dummy_,
-                this->dummy_->type (),
-                (this->dummy_->type () != 0) ? this->dummy_->type ()->object () : 0,
-                this->dummy_->active ()));
-
-  // Note that the dummy_'s memory may be deallocated between invoking
-  // the ctor and dtor, if the expected ("real") dynamic service is
-  // inserted in the repository. See how this affects the destructor's
-  // behavior, below.
-  this->repo_.insert (this->dummy_);
 }
 
 
@@ -99,81 +86,48 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
   int const ret = this->repo_.find_i (this->name_, slot, &tmp, false);
 
   // We inserted it (as inactive), so we expect to find it, right?
-  if (ret < 0 && ret != -2)
+  if ((ret < 0 && ret != -2) || tmp == 0)
     {
       if (ACE::debug ())
         ACE_ERROR ((LM_WARNING,
-                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor> - Failed (%d) to find %s\n"),
-                    ret, this->name_));
+                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor> - Failed (%d) to find %s -> %@\n"),
+                    ret, this->name_, tmp));
       return;
     }
 
-  if (tmp != 0 && tmp->type () != 0)
+  if (tmp->type () != 0)
     {
       // Something has registered a proper (non-forward-decl) service with
       // the same name as our dummy.
 
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, name=%s - updating [%d - %d]\n"),
+                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@ [%d], ")
+                    ACE_TEXT ("name=%s - updating dependents [%d - %d)\n"),
                     &this->repo_,
+                    slot,
                     this->name_,
                     this->repo_begin_,
                     this->repo_.current_size ()));
 
-      // Relocate any static services. If any have been registered in
-      // the context of this guard, those really aren't static
-      // services because their code is in the DLL's code segment
+      // Relocate any services inserted since we were created.
+      // Any (static, i.e. DLL = 0) services registered in
+      // the context of this guard aren't really static because
+      // their code belongs in the DLL's code segment
       this->repo_.relocate_i (this->repo_begin_, this->repo_.current_size (), tmp->dll());
-
-      // The ACE_Service_Gestalt::insert() modifies the memory for the
-      // original ACE_Service_Type instance. It deletes our dummy
-      // instance when replacing it with the actual implementation, so
-      // we are hereby simply giving up ownership.
-      this->dummy_ = 0;
 
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@ [%d], ")
-                    ACE_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - loaded\n"),
-                    &this->repo_, this->repo_begin_, this->name_, tmp, tmp->type (),
-                    (tmp->type () != 0) ? tmp->type ()->object () : 0,
+                    ACE_TEXT ("name=%s - loaded (type=%@, impl=%@, object=%@, active=%d)\n"),
+                    &this->repo_,
+                    slot,
+                    this->name_,
+                    tmp,
+                    tmp->type (),
+                    tmp->type ()->object (),
                     tmp->active ()));
     }
-  else
-    {
-      if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, ")
-                    ACE_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - removing dummy forward\n"),
-                    &this->repo_, this->name_, this->dummy_, this->dummy_->type (),
-                    (this->dummy_->type () != 0) ? this->dummy_->type ()->object () : 0,
-                    this->dummy_->active ()));
-
-      // The (dummy) forward declaration is still there and is
-      // the same, which means that no actual declaration was
-      // provided inside the guarded scope. Therefore, the forward
-      // declaration is no longer necessary.
-      if (this->repo_.remove_i (this->name_,
-                                const_cast< ACE_Service_Type**> (&this->dummy_)) == 0)
-        {
-          // If it is a dummy then deleting it while holding the repo lock is okay. There will be no
-          // call to service object's fini() and no possibility for deadlocks.
-          delete this->dummy_;
-        }
-      else
-        {
-          ACE_ERROR ((LM_WARNING,
-                      ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, name=%s, ")
-                      ACE_TEXT ("type=%@, impl=%@, object=%@, active=%d - dummy remove failed\n"),
-                      &this->repo_, this->name_, this->dummy_, this->dummy_->type (),
-                      (this->dummy_->type () != 0) ? this->dummy_->type ()->object () : 0,
-                      this->dummy_->active ()));
-        }
-    }
-
-  // Clean up
-  this->dummy_ = 0;
 }
 
 
@@ -218,6 +172,7 @@ ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
 
 ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 {
+
   if (this->svc_repo_is_owned_)
     delete this->repo_;
 
@@ -266,6 +221,7 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , repo_ (0)
   , static_svcs_ (0)
   , processed_static_svcs_ (0)
+  , refcnt_ (0)
 {
   (void)this->init_i ();
 
@@ -299,6 +255,35 @@ ACE_Service_Gestalt::init_i (void)
           this->repo_ =
             ACE_Service_Repository::instance (this->svc_repo_size_);
         }
+    }
+
+  if (init_svc_conf_file_queue () == -1)
+    return -1;
+
+  if ( svc_conf_file_queue_->is_empty ())
+    {
+      // Check if the default file exists before attempting to queue it
+      // for processing
+      FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF,
+                                ACE_TEXT ("r"));
+      bool skip_static_svcs = (fp == 0);
+      if (fp != 0)
+        ACE_OS::fclose (fp);
+
+      if (!skip_static_svcs) {
+        // Load the default "svc.conf" entry here if there weren't
+        // overriding -f arguments in <parse_args>.
+        if (svc_conf_file_queue_->enqueue_tail
+            (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("enqueuing ")
+                               ACE_DEFAULT_SVC_CONF
+                               ACE_TEXT(" file")),
+                              -1);
+          }
+      }
     }
 
   return 0;
@@ -542,8 +527,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, looking up dynamic ")
-                ACE_TEXT ("service \'%s\' to initialize\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, name=%s")
+                ACE_TEXT (" - looking up in the repo\n"),
                 this->repo_,
                 stf->name ()));
 #endif
@@ -552,23 +537,19 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
   int const retv = this->repo_->find (stf->name (),
                                       (const ACE_Service_Type **) &srp);
 
-  // If there is an active service already, it must first be removed,
-  // before it could be re-installed.
-  // IJ: This used to be the behavior, before allowing multiple
-  // independent service repositories. Should that still be required?
+  // If there is an active service already, remove it first
+  // before it can be re-installed.
   if (retv >= 0)
     {
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
-        ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
-                           ACE_TEXT (" %s is already initialized.")
-                           ACE_TEXT (" Remove before re-initializing.\n"),
-                           this->repo_,
-                           stf->name ()),
-                          0);
+        ACE_DEBUG ((LM_WARNING,
+                    ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
+                    ACE_LIB_TEXT (" name=%s - removing a pre-existing namesake.\n"),
+                    this->repo_,
+                    stf->name ()));
 #endif
-        return 0;
+      this->repo_->remove (stf->name ());
     }
 
   // If there is an inactive service by that name it may have been
@@ -584,9 +565,9 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
   if (retv == -2 && srp->type () == 0)
     ACE_ERROR_RETURN ((LM_WARNING,
                        ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
-                       ACE_TEXT (" %s is forward-declared.")
-                       ACE_TEXT (" Recursive initialization requests are")
-                       ACE_TEXT (" not supported.\n"),
+                       ACE_TEXT (" name=%s - forward-declared; ")
+                       ACE_TEXT (" recursive initialization requests are")
+                       ACE_TEXT (" ignored.\n"),
                        this->repo_,
                        stf->name ()),
                       -1);
@@ -640,19 +621,24 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SG::initialize - looking up dynamic ")
-                ACE_TEXT (" service %s to initialize, repo=%@\n"),
-                sr->name (), this->repo_));
+                ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, name=%s")
+                ACE_TEXT (" - looking up in the repo\n"),
+                this->repo_,
+                sr->name ()));
 
   ACE_Service_Type *srp = 0;
   if (this->repo_->find (sr->name (),
                          (const ACE_Service_Type **) &srp) >= 0)
-    ACE_ERROR_RETURN ((LM_WARNING,
-                       ACE_TEXT ("ACE (%P|%t) SG::initialize - \'%s\' ")
-                       ACE_TEXT ("has already been installed. ")
-                       ACE_TEXT ("Remove before reinstalling\n"),
-                       sr->name ()),
-                      0);
+    {
+#ifndef ACE_NLOGGING
+      ACE_DEBUG ((LM_WARNING,
+                  ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, name=%s")
+                  ACE_LIB_TEXT (" - removing a pre-existing namesake.\n"),
+                  this->repo_,
+                  sr->name ()));
+#endif
+      this->repo_->remove (sr->name ());
+    }
 
   return this->initialize_i (sr, parameters);
 
@@ -677,8 +663,9 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
       // Not using LM_ERROR here to avoid confusing the test harness
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_TEXT ("ACE (%P|%t) SG::initialize_i ")
-                           ACE_TEXT ("failed for %s: %m\n"),
+                           ACE_TEXT ("ACE (%P|%t) SG::initialize_i -")
+                           ACE_TEXT (" repo=%@, name=%s - remove failed: %m\n"),
+                           this->repo_,
                            sr->name ()),
                           -1);
 #endif
@@ -691,8 +678,9 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
       // Not using LM_ERROR here to avoid confusing the test harness
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_TEXT ("ACE (%P|%t) SG - repository insert ")
-                           ACE_TEXT ("failed for %s: %m\n"),
+                           ACE_TEXT ("ACE (%P|%t) SG::initialize_i -")
+                           ACE_TEXT (" repo=%@, name=%s - insert failed: %m\n"),
+                           this->repo_,
                            sr->name ()),
                           -1);
 #endif
@@ -820,21 +808,6 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
 int
 ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
 {
-  // AC 970827 Skip the heap check because yacc allocates a buffer
-  // here which will be reported as a memory leak for some reason.
-  ACE_NO_HEAP_CHECK
-
-  // Were we called in the context of the current instance?
-  ACE_ASSERT (this == param->config);
-
-  // Temporarily (for the duration of this call) make sure that *any* static
-  // service registrations will happen with this instance. Such registrations
-  // are possible as a side-effect of dynamically loading a DLL, which has
-  // other static services registered. Thus this instance will own both the
-  // DLL and those static services, which implies that their finalization
-  // will be performed in the correct order, i.e. prior to finalizing the DLL
-  ACE_Service_Config_Guard guard (this);
-
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -845,6 +818,22 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
                 ? ACE_TEXT ("<from file>")
                 : param->source.directive));
 #endif
+
+  // AC 970827 Skip the heap check because yacc allocates a buffer
+  // here which will be reported as a memory leak for some reason.
+  ACE_NO_HEAP_CHECK
+
+  // Were we called in the context of the current instance?
+  ACE_ASSERT (this == param->config);
+
+  // Temporarily (for the duration of this call) make sure that *any*
+  // static service registrations will happen with this instance. Such
+  // registrations are possible as a side-effect of dynamically
+  // loading a DLL, which has other static services registered. Thus
+  // this instance will own both the DLL and those static services,
+  // which implies that their finalization will be performed in the
+  // correct order, i.e. prior to finalizing the DLL
+  ACE_Service_Config_Guard guard (this);
 
   ::ace_yyparse (param);
 
@@ -1014,7 +1003,6 @@ ACE_Service_Gestalt::init_svc_conf_file_queue (void)
       ACE_NEW_RETURN (tmp,
           ACE_SVC_QUEUE,
           -1);
-      delete this->svc_conf_file_queue_;
       this->svc_conf_file_queue_ = tmp;
     }
 
@@ -1147,11 +1135,14 @@ int
 ACE_Service_Gestalt::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::parse_args");
-  return parse_args_i (argc, argv);
+  bool unused_ignore_default_svc_conf = true;
+  return parse_args_i (argc, argv, unused_ignore_default_svc_conf);
 }
 
 int
-ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
+ACE_Service_Gestalt::parse_args_i (int argc,
+                                   ACE_TCHAR *argv[],
+                                   bool &ignore_default_svc_conf_file)
 {
   ACE_TRACE ("ACE_Service_Gestalt::parse_args_i");
   //FUZZ: disable check_for_lack_ACE_OS
@@ -1178,6 +1169,7 @@ ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
                              ACE_TEXT ("%p\n"),
                              ACE_TEXT ("enqueue_tail")),
                             -1);
+        ignore_default_svc_conf_file = true;
         break;
       case 'k':
         /*
@@ -1229,21 +1221,21 @@ ACE_Service_Gestalt::process_directives (bool ignore_default_svc_conf_file)
       || this->svc_conf_file_queue_->is_empty ())
     return 0;
 
-      ACE_TString *sptr = 0;
+  ACE_TString *sptr = 0;
   ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
 
-      // Iterate through all the svc.conf files.
-      for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
-           iter.next (sptr) != 0;
-           iter.advance ())
-        {
+  // Iterate through all the svc.conf files.
+  for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
+       iter.next (sptr) != 0;
+       iter.advance ())
+    {
       if (*sptr == default_svc_conf && ignore_default_svc_conf_file)
         continue;
 
       int result = this->process_file (sptr->fast_rep ());
       if (result < 0)
         return result;
-            }
+    }
 
   return 0;
 
