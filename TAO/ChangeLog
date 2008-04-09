@@ -1,3 +1,19 @@
+Wed Apr  9 18:01:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Default_Thread_Lane_Resources_Manager.cpp:
+        * tao/IORManipulation/IORManip_Loader.cpp:
+          Layout changes
+
+        * tao/IORManipulation/IORManipulation.h:
+          Doxygen and layout changes
+
+        * tao/ORBInitializer_Registry.cpp:
+          Removed VxWorks specific code, with the new SG/SC implementation
+          this shouldn't be needed anymore.
+
+        * tao/Transport_Cache_Manager.cpp:
+          Const and layout changes
+
 Wed Apr  9 14:00:34 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB.cpp:
