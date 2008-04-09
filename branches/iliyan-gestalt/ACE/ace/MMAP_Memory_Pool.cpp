@@ -119,10 +119,11 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
   : base_addr_ (0),
     use_fixed_addr_(0),
     flags_ (MAP_SHARED),
-    write_each_page_ (0),
+    write_each_page_ (false),
     minimum_bytes_ (0),
     sa_ (0),
-    file_mode_ (ACE_DEFAULT_FILE_PERMS)
+    file_mode_ (ACE_DEFAULT_FILE_PERMS),
+    install_signal_handler_ (true)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
 
@@ -156,6 +157,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
       if (options->sa_ != 0)
         this->sa_ = options->sa_;
       this->file_mode_ = options->file_mode_;
+      this->install_signal_handler_ = options->install_signal_handler_;
     }
 
   if (backing_store_name == 0)
@@ -192,9 +194,12 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
                       (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
 
 #if !defined (ACE_WIN32)
-  if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n", this->backing_store_name_));
+  if (this->install_signal_handler_)
+    {
+      if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n", this->backing_store_name_));
+    }
 #endif /* ACE_WIN32 */
 }
 
@@ -438,13 +443,14 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
 ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
   const void *base_addr,
   int use_fixed_addr,
-  int write_each_page,
+  bool write_each_page,
   size_t minimum_bytes,
   u_int flags,
-  int guess_on_fault,
+  bool guess_on_fault,
   LPSECURITY_ATTRIBUTES sa,
   mode_t file_mode,
-  bool unique)
+  bool unique,
+  bool install_signal_handler)
   : base_addr_ (base_addr),
     use_fixed_addr_ (use_fixed_addr),
     write_each_page_ (write_each_page),
@@ -453,7 +459,8 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
     guess_on_fault_ (guess_on_fault),
     sa_ (sa),
     file_mode_ (file_mode),
-    unique_ (unique)
+    unique_ (unique),
+    install_signal_handler_ (install_signal_handler)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
   // for backwards compatability
@@ -471,6 +478,7 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
 // update the mapping accordingly.  When the signal handler returns,
 // the instruction should be restarted and the operation should work.
 
+#if !defined (ACE_WIN32)
 int
 ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 {
@@ -526,6 +534,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   else
     return -1;
 }
+#endif
 
 void *
 ACE_MMAP_Memory_Pool::base_addr (void) const

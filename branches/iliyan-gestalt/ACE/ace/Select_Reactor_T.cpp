@@ -241,7 +241,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handlers (void)
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
        iter.next (eh) != 0;
        iter.advance ())
-    this->suspend_i (eh->get_handle ());
+    {
+      this->suspend_i (eh->get_handle ());
+    }
 
   return 0;
 }
@@ -257,7 +259,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handlers (void)
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
        iter.next (eh) != 0;
        iter.advance ())
-    this->resume_i (eh->get_handle ());
+    {
+      this->resume_i (eh->get_handle ());
+    }
 
   return 0;
 }

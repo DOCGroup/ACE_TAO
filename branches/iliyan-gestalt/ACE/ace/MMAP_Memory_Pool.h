@@ -63,16 +63,17 @@ public:
     NEVER_FIXED = 2
   };
 
-  // = Initialization method.
+  /// Constructor
   ACE_MMAP_Memory_Pool_Options (const void *base_addr = ACE_DEFAULT_BASE_ADDR,
                                 int use_fixed_addr = ALWAYS_FIXED,
-                                int write_each_page = 1,
+                                bool write_each_page = true,
                                 size_t minimum_bytes = 0,
                                 u_int flags = 0,
-                                int guess_on_fault = 1,
+                                bool guess_on_fault = true,
                                 LPSECURITY_ATTRIBUTES sa = 0,
                                 mode_t file_mode = ACE_DEFAULT_FILE_PERMS,
-                                bool unique_ = false);
+                                bool unique_ = false,
+                                bool install_signal_handler = true);
 
   /// Base address of the memory-mapped backing store.
   const void *base_addr_;
@@ -93,7 +94,7 @@ public:
 
   /// Should each page be written eagerly to avoid surprises later
   /// on?
-  int write_each_page_;
+  bool write_each_page_;
 
   /// What the minimim bytes of the initial segment should be.
   size_t minimum_bytes_;
@@ -116,6 +117,9 @@ public:
 
   /// Do we want an unique backing store name?
   bool unique_;
+
+  /// Should we install a signal handler
+  bool install_signal_handler_;
 
 private:
   // Prevent copying
@@ -238,12 +242,16 @@ protected:
   /// Memory map the file up to @a map_size bytes.
   virtual int map_file (size_t map_size);
 
+#if !defined (ACE_WIN32)
   /// Handle SIGSEGV and SIGBUS signals to remap shared memory
   /// properly.
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+#endif
 
+#if !defined (ACE_WIN32)
   /// Handles SIGSEGV.
   ACE_Sig_Handler signal_handler_;
+#endif
 
   /// Memory-mapping object.
   ACE_Mem_Map mmap_;
@@ -263,7 +271,7 @@ protected:
 
   /// Should we write a byte to each page to forceably allocate memory
   /// for this backing store?
-  int write_each_page_;
+  bool write_each_page_;
 
   /// What the minimum bytes of the initial segment should be.
   size_t minimum_bytes_;
@@ -283,6 +291,9 @@ protected:
 
   /// Protection mode for mmaped file.
   mode_t file_mode_;
+
+  /// Should we install a signal handler
+  bool install_signal_handler_;
 };
 
 /**
