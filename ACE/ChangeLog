@@ -1,3 +1,31 @@
+Wed Apr  9 07:18:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Export ACE_Threading_Helper, it is used as protected class
+          member
+
+        * ace/Service_Gestalt.cpp:
+          Don't use ACE_LIB_TEXT
+
+        * ace/High_Res_Timer.h:
+        * ace/Based_Pointer_T.h:
+          Doxygen changes
+
+        * ace/Naming_Context.cpp:
+          Fixed gcc 4.3 warning
+
+        * ace/OS_NS_errno.h (last_error):
+          Give the argument a name so that doxygen can do its work
+
+        * ace/Select_Reactor_T.cpp:
+          Use scoping
+
+        * ace/MMAP_Memory_Pool.{h,cpp}:
+          Add a bool flag to indicate whether the signal handler has to
+          be installed or not. Made some other flags bool and win32 there
+          is no need have a signal handler as member. This fixes bugzilla
+          3290
+
 Wed Apr  9 02:43:37 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Dynamic_Service.inl (instance):
@@ -19,7 +47,7 @@ Wed Apr  9 01:21:42 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Condition_T.cpp (wait): Fixed a bug where the mutex
           parameter wasn't being used properly if abstime was 0.  Thanks
-          to Andriy Gapon <avg at icyb dot net dot ua> for reporting this.  
+          to Andriy Gapon <avg at icyb dot net dot ua> for reporting this.
 
 Mon Apr  7 18:49:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
