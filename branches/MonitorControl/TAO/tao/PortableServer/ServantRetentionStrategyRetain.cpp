@@ -20,6 +20,10 @@
 #include "tao/PortableServer/Active_Object_Map_Entry.h"
 #include "ace/Auto_Ptr.h"
 
+#if defined (TAO_ENABLE_MONITORS)
+#include "ace/Size_Monitor.h"
+#endif /* TAO_ENABLE_MONITORS */
+
 ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,
            "$Id$")
@@ -51,6 +55,13 @@ namespace TAO
                                                poa->orb_core().server_factory ()->active_object_map_creation_parameters ()
                                               ), CORBA::NO_MEMORY ());
 
+#if defined (TAO_ENABLE_MONITORS)
+      ACE_CString name_str ("Active_Object_Map_");
+      name_str += poa->the_name ();
+      active_object_map->monitor_.name (name_str.c_str ());
+      active_object_map->monitor_.add_to_registry ();
+#endif /* TAO_ENABLE_MONITORS */
+
       // Give ownership of the new map to the auto pointer.  Note, that it
       // is important for the auto pointer to take ownership before
       // checking for exception since we may need to delete the new map.
@@ -64,7 +75,7 @@ namespace TAO
     }
 
     void
-    ServantRetentionStrategyRetain::strategy_cleanup(void)
+    ServantRetentionStrategyRetain::strategy_cleanup (void)
     {
       // Delete the active object map.
       delete this->active_object_map_;

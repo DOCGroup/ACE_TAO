@@ -136,6 +136,7 @@ Monitor_Impl::clear_statistics (const ::Monitor::MC::NameList & names)
   ACE_NEW_THROW_EX (namelist,
                     ::Monitor::MC::NameList (names.length ()),
                     CORBA::NO_MEMORY ());
+  namelist->length (0UL);
 
   /// Get an instance of the MC service singleton.
   MC_ADMINMANAGER* mgr =
@@ -149,11 +150,13 @@ Monitor_Impl::clear_statistics (const ::Monitor::MC::NameList & names)
 
       if (monitor != 0)
         {
-          CORBA::ULong const length = namelist->length();
+          CORBA::ULong const length = namelist->length ();
           namelist->length (length + 1);
-          (*namelist)[length] = CORBA::string_dup (names[index].in());
+          (*namelist)[length] = CORBA::string_dup (names[index].in ());
           monitor->clear ();
         }
     }
+    
+  return namelist;
 }
 

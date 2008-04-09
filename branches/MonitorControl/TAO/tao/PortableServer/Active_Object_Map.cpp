@@ -3,11 +3,6 @@
 #include "tao/PortableServer/Active_Object_Map.h"
 #include "tao/PortableServer/Active_Object_Map_Entry.h"
 
-#if defined (TAO_ENABLE_MONITORS)
-#include "ace/MC_Admin_Manager.h"
-#include "ace/Dynamic_Service.h"
-#endif /* TAO_ENABLE_MONITORS */
-
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Active_Object_Map.inl"
 #endif /* __ACE_INLINE__ */
@@ -92,9 +87,6 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   , id_assignment_strategy_ (0)
   , id_hint_strategy_ (0)
   , using_active_maps_ (false)
-#if defined (TAO_ENABLE_MONITORS)
-  , monitor_ ("Root POA Monitor")
-#endif /* TAO_ENABLE_MONITORS */
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);
 
@@ -320,12 +312,6 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   this->id_hint_strategy_ = new_id_hint_strategy.release ();
   this->servant_map_ = new_servant_map.release ();
   this->user_id_map_ = new_user_id_map.release ();
-  
-#if defined (TAO_ENABLE_MONITORS)
-  MC_ADMINMANAGER *mgr =
-    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-  mgr->admin ().monitor_point (&this->monitor_, 0);
-#endif /* TAO_ENABLE_MONITORS */
 }
 
 TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
@@ -349,8 +335,7 @@ TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
   delete this->user_id_map_;
  
 #if defined (TAO_ENABLE_MONITORS)
-  size_t empty = 0UL; 
-  this->monitor_.receive (empty);
+  this->monitor_.remove_from_registry ();
 #endif /* TAO_ENABLE_MONITORS */
 }
 

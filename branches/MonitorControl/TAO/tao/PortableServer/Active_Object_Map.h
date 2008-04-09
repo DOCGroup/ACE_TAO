@@ -22,13 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_ENABLE_MONITORS)
-#include "tao/PortableServer/Active_Object_Map_Monitor.h"
-#endif /* TAO_ENABLE_MONITORS */
-
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "ace/Map_T.h"
+
+#if defined (TAO_ENABLE_MONITORS)
+#include "ace/Size_Monitor.h"
+#endif /* TAO_ENABLE_MONITORS */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -263,7 +263,7 @@ public:
   static size_t system_id_size_;
 
 #if defined (TAO_ENABLE_MONITORS)
-  Active_Object_Map_Monitor monitor_;
+  ACE::MonitorControl::Size_Monitor monitor_;
 #endif /* TAO_ENABLE_MONITORS */
 };
 

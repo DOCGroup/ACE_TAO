@@ -1,3 +1,27 @@
+Wed Apr  9 15:55:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/Active_Object_Map_Monitor.h:
+        * tao/PortableServer/Active_Object_Map_Monitor.cpp:
+
+          Removed these files, the base class Size_Monitor is
+          sufficient.
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+
+          Added code to construct the active object map monitor's
+          unique name using the POA name.
+
+        * tao/PortableServer/Active_Object_Map.h:
+        * tao/PortableServer/Active_Object_Map.cpp:
+
+          Changed member monitor type to Size_Monitor and moved
+          code that names and registers the monitor to the
+          enclosing strategy.
+
+        * tao/Monitor/Monitor_Impl.cpp(clear_statistics):
+
+          Added a return statement to eliminate a compiler warning.
+
 Wed Apr  9 13:13:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Monitor/Marshal_Buffer/client.cpp:
