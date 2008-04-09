@@ -316,7 +316,8 @@ ACE_Service_Repository::relocate_i (size_t begin,
       ACE_Service_Type *type =
         const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
-      ACE_SHLIB_HANDLE old_handle =  type->dll ().get_handle (0);
+      ACE_SHLIB_HANDLE old_handle = (type == 0) ? ACE_SHLIB_INVALID_HANDLE
+                                                : type->dll ().get_handle (0);
 
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
