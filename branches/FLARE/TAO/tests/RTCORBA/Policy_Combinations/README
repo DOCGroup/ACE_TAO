@@ -1,0 +1,44 @@
+$Id$
+
+Description:
+
+Test combines and tests several RT policies in different ways.
+
+- The IDL interface has two methods: method() and
+  prioritized_method().
+
+- The client sets its thread to the default priority, calls method()
+  which returns a priority.  If the priority returned is different
+  from <TAO_INVALID_PRIORITY>, the client sets its thread to the
+  priority returned by the server and calls prioritized_method()
+
+- The servant returns the <client_priority_> member in method().  In
+  prioritized_method(), it makes sure that the thread running the
+  upcall is at priority <server_priority_>.  These two members allow
+  several different policies to be tested with the same code.
+
+- In addition to testing servants in the RootPOA and in a simple child
+  POA, the following policy combinations are tested in this example:
+  ________________________________________________________________________________
+
+  Thread-pool    BANDS   PRIORITY MODEL    Client Priority    Server Priority
+  ________________________________________________________________________________
+
+  Default Pool     NO   CLIENT_PROPAGATED        3                  3
+  Default Pool     NO   SERVER_DECLARED          3                  5
+  Without Lanes    NO   CLIENT_PROPAGATED        1                  1
+  Without Lanes    NO   SERVER_DECLARED          1                  5
+  With Lanes       NO   CLIENT_PROPAGATED        2                  2
+  With Lanes       NO   SERVER_DECLARED          3                  5
+  Default Pool    YES   CLIENT_PROPAGATED        3                  3
+  Default Pool    YES   SERVER_DECLARED          1                  5
+  Without Lanes   YES   CLIENT_PROPAGATED        1                  1
+  Without Lanes   YES   SERVER_DECLARED          3                  5
+  With Lanes      YES   CLIENT_PROPAGATED        3                  2
+  With Lanes      YES   SERVER_DECLARED          1                  5
+
+  where the priorities are relative to the minimum priority of the
+  thread scheduling policy used for the test.
+
+- This test uses the -ORBPriorityMapping continuous option.
+

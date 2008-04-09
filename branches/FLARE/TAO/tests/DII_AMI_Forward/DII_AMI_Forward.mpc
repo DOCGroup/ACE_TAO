@@ -1,0 +1,26 @@
+//
+// $Id$
+//
+
+
+project (*Client): taoclient, dynamicinterface {
+  Source_Files {
+    client.cpp
+    DII_ReplyHandler.cpp
+  }
+}
+
+project (*Server): messaging, pi_server, taoserver, avoids_minimum_corba {
+  IDL_Files {
+    test.idl
+  }
+
+  Source_Files {
+    server.cpp
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    orb_initializer.cpp
+    server_interceptor.cpp
+  }
+}

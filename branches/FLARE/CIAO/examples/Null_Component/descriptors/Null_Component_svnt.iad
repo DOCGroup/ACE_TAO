@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:implementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>6DCFFB72-08DB-4546-B206-13B6AC2DB251</UUID>
+
+  <location>Null_Component_svnt</location>
+
+  <dependsOn>
+    <name>Null_Component.ImplementationArtifacts.Null_ComponentArtifacts.Null_Component_stub</name>
+    <referencedArtifact href="Null_Component_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>create_Null_ComponentHome_Servant</string>
+      </value>
+    </value>
+  </execParameter>
+
+  <execParameter>
+    <name>architecture</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>x86</string>
+      </value>
+    </value>
+  </execParameter>
+
+  <execParameter>
+    <name>artifactVersion</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>0.0.0.0</string>
+      </value>
+    </value>
+  </execParameter>
+
+  <execParameter>
+    <name>configuration</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Release</string>
+      </value>
+    </value>
+  </execParameter>
+
+  <execParameter>
+    <name>operatingSystem</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Linux</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:implementationArtifactDescription>

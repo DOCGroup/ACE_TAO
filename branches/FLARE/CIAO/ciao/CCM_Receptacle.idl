@@ -1,0 +1,68 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -I W:/ACE_wrappers/TAO Component_Base.idl
+ *     tao_idl -I ../.. \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Base.idl
+ */
+
+//#define CIAO_HAS_IMPORT_KEYWORD
+
+#if !defined (CCM_RECEPTACLE_IDL)
+#define CCM_RECEPTACLE_IDL
+
+#include "ciao/CCM_Base.idl"
+#include "ciao/CCM_Navigation.idl"
+#include "ciao/CCM_Cookie.idl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  valuetype ConnectionDescription
+  {
+    public Cookie ck;
+    public Object objref;
+  };
+  typedef sequence<ConnectionDescription> ConnectionDescriptions;
+
+  valuetype ReceptacleDescription : PortDescription
+  {
+    public boolean is_multiple;
+    public ConnectionDescriptions connections;
+  };
+  typedef sequence<ReceptacleDescription> ReceptacleDescriptions;
+
+  exception ExceededConnectionLimit {};
+  exception CookieRequired {};
+
+  interface Receptacles
+  {
+    Cookie connect (in FeatureName name, in Object connection )
+      raises (InvalidName,
+              InvalidConnection,
+              AlreadyConnected,
+              ExceededConnectionLimit);
+
+    Object disconnect (in FeatureName name, in Cookie ck)
+      raises (InvalidName,
+              InvalidConnection,
+              CookieRequired,
+              NoConnection);
+
+    ConnectionDescriptions get_connections (in FeatureName name)
+      raises (InvalidName);
+
+    ReceptacleDescriptions get_all_receptacles ();
+
+    ReceptacleDescriptions get_named_receptacles (in NameList names)
+      raises (InvalidName);
+  };
+};
+#endif /* CCM_RECEPTACLE_IDL */
