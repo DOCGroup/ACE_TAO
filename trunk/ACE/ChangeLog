@@ -1,3 +1,20 @@
+Wed Apr  9 22:05:30 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_Lexer.h:
+        * ace/Svc_Conf_Lexer.cpp:
+        * ace/Svc_Conf_Param.h:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+        * ace/svcconf.mpb:
+
+          Simplified the build sequence reducing the number of additional
+          transformations needed for Bison's parser output. That includes
+          the elimination of the ACE_YY prefix, which was necessary only
+          because of these transformations.  Added ACE_TEXT around naked
+          string literals. Fixed build warnings with unicode builds.
+
 Wed Apr  9 20:22:46 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Repository.cpp:
