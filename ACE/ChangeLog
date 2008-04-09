@@ -1,3 +1,8 @@
+Wed Apr  9 11:11:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Svc_Conf_y.cpp:
+          Fixed unicode build problems
+
 Wed Apr  9 08:06:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Svc_Conf.y:
