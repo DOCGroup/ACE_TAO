@@ -1111,7 +1111,7 @@ namespace TAO
     return found;
   }
 
-  ACE_Service_Gestalt_Auto_Ptr
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt>
   find_orb_context (const ACE_CString& orbconfig_string)
     {
       const ACE_TCHAR *arg = ACE_TEXT_CHAR_TO_TCHAR(orbconfig_string.c_str ());
@@ -1121,7 +1121,7 @@ namespace TAO
       const ACE_TCHAR *local = ACE_TEXT("LOCAL");
       if  (ACE_OS::strcasecmp (arg, local) == 0)
         {
-          ACE_Service_Gestalt_Auto_Ptr gestalt;
+          ACE_Service_Gestalt* gestalt = 0;
           ACE_NEW_THROW_EX (gestalt,
                             ACE_Service_Gestalt
                             (ACE_Service_Gestalt::MAX_SERVICES / 4, true),
@@ -1129,7 +1129,7 @@ namespace TAO
                             (CORBA::SystemException::_tao_minor_code (0,
                                                                       ENOMEM),
                              CORBA::COMPLETED_NO));
-          return gestalt;
+          return ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> (gestalt);
         }
 
       // Explicit global case?
