@@ -1,3 +1,14 @@
+Wed Apr  9 18:55:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Monitor/Marshal_Buffer/marshal_buffer.mpc:
+        
+          Added ENABLE_MONITORS macro to the client project so the
+          OS monitors instantiated there will be doing something.
+          
+        * tests/Monitor/Marshal_Buffer/run_test.pl:
+        
+          Replaced literal IOR filename with existing variable name.
+
 Wed Apr  9 15:55:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/Active_Object_Map_Monitor.h:
