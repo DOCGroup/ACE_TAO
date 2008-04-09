@@ -291,7 +291,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // messages.
 
 void
-yyerror (int yyerrno, int yylineno, ACE_TCHAR const * s)
+yyerror (int yyerrno, int yylineno, char const * s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (yyerrno);
@@ -300,14 +300,14 @@ yyerror (int yyerrno, int yylineno, ACE_TCHAR const * s)
 #endif /* ACE_NLOGGING */
 
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("ACE (%P|%t) [error %d] on line %d: %s\n"),
+              ACE_TEXT ("ACE (%P|%t) [error %d] on line %d: %C\n"),
               yyerrno,
               yylineno,
               s));
 }
 
 void
-yyerror (ACE_TCHAR const * s)
+yyerror (char const * s)
 {
   yyerror (-1, -1, s);
 }
