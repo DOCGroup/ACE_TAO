@@ -937,8 +937,8 @@ ace_yystpcpy (ace_yydest, ace_yysrc)
    heuristic is that double-quoting is unnecessary unless the string
    contains an apostrophe, a comma, or backslash (other than
    backslash-backslash).  ACE_YYSTR is taken from ace_yytname.  If ACE_YYRES is
-   null, do not copy; instead, return the length of what the result
-   would have been.  */
+   null, do not copy; instead, return the length of what the result would
+   have been.  */
 static ACE_YYSIZE_T
 ace_yytnamerr (ACE_TCHAR *ace_yyres, const char *ace_yystr)
 {
