@@ -1,3 +1,9 @@
+Wed Apr  9 01:21:42 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Condition_T.cpp (wait): Fixed a bug where the mutex
+          parameter wasn't being used properly if abstime was 0.  Thanks
+          to Andriy Gapon <avg at icyb dot net dot ua> for reporting this.  
+
 Mon Apr  7 18:49:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/docs/templates/gnu.txt:
