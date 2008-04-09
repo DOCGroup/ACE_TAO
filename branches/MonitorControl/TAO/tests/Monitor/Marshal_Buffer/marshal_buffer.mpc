@@ -11,6 +11,8 @@ project(*idl): taoidldefaults {
 
 project(*client): taoclient, monitor, ace_mc {
   after += *idl
+  macros += ENABLE_MONITORS
+  
   IDL_Files {
   }
 
@@ -30,6 +32,7 @@ project(*client): taoclient, monitor, ace_mc {
 
 project(*server): taoserver {
   after += *idl
+  
   IDL_Files {
   }
 
