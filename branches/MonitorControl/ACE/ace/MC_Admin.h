@@ -30,7 +30,7 @@ namespace ACE
   namespace MonitorControl
   {
     class MonitorQuery;
-    
+
     /**
      * @class MonitorPointAutoUpdater
      *
@@ -40,7 +40,7 @@ namespace ACE
      * class below. For a monitor point that must periodically
      * check what they are monitoring, the admin class registers
      * the monitor point with the ACE reactor. Each time the
-     * interval times out, the reactor will call the 
+     * interval times out, the reactor will call the
      * handle_timeout() method below, and pass in the appropriate
      * monitor point. The handle_timeout() method will in turn
      * call the appropriate method on the monitor point to get
@@ -52,14 +52,14 @@ namespace ACE
       virtual int handle_timeout (const ACE_Time_Value& interval,
                                   const void* monitor_point);
     };
-    
+
     /**
      * @class Admin
      *
      * @brief Accesses monitor points or groups and manages the registries.
      *
      * Responsible for adding and removing monitor points and control
-     * actions to/form their respective global registries. If 
+     * actions to/form their respective global registries. If
      * add_monitor_point() is called with a non-zero auto_update_msec
      * arg, the monitor point will get registered with the reactor, which
      * will prompt it to automatically update its data.
@@ -80,57 +80,57 @@ namespace ACE
         /// Constructor stores the list of names for which there was a
         /// problem in the operation where the exception was thrown.
         InvalidName (const MonitorControl_Types::NameList& names);
-        
+
         ~InvalidName (void);
-        
+
         /// Class member which holds the namelist passed to the constructor.
         MonitorControl_Types::NameList names_;
       };
-      
+
       MC_Admin (void);
       ~MC_Admin (void);
-      
+
       /// Add or access monitor points in a global registry
       /// (see MC_Generic_Registry.h). If the auto_update_msec arg is non-zero,
       /// the monitor point, the auto updater member, and the given time
       /// interval are passed to our reactor's register_timeout()
       /// method.
-      
+
       bool monitor_point (Monitor_Base* monitor_point,
-                          unsigned long auto_update_msec);
+                          const ACE_Time_Value& time);
       Monitor_Base* monitor_point (const char* name);
-      
+
       /// Works similarly to monitor_point() above, but registers our
       /// auto_query_ member's handle_timeout() method with the reactor,
       /// instead of our auto_updater_'s handle_timeout().
       void auto_query (ACE_Event_Handler* handler,
                        MonitorQuery* query,
-                       unsigned long auto_query_sec);
-                              
+                       const ACE_Time_Value& time);
+
       /// Same as for monitor points, except that a different registry
       /// is used, and there is no registration with the reactor. These
       /// are actions that may be triggered by a constraint or called
       /// from the application directly.
-      
+
       bool control_action (Control_Action* control_action);
       Control_Action* control_action (const char* name);
-                              
+
       /// Resets the monitor points found in the registry by
       /// lookup of the passed list of names. Throws InvalidName
       void clear_statistics (const MonitorControl_Types::NameList& names);
-      
+
       /// Called from the application to manually update the monitor points
       /// (or group) specified in <names>. The boolean parameter specifies
       /// whether or not some action should be triggered (constraint check,
       /// logging, or some other action). Throws InvalidName.
       void update_monitors (const MonitorControl_Types::NameList& names,
                             bool notify);
-      
+
       /// This mutator allows the application to create its own reactor
       /// and substitute it for the default reactor.
       void reactor (ACE_Reactor* new_reactor);
       ACE_Reactor* reactor (void) const;
-      
+
     private:
       MonitorPointAutoUpdater auto_updater_;
       ACE_Reactor* reactor_;

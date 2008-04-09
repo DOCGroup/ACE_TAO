@@ -49,8 +49,8 @@ int main (int /* argc */, char * /* argv */ [])
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
   mgr->admin ().reactor (new_reactor);
 
-  /// Set the timer for CPU load check at 2000 msecs (2 sec).
-  ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, 2000);
+  /// Set the timer for CPU load check at 2 sec.
+  ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.

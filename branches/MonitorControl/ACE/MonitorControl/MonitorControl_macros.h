@@ -73,7 +73,7 @@ typedef ACE_VERSIONED_NAMESPACE_NAME::DISABLED_PACKETS_RECEIVED_MONITOR
       TYPE, \
       ACE_VERSIONED_NAMESPACE_NAME::ACE_Null_Mutex>::instance (); \
   bool good_add = \
-    mgr->admin ().monitor_point (mp, 0); \
+    mgr->admin ().monitor_point (mp, ACE_Time_Value::zero); \
   if (!good_add) \
     { \
       ACE_ERROR ((LM_ERROR, \
@@ -111,7 +111,7 @@ typedef ACE_VERSIONED_NAMESPACE_NAME::DISABLED_PACKETS_RECEIVED_MONITOR
     ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance ( \
       "MC_ADMINMANAGER")->admin ().reactor ()->end_reactor_event_loop (); \
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Thread_Manager::instance ()->wait ()
-  
+
 #define ADD_PERIODIC_QUERY(HANDLER,QUERY,INTERVAL_SEC) \
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service< \
     ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance ( \

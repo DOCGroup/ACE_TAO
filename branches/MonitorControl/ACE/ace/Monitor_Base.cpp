@@ -96,19 +96,19 @@ namespace ACE
     }
 
     void
-    Monitor_Base::add_to_registry (unsigned long auto_update_msec)
+    Monitor_Base::add_to_registry (const ACE_Time_Value& time)
     {
       MC_ADMINMANAGER *mgr =
         ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-      if (!mgr->admin ().monitor_point (this, auto_update_msec))
+      if (!mgr->admin ().monitor_point (this, time))
         {
           ACE_ERROR ((LM_ERROR,
                       "monitor point %s registration failed\n",
                       this->name ()));
         }
     }
-    
+
     void
     Monitor_Base::remove_from_registry (void)
     {

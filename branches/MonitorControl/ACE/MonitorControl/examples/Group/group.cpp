@@ -79,7 +79,7 @@ int main (int /* argc */, char * /* argv */ [])
   group->add_member (m_base);
 
   /// Register the group as an auto-updated monitor point.
-  bool good_add = mgr->admin ().monitor_point (group, 2000);
+  bool good_add = mgr->admin ().monitor_point (group, ACE_Time_Value (2));
 
   if (!good_add)
     {

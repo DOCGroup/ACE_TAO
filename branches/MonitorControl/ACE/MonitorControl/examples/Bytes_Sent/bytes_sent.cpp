@@ -41,8 +41,8 @@ public:
 
 int main (int /* argc */, char * /* argv */ [])
 {
-  /// Set the timer for # of threads check at 2000 msecs (2 sec).
-  ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, 2000);
+  /// Set the timer for # of threads check at 2 sec.
+  ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.

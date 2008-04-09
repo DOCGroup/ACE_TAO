@@ -62,8 +62,8 @@ public:
 
 int main (int /* argc */, char * /* argv */ [])
 {
-  /// Set the timer for # of threads check at 2000 msecs (2 sec).
-  ADD_PERIODIC_MONITOR (BYTES_RECEIVED_MONITOR, 2000);
+  /// Set the timer for # of threads check at 2 sec.
+  ADD_PERIODIC_MONITOR (BYTES_RECEIVED_MONITOR, ACE_Time_Value (2));
 
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_Admin_Manager>::instance ("MC_ADMINMANAGER");
@@ -83,7 +83,7 @@ int main (int /* argc */, char * /* argv */ [])
   MonitorQuery query ("BytesReceived");
   MonitorPointAutoQuery *auto_query = new MonitorPointAutoQuery;
   ACE_Event_Handler_var safety (auto_query);
-  ADD_PERIODIC_QUERY (auto_query, &query, 2);
+  ADD_PERIODIC_QUERY (auto_query, &query, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.

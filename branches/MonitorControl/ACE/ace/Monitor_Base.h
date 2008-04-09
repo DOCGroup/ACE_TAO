@@ -73,7 +73,7 @@ namespace ACE
       void retrieve_and_clear (MonitorControl_Types::Data& data);
 
       /// Common to all monitors.
-      void add_to_registry (unsigned long auto_update_msec = 0UL);
+      void add_to_registry (const ACE_Time_Value& time = ACE_Time_Value::zero);
       void remove_from_registry (void);
 
     protected:

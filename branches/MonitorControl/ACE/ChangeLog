@@ -1,3 +1,18 @@
+Wed Apr  9 13:08:48 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MC_Admin.cpp
+        * ace/MC_Admin.h
+        * ace/Monitor_Base.cpp
+        * ace/Monitor_Base.h
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp
+        * MonitorControl/examples/Constraint/constraint.cpp
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp
+        * MonitorControl/examples/Group/group.cpp
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp
+        * MonitorControl/MonitorControl_macros.h
+          Changed number of msec to a ACE_Time_Value, that way the time periods
+          are more flexible and the implementation is easier
+
 Tue Apr  8 19:57:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp:
@@ -8,11 +23,11 @@ Tue Apr  8 19:57:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * ace/MC_Generic_Registry.cpp:
         * ace/CDR_Stream.h:
         * ace/CDR_Stream.cpp:
-        
+
           - Added mechanism to remove a monitor point from the registry
             when it (along with the thing it is monitoring) goes out
             of scope.
-            
+
           - Added code to create a unique name for a message queue monitor
             based on its address.
 
