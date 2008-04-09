@@ -544,8 +544,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
         ACE_DEBUG ((LM_WARNING,
-                    ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
-                    ACE_LIB_TEXT (" name=%s - removing a pre-existing namesake.\n"),
+                    ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
+                    ACE_TEXT (" name=%s - removing a pre-existing namesake.\n"),
                     this->repo_,
                     stf->name ()));
 #endif
@@ -632,8 +632,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
     {
 #ifndef ACE_NLOGGING
       ACE_DEBUG ((LM_WARNING,
-                  ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, name=%s")
-                  ACE_LIB_TEXT (" - removing a pre-existing namesake.\n"),
+                  ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, name=%s")
+                  ACE_TEXT (" - removing a pre-existing namesake.\n"),
                   this->repo_,
                   sr->name ()));
 #endif

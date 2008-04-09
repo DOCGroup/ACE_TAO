@@ -85,27 +85,29 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
                     -1);
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
   if (!this->name_options_->use_registry ())
-    if (scope_in == ACE_Naming_Context::NET_LOCAL && this->local () == 0)
-      {
-        // Use NET_LOCAL name space, set up connection with remote server.
-        ACE_NEW_RETURN (this->name_space_,
-                        ACE_Remote_Name_Space (this->netnameserver_host_,
-                                               (u_short) this->netnameserver_port_),
-                        -1);
-      }
-    else   // Use NODE_LOCAL or PROC_LOCAL name space.
-      {
-        if (lite)
+    {
+      if (scope_in == ACE_Naming_Context::NET_LOCAL && this->local () == 0)
+        {
+          // Use NET_LOCAL name space, set up connection with remote server.
           ACE_NEW_RETURN (this->name_space_,
-                          LITE_LOCAL_NAME_SPACE (scope_in,
-                                                 this->name_options_),
+                          ACE_Remote_Name_Space (this->netnameserver_host_,
+                                                 (u_short) this->netnameserver_port_),
                           -1);
-        else
-          ACE_NEW_RETURN (this->name_space_,
-                          LOCAL_NAME_SPACE (scope_in,
-                                            this->name_options_),
-                          -1);
-      }
+        }
+      else   // Use NODE_LOCAL or PROC_LOCAL name space.
+        {
+          if (lite)
+            ACE_NEW_RETURN (this->name_space_,
+                            LITE_LOCAL_NAME_SPACE (scope_in,
+                                                   this->name_options_),
+                            -1);
+          else
+            ACE_NEW_RETURN (this->name_space_,
+                            LOCAL_NAME_SPACE (scope_in,
+                                              this->name_options_),
+                            -1);
+        }
+    }
 
   if (ACE_LOG_MSG->op_status () != 0 || this->name_space_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,

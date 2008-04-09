@@ -16,7 +16,7 @@ use VXTestProjectCreator;
 use WorkspaceCreator;
 
 use vars qw(@ISA);
-@ISA = qw(WorkspaceBase WorkspaceCreator);
+@ISA = qw(WorkspaceCreator);
 
 # ************************************************************
 # Subroutine Section
