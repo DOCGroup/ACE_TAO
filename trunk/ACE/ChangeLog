@@ -1,3 +1,9 @@
+Wed Apr  9 20:22:46 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Repository.cpp:
+          Fixing relocate_i to both account for empty slots _and_ provide
+          useful logging.
+
 Wed Apr  9 18:24:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
