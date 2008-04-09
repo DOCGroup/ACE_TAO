@@ -1913,13 +1913,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // messages.
 
 void
-ace_yyerror (ACE_TCHAR const * s)
-{
-  ace_yyerror (-1, -1, s);
-}
-
-void
-ace_yyerror (int ace_yyerrno, int ace_yylineno, char const * s)
+ace_yyerror (int ace_yyerrno, int ace_yylineno, ACE_TCHAR const * s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (ace_yyerrno);
@@ -1931,7 +1925,13 @@ ace_yyerror (int ace_yyerrno, int ace_yylineno, char const * s)
               ACE_TEXT ("ACE (%P|%t) [error %d] on line %d: %s\n"),
               ace_yyerrno,
               ace_yylineno,
-              ACE_TEXT_CHAR_TO_TCHAR (s)));
+              s));
+}
+
+void
+ace_yyerror (ACE_TCHAR const * s)
+{
+  ace_yyerror (-1, -1, s);
 }
 
 // Note that SRC_REC represents left context, which is the STREAM *
