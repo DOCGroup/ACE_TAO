@@ -1,3 +1,13 @@
+Wed Apr  9 18:51:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/MonitorPoint_T.h:
+        * MonitorControl/MonitorPoint_T.cpp:
+        
+          Added no-op implementation of pure virtual update(), which
+          will be seen by default when an application is built with
+          ENABLE_MONITORS undefined and therefore instantiates OS
+          monitors with a boolean template argument of 'false'.
+
 Wed Apr  9 14:03:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp:

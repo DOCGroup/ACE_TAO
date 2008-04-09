@@ -19,18 +19,10 @@ namespace ACE
     template<bool ENABLED>
     MonitorPoint<ENABLED>::~MonitorPoint (void)
     {}
-
+    
     template<bool ENABLED>
     void
-    MonitorPoint<ENABLED>::constraint (
-      const char* /* constraint */)
-    {
-    }
-
-    template<bool ENABLED>
-    void
-    MonitorPoint<ENABLED>::control_action (Control_Action* /* action */,
-                                           const char* /* command */)
+    MonitorPoint<ENABLED>::update (void)
     {
     }
   }
