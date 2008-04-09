@@ -147,27 +147,26 @@ ACE_Service_Repository::fini (void)
   // Do not be tempted to use the prefix decrement operator.  Use
   // postfix decrement operator since the index is unsigned and may
   // wrap around the 0
-      for (size_t i = this->current_size_; i-- != 0; )
-        {
+  for (size_t i = this->current_size_; i-- != 0; )
+    {
       // <fini> the services in reverse order.
-          ACE_Service_Type *s =
-            const_cast<ACE_Service_Type *> (this->service_vector_[i]);
-
+      ACE_Service_Type *s =
+        const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
 #ifndef ACE_NLOGGING
-          if (ACE::debug ())
+      if (ACE::debug ())
         {
           if (s != 0)
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d), ")
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d), ")
                         ACE_TEXT ("name=%s, type=%@, object=%@, active=%d\n"),
                         this,
                         i,
                         this->total_size_,
                         s->name(),
                         s->type (),
-                          (s->type () != 0) ? s->type ()->object () : 0,
-                          s->active ()));
+                        (s->type () != 0) ? s->type ()->object () : 0,
+                        s->active ()));
           else
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d) -> 0\n"),
@@ -175,13 +174,12 @@ ACE_Service_Repository::fini (void)
                         i,
                         this->total_size_));
         }
-
 #endif
 
-          // Collect any errors.
+      // Collect any errors.
       if (s != 0)
         retval += s->fini ();
-        }
+    }
 
   return (retval == 0) ? 0 : -1;
 }
@@ -198,45 +196,45 @@ ACE_Service_Repository::close (void)
     return 0;
 
 #ifndef ACE_NLOGGING
-      if(ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,
+  if(ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) SR::close - repo=%@, size=%d\n"),
-                    this,
-                    this->current_size_));
+                this,
+                this->current_size_));
 #endif
 
   // Do not use the prefix decrement operator since the index is
   // unsigned and may wrap around the 0.
-      for (size_t i = this->current_size_; i-- != 0; )
-        {
+  for (size_t i = this->current_size_; i-- != 0; )
+    {
       // Delete services in reverse order.
       ACE_Service_Type *s =
         const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
 #ifndef ACE_NLOGGING
-          if(ACE::debug ())
+      if(ACE::debug ())
         {
           if (s == 0)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%P|%t) SR::close - repo=%@ [%d] -> 0\n"),
                         this,
                         i));
-            else
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) SR::close - repo=%@ [%d], name=%s, object=%@\n"),
-                          this,
-                          i,
-                          s->name (),
-                          s));
+          else
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) SR::close - repo=%@ [%d], name=%s, object=%@\n"),
+                        this,
+                        i,
+                        s->name (),
+                        s));
         }
 #endif
-          --this->current_size_;
-          delete s;
-        }
+      --this->current_size_;
+      delete s;
+    }
 
-      delete [] this->service_vector_;
-      this->service_vector_ = 0;
-      this->current_size_ = 0;
+  delete [] this->service_vector_;
+  this->service_vector_ = 0;
+  this->current_size_ = 0;
 
   return 0;
 }
@@ -271,8 +269,8 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
     {
       if (this->service_vector_[i] != 0 // skip any empty slots
           && ACE_OS::strcmp (name,
-                        this->service_vector_[i]->name ()) == 0)
-      break;
+                             this->service_vector_[i]->name ()) == 0)
+        break;
     }
 
   if (i < this->current_size_)
@@ -287,13 +285,15 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
 
       if (srp != 0)
         *srp = this->service_vector_[i];
+
       if (ignore_suspended
           && this->service_vector_[i]->active () == 0)
         return -2;
+
       return 0;
     }
-  else
-    return -1;
+
+  return -1;
 }
 
 
@@ -316,27 +316,49 @@ ACE_Service_Repository::relocate_i (size_t begin,
       ACE_Service_Type *type =
         const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
-      if (type == 0) continue; // skip any gaps
-
       ACE_SHLIB_HANDLE old_handle =  type->dll ().get_handle (0);
-      if (old_handle == ACE_SHLIB_INVALID_HANDLE && new_handle != old_handle)
-        {
+
 #ifndef ACE_NLOGGING
-    if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::relocate - repo=%@ [%d] (size=%d)")
-                        ACE_TEXT (": name=%s, handle: %d -> %d\n"),
+      if (ACE::debug ())
+        {
+          if (type == 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d] (size=%d)")
+                        ACE_TEXT (": skipping empty slot\n"),
+                        this,
+                        i,
+                        this->total_size_));
+          else
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d] (size=%d)")
+                        ACE_TEXT (": trying name=%s, handle: %d -> %d\n"),
                         this,
                         i,
                         this->total_size_,
                         type->name (),
-                    old_handle,
-                    new_handle));
-#else
-  ACE_UNUSED_ARG (new_handle);
+                        old_handle,
+                        new_handle));
+        }
+#endif
+
+      if (type != 0  // skip any gaps
+          && old_handle == ACE_SHLIB_INVALID_HANDLE
+          && new_handle != old_handle)
+        {
+#ifndef ACE_NLOGGING
+          if (ACE::debug ())
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d] (size=%d)")
+                        ACE_TEXT (": relocating name=%s, handle: %d -> %d\n"),
+                        this,
+                        i,
+                        this->total_size_,
+                        type->name (),
+                        old_handle,
+                        new_handle));
 #endif
           type->dll (adll); // ups the refcount on adll
-    }
+        }
     }
 
   return 0;
@@ -363,9 +385,9 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 {
   ACE_TRACE ("ACE_Service_Repository::insert");
 
-  int return_value = -1;
-  ACE_Service_Type *s = 0;
   size_t i = 0;
+  int return_value = -1;
+  ACE_Service_Type const *s = 0;
 
   // Establish scope for locking while manipulating the service
   // storage
@@ -376,42 +398,47 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
                               this->lock_,
                               -1));
 
-    // Check to see if this is a duplicate.
-    for (i = 0; i < this->current_size_; i++)
-      {
-        // Replacing an existing entry?
-        if (this->service_vector_[i] != 0 // skip any gaps
-            && ACE_OS::strcmp (sr->name (), this->service_vector_[i]->name ()) == 0)
-          {
-        return_value = 0;
-
-        // Check for self-assignment...
-        if (sr != this->service_vector_[i])
-          {
-            s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
-            this->service_vector_[i] = sr;
-          }
-
-            break;
-      }
-      }
+    return_value = find_i (sr->name (), i, &s, false);
 
     // Adding an entry.
-    if (i >= this->total_size_)
-      {
-        return_value = -1; // no space left
-      }
-    else if (s == 0)
+    if (s != 0)
       {
         this->service_vector_[i] = sr;
-        this->current_size_++;
-        return_value = 0;
+      }
+    else
+      {
+        // New services are always added where current_size_ points,
+        // because if any DLL relocation needs to happen, it will be
+        // performed on services with indexes between some old
+        // current_size_ and the new current_size_ value.  See
+        // ACE_Service_Type_Dynamic_Guard ctor and dtor for details.
+
+        if (i < this->current_size_)
+          i = this->current_size_;
+
+        if (i < this->total_size_)
+          {
+            this->service_vector_[i] = sr;
+            this->current_size_++;
+            return_value = 0;
+          }
+        else
+          {
+            return_value = -1; // no space left
+          }
+
+        // Since there may be "holes" left by removed services one
+        // could consider wrapping current_size_ modulo
+        // total_size_. This is going to impact
+        // ACE_Service_Type_Dynamic_Guard, too and is tricky. Perhaps
+        // a new directive, like "reload" would be better as it can
+        // combine the removal and insertion in an atomic step and
+        // avoid creating too many "holes".
       }
   }
-
 #ifndef ACE_NLOGGING
-    if (ACE::debug ())
-      ACE_DEBUG ((LM_DEBUG,
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE (%P|%t) SR::insert - repo=%@ [%d] (%d),")
                 ACE_TEXT (" name=%s (%s) (type=%@, object=%@, active=%d)\n"),
                 this,
@@ -420,13 +447,13 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
                 sr->name(),
                 (return_value == 0 ? ((s==0) ? "new" : "replacing") : "failed"),
                 sr->type (),
-                  (sr->type () != 0) ? sr->type ()->object () : 0,
-                  sr->active ()));
+                (sr->type () != 0) ? sr->type ()->object () : 0,
+                sr->active ()));
 #endif
 
   // If necessary, delete but outside the lock. (s may be 0, but
   // that's okay, too)
-      delete s;
+  delete s;
 
   if (return_value == -1)
     ACE_OS::last_error (ENOSPC);
