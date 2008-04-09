@@ -546,7 +546,7 @@ protected:
 
 protected:
 
-  /// @deprecated 
+  /// @deprecated
   /// Process service configuration requests that were provided on the
   /// command-line.  Returns the number of errors that occurred.
   static int process_commandline_directives (void);
