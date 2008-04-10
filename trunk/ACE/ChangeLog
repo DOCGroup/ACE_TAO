@@ -1,3 +1,10 @@
+Thu Apr 10 13:27:13 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+
+           Fixed compilation issues and reversed the CAN_RUN_TEST check to
+           get it to run on non-win32 and non-vxworks operating systems.
+
 Thu Apr 10 10:11:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dynamic_Service.inl:
