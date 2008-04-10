@@ -1,3 +1,11 @@
+Thu Apr 10 14:35:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.cpp:
+        
+          Fixed bug in call to purge monitor and added connection 
+          cache size monitor.
+
 Wed Apr  9 18:55:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Monitor/Marshal_Buffer/marshal_buffer.mpc:

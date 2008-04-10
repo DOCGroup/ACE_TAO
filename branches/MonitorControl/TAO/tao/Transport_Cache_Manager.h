@@ -24,6 +24,10 @@
 
 #include "tao/Cache_Entries.h"
 #include "tao/orbconf.h"
+ 
+#if defined (TAO_ENABLE_MONITORS)    
+#include "ace/Size_Monitor.h"
+#endif /* TAO_ENABLE_MONITORS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Handle_Set;
@@ -261,6 +265,14 @@ namespace TAO
     /// is put back is cached here. This should prevent all th threads
     /// trying to search for their required entry.
     Cache_ExtId *last_entry_returned_;
+ 
+#if defined (TAO_ENABLE_MONITORS)    
+    /// Connection cache purge monitor.
+    ACE::MonitorControl::Size_Monitor purge_monitor_;
+    
+    /// Connection cache size monitor.
+    ACE::MonitorControl::Size_Monitor size_monitor_;
+#endif /* TAO_ENABLE_MONITORS */
   };
 
 }

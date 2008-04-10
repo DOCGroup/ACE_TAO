@@ -14,11 +14,9 @@
 # include "tao/Transport_Cache_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            Transport_Cache_Manager,
            "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,6 +31,10 @@ namespace TAO
     , muxed_number_ (orb_core.resource_factory ()->max_muxed_connections ())
     , no_waiting_threads_ (0)
     , last_entry_returned_ (0)
+#if defined (TAO_ENABLE_MONITORS)    
+    , purge_monitor_ ("Connection_Cache_Purge")
+    , size_monitor_ ("Connection_Cache_Size")
+#endif /* TAO_ENABLE_MONITORS */
   {
     if (orb_core.resource_factory ()->locked_transport_cache ())
       {
@@ -51,6 +53,11 @@ namespace TAO
         ACE_NEW (this->cache_lock_,
                  ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>);
       }
+
+#if defined (TAO_ENABLE_MONITORS)    
+    this->purge_monitor_.add_to_registry ();
+    this->size_monitor_.add_to_registry ();
+#endif /* TAO_ENABLE_MONITORS */
   }
 
   Transport_Cache_Manager::~Transport_Cache_Manager (void)
@@ -81,6 +88,11 @@ namespace TAO
         delete this->condition_;
         this->condition_ = 0;
       }
+
+#if defined (TAO_ENABLE_MONITORS)    
+    this->purge_monitor_.remove_from_registry ();
+    this->size_monitor_.remove_from_registry ();
+#endif /* TAO_ENABLE_MONITORS */
   }
 
 
@@ -144,6 +156,10 @@ namespace TAO
                     "cache size is [%d]\n",
                     this->current_size ()));
       }
+
+#if defined (TAO_ENABLE_MONITORS)    
+    this->size_monitor_.receive (this->current_size ());
+#endif /* TAO_ENABLE_MONITORS */
 
     return retval;
   }
@@ -342,7 +358,7 @@ namespace TAO
 
         // Inform the transport that has a reference to the entry in the
         // map that we are *gone* now. So, the transport should not use
-        // the reference to the entry that he has, to acces us *at any
+        // the reference to the entry that he has, to access us *at any
         // time*.
         (*iter).int_id_.transport ()->cache_map_entry (0);
       }
@@ -391,6 +407,10 @@ namespace TAO
     // Set the entry pointer to zero
     entry = 0;
 
+#if defined (TAO_ENABLE_MONITORS)    
+    this->size_monitor_.receive (this->current_size ());
+#endif /* TAO_ENABLE_MONITORS */
+
     return retval;
   }
 
@@ -428,6 +448,10 @@ namespace TAO
     return  this->cache_map_.bind (key,
                                    val,
                                    entry);
+
+#if defined (TAO_ENABLE_MONITORS)    
+    this->size_monitor_.receive (this->current_size ());
+#endif /* TAO_ENABLE_MONITORS */
   }
 
 
@@ -555,6 +579,14 @@ namespace TAO
               }
           }
       }
+
+#if defined (TAO_ENABLE_MONITORS)
+    /// The value doesn't matter, all we need is the timestamp,
+    /// which is added automatically.    
+    this->purge_monitor_.receive (static_cast<size_t> (0UL));
+    /// And update the size monitor as well.
+    this->size_monitor_.receive (this->current_size ());
+#endif /* TAO_ENABLE_MONITORS */
 
     return 0;
   }
