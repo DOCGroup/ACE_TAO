@@ -10,10 +10,12 @@
 #include <ace/Event_Handler.h>
 #include <ace/Condition_T.h>
 #include <ace/OS_NS_sys_wait.h>
+#include <ace/Refcounted_Auto_Ptr.h>
 #include <tao/PortableServer/PortableServer.h>
 #include <ciao/Client_init.h>
 #include <ciao/ComponentServer/CIAO_CS_ClientS.h>
 #include <ciao/ComponentServer/CIAO_ComponentServerC.h>
+#include <ciao/ComponentServer/CIAO_CS_Client_svnt_export.h>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -51,7 +53,7 @@ namespace CIAO
           return 0;
         }
       };
-  }
+    }
   
   
     /**
@@ -65,13 +67,14 @@ namespace CIAO
      * so there will be only one actor *modifying* data at a particular
      * point in time.
      */
-    class  CIAO_ServerActivator_i
+    class CIAO_CS_Client_svnt_Export CIAO_ServerActivator_i
       : public virtual POA_CIAO::Deployment::ServerActivator
     {
     public:
       // Constructor 
       CIAO_ServerActivator_i (CORBA::ULong def_spawn_delay,
                               const char * default_cs_path,
+                              bool multithreaded,
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa_);
 
@@ -126,20 +129,34 @@ namespace CIAO
       struct Server_Info
       {
         Server_Info (size_t cmap_size_hint = 128)
-          : cmap_ (cmap_size_hint), 
+          : cmap_ (new CIAO::Utility::CONFIGVALUE_MAP (cmap_size_hint)), 
+            ref_ (Components::Deployment::ComponentServer::_nil ()),
             pid_ (ACE_INVALID_PID),
             activated_ (false) {}
         
+        typedef ACE_Refcounted_Auto_Ptr <CIAO::Utility::CONFIGVALUE_MAP,
+                                         ACE_Null_Mutex> CONFIGVALUE_MAP_PTR;
+        
         ACE_CString uuid_;
-        CIAO::Utility::CONFIGVALUE_MAP cmap_;
+        CONFIGVALUE_MAP_PTR cmap_;
         Components::Deployment::ComponentServer_var ref_;
         pid_t pid_;
         bool activated_;
       };
       
+      typedef ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex> Safe_Server_Info;
+              
+      struct _server_info
+      {
+        bool operator() (const Safe_Server_Info &a, const Safe_Server_Info &b) const
+        {
+          return a->uuid_ == b->uuid_;
+        }
+      };
+      
       // Presumably, there won't be too many component servers per node application
-      typedef ACE_DLList <Server_Info> SERVER_INFOS;
-      typedef ACE_DLList_Iterator <Server_Info> SERVER_INFOS_ITERATOR;
+      typedef ACE_Unbounded_Set_Ex <Safe_Server_Info, _server_info> SERVER_INFOS;
+
       /// Default args to pass to all componentservers.
       ACE_CString default_args_;
       
