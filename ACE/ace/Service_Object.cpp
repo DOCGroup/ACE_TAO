@@ -12,6 +12,7 @@
 #include "ace/Service_Types.h"
 #include "ace/DLL.h"
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 #if defined (ACE_OPENVMS)
 # include "ace/Lib_Find.h"
 #endif
