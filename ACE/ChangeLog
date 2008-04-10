@@ -1,3 +1,8 @@
+Thu Apr 10 10:11:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dynamic_Service.inl:
+          Corrected method signatures
+
 Thu Apr 10 10:03:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2980_Regression_Test.cpp:
