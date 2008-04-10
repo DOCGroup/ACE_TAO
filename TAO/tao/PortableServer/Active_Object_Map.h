@@ -25,6 +25,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "ace/Map_T.h"
+#include "ace/Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -207,22 +208,22 @@ public:
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Id map.
-  user_id_map *user_id_map_;
+  auto_ptr<user_id_map> user_id_map_;
 
   /// Servant map.
-  servant_map *servant_map_;
+  auto_ptr<servant_map> servant_map_;
 
   /// Id uniqueness strategy.
-  TAO_Id_Uniqueness_Strategy *id_uniqueness_strategy_;
+  auto_ptr<TAO_Id_Uniqueness_Strategy> id_uniqueness_strategy_;
 
   /// Lifespan strategy.
-  TAO_Lifespan_Strategy *lifespan_strategy_;
+  auto_ptr<TAO_Lifespan_Strategy> lifespan_strategy_;
 
   /// Id assignment strategy.
-  TAO_Id_Assignment_Strategy *id_assignment_strategy_;
+  auto_ptr<TAO_Id_Assignment_Strategy> id_assignment_strategy_;
 
   /// Id hint strategy.
-  TAO_Id_Hint_Strategy *id_hint_strategy_;
+  auto_ptr<TAO_Id_Hint_Strategy> id_hint_strategy_;
 
   /// Flag to see if we are using active maps in this active object
   /// map.

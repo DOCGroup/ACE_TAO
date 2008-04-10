@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Auto_Ptr.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Root_POA;
@@ -93,8 +95,7 @@ namespace TAO
         PortableServer::Servant servant);
 
       virtual
-      CORBA::Object_ptr
-      servant_to_reference (PortableServer::Servant servant);
+      CORBA::Object_ptr servant_to_reference (PortableServer::Servant servant);
 
       virtual
       CORBA::Object_ptr create_reference (
@@ -140,7 +141,7 @@ namespace TAO
         const PortableServer::ObjectId &user_id);
 
     private:
-      TAO_Active_Object_Map *active_object_map_;
+      auto_ptr<TAO_Active_Object_Map> active_object_map_;
       CORBA::ULong waiting_servant_deactivation_;
     };
   }
