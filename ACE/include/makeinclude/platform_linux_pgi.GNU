@@ -9,10 +9,9 @@ include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 static_libs_only ?= 1
 
-CC  ?= pgcc
-CXX ?= pgCC
+CC  = pgcc
+CXX = pgCC
 
-CFLAGS  += --one_instantiation_per_object --prelink_objects -Wc,-tused
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads

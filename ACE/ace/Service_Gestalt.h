@@ -30,6 +30,7 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
