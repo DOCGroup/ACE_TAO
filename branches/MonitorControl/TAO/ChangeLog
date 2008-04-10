@@ -1,3 +1,10 @@
+Thu Apr 10 19:48:58 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+        
+          Added start/stop macros for the periodic OS monitors that
+          are created.
+
 Thu Apr 10 18:19:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/GIOP_Message_Base.cpp:

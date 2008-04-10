@@ -44,6 +44,8 @@ main (int argc, char *argv[])
       ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, ACE_Time_Value(1));
       ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, ACE_Time_Value(1));
       ADD_PERIODIC_MONITOR (NUM_THREADS_MONITOR, ACE_Time_Value(1));
+      
+      START_PERIODIC_MONITORS;
 
       /// Here we take on aspects of a server role, exposing the
       /// Monitor interface of our ORB so the monitoring client
@@ -108,6 +110,8 @@ main (int argc, char *argv[])
       /// Make sure the monitor client is done before we destroy the ORB
       /// and make the MC objref invalid.
       ACE_OS::sleep (15);
+      
+      STOP_PERIODIC_MONITORS;
 
       orb->destroy ();
     }
