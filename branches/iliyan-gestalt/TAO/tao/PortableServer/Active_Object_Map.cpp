@@ -299,12 +299,12 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
 
   // Finally everything is fine.  Make sure to take ownership away
   // from the auto pointer.
-  this->id_uniqueness_strategy_ = new_id_uniqueness_strategy.release ();
-  this->lifespan_strategy_ = new_lifespan_strategy.release ();
-  this->id_assignment_strategy_ = new_id_assignment_strategy.release ();
-  this->id_hint_strategy_ = new_id_hint_strategy.release ();
-  this->servant_map_ = new_servant_map.release ();
-  this->user_id_map_ = new_user_id_map.release ();
+  this->id_uniqueness_strategy_ = new_id_uniqueness_strategy;
+  this->lifespan_strategy_ =  new_lifespan_strategy;
+  this->id_assignment_strategy_ = new_id_assignment_strategy;
+  this->id_hint_strategy_ = new_id_hint_strategy;
+  this->servant_map_ = new_servant_map;
+  this->user_id_map_ = new_user_id_map;
 }
 
 TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
@@ -319,13 +319,6 @@ TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
       user_id_map::value_type map_entry = *iterator;
       delete map_entry.second ();
     }
-
-  delete this->id_uniqueness_strategy_;
-  delete this->lifespan_strategy_;
-  delete this->id_assignment_strategy_;
-  delete this->id_hint_strategy_;
-  delete this->servant_map_;
-  delete this->user_id_map_;
 }
 
 bool

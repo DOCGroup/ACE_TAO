@@ -192,7 +192,7 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa)
 
   FtRtecEventComm::ObjectId oid;
   oid.length(16);
-  UUID::create(oid.get_buffer());
+  TAO_FtRt::UUID::create(oid.get_buffer());
 
   RtecEventChannelAdmin::EventChannel_var gateway;
 

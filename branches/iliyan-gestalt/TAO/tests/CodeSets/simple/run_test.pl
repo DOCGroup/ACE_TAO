@@ -8,8 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-PerlACE::add_lib_path ('../lib/IBM1047_ISO8859/.');
-PerlACE::add_lib_path ('../lib/UCS4_UTF16/.');
+PerlACE::add_lib_path ('../libs/IBM1047_ISO8859/.');
+PerlACE::add_lib_path ('../libs/UCS4_UTF16/.');
 
 $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;

@@ -181,7 +181,7 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
 // ****************************************************************
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
-                            ACE_Service_Gestalt_Auto_Ptr gestalt)
+                            ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> gestalt)
   : protocols_hooks_ (0),
     network_priority_protocols_hooks_ (0),
 #if TAO_USE_LOCAL_MEMORY_POOL == 1
