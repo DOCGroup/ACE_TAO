@@ -23,8 +23,26 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Parse_Node.h"
-
 #include "ace/Svc_Conf_Param.h"
+
+// Make sure the yacc(1) function declarations are _outside_
+// any ACE versioned namespace. The block below is verbatim
+// from the template that comes with bison (ver. 2.3).
+
+#ifdef YYPARSE_PARAM
+#if defined __STDC__ || defined __cplusplus
+int ace_yyparse (void *YYPARSE_PARAM);
+#else
+int ace_yyparse ();
+#endif
+#else /* ! YYPARSE_PARAM */
+#if defined __STDC__ || defined __cplusplus
+int ace_yyparse (void);
+#else
+int ace_yyparse ();
+#endif
+#endif /* ! YYPARSE_PARAM */
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -57,13 +75,6 @@ typedef union
 
 // Forward declaration
 struct ace_yy_buffer_state;
-
-/// Performs the parsing
-#ifdef YYPARSE_PARAM
-int ace_yyparse (void *);
-#else
-int ace_yyparse (void);
-#endif
 
 /// Performs the lexical analysis
 YY_DECL;
