@@ -1,3 +1,13 @@
+Thu Apr 10 22:40:22 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/TAO_Internal.cpp:
+
+          Eliminating the typedef for
+          ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt>.
+
 Thu Apr 10 12:42:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CodeSets/simple/run_test.pl:
