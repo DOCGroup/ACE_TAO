@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <assert.h>
+#include <stdio.h>
 
 // This is a non-ACE driver program which loads an ACE-based DLL.
 // The usual ACE-related defines will not apply and we must use
@@ -105,7 +106,7 @@ void * loadunloadDll(void *pp)
 int main(int, char **)
 {
 
-#if defined (CAN_RUN_TEST)
+#if !defined (CAN_RUN_TEST)
 
 #if defined (__BORLANDC__)
   std::printf ("Terminating because this test has not been designed "
@@ -116,11 +117,10 @@ int main(int, char **)
 #endif
 
 #else
-  int result = 0;
-
   printf ("main - entered\n");
 
 #  ifdef USE_THREAD
+  int result = 0;
   pthread_t tid1;
   result = pthread_create(&tid1, 0, &loadDll, 0);
   if (result != 0)
@@ -132,7 +132,7 @@ int main(int, char **)
   printf ("loadDll thread finished\n");
 #  else
   loadDll(0);
-  printf ("loadDll finished"\n);
+  printf ("loadDll finished\n");
 #  endif
 
 #  ifdef USE_THREAD
