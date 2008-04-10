@@ -3,6 +3,8 @@
 // $Id$
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+namespace TAO_FtRt
+{
 
 ACE_INLINE
 UUID::UUID()
@@ -54,5 +56,5 @@ void UUID::to_string(ACE_CString& string) const
   string.resize(STRING_LENGTH-1);
   this->to_string(&string[0]);
 }
-
+}
 TAO_END_VERSIONED_NAMESPACE_DECL

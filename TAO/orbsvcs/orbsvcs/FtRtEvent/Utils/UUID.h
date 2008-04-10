@@ -31,6 +31,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace TAO_FtRt
+{
 /**
  * This is an implementation of Global Unique Identifier
  * which follows the document draft-leach-uuids-guids-01.txt. The
@@ -112,7 +114,7 @@ class TAO_FtRtEvent_Export  UUID
       unsigned char uuid[BINRARY_LENGTH];
     } rep_;
 };
-
+}
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)

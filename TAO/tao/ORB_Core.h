@@ -165,7 +165,7 @@ class TAO_Export TAO_ORB_Core
 public:
 
   /// Constructor.
-  TAO_ORB_Core (const char* id, ACE_Service_Gestalt_Auto_Ptr g);
+  TAO_ORB_Core (const char* id, ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> g);
 
   /// Accessor for the ORB parameters.
   TAO_ORB_Parameters *orb_params (void);
@@ -1230,7 +1230,7 @@ protected:
   TAO_Codeset_Manager *codeset_manager_;
 
   /// ORB's service configuration
-  ACE_Service_Gestalt_Auto_Ptr config_;
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> config_;
 
   /// The hook to be set for the SyncScopePolicy
   Sync_Scope_Hook sync_scope_hook_;

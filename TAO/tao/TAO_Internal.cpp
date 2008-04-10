@@ -124,13 +124,13 @@ namespace
      * Initialize ORB-local (private) ACE Service Configurator
      * repository.
      *
-     * @return @c 0 if successful, @c -1 with @c errno set if failure.
-     *
-     */
-    int open_private_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg,
-                                 int & argc,
-                                 char ** argv,
-                                 bool skip_service_config_open = false,
+   * @return @c 0 if successful, @c -1 with @c errno set if failure.
+   *
+   */
+  int open_private_services_i (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
+                               int & argc,
+                               char ** argv,
+                               bool skip_service_config_open = false,
                                  bool ignore_default_svc_conf_file = false);
 
     /**
@@ -453,7 +453,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 }
 
 int
-TAO::ORB::close_services (ACE_Service_Gestalt_Auto_Ptr pcfg)
+TAO::ORB::close_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg)
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                             guard,
@@ -485,7 +485,7 @@ namespace
   /// Open services, belonging to the gestalt instance.
 
   int
-  open_private_services_i (ACE_Service_Gestalt_Auto_Ptr pcfg,
+  open_private_services_i (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                            int & argc,
                            char ** argv,
                            bool skip_service_config_open,

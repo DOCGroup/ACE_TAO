@@ -1,3 +1,55 @@
+Thu Apr 10 22:40:22 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/TAO_Internal.cpp:
+
+          Eliminating the typedef for
+          ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt>.
+
+Thu Apr 10 12:42:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CodeSets/simple/run_test.pl:
+          Fixed bug in add_lib_paths
+
+Thu Apr 10 11:42:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+          Fixed invalid delete
+
+Thu Apr 10 11:29:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.{h,cpp}:
+          Use an auto_ptr to store the members, simplifies our code
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.{h,cpp}:
+          Don't use an auto_ptr in the constructor, just use it as member. This was
+          a left over of emulated exception support, thanks to Jeff Parsons
+          for finding this
+
+        * tao/Transport.cpp:
+          Layout change
+
+Thu Apr 10 08:15:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/performance-tests/RTEvent/lib/RIR_Narrow.cpp:
+
+          Another "interface" VC8 MFC conflict.
+
+        * tests/DII_AMI_Forward/DII_AMI_Forward.mpc:
+
+          VC8 multi-build conflict (both server + client) over the test.idl
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.inl:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+
+          Place this specialised UUID class into it's own TAO_FtRt namespace.
+
 Wed Apr  9 18:01:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Default_Thread_Lane_Resources_Manager.cpp:

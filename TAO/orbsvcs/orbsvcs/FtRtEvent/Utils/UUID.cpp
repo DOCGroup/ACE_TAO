@@ -9,6 +9,8 @@ ACE_RCSID (Utils,
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+namespace TAO_FtRt
+{
 
 static union
 {
@@ -163,5 +165,5 @@ UUID::create (unsigned char *buffer)
 
   ACE_OS::memcpy(buffer + 10, &node, 6);
 }
-
+}
 TAO_END_VERSIONED_NAMESPACE_DECL

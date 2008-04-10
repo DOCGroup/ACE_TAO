@@ -18,7 +18,6 @@
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Active_Object_Map.h"
 #include "tao/PortableServer/Active_Object_Map_Entry.h"
-#include "ace/Auto_Ptr.h"
 
 ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,
@@ -32,7 +31,7 @@ namespace TAO
   {
     ServantRetentionStrategyRetain::ServantRetentionStrategyRetain (void) :
       ServantRetentionStrategyNonRetain (),
-      active_object_map_ (0),
+      active_object_map_ (),
       waiting_servant_deactivation_ (0)
     {
     }
@@ -51,31 +50,18 @@ namespace TAO
                                                poa->orb_core().server_factory ()->active_object_map_creation_parameters ()
                                               ), CORBA::NO_MEMORY ());
 
-      // Give ownership of the new map to the auto pointer.  Note, that it
-      // is important for the auto pointer to take ownership before
-      // checking for exception since we may need to delete the new map.
-      auto_ptr<TAO_Active_Object_Map> new_active_object_map (active_object_map);
-
-      // Check for exception in construction of the active object map.
-
-      // Finally everything is fine.  Make sure to take ownership away
-      // from the auto pointer.
-      this->active_object_map_ = new_active_object_map.release ();
+      ACE_auto_ptr_reset (this->active_object_map_, active_object_map);
     }
 
     void
     ServantRetentionStrategyRetain::strategy_cleanup(void)
     {
-      // Delete the active object map.
-      delete this->active_object_map_;
-      active_object_map_ = 0;
     }
 
     void
     ServantRetentionStrategyRetain::deactivate_object (
       const PortableServer::ObjectId &id)
     {
-
       TAO_Active_Object_Map_Entry *active_object_map_entry = 0;
       int const result = this->active_object_map_->
         find_entry_using_user_id (id, active_object_map_entry);
@@ -104,8 +90,7 @@ namespace TAO
         {
           this->poa_->servant_deactivated_hook (
             active_object_map_entry->servant_,
-            active_object_map_entry->user_id_
-           );
+            active_object_map_entry->user_id_);
         }
 
       if (new_count == 0)
