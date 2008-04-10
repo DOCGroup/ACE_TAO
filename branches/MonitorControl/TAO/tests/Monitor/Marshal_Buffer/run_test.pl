@@ -23,7 +23,11 @@ else {
   $SV = new PerlACE::Process ("server");
 }
 $CL = new PerlACE::Process ("client");
-$MCL = new PerlACE::Process ("../../../utils/monitor/monitor_client", "-k file://$mc_iorfile -p \"Output CDR Buffer\" -p \"CPULoad\" -p \"BytesSent\" -i 10");
+$mcl_args = "-k \"file://$mc_iorfile\" " .
+            "-p \"Output CDR Buffer\" " .
+            "-p \"OS/Processor/CPULoad\" " .
+            "-p \"OS/Network/BytesSent\" -i 10";
+$MCL = new PerlACE::Process ("../../../utils/monitor/monitor_client", $mcl_args);
 
 $SV->Spawn ();
 

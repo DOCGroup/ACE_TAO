@@ -15,7 +15,7 @@ Monitor_Impl::Monitor_Impl (CORBA::ORB_ptr orb)
 }
 
 ::Monitor::MC::NameList *
-Monitor_Impl::get_statistic_names (const char * filter)
+Monitor_Impl::get_statistic_names (const char * /* filter */)
 {
   MonitorControl_Types::NameList mc_names =
     Monitor_Point_Registry::instance ()->names ();

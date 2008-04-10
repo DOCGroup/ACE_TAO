@@ -1,3 +1,22 @@
+Thu Apr 10 18:19:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/GIOP_Message_Base.cpp:
+
+          Fixed typo in CDR buffer monitor name construction.
+
+        * tao/Monitor/Monitor_Impl.cpp(get_statistic_names):
+
+          Commented out identifier of unused arg.
+
+        * utils/monitor/monitor_client.cpp:
+
+          Cosmetic changes.
+
+        * tests/Monitor/Marshal_Buffer/run_test.pl:
+
+          Changed names of OS monitors to match recent
+          changes in ACE_ROOT/MonitorControl.
+
 Thu Apr 10 14:35:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Transport_Cache_Manager.h:
