@@ -450,8 +450,7 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
   this->purge_entry ();
 
   // Then add ourselves to the cache
-  return this->transport_cache_manager ().cache_transport (desc,
-                                                           this);
+  return this->transport_cache_manager ().cache_transport (desc, this);
 }
 
 int

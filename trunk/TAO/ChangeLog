@@ -1,3 +1,16 @@
+Thu Apr 10 11:29:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.{h,cpp}:
+          Use an auto_ptr to store the members, simplifies our code
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.{h,cpp}:
+          Don't use an auto_ptr in the constructor, just use it as member. This was
+          a left over of emulated exception support, thanks to Jeff Parsons
+          for finding this
+
+        * tao/Transport.cpp:
+          Layout change
+
 Thu Apr 10 08:15:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
 
         * orbsvcs/performance-tests/RTEvent/lib/RIR_Narrow.cpp:
