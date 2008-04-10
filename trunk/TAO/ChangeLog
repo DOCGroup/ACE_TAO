@@ -1,3 +1,8 @@
+Thu Apr 10 11:42:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+          Fixed invalid delete
+
 Thu Apr 10 11:29:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Object_Map.{h,cpp}:
