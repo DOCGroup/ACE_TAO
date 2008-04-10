@@ -9,7 +9,7 @@ namespace ACE
   namespace MonitorControl
   {
     PacketsReceivedMonitor<true>::PacketsReceivedMonitor (void)
-      : MonitorPoint<true> ("PacketsReceived")
+      : MonitorPoint<true> ("OS/Network/PacketsReceived")
 #if defined (ACE_WIN32)
         , WindowsMultiInstanceMonitor (
             "\\Network Interface(*)\\Packets Received/sec")

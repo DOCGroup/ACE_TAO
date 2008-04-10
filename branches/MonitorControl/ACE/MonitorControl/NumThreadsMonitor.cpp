@@ -13,7 +13,7 @@ namespace ACE
   namespace MonitorControl
   {
     NumThreadsMonitor<true>::NumThreadsMonitor (void)
-      : MonitorPoint<true> ("NumThreads")
+      : MonitorPoint<true> ("OS/System/NumThreads")
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\System\\Threads")
 #elif defined (linux)

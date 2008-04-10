@@ -19,7 +19,7 @@ public:
 
     /// Call on the administrator class to look up the desired monitors.
     ACE::MonitorControl::Monitor_Base *cpu_monitor =
-      mgr->admin ().monitor_point ("CPULoad");
+      mgr->admin ().monitor_point ("OS/Processor/CPULoad");
 
     if (cpu_monitor != 0)
       {

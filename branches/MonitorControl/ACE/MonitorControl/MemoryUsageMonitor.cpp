@@ -13,7 +13,7 @@ namespace ACE
   namespace MonitorControl
   {
     MemoryUsageMonitor<true>::MemoryUsageMonitor (void)
-      : MonitorPoint<true> ("MemoryUsage")
+      : MonitorPoint<true> ("OS/Memory/TotalUsage")
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\Memory\\% Committed Bytes In Use")
 #elif defined (ACE_HAS_KSTAT)

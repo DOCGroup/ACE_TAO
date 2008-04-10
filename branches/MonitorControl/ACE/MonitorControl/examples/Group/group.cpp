@@ -23,13 +23,13 @@ public:
       ACE_Dynamic_Service<MC_Admin_Manager>::instance ("MC_ADMINMANAGER");
 
     ACE::MonitorControl::Monitor_Base *cpu_monitor =
-      mgr->admin ().monitor_point ("CPULoad");
+      mgr->admin ().monitor_point ("OS/Processor/CPULoad");
 
     ACE::MonitorControl::Monitor_Base *memory_monitor =
-      mgr->admin ().monitor_point ("MemoryUsage");
+      mgr->admin ().monitor_point ("OS/Memory/TotalUsage");
 
     ACE::MonitorControl::Monitor_Base *bytes_monitor =
-      mgr->admin ().monitor_point ("BytesSent");
+      mgr->admin ().monitor_point ("OS/Network/BytesSent");
 
     /// Query the monitor for its data every 2 seconds, and call the
     /// appropriate display function.
@@ -69,13 +69,13 @@ int main (int /* argc */, char * /* argv */ [])
 
   /// Fetch monitors from the registry and add them to the group.
 
-  Monitor_Base *m_base = mgr->admin ().monitor_point ("CPULoad");
+  Monitor_Base *m_base = mgr->admin ().monitor_point ("OS/Processor/CPULoad");
   group->add_member (m_base);
 
-  m_base = mgr->admin ().monitor_point ("BytesSent");
+  m_base = mgr->admin ().monitor_point ("OS/Network/BytesSent");
   group->add_member (m_base);
 
-  m_base = mgr->admin ().monitor_point ("MemoryUsage");
+  m_base = mgr->admin ().monitor_point ("OS/Memory/TotalUsage");
   group->add_member (m_base);
 
   /// Register the group as an auto-updated monitor point.

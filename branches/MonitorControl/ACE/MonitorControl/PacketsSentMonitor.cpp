@@ -9,7 +9,7 @@ namespace ACE
   namespace MonitorControl
   {
     PacketsSentMonitor<true>::PacketsSentMonitor (void)
-      : MonitorPoint<true> ("PacketsSent")
+      : MonitorPoint<true> ("OS/Network/PacketsSent")
 #if defined (ACE_WIN32)
       , WindowsMultiInstanceMonitor (
           "\\Network Interface(*)\\Packets Sent/sec")

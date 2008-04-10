@@ -9,7 +9,7 @@ namespace ACE
   namespace MonitorControl
   {
     BytesReceivedMonitor<true>::BytesReceivedMonitor (void)
-      : MonitorPoint<true> ("BytesReceived")
+      : MonitorPoint<true> ("OS/Network/BytesReceived")
 #if defined (ACE_WIN32)
         , WindowsMultiInstanceMonitor (
             "\\Network Interface(*)\\Bytes Received/sec")

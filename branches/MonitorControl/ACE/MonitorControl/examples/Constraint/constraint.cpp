@@ -40,7 +40,7 @@ public:
 
     /// Call on the administrator class to look up the desired monitors.
     ACE::MonitorControl::Monitor_Base *bytes_monitor =
-      mgr->admin ().monitor_point ("BytesReceived");
+      mgr->admin ().monitor_point ("OS/Network/BytesReceived");
 
     if (bytes_monitor != 0)
       {

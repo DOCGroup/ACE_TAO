@@ -13,7 +13,7 @@ namespace ACE
   namespace MonitorControl
   {
     CPULoadMonitor<true>::CPULoadMonitor (void)
-      : MonitorPoint<true> ("CPULoad")
+      : MonitorPoint<true> ("OS/Processor/CPULoad")
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\Processor(_Total)\\% Processor Time")
 #endif

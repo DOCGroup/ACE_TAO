@@ -29,7 +29,7 @@ public:
 
     /// Call on the administrator class to look up the desired monitors.
     ACE::MonitorControl::Monitor_Base *thread_monitor =
-      mgr->admin ().monitor_point ("NumThreads");
+      mgr->admin ().monitor_point ("OS/System/NumThreads");
 
     if (thread_monitor != 0)
       {

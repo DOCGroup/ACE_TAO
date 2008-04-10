@@ -19,7 +19,7 @@ public:
 
     /// Call on the administrator class to look up the desired monitors.
     ACE::MonitorControl::Monitor_Base *memory_monitor =
-      mgr->admin ().monitor_point ("MemoryUsage");
+      mgr->admin ().monitor_point ("OS/Memory/TotalUsage");
 
     if (memory_monitor != 0)
       {
