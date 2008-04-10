@@ -1,3 +1,8 @@
+Thu Apr 10 10:03:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+          Fixed BCB compile error
+
 Thu Apr 10 07:13:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_pgi.GNU:
