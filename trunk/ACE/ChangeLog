@@ -1,3 +1,23 @@
+Thu Apr 10 22:32:58 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+
+          Fixing compile problems with single-thread-only builds - using
+          the compiler's abilities (partial specialization) to generate
+          appropriate code.
+
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf_Token_Table.h:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+        * ace/svcconf.mpb:
+
+          Changes to fix compile problems related to versioned namespace
+          use. Eliminated custom token file post-processing - replaced
+          with a wrapper header file (yacc(1) is now producing
+          Token_Table.h, which gets included in Tokens.h)
+
 Thu Apr 10 14:42:04 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Svc_Conf.h:

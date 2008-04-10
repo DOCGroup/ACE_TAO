@@ -19,6 +19,7 @@
 #include "ace/Default_Constants.h"
 #include "ace/Intrusive_Auto_Ptr.h"
 #include "ace/Service_Gestalt.h"
+#include "ace/Synch_Traits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -133,6 +134,7 @@ public:
   bool operator!= (ACE_Static_Svc_Descriptor &) const;
 };
 
+
 /**
  * @class ACE_Threading_Helper
  *
@@ -140,9 +142,13 @@ public:
  * manipulating the value, associated with a thread-specific
  * key. Relates to the ability of the created thread to inherit the
  * parent thread's gestalt. Designed to be used as an instance member
- * of @c ACE_Service_Config
+ * of @c ACE_Service_Config.
+ *
+ * Partial specialization over ACE_SYNCH_MUTEX is used to implement
+ * specific behavior in both multi- and single-threaded builds.
  */
-class ACE_Export ACE_Threading_Helper
+template <typename LOCK>
+class ACE_Threading_Helper
 {
 public:
   ACE_Threading_Helper ();
@@ -153,17 +159,12 @@ public:
 
 private:
 
-  /**
-   * Key for the thread-specific data Service Configuration keeps
-   * around.  This datum is a simple pointer to the configuration
-   * context (Gestalt).
-   */
+  /// Key for the thread-specific data, which is a simple pointer to
+  /// the thread's (currently-) global configuration context.
   ACE_thread_key_t key_;
 };
 
 #define ACE_Component_Config ACE_Service_Config
-
-typedef ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> ACE_Service_Gestalt_Auto_Ptr;
 
 /**
  * @class ACE_Service_Config
@@ -202,7 +203,7 @@ class ACE_Export ACE_Service_Config
   // The Instance, or the global (default) configuration context.
   // The monostate would forward the calls to that instance. The TSS
   // will point here
-  ACE_Service_Gestalt_Auto_Ptr instance_;
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> instance_;
 
 public:
 
@@ -257,9 +258,13 @@ protected:
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
 
   /**
-   * A helper instance to manage thread-specific key creation
+   * A helper instance to manage thread-specific key creation.
+   * Dependent on the syncronization mutex ACE uses, the corresponding
+   * partial template instantiation will perform the right services
+   * that have to do with managing thread-specific storage. Note that,
+   * for single-threaded builds they would do (next to) nothing.
    */
-  ACE_Threading_Helper threadkey_;
+  ACE_Threading_Helper<ACE_SYNCH_MUTEX> threadkey_;
 
   /// = Static interfaces
 
@@ -606,6 +611,10 @@ private:
   /// This class needs the intimate access to be able to swap the
   /// current TSS pointer for the global Gestalt.
   friend class ACE_Service_Config_Guard;
+
+  /// The helper needs intimate access (when building with no threads)
+  friend class ACE_Threading_Helper <ACE_Thread_Mutex>;
+  friend class ACE_Threading_Helper <ACE_Null_Mutex>;
 };
 
 /**
@@ -631,7 +640,7 @@ private:
   ACE_Service_Config_Guard& operator= (const ACE_Service_Config_Guard&);
 
 private:
-  ACE_Service_Gestalt_Auto_Ptr saved_;
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> saved_;
 };
 
 
