@@ -7,12 +7,9 @@
 
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
-static_libs_only ?= 1
+CC  = pgcc
+CXX = pgCC
 
-CC  ?= pgcc
-CXX ?= pgCC
-
-CFLAGS  += --one_instantiation_per_object --prelink_objects -Wc,-tused
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
@@ -32,8 +29,8 @@ endif
 
 OCFLAGS += -O3
 
-SOFLAGS += $(CPPFLAGS) -shared $(PIC) --one_instantiation_per_object --prelink_objects
-SOBUILD = $(COMPILE.cc) $(PIC) --one_instantiation_per_object --prelink_objects -o $(VSHDIR)$*.so $<; \
+SOFLAGS += $(CPPFLAGS) -shared $(PIC) --prelink_objects
+SOBUILD = $(COMPILE.cc) $(PIC) --prelink_objects -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB  = @true
 

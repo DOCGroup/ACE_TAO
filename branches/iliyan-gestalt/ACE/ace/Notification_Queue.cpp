@@ -6,6 +6,10 @@
 #include "ace/Notification_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Guard_T.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Notification_Queue::
 ACE_Notification_Queue()
   : ACE_Copy_Disabled()
@@ -220,3 +224,5 @@ ACE_Notification_Queue::pop_next_notification(
 
   return 1;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -8,6 +8,7 @@
 #include "ace/SString.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/ACE.h"
 
 #if defined (sparc)
 #  include "ace/OS_NS_fcntl.h"
