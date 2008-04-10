@@ -1239,7 +1239,7 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
     // Use this string variable to hold the configuration identity key
   ACE_CString orbconfig_string;
   TAO::parse_orb_opt (command_line, ACE_TEXT("-ORBGestalt"), orbconfig_string);
-  ACE_Service_Gestalt_Auto_Ptr gestalt = TAO::find_orb_context (orbconfig_string);
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> gestalt = TAO::find_orb_context (orbconfig_string);
 
   // An ORB corresponding to the desired ORBid doesn't exist so create
   // a new one.
