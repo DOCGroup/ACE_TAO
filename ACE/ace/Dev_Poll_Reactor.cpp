@@ -42,6 +42,9 @@ ACE_RCSID (ace,
 #include "ace/Null_Mutex.h"
 #include "ace/os_include/os_poll.h"
 #include "ace/OS_NS_sys_mman.h"
+#include "ace/Guard_T.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

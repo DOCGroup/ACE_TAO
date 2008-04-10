@@ -2,16 +2,32 @@
 
 #include <iostream>
 #include <assert.h>
+#include <stdio.h>
 
 // This is a non-ACE driver program which loads an ACE-based DLL.
 // The usual ACE-related defines will not apply and we must use
 // platform-specific ones. Luckily, it is only Windows where this
 // test has not been made to work yet ...
 
-#if !(defined (WIN32) || defined (ACE_VXWORKS))
+
+#if  !(defined (WIN32) || defined (ACE_VXWORKS))
+
+#  if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#    define USE_THREAD
+#  else
+#    undef USE_THREAD
+#  endif
+
+#  define CAN_RUN_TEST
+#endif
+
+#if defined (CAN_RUN_TEST)
 
 #include <dlfcn.h>
-#include <pthread.h>
+
+#if defined USE_THREAD
+#  include <pthread.h>
+#endif
 
 
 static void * dllHandle;
@@ -21,7 +37,7 @@ static voidfunction   capi_init = 0;
 static voidfunction   capi_fini = 0;
 static voidfunction   capi_dosomething = 0;
 
-
+extern "C"
 void* loadDll(void*)
 {
   printf ("loadDll - entered\n");
@@ -85,22 +101,26 @@ void * loadunloadDll(void *pp)
 
   return 0;
 }
-#endif /* !(defined (WIN32) || defined (ACE_VXWORKS)) */
+#endif /* defined (CAN_RUN_TEST) */
 
 int main(int, char **)
 {
 
-#if (defined (WIN32) || defined (ACE_VXWORKS))
+#if !defined (CAN_RUN_TEST)
 
+#if defined (__BORLANDC__)
+  std::printf ("Terminating because this test has not been designed "
+               "to run on platforms where WIN32 has been defined.\n");
+#else
   printf ("Terminating because this test has not been designed "
-    "to run on platforms where WIN32 has been defined.\n");
+          "to run on platforms where WIN32 has been defined.\n");
+#endif
 
 #else
-  int result = 0;
-
   printf ("main - entered\n");
 
 #  ifdef USE_THREAD
+  int result = 0;
   pthread_t tid1;
   result = pthread_create(&tid1, 0, &loadDll, 0);
   if (result != 0)
@@ -112,7 +132,7 @@ int main(int, char **)
   printf ("loadDll thread finished\n");
 #  else
   loadDll(0);
-  printf ("loadDll finished"\n);
+  printf ("loadDll finished\n");
 #  endif
 
 #  ifdef USE_THREAD
@@ -132,7 +152,7 @@ int main(int, char **)
 
   printf ("main - leaving\n");
 
-#endif /* (defined (WIN32) || defined (ACE_VXWORKS)) */
+#endif /* defined (CAN_RUN_TEST) */
 
   return 0;
 }

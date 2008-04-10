@@ -38,6 +38,13 @@ static ACE_Module_Type *
 // Normalize the message literal's type to match yyerror() prototype
 #define YY_ ACE_TEXT
 
+// Prevent yacc(1) from declaring a trivial YYSTYPE just because
+// YYSTYPE is not a macro definition. On the other hand we want
+// YYSTYPE_IS_DECLARED to be as localized as possible to avoid
+// poluting the global namespace - there may be other yacc(1) parsers
+// that want to play nice with ACE
+#define YYSTYPE_IS_DECLARED
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 %}
@@ -153,6 +160,7 @@ stream_modules
     }
    module_list '}'
     {
+      ACE_UNUSED_ARG ($2);
       $$ = $3;
     }
   | /* EMPTY */ { $$ = 0; }

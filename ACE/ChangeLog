@@ -1,3 +1,114 @@
+Thu Apr 10 22:32:58 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+
+          Fixing compile problems with single-thread-only builds - using
+          the compiler's abilities (partial specialization) to generate
+          appropriate code.
+
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf_Token_Table.h:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+        * ace/svcconf.mpb:
+
+          Changes to fix compile problems related to versioned namespace
+          use. Eliminated custom token file post-processing - replaced
+          with a wrapper header file (yacc(1) is now producing
+          Token_Table.h, which gets included in Tokens.h)
+
+Thu Apr 10 14:42:04 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Svc_Conf.h:
+
+          Adding YYSTYPE_IS_DECLARED to prevent yacc(1) from trying to use a
+          trivial definition of YYSTYPE.
+
+        * ace/Svc_Conf.y:
+
+          Fixing an unused variable warning. Adding an YYSTYPE guard.
+
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+        * ace/svcconf.mpb:
+
+          Undefining YYSTYPE_IS_DECLARED at the bottom of Svc_Conf_Tokens.h
+          prevents it from leaking and poluting the global namespace. This
+          allows other yacc(1) based parsers to be used in ACE
+          apps. Cleaning up and recording generated files.
+
+Thu Apr 10 13:27:13 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+
+           Fixed compilation issues and reversed the CAN_RUN_TEST check to
+           get it to run on non-win32 and non-vxworks operating systems.
+
+Thu Apr 10 10:11:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dynamic_Service.inl:
+          Corrected method signatures
+
+Thu Apr 10 10:03:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+          Fixed BCB compile error
+
+Thu Apr 10 07:13:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_pgi.GNU:
+          Removed deprecated linker flags
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Notification_Queue.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Service_Object.cpp:
+        * ace/Sock_Connect.cpp:
+         Added missing includes
+
+        * ace/Notification_Queue.cpp:
+        * ace/Notification_Queue.inl:
+          Added missing versioned namespace macros
+
+Thu Apr 10 06:41:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Gestalt.h:
+          Added include of Guard_T.h
+
+        * include/makeinclude/platform_linux_pgi.GNU:
+          Updated for latest pgCC version
+
+Thu Apr 10 00:50:53 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+        * tests/tests.mpc:
+
+          Fixing a compile problem with no-threads builds.
+
+Wed Apr  9 22:05:30 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_Lexer.h:
+        * ace/Svc_Conf_Lexer.cpp:
+        * ace/Svc_Conf_Param.h:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+        * ace/svcconf.mpb:
+
+          Simplified the build sequence reducing the number of additional
+          transformations needed for Bison's parser output. That includes
+          the elimination of the ACE_YY prefix, which was necessary only
+          because of these transformations.  Added ACE_TEXT around naked
+          string literals. Fixed build warnings with unicode builds.
+
+Wed Apr  9 20:22:46 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Repository.cpp:
+          Fixing relocate_i to both account for empty slots _and_ provide
+          useful logging.
+
 Wed Apr  9 18:24:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
