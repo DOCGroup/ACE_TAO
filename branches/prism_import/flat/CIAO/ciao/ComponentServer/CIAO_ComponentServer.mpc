@@ -37,9 +37,10 @@ project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, taolib_with_idl, 
   }
 }
 
-project(CIAO_CS_Client_svnt) : ccm_stub, ciao_componentserver_stub, portableserver {
+project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
+    ciao_client, ciao_lib {
   dynamicflags = CIAO_CS_CLIENT_SVNT_BUILD_DLL
-  
+  after += CIAO_CS_Client_IDL
   Source_Files {
     CIAO_ServerActivator_Impl.cpp
     CIAO_CS_ClientS.cpp

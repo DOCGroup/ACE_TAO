@@ -195,22 +195,39 @@ namespace CIAO
           
           CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
                        "Calling back to ServerActivator\n"));
-          // Callback to NodeApplication to get configuration
-          sa->component_server_callback (cs.in (),
-                                         this->uuid_.c_str (),
-                                         config.out ());
           
-          CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
-                       "Configuration received\n"));
-          // @@WO: Probably need to do something with these config values.
-
-          ci_srv->init (sa.in (), config._retn ());
+          try
+            {
+              // Callback to NodeApplication to get configuration
+              sa->component_server_callback (cs.in (),
+                                             this->uuid_.c_str (),
+                                             config.out ());
+              
+              CIAO_DEBUG ((LM_TRACE, CLINFO "ComponentServer_Task::svc - "
+                           "Configuration received\n"));
+              // @@WO: Probably need to do something with these config values.
+              
+              ci_srv->init (sa.in (), config._retn ());
+              
+              CIAO_DEBUG ((LM_NOTICE, CLINFO "ComponentServer_Task::svc - "
+                           "Configuration complete for component server %s\n",
+                           this->uuid_.c_str ()));
           
-          CIAO_DEBUG ((LM_NOTICE, CLINFO "ComponentServer_Task::svc - "
-                       "Configuration complete for component server %s\n",
-                       this->uuid_.c_str ()));
+              sa->configuration_complete (this->uuid_.c_str ());
+            }
+          catch (CORBA::BAD_PARAM &)
+            {
+              CIAO_ERROR ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
+                           "The Callback IOR provided pointed to the wrong ServerActivator\n"));
+              throw Error ("Bad callback IOR");
+            }
+          catch (...)
+            {
+              CIAO_ERROR ((LM_ERROR, CLINFO "ComponentServer_Task::svc - "
+                           "Caught exception while calling back\n"));
+              throw Error ("Caught exception while calling back");
+            }
           
-          sa->configuration_complete (this->uuid_.c_str ());
         }
       else
         {
@@ -294,7 +311,7 @@ namespace CIAO
       ACE_Env_Value<int> log ("CIAO_LOG_LEVEL", this->log_level_);
       this->log_level_ = log;
       
-      ACE_Env_Value<bool> trace ("CIAO_TRACE_ENABLE", this->log_enable_tracing_);
+      ACE_Env_Value<int> trace ("CIAO_TRACE_ENABLE", this->log_enable_tracing_);
       this->log_enable_tracing_ = trace;
       
       const ACE_TCHAR *shortl = "-l";
