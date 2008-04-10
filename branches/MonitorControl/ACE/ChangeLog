@@ -1,3 +1,11 @@
+Thu Apr 10 14:32:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/examples/Num_Threads/num_threads.cpp:
+        
+          Replaced msec arg with ACE_Time_Value, similar to changes in
+          
+          Wed Apr  9 13:08:48 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Wed Apr  9 18:51:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorPoint_T.h:
