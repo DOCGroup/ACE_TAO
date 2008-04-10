@@ -1,3 +1,23 @@
+Thu Apr 10 14:42:04 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Svc_Conf.h:
+
+          Adding YYSTYPE_IS_DECLARED to prevent yacc(1) from trying to use a
+          trivial definition of YYSTYPE.
+
+        * ace/Svc_Conf.y:
+
+          Fixing an unused variable warning. Adding an YYSTYPE guard.
+
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+        * ace/svcconf.mpb:
+
+          Undefining YYSTYPE_IS_DECLARED at the bottom of Svc_Conf_Tokens.h
+          prevents it from leaking and poluting the global namespace. This
+          allows other yacc(1) based parsers to be used in ACE
+          apps. Cleaning up and recording generated files.
+
 Thu Apr 10 13:27:13 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2980_Regression_Test.cpp:
