@@ -1,3 +1,11 @@
+Thu Apr 10 06:41:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Gestalt.h:
+          Added include of Guard_T.h
+
+        * include/makeinclude/platform_linux_pgi.GNU:
+          Updated for latest pgCC version
+
 Thu Apr 10 00:50:53 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Bug_2980_Regression_Test.cpp:
