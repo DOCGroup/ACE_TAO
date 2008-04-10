@@ -16,9 +16,13 @@
 #endif  /* !ACE_LACKS_UNIX_SIGNALS */
 
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/Thread.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
 ACE_RCSID (ace,
            Service_Config,

@@ -1,5 +1,7 @@
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE ACE_Notification_Queue_Node::
 ACE_Notification_Queue_Node()
   : ACE_Intrusive_List_Node<ACE_Notification_Queue_Node>()
@@ -44,4 +46,5 @@ clear_mask(ACE_Reactor_Mask mask)
   ACE_CLR_BITS(contents_.mask_, mask);
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
