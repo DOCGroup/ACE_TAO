@@ -107,8 +107,13 @@ int main(int, char **)
 
 #if defined (CAN_RUN_TEST)
 
+#if defined (__BORLANDC__)
+  std::printf ("Terminating because this test has not been designed "
+               "to run on platforms where WIN32 has been defined.\n");
+#else
   printf ("Terminating because this test has not been designed "
-    "to run on platforms where WIN32 has been defined.\n");
+          "to run on platforms where WIN32 has been defined.\n");
+#endif
 
 #else
   int result = 0;
