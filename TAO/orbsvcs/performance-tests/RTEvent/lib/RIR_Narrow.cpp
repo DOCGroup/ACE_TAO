@@ -19,16 +19,16 @@ template<class Interface> typename RIR_Narrow<Interface>::Interface_ptr
 RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
                                 const char *object_id)
 {
-  Interface_var interface;
+  Interface_var intface;
 
   try
     {
       CORBA::Object_var object =
         orb->resolve_initial_references (object_id);
 
-      interface = Interface::_narrow (object.in ());
+      intface = Interface::_narrow (object.in ());
 
-      if (CORBA::is_nil (interface.in ()))
+      if (CORBA::is_nil (intface.in ()))
         {
           ACE_ERROR ((LM_ERROR,
                       "Panic - error while narrowing <%s>\n",
@@ -38,7 +38,7 @@ RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
     } catch (const CORBA::Exception& ex) {
       ex._tao_print_exception ("Caught an exception \n");
     }
-  return interface._retn ();
+  return intface._retn ();
 }
 
 #endif /* TAO_PERF_RTEC_RIR_NARROW_CPP */
