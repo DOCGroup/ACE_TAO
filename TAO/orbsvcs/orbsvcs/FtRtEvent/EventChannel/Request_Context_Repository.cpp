@@ -45,8 +45,8 @@ Request_Context_Repository::init(CORBA::ORB_ptr the_orb)
 void Request_Context_Repository::generate_object_id(
   FtRtecEventChannelAdmin::ObjectId& oid)
 {
-  oid.length(sizeof(UUID));
-  UUID::create(oid.get_buffer());
+  oid.length(sizeof(TAO_FtRt::UUID));
+  TAO_FtRt::UUID::create(oid.get_buffer());
   set_object_id(oid);
 }
 

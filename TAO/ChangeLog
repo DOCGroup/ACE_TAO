@@ -1,3 +1,22 @@
+Thu Apr 10 08:15:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/performance-tests/RTEvent/lib/RIR_Narrow.cpp:
+
+          Another "interface" VC8 MFC conflict.
+
+        * tests/DII_AMI_Forward/DII_AMI_Forward.mpc:
+
+          VC8 multi-build conflict (both server + client) over the test.idl
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.inl:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+
+          Place this specialised UUID class into it's own TAO_FtRt namespace.
+
 Wed Apr  9 18:01:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Default_Thread_Lane_Resources_Manager.cpp:

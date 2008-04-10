@@ -43,7 +43,7 @@ namespace FTRTEC {
         --argc; ++argv;
         if (argv[0][0] == '-') continue;
         else if (argv[0][0] != '$') {
-          UUID uuid(argv[0]);
+          TAO_FtRt::UUID uuid(argv[0]);
           if (!uuid.is_valid())
             ACE_ERROR_RETURN((LM_ERROR, "Invalid Object_ID\n"), -1);
           object_id_.length(16);
