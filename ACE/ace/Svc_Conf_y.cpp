@@ -143,6 +143,13 @@ static ACE_Module_Type *
 // Normalize the message literal's type to match ace_yyerror() prototype
 #define YY_ ACE_TEXT
 
+// Prevent yacc(1) from declaring a trivial YYSTYPE just because
+// YYSTYPE is not a macro definition. On the other hand we want
+// YYSTYPE_IS_DECLARED to be as localized as possible to avoid
+// poluting the global namespace - there may be other yacc(1) parsers
+// that want to play nice with ACE
+#define YYSTYPE_IS_DECLARED
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 
@@ -476,11 +483,11 @@ static const ace_yytype_int8 ace_yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const ace_yytype_uint16 ace_yyrline[] =
 {
-       0,    65,    65,    74,    78,    82,    83,    84,    85,    86,
-      87,    91,   101,   108,   115,   122,   129,   133,   133,   140,
-     143,   150,   149,   158,   162,   170,   174,   177,   191,   200,
-     209,   231,   238,   242,   247,   253,   257,   261,   268,   272,
-     276,   283,   284,   288,   289,   290
+       0,    72,    72,    81,    85,    89,    90,    91,    92,    93,
+      94,    98,   108,   115,   122,   129,   136,   140,   140,   147,
+     150,   157,   156,   166,   170,   178,   182,   185,   199,   208,
+     217,   239,   246,   250,   255,   261,   265,   269,   276,   280,
+     284,   291,   292,   296,   297,   298
 };
 #endif
 
@@ -1526,6 +1533,7 @@ ace_yyreduce:
   case 22:
 
     {
+      ACE_UNUSED_ARG ((ace_yyvsp[(2) - (4)]));
       (ace_yyval.parse_node_) = (ace_yyvsp[(3) - (4)].parse_node_);
     ;}
     break;

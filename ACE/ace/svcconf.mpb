@@ -26,14 +26,6 @@ feature(ace_svcconf) {
     XML_Svc_Conf.cpp
   }
 
-//    "       -e 's/->ace_yylineno/->yylineno/g' \\"     // added by the substitution, above.
-///    "       -e 's/^char /ACE_TCHAR /g' \\"
-///    "       -e 's/\([^d]\) char /\$1 ACE_TCHAR /g' \\"
-///    "       -e 's/(char/(ACE_TCHAR/g' \\"
-
-//    "       -e 's/ace_yyerror[ ]*([ ]*YY_/ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, YY_/g' \\"
-///    "       -e 's/ace_yyerror (int ace_yyerrno, int ace_yylineno, const ACE_TCHAR/ace_yyerror (int ace_yyerrno, int ace_yylineno, const char/' \\"
-
   verbatim(gnuace, local) {
     "Svc_Conf_y.cpp: Svc_Conf.y"
     "ifeq ($(notdir $(YACC)), bison)"
@@ -49,7 +41,7 @@ feature(ace_svcconf) {
     "       -e 's/ace_yyerror[ ]*([ ]*YY_/ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, YY_/g' \\"
     "       -e 's@#include <stdio\.h>@@' \\"
     "       -e 's/Svc_Conf\\.tab\\.c/Svc_Conf_y.cpp/g' <Svc_Conf.tab.c >$@"
-//    "	$(RM) -f Svc_Conf.tab.c Svc_Conf_y.cpp.orig"
+    "	$(RM) -f Svc_Conf.tab.c Svc_Conf_y.cpp.orig"
     "else"
     "	@echo 'ERROR: You must use bison 1.35 or higher to process this file'"
     "	@/bin/false"
@@ -60,10 +52,11 @@ feature(ace_svcconf) {
     "	echo \/\/ '$$I''d:$$' >$@"
     "	echo '#ifndef BISON_SVC_CONF_TAB_H' >>$@"       // Inclusion protection macros
     "	echo '# define BISON_SVC_CONF_TAB_H' >>$@"      // ... same ...
-    "	echo '# define YYSTYPE_IS_DECLARED 1' >>$@" // Don't use Svc_Conf_y.cpp's
+    "	echo '# define YYSTYPE_IS_DECLARED 1' >>$@"     // Use Svc_Conf_y.cpp's
     "	sed -e 's/yy/ace_yy/g' <Svc_Conf.tab.h >>$@"
+    "	echo '# undef YYSTYPE_IS_DECLARED' >>$@"        // Use Svc_Conf_y.cpp's AND limit global scope polution 
     "	echo '#endif \/\* ifndef BISON_SVC_CONF_TAB_H \*\/' >>$@"
-//    "	$(RM) -f Svc_Conf.tab.h"
+    "	$(RM) -f Svc_Conf.tab.h"
     "else"
     "	@echo 'ERROR: You must use bison 1.35 or higher to process this file'"
     "	@/bin/false"

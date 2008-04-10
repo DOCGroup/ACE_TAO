@@ -53,6 +53,8 @@ typedef union
   ACE_TCHAR *ident_;
 } YYSTYPE;
 
+#define YYSTYPE_IS_DECLARED
+
 // Forward declaration
 struct ace_yy_buffer_state;
 
