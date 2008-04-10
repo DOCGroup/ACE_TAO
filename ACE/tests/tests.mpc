@@ -256,9 +256,11 @@ project(Bug_2975_Regression_Test) : acetest {
 }
 
 project (Bug_2980_Regression_Test) {
-  // The test uses a non-ACE executable, loading an ACE-based DLL
+
+  // The test uses a non-ACE executable,
+  // which loads an ACE-based DLL.
+
   after += Bug_2980_Regression_Dll
-  macros += USE_THREAD
   exename = Bug_2980_Regression_Test
   Source_Files {
     Bug_2980_Regression_Test.cpp

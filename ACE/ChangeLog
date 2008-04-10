@@ -1,3 +1,10 @@
+Thu Apr 10 00:50:53 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+        * tests/tests.mpc:
+
+          Fixing a compile problem with no-threads builds.
+
 Wed Apr  9 22:05:30 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Svc_Conf.h:
