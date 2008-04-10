@@ -37,7 +37,7 @@ static voidfunction   capi_init = 0;
 static voidfunction   capi_fini = 0;
 static voidfunction   capi_dosomething = 0;
 
-
+extern "C"
 void* loadDll(void*)
 {
   printf ("loadDll - entered\n");
