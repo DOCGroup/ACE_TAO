@@ -8,10 +8,25 @@
 // platform-specific ones. Luckily, it is only Windows where this
 // test has not been made to work yet ...
 
-#if !(defined (WIN32) || defined (ACE_VXWORKS))
+
+#if  !(defined (WIN32) || defined (ACE_VXWORKS))
+
+#  if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#    define USE_THREAD
+#  else
+#    undef USE_THREAD
+#  endif
+
+#  define CAN_RUN_TEST
+#endif
+
+#if defined (CAN_RUN_TEST)
 
 #include <dlfcn.h>
-#include <pthread.h>
+
+#if defined USE_THREAD
+#  include <pthread.h>
+#endif
 
 
 static void * dllHandle;
@@ -85,12 +100,12 @@ void * loadunloadDll(void *pp)
 
   return 0;
 }
-#endif /* !(defined (WIN32) || defined (ACE_VXWORKS)) */
+#endif /* defined (CAN_RUN_TEST) */
 
 int main(int, char **)
 {
 
-#if (defined (WIN32) || defined (ACE_VXWORKS))
+#if defined (CAN_RUN_TEST)
 
   printf ("Terminating because this test has not been designed "
     "to run on platforms where WIN32 has been defined.\n");
@@ -132,7 +147,7 @@ int main(int, char **)
 
   printf ("main - leaving\n");
 
-#endif /* (defined (WIN32) || defined (ACE_VXWORKS)) */
+#endif /* defined (CAN_RUN_TEST) */
 
   return 0;
 }
