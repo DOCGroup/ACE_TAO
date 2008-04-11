@@ -1,0 +1,129 @@
+project(FirstFit_idl_gen) : taoidldefaults, anytypecode {
+  avoids += ace_for_tao
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=FIRSTFIT_STUB_Export \
+              -Wb,stub_export_include=FirstFit_stub_export.h \
+              -Wb,skel_export_macro=FIRSTFIT_SVNT_Export \
+              -Wb,skel_export_include=FirstFit_svnt_export.h
+
+  IDL_Files {
+    FirstFit.idl
+  }
+}
+
+project(FirstFit_cidl_gen) : ciaocidldefaults, taoidldefaults {
+  avoids += ace_for_tao
+  custom_only = 1
+  cidlflags += --svnt-export-macro FIRSTFIT_SVNT_Export \
+               --svnt-export-include FirstFit_svnt_export.h
+
+	
+  idlflags += -Wb,export_macro=FIRSTFIT_EXEC_Export \
+              -Wb,export_include=FirstFit_exec_export.h \
+              -SS
+              
+  CIDL_Files {
+    FirstFit.cidl
+  }
+  
+  IDL_Files {
+    FirstFitE.idl
+  }
+}
+
+project(FirstFit_stub) : ciao_client_dnc {
+  avoids += ace_for_tao
+  after += FirstFit_idl_gen 
+  libs  += Allocator_Base_stub  
+
+  sharedname = FirstFit_stub
+  dynamicflags   = FIRSTFIT_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FirstFitC.cpp
+  }
+
+  Header_Files {
+    FirstFitC.h
+    FirstFit_stub_export.h
+  }
+
+  Inline_Files {
+    FirstFitC.inl
+  }
+}
+
+project(FirstFit_exec) : ciao_component_dnc, ciao_config_handlers {
+  avoids += ace_for_tao
+  after   += FirstFit_cidl_gen FirstFit_stub
+  sharedname = FirstFit_exec
+  libs += FirstFit_stub \
+          Allocator_Base_stub \
+          RACE_utils \
+          OpString_stub \
+          RACE_common_stub \
+          TM_Proxy_Component_stub 
+  
+  dynamicflags   = FIRSTFIT_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FirstFitEC.cpp
+    FirstFit_exec.cpp
+  }
+  
+  Header_Files {
+    FirstFitEC.h
+    FirstFit_exec.h
+    FirstFit_exec_export.h
+  }
+  
+  Inline_Files {
+    FirstFitEC.inl
+  }
+}
+
+
+project(FirstFit_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
+  after      +=  FirstFit_exec
+  sharedname  = FirstFit_svnt
+  libs       += FirstFit_exec \
+                FirstFit_stub \
+                Allocator_Base_svnt \
+                Allocator_Base_stub \
+                OpString_stub \
+                RACE_common_stub \
+                TM_Proxy_Component_stub 
+
+  
+  dynamicflags = FIRSTFIT_SVNT_BUILD_DLL
+  
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FirstFitS.cpp
+    FirstFit_svnt.cpp
+  }
+  
+  Header_Files {
+    FirstFitS.h
+    FirstFit_svnt.h
+    FirstFit_svnt_export.h
+  }
+  
+  Inline_Files {
+    FirstFitS.inl
+  }
+}
+
+

@@ -1,0 +1,76 @@
+project(Allocator_Base_idl_gen) : taoidldefaults, anytypecode {
+  avoids += ace_for_tao
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=ALLOCATOR_BASE_STUB_Export \
+              -Wb,stub_export_include=Allocator_Base_stub_export.h \
+              -Wb,skel_export_macro=ALLOCATOR_BASE_SVNT_Export \
+              -Wb,skel_export_include=Allocator_Base_svnt_export.h
+
+  IDL_Files {
+    Allocator_Base.idl
+  }
+}
+
+project(Allocator_Base_stub) : ciao_client_dnc {
+  avoids += ace_for_tao
+  after += Allocator_Base_idl_gen \
+           OpString_stub \
+           RACE_common_stub \
+           TM_Proxy_stub 
+
+  libs  += OpString_stub \
+           RACE_common_stub \
+           TM_Proxy_Component_stub 
+
+  
+  sharedname = Allocator_Base_stub
+  dynamicflags   = ALLOCATOR_BASE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Allocator_BaseC.cpp
+  }
+
+  Header_Files {
+    Allocator_BaseC.h
+    Allocator_Base_stub_export.h
+  }
+
+  Inline_Files {
+    Allocator_BaseC.inl
+  }
+}
+
+project(Allocator_Base_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
+  after      +=  Allocator_Base_exec
+  sharedname  = Allocator_Base_svnt
+  libs       += Allocator_Base_stub \
+                OpString_stub \
+                RACE_common_stub \
+                TM_Proxy_Component_stub
+  
+  dynamicflags = ALLOCATOR_BASE_SVNT_BUILD_DLL
+  
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Allocator_BaseS.cpp
+  }
+  
+  Header_Files {
+    Allocator_BaseS.h
+  }
+  
+  Inline_Files {
+    Allocator_BaseS.inl
+  }
+}
+
+

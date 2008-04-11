@@ -1,0 +1,47 @@
+//$
+#ifndef RACE_ALLOCATOR_BASE_IDL
+#define RACE_ALLOCATOR_BASE_IDL
+
+/**
+ * @file Allocator.idl
+ *
+ * @brief Base Allocator Component of RACE.
+ *
+ * This file declares a Base Controller of the RACE framework.
+ *
+ * @author Nilabja Roy <nilabjarATdreDOTvanderbiltDOTcom>
+ */
+
+#include <Components.idl>
+#include "RACE/TM_Proxy/TM_Proxy.idl"
+#include "RACE/common/OpString.idl"
+#include "RACE/common/RACE_common.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    module Allocator
+    {
+
+      interface Allocation
+      {
+        /// Allocate the components 
+        boolean allocate (inout OperationalString opstring);
+      };
+      
+      component Allocator_Base
+      {
+        /// Obtain system information (both resource utilization and QoS
+        /// infromation) from the target manager.
+        uses ::CIAO::RACE::TM_Proxy::SystemSnapshot system_monitor;
+
+        uses ::CIAO::RACE::TM_Proxy::Utility system_utils;
+
+        provides Allocation allocation ;
+
+      };
+    };
+  };
+};
+#endif /* RACE_ALLOCATOR_BASE_IDL */
