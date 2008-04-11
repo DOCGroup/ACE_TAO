@@ -1,3 +1,11 @@
+Fri Apr 11 01:51:13 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Svc_Conf_Tokens.h:
+        * ace/svcconf.mpb:
+
+          Fixing a fuzz build warning of a missing $Id$. Also, not all
+          make(1)'s have $(MV), so changing mpb to use just "mv"
+
 Thu Apr 10 22:32:58 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:
