@@ -1,3 +1,11 @@
+
+Fri Apr 11 17:36:34 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/Download.html: 
+        * docs/ACE-development-process.html:
+        * docs/ACE-bug-process.html: Updated these files to use the major,
+          minor, and micro release terminology. 
+
 Fri Apr 11 15:26:08 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Bug_2980_Regression_Test.cpp:
