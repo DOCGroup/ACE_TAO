@@ -1,3 +1,24 @@
+Thu Apr 10 23:06:32 UTC 2008  Nilabja R  <nilabjar@nospam.com>
+
+        * Allocator/Base/Allocator_Base.idl:
+        * Allocator/Base/Allocator_Base.mpc:
+        * Allocator/Base/Allocator_Base_exec_export.h:
+        * Allocator/Base/Allocator_Base_stub_export.h:
+        * Allocator/Base/Allocator_Base_svnt_export.h:
+        * Allocator/FirstFit/FirstFit.cidl:
+        * Allocator/FirstFit/FirstFit.idl:
+        * Allocator/FirstFit/FirstFit.mpc:
+        * Allocator/FirstFit/FirstFitE.idl:
+        * Allocator/FirstFit/FirstFit_exec.h:
+        * Allocator/FirstFit/FirstFit_exec.cpp:
+        * Allocator/FirstFit/FirstFit_exec_export.h:
+        * Allocator/FirstFit/FirstFit_stub_export.h:
+        * Allocator/FirstFit/FirstFit_svnt_export.h:
+        * Allocator/FirstFit/Single_D_BP.h:
+        * Allocator/FirstFit/Single_D_BP.cpp:
+          
+	  The allocator component.
+
 Thu Apr  3 20:13:49 UTC 2008  Nilabja Roy  <nilabja@nospam.com>
 
         * Effectors/Callback/Callback.mpc:
@@ -7,7 +28,7 @@ Thu Apr  3 20:13:49 UTC 2008  Nilabja Roy  <nilabja@nospam.com>
         * common/RACE_common.mpc:
 
         * utils/RACE_utils.mpc:
-	  Changed the files to address the problem of libout
+          Changed the files to address the problem of libout
 
 Tue Apr  1 00:16:43 UTC 2008  Nishanth Shankaran  <nshanakr@nospam.com>
 

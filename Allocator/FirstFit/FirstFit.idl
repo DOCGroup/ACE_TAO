@@ -1,0 +1,39 @@
+#ifndef RACE_FIRST_FIT_ALLOCATOR_IDL
+#define RACE_FIRST_FIT_ALLOCATOR_IDL
+
+/**
+ * @file EUCON_Controller.idl
+ *
+ * @brief EUCON_Controller Component of RACE.
+ *
+ * This file declares a EUCON_Controller of the RACE framework.
+ *
+ * @author Nishanth Shankaran <nshankar@nospam.com>
+ */
+
+#include <Components.idl>
+#include "RACE/Allocator/Base/Allocator_Base.idl"
+
+
+module CIAO
+{
+  module RACE
+  {
+    module Allocator
+    {
+      /**
+       * @component EUCON_Controller
+       * @brief The EUCON_Controller component of RACE.
+       */
+      component First_Fit_Allocator : Allocator_Base
+      {
+      };
+
+      home First_Fit_Allocator_Home manages First_Fit_Allocator
+      {
+      };
+    };
+  };
+};
+
+#endif /* FIRST_FIT_ALLOCATOR */

@@ -1,0 +1,33 @@
+// $Id$
+#ifndef RACE_FIRST_FIT_ALLOCATOR_CIDL
+#define RACE_FIRST_FIT_ALLOCATOR_CIDL
+
+/*
+ * @file EUCON_Controller.cidl
+ *
+ * @brief This file contains the EUCON Controller component implementation
+ * defination.
+ */
+
+#include "FirstFit.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    module Allocator
+    {
+      composition session First_Fit_Allocator_Impl
+      {
+        home executor First_Fit_Allocator_Home_Exec
+        {
+          implements First_Fit_Allocator_Home;
+          manages    First_Fit_Allocator_Exec;
+        };
+      };
+    };
+  };
+};
+
+
+#endif /* RACE_FIRST_FIT_ALLOCATOR_CIDL */
