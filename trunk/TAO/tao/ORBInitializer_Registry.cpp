@@ -43,16 +43,10 @@ namespace PortableInterceptor
         }
     }
 
-#if defined (ACE_VXWORKS) && defined (ACE_HAS_TSS_EMULATION)
-   bool const lookup = false;
-#else
-   bool const lookup = true;
-#endif
-
     // If not, look it up.
     TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_ =
       ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-      ("ORBInitializer_Registry", lookup); // only look in the local repo
+      ("ORBInitializer_Registry", true); // only look in the local repo
 
 #if !defined (TAO_AS_STATIC_LIBS)
     if (orbinitializer_registry_ == 0)
