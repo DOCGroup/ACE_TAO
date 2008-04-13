@@ -5045,6 +5045,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (ACE_VXWORKS) && !defined (__RTP__)
 # include /**/ <usrLib.h>   /* for ::sp() */
 # include /**/ <sysLib.h>   /* for ::sysClkRateGet() */
+# include "ace/Service_Config.h"
 
 // This global function can be used from the VxWorks shell to pass
 // arguments to a C main () function.
@@ -5285,6 +5286,7 @@ static int _vx_call_rc = 0;
 static int
 _vx_call_entry(FUNCPTR entry, int argc, char* argv[])
 {
+    ACE_Service_Config::current (ACE_Service_Config::global());
     _vx_call_rc = entry (argc, argv);
     return _vx_call_rc;
 }
