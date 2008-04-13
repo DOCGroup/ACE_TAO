@@ -1,10 +1,16 @@
+Sun Apr 13 07:27:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp (_vx_call_entry):
+          Set the sc::current before calling main. This resolves the
+          sc asserts with vxworks kernel mode. Thanks to Iliyan
+          for suggesting this addition
 
 Fri Apr 11 17:36:34 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * docs/Download.html: 
+        * docs/Download.html:
         * docs/ACE-development-process.html:
         * docs/ACE-bug-process.html: Updated these files to use the major,
-          minor, and micro release terminology. 
+          minor, and micro release terminology.
 
 Fri Apr 11 15:26:08 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
