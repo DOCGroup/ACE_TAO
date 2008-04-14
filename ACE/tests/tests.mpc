@@ -261,10 +261,13 @@ project (Bug_2980_Regression_Test) {
   // which loads an ACE-based DLL.
 
   after += Bug_2980_Regression_Dll
+  avoids += uses_wchar
   includes    += $(ACE_ROOT)
   exename = Bug_2980_Regression_Test
   Source_Files {
     Bug_2980_Regression_Test.cpp
+  }
+  Resource_Files {
   }
 }
 
