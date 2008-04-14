@@ -150,6 +150,14 @@ public:
 template <typename LOCK>
 class ACE_Threading_Helper
 {
+};
+
+/*
+ * Specialization for a multi threaded program
+ */
+template<>
+class ACE_Export ACE_Threading_Helper<ACE_Thread_Mutex>
+{
 public:
   ACE_Threading_Helper ();
   ~ACE_Threading_Helper ();
@@ -158,10 +166,23 @@ public:
   void* get (void);
 
 private:
-
   /// Key for the thread-specific data, which is a simple pointer to
   /// the thread's (currently-) global configuration context.
   ACE_thread_key_t key_;
+};
+
+/*
+ * Specialization for a single threaded program
+ */
+template<>
+class ACE_Export ACE_Threading_Helper<ACE_Null_Mutex>
+{
+public:
+  ACE_Threading_Helper ();
+  ~ACE_Threading_Helper ();
+
+  void set (void*);
+  void* get (void);
 };
 
 #define ACE_Component_Config ACE_Service_Config
@@ -650,16 +671,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Config.inl"
 #endif /* __ACE_INLINE__ */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Threading_Helper_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Threading_Helper_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-
 
 #include /**/ "ace/post.h"
 
