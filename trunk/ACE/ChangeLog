@@ -1,3 +1,26 @@
+Mon Apr 14 08:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Threading_Helper_T.cpp:
+          Added new file with the threading helper template code. This resolves
+          the strange link problems with BCB. This file is included in the
+          Service_Config.h file
+
+        * ace/Makefile.am:
+          Added new files
+
+        * ace/Service_Config.{h,cpp,inl}:
+          Include the new Threading_Helper_T.cpp and removed the implementation
+          from these files
+
+        * tests/tests.mpc:
+          Added missing include for bug 2980
+
+        * ace/Codeset_Registry.h:
+          Fixed typo in comment
+
+        * ace/Shared_Object.h:
+          Doxygen changes
+
 Mon Apr 14 01:56:06 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:
