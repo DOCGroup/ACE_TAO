@@ -21,7 +21,6 @@
 #include "tao/Codeset_Manager_Factory_Base.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/debug.h"
-#include "tao/StringSeqC.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
@@ -69,7 +68,7 @@ namespace
   int
   parse_global_args_i (int &argc,
                        ACE_TCHAR **argv,
-                       CORBA::StringSeq &svc_config_argv,
+                       ACE_ARGV &svc_config_argv,
                        bool apply_values);
 
   /**
@@ -85,7 +84,7 @@ namespace
   int
   parse_svcconf_args_i (int &argc,
                        ACE_TCHAR **argv,
-                       CORBA::StringSeq &svc_config_argv);
+                       ACE_ARGV &svc_config_argv);
 
   /**
    * Initialize the ACE Service Configurator with the process-global
@@ -117,7 +116,7 @@ namespace
   int
   parse_private_args_i (int &argc,
                         ACE_TCHAR **argv,
-                        CORBA::StringSeq & svc_config_argv,
+                        ACE_ARGV & svc_config_argv,
                         bool & skip_service_config_open);
 
   /**
@@ -129,7 +128,7 @@ namespace
    */
   int open_private_services_i (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                                int & argc,
-                               char ** argv,
+                               ACE_TCHAR **argv,
                                bool skip_service_config_open = false,
                                bool ignore_default_svc_conf_file = false);
 
@@ -202,7 +201,7 @@ public:
   /// Note that the argument vector will be corrupted upon return
   int
   TAO::ORB::open_global_services (int argc,
-                                  char **argv)
+                                  ACE_TCHAR **argv)
   {
     {
       // Count of the number of (times we did this for all) ORBs.
@@ -246,16 +245,12 @@ public:
 
     register_global_services_i (theone);
 
-    // Be certain to copy the program name so that service configurator
-    // has something to skip!
-    ACE_CString argv0 ((argc <= 0 || argv == 0)
-                       ? ACE_TEXT ("") : ACE_TEXT_ALWAYS_CHAR (argv[0]));
 
     // Construct an argument vector specific to the process-wide
     // (global) Service Configurator instance.
-    CORBA::StringSeq global_svc_config_argv;
-    global_svc_config_argv.length (1);
-    global_svc_config_argv[0] = argv0.c_str ();
+    // Be certain to copy the program name so that service configurator
+    // has something to skip!
+    ACE_ARGV global_svc_config_argv ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0]);
 
     // Will expand the environment variables, if any were used. Is this a good thing?
     // I guess it provides greater flexibility for deployment, so let's leave it. Will
@@ -291,10 +286,10 @@ public:
     return -1;
 
   // Perform the open magic (unless SC::open() has been called already)
-  int global_svc_config_argc = global_svc_config_argv.length ();
+  int global_svc_config_argc = global_svc_config_argv.argc ();
   int status = open_private_services_i (theone,
                                         global_svc_config_argc,
-                                        global_svc_config_argv.get_buffer (),
+                                        global_svc_config_argv.argv (),
                                         skip_service_config_open);
 
   // okay?
@@ -383,21 +378,12 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   // Construct an argument vector specific to the Service
   // Configurator.
-  CORBA::StringSeq svc_config_argv;
-
   // Be certain to copy the program name so that service configurator
   // has something to skip!
-  ACE_CString argv0 ((argc <= 0 || argv == 0) ? "" : ACE_TEXT_ALWAYS_CHAR (argv[0]));
-  svc_config_argv.length (1);
-  svc_config_argv[0] = argv0.c_str ();
+  ACE_ARGV svc_config_argv ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0]);
 
-  // Should we skip the ACE_Service_Config::open() method, e.g., if we
-  // already being configured by the ACE Service Configurator.
-  //
-  // @@ This is no longer needed since the Service Configurator is now
-  // reentrant.(-Ossama)
-  // @@ Leaving it in, since the -ORBSkipServiceConfigOpen is still
-  // available. (-Iliyan)
+  // Should we skip the ACE_Service_Config::open() method?,
+  // e.g., because of -ORBSkipServiceConfigOpen
   bool skip_service_config_open = false;
 
   // Extract any ORB options from the argument vector.
@@ -411,10 +397,12 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   // Construct an argument vector specific to the process-wide
   // (global) Service Configurator instance.
-  CORBA::StringSeq global_svc_config_argv;
-  // Parse any globally applicable arguments, but do not make them effective. We are effectively purging the command line from them without affecting the global state - after all, it may be a private (local) configuration context.
-  int status =
-        parse_global_args_i(argc, argv, global_svc_config_argv, false);
+  ACE_ARGV global_svc_config_argv;
+
+  // Parse any globally applicable arguments, but do not make them effective.
+  // We are effectively purging the command line from them without affecting
+  // the global state - after all, it may be a private (local) configuration context.
+  int status = parse_global_args_i(argc, argv, global_svc_config_argv, false);
 
   if (status == -1 && TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -435,11 +423,11 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   // only open the private context if it is not also the global context
   if (pcfg != ACE_Service_Config::global())
     {
-      int svc_config_argc = svc_config_argv.length ();
+      int svc_config_argc = svc_config_argv.argc ();
       status =
         open_private_services_i (pcfg,
                                  svc_config_argc,
-                                 svc_config_argv.get_buffer (),
+                                 svc_config_argv.argv (),
                                  skip_service_config_open);
     }
 
@@ -489,7 +477,7 @@ namespace
   int
   open_private_services_i (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                            int & argc,
-                           char ** argv,
+                           ACE_TCHAR ** argv,
                            bool skip_service_config_open,
                            bool ignore_default_svc_conf_file)
   {
@@ -723,13 +711,11 @@ namespace
   int
   parse_svcconf_args_i (int &argc,
                         ACE_TCHAR **argv,
-                        CORBA::StringSeq &svc_config_argv)
+                        ACE_ARGV &svc_config_argv)
   {
     // Extract the Service Configurator ORB options from the argument
     // vector.
     ACE_Arg_Shifter arg_shifter (argc, argv);
-    CORBA::ULong len = 0;
-
 
     while (arg_shifter.is_anything_left ())
       {
@@ -761,12 +747,8 @@ namespace
                 ACE_OS::fclose (conf_file);
               }
 
-            len = svc_config_argv.length ();
-            svc_config_argv.length (len + 2);  // 2 arguments to add
-
-            svc_config_argv[len] = CORBA::string_dup ("-f");
-            svc_config_argv[len + 1] =
-              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (current_arg));
+            svc_config_argv.add (ACE_TEXT ("-f"));
+            svc_config_argv.add (current_arg);
           }
         else
           {
@@ -782,13 +764,12 @@ namespace
   int
   parse_private_args_i (int &argc,
                         ACE_TCHAR **argv,
-                        CORBA::StringSeq &svc_config_argv,
+                        ACE_ARGV &svc_config_argv,
                         bool & skip_service_config_open)
   {
     // Extract the Service Configurator ORB options from the argument
     // vector.
     ACE_Arg_Shifter arg_shifter (argc, argv);
-    CORBA::ULong len = 0;
 
     while (arg_shifter.is_anything_left ())
       {
@@ -803,28 +784,20 @@ namespace
         else if (0 != (current_arg = arg_shifter.get_the_parameter
                        (ACE_TEXT ("-ORBSvcConfDirective"))))
           {
-            len = svc_config_argv.length ();
-            svc_config_argv.length (len + 2);  // 2 arguments to add
-
             // This is used to pass arguments to the Service
             // Configurator using the "command line" to provide
             // configuration information rather than using a svc.conf
             // file.  Pass the "-S" to the service configurator.
-            svc_config_argv[len] = CORBA::string_dup ("-S");
-            svc_config_argv[len + 1] =
-              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (current_arg));
+            svc_config_argv.add (ACE_TEXT ("-S"));
+            svc_config_argv.add (current_arg);
 
             arg_shifter.consume_arg ();
           }
         else if (0 != (current_arg = arg_shifter.get_the_parameter
                        (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
           {
-            len = svc_config_argv.length ();
-            svc_config_argv.length (len + 2);  // 2 arguments to add
-
-            svc_config_argv[len] = CORBA::string_dup ("-k");
-            svc_config_argv[len + 1] =
-              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (current_arg));
+            svc_config_argv.add (ACE_TEXT ("-k"));
+            svc_config_argv.add (current_arg);
 
             arg_shifter.consume_arg ();
           }
@@ -839,6 +812,7 @@ namespace
 
             if (0 != (current_arg = arg_shifter.get_current()))
               negotiate_codesets = (ACE_OS::atoi (current_arg));
+
             arg_shifter.ignore_arg();
           }
         else if (0 != (current_arg =
@@ -866,7 +840,7 @@ namespace
   int
   parse_global_args_i (int &argc,
                        ACE_TCHAR **argv,
-                       CORBA::StringSeq &svc_config_argv,
+                       ACE_ARGV &svc_config_argv,
                        bool apply_values)
   {
     // NOTE: When adding new global arguments, ensure they are only
@@ -899,7 +873,6 @@ namespace
     // Extract the Service Configurator ORB options from the argument
     // vector.
     ACE_Arg_Shifter arg_shifter (argc, argv);
-    CORBA::ULong len = 0;
 
     while (arg_shifter.is_anything_left ())
       {
@@ -920,11 +893,7 @@ namespace
             // Be a daemon.
             if (apply_values)
               {
-                len = svc_config_argv.length ();
-                svc_config_argv.length (len + 1);
-
-                svc_config_argv[len] =
-                  CORBA::string_dup ("-b");
+                svc_config_argv.add (ACE_TEXT("-b"));
               }
 
             arg_shifter.consume_arg ();

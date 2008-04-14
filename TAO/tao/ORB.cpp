@@ -1200,6 +1200,11 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
         CORBA::COMPLETED_NO);
     }
 
+  // Copy command line parameter not to corrupt the original.
+  ACE_Argv_Type_Converter command_line(argc, argv);
+  int tmpargc = command_line.get_argc ();
+  ACE_TCHAR **tmpargv = command_line.get_TCHAR_argv ();
+
   // Scan the parameters to find any we could interpret to
   // use for initializing the global context. Note that if
   // the global context has been initialized already, the
@@ -1207,14 +1212,10 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
   // a local configuration context. The chosen action depends on
   // weather we want the ORB to share the global context or
   // have its own, private (or local) context.
-  if (TAO::ORB::open_global_services (argc, argv) == -1)
+  if (TAO::ORB::open_global_services (tmpargc, tmpargv) == -1)
     {
         return CORBA::ORB::_nil ();
     }
-
-  // Copy command line parameter not to corrupt the original.
-  ACE_Argv_Type_Converter command_line(argc, argv);
-
 
   // Make sure the following is done after the global ORB
   // initialization since we need to have exceptions initialized.
