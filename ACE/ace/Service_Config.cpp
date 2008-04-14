@@ -30,7 +30,12 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <>
+ACE_Threading_Helper<ACE_Thread_Mutex>::~ACE_Threading_Helper ()
+{
+  ACE_OS::thr_key_detach (this->key_, 0);
+  ACE_OS::thr_keyfree (this->key_);
+}
+
 ACE_Threading_Helper<ACE_Thread_Mutex>::ACE_Threading_Helper ()
   :  key_ (ACE_OS::NULL_key)
 {
@@ -46,26 +51,7 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::ACE_Threading_Helper ()
     }
 }
 
-template <>
-ACE_Threading_Helper<ACE_Null_Mutex>::ACE_Threading_Helper ()
-  :  key_ (ACE_OS::NULL_key)
-{
-}
-
-
-template <>
-ACE_Threading_Helper<ACE_Thread_Mutex>::~ACE_Threading_Helper ()
-{
-  ACE_OS::thr_key_detach (this->key_, 0);
-  ACE_OS::thr_keyfree (this->key_);
-}
-
-template <>
-ACE_Threading_Helper<ACE_Null_Mutex>::~ACE_Threading_Helper ()
-{
-}
-
-template <> void
+void
 ACE_Threading_Helper<ACE_Thread_Mutex>::set (void* p)
 {
   if (ACE_Thread::setspecific (key_, p) == -1)
@@ -74,12 +60,7 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::set (void* p)
                        ""));
 }
 
-template <> void
-ACE_Threading_Helper<ACE_Null_Mutex>::set (void*)
-{
-}
-
-template <> void*
+void*
 ACE_Threading_Helper<ACE_Thread_Mutex>::get (void)
 {
   void* temp = 0;
@@ -91,12 +72,24 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::get (void)
   return temp;
 }
 
-template <> void*
+ACE_Threading_Helper<ACE_Null_Mutex>::~ACE_Threading_Helper ()
+{
+}
+
+ACE_Threading_Helper<ACE_Null_Mutex>::ACE_Threading_Helper ()
+{
+}
+
+void
+ACE_Threading_Helper<ACE_Null_Mutex>::set (void*)
+{
+}
+
+void*
 ACE_Threading_Helper<ACE_Null_Mutex>::get (void)
 {
   return ACE_Service_Config::singleton()->instance_.get ();
 }
-
 
 /**
   * @c ACE_Service_Config is supposed to be a Singleton. This is the
@@ -573,7 +566,7 @@ ACE_Service_Config::reconfigure (void)
 int
 ACE_Service_Config::close (void)
 {
-    ACE_Service_Config::singleton ()->instance_->close ();
+  ACE_Service_Config::singleton ()->instance_->close ();
 
   // Delete the service repository.  All the objects inside the
   // service repository should already have been finalized.
@@ -627,7 +620,5 @@ ACE_Service_Config::reconfig_occurred (int config_occurred)
   ACE_TRACE ("ACE_Service_Config::reconfig_occurred");
   ACE_Service_Config::reconfig_occurred_ = config_occurred;
 }
-
-// ************************************************************
 
 ACE_END_VERSIONED_NAMESPACE_DECL

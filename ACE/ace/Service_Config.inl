@@ -9,7 +9,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This is the primary entry point into the ACE_Service_Config (the
 // constructor just handles simple initializations).
-
 ACE_INLINE int
 ACE_Service_Config::open (const ACE_TCHAR program_name[],
                           const ACE_TCHAR *logger_key,
@@ -121,8 +120,7 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
                                 const ACE_TCHAR *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
-  return ACE_Service_Config::current ()->initialize (sr,
-                                                     parameters);
+  return ACE_Service_Config::current ()->initialize (sr, parameters);
 }
 
 /// Process a file containing a list of service configuration

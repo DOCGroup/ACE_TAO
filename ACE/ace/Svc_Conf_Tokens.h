@@ -1,4 +1,15 @@
-// $Id$
+// -*- C++ -*-
+//====================================================================
+/**
+ *  @file    Svc_Conf_Tokens.h
+ *
+ *  $Id$
+ *
+ *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
+ */
+//====================================================================
+
+
 #ifndef BISON_SVC_CONF_TAB_H
 #  define BISON_SVC_CONF_TAB_H
 

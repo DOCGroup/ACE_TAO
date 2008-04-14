@@ -150,6 +150,14 @@ public:
 template <typename LOCK>
 class ACE_Threading_Helper
 {
+};
+
+/*
+ * Specialization for a multi threaded program
+ */
+template<>
+class ACE_Export ACE_Threading_Helper<ACE_Thread_Mutex>
+{
 public:
   ACE_Threading_Helper ();
   ~ACE_Threading_Helper ();
@@ -158,10 +166,23 @@ public:
   void* get (void);
 
 private:
-
   /// Key for the thread-specific data, which is a simple pointer to
   /// the thread's (currently-) global configuration context.
   ACE_thread_key_t key_;
+};
+
+/*
+ * Specialization for a single threaded program
+ */
+template<>
+class ACE_Export ACE_Threading_Helper<ACE_Null_Mutex>
+{
+public:
+  ACE_Threading_Helper ();
+  ~ACE_Threading_Helper ();
+
+  void set (void*);
+  void* get (void);
 };
 
 #define ACE_Component_Config ACE_Service_Config
@@ -200,10 +221,18 @@ private:
 class ACE_Export ACE_Service_Config
 {
 
-  // The Instance, or the global (default) configuration context.
-  // The monostate would forward the calls to that instance. The TSS
-  // will point here
+  /// The Instance, or the global (default) configuration context.
+  /// The monostate would forward the calls to that instance. The TSS
+  /// will point here
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> instance_;
+
+
+  /// A helper instance to manage thread-specific key creation.
+  /// Dependent on the syncronization mutex ACE uses, the corresponding
+  /// partial template instantiation will perform the right services
+  /// that have to do with managing thread-specific storage. Note that,
+  /// for single-threaded builds they would do (next to) nothing.
+  ACE_Threading_Helper<ACE_SYNCH_MUTEX> threadkey_;
 
 public:
 
@@ -230,7 +259,7 @@ public:
   /// memory.
   virtual ~ACE_Service_Config (void);
 
-protected:
+private:
 
   /**
    * Performs an open without parsing command-line arguments.
@@ -256,15 +285,6 @@ protected:
    * for this class, as opposed to the base class.
    */
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
-
-  /**
-   * A helper instance to manage thread-specific key creation.
-   * Dependent on the syncronization mutex ACE uses, the corresponding
-   * partial template instantiation will perform the right services
-   * that have to do with managing thread-specific storage. Note that,
-   * for single-threaded builds they would do (next to) nothing.
-   */
-  ACE_Threading_Helper<ACE_SYNCH_MUTEX> threadkey_;
 
   /// = Static interfaces
 
@@ -549,20 +569,10 @@ protected:
                               u_int flags,
                               ACE_Service_Object_Exterminator gobbler);
 
-protected:
-
   /// @deprecated
   /// Process service configuration requests that were provided on the
   /// command-line.  Returns the number of errors that occurred.
   static int process_commandline_directives (void);
-
-#if (ACE_USES_CLASSIC_SVC_CONF == 1)
-  /// @deprecated
-  /// This is the implementation function that process_directives()
-  /// and process_directive() both call.  Returns the number of errors
-  /// that occurred.
-  static int process_directives_i (ACE_Svc_Conf_Param *param);
-#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
   /// Become a daemon.
   static int start_daemon (void);
@@ -572,6 +582,18 @@ protected:
   // ACE_Service_Repository.
   static int load_static_svcs (void);
 
+protected:
+
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
+  /// @deprecated
+  /// This is the implementation function that process_directives()
+  /// and process_directive() both call.  Returns the number of errors
+  /// that occurred.
+  static int process_directives_i (ACE_Svc_Conf_Param *param);
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
+
+
+  // = Process-wide state.
 
 private:
 
@@ -649,7 +671,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Config.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

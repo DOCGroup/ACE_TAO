@@ -1,3 +1,90 @@
+Mon Apr 14 11:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Threading_Helper_T.cpp:
+          Removed
+
+        * ace/Makefile.am:
+          Removed file above
+
+        * ace/Service_Config.{h,cpp,inl}:
+          Changed the template instantiations like we have for Atomic_Op.
+
+Mon Apr 14 09:54:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/tests.mpc:
+          Don't build 2980 with wchar enabled and added empty resource
+          file section
+
+Mon Apr 14 08:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Threading_Helper_T.cpp:
+          Added new file with the threading helper template code. This resolves
+          the strange link problems with BCB. This file is included in the
+          Service_Config.h file
+
+        * ace/Makefile.am:
+          Added new files
+
+        * ace/Service_Config.{h,cpp,inl}:
+          Include the new Threading_Helper_T.cpp and removed the implementation
+          from these files
+
+        * tests/tests.mpc:
+          Added missing include for bug 2980
+
+        * ace/Codeset_Registry.h:
+          Fixed typo in comment
+
+        * ace/Shared_Object.h:
+          Doxygen changes
+
+Mon Apr 14 01:56:06 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+
+          Moved ACE_Threading_Helper ctor and dtor implementaion
+          inline. This makes them available to code that indirectly
+          references the threadkey_ member (like, in examples/). This
+          should resolve link-time problems with borland compilers.
+
+        * tests/Bug_2980_Regression_Test.cpp (unloadDll):
+
+          Fixing warnings about missing extern "C" qualifier in call to
+          pthread_create.
+
+Sun Apr 13 07:27:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp (_vx_call_entry):
+          Set the sc::current before calling main. This resolves the
+          sc asserts with vxworks kernel mode. Thanks to Iliyan
+          for suggesting this addition
+
+Fri Apr 11 17:36:34 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/Download.html:
+        * docs/ACE-development-process.html:
+        * docs/ACE-bug-process.html: Updated these files to use the major,
+          minor, and micro release terminology.
+
+Fri Apr 11 15:26:08 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+        * tests/run_test.lst:
+
+          Including config-lite.h: the driver is non-ACE but it still
+          needs to know platform-specific stuff, like threads usage,
+          etc.
+
+Fri Apr 11 01:51:13 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Svc_Conf_Tokens.h:
+        * ace/svcconf.mpb:
+
+          Fixing a fuzz build warning of a missing $Id. Also, not all
+          make(1)'s have $(MV), so changing mpb to use just "mv"
+
 Thu Apr 10 22:32:58 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:

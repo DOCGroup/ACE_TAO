@@ -980,6 +980,7 @@ nobase_include_HEADERS += \
   Svc_Conf.h \
   Svc_Conf_Lexer.h \
   Svc_Conf_Tokens.h \
+  Svc_Conf_Token_Table.h \
   Svc_Handler.cpp \
   Svc_Handler.h \
   Synch.h \
