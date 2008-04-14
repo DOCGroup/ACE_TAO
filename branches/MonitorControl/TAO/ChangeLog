@@ -1,7 +1,15 @@
+Mon Apr 14 14:51:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/Monitor.pidl:
+        * tao/Monitor/Monitor_Impl.cpp:
+        * tao/Monitor/Monitor_Impl.h:
+        * tests/monitor/monitor_client.cpp:
+          Moved the types outside of the interface and into the module
+
 Thu Apr 10 19:48:58 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Monitor/Marshal_Buffer/client.cpp:
-        
+
           Added start/stop macros for the periodic OS monitors that
           are created.
 
@@ -28,19 +36,19 @@ Thu Apr 10 14:35:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Transport_Cache_Manager.h:
         * tao/Transport_Cache_Manager.cpp:
-        
-          Fixed bug in call to purge monitor and added connection 
+
+          Fixed bug in call to purge monitor and added connection
           cache size monitor.
 
 Wed Apr  9 18:55:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Monitor/Marshal_Buffer/marshal_buffer.mpc:
-        
+
           Added ENABLE_MONITORS macro to the client project so the
           OS monitors instantiated there will be doing something.
-          
+
         * tests/Monitor/Marshal_Buffer/run_test.pl:
-        
+
           Replaced literal IOR filename with existing variable name.
 
 Wed Apr  9 15:55:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>

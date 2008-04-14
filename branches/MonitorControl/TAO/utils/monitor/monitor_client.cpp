@@ -8,7 +8,7 @@
 #include "tao/Monitor/Monitor.h"
 
 const char *monitor_ior = "file://monitor.ior";
-::Monitor::MC::NameList* monitor_point = 0;
+::Monitor::NameList* monitor_point = 0;
 bool mp_clear = false;
 int n_iterations = 1;
 ACE_Time_Value sleep_time = ACE_Time_Value (1);
@@ -34,10 +34,10 @@ parse_args (int argc, char *argv[])
           if (monitor_point == 0)
             {
               ACE_NEW_THROW_EX (monitor_point,
-                                ::Monitor::MC::NameList,
+                                ::Monitor::NameList,
                                 CORBA::NO_MEMORY ());
             }
-            
+
           monitor_point->length (monitor_point->length () + 1);
           (*monitor_point)[monitor_point->length () - 1] =
             CORBA::string_dup (get_opts.opt_arg ());
@@ -66,7 +66,7 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
-      
+
   // Indicates sucessful parsing of the command line
   return 0;
 }
@@ -103,14 +103,14 @@ main (int argc, char *argv[])
                              "Monitor client - narrow failed\n"),
                              -1);
         }
-        
+
       if (monitor_point != 0)
         {
           /// Access the monitor's value a few times and watch it grow.
           for (int i = 0; i < n_iterations; ++i)
             {
-              Monitor::MC::DataListList_var data;
-              
+              Monitor::DataItemList_var data;
+
               if (mp_clear)
                 {
                   data = monitor->get_and_clear_statistics (*monitor_point);
@@ -119,17 +119,17 @@ main (int argc, char *argv[])
                 {
                   data = monitor->get_statistics (*monitor_point);
                 }
-                
+
               for (CORBA::ULong index = 0; index < data->length (); ++index)
                 {
                   ACE_DEBUG ((LM_DEBUG, "MP <%s>:\n", data[index].itemname));
-                  Monitor::MC::DataItem dlist = data[index];
-                  
+                  Monitor::DataItem dlist = data[index];
+
                   for (CORBA::ULong valueindex = 0;
                        valueindex < dlist.dlist.length ();
                        ++valueindex)
                   {
-                    Monitor::MC::Data d = dlist.dlist[valueindex];
+                    Monitor::Data d = dlist.dlist[valueindex];
                     ACE_DEBUG ((LM_DEBUG, "\t value <%A>:\n", d.value));
                   }
                 }
@@ -139,8 +139,8 @@ main (int argc, char *argv[])
         }
       else
         {
-          Monitor::MC::NameList_var list = monitor->get_statistic_names (filter);
-          
+          Monitor::NameList_var list = monitor->get_statistic_names (filter);
+
           for (CORBA::ULong index = 0; index < list->length (); ++index)
             {
               ACE_DEBUG ((LM_DEBUG, "MP: <%s>\n", list[index].in ()));
