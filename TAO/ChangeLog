@@ -1,3 +1,9 @@
+Fri Apr 11 10:50:37 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Adding ACE_TEXT
+
 Thu Apr 10 22:40:22 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB.cpp:
