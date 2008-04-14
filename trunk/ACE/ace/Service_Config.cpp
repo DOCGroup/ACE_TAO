@@ -52,19 +52,6 @@ ACE_Threading_Helper<ACE_Null_Mutex>::ACE_Threading_Helper ()
 {
 }
 
-
-template <>
-ACE_Threading_Helper<ACE_Thread_Mutex>::~ACE_Threading_Helper ()
-{
-  ACE_OS::thr_key_detach (this->key_, 0);
-  ACE_OS::thr_keyfree (this->key_);
-}
-
-template <>
-ACE_Threading_Helper<ACE_Null_Mutex>::~ACE_Threading_Helper ()
-{
-}
-
 template <> void
 ACE_Threading_Helper<ACE_Thread_Mutex>::set (void* p)
 {
