@@ -14,7 +14,7 @@
  * via translators and the CDR streams, primarily in TAO, but this capability
  * is not restricted to CORBA.
  *
- * The emulated functionalty supports Open Group RFC #40, currently RFC 40.2,
+ * The emulated functionality supports Open Group RFC #40, currently RFC 40.2,
  * www.opengroup.org/tech/rfc/rfc40.2.html
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>

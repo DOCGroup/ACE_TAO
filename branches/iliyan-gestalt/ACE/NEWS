@@ -6,6 +6,17 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN ACE-5.6.3 and ACE-5.6.4
 ====================================================
 
+. Reworked the relationship between ACE_Service_Config and
+  ACE_Service_Gestalt
+
+. Improved autoconf support
+
+. Improved AIX with gcc support
+
+. Improved OpenVMS suppor
+
+. Improved VxWorks support
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.2 and ACE-5.6.3
 ====================================================
 
