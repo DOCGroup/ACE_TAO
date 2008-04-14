@@ -30,6 +30,10 @@ namespace ACE
     Monitor_Base::constraints (const char* expression,
                                Control_Action* action)
     {
+      ACE_GUARD (ACE_SYNCH_MUTEX,
+                 guard,
+                 this->mutex_);
+
       MonitorControl_Types::Constraint constraint;
       constraint.expr = expression;
       constraint.control_action = action;
@@ -39,6 +43,7 @@ namespace ACE
     Monitor_Base::CONSTRAINTS&
     Monitor_Base::constraints (void)
     {
+      // @todo make thread safe
       return this->constraints_;
     }
 
