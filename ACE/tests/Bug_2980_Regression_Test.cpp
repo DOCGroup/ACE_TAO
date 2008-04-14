@@ -92,8 +92,7 @@ void* loadDll(void*)
   return 0;
 }
 
-
-
+extern "C"
 void* unloadDll(void*)
 {
   PRINTF ("unloadDll - entered\n");
@@ -106,6 +105,9 @@ void* unloadDll(void*)
   PRINTF ("unloadDll - leaving\n");
   return 0;
 }
+
+
+
 
 void * loadunloadDll(void *pp)
 {
@@ -120,8 +122,6 @@ void * loadunloadDll(void *pp)
 
   return 0;
 }
-
-
 
 int main(int, char **)
 {

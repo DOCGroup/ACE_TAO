@@ -1,3 +1,19 @@
+Mon Apr 14 01:56:06 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+
+          Moved ACE_Threading_Helper ctor and dtor implementaion
+          inline. This makes them available to code that indirectly
+          references the threadkey_ member (like, in examples/). This
+          should resolve link-time problems with borland compilers.
+
+        * tests/Bug_2980_Regression_Test.cpp (unloadDll):
+
+          Fixing warnings about missing extern "C" qualifier in call to
+          pthread_create.
+
 Sun Apr 13 07:27:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp (_vx_call_entry):

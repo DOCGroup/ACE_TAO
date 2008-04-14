@@ -9,6 +9,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // This is the primary entry point into the ACE_Service_Config (the
 // constructor just handles simple initializations).
 
+template <> ACE_INLINE
+ACE_Threading_Helper<ACE_Thread_Mutex>::~ACE_Threading_Helper ()
+{
+  ACE_OS::thr_key_detach (this->key_, 0);
+  ACE_OS::thr_keyfree (this->key_);
+}
+
+template <> ACE_INLINE
+ACE_Threading_Helper<ACE_Null_Mutex>::~ACE_Threading_Helper ()
+{
+}
+
 ACE_INLINE int
 ACE_Service_Config::open (const ACE_TCHAR program_name[],
                           const ACE_TCHAR *logger_key,
