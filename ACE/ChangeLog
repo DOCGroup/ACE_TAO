@@ -1,3 +1,8 @@
+Mon Apr 14 12:10:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.pl:
+          Don't run 2980 when WCHAR is set
+
 Mon Apr 14 11:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Threading_Helper_T.cpp:
