@@ -1027,7 +1027,6 @@ nobase_include_HEADERS += \
   Thread_Mutex.inl \
   Thread_Semaphore.h \
   Thread_Semaphore.inl \
-  Threading_Helper_T.cpp \
   Throughput_Stats.h \
   Time_Value.h \
   Time_Value.inl \
