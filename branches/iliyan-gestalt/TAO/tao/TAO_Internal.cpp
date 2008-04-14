@@ -247,7 +247,8 @@ namespace
 
     // Be certain to copy the program name so that service configurator
     // has something to skip!
-    ACE_CString argv0 ((argc <= 0 || argv == 0) ? "" : ACE_TEXT_ALWAYS_CHAR (argv[0]));
+    ACE_CString argv0 ((argc <= 0 || argv == 0)
+                       ? ACE_TEXT ("") : ACE_TEXT_ALWAYS_CHAR (argv[0]));
 
     // Construct an argument vector specific to the process-wide
     // (global) Service Configurator instance.
