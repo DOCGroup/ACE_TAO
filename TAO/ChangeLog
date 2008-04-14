@@ -1,3 +1,16 @@
+Mon Apr 14 20:14:18 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB.cpp:
+        * tao/TAO_Internal.h:
+
+          Adding a wchar/char conversion before calling the
+          initialization.
+
+        * tao/TAO_Internal.cpp:
+
+          Removing the use of CORBA::StringSeq to store intermediate
+          argument lists in favor of ACE_ARGV, which is more wchar-aware.
+
 Fri Apr 11 10:50:37 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Internal.cpp:
