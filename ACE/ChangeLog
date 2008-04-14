@@ -1,3 +1,14 @@
+Mon Apr 14 11:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Threading_Helper_T.cpp:
+          Removed
+
+        * ace/Makefile.am:
+          Removed file above
+
+        * ace/Service_Config.{h,cpp,inl}:
+          Changed the template instantiations like we have for Atomic_Op.
+
 Mon Apr 14 09:54:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/tests.mpc:
