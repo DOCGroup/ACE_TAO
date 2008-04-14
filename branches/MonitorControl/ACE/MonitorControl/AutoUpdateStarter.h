@@ -40,9 +40,10 @@ namespace ACE
      * can run as well. A very simple struct inheriting from ACE_Task
      * and overriding the svc() method suffices.
      */
-    struct MONITORCONTROL_Export AutoUpdateStarter : ACE_Task_Base
+    class MONITORCONTROL_Export AutoUpdateStarter : public ACE_Task_Base
     {
-      int svc (void);
+      public:
+        int svc (void);
     };
   }
 }

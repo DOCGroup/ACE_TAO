@@ -1,3 +1,8 @@
+Mon Apr 14 14:42:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MonitorControl/AutoUpdateStarter.h:
+          Make this a class
+
 Thu Apr 10 16:38:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/CPULoadMonitor.cpp:
@@ -20,16 +25,16 @@ Thu Apr 10 16:38:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Apr 10 14:32:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/Num_Threads/num_threads.cpp:
-        
+
           Replaced msec arg with ACE_Time_Value, similar to changes in
-          
+
           Wed Apr  9 13:08:48 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr  9 18:51:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorPoint_T.h:
         * MonitorControl/MonitorPoint_T.cpp:
-        
+
           Added no-op implementation of pure virtual update(), which
           will be seen by default when an application is built with
           ENABLE_MONITORS undefined and therefore instantiates OS
@@ -38,12 +43,12 @@ Wed Apr  9 18:51:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Apr  9 14:03:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp:
-        
+
           Fixed bug in creation of unique monitor name that was corrupting
           the stack.
-          
+
         * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp:
-        
+
           Changed code to reconstruct the monitor name to match changes in
           how the name is first created.
 
@@ -895,13 +900,13 @@ Fri Feb 22 21:55:07 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
           interest to the monitor has more than one 'instance', for
           example a Network Interface object has an instance for each
           network card.
-          
+
         * MonitorControl/BytesSentMonitor.cpp:
         * MonitorControl/WindowsMonitor.h:
         * MonitorControl/BytesSentMonitor.h:
         * MonitorControl/MonitorControl.mpc:
         * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
-        
+
           Changes corresponding to the integration of the new class
           described above.
 
@@ -926,7 +931,7 @@ Fri Feb 22 000:03:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Removed previous monitor group-related methods,
           since they have been replaced by the new class
-          above. Also made minor changes to the 
+          above. Also made minor changes to the
           BYtesSentMonitor and PacketsSentMonitor classes.
 
         * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
@@ -1164,13 +1169,13 @@ Tue Feb 12 21:52:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/CPULoadMonitor.cpp:
         * MonitorControl/CPULoadMonitor.h:
-        
+
           Numerous changes to Linux-specific implementation of update().
           Also moved receive(double) to base class, to avoid a
           warning from the Borland compiler.
-          
+
         * MonitorControl/MonitorPoint.cpp:
-        
+
           Replaced empty implementation of receive(double) with the
           real version from CPULoadMonitor, as described above.
 
