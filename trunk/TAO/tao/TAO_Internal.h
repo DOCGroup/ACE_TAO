@@ -50,7 +50,7 @@ namespace TAO
      * argument vector, and initialize the _global_ configuration gestalt. Return value 0 means OK,
      * -1 spells major trouble ...
      */
-    int open_global_services (int argc, char** argv);
+    int open_global_services (int argc, ACE_TCHAR** argv);
 
     /**
      * Extract ACE Service Configurator arguments from the given
