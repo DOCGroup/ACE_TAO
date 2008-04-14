@@ -18,7 +18,7 @@ namespace ACE
     }
 
     Monitor_Base::Monitor_Base (const char*  name)
-      : MC_Generic (name)
+      : name_ (name)
     {
     }
 
@@ -26,18 +26,25 @@ namespace ACE
     {
     }
 
-    void
-    Monitor_Base::constraints (const char* expression,
-                               Control_Action* action)
+    long
+    Monitor_Base::add_constraint (const char* expression,
+                                  Control_Action* action)
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX,
-                 guard,
-                 this->mutex_);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
 
       MonitorControl_Types::Constraint constraint;
       constraint.expr = expression;
       constraint.control_action = action;
+      constraint.id = Monitor_Point_Registry::instance ()->constraint_id ();
       (void) this->constraints_.push_back (constraint);
+      return constraint.id;
+    }
+    
+    void
+    Monitor_Base::remove_constraint (long constraint_id)
+    {
+      // TODO, probably have to change the constraint storage type
+      // to implement this method.
     }
 
     Monitor_Base::CONSTRAINTS&
@@ -50,9 +57,8 @@ namespace ACE
     void
     Monitor_Base::retrieve (MonitorControl_Types::Data& data) const
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX,
-                 guard,
-                 this->mutex_);
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+
       data = this->data_;
     }
 
@@ -60,6 +66,7 @@ namespace ACE
     Monitor_Base::receive (size_t value)
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+      
       this->data_.timestamp_ = ACE_OS::gettimeofday ();
       this->data_.value_ = static_cast<double> (value);
     }
@@ -75,9 +82,8 @@ namespace ACE
     void
     Monitor_Base::clear (void)
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX,
-                 guard,
-                 this->mutex_);
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+
 
       this->clear_i ();
     }
@@ -93,9 +99,8 @@ namespace ACE
     void
     Monitor_Base::retrieve_and_clear (MonitorControl_Types::Data& data)
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX,
-                 guard,
-                 this->mutex_);
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+
       data = this->data_;
       this->clear_i ();
     }
@@ -123,6 +128,18 @@ namespace ACE
                       "monitor point %s unregistration failed\n",
                       this->name ()));
         }
+    }
+    
+    const char*
+    Monitor_Base::name (void) const
+    {
+      return this->name_.fast_rep ();
+    }
+    
+    void
+    Monitor_Base::name (const char* new_name)
+    {
+      this->name_ = new_name;
     }
   }
 }

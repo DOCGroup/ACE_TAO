@@ -35,7 +35,7 @@ namespace ACE
     }
 
     //====================================================================
-
+    
     MC_Admin::MC_Admin (void)
       : reactor_ (ACE_Reactor::instance ()),
         delete_reactor_ (false)
@@ -90,13 +90,6 @@ namespace ACE
                                       query,
                                       ACE_Time_Value::zero,
                                       time);
-    }
-
-    bool
-    MC_Admin::control_action (Control_Action* /* control_action */)
-    {
-      // TODO
-      return true;
     }
 
     void

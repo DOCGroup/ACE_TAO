@@ -19,7 +19,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/MonitorControl_Types.h"
+#include "ace/ACE_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,13 +36,7 @@ namespace ACE
      * This class is extended by the application developer or
      * by the MC service itself to create a concrete class.
      */
-    /**
-     * @note No need to have enabled/disabled template
-     *       specializations as with MonitorPoint, since
-     *       for a disabled monitor point, the associated
-     *       control action (if any) won't be instantiated.
-     */
-    class ACE_Export Control_Action : public MC_Generic
+    class ACE_Export Control_Action
     {
     public:
       /// To be implemented by the concrete derived class.
@@ -50,8 +44,7 @@ namespace ACE
       
     protected:
       Control_Action (void);
-      Control_Action (const char* name);
-      virtual ~Control_Action (void);
+      virtual ~Control_Action (void);      
     };
   }
 }

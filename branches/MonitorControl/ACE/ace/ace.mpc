@@ -49,7 +49,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Connection_Recycling_Strategy.cpp
     Containers.cpp
     Control_Action.cpp
-    Control_Action_Registry.cpp
     Copy_Disabled.cpp
     Countdown_Time.cpp
     Date_Time.cpp
@@ -115,7 +114,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Manual_Event.cpp
     MC_Admin.cpp
     MC_Admin_Manager.cpp
-    MC_Generic_Registry.cpp
     MEM_Acceptor.cpp
     MEM_Addr.cpp
     MEM_Connector.cpp

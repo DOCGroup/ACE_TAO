@@ -1,3 +1,65 @@
+Mon Apr 14 19:15:03 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Control_Action_Registry.h:
+        * ace/Control_Action_Registry.cpp:
+        * ace/MC_Generic_Registry.h:
+        * ace/MC_Generic_Registry.cpp:
+
+          Removed these files, the control action registry
+          has been eliminated from the design and thus also
+          the need for a common registry base class.
+
+        * ace/Control_Action.cpp:
+        * ace/Control_Action.h:
+
+          Removed the base class from the class declaration.
+
+        * ace/MC_Admin.cpp:
+        * ace/MC_Admin.h:
+
+          Removed the control_action() methods, since they don't
+          have their own registry any longer.
+
+        * ace/Monitor_Point_Registry.cpp:
+        * ace/Monitor_Point_Registry.h:
+
+          Removed the base class from the class declaration.
+
+        * ace/Monitor_Base.cpp:
+        * ace/Monitor_Base.h:
+
+          Removed the base class from the class declaration.
+          Also renamed constraints() method as add_constraint(),
+          to makes its purpose obvious. Finally, added a new,
+          as yet unimplemented method called remove_constraint().
+
+        * ace/MonitorControl_Types.cpp:
+        * ace/MonitorControl_Types.h:
+
+          Removed the MC_Generic class and added an 'id' member
+          to the Constraint struct.
+
+        * ace/MC_Admin_Manager.h:
+
+          Removed the  #include of MC_Generic_Registry.h.
+
+        * ace/ace.mpc:
+
+          Removed MC_Generic_Registry.cpp and Control_Action_Registry
+          from the proejct.
+
+        * MonitorControl/MonitorControl.h:
+
+          Replaced #include of MC_Generic_Registry.h with one of
+          Monitor_Point_Registry.h.
+
+        * MonitorControl/examples/Constraint/constraint.cpp:
+
+          Changed calls to Monitor_Base's constraints() method to
+          the new name of add_constraint(). Also added debug
+          statements to output the created constraint id in each
+          case.
+
 Mon Apr 14 14:42:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MonitorControl/AutoUpdateStarter.h:

@@ -11,10 +11,6 @@ namespace ACE
     Control_Action::Control_Action (void)
     {}
   
-    Control_Action::Control_Action (const char* name)
-      : MC_Generic (name)
-    {}
-    
     Control_Action::~Control_Action (void)
     {}
   }

@@ -51,6 +51,7 @@ namespace ACE
       {
         ACE_CString expr;
         Control_Action* control_action;
+        long id;
       };
 
 #if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
@@ -76,28 +77,6 @@ namespace ACE
        */
       typedef ACE_Vector<Constraint> ConstraintList;
 #endif
-    };
-
-    /**
-     * @class MC_Generic
-     *
-     * @brief Base class of Monitor_Base and ControlAction.
-     */
-    /// Allows us to combine
-    /// operations of the respective registries into a common base class.
-    class ACE_Export MC_Generic
-    {
-    public:
-      const char* name (void) const;
-      void name (const char* new_name);
-
-    protected:
-      MC_Generic (void);
-      MC_Generic (const char* name);
-      virtual ~MC_Generic (void);
-
-    private:
-      ACE_CString name_;
     };
   }
 }

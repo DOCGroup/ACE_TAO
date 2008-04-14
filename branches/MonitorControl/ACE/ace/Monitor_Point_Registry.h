@@ -15,11 +15,16 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Synch_Traits.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/MC_Generic_Registry.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Hash_Map_Manager_T.h"
+#include "ace/MonitorControl_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,20 +37,45 @@ namespace ACE
     /**
      * @class Monitor_Point_Registry
      *
-     * @brief Specializaton of MC_Generic_Registry.
+     * @brief Storage for instantiated monitor points.
      *
-     * Stores instances of the monitor point classes.
      */
     class ACE_Export Monitor_Point_Registry
-      : public MC_Generic_Registry
     {
     public:
       /// Used to help ensure that there is only a single instance
-      /// per process of MonitorPointRegistry.
+      /// per process of Monitor_Point_Registry.
       static Monitor_Point_Registry* instance (void);
+      
+      Monitor_Point_Registry (void);
+
+      /// Adds a Statistic or ControlAction to its corresponding registry.
+      bool add (Monitor_Base* type);
+      
+      /// Removes a Statistic or ControlAction from its registry.
+      bool remove (const char* name);
+
+      /// Returns a list of names stored in the registry
+      MonitorControl_Types::NameList names (void);
 
       /// The lookup operation.
       Monitor_Base* get (const ACE_CString& name) const;
+      
+      /// Returns a unique id for a constraint when it is created.
+      long constraint_id (void);
+
+    private:
+      /// Underlying container for the registry.
+      typedef ACE_Hash_Map_Manager<ACE_CString,
+                                   Monitor_Base*,
+                                   ACE_SYNCH_NULL_MUTEX> Map;
+
+      mutable ACE_SYNCH_MUTEX mutex_;
+      Map map_;
+      
+      /// Since we're accessed as a singleton, we can keep track of
+      /// dispensing unique ids for constraints.
+      long constraint_id_;
     };
   }
 }

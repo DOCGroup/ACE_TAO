@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
-#include "ace/MC_Generic_Registry.h"
 #include "ace/MC_Admin.h"
 
 using namespace ACE::MonitorControl;

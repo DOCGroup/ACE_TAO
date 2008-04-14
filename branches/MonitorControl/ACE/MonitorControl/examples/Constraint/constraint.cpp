@@ -74,10 +74,14 @@ int main (int /* argc */, char * /* argv */ [])
   /// Add two constraints, each with its own triggered action.
 
   Trigger8k trigger8k;
-  bytes_monitor->constraints ("value > 8192", &trigger8k);
+  long id = bytes_monitor->add_constraint ("value > 8192", &trigger8k);
+  
+  ACE_DEBUG ((LM_DEBUG, "trigger8k id = %d\n", id));
 
   Trigger16k trigger16k;
-  bytes_monitor->constraints ("value > 16384", &trigger16k);
+  id = bytes_monitor->add_constraint ("value > 16384", &trigger16k);
+
+  ACE_DEBUG ((LM_DEBUG, "trigger16k id = %d\n", id));
 
   /// Create a query and register it to be called periodically.
   MonitorQuery query ("BytesReceived");

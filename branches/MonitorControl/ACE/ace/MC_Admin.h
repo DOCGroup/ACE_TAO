@@ -107,14 +107,6 @@ namespace ACE
                        MonitorQuery* query,
                        const ACE_Time_Value& time);
 
-      /// Same as for monitor points, except that a different registry
-      /// is used, and there is no registration with the reactor. These
-      /// are actions that may be triggered by a constraint or called
-      /// from the application directly.
-
-      bool control_action (Control_Action* control_action);
-      Control_Action* control_action (const char* name);
-
       /// Resets the monitor points found in the registry by
       /// lookup of the passed list of names. Throws InvalidName
       void clear_statistics (const MonitorControl_Types::NameList& names);
@@ -130,11 +122,11 @@ namespace ACE
       /// and substitute it for the default reactor.
       void reactor (ACE_Reactor* new_reactor);
       ACE_Reactor* reactor (void) const;
-
+      
     private:
       MonitorPointAutoUpdater auto_updater_;
       ACE_Reactor* reactor_;
-      bool delete_reactor_;
+      bool delete_reactor_;   
     };
   }
 }

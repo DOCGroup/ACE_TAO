@@ -43,7 +43,7 @@ namespace ACE
      * be implemented in the 'disabled' template specialization
      * as no-ops.
      */
-    class ACE_Export Monitor_Base : public MC_Generic
+    class ACE_Export Monitor_Base
     {
     public:
       typedef MonitorControl_Types::ConstraintList CONSTRAINTS;
@@ -60,9 +60,9 @@ namespace ACE
       virtual void receive (size_t value);
 
       /// Accessors for the constraint list.
-      void constraints (const char* expression,
-                        Control_Action* action = 0);
-
+      long add_constraint (const char* expression,
+                           Control_Action* action = 0);
+      void remove_constraint (long constraint_id);
       CONSTRAINTS& constraints (void);
 
       /// Reset function.
@@ -76,21 +76,23 @@ namespace ACE
       void add_to_registry (const ACE_Time_Value& time = ACE_Time_Value::zero);
       void remove_from_registry (void);
 
+      const char* name (void) const;
+      void name (const char* new_name);
+
     protected:
       Monitor_Base (void);
       Monitor_Base (const char* name);
       virtual ~Monitor_Base (void);
       virtual void clear_i (void);
 
-    /// @@@ (JP) To keep overhead down for system monitors, we
-    /// may want to remove these from here and duplicate them, in
-    /// MonitorPoint<true> and in a new class below this
-    /// one and above the ACE-specific monitors.
     protected:
       MonitorControl_Types::Data data_;
       mutable ACE_SYNCH_MUTEX mutex_;
 
       CONSTRAINTS constraints_;
+
+    private:
+      ACE_CString name_;
     };
   }
 }
