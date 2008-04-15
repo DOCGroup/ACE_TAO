@@ -21,13 +21,23 @@ module Monitor
   };
   typedef sequence<DataItem> DataItemList;
   typedef long ConstraintId;
+  typedef sequence<ConstraintId> ConstraintIdList;
   typedef string Constraint;
+  struct ConstraintStruct
+  {
+    Name itemname;
+    ConstraintId id;
+  };
+  typedef sequence<ConstraintStruct> ConstraintStructList;
 
   interface Subscriber
   {
     oneway void push (in DataItemList dil);
   };
 
+  /**
+   * @todo Make it possible to use then namelist as filter
+   */
   interface MC
   {
     NameList get_statistic_names (in NameFilter filter);
@@ -60,13 +70,13 @@ module Monitor
      * Register a constraint for the given monitoring points specified
      * by @a names. When the constraint evaluates to true the
      * @a sub is called
-     * @return The unique constraint id which can be used to unregister
+     * @return Returns a list with constraint id and monitor name
      */
-    ConstraintId register_constraint (in NameList names, in Constraint cs, in Subscriber sub);
+    ConstraintStructList register_constraint (in NameList names, in Constraint cs, in Subscriber sub);
 
     /**
      * Unregister for a certain constraint
      */
-    void unregister_constraint (in ConstraintId constaint);
+    void unregister_constraint (in ConstraintIdList constraint);
   };
 };

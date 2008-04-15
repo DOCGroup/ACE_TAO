@@ -9,6 +9,29 @@ ACE_RCSID (Monitor,
            Monitor_Impl,
            "$Id$")
 
+class TAO_Control_Action : public Control_Action
+{
+public:
+  TAO_Control_Action (::Monitor::Subscriber_ptr sub) : sub_ (::Monitor::Subscriber::_duplicate (sub))
+  {
+  }
+
+  virtual void execute (const char* /* command */)
+  {
+    try
+      {
+        // @todo, really want to send the value to the subscriber
+        ::Monitor::DataItemList d;
+        sub_->push (d);
+      }
+    catch (const ::CORBA::Exception&)
+      {
+      }
+  }
+private:
+  ::Monitor::Subscriber_var sub_;
+};
+
 Monitor_Impl::Monitor_Impl (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -160,16 +183,43 @@ Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
   return namelist;
 }
 
-::Monitor::ConstraintId
+::Monitor::ConstraintStructList *
 Monitor_Impl::register_constraint (
       const ::Monitor::NameList & names,
       const char * cs,
       ::Monitor::Subscriber_ptr sub)
 {
+  ::Monitor::ConstraintStructList *constraintlist = 0;
+  ACE_NEW_THROW_EX (constraintlist,
+                    ::Monitor::ConstraintStructList (names.length ()),
+                    CORBA::NO_MEMORY ());
+  constraintlist->length (0UL);
+
+  MC_ADMINMANAGER* mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+
+  for (CORBA::ULong index = 0; index < names.length (); ++index)
+    {
+      /// Call on the administrator class to look up the desired monitors.
+      ACE::MonitorControl::Monitor_Base *monitor =
+        mgr->admin ().monitor_point (names[index]);
+
+      if (monitor != 0)
+        {
+          TAO_Control_Action* ca = new TAO_Control_Action (sub);
+          long id = monitor->add_constraint (cs, ca);
+          CORBA::ULong const length = constraintlist->length ();
+          constraintlist->length (length + 1);
+          (*constraintlist)[length].id = id;
+          (*constraintlist)[length].itemname = CORBA::string_dup (names[index].in ());
+        }
+    }
+
+  return constraintlist;
 }
 
 void
-Monitor_Impl::unregister_constraint ( ::Monitor::ConstraintId constaint)
+Monitor_Impl::unregister_constraint ( const ::Monitor::ConstraintIdList & constraint)
 {
 
 }

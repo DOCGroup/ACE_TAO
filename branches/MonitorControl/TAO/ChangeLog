@@ -1,3 +1,18 @@
+Tue Apr 15 10:46:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/Monitor.pidl:
+        * tao/Monitor/Monitor_Impl.cpp:
+        * tao/Monitor/Monitor_Impl.h:
+          Implemented part of the subscriber code, not tested yet, but
+          just to show the ideas
+
+Tue Apr 15 09:58:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/Monitor.pidl:
+        * tao/Monitor/Monitor_Impl.cpp:
+        * tao/Monitor/Monitor_Impl.h:
+          Added empty methods to register a corba subscriber
+
 Mon Apr 14 14:51:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Monitor/Monitor.pidl:
