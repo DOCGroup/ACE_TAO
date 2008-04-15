@@ -224,6 +224,8 @@ Monitor_Impl::unregister_constraints ( const ::Monitor::ConstraintStructList & c
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
+  // @todo handle ownership of the control_action
+
   for (CORBA::ULong index = 0; index < constraint.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
