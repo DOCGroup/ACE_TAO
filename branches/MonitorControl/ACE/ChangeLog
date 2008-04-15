@@ -1,3 +1,18 @@
+Tue Apr 15 20:09:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Control_Action.cpp:
+        * ace/Control_Action.h:
+        * ace/Monitor_Base.cpp:
+        * ace/MonitorControl_Types.h:
+        * ace/Monitor_Base.h:
+        * ace/MonitorControl_Types.cpp:
+        * MonitorControl/MonitorQuery.cpp:
+        * MonitorControl/examples/Constraint/constraint.cpp:
+
+          Added refcounting for control actions, and 
+          implemented remove_constraint() in class
+          Monitor_Base.
+
 Mon Apr 14 19:15:03 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Control_Action_Registry.h:

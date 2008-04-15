@@ -47,7 +47,7 @@ namespace ACE
     {
     public:
       typedef MonitorControl_Types::ConstraintList CONSTRAINTS;
-      typedef CONSTRAINTS::Iterator CONSTRAINT_ITERATOR;
+      typedef CONSTRAINTS::const_iterator CONSTRAINT_ITERATOR;
 
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.
@@ -62,7 +62,7 @@ namespace ACE
       /// Accessors for the constraint list.
       long add_constraint (const char* expression,
                            Control_Action* action = 0);
-      void remove_constraint (long constraint_id);
+      Control_Action* remove_constraint (const long constraint_id);
       CONSTRAINTS& constraints (void);
 
       /// Reset function.

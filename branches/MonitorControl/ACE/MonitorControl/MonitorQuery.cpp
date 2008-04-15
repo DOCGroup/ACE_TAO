@@ -46,32 +46,29 @@ namespace ACE
     void
     MonitorQuery::query (void)
     {
-      MonitorControl_Types::Constraint* constraint = 0;
-
       if (this->monitor_ == 0)
         {
           ACE_ERROR ((LM_ERROR, "MonitorQuery::query - null monitor\n"));
           return;
         }
+        
+      Monitor_Base::CONSTRAINTS& list = this->monitor_->constraints ();
 
-      for (Monitor_Base::CONSTRAINT_ITERATOR i (
-             this->monitor_->constraints ());
-           !i.done ();
-           i.advance ())
+      for (Monitor_Base::CONSTRAINT_ITERATOR i (list.begin ());
+           i != list.end ();
+           ++i)
         {
-          i.next (constraint);
-
           Constraint_Interpreter interpreter;
-          interpreter.build_tree (constraint->expr.fast_rep ());
+          interpreter.build_tree (i->second.expr.fast_rep ());
 
           MonitorControl_Types::Data data;
           this->monitor_->retrieve (data);
           Constraint_Visitor visitor (data);
           bool satisfied = interpreter.evaluate (visitor);
 
-          if (satisfied && constraint->control_action != 0)
+          if (satisfied && i->second.control_action != 0)
             {
-              constraint->control_action->execute ();
+              i->second.control_action->execute ();
             }
         }
     }

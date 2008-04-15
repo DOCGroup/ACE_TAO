@@ -32,19 +32,35 @@ namespace ACE
     {
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
 
-      MonitorControl_Types::Constraint constraint;
-      constraint.expr = expression;
-      constraint.control_action = action;
-      constraint.id = Monitor_Point_Registry::instance ()->constraint_id ();
-      (void) this->constraints_.push_back (constraint);
-      return constraint.id;
+      long id = Monitor_Point_Registry::instance ()->constraint_id ();
+      
+      CONSTRAINTS::value_type entry;
+      entry.first = id;
+      entry.second.expr = expression;
+      entry.second.control_action = action;
+      
+      action->add_ref ();
+      (void) this->constraints_.insert (entry);
+      
+      return id;
     }
 
-    void
-    Monitor_Base::remove_constraint (long constraint_id)
+    Control_Action*
+    Monitor_Base::remove_constraint (const long constraint_id)
     {
-      // TODO, probably have to change the constraint storage type
-      // to implement this method.
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
+
+      Control_Action* retval = 0;
+      CONSTRAINT_ITERATOR i = this->constraints_.find (constraint_id);
+      
+      if (i != this->constraints_.end ())
+        {
+          retval = i->second.control_action;
+          (void) this->constraints_.erase (constraint_id);
+        }
+        
+      retval->remove_ref ();  
+      return retval;
     }
 
     Monitor_Base::CONSTRAINTS&

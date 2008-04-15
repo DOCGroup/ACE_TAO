@@ -69,22 +69,22 @@ int main (int /* argc */, char * /* argv */ [])
     ACE_Dynamic_Service<MC_Admin_Manager>::instance ("MC_ADMINMANAGER");
 
   ACE::MonitorControl::Monitor_Base *bytes_monitor =
-    mgr->admin ().monitor_point ("BytesReceived");
+    mgr->admin ().monitor_point ("OS/Network/BytesReceived");
 
   /// Add two constraints, each with its own triggered action.
 
-  Trigger8k trigger8k;
-  long id = bytes_monitor->add_constraint ("value > 8192", &trigger8k);
+  Trigger8k *trigger8k = new Trigger8k;
+  long id8 = bytes_monitor->add_constraint ("value > 8192", trigger8k);
   
-  ACE_DEBUG ((LM_DEBUG, "trigger8k id = %d\n", id));
+  ACE_DEBUG ((LM_DEBUG, "trigger8k id = %d\n", id8));
 
-  Trigger16k trigger16k;
-  id = bytes_monitor->add_constraint ("value > 16384", &trigger16k);
+  Trigger16k *trigger16k = new Trigger16k;
+  long id16 = bytes_monitor->add_constraint ("value > 16384", trigger16k);
 
-  ACE_DEBUG ((LM_DEBUG, "trigger16k id = %d\n", id));
+  ACE_DEBUG ((LM_DEBUG, "trigger16k id = %d\n", id16));
 
   /// Create a query and register it to be called periodically.
-  MonitorQuery query ("BytesReceived");
+  MonitorQuery query ("OS/Network/BytesReceived");
   MonitorPointAutoQuery *auto_query = new MonitorPointAutoQuery;
   ACE_Event_Handler_var safety (auto_query);
   ADD_PERIODIC_QUERY (auto_query, &query, ACE_Time_Value (2));
@@ -100,9 +100,17 @@ int main (int /* argc */, char * /* argv */ [])
   monitor_checker.activate ();
 
   ACE_OS::sleep (20);
+  
+  Control_Action *removed_action = bytes_monitor->remove_constraint (id8);
+  ACE_DEBUG ((LM_DEBUG, "8k trigger removed\n"));
+  
+  ACE_OS::sleep (5);
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
+  
+  removed_action->remove_ref ();
+  trigger16k->remove_ref ();
 
   return 0;
 }

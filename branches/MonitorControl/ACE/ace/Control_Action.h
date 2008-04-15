@@ -19,7 +19,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_export.h"
+#include "ace/Refcountable.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Synch_Traits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,15 +38,23 @@ namespace ACE
      * This class is extended by the application developer or
      * by the MC service itself to create a concrete class.
      */
-    class ACE_Export Control_Action
+    class ACE_Export Control_Action : private ACE_Refcountable
     {
     public:
       /// To be implemented by the concrete derived class.
       virtual void execute (const char* command = "") = 0;
       
+      /// Refcounting methods.
+      void add_ref (void);
+      void remove_ref (void);
+      int refcount (void) const;
+      
     protected:
       Control_Action (void);
-      virtual ~Control_Action (void);      
+      virtual ~Control_Action (void);  
+      
+    protected:    
+      mutable ACE_SYNCH_MUTEX mutex_;
     };
   }
 }
