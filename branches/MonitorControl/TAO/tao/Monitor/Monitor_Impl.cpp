@@ -160,3 +160,17 @@ Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
   return namelist;
 }
 
+::Monitor::ConstraintId
+Monitor_Impl::register_constraint (
+      const ::Monitor::NameList & names,
+      const char * cs,
+      ::Monitor::Subscriber_ptr sub)
+{
+}
+
+void
+Monitor_Impl::unregister_constraint ( ::Monitor::ConstraintId constaint)
+{
+
+}
+

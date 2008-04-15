@@ -28,6 +28,15 @@ public:
 
   virtual ::Monitor::NameList * clear_statistics (
     const ::Monitor::NameList & names);
+
+  virtual ::Monitor::ConstraintId register_constraint (
+      const ::Monitor::NameList & names,
+      const char * cs,
+      ::Monitor::Subscriber_ptr sub);
+
+  virtual void unregister_constraint (
+      ::Monitor::ConstraintId constaint);
+
 private:
 
   /// Use an ORB reference to convert strings to objects and shutdown

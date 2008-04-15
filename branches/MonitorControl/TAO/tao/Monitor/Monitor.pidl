@@ -20,6 +20,13 @@ module Monitor
     DataList dlist;
   };
   typedef sequence<DataItem> DataItemList;
+  typedef long ConstraintId;
+  typedef string Constraint;
+
+  interface Subscriber
+  {
+    oneway void push (in DataItemList dil);
+  };
 
   interface MC
   {
@@ -48,10 +55,18 @@ module Monitor
      * not in the list.
      */
     NameList clear_statistics (in NameList names);
-  };
 
-  interface Subscriber
-  {
-    oneway void push (in DataItemList dil);
+    /**
+     * Register a constraint for the given monitoring points specified
+     * by @a names. When the constraint evaluates to true the
+     * @a sub is called
+     * @return The unique constraint id which can be used to unregister
+     */
+    ConstraintId register_constraint (in NameList names, in Constraint cs, in Subscriber sub);
+
+    /**
+     * Unregister for a certain constraint
+     */
+    void unregister_constraint (in ConstraintId constaint);
   };
 };
