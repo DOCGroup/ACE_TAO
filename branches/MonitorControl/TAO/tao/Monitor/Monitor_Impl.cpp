@@ -219,8 +219,20 @@ Monitor_Impl::register_constraint (
 }
 
 void
-Monitor_Impl::unregister_constraint ( const ::Monitor::ConstraintIdList & constraint)
+Monitor_Impl::unregister_constraints ( const ::Monitor::ConstraintStructList & constraint)
 {
+  MC_ADMINMANAGER* mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
+  for (CORBA::ULong index = 0; index < constraint.length (); ++index)
+    {
+      /// Call on the administrator class to look up the desired monitors.
+      ACE::MonitorControl::Monitor_Base *monitor =
+        mgr->admin ().monitor_point (constraint[index].itemname.in ());
+      if (monitor != 0)
+        {
+          monitor->remove_constraint (constraint[index].id);
+        }
+    }
 }
 

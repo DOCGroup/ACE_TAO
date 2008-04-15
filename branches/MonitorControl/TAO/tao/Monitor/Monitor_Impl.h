@@ -34,8 +34,8 @@ public:
       const char * cs,
       ::Monitor::Subscriber_ptr sub);
 
-  virtual void unregister_constraint (
-      const ::Monitor::ConstraintIdList & constraint);
+  virtual void unregister_constraints (
+      const ::Monitor::ConstraintStructList & constraint);
 
 private:
 

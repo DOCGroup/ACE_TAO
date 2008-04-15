@@ -75,8 +75,8 @@ module Monitor
     ConstraintStructList register_constraint (in NameList names, in Constraint cs, in Subscriber sub);
 
     /**
-     * Unregister for a certain constraint
+     * Unregister for certain constraints
      */
-    void unregister_constraint (in ConstraintIdList constraint);
+    void unregister_constraints (in ConstraintStructList constraint);
   };
 };
