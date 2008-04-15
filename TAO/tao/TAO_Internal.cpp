@@ -250,7 +250,8 @@ public:
     // (global) Service Configurator instance.
     // Be certain to copy the program name so that service configurator
     // has something to skip!
-    ACE_ARGV global_svc_config_argv ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0]);
+    ACE_ARGV global_svc_config_argv (true); // only this ctor allows subsequent use of add()!
+    global_svc_config_argv.add ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0]);
 
     // Will expand the environment variables, if any were used. Is this a good thing?
     // I guess it provides greater flexibility for deployment, so let's leave it. Will
@@ -380,7 +381,8 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   // Configurator.
   // Be certain to copy the program name so that service configurator
   // has something to skip!
-  ACE_ARGV svc_config_argv ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0]);
+  ACE_ARGV svc_config_argv (true);  // only this ctor allows subsequent use of add()!
+  svc_config_argv.add ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0]);
 
   // Should we skip the ACE_Service_Config::open() method?,
   // e.g., because of -ORBSkipServiceConfigOpen

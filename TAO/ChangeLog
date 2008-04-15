@@ -1,3 +1,10 @@
+Tue Apr 15 12:15:35 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Turns out ACE_ARGV only allows "iterative" use (e.g. adding new
+          arguments to the list), when created with one of the ctors.
+
 Mon Apr 14 20:14:18 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB.cpp:
