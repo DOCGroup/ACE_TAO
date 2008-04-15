@@ -39,7 +39,7 @@ namespace ACE
       (void) this->constraints_.push_back (constraint);
       return constraint.id;
     }
-    
+
     void
     Monitor_Base::remove_constraint (long constraint_id)
     {
@@ -66,7 +66,7 @@ namespace ACE
     Monitor_Base::receive (size_t value)
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-      
+
       this->data_.timestamp_ = ACE_OS::gettimeofday ();
       this->data_.value_ = static_cast<double> (value);
     }
@@ -83,7 +83,6 @@ namespace ACE
     Monitor_Base::clear (void)
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-
 
       this->clear_i ();
     }
@@ -129,13 +128,13 @@ namespace ACE
                       this->name ()));
         }
     }
-    
+
     const char*
     Monitor_Base::name (void) const
     {
       return this->name_.fast_rep ();
     }
-    
+
     void
     Monitor_Base::name (const char* new_name)
     {

@@ -35,13 +35,14 @@ namespace ACE
      * @brief Automates periodic querying of monitor point classes.
      *
      */
-    struct MONITORCONTROL_Export MonitorPointAutoQuery : ACE_Event_Handler
+    class MONITORCONTROL_Export MonitorPointAutoQuery : public ACE_Event_Handler
     {
+    public:
       /// Override of ACE base class method.
       virtual int handle_timeout (const ACE_Time_Value& current,
                                   const void* monitor_query);
     };
-    
+
     /**
      * @class MonitorQuery
      *
@@ -53,9 +54,9 @@ namespace ACE
     {
     public:
       MonitorQuery (const char* monitor_name);
-      
+
       void query (void);
-      
+
     private:
       Monitor_Base* monitor_;
     };
