@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Refcountable_T.h"
+#include "ace/Null_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
