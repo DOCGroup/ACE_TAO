@@ -55,14 +55,14 @@ typedef ACE_Refcountable_T<ACE_Null_Mutex> ACE_Refcountable;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include "ace/Refcountable.inl"
+#include "ace/Refcountable_T.inl"
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Refcountable.cpp"
+#include "ace/Refcountable_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Refcountable.cpp")
+#pragma implementation ("Refcountable_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
