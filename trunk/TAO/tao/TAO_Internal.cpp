@@ -791,7 +791,7 @@ namespace
             // configuration information rather than using a svc.conf
             // file.  Pass the "-S" to the service configurator.
             svc_config_argv.add (ACE_TEXT ("-S"));
-            svc_config_argv.add (current_arg);
+            svc_config_argv.add (current_arg, true); // quote args!
 
             arg_shifter.consume_arg ();
           }
@@ -799,7 +799,7 @@ namespace
                        (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
           {
             svc_config_argv.add (ACE_TEXT ("-k"));
-            svc_config_argv.add (current_arg);
+            svc_config_argv.add (current_arg, true); // quote args!
 
             arg_shifter.consume_arg ();
           }
