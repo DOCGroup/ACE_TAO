@@ -337,10 +337,11 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue (void)
           *ptr++ = '"';
           if (ACE_OS::strchr (arg->arg_, '"') != 0)
             {
+              CHAR_TYPE prev = 0;
               for (const CHAR_TYPE * p = arg->arg_; *p != '\0'; ++p)
                 {
-                  if (*p == '"') *ptr++ = '\\';
-                  *ptr++ = *p;
+                  if (*p == '"' && prev != '\\') *ptr++ = '\\';
+                  prev = *ptr++ = *p;
                 }
             }
           else
