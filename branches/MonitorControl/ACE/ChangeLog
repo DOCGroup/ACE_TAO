@@ -1,3 +1,21 @@
+Wed Apr 16 12:00:18 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc
+        * ace/Control_Action.cpp
+        * ace/Control_Action.h
+        * ace/Refcountable.cpp
+        * ace/Refcountable.h
+        * ace/Refcountable.inl
+        * ace/Refcountable_T.cpp
+        * ace/Refcountable_T.h
+        * ace/Refcountable_T.inl
+        * ace/Strategies_T.h
+        * ace/Strategies_T.inl
+          Changed ACE_Refcountable to ACE_Refcountable_T which is a template
+          that can be specialized with a ACE_SYNCH_MUTEX. ACE_Refcountable
+          is now a typedef of ACE_Refcountable_T<ACE_Null_Mutex> which is
+          kept as backward compatibity
+
 Tue Apr 15 20:09:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Control_Action.cpp:
@@ -9,7 +27,7 @@ Tue Apr 15 20:09:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/MonitorQuery.cpp:
         * MonitorControl/examples/Constraint/constraint.cpp:
 
-          Added refcounting for control actions, and 
+          Added refcounting for control actions, and
           implemented remove_constraint() in class
           Monitor_Base.
 

@@ -200,7 +200,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Read_Buffer.cpp
     Recursive_Thread_Mutex.cpp
     Recyclable.cpp
-    Refcountable.cpp
     Registry.cpp
     Rtems_init.c
     RW_Mutex.cpp
@@ -334,6 +333,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Pair_T.cpp
     RB_Tree.cpp
     Reactor_Token_T.cpp
+    Refcountable_T.cpp
     Refcounted_Auto_Ptr.cpp
     Reverse_Lock_T.cpp
     Select_Reactor_T.cpp

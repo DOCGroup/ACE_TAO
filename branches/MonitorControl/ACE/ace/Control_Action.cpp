@@ -10,37 +10,27 @@ namespace ACE
   namespace MonitorControl
   {
     Control_Action::Control_Action (void)
-      : ACE_Refcountable (1)
+      : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
     {}
-  
+
     Control_Action::~Control_Action (void)
     {}
-    
+
     void
     Control_Action::add_ref (void)
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
       (void) this->increment ();
     }
-    
+
     void
     Control_Action::remove_ref (void)
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-      const int new_count = this->decrement ();
-      
-      if (new_count != 0)
+      const long new_count = this->decrement ();
+
+      if (new_count == 0)
         {
-          return;
+          delete this;
         }
-        
-      delete this;
-    }
-    
-    int
-    Control_Action::refcount (void) const
-    {
-      return ACE_Refcountable::refcount ();
     }
   }
 }

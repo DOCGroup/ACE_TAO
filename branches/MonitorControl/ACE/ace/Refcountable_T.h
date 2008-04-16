@@ -19,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Atomic_Op.h"
+#include "ace/Synch_Traits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -26,33 +28,41 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_Refcountable
  *
  */
-class ACE_Export ACE_Refcountable
+template <class ACE_LOCK>
+class ACE_Refcountable_T
 {
 public:
   /// Destructor.
-  virtual ~ACE_Refcountable (void);
+  virtual ~ACE_Refcountable_T (void);
 
   // = Increment/Decrement refcount
-  int increment (void);
-  int decrement (void);
+  long increment (void);
+  long decrement (void);
 
   /// Returns the current refcount.
-  int refcount (void) const;
+  long refcount (void) const;
 
 protected:
   /// Protected constructor.
-  ACE_Refcountable (int refcount);
+  ACE_Refcountable_T (long refcount);
 
   /// Current refcount.
-  int refcount_;
+  ACE_Atomic_Op <ACE_LOCK, long> refcount_;
 };
+
+typedef ACE_Refcountable_T<ACE_Null_Mutex> ACE_Refcountable;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-
-#if defined (__ACE_INLINE__)
 #include "ace/Refcountable.inl"
-#endif /* __ACE_INLINE __ */
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "ace/Refcountable.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Refcountable.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /*ACE_REFCOUNTABLE_H*/
