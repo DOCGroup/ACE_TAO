@@ -1,3 +1,10 @@
+Wed Apr 16 13:03:25 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+        Synthetic arguments for -ORBSvcConfDirective must be quoted to
+        ensure correct interpretation.
+
 Tue Apr 15 12:15:35 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Internal.cpp:
