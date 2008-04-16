@@ -26,7 +26,8 @@ $CL = new PerlACE::Process ("client");
 $mcl_args = "-k \"file://$mc_iorfile\" " .
             "-p \"Output CDR Buffer\" " .
             "-p \"OS/Processor/CPULoad\" " .
-            "-p \"OS/Network/BytesSent\" -i 10";
+            "-p \"OS/Network/BytesSent\" " .
+            "-i 10";
 $MCL = new PerlACE::Process ("../../../utils/monitor/monitor_client", $mcl_args);
 
 $SV->Spawn ();
