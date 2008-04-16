@@ -48,18 +48,18 @@ namespace ACE
        * @brief Bundles the constrain string with its associated
        *        trigger action.
        */
-      struct Constraint
+      struct ACE_Export Constraint
       {
         Constraint (void);
         Constraint (const Constraint& rhs);
         ~Constraint (void);
-        
+
         Constraint& operator= (const Constraint& rhs);
-      
+
         ACE_CString expr;
         Control_Action* control_action;
       };
-      
+
 #if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
       // Borland C++ Builder 6 and earlier don't handle the second template
       // argument correctly. We have to pass it explicitly
