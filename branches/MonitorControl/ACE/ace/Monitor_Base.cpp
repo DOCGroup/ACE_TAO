@@ -59,7 +59,6 @@ namespace ACE
           (void) this->constraints_.erase (constraint_id);
         }
         
-      retval->remove_ref ();  
       return retval;
     }
 

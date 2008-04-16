@@ -86,6 +86,8 @@ int main (int /* argc */, char * /* argv */ [])
   /// Create a query and register it to be called periodically.
   MonitorQuery query ("OS/Network/BytesReceived");
   MonitorPointAutoQuery *auto_query = new MonitorPointAutoQuery;
+  auto_query->reference_counting_policy ().value (
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
   ACE_Event_Handler_var safety (auto_query);
   ADD_PERIODIC_QUERY (auto_query, &query, ACE_Time_Value (2));
 
@@ -101,6 +103,9 @@ int main (int /* argc */, char * /* argv */ [])
 
   ACE_OS::sleep (20);
   
+  /// Can do a remove_ref() on this returned value or on the original
+  /// control action 'trigger8k', but not on both, since they point to
+  /// the same thing.
   Control_Action *removed_action = bytes_monitor->remove_constraint (id8);
   ACE_DEBUG ((LM_DEBUG, "8k trigger removed\n"));
   
@@ -109,7 +114,8 @@ int main (int /* argc */, char * /* argv */ [])
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
   
-  removed_action->remove_ref ();
+  /// Do this instead of 'delete' since they are refcounted.
+  trigger8k->remove_ref ();
   trigger16k->remove_ref ();
 
   return 0;

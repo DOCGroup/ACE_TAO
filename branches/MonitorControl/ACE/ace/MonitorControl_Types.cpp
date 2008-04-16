@@ -41,6 +41,11 @@ namespace ACE
     MonitorControl_Types::Constraint&
     MonitorControl_Types::Constraint::operator= (const Constraint& rhs)
     {
+      if (this->control_action != 0)
+        {
+          this->control_action->remove_ref ();
+        }
+        
       this->expr = rhs.expr;
       this->control_action = rhs.control_action;
       

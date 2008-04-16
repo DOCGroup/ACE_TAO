@@ -58,7 +58,8 @@ namespace ACE
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
 
-      int const status = this->map_.unbind (name);
+      ACE_CString name_str (name, 0, false);
+      int const status = this->map_.unbind (name_str);
 
       if (status == -1)
         {
