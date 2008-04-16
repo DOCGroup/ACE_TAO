@@ -2,15 +2,16 @@
 
 //=============================================================================
 /**
- *  @file   Refcountable.h
+ *  @file   Refcountable_T.h
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ * @author Doug Schmidt
+ * @author Johnny Willemsen
  */
 //=============================================================================
-#ifndef ACE_REFCOUNTABLE_H
-#define ACE_REFCOUNTABLE_H
+#ifndef ACE_REFCOUNTABLE_T_H
+#define ACE_REFCOUNTABLE_T_H
 #include /**/ "ace/pre.h"
 
 #include /**/ "ace/ACE_export.h"
@@ -65,4 +66,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
-#endif /*ACE_REFCOUNTABLE_H*/
+#endif /*ACE_REFCOUNTABLE_T_H*/
