@@ -7,6 +7,10 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_sys_time.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Monitor_Base.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -33,15 +37,15 @@ namespace ACE
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
 
       long id = Monitor_Point_Registry::instance ()->constraint_id ();
-      
+
       CONSTRAINTS::value_type entry;
       entry.first = id;
       entry.second.expr = expression;
       entry.second.control_action = action;
-      
+
       action->add_ref ();
       (void) this->constraints_.insert (entry);
-      
+
       return id;
     }
 
@@ -52,13 +56,13 @@ namespace ACE
 
       Control_Action* retval = 0;
       CONSTRAINT_ITERATOR i = this->constraints_.find (constraint_id);
-      
+
       if (i != this->constraints_.end ())
         {
           retval = i->second.control_action;
           (void) this->constraints_.erase (constraint_id);
         }
-        
+
       return retval;
     }
 
@@ -73,7 +77,6 @@ namespace ACE
     Monitor_Base::retrieve (MonitorControl_Types::Data& data) const
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-
       data = this->data_;
     }
 
@@ -142,18 +145,6 @@ namespace ACE
                       "monitor point %s unregistration failed\n",
                       this->name ()));
         }
-    }
-
-    const char*
-    Monitor_Base::name (void) const
-    {
-      return this->name_.fast_rep ();
-    }
-
-    void
-    Monitor_Base::name (const char* new_name)
-    {
-      this->name_ = new_name;
     }
   }
 }

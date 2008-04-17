@@ -1,10 +1,17 @@
+Thu Apr 17 09:38:18 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Base.cpp
+        * ace/Monitor_Base.h
+        * ace/Monitor_Base.inl
+          Added inline file
+
 Wed Apr 16 17:58:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Point_Registry.cpp:
         * ace/Monitor_Base.cpp:
         * ace/MonitorControl_Types.cpp:
         * MonitorControl/examples/Constraint/constraint.cpp:
-        
+
           Fixed memory management problems with the recently added
           refcounting, and added comments to the constraint example.
 

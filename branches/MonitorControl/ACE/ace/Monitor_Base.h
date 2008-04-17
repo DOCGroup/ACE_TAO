@@ -92,12 +92,16 @@ namespace ACE
       CONSTRAINTS constraints_;
 
     private:
-      ACE_CString name_;
+      const char* name_;
     };
   }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+#include "ace/Monitor_Base.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
