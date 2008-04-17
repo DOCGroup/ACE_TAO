@@ -34,8 +34,7 @@ namespace ACE
     Monitor_Base::add_constraint (const char* expression,
                                   Control_Action* action)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
-
+      /// Thread-safe and guaranteed to be unique.
       long id = Monitor_Point_Registry::instance ()->constraint_id ();
 
       CONSTRAINTS::value_type entry;
@@ -43,26 +42,38 @@ namespace ACE
       entry.second.expr = expression;
       entry.second.control_action = action;
 
+      /// This is thread-safe on its own so we don't have
+      /// to guard it here.
       action->add_ref ();
-      (void) this->constraints_.insert (entry);
-
+      
+      {
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
+         
+        /// Since we know external key is unique,
+        /// we don't check for failure. 
+        (void) this->constraints_.insert (entry);
+      }
+      
       return id;
     }
 
     Control_Action*
     Monitor_Base::remove_constraint (const long constraint_id)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
-
       Control_Action* retval = 0;
-      CONSTRAINT_ITERATOR i = this->constraints_.find (constraint_id);
 
-      if (i != this->constraints_.end ())
-        {
-          retval = i->second.control_action;
-          (void) this->constraints_.erase (constraint_id);
-        }
+      {
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
 
+        CONSTRAINT_ITERATOR i = this->constraints_.find (constraint_id);
+
+        if (i != this->constraints_.end ())
+          {
+            retval = i->second.control_action;
+            (void) this->constraints_.erase (constraint_id);
+          }
+      }
+      
       return retval;
     }
 
@@ -70,6 +81,8 @@ namespace ACE
     Monitor_Base::constraints (void)
     {
       // @todo make thread safe
+      /// @@ (JP) We're returning a reference that can change after
+      /// this method returns - why do we need local thread safety?
       return this->constraints_;
     }
 

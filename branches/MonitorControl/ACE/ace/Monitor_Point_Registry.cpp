@@ -14,7 +14,7 @@ namespace ACE
     Monitor_Point_Registry::instance (void)
     {
       return
-        ACE_Singleton<Monitor_Point_Registry, ACE_Thread_Mutex>::instance ();
+        ACE_Singleton<Monitor_Point_Registry, ACE_SYNCH_MUTEX>::instance ();
     }
     
     Monitor_Point_Registry::Monitor_Point_Registry (void)
@@ -31,10 +31,14 @@ namespace ACE
                              "registry add: null type\n"),
                             false);
         }
+        
+      int status = 0;
 
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
+      {
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
 
-      int const status = this->map_.bind (type->name (), type);
+        status = this->map_.bind (type->name (), type);
+      }
 
       if (status == -1)
         {
@@ -55,11 +59,15 @@ namespace ACE
                              "registry remove: null name\n"),
                             false);
         }
+        
+      int status = 0;
 
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
+      {
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
 
-      ACE_CString name_str (name, 0, false);
-      int const status = this->map_.unbind (name_str);
+        ACE_CString name_str (name, 0, false);
+        status = this->map_.unbind (name_str);
+      }
 
       if (status == -1)
         {
@@ -74,14 +82,16 @@ namespace ACE
     MonitorControl_Types::NameList
     Monitor_Point_Registry::names (void)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
-
       MonitorControl_Types::NameList name_holder_;
       
-      for (Map::CONST_ITERATOR i (this->map_); !i.done (); i.advance ())
-        {
-          name_holder_.push_back (i->key ());
-        }
+      {
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
+
+        for (Map::CONST_ITERATOR i (this->map_); !i.done (); i.advance ())
+          {
+            name_holder_.push_back (i->key ());
+          }
+      }
         
       return name_holder_;
     }
@@ -89,18 +99,28 @@ namespace ACE
     Monitor_Base*
     Monitor_Point_Registry::get (const ACE_CString& name) const
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
       Map::data_type type = 0;
-      this->map_.find (name, type);
+      
+      {
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
+        
+        this->map_.find (name, type);
+      }
+      
       return type;
     }
     
     long
     Monitor_Point_Registry::constraint_id (void)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
-      long retval = this->constraint_id_;
-      ++this->constraint_id_;
+      long retval = 0;
+      
+      {
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
+        
+        retval = this->constraint_id_++;
+      }
+      
       return retval;      
     }
   }

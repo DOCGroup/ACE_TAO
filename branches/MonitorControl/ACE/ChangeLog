@@ -1,3 +1,12 @@
+Thu Apr 17 20:17:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Point_Registry.cpp:
+        * ace/Monitor_Base.cpp:
+        
+          Trimmed ACE_GUARD scopes to minimum necessary and added comments.
+          Thanks to Abdullah Sowayan <abdullah dot sowayan at lmco dot com>
+          for the ACE_GUARD suggestions.
+
 Thu Apr 17 09:38:18 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Monitor_Base.cpp
