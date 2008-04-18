@@ -15,11 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Monitor_Base.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Monitor_Base.h"
+#include "MonitorControl/MonitorControl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,8 +29,7 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    template<bool ENABLED>
-    class MonitorGroup : public Monitor_Base
+    class MONITORCONTROL_Export MonitorGroup : public Monitor_Base
     {
     public:
       MonitorGroup (const char* name);
@@ -36,11 +37,6 @@ namespace ACE
       void add_member (Monitor_Base* member);
 
       virtual void update (void);
-
-      virtual void constraint (const char* constraint);
-
-      virtual void control_action (Control_Action* action,
-                                   const char* command = 0);
 
       virtual void clear (void);
 
@@ -56,14 +52,6 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "MonitorControl/MonitorGroup_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("MonitorGroup_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

@@ -15,11 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/MonitorControl_Types.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/MonitorControl_Types.h"
+#if defined (ACE_ENABLE_MONITORS)
+
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
 
@@ -102,6 +105,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Monitor_Base.inl"
 #endif /* __ACE_INLINE__ */
+
+#endif /* ACE_ENABLE_MONITORS */
 
 #include /**/ "ace/post.h"
 

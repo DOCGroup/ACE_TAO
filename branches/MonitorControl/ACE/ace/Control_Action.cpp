@@ -1,6 +1,9 @@
 // $Id$
 
 #include "ace/Control_Action.h"
+
+#if defined (ACE_ENABLE_MONITORS)
+
 #include "ace/Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -36,4 +39,7 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
+
 

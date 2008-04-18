@@ -61,8 +61,8 @@ int main (int /* argc */, char * /* argv */ [])
   ADD_MANUAL_MONITOR (CPU_LOAD_MONITOR);
   ADD_MANUAL_MONITOR (MEMORY_USAGE_MONITOR);
 
-  MonitorGroup<true> *group = new MonitorGroup<true> ("Test_Group");
-  ACE_Auto_Ptr<MonitorGroup<true> > safety (group);
+  MonitorGroup *group = new MonitorGroup ("Test_Group");
+  ACE_Auto_Ptr<MonitorGroup> safety (group);
 
   MC_Admin_Manager *mgr =
     ACE_Dynamic_Service<MC_Admin_Manager>::instance ("MC_ADMINMANAGER");

@@ -15,11 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Event_Handler.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Handler.h"
+#if defined (ACE_ENABLE_MONITORS)
+
 #include "ace/Monitor_Base.h"
 #include "ace/Control_Action.h"
 
@@ -132,6 +135,8 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
 
 #include /**/ "ace/post.h"
 

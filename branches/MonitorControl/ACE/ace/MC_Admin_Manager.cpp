@@ -1,6 +1,9 @@
 // $Id$
 
 #include "ace/MC_Admin_Manager.h"
+
+#if defined (ACE_ENABLE_MONITORS)
+
 #include "ace/Service_Config.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -35,3 +38,5 @@ ACE_STATIC_SVC_DEFINE (MC_ADMINMANAGER,
                        0)
 ACE_FACTORY_DEFINE (ACE, MC_ADMINMANAGER)
     
+#endif /* ACE_ENABLE_MONITORS */
+

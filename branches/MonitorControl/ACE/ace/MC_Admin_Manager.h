@@ -15,11 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Service_Object.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
+#if defined (ACE_ENABLE_MONITORS)
+
 #include "ace/MC_Admin.h"
 
 using namespace ACE::MonitorControl;
@@ -61,6 +64,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (MC_ADMINMANAGER)
 ACE_FACTORY_DECLARE (ACE, MC_ADMINMANAGER)
+
+#endif /* ACE_ENABLE_MONITORS */
 
 #include /**/ "ace/post.h"
 

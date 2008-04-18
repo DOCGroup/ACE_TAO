@@ -15,11 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Vector_T.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Vector_T.h"
+#if defined (ACE_ENABLE_MONITORS)
+
 #include "ace/Array_Map.h"
 #include "ace/SString.h"
 #include "ace/Time_Value.h"
@@ -88,6 +91,8 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
 
 #include /**/ "ace/post.h"
 

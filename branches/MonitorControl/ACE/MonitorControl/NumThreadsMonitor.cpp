@@ -6,14 +6,16 @@
 
 #include "MonitorControl/NumThreadsMonitor.h"
 
+#if defined (ACE_ENABLE_MONITORS)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace MonitorControl
   {
-    NumThreadsMonitor<true>::NumThreadsMonitor (void)
-      : MonitorPoint<true> ("OS/System/NumThreads")
+    NumThreadsMonitor::NumThreadsMonitor (void)
+      : Monitor_Base ("OS/System/NumThreads")
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\System\\Threads")
 #elif defined (linux)
@@ -24,7 +26,7 @@ namespace ACE
     }
 
     void
-    NumThreadsMonitor<true>::update (void)
+    NumThreadsMonitor::update (void)
     {
 #if defined (ACE_WIN32)
       this->win_update ();
@@ -72,4 +74,6 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
 

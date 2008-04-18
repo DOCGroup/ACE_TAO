@@ -2,14 +2,16 @@
 
 #include "MonitorControl/PacketsSentMonitor.h"
 
+#if defined (ACE_ENABLE_MONITORS)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace MonitorControl
   {
-    PacketsSentMonitor<true>::PacketsSentMonitor (void)
-      : MonitorPoint<true> ("OS/Network/PacketsSent")
+    PacketsSentMonitor::PacketsSentMonitor (void)
+      : Monitor_Base ("OS/Network/PacketsSent")
 #if defined (ACE_WIN32)
       , WindowsMultiInstanceMonitor (
           "\\Network Interface(*)\\Packets Sent/sec")
@@ -20,7 +22,7 @@ namespace ACE
     {}
 
     void
-    PacketsSentMonitor<true>::update (void)
+    PacketsSentMonitor::update (void)
     {
 #if defined (ACE_WIN32)
       this->win_update ();
@@ -38,4 +40,6 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
 

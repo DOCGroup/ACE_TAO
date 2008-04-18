@@ -2,14 +2,16 @@
 
 #include "MonitorControl/BytesSentMonitor.h"
 
+#if defined (ACE_ENABLE_MONITORS)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace MonitorControl
   {
-    BytesSentMonitor<true>::BytesSentMonitor (void)
-      : MonitorPoint<true> ("OS/Network/BytesSent")
+    BytesSentMonitor::BytesSentMonitor (void)
+      : Monitor_Base ("OS/Network/BytesSent")
 #if defined (ACE_WIN32)
         , WindowsMultiInstanceMonitor (
             "\\Network Interface(*)\\Bytes Sent/sec")
@@ -21,7 +23,7 @@ namespace ACE
     }
 
     void
-    BytesSentMonitor<true>::update (void)
+    BytesSentMonitor::update (void)
     {
 #if defined (ACE_WIN32)
       this->win_update ();
@@ -39,4 +41,7 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
+
 

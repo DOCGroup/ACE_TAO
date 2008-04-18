@@ -4,7 +4,6 @@ project (*) : aceexe, ace_mc {
   exename = bytes_sent
   after += MC_Test_Utilities
   libs  += MC_Test_Utilities
-  macros += ENABLE_MONITORS
 
   source_files {
     bytes_sent.cpp

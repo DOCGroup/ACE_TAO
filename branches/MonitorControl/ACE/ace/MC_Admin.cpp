@@ -1,6 +1,9 @@
 // $Id$
 
 #include "ace/MC_Admin.h"
+
+#if defined (ACE_ENABLE_MONITORS)
+
 #include "ace/Reactor.h"
 #include "ace/Monitor_Point_Registry.h"
 
@@ -121,4 +124,6 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
 

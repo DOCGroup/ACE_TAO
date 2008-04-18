@@ -6,14 +6,16 @@
 
 #include "MonitorControl/CPULoadMonitor.h"
 
+#if defined (ACE_ENABLE_MONITORS)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace MonitorControl
   {
-    CPULoadMonitor<true>::CPULoadMonitor (void)
-      : MonitorPoint<true> ("OS/Processor/CPULoad")
+    CPULoadMonitor::CPULoadMonitor (void)
+      : Monitor_Base ("OS/Processor/CPULoad")
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\Processor(_Total)\\% Processor Time")
 #endif
@@ -51,7 +53,7 @@ namespace ACE
     }
 
     void
-    CPULoadMonitor<true>::update (void)
+    CPULoadMonitor::update (void)
     {
 #if defined (ACE_WIN32)
       this->win_update ();
@@ -215,4 +217,6 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
 

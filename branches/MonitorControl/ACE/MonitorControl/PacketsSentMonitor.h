@@ -15,12 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Monitor_Base.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "MonitorControl/LowLevelMonitors_T.h"
-#include "MonitorControl/MonitorPoint.h"
+#if defined (ACE_ENABLE_MONITORS)
 
 #if defined (ACE_WIN32)
 #include "MonitorControl/WindowsMultiInstanceMonitor.h"
@@ -35,24 +36,12 @@ namespace ACE
   namespace MonitorControl
   {
     /**
-     * @note This file contains a class declarations for a specialized monitor
-     *       point we will want to have at the OS level. In the
-     *       enabled ("true") versions, the virtual update() method
-     *       is implemented with the appropriate behavior, while in the
-     *       disabled ("false") versions, it is implemented as a no-op,
-     *       so the compiler may optimize it away. The purpose of the
-     *       class should be self-evident from its name.
-     */
-
-    /**
      * @class PacketsSentMonitor
      *
-     * @brief Template specialization with meaningful implementation of
-     * pure virtual method.
+     * @brief Monitors total packets sent over all network interfaces.
      */
-    template<>
-    class MONITORCONTROL_Export PacketsSentMonitor<true>
-      : public MonitorPoint<true>
+    class MONITORCONTROL_Export PacketsSentMonitor
+      : public Monitor_Base
 #if defined (ACE_WIN32)
         , public WindowsMultiInstanceMonitor
 #elif defined (linux)
@@ -69,6 +58,8 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
 
 #include /**/ "ace/post.h"
 

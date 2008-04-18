@@ -21,6 +21,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_ENABLE_MONITORS)
+
 #include "ace/Monitor_Base.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -54,6 +56,8 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
 
 #include /**/ "ace/post.h"
 

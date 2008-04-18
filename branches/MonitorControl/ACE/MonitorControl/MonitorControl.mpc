@@ -14,7 +14,6 @@ project(MonitorControl) : acelib, ace_etcl_parser {
     LinuxNetworkInterfaceMonitor.cpp
     MemoryUsageMonitor.cpp
     MonitorGroup.cpp
-    MonitorPoint.cpp
     MonitorQuery.cpp
     NumThreadsMonitor.cpp
     PacketsReceivedMonitor.cpp
@@ -27,12 +26,6 @@ project(MonitorControl) : acelib, ace_etcl_parser {
     MonitorControl.h
     MonitorControl_export.h
     MonitorControl_macros.h
-  }
-
-  Template_Files {
-    LowLevelMonitors_T.cpp
-    MonitorGroup_T.cpp
-    MonitorPoint_T.cpp
   }
 
   specific (vc6, vc7, vc71, vc8, vc9, nmake) {

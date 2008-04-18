@@ -6,14 +6,16 @@
 
 #include "MonitorControl/MemoryUsageMonitor.h"
 
+#if defined (ACE_ENABLE_MONITORS)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace MonitorControl
   {
-    MemoryUsageMonitor<true>::MemoryUsageMonitor (void)
-      : MonitorPoint<true> ("OS/Memory/TotalUsage")
+    MemoryUsageMonitor::MemoryUsageMonitor (void)
+      : Monitor_Base ("OS/Memory/TotalUsage")
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\Memory\\% Committed Bytes In Use")
 #elif defined (ACE_HAS_KSTAT)
@@ -22,7 +24,7 @@ namespace ACE
     }
   
     void
-    MemoryUsageMonitor<true>::update (void)
+    MemoryUsageMonitor::update (void)
     {
 #if defined (ACE_WIN32)
       this->win_update ();
@@ -56,4 +58,6 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
 

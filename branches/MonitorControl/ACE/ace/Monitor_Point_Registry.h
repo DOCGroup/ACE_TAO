@@ -21,6 +21,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_ENABLE_MONITORS)
+
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -81,6 +83,8 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ENABLE_MONITORS */
 
 #include /**/ "ace/post.h"
 

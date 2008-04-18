@@ -22,7 +22,6 @@
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/MC_Admin_Manager.h"
 
-#include "MonitorControl/MonitorControl_macros.h"
 #include "MonitorControl/CPULoadMonitor.h"
 #include "MonitorControl/MemoryUsageMonitor.h"
 #include "MonitorControl/NumThreadsMonitor.h"
@@ -30,8 +29,9 @@
 #include "MonitorControl/PacketsSentMonitor.h"
 #include "MonitorControl/BytesReceivedMonitor.h"
 #include "MonitorControl/PacketsReceivedMonitor.h"
-#include "MonitorControl/MonitorGroup_T.h"
+#include "MonitorControl/MonitorGroup.h"
 #include "MonitorControl/MonitorQuery.h"
+#include "MonitorControl/MonitorControl_macros.h"
 
 static int
 ACE_Requires_MC_Initializer = MC_ADMINMANAGER::Initializer ();

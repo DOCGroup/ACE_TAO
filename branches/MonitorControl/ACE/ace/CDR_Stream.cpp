@@ -812,22 +812,22 @@ ACE_OutputCDR::find (char* loc)
   return mb;
 }
 
+#if defined (ACE_ENABLE_MONITORS)
+
 void
 ACE_OutputCDR::register_monitor (const char *id)
 {
-#if defined (ACE_ENABLE_MONITORS)
   this->monitor_.name (id);
   this->monitor_.add_to_registry ();
-#endif /* ACE_ENABLE_MONITORS */
 }
 
 void
 ACE_OutputCDR::unregister_monitor (void)
 {
-#if defined (ACE_ENABLE_MONITORS)
   this->monitor_.remove_from_registry ();
-#endif /* ACE_ENABLE_MONITORS */
 }
+
+#endif /* ACE_ENABLE_MONITORS */
 
 // ****************************************************************
 
@@ -1935,22 +1935,22 @@ ACE_InputCDR::reset_contents (void)
 #endif /* ACE_ENABLE_MONITORS */
 }
 
+#if defined (ACE_ENABLE_MONITORS)
+
 void
 ACE_InputCDR::register_monitor (const char *id)
 {
-#if defined (ACE_ENABLE_MONITORS)
   this->monitor_.name (id);
   this->monitor_.add_to_registry ();
-#endif /* ACE_ENABLE_MONITORS */
 }
 
 void
 ACE_InputCDR::unregister_monitor (void)
 {
-#if defined (ACE_ENABLE_MONITORS)
   this->monitor_.remove_from_registry ();
-#endif /* ACE_ENABLE_MONITORS */
 }
+
+#endif /* ACE_ENABLE_MONITORS */
 
 // --------------------------------------------------------------
 

@@ -1900,7 +1900,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
     return this->notification_strategy_->notify ();
 }
 
-
 // = Initialization and termination methods.
 template <ACE_SYNCH_DECL>
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
