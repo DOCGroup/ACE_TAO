@@ -1,3 +1,82 @@
+Fri Apr 18 21:33:44 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/MonitorPoint.h:
+        * MonitorControl/LowLevelMonitors_T.cpp:
+        * MonitorControl/MonitorPoint_T.h:
+        * MonitorControl/MonitorGroup_T.h:
+        * MonitorControl/MonitorPoint.cpp:
+        * MonitorControl/LowLevelMonitors_T.h:
+        * MonitorControl/MonitorPoint_T.cpp:
+        * MonitorControl/MonitorGroup_T.cpp:
+
+          Removed these files, no longer needed without
+          the template design of the OS monitors, see below.
+
+        * MonitorControl/MonitorControl.mpc:
+
+          Removed the above files from the MPC project.
+
+        * MonitorControl/MonitorGroup.h:
+
+          New file.
+
+        * ace/Control_Action.cpp:
+        * ace/Message_Queue_T.cpp:
+        * ace/Control_Action.h:
+        * ace/MC_Admin.h:
+        * ace/MC_Admin_Manager.cpp:
+        * ace/Monitor_Point_Registry.cpp:
+        * ace/Message_Queue_T.h:
+        * ace/Monitor_Base.cpp:
+        * ace/MonitorControl_Types.h:
+        * ace/Monitor_Base.h:
+        * ace/Monitor_Base.inl
+        * ace/Monitor_Point_Registry.h:
+        * ace/MonitorControl_Types.cpp:
+        * ace/Size_Monitor.cpp:
+        * ace/Size_Monitor.h:
+        * ace/CDR_Stream.h:
+        * ace/MC_Admin_Manager.h:
+        * ace/CDR_Stream.cpp:
+        * ace/MC_Admin.cpp:
+
+          Place ACE_ENABLE_MONITORS guards around all
+          monitor-related code and classes in ACE.
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.h:
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/BytesReceivedMonitor.cpp:
+        * MonitorControl/PacketsReceivedMonitor.cpp:
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.cpp:
+        * MonitorControl/MonitorControl_macros.h:
+        * MonitorControl/CPULoadMonitor.h:
+        * MonitorControl/MonitorGroup.cpp:
+        * MonitorControl/MemoryUsageMonitor.h:
+        * MonitorControl/BytesReceivedMonitor.h:
+        * MonitorControl/PacketsReceivedMonitor.h:
+        * MonitorControl/NumThreadsMonitor.h:
+        * MonitorControl/MonitorControl.h:
+        * MonitorControl/BytesSentMonitor.h:
+        * MonitorControl/examples/Group/group.cpp:
+
+          Changed design of OS monitors from being enabled/disabled
+          via a boolean template parameter to just inheriting
+          directly from Monitor_Base and being enabled/disabled
+          at ACE build time the same as all the other monitors.
+
+        * MonitorControl/examples/Bytes_Sent/Bytes_Sent.mpc:
+        * MonitorControl/examples/Constraint/Constraint.mpc:
+        * MonitorControl/examples/CPU_Load/CPU_Load.mpc:
+        * MonitorControl/examples/Num_Threads/Num_Threads.mpc:
+        * MonitorControl/examples/Memory_Usage/Memory_Usage.mpc:
+        * MonitorControl/examples/Group/Group.mpc:
+
+          Removed the 'macros += ENABLE_MONITORS' line, no
+          longer needed.
+
 Thu Apr 17 20:17:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Point_Registry.cpp:
