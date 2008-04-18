@@ -24,8 +24,7 @@ class Logger:
             print message
 
     def info (self, message):
-        if self.verbosity > 0:
-            print message
+        print message
 
     def warn (self, message):
         if self.verbosity > 0:
@@ -183,12 +182,16 @@ class AbstractParser (HTMLParser):
 ## Where BUILDn is:
 ##
 ## <td><a href="BUILDHISTORYURL">NAME</a></td> ...
+##
+## Example build index: http://www.dre.vanderbilt.edu/scoreboard/integrated.html
+##
 
 class Build:
     def __init__ (self, group, historyurl):
         self.group = group
         self.historyurl = historyurl
         self.name = None
+        self.configurl = None
         self.briefurl = None
         self.filtered = False
 
@@ -218,6 +221,8 @@ class IndexParser (AbstractParser):
                 url = urljoin(self.base_url, href)
                 if self.column == 0:
                     self.build.append (Build (self.current_group, url))
+                elif self.column == 2:
+                    self.build[-1].configurl = url
                 elif self.column == 5:
                     if href.find ('Brief'):
                         self.build[-1].briefurl = url
@@ -253,8 +258,56 @@ class IndexParser (AbstractParser):
         self.build[-1].filtered = filtered
         self.build[-1].name = b
 
-## Searches a specific build for available results
-## denoted by:
+
+## Works with the "Daily Build Configuration" pages for a specific
+## build from the index page, like
+## http://www.dre.vanderbilt.edu/scoreboard/FC8_GCC_412/2008_04_09_16_12_Config.html##
+##
+## Searches a specific build for available results denoted by:
+##
+## <h3>PrintACEConfig</h3>
+##   <a href="...">MPC ChangeLog</a> ================
+##Mon Mar  7 08:24:46 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+##================ 
+##
+## Where TIMESTAMPn is:
+##
+## <td><a href="TIMESTAMPURL">TIMESTAMP</a></td> ...
+
+class ConfigParser (AbstractParser):
+
+    def __init__ (self, baseurl, logger=None):
+        AbstractParser.__init__ (self, baseurl, logger)
+        self.subsystem = []
+        self.changelog = []
+        self.headerfound = False
+
+    def istag (self, tagname):
+        return (['a', 'h3'].count (tagname) > 0)
+
+    def data (self,content):
+        if len (self.context) > 1 and \
+            self.context[-1] == 'h3':
+
+            self.headerfound = (content == 'PrintACEConfig')
+            return
+                
+        if len (self.context) > 1 and \
+            self.context[-1] == 'a' and \
+            self.headerfound:
+
+            self.subsystem.append (content)
+            return
+
+        if self.headerfound:
+            self.changelog.append (content)
+
+
+## Works with the "Build History" pages for a specific build, like
+## http://www.dre.vanderbilt.edu/~remedynl/fc8_gcc/index.html 
+##
+## Searches
+## a specific build for available results denoted by:
 ##
 ## <table border="1">
 ##   <tbody>
@@ -357,9 +410,12 @@ class HistoryParser (AbstractParser):
             self.timestamp.append (t)
 
 
-## Searches the index page of a build for a specific day
-## to extract information about each section: begin, setup, 
-## config, compile, test, and end. The sections are denoted by:
+## Searches the index page of a given build, for a specific day, like
+## http://www.dre.vanderbilt.edu/~remedynl/fc8_gcc/2008_04_09_16_12_Totals.html,
+## called "Daily Build Log (Totals)"
+##
+## Extracts information about each section: begin, setup, config,
+## compile, test, and end. The sections are denoted by:
 ##
 ## <table border="1">
 ##   <tbody>
@@ -370,6 +426,7 @@ class HistoryParser (AbstractParser):
 ## <table>
 ##
 ## Where SECTIONn is:
+##
 ## ...
 ## <td>NAME</td>
 ## <td><a href="FULLURL">Full</a><a href="BRIEFURL">Brief</a></td>
@@ -589,10 +646,14 @@ def main ():
         ip.parse ()
         
         for i in range (len (ip.build)):
-            log.info ("%s [%s]" % (ip.build[i].name, ip.build[i].group))
  
-            hp = HistoryParser (ip.build[i].historyurl, log)
-            parse_with_retry (hp, ip.build[i].historyurl)
+#            cp = ConfigParser (ip.build[i].configurl, log)
+#            parse_with_retry (cp, ip.build[i].configurl)
+
+            log.info ("%s [%s]" % (ip.build[i].name, ip.build[i].group))
+
+#            hp = HistoryParser (ip.build[i].historyurl, log)
+#            parse_with_retry (hp, ip.build[i].historyurl)
 
 
     elif options.isdiff:
