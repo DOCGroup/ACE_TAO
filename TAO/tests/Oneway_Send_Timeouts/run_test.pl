@@ -50,7 +50,6 @@ else {
     $TV = new PerlACE::Process ("oneway_test", "$test_opts");
 }
 
-print $TV->CommandLine()."\n";
 $test = $TV->Spawn ();
 
 if ($test != 0) {

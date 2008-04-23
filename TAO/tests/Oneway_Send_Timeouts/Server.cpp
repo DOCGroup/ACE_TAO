@@ -86,10 +86,10 @@ Server::Server (int , ACE_TCHAR* argv[])
     obj = root_poa->id_to_reference (oid.in());
     Test_var test_obj = Test::_narrow (obj.in());
 
-    std::string ior = orb_->object_to_string (test_obj.in ());
+    CORBA::String_var ior = orb_->object_to_string (test_obj.in ());
     obj = orb_->resolve_initial_references("IORTable");
     IORTable::Table_var table = IORTable::Table::_narrow (obj.in());
-    table->bind ("Test", ior.c_str());
+    table->bind ("Test", ior.in());
 
     poa_manager->activate ();
 
@@ -108,7 +108,7 @@ Server::Server (int , ACE_TCHAR* argv[])
     ior = orb_->object_to_string (test_obj.in ());
     obj = management_orb_->resolve_initial_references("IORTable");
     table = IORTable::Table::_narrow (obj.in());
-    table->bind ("Management", ior.c_str());
+    table->bind ("Management", ior.in());
 
     management_poa_manager->activate ();
   }
