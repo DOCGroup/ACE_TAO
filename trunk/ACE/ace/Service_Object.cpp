@@ -51,12 +51,12 @@ ACE_Service_Type::dump (void) const
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
                                     ACE_Service_Type_Impl *t,
                                     const ACE_DLL &dll,
-                                    int active)
+                                    bool active)
   : name_ (0),
     type_ (t),
     dll_ (dll),
     active_ (active),
-    fini_already_called_ (0)
+    fini_already_called_ (false)
 {
   ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
   this->name (n);
@@ -65,11 +65,11 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
                                     ACE_Service_Type_Impl *t,
                                     ACE_SHLIB_HANDLE handle,
-                                    int active)
+                                    bool active)
   : name_ (0),
     type_ (t),
     active_ (active),
-    fini_already_called_ (0)
+    fini_already_called_ (false)
 {
   ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
   this->dll_.set_handle (handle);
@@ -93,10 +93,10 @@ ACE_Service_Type::fini (void)
                 this->name_,
                 this->dll_.dll_name_));
 
-  if (this->fini_already_called_)
+  if (!this->fini_already_called_)
     return 0;
 
-  this->fini_already_called_ = 1;
+  this->fini_already_called_ = true;
 
   if (this->type_ == 0)
     {
@@ -122,7 +122,7 @@ int
 ACE_Service_Type::suspend (void) const
 {
   ACE_TRACE ("ACE_Service_Type::suspend");
-  (const_cast<ACE_Service_Type *> (this))->active_ = 0;
+  (const_cast<ACE_Service_Type *> (this))->active_ = false;
   return this->type_->suspend ();
 }
 
@@ -130,7 +130,7 @@ int
 ACE_Service_Type::resume (void) const
 {
   ACE_TRACE ("ACE_Service_Type::resume");
-  (const_cast<ACE_Service_Type *> (this))->active_ = 1;
+  (const_cast<ACE_Service_Type *> (this))->active_ = true;
   return this->type_->resume ();
 }
 

@@ -89,9 +89,7 @@ public:
 template <class KEY, class VALUE, class CONTAINER>
 class ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
 {
-
 public:
-
   /// The method which will do the cleanup of the entry in the container.
   virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
 };
@@ -113,9 +111,7 @@ public:
 template <class KEY, class VALUE, class CONTAINER>
 class ACE_Handler_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
 {
-
 public:
-
   /// The method which will do the cleanup of the entry in the container.
   virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
 };
@@ -134,9 +130,7 @@ public:
 template <class KEY, class VALUE, class CONTAINER>
 class ACE_Null_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
 {
-
 public:
-
   /// The dummy cleanup method.
   virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
 };

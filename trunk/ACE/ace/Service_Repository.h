@@ -266,7 +266,7 @@ private:
   size_t next_;
 
   /// Are we ignoring suspended services?
-  int ignore_suspended_;
+  bool ignore_suspended_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
