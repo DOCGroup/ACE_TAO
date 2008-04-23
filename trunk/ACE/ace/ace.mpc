@@ -195,7 +195,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Read_Buffer.cpp
     Recursive_Thread_Mutex.cpp
     Recyclable.cpp
-    Refcountable.cpp
     Registry.cpp
     Rtems_init.c
     RW_Mutex.cpp
@@ -311,7 +310,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Hash_Multi_Map_Manager_T.cpp
     Hash_Map_With_Allocator_T.cpp
     IOStream_T.cpp
-
     Intrusive_Auto_Ptr.cpp
     Intrusive_List.cpp
     Intrusive_List_Node.cpp
@@ -340,6 +338,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     String_Base.cpp
     Svc_Handler.cpp
     Synch_T.cpp
+    Refcountable_T.cpp
     TSS_T.cpp
     Task_Ex_T.cpp
     Task_T.cpp
