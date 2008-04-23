@@ -51,15 +51,12 @@ public:
   virtual ~WIBM1047_ISO8859 (void);
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
-                                      ACE_CDR::WChar &);
-  virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR &,
-                                        ACE_CDR::WChar *&);
+  virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &, ACE_CDR::WChar &);
+  virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR &, ACE_CDR::WChar *&);
   virtual ACE_CDR::Boolean read_wchar_array (ACE_InputCDR &,
                                             ACE_CDR::WChar *,
                                             ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_wchar (ACE_OutputCDR &,
-                                       ACE_CDR::WChar);
+  virtual ACE_CDR::Boolean write_wchar (ACE_OutputCDR &, ACE_CDR::WChar);
   virtual ACE_CDR::Boolean write_wstring (ACE_OutputCDR &,
                                          ACE_CDR::ULong,
                                          const ACE_CDR::WChar *);

@@ -1,3 +1,18 @@
+Wed Apr 23 14:08:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2494_Regression/run_test.pl:
+          Check return value of spawn
+
+        * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.h:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Translator.h:
+          Layout changes
+
+        * tests/OBV/Forward/run_test.pl:
+          Changed wait time
+
+        * tests/Portable_Interceptors/Dynamic/run_test.pl:
+          Removed duplicated names
+
 Wed Apr 23 14:05:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.cpp:
