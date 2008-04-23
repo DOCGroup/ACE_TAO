@@ -239,7 +239,6 @@ libACE_la_SOURCES = \
   Read_Buffer.cpp \
   Recursive_Thread_Mutex.cpp \
   Recyclable.cpp \
-  Refcountable.cpp \
   Registry.cpp \
   Registry_Name_Space.cpp \
   Remote_Name_Space.cpp \
@@ -858,8 +857,10 @@ nobase_include_HEADERS += \
   Recursive_Thread_Mutex.inl \
   Recyclable.h \
   Recyclable.inl \
+  Refcountable_T.cpp \
   Refcountable.h \
-  Refcountable.inl \
+  Refcountable_T.h \
+  Refcountable_T.inl \
   Refcounted_Auto_Ptr.cpp \
   Refcounted_Auto_Ptr.h \
   Refcounted_Auto_Ptr.inl \
