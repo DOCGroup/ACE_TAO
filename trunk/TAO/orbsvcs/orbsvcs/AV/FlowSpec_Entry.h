@@ -127,7 +127,7 @@ public:
   //ACE_Addr *fwd_address (void);
   ACE_Addr *address (void);
   ACE_Addr *control_address (void);
-  void address (ACE_Addr *address);
+  void address (ACE_Addr *address, bool cleanup = false);
   void control_address (ACE_Addr *address);
 
   /// Address in string format i. hostname:port.

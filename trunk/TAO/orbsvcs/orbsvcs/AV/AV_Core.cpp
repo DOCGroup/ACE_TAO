@@ -336,45 +336,21 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
           }
         if (flow_set.size () > 0)
           {
-	    TAO_AV_FlowSpecSet tmp_flow_set (flow_set);
-	    flow_set.reset ();
-	    TAO_AV_FlowSpecSetItor end = tmp_flow_set.end ();
-	    TAO_AV_FlowSpecSetItor start = tmp_flow_set.begin ();
+            // If any of the flow spec entries have a valid peer address,
+            // we need to set it as the forwarding address.  According to
+            // Yamuna Krishnamurthy, this "happens when no address is
+            // specified for the A endpoint."
+	    TAO_AV_FlowSpecSetItor end = flow_set.end ();
+	    TAO_AV_FlowSpecSetItor start = flow_set.begin ();
             for (; start != end; ++start)
               {
 		TAO_FlowSpec_Entry *entry = *start;
-		TAO_FlowSpec_Entry *new_entry;
-		ACE_CString dir;
-		if (entry->direction () == 0)
-		  dir += "IN";
-		else if (entry->direction () == 1)
-		  dir += "OUT";
 		if (entry->get_peer_addr () != 0)
 		  {
-		    ACE_NEW_RETURN (new_entry,
-				    TAO_Forward_FlowSpec_Entry (entry->flowname (),
-								dir.c_str (),
-								entry->format (),
-								entry->flow_protocol_str (),
-								entry->carrier_protocol_str (),
-								entry->get_peer_addr (),
-								entry->control_address ()),
-				    -1);
+		    entry->address (entry->get_peer_addr (), false);
 		  }
-		else
-		  {
-		    ACE_NEW_RETURN (new_entry,
-				    TAO_Forward_FlowSpec_Entry (entry->flowname (),
-								dir.c_str (),
-								entry->format (),
-								entry->flow_protocol_str (),
-								entry->carrier_protocol_str (),
-								entry->address (),
-								entry->control_address ()),
-				    -1);
-		  }
-		flow_set.insert (new_entry);
 	      }
+
             result = this->acceptor_registry_->open (endpoint,
                                                      this,
                                                      flow_set);

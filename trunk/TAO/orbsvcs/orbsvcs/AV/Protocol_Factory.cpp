@@ -10,6 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_AV_Flow_Protocol_Factory
 TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory (void)
+ : ref_count (0)
 {
 }
 
