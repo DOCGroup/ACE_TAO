@@ -1,3 +1,44 @@
+Wed Apr 23 14:01:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+          Corrected doxygen path
+
+        * bin/group_test_stats.sh:
+          Helper script to analyze test stat diffs
+
+        * ace/Sig_Handler.{h,cpp}:
+          Doxygen changes and changed third_party_sig_handler flag to a
+          bool
+
+        * ace/Service_Repository.{h,cpp}:
+          Changed ignore_suspended to a bool
+
+        * ace/Intrusive_Auto_Ptr.h:
+          Fixed typo in comment
+
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Removed workaround that is only needed with VxWorks 5.5.1
+
+        * ace/Codeset_Registry_db.cpp:
+          Added UCS2 and correct short names. This fixes bugzilla 3295
+
+        * ace/Codeset_IBM1047.h:
+          Doxygen changes
+
+        * ace/Cleanup_Strategies_T.h:
+          Layout changes
+
+        * ace/Service_Gestalt.{h,inl}:
+          No need for virtual methods, use bool and doxygen changes
+
+        * ace/Service_Manager.h:
+          Explicitly mark destructor as virtual
+
+        * ace/Service_Object.{h,cpp,inl}:
+          Use bool
+
 Wed Apr 23 01:53:32 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ACE version 5.6.4 released.

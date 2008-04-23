@@ -43,8 +43,10 @@ class ACE_Sig_Action;
 class ACE_Export ACE_Sig_Handler
 {
 public:
-  /// Default ctor/dtor.
+  /// Default constructor.
   ACE_Sig_Handler (void);
+
+  /// Destructor
   virtual ~ACE_Sig_Handler (void);
 
   // = Registration and removal methods.
@@ -87,8 +89,7 @@ public:
 
   /// Set a new ACE_Event_Handler that is associated with @a signum.
   /// Return the existing handler.
-  virtual ACE_Event_Handler *handler (int signum,
-                                      ACE_Event_Handler *);
+  virtual ACE_Event_Handler *handler (int signum, ACE_Event_Handler *);
 
   /**
    * Callback routine registered with sigaction(2) that dispatches the
@@ -221,9 +222,9 @@ private:
    */
   static int sigkey_;
 
-  /// If this is > 0 then a 3rd party library has registered a
+  /// If this is true then a 3rd party library has registered a
   /// handler...
-  static int third_party_sig_handler_;
+  static bool third_party_sig_handler_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

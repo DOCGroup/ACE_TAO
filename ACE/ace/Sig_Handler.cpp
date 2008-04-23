@@ -289,9 +289,9 @@ ACE_Sig_Handler::dispatch (int signum,
 // <remove_handler> method.
 int ACE_Sig_Handlers::sigkey_ = 0;
 
-// If this is > 0 then a 3rd party library has registered a
+// If this is true then a 3rd party library has registered a
 // handler...
-int ACE_Sig_Handlers::third_party_sig_handler_ = 0;
+bool ACE_Sig_Handlers::third_party_sig_handler_ = false;
 
 // Make life easier by defining typedefs...
 typedef ACE_Fixed_Set <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> ACE_SIG_HANDLERS_SET;
@@ -376,7 +376,7 @@ ACE_Sig_Handlers::register_handler (int signum,
             return -1;
 
           // Note that we've seen a 3rd party handler...
-          ACE_Sig_Handlers::third_party_sig_handler_ = 1;
+          ACE_Sig_Handlers::third_party_sig_handler_ = true;
 
           // Create a new 3rd party disposition, remembering its
           // preferred signal blocking etc...;

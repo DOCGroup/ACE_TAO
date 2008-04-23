@@ -35,28 +35,28 @@ ACE_Service_Type::type (void) const
 }
 
 ACE_INLINE void
-ACE_Service_Type::type (const ACE_Service_Type_Impl *o, int enabled)
+ACE_Service_Type::type (const ACE_Service_Type_Impl *o, bool enabled)
 {
   ACE_TRACE ("ACE_Service_Type::type");
   this->type_ = o;
   ((ACE_Service_Type *) this)->active_ = enabled;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Service_Type::active (void) const
 {
   ACE_TRACE ("ACE_Service_Type::active");
-  return this->active_ != 0;
+  return this->active_;
 }
 
 ACE_INLINE void
-ACE_Service_Type::active (int turnon)
+ACE_Service_Type::active (bool turnon)
 {
   ACE_TRACE ("ACE_Service_Type::active");
   this->active_ = turnon;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Service_Type::fini_called (void) const
 {
   ACE_TRACE ("ACE_Service_Type::fini_called");

@@ -38,14 +38,6 @@
 # define ACE_LACKS_IOSTREAM_FX
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
-# if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
-  // GNU 3.3+ toolchain supports long long types but fails to define this so STL
-  // skips some definitions
-#   if !defined (_GLIBCPP_USE_LONG_LONG)
-#     define _GLIBCPP_USE_LONG_LONG
-#   endif
-# endif /* (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)) */
-
 # if defined (__RTP__) && !defined (_HAS_C9X)
 // Workaround for the fact that under RTP the log2 method can't be used
 // without this define set, see TSR560446

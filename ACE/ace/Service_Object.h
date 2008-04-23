@@ -36,10 +36,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Provide the abstract base class common to all service
  * implementations.
  *
- * Classes that inherit from <ACE_Service_Objects> are capable
+ * Classes that inherit from ACE_Service_Objects are capable
  * of being registered with the ACE_Reactor (due to the
  * ACE_Event_Handler, as well as being dynamically linked by
- * the ACE_Service_Config (due to the <ACE_Shared_Object>).
+ * the ACE_Service_Config (due to the ACE_Shared_Object).
  */
 class ACE_Export ACE_Service_Object
   : public ACE_Event_Handler,
@@ -95,32 +95,32 @@ public:
   ACE_Service_Type (const ACE_TCHAR *n,
                     ACE_Service_Type_Impl *o,
                     const ACE_DLL &dll,
-                    int active);
+                    bool active);
   ACE_Service_Type (const ACE_TCHAR *n,
                     ACE_Service_Type_Impl *o,
                     ACE_SHLIB_HANDLE handle,
-                    int active);
+                    bool active);
   ~ACE_Service_Type (void);
 
   const ACE_TCHAR *name (void) const;
   void name (const ACE_TCHAR *);
 
   const ACE_Service_Type_Impl *type (void) const;
-  void type (const ACE_Service_Type_Impl *, int active = 1);
+  void type (const ACE_Service_Type_Impl *, bool active = true);
 
-  // Is this just a stub for the real thing?
+  /// Is this just a stub for the real thing?
   bool is_forward_declaration (void) const;
 
   int suspend (void) const;
   int resume (void) const;
-  int  active (void) const;
-  void active (int);
+  bool active (void) const;
+  void active (bool turnon);
 
   /// Calls <fini> on <type_>
   int fini (void);
 
   /// Check if the service has been fini'ed.
-  int fini_called (void) const;
+  bool fini_called (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -145,11 +145,11 @@ private:
   /// dynamically linked).
   mutable ACE_DLL dll_;
 
-  /// 1 if svc is currently active, otherwise 0.
-  int active_;
+  /// true if svc is currently active, otherwise false.
+  bool active_;
 
-  /// 1 if <fini> on <type_> has already been called, otherwise 0.
-  int fini_already_called_;
+  /// true if <fini> on <type_> has already been called, otherwise false.
+  bool fini_already_called_;
 };
 
 /**

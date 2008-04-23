@@ -24,7 +24,7 @@ my $status= 0;
 &can_run($perl_path.' -V') ||
   die "$0: perl path is incorrect, please fix the script\n";
 
-my  $doxy_path = '/usr/bin';
+my  $doxy_path = '/usr/local/bin';
 
 my $doxy_version = '1.5.5';
 
