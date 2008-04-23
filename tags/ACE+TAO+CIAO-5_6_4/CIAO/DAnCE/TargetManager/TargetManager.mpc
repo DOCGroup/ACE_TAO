@@ -1,0 +1,63 @@
+// $Id$
+
+project(CIAO_TargetManager_stub): ciao_client_dnc, ciao_deployment_stub, ciao_nodemanager_stub, ace_output {
+  sharedname = TargetManager_stub
+  idlflags += -Wb,stub_export_macro=TARGETMANAGER_STUB_Export \
+              -Wb,stub_export_include=TargetManager_stub_export.h \
+              -Wb,skel_export_macro=TARGETMANAGER_SVNT_Export \
+              -Wb,skel_export_include=TargetManager_svnt_export.h
+  dynamicflags   = TARGETMANAGER_STUB_BUILD_DLL
+
+  IDL_Files {
+    TargetManagerImpl.idl
+    TargetManagerExt.idl
+    DomainEvents.idl
+  }
+
+  Source_Files {
+    TargetManagerImplC.cpp
+    TargetManagerExtC.cpp
+    DomainEventsC.cpp
+  }
+}
+
+project(CIAO_TargetManager_svnt) : ciao_servant_dnc, ciao_targetmanager_stub, ace_output {
+  sharedname  = TargetManager_svnt
+
+  idlflags  +=  -Wb,export_macro=TARGETMANAGER_SVNT_Export \
+                -Wb,export_include=TargetManager_svnt_export.h
+
+  dynamicflags = TARGETMANAGER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    TargetManager.cidl
+  }
+
+  IDL_Files {
+    TargetManagerE.idl
+  }
+
+  Source_Files {
+    TargetManagerEC.cpp
+    TargetManagerImplS.cpp
+    TargetManagerExtS.cpp
+    TargetManager_svnt.cpp
+    DomainEventsS.cpp
+  }
+}
+
+
+project(CIAO_TargetManager_exec) : ciao_component_dnc, ciao_config_handlers, ciao_domainapplicationmanager_dnc, ciao_targetmanager_svnt, ace_output {
+  sharedname = TargetManager_exec
+
+  dynamicflags   = TARGETMANAGER_EXEC_BUILD_DLL
+
+  Source_Files {
+    DomainDataManager.cpp
+    TargetManager_exec.cpp
+    ResourceCommitmentManager.cpp
+  }
+
+  IDL_Files {
+  }
+}

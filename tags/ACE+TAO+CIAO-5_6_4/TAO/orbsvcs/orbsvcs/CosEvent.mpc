@@ -1,0 +1,133 @@
+// $Id$
+
+project (CosEvent_IDL) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, ec_typed_events_idl, tao_versioning_idl_defaults {
+  custom_only = 1
+  idlflags   += -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h
+
+  IDL_Files {
+    CosEventComm.idl
+    CosEventChannelAdmin.idl
+  }
+}
+
+project (CosEvent) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, ec_typed_events {
+  sharedname   = TAO_CosEvent
+  dynamicflags = TAO_EVENT_BUILD_DLL
+  tagchecks   += CosEvent
+  after       += CosEvent_IDL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    CosEventCommC.cpp
+    CosEventChannelAdminC.cpp
+  }
+
+  Header_Files {
+    CosEventCommC.h
+    CosEventChannelAdminC.h
+    CosEvent/event_export.h
+  }
+
+  Inline_Files {
+    CosEventCommC.inl
+    CosEventChannelAdminC.inl
+  }
+
+  Template_Files {
+  }
+
+  // explicit Resource_Files to avoid including _Skel & _Serv rc files.
+  Resource_Files {
+    CosEvent.rc
+  }
+
+  Pkgconfig_Files {
+    TAO_CosEvent.pc.in
+  }
+}
+
+
+project (CosEvent_Skel) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, event, portableserver, ec_typed_events_skel {
+  sharedname   = TAO_CosEvent_Skel
+  dynamicflags = TAO_EVENT_SKEL_BUILD_DLL
+  tagchecks   += CosEvent
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    CosEventCommS.cpp
+    CosEventChannelAdminS.cpp
+  }
+
+  Header_Files {
+    CosEventCommS.h
+    CosEventChannelAdminS.h
+    CosEventCommS_T.h
+    CosEventChannelAdminS_T.h
+    CosEvent/event_skel_export.h
+  }
+
+  Inline_Files {
+    CosEventCommS.inl
+    CosEventChannelAdminS.inl
+  }
+
+  Template_Files {
+    CosEventCommS_T.cpp
+    CosEventChannelAdminS_T.cpp
+  }
+
+  Pkgconfig_Files {
+    TAO_CosEvent_Skel.pc.in
+  }
+}
+
+
+project (CosEvent_Serv) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, event_skel, ec_typed_events_serv, messaging_optional, naming, svc_utils {
+  sharedname   = TAO_CosEvent_Serv
+  dynamicflags = TAO_EVENT_SERV_BUILD_DLL
+  tagchecks   += CosEvent
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    CosEvent/CEC_ConsumerAdmin.cpp
+    CosEvent/CEC_ConsumerControl.cpp
+    CosEvent/CEC_Default_Factory.cpp
+    CosEvent/CEC_Dispatching.cpp
+    CosEvent/CEC_Dispatching_Task.cpp
+    CosEvent/CEC_EventChannel.cpp
+    CosEvent/CEC_Event_Loader.cpp
+    CosEvent/CEC_Factory.cpp
+    CosEvent/CEC_MT_Dispatching.cpp
+    CosEvent/CEC_ProxyPullConsumer.cpp
+    CosEvent/CEC_ProxyPullSupplier.cpp
+    CosEvent/CEC_ProxyPushConsumer.cpp
+    CosEvent/CEC_ProxyPushSupplier.cpp
+    CosEvent/CEC_Pulling_Strategy.cpp
+    CosEvent/CEC_Reactive_ConsumerControl.cpp
+    CosEvent/CEC_Reactive_Pulling_Strategy.cpp
+    CosEvent/CEC_Reactive_SupplierControl.cpp
+    CosEvent/CEC_SupplierAdmin.cpp
+    CosEvent/CEC_SupplierControl.cpp
+  }
+
+  Header_Files {
+    CosEvent/CEC_Defaults.h
+    CosEvent/event_serv_export.h
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosEvent_Serv.pc.in
+  }
+}

@@ -1,0 +1,47 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../.. -I ../../orbsvcs/orbsvcs \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Container_Ex.idl
+ */
+
+//#define CIAO_HAS_IMPORT_KEYWORD
+
+#if !defined (CCM_COMPONENTID_IDL)
+#define CCM_COMPONENTID_IDL
+
+#include "ciao/CCM_StateIdFactory.idl"
+
+// *************** Extended Container Interfaces ***************
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  local interface ComponentId
+  {
+    FacetId get_target_facet();
+
+    SegmentId get_target_segment();
+
+    StateIdValue get_target_state_id (in StateIdFactory sid_factory)
+      raises (InvalidStateIdData);
+
+    StateIdValue get_segment_state_id (in SegmentId seg,
+                                       in StateIdFactory sid_factory)
+      raises (InvalidStateIdData);
+
+    ComponentId create_with_new_target (in FacetId new_target_facet,
+                                        in SegmentId new_target_segment);
+
+    SegmentDescrSeq get_segment_descrs (in StateIdFactory sid_factory)
+      raises (InvalidStateIdData);
+  };
+};
+#endif /* CCM_COMPONENTID_IDL */

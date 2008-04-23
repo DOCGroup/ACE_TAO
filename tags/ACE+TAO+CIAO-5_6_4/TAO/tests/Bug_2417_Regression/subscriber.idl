@@ -1,0 +1,7 @@
+// $Id$
+
+interface Subscriber
+{
+	oneway void onData(in double value);
+	boolean isAlive();
+};
