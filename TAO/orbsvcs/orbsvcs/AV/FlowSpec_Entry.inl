@@ -91,9 +91,13 @@ TAO_FlowSpec_Entry::address (void)
 
 ACE_INLINE
 void
-TAO_FlowSpec_Entry::address (ACE_Addr *addr)
+TAO_FlowSpec_Entry::address (ACE_Addr *addr, bool cleanup)
 {
+  if (this->clean_up_address_)
+    delete this->address_;
+
   this->address_ = addr;
+  this->clean_up_address_ = cleanup;
 }
 
 ACE_INLINE

@@ -1,3 +1,28 @@
+Wed Apr 23 18:12:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+
+          A change made to this file back on Tue June 24 16:26:06 2003
+          caused the Simple_Three_Stage test to fail 100% of the time.  I'm
+          not sure how this went unnoticed.  I reworked the change to retain
+          the intended functionality, but still allow the test pass.
+
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.inl:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+
+          Cleaned up memory errors and leaks.
+
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+
+          Initialize the ref_count data member.
+
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+
+          Use the correct return type for the call to ACE_OS::fread().
+
 Wed Apr 23 15:22:20 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Send_Timeouts/Client.cpp:
@@ -38,7 +63,7 @@ Wed Apr 23 14:03:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 23 01:53:32 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.6.4 released.
+        * TAO version 1.6.4 released.
 
 Wed Apr 16 13:03:25 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
