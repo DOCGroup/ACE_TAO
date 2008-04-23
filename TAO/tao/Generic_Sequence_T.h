@@ -434,7 +434,8 @@ private:
 
 /**
  * @class Generic_Sequence_Iterator
- * @brief Implements a random access iterator for generic sequence type classes.
+ * @brief Implements a random access iterator for generic sequence type
+ *        classes.
  */
 template <typename SEQUENCE_T>
   class Generic_Sequence_Iterator
@@ -655,7 +656,8 @@ template<typename SEQUENCE_T>
 
 /**
  * @class Const_Generic_Sequence_Iterator
- * @brief Implements a random access iterator for generic sequence type classes.
+ * @brief Implements a constant random access iterator for generic sequence
+ *        type classes.
  *
  * Note:  Having a const Iterator does not guarantee that the current
  * *position* that it points to will not change, it only guarantees that
@@ -864,7 +866,8 @@ template<typename SEQUENCE_T>
 
 /**
  * @class Generic_Sequence_Reverse_Iterator
- * @brief Implements a random access iterator for generic sequence type classes.
+ * @brief Implements a reverse random access iterator for generic sequence
+ *        type classes.
  */
 template <typename SEQUENCE_T>
 class Generic_Sequence_Reverse_Iterator 
@@ -1099,7 +1102,8 @@ template<typename SEQUENCE_T>
 
 /**
  * @class Const_Generic_Sequence_Reverse_Iterator
- * @brief Implements a random access iterator for generic sequence type classes.
+ * @brief Implements a constant reverse random access iterator for generic
+ *        sequence type classes.
  *
  * Note:  Having a const Iterator does not guarantee that the current
  * *position* that it points to will not change, it only guarantees that
