@@ -647,6 +647,7 @@ TAO_AV_Acceptor::~TAO_AV_Acceptor (void)
 }
 
 TAO_AV_Transport_Factory::TAO_AV_Transport_Factory (void)
+ : ref_count (0)
 {
 }
 

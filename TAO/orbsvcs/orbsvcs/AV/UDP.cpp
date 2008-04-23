@@ -478,12 +478,13 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                     {
                       // RTP port should be even
                       delete local_addr;
+                      local_addr = 0;
                       delete flow_handler;
                       get_new_port = 1;
                     }
                   else
                     {
-                      ACE_INET_Addr *local_control_addr;
+                      ACE_INET_Addr *local_control_addr = 0;
                       TAO_AV_Flow_Handler *control_flow_handler = 0;
 
                       ACE_NEW_RETURN (this->control_inet_address_,
@@ -501,6 +502,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                         {
                           delete this->control_inet_address_;
                           delete local_addr;
+                          local_addr = 0;
                           delete flow_handler;
                           delete local_control_addr;
                           delete control_flow_handler;
@@ -544,12 +546,15 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
       this->entry_->control_handler (flow_handler);
     }
 
-  char buf[BUFSIZ];
-  local_addr->addr_to_string (buf,BUFSIZ);
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_AV_UDP_ACCEPTOR::open:%s \n",
-                buf));
+  if (local_addr != 0)
+    {
+      char buf[BUFSIZ];
+      local_addr->addr_to_string (buf,BUFSIZ);
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_AV_UDP_ACCEPTOR::open:%s \n",
+                    buf));
+    }
 
   // call activate svc handler.
   return this->activate_svc_handler (flow_handler);
@@ -664,12 +669,13 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                 {
                   // RTP port should be even
                   delete local_addr;
+                  local_addr = 0;
                   delete flow_handler;
                   get_new_port = 1;
                 }
               else
                 {
-                  ACE_INET_Addr *local_control_addr;
+                  ACE_INET_Addr *local_control_addr = 0;
                   TAO_AV_Flow_Handler *control_flow_handler = 0;
 
                   if (entry->is_multicast ())
@@ -708,6 +714,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                       local_addr->get_port_number () +1)
                     {
                       delete local_addr;
+                      local_addr = 0;
                       delete flow_handler;
                       delete local_control_addr;
                       delete control_flow_handler;
@@ -750,11 +757,14 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
       transport = flow_handler->transport ();
     }
 
-  char buf[BUFSIZ];
-  local_addr->addr_to_string (buf,BUFSIZ);
+  if (local_addr != 0)
+    {
+      char buf[BUFSIZ];
+      local_addr->addr_to_string (buf,BUFSIZ);
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_CONNECTOR::connect:%s \n",buf));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_CONNECTOR::connect:%s \n",buf));
+    }
 
   // call activate svc handler.
   return this->activate_svc_handler (flow_handler);

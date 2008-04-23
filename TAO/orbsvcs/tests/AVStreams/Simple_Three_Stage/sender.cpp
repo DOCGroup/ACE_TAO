@@ -206,12 +206,12 @@ Sender::pace_data (void)
       while (1)
         {
           // Read from the file into a message block.
-          int n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                 1,
-                                 this->mb_.size (),
-                                 this->input_file_);
+          size_t n = ACE_OS::fread (this->mb_.wr_ptr (),
+                                    1,
+                                    this->mb_.size (),
+                                    this->input_file_);
 
-          if (n < 0)
+          if (n == 0 && ferror (this->input_file_))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Sender::pace_data fread failed\n"),
                               -1);

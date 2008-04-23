@@ -68,7 +68,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    clean_up_control_address_ (0),
    address_str_ (),
    format_ (format_name),
-   direction_str_ (direction ),
+   direction_str_ (), // This is initialized in the call to set_direction()
    flowname_ ( flowname ),
    carrier_protocol_ ( carrier_protocol ),
    flow_protocol_ ( flow_protocol ),
@@ -93,8 +93,8 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    role_ (TAO_AV_INVALID_ROLE)
 {
   this->set_protocol ();
-  this->set_direction (this->direction_str_.c_str());
-  this->parse_flow_protocol_string (this->flow_protocol_.c_str() );
+  this->set_direction (direction);
+  this->parse_flow_protocol_string (this->flow_protocol_.c_str());
 }
 
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
@@ -102,14 +102,13 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
                                         const char *format_name,
                                         const char *flow_protocol,
                                         const char *address)
-                                        //const char *peer_address)
   :address_ (0),
    clean_up_address_ (0),
    control_address_ (0),
    clean_up_control_address_ (0),
    address_str_ ( address ),
    format_ ( format_name ),
-   direction_str_ ( direction ),
+   direction_str_ (), // This is initialized in the call to set_direction()
    flowname_ ( flowname ),
    carrier_protocol_ (),
    flow_protocol_ ( flow_protocol ),
@@ -134,7 +133,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
 {
   this->parse_flow_protocol_string (this->flow_protocol_.c_str() );
   this->parse_address (this->address_str_.c_str(), TAO_AV_Core::TAO_AV_DATA);
-  this->set_direction (this->direction_str_.c_str());
+  this->set_direction (direction);
 }
 
 // Destructor.
