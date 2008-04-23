@@ -1,3 +1,10 @@
+Wed Apr 23 14:49:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          When _XOPEN_STREAMS is defined to -1 we don't have stropts.h,
+          this fixes bugzilla 3291. Thanks to Jules Colding
+          <colding at 42tools dot com> for reporting this
+
 Wed Apr 23 14:10:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-development-process.html:
