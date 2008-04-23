@@ -14,6 +14,7 @@
 #include "Generic_Sequence_T.h"
 #include "Object_Reference_Sequence_Element_T.h"
 #include "Object_Reference_Const_Sequence_Element_T.h"
+#include "tao/MM_Sequence_Iterator_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -115,10 +116,10 @@ public:
   ///
 
   // = Traits and factory methods that create iterators.
-  typedef details::Generic_Sequence_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > iterator;
-  typedef details::Const_Generic_Sequence_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > const_iterator;
-  typedef details::Generic_Sequence_Reverse_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > reverse_iterator;
-  typedef details::Const_Generic_Sequence_Reverse_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > const_reverse_iterator;
+  typedef MM_Sequence_Iterator<unbounded_object_reference_sequence<object_t, object_t_var> > iterator;
+  typedef Const_MM_Sequence_Iterator<unbounded_object_reference_sequence<object_t, object_t_var> > const_iterator;
+  typedef MM_Sequence_Reverse_Iterator<unbounded_object_reference_sequence<object_t, object_t_var> > reverse_iterator;
+  typedef Const_MM_Sequence_Reverse_Iterator<unbounded_object_reference_sequence<object_t, object_t_var> > const_reverse_iterator;
 
   // Get an iterator that points to the beginning of the sequence.
   iterator begin (void)
