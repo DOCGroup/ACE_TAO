@@ -55,7 +55,7 @@ ACE_Service_Gestalt::open (int argc,
 ACE_INLINE int
 ACE_Service_Gestalt::find (const ACE_TCHAR name[],
                            const ACE_Service_Type **srp,
-                           int ignore_suspended) const
+                           bool ignore_suspended) const
 {
   // Closing the gestalt will have disassociated it from the
   // repository. If the repository used to be owned by the gestalt, it

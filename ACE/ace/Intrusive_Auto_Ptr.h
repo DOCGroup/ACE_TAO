@@ -33,7 +33,7 @@ template <class X> class ACE_Intrusive_Auto_Ptr;
  * @class ACE_Intrusive_Auto_Ptr
  *
  * @brief This class implements support for a reference counted
- * auto_ptr. It assumes refernce counting abilities of the
+ * auto_ptr. It assumes reference counting abilities of the
  * parameterizing class.
  *
  * Assigning or copying instances of an ACE_Intrusive_Auto_Ptr will

@@ -90,7 +90,7 @@ public:
 
   /// Perform user-specified close activities and remove dynamic
   /// memory.
-  virtual ~ACE_Service_Gestalt (void);
+  ~ACE_Service_Gestalt (void);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -203,20 +203,20 @@ public:
   int process_file (const ACE_TCHAR file[]);
 
   /**
-   * Locate an entry with @a name in the table.  If <ignore_suspended>
+   * Locate an entry with @a name in the table.  If @a ignore_suspended
    * is set then only consider services marked as resumed.  If the
    * caller wants the located entry, pass back a pointer to the
-   * located entry via <srp>.  If @a name is not found, -1 is returned.
+   * located entry via @a srp.  If @a name is not found, -1 is returned.
    * If @a name is found, but it is suspended and the caller wants to
    * ignore suspended services a -2 is returned.
    */
   int find (const ACE_TCHAR name[],
             const ACE_Service_Type **srp = 0,
-            int ignore_suspended = 1) const;
+            bool ignore_suspended = true) const;
 
   /**
    * Handle the command-line options intended for the
-   * <ACE_Service_Gestalt>.  Note that <argv[0]> is assumed to be the
+   * ACE_Service_Gestalt.  Note that <argv[0]> is assumed to be the
    * program name.
    *
    * The arguments that are valid in a call to this method are
@@ -261,18 +261,18 @@ public:
                   const ACE_TCHAR *parameters);
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
 
-  // Dynamically link the shared object file and retrieve a pointer to
-  // the designated shared object in this file.
-  // @obsolete
-  // @note This is error-prone in the presense of dynamic services,
-  // which in turn initialize their own static services. This method
-  // will allow those static services to register *before* the dynamic
-  // service that owns them.  Upon finalization of the static services
-  // the process will typically crash, because the dynamic service's
-  // DLL may have been already released, together with the memory in
-  // which the static services reside.  It may not crash, for
-  // instance, when the first static service to register is the same
-  // as the dynamic service being loaded. You should be so lucky!
+  /// Dynamically link the shared object file and retrieve a pointer to
+  /// the designated shared object in this file.
+  /// @deprecated
+  /// @note This is error-prone in the presense of dynamic services,
+  /// which in turn initialize their own static services. This method
+  /// will allow those static services to register *before* the dynamic
+  /// service that owns them.  Upon finalization of the static services
+  /// the process will typically crash, because the dynamic service's
+  /// DLL may have been already released, together with the memory in
+  /// which the static services reside.  It may not crash, for
+  /// instance, when the first static service to register is the same
+  /// as the dynamic service being loaded. You should be so lucky!
   int initialize (const ACE_Service_Type *,
                   const ACE_TCHAR *parameters);
 
@@ -288,7 +288,7 @@ public:
    * Suspend @a svc_name.  Note that this will not unlink the service
    * from the daemon if it was dynamically linked, it will mark it as
    * being suspended in the Service Repository and call the <suspend>
-   * member function on the appropriate <ACE_Service_Object>.  A
+   * member function on the appropriate ACE_Service_Object.  A
    * service can be resumed later on by calling the <RESUME> member
    * function...
    */
@@ -318,11 +318,8 @@ public:
 
 protected:
 
-  /**
-   *
-   */
-  virtual int parse_args_i (int, ACE_TCHAR *argv[],
-                            bool& ignore_default_svc_conf_file);
+  int parse_args_i (int, ACE_TCHAR *argv[],
+                    bool& ignore_default_svc_conf_file);
 
   /**
    * Performs an open without parsing command-line arguments.  The
@@ -334,11 +331,11 @@ protected:
    * @c ACE_Log_Msg::priority_mask() appropriately.  Returns number of
    * errors that occurred on failure and 0 otherwise.
    */
-  virtual int open_i (const ACE_TCHAR program_name[],
-                      const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
-                      bool ignore_static_svcs = true,
-                      bool ignore_default_svc_conf_file = false,
-                      bool ignore_debug_flag = false);
+  int open_i (const ACE_TCHAR program_name[],
+              const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
+              bool ignore_static_svcs = true,
+              bool ignore_default_svc_conf_file = false,
+              bool ignore_debug_flag = false);
 
   /// Initialize the <svc_conf_file_queue_> if necessary.
   int init_svc_conf_file_queue (void);
@@ -368,8 +365,8 @@ protected:
   ACE_XML_Svc_Conf* get_xml_svc_conf (ACE_DLL &d);
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
-  // Dynamically link the shared object file and retrieve a pointer to
-  // the designated shared object in this file.
+  /// Dynamically link the shared object file and retrieve a pointer to
+  /// the designated shared object in this file.
   int initialize_i (const ACE_Service_Type *sr, const ACE_TCHAR *parameters);
 
   const ACE_Static_Svc_Descriptor* find_processed_static_svc (const ACE_TCHAR*);
@@ -379,7 +376,6 @@ protected:
   /// closed instance. Must not be virtual, as it is called from the
   /// constructor.
   int init_i (void);
-
 
 protected:
 

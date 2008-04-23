@@ -627,7 +627,7 @@ bool
 ACE_Service_Repository_Iterator::valid (void) const
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::valid");
-  if (this->ignore_suspended_ == 0)
+  if (!this->ignore_suspended_)
     return (this->svc_rep_.service_vector_[this->next_] != 0); // skip over gaps
 
   return (this->svc_rep_.service_vector_[this->next_] != 0
