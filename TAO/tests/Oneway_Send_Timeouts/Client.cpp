@@ -244,9 +244,9 @@ Client::test_oneway_timeout (bool flood)
 {
   bool status = true;
 
-  std::auto_ptr<char> tmp;
-  char* msg = new char [6000000];
-  ACE_auto_ptr_reset (tmp, msg);
+  ACE_Auto_Array_Ptr<char> tmp (new char [6000000]);
+  char* msg = tmp.get();
+
   ACE_OS::memset (msg,'A',5999999);
   msg[5999999] = 0;
 
@@ -502,9 +502,9 @@ Client::flood_connection (ACE_Time_Value& tv)
   policy_list[0]->destroy ();
   policy_list.length(0);
 
-  std::auto_ptr<char> tmp;
-  char* msg = new char [2000000];
-  ACE_auto_ptr_reset (tmp, msg);
+  ACE_Auto_Array_Ptr<char> tmp (new char [2000000]);
+  char* msg = tmp.get();
+
   ACE_OS::memset (msg,'A',1999999);
   msg[1999999] = 0;
 
