@@ -1,3 +1,17 @@
+Wed Apr 23 18:29:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Refcountable.{h,cpp,inl}:
+        * ace/Refcountable_T.{h,cpp,inl}:
+          Changed ACE_Refcountable to ACE_Refcountable_T which has a
+          trait for the type of lock. ACE_Refcountable is now a typedef
+          of ACE_Refcountable_T<ACE_Null_Mutex>. Also the refcount
+          type is now a long so that we can make use of the Atomic_Op
+          optimizations on some platforms
+
+        * ace/ace.mpc:
+        * ace/Makefile.am:
+          Updated for the change above
+
 Wed Apr 23 14:49:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
