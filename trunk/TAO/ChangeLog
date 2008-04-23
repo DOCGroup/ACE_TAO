@@ -1,3 +1,14 @@
+Wed Apr 23 14:03:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_export.h:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Factory.cpp:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Factory.h:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Translator.cpp:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Translator.h:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Translator.mpc:
+          Ported UTF16_UCS2 translator from OCI 1.4a to svn head. Fixes
+          bugzilla 3296
+
 Wed Apr 23 01:53:32 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO version 1.6.4 released.
