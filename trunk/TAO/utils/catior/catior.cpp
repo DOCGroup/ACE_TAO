@@ -143,6 +143,9 @@ cat_coiop_profile (TAO_InputCDR& cdr);
 CORBA::Boolean
 cat_nskpw_profile (TAO_InputCDR& cdr);
 
+CORBA::Boolean
+cat_ibm_partner_version (TAO_InputCDR& cdr);
+
 static CORBA::Boolean
 cat_nskfs_profile (TAO_InputCDR& cdr);
 
@@ -987,7 +990,7 @@ CORBA::Boolean
 cat_tag_orb_type (TAO_InputCDR& stream) {
   CORBA::ULong length = 0;
   if (stream.read_ulong (length) == 0)
-    return 1;
+    return true;
 
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
@@ -1009,6 +1012,41 @@ cat_tag_orb_type (TAO_InputCDR& stream) {
                   "%I ORB Type: 0x%x\n",
                   orbtype));
     }
+
+  return true;
+}
+
+CORBA::Boolean
+cat_ibm_partner_version (TAO_InputCDR& stream) {
+  /*
+   * IBM Partner version looks like:
+   * 49424d0a 00000008 00000000 1400 0005
+   * The three initial bytes (from left to right) are the ASCII code for IBM,
+   * followed by 0x0A, which specifies that the following bytes handle the
+   * partner version.
+   * The next four bytes encode the length of the remaining data (in this
+   * case 8 bytes)
+   * The next four null bytes are for future use.
+   * The two bytes for the Partner Version Major field (0x1400) define the
+   * release of the ORB that is being used (1.4.0 in this case).
+   * The Minor field (0x0005) distinguishes in the same release, service
+   * refreshes that contain changes that have affected the backward
+   * compatibility
+   */
+  CORBA::ULong length = 0;
+  if (!(stream.read_ulong (length)))
+    return true;
+
+  TAO_InputCDR stream2 (stream, length);
+  stream.skip_bytes(length);
+
+  CORBA::ULong version;
+  if (!(stream2 >> version))
+    return false;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\tPartner Version: 0x%x\n",
+              version));
 
   return true;
 }
@@ -1294,7 +1332,7 @@ cat_octet_seq (const char *object_name,
                TAO_InputCDR& stream)
 {
   CORBA::ULong length = 0;
-  if (stream.read_ulong (length) == 0)
+  if (!stream.read_ulong (length))
     return true;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -1516,6 +1554,16 @@ cat_tagged_components (TAO_InputCDR& stream)
         ACE_DEBUG ((LM_DEBUG, "%{"));
         cat_tag_ssl_sec_trans(stream);
         ACE_DEBUG ((LM_DEBUG, "%}"));
+      }  else if (tag == 38U /* TAG_RMI_CUSTOM_MAX_STREAM_FORMAT */) {
+        ACE_DEBUG ((LM_DEBUG,"%d (TAG_RMI_CUSTOM_MAX_STREAM_FORMAT)\n", tag));
+        ACE_DEBUG ((LM_DEBUG, "%{%{"));
+        cat_octet_seq ("Component Value", stream);
+        ACE_DEBUG ((LM_DEBUG, "%}%}"));
+      } else if (tag == 1229081866U /* IBM_PARTNER_VERSION */) {
+        ACE_DEBUG ((LM_DEBUG,"%d (IBM_PARTNER_VERSION)\n", tag));
+        ACE_DEBUG ((LM_DEBUG, "%{%{"));
+        cat_ibm_partner_version (stream);
+        ACE_DEBUG ((LM_DEBUG, "%}%}"));
       } else {
         ACE_DEBUG ((LM_DEBUG,"%d\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
