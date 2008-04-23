@@ -52,15 +52,12 @@ public:
   virtual ~IBM1047_ISO8859 (void);
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,
-                                      ACE_CDR::Char &);
-  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
-                                        ACE_CDR::Char *&);
+  virtual ACE_CDR::Boolean read_char (ACE_InputCDR &, ACE_CDR::Char &);
+  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &, ACE_CDR::Char *&);
   virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
                                             ACE_CDR::Char *,
                                             ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR &,
-                                       ACE_CDR::Char);
+  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR &, ACE_CDR::Char);
   virtual ACE_CDR::Boolean write_string (ACE_OutputCDR &,
                                          ACE_CDR::ULong,
                                          const ACE_CDR::Char *);
