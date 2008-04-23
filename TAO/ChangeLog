@@ -1,3 +1,8 @@
+Wed Apr 23 14:05:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.cpp:
+          Handle TAG_RMI_CUSTOM_MAX_STREAM_FORMAT and IBM_PARTNER_VERSION
+
 Wed Apr 23 14:03:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_export.h:
