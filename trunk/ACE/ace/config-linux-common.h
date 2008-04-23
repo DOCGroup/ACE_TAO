@@ -364,6 +364,12 @@
 
 #define ACE_HAS_DIRENT
 
+// Starting with FC9 rawhide this file is not available anymore but
+// this define is set
+#if defined _XOPEN_STREAMS && _XOPEN_STREAMS == -1
+# define ACE_LACKS_STROPTS_H
+#endif
+
 #if defined (__ia64) || defined(__alpha) || defined (__x86_64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
