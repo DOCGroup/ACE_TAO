@@ -1,3 +1,14 @@
+Thu Apr 17 19:27:23 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/config-posix.h: Added a check for 
+        
+        #if defined _XOPEN_STREAMS && _XOPEN_STREAMS == -1
+        # define ACE_LACKS_STROPTS_H
+        #endif
+        
+        so that ACE will compile properly on Fedora 8.  Thanks to 
+        Jules Colding <colding at 42tools dot com> for this fix.
+
 Wed Apr 23 18:29:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Refcountable.{h,cpp,inl}:
