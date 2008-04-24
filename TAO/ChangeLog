@@ -1,3 +1,8 @@
+Thu Apr 24 19:23:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
+          Use bool and removed not used flag
+
 Thu Apr 24 18:33:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_GIOP/BiDir_ORBInitializer.h
