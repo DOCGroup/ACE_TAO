@@ -82,8 +82,8 @@ private:
   /// The release method is called when the refcount reaches 0.
   virtual void release (void) = 0;
 
-  // Use a signed counter so that we can more easily detect
-  // boundary conditions such as too many _decr_refcnt() calls.
+  /// Use a signed counter so that we can more easily detect
+  /// boundary conditions such as too many _decr_refcnt() calls.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::Long> refcount_;
 
 #if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )

@@ -51,6 +51,7 @@ namespace TAO_Notify
      *  simultaneously by the persistent store.
      */
     Routing_Slip_Queue (size_t allowed = 1);
+
     /// Destructor.
     ~Routing_Slip_Queue ();
 

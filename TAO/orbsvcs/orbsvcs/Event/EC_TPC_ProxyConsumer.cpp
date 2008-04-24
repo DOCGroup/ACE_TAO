@@ -17,7 +17,7 @@ TAO_EC_TPC_ProxyPushConsumer::TAO_EC_TPC_ProxyPushConsumer (TAO_EC_Event_Channel
 }
 
 TAO_EC_TPC_Dispatching*
-TAO_EC_TPC_ProxyPushConsumer::tpc_dispatching ()
+TAO_EC_TPC_ProxyPushConsumer::tpc_dispatching (void)
 {
   TAO_EC_Dispatching* dispatcher = this->event_channel_->dispatching ();
   TAO_EC_TPC_Dispatching* tpcdispatcher =
@@ -36,10 +36,9 @@ TAO_EC_TPC_ProxyPushConsumer::~TAO_EC_TPC_ProxyPushConsumer (void)
 }
 
 void
-TAO_EC_TPC_ProxyPushConsumer::disconnect_push_consumer ()
+TAO_EC_TPC_ProxyPushConsumer::disconnect_push_consumer (void)
 {
-  RtecEventComm::PushConsumer_var emulated_exceptions_suck =
-    this->_this ();
+  RtecEventComm::PushConsumer_var emulated_exceptions_suck = this->_this ();
 
   this->tpc_dispatching ()->remove_consumer (emulated_exceptions_suck.in ());
 

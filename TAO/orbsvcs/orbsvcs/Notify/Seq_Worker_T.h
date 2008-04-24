@@ -43,11 +43,11 @@ public:
   /// Constructor
   TAO_Notify_Seq_Worker_T (void);
 
-  /// create a SEQ
+  /// Create a SEQ
   SEQ* create (CONTAINER& container);
 
 protected:
-  ///= TAO_ESF_Worker method
+  /// TAO_ESF_Worker method
   void work (TYPE* object);
 
   /// The result

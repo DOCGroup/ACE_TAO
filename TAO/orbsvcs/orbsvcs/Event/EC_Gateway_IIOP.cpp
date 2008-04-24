@@ -24,9 +24,9 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
      supplier_info_ (0),
      consumer_info_ (0),
      consumer_ (this),
-     consumer_is_active_ (0),
+     consumer_is_active_ (false),
      supplier_ (this),
-     supplier_is_active_ (0),
+     supplier_is_active_ (false),
      ec_control_ (0),
      factory_ (0),
      use_ttl_ (1),
@@ -302,11 +302,10 @@ TAO_EC_Gateway_IIOP::open_i (
 
   if (this->consumer_proxy_map_.current_size () > 0)
     {
-      this->supplier_is_active_ = 1;
+      this->supplier_is_active_ = true;
 
       // Obtain a reference to our supplier personality...
-      RtecEventComm::PushSupplier_var supplier_ref =
-        this->supplier_._this ();
+      RtecEventComm::PushSupplier_var supplier_ref = this->supplier_._this ();
 
       // For each subscription by source build the set of publications
       // (they may several, by type, for instance) and connect to the
@@ -384,7 +383,7 @@ TAO_EC_Gateway_IIOP::open_i (
 
   if (c > 0)
     {
-      this->supplier_is_active_ = 1;
+      this->supplier_is_active_ = true;
 
       // Obtain a reference to our supplier personality...
       RtecEventComm::PushSupplier_var supplier_ref =
@@ -407,7 +406,7 @@ TAO_EC_Gateway_IIOP::open_i (
   this->supplier_proxy_ =
     consumer_admin->obtain_push_supplier ();
 
-  this->consumer_is_active_ = 1;
+  this->consumer_is_active_ = true;
   RtecEventComm::PushConsumer_var consumer_ref =
     this->consumer_._this ();
 
@@ -553,7 +552,7 @@ TAO_EC_Gateway_IIOP::shutdown (void)
       PortableServer::ObjectId_var id =
         poa->servant_to_id (&this->supplier_);
       poa->deactivate_object (id.in ());
-      this->supplier_is_active_ = 0;
+      this->supplier_is_active_ = false;
     }
 
   if (this->consumer_is_active_)
@@ -563,7 +562,7 @@ TAO_EC_Gateway_IIOP::shutdown (void)
       PortableServer::ObjectId_var id =
         poa->servant_to_id (&this->consumer_);
       poa->deactivate_object (id.in ());
-      this->consumer_is_active_ = 0;
+      this->consumer_is_active_ = false;
     }
 
   this->cleanup_consumer_ec_i ();

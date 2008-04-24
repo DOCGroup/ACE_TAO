@@ -31,8 +31,6 @@ class TAO_Notify_PropertySeq;
  * @brief Boolean Property.
  *
  */
-/*******************************************************************************/
-
 class TAO_Notify_Serv_Export TAO_Notify_Property_Boolean
 {
 public:

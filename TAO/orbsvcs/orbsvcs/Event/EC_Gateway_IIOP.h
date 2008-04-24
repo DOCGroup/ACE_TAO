@@ -197,14 +197,14 @@ protected:
   /// Our consumer personality....
   ACE_PushConsumer_Adapter<TAO_EC_Gateway_IIOP> consumer_;
 
-  /// If it is not 0 then we must deactivate the consumer
-  int consumer_is_active_;
+  /// If it is true then we must deactivate the consumer
+  bool consumer_is_active_;
 
   /// Our supplier personality....
   ACE_PushSupplier_Adapter<TAO_EC_Gateway_IIOP> supplier_;
 
-  /// If it is not 0 then we must deactivate the supplier
-  int supplier_is_active_;
+  /// If it is true then we must deactivate the supplier
+  bool supplier_is_active_;
 
   // We use a different Consumer_Proxy
   typedef ACE_Map_Manager<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map;

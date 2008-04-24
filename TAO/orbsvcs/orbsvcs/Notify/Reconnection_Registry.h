@@ -60,7 +60,7 @@ namespace TAO_Notify
     //////////////////////////
     // During normal operation
 
-    /// add a new callback to the registry
+    /// Add a new callback to the registry
     ::NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
       ::NotifyExt::ReconnectionCallback_ptr callback);
 
