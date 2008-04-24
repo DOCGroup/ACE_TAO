@@ -40,10 +40,8 @@ TAO_GOA::create_id_for_reference (CORBA::Object_ptr the_ref)
 }
 
 PortableGroup::IDs *
-TAO_GOA::reference_to_ids (CORBA::Object_ptr the_ref)
+TAO_GOA::reference_to_ids (CORBA::Object_ptr)
 {
-  ACE_UNUSED_ARG (the_ref);
-
   return 0;
 }
 
@@ -308,8 +306,7 @@ void
 TAO_GOA::activate_object_with_id (const PortableServer::ObjectId &id,
                                      PortableServer::Servant p_servant)
 {
-  this->TAO_Regular_POA::activate_object_with_id (id,
-                                          p_servant);
+  this->TAO_Regular_POA::activate_object_with_id (id, p_servant);
 }
 
 void
@@ -511,14 +508,10 @@ TAO_GOA::associate_group_with_ref (
                                 rd->acceptor_registry_,
                                 this->orb_core_);
 
-
-
   // Add a mapping from GroupId to Object key in the PortableGroup
   const TAO::ObjectKey &key =
     obj_ref->_stubobj ()->profile_in_use ()->object_key ();
-  rd->group_map_.add_groupid_objectkey_pair (group_id._retn (),
-                                             key);
-
+  rd->group_map_.add_groupid_objectkey_pair (group_id._retn (), key);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

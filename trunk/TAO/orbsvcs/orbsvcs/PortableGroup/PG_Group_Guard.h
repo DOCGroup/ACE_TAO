@@ -82,7 +82,7 @@ private:
 
   /// Flag that dictates whether or not the destructor will perform
   /// cleanup.
-  int released_;
+  bool released_;
 
 };
 

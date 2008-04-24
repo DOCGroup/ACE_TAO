@@ -40,7 +40,7 @@ public:
   TAO_Notify_Reactive_Task (void);
 
   /// Destructor
-  virtual ~TAO_Notify_Reactive_Task ();
+  virtual ~TAO_Notify_Reactive_Task (void);
 
   /// Init the reactive task.
   void init (void);

@@ -54,23 +54,19 @@ public:
   /// @name MIOP specification methods
   //@{
   virtual PortableServer::ObjectId * create_id_for_reference (
-      CORBA::Object_ptr the_ref
-    );
+      CORBA::Object_ptr the_ref);
 
 
   virtual PortableGroup::IDs * reference_to_ids (
-      CORBA::Object_ptr the_ref
-    );
+      CORBA::Object_ptr the_ref);
 
   virtual void associate_reference_with_id (
       CORBA::Object_ptr ref,
-      const PortableServer::ObjectId & oid
-    );
+      const PortableServer::ObjectId & oid);
 
   virtual void disassociate_reference_with_id (
       CORBA::Object_ptr ref,
-      const PortableServer::ObjectId & oid
-    );
+      const PortableServer::ObjectId & oid);
   //@}
 
   // Standard POA interface methods
@@ -189,14 +185,12 @@ protected:
 
   int find_group_component_in_profile (
       const TAO_Profile* profile,
-      PortableGroup::TagGroupTaggedComponent &group
-    );
+      PortableGroup::TagGroupTaggedComponent &group);
 
   int create_group_acceptors (
       CORBA::Object_ptr the_ref,
       TAO_PortableGroup_Acceptor_Registry &acceptor_registry,
-      TAO_ORB_Core &orb_core
-    );
+      TAO_ORB_Core &orb_core);
 
   /// Helper function to associate group references with
   /// object references.
