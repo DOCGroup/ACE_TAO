@@ -1,3 +1,10 @@
+Thu Apr 24 16:47:16 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          The DLL_ORB test requires threads.  Disable it when the ST config
+          is used.
+
 Thu Apr 24 15:05:50 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_orb_tests.lst:
