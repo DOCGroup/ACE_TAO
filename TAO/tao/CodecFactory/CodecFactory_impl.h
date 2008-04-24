@@ -44,7 +44,7 @@ class TAO_Codeset_Translator_Base;
  */
 class TAO_CodecFactory
   : public virtual IOP::CodecFactory,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

@@ -31,16 +31,11 @@
 #include "tao/LocalObject.h"
 #include "tao/Policy_Set.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Policy_Manager
   : public CORBA::PolicyManager
-  , public TAO_Local_RefCounted_Object
+  , public ::CORBA::LocalObject
 {
 public:
   /// constructor
@@ -75,10 +70,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
 # include "tao/Policy_Manager.inl"

@@ -113,7 +113,7 @@ namespace PortableServer
  */
 class TAO_PortableServer_Export TAO_Root_POA
   : public virtual PortableServer::POA,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

@@ -36,7 +36,7 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Property
   friend class TAO_RT_Transport_Descriptor;
 
 public:
-  /// Constuctor
+  /// Constructor
   TAO_RT_Transport_Descriptor_Property (void);
 
   /// Destructor
@@ -70,7 +70,7 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Private_Connection_Property
   : public TAO_RT_Transport_Descriptor_Property
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_RT_Transport_Descriptor_Private_Connection_Property (void);
   TAO_RT_Transport_Descriptor_Private_Connection_Property (long object_id);
 
@@ -108,7 +108,7 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Banded_Connection_Property
   : public TAO_RT_Transport_Descriptor_Property
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_RT_Transport_Descriptor_Banded_Connection_Property (void);
   TAO_RT_Transport_Descriptor_Banded_Connection_Property (CORBA::Short low_priority,
                                                           CORBA::Short high_priority);

@@ -47,7 +47,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_RTCORBA_Export TAO_PriorityModelPolicy
   : public RTCORBA::PriorityModelPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
@@ -120,7 +120,7 @@ private:
  */
 class TAO_RTCORBA_Export TAO_ThreadpoolPolicy
   : public RTCORBA::ThreadpoolPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
@@ -172,7 +172,7 @@ private:
  */
 class TAO_RTCORBA_Export TAO_PrivateConnectionPolicy
   : public RTCORBA::PrivateConnectionPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
@@ -220,7 +220,7 @@ protected:
  */
 class TAO_RTCORBA_Export TAO_PriorityBandedConnectionPolicy
   : public RTCORBA::PriorityBandedConnectionPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
@@ -289,7 +289,7 @@ private:
  */
 class TAO_RTCORBA_Export TAO_ServerProtocolPolicy
   : public RTCORBA::ServerProtocolPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
@@ -348,7 +348,7 @@ private:
  */
 class TAO_RTCORBA_Export TAO_ClientProtocolPolicy
   : public RTCORBA::ClientProtocolPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
@@ -419,7 +419,7 @@ private:
  */
 class TAO_RTCORBA_Export TAO_TCP_Protocol_Properties
   : public RTCORBA::TCPProtocolProperties,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
@@ -489,7 +489,7 @@ private:
  */
 class TAO_RTCORBA_Export TAO_UnixDomain_Protocol_Properties
   : public RTCORBA::UnixDomainProtocolProperties,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
 
@@ -549,7 +549,7 @@ private:
  */
 class TAO_RTCORBA_Export TAO_SharedMemory_Protocol_Properties
   : public RTCORBA::SharedMemoryProtocolProperties,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
@@ -646,7 +646,7 @@ private:
  */
 class TAO_RTCORBA_Export TAO_UserDatagram_Protocol_Properties
   : public RTCORBA::UserDatagramProtocolProperties,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
@@ -697,7 +697,7 @@ private:
  */
 class TAO_RTCORBA_Export TAO_StreamControl_Protocol_Properties
   : public RTCORBA::StreamControlProtocolProperties,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.
@@ -759,7 +759,7 @@ private:
 
 class TAO_RTCORBA_Export TAO_GIOP_Protocol_Properties
   : public RTCORBA::GIOPProtocolProperties,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
 

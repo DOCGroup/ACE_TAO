@@ -58,7 +58,7 @@ typedef TAO_Objref_Out_T<TAO_ORBInitInfo>
  */
 class TAO_PI_Export TAO_ORBInitInfo
   : public virtual PortableInterceptor::ORBInitInfo_3_1,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

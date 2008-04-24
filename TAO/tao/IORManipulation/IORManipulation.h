@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IOR_Manipulation_impl
   : public TAO_IOP::TAO_IOR_Manipulation,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
 

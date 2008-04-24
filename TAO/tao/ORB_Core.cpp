@@ -1761,7 +1761,6 @@ TAO_ORB_Core::root_poa (void)
   // DCL ..
   if (CORBA::is_nil (this->root_poa_.in ()))
     {
-
       // Making sure the initialization process in the current thread uses
       // the correct service repository (ours), instead of the global one.
       ACE_Service_Config_Guard scg (this->configuration ());
@@ -2220,7 +2219,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
   tm->cancel_all ();
 
   // If <wait_for_completion> is set, wait for all threads to exit.
-  if (wait_for_completion != 0)
+  if (wait_for_completion == true)
     tm->wait ();
 
   // Explicitly destroy the valuetype adapter
@@ -2247,7 +2246,6 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
 void
 TAO_ORB_Core::destroy (void)
 {
-  //
   // All destroy() should do is (a) call shutdown() and (b) unbind()
   // from the ORB table.  Nothing else should really be added to this
   // method.  Everything else should go to the shutdown() method.
@@ -3376,8 +3374,7 @@ TAO_ORB_Core_instance (void)
           try
             {
               int argc = 0;
-              CORBA::ORB_var orb =
-                CORBA::ORB_init (argc, 0, 0);
+              CORBA::ORB_var orb = CORBA::ORB_init (argc, 0);
             }
           catch (const ::CORBA::Exception&)
             {

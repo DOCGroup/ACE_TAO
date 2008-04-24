@@ -1,3 +1,111 @@
+Thu Apr 24 18:33:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDir_ORBInitializer.h
+        * tao/BiDir_GIOP/BiDir_PolicyFactory.h
+        * tao/CodecFactory/CDR_Encaps_Codec.h
+        * tao/CodecFactory/CodecFactory_impl.h
+        * tao/Codeset/Codeset_Manager_i.cpp
+        * tao/Compression/Base_Compressor.h
+        * tao/Compression/Compression_Manager.h
+        * tao/Compression/Compressor_Factory.h
+        * tao/Configurable_Refcount.h
+        * tao/CSD_Framework/CSD_ORBInitializer.h
+        * tao/CSD_Framework/CSD_Strategy_Base.h
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.cpp
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.h
+        * tao/DiffServPolicy/DiffServPolicy_Factory.h
+        * tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.h
+        * tao/DynamicAny/DynAny_i.h
+        * tao/DynamicAny/DynAnyFactory.h
+        * tao/DynamicAny/DynArray_i.h
+        * tao/DynamicAny/DynEnum_i.h
+        * tao/DynamicAny/DynSequence_i.h
+        * tao/DynamicAny/DynStruct_i.h
+        * tao/DynamicAny/DynUnion_i.h
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.h
+        * tao/DynamicInterface/DII_Reply_Handler.h
+        * tao/EndpointPolicy/EndpointPolicy_Factory.h
+        * tao/EndpointPolicy/EndpointPolicy_i.cpp
+        * tao/EndpointPolicy/EndpointPolicy_i.h
+        * tao/EndpointPolicy/EndpointPolicy_ORBInitializer.h
+        * tao/EndpointPolicy/IIOPEndpointValue_i.cpp
+        * tao/EndpointPolicy/IIOPEndpointValue_i.h
+        * tao/IORInterceptor/IORInfo.h
+        * tao/IORManipulation/IORManipulation.h
+        * tao/IORTable/IOR_Table_Impl.h
+        * tao/Messaging/AMH_Response_Handler.h
+        * tao/Messaging/Buffering_Constraint_Policy.cpp
+        * tao/Messaging/Buffering_Constraint_Policy.h
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp
+        * tao/Messaging/Connection_Timeout_Policy_i.h
+        * tao/Messaging/Messaging_ORBInitializer.h
+        * tao/Messaging/Messaging_Policy_i.cpp
+        * tao/Messaging/Messaging_Policy_i.h
+        * tao/Messaging/Messaging_PolicyFactory.h
+        * tao/MProfile.inl
+        * tao/ORB_Core.cpp
+        * tao/PI/ClientRequestInfo.h
+        * tao/PI/ORBInitInfo.h
+        * tao/PI/PI_ORBInitializer.h
+        * tao/PI/PI_PolicyFactory.h
+        * tao/PI/PICurrent.h
+        * tao/PI/ProcessingModePolicy.h
+        * tao/PI_Server/PortableServer_ORBInitializer.h
+        * tao/PI_Server/PortableServer_PolicyFactory.h
+        * tao/PI_Server/ServerRequestInfo.h
+        * tao/Policy_Current.h
+        * tao/Policy_Manager.h
+        * tao/PortableServer/IdAssignmentPolicy.h
+        * tao/PortableServer/IdUniquenessPolicy.h
+        * tao/PortableServer/ImplicitActivationPolicy.h
+        * tao/PortableServer/LifespanPolicy.h
+        * tao/PortableServer/POA_Current.h
+        * tao/PortableServer/POAManager.h
+        * tao/PortableServer/POAManagerFactory.h
+        * tao/PortableServer/RequestProcessingPolicy.h
+        * tao/PortableServer/Root_POA.cpp
+        * tao/PortableServer/Root_POA.h
+        * tao/PortableServer/Servant_Base.cpp
+        * tao/PortableServer/ServantRetentionPolicy.h
+        * tao/PortableServer/ThreadPolicy.h
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.h
+        * tao/RTCORBA/Priority_Mapping_Manager.h
+        * tao/RTCORBA/RT_Current.h
+        * tao/RTCORBA/RT_Mutex.h
+        * tao/RTCORBA/RT_ORB.h
+        * tao/RTCORBA/RT_ORBInitializer.h
+        * tao/RTCORBA/RT_Policy_i.cpp
+        * tao/RTCORBA/RT_Policy_i.h
+        * tao/RTCORBA/RT_PolicyFactory.h
+        * tao/RTCORBA/RT_Transport_Descriptor.h
+        * tao/RTCORBA/RT_Transport_Descriptor_Property.h
+        * tao/RTScheduling/Current.h
+        * tao/RTScheduling/Distributable_Thread.h
+        * tao/RTScheduling/Request_Interceptor.h
+        * tao/RTScheduling/RTScheduler_Initializer.h
+        * tao/RTScheduling/RTScheduler_Manager.h
+        * tao/RTScheduling/ThreadAction.h
+        * tao/SmartProxies/Smart_Proxies.h
+        * tao/Strategies/Strategies_ORBInitializer.h
+        * tao/Stub.inl
+        * tao/target_specification.h
+        * tao/Thread_Lane_Resources_Manager.h
+        * tao/TransportCurrent/Current_Impl.h
+        * tao/TransportCurrent/Current_ORBInitializer_Base.h
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h
+          Use CORBA::LocalObject instead of TAO_Local_RefCounted_Object
+
+        * tao/Object.cpp
+        * tao/Object.h
+          Added _refcount_value as mentioned in the C++ mapping
+
+        * tao/Profile.cpp
+        * tao/Profile.inl
+          Moved refcount methods inline
+
 Thu Apr 24 14:08:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LocalObject.{h,inl}:

@@ -71,7 +71,7 @@ private:
  * use in the Dynamic Invocation Interface.
  */
 class TAO_DynamicInterface_Export TAO_DII_Reply_Handler
-  : public virtual TAO_Local_RefCounted_Object
+  : public virtual ::CORBA::LocalObject
 {
 public:
   TAO_DII_Reply_Handler ();

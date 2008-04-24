@@ -40,7 +40,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_PortableServer_Export TAO_POAManager_Factory :
   public ::PortableServer::POAManagerFactory,
-  public TAO_Local_RefCounted_Object
+  public ::CORBA::LocalObject
 {
 public:
   TAO_POAManager_Factory (TAO_Object_Adapter &object_adapter);

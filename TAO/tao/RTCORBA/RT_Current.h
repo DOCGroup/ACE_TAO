@@ -42,7 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_RTCORBA_Export TAO_RT_Current
   : public RTCORBA::Current
-  , public TAO_Local_RefCounted_Object
+  , public ::CORBA::LocalObject
 {
 public:
 

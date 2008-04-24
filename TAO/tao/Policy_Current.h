@@ -30,18 +30,13 @@
 #include "tao/Policy_CurrentC.h"
 #include "tao/LocalObject.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Policy_Current_Impl;
 
 class TAO_Policy_Current
   : public CORBA::PolicyCurrent
-  , public TAO_Local_RefCounted_Object
+  , public ::CORBA::LocalObject
 {
 public:
   /// Constructor
@@ -68,10 +63,6 @@ public:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
 # include "tao/Policy_Current.inl"

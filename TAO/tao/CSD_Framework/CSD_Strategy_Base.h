@@ -55,7 +55,7 @@ namespace TAO
     */
     class TAO_CSD_FW_Export Strategy_Base
       : public CSD_Framework::Strategy,
-        public TAO_Local_RefCounted_Object
+        public ::CORBA::LocalObject
     {
     public:
 

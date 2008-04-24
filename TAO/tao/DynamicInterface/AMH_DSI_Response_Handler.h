@@ -83,14 +83,11 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder_var
 public:
   TAO_AMH_DSI_Exception_Holder_var (void);
   TAO_AMH_DSI_Exception_Holder_var (TAO_AMH_DSI_Exception_Holder*);
-  TAO_AMH_DSI_Exception_Holder_var (
-      const TAO_AMH_DSI_Exception_Holder*);
-  TAO_AMH_DSI_Exception_Holder_var (
-      const TAO_AMH_DSI_Exception_Holder_var &);
+  TAO_AMH_DSI_Exception_Holder_var (const TAO_AMH_DSI_Exception_Holder*);
+  TAO_AMH_DSI_Exception_Holder_var (const TAO_AMH_DSI_Exception_Holder_var &);
   ~TAO_AMH_DSI_Exception_Holder_var (void);
 
-  TAO_AMH_DSI_Exception_Holder_var &operator= (
-      TAO_AMH_DSI_Exception_Holder*);
+  TAO_AMH_DSI_Exception_Holder_var &operator= (TAO_AMH_DSI_Exception_Holder*);
   TAO_AMH_DSI_Exception_Holder_var &operator= (
       const TAO_AMH_DSI_Exception_Holder_var &);
   TAO_AMH_DSI_Exception_Holder* operator-> (void) const;
@@ -124,8 +121,7 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder_out
 public:
   TAO_AMH_DSI_Exception_Holder_out (TAO_AMH_DSI_Exception_Holder* &);
   TAO_AMH_DSI_Exception_Holder_out (TAO_AMH_DSI_Exception_Holder_var &);
-  TAO_AMH_DSI_Exception_Holder_out (
-      const TAO_AMH_DSI_Exception_Holder_out &);
+  TAO_AMH_DSI_Exception_Holder_out (const TAO_AMH_DSI_Exception_Holder_out &);
   TAO_AMH_DSI_Exception_Holder_out &operator= (
       const TAO_AMH_DSI_Exception_Holder_out &);
   TAO_AMH_DSI_Exception_Holder_out &operator= (

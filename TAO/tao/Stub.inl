@@ -156,7 +156,6 @@ TAO_Stub::next_profile_i (void)
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_profile (void)
 {
-
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
                             *this->profile_lock_ptr_,

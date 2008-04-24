@@ -70,7 +70,7 @@ namespace Messaging
  */
 class TAO_PI_Export TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
   TAO_ClientRequestInfo (TAO::Invocation_Base *invocation);

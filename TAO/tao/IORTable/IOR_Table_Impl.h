@@ -42,7 +42,7 @@ typedef TAO_Objref_Out_T <TAO_IOR_Table_Impl> TAO_IOR_Table_Impl_out;
 
 class TAO_IOR_Table_Impl
   : public virtual IORTable::Table,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
   static TAO_IOR_Table_Impl_ptr

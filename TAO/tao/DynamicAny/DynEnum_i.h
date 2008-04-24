@@ -42,7 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_DynamicAny_Export TAO_DynEnum_i
   : public virtual DynamicAny::DynEnum,
     public virtual TAO_DynCommon,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
   /// Constructor.

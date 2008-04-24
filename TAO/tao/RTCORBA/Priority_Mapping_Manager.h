@@ -42,7 +42,7 @@ typedef TAO_Priority_Mapping_Manager *TAO_Priority_Mapping_Manager_ptr;
  * Allows setting of user-defined Priority_Mapping at run-time.
  */
 class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager :
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
 
 public:

@@ -125,6 +125,12 @@ CORBA::Object::_remove_ref (void)
   delete this;
 }
 
+CORBA::ULong
+CORBA::Object::_refcount_value() (void)
+{
+  return static_cast<CORBA::ULong> (this->ref_count_.value ());
+}
+
 void
 CORBA::Object::_tao_any_destructor (void *x)
 {

@@ -30,7 +30,7 @@ namespace TAO
 {
   class TAO_Compression_Export CompressorFactory :
     public virtual ::Compression::CompressorFactory,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     CompressorFactory (::Compression::CompressorId compressor_id);

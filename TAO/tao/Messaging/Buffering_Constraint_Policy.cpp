@@ -23,7 +23,6 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::Buf
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , TAO::BufferingConstraintPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , buffering_constraint_ (buffering_constraint)
 {
 }
@@ -34,7 +33,6 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buff
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , TAO::BufferingConstraintPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , buffering_constraint_ (rhs.buffering_constraint_)
 {
 }

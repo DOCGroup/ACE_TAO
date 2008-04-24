@@ -41,7 +41,6 @@ class TAO_MProfile;
 class TAO_Export TAO_Thread_Lane_Resources_Manager
 {
 public:
-
   /// Constructor.
   TAO_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
@@ -66,13 +65,11 @@ public:
 
   /// @name Accessors
   // @{
-
   virtual TAO_Thread_Lane_Resources &lane_resources (void) = 0;
 
   virtual TAO_Thread_Lane_Resources &default_lane_resources (void) = 0;
 
   TAO_LF_Strategy &lf_strategy (void);
-
   // @}
 
 protected:
