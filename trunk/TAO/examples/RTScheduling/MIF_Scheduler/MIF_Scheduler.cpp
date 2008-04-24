@@ -72,7 +72,11 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb)
       this->current_ =
         RTScheduling::Current::_narrow (object.in ());
 
-      wait_ = 0;
+      object =
+        orb->resolve_initial_references ("PriorityMappingManager");
+
+      this->mapping_manager_ =
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
     }
   catch (const CORBA::Exception& ex)
     {
@@ -322,16 +326,20 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
                   priority,
                   ACE_DEFAULT_THREAD_PRIORITY));
 
-      current_->the_priority (priority + 1);
+      RTCORBA::Priority rtpriority;
+      RTCORBA::PriorityMapping* pm = this->mapping_manager_->mapping ();
+      if (pm->to_CORBA(priority + 1, rtpriority))
+        {
+          current_->the_priority (rtpriority);
 
-      ACE_Thread::self (current);
-      if (ACE_Thread::getprio (current, priority) == -1)
-        return;
+          ACE_Thread::self (current);
+          if (ACE_Thread::getprio (current, priority) == -1)
+            return;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Bumped thread priority is %d\n",
-                  priority));
-
+          ACE_DEBUG ((LM_DEBUG,
+                      "Bumped thread priority is %d\n",
+                      priority));
+        }
 
       DT* run_dt;
       ACE_Message_Block* msg;
@@ -535,7 +543,13 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
   if (ACE_Thread::getprio (current, priority) == -1)
     return;
 
-  current_->the_priority (priority - 1);
+  RTCORBA::Priority rtpriority;
+  RTCORBA::PriorityMapping* pm = this->mapping_manager_->mapping ();
+  if (pm->to_CORBA(priority - 1, rtpriority))
+    {
+      current_->the_priority (rtpriority);
+    }
+
   new_dt->suspend ();
   lock_.release ();
 }
@@ -575,7 +589,13 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
   if (ACE_Thread::getprio (current, priority) == -1)
     return;
 
-  current_->the_priority (priority - 1);
+  RTCORBA::Priority rtpriority;
+  RTCORBA::PriorityMapping* pm = this->mapping_manager_->mapping ();
+  if (pm->to_CORBA(priority - 1, rtpriority))
+    {
+      current_->the_priority (rtpriority);
+    }
+
   new_dt->suspend ();
   lock_.release ();
 }
@@ -615,7 +635,13 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
   if (ACE_Thread::getprio (current, priority) == -1)
     return;
 
-  current_->the_priority (priority - 1);
+  RTCORBA::Priority rtpriority;
+  RTCORBA::PriorityMapping* pm = this->mapping_manager_->mapping ();
+  if (pm->to_CORBA(priority - 1, rtpriority))
+    {
+      current_->the_priority (rtpriority);
+    }
+
   new_dt->suspend ();
   lock_.release ();
 }
