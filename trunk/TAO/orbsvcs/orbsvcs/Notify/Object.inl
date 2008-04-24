@@ -67,7 +67,7 @@ TAO_Notify_Object::proxy_poa (void)
   return this->proxy_poa_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Notify_Object::has_shutdown (void)
 {
   return this->shutdown_;
