@@ -312,6 +312,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   this->id_hint_strategy_ = new_id_hint_strategy.release ();
   this->servant_map_ = new_servant_map.release ();
   this->user_id_map_ = new_user_id_map.release ();
+ 
+#if defined (TAO_ENABLE_MONITORS)
+  ACE_NEW (this->monitor_,
+           ACE::MonitorControl::Size_Monitor);
+#endif /* TAO_ENABLE_MONITORS */
 }
 
 TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
@@ -335,7 +340,8 @@ TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
   delete this->user_id_map_;
  
 #if defined (TAO_ENABLE_MONITORS)
-  this->monitor_.remove_from_registry ();
+  this->monitor_->remove_from_registry ();
+  this->monitor_->remove_ref ();
 #endif /* TAO_ENABLE_MONITORS */
 }
 
@@ -433,7 +439,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
 #if defined (TAO_ENABLE_MONITORS)
           if (result == 0)
             {
-              this->active_object_map_->monitor_.receive (
+              this->active_object_map_->monitor_->receive (
                 this->active_object_map_->servant_map_->current_size ());
             }
 #endif /* TAO_ENABLE_MONITORS */
@@ -476,7 +482,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
               else
                 {
 #if defined (TAO_ENABLE_MONITORS)
-                  this->active_object_map_->monitor_.receive (
+                  this->active_object_map_->monitor_->receive (
                     this->active_object_map_->servant_map_->current_size ());
 #endif /* TAO_ENABLE_MONITORS */
                 }
@@ -517,7 +523,7 @@ TAO_Unique_Id_Strategy::unbind_using_user_id (
             this->active_object_map_->id_hint_strategy_->unbind (*entry);
 
 #if defined (TAO_ENABLE_MONITORS)
-          this->active_object_map_->monitor_.receive (
+          this->active_object_map_->monitor_->receive (
             this->active_object_map_->servant_map_->current_size ());
 #endif /* TAO_ENABLE_MONITORS */
         }
@@ -648,7 +654,7 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
           else
             {
 #if defined (TAO_ENABLE_MONITORS)
-              this->active_object_map_->monitor_.receive (
+              this->active_object_map_->monitor_->receive (
                 this->active_object_map_->user_id_map_->current_size ());
 #endif /* TAO_ENABLE_MONITORS */
             }
@@ -679,7 +685,7 @@ TAO_Multiple_Id_Strategy::unbind_using_user_id (
         }
         
 #if defined (TAO_ENABLE_MONITORS)
-              this->active_object_map_->monitor_.receive (
+              this->active_object_map_->monitor_->receive (
                 this->active_object_map_->user_id_map_->current_size ());
 #endif /* TAO_ENABLE_MONITORS */
     }
@@ -911,7 +917,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
           else
             {
 #if defined (TAO_ENABLE_MONITORS)
-              this->active_object_map_->monitor_.receive (
+              this->active_object_map_->monitor_->receive (
                 this->active_object_map_->servant_map_->current_size ());
 #endif /* TAO_ENABLE_MONITORS */
             }
@@ -957,7 +963,7 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
         }
     
 #if defined (TAO_ENABLE_MONITORS)
-      this->active_object_map_->monitor_.receive (
+      this->active_object_map_->monitor_->receive (
         this->active_object_map_->user_id_map_->current_size ());
 #endif /* TAO_ENABLE_MONITORS */
     }

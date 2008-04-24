@@ -11,6 +11,8 @@
 
 #include "testC.h"
 
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
+  
 const char *ior_input_file = "file://test.ior";
 const char *monitor_output_file = "monitor.ior";
 
@@ -40,10 +42,14 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, ACE_Time_Value(1));
-      ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, ACE_Time_Value(1));
-      ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, ACE_Time_Value(1));
-      ADD_PERIODIC_MONITOR (NUM_THREADS_MONITOR, ACE_Time_Value(1));
+      Monitor_Base *bytes_sent_monitor =
+        create_os_monitor<BYTES_SENT_MONITOR> (0, ACE_Time_Value (1));
+      Monitor_Base *cpu_load_monitor =
+        create_os_monitor<CPU_LOAD_MONITOR> (0, ACE_Time_Value (1));
+      Monitor_Base *memory_usage_monitor =
+        create_os_monitor<MEMORY_USAGE_MONITOR> (0, ACE_Time_Value (1));
+      Monitor_Base *num_threads_monitor =
+        create_os_monitor<NUM_THREADS_MONITOR> (0, ACE_Time_Value (1));
       
       START_PERIODIC_MONITORS;
 
@@ -112,6 +118,11 @@ main (int argc, char *argv[])
       ACE_OS::sleep (15);
       
       STOP_PERIODIC_MONITORS;
+      
+      bytes_sent_monitor->remove_ref ();
+      cpu_load_monitor->remove_ref ();
+      memory_usage_monitor->remove_ref ();
+      num_threads_monitor->remove_ref ();
 
       orb->destroy ();
     }

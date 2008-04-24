@@ -58,8 +58,8 @@ namespace TAO
 #if defined (TAO_ENABLE_MONITORS)
       ACE_CString name_str ("Active_Object_Map_");
       name_str += poa->the_name ();
-      active_object_map->monitor_.name (name_str.c_str ());
-      active_object_map->monitor_.add_to_registry ();
+      active_object_map->monitor_->name (name_str.c_str ());
+      active_object_map->monitor_->add_to_registry ();
 #endif /* TAO_ENABLE_MONITORS */
 
       // Give ownership of the new map to the auto pointer.  Note, that it

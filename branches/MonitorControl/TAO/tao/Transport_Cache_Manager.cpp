@@ -31,10 +31,6 @@ namespace TAO
     , muxed_number_ (orb_core.resource_factory ()->max_muxed_connections ())
     , no_waiting_threads_ (0)
     , last_entry_returned_ (0)
-#if defined (TAO_ENABLE_MONITORS)    
-    , purge_monitor_ ("Connection_Cache_Purge")
-    , size_monitor_ ("Connection_Cache_Size")
-#endif /* TAO_ENABLE_MONITORS */
   {
     if (orb_core.resource_factory ()->locked_transport_cache ())
       {
@@ -55,8 +51,12 @@ namespace TAO
       }
 
 #if defined (TAO_ENABLE_MONITORS)    
-    this->purge_monitor_.add_to_registry ();
-    this->size_monitor_.add_to_registry ();
+    ACE_NEW (this->purge_monitor_,
+             ACE::MonitorControl::Size_Monitor ("Connection_Cache_Purge"));
+    ACE_NEW (this->size_monitor_,
+             ACE::MonitorControl::Size_Monitor ("Connection_Cache_Size"));
+    this->purge_monitor_->add_to_registry ();
+    this->size_monitor_->add_to_registry ();
 #endif /* TAO_ENABLE_MONITORS */
   }
 
@@ -90,8 +90,10 @@ namespace TAO
       }
 
 #if defined (TAO_ENABLE_MONITORS)    
-    this->purge_monitor_.remove_from_registry ();
-    this->size_monitor_.remove_from_registry ();
+    this->purge_monitor_->remove_from_registry ();
+    this->size_monitor_->remove_from_registry ();
+    this->purge_monitor_->remove_ref ();
+    this->size_monitor_->remove_ref ();
 #endif /* TAO_ENABLE_MONITORS */
   }
 
@@ -158,7 +160,7 @@ namespace TAO
       }
 
 #if defined (TAO_ENABLE_MONITORS)    
-    this->size_monitor_.receive (this->current_size ());
+    this->size_monitor_->receive (this->current_size ());
 #endif /* TAO_ENABLE_MONITORS */
 
     return retval;
@@ -408,7 +410,7 @@ namespace TAO
     entry = 0;
 
 #if defined (TAO_ENABLE_MONITORS)    
-    this->size_monitor_.receive (this->current_size ());
+    this->size_monitor_->receive (this->current_size ());
 #endif /* TAO_ENABLE_MONITORS */
 
     return retval;
@@ -450,7 +452,7 @@ namespace TAO
                                    entry);
 
 #if defined (TAO_ENABLE_MONITORS)    
-    this->size_monitor_.receive (this->current_size ());
+    this->size_monitor_->receive (this->current_size ());
 #endif /* TAO_ENABLE_MONITORS */
   }
 
@@ -583,9 +585,9 @@ namespace TAO
 #if defined (TAO_ENABLE_MONITORS)
     /// The value doesn't matter, all we need is the timestamp,
     /// which is added automatically.    
-    this->purge_monitor_.receive (static_cast<size_t> (0UL));
+    this->purge_monitor_->receive (static_cast<size_t> (0UL));
     /// And update the size monitor as well.
-    this->size_monitor_.receive (this->current_size ());
+    this->size_monitor_->receive (this->current_size ());
 #endif /* TAO_ENABLE_MONITORS */
 
     return 0;

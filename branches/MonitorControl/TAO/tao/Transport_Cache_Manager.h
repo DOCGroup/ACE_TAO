@@ -268,10 +268,10 @@ namespace TAO
  
 #if defined (TAO_ENABLE_MONITORS)    
     /// Connection cache purge monitor.
-    ACE::MonitorControl::Size_Monitor purge_monitor_;
+    ACE::MonitorControl::Size_Monitor *purge_monitor_;
     
     /// Connection cache size monitor.
-    ACE::MonitorControl::Size_Monitor size_monitor_;
+    ACE::MonitorControl::Size_Monitor *size_monitor_;
 #endif /* TAO_ENABLE_MONITORS */
   };
 

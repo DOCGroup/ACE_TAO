@@ -263,7 +263,7 @@ public:
   static size_t system_id_size_;
 
 #if defined (TAO_ENABLE_MONITORS)
-  ACE::MonitorControl::Size_Monitor monitor_;
+  ACE::MonitorControl::Size_Monitor *monitor_;
 #endif /* TAO_ENABLE_MONITORS */
 };
 

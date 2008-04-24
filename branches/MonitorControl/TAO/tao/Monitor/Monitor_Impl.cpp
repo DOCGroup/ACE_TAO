@@ -12,7 +12,8 @@ ACE_RCSID (Monitor,
 class TAO_Control_Action : public Control_Action
 {
 public:
-  TAO_Control_Action (::Monitor::Subscriber_ptr sub) : sub_ (::Monitor::Subscriber::_duplicate (sub))
+  TAO_Control_Action (::Monitor::Subscriber_ptr sub)
+    : sub_ (::Monitor::Subscriber::_duplicate (sub))
   {
   }
 
@@ -20,7 +21,7 @@ public:
   {
     try
       {
-        // @todo, really want to send the value to the subscriber
+        // @todo, really want to send the value to the subscriber.
         ::Monitor::DataItemList d;
         sub_->push (d);
       }
@@ -102,6 +103,8 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
           data.timestamp = usecs;
           (*dataitem).dlist[0] = data;
           (*datalist)[length] = *dataitem;
+        
+          monitor->remove_ref ();
         }
     }
 
@@ -146,6 +149,8 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
           data.timestamp = usecs;
           (*dataitem).dlist[0] = data;
           (*datalist)[length] = *dataitem;
+        
+          monitor->remove_ref ();
         }
     }
 
@@ -177,6 +182,8 @@ Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
           namelist->length (length + 1);
           (*namelist)[length] = CORBA::string_dup (names[index].in ());
           monitor->clear ();
+        
+          monitor->remove_ref ();
         }
     }
 
@@ -211,7 +218,10 @@ Monitor_Impl::register_constraint (
           CORBA::ULong const length = constraintlist->length ();
           constraintlist->length (length + 1);
           (*constraintlist)[length].id = id;
-          (*constraintlist)[length].itemname = CORBA::string_dup (names[index].in ());
+          (*constraintlist)[length].itemname =
+            CORBA::string_dup (names[index].in ());
+        
+          monitor->remove_ref ();
         }
     }
 
@@ -219,21 +229,29 @@ Monitor_Impl::register_constraint (
 }
 
 void
-Monitor_Impl::unregister_constraints ( const ::Monitor::ConstraintStructList & constraint)
+Monitor_Impl::unregister_constraints (
+  const ::Monitor::ConstraintStructList & constraint)
 {
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-
-  // @todo handle ownership of the control_action
 
   for (CORBA::ULong index = 0; index < constraint.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
       ACE::MonitorControl::Monitor_Base *monitor =
         mgr->admin ().monitor_point (constraint[index].itemname.in ());
+        
       if (monitor != 0)
         {
-          monitor->remove_constraint (constraint[index].id);
+          ACE::MonitorControl::Control_Action *action =
+            monitor->remove_constraint (constraint[index].id);
+        
+          if (action != 0)
+            {
+              action->remove_ref ();
+            }
+            
+          monitor->remove_ref ();
         }
     }
 }

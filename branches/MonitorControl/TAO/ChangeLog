@@ -1,3 +1,16 @@
+Thu Apr 24 22:20:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/Active_Object_Map.h:
+        * tao/PortableServer/Active_Object_Map.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Monitor/Monitor_Impl.cpp:
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+
+          Changes required to integrate the monitor refcounting
+          changes recently made in ACE.
+
 Tue Apr 15 10:46:18 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Monitor/Monitor.pidl:
