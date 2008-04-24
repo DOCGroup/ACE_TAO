@@ -45,7 +45,7 @@ class TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits
   typedef typename Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
 
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Peer_T (void);
 
   /// Destructor

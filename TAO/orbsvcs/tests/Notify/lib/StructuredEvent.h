@@ -30,7 +30,7 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredEvent
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_StructuredEvent (void);
   TAO_Notify_Tests_StructuredEvent (const char* name);
   TAO_Notify_Tests_StructuredEvent (const char* domain, const char* type);

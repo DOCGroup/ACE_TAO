@@ -32,7 +32,7 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Filter_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Filter_Command (void);
 
   /// Destructor

@@ -39,7 +39,7 @@ class TAO_Notify_Tests_Command;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Builder : public ACE_Service_Object
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Command_Builder (void);
 
   /// Destructor

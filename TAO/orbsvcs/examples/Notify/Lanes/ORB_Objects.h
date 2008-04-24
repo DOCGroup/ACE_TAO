@@ -28,7 +28,7 @@
 class TAO_Notify_ORB_Objects
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ORB_Objects (void);
 
   /// Destructor

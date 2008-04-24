@@ -34,7 +34,7 @@ class TAO_Notify_Tests_Periodic_Supplier;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Supplier_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Periodic_Supplier_Command (void);
 
   /// Destructor
