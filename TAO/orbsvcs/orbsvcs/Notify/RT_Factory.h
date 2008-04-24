@@ -31,7 +31,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RT_Notify_Export TAO_Notify_RT_Factory : public TAO_Notify_Default_Factory
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_RT_Factory (void);
 
   /// Destructor

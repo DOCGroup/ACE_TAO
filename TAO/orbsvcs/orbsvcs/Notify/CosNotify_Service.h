@@ -37,7 +37,7 @@ class TAO_Notify_EventChannelFactory;
 class TAO_Notify_Serv_Export TAO_CosNotify_Service : public TAO_Notify_Service
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_CosNotify_Service (void);
 
   /// Destructor

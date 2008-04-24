@@ -43,7 +43,7 @@ class TAO_Notify_Serv_Export TAO_Notify_SequenceProxyPushConsumer
   typedef TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer> SuperClass;
   friend class TAO_Notify_Builder;
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_SequenceProxyPushConsumer (void);
 
   /// Destructor

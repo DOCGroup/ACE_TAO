@@ -36,7 +36,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Reactive_Task
   : public TAO_Notify_Worker_Task
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Reactive_Task (void);
 
   /// Destructor

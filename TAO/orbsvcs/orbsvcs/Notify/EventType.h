@@ -36,11 +36,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_Notify::Topology_Savable
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_EventType (void);
   TAO_Notify_EventType (const char* domain_name, const char* type_name);
   TAO_Notify_EventType (const CosNotification::EventType& event_type);
-  // Constuctor
+  // Constructor
 
   /// Destructor
   virtual ~TAO_Notify_EventType ();

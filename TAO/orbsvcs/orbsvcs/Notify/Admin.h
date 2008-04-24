@@ -44,7 +44,7 @@ public:
   typedef CosNotifyChannelAdmin::AdminIDSeq SEQ;
   typedef CosNotifyChannelAdmin::AdminIDSeq_var SEQ_VAR;
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Admin ();
 
   /// Destructor

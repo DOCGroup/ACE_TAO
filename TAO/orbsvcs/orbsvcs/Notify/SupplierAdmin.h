@@ -44,7 +44,7 @@ class TAO_Notify_Serv_Export TAO_Notify_SupplierAdmin
 public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_SupplierAdmin > Ptr;
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_SupplierAdmin (void);
 
   /// Destructor

@@ -79,7 +79,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event_Queueable
   , public TAO_Notify_Method_Request_Event
 {
 public:
-  /// Constuctor
+  /// Constructor
   /// Not the event_var is passed as a separate parameter to avoid throwing
   /// exceptions from the constructor if it's necessary to copy the event.
   TAO_Notify_Method_Request_Event_Queueable (

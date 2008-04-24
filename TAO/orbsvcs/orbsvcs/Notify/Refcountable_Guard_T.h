@@ -34,7 +34,7 @@ template <class T>
 class TAO_Notify_Refcountable_Guard_T
 {
 public:
-  /// Constuctor
+  /// Constructor
   explicit TAO_Notify_Refcountable_Guard_T (T* t = 0);
 
   /// Copy constructor

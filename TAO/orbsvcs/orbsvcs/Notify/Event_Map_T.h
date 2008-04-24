@@ -41,7 +41,7 @@ class TAO_Notify_Event_Map_T
 public:
   typedef  TAO_Notify_Event_Map_Entry_T<PROXY> ENTRY;
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Event_Map_T (void);
 
   /// Destructor

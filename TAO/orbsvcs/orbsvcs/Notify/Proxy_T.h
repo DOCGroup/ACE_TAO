@@ -38,7 +38,7 @@ template <class SERVANT_TYPE>
 class TAO_Notify_Proxy_T : public SERVANT_TYPE, public virtual TAO_Notify_Proxy
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Proxy_T (void);
 
   /// Destructor

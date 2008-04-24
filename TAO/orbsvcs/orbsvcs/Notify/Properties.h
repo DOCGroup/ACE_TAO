@@ -40,7 +40,7 @@ class TAO_Notify_Builder;
 class TAO_Notify_Serv_Export TAO_Notify_Properties
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Properties (void);
 
   /// Destructor

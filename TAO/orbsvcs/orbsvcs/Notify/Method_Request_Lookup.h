@@ -56,10 +56,10 @@ public:
     TAO_InputCDR & cdr);
 
 protected:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Method_Request_Lookup (const TAO_Notify_Event * event, TAO_Notify_ProxyConsumer * proxy);
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Method_Request_Lookup (const TAO_Notify::Delivery_Request_Ptr& delivery, TAO_Notify_ProxyConsumer * proxy);
 
   /// Execute the dispatch operation.
@@ -87,12 +87,12 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_Queueable
   , public TAO_Notify_Method_Request_Queueable
 {
 public:
-  /// Constuctor from event
+  /// Constructor from event
   TAO_Notify_Method_Request_Lookup_Queueable (
     const TAO_Notify_Event::Ptr& event,
     TAO_Notify_ProxyConsumer * proxy_consumer);
 
-  /// Constuctor from delivery request
+  /// Constructor from delivery request
   TAO_Notify_Method_Request_Lookup_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request,
     TAO_Notify_ProxyConsumer * proxy_consumer);
@@ -121,7 +121,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_No_Copy
   , public TAO_Notify_Method_Request
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Method_Request_Lookup_No_Copy (
     const TAO_Notify_Event* event,
     TAO_Notify_ProxyConsumer* proxy_consumer);

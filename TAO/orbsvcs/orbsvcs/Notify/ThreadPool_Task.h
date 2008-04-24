@@ -45,7 +45,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ThreadPool_Task
   friend class TAO_Notify_Method_Request_Shutdown;
 
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ThreadPool_Task (void);
 
   /// Destructor

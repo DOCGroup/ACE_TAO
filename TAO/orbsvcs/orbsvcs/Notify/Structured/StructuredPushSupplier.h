@@ -35,7 +35,7 @@ class TAO_Notify_ProxyConsumer;
 class TAO_Notify_Serv_Export TAO_Notify_StructuredPushSupplier : public TAO_Notify_Supplier
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_StructuredPushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor

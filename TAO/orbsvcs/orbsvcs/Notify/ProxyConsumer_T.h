@@ -33,7 +33,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_T
     public virtual TAO_Notify_ProxyConsumer
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ProxyConsumer_T (void);
 
   /// Destructor
