@@ -231,7 +231,7 @@ namespace CORBA
     virtual void _remove_ref (void);
 
     /// Get the refcount
-    virtual CORBA::ULong _refcount_value() const;
+    virtual CORBA::ULong _refcount_value(void) const;
     //@}
 
     // Useful for template programming.
