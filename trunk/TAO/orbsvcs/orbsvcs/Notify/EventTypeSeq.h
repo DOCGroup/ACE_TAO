@@ -65,7 +65,7 @@ public:
   void populate (CosNotification::EventTypeSeq& event_type) const;
 
   /// Populate <event_type_seq> with the contents of this object.
-  // Excludes the special event type. This is used to avoid sending * type updates to proxys.
+  /// Excludes the special event type. This is used to avoid sending * type updates to proxys.
   void populate_no_special (CosNotification::EventTypeSeq& event_type) const;
 
   /// Print the contents.

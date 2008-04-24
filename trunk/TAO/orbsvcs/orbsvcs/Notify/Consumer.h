@@ -70,10 +70,10 @@ public:
   /// Dispatch Event to consumer
   void deliver (TAO_Notify_Method_Request_Event * request);
 
-  /// Push <event> to this consumer.
+  /// Push @a event to this consumer.
   virtual void push (const CORBA::Any& event) = 0;
 
-  /// Push <event> to this consumer.
+  /// Push @a event to this consumer.
   virtual void push (const CosNotification::StructuredEvent& event) = 0;
 
   /// Push a batch of events to this consumer.
@@ -97,10 +97,9 @@ public:
   /// Shutdown the consumer
   virtual void shutdown (void);
 
-  /// on reconnect we need to move events from the old consumer
+  /// On reconnect we need to move events from the old consumer
   /// to the new one
-  virtual void reconnect_from_consumer (
-    TAO_Notify_Consumer* old_consumer) = 0;
+  virtual void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer) = 0;
 
   /// Override, Peer::qos_changed
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);

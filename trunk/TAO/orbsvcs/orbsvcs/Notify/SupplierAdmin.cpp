@@ -170,8 +170,7 @@ TAO_Notify_SupplierAdmin::obtain_notification_push_consumer (CosNotifyChannelAdm
 CosNotifyChannelAdmin::ProxyConsumer_ptr
 TAO_Notify_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                                                   CosNotifyChannelAdmin::ProxyID_out proxy_id,
-                                                                  const CosNotification::QoSProperties & initial_qos
-                                                                  )
+                                                                  const CosNotification::QoSProperties & initial_qos)
 {
   CosNotifyChannelAdmin::ProxyConsumer_var proxy =
     TAO_Notify_PROPERTIES::instance()->builder()->build_proxy (this
@@ -228,8 +227,7 @@ TAO_Notify_SupplierAdmin::get_proxy_consumer (CosNotifyChannelAdmin::ProxyID pro
 
 void
 TAO_Notify_SupplierAdmin::offer_change (const CosNotification::EventTypeSeq & added,
-                                    const CosNotification::EventTypeSeq & removed
-                                    )
+                                        const CosNotification::EventTypeSeq & removed)
 
 {
   TAO_Notify_EventTypeSeq seq_added (added);
@@ -280,6 +278,22 @@ TAO_Notify_SupplierAdmin::remove_all_filters (void)
   this->filter_admin_.remove_all_filters ();
 }
 
+TAO_Notify_ProxyConsumer *
+TAO_Notify_SupplierAdmin::find_proxy_consumer (
+    TAO_Notify::IdVec & id_path,
+    size_t position)
+{
+  TAO_Notify_ProxyConsumer * result = 0;
+  size_t path_size = id_path.size ();
+  if (position < path_size)
+  {
+    TAO_Notify_ProxyConsumer_Find_Worker find_worker;
+    TAO_Notify_Proxy * proxy = find_worker.find (id_path[position], this->proxy_container());
+    result = dynamic_cast <TAO_Notify_ProxyConsumer *> (proxy);
+  }
+  return result;
+}
+
 /************** UNIMPLEMENTED METHODS ***************/
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
@@ -307,22 +321,6 @@ TAO_Notify_SupplierAdmin::obtain_notification_pull_consumer (CosNotifyChannelAdm
                                                          CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
 {
   throw CORBA::NO_IMPLEMENT ();
-}
-
-TAO_Notify_ProxyConsumer *
-TAO_Notify_SupplierAdmin::find_proxy_consumer (
-    TAO_Notify::IdVec & id_path,
-    size_t position)
-{
-  TAO_Notify_ProxyConsumer * result = 0;
-  size_t path_size = id_path.size ();
-  if (position < path_size)
-  {
-    TAO_Notify_ProxyConsumer_Find_Worker find_worker;
-    TAO_Notify_Proxy * proxy = find_worker.find (id_path[position], this->proxy_container());
-    result = dynamic_cast <TAO_Notify_ProxyConsumer *> (proxy);
-  }
-  return result;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

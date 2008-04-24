@@ -5,8 +5,6 @@
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ETCL_FILTER_H
@@ -55,8 +53,7 @@ protected:
   virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list);
 
   virtual void modify_constraints (const CosNotifyFilter::ConstraintIDSeq & del_list,
-                                   const CosNotifyFilter::ConstraintInfoSeq & modify_list
-                                   );
+                                   const CosNotifyFilter::ConstraintInfoSeq & modify_list);
 
   virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list);
 
@@ -83,16 +80,16 @@ private:
 
   void remove_all_constraints_i (void);
 
+  /**
+   * Structure for associating ConstraintInfo with an interpreter.
+   */
   struct TAO_Notify_Constraint_Expr
   {
-    // = DESCRIPTION
-    //   Structure for associating ConstraintInfo with an interpreter.
-    //
+    /// Constraint Expression.
     CosNotifyFilter::ConstraintExp constr_expr;
-    // Constraint Expression.
 
+    /// Constraint Interpreter.
     TAO_Notify_Constraint_Interpreter interpreter;
-    // Constraint Interpreter.
   };
 
   /// Lock to serialize access to data members.

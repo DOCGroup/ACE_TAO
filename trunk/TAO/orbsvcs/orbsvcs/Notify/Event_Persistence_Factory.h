@@ -44,7 +44,6 @@ namespace TAO_Notify
     /// Begin the reload process by returning the first Routing_Slip_Persistence_Manager
     /// to continue call Routing_Slip_Persistence_Manager::load_next ()
     virtual Routing_Slip_Persistence_Manager * first_reload_manager () = 0;
-
   };
 } // namespace TAO_Notify
 

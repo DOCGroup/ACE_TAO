@@ -55,7 +55,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
 public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory > Ptr;
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_EventChannelFactory (void);
 
   /// Init the factory
@@ -104,7 +104,7 @@ public:
   CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (void);
   virtual void reconnect (void);
 
-  /// handle change notifications
+  /// Handle change notifications
   bool handle_change (void);
 
   void load_event_persistence (void);
@@ -159,7 +159,7 @@ private:
 
   CosNotifyChannelAdmin::EventChannelFactory_var channel_factory_;
 
-  /// change-in-progress detector to avoid duplicates
+  /// Change-in-progress detector to avoid duplicates
   short topology_save_seq_;
   TAO_Notify::Topology_Factory* topology_factory_;
   TAO_Notify::Reconnection_Registry reconnect_registry_;

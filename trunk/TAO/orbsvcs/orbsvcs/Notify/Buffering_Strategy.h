@@ -117,7 +117,6 @@ private:
   TAO_Notify_Property_Long max_events_per_consumer_;
   TAO_Notify_Property_Time blocking_policy_;
 
-
   TAO_SYNCH_CONDITION& global_not_full_;
   TAO_SYNCH_CONDITION local_not_full_;
 

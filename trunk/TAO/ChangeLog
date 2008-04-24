@@ -1,3 +1,21 @@
+Thu Apr 24 11:10:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp
+        * orbsvcs/orbsvcs/Notify/Admin.h
+        * orbsvcs/orbsvcs/Notify/AdminProperties.h
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h
+        * orbsvcs/orbsvcs/Notify/Consumer.h
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.h
+        * orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.h
+        * orbsvcs/orbsvcs/Notify/EventChannel.h
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h
+        * orbsvcs/orbsvcs/Notify/EventType.h
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h
+        * orbsvcs/orbsvcs/Notify/ID_Factory.h
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp
+          Layout and doxygen changes
+
 Thu Apr 24 10:38:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
 
         * orbsvcs/tests/Security/mixed_security_test/mixed_security.mpc:
