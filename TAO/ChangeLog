@@ -1,3 +1,22 @@
+Thu Apr 24 10:41:42 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Synch_Invocation.cpp:
+
+          Fixed a bug where TAO did not honour the required CORBA 'at most
+          once' invocation rules whenever an IOR had more than one profile.
+
+        * tests/Bug_3299_Regression:
+        * tests/Bug_3299_Regression/Bug_3299_Regression.mpc:
+        * tests/Bug_3299_Regression/Hello.h:
+        * tests/Bug_3299_Regression/Hello.cpp:
+        * tests/Bug_3299_Regression/README:
+        * tests/Bug_3299_Regression/Test.idl:
+        * tests/Bug_3299_Regression/client.cpp:
+        * tests/Bug_3299_Regression/run_test.pl:
+        * tests/Bug_3299_Regression/server.cpp:
+
+          Regression test for the above.
+
 Thu Apr 24 12:13:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Admin.h
@@ -175,6 +194,7 @@ Thu Apr 24 10:25:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.{h,cpp}:
           Changed released flag to a bool
 
+>>>>>>> .r81422
 Thu Apr 24 09:49:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
