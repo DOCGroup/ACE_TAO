@@ -61,20 +61,17 @@ public:
    * is invoked in an innapropriate context (think shutting down the
    * POA while performing an upcall).
    */
-  void close (int wait_for_completion
-             );
+  void close (int wait_for_completion);
 
   /**
    * Verify if the close() call can be invoked in the current
    * context for *all* adapters.
    * Raise the right exception if not.
    */
-  void check_close (int wait_for_completion
-                   );
+  void check_close (int wait_for_completion);
 
   /// Insert a new adapter into the registry.
-  void insert (TAO_Adapter *adapter
-              );
+  void insert (TAO_Adapter *adapter);
 
   /**
    * Dispatch the request to all the adapters.
@@ -83,12 +80,10 @@ public:
    */
   void dispatch (TAO::ObjectKey &key,
                  TAO_ServerRequest &request,
-                 CORBA::Object_out forward_to
-                );
+                 CORBA::Object_out forward_to);
 
   /// Create a collocated object using the given profile and stub.
-  CORBA::Object_ptr create_collocated_object (TAO_Stub *,
-                                              const TAO_MProfile &);
+  CORBA::Object_ptr create_collocated_object (TAO_Stub *, const TAO_MProfile &);
 
   /// Initialize a collocated object using the given stub and object
   /// pointer for lazily evaluated object references.

@@ -176,7 +176,7 @@ public:
    * object we should add a "Resolver" to the ORB, so the "POACurrent"
    * object returns a per-ORB object.
    * @par
-   * Similarly, each ORB should implement the TSS pattern to put   the
+   * Similarly, each ORB should implement the TSS pattern to put the
    * POA_Current_Impl in a void* slot.  The current approach *does*
    * decouple the POA from the ORB, but it cannot add new adapters or
    * other components transparently.

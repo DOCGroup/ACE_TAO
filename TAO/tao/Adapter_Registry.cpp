@@ -182,7 +182,6 @@ TAO_Adapter_Registry::find_adapter (const char *name) const
       return *i;
 
   return 0;
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
