@@ -128,7 +128,7 @@ CORBA::Object::_remove_ref (void)
 CORBA::ULong
 CORBA::Object::_refcount_value(void) const
 {
-  return static_cast<CORBA::ULong> (this->ref_count_.value ());
+  return static_cast<CORBA::ULong> (this->refcount_.value ());
 }
 
 void
