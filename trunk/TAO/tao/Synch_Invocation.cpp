@@ -560,7 +560,8 @@ namespace TAO
          *       be able to help in this case but it ultimately ends
          *       up being an application issue.
          */
-        if (this->resolver_.stub ()->next_profile_retry ())
+        if (completion != CORBA::COMPLETED_MAYBE &&
+            this->resolver_.stub ()->next_profile_retry ())
           {
             return TAO_INVOKE_RESTART;
           }
