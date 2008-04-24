@@ -3,6 +3,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) Add VxWorks 6.x kernel mode with shared library support
 
+USER VISIBLE CHANGES BETWEEN ACE-5.6.4 and ACE-5.6.5
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.3 and ACE-5.6.4
 ====================================================
 
