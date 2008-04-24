@@ -29,7 +29,7 @@ CORBA::LocalObject::_narrow (CORBA::Object_ptr obj)
 {
   if (obj->_is_local () != 0)
     {
-      return CORBA::LocalObject::_duplicate (
+      return ::CORBA::LocalObject::_duplicate (
           dynamic_cast<CORBA::LocalObject_ptr> (obj));
     }
 
@@ -39,6 +39,11 @@ CORBA::LocalObject::_narrow (CORBA::Object_ptr obj)
 ACE_INLINE
 CORBA::LocalObject::LocalObject (void)
   : Object (0)
+{
+}
+
+ACE_INLINE
+TAO_Local_RefCounted_Object::TAO_Local_RefCounted_Object (void)
 {
 }
 
