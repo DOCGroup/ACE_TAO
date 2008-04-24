@@ -1,3 +1,19 @@
+Thu Apr 24 10:38:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * orbsvcs/tests/Security/mixed_security_test/mixed_security.mpc:
+        * orbsvcs/tests/Security/ssliop_CSD/ssliop_CSD.mpc:
+
+          Stopped multi-build conflicts with VC8.
+
+        * examples/MFC/client.mpc:
+        * examples/MFC/server.mpc:
+
+          Stopped multi-build conflicts with VC8 (Avoid Unicode for now).
+
+        * utils/NamingViewer/NamingViewer.mpc:
+
+          Avoid unicode for now.
+
 Thu Apr 24 10:25:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Admin.h:

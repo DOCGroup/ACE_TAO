@@ -2,6 +2,7 @@
 // $Id$
 
 project : namingexe, ace_mfc {
+  avoids    += unicode
   exename    = NamingViewer
   install    = $(ACE_ROOT)/bin
   pch_header = StdAfx.h
