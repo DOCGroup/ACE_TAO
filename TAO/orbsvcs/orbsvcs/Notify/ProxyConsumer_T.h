@@ -26,9 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_ProxyConsumer_T
- *
- * @brief
- *
  */
 template <class SERVANT_TYPE>
 class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_T
@@ -49,8 +46,7 @@ public:
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (void);
 
   virtual CosNotification::EventTypeSeq * obtain_subscription_types (
-    CosNotifyChannelAdmin::ObtainInfoMode mode
-  );
+    CosNotifyChannelAdmin::ObtainInfoMode mode);
 
   virtual void offer_change (
     const CosNotification::EventTypeSeq & added,

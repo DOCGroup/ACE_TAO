@@ -58,7 +58,6 @@ public:
   virtual void _add_ref (void);
   virtual void _remove_ref (void);
 
-
   virtual const char * get_admin_type_name () const;
 
   virtual TAO_Notify::Topology_Object* load_child (
@@ -83,8 +82,7 @@ protected:
   virtual CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                               CosNotifyChannelAdmin::ProxyID_out proxy_id,
-                                              const CosNotification::QoSProperties & initial_qos
-                                              );
+                                              const CosNotification::QoSProperties & initial_qos);
 
   /// = CosNotifyChannelAdmin::ConsumerAdmin methods
   virtual CosNotifyChannelAdmin::AdminID MyID (void);

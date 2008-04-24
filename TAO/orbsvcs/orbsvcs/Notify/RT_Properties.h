@@ -36,6 +36,7 @@ public:
 
   /// Destructor
   ~TAO_Notify_RT_Properties ();
+
   /// Return singleton instance of this class.
   static TAO_Notify_RT_Properties * instance (void);
 
