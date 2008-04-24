@@ -60,7 +60,7 @@ TAO_BidirectionalPolicy::copy (void)
   // Future policy implementors: notice how the following code is
   // exception safe!
 
-  TAO_BidirectionalPolicy* tmp;
+  TAO_BidirectionalPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp, TAO_BidirectionalPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));

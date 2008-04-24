@@ -141,13 +141,6 @@ namespace CORBA
      */
     virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj);
 
-    // = Reference count managment.
-    /// Increment the reference count.
-    virtual void _add_ref (void);
-
-    /// Decrement the reference count.
-    virtual void _remove_ref (void);
-
     virtual CORBA::ORB_ptr _get_orb (void);
 
     // = TAO extensions
@@ -182,43 +175,12 @@ namespace CORBA
 }   // End CORBA namespace
 
 /**
- * @class TAO_Local_RefCounted_Object
- *
- * @brief This class adds default reference counting to local
- *        objects.
- *
- * This is proprietary convenience class that implements reference
- * counting in locality constrained objects.
+ * @brief This class is there to keep backwards compatibility to the
+ *        v1.1 C++ mapping
  */
 class TAO_Export TAO_Local_RefCounted_Object
   : public virtual CORBA::LocalObject
 {
-public:
-
-  /// Increment reference count.
-  virtual void _add_ref (void);
-
-  /// Decrement reference count.
-  virtual void _remove_ref (void);
-
-protected:
-
-  // Default constructor.
-  /**
-   * Make it protected to prevent instantiation of this class.
-   */
-  TAO_Local_RefCounted_Object (void);
-
-private:
-
-  /**
-   * @name Unimplemented methods
-   */
-  //@{
-  TAO_Local_RefCounted_Object (const TAO_Local_RefCounted_Object &);
-  TAO_Local_RefCounted_Object & operator = (
-      const TAO_Local_RefCounted_Object &);
-  //@}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

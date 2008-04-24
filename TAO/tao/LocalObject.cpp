@@ -23,18 +23,6 @@ CORBA::LocalObject::~LocalObject (void)
 {
 }
 
-void
-CORBA::LocalObject::_add_ref (void)
-{
-  // Do nothing as per CCM spec.
-}
-
-void
-CORBA::LocalObject::_remove_ref (void)
-{
-  // Do nothing as per CCM spec.
-}
-
 // Quickly hash an object reference's representation data.  Used to
 // create hash tables.
 
@@ -181,20 +169,6 @@ CORBA::ORB_ptr
 CORBA::LocalObject::_get_orb (void)
 {
   throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
-}
-
-// ****************************************************************
-
-void
-TAO_Local_RefCounted_Object::_add_ref (void)
-{
-  this->_tao_actual_add_ref ();
-}
-
-void
-TAO_Local_RefCounted_Object::_remove_ref (void)
-{
-  this->_tao_actual_remove_ref ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
