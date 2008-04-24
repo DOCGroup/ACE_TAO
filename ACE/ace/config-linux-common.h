@@ -324,8 +324,6 @@
 // Although the scandir man page says otherwise, this setting is correct.
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
 
-#define ACE_HAS_STRBUF_T
-
 // A conflict appears when including both <ucontext.h> and
 // <sys/procfs.h> with recent glibc headers.
 //#define ACE_HAS_PROC_FS
@@ -368,6 +366,10 @@
 // this define is set
 #if defined _XOPEN_STREAMS && _XOPEN_STREAMS == -1
 # define ACE_LACKS_STROPTS_H
+#endif
+
+#if !defined (ACE_LACKS_STROPTS_H)
+# define ACE_HAS_STRBUF_T
 #endif
 
 #if defined (__ia64) || defined(__alpha) || defined (__x86_64__)
