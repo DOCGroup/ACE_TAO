@@ -238,19 +238,6 @@ namespace CORBA
 
     //@} End of CORBA specific methods
 
-
-    /**
-     * @name Methods that are TAO specific.
-     *
-     * These methods are defined here as helper functions to be used
-     * by other parts of TAO. Theoretically they shold all start with
-     * tao_. But we have deviated from that principle.
-     */
-
-  protected:
-    void _tao_actual_add_ref (void);
-    void _tao_actual_remove_ref (void);
-
   public:
     /// Marshalling operator used by the stub code. A long story why
     /// the stub code uses this, let us keep it short here.

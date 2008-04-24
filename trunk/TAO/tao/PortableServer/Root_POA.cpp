@@ -216,7 +216,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     outstanding_requests_ (0),
     outstanding_requests_condition_ (thread_lock),
     wait_for_completion_pending_ (0),
-    waiting_destruction_ (0),
+    waiting_destruction_ (false),
     servant_deactivation_condition_ (thread_lock),
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     filter_factory_ (0),
@@ -327,10 +327,10 @@ void
 TAO_Root_POA::complete_destruction_i (void)
 {
   bool doing_complete_destruction =
-    this->waiting_destruction_ != 0;
+    this->waiting_destruction_ != false;
 
   // No longer awaiting destruction.
-  this->waiting_destruction_ = 0;
+  this->waiting_destruction_ = false;
 
   PortableServer::POA_var poa;
   TAO::ORT_Array my_array_obj_ref_template;
@@ -358,15 +358,13 @@ TAO_Root_POA::complete_destruction_i (void)
     }
 
   // Remove POA from the POAManager.
-  int result = this->poa_manager_.remove_poa (this);
-
-  if (result != 0)
+  if (this->poa_manager_.remove_poa (this) != 0)
     throw ::CORBA::OBJ_ADAPTER ();
 
   // Remove POA from the Object Adapter.
-  result = this->object_adapter ().unbind_poa (this,
-                                               this->folded_name_,
-                                               this->system_name_.in ());
+  int result = this->object_adapter ().unbind_poa (this,
+                                                   this->folded_name_,
+                                                   this->system_name_.in ());
   if (result != 0)
     throw ::CORBA::OBJ_ADAPTER ();
 
@@ -797,8 +795,7 @@ TAO_Root_POA::destroy (CORBA::Boolean etherealize_objects,
   TAO::Portable_Server::POA_Guard poa_guard (*this , 0);
   ACE_UNUSED_ARG (poa_guard);
 
-  this->destroy_i (etherealize_objects,
-                   wait_for_completion);
+  this->destroy_i (etherealize_objects, wait_for_completion);
 }
 
 void
@@ -963,7 +960,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
   else
     {
       // Mark that we are ready for destruction.
-      this->waiting_destruction_ = 1;
+      this->waiting_destruction_ = true;
     }
 }
 
@@ -1254,7 +1251,7 @@ TAO_Root_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core
                   // CORBA 2.3 specifies which minor code corresponds
                   // to this particular problem.
                   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 3,
-                                                   CORBA::COMPLETED_NO);
+                                                CORBA::COMPLETED_NO);
                 }
             }
           else

@@ -47,16 +47,16 @@ module IORTable
    */
   local interface Table
   {
-    /// Bind <object_key> to the <IOR>
+    /// Bind @a object_key to the @a IOR
     void bind (in string object_key,
                in string IOR)
       raises (AlreadyBound);
 
-    /// Bind <object_key> to the <IOR>
+    /// Bind @a object_key to the @a IOR
     void rebind (in string object_key,
                  in string IOR);
 
-    /// Remove the binding for <object_key>
+    /// Remove the binding for @a object_key
     void unbind (in string object_key)
       raises (NotFound);
 
@@ -65,14 +65,14 @@ module IORTable
     void set_locator (in Locator the_locator);
   };
 
-  /// Callback interface to locate  object keys dynamically
+  /// Callback interface to locate object keys dynamically
   /**
    * The application can provide a callback interface to locate object
    * keys dynamically.
    */
   local interface Locator
   {
-    /// Returns an IOR to use for <object_key>
+    /// Returns an IOR to use for @a object_key
     string locate (in string object_key)
       raises (NotFound);
   };

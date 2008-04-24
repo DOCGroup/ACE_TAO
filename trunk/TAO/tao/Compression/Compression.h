@@ -47,8 +47,7 @@ public:
 };
 
 static int
-  TAO_Requires_Compression_Initializer = TAO_Compression_Loader::Initializer
-  ();
+  TAO_Requires_Compression_Initializer = TAO_Compression_Loader::Initializer ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -34,9 +34,7 @@ namespace TAO
 
       // This assumes that the lock on the parent is recursive
       PortableServer::POA_var child =
-        parent->create_POA (name,
-                            this->poa_manager_.in (),
-                            default_policies);
+        parent->create_POA (name, this->poa_manager_.in (), default_policies);
 
       try
         {

@@ -1,3 +1,28 @@
+Thu Apr 24 09:21:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Adapter_Registry.{h,cpp}:
+        * tao/Compression/Compression.h:
+        * tao/PortableServer/Adapter_Activator.cpp:
+        * tao/ORB_Core.h:
+          Layout changes
+
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+          Initialise pointer with 0
+
+        * tao/IORTable/IORTable.pidl:
+          Doxygen changes
+
+        * tao/PortableServer/Root_POA.cpp:
+          Layout and bool changes
+
+        * tao/Object.{h,cpp,inl}:
+        * tao/LocalObject.{h,cpp,inl}:
+          Updated TAO to the 1.2 IDL to C++ mapping. LocalObject is now
+          refcounted by default. TAO_Local_RefCounted_Object is now an
+          empty class kept for backward compatibility. CORBA::LocalObject
+          can be used directly now, we have to update the other parts
+          of TAO to not use this class anymore
+
 Wed Apr 23 18:12:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV/AV_Core.cpp:

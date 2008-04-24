@@ -113,19 +113,16 @@ if (!this->is_evaluated_) \
 void
 CORBA::Object::_add_ref (void)
 {
-  if (this->is_local_)
-    return;
-
-  this->_tao_actual_add_ref ();
+  this->refcount_.increment ();
 }
 
 void
 CORBA::Object::_remove_ref (void)
 {
-  if (this->is_local_)
+  if (this->refcount_.decrement () != 0)
     return;
 
-  this->_tao_actual_remove_ref ();
+  delete this;
 }
 
 void

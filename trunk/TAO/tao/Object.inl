@@ -95,19 +95,4 @@ CORBA::Object::ior (void) const
   return this->ior_.in ();
 }
 
-ACE_INLINE void
-CORBA::Object::_tao_actual_add_ref (void)
-{
-  this->refcount_.increment ();
-}
-
-ACE_INLINE void
-CORBA::Object::_tao_actual_remove_ref (void)
-{
-  if (this->refcount_.decrement () != 0)
-    return;
-
-  delete this;
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL
