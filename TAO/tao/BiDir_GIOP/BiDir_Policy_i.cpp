@@ -20,7 +20,6 @@ TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (
   , ::CORBA::Policy ()
   , ::BiDirPolicy::BidirectionalPolicy ()
   , ::CORBA::LocalObject ()
-  , TAO_Local_RefCounted_Object ()
   , value_ (val)
 {
 }
@@ -30,7 +29,6 @@ TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy 
   , ::CORBA::Policy ()
   , ::BiDirPolicy::BidirectionalPolicy ()
   , ::CORBA::LocalObject ()
-  , TAO_Local_RefCounted_Object ()
   , value_ (rhs.value_)
 {
 }

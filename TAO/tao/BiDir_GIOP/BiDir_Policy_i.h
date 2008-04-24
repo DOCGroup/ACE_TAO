@@ -41,7 +41,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_BidirectionalPolicy
   : public virtual BiDirPolicy::BidirectionalPolicy
-  , public virtual TAO_Local_RefCounted_Object
+  , public virtual ::CORBA::LocalObject
 {
 public:
 
