@@ -40,7 +40,7 @@ namespace TAO
   {
     class TAO_PortableServer_Export ThreadPolicy
       : public virtual ::PortableServer::ThreadPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
       ThreadPolicy (::PortableServer::ThreadPolicyValue value);

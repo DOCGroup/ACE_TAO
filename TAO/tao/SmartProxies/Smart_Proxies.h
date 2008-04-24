@@ -36,7 +36,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * Contains the _var pointer to the real proxy.
  */
 class TAO_SmartProxies_Export TAO_Smart_Proxy_Base
-  : public TAO_Local_RefCounted_Object
+  : public ::CORBA::LocalObject
 {
 public:
   /// Destructor

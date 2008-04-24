@@ -39,7 +39,7 @@ namespace TAO
 
     class TAO_PortableServer_Export POA_Current
       : public PortableServer::Current
-      , public TAO_Local_RefCounted_Object
+      , public ::CORBA::LocalObject
     {
     public:
 

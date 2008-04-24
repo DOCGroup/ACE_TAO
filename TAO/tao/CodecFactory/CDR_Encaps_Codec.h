@@ -45,7 +45,7 @@ class TAO_Codeset_Translator_Base;
  */
 class TAO_CDR_Encaps_Codec
   : public virtual IOP::Codec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

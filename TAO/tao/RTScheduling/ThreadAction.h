@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTScheduler_Export TAO_ThreadAction:
 public RTScheduling::ThreadAction,
-  public TAO_Local_RefCounted_Object
+  public ::CORBA::LocalObject
 {
  public:
 

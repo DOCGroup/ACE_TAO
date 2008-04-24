@@ -71,7 +71,7 @@ class TAO_Messaging_Export TAO_AMH_Response_Handler
 //    isn't consistent with the specified semantics detailed in the
 //    CCM spec.  Please remove this and place it where appropriate in
 //    your AMH tests and examples.
-  : public TAO_Local_RefCounted_Object
+  : public ::CORBA::LocalObject
 {
 public:
 

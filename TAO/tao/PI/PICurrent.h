@@ -56,7 +56,7 @@ namespace TAO
    */
   class TAO_PI_Export PICurrent
     : public virtual PortableInterceptor::Current,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
   public:
     /// Constructor.

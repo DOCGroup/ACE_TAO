@@ -301,7 +301,7 @@ TAO_Codeset_Manager_i::isCompatible(CONV_FRAME::CodeSetId cs1,
 /// returns the TCS for Char / Wchar
 CONV_FRAME::CodeSetId
 TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent &remote,
-                                   CONV_FRAME::CodeSetComponent &local )
+                                   CONV_FRAME::CodeSetComponent &local)
 {
   if (remote.native_code_set == local.native_code_set)
     {
@@ -419,7 +419,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
     {
       tlist->translator_factory_ =
         ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::instance
-        (ACE_TEXT_ALWAYS_CHAR (tlist->name_));
+        (tlist->name_);
 
       if (tlist->translator_factory_ == 0)
         {

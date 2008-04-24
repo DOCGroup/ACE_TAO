@@ -40,7 +40,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_PI_Export TAO_ProcessingModePolicy
   : public PortableInterceptor::ProcessingModePolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.

@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// EndpointPolicy ORB initializer.
 class TAO_EndpointPolicy_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 
@@ -48,22 +48,15 @@ public:
    * PortableInterceptor::ORBInitializer interface.
    */
   //@{
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         );
-
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          );
-
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
   //@}
 
 private:
 
   /// Register Endpoint policy factories.
-  void register_policy_factories (
-    PortableInterceptor::ORBInitInfo_ptr info
-   );
-
+  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

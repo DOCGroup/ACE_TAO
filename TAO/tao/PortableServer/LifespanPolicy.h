@@ -40,7 +40,7 @@ namespace TAO
   {
     class TAO_PortableServer_Export LifespanPolicy
       : public virtual ::PortableServer::LifespanPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
       LifespanPolicy (::PortableServer::LifespanPolicyValue value);

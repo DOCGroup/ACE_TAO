@@ -36,7 +36,7 @@ class TAO_PI_PolicyFactory;
 /// PortableServer ORB initializer.
 class TAO_PI_Export TAO_PI_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

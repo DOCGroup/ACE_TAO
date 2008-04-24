@@ -40,7 +40,7 @@ namespace TAO
   {
     class TAO_PortableServer_Export ImplicitActivationPolicy
       : public virtual ::PortableServer::ImplicitActivationPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
       ImplicitActivationPolicy (::PortableServer::ImplicitActivationPolicyValue value);

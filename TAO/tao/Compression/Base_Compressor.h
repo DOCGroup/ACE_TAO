@@ -33,7 +33,7 @@ namespace TAO
    */
   class TAO_Compression_Export BaseCompressor :
     public virtual ::Compression::Compressor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     BaseCompressor (::Compression::CompressionLevel compression_level,

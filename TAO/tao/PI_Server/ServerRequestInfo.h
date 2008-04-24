@@ -69,7 +69,7 @@ namespace TAO
    */
   class ServerRequestInfo
     : public virtual PortableInterceptor::ServerRequestInfo
-    , public virtual CORBA::LocalObject
+    , public virtual ::CORBA::LocalObject
   {
   public:
 

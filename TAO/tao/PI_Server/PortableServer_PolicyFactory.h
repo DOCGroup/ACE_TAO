@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// Policy factory for all PortableServer related policies.
 class TAO_PortableServer_PolicyFactory
   : public virtual PortableInterceptor::PolicyFactory,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,

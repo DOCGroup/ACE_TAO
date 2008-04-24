@@ -42,7 +42,7 @@ namespace TAO
 
 class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_i
     : public virtual CORBA::TypeCodeFactory,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
 {
 /**
  * @class TAO_TypeCodeFactory_i

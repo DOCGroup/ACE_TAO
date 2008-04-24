@@ -40,7 +40,7 @@ class TAO_RTScheduler_Current;
 /// RTCORBA ORB initializer.
 class TAO_RTScheduler_ORB_Initializer
   : public virtual PortableInterceptor::ORBInitializer
-  , public virtual TAO_Local_RefCounted_Object
+  , public virtual ::CORBA::LocalObject
 {
 public:
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);

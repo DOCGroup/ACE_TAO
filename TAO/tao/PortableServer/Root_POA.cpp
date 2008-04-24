@@ -212,7 +212,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     lock_ (lock),
     orb_core_ (orb_core),
     object_adapter_ (object_adapter),
-    cleanup_in_progress_ (0),
+    cleanup_in_progress_ (false),
     outstanding_requests_ (0),
     outstanding_requests_condition_ (thread_lock),
     wait_for_completion_pending_ (0),
@@ -815,7 +815,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
   TAO_Root_POA::check_for_valid_wait_for_completions (this->orb_core (),
                                                       wait_for_completion);
 
-  this->cleanup_in_progress_ = 1;
+  this->cleanup_in_progress_ = true;
 
   // Inform the custom servant dispatching strategy to stop the working
   // threads when the poa is destroyed.
@@ -1022,7 +1022,6 @@ TAO_Root_POA::adapter_name_i (void)
   while (!CORBA::is_nil (poa.in ()))
     {
       poa = poa->the_parent ();
-
       ++len;
     }
 
