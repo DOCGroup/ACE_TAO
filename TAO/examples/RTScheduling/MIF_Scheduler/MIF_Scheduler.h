@@ -8,6 +8,7 @@
 #include "tao/orbconf.h"
 #include "tao/LocalObject.h"
 #include "tao/RTScheduling/RTScheduler.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
 #include "ace/Message_Queue.h"
 #include "ace/Null_Condition.h"
@@ -131,6 +132,7 @@ public TAO_Local_RefCounted_Object
 
  private:
   RTScheduling::Current_var current_;
+  RTCORBA::PriorityMappingManager_var mapping_manager_;
   TAO_SYNCH_MUTEX lock_;
   TAO_SYNCH_MUTEX wait_lock_;
   TAO_SYNCH_CONDITION wait_cond_;

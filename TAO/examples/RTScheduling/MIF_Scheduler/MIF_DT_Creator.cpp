@@ -42,6 +42,11 @@ MIF_DT_Creator::yield (int suspend_time,
 {
   try
     {
+      CORBA::Object_var object =
+        this->orb_->resolve_initial_references ("RTScheduler_Current");
+      RTScheduling::Current_var current =
+        RTScheduling::Current::_narrow (object.in ());
+
       ACE_Time_Value const sus_time_value (suspend_time);
       ACE_Time_Value now (ACE_OS::gettimeofday ());
       while (((now - *base_time_) < sus_time_value) || (suspend_time == 1))
@@ -51,9 +56,9 @@ MIF_DT_Creator::yield (int suspend_time,
           CORBA::Policy_var sched_param;
           sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
           const char * name = 0;
-          current_->update_scheduling_segment (name,
-                                               sched_param.in (),
-                                               sched_param.in ());
+          current->update_scheduling_segment (name,
+                                              sched_param.in (),
+                                              sched_param.in ());
           now = ACE_OS::gettimeofday ();
           if (suspend_time == 1)
             break;

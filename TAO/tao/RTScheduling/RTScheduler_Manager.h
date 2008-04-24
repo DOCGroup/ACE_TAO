@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#ifndef TAO_PRIORITY_MAPPING_MANAGER_H
-#define TAO_PRIORITY_MAPPING_MANAGER_H
+#ifndef TAO_RTSCHEDULER_MANAGER_H
+#define TAO_RTSCHEDULER_MANAGER_H
 
 #include "tao/RTScheduling/RTScheduler.h"
 #include "tao/LocalObject.h"
@@ -135,4 +135,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/RTScheduling/RTScheduler_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_PRIORITY_MAPPING_MANAGER_H */
+#endif /* TAO_RTSCHEDULER_MANAGER_H */
