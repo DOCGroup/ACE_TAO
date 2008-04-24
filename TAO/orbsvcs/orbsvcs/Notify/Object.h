@@ -70,8 +70,8 @@ public:
   /// Deactivate
   void deactivate (void);
 
-  /// Have we been shutdown. returns 1 if shutdown.
-  int has_shutdown (void);
+  /// Have we been shutdown. returns true if shutdown.
+  bool has_shutdown (void);
 
   void execute_task (TAO_Notify_Method_Request& method_request);
 
@@ -94,7 +94,7 @@ public:
   /// Accessor for the Event Manager
   TAO_Notify_Event_Manager& event_manager (void);
 
-  /// shutdown. Returns 1 ifif the shutdown was already run once before.
+  /// Shutdown. Returns 1 if the shutdown was already run once before.
   virtual int shutdown (void);
 
   /// Load our attributes. Each derived type should call the superclass
@@ -130,15 +130,16 @@ protected:
   TAO_Notify_POA_Helper* poa (void);
 
   // Sets the admin properties
-  void set_event_manager( TAO_Notify_Event_Manager* event_manager );
+  void set_event_manager(TAO_Notify_Event_Manager* event_manager);
 
   // Sets the admin properties
-  void set_admin_properties( TAO_Notify_AdminProperties* admin_properties );
+  void set_admin_properties(TAO_Notify_AdminProperties* admin_properties);
 
   /// Accessor for the Admin Properties
   TAO_Notify_AdminProperties& admin_properties (void);
 
-  /// Notification that can be overridden by subclasses to be informed that <qos_properties_> have been modified.
+  /// Notification that can be overridden by subclasses to be informed that
+  /// <qos_properties_> have been modified.
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Called by derived types to save their attributes. Each
@@ -198,7 +199,7 @@ private:
   ID id_;
 
   /// The event manager.
-  //TAO_Notify_Event_Manager inl includes Object.h
+  /// TAO_Notify_Event_Manager inl includes Object.h
   TAO_Notify_Refcountable_Guard_T< TAO_Notify_Event_Manager > event_manager_;
 
   /// Admin Properties.
