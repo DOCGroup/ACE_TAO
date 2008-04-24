@@ -6,6 +6,10 @@
 
 #include <unistd.h>
 
+#if defined _XOPEN_STREAMS && _XOPEN_STREAMS == -1
+# define ACE_LACKS_STROPTS_H
+#endif /* _XOPEN_STREAMS && _XOPEN_STREAMS == -1 */
+
 /*  The following POSIX constants are defined after <unistd.h> is
  *  included.  They are documented in:
  * http://www.opengroup.org/onlinepubs/007904975/basedefs/unistd.h.html
