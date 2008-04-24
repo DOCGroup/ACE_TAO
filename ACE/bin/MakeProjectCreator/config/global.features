@@ -44,6 +44,7 @@ uses_wchar    = 0
 gen_ostream   = 0
 ziparchive    = 0
 negotiate_codesets  = 0
+unicode       = 0
 versioned_namespace = 0
 vcl           = 0
 stl           = 0
