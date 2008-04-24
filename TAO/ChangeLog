@@ -1,3 +1,10 @@
+Thu Apr 24 09:49:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+        * tao/BiDir_GIOP/BiDir_Policy_i.h:
+          Get rid of TAO_Local_RefCounted_Object. If this doesn't lead to
+          compile warnings I will commit more changes to the core TAO libs
+
 Thu Apr 24 09:21:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Adapter_Registry.{h,cpp}:
