@@ -6,8 +6,6 @@
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_RT_NOTIFY_SERVICE_H

@@ -68,7 +68,6 @@ public:
   /// Set up callbacks
   void set_callback(Persistent_Callback* callback);
 
-
   /// Store an event + routing slip.
   bool store(const ACE_Message_Block& event,
     const ACE_Message_Block& routing_slip);
@@ -255,7 +254,7 @@ private:
   ACE_Unbounded_Stack<size_t> allocated_routing_slip_blocks_;
   Persistent_Callback* callback_;
 
-  /// if these are non-zero we own 'em
+  /// If these are non-zero we own 'em
   ACE_Message_Block * event_mb_;
   ACE_Message_Block * routing_slip_mb_;
 };

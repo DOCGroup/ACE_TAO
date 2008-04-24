@@ -1,3 +1,22 @@
+Thu Apr 24 11:34:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.cpp
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.h
+        * orbsvcs/orbsvcs/Notify/Proxy.h
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.h
+        * orbsvcs/orbsvcs/Notify/Reconnect_Worker_T.h
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.h
+        * orbsvcs/orbsvcs/Notify/Refcountable.h
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.h
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.h
+        * orbsvcs/orbsvcs/Notify/RT_Properties.h
+        * orbsvcs/orbsvcs/Notify/Seq_Worker_T.h
+          Layout, bool and doxygen changes
+
 Thu Apr 24 11:10:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Admin.cpp

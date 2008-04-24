@@ -34,7 +34,7 @@ namespace TAO_Notify
     /// Constructor
     Reconnect_Worker();
 
-    // override virtual ESF_Worker method
+    /// Override virtual ESF_Worker method
     virtual void work (TOPOOBJ* o);
   };
 } // namespace TAO_Notify
