@@ -50,10 +50,10 @@ public:
   /// Destructor
   virtual ~TAO_Notify_AdminProperties ();
 
-  // Init
+  /// Init
   int init (const CosNotification::PropertySeq& prop_seq);
 
-  // finish initialization after values are set by topology load
+  /// finish initialization after values are set by topology load
   void init ();
 
   // = Const Accessors

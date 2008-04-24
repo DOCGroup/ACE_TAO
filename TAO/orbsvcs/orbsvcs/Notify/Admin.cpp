@@ -102,8 +102,7 @@ TAO_Notify_Admin::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types)
 int
 TAO_Notify_Admin::shutdown (void)
 {
-  int sd_ret = TAO_Notify_Object::shutdown ();
-  if (sd_ret == 1)
+  if (TAO_Notify_Object::shutdown () == 1)
     return 1;
 
   this->proxy_container().shutdown ();

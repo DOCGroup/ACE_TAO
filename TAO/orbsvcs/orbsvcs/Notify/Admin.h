@@ -56,8 +56,7 @@ public:
   /// Insert the proxy in the <proxy_container_>.
   void insert (TAO_Notify_Proxy* proxy);
 
-  /// Remove type from container_
-  /// and cleanup any EC resources.
+  /// Remove type from container_ and cleanup any EC resources.
   void cleanup_proxy (TAO_Notify_Proxy *proxy, bool is_supplier);
 
   /// Access Admin FilterAdmin.
@@ -74,6 +73,7 @@ public:
   void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types);
 
   TAO_Notify_EventChannel * event_channel () const;
+
   /// Shutdown
   virtual int shutdown (void);
 
