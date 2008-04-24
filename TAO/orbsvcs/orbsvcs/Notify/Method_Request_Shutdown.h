@@ -35,7 +35,7 @@ class TAO_Notify_ThreadPool_Task;
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Shutdown : public TAO_Notify_Method_Request_Queueable
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task);
 
   /// Destructor

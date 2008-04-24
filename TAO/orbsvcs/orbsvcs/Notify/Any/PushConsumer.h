@@ -33,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_PushConsumer : public TAO_Notify_Consumer
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Destructor

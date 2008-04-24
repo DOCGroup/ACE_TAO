@@ -43,7 +43,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Worker_Task : public TAO_Notify_Refcount
 public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Worker_Task > Ptr;
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Worker_Task (void);
 
   /// Update QoS Properties.

@@ -38,7 +38,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Peer
 {
 public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Peer > Ptr;
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Peer (void);
 
   /// Destructor

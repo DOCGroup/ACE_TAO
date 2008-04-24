@@ -44,7 +44,7 @@ class TAO_Notify_Serv_Export TAO_Notify_AdminProperties
 {
 public:
   typedef ACE_Strong_Bound_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX> Ptr;
-  /// Constuctor
+  /// Constructor
   TAO_Notify_AdminProperties (void);
 
   /// Destructor

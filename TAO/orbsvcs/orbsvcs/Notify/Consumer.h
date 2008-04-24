@@ -55,7 +55,7 @@ public:
     DISPATCH_FAIL};   // discard all messages and disconnect consumer
 
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Destructor

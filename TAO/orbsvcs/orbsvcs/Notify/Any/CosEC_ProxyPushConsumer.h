@@ -42,7 +42,7 @@ class TAO_Notify_Serv_Export TAO_Notify_CosEC_ProxyPushConsumer
 {
  friend class TAO_Notify_Builder;
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_CosEC_ProxyPushConsumer (void);
 
   /// Destructor

@@ -44,7 +44,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyPushConsumer
  typedef TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::ProxyPushConsumer> SuperClass;
  friend class TAO_Notify_Builder;
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ProxyPushConsumer (void);
 
   /// Destructor

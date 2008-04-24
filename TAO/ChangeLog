@@ -1,3 +1,68 @@
+Thu Apr 24 12:13:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Admin.h
+        * orbsvcs/orbsvcs/Notify/AdminProperties.h
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Consumer.h
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h
+        * orbsvcs/orbsvcs/Notify/Container_T.h
+        * orbsvcs/orbsvcs/Notify/CosNotify_Initializer.h
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.h
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.h
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h
+        * orbsvcs/orbsvcs/Notify/Event.h
+        * orbsvcs/orbsvcs/Notify/Event_Manager.h
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.h
+        * orbsvcs/orbsvcs/Notify/EventChannel.h
+        * orbsvcs/orbsvcs/Notify/EventType.h
+        * orbsvcs/orbsvcs/Notify/ID_Factory.h
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.h
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.h
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.h
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h
+        * orbsvcs/orbsvcs/Notify/Peer.h
+        * orbsvcs/orbsvcs/Notify/Properties.h
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.h
+        * orbsvcs/orbsvcs/Notify/Property_T.h
+        * orbsvcs/orbsvcs/Notify/PropertySeq.h
+        * orbsvcs/orbsvcs/Notify/Proxy.h
+        * orbsvcs/orbsvcs/Notify/Proxy_T.h
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.h
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.h
+        * orbsvcs/orbsvcs/Notify/QoSProperties.h
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h
+        * orbsvcs/orbsvcs/Notify/RT_Builder.h
+        * orbsvcs/orbsvcs/Notify/RT_Factory.h
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.h
+        * orbsvcs/orbsvcs/Notify/RT_Properties.h
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.h
+        * orbsvcs/orbsvcs/Notify/Supplier.h
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.h
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.h
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h
+          Fixed Constuctor to Constructor
+
 Thu Apr 24 12:16:30 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/RTScheduling/DT_Creator.h:
@@ -7,14 +72,14 @@ Thu Apr 24 12:16:30 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
           Changed to not hold onto the RTScheduling::Current, RTCORBA::RTORB
           or PortableServer::POA.  They are retrieved on demand.  Otherwise,
-          static destruction causes problems on some platforms.             
+          static destruction causes problems on some platforms.
 
         * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
         * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
 
           Modified this test to convert the native priority to the CORBA
           priority before passing it to the RTCORBA::Current::the_priority()
-          method.  It expects an RTCORBA priority, not a native priority.   
+          method.  It expects an RTCORBA priority, not a native priority.
 
         * examples/RTScheduling/Task_Stats.cpp:
 

@@ -40,7 +40,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier : public virtual TAO_Notif
 
 public:
   typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier> Ptr;
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ProxySupplier (void);
 
   /// Destructor

@@ -34,10 +34,10 @@ class TAO_Notify_PropertySeq;
 class TAO_Notify_Serv_Export TAO_Notify_Property_Boolean
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Property_Boolean (const char* name, CORBA::Boolean initial);
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Property_Boolean (const char* name);
 
   /// Assignment from TAO_Notify_Property_Boolean

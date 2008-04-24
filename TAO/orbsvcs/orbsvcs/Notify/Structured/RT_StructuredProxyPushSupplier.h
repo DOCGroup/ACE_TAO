@@ -33,7 +33,7 @@ class TAO_RT_Notify_Export TAO_Notify_RT_StructuredProxyPushSupplier :
   public virtual TAO_Notify_StructuredProxyPushSupplier
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_RT_StructuredProxyPushSupplier (void);
 
   /// Destructor
