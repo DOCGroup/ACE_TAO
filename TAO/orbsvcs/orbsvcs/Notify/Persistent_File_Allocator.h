@@ -121,8 +121,8 @@ private:
  * Maintains a free list, write queue, allocations of new
  * blocks, reads, and writes.  This class also manages a thread that performs
  * background updating of a Random_File.
- * @@todo this is too much for one class to do.  It should be refactored.
- * @@todo: we shouldn't arbitrarily use a thread.
+ * @todo this is too much for one class to do.  It should be refactored.
+ * @todo we shouldn't arbitrarily use a thread.
  */
 class TAO_Notify_Serv_Export Persistent_File_Allocator
 {

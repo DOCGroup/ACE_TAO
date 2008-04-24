@@ -44,7 +44,8 @@ public:
   /// Destructor
   virtual ~TAO_Notify_Peer ();
 
-  /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
+  /// This method sigantures deliberately match the RefCounting methods
+  /// required for ESF Proxy
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 

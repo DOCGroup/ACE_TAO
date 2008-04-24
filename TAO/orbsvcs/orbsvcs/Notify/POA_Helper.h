@@ -40,8 +40,7 @@ public:
   TAO_Notify_POA_Helper (void);
 
   /// Create a new PortableServer::POA.
-  void init (PortableServer::POA_ptr parent_poa,
-             const char* poa_name);
+  void init (PortableServer::POA_ptr parent_poa, const char* poa_name);
 
 #if !defined (CORBA_E_MICRO)
   /// Create a new persistent PortableServer::POA.

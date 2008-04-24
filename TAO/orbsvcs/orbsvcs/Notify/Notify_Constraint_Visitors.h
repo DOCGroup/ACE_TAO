@@ -45,8 +45,8 @@ public:
   int bind_structured_event (const CosNotification::StructuredEvent &s_event);
 
   /**
-   * Returns 1 if the event satisfies the constraint
-   * represented by the the expression tree rooted at <root>, 0 if it
+   * Returns true if the event satisfies the constraint
+   * represented by the the expression tree rooted at @a root, false if it
    * doesn't. If an error occurs during the process, the traversal
    * automatically fails.
    */
@@ -91,10 +91,9 @@ protected:
   CORBA::Boolean any_does_contain (const CORBA::Any *any,
                                    TAO_ETCL_Literal_Constraint &item);
 
-  // Utility function to compare a TAO_ETCL_Literal_Constraint type
-  // and a type code.
-  CORBA::Boolean simple_type_match (int expr_type,
-                                    CORBA::TCKind tc_kind);
+  /// Utility function to compare a TAO_ETCL_Literal_Constraint type
+  /// and a type code.
+  CORBA::Boolean simple_type_match (int expr_type, CORBA::TCKind tc_kind);
 
   enum structured_event_field
     {
@@ -117,7 +116,7 @@ protected:
   /// @note A fixed set of 9 keys are stored in this map.  In the absence
   /// of a minimal perfect hash, ACE's default hash_pjw() and a hash size
   /// of 27 ensures each element is hashed to a unique bucket.
-  /// TODO: define inline once VC6 support is deprecated.
+  /// @todo define inline once VC6 support is deprecated.
   static const size_t implicit_ids_size_;
 
   /// Lookup table for the implicit ids, to avoid string comparisons in
@@ -126,7 +125,7 @@ protected:
     implicit_ids_;
 
   /// Size of filterable_data_ hash map.
-  /// TODO: define inline once VC6 support is deprecated.
+  /// @todo define inline once VC6 support is deprecated.
   static const size_t filterable_data_size_;
 
   /// Used to lookup names and values in the event's 'filterable_data' field.
@@ -134,7 +133,7 @@ protected:
     filterable_data_;
 
   /// Size of variable_header_ hash map.
-  /// TODO: define inline once VC6 support is deprecated.
+  /// @todo define inline once VC6 support is deprecated.
   static const size_t variable_header_size_;
 
   /// Used to lookup names and values in the event's 'variable_header' field.
