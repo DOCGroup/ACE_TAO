@@ -45,7 +45,7 @@ public:
   TAO_Notify_ProxyConsumer (void);
 
   /// Destructor
-  virtual ~TAO_Notify_ProxyConsumer ();
+  virtual ~TAO_Notify_ProxyConsumer (void);
 
   /// init: overrides Topology_Object method
   virtual void init (TAO_Notify::Topology_Parent * topology_parent);
@@ -62,8 +62,7 @@ public:
   /// Destroy this object.
   virtual void destroy (void);
 
-
-  /// Return 1 if connected
+  /// Return true if connected
   bool is_connected (void) const;
 
   /// The SA parent.

@@ -20,7 +20,7 @@ TAO_PG_Group_Guard::TAO_PG_Group_Guard (
     factory_set_ (factory_set),
     group_manager_ (group_manager),
     oid_ (oid),
-    released_ (0)
+    released_ (false)
 {
 }
 
@@ -48,7 +48,7 @@ TAO_PG_Group_Guard::~TAO_PG_Group_Guard (void)
 void
 TAO_PG_Group_Guard::release (void)
 {
-  this->released_ = 1;
+  this->released_ = true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

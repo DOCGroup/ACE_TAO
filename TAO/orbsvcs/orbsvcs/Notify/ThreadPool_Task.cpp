@@ -120,7 +120,7 @@ TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request)
 int
 TAO_Notify_ThreadPool_Task::svc (void)
 {
-  TAO_Notify_Method_Request_Queueable* method_request;
+  TAO_Notify_Method_Request_Queueable* method_request = 0;
 
   while (!shutdown_)
   {
@@ -136,7 +136,7 @@ TAO_Notify_ThreadPool_Task::svc (void)
       }
 
       // Dequeue 1 item
-      int result = buffering_strategy_->dequeue (method_request, dequeue_blocking_time);
+      int const result = buffering_strategy_->dequeue (method_request, dequeue_blocking_time);
 
       if (result > 0)
       {

@@ -39,7 +39,7 @@ public:
   TAO_Notify_QoSProperties (void);
 
   /// Destructor
-  virtual ~TAO_Notify_QoSProperties ();
+  virtual ~TAO_Notify_QoSProperties (void);
 
   /// Return 0 on success, 1 if unsupported properties were detected and -1 on error.
   int init (const CosNotification::PropertySeq& prop_seq, CosNotification::PropertyErrorSeq& err_seq);

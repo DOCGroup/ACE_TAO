@@ -152,9 +152,8 @@ module NotifyExt
     CosNotifyChannelAdmin::ProxySupplier obtain_notification_push_supplier_with_qos (in CosNotifyChannelAdmin::ClientType ctype,
                                                                                      out CosNotifyChannelAdmin::ProxyID proxy_id,
                                                                                      in CosNotification::QoSProperties initial_qos)
-      raises ( CosNotifyChannelAdmin::AdminLimitExceeded,
-               CosNotification::UnsupportedQoS
-               );
+      raises (CosNotifyChannelAdmin::AdminLimitExceeded,
+              CosNotification::UnsupportedQoS);
   };
 
   interface SupplierAdmin : CosNotifyChannelAdmin::SupplierAdmin
@@ -175,9 +174,8 @@ module NotifyExt
     CosNotifyChannelAdmin::ProxyConsumer obtain_notification_push_consumer_with_qos (in CosNotifyChannelAdmin::ClientType ctype,
                                                                                      out CosNotifyChannelAdmin::ProxyID proxy_id,
                                                                                      in CosNotification::QoSProperties initial_qos)
-      raises ( CosNotifyChannelAdmin::AdminLimitExceeded,
-               CosNotification::UnsupportedQoS
-               );
+      raises (CosNotifyChannelAdmin::AdminLimitExceeded,
+              CosNotification::UnsupportedQoS);
   };
 };
 

@@ -133,16 +133,11 @@ private:
 protected:
   /// =CosNotifyChannelAdmin::EventChannel methods
 
-  virtual ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory (
-  );
+  virtual ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory ();
 
-  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin (
+  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin (void);
 
-  );
-
-  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin (
-
-  );
+  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin (void);
 
   virtual ::CosNotifyFilter::FilterFactory_ptr default_filter_factory (void);
 

@@ -42,7 +42,6 @@ public:
   /// Destructor
   virtual ~TAO_Notify_Timer_Reactor ();
 
-
   /// Schedule a timer
   virtual long schedule_timer (ACE_Event_Handler *handler,
                                const ACE_Time_Value &delay_time,

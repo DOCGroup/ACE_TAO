@@ -65,8 +65,7 @@ public:
 
   /// Set Filter operator
   void filter_operator (
-      CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
-    );
+      CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator);
 
   /// Access Filter operator
   CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator (void);
@@ -98,7 +97,6 @@ protected:
 
   /// The EventChannel.
   TAO_Notify_EventChannel::Ptr ec_;
-
 
   /// The types that we've subscribed our proxy objects with the event manager.
   TAO_Notify_EventTypeSeq subscribed_types_;
