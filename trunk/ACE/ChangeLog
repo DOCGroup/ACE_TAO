@@ -1,3 +1,9 @@
+Thu Apr 24 18:45:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          When ACE_LACKS_STROPTS_H not is defined we assume we have
+          strbut so we set ACE_HAS_STRBUF_T
+
 Thu Apr 24 16:47:16 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:
