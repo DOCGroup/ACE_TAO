@@ -16,12 +16,12 @@
 
 TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 : notify_service_ (0)
-, bootstrap_ (0)
-, use_name_svc_ (1)
+, bootstrap_ (false)
+, use_name_svc_ (true)
 , ior_output_file_ (0)
 , notify_factory_name_ (NOTIFY_KEY)
 , notify_channel_name_ (NOTIFY_CHANNEL_NAME)
-, register_event_channel_ (0)
+, register_event_channel_ (false)
 , nthreads_ (1)
 , separate_dispatching_orb_ (false)
 {
@@ -184,7 +184,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
                   "Registered with the naming service as: %s\n",
                   this->notify_factory_name_.c_str()));
 
-      if (this->register_event_channel_ == 1)
+      if (this->register_event_channel_)
         {
           // create an event channel
           CosNotifyChannelAdmin::ChannelID id;
@@ -349,21 +349,21 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Boot")) == 0)
         {
-          this->bootstrap_ = 1;
+          this->bootstrap_ = true;
           // Make it bootstrappable
 
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NameSvc")) == 0)
         {
-          this->use_name_svc_ = 1;
+          this->use_name_svc_ = true;
           // Register ref with the name service
 
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NoNameSvc")) == 0)
         {
-          this->use_name_svc_ = 0;
+          this->use_name_svc_ = false;
           // Don't Register ref with the name service
 
           arg_shifter.consume_arg ();
@@ -384,7 +384,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Channel")) == 0)
         {
-          this->register_event_channel_ = 1;
+          this->register_event_channel_ = true;
           // Register one EC with naming.
 
           arg_shifter.consume_arg ();
