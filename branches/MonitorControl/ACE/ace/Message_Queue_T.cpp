@@ -17,6 +17,10 @@
 #include "ace/Notification_Strategy.h"
 #include "ace/Truncate.h"
 
+#if defined (ACE_ENABLE_MONITORS)
+#include "ace/Size_Monitor.h"
+#endif /* ACE_ENABLE_MONITORS */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
@@ -935,6 +939,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
                 ACE_TEXT ("open")));
                 
 #if defined (ACE_ENABLE_MONITORS)
+  ACE_NEW (this->monitor_,
+           ACE::MonitorControl::Size_Monitor);
+
   /// Make a unique name using our hex address.
   const int nibbles = 2 * sizeof (ptrdiff_t);
   char buf[nibbles + 1];
@@ -942,8 +949,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
   buf[nibbles] = '\0';
   ACE_CString name_str ("Message_Queue_");
   name_str += buf;
-  this->monitor_.name (name_str.c_str ());
-  this->monitor_.add_to_registry ();
+  this->monitor_->name (name_str.c_str ());
+  this->monitor_->add_to_registry ();
 #endif /* ACE_ENABLE_MONITORS */
 }
 
@@ -956,7 +963,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
                 ACE_TEXT ("close")));
                 
 #if defined (ACE_ENABLE_MONITORS)
-  this->monitor_.remove_from_registry ();
+  this->monitor_->remove_from_registry ();
+  this->monitor_->remove_ref ();
 #endif /* ACE_ENABLE_MONITORS */
 }
 
@@ -992,7 +1000,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::flush_i (void)
   // The monitor should output only if the size has actually changed.
   if (number_flushed > 0)
     {
-      this->monitor_.receive (this->cur_length_);
+      this->monitor_->receive (this->cur_length_);
     }
 #endif
 
@@ -1371,7 +1379,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
   first_item->next (0);
   
 #if defined (ACE_ENABLE_MONITORS)
-  this->monitor_.receive (this->cur_length_);
+  this->monitor_->receive (this->cur_length_);
 #endif
 
   // Only signal enqueueing threads if we've fallen below the low
@@ -1890,7 +1898,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::notify");
   
 #if defined (ACE_ENABLE_MONITORS)
-  this->monitor_.receive (this->cur_length_);
+  this->monitor_->receive (this->cur_length_);
 #endif
 
   // By default, don't do anything.

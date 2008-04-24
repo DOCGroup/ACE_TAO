@@ -39,45 +39,33 @@ typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::BytesReceivedMonitor
   BYTES_RECEIVED_MONITOR;
 typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::PacketsReceivedMonitor
   PACKETS_RECEIVED_MONITOR;
+  
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
+  
+template<typename OS_MP_TYPE>
+Monitor_Base*
+create_os_monitor (const char* name = 0,
+                   ACE_Time_Value period = ACE_Time_Value::zero)
+{
+  Monitor_Base* retval = 0;
+  
+  ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER *mgr =
+    ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service<
+      ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance (
+        "MC_ADMINMANAGER");
+        
+  const char* working_name =
+    (name == 0 ? OS_MP_TYPE::default_name () : name);
+        
+  retval = mgr->admin ().monitor_point (working_name);
 
-#define ADD_MANUAL_MONITOR(TYPE) \
-{ \
-  ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER *mgr = \
-    ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service< \
-      ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance ( \
-        "MC_ADMINMANAGER"); \
-  TYPE* mp = \
-    ACE_VERSIONED_NAMESPACE_NAME::ACE_Singleton< \
-      TYPE, \
-      ACE_VERSIONED_NAMESPACE_NAME::ACE_Null_Mutex>::instance (); \
-  bool good_add = \
-    mgr->admin ().monitor_point (mp, ACE_Time_Value::zero); \
-  if (!good_add) \
-    { \
-      ACE_ERROR ((LM_ERROR, \
-                  "Monitor %s already registered.\n", \
-                  mp->name ())); \
-    } \
-}
-
-#define ADD_PERIODIC_MONITOR(TYPE,TIMEVAL) \
-{ \
-  ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER *mgr = \
-    ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service< \
-      ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance ( \
-        "MC_ADMINMANAGER"); \
-  TYPE* mp = \
-    ACE_VERSIONED_NAMESPACE_NAME::ACE_Singleton< \
-      TYPE, \
-      ACE_VERSIONED_NAMESPACE_NAME::ACE_Null_Mutex>::instance (); \
-  bool good_add = \
-    mgr->admin ().monitor_point (mp, TIMEVAL); \
-  if (!good_add) \
-    { \
-      ACE_ERROR ((LM_ERROR, \
-                  "Monitor %s already registered.\n", \
-                  mp->name ())); \
-    } \
+  if (retval == 0)
+    {
+      ACE_NEW_RETURN (retval, OS_MP_TYPE (working_name), 0);
+      (void) mgr->admin ().monitor_point (retval, period);
+    }
+    
+  return retval;
 }
 
 #define START_PERIODIC_MONITORS \

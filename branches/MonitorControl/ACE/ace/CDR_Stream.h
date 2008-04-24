@@ -51,10 +51,6 @@
 #include "ace/SStringfwd.h"
 #include "ace/Message_Block.h"
 
-#if defined (ACE_ENABLE_MONITORS)
-#include "Size_Monitor.h"
-#endif /* ACE_ENABLE_MONITORS */
-
 #if defined (GEN_OSTREAM_OPS)
 #include "ace/streams.h"
 #endif /* GEN_OSTREAM_OPS */
@@ -75,6 +71,16 @@ class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
 
 class ACE_InputCDR;
+
+#if defined (ACE_ENABLE_MONITORS)
+namespace ACE
+{
+  namespace MonitorControl
+  {
+    class Size_Monitor;
+  }
+}
+#endif /* ACE_ENABLE_MONITORS */
 
 /**
  * @class ACE_OutputCDR
@@ -564,7 +570,7 @@ private:
   size_t const memcpy_tradeoff_;
   
 #if defined (ACE_ENABLE_MONITORS)
-  ACE::MonitorControl::Size_Monitor monitor_;
+  ACE::MonitorControl::Size_Monitor *monitor_;
 #endif /* ACE_ENABLE_MONITORS */
 
 protected:
@@ -1001,7 +1007,7 @@ protected:
   ACE_WChar_Codeset_Translator *wchar_translator_;
   
 #if defined (ACE_ENABLE_MONITORS)
-  ACE::MonitorControl::Size_Monitor monitor_;
+  ACE::MonitorControl::Size_Monitor *monitor_;
 #endif /* ACE_ENABLE_MONITORS */
 
 private:

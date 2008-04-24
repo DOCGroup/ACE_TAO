@@ -1,3 +1,61 @@
+Thu Apr 24 22:13:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Stream.inl:
+        * ace/Message_Queue_T.cpp:
+        * ace/Control_Action.h:
+        * ace/MC_Admin.h:
+        * ace/Monitor_Point_Registry.cpp:
+        * ace/Message_Queue_T.h:
+        * ace/Monitor_Base.cpp:
+        * ace/Monitor_Base.h:
+        * ace/Monitor_Base.inl:
+        * ace/Monitor_Point_Registry.h:
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+        * ace/MC_Admin.cpp:
+
+          Added reference counting for monitors.
+
+        * MonitorControl/MonitorControl_macros.h:
+
+          Renamed this file as MonitorControl_utils.h,
+          since it now contains more than just macros.
+
+        * MonitorControl/MonitorControl_utils.h:
+
+          Renamed from above file.
+
+        * MonitorControl/MonitorControl.mpc:
+
+          Changed the name of the renamed header file
+          in the MPC project.
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.h:
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/BytesReceivedMonitor.cpp:
+        * MonitorControl/PacketsReceivedMonitor.cpp:
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        * MonitorControl/BytesReceivedMonitor.h:
+        * MonitorControl/MemoryUsageMonitor.h:
+        * MonitorControl/PacketsReceivedMonitor.h:
+        * MonitorControl/NumThreadsMonitor.h:
+        * MonitorControl/MonitorControl.h:
+        * MonitorControl/BytesSentMonitor.h:
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
+        * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp:
+        * MonitorControl/examples/Constraint/constraint.cpp:
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp:
+        * MonitorControl/examples/Num_Threads/num_threads.cpp:
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp:
+        * MonitorControl/examples/Group/group.cpp:
+
+          Changes necessary to integrate monitor refcounting
+          into MonitorControl classes and into the examples.
+
 Fri Apr 18 21:33:44 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/MonitorPoint.h:

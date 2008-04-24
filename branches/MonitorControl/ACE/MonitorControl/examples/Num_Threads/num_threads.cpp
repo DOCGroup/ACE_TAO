@@ -43,6 +43,8 @@ public:
             thread_monitor->retrieve (data);
             MC_Test_Utilities::display_num_threads (data);
           }
+          
+        thread_monitor->remove_ref ();
       }
 
     return 0;
@@ -52,7 +54,8 @@ public:
 int main (int /* argc */, char * /* argv */ [])
 {
   /// Set the timer for # of threads check at 2 sec.
-  ADD_PERIODIC_MONITOR (NUM_THREADS_MONITOR, ACE_Time_Value (2));
+  Monitor_Base *num_threads_monitor =
+    create_os_monitor<NUM_THREADS_MONITOR> (0, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
@@ -70,6 +73,8 @@ int main (int /* argc */, char * /* argv */ [])
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
+  
+  num_threads_monitor->remove_ref ();
 
   return 0;
 }

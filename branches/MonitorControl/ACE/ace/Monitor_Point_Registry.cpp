@@ -24,7 +24,7 @@ namespace ACE
       : constraint_id_ (0)
     {
     }
-
+    
     bool
     Monitor_Point_Registry::add (Monitor_Base* type)
     {
@@ -39,6 +39,8 @@ namespace ACE
 
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
+        
+        type->add_ref ();
 
         status = this->map_.bind (type->name (), type);
       }
@@ -64,19 +66,25 @@ namespace ACE
         }
         
       int status = 0;
+      Map::data_type mp = 0;
 
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
 
         ACE_CString name_str (name, 0, false);
-        status = this->map_.unbind (name_str);
+        status = this->map_.unbind (name_str, mp);
       }
 
       if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "registry add: map unbind failed\n"),
+                             "registry remove: unbind failed for %s\n",
+                             name),
                             false);
+        }
+      else
+        {
+          mp->remove_ref ();
         }
         
       return (status == 0);
@@ -102,15 +110,20 @@ namespace ACE
     Monitor_Base*
     Monitor_Point_Registry::get (const ACE_CString& name) const
     {
-      Map::data_type type = 0;
+      Map::data_type mp = 0;
       
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
         
-        this->map_.find (name, type);
+        this->map_.find (name, mp);
       }
       
-      return type;
+      if (mp != 0)
+        {
+          mp->add_ref ();
+        }
+      
+      return mp;
     }
     
     long
@@ -125,6 +138,19 @@ namespace ACE
       }
       
       return retval;      
+    }
+    
+    void
+    Monitor_Point_Registry::cleanup (void)
+    {
+      for (Map::ITERATOR i = this->map_.begin ();
+           i != this->map_.end ();
+           i.advance ())
+        {
+          Map::ENTRY* entry;
+          i.next (entry);
+          entry->int_id_->remove_ref ();
+        }
     }
   }
 }

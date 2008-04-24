@@ -38,7 +38,8 @@ namespace ACE
      * This class is extended by the application developer or
      * by the MC service itself to create a concrete class.
      */
-    class ACE_Export Control_Action : private ACE_Refcountable_T<ACE_SYNCH_MUTEX>
+    class ACE_Export Control_Action
+      : private ACE_Refcountable_T<ACE_SYNCH_MUTEX>
     {
     public:
       /// To be implemented by the concrete derived class.

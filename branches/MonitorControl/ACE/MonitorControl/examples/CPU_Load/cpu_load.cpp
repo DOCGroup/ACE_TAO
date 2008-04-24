@@ -33,6 +33,8 @@ public:
             cpu_monitor->retrieve (data);
             MC_Test_Utilities::display_cpu_load (data);
           }
+          
+        cpu_monitor->remove_ref ();
       }
 
     return 0;
@@ -44,13 +46,14 @@ int main (int /* argc */, char * /* argv */ [])
   /// The Admin class will own the reactor and destroy it. We are
   /// passing a vanilla reactor to show how it works, but in real
   /// life it could be some specialized reactor.
-  ACE_Reactor* new_reactor = new ACE_Reactor;
+  ACE_Reactor new_reactor;
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-  mgr->admin ().reactor (new_reactor);
+  mgr->admin ().reactor (&new_reactor);
 
   /// Set the timer for CPU load check at 2 sec.
-  ADD_PERIODIC_MONITOR (CPU_LOAD_MONITOR, ACE_Time_Value (2));
+  Monitor_Base *cpu_monitor =
+    create_os_monitor<CPU_LOAD_MONITOR> (0, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
@@ -82,6 +85,8 @@ int main (int /* argc */, char * /* argv */ [])
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
+  
+  cpu_monitor->remove_ref ();
 
   return 0;
 }

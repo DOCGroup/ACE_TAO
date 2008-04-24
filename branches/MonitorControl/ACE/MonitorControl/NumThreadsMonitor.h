@@ -46,12 +46,17 @@ namespace ACE
 #endif
     {
     public:
-      NumThreadsMonitor (void);
+      NumThreadsMonitor (const char* name);
     
       /// Implementation of the pure virtual method.
       virtual void update (void);
       
+      /// Stores the default name, used if none is supplied to constructor.
+      static const char* default_name (void);
+      
     private:
+      static const char* default_name_;
+    
 #if defined (linux)
       FILE *file_ptr_;
       char buf_[1024];

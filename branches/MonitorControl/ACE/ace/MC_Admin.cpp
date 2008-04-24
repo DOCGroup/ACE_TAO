@@ -41,21 +41,23 @@ namespace ACE
     
     MC_Admin::MC_Admin (void)
       : reactor_ (ACE_Reactor::instance ()),
-        delete_reactor_ (false)
+        default_reactor_ (true)
     {}
 
     MC_Admin::~MC_Admin (void)
     {
-      if (this->delete_reactor_)
-        {
-          delete this->reactor_;
-        }
-      else
+      if (this->default_reactor_)
         {
           /// Destroys the timers associated with our event handler
           /// before its destructor is called.
           ACE_Reactor::instance ()->close_singleton ();
         }
+        
+      /// We access the registry through ACE_Singleton, which somhow
+      /// doesn't call the destructor, so we call this method to
+      /// do a remove_ref() on all monitor points left in the registry.
+      /// which needs to be done before the registry goes away.  
+      Monitor_Point_Registry::instance ()->cleanup ();
     }
 
     bool
@@ -112,7 +114,7 @@ namespace ACE
     MC_Admin::reactor (ACE_Reactor* new_reactor)
     {
       this->reactor_ = new_reactor;
-      this->delete_reactor_ = true;
+      this->default_reactor_ = false;
     }
 
     ACE_Reactor*

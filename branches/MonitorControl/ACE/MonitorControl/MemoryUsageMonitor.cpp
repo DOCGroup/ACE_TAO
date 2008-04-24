@@ -14,8 +14,11 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    MemoryUsageMonitor::MemoryUsageMonitor (void)
-      : Monitor_Base ("OS/Memory/TotalUsage")
+    const char* MemoryUsageMonitor::default_name_ =
+      "OS/Memory/TotalUsage";
+  
+    MemoryUsageMonitor::MemoryUsageMonitor (const char* name)
+      : Monitor_Base (name)
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\Memory\\% Committed Bytes In Use")
 #elif defined (ACE_HAS_KSTAT)
@@ -53,6 +56,12 @@ namespace ACE
       
       this->receive (percent_mem_usage);
 #endif
+    }
+    
+    const char*
+    MemoryUsageMonitor::default_name (void)
+    {
+      return MemoryUsageMonitor::default_name_;
     }
   }
 }

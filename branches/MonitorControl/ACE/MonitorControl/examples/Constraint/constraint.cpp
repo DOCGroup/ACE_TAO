@@ -39,7 +39,7 @@ public:
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::MonitorControl::Monitor_Base *bytes_monitor =
+    Monitor_Base *bytes_monitor =
       mgr->admin ().monitor_point ("OS/Network/BytesReceived");
 
     if (bytes_monitor != 0)
@@ -54,6 +54,8 @@ public:
             bytes_monitor->retrieve (data);
             MC_Test_Utilities::display_bytes_received (data);
           }
+          
+        bytes_monitor->remove_ref ();
       }
 
     return 0;
@@ -63,13 +65,8 @@ public:
 int main (int /* argc */, char * /* argv */ [])
 {
   /// Set the timer for # of threads check at 2 sec.
-  ADD_PERIODIC_MONITOR (BYTES_RECEIVED_MONITOR, ACE_Time_Value (2));
-
-  MC_ADMINMANAGER* mgr =
-    ACE_Dynamic_Service<MC_Admin_Manager>::instance ("MC_ADMINMANAGER");
-
-  ACE::MonitorControl::Monitor_Base *bytes_monitor =
-    mgr->admin ().monitor_point ("OS/Network/BytesReceived");
+  Monitor_Base *bytes_monitor =
+    create_os_monitor<BYTES_RECEIVED_MONITOR> (0, ACE_Time_Value (2));
 
   /// Add two constraints, each with its own triggered action.
 
@@ -117,6 +114,7 @@ int main (int /* argc */, char * /* argv */ [])
   /// Do this instead of 'delete' since they are refcounted.
   trigger8k->remove_ref ();
   trigger16k->remove_ref ();
+  bytes_monitor->remove_ref ();
 
   return 0;
 }

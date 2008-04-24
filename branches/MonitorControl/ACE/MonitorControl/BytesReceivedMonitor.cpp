@@ -10,8 +10,11 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    BytesReceivedMonitor::BytesReceivedMonitor (void)
-      : Monitor_Base ("OS/Network/BytesReceived")
+    const char* BytesReceivedMonitor::default_name_ =
+      "OS/Network/BytesReceived";
+  
+    BytesReceivedMonitor::BytesReceivedMonitor (const char* name)
+      : Monitor_Base (name)
 #if defined (ACE_WIN32)
         , WindowsMultiInstanceMonitor (
             "\\Network Interface(*)\\Bytes Received/sec")
@@ -35,6 +38,12 @@ namespace ACE
       /// Stores value and timestamp with thread-safety.
       this->receive (static_cast<double> (this->value_));
 #endif
+    }
+    
+    const char*
+    BytesReceivedMonitor::default_name (void)
+    {
+      return BytesReceivedMonitor::default_name_;
     }
   }
 }

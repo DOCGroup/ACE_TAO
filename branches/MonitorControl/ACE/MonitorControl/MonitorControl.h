@@ -31,7 +31,7 @@
 #include "MonitorControl/PacketsReceivedMonitor.h"
 #include "MonitorControl/MonitorGroup.h"
 #include "MonitorControl/MonitorQuery.h"
-#include "MonitorControl/MonitorControl_macros.h"
+#include "MonitorControl/MonitorControl_utils.h"
 
 static int
 ACE_Requires_MC_Initializer = MC_ADMINMANAGER::Initializer ();

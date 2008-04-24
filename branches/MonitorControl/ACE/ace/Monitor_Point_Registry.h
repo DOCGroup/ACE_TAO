@@ -65,6 +65,9 @@ namespace ACE
       
       /// Returns a unique id for a constraint when it is created.
       long constraint_id (void);
+      
+      /// Needed since ACE_Singleton doesn't call the destructor.
+      void cleanup (void);
 
     private:
       /// Underlying container for the registry.

@@ -2,7 +2,6 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/streams.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Monitor_Point_Registry.h"
 
 #include "MonitorControl/MonitorControl.h"
@@ -49,6 +48,10 @@ public:
 
         cout << endl;
       }
+      
+    cpu_monitor->remove_ref ();
+    memory_monitor->remove_ref ();
+    bytes_monitor->remove_ref ();
 
     return 0;
   }
@@ -57,28 +60,22 @@ public:
 int main (int /* argc */, char * /* argv */ [])
 {
   /// Creates these future group members without automatic update.
-  ADD_MANUAL_MONITOR (BYTES_SENT_MONITOR);
-  ADD_MANUAL_MONITOR (CPU_LOAD_MONITOR);
-  ADD_MANUAL_MONITOR (MEMORY_USAGE_MONITOR);
+  Monitor_Base *cpu_load_monitor =
+    create_os_monitor<CPU_LOAD_MONITOR> ();
+  Monitor_Base *bytes_sent_monitor =
+    create_os_monitor<BYTES_SENT_MONITOR> ();
+  Monitor_Base *memory_usage_monitor =
+    create_os_monitor<MEMORY_USAGE_MONITOR> ();
 
   MonitorGroup *group = new MonitorGroup ("Test_Group");
-  ACE_Auto_Ptr<MonitorGroup> safety (group);
 
-  MC_Admin_Manager *mgr =
-    ACE_Dynamic_Service<MC_Admin_Manager>::instance ("MC_ADMINMANAGER");
-
-  /// Fetch monitors from the registry and add them to the group.
-
-  Monitor_Base *m_base = mgr->admin ().monitor_point ("OS/Processor/CPULoad");
-  group->add_member (m_base);
-
-  m_base = mgr->admin ().monitor_point ("OS/Network/BytesSent");
-  group->add_member (m_base);
-
-  m_base = mgr->admin ().monitor_point ("OS/Memory/TotalUsage");
-  group->add_member (m_base);
+  group->add_member (cpu_load_monitor);
+  group->add_member (bytes_sent_monitor);
+  group->add_member (memory_usage_monitor);
 
   /// Register the group as an auto-updated monitor point.
+  MC_ADMINMANAGER* mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
   bool good_add = mgr->admin ().monitor_point (group, ACE_Time_Value (2));
 
   if (!good_add)
@@ -148,6 +145,11 @@ int main (int /* argc */, char * /* argv */ [])
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
+  
+  cpu_load_monitor->remove_ref ();
+  bytes_sent_monitor->remove_ref ();
+  memory_usage_monitor->remove_ref ();
+  group->remove_ref ();
 
   return 0;
 }

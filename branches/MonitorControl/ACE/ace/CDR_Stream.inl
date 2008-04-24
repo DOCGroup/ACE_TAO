@@ -146,7 +146,12 @@ ACE_OutputCDR::~ACE_OutputCDR (void)
       ACE_Message_Block::release (this->start_.cont ());
       this->start_.cont (0);
     }
+    
   this->current_ = 0;
+  
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_->remove_ref ();
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_INLINE void
@@ -170,6 +175,10 @@ ACE_OutputCDR::reset (void)
       ACE_Message_Block::release (cont);
       this->start_.cont (0);
     }
+  
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_->receive (this->start_.total_size ());
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 // Encode the CDR stream.
@@ -458,7 +467,7 @@ ACE_OutputCDR::adjust (size_t size,
       this->current_->wr_ptr (end);
       
 #if defined (ACE_ENABLE_MONITORS)
-      this->monitor_.receive (this->total_length ());
+      this->monitor_->receive (this->total_length ());
 #endif /* ACE_ENABLE_MONITORS */
 
       return 0;
@@ -599,6 +608,9 @@ ACE_OutputCDR::wchar_translator (ACE_WChar_Codeset_Translator * wctran)
 ACE_INLINE
 ACE_InputCDR::~ACE_InputCDR (void)
 {
+#if defined (ACE_ENABLE_MONITORS)
+  this->monitor_->remove_ref ();
+#endif /* ACE_ENABLE_MONITORS */
 }
 
 ACE_INLINE ACE_CDR::Boolean

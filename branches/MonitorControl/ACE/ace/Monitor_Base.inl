@@ -10,7 +10,7 @@ namespace ACE
     const char*
     Monitor_Base::name (void) const
     {
-      return this->name_;
+      return this->name_.c_str ();
     }
 
     ACE_INLINE

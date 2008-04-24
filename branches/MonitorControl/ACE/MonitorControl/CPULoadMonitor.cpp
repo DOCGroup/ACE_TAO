@@ -14,8 +14,11 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    CPULoadMonitor::CPULoadMonitor (void)
-      : Monitor_Base ("OS/Processor/CPULoad")
+    const char* CPULoadMonitor::default_name_ =
+      "OS/Processor/CPULoad";
+  
+    CPULoadMonitor::CPULoadMonitor (const char* name)
+      : Monitor_Base (name)
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\Processor(_Total)\\% Processor Time")
 #endif
@@ -88,10 +91,16 @@ namespace ACE
       this->prev_total_ = total;
 #endif
     }
-
+    
+    const char*
+    CPULoadMonitor::default_name (void)
+    {
+      return CPULoadMonitor::default_name_;
+    }
+    
 #if defined (linux)
     void
-    CPULoadMonitor<true>::access_proc_stat (unsigned long *which_idle)
+    CPULoadMonitor::access_proc_stat (unsigned long *which_idle)
     {
       this->file_ptr_ = ACE_OS::fopen ("/proc/stat", "r");
       
@@ -132,7 +141,7 @@ namespace ACE
 
 #if defined (ACE_HAS_KSTAT)
     void
-    CPULoadMonitor<true>::access_kstats (unsigned long *which_idle)
+    CPULoadMonitor::access_kstats (unsigned long *which_idle)
     {
       this->kstats_ = kstat_open ();
       

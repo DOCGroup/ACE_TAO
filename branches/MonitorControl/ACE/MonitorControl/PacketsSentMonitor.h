@@ -49,10 +49,16 @@ namespace ACE
 #endif
     {
     public:
-      PacketsSentMonitor (void);
+      PacketsSentMonitor (const char* name);
 
       /// Implementation of the pure virtual method.
       virtual void update (void);
+      
+      /// Stores the default name, used if none is supplied to constructor.
+      static const char* default_name (void);
+      
+    private:
+      static const char* default_name_;
     };
   }
 }

@@ -129,7 +129,7 @@ namespace ACE
     private:
       MonitorPointAutoUpdater auto_updater_;
       ACE_Reactor* reactor_;
-      bool delete_reactor_;   
+      bool default_reactor_;   
     };
   }
 }

@@ -47,12 +47,15 @@ namespace ACE
 #endif
     {
     public:
-      CPULoadMonitor (void);
+      CPULoadMonitor (const char* name);
       
       /// Implementation of the pure virtual method.
       virtual void update (void);
       
-    private:
+      /// Stores the default name, used if none is supplied to constructor.
+      static const char* default_name (void);
+      
+    private:    
 #if defined (linux)
       void access_proc_stat (unsigned long *which_idle);
 #endif
@@ -62,6 +65,8 @@ namespace ACE
 #endif
       
     private:
+      static const char* default_name_;
+
       /// Common to Linux and Solaris implementations.
 #if defined (linux) || defined (ACE_HAS_KSTAT)
       unsigned long user_;

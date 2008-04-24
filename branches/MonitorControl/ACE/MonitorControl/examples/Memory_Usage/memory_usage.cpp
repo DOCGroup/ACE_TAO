@@ -33,6 +33,8 @@ public:
             memory_monitor->retrieve (data);
             MC_Test_Utilities::display_memory_usage (data);
           }
+          
+        memory_monitor->remove_ref ();
       }
 
     return 0;
@@ -42,7 +44,8 @@ public:
 int main (int /* argc */, char * /* argv */ [])
 {
   /// Set the timer for memory usage check at 2 sec.
-  ADD_PERIODIC_MONITOR (MEMORY_USAGE_MONITOR, ACE_Time_Value (2));
+  Monitor_Base *memory_usage_monitor =
+    create_os_monitor<MEMORY_USAGE_MONITOR> (0, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
@@ -69,9 +72,11 @@ int main (int /* argc */, char * /* argv */ [])
           delete [] str_array[i - 5];
         }
     }
-
+    
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
+  
+  memory_usage_monitor->remove_ref ();
 
   return 0;
 }

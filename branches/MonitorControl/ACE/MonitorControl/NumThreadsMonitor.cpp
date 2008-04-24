@@ -14,8 +14,11 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    NumThreadsMonitor::NumThreadsMonitor (void)
-      : Monitor_Base ("OS/System/NumThreads")
+    const char* NumThreadsMonitor::default_name_ =
+      "OS/System/NumThreads";
+  
+    NumThreadsMonitor::NumThreadsMonitor (const char* name)
+      : Monitor_Base (name)
 #if defined (ACE_WIN32)
       , WindowsMonitor ("\\System\\Threads")
 #elif defined (linux)
@@ -69,6 +72,12 @@ namespace ACE
       ACE_OS::fclose (this->file_ptr_);
 #elif defined (ACE_HAS_KSTAT)
 #endif
+    }
+    
+    const char*
+    NumThreadsMonitor::default_name (void)
+    {
+      return NumThreadsMonitor::default_name_;
     }
   }
 }

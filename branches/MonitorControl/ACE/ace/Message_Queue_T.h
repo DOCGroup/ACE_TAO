@@ -20,10 +20,6 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Guard_T.h"
 
-#if defined (ACE_ENABLE_MONITORS)
-#include "ace/Size_Monitor.h"
-#endif /* ACE_ENABLE_MONITORS */
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -37,6 +33,16 @@ class ACE_Message_Queue_Vx;
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 class ACE_Message_Queue_NT;
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO*/
+
+#if defined (ACE_ENABLE_MONITORS)
+namespace ACE
+{
+  namespace MonitorControl
+  {
+    class Size_Monitor;
+  }
+}
+#endif /* ACE_ENABLE_MONITORS */
 
 /**
  * @class ACE_Message_Queue
@@ -600,7 +606,7 @@ protected:
   
   /// Sends the size of the queue whenever it changes.
 #if defined (ACE_ENABLE_MONITORS)
-  ACE::MonitorControl::Size_Monitor monitor_;
+  ACE::MonitorControl::Size_Monitor *monitor_;
 #endif
 
 private:

@@ -23,6 +23,7 @@
 
 #if defined (ACE_ENABLE_MONITORS)
 
+#include "ace/Refcountable_T.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
 
@@ -47,6 +48,7 @@ namespace ACE
      * as no-ops.
      */
     class ACE_Export Monitor_Base
+      : private ACE_Refcountable_T<ACE_SYNCH_MUTEX>
     {
     public:
       typedef MonitorControl_Types::ConstraintList CONSTRAINTS;
@@ -82,6 +84,10 @@ namespace ACE
       const char* name (void) const;
       void name (const char* new_name);
 
+      /// Refcounting methods.
+      void add_ref (void);
+      void remove_ref (void);
+
     protected:
       Monitor_Base (void);
       Monitor_Base (const char* name);
@@ -95,7 +101,7 @@ namespace ACE
       CONSTRAINTS constraints_;
 
     private:
-      const char* name_;
+      ACE_CString name_;
     };
   }
 }

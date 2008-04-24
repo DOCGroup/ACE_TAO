@@ -5,6 +5,8 @@
 #include "MonitorControl/MonitorControl.h"
 #include "MonitorControl/examples/MC_Test_Utilities.h"
 
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
+  
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
@@ -18,7 +20,7 @@ public:
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::MonitorControl::Monitor_Base *bytes_monitor =
+    Monitor_Base *bytes_monitor =
       mgr->admin ().monitor_point ("OS/Network/BytesSent");
 
     if (bytes_monitor != 0)
@@ -33,6 +35,8 @@ public:
             bytes_monitor->retrieve (data);
             MC_Test_Utilities::display_bytes_sent (data);
           }
+          
+        bytes_monitor->remove_ref ();
       }
 
     return 0;
@@ -42,7 +46,8 @@ public:
 int main (int /* argc */, char * /* argv */ [])
 {
   /// Set the timer for # of threads check at 2 sec.
-  ADD_PERIODIC_MONITOR (BYTES_SENT_MONITOR, ACE_Time_Value (2));
+  Monitor_Base *monitor =
+    create_os_monitor<BYTES_SENT_MONITOR> (0, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
@@ -56,6 +61,8 @@ int main (int /* argc */, char * /* argv */ [])
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
+  
+  monitor->remove_ref ();
 
   return 0;
 }

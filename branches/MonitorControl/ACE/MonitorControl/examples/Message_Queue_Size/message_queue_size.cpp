@@ -51,6 +51,8 @@ public:
             mq_monitor->retrieve (data);
             MC_Test_Utilities::display_mq_size (data);
           }
+          
+        mq_monitor->remove_ref ();
       }
 
     return 0;
@@ -92,6 +94,10 @@ int main (int /* argc */, char * /* argv */ [])
           mb->release ();
         }
     }
+  
+  /// This makes Purify much happier, but doesn't seem necessary for
+  /// a regular run.  
+  monitor_checker.wait ();
 
   /// Clean up the remaining message queue resources.
   monitored_queue.flush ();

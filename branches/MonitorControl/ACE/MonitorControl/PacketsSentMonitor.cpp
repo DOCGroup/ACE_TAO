@@ -10,8 +10,11 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    PacketsSentMonitor::PacketsSentMonitor (void)
-      : Monitor_Base ("OS/Network/PacketsSent")
+    const char* PacketsSentMonitor::default_name_ =
+      "OS/Network/PacketsSent";
+  
+    PacketsSentMonitor::PacketsSentMonitor (const char* name)
+      : Monitor_Base (name)
 #if defined (ACE_WIN32)
       , WindowsMultiInstanceMonitor (
           "\\Network Interface(*)\\Packets Sent/sec")
@@ -35,6 +38,12 @@ namespace ACE
       /// Stores value and timestamp with thread-safety.
       this->receive (static_cast<double> (this->value_));
 #endif
+    }
+    
+    const char*
+    PacketsSentMonitor::default_name (void)
+    {
+      return PacketsSentMonitor::default_name_;
     }
   }
 }

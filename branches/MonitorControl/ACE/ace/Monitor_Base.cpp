@@ -21,11 +21,13 @@ namespace ACE
   namespace MonitorControl
   {
     Monitor_Base::Monitor_Base (void)
+      : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
     {
     }
 
-    Monitor_Base::Monitor_Base (const char*  name)
-      : name_ (name)
+    Monitor_Base::Monitor_Base (const char* name)
+      : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
+      , name_ (name)
     {
     }
 
@@ -160,6 +162,23 @@ namespace ACE
           ACE_ERROR ((LM_ERROR,
                       "monitor point %s unregistration failed\n",
                       this->name ()));
+        }
+    }
+
+    void
+    Monitor_Base::add_ref (void)
+    {
+      (void) this->increment ();
+    }
+
+    void
+    Monitor_Base::remove_ref (void)
+    {
+      const long new_count = this->decrement ();
+
+      if (new_count == 0)
+        {
+          delete this;
         }
     }
   }

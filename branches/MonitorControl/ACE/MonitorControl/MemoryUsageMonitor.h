@@ -47,12 +47,17 @@ namespace ACE
 #endif
     {
     public:
-      MemoryUsageMonitor (void);
+      MemoryUsageMonitor (const char* name);
     
       /// Implementation of the pure virtual method.
       virtual void update (void);
       
+      /// Stores the default name, used if none is supplied to constructor.
+      static const char* default_name (void);
+      
     private:
+      static const char* default_name_;
+    
 #if defined (linux)
       struct sysinfo sysinfo_;
 #elif defined (ACE_HAS_KSTAT)
