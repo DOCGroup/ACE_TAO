@@ -1,3 +1,10 @@
+Thu Apr 24 14:08:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LocalObject.{h,inl}:
+          Give TAO_Local_RefCounted_Object again a constructor and
+          assignment/copy constructor. Footprint increased after
+          removing these.
+
 Thu Apr 24 13:59:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/Notify/Lanes/Consumer.h
