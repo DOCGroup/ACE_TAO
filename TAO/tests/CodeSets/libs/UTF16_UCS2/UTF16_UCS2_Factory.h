@@ -27,7 +27,7 @@
 #include "UTF16_UCS2_export.h"
 #include "UTF16_UCS2_Translator.h"
 
-typedef UTF16_UCS2_Export TAO_Codeset_Translator_Factory_T<UTF16_UCS2_Translator> UTF16_UCS2_Factory;
+typedef TAO_Codeset_Translator_Factory_T<UTF16_UCS2_Translator> UTF16_UCS2_Factory;
 
 ACE_STATIC_SVC_DECLARE_EXPORT (UTF16_UCS2, UTF16_UCS2_Factory)
 ACE_FACTORY_DECLARE (UTF16_UCS2, UTF16_UCS2_Factory)
