@@ -270,7 +270,7 @@ TAO/tests/Big_Reply/run_test.pl: !ST !LabVIEW_RT
 TAO/tests/Big_Request_Muxing/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Oneways_Invoking_Twoways/run_test.pl: !ST !LabVIEW_RT
 TAO/tests/Queued_Message_Test/run_test.pl: !LabVIEW_RT
-TAO/tests/DLL_ORB/run_test.pl: !STATIC !LabVIEW_RT
+TAO/tests/DLL_ORB/run_test.pl: !ST !STATIC !LabVIEW_RT
 TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Multiple/run_test.pl: !SUNCC5_1 !LabVIEW_RT
 TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !ACE_FOR_TAO !LabVIEW_RT
