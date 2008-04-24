@@ -84,13 +84,11 @@ class TAO_Notify_Service_Driver
   /// Returns 0 on success, -1 on error.
   void shutdown (void);
 
-
-  // CosNotifyChannelAdmin::EventChannelFactory_var obj;
-  //
 protected:
   /// initialize the ORB.
-  /// initialize the dispatching ORB.
   int init_ORB (int& argc, ACE_TCHAR *argv []);
+
+  /// initialize the dispatching ORB.
   int init_dispatching_ORB (int& argc, ACE_TCHAR *argv []);
 
   TAO_Notify_Service* notify_service_;
@@ -103,14 +101,11 @@ protected:
 
   // = Data members
 
-  /// 1: this service is bootstrappable
-  int bootstrap_;
+  /// true: this service is bootstrappable
+  bool bootstrap_;
 
-  /// 1: register itself with the name service
-  int use_name_svc_;
-
-  /// 1:
-  int register_ec_;
+  /// true: register itself with the name service
+  bool use_name_svc_;
 
   /// File where the IOR of the server object is stored.
   FILE *ior_output_file_;
@@ -121,9 +116,9 @@ protected:
   /// The Factory name.
   ACE_CString notify_channel_name_;
 
-  /// 1:  create an event channel and registers it with the Naming Service with
-  ///     the name <notify_channel_name_>
-  int register_event_channel_;
+  /// true: create an event channel and registers it with the Naming Service
+  /// with the name <notify_channel_name_>
+  bool register_event_channel_;
 
   /// The Factory.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
