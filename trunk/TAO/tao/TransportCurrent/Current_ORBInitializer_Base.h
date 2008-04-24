@@ -36,7 +36,7 @@ namespace TAO
   {
     class TAO_Transport_Current_Export Current_ORBInitializer_Base
       : public virtual PortableInterceptor::ORBInitializer
-      , public virtual TAO_Local_RefCounted_Object
+      , public virtual ::CORBA::LocalObject
     {
     public:
       Current_ORBInitializer_Base (const ACE_TCHAR* id);

@@ -115,8 +115,7 @@ TAO_AMH_DSI_Exception_Holder_var::operator const TAO_AMH_DSI_Exception_Holder* (
   return this->ptr_;
 }
 
-TAO_AMH_DSI_Exception_Holder_var::operator TAO_AMH_DSI_Exception_Holder*& (
-    ) // cast
+TAO_AMH_DSI_Exception_Holder_var::operator TAO_AMH_DSI_Exception_Holder*& ()
 {
   return this->ptr_;
 }
@@ -157,17 +156,14 @@ TAO_AMH_DSI_Exception_Holder_var::_retn (void)
 }
 
 void
-TAO_AMH_DSI_Exception_Holder_var::tao_add_ref (
-    TAO_AMH_DSI_Exception_Holder *p
-  )
+TAO_AMH_DSI_Exception_Holder_var::tao_add_ref (TAO_AMH_DSI_Exception_Holder *p)
 {
   CORBA::add_ref (p);
 }
 
 void
 TAO_AMH_DSI_Exception_Holder_var::tao_remove_ref (
-    TAO_AMH_DSI_Exception_Holder *p
-  )
+    TAO_AMH_DSI_Exception_Holder *p)
 {
   CORBA::remove_ref (p);
 }

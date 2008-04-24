@@ -36,7 +36,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// Policy factory for all Messaging related policies.
 class TAO_BiDir_PolicyFactory
   : public PortableInterceptor::PolicyFactory
-  , public TAO_Local_RefCounted_Object
+  , public ::CORBA::LocalObject
 {
 public:
 

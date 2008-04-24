@@ -50,7 +50,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTCORBA_Export TAO_RT_Mutex
   : public RTCORBA::Mutex,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
 

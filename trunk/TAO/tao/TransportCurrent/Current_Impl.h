@@ -37,7 +37,7 @@ namespace TAO
      */
     class TAO_Transport_Current_Export Current_Impl
       : public virtual Current
-      , public virtual TAO_Local_RefCounted_Object
+      , public virtual ::CORBA::LocalObject
       {
       public:
 

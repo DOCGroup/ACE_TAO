@@ -40,7 +40,7 @@ namespace TAO
   {
     class TAO_PortableServer_Export RequestProcessingPolicy :
       public virtual ::PortableServer::RequestProcessingPolicy,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
     {
     public:
       RequestProcessingPolicy (::PortableServer::RequestProcessingPolicyValue value);

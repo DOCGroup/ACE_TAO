@@ -77,7 +77,7 @@ typedef TAO_RTScheduler_Current* TAO_RTScheduler_Current_ptr;
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Current
   : public RTScheduling::Current,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
  public:
   static ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;

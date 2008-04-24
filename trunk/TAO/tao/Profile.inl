@@ -64,4 +64,25 @@ TAO_Profile::object_key (void) const
   return this->ref_object_key_->object_key ();
 }
 
+ACE_INLINE unsigned long
+TAO_Profile::_incr_refcnt (void)
+{
+  return this->refcount_.increment ();
+}
+
+ACE_INLINE unsigned long
+TAO_Profile::_decr_refcnt (void)
+{
+  unsigned long count = this->refcount_.decrement ();
+  if (count != 0)
+    return count;
+
+  // refcount is 0, so delete us!
+  // delete will call our ~ destructor which in turn deletes stuff.
+  delete this;
+  return 0;
+}
+
+
+
 TAO_END_VERSIONED_NAMESPACE_DECL

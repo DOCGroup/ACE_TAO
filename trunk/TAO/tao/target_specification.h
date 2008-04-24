@@ -68,12 +68,11 @@ public:
     Reference_Addr
   };
 
-  // Note: Please do not pass in a identifiers that is allocated on
-  // stack. These methods does not make a copy but holds the pointer
-  // passed in.
   /// Set the target specification by giving the object key.
+  /// @note Please do not pass in a identifiers that is allocated on
+  /// stack. These methods does not make a copy but holds the pointer
+  /// passed in.
   void target_specifier (const TAO::ObjectKey &key);
-
 
   /// Set the target specification by passing in an IOP::TaggedProfile.
   void target_specifier (IOP::TaggedProfile &profile);

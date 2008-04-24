@@ -55,7 +55,7 @@ namespace PortableServer
 
 class TAO_PortableServer_Export TAO_POA_Manager :
   public PortableServer::POAManager,
-  public TAO_Local_RefCounted_Object
+  public ::CORBA::LocalObject
 {
   friend class TAO_Root_POA;
   friend class TAO_Object_Adapter;

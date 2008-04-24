@@ -19,7 +19,6 @@ TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (const TAO_EndpointPolicy_i &rhs)
   , ::CORBA::Policy ()
   , ::EndpointPolicy::Policy ()
   , ::CORBA::LocalObject ()
-  , TAO_Local_RefCounted_Object ()
   , value_ (rhs.value_)
 {
 }

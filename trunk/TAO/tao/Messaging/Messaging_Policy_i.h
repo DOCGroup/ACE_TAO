@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_RelativeRoundtripTimeoutPolicy
   : public Messaging::RelativeRoundtripTimeoutPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 
 public:
@@ -97,7 +97,7 @@ private:
  */
 class TAO_Messaging_Export TAO_Sync_Scope_Policy
   : public Messaging::SyncScopePolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 
 public:

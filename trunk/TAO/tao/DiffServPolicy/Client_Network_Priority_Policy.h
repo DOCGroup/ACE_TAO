@@ -45,7 +45,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_DiffServPolicy_Export TAO_Client_Network_Priority_Policy
   : public TAO::NetworkPriorityPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.

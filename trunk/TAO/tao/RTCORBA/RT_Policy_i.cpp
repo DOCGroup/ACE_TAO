@@ -28,7 +28,6 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::PriorityModelPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , priority_model_ (priority_model)
   , server_priority_ (server_priority)
 {
@@ -39,7 +38,6 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy 
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::PriorityModelPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , priority_model_ (rhs.priority_model_)
   , server_priority_ (rhs.server_priority_)
 {
@@ -148,7 +146,6 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::ThreadpoolPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , id_ (id)
 {
 }
@@ -158,7 +155,6 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs)
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::ThreadpoolPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , id_ (rhs.id_)
 {
 }
@@ -233,7 +229,6 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (void)
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::PrivateConnectionPolicy ()
-  , TAO_Local_RefCounted_Object ()
 {
 }
 
@@ -242,7 +237,6 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const TAO_PrivateConne
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::PrivateConnectionPolicy ()
-  , TAO_Local_RefCounted_Object ()
 {
 }
 
@@ -306,7 +300,6 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const RT
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::PriorityBandedConnectionPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , priority_bands_ (bands)
 {
 }
@@ -316,7 +309,6 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const TA
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::PriorityBandedConnectionPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , priority_bands_ (rhs.priority_bands_)
 {
 }
@@ -418,7 +410,6 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList 
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::ServerProtocolPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , protocols_ (protocols)
 {
 }
@@ -428,7 +419,6 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const TAO_ServerProtocolPoli
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::ServerProtocolPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , protocols_ (rhs.protocols_)
 {
 }
@@ -519,7 +509,6 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList 
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::ClientProtocolPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , protocols_ (protocols)
 {
 }
@@ -529,7 +518,6 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const TAO_ClientProtocolPoli
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , RTCORBA::ClientProtocolPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , protocols_ (rhs.protocols_)
 {
 }

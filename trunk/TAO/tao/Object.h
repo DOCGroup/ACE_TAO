@@ -229,6 +229,9 @@ namespace CORBA
 
     /// Decrement the reference count.
     virtual void _remove_ref (void);
+
+    /// Get the refcount
+    virtual CORBA::ULong _refcount_value() const;
     //@}
 
     // Useful for template programming.
@@ -354,7 +357,6 @@ namespace CORBA
     Object &operator = (const Object &);
 
   private:
-
     /// Specify whether this is a local object or not.
     CORBA::Boolean is_local_;
 

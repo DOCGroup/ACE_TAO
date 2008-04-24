@@ -42,7 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Buffering_Constraint_Policy
   : public TAO::BufferingConstraintPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
   /// Constructor.

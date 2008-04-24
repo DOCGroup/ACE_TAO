@@ -25,7 +25,6 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , Messaging::RelativeRoundtripTimeoutPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , relative_expiry_ (relative_expiry)
 {
 }
@@ -36,7 +35,6 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , Messaging::RelativeRoundtripTimeoutPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , relative_expiry_ (rhs.relative_expiry_)
 {
 }
@@ -194,7 +192,6 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronizati
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , Messaging::SyncScopePolicy ()
-  , TAO_Local_RefCounted_Object ()
   , synchronization_ (synchronization)
 {
 }
@@ -204,7 +201,6 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , Messaging::SyncScopePolicy ()
-  , TAO_Local_RefCounted_Object ()
   , synchronization_ (rhs.synchronization_)
 {
 }

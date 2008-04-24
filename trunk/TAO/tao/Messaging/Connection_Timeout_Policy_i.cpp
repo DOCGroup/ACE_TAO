@@ -23,7 +23,6 @@ TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , TAO::ConnectionTimeoutPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , relative_expiry_ (relative_expiry)
 {
 }
@@ -34,7 +33,6 @@ TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()
   , TAO::ConnectionTimeoutPolicy ()
-  , TAO_Local_RefCounted_Object ()
   , relative_expiry_ (rhs.relative_expiry_)
 {
 }

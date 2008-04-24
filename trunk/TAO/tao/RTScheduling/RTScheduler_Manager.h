@@ -32,7 +32,7 @@ typedef TAO_RTScheduler_Manager *TAO_RTScheduler_Manager_ptr;
  * Allows setting of user-defined RTScheduler at run-time.
  */
 class TAO_RTScheduler_Export TAO_RTScheduler_Manager :
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
 public:
 

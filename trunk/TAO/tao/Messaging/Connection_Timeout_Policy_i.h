@@ -44,7 +44,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_ConnectionTimeoutPolicy
   : public TAO::ConnectionTimeoutPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 
 public:

@@ -19,7 +19,7 @@ extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
 
 class TAO_RTScheduler_Export Client_Interceptor:
   public PortableInterceptor::ClientRequestInterceptor,
-  public TAO_Local_RefCounted_Object
+  public ::CORBA::LocalObject
 {
 public:
 
@@ -44,7 +44,7 @@ public:
 
 class TAO_RTScheduler_Export Server_Interceptor :
   public PortableInterceptor::ServerRequestInterceptor,
-  public TAO_Local_RefCounted_Object
+  public ::CORBA::LocalObject
 {
 
 public:

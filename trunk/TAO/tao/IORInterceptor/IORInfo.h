@@ -44,7 +44,7 @@ class TAO_Root_POA;
  */
 class TAO_IORInfo
   : public virtual PortableInterceptor::IORInfo,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

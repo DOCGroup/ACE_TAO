@@ -20,8 +20,7 @@ IIOPEndpointValue_i::IIOPEndpointValue_i ()
 {
 }
 
-IIOPEndpointValue_i::IIOPEndpointValue_i (const char *host,
-                                          CORBA::UShort port)
+IIOPEndpointValue_i::IIOPEndpointValue_i (const char *host, CORBA::UShort port)
   :host_(host),
    port_(port)
 {

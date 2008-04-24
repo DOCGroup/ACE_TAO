@@ -80,25 +80,6 @@ TAO_Profile::~TAO_Profile (void)
   //@@ TAO_PROFILE_SPL_DESTRUCTOR_ADD_HOOK
 }
 
-unsigned long
-TAO_Profile::_incr_refcnt (void)
-{
-  return this->refcount_.increment ();
-}
-
-unsigned long
-TAO_Profile::_decr_refcnt (void)
-{
-  unsigned long count = this->refcount_.decrement ();
-  if (count != 0)
-    return count;
-
-  // refcount is 0, so delete us!
-  // delete will call our ~ destructor which in turn deletes stuff.
-  delete this;
-  return 0;
-}
-
 void
 TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component)
 {
