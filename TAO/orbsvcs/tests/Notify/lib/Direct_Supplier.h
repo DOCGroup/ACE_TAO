@@ -30,7 +30,7 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Direct_Supplier : public TAO_Notify_Tests_Periodic_Supplier
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Direct_Supplier (ACE_CString& target);
 
   /// Destructor

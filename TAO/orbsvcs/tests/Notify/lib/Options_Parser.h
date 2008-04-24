@@ -31,7 +31,7 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Options_Parser
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Options_Parser (void);
 
   /// Destructor

@@ -19,7 +19,7 @@ TAO_Notify_Properties::TAO_Notify_Properties (void)
   , builder_ (0)
   , orb_(0)
   , dispatching_orb_ (0)
-  , asynch_updates_ (0)
+  , asynch_updates_ (false)
   , allow_reconnect_ (false)
   , separate_dispatching_orb_ (false)
   , updates_ (1)
@@ -45,6 +45,13 @@ TAO_Notify_Properties::instance (void)
 {
   return ACE_Unmanaged_Singleton<TAO_Notify_Properties,
                                  TAO_SYNCH_MUTEX>::instance ();
+}
+
+void
+TAO_Notify_Properties::close (void)
+{
+  ACE_Unmanaged_Singleton<TAO_Notify_Properties,
+                          TAO_SYNCH_MUTEX>::close ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

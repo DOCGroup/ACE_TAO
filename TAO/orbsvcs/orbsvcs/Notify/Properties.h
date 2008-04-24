@@ -49,6 +49,8 @@ public:
   /// Return a singleton instance of this class.
   static TAO_Notify_Properties * instance (void);
 
+  static void close (void);
+
   // = Property Accessors
   TAO_Notify_Factory* factory (void);
   void factory (TAO_Notify_Factory* factory);
@@ -119,7 +121,7 @@ protected:
   /// dispatching orb
   CORBA::ORB_var dispatching_orb_;
 
-  // POA
+  /// POA
   PortableServer::POA_var default_poa_;
 
   /// True if send asynch updates.

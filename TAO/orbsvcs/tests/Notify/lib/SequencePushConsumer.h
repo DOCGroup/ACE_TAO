@@ -66,7 +66,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushConsumer : public TAO_
   typedef Peer_Traits::Proxy_Traits Proxy_Traits;
 
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_SequencePushConsumer (void);
 
   /// Destructor

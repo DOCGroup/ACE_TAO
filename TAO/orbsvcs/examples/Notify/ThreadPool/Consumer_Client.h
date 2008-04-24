@@ -32,7 +32,7 @@ class TAO_Notify_ThreadPool_Consumer;
 class TAO_Notify_ThreadPool_Consumer_Client  : public ACE_Task_Base
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ThreadPool_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Destructor

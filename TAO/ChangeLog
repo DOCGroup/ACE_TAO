@@ -1,3 +1,51 @@
+Thu Apr 24 13:59:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Notify/Lanes/Consumer.h
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.h
+        * orbsvcs/examples/Notify/Lanes/ORB_Objects.h
+        * orbsvcs/examples/Notify/Lanes/ORB_Run_Task.h
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.h
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.h
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h
+        * orbsvcs/examples/Notify/ThreadPool/ORB_Objects.h
+        * orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.h
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h
+        * orbsvcs/tests/Notify/lib/Activation_Manager.h
+        * orbsvcs/tests/Notify/lib/Application_Command.h
+        * orbsvcs/tests/Notify/lib/Command.h
+        * orbsvcs/tests/Notify/lib/Command_Builder.h
+        * orbsvcs/tests/Notify/lib/Command_Factory.h
+        * orbsvcs/tests/Notify/lib/Command_Factory_T.h
+        * orbsvcs/tests/Notify/lib/Consumer_T.h
+        * orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.h
+        * orbsvcs/tests/Notify/lib/Direct_Consumer.h
+        * orbsvcs/tests/Notify/lib/Direct_Supplier.h
+        * orbsvcs/tests/Notify/lib/Driver.h
+        * orbsvcs/tests/Notify/lib/EventChannel_Command.h
+        * orbsvcs/tests/Notify/lib/Filter_Command.h
+        * orbsvcs/tests/Notify/lib/LookupManager.h
+        * orbsvcs/tests/Notify/lib/Options_Parser.h
+        * orbsvcs/tests/Notify/lib/Peer.h
+        * orbsvcs/tests/Notify/lib/Peer_T.h
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.h
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.h
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.h
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.h
+        * orbsvcs/tests/Notify/lib/PushConsumer.h
+        * orbsvcs/tests/Notify/lib/PushSupplier.h
+        * orbsvcs/tests/Notify/lib/Relay_Consumer.h
+        * orbsvcs/tests/Notify/lib/SequencePushConsumer.h
+        * orbsvcs/tests/Notify/lib/SequencePushSupplier.h
+        * orbsvcs/tests/Notify/lib/StructuredEvent.h
+        * orbsvcs/tests/Notify/lib/StructuredPushConsumer.h
+        * orbsvcs/tests/Notify/lib/StructuredPushSupplier.h
+        * orbsvcs/tests/Notify/lib/Supplier_T.h
+        * orbsvcs/tests/Notify/lib/SupplierAdmin_Command.h
+          Fixed Constuctor to Constructor
+
+        * orbsvcs/orbsvcs/Notify/Properties.{h,cpp}:
+          Added close method
+
 Thu Apr 24 10:41:42 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * tao/Synch_Invocation.cpp:
