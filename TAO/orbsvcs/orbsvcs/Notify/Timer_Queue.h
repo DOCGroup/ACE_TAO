@@ -41,8 +41,7 @@ public:
   TAO_Notify_Timer_Queue (void);
 
   /// Destructor
-  virtual ~TAO_Notify_Timer_Queue ();
-
+  virtual ~TAO_Notify_Timer_Queue (void);
 
   /// Schedule a timer
   virtual long schedule_timer (ACE_Event_Handler *handler,

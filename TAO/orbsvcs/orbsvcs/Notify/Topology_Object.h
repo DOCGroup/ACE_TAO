@@ -123,22 +123,22 @@ namespace TAO_Notify
     /// Use "type" as passed in to determine what kind of child (supporting
     /// the Topology_Object interface) to create and return.  Inform it of
     /// its new ID.
-    virtual Topology_Object* load_child (const ACE_CString & /*type*/,
-      CORBA::Long /* id */,
-      const NVPList& /* attrs */);
+    virtual Topology_Object* load_child (const ACE_CString & type,
+      CORBA::Long id,
+      const NVPList& attrs);
 
     /// \brief Find the id associated with topology object.
     ///
     /// A bit of a hack because id is unknown to Topology_Object
     /// the get_id returns the same thing as id -- we just need someone
     /// to find it for us.
-    virtual TAO_Notify_Object::ID get_id () const;
+    virtual TAO_Notify_Object::ID get_id (void) const;
 
     /// \brief Get the path of id's from the root to this object.
     void get_id_path (IdVec & id_path) const;
 
     /// \brief Is there an unsaved change for this object or its children?
-    bool is_changed () const;
+    bool is_changed (void) const;
 
   protected:
     /// \brief Should this object be saved?
@@ -146,7 +146,7 @@ namespace TAO_Notify
     /// This is a way for send_change() and save_persistent() to find out
     /// if this object has a persistent QoS connection property.
     /// \return true (default) if object should be saved.
-    virtual bool is_persistent () const;
+    virtual bool is_persistent (void) const;
 
     /// \brief Method to report change in this object
     ///

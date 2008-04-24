@@ -1,3 +1,24 @@
+Thu Apr 24 10:25:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.h:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/NotifyExt.idl:
+        * orbsvcs/orbsvcs/PortableGroup/GOA.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/GOA.h:
+          Layout changes
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.{h,cpp}:
+          Changed released flag to a bool
+
 Thu Apr 24 09:49:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
