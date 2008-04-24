@@ -61,10 +61,17 @@ Job_i::work (CORBA::ULong work,
     "test_i::method: %d units of work\n",
     work));
 
+  CORBA::Object_var object =
+    this->dt_creator_->orb ()->resolve_initial_references (
+                                         "RTScheduler_Current");
+
+  RTScheduling::Current_var current =
+    RTScheduling::Current::_narrow (object.in ());
+
   if (guid_ == 0)
     ACE_OS::memcpy (&guid_,
-        dt_creator_->current ()->id ()->get_buffer (),
-        sizeof (dt_creator_->current ()->id ()->length ()));
+                    current->id ()->get_buffer (),
+                    sizeof (current->id ()->length ()));
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -104,7 +111,7 @@ Job_i::work (CORBA::ULong work,
       CORBA::Policy_var sched_param;
       sched_param = CORBA::Policy::_duplicate (dt_creator_->sched_param (importance));
       const char * name = 0;
-      dt_creator_->current ()->update_scheduling_segment (name,
+      current->update_scheduling_segment (name,
                 sched_param.in (),
                 sched_param.in ());
     }

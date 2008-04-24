@@ -240,13 +240,13 @@ int
 DT_Creator::activate_root_poa (void)
 {
   CORBA::Object_var object =
-    orb_->resolve_initial_references ("RootPOA");
+    this->orb_->resolve_initial_references ("RootPOA");
 
-  root_poa_ =
+  PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (object.in ());
 
   PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager ();
+    root_poa->the_POAManager ();
 
   poa_manager->activate ();
 
@@ -263,15 +263,19 @@ DT_Creator::activate_poa_list (void)
   if (poa_count_ > 0)
     {
       CORBA::Object_var object =
-  orb_->resolve_initial_references ("RTORB");
+        this->orb_->resolve_initial_references ("RTORB");
 
-      this->rt_orb_ =
-  RTCORBA::RTORB::_narrow (object.in ());
-    }
+      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
 
-  for (int i = 0; i < poa_count_; ++i)
-    {
-      poa_list_[i]->activate (this->rt_orb_.in(), this->root_poa_.in ());
+      object = this->orb_->resolve_initial_references ("RootPOA");
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (object.in ());
+
+      for (int i = 0; i < poa_count_; ++i)
+        {
+          poa_list_[i]->activate (rt_orb.in(), root_poa.in ());
+        }
     }
 }
 
@@ -285,6 +289,12 @@ DT_Creator::activate_job_list (void)
 
   Job_i* job;
 
+  CORBA::Object_var object =
+    this->orb_->resolve_initial_references ("RootPOA");
+
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (object.in ());
+
   for (int i = 0; i < job_count_; ++i)
     {
       job = job_list_[i];
@@ -294,7 +304,7 @@ DT_Creator::activate_job_list (void)
 
       // find your poa
       PortableServer::POA_var host_poa =
-        root_poa_->find_POA (job->poa ().c_str (), 0);
+        root_poa->find_POA (job->poa ().c_str (), 0);
 
       PortableServer::ServantBase_var servant_var (job);
 
@@ -412,8 +422,6 @@ DT_Creator::resolve_naming_service (void)
 void
 DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
 {
-  current_ = RTScheduling::Current::_duplicate (current);
-
   long flags;
   flags = THR_NEW_LWP | THR_JOINABLE;
   flags |=
@@ -431,7 +439,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
   CORBA::Policy_var sched_param;
   sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
   const char * name = 0;
-  current_->begin_scheduling_segment (name,
+  current->begin_scheduling_segment (name,
               sched_param.in (),
               sched_param.in ());
 
@@ -475,7 +483,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
 
   this->wait ();
 
-  current_->end_scheduling_segment (name);
+  current->end_scheduling_segment (name);
 
   this->check_ifexit ();
 }
@@ -640,13 +648,6 @@ void
 DT_Creator::base_time (ACE_Time_Value* base_time)
 {
   this->base_time_ = base_time;
-}
-
-
-RTScheduling::Current_ptr
-DT_Creator::current (void)
-{
-  return current_.in ();
 }
 
 

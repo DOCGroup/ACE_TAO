@@ -1,3 +1,31 @@
+Thu Apr 24 12:16:30 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/RTScheduling/DT_Creator.h:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+
+          Changed to not hold onto the RTScheduling::Current, RTCORBA::RTORB
+          or PortableServer::POA.  They are retrieved on demand.  Otherwise,
+          static destruction causes problems on some platforms.             
+
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
+
+          Modified this test to convert the native priority to the CORBA
+          priority before passing it to the RTCORBA::Current::the_priority()
+          method.  It expects an RTCORBA priority, not a native priority.   
+
+        * examples/RTScheduling/Task_Stats.cpp:
+
+          Changed to only dump statistics if the object has been
+          initialized.
+
+        * tao/RTScheduling/RTScheduler_Manager.h:
+
+          Fixed the header guard.  It was the same as the
+          Priority_Mapping_Manager.h guard.
+
 Thu Apr 24 12:13:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h

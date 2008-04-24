@@ -76,8 +76,6 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   virtual int total_load (void) = 0;
 
-  RTScheduling::Current_ptr current (void);
-
   Synch_i* synch (void);
 
   void register_synch_obj (void);
@@ -102,11 +100,6 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   int active_job_count_;
   char** log;
   ACE_Time_Value* base_time_;
-  RTScheduling::Current_var current_;
-  /// RT ORB
-  RTCORBA::RTORB_var rt_orb_;
-  /// Reference to the root poa.
-  PortableServer::POA_var root_poa_;
   /// A naming context.
   CosNaming::NamingContextExt_var naming_;
   char* file_name_;
