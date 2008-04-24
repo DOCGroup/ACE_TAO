@@ -40,7 +40,7 @@ class TAO_Notify_Serv_Export TAO_Notify_AnyEvent_No_Copy : public TAO_Notify_Eve
 {
   friend class TAO_Notify_Builder;
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_AnyEvent_No_Copy (const CORBA::Any &event);
 
   /// Destructor
@@ -103,7 +103,7 @@ protected:
 class TAO_Notify_Serv_Export TAO_Notify_AnyEvent : public TAO_Notify_AnyEvent_No_Copy
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_AnyEvent (const CORBA::Any &event);
 
   /// Destructor

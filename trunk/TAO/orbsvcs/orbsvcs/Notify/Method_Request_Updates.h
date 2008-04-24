@@ -42,7 +42,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates
   , public TAO_Notify_Method_Request_Queueable
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Method_Request_Updates (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy);
 
   /// Destructor
@@ -71,7 +71,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates_No_Copy
   , public TAO_Notify_Method_Request
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Method_Request_Updates_No_Copy (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy);
 
   /// Destructor

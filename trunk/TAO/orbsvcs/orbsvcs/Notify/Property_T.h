@@ -37,13 +37,13 @@ template <class TYPE>
 class TAO_Notify_PropertyBase_T
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_PropertyBase_T (const char* name, const TYPE& initial);
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_PropertyBase_T (const char* name);
 
-  /// Copy Constuctor
+  /// Copy Constructor
   TAO_Notify_PropertyBase_T (const TAO_Notify_PropertyBase_T &rhs);
 
   /// Destructor
@@ -96,10 +96,10 @@ template <class TYPE>
 class TAO_Notify_Property_T : public TAO_Notify_PropertyBase_T<TYPE>
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Property_T (const char* name, const TYPE& initial);
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Property_T (const char* name);
 
   /// Init this Property from the sequence.
@@ -122,10 +122,10 @@ template <class TYPE>
 class TAO_Notify_StructProperty_T
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_StructProperty_T (const char* name, const TYPE& initial);
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_StructProperty_T (const char* name);
 
   /// Init this Property from the sequence.

@@ -41,7 +41,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ETCL_Filter
   : public POA_CosNotifyFilter::Filter
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa);
 
   /// Destructor

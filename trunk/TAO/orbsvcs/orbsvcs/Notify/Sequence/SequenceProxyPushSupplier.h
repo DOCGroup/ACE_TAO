@@ -50,7 +50,7 @@ class TAO_Notify_Serv_Export TAO_Notify_SequenceProxyPushSupplier
   friend class TAO_Notify_Builder;
 
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_SequenceProxyPushSupplier (void);
 
   /// Destructor

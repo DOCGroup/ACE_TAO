@@ -45,7 +45,7 @@ public:
   typedef CosNotifyChannelAdmin::ProxyIDSeq SEQ;
   typedef CosNotifyChannelAdmin::ProxyIDSeq_var SEQ_VAR;
 
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Proxy (void);
 
   /// Destructor

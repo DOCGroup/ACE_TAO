@@ -49,7 +49,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyPushSupplier
   typedef TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::ProxyPushSupplier> SuperClass;
   friend class TAO_Notify_Builder;
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ProxyPushSupplier (void);
 
   /// Destructor

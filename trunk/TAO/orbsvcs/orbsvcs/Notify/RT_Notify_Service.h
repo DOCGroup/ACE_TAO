@@ -31,7 +31,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RT_Notify_Export TAO_RT_Notify_Service : public TAO_CosNotify_Service
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_RT_Notify_Service (void);
 
   /// Destructor
