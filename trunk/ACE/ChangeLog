@@ -1,3 +1,14 @@
+Thu Apr 24 09:55:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * bin/MakeProjectCreator/config/ace_unicode.mpb:
+        * bin/MakeProjectCreator/config/global.features:
+          Default unicode=0 feature. Unicode does not depend upon MFC,
+          may be used together as necessary.
+
+        * examples/Log_Mgs/Log_Msg_MFC/Log_Mgs_MFC.mpc:
+        * examples/Log_Mgs/Log_Msg_MFC/Log_Mgs_Unicode_MFC.mpc:
+          Split out the unicode requirements.
+
 Thu Apr 24 05:58:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Refcountable_T.{cpp,inl}:
