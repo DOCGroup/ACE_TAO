@@ -124,10 +124,10 @@ private:
 
   TAO_SYNCH_MUTEX default_admin_mutex_;
 
-  // Default Consumer Admin
+  /// Default Consumer Admin
   CosNotifyChannelAdmin::ConsumerAdmin_var default_consumer_admin_;
 
-  // Default Supplier Admin
+  /// Default Supplier Admin
   CosNotifyChannelAdmin::SupplierAdmin_var default_supplier_admin_;
 
 protected:

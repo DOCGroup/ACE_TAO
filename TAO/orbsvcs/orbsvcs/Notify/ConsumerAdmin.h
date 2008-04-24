@@ -89,15 +89,11 @@ protected:
   /// = CosNotifyChannelAdmin::ConsumerAdmin methods
   virtual CosNotifyChannelAdmin::AdminID MyID (void);
 
-  virtual ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel (
-
-  );
+  virtual ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel (void);
 
   virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void);
 
-  virtual ::CosNotifyFilter::MappingFilter_ptr priority_filter (
-
-  );
+  virtual ::CosNotifyFilter::MappingFilter_ptr priority_filter (void);
 
   virtual void priority_filter (CosNotifyFilter::MappingFilter_ptr priority_filter);
 

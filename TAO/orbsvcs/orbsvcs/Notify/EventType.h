@@ -5,8 +5,6 @@
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_EVENTTYPE_H
@@ -62,14 +60,14 @@ public:
   /// != operator
   bool operator!=(const TAO_Notify_EventType& notify_event_type) const;
 
+  /// Return the special event type.
   static TAO_Notify_EventType special (void);
-  // Return the special event type.
 
+  /// Is this the special event (accept everything).
   CORBA::Boolean is_special (void) const;
-  // Is this the special event (accept everything).
 
+  /// Get the type underneath us.
   const CosNotification::EventType& native (void) const;
-  // Get the type underneath us.
 
   /// Helper to print contents.
   void dump (void) const;
@@ -85,18 +83,18 @@ protected:
   /// Init this object.
   void init_i (const char* domain_name, const char* type_name);
 
+  /// Recompute the hash value.
   void recompute_hash (void);
-  // Recompute the hash value.
 
   bool domain_is_wildcard (const char* domain) const;
   bool type_is_wildcard (const char* type) const;
-  
-  // = Data Members
-  CosNotification::EventType event_type_;
-  // The event_type that we're decorating.
 
+  // = Data Members
+  /// The event_type that we're decorating.
+  CosNotification::EventType event_type_;
+
+  /// The hash value computed.
   u_long hash_value_;
-  // The hash value computed.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
