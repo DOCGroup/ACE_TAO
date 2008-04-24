@@ -140,7 +140,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Reactor_Timer_Interface.cpp
     Read_Buffer.cpp
     Recursive_Thread_Mutex.cpp
-    Refcountable.cpp
     Rtems_init.c
     RW_Mutex.cpp
     RW_Thread_Mutex.cpp
@@ -243,6 +242,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Pair_T.cpp
     RB_Tree.cpp
     Reactor_Token_T.cpp
+    Refcountable_T.cpp
     Refcounted_Auto_Ptr.cpp
     Reverse_Lock_T.cpp
     Select_Reactor_T.cpp
