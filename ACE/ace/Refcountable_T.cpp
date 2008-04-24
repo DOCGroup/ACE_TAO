@@ -9,6 +9,10 @@ ACE_RCSID (ace,
            Refcountable_T,
            "$Id$")
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Refcountable_T.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK>
