@@ -30,7 +30,7 @@ class TAO_Notify_Tests_Command;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Factory
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Command_Factory (void);
 
   /// Destructor

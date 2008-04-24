@@ -32,7 +32,7 @@ class TAO_Notify_ThreadPool_Consumer
   : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ThreadPool_Consumer (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Init

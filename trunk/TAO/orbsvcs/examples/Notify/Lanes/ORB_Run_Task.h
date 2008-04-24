@@ -26,7 +26,7 @@
 class TAO_Notify_ORB_Run_Task : public ACE_Task_Base
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Destructor

@@ -38,7 +38,7 @@ template <class COMMAND>
 class TAO_Notify_Tests_Command_Factory_T : public TAO_Notify_Tests_Command_Factory, public ACE_Service_Object
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Command_Factory_T (void);
 
   /// Destructor

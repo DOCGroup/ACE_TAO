@@ -48,7 +48,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Activation_Manager : public TAO_No
   typedef ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*> TAO_Notify_Tests_PeriodicConsumer_Entry;
 
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Activation_Manager (void);
 
   /// Destructor

@@ -54,7 +54,7 @@ class TAO_Notify_Tests_Supplier_T : public TAO_Notify_Tests_Peer_T <Supplier_Tra
   typedef typename Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
 
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Supplier_T (void);
 
   /// Destructor

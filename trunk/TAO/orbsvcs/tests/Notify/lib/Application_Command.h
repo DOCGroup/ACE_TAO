@@ -33,7 +33,7 @@ class TAO_Notify_Tests_Application_Command;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Application_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Application_Command (void);
 
   /// Destructor

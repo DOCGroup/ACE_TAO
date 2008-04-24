@@ -33,7 +33,7 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Peer
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_Peer (void);
 
   /// Destructor
