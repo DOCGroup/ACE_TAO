@@ -5,7 +5,6 @@
 #if defined (ACE_ENABLE_MONITORS)
 
 #include "ace/Monitor_Base.h"
-#include "ace/Singleton.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -19,12 +18,12 @@ namespace ACE
       return
         ACE_Singleton<Monitor_Point_Registry, ACE_SYNCH_MUTEX>::instance ();
     }
-    
+
     Monitor_Point_Registry::Monitor_Point_Registry (void)
       : constraint_id_ (0)
     {
     }
-    
+
     bool
     Monitor_Point_Registry::add (Monitor_Base* type)
     {
@@ -34,12 +33,12 @@ namespace ACE
                              "registry add: null type\n"),
                             false);
         }
-        
+
       int status = 0;
 
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
-        
+
         type->add_ref ();
 
         status = this->map_.bind (type->name (), type);
@@ -51,10 +50,10 @@ namespace ACE
                              "registry add: map bind failed\n"),
                             false);
         }
-        
+
       return (status == 0);
     }
-    
+
     bool
     Monitor_Point_Registry::remove (const char* name)
     {
@@ -64,7 +63,7 @@ namespace ACE
                              "registry remove: null name\n"),
                             false);
         }
-        
+
       int status = 0;
       Map::data_type mp = 0;
 
@@ -86,15 +85,15 @@ namespace ACE
         {
           mp->remove_ref ();
         }
-        
+
       return (status == 0);
     }
-    
+
     MonitorControl_Types::NameList
     Monitor_Point_Registry::names (void)
     {
       MonitorControl_Types::NameList name_holder_;
-      
+
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
 
@@ -103,7 +102,7 @@ namespace ACE
             name_holder_.push_back (i->key ());
           }
       }
-        
+
       return name_holder_;
     }
 
@@ -111,35 +110,35 @@ namespace ACE
     Monitor_Point_Registry::get (const ACE_CString& name) const
     {
       Map::data_type mp = 0;
-      
+
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
-        
+
         this->map_.find (name, mp);
       }
-      
+
       if (mp != 0)
         {
           mp->add_ref ();
         }
-      
+
       return mp;
     }
-    
+
     long
     Monitor_Point_Registry::constraint_id (void)
     {
       long retval = 0;
-      
+
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
-        
+
         retval = this->constraint_id_++;
       }
-      
-      return retval;      
+
+      return retval;
     }
-    
+
     void
     Monitor_Point_Registry::cleanup (void)
     {

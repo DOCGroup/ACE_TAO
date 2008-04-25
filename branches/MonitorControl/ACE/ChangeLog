@@ -1,3 +1,12 @@
+Fri Apr 25 10:25:38 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MC_Admin.cpp
+        * ace/MC_Admin.h
+        * ace/Monitor_Base.h
+        * ace/Monitor_Point_Registry.cpp
+        * ace/Monitor_Point_Registry.h
+          Small improvements, cleanup, doxygen, etc
+
 Thu Apr 24 22:13:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/CDR_Stream.inl:
@@ -139,7 +148,7 @@ Thu Apr 17 20:17:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Point_Registry.cpp:
         * ace/Monitor_Base.cpp:
-        
+
           Trimmed ACE_GUARD scopes to minimum necessary and added comments.
           Thanks to Abdullah Sowayan <abdullah dot sowayan at lmco dot com>
           for the ACE_GUARD suggestions.

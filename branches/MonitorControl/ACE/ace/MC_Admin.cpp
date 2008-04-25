@@ -27,18 +27,6 @@ namespace ACE
 
     //====================================================================
 
-    MC_Admin::InvalidName::InvalidName (
-      const MonitorControl_Types::NameList& names)
-      : names_ (names)
-    {}
-
-    MC_Admin::InvalidName::~InvalidName (void)
-    {
-      // TODO - destroy name list?
-    }
-
-    //====================================================================
-    
     MC_Admin::MC_Admin (void)
       : reactor_ (ACE_Reactor::instance ()),
         default_reactor_ (true)
@@ -52,11 +40,11 @@ namespace ACE
           /// before its destructor is called.
           ACE_Reactor::instance ()->close_singleton ();
         }
-        
+
       /// We access the registry through ACE_Singleton, which somhow
       /// doesn't call the destructor, so we call this method to
       /// do a remove_ref() on all monitor points left in the registry.
-      /// which needs to be done before the registry goes away.  
+      /// which needs to be done before the registry goes away.
       Monitor_Point_Registry::instance ()->cleanup ();
     }
 

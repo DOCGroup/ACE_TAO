@@ -64,10 +64,14 @@ namespace ACE
       /// Updates the monitor's data if it is an integer size.
       virtual void receive (size_t value);
 
-      /// Accessors for the constraint list.
+      /// Add a constraint, returns the so called constraint id
       long add_constraint (const char* expression,
                            Control_Action* action = 0);
+
+      /// Remove a constraint
       Control_Action* remove_constraint (const long constraint_id);
+
+      /// Get all constraints
       CONSTRAINTS& constraints (void);
 
       /// Reset function.

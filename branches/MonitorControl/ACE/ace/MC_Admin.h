@@ -70,26 +70,6 @@ namespace ACE
     class ACE_Export MC_Admin
     {
     public:
-      /**
-       * @struct InvalidName
-       *
-       * @brief Exception, thrown when an operation below taking a
-       *        single name or list of names has a problem because of
-       *        an invalid name.
-       *
-       */
-      struct InvalidName
-      {
-        /// Constructor stores the list of names for which there was a
-        /// problem in the operation where the exception was thrown.
-        InvalidName (const MonitorControl_Types::NameList& names);
-
-        ~InvalidName (void);
-
-        /// Class member which holds the namelist passed to the constructor.
-        MonitorControl_Types::NameList names_;
-      };
-
       MC_Admin (void);
       ~MC_Admin (void);
 
@@ -111,13 +91,13 @@ namespace ACE
                        const ACE_Time_Value& time);
 
       /// Resets the monitor points found in the registry by
-      /// lookup of the passed list of names. Throws InvalidName
+      /// lookup of the passed list of names.
       void clear_statistics (const MonitorControl_Types::NameList& names);
 
       /// Called from the application to manually update the monitor points
       /// (or group) specified in <names>. The boolean parameter specifies
       /// whether or not some action should be triggered (constraint check,
-      /// logging, or some other action). Throws InvalidName.
+      /// logging, or some other action).
       void update_monitors (const MonitorControl_Types::NameList& names,
                             bool notify);
 
@@ -125,11 +105,11 @@ namespace ACE
       /// and substitute it for the default reactor.
       void reactor (ACE_Reactor* new_reactor);
       ACE_Reactor* reactor (void) const;
-      
+
     private:
       MonitorPointAutoUpdater auto_updater_;
       ACE_Reactor* reactor_;
-      bool default_reactor_;   
+      bool default_reactor_;
     };
   }
 }
