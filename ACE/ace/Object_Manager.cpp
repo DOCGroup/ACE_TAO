@@ -246,7 +246,6 @@ ACE_Object_Manager::init (void)
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && \
     defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 #if defined (_DEBUG) && (defined (_MSC_VER) || defined (__INTEL_COMPILER))
-          // This will keep the ACE_Assert window
           _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
           _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDERR );
           _CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE );
