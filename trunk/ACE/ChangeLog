@@ -1,3 +1,8 @@
+Fri Apr 25 10:40:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * tests/Unload_libACE.cpp:
+          This test wasn't using ACE_TMAIN.
+
 Fri Apr 25 09:10:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
 
         * bin/MakeProjectCreator/config/global.features:
