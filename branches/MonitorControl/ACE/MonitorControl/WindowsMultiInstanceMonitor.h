@@ -36,7 +36,7 @@ namespace ACE
      *
      * @brief Mixin class for concrete monitors compiled on Windows machines
      *        where the Performance Data Helper object of interest has more
-     *        than once instance.
+     *        than once instance, for example multiple CPUs or network cards.
      */
     class MONITORCONTROL_Export WindowsMultiInstanceMonitor
     {
@@ -57,8 +57,6 @@ namespace ACE
         INSTANCES_ITERATOR;
         
       INSTANCES instances_;
-      WindowsMonitor **current_instance_;
-      
       DWORD n_instances_;
       PDH_STATUS status_;
     };

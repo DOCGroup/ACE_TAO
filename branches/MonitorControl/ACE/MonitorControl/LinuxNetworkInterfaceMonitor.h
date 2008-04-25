@@ -40,6 +40,9 @@ namespace ACE
     class MONITORCONTROL_Export LinuxNetworkInterfaceMonitor
     {
     protected:
+      /// The Linux system file /proc/net/dev stores a wealth of
+      /// network information about the system. To get the specific
+      /// value we want to monitor, we just vary the scan format string.
       LinuxNetworkInterfaceMonitor (const char *scan_format);
 
       void lin_update (void);

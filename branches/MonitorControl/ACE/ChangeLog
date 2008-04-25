@@ -1,3 +1,31 @@
+Fri Apr 25 18:19:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/PacketsSentMonitor.h:
+        * MonitorControl/WindowsMultiInstanceMonitor.cpp:
+        * MonitorControl/WindowsMonitor.cpp:
+        * MonitorControl/BytesReceivedMonitor.cpp:
+        * MonitorControl/LinuxNetworkInterfaceMonitor.h:
+        * MonitorControl/Constraint_Visitor.h:
+        * MonitorControl/PacketsReceivedMonitor.cpp:
+        * MonitorControl/MonitorGroup.h:
+        * MonitorControl/MonitorQuery.h:
+        * MonitorControl/AutoUpdateStarter.h:
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.cpp:
+        * MonitorControl/LinuxNetworkInterfaceMonitor.cpp:
+        * MonitorControl/Constraint_Visitor.cpp:
+        * MonitorControl/CPULoadMonitor.h:
+        * MonitorControl/WindowsMultiInstanceMonitor.h:
+        * MonitorControl/WindowsMonitor.h:
+        * MonitorControl/BytesReceivedMonitor.h:
+        * MonitorControl/MemoryUsageMonitor.h:
+        * MonitorControl/Constraint_Interpreter.h:
+        * MonitorControl/PacketsReceivedMonitor.h:
+        * MonitorControl/NumThreadsMonitor.h:
+        * MonitorControl/BytesSentMonitor.h:
+
+          Added and updated comments.
+
 Fri Apr 25 16:43:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Admin_Manager.h:

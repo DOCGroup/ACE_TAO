@@ -50,8 +50,8 @@ namespace ACE
     int
     Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
     {
-      /// TODO - check for strings related to the timestamp, maybe
-      /// using a has map of relevant string as in TAO_ETCL_Constraint.
+      /// TODO - check for strings related to other identifiers
+      /// relevant in MonitorControl, for example the data timestamp.
       if (ACE_OS::strcmp (ident->value (), "value") == 0)
         {
           this->queue_.enqueue_head (
@@ -188,7 +188,7 @@ namespace ACE
           this->queue_.dequeue_head (lhs_result);
           result = (ACE_CDR::Boolean) lhs_result;
 
-          // Short-circuiting AND.
+          /// Short-circuiting AND.
           if (result == true)
             {
               ETCL_Constraint *rhs = binary->rhs ();
@@ -223,8 +223,8 @@ namespace ACE
       ETCL_Constraint *lhs = binary->lhs ();
       ACE_CDR::Boolean result = false;
 
-      // Perform an operation on the results of evaluating the left and
-      // right branches of this subtree. The evaluations go on our queue.
+      /// Perform an operation on the results of evaluating the left and
+      /// right branches of this subtree. The evaluations go on our queue.
       if (lhs->accept (this) == 0)
         {
           ETCL_Literal_Constraint left_operand;

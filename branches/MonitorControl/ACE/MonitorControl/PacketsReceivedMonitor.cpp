@@ -21,6 +21,7 @@ namespace ACE
 #elif defined (linux)
         , LinuxNetworkInterfaceMonitor (
             " %*[^:]: %*u %lu %*u %*u %*u %*u %*u %*u %*u %*u")
+            /// Scan format for /proc/net/dev
 #endif
     {}
 

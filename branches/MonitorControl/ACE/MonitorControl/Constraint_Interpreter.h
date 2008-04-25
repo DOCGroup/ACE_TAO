@@ -36,7 +36,9 @@ namespace ACE
     /**
      * @class Constraint_Interpreter
      *
-     * @brief "ETCL" Interpreter for MonitorControl constraints.
+     * @brief "ETCL" Interpreter for MonitorControl constraints,
+              specialized to encapsulate MonitorControl-specific
+              knowledge of types and visitors.
      */
     class MONITORCONTROL_Export Constraint_Interpreter
       : public ETCL_Interpreter

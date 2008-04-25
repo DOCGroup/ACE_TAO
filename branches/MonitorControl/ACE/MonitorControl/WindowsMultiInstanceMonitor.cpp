@@ -23,6 +23,9 @@ namespace ACE
     {
       this->value_.doubleValue = 0.0;
       
+      /// Create a string which is a concatentation of the path
+      /// name of each 'instance' we need to monitor.
+      
       DWORD paths_size = 4096;
       LPSTR paths = (LPSTR) GlobalAlloc (GPTR, paths_size);
       
@@ -51,6 +54,7 @@ namespace ACE
       LPSTR path = paths;
       int index = 0;
       
+      /// Create a regular Windows monitor for each path name.
       while (*path != 0)
         {
           WindowsMonitor *instance = new WindowsMonitor (path);
@@ -65,6 +69,7 @@ namespace ACE
     {
       WindowsMonitor *instance = 0;
       
+      /// Destroy the single instance monitors created in the constructor.
       while (this->instances_.dequeue_head (instance) == 0)
         {
           delete instance;
@@ -74,12 +79,17 @@ namespace ACE
     void
     WindowsMultiInstanceMonitor::win_update (void)
     {
+      WindowsMonitor **current_instance;
+      
+      /// Sum the values of each single instance monitor.
       for (INSTANCES_ITERATOR i (this->instances_); !i.done (); i.advance ())
         {
-          i.next (this->current_instance_);
-          (*this->current_instance_)->win_update ();
+          i.next (current_instance);
+          
+          (*current_instance)->win_update ();
+          
           this->value_.doubleValue +=
-            (*this->current_instance_)->value_.doubleValue;
+            (*current_instance)->value_.doubleValue;
         }
     }
   }

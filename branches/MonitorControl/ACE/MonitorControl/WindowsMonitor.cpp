@@ -17,6 +17,9 @@ namespace ACE
         counter_ (0),
         status_ (ERROR_SUCCESS)
     {
+      /// Create a query and a counter here so it doesn't have
+      /// to be done with each update.
+    
       this->status_ = PdhOpenQuery (0, 0, &this->query_);
 
       if (ERROR_SUCCESS != this->status_)

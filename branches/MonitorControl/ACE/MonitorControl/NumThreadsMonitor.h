@@ -36,8 +36,7 @@ namespace ACE
     /**
      * @class NumThreadsMonitor
      *
-     * @brief Template specialization with meaningful implementation of
-     * pure virtual method.
+     * @brief Monitor total number of threads in the system.
      */
     class MONITORCONTROL_Export NumThreadsMonitor
       : public Monitor_Base
@@ -51,7 +50,7 @@ namespace ACE
       /// Implementation of the pure virtual method.
       virtual void update (void);
 
-      /// Stores the default name, used if none is supplied to constructor.
+      /// Stores the default name, used if none is supplied by the user.
       static const char* default_name (void);
 
     private:

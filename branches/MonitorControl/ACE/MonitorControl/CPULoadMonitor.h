@@ -52,7 +52,7 @@ namespace ACE
       /// Implementation of the pure virtual method.
       virtual void update (void);
 
-      /// Stores the default name, used if none is supplied to constructor.
+      /// Stores the default name, used if none is supplied by the user.
       static const char* default_name (void);
 
     private:

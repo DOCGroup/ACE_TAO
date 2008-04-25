@@ -31,20 +31,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ETCL_Literal_Constraint;
 class ETCL_Identifier;
-class ETCL_Union_Value;
-class ETCL_Union_Pos;
-class ETCL_Component_Pos;
-class ETCL_Component_Assoc;
-class ETCL_Component_Array;
-class ETCL_Special;
-class ETCL_Component;
-class ETCL_Dot;
-class ETCL_Eval;
-class ETCL_Default;
-class ETCL_Exist;
 class ETCL_Unary_Expr;
 class ETCL_Binary_Expr;
-class ETCL_Preference;
 class ETCL_Constraint;
 
 namespace ACE
@@ -55,7 +43,8 @@ namespace ACE
      * @class Constraint_Visitor
      *
      * @brief Backend for the non-CORBA ETCL frontend, specific to
-     *        MonitorControl
+     *        MonitorControl and supporting only basic types not
+              specific to CORBA.
      */
     class MONITORCONTROL_Export Constraint_Visitor
       : public ETCL_Constraint_Visitor

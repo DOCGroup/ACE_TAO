@@ -29,6 +29,11 @@ namespace ACE
 {
   namespace MonitorControl
   {
+    /**
+     * @class MonitorGroup
+     *
+     * @brief Updates and/or clears a group of monitors iwth a single call.
+     */
     class MONITORCONTROL_Export MonitorGroup : public Monitor_Base
     {
     public:

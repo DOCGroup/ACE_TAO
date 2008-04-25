@@ -37,7 +37,7 @@ namespace ACE
      * For all the monitors that are periodically updated, the reactor
      * event loop that calls their associated registered timers must
      * be started in a separate thread so the rest of the application
-     * can run as well. A very simple struct inheriting from ACE_Task
+     * isn't blocked. A very simple class inheriting from ACE_Task_Base
      * and overriding the svc() method suffices.
      */
     class MONITORCONTROL_Export AutoUpdateStarter : public ACE_Task_Base

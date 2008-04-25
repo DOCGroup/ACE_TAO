@@ -49,7 +49,9 @@ namespace ACE
       
     protected:
       PDH_FMT_COUNTERVALUE value_;
-      
+    
+    /// Make these persistent as members so they don't have to be
+    /// created & destroyed with each update.  
     private:
       HQUERY query_;
       HCOUNTER counter_;

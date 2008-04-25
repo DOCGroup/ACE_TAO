@@ -47,7 +47,7 @@ namespace ACE
      * @class MonitorQuery
      *
      * @brief Handles queries for a specific monitor point, and
-     *        evaluates its constraint(s).
+     *        evaluates its constraint(s) with each query.
      *
      */
     class MONITORCONTROL_Export MonitorQuery

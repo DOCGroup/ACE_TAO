@@ -37,7 +37,8 @@ namespace ACE
           return;
         }
           
-      // TODO - something if dummy comes up 0.        
+      /// Ignore the first 2 lines of the file, which are file
+      /// and column headers.  
       void* dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
       dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
       
@@ -68,7 +69,7 @@ namespace ACE
           return;
         }
         
-      /// Throw away the first 2 lines of the file, which are file
+      /// Ignore the first 2 lines of the file, which are file
       /// and column headers.  
       void* dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
       dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
