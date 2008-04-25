@@ -1,4 +1,4 @@
-# VxWorks test file
+# VxWorks script for loading libraries used by: <%exename%>
 
 <%foreach(reverse(libs))%>
 ld < lib<%lib%>.so

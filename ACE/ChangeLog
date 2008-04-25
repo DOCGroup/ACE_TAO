@@ -1,3 +1,11 @@
+Fri Apr 25 21:47:54 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/vxtest.mpd:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+
+          Began integration of the foo.vxtest files into the actual testing
+          process.  This needs to get enhanced in ProcessVX_Win32.pm too.
+
 Fri Apr 25 21:21:56 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Object_Manager.cpp:
