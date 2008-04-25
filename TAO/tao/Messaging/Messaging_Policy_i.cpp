@@ -23,8 +23,8 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
   const TimeBase::TimeT& relative_expiry)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
-  , ::CORBA::LocalObject ()
   , Messaging::RelativeRoundtripTimeoutPolicy ()
+  , ::CORBA::LocalObject ()
   , relative_expiry_ (relative_expiry)
 {
 }
@@ -33,8 +33,8 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
   const TAO_RelativeRoundtripTimeoutPolicy &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
-  , ::CORBA::LocalObject ()
   , Messaging::RelativeRoundtripTimeoutPolicy ()
+  , ::CORBA::LocalObject ()
   , relative_expiry_ (rhs.relative_expiry_)
 {
 }
@@ -59,7 +59,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 {
   try
     {
-      CORBA::Policy_var policy = 0;
+      CORBA::Policy_var policy = CORBA::Policy::_nil ();
 
       if (stub == 0)
         {
@@ -190,8 +190,8 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
-  , ::CORBA::LocalObject ()
   , Messaging::SyncScopePolicy ()
+  , ::CORBA::LocalObject ()
   , synchronization_ (synchronization)
 {
 }
@@ -199,8 +199,8 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronizati
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
-  , ::CORBA::LocalObject ()
   , Messaging::SyncScopePolicy ()
+  , ::CORBA::LocalObject ()
   , synchronization_ (rhs.synchronization_)
 {
 }
@@ -219,7 +219,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
 {
   try
     {
-      CORBA::Policy_var policy = 0;
+      CORBA::Policy_var policy = CORBA::Policy::_nil ();
 
       if (stub == 0)
         {
