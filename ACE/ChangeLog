@@ -1,3 +1,11 @@
+Fri Apr 25 09:10:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * bin/MakeProjectCreator/config/global.features:
+        * examples/Log_Mgs/Log_Msg_MFC/Log_Mgs_MFC.mpc:
+          Feature name "uses_wchar" already used within ACE/TAO. Replaces
+          the "unicode" feature name. Template / project names within MPC
+          still named unicode.
+
 Thu Apr 24 18:45:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
