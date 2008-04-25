@@ -389,8 +389,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->addrs_[0].set (addr) != 0)
     return -1;
 
-  return this->open_i (addr,
-                       reactor);
+  return this->open_i (addr, reactor);
 }
 
 int
@@ -465,7 +464,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                      this->reuse_addr_) == -1)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                         ACE_TEXT ("%p, "),
                         ACE_TEXT ("cannot open acceptor\n")));

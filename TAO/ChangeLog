@@ -1,3 +1,13 @@
+Fri Apr 25 13:24:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Registry.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/params.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/Thread_Lane_Resources.cpp:
+          layout changes
+
 Fri Apr 25 09:25:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
 
         * examples/MFC/server.mpc:

@@ -915,8 +915,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // All endpoint strings should be of the above form(s).
 
           this->set_endpoint_helper (TAO_DEFAULT_LANE,
-                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
-                                    );
+                                     ACE_TEXT_ALWAYS_CHAR (current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -929,8 +928,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // used.
 
           this->set_endpoint_helper (TAO_DEFAULT_LANE,
-                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
-                                    );
+                                     ACE_TEXT_ALWAYS_CHAR (current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -955,9 +953,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                                   (arg_shifter.get_current ()));
           arg_shifter.consume_arg ();
 
-          this->set_endpoint_helper (lane,
-                                     endpoints
-                                    );
+          this->set_endpoint_helper (lane, endpoints);
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBNoProprietaryActivation"))))
@@ -975,16 +971,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
        else if (0 != (current_arg = arg_shifter.get_the_parameter
                  (ACE_TEXT("-ORBUseSharedProfile"))))
          {
-           this->orb_params ()->shared_profile
-             (ACE_OS::atoi (current_arg));
+           this->orb_params ()->shared_profile (ACE_OS::atoi (current_arg));
 
            arg_shifter.consume_arg ();
          }
        else if (0 != (current_arg = arg_shifter.get_the_parameter
                  (ACE_TEXT("-ORBNegotiateCodesets"))))
          {
-           negotiate_codesets =
-             (ACE_OS::atoi (current_arg));
+           negotiate_codesets = (ACE_OS::atoi (current_arg));
 
            arg_shifter.consume_arg ();
          }
@@ -1081,8 +1075,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   if (env_endpoint != 0)
     {
       int result =
-        this->orb_params ()->add_endpoints (TAO_DEFAULT_LANE,
-                                            env_endpoint);
+        this->orb_params ()->add_endpoints (TAO_DEFAULT_LANE, env_endpoint);
 
       if (result != 0)
         {
@@ -2575,8 +2568,7 @@ int
 TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
                                    const ACE_CString &endpoints)
 {
-  if (this->orb_params ()->add_endpoints (lane,
-                                          endpoints) != 0)
+  if (this->orb_params ()->add_endpoints (lane, endpoints) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t)\n")
