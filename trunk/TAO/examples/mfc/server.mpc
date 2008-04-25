@@ -2,7 +2,7 @@
 // $Id$
 
 project(MFC_Server): namingexe, portableserver, ace_mfc {
-  avoids    += unicode
+  avoids    += uses_wchar
   after     += MFC_Client
   exename    = server
   pch_header = StdAfx.h

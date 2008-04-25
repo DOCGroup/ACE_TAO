@@ -1,3 +1,12 @@
+Fri Apr 25 09:25:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * examples/MFC/server.mpc:
+        * utils/NamingViewer/NamingView.mpc:
+
+          Feature name "uses_wchar" already used within ACE/TAO. Replaces
+          the "unicode" feature name. Template / project name within MPC
+          still named unicode.
+
 Fri Apr 25 09:10:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
