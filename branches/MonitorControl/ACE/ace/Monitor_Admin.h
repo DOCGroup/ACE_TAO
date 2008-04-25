@@ -73,7 +73,7 @@ namespace ACE
       ~MC_Admin (void);
 
       /// Add or access monitor points in a global registry
-      /// (see MC_Generic_Registry.h). If the auto_update_msec arg is non-zero,
+      /// If the auto_update_msec arg is non-zero,
       /// the monitor point, the auto updater member, and the given time
       /// interval are passed to our reactor's register_timeout()
       /// method.
@@ -94,7 +94,7 @@ namespace ACE
       void clear_statistics (const Monitor_Control_Types::NameList& names);
 
       /// Called from the application to manually update the monitor points
-      /// (or group) specified in <names>. The boolean parameter specifies
+      /// (or group) specified in @a names. The boolean parameter specifies
       /// whether or not some action should be triggered (constraint check,
       /// logging, or some other action).
       void update_monitors (const Monitor_Control_Types::NameList& names,
