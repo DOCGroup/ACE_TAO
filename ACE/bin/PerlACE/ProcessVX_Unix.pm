@@ -155,6 +155,34 @@ sub IgnoreExeSubDir
 
 ### Spawning processes
 
+#Helper for spawning with list of kernel modules in a .vxtest file
+sub hasVxtestFile
+{
+  my $program = shift; #example: ORB_init
+  my $vx_ref = shift;
+  my $unld_ref = shift;
+  my $found = 0;
+  foreach my $file (glob('*.vxtest')) {
+    last if $found;
+    next unless -r $file;
+    my $fh = new FileHandle;
+    open ($fh, $file);
+    my $line1 = <$fh>;
+    chomp $line1;
+    if ($line1 =~ /libraries used by: $program$/) {
+      $$vx_ref = $file;
+      $found = 1;
+      while(<$fh>) {
+        chomp;
+        next unless /^ld < (\S+)$/;
+        unshift @$unld_ref, "unld \"$1\"";
+      }
+    }
+    close $fh;
+  }
+  return $found;
+}
+
 
 # Spawn the process and continue.
 
@@ -235,6 +263,13 @@ sub Spawn ()
             $self->{SET_VX_DEFGW} = 0;
         }
 
+        my($vxtest);
+        my(@unload_commands);
+        if (hasVxtestFile($program, \$vxtest, \@unload_commands)) {
+            @cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
+            @cmds[$cmdnr++] = '< ../' . $cwdrel . '/' . $vxtest;
+        }
+
         @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
@@ -258,6 +293,7 @@ sub Spawn ()
         }
         @cmds[$cmdnr++] = 'ace_vx_rc = vx_execae(ace_main' . $arguments . ')';
         @cmds[$cmdnr++] = 'unld "'. $program . $PerlACE::ProcessVX::ExeExt . '"';
+        push @cmds, @unload_commands;
         $prompt = '/-> $/';
     }
 
