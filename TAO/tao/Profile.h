@@ -368,7 +368,7 @@ protected:
   /// Our tagged profile
   IOP::TaggedProfile *tagged_profile_;
 
-  /// object_key associated with this profile.
+  /// Object_key associated with this profile.
   TAO::Refcounted_ObjectKey *ref_object_key_;
 
 private:
