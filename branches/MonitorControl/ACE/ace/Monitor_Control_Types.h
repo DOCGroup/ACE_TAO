@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef MONITORCONTROL_TYPES_H
-#define MONITORCONTROL_TYPES_H
+#ifndef MONITOR_CONTROL_TYPES_H
+#define MONITOR_CONTROL_TYPES_H
 
 #include /**/ "ace/pre.h"
 
@@ -96,4 +96,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // MONITORCONTROL_TYPES_H
+#endif // MONITOR_CONTROL_TYPES_H
