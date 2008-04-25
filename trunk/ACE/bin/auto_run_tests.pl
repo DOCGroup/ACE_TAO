@@ -179,7 +179,10 @@ foreach my $test_lst (@file_list) {
 
         $cmd = '';
         if ($opt_s) {
-            $cmd = "$opt_s \"perl $program $inherited_options\"";
+            #The Win32 sandbox takes the program and options in quotes, but the
+            #posix sandbox takes the program and options as separate args.
+            my($q) = ($^O eq 'MSWin32') ? '"' : '';
+            $cmd = "$opt_s ${q}perl $program $inherited_options${q}";
         }
         else {
             $cmd = "perl $program$inherited_options";

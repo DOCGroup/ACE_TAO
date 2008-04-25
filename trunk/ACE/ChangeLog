@@ -1,3 +1,20 @@
+Fri Apr 25 21:21:56 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Object_Manager.cpp:
+
+          Removed a comment that no longer applies.
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Changed the check for failure to spawn a process, in order to avoid
+          a race condition (the spawned process exits normally before we even
+          check its status).
+
+        * bin/auto_run_tests.pl:
+
+          With -s, account for different parameter formatting requirements in
+          the win32 and posix sandbox programs.
+
 Fri Apr 25 14:25:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
 
         * tests/Unload_libACE.cpp:

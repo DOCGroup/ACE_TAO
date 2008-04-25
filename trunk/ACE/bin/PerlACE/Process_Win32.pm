@@ -287,18 +287,14 @@ sub Spawn ()
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print "$executable $cmdline\n";
     }
-    Win32::Process::Create ($self->{PROCESS},
-                            $executable,
-                            $cmdline,
-                            0,
-                            $state,
-                            '.');
+    my $status = Win32::Process::Create ($self->{PROCESS},
+                                         $executable,
+                                         $cmdline,
+                                         0,
+                                         $state,
+                                         '.');
 
-    my $status = 0;
-
-    Win32::Process::GetExitCode ($self->{PROCESS}, $status);
-
-    if ($status != $STILL_ACTIVE) {
+    if ($status == 0) {
         print STDERR "ERROR: Spawn failed for <", $self->CommandLine (), ">\n";
         return -1;
     }
