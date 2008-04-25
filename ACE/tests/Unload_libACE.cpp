@@ -120,7 +120,7 @@ time_stamp (char date_and_time[], int date_and_timelen, int format)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+main (int, char **)
 {
   char const *const program = "UnloadLibACE";
 
@@ -131,7 +131,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   char ybuf[BUFSIZ];
   FILE *logfp = 0;
 
-  if ((logfp = fopen ("log/UnloadLibACE.log", ACE_TEXT ("w"))) != 0)
+  if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != 0)
     {
       setvbuf (logfp, 0, _IONBF, 0);
       // reassign stdout/stderr to log file

@@ -1,3 +1,9 @@
+Fri Apr 25 14:25:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * tests/Unload_libACE.cpp:
+          I've backed out this change due to lack of time to chase up
+          the lack of macro definitions. This will need to be revisited.
+
 Fri Apr 25 10:40:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
 
         * tests/Unload_libACE.cpp:
