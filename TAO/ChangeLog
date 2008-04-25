@@ -1,3 +1,11 @@
+Fri Apr 25 09:10:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
+        * tao/Messaging/Buffering_Constraint_Policy.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+          Fixed gnu warnings
+
 Fri Apr 25 07:27:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.h:

@@ -21,18 +21,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
-  , ::CORBA::LocalObject ()
   , TAO::BufferingConstraintPolicy ()
+  , ::CORBA::LocalObject ()
   , buffering_constraint_ (buffering_constraint)
 {
 }
 
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs)
-
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
-  , ::CORBA::LocalObject ()
   , TAO::BufferingConstraintPolicy ()
+  , ::CORBA::LocalObject ()
   , buffering_constraint_ (rhs.buffering_constraint_)
 {
 }
