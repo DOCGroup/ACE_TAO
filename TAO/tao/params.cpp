@@ -75,15 +75,14 @@ TAO_ORB_Parameters::get_endpoint_set (const ACE_CString &lane,
   endpoints_map_type::iterator const endpoints =
     this->endpoints_map_.find (lane);
 
-  // If lane is not in the map, <endpoint_set> remains empty
+  // If lane is not in the map, endpoint_set remains empty
   if (endpoints == this->endpoints_map_.end ())
     return;
 
   // At this point, the parsing should not fail since they have been
   // parsed successfully before.
   int const result =
-    this->parse_and_add_endpoints ((*endpoints).second,
-                                   endpoint_set);
+    this->parse_and_add_endpoints ((*endpoints).second, endpoint_set);
 
   ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
@@ -97,8 +96,7 @@ TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
 
   // Parse the additional endpoints.
   int const result =
-    this->parse_and_add_endpoints (additional_endpoints,
-                                   endpoint_set);
+    this->parse_and_add_endpoints (additional_endpoints, endpoint_set);
 
   // Parse failure.
   if (result != 0)

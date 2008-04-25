@@ -283,7 +283,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
               // increment slot past the "://" (i.e. add 3)
               ACE_CString addrs = iop.substring (slot + 3);
 
-              const int result = this->open_i (orb_core,
+              int const result = this->open_i (orb_core,
                                                reactor,
                                                addrs,
                                                factory,
@@ -438,7 +438,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                   addr.set (port, ACE_IPV6_ANY, AF_INET6); // IPv6 ANY on specified port
 
                   iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
- 
+
                   if (!iiop_acceptor)
                     return -1;
 
@@ -550,8 +550,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   // default endpoint.
 
   // Make an acceptor
-  TAO_Acceptor *acceptor =
-    (*factory)->factory ()->make_acceptor ();
+  TAO_Acceptor *acceptor = (*factory)->factory ()->make_acceptor ();
 
   if (acceptor == 0)
     {
@@ -588,11 +587,7 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
                                        const char *options)
 {
   // Initialize the acceptor to listen on a default endpoint.
-  if (acceptor->open_default (orb_core,
-                              reactor,
-                              major,
-                              minor,
-                              options) == -1)
+  if (acceptor->open_default (orb_core, reactor, major, minor, options) == -1)
     {
       delete acceptor;
 
@@ -601,8 +596,8 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
           ACE_ERROR ((
               LM_ERROR,
               ACE_TEXT ("TAO (%P|%t) unable to open ")
-              ACE_TEXT ("default acceptor for <%s>%p\n"),
-              ACE_TEXT_CHAR_TO_TCHAR ((*factory)->protocol_name ().c_str ()),
+              ACE_TEXT ("default acceptor for <%C>%p\n"),
+              (*factory)->protocol_name ().c_str (),
               ACE_TEXT ("")
             ));
         }
@@ -622,14 +617,11 @@ TAO_Acceptor_Registry::close_all (void)
 
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     {
-      if (*i == 0)
+      if (*i != 0)
         {
-          continue;
+          (*i)->close ();
+          delete *i;
         }
-
-      (*i)->close ();
-
-      delete *i;
     }
 
   this->size_ = 0;
@@ -685,21 +677,19 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                bool ignore_address)
 {
   ACE_CString options_tmp;
-  this->extract_endpoint_options (addrs,
-                                  options_tmp,
-                                  (*factory)->factory ());
+  this->extract_endpoint_options (addrs, options_tmp, (*factory)->factory ());
 
   const char *options = 0;
 
   if (options_tmp.length () > 0)
-    options = options_tmp.c_str ();
+    {
+      options = options_tmp.c_str ();
+    }
 
   char *last_addr = 0;
   ACE_Auto_Basic_Array_Ptr<char> addr_str (addrs.rep ());
 
-  const char *astr = ACE_OS::strtok_r (addr_str.get (),
-                                       ",",
-                                       &last_addr);
+  const char *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
 
   // Iterate over the addrs specified in the endpoint.
 
@@ -711,8 +701,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
       // the specified protocol.
       ACE_CString address (astr == 0 ? "" : astr);
 
-      TAO_Acceptor *acceptor =
-        (*factory)->factory ()->make_acceptor ();
+      TAO_Acceptor *acceptor = (*factory)->factory ()->make_acceptor ();
 
       if (acceptor != 0)
         {
@@ -720,9 +709,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
           // exists.
           int major = TAO_DEF_GIOP_MAJOR;
           int minor = TAO_DEF_GIOP_MINOR;
-          this->extract_endpoint_version (address,
-                                          major,
-                                          minor);
+          this->extract_endpoint_version (address, major, minor);
 
           // Check for existence of endpoint.
           if (ignore_address || address.length () == 0)
@@ -851,7 +838,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
             {
               /* Need to save the errno value from the acceptor->open(),
                * because errno will get reset when we delete acceptor */
-              const int errno_value = errno;
+              int const errno_value = errno;
               delete acceptor;
 
               if (TAO_debug_level > 0)

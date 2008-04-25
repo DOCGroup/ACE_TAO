@@ -298,7 +298,7 @@ TAO_Thread_Lane::open (void)
     this->pool ().manager ().orb_core ().orb_params ();
 
   TAO_EndpointSet endpoint_set;
-  bool ignore_address;
+  bool ignore_address = false;
 
   // Get the endpoints for this lane.
   params->get_endpoint_set (pool_lane_id, endpoint_set);
@@ -308,14 +308,13 @@ TAO_Thread_Lane::open (void)
       // If endpoints are not specified for this lane, use the
       // endpoints specified for the default lane but ignore their
       // addresses.
-      params->get_endpoint_set (TAO_DEFAULT_LANE,
-                                endpoint_set);
+      params->get_endpoint_set (TAO_DEFAULT_LANE, endpoint_set);
 
       ignore_address = true;
     }
   else
     {
-      // If endpoints are specified for this lane, use them with thier
+      // If endpoints are specified for this lane, use them with their
       // addresses.
       ignore_address = false;
     }
@@ -779,9 +778,7 @@ TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool)
     TAO_THREAD_POOL_MANAGER_GUARD;
 
     // Unbind the thread pool from the map.
-    int result =
-      this->thread_pools_.unbind (threadpool,
-                                  tao_thread_pool);
+    int const result = this->thread_pools_.unbind (threadpool, tao_thread_pool);
 
     // If the thread pool is not found in our map.
     if (result != 0)
