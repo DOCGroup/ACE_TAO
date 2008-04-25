@@ -21,8 +21,8 @@ TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
   const TimeBase::TimeT& relative_expiry)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
-  , ::CORBA::LocalObject ()
   , TAO::ConnectionTimeoutPolicy ()
+  , ::CORBA::LocalObject ()
   , relative_expiry_ (relative_expiry)
 {
 }
@@ -31,8 +31,8 @@ TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
   const TAO_ConnectionTimeoutPolicy &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
-  , ::CORBA::LocalObject ()
   , TAO::ConnectionTimeoutPolicy ()
+  , ::CORBA::LocalObject ()
   , relative_expiry_ (rhs.relative_expiry_)
 {
 }
@@ -57,7 +57,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 {
   try
     {
-      CORBA::Policy_var policy = CORBA::Policy_ptr ();
+      CORBA::Policy_var policy = CORBA::Policy::_nil ();
 
       if (stub == 0)
         {
