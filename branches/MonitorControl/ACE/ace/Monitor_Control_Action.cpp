@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ace/Control_Action.h"
+#include "ace/Monitor_Control_Action.h"
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 #include "ace/Guard_T.h"
 
@@ -40,6 +40,6 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 

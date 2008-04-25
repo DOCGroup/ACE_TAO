@@ -7,7 +7,7 @@
 
 void
 MC_Test_Utilities::display_timestamp (
-  const MonitorControl_Types::Data &data)
+  const Monitor_Control_Types::Data &data)
 {
   ACE_Date_Time dt (data.timestamp_);
   cout << setfill ('0')
@@ -22,7 +22,7 @@ MC_Test_Utilities::display_timestamp (
 
 void
 MC_Test_Utilities::display_num_threads (
-  const MonitorControl_Types::Data &data)
+  const Monitor_Control_Types::Data &data)
 {
   cout << "# of threads:             ";
   display_timestamp (data);
@@ -31,7 +31,7 @@ MC_Test_Utilities::display_num_threads (
 
 void
 MC_Test_Utilities::display_mq_size (
-  const MonitorControl_Types::Data &data)
+  const Monitor_Control_Types::Data &data)
 {
   cout << "Message queue size:       ";
   display_timestamp (data);
@@ -40,7 +40,7 @@ MC_Test_Utilities::display_mq_size (
 
 void
 MC_Test_Utilities::display_memory_usage (
-  const MonitorControl_Types::Data &data)
+  const Monitor_Control_Types::Data &data)
 {
   cout << "% memory used:            ";
   display_timestamp (data);
@@ -50,7 +50,7 @@ MC_Test_Utilities::display_memory_usage (
 
 void
 MC_Test_Utilities::display_cpu_load (
-  const MonitorControl_Types::Data &data)
+  const Monitor_Control_Types::Data &data)
 {
   cout << "% CPU load:               ";
   display_timestamp (data);
@@ -60,7 +60,7 @@ MC_Test_Utilities::display_cpu_load (
 
 void
 MC_Test_Utilities::display_bytes_sent (
-  const MonitorControl_Types::Data &data)
+  const Monitor_Control_Types::Data &data)
 {
   cout << "total bytes sent:         ";
   display_timestamp (data);
@@ -68,7 +68,7 @@ MC_Test_Utilities::display_bytes_sent (
 }
 void
 MC_Test_Utilities::display_bytes_received (
-  const MonitorControl_Types::Data &data)
+  const Monitor_Control_Types::Data &data)
 {
   cout << "total bytes received:         ";
   display_timestamp (data);
@@ -77,7 +77,7 @@ MC_Test_Utilities::display_bytes_received (
 
 void
 MC_Test_Utilities::display_packets_sent (
-  const MonitorControl_Types::Data &data)
+  const Monitor_Control_Types::Data &data)
 {
   cout << "total packets sent:         ";
   display_timestamp (data);
@@ -85,7 +85,7 @@ MC_Test_Utilities::display_packets_sent (
 }
 void
 MC_Test_Utilities::display_packets_received (
-  const MonitorControl_Types::Data &data)
+  const Monitor_Control_Types::Data &data)
 {
   cout << "total packets received:         ";
   display_timestamp (data);

@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/MonitorControl_Types.h"
+#include "ace/Monitor_Control_Types.h"
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
-#include "ace/Control_Action.h"
+#include "ace/Monitor_Control_Action.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -12,18 +12,18 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    MonitorControl_Types::Data::Data (void)
+    Monitor_Control_Types::Data::Data (void)
       : timestamp_ (ACE_Time_Value::zero),
         value_ (0.0)
     {}
-    
+
     //=============================================================
-    
-    MonitorControl_Types::Constraint::Constraint (void)
+
+    Monitor_Control_Types::Constraint::Constraint (void)
       : control_action (0)
     {}
-    
-    MonitorControl_Types::Constraint::Constraint (const Constraint& rhs)
+
+    Monitor_Control_Types::Constraint::Constraint (const Constraint& rhs)
       : expr (rhs.expr),
         control_action (rhs.control_action)
     {
@@ -32,31 +32,31 @@ namespace ACE
           control_action->add_ref ();
         }
     }
-    
-    MonitorControl_Types::Constraint::~Constraint (void)
+
+    Monitor_Control_Types::Constraint::~Constraint (void)
     {
       if (this->control_action != 0)
         {
           this->control_action->remove_ref ();
         }
     }
-    
-    MonitorControl_Types::Constraint&
-    MonitorControl_Types::Constraint::operator= (const Constraint& rhs)
+
+    Monitor_Control_Types::Constraint&
+    Monitor_Control_Types::Constraint::operator= (const Constraint& rhs)
     {
       if (this->control_action != 0)
         {
           this->control_action->remove_ref ();
         }
-        
+
       this->expr = rhs.expr;
       this->control_action = rhs.control_action;
-      
+
       if (this->control_action != 0)
         {
           this->control_action->add_ref ();
         }
-        
+
       return *this;
     }
   }
@@ -64,6 +64,6 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 

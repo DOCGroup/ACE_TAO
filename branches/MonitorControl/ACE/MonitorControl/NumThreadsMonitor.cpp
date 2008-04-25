@@ -6,7 +6,7 @@
 
 #include "MonitorControl/NumThreadsMonitor.h"
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -16,7 +16,7 @@ namespace ACE
   {
     const char* NumThreadsMonitor::default_name_ =
       "OS/System/NumThreads";
-  
+
     NumThreadsMonitor::NumThreadsMonitor (const char* name)
       : Monitor_Base (name)
 #if defined (ACE_WIN32)
@@ -73,7 +73,7 @@ namespace ACE
 #elif defined (ACE_HAS_KSTAT)
 #endif
     }
-    
+
     const char*
     NumThreadsMonitor::default_name (void)
     {
@@ -84,5 +84,5 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 

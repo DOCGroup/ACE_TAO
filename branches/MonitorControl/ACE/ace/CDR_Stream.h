@@ -72,7 +72,7 @@ class ACE_WChar_Codeset_Translator;
 
 class ACE_InputCDR;
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 namespace ACE
 {
   namespace MonitorControl
@@ -80,7 +80,7 @@ namespace ACE
     class Size_Monitor;
   }
 }
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 /**
  * @class ACE_OutputCDR
@@ -302,7 +302,7 @@ public:
         ...   // insert more values
         ACE_CDR::Long real_val;       // Somehow assign the "correct" value
         strm.replace (real_val, pos); // Replace earlier placeholder
-      @endcode 
+      @endcode
   */
 
   /**
@@ -470,12 +470,12 @@ public:
 
   /// Set the underlying GIOP version..
   void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
-  
-#if defined (ACE_ENABLE_MONITORS)  
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
   /// Register and unregister our buffer size monitor.
   void register_monitor (const char* id);
   void unregister_monitor (void);
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 private:
 
@@ -568,10 +568,10 @@ private:
 
   /// Break-even point for copying.
   size_t const memcpy_tradeoff_;
-  
-#if defined (ACE_ENABLE_MONITORS)
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
   ACE::MonitorControl::Size_Monitor *monitor_;
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 protected:
   /// GIOP version information
@@ -979,11 +979,11 @@ public:
   /// Set the underlying GIOP version..
   void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
 
-#if defined (ACE_ENABLE_MONITORS)  
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
   /// Register and unregister our buffer size monitor.
   void register_monitor (const char* id);
   void unregister_monitor (void);
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 protected:
 
@@ -1005,10 +1005,10 @@ protected:
   /// If not nil, invoke for translation of character and string data.
   ACE_Char_Codeset_Translator *char_translator_;
   ACE_WChar_Codeset_Translator *wchar_translator_;
-  
-#if defined (ACE_ENABLE_MONITORS)
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
   ACE::MonitorControl::Size_Monitor *monitor_;
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 private:
 

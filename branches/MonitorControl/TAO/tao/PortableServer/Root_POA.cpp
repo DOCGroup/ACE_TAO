@@ -474,8 +474,7 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
       // The POAManager name will be generated when the POAManager instance
       // is created.
       the_poa_manager
-        = tao_poa_manager_factory->create_POAManager (0,
-                                                      empty_policies);
+        = tao_poa_manager_factory->create_POAManager (0, empty_policies);
 #else
 
       PortableServer::POAManager_ptr the_poa_manager_ptr;

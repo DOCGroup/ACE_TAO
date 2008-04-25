@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/MonitorControl_Types.h"
+#include "ace/Monitor_Control_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 #include "ace/Refcountable_T.h"
 #include "ace/Thread_Mutex.h"
@@ -51,7 +51,7 @@ namespace ACE
       : private ACE_Refcountable_T<ACE_SYNCH_MUTEX>
     {
     public:
-      typedef MonitorControl_Types::ConstraintList CONSTRAINTS;
+      typedef Monitor_Control_Types::ConstraintList CONSTRAINTS;
       typedef CONSTRAINTS::const_iterator CONSTRAINT_ITERATOR;
 
       /// Implemented by the most-derived class. Does the actual
@@ -78,8 +78,8 @@ namespace ACE
       void clear (void);
 
       /// Data accessors.
-      void retrieve (MonitorControl_Types::Data& data) const;
-      void retrieve_and_clear (MonitorControl_Types::Data& data);
+      void retrieve (Monitor_Control_Types::Data& data) const;
+      void retrieve_and_clear (Monitor_Control_Types::Data& data);
 
       /// Common to all monitors.
       void add_to_registry (const ACE_Time_Value& time = ACE_Time_Value::zero);
@@ -99,7 +99,7 @@ namespace ACE
       virtual void clear_i (void);
 
     protected:
-      MonitorControl_Types::Data data_;
+      Monitor_Control_Types::Data data_;
       mutable ACE_SYNCH_MUTEX mutex_;
 
       CONSTRAINTS constraints_;
@@ -116,7 +116,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Monitor_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 #include /**/ "ace/post.h"
 

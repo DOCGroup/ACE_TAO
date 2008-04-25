@@ -20,7 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Monitor_Point_Registry.h"
-#include "ace/MC_Admin_Manager.h"
+#include "ace/Monitor_Admin_Manager.h"
 
 #include "MonitorControl/CPULoadMonitor.h"
 #include "MonitorControl/MemoryUsageMonitor.h"

@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 #if defined (ACE_WIN32)
 #include "MonitorControl/WindowsMonitor.h"
@@ -48,14 +48,14 @@ namespace ACE
     {
     public:
       CPULoadMonitor (const char* name);
-      
+
       /// Implementation of the pure virtual method.
       virtual void update (void);
-      
+
       /// Stores the default name, used if none is supplied to constructor.
       static const char* default_name (void);
-      
-    private:    
+
+    private:
 #if defined (linux)
       void access_proc_stat (unsigned long *which_idle);
 #endif
@@ -63,7 +63,7 @@ namespace ACE
 #if defined (ACE_HAS_KSTAT)
       void access_kstats (unsigned long *which_idle);
 #endif
-      
+
     private:
       static const char* default_name_;
 
@@ -90,7 +90,7 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 #include /**/ "ace/post.h"
 

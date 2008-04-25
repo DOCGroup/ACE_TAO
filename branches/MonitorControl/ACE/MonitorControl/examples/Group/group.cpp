@@ -3,6 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/streams.h"
 #include "ace/Monitor_Point_Registry.h"
+#include "ace/Monitor_Admin_Manager.h"
 
 #include "MonitorControl/MonitorControl.h"
 #include "MonitorControl/examples/MC_Test_Utilities.h"
@@ -19,7 +20,7 @@ public:
   {
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =
-      ACE_Dynamic_Service<MC_Admin_Manager>::instance ("MC_ADMINMANAGER");
+      ACE_Dynamic_Service<Monitor_Admin_Manager>::instance ("MC_ADMINMANAGER");
 
     ACE::MonitorControl::Monitor_Base *cpu_monitor =
       mgr->admin ().monitor_point ("OS/Processor/CPULoad");
@@ -36,7 +37,7 @@ public:
       {
         ACE_OS::sleep (2);
 
-        MonitorControl_Types::Data data;
+        Monitor_Control_Types::Data data;
         cpu_monitor->retrieve (data);
         MC_Test_Utilities::display_cpu_load (data);
 
@@ -48,7 +49,7 @@ public:
 
         cout << endl;
       }
-      
+
     cpu_monitor->remove_ref ();
     memory_monitor->remove_ref ();
     bytes_monitor->remove_ref ();
@@ -86,12 +87,12 @@ int main (int /* argc */, char * /* argv */ [])
     }
 
   /// A quick test of the registry's name cache.
-  MonitorControl_Types::NameList mc_names =
+  Monitor_Control_Types::NameList mc_names =
     Monitor_Point_Registry::instance ()->names ();
 
   cout << "stored in monitor point registry:" << endl << endl;
 
-  for (MonitorControl_Types::NameList::Iterator i (mc_names);
+  for (Monitor_Control_Types::NameList::Iterator i (mc_names);
        !i.done ();
        i.advance ())
     {
@@ -145,7 +146,7 @@ int main (int /* argc */, char * /* argv */ [])
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
-  
+
   cpu_load_monitor->remove_ref ();
   bytes_sent_monitor->remove_ref ();
   memory_usage_monitor->remove_ref ();

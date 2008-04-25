@@ -6,7 +6,7 @@
 
 #include "MonitorControl/MemoryUsageMonitor.h"
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -16,7 +16,7 @@ namespace ACE
   {
     const char* MemoryUsageMonitor::default_name_ =
       "OS/Memory/TotalUsage";
-  
+
     MemoryUsageMonitor::MemoryUsageMonitor (const char* name)
       : Monitor_Base (name)
 #if defined (ACE_WIN32)
@@ -25,7 +25,7 @@ namespace ACE
 #endif
     {
     }
-  
+
     void
     MemoryUsageMonitor::update (void)
     {
@@ -41,23 +41,23 @@ namespace ACE
                       "Memory usage - sysinfo() failed\n"));
           return;
         }
-        
+
       double used_ram = this->sysinfo_.totalram - this->sysinfo_.freeram;
       double percent_mem_usage = used_ram / this->sysinfo_.totalram * 100.0;
-      
+
       this->receive (percent_mem_usage);
 #elif defined (ACE_HAS_KSTAT)
       unsigned long page_size = sysconf (_SC_PAGE_SIZE);
       unsigned long total = sysconf (_SC_PHYS_PAGES) * page_size;
       unsigned long free = sysconf (_SC_AVPHYS_PAGES) * page_size;
-      
+
       double used = total - free;
       double percent_mem_usage = used / total * 100.0;
-      
+
       this->receive (percent_mem_usage);
 #endif
     }
-    
+
     const char*
     MemoryUsageMonitor::default_name (void)
     {
@@ -68,5 +68,5 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 

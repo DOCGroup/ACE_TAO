@@ -2,7 +2,7 @@
 
 #include "ace/Monitor_Point_Registry.h"
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 #include "ace/Monitor_Base.h"
 
@@ -89,10 +89,10 @@ namespace ACE
       return (status == 0);
     }
 
-    MonitorControl_Types::NameList
+    Monitor_Control_Types::NameList
     Monitor_Point_Registry::names (void)
     {
-      MonitorControl_Types::NameList name_holder_;
+      Monitor_Control_Types::NameList name_holder_;
 
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
@@ -156,5 +156,5 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 

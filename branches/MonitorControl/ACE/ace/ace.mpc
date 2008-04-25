@@ -48,7 +48,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Configuration_Import_Export.cpp
     Connection_Recycling_Strategy.cpp
     Containers.cpp
-    Control_Action.cpp
     Copy_Disabled.cpp
     Countdown_Time.cpp
     Date_Time.cpp
@@ -112,8 +111,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Malloc.cpp
     Malloc_Allocator.cpp
     Manual_Event.cpp
-    MC_Admin.cpp
-    MC_Admin_Manager.cpp
     MEM_Acceptor.cpp
     MEM_Addr.cpp
     MEM_Connector.cpp
@@ -127,9 +124,12 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Method_Request.cpp
     MMAP_Memory_Pool.cpp
     Msg_WFMO_Reactor.cpp
+    Monitor_Admin.cpp
+    Monitor_Admin_Manager.cpp
     Monitor_Base.cpp
     Monitor_Point_Registry.cpp
-    MonitorControl_Types.cpp
+    Monitor_Control_Types.cpp
+    Monitor_Control_Action.cpp
     Multihomed_INET_Addr.cpp
     Mutex.cpp
     Netlink_Addr.cpp

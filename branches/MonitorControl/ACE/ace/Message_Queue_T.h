@@ -34,7 +34,7 @@ class ACE_Message_Queue_Vx;
 class ACE_Message_Queue_NT;
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO*/
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 namespace ACE
 {
   namespace MonitorControl
@@ -42,7 +42,7 @@ namespace ACE
     class Size_Monitor;
   }
 }
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 /**
  * @class ACE_Message_Queue
@@ -603,9 +603,9 @@ protected:
 
   /// Used to make threads sleep until the queue is no longer full.
   ACE_SYNCH_CONDITION_T not_full_cond_;
-  
+
   /// Sends the size of the queue whenever it changes.
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
   ACE::MonitorControl::Size_Monitor *monitor_;
 #endif
 

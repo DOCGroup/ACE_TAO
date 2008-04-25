@@ -1,3 +1,8 @@
+
+        * ace/*:
+          Renamed all monitor files to Monitor_*.*. Also use
+          ACE_HAS_MONITOR_FRAMEWORK
+
 Fri Apr 25 10:25:38 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MC_Admin.cpp

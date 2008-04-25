@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ace/MC_Admin_Manager.h"
+#include "ace/Monitor_Admin_Manager.h"
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 #include "ace/Service_Config.h"
 
@@ -13,13 +13,13 @@ namespace ACE
   namespace MonitorControl
   {
     MC_Admin&
-    MC_Admin_Manager::admin (void)
+    Monitor_Admin_Manager::admin (void)
     {
       return this->admin_;
     }
-    
+
     int
-    MC_Admin_Manager::Initializer (void)
+    Monitor_Admin_Manager::Initializer (void)
     {
       return
         ACE_Service_Config::process_directive (ace_svc_desc_MC_ADMINMANAGER);
@@ -37,6 +37,6 @@ ACE_STATIC_SVC_DEFINE (MC_ADMINMANAGER,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (ACE, MC_ADMINMANAGER)
-    
-#endif /* ACE_ENABLE_MONITORS */
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 

@@ -3,6 +3,7 @@
 //
 #include "tao/Monitor/Monitor_Impl.h"
 #include "ace/Monitor_Point_Registry.h"
+#include "ace/Monitor_Control_Action.h"
 #include "MonitorControl/MonitorControl.h"
 
 ACE_RCSID (Monitor,
@@ -41,7 +42,7 @@ Monitor_Impl::Monitor_Impl (CORBA::ORB_ptr orb)
 ::Monitor::NameList *
 Monitor_Impl::get_statistic_names (const char * /* filter */)
 {
-  MonitorControl_Types::NameList mc_names =
+  Monitor_Control_Types::NameList mc_names =
     Monitor_Point_Registry::instance ()->names ();
 
   ::Monitor::NameList *namelist = 0;
@@ -50,7 +51,7 @@ Monitor_Impl::get_statistic_names (const char * /* filter */)
                     CORBA::NO_MEMORY ());
 
   CORBA::ULong index = 0;
-  for (MonitorControl_Types::NameList::Iterator i (mc_names);
+  for (Monitor_Control_Types::NameList::Iterator i (mc_names);
        !i.done ();
        i.advance (), ++index)
     {
@@ -77,7 +78,7 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-  MonitorControl_Types::Data d;
+  Monitor_Control_Types::Data d;
 
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
@@ -103,7 +104,7 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
           data.timestamp = usecs;
           (*dataitem).dlist[0] = data;
           (*datalist)[length] = *dataitem;
-        
+
           monitor->remove_ref ();
         }
     }
@@ -123,7 +124,7 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-  MonitorControl_Types::Data d;
+  Monitor_Control_Types::Data d;
 
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
@@ -149,7 +150,7 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
           data.timestamp = usecs;
           (*dataitem).dlist[0] = data;
           (*datalist)[length] = *dataitem;
-        
+
           monitor->remove_ref ();
         }
     }
@@ -182,7 +183,7 @@ Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
           namelist->length (length + 1);
           (*namelist)[length] = CORBA::string_dup (names[index].in ());
           monitor->clear ();
-        
+
           monitor->remove_ref ();
         }
     }
@@ -220,7 +221,7 @@ Monitor_Impl::register_constraint (
           (*constraintlist)[length].id = id;
           (*constraintlist)[length].itemname =
             CORBA::string_dup (names[index].in ());
-        
+
           monitor->remove_ref ();
         }
     }
@@ -240,17 +241,17 @@ Monitor_Impl::unregister_constraints (
       /// Call on the administrator class to look up the desired monitors.
       ACE::MonitorControl::Monitor_Base *monitor =
         mgr->admin ().monitor_point (constraint[index].itemname.in ());
-        
+
       if (monitor != 0)
         {
           ACE::MonitorControl::Control_Action *action =
             monitor->remove_constraint (constraint[index].id);
-        
+
           if (action != 0)
             {
               action->remove_ref ();
             }
-            
+
           monitor->remove_ref ();
         }
     }

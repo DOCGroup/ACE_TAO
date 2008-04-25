@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ace/MC_Admin.h"
+#include "ace/Monitor_Admin.h"
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 #include "ace/Reactor.h"
 #include "ace/Monitor_Point_Registry.h"
@@ -86,13 +86,13 @@ namespace ACE
     }
 
     void
-    MC_Admin::clear_statistics (const MonitorControl_Types::NameList& /* names */)
+    MC_Admin::clear_statistics (const Monitor_Control_Types::NameList& /* names */)
     {
       // TODO
     }
 
     void
-    MC_Admin::update_monitors (const MonitorControl_Types::NameList& /* names */,
+    MC_Admin::update_monitors (const Monitor_Control_Types::NameList& /* names */,
                                bool /* notify */)
     {
       // TODO
@@ -115,5 +115,5 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file Control_Action.h
+ * @file Monitor_Control_Action.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef CONTROL_ACTION_H
-#define CONTROL_ACTION_H
+#ifndef MONITOR_CONTROL_ACTION_H
+#define MONITOR_CONTROL_ACTION_H
 
 #include /**/ "ace/pre.h"
 
@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -58,8 +58,8 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 #include /**/ "ace/post.h"
 
-#endif // CONTROL_ACTION_H
+#endif // MONITOR_CONTROL_ACTION_H

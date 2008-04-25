@@ -2,9 +2,10 @@
 
 #include "ace/Monitor_Base.h"
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
-#include "ace/MC_Admin_Manager.h"
+#include "ace/Monitor_Admin_Manager.h"
+#include "ace/Monitor_Control_Action.h"
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Guard_T.h"
 #include "ace/Dynamic_Service.h"
@@ -50,15 +51,15 @@ namespace ACE
       /// This is thread-safe on its own so we don't have
       /// to guard it here.
       action->add_ref ();
-      
+
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, -1);
-         
+
         /// Since we know external key is unique,
-        /// we don't check for failure. 
+        /// we don't check for failure.
         (void) this->constraints_.insert (entry);
       }
-      
+
       return id;
     }
 
@@ -78,7 +79,7 @@ namespace ACE
             (void) this->constraints_.erase (constraint_id);
           }
       }
-      
+
       return retval;
     }
 
@@ -92,7 +93,7 @@ namespace ACE
     }
 
     void
-    Monitor_Base::retrieve (MonitorControl_Types::Data& data) const
+    Monitor_Base::retrieve (Monitor_Control_Types::Data& data) const
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
       data = this->data_;
@@ -132,7 +133,7 @@ namespace ACE
 
 
     void
-    Monitor_Base::retrieve_and_clear (MonitorControl_Types::Data& data)
+    Monitor_Base::retrieve_and_clear (Monitor_Control_Types::Data& data)
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
 
@@ -186,5 +187,5 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 

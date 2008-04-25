@@ -12,7 +12,7 @@ class MonitorChecker : public ACE_Task_Base
 {
 private:
   void *addr_;
-  
+
 public:
   MonitorChecker (void *addr)
     : addr_ (addr)
@@ -40,18 +40,18 @@ public:
     if (mq_monitor != 0)
       {
         ACE_OS::sleep (1);
-        
+
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
         for (int i = 0; i < 10; ++i)
           {
             ACE_OS::sleep (1);
 
-            MonitorControl_Types::Data data;
+            Monitor_Control_Types::Data data;
             mq_monitor->retrieve (data);
             MC_Test_Utilities::display_mq_size (data);
           }
-          
+
         mq_monitor->remove_ref ();
       }
 
@@ -94,9 +94,9 @@ int main (int /* argc */, char * /* argv */ [])
           mb->release ();
         }
     }
-  
+
   /// This makes Purify much happier, but doesn't seem necessary for
-  /// a regular run.  
+  /// a regular run.
   monitor_checker.wait ();
 
   /// Clean up the remaining message queue resources.

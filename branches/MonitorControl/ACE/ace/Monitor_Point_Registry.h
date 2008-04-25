@@ -21,12 +21,12 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/MonitorControl_Types.h"
+#include "ace/Monitor_Control_Types.h"
 #include "ace/Singleton.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -59,7 +59,7 @@ namespace ACE
       bool remove (const char* name);
 
       /// Returns a list of names stored in the registry
-      MonitorControl_Types::NameList names (void);
+      Monitor_Control_Types::NameList names (void);
 
       /// The lookup operation.
       Monitor_Base* get (const ACE_CString& name) const;
@@ -91,7 +91,7 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 #include /**/ "ace/post.h"
 

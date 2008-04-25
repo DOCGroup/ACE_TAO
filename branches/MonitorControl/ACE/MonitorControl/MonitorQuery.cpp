@@ -2,7 +2,7 @@
 
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Base.h"
-#include "ace/Control_Action.h"
+#include "ace/Monitor_Control_Action.h"
 
 #include "MonitorControl/MonitorQuery.h"
 #include "MonitorControl/Constraint_Interpreter.h"
@@ -51,7 +51,7 @@ namespace ACE
           ACE_ERROR ((LM_ERROR, "MonitorQuery::query - null monitor\n"));
           return;
         }
-        
+
       Monitor_Base::CONSTRAINTS& list = this->monitor_->constraints ();
 
       for (Monitor_Base::CONSTRAINT_ITERATOR i (list.begin ());
@@ -61,7 +61,7 @@ namespace ACE
           Constraint_Interpreter interpreter;
           interpreter.build_tree (i->second.expr.fast_rep ());
 
-          MonitorControl_Types::Data data;
+          Monitor_Control_Types::Data data;
           this->monitor_->retrieve (data);
           Constraint_Visitor visitor (data);
           bool satisfied = interpreter.evaluate (visitor);

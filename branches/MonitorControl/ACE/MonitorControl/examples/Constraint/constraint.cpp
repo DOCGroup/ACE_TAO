@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/Monitor_Control_Action.h"
 
 #include "MonitorControl/MonitorControl.h"
 #include "MonitorControl/examples/MC_Test_Utilities.h"
@@ -50,11 +51,11 @@ public:
           {
             ACE_OS::sleep (2);
 
-            MonitorControl_Types::Data data;
+            Monitor_Control_Types::Data data;
             bytes_monitor->retrieve (data);
             MC_Test_Utilities::display_bytes_received (data);
           }
-          
+
         bytes_monitor->remove_ref ();
       }
 
@@ -72,7 +73,7 @@ int main (int /* argc */, char * /* argv */ [])
 
   Trigger8k *trigger8k = new Trigger8k;
   long id8 = bytes_monitor->add_constraint ("value > 8192", trigger8k);
-  
+
   ACE_DEBUG ((LM_DEBUG, "trigger8k id = %d\n", id8));
 
   Trigger16k *trigger16k = new Trigger16k;
@@ -99,18 +100,18 @@ int main (int /* argc */, char * /* argv */ [])
   monitor_checker.activate ();
 
   ACE_OS::sleep (20);
-  
+
   /// Can do a remove_ref() on this returned value or on the original
   /// control action 'trigger8k', but not on both, since they point to
   /// the same thing.
   Control_Action *removed_action = bytes_monitor->remove_constraint (id8);
   ACE_DEBUG ((LM_DEBUG, "8k trigger removed\n"));
-  
+
   ACE_OS::sleep (5);
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
-  
+
   /// Do this instead of 'delete' since they are refcounted.
   trigger8k->remove_ref ();
   trigger16k->remove_ref ();

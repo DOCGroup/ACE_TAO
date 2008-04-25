@@ -17,9 +17,9 @@
 #include "ace/Notification_Strategy.h"
 #include "ace/Truncate.h"
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 #include "ace/Size_Monitor.h"
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -937,8 +937,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
   if (this->open (hwm, lwm, ns) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("open")));
-                
-#if defined (ACE_ENABLE_MONITORS)
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
   ACE_NEW (this->monitor_,
            ACE::MonitorControl::Size_Monitor);
 
@@ -951,7 +951,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
   name_str += buf;
   this->monitor_->name (name_str.c_str ());
   this->monitor_->add_to_registry ();
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 }
 
 template <ACE_SYNCH_DECL>
@@ -961,11 +961,11 @@ ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
   if (this->head_ != 0 && this->close () == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("close")));
-                
-#if defined (ACE_ENABLE_MONITORS)
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
   this->monitor_->remove_from_registry ();
   this->monitor_->remove_ref ();
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 }
 
 template <ACE_SYNCH_DECL> int
@@ -995,8 +995,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::flush_i (void)
       // reference counted.
       temp->release ();
     }
-    
-#if defined (ACE_ENABLE_MONITORS)
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
   // The monitor should output only if the size has actually changed.
   if (number_flushed > 0)
     {
@@ -1377,8 +1377,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
   // Make sure that the prev and next fields are 0!
   first_item->prev (0);
   first_item->next (0);
-  
-#if defined (ACE_ENABLE_MONITORS)
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
   this->monitor_->receive (this->cur_length_);
 #endif
 
@@ -1896,8 +1896,8 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::notify");
-  
-#if defined (ACE_ENABLE_MONITORS)
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
   this->monitor_->receive (this->cur_length_);
 #endif
 

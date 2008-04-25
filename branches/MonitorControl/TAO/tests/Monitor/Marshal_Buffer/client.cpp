@@ -1,4 +1,5 @@
 // $Id$
+#define ENABLE_MONITORS
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
@@ -50,7 +51,7 @@ main (int argc, char *argv[])
         create_os_monitor<MEMORY_USAGE_MONITOR> (0, ACE_Time_Value (1));
       Monitor_Base *num_threads_monitor =
         create_os_monitor<NUM_THREADS_MONITOR> (0, ACE_Time_Value (1));
-      
+
       START_PERIODIC_MONITORS;
 
       /// Here we take on aspects of a server role, exposing the
@@ -116,7 +117,7 @@ main (int argc, char *argv[])
       /// Make sure the monitor client is done before we destroy the ORB
       /// and make the MC objref invalid.
       ACE_OS::sleep (15);
-      
+
       STOP_PERIODIC_MONITORS;
       
       bytes_sent_monitor->remove_ref ();

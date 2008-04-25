@@ -6,7 +6,7 @@
 #include "MonitorControl/examples/MC_Test_Utilities.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
-  
+
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
@@ -31,11 +31,11 @@ public:
           {
             ACE_OS::sleep (2);
 
-            MonitorControl_Types::Data data;
+            Monitor_Control_Types::Data data;
             bytes_monitor->retrieve (data);
             MC_Test_Utilities::display_bytes_sent (data);
           }
-          
+
         bytes_monitor->remove_ref ();
       }
 
@@ -61,7 +61,7 @@ int main (int /* argc */, char * /* argv */ [])
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
-  
+
   monitor->remove_ref ();
 
   return 0;

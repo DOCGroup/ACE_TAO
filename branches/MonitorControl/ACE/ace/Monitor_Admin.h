@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file MC_Admin.h
+ * @file Monitor_Admin.h
  *
  * $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef MC_ADMIN_H
-#define MC_ADMIN_H
+#ifndef MONITOR_ADMIN_H
+#define MONITOR_ADMIN_H
 
 #include /**/ "ace/pre.h"
 
@@ -21,10 +21,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 #include "ace/Monitor_Base.h"
-#include "ace/Control_Action.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -92,13 +91,13 @@ namespace ACE
 
       /// Resets the monitor points found in the registry by
       /// lookup of the passed list of names.
-      void clear_statistics (const MonitorControl_Types::NameList& names);
+      void clear_statistics (const Monitor_Control_Types::NameList& names);
 
       /// Called from the application to manually update the monitor points
       /// (or group) specified in <names>. The boolean parameter specifies
       /// whether or not some action should be triggered (constraint check,
       /// logging, or some other action).
-      void update_monitors (const MonitorControl_Types::NameList& names,
+      void update_monitors (const Monitor_Control_Types::NameList& names,
                             bool notify);
 
       /// This mutator allows the application to create its own reactor
@@ -116,8 +115,8 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 #include /**/ "ace/post.h"
 
-#endif // MC_ADMIN_H
+#endif // MONITOR_ADMIN_H

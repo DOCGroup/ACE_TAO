@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file MonitorControl_Types.h
+ * @file Monitor_Control_Types.h
  *
  * $Id$
  *
@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 #include "ace/Array_Map.h"
 #include "ace/SString.h"
@@ -35,7 +35,7 @@ namespace ACE
   {
     class Control_Action;
 
-    struct ACE_Export MonitorControl_Types
+    struct ACE_Export Monitor_Control_Types
     {
       /**
        * @brief An instance is contained by each enabled monitor point.
@@ -92,7 +92,7 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 #include /**/ "ace/post.h"
 

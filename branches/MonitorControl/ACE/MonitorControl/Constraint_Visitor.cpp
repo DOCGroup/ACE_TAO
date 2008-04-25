@@ -12,13 +12,13 @@ namespace ACE
   namespace MonitorControl
   {
     Constraint_Visitor::Constraint_Visitor (
-      const MonitorControl_Types::Data& data)
+      const Monitor_Control_Types::Data& data)
       : data_ (data)
     {}
-  
+
     Constraint_Visitor::~Constraint_Visitor (void)
     {}
-    
+
     ACE_CDR::Boolean
     Constraint_Visitor::evaluate_constraint (ETCL_Constraint *root)
     {
@@ -46,7 +46,7 @@ namespace ACE
       this->queue_.enqueue_head (*constraint);
       return 0;
     }
-    
+
     int
     Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
     {
@@ -56,13 +56,13 @@ namespace ACE
         {
           this->queue_.enqueue_head (
             ETCL_Literal_Constraint (this->data_.value_));
-            
+
           return 0;
         }
-        
+
       return -1;
     }
-    
+
     int
     Constraint_Visitor::visit_unary_expr (ETCL_Unary_Expr *unary_expr)
     {
@@ -102,7 +102,7 @@ namespace ACE
 
       return -1;
     }
-    
+
     int
     Constraint_Visitor::visit_binary_expr (ETCL_Binary_Expr *binary_expr)
     {
@@ -132,7 +132,7 @@ namespace ACE
             return -1;
         }
     }
-    
+
     int
     Constraint_Visitor::visit_or (ETCL_Binary_Expr *binary)
     {

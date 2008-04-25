@@ -2,7 +2,7 @@
 
 #include "MonitorControl/BytesSentMonitor.h"
 
-#if defined (ACE_ENABLE_MONITORS)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -12,7 +12,7 @@ namespace ACE
   {
     const char* BytesSentMonitor::default_name_ =
       "OS/Network/BytesSent";
-  
+
     BytesSentMonitor::BytesSentMonitor (const char* name)
       : Monitor_Base (name)
 #if defined (ACE_WIN32)
@@ -39,7 +39,7 @@ namespace ACE
       this->receive (static_cast<double> (this->value_));
 #endif
     }
-    
+
     const char*
     BytesSentMonitor::default_name (void)
     {
@@ -50,6 +50,6 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_ENABLE_MONITORS */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
 

@@ -39,11 +39,11 @@ public:
           {
             ACE_OS::sleep (2);
 
-            MonitorControl_Types::Data data;
+            Monitor_Control_Types::Data data;
             thread_monitor->retrieve (data);
             MC_Test_Utilities::display_num_threads (data);
           }
-          
+
         thread_monitor->remove_ref ();
       }
 
@@ -73,7 +73,7 @@ int main (int /* argc */, char * /* argv */ [])
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
-  
+
   num_threads_monitor->remove_ref ();
 
   return 0;

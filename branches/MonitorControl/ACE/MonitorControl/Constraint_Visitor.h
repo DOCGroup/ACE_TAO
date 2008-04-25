@@ -20,7 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/CDR_Base.h"
-#include "ace/MonitorControl_Types.h"
+#include "ace/Monitor_Control_Types.h"
 
 #include "ETCL/ETCL_Constraint.h"
 #include "ETCL/ETCL_Constraint_Visitor.h"
@@ -61,25 +61,25 @@ namespace ACE
       : public ETCL_Constraint_Visitor
     {
     public:
-      Constraint_Visitor (const MonitorControl_Types::Data& data);
+      Constraint_Visitor (const Monitor_Control_Types::Data& data);
       virtual ~Constraint_Visitor (void);
-      
+
       ACE_CDR::Boolean evaluate_constraint (ETCL_Constraint *root);
 
       virtual int visit_literal (ETCL_Literal_Constraint *);
       virtual int visit_identifier (ETCL_Identifier *);
       virtual int visit_unary_expr (ETCL_Unary_Expr *);
       virtual int visit_binary_expr (ETCL_Binary_Expr *);
-      
+
     private:
       /// Sub-methods for visit_binary_expr().
       int visit_or (ETCL_Binary_Expr *);
       int visit_and (ETCL_Binary_Expr *);
       int visit_binary_op (ETCL_Binary_Expr *binary_expr,
-                           int op_type);      
-      
+                           int op_type);
+
     private:
-      const MonitorControl_Types::Data& data_;
+      const Monitor_Control_Types::Data& data_;
       ACE_Unbounded_Queue<ETCL_Literal_Constraint> queue_;
     };
   }
@@ -90,4 +90,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif // CONSTRAINT_VISITOR_H
-    
+
