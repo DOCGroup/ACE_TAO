@@ -25,6 +25,13 @@
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
 
+/**
+ * @struct MC_Test_Utilities
+ *
+ * @brief Container for utility methods that display the output
+ *        of the various OS monitors in a friendly format.
+ *
+ */
 struct MC_TEST_UTILITIES_Export MC_Test_Utilities
 {
   static void display_timestamp (const Monitor_Control_Types::Data &data);

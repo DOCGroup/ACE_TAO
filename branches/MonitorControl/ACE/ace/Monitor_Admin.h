@@ -60,20 +60,17 @@ namespace ACE
      *
      * @brief Accesses monitor points or groups and manages the registries.
      *
-     * Responsible for adding and removing monitor points and control
-     * actions to/form their respective global registries. If
-     * add_monitor_point() is called with a non-zero auto_update_msec
-     * arg, the monitor point will get registered with the reactor, which
-     * will prompt it to automatically update its data.
+     * Responsible for adding and removing monitor points and creating
+     * automatic periodic actions that update or query monitor points.
      */
-    class ACE_Export MC_Admin
+    class ACE_Export Monitor_Admin
     {
     public:
-      MC_Admin (void);
-      ~MC_Admin (void);
+      Monitor_Admin (void);
+      ~Monitor_Admin (void);
 
       /// Add or access monitor points in a global registry
-      /// If the auto_update_msec arg is non-zero,
+      /// If the ACE_Time_Value arg is non-zero,
       /// the monitor point, the auto updater member, and the given time
       /// interval are passed to our reactor's register_timeout()
       /// method.
@@ -82,23 +79,12 @@ namespace ACE
                           const ACE_Time_Value& time);
       Monitor_Base* monitor_point (const char* name);
 
-      /// Works similarly to monitor_point() above, but registers our
-      /// auto_query_ member's handle_timeout() method with the reactor,
+      /// Works similarly to monitor_point() above, but registers the
+      /// handler arg's handle_timeout() method with the reactor,
       /// instead of our auto_updater_'s handle_timeout().
       void auto_query (ACE_Event_Handler* handler,
                        MonitorQuery* query,
                        const ACE_Time_Value& time);
-
-      /// Resets the monitor points found in the registry by
-      /// lookup of the passed list of names.
-      void clear_statistics (const Monitor_Control_Types::NameList& names);
-
-      /// Called from the application to manually update the monitor points
-      /// (or group) specified in @a names. The boolean parameter specifies
-      /// whether or not some action should be triggered (constraint check,
-      /// logging, or some other action).
-      void update_monitors (const Monitor_Control_Types::NameList& names,
-                            bool notify);
 
       /// This mutator allows the application to create its own reactor
       /// and substitute it for the default reactor.

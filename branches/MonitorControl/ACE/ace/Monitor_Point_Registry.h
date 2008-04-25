@@ -61,17 +61,19 @@ namespace ACE
       /// Returns a list of names stored in the registry
       Monitor_Control_Types::NameList names (void);
 
-      /// The lookup operation.
+      /// Increments the refcount, so the caller is responsible for
+      /// decrementing it when finished.
       Monitor_Base* get (const ACE_CString& name) const;
 
       /// Returns a unique id for a constraint when it is created.
       long constraint_id (void);
 
-      /// Needed since ACE_Singleton doesn't call the destructor.
+      /// Decrements the reference count on all remaining entries,
+      /// called right before we go out of scope (i.e., process exits).
       void cleanup (void);
 
     private:
-      /// Prevent that users can make an instance
+      /// Prevent that users can make an instance.
       Monitor_Point_Registry (void);
 
       /// Underlying container for the registry.

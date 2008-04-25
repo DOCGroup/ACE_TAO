@@ -1,3 +1,24 @@
+Fri Apr 25 16:43:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Admin_Manager.h:
+        * ace/Monitor_Admin_Manager.cpp:
+        * ace/Monitor_Control_Types.h:
+        * ace/Monitor_Base.cpp:
+        * ace/Monitor_Admin.h:
+        * ace/Monitor_Base.h:
+        * ace/Monitor_Point_Registry.h:
+        * ace/Monitor_Admin.cpp:
+        * MonitorControl/examples/MC_Test_Utilities.h:
+        * MonitorControl/examples/MC_Test_Utilities.cpp:
+
+          - Changed the name of class MC_Admin to Monitor_Admin
+          - Removed some unused methods from Monitor_Admin
+          - Enhanced error reporting in monitor_point() in
+            Monitor_Admin
+          - Added and updated comments for all ACE monitor and
+            monitor test utility classes
+            
+Fri Apr 25 11:25:38 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/*:
           Renamed all monitor files to Monitor_*.*. Also use

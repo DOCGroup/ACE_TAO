@@ -9,6 +9,9 @@ void
 MC_Test_Utilities::display_timestamp (
   const Monitor_Control_Types::Data &data)
 {
+  /// The heavy lifting of converting an ACE_Time_Value
+  /// to something that's easily outputted in a pretty
+  /// format has already been done in ACE_Date_Time.
   ACE_Date_Time dt (data.timestamp_);
   cout << setfill ('0')
        << setw (2) << dt.month () << '-'

@@ -44,13 +44,13 @@ namespace ACE
     {
     public:
       /// Access the admin instance.
-      ACE::MonitorControl::MC_Admin& admin (void);
+      ACE::MonitorControl::Monitor_Admin& admin (void);
 
       /// Used to force initialization of the MC service.
       static int Initializer (void);
 
     private:
-      MC_Admin admin_;
+      Monitor_Admin admin_;
     };
   }
 }

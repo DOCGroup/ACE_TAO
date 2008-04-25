@@ -12,7 +12,7 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    MC_Admin&
+    Monitor_Admin&
     Monitor_Admin_Manager::admin (void)
     {
       return this->admin_;

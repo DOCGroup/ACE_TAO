@@ -86,9 +86,6 @@ namespace ACE
     Monitor_Base::CONSTRAINTS&
     Monitor_Base::constraints (void)
     {
-      // @todo make thread safe
-      /// @@ (JP) We're returning a reference that can change after
-      /// this method returns - why do we need local thread safety?
       return this->constraints_;
     }
 

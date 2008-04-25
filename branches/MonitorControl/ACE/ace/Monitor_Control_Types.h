@@ -54,9 +54,11 @@ namespace ACE
       struct ACE_Export Constraint
       {
         Constraint (void);
-        Constraint (const Constraint& rhs);
         ~Constraint (void);
 
+        /// Implemented explicitly so reference counting of control
+        /// actions can be managed.
+        Constraint (const Constraint& rhs);
         Constraint& operator= (const Constraint& rhs);
 
         ACE_CString expr;

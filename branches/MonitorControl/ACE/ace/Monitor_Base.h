@@ -64,11 +64,12 @@ namespace ACE
       /// Updates the monitor's data if it is an integer size.
       virtual void receive (size_t value);
 
-      /// Add a constraint, returns the so called constraint id
+      /// Add a constraint, returns a unique constraint id.
       long add_constraint (const char* expression,
                            Control_Action* action = 0);
 
-      /// Remove a constraint
+      /// Remove a constraint and return the associated control action,
+      /// which may be shared, for deletion or further use.
       Control_Action* remove_constraint (const long constraint_id);
 
       /// Get all constraints
@@ -82,13 +83,14 @@ namespace ACE
       void retrieve_and_clear (Monitor_Control_Types::Data& data);
 
       /// Common to all monitors.
-      void add_to_registry (const ACE_Time_Value& time = ACE_Time_Value::zero);
+      
+      void add_to_registry (
+        const ACE_Time_Value& time = ACE_Time_Value::zero);
       void remove_from_registry (void);
 
       const char* name (void) const;
       void name (const char* new_name);
 
-      /// Refcounting methods.
       void add_ref (void);
       void remove_ref (void);
 
@@ -96,6 +98,9 @@ namespace ACE
       Monitor_Base (void);
       Monitor_Base (const char* name);
       virtual ~Monitor_Base (void);
+      
+      /// Overridden in some monitors (for example the OS monitors) where
+      /// clearing requires monitor-specific actions.
       virtual void clear_i (void);
 
     protected:
