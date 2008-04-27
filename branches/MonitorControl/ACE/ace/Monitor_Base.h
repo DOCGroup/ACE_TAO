@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_MONITOR_FRAMEWORK)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 #include "ace/Refcountable_T.h"
 #include "ace/Thread_Mutex.h"
@@ -83,7 +83,7 @@ namespace ACE
       void retrieve_and_clear (Monitor_Control_Types::Data& data);
 
       /// Common to all monitors.
-      
+
       void add_to_registry (
         const ACE_Time_Value& time = ACE_Time_Value::zero);
       void remove_from_registry (void);
@@ -98,7 +98,7 @@ namespace ACE
       Monitor_Base (void);
       Monitor_Base (const char* name);
       virtual ~Monitor_Base (void);
-      
+
       /// Overridden in some monitors (for example the OS monitors) where
       /// clearing requires monitor-specific actions.
       virtual void clear_i (void);
@@ -121,7 +121,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Monitor_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 #include /**/ "ace/post.h"
 

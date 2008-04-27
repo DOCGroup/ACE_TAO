@@ -2,7 +2,7 @@
 
 #include "ace/Monitor_Admin_Manager.h"
 
-#if defined (ACE_HAS_MONITOR_FRAMEWORK)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 #include "ace/Service_Config.h"
 
@@ -38,5 +38,5 @@ ACE_STATIC_SVC_DEFINE (MC_ADMINMANAGER,
                        0)
 ACE_FACTORY_DEFINE (ACE, MC_ADMINMANAGER)
 
-#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 

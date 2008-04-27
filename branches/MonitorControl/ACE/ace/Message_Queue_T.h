@@ -34,7 +34,7 @@ class ACE_Message_Queue_Vx;
 class ACE_Message_Queue_NT;
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO*/
 
-#if defined (ACE_HAS_MONITOR_FRAMEWORK)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && ACE_HAS_MONITOR_FRAMEWORK == 1
 namespace ACE
 {
   namespace MonitorControl
@@ -42,7 +42,7 @@ namespace ACE
     class Size_Monitor;
   }
 }
-#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 /**
  * @class ACE_Message_Queue
@@ -605,7 +605,7 @@ protected:
   ACE_SYNCH_CONDITION_T not_full_cond_;
 
   /// Sends the size of the queue whenever it changes.
-#if defined (ACE_HAS_MONITOR_FRAMEWORK)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
   ACE::MonitorControl::Size_Monitor *monitor_;
 #endif
 

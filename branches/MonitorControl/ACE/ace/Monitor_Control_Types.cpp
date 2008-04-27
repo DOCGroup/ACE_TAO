@@ -2,7 +2,7 @@
 
 #include "ace/Monitor_Control_Types.h"
 
-#if defined (ACE_HAS_MONITOR_FRAMEWORK)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 #include "ace/Monitor_Control_Action.h"
 
@@ -64,6 +64,6 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 

@@ -149,9 +149,9 @@ ACE_OutputCDR::~ACE_OutputCDR (void)
 
   this->current_ = 0;
 
-#if defined (ACE_HAS_MONITOR_FRAMEWORK)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
   this->monitor_->remove_ref ();
-#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 }
 
 ACE_INLINE void
@@ -176,9 +176,9 @@ ACE_OutputCDR::reset (void)
       this->start_.cont (0);
     }
 
-#if defined (ACE_HAS_MONITOR_FRAMEWORK)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
   this->monitor_->receive (this->start_.total_size ());
-#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 }
 
 // Encode the CDR stream.
@@ -466,9 +466,9 @@ ACE_OutputCDR::adjust (size_t size,
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
       this->current_->wr_ptr (end);
 
-#if defined (ACE_HAS_MONITOR_FRAMEWORK)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
       this->monitor_->receive (this->total_length ());
-#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
       return 0;
     }
@@ -608,9 +608,9 @@ ACE_OutputCDR::wchar_translator (ACE_WChar_Codeset_Translator * wctran)
 ACE_INLINE
 ACE_InputCDR::~ACE_InputCDR (void)
 {
-#if defined (ACE_HAS_MONITOR_FRAMEWORK)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
   this->monitor_->remove_ref ();
-#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 }
 
 ACE_INLINE ACE_CDR::Boolean

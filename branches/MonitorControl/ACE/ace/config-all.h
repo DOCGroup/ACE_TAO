@@ -72,6 +72,10 @@
 #  include "ace/Trace.h"
 #endif /* ACE_OS_NTRACE */
 
+#if !defined (ACE_HAS_MONITOR_FRAMEWORK)
+# define ACE_HAS_MONITOR_FRAMEWORK 1
+#endif
+
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.
 #include "ace/OS_main.h"
