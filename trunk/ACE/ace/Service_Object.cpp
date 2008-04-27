@@ -93,7 +93,7 @@ ACE_Service_Type::fini (void)
                 this->name_,
                 this->dll_.dll_name_));
 
-  if (!this->fini_already_called_)
+  if (this->fini_already_called_)
     return 0;
 
   this->fini_already_called_ = true;
