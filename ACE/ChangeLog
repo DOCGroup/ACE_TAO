@@ -1,3 +1,8 @@
+Sun Apr 27 05:55:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Object.cpp:
+          Fixed big introduced by some cleanup I did
+
 Fri Apr 25 21:47:54 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/vxtest.mpd:
