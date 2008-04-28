@@ -56,16 +56,14 @@ public:
   virtual ~TAO_Valuetype_Adapter (void);
 
   virtual CORBA::Object_ptr abstractbase_to_object (
-      CORBA::AbstractBase_ptr p
-    ) = 0;
+      CORBA::AbstractBase_ptr p) = 0;
 
   virtual CORBA::Boolean stream_to_value (TAO_InputCDR &,
                                           CORBA::ValueBase *&) = 0;
 
   virtual CORBA::Boolean stream_to_abstract_base (
       TAO_InputCDR &,
-      CORBA::AbstractBase_ptr &
-    ) = 0;
+      CORBA::AbstractBase_ptr &) = 0;
 
   virtual CORBA::Long type_info_single (void) const = 0;
 
@@ -74,8 +72,7 @@ public:
   virtual CORBA::Boolean is_type_info_list (CORBA::Long) const = 0;
   virtual CORBA::Boolean is_value_chunked (CORBA::Long) const = 0;
 
-  virtual int vf_map_rebind (const char *,
-                             CORBA::ValueFactory &) = 0;
+  virtual int vf_map_rebind (const char *, CORBA::ValueFactory &) = 0;
 
   virtual int vf_map_unbind (const char *) = 0;
 

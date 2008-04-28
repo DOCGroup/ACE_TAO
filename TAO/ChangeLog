@@ -1,3 +1,22 @@
+Mon Apr 28 10:26:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype_Adapter.h:
+        * tao/RTScheduling/RTScheduler_Initializer.h:
+        * tao/PI/PI_ORBInitializer.h:
+        * tao/PI_Server/PortableServer_ORBInitializer.h:
+          Layout changes
+
+        * tao/Thread_Lane_Resources.cpp:
+          No need for intermediate variable
+
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * docs/Options.html:
+          Extended the -ORBLaneListenEndpoints commandline option with
+          support for *, *:* means all pools and all lanes, *:1 means
+          lane 1 of all pools, 1:* means all lanes for pool 1. This makes
+          it easier to specify an endpoint in a dynamic system. This
+          fixes bugzilla 3308
+
 Mon Apr 28 07:45:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
 
         * tests/Bug_3299_Regression/Hello.cpp:

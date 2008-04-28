@@ -42,7 +42,6 @@ public:
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info);
-
   //@}
 
 private:
