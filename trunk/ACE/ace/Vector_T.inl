@@ -10,9 +10,9 @@ template <class T, size_t DEFAULT_SIZE> ACE_INLINE
 ACE_Vector<T, DEFAULT_SIZE>::ACE_Vector (const size_t init_size,
                                          ACE_Allocator* alloc)
   : ACE_Array<T> (init_size == 0 ? DEFAULT_SIZE : init_size, alloc),
-    length_ (0),
-    curr_max_size_ (max_size ())
+    length_ (0)
 {
+  this->curr_max_size_ = this->max_size ();
 }
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
