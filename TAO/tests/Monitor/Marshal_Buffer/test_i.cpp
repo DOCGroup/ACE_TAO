@@ -1,3 +1,4 @@
+// $Id$
 
 #include "ace/streams.h"
 
