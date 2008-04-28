@@ -9,6 +9,8 @@ workspace {
   $(ACE_ROOT)/ACEXML/parser/parser
   $(ACE_ROOT)/ACEXML/apps/svcconf
   $(ACE_ROOT)/contrib
+  $(ACE_ROOT)/ETCL
+  $(ACE_ROOT)/Monitoring
   $(TAO_ROOT)/TAO_IDL
   $(TAO_ROOT)/tao/tao.mpc
   $(TAO_ROOT)/tao/PortableServer.mpc
@@ -42,7 +44,7 @@ workspace {
   ciaosvcs
   DAnCE
   tools/Config_Handlers
-  
+
   exclude {
     DAnCE/tests
   }

@@ -50,7 +50,7 @@ namespace CIAO
    */
   class CIAO_SERVER_Export Servant_Activator
     : public virtual PortableServer::ServantActivator,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
   public:
     Servant_Activator (CORBA::ORB_ptr o);

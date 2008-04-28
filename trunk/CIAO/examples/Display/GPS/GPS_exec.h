@@ -25,7 +25,7 @@ namespace MyImpl
    */
   class GPS_EXEC_Export GPS_exec_i :
     public virtual CIDL_GPS_Impl::GPS_exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
 
   public:
@@ -74,7 +74,7 @@ namespace MyImpl
    */
     class GPS_EXEC_Export GPSHome_exec_i :
       public virtual HUDisplay::CCM_GPSHome,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
   public:
     /// Default ctor.
@@ -89,7 +89,7 @@ namespace MyImpl
 
 
  class Position_Impl : public virtual HUDisplay::CCM_position,
-                       public virtual TAO_Local_RefCounted_Object
+                       public virtual ::CORBA::LocalObject
   {
   public:
     Position_Impl (GPS_exec_i& component)

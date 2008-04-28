@@ -36,7 +36,7 @@ namespace CIDL_Null_Component_Impl
 {
   class NULL_COMPONENT_EXEC_Export Null_Interface_exec_i
     : public virtual ::CCM_Null_Interface,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     Null_Interface_exec_i (void);
@@ -50,7 +50,7 @@ namespace CIDL_Null_Component_Impl
 
   class NULL_COMPONENT_EXEC_Export Null_Component_exec_i
     : public virtual Null_Component_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     Null_Component_exec_i (void);
@@ -87,7 +87,7 @@ namespace CIDL_Null_Component_Impl
 
   class NULL_COMPONENT_EXEC_Export Null_ComponentHome_exec_i
     : public virtual Null_ComponentHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     Null_ComponentHome_exec_i (void);

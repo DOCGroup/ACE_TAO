@@ -1,3 +1,47 @@
+Mon Apr 28 14:27:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Context_Impl_T.h
+        * ciao/Dynamic_Component_Activator.h
+        * ciao/Servant_Activator.h
+        * CIDLC/ExecImplHeaderGenerator.cpp
+        * DAnCE/TargetManager/TargetManager_exec.h
+        * DAnCE/tests/NodeApplicationTest/RoundTrip_exec.h
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.h
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.h
+        * examples/BasicSP/BasicSP_exec.h
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.h
+        * examples/BasicSP/BMDevice/BMDevice_exec.h
+        * examples/BasicSP/BMDisplay/BMDisplay_exec.h
+        * examples/BasicSP/EC/EC_exec.h
+        * examples/Display/GPS/GPS_exec.h
+        * examples/Display/GPS/GPS_tracing_exec.h
+        * examples/Display/NavDisplay/NavDisplay_exec.h
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h
+        * examples/Display/RateGen/RateGen_exec.h
+        * examples/Hello/Receiver/Receiver_exec.h
+        * examples/Hello/Sender/Sender_exec.h
+        * examples/Null_Component/Null_Component_exec.h
+        * examples/Swapping/Receiver/Receiver_exec.h
+        * examples/Swapping/Sender/Sender_exec.h
+        * examples/Swapping/Sender/Sender_exec_1.h
+        * examples/Swapping/Sender/Sender_exec_2.h
+        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec.h
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.h
+        * performance-tests/Protocols/Receiver/Receiver_exec.h
+        * performance-tests/Protocols/Sender/Sender_exec.h
+        * tests/Bug_2130_Regression/SEC_CheckPoint/TSEC_CheckPoint_exec.h
+        * tests/Minimum/Receiver/Receiver_exec.h
+        * tests/Minimum/Sender/Sender_exec.h
+          Don't use TAO_Local_RefCounted_Object but ::CORBA::LocalObject now
+          LocalObject is also refcounted. Users can still sue TAO_Local_RefCounted_Object,
+          it just does nothing, actions have been takin in LocalObject.h
+          to prevent the usage of TAO_Local_RefCounted_Object in the
+          TAO distribution itself
+
+        * CIAO_TAO.mwc
+        * CIAO_TAO_DAnCE.mwc
+          Added ETCL and monitoring
+
 Wed Apr 23 01:53:32 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* CIAO version 0.6.4 released.
@@ -6,9 +50,9 @@ Thu Mar 27 18:51:13 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO.mwc:
         * CIAO_TAO_DAnCE.mwc:
-        
+
           Added minizip in ACE/contrib for RM.
-        
+
 Thu Mar 27 14:12:41 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciaocidldefaults.mpb:

@@ -31,7 +31,7 @@ namespace MyImpl
     public virtual CIDL_BMClosedED_Impl::BMClosedED_Exec,
     // CIAO container implementation depends on correct reference
     // counting of local interfaces, so we take a short cut to
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default constructor.
@@ -84,7 +84,7 @@ namespace MyImpl
    */
   class BMCLOSEDED_EXEC_Export BMClosedEDHome_exec_i :
     public virtual CIDL_BMClosedED_Impl::BMClosedEDHome_Exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default ctor.

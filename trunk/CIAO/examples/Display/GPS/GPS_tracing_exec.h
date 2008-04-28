@@ -24,7 +24,7 @@ namespace MyImpl
    */
   class GPS_EXEC_Export GPS_tracing_exec_i :
     public virtual HUDisplay::GPS_Exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default constructor.
@@ -88,7 +88,7 @@ namespace MyImpl
    */
   class GPS_EXEC_Export GPSHome_tracing_exec_i :
     public virtual HUDisplay::CCM_GPSHome,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default ctor.

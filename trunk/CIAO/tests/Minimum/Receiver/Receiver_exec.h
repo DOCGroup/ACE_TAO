@@ -36,7 +36,7 @@ namespace CIDL_Receiver_Impl
 {
   class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     Receiver_exec_i (void);
@@ -70,7 +70,7 @@ namespace CIDL_Receiver_Impl
 
   class RECEIVER_EXEC_Export ReceiverHome_exec_i
     : public virtual ReceiverHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     ReceiverHome_exec_i (void);

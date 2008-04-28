@@ -21,7 +21,7 @@ namespace CIDL_Sender_Impl
 
   class SENDER_EXEC_2_Export Sender_exec_2_i :
       public virtual Sender_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
 
   public:
@@ -92,7 +92,7 @@ namespace CIDL_Sender_Impl
   };
 
   class Message_Impl_2 : public virtual Hello::CCM_ReadMessage,
-                       public virtual TAO_Local_RefCounted_Object
+                       public virtual ::CORBA::LocalObject
   {
   public:
     Message_Impl_2 (Sender_exec_2_i& component)

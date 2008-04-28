@@ -41,7 +41,7 @@ namespace MyImpl
    */
   class BASICSP_EXEC_Export ReadData_Impl :
     public virtual ::BasicSP::CCM_ReadData,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Constructor
