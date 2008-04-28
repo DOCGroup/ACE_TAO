@@ -22,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
                                  const ACE_Time_Value & timeout)
   : TAO::IIOP_SSL_Acceptor (),
-    ssl_acceptor_ (),
+    ssl_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0),
@@ -566,6 +566,13 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                       this->ssl_component_.port));
         }
     }
+
+  // In the event that an accept() fails, we can examine the reason.  If
+  // the reason warrants it, we can try accepting again at a later time.
+  // The amount of time we wait to accept again is governed by this orb
+  // parameter.
+  this->set_error_retry_delay (
+    this->orb_core_->orb_params ()->accept_error_delay());
 
   return 0;
 }

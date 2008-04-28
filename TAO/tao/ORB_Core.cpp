@@ -399,7 +399,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 #endif /* TAO_STD_PROFILE_COMPONENTS */
 
   int linger = -1;
-
+  time_t accept_error_delay = 5;
   int use_parallel_connects = 0;
 
   // Copy command line parameter not to use original.
@@ -893,6 +893,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
+               (ACE_TEXT("-ORBAcceptErrorDelay"))))
+        {
+          accept_error_delay = ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBEndpoint"))))
         {
           // Each "endpoint" is of the form:
@@ -1240,6 +1247,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
     (use_parallel_connects != 0);
 
   this->orb_params ()->linger (linger);
+  this->orb_params ()->accept_error_delay (accept_error_delay);
   this->orb_params ()->nodelay (nodelay);
   this->orb_params ()->sock_keepalive (so_keepalive);
   this->orb_params ()->sock_dontroute (so_dontroute);
