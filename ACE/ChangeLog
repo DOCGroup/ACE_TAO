@@ -1,3 +1,15 @@
+Mon Apr 28 18:24:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_wchar.h:
+          Added defines needed to build MonitorControl unicode
+
+        * MonitorControl/WindowsMonitor.cpp:
+        * MonitorControl/WindowsMultiInstanceMonitor.cpp:
+          Make a correct difference between unicode and non unicode builds
+
+        * ace/Strategies_T.{h,inl}:
+          Refcount from base is now a long
+
 Mon Apr 28 18:23:55 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * bin/PerlACE/ProcessVX_Unix.pm:

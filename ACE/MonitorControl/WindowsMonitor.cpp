@@ -20,7 +20,7 @@ namespace ACE
       /// Create a query and a counter here so it doesn't have
       /// to be done with each update.
 
-      this->status_ = PdhOpenQuery (0, 0, &this->query_);
+      this->status_ = ACE_TEXT_PdhOpenQuery (0, 0, &this->query_);
 
       if (ERROR_SUCCESS != this->status_)
         {
@@ -28,10 +28,10 @@ namespace ACE
         }
 
       this->status_ =
-        PdhAddCounter (this->query_,
-                       path,
-                       0,
-                       &this->counter_);
+        ACE_TEXT_PdhAddCounter (this->query_,
+                                path,
+                                0,
+                                &this->counter_);
 
       if (ERROR_SUCCESS != this->status_)
         {
