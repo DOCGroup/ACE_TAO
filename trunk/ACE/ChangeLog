@@ -1,3 +1,9 @@
+Mon Apr 28 12:45:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added the new TAO HandleExhaustion test for all but Windows.
+
 Mon Apr 28 12:21:55 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Vector_T.inl (ACE_Vector): Zapped the "this->" in "this->max_size()".
