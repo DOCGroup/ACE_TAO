@@ -1,3 +1,13 @@
+Mon Apr 28 11:37:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-all.h:
+        * ace/Global_Macros.h:
+          Moved set of define to config-all
+
+        * ace/Truncate.h:
+        * ace/Condition_T.h:
+          Doxygen fix
+
 Mon Apr 28 11:36:46 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Acceptor.h:
