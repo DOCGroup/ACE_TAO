@@ -776,6 +776,14 @@ project(Proactor Timer Test) : acetest {
   }
 }
 
+project(Proactor UDP Test) : acetest {
+  avoids += ace_for_tao
+  exename = Proactor_UDP_Test
+  Source_Files {
+    Proactor_UDP_Test.cpp
+  }
+}
+
 project(Process Manual Event Test) : acetest {
   exename = Process_Manual_Event_Test
   Source_Files {

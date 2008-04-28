@@ -194,7 +194,6 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
   ACE_OS::flock_adjust_params (lock, whence, start, len);
   DWORD low_len = ACE_LOW_PART (len);
   DWORD high_len = ACE_HIGH_PART (len);
-#  if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_,
                                                         0,
                                                         0,
@@ -202,15 +201,6 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
                                                         high_len,
                                                         &lock->overlapped_),
                                           ace_result_), int, -1);
-#  else /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-  ACE_WIN32CALL_RETURN (
-    ACE_ADAPT_RETVAL (::LockFile (lock->handle_,
-                                  lock->overlapped_.Offset,
-                                  lock->overlapped_.OffsetHigh,
-                                  low_len,
-                                  high_len),
-                      ace_result_), int, -1);
-#  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
 #else
   lock->lock_.l_whence = whence;
   lock->lock_.l_start = start;
@@ -237,7 +227,6 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
-#  if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
   ACE_OS::flock_adjust_params (lock, whence, start, len);
   DWORD low_len = ACE_LOW_PART (len);
   DWORD high_len = ACE_HIGH_PART (len);
@@ -249,13 +238,6 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
                                     high_len,
                                     &lock->overlapped_),
                       ace_result_), int, -1);
-#  else /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-  ACE_UNUSED_ARG (lock);
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  ACE_NOTSUP_RETURN (-1);
-#  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
 #else
   lock->lock_.l_whence = whence;
   lock->lock_.l_start = start;
@@ -289,7 +271,6 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
-#  if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
   ACE_OS::flock_adjust_params (lock, whence, start, len);
   DWORD low_len = ACE_LOW_PART (len);
   DWORD high_len = ACE_HIGH_PART (len);
@@ -301,13 +282,6 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
                                     high_len,
                                     &lock->overlapped_),
                       ace_result_), int, -1);
-#  else /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-  ACE_UNUSED_ARG (lock);
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  ACE_NOTSUP_RETURN (-1);
-#  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
 #else
   lock->lock_.l_whence = whence;
   lock->lock_.l_start = start;
@@ -345,7 +319,6 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
   ACE_OS::flock_adjust_params (lock, whence, start, len);
   DWORD low_len = ACE_LOW_PART (len);
   DWORD high_len = ACE_HIGH_PART (len);
-#  if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
   ACE_WIN32CALL_RETURN (
     ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_,
                                     LOCKFILE_EXCLUSIVE_LOCK,
@@ -354,15 +327,6 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
                                     high_len,
                                     &lock->overlapped_),
                       ace_result_), int, -1);
-#  else /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-  ACE_WIN32CALL_RETURN (
-    ACE_ADAPT_RETVAL (::LockFile (lock->handle_,
-                                  lock->overlapped_.Offset,
-                                  lock->overlapped_.OffsetHigh,
-                                  low_len,
-                                  high_len),
-                      ace_result_), int, -1);
-#  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
 #else
   lock->lock_.l_whence = whence;
   lock->lock_.l_start = start;
