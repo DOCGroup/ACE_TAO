@@ -1,3 +1,18 @@
+Mon Apr 28 17:54:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MonitorControl/BytesReceivedMonitor.cpp:
+        * MonitorControl/BytesSentMonitor.cpp:
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/PacketsReceivedMonitor.cpp:
+        * MonitorControl/PacketsSentMonitor.cpp:
+        * MonitorControl/WindowsMonitor.cpp:
+        * MonitorControl/WindowsMonitor.h:
+        * MonitorControl/WindowsMultiInstanceMonitor.cpp:
+        * MonitorControl/WindowsMultiInstanceMonitor.h:
+          Fixed unicode compile problems on windows
+
 Mon Apr 28 13:25:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Streams/streams.mpc:

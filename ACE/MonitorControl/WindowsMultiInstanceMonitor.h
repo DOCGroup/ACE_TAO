@@ -41,21 +41,21 @@ namespace ACE
     class MONITORCONTROL_Export WindowsMultiInstanceMonitor
     {
     protected:
-      WindowsMultiInstanceMonitor (const char *wildcard_path);          
+      WindowsMultiInstanceMonitor (const ACE_TCHAR *wildcard_path);
       virtual ~WindowsMultiInstanceMonitor (void);
-    
+
       /// Implementation of the pure virtual method.
       void win_update (void);
-      
+
     protected:
       PDH_FMT_COUNTERVALUE value_;
-      
+
     private:
       typedef ACE_Unbounded_Queue<WindowsMonitor *>
         INSTANCES;
       typedef ACE_Unbounded_Queue_Const_Iterator<WindowsMonitor *>
         INSTANCES_ITERATOR;
-        
+
       INSTANCES instances_;
       DWORD n_instances_;
       PDH_STATUS status_;

@@ -20,7 +20,7 @@ namespace ACE
     MemoryUsageMonitor::MemoryUsageMonitor (const char* name)
       : Monitor_Base (name)
 #if defined (ACE_WIN32)
-      , WindowsMonitor ("\\Memory\\% Committed Bytes In Use")
+      , WindowsMonitor (ACE_TEXT("\\Memory\\% Committed Bytes In Use"))
 #elif defined (ACE_HAS_KSTAT)
 #endif
     {
@@ -38,7 +38,7 @@ namespace ACE
       if (sysinfo (&this->sysinfo_) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Memory usage - sysinfo() failed\n"));
+                      ACE_TEXT ("Memory usage - sysinfo() failed\n")));
           return;
         }
 

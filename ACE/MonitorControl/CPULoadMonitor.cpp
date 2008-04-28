@@ -20,7 +20,7 @@ namespace ACE
     CPULoadMonitor::CPULoadMonitor (const char* name)
       : Monitor_Base (name)
 #if defined (ACE_WIN32)
-      , WindowsMonitor ("\\Processor(_Total)\\% Processor Time")
+      , WindowsMonitor (ACE_TEXT("\\Processor(_Total)\\% Processor Time"))
 #endif
 #if defined (linux) || defined (ACE_HAS_KSTAT)
       , user_ (0)
