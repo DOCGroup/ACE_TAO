@@ -1,13 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(MC_Test_Utilities) : acelib {
+project(MC_Test_Utilities) : acelib, ace_output {
   dynamicflags += MC_TEST_UTILITIES_BUILD_DLL
 
   Source_Files {
     MC_Test_Utilities.cpp
   }
-  
+
   Header_Files {
     MC_Test_Utilities_export.h
   }
