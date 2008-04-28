@@ -1,5 +1,35 @@
-Mon Apr 28 12:42:36 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+Mon Apr 28 13:10:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * MPC/config/monitor.mpb:
+        * MPC/config/tao_etcl.mpb:
+        * MPC/config/tao_etcl_parser.mpb:
+          New base projects
+
+        * tao/ETCL/*:
+          New TAO ETCL library which uses the ACE ETCL library. This will
+          replace the orbsvcs ETCL lib
+
+        * tao/Monitor/*:
+          New TAO library to get/clear monitor points from a corba client
+
+        * tao/objectid.h:
+          Added an id for the Monitor
+
+        * utils/monitor/*:
+          Commandline client to retrieve monitor points from a TAO server
+
+        * tao/ORB.cpp:
+          Extended rir for Monitor
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+          Added code to get and store the Monitor
+
+        * tao/orbconf.h:
+          When ACE has monitoring enabled we also enable it for TAO
+
+Mon Apr 28 12:42:36 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/ORB_Core.cpp:
         * tao/params.h:

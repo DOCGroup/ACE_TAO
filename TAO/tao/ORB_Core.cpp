@@ -203,6 +203,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
+    monitor_ (CORBA::Object::_nil ()),
     orb_ (CORBA::ORB::_nil ()),
     root_poa_ (),
     orb_params_ (),
@@ -1370,6 +1371,8 @@ TAO_ORB_Core::fini (void)
   ::CORBA::release (this->ior_manip_factory_);
 
   ::CORBA::release (this->ior_table_);
+  
+  ::CORBA::release (this->monitor_);
 
   if (TAO_debug_level > 2)
     {
@@ -2569,6 +2572,33 @@ TAO_ORB_Core::resolve_ior_table_i (void)
       // It is now (exception) safe to release ownership from the auto pointers
       this->ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
+    }
+}
+
+void
+TAO_ORB_Core::resolve_monitor_i (void)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance
+      (this->configuration (),
+       ACE_TEXT ("Monitor_Init"));
+
+  if (loader == 0)
+    {
+      this->configuration ()->process_directive
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("Monitor_Init",
+                                       "TAO_Monitor",
+                                       "_make_TAO_Monitor_Init",
+                                       ""));
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance
+        (this->configuration (),
+         ACE_TEXT ("Monitor_Init"));
+    }
+
+  if (loader != 0)
+    {
+      this->monitor_ = loader->create_object (this->orb_, 0, 0);
     }
 }
 

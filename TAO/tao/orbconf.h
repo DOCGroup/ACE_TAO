@@ -235,6 +235,13 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 // Define if you have the vprintf function.
 #define HAVE_VPRINTF 1
 
+// Comment out to enable only ACE monitors...
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+#  define TAO_HAS_MONITOR_FRAMEWORK 1
+#else
+#  define TAO_HAS_MONITOR_FRAMEWORK 0
+#endif /* ACE_HAS_MONITOR_FRAMEWORK*/
+
 // Avoid namespace pollution that's common on older UNIXes...
 #if defined (minor)
 #undef minor
