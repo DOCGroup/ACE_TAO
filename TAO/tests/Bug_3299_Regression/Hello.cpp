@@ -5,8 +5,6 @@
 
 ACE_RCSID(Hello, Hello, "$Id$")
 
-int count = 0;
-
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -15,9 +13,11 @@ Hello::Hello (CORBA::ORB_ptr orb)
 char *
 Hello::get_string (void)
 {
-  if (count == 0)
+  static int our_count = 0;
+
+  if (our_count == 0)
     {
-      ++count;
+      ++our_count;
       throw ::CORBA::TRANSIENT (0,
               CORBA::COMPLETED_MAYBE);
     }
