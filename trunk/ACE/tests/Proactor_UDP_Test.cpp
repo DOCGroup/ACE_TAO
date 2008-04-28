@@ -1575,8 +1575,8 @@ Client::initiate_write (void)
                                      complete_message_length),
                   -1);
   mb->wr_ptr (complete_message_length);
-
-  if (this->ws_.send (*mb, mb->length ()) == -1)
+  size_t unused;   // Number of bytes sent
+  if (this->ws_.send (mb, unused, 0, this->server_addr_) == -1)
     {
       mb->release ();
       ACE_ERROR_RETURN((LM_ERROR,
@@ -1666,7 +1666,8 @@ Client::initiate_read (void)
                   -1);
 
   // Inititiate read
-  if (this->rs_.read (*mb, mb->size () - 1) == -1)
+  size_t unused = 0;
+  if (this->rs_.recv (mb, unused, 0) == -1)
     {
       mb->release ();
       ACE_ERROR_RETURN ((LM_ERROR,
