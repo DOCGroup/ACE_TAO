@@ -261,6 +261,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_WIN32)
 #if defined (ACE_USES_WCHAR)
+#define ACE_LPSTR                                LPWSTR
 #define ACE_TEXT_SERVICE_TABLE_ENTRY             SERVICE_TABLE_ENTRYW
 #define ACE_TEXT_STARTUPINFO                     STARTUPINFOW
 #define ACE_TEXT_WIN32_FIND_DATA                 WIN32_FIND_DATAW
@@ -314,8 +315,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_StartServiceCtrlDispatcher      ::StartServiceCtrlDispatcherW
 #define ACE_TEXT_SetFileSecurity                 ::SetFileSecurityW
 #define ACE_TEXT_SetEntriesInAcl                 ::SetEntriesInAclW
+#define ACE_TEXT_PdhExpandCounterPath            ::PdhExpandCounterPathW
+#define ACE_TEXT_PdhOpenQuery                    ::PdhOpenQueryW
+#define ACE_TEXT_PdhAddCounter                   ::PdhAddCounterW
 
 #else /* ACE_USES_WCHAR */
+#define ACE_LPSTR                                LPSTR
 #define ACE_TEXT_SERVICE_TABLE_ENTRY             SERVICE_TABLE_ENTRYA
 #define ACE_TEXT_STARTUPINFO                     STARTUPINFOA
 #define ACE_TEXT_WIN32_FIND_DATA                 WIN32_FIND_DATAA
@@ -369,6 +374,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_StartServiceCtrlDispatcher      ::StartServiceCtrlDispatcherA
 #define ACE_TEXT_SetFileSecurity                 ::SetFileSecurityA
 #define ACE_TEXT_SetEntriesInAcl                 ::SetEntriesInAclA
+#define ACE_TEXT_PdhExpandCounterPath            ::PdhExpandCounterPathA
+#define ACE_TEXT_PdhOpenQuery                    ::PdhOpenQueryA
+#define ACE_TEXT_PdhAddCounter                   ::PdhAddCounterA
 #endif /* ACE_USES_WCHAR */
 #endif /* ACE_WIN32 */
 
