@@ -659,6 +659,9 @@ public:
   /// Resolve the IOR Table reference for this ORB.
   CORBA::Object_ptr resolve_ior_table (void);
 
+  /// Resolve the Monitor reference for this ORB.
+  CORBA::Object_ptr resolve_monitor (void);
+
   /// Resolve an initial reference via the -ORBInitRef and
   // -ORBDefaultInitRef options.
   CORBA::Object_ptr resolve_rir (const char *name);
@@ -943,6 +946,9 @@ protected:
   /// Obtain and cache the IORManipulation factory object reference.
   void resolve_iormanipulation_i (void);
 
+  /// Obtain and cache the Monitor object reference.
+  void resolve_monitor_i (void);
+
   /// Search the Dynamic service list for well known services that has
   /// callbacks  which can be dynamically loaded.
   void services_callbacks_init (void);
@@ -1028,6 +1034,9 @@ protected:
 
   /// The cached object reference for the IORTable.
   CORBA::Object_ptr ior_table_;
+
+  /// The cached object reference for the Monitor.
+  CORBA::Object_ptr monitor_;
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   /// The cached object reference for the RTCORBA::RTORB.
