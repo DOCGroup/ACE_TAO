@@ -21,11 +21,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
+#include "ace/Monitor_Base.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
-
-#include "ace/Monitor_Base.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
