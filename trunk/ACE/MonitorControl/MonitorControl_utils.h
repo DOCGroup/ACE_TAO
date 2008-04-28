@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file MonitorControl_macros.h
+ * @file MonitorControl_utils.h
  *
  * $Id$
  *
@@ -39,24 +39,24 @@ typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::BytesReceivedMonitor
   BYTES_RECEIVED_MONITOR;
 typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::PacketsReceivedMonitor
   PACKETS_RECEIVED_MONITOR;
-  
+
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
-  
+
 template<typename OS_MP_TYPE>
 Monitor_Base*
 create_os_monitor (const char* name = 0,
                    ACE_Time_Value period = ACE_Time_Value::zero)
 {
   Monitor_Base* retval = 0;
-  
+
   ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER *mgr =
     ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service<
       ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance (
         "MC_ADMINMANAGER");
-        
+
   const char* working_name =
     (name == 0 ? OS_MP_TYPE::default_name () : name);
-        
+
   retval = mgr->admin ().monitor_point (working_name);
 
   if (retval == 0)
@@ -64,7 +64,7 @@ create_os_monitor (const char* name = 0,
       ACE_NEW_RETURN (retval, OS_MP_TYPE (working_name), 0);
       (void) mgr->admin ().monitor_point (retval, period);
     }
-    
+
   return retval;
 }
 
