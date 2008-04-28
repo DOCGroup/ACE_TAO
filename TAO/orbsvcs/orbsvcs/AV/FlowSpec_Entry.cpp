@@ -360,7 +360,6 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 
           if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
             {
-
               ACE_DEBUG ((LM_DEBUG,
                           "Number of local sec addresses = %d\n",
                           port_tokenizer.num_tokens () - 1));
