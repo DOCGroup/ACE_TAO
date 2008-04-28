@@ -125,6 +125,12 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Method_Request.cpp
     MMAP_Memory_Pool.cpp
     Msg_WFMO_Reactor.cpp
+    Monitor_Admin.cpp
+    Monitor_Admin_Manager.cpp
+    Monitor_Base.cpp
+    Monitor_Point_Registry.cpp
+    Monitor_Control_Types.cpp
+    Monitor_Control_Action.cpp
     Multihomed_INET_Addr.cpp
     Mutex.cpp
     Netlink_Addr.cpp
@@ -212,6 +218,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Sig_Adapter.cpp
     Sig_Handler.cpp
     Signal.cpp
+    Size_Monitor.cpp
     SOCK.cpp
     SOCK_Acceptor.cpp
     SOCK_CODgram.cpp
@@ -328,6 +335,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Pair_T.cpp
     RB_Tree.cpp
     Reactor_Token_T.cpp
+    Refcountable_T.cpp
     Refcounted_Auto_Ptr.cpp
     Reverse_Lock_T.cpp
     Select_Reactor_T.cpp

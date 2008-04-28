@@ -1,3 +1,24 @@
+Mon Apr 28 10:31:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Admin.cpp:
+        * ace/Monitor_Admin.h:
+        * ace/Monitor_Admin_Manager.cpp:
+        * ace/Monitor_Admin_Manager.h:
+        * ace/Monitor_Base.cpp:
+        * ace/Monitor_Base.h:
+        * ace/Monitor_Base.inl:
+        * ace/Monitor_Control_Action.cpp:
+        * ace/Monitor_Control_Action.h:
+        * ace/Monitor_Control_Types.cpp:
+        * ace/Monitor_Control_Types.h:
+        * ace/Monitor_Point_Registry.cpp:
+        * ace/Monitor_Point_Registry.h:
+        * ace/ace.mpc:
+        * ace/Global_Macros.h:
+          First commit coming from the Monitor branch. This will add a
+          monitoring framework to ACE with which size of queues, cpu load
+          and other resources can be monitored.
+
 Sun Apr 27 05:55:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Object.cpp:
