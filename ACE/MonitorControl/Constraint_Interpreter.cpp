@@ -7,6 +7,8 @@
 #include "MonitorControl/Constraint_Interpreter.h"
 #include "MonitorControl/Constraint_Visitor.h"
 
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -55,5 +57,7 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 
