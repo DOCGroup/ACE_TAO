@@ -18,9 +18,8 @@ TAO_FT_Heart_Beat_Enabled_Policy::TAO_FT_Heart_Beat_Enabled_Policy (
   )
   : CORBA::Object (),
     CORBA::Policy (),
-    CORBA::LocalObject (),
     FT::HeartbeatEnabledPolicy (),
-    TAO_Local_RefCounted_Object (),
+    CORBA::LocalObject (),
     heartbeat_enabled_value_ (rhs.heartbeat_enabled_value_)
 {
 }

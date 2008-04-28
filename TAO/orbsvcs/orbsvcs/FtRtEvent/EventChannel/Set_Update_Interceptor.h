@@ -38,7 +38,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Set_Update_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
 public:
   TAO_Set_Update_Interceptor ();

@@ -57,7 +57,7 @@ namespace TAO
      */
     class TAO_SSLIOP_Export SSLIOP_Credentials
       : public virtual SecurityLevel3::Credentials,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
       typedef SSLIOP::Credentials_ptr _ptr_type;

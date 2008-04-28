@@ -23,7 +23,7 @@
 /// RTCORBA ORB initializer.
 class Server_ORBInitializer2 :
   public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
 public:
 

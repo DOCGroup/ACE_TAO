@@ -45,7 +45,7 @@ namespace TAO
        */
       class PolicyFactory
         : public virtual PortableInterceptor::PolicyFactory,
-          public virtual TAO_Local_RefCounted_Object
+          public virtual ::CORBA::LocalObject
       {
       public:
 

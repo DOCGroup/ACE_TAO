@@ -28,7 +28,7 @@
 
 class ServantActivator_i :
   public virtual PortableServer::ServantActivator,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 
 {
   //= TITLE

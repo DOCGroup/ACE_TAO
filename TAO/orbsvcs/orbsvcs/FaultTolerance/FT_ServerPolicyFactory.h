@@ -38,7 +38,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// Policy factory for all FTCORBA related policies.
 class TAO_FT_ServerPolicyFactory
   : public PortableInterceptor::PolicyFactory
-  , public TAO_Local_RefCounted_Object
+  , public ::CORBA::LocalObject
 {
 public:
 

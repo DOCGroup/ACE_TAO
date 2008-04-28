@@ -78,7 +78,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   if (node->is_local ())
     {
       *os << "," << be_idt_nl
-          << "public virtual TAO_Local_RefCounted_Object"
+          << "public virtual ::CORBA::LocalObject"
           << be_uidt;
     }
 

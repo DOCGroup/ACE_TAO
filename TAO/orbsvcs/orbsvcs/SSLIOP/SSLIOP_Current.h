@@ -57,7 +57,7 @@ namespace TAO
      */
     class Current
       : public ::SSLIOP::Current,
-        public TAO_Local_RefCounted_Object
+        public ::CORBA::LocalObject
     {
     public:
       typedef Current_ptr _ptr_type;

@@ -54,7 +54,7 @@ namespace TAO
      */
     class Server_Invocation_Interceptor
       : public virtual PortableInterceptor::ServerRequestInterceptor,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
 

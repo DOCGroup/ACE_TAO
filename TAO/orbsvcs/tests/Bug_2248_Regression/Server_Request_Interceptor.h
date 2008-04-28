@@ -35,7 +35,7 @@
  */
 class Server_Request_Interceptor
   : public virtual Simple_ServerRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

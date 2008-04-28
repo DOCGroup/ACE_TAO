@@ -52,7 +52,7 @@ namespace TAO
      */
     class AccessDecision
       : public virtual TAO::SL2::AccessDecision,
-	public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
     {
     public:
       /*! Constructor */
@@ -166,7 +166,7 @@ namespace TAO
      */
     class SecurityManager
       : public virtual SecurityLevel2::SecurityManager,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
 

@@ -28,7 +28,7 @@
  */
 class Policy
   : public virtual Test::Policy,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

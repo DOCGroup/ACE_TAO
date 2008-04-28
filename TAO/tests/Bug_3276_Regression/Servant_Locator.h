@@ -9,7 +9,7 @@
 
 class Servant_Locator
   : public PortableServer::ServantLocator
-  , public virtual TAO_Local_RefCounted_Object
+  , public virtual ::CORBA::LocalObject
 {
 public:
   virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,

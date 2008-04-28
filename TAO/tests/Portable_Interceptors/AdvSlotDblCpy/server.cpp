@@ -177,7 +177,7 @@ private:
 //
 //
 class ReplicaController: public virtual ServerRequestInterceptor,
-                         public virtual TAO_Local_RefCounted_Object
+                         public virtual ::CORBA::LocalObject
 {
   PortableInterceptor::Current_ptr pi_current_;
 public:
@@ -244,7 +244,7 @@ public:
 //
 //
 class ORB_Initializer : public virtual ORBInitializer,
-                        public virtual TAO_Local_RefCounted_Object
+                        public virtual ::CORBA::LocalObject
 {
 public:
   virtual void

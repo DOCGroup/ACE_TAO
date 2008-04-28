@@ -26,7 +26,7 @@
  */
 class Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 
