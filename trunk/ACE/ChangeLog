@@ -1,3 +1,13 @@
+Mon Apr 28 12:13:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_common.GNU:
+          Added kstat support needed for monitoring lib on solaris
+
+Mon Apr 28 12:05:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MonitorControl/*:
+          Merge from MonitorControl branch.
+
 Mon Apr 28 11:37:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-all.h:
