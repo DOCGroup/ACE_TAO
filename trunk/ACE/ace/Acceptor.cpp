@@ -215,6 +215,13 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::close (void)
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_accept_error (void)
+{
+  ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_accept_error");
+  return 0;
+}
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
                                                               ACE_Reactor_Mask)
 {
@@ -397,7 +404,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("accept_svc_handler")));
-          return 0;
+          return this->handle_accept_error ();
         }
       // Activate the <svc_handler> using the designated concurrency
       // strategy (note that this method becomes responsible for
