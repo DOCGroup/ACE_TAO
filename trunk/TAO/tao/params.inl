@@ -89,6 +89,19 @@ TAO_ORB_Parameters::linger (int x)
 }
 
 
+ACE_INLINE time_t
+TAO_ORB_Parameters::accept_error_delay (void) const
+{
+  return this->accept_error_delay_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::accept_error_delay (time_t x)
+{
+  this->accept_error_delay_ = x;
+}
+
+
 ACE_INLINE void
 TAO_ORB_Parameters::service_port (TAO::MCAST_SERVICEID service_id,
                                   CORBA::UShort port)

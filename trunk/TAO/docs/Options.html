@@ -502,6 +502,16 @@ selection within a TAO application.
         <th>Description</th>
       </tr>
       <tr>
+        <td><code>-ORBAcceptErrorDelay</code> <em>seconds</em></td>
+        <td><a name="-ORBAcceptErrorDelay"></a>This argument controls the
+        amount of time to wait before attempting to accept new
+        connections in the event that a transient error occurs (such as
+        running out of file handles).  A delay of zero indicates that
+        accepting should not be attempted again after the transient error
+        and the handler will be removed from the reactor.
+        </td>
+      </tr>
+      <tr>
         <td><code>-ORBDefaultInitRef</code> <em>IOR prefix</em></td>
         <td><a name="-ORBDefaultInitRef"></a>This argument allows
 resolution of initial references not explicitly specified with

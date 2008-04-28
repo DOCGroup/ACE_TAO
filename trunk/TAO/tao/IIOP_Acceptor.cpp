@@ -44,7 +44,7 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 #else
     default_address_ (static_cast<unsigned short> (0), static_cast<ACE_UINT32> (INADDR_ANY)),
 #endif /* ACE_HAS_IPV6 */
-    base_acceptor_ (),
+    base_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0)
@@ -583,6 +583,13 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                       this->addrs_[i].get_port_number ()));
         }
     }
+
+  // In the event that an accept() fails, we can examine the reason.  If
+  // the reason warrants it, we can try accepting again at a later time.
+  // The amount of time we wait to accept again is governed by this orb
+  // parameter.
+  this->set_error_retry_delay (
+    this->orb_core_->orb_params ()->accept_error_delay());
 
   return 0;
 }

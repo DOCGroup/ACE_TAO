@@ -125,6 +125,11 @@ public:
   int linger (void) const;
   void linger (int);
 
+  /// The amount of time desired by the user to wait to accept
+  /// connections after a particular type of accept() error.
+  time_t accept_error_delay (void) const;
+  void accept_error_delay (time_t);
+
   /// Set/Get the Init Reference of an arbitrary ObjectID.
   char *default_init_ref (void) const;
   void default_init_ref (const char *default_init_ref);
@@ -307,6 +312,9 @@ private:
 
   /// For setting the SO_LINGER option
   int linger_;
+
+  /// For setting the accept retry delay
+  time_t accept_error_delay_;
 
   /// If true then the standard OMG components are not generated.
   int std_profile_components_;

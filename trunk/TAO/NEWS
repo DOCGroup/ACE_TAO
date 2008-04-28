@@ -9,6 +9,10 @@ USER VISIBLE CHANGES BETWEEN TAO-1.6.4 and TAO-1.6.5
 . Updated TAO to comply with the IDL to C++ mapping v1.2. As a result
   CORBA::LocalObject is now refcounted by default
 
+. Added a new ORB parameter, -ORBAcceptErrorDelay, that controls the amount
+  of time to wait before attempting to accept new connections when a
+  possibly transient error occurs during accepting a new connection.
+
 USER VISIBLE CHANGES BETWEEN TAO-1.6.3 and TAO-1.6.4
 ====================================================
 
