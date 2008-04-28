@@ -25,6 +25,8 @@
 #include "tao/Versioned_Namespace.h"
 #include "tao/Object_Loader.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -55,6 +57,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_Monitor_Init)
 ACE_FACTORY_DECLARE (TAO_Monitor, TAO_Monitor_Init)
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
 #include /**/ "ace/post.h"
 
