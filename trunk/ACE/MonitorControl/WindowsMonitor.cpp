@@ -12,19 +12,19 @@ namespace ACE
 {
   namespace MonitorControl
   {
-    WindowsMonitor::WindowsMonitor (const char *path)
+    WindowsMonitor::WindowsMonitor (const ACE_TCHAR *path)
       : query_ (0),
         counter_ (0),
         status_ (ERROR_SUCCESS)
     {
       /// Create a query and a counter here so it doesn't have
       /// to be done with each update.
-    
+
       this->status_ = PdhOpenQuery (0, 0, &this->query_);
 
       if (ERROR_SUCCESS != this->status_)
         {
-          ACE_ERROR ((LM_DEBUG, "PdhOpenQuery failed\n"));
+          ACE_ERROR ((LM_DEBUG, ACE_TEXT ("PdhOpenQuery failed\n")));
         }
 
       this->status_ =
@@ -35,7 +35,7 @@ namespace ACE
 
       if (ERROR_SUCCESS != this->status_)
         {
-          ACE_ERROR ((LM_DEBUG, "PdhAddCounter %s failed\n", path));
+          ACE_ERROR ((LM_DEBUG, ACE_TEXT ("PdhAddCounter %s failed\n"), path));
         }
     }
 

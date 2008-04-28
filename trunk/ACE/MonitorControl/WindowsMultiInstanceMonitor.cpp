@@ -16,44 +16,44 @@ namespace ACE
   namespace MonitorControl
   {
     WindowsMultiInstanceMonitor::WindowsMultiInstanceMonitor (
-      const char *wildcard_path)
+      const ACE_TCHAR *wildcard_path)
       : instances_ (0),
         n_instances_ (0),
         status_ (ERROR_SUCCESS)
     {
       this->value_.doubleValue = 0.0;
-      
+
       /// Create a string which is a concatentation of the path
       /// name of each 'instance' we need to monitor.
-      
+
       DWORD paths_size = 4096;
-      LPSTR paths = (LPSTR) GlobalAlloc (GPTR, paths_size);
-      
+      LPWSTR paths = (LPWSTR) GlobalAlloc (GPTR, paths_size);
+
       this->status_ = PdhExpandCounterPath (wildcard_path,
-                                            paths, 
+                                            paths,
                                             &paths_size);
 
       if (PDH_MORE_DATA == this->status_)
         {
           ++paths_size;
           GlobalFree (paths);
-          paths = (LPSTR) GlobalAlloc (GPTR, paths_size);
-      
+          paths = (LPWSTR) GlobalAlloc (GPTR, paths_size);
+
           this->status_ = PdhExpandCounterPath (wildcard_path,
-                                                paths, 
+                                                paths,
                                                 &paths_size);
         }
-        
+
       if (PDH_CSTATUS_VALID_DATA != this->status_)
         {
           ACE_ERROR ((LM_ERROR,
                       "%s: PdhExpandCounterPath failed\n",
                       wildcard_path));
         }
-        
-      LPSTR path = paths;
+
+      LPWSTR path = paths;
       int index = 0;
-      
+
       /// Create a regular Windows monitor for each path name.
       while (*path != 0)
         {
@@ -61,14 +61,14 @@ namespace ACE
           this->instances_.enqueue_tail (instance);
           path += lstrlen (path) + 1;
         }
-        
+
       GlobalFree (paths);
     }
-    
+
     WindowsMultiInstanceMonitor::~WindowsMultiInstanceMonitor (void)
     {
       WindowsMonitor *instance = 0;
-      
+
       /// Destroy the single instance monitors created in the constructor.
       while (this->instances_.dequeue_head (instance) == 0)
         {
@@ -80,14 +80,14 @@ namespace ACE
     WindowsMultiInstanceMonitor::win_update (void)
     {
       WindowsMonitor **current_instance;
-      
+
       /// Sum the values of each single instance monitor.
       for (INSTANCES_ITERATOR i (this->instances_); !i.done (); i.advance ())
         {
           i.next (current_instance);
-          
+
           (*current_instance)->win_update ();
-          
+
           this->value_.doubleValue +=
             (*current_instance)->value_.doubleValue;
         }

@@ -41,17 +41,17 @@ namespace ACE
     class MONITORCONTROL_Export WindowsMonitor
     {
       friend class WindowsMultiInstanceMonitor;
-    
+
     protected:
-      WindowsMonitor (const char *path);
-    
+      WindowsMonitor (const ACE_TCHAR *path);
+
       void win_update (void);
-      
+
     protected:
       PDH_FMT_COUNTERVALUE value_;
-    
+
     /// Make these persistent as members so they don't have to be
-    /// created & destroyed with each update.  
+    /// created & destroyed with each update.
     private:
       HQUERY query_;
       HCOUNTER counter_;
