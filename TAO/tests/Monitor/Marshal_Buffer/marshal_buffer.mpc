@@ -1,0 +1,57 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+
+project(*client): taoclient, monitor, ace_mc {
+  after += *idl
+  macros += ENABLE_MONITORS
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+    testC.cpp
+  }
+
+  Header_Files {
+    testC.h
+  }
+
+  Inline_Files {
+    testC.inl
+  }
+}
+
+project(*server): taoserver {
+  after += *idl
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    server.cpp
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+  }
+
+  Header_Files {
+    testC.h
+    testS.h
+    test_i.h
+  }
+
+  Inline_Files {
+    testC.inl
+    testS.inl
+  }
+}
+

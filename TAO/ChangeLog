@@ -1,3 +1,8 @@
+Mon Apr 28 13:16:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Monitor/*:
+          New test for the monitoring framework
+
 Mon Apr 28 13:10:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/monitor.mpb:
