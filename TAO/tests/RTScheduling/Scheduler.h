@@ -7,7 +7,7 @@
 
 class TAO_Scheduler:
 public RTScheduling::Scheduler,
-  public TAO_Local_RefCounted_Object
+  public ::CORBA::LocalObject
 {
  public:
 

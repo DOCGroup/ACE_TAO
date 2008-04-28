@@ -12,28 +12,24 @@ FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy ()
 }
 
 FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy (
-    const FP_Segment_Sched_Param_Policy &rhs
-  )
+    const FP_Segment_Sched_Param_Policy &rhs)
   : CORBA::Object (),
   CORBA::Policy (),
-  CORBA::LocalObject (),
   FP_Scheduling::SegmentSchedulingParameterPolicy (),
-  TAO_Local_RefCounted_Object (),
+  CORBA::LocalObject (),
   value_ (rhs.value_)
 {
 }
 
 FP_Scheduling::SegmentSchedulingParameter
-FP_Segment_Sched_Param_Policy::value (
-      )
+FP_Segment_Sched_Param_Policy::value (void)
 {
   return value_;
 }
 
 void
 FP_Segment_Sched_Param_Policy::value (
-        const FP_Scheduling::SegmentSchedulingParameter & value
-      )
+        const FP_Scheduling::SegmentSchedulingParameter & value)
 {
   this->value_ = value;
 }
@@ -41,7 +37,7 @@ FP_Segment_Sched_Param_Policy::value (
 CORBA::Policy_ptr
 FP_Segment_Sched_Param_Policy::copy (void)
 {
-  FP_Segment_Sched_Param_Policy* tmp;
+  FP_Segment_Sched_Param_Policy* tmp = 0;
   ACE_NEW_THROW_EX (tmp, FP_Segment_Sched_Param_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));

@@ -36,7 +36,7 @@ class ImR_Locator_i;
  */
 class INS_Locator
   : public virtual IORTable::Locator,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
   INS_Locator (ImR_Locator_i& loc);

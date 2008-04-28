@@ -36,7 +36,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// RTCORBA ORB initializer.
 class FTRT_ClientORB_Initializer
   : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
   /// Priority mapping types

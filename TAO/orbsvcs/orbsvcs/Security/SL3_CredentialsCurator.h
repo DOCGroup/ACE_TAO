@@ -59,7 +59,7 @@ namespace TAO
      */
     class TAO_Security_Export CredentialsCurator
       : public virtual SecurityLevel3::CredentialsCurator,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
       typedef CredentialsCurator_ptr _ptr_type;

@@ -60,7 +60,7 @@ namespace TAO
      */
     class TAO_SSLIOP_Export CredentialsAcquirer
       : public virtual SecurityLevel3::CredentialsAcquirer,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
 

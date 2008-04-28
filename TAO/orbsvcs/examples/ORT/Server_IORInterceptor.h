@@ -21,7 +21,7 @@
 
 class Server_IORInterceptor
   : public virtual PortableInterceptor::IORInterceptor_3_0,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

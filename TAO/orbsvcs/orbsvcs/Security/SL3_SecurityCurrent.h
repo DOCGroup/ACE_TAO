@@ -55,7 +55,7 @@ namespace TAO
      */
     class TAO_Security_Export SecurityCurrent
       : public virtual SecurityLevel3::SecurityCurrent,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
 

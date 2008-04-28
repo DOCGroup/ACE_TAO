@@ -30,7 +30,7 @@ state_slot_id (PortableInterceptor::SlotId slot_id);
 
 class ReplicaController
   : public virtual PortableInterceptor::ServerRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
   virtual

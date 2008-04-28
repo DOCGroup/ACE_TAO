@@ -35,7 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// FT ORB initializer.
 class TAO_FT_ClientORBInitializer
   : public virtual PortableInterceptor::ORBInitializer
-  , public virtual TAO_Local_RefCounted_Object
+  , public virtual ::CORBA::LocalObject
 {
 public:
 

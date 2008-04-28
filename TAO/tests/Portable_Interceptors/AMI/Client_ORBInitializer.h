@@ -15,7 +15,7 @@
 
 class Client_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer
-  , public virtual TAO_Local_RefCounted_Object
+  , public virtual ::CORBA::LocalObject
 {
 public:
   Client_ORBInitializer ();

@@ -25,7 +25,7 @@
  */
 class Server_Request_Interceptor
   : public virtual Collocated_ForwardRequestTest::ServerRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

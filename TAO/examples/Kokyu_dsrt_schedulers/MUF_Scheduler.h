@@ -55,7 +55,7 @@ struct MUF_Scheduler_Traits
 
 class Kokyu_DSRT_Schedulers_Export MUF_Sched_Param_Policy:
 public MUF_Scheduling::SchedulingParameterPolicy,
-       public TAO_Local_RefCounted_Object
+       public ::CORBA::LocalObject
 {
  public:
     MUF_Sched_Param_Policy ();
@@ -75,7 +75,7 @@ public MUF_Scheduling::SchedulingParameterPolicy,
 
 class Kokyu_DSRT_Schedulers_Export MUF_Scheduler:
 public MUF_Scheduling::Scheduler,
-public TAO_Local_RefCounted_Object
+public ::CORBA::LocalObject
 {
  public:
 

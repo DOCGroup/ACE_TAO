@@ -54,7 +54,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_LB_ClientRequestInterceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

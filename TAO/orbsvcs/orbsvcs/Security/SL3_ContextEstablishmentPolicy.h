@@ -45,7 +45,7 @@ namespace TAO
      */
     class ContextEstablishmentPolicy
       : public virtual SecurityLevel3::ContextEstablishmentPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
 

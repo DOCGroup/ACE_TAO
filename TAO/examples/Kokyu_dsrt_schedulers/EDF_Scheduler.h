@@ -47,7 +47,7 @@ struct EDF_Scheduler_Traits
 
 class Kokyu_DSRT_Schedulers_Export EDF_Sched_Param_Policy:
 public EDF_Scheduling::SchedulingParameterPolicy,
-       public TAO_Local_RefCounted_Object
+       public ::CORBA::LocalObject
 {
  public:
 
@@ -61,7 +61,7 @@ public EDF_Scheduling::SchedulingParameterPolicy,
 
 class Kokyu_DSRT_Schedulers_Export EDF_Scheduler:
 public EDF_Scheduling::Scheduler,
-public TAO_Local_RefCounted_Object
+public ::CORBA::LocalObject
 {
  public:
 
