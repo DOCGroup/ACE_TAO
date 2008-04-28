@@ -294,6 +294,7 @@ sub Spawn ()
         @cmds[$cmdnr++] = 'ace_vx_rc = vx_execae(ace_main' . $arguments . ')';
         @cmds[$cmdnr++] = 'unld "'. $program . $PerlACE::ProcessVX::ExeExt . '"';
         push @cmds, @unload_commands;
+        $cmdnr += scalar @unload_commands;
         $prompt = '/-> $/';
     }
 
