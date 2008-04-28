@@ -241,6 +241,18 @@ sub Spawn ()
             @cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
         }
 
+        my($vxtest);
+        my(@unload_commands);
+        if (!$config->check_config("STATIC") && !$PerlACE::VxWorks_RTP_Test)) {
+          if (handle_vxtest_file($program, \$vxtest, \@unload_commands)) {
+              @cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
+              @cmds[$cmdnr++] = '< ../' . $cwdrel . '/' . $vxtest;
+          } else {
+              print STDERR "ERROR: Cannot find <", $program, ".vxtest>\n";
+              return -1;
+          }
+        }
+
         @cmds[$cmdnr++] = 'ld <'. $program . $PerlACE::ProcessVX::ExeExt;
         $cmdline = $program . $PerlACE::ProcessVX::ExeExt . ' ' . $self->{ARGUMENTS};
         if (defined $self->{ARGUMENTS}) {
@@ -250,6 +262,8 @@ sub Spawn ()
         }
         @cmds[$cmdnr++] = 'ace_vx_rc = vx_execae(ace_main' . $arguments . ')';
         @cmds[$cmdnr++] = 'unld "'. $program . $PerlACE::ProcessVX::ExeExt . '"';
+        push @cmds, @unload_commands;
+        $cmdnr += scalar @unload_commands;
         $prompt = '/-> $/';
     }
 
