@@ -1,3 +1,11 @@
+Mon Apr 28 11:36:46 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Acceptor.h:
+        * ace/Acceptor.cpp:
+
+          Added a virtual method to facilitate the configurable handling of
+          accept() errors.
+
 Mon Apr 28 11:30:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ETCL/*:
