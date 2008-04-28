@@ -1,3 +1,9 @@
+Mon Apr 28 07:45:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * tests/Bug_3299_Regression/Hello.cpp:
+        Renamed (and rescoped) variable count due to vxworks 5.5 system
+        over-used of common variable name.
+
 Fri Apr 25 13:24:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Registry.cpp:
@@ -7,6 +13,16 @@ Fri Apr 25 13:24:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/RTCORBA/Thread_Pool.cpp:
         * tao/Thread_Lane_Resources.cpp:
           layout changes
+
+Fri Apr 25 09:25:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * examples/MFC/server.cpp:
+        * examples/MFC/server_unicode.mpc:
+        * utils/NamingViewer/NamingViewUnicode.mpc:
+        * utils/NamingViewer/NamingViewer.cpp:
+        * utils/NamingViewer/SelectNSDialog.cpp:
+
+          Split out the unicode versions of these.
 
 Fri Apr 25 09:25:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
 
