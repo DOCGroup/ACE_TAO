@@ -24,6 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Acceptor.h"
 #include "tao/Basic_Types.h"
 
 // Forward declarations.
@@ -84,6 +85,10 @@ public:
   /// The tag, each concrete class will have a specific tag value.
   CORBA::ULong tag (void) const;
 
+  /// Set the amount of time to delay accepting new connections in the
+  /// event that we encounter an error that may be transient.
+  void set_error_retry_delay (time_t delay);
+
   /// Method to initialize acceptor for address.
   virtual int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
@@ -136,6 +141,15 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key) = 0;
 
+  /// This method is not directly associated with the method of the same
+  /// name on the ACE_Acceptor template class.  However, it is called by
+  /// the various sub-classes of ACE_Acceptor.
+  int handle_accept_error (ACE_Event_Handler* base_acceptor);
+
+  /// Perform the handle_timeout functionality to put this acceptor back
+  /// into the reactor to try accepting again.
+  int handle_expiration (ACE_Event_Handler* base_acceptor);
+
   /*
    * Hook to add public methods from derived acceptor classes onto
    * this class.
@@ -146,11 +160,45 @@ private:
   /// IOP protocol tag.
   CORBA::ULong const tag_;
 
+  time_t error_retry_delay_;
+
   /*
    * Hook to add data members from concrete acceptor implementations onto
    * the base class.
    */
   //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_ADD_HOOK
+};
+
+/// This is a drop-in replacement class for the ACE_Strategy_Acceptor. 
+/// It provides all of the same functionality and the additional
+/// functionality of handling accept() errors with some sort of
+/// configured action.  All of the actual code is in the TAO_Acceptor
+/// to avoid multiply-instantiated code that would be, in effect,
+/// identical.
+///
+/// It is not declared nested within TAO_Acceptor as I originally wanted
+/// because it caused an internal compiler error for the Tornado 2.2.1
+/// compiler.
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
+class TAO_Strategy_Acceptor:
+  public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+{
+public:
+  TAO_Strategy_Acceptor (TAO_Acceptor* acceptor)
+   : acceptor_ (acceptor) {
+  }
+
+  virtual int handle_accept_error (void) {
+    return this->acceptor_->handle_accept_error (this);
+  }
+
+  virtual int handle_timeout (const ACE_Time_Value&,
+                              const void*) {
+    return this->acceptor_->handle_expiration (this);
+  }
+
+private:
+  TAO_Acceptor* acceptor_;
 };
 
 //@@ TAO_ACCEPTOR_SPL_EXTERN_ADD_HOOK

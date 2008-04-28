@@ -147,6 +147,7 @@ SUBDIRS = \
         File_IO \
         Forwarding \
         GIOP_Fragments \
+        HandleExhaustion \
         Hang_Shutdown \
         Hello \
         ICMG_Any_Bug \

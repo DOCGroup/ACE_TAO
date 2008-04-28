@@ -23,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
-    base_acceptor_ (),
+    base_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0),
@@ -285,6 +285,14 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
                 "\nTAO (%P|%t) UIOP_Acceptor::open_i - "
                 "listening on: <%s>\n",
                 addr.get_path_name ()));
+
+  // In the event that an accept() fails, we can examine the reason.  If
+  // the reason warrants it, we can try accepting again at a later time.
+  // The amount of time we wait to accept again is governed by this orb
+  // parameter.
+  this->set_error_retry_delay (
+    this->orb_core_->orb_params ()->accept_error_delay());
+
   return 0;
 }
 

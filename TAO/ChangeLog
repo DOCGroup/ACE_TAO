@@ -1,3 +1,57 @@
+Mon Apr 28 12:42:36 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+        * docs/Options.html:
+        * NEWS:
+
+          Added a new ORB parameter, -ORBAcceptErrorDelay, that controls the
+          amount of time to wait before attempting to accept new connections
+          when a possibly transient error occurs during accepting a new
+          connection. A delay of zero indicates that accepting should not be
+          attempted again after the transient error and the handler will be
+          removed from the reactor.
+
+        * tao/Transport_Acceptor.h:
+        * tao/Transport_Acceptor.inl:
+        * tao/Transport_Acceptor.cpp:
+
+          Added code to inspect the error behind an accept() failure and
+          take action according to the above ORB parameter.  This includes a
+          template that derives from ACE_Strategy_Acceptor that allows the
+          sub-classed accptors to use this error handling with minimal code
+          changes.
+
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Acceptor.h:
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Acceptor.h:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+
+          Use the new template provided by TAO_Acceptor and set the accept
+          error delay based on the ORB parameter.
+
+        * configure.ac:
+        * tests/HandleExhaustion:
+        * tests/HandleExhaustion/HandleExhaustion.mpc:
+        * tests/HandleExhaustion/Makefile.am:
+        * tests/HandleExhaustion/README:
+        * tests/HandleExhaustion/Test.idl:
+        * tests/HandleExhaustion/client.cpp:
+        * tests/HandleExhaustion/run_test.pl:
+        * tests/HandleExhaustion/server.cpp:
+        * tests/Makefile.am:
+
+          Added a test to exersice the above changes.
+
 Mon Apr 28 11:39:21 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_1269_Regression/client.cpp:

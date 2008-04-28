@@ -755,6 +755,7 @@ if test $tao_build_tests = yes; then
     tests/GIOP_Fragments/Java_Big_Request/Makefile
     tests/GIOP_Fragments/Makefile
     tests/GIOP_Fragments/PMB_With_Fragments/Makefile
+    tests/HandleExhaustion/Makefile
     tests/Hang_Shutdown/Makefile
     tests/Hello/Makefile
     tests/ICMG_Any_Bug/Makefile
