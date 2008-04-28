@@ -349,12 +349,10 @@ TAO_Thread_Lane_Resources::open_acceptor_registry (const TAO_EndpointSet &endpoi
   TAO_Acceptor_Registry &ar = this->acceptor_registry ();
 
   // Open it.
-  int result = ar.open (&this->orb_core_,
-                        this->leader_follower ().reactor (),
-                        endpoint_set,
-                        ignore_address);
-
-  return result;
+  return ar.open (&this->orb_core_,
+                  this->leader_follower ().reactor (),
+                  endpoint_set,
+                  ignore_address);
 }
 
 TAO_Resource_Factory *
