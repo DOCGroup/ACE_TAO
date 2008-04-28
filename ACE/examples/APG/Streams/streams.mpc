@@ -1,10 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(Answerer) : aceexe {
+project(Answerer) : aceexe, threads {
   avoids   += ace_for_tao
   exename   = Answerer
-  requires += threads
   Source_Files {
     Answerer.cpp
     CommandModule.cpp

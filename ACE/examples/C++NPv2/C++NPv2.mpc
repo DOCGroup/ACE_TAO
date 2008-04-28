@@ -7,8 +7,7 @@
 // Also, a specific section was used because you can't set build order
 // without setting a build dependency within vc6 and the like.
 
-project(*AC_CLD) : acelib, ssl {
-  requires += threads
+project(*AC_CLD) : acelib, ssl, threads {
   avoids += uses_wchar
   sharedname = AC_CLD
   dynamicflags = AC_CLD_BUILD_DLL
@@ -29,8 +28,8 @@ project(*AIO_CLD) : acelib, ssl {
   }
 }
 
-project(*CLD) : acelib {
-  avoids += uses_wchar ace_for_tao
+project(*CLD) : acelib, avoids_ace_for_tao {
+  avoids += uses_wchar
   sharedname = CLD
   dynamicflags = CLD_BUILD_DLL
   Source_Files {
@@ -50,16 +49,15 @@ project(*Configurable_Log_Server) : aceexe {
   }
 }
 
-project(*Display_Logfile) : aceexe {
-  avoids += ace_for_tao
+project(*Display_Logfile) : aceexe, avoids_ace_for_tao {
   exename = display_logfile
   Source_Files {
     display_logfile.cpp
   }
 }
 
-project(*Reactor_Log_Server) : aceexe {
-  avoids += uses_wchar ace_for_tao
+project(*Reactor_Log_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
   exename = reactor_logging_server
   Source_Files {
     Logging_Acceptor.cpp
@@ -70,8 +68,8 @@ project(*Reactor_Log_Server) : aceexe {
   }
 }
 
-project(*Select_Reactor_Log_Server) : aceexe {
-  avoids += uses_wchar ace_for_tao
+project(*Select_Reactor_Log_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
   exename = select_reactor_logging_server
   specific(gnuace) {
     after += *Reactor_Log_Server
@@ -85,8 +83,8 @@ project(*Select_Reactor_Log_Server) : aceexe {
   }
 }
 
-project(*SLD) : acelib {
-  avoids += uses_wchar ace_for_tao
+project(*SLD) : acelib, avoids_ace_for_tao {
+  avoids += uses_wchar
   sharedname = SLD
   dynamicflags = SLD_BUILD_DLL
   specific(gnuace) {

@@ -1,7 +1,13 @@
+Mon Apr 28 13:25:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Streams/streams.mpc:
+        * examples/C++NPv2/C++NPv2.mpc:
+          Use base projects
+
 Mon Apr 28 13:20:40 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Vector_T.inl (ACE_Vector): Take another shot at fixing the
-          max_size() problem. 
+          max_size() problem.
 
 Mon Apr 28 12:45:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
