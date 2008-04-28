@@ -16,7 +16,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.3 and ACE-5.6.4
 
 . Improved AIX with gcc support
 
-. Improved OpenVMS suppor
+. Improved OpenVMS support
 
 . Improved VxWorks support
 
