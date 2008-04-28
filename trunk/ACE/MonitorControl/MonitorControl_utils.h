@@ -19,6 +19,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 #include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Reactor.h"
@@ -82,6 +84,8 @@ create_os_monitor (const char* name = 0,
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service< \
     ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance ( \
       "MC_ADMINMANAGER")->admin ().auto_query (HANDLER, QUERY, INTERVAL_SEC)
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 #include /**/ "ace/post.h"
 
