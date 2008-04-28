@@ -143,7 +143,7 @@ public:
 
   /// This method is not directly associated with the method of the same
   /// name on the ACE_Acceptor template class.  However, it is called by
-  /// the various sub-classes of ACE_Acceptor.
+  /// the TAO_Strategy_Acceptor method of the same name.
   int handle_accept_error (ACE_Event_Handler* base_acceptor);
 
   /// Perform the handle_timeout functionality to put this acceptor back
