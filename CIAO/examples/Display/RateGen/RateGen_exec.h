@@ -75,7 +75,7 @@ namespace MyImpl
    */
   class RATEGEN_EXEC_Export RateGen_exec_i :
     public virtual CIDL_RateGen_Impl::RateGen_exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default constructor.
@@ -137,7 +137,7 @@ namespace MyImpl
    */
   class RATEGEN_EXEC_Export RateGenHome_exec_i :
     public virtual HUDisplay::CCM_RateGenHome,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default ctor.

@@ -29,7 +29,7 @@ namespace MyImpl
    */
   class BMDEVICE_EXEC_Export BMDevice_exec_i :
     public virtual CIDL_BMDevice_Impl::BMDevice_Exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default constructor.
@@ -81,7 +81,7 @@ namespace MyImpl
    */
   class BMDEVICE_EXEC_Export BMDeviceHome_exec_i :
     public virtual CIDL_BMDevice_Impl::BMDeviceHome_Exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default ctor.

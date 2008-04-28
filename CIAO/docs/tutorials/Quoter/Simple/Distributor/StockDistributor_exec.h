@@ -48,7 +48,7 @@ namespace CIDL_StockDistributor_Impl
    */
   class STOCKDISTRIBUTOR_EXEC_Export StockQuoter_exec_i
     : public virtual ::Stock::CCM_StockQuoter,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     StockQuoter_exec_i (StockDistributor_exec_i &distributor)
@@ -129,7 +129,7 @@ namespace CIDL_StockDistributor_Impl
    */
   class STOCKDISTRIBUTOR_EXEC_Export StockDistributor_exec_i
     : public virtual StockDistributor_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     StockDistributor_exec_i (void);
@@ -179,7 +179,7 @@ namespace CIDL_StockDistributor_Impl
 
     private:
     ::Stock::CCM_StockDistributor_Context_var context_;
-    
+
     /// User defined members
     public:
 
@@ -212,12 +212,12 @@ namespace CIDL_StockDistributor_Impl
    */
   class STOCKDISTRIBUTOR_EXEC_Export StockDistributorHome_exec_i
     : public virtual StockDistributorHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     StockDistributorHome_exec_i (void);
     virtual ~StockDistributorHome_exec_i (void);
-    
+
     // Supported or inherited operations.
 
     // Home operations.
@@ -226,7 +226,7 @@ namespace CIDL_StockDistributor_Impl
 
     // Attribute operations.
 
-    // Implicit operations.    
+    // Implicit operations.
 
     virtual ::Components::EnterpriseComponent_ptr
     create ();

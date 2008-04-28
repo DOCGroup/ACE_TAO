@@ -47,7 +47,7 @@ namespace CIDL_StockBroker_Impl
    */
   class STOCKBROKER_EXEC_Export StockBroker_exec_i
     : public virtual StockBroker_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     StockBroker_exec_i (void);
@@ -65,7 +65,7 @@ namespace CIDL_StockBroker_Impl
     // Attribute operations.
 
     // Port operations.
-    
+
     virtual void
     push_notify_in (::Stock::StockName *ev);
 
@@ -99,7 +99,7 @@ namespace CIDL_StockBroker_Impl
    */
   class STOCKBROKER_EXEC_Export StockBrokerHome_exec_i
     : public virtual StockBrokerHome_Exec,
-      public virtual TAO_Local_RefCounted_Object
+      public virtual ::CORBA::LocalObject
   {
     public:
     StockBrokerHome_exec_i (void);
@@ -114,7 +114,7 @@ namespace CIDL_StockBroker_Impl
     // Attribute operations.
 
     // Implicit operations.
-    
+
     virtual ::Components::EnterpriseComponent_ptr
     create ();
   };

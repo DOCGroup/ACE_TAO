@@ -29,7 +29,7 @@ namespace MyImpl
 
   class ROUNDTRIPCLIENT_EXEC_Export RoundTripClient_exec_i :
     public virtual Benchmark::RoundTripClient_Exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
 
   public:
@@ -71,7 +71,7 @@ namespace MyImpl
    */
   class ROUNDTRIPCLIENT_EXEC_Export RoundTripClientHome_exec_i :
     public virtual Benchmark::CCM_RoundTripClientHome,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default ctor.
