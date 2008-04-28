@@ -112,7 +112,7 @@ This role is briefly summarized below:<p>
   <li>Fix minor problems caused by compilation errors.  More complex
       problems should be fixed by the developers who caused them.  The
       build czar should help track down the guilty parties.
-  <li>Freeze the svn repository when it's decided to no more
+  <li>Freeze the source repository when it's decided to no more
     non-critical changes will be accepted for the next kits.
     The build czar has the final say over when the freeze is
     implemented.  The tendency to implement a freeze sooner than
@@ -120,7 +120,7 @@ This role is briefly summarized below:<p>
     to do.
   <li>Verifies that the final round of builds/tests are clean.
   <li>Creates the kits.
-  <li>Unfreezes the svn repository.
+  <li>Unfreezes the source repository.
   <li>Sends email to appropriate news groups announcing the new kits.
   <li>Passes the mantle on to the next build czar.<p>
 </ul>
@@ -146,7 +146,7 @@ we support. <P>
 
 Between major/minor releases, we release micro releases periodically,
 <EM>e.g.,</EM> 3-4 times per year, so that ACE+TAO+CIAO users can
-download and test our latest work in progress.  ACE+TAO+CIAO minor
+download and test our latest work in progress.  ACE+TAO+CIAO micro
 release kits have three-digit numbers, <EM>e.g.,</EM> 5.3.1.  Micro
 releases often contain important fixes that aren't in the major/minor
 releases and will compile cleanly and pass most tests on most
@@ -158,12 +158,12 @@ The first micro release following a major/minor release is called the
 <EM>bug-fix-only</EM> (BFO) micro release. As the name implies, this
 micro release only has fixes for the most recent major/minor releases.
 Types of fixes and checkins that are allowed to go in for the BFO
-include, bug fixes in the implementation, fixes to the build systems
-like Makefiles, project files, and MPC files, adding new tests and
-examples, fixes to the documentation etc. Fixes that are definitely
-not allowed include, changes to the public interface, refactoring
+include bug fixes in the implementation; fixes to the build systems
+like Makefiles, project files, and MPC files; adding new tests and
+examples; fixes to the documentation, etc. Fixes that are definitely
+not allowed include changes to the public interface, refactoring
 implementations, removing files from the repository, adding new files
-into the repository etc. The idea is to allow commercial support
+into the repository, etc. The idea is to allow commercial support
 vendors to stabilize the major or minor release for their product
 offerings.  As always, if you require 100% predictable stability and
 support, please contact one of the companies that provides <A
@@ -177,7 +177,7 @@ commercial support</A> for ACE+TAO.<P>
 Over the years, ACE+TAO+CIAO have benefitted significantly from
 contributions by <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE-members.html">thousands</A>
-of deveopers in the open-source community.  To avoid fragmentation of
+of developers in the open-source community.  To avoid fragmentation of
 the code base, by submitting comments, suggestions, code, code
 snippets, techniques (including that of usage) and algorithms
 (collectively ``Submissions''), submitters acknowledge that they have

@@ -1,3 +1,29 @@
+Mon Apr 28 21:53:23 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * docs/ACE-development-process.html: Fix a few remaining nits.
+
+        * ace/OS_NS_stdio.inl: Removed all the pre-ACE_HAS_WINNT4 code in the
+          file locks methods. This was the only place left in ACE that
+          referred to ACE_HAS_WINNT4; all pre-NT4 support was removed last
+          year from the rest of ACE. This also corrects behavior of file
+          locks as well as ACE_RW_Process_Mutex.
+
+        * ace/RW_Process_Mutex.h: Doxygen improvements.
+
+        * ace/SOCK_CODgram.h: Doxygen improvements.
+
+        * ace/SOCK_CODgram.cpp (open): If either of the local or remote
+          addresses is specified, use its address family rather than the
+          value of protocol_family. If both are specified, they must match.
+
+        * tests/Message_Queue_Test.cpp: Added a counting test to validate the
+          queue's message counting.
+
+        * tests/Proactor_UDP_Test.cpp: New test for UDP with ACE_Proactor.
+
+        * tests/tests.mpc:
+        * tests/run_test.lst: Add Proactor_UDP_Test.
+
 Mon Apr 28 19:21:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
