@@ -1,3 +1,8 @@
+Mon Apr 28 12:21:55 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Vector_T.inl (ACE_Vector): Zapped the "this->" in "this->max_size()".
+          Thanks to Karl-Heinz <wind at itq dot de> for reporting this.
+
 Mon Apr 28 12:13:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_common.GNU:
