@@ -11,13 +11,14 @@
 // = DESCRIPTION
 //      This is:
 //      0) a test that ensures key ACE_Message_Queue features are
-//         working properly, including timeouts and priorities.
+//         working properly, including timeouts and priorities
 //      1) a simple test of the ACE_Message_Queue that illustrates how to
-//         use the forward and reverse iterators;
+//         use the forward and reverse iterators
 //      2) a simple performance measurement test for both single-threaded
-//         (null synch) and thread-safe ACE_Message_Queues, and
-//         ACE_Message_Queue_Vx, which wraps VxWorks message queues; and
-//      3) a test/usage example of ACE_Message_Queue_Vx.
+//         (null synch), thread-safe ACE_Message_Queues, and
+//         ACE_Message_Queue_Vx, which wraps VxWorks message queues
+//      3) a test/usage example of ACE_Message_Queue_Vx
+//      4) a test of the message counting in a message queue under load.
 //
 // = AUTHORS
 //    Irfan Pyarali <irfan@cs.wustl.edu>,
@@ -27,6 +28,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/Atomic_Op.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Message_Queue.h"
 #include "ace/Message_Queue_NT.h"
@@ -35,9 +37,11 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Null_Condition.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Task.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Message_Queue_Test, "$Id$")
 
@@ -80,6 +84,224 @@ struct Queue_Wrapper
   }
   // Default constructor.
 };
+
+// For the message counting test, there are two tasks, producer and consumer.
+// Each will spawn a number of threads, and the two tasks share a queue.
+class Counting_Test_Producer : public ACE_Task<ACE_MT_SYNCH>
+{
+public:
+  Counting_Test_Producer (ACE_Message_Queue<ACE_MT_SYNCH> *queue)
+    : ACE_Task<ACE_MT_SYNCH> (0, queue), sequence_ (0), produced_ (0) {}
+  virtual int svc (void);
+
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> sequence_;
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> produced_;
+};
+
+class Counting_Test_Consumer : public ACE_Task<ACE_MT_SYNCH>
+{
+public:
+  Counting_Test_Consumer (ACE_Message_Queue<ACE_MT_SYNCH> *queue)
+    : ACE_Task<ACE_MT_SYNCH> (0, queue), consumed_ (0) {}
+  virtual int svc (void);
+
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> consumed_;
+};
+
+int
+Counting_Test_Producer::svc (void)
+{
+  // Going to produce a lot of blocks. Since we don't necessarily want them
+  // all consumed, there's no arrangement with the consumer to be sure that
+  // the same number produced will be consumed; the test check will compare
+  // the number produced, consumed, and remaining to be sure it ends up
+  // correct.
+  // Also, to be sure there's not just 1 producer and 1 consumer pinging
+  // back and forth, make the producers randomly delay between blocks.
+  ACE_OS::srand ((u_int)ACE_Thread::self ());
+  int multiple = ACE_OS::rand () % 10;
+  int delay_ms = ACE_OS::rand () % 10;
+  long count = 100000 * (multiple ? multiple : 1);
+  long produced = 0;
+  // Some of the threads enqueue single blocks, others sequences.
+  long lsequence = ++(this->sequence_);
+  int seq = static_cast<int> (lsequence);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Producer will enqueue %B blocks in seq of %d, ")
+              ACE_TEXT ("%d msec delay\n"),
+              (size_t)count,
+              seq,
+              delay_ms));
+
+  ACE_Message_Block *first, *prev, *b;
+  ACE_Time_Value delay (0, delay_ms);
+  ACE_Time_Value timeout (10);
+  while (produced < count)
+    {
+      ACE_NEW_NORETURN (b, ACE_Message_Block (1));
+      if (b == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Producer out of memory\n")));
+          break;
+        }
+      first = b;
+      prev = first;
+      for (int s = 1; s < seq; ++s)
+        {
+          ACE_NEW_NORETURN (b, ACE_Message_Block (1));
+          if (b == 0)
+            break;
+          prev->next (b);
+          b->prev (prev);
+          prev = b;
+        }
+      if (b == 0)
+        {
+          if (first != b)
+            {
+              while (first->next () != 0)
+                {
+                  b = first->next ();
+                  first->release ();
+                  first = b;
+                }
+              first->release ();
+            }
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Producer out of memory\n")));
+          break;
+        }
+      // To be sure we can keep going on slow or completed consumers, but not
+      // delay excessively if the consumers have stopped, limit the time
+      // spent waiting to 10 seconds.
+      ACE_Time_Value block = ACE_OS::gettimeofday ();
+      block += timeout;
+      if (this->putq (first, &block) == -1)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) Producer cannot putq; giving up\n")));
+          while (first->next () != 0)
+            {
+              b = first->next ();
+              first->release ();
+              first = b;
+            }
+          first->release ();
+          break;
+        }
+      produced += seq;
+      ACE_OS::sleep (delay);
+    }
+  this->produced_ += produced;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Producer done\n")));
+  return 0;
+}
+
+int
+Counting_Test_Consumer::svc (void)
+{
+  // Consume lots of blocks and release them. To mimic a thread with work
+  // to do, put a small random delay between dequeuing the blocks. Consume
+  // a calculated number of blocks then stop; the test checker will determine
+  // if the number consumed plus the number remaining is correct for the
+  // number produced.
+  ACE_OS::srand ((u_int)ACE_Thread::self ());
+  int multiple = ACE_OS::rand () % 10;
+  int delay_ms = ACE_OS::rand () % 10;
+  long count = 100000 * (multiple ? multiple : 1);
+  long consumed = 0;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Consumer will dequeue %B blocks, ")
+              ACE_TEXT ("%d msec delay\n"),
+              (size_t)count,
+              delay_ms));
+  ACE_Message_Block *b = 0;
+  ACE_Time_Value delay (0, delay_ms);
+  ACE_Time_Value timeout (2);
+  while (consumed < count)
+    {
+      // To be sure we can wait in the case of an empty queue, but not
+      // delay excessively if the producers have stopped, limit the time
+      // spent waiting to 2 seconds.
+      ACE_Time_Value block = ACE_OS::gettimeofday ();
+      block += timeout;
+      if (this->getq (b, &block) == -1)
+        {
+          if (errno == EWOULDBLOCK)
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Consumer timed out\n")));
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%t) Consumer %p\n"),
+                        ACE_TEXT ("getq")));
+          break;
+        }
+      ++consumed;
+      b->release ();
+      ACE_OS::sleep (delay);
+    }
+  this->consumed_ += consumed;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Consumer done\n")));
+  return 0;
+}
+
+static int
+counting_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting counting test\n")));
+
+  ACE_Message_Queue<ACE_MT_SYNCH> q;
+  Counting_Test_Producer p (&q);
+  Counting_Test_Consumer c (&q);
+  // Activate consumers first; if the producers fail to start, consumers will
+  // stop quicker.
+  if (c.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 5) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Consumers %p\n"),
+                       ACE_TEXT ("activate")),
+                      -1);
+  if (p.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 5) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Producers %p\n"),
+                  ACE_TEXT ("activate")));
+      c.wait ();
+      return -1;
+    }
+  // Producers and consumers are both running; wait for them then
+  // check the results.
+  p.wait ();
+  c.wait ();
+  // This compare relies on the flush() method counting blocks as it
+  // walks the chain releasing them, and doesn't rely on the count.
+  int status = 0;
+  long q_count = static_cast<long> (q.message_count ());
+  long remaining = q.flush ();
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Queue message_count is %b; %b flushed\n"),
+              (ssize_t)q_count,
+              (ssize_t)remaining));
+  if (q_count != remaining)
+    {
+      status = -1;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("message_count and flushed should be equal!\n")));
+    }
+  long expected = p.produced_.value () - c.consumed_.value ();
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Produced %b, consumed %b; diff %b\n"),
+              (ssize_t)p.produced_.value (),
+              (ssize_t)c.consumed_.value (),
+              (ssize_t)expected));
+  if (expected != remaining)
+    {
+      status = -1;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Producer-consumer diff is %b; should be %b\n"),
+                  (ssize_t)expected,
+                  (ssize_t)remaining));
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending counting test\n")));
+  return status;
+}
 
 #endif /* ACE_HAS_THREADS */
 
@@ -675,6 +897,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (status == 0)
     status = performance_test (1);
 # endif /* VXWORKS */
+
+  if (counting_test () != 0)
+    status = -1;
 #endif /* ACE_HAS_THREADS */
 
   if (status != 0)

@@ -31,18 +31,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Wrapper for readers/writer locks that exist across processes.
  *
- * Note that because this class uses the
- * <ACE_File_Lock> as its implementation it only can be reliably
- * used between separate processes, rather than threads in the
- * same process.  This isn't a limitation of ACE, it's simply
+ * @note This class uses an ACE_File_Lock as its implementation. Thus, it
+ * can only be reliably used between separate processes, rather than
+ * threads in the same process.  This isn't a limitation of ACE, it's simply
  * the file lock semantics on UNIX and Win32.
- * \todo For systems with pthread_rwlockattr_setpshared one
+ *
+ * @todo For systems with pthread_rwlockattr_setpshared one
  * may consider using them to make the mutex faster.
  */
 class ACE_Export ACE_RW_Process_Mutex
 {
 public:
-  /// Create a readers/writer <Process_Mutex>, passing in the optional
+  /// Create a cross-process readers/writer mutex, passing in the optional
   /// @a name, @a flags and @a mode \sa ACE_File_Lock.
   ///  If not specified, a name is generated and flags and mode are set
   ///  to default platform values.
@@ -53,7 +53,7 @@ public:
 #else
   ACE_RW_Process_Mutex (const ACE_TCHAR *name = 0,
                         int flags = O_CREAT|O_RDWR,
-                            mode_t mode = S_IRUSR | S_IWUSR );
+                        mode_t mode = S_IRUSR | S_IWUSR );
 #endif /* ACE_WIN32 */
 
   ~ACE_RW_Process_Mutex (void);
@@ -65,36 +65,47 @@ public:
    */
   int remove (void);
 
-  /// Acquire lock ownership (wait on queue if necessary).
+  /// Same as acquire_write().
+  /// Acquire lock ownership; blocks until the lock is acquired or the
+  /// operation fails.
   int acquire (void);
 
   /**
-   * Conditionally acquire lock (i.e., don't wait on queue).  Returns
-   * -1 on failure.  If we "failed" because someone else already had
-   * the lock, @c errno is set to @c EBUSY.
+   * Same as tryacquire_write().
+   * Try to acquire the lock, but do not block if the lock is not immediately
+   * acquired.
+   *
+   * @retval -1 on failure. If the lock is already held, @c errno is set
+   *         to @c EBUSY.
    */
   int tryacquire (void);
 
-  /// Release lock and unblock a thread at head of queue.
+  /// Release lock.
   int release (void);
 
-  /// Acquire lock ownership (wait on queue if necessary).
+  /// Acquire read lock; blocks until the lock is acquired or the
+  /// operation fails.
   int acquire_read (void);
 
-  /// Acquire lock ownership (wait on queue if necessary).
+  /// Acquire write lock; blocks until the lock is acquired or the
+  /// operation fails.
   int acquire_write (void);
 
   /**
-   * Conditionally acquire a lock (i.e., won't block).  Returns -1 on
-   * failure.  If we "failed" because someone else already had the
-   * lock, @c errno is set to @c EBUSY.
+   * Try to acquire the read lock, but do not block if the lock is not
+   * immediately acquired.
+   *
+   * @retval -1 on failure. If the lock is already held, @c errno is set
+   *         to @c EBUSY.
    */
   int tryacquire_read (void);
 
   /**
-   * Conditionally acquire a lock (i.e., won't block).  Returns -1 on
-   * failure.  If we "failed" because someone else already had the
-   * lock, @c errno is set to @c EBUSY.
+   * Try to acquire the write lock, but do not block if the lock is not
+   * immediately acquired.
+   *
+   * @retval -1 on failure. If the lock is already held, @c errno is set
+   *         to @c EBUSY.
    */
   int tryacquire_write (void);
 

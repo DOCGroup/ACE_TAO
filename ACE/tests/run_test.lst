@@ -119,6 +119,7 @@ Priority_Task_Test: !Unicos
 Proactor_Scatter_Gather_Test: !VxWorks !nsk !ACE_FOR_TAO
 Proactor_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Proactor_Timer_Test: !VxWorks !nsk !ACE_FOR_TAO
+Proactor_UDP_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Process_Manager_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Manual_Event_Test: !HPUX !VxWorks !ACE_FOR_TAO !PHARLAP
 Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
