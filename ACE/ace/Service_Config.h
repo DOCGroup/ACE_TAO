@@ -226,7 +226,6 @@ class ACE_Export ACE_Service_Config
   /// will point here
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> instance_;
 
-
   /// A helper instance to manage thread-specific key creation.
   /// Dependent on the syncronization mutex ACE uses, the corresponding
   /// partial template instantiation will perform the right services
