@@ -192,7 +192,7 @@ ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (void)
 
 template <class T> ACE_INLINE
 ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (const T &t,
-                                                                   int refcount,
+                                                                   long refcount,
                                                                    ACE_Recyclable_State state)
   : ACE_Refcountable (refcount),
     ACE_Hashable (),

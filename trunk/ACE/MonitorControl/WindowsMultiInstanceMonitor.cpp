@@ -27,21 +27,21 @@ namespace ACE
       /// name of each 'instance' we need to monitor.
 
       DWORD paths_size = 4096;
-      LPWSTR paths = (LPWSTR) GlobalAlloc (GPTR, paths_size);
+      ACE_LPSTR paths = (ACE_LPSTR) GlobalAlloc (GPTR, paths_size);
 
-      this->status_ = PdhExpandCounterPath (wildcard_path,
-                                            paths,
-                                            &paths_size);
+      this->status_ = ACE_TEXT_PdhExpandCounterPath (wildcard_path,
+                                                     paths,
+                                                     &paths_size);
 
       if (PDH_MORE_DATA == this->status_)
         {
           ++paths_size;
           GlobalFree (paths);
-          paths = (LPWSTR) GlobalAlloc (GPTR, paths_size);
+          paths = (ACE_LPSTR) GlobalAlloc (GPTR, paths_size);
 
-          this->status_ = PdhExpandCounterPath (wildcard_path,
-                                                paths,
-                                                &paths_size);
+          this->status_ = ACE_TEXT_PdhExpandCounterPath (wildcard_path,
+                                                         paths,
+                                                         &paths_size);
         }
 
       if (PDH_CSTATUS_VALID_DATA != this->status_)
@@ -51,7 +51,7 @@ namespace ACE
                       wildcard_path));
         }
 
-      LPWSTR path = paths;
+      ACE_LPSTR path = paths;
       int index = 0;
 
       /// Create a regular Windows monitor for each path name.
@@ -79,7 +79,7 @@ namespace ACE
     void
     WindowsMultiInstanceMonitor::win_update (void)
     {
-      WindowsMonitor **current_instance;
+      WindowsMonitor **current_instance = 0;
 
       /// Sum the values of each single instance monitor.
       for (INSTANCES_ITERATOR i (this->instances_); !i.done (); i.advance ())

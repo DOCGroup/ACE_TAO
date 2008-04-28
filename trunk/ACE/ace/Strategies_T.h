@@ -795,7 +795,7 @@ public:
 
   /// Constructor.
   ACE_Refcounted_Hash_Recyclable (const T &t,
-                                  int refcount = 0,
+                                  long refcount = 0,
                                   ACE_Recyclable_State state = ACE_RECYCLABLE_UNKNOWN);
 
   /// Destructor
