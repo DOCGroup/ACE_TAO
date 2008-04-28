@@ -1,3 +1,17 @@
+Mon Apr 28 11:39:21 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_1269_Regression/client.cpp:
+        * tests/Bug_1270_Regression/client.cpp:
+
+          Removed #include of ORB_Task.h.
+
+        * tests/Bug_1269_Regression/ORB_Task.h:
+        * tests/Bug_1269_Regression/ORB_Task.cpp:
+        * tests/Bug_1270_Regression/ORB_Task.h:
+        * tests/Bug_1270_Regression/ORB_Task.cpp:
+
+          Removed these files.  There were not used.
+
 Mon Apr 28 10:26:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype_Adapter.h:
