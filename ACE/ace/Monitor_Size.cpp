@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Size_Monitor.h"
+#include "ace/Monitor_Size.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
