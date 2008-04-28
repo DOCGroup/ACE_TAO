@@ -1,0 +1,34 @@
+// -*- MPC -*-
+// $Id$
+
+project(MonitorControl) : acelib, ace_etcl_parser {
+  dynamicflags += MONITORCONTROL_BUILD_DLL
+
+  Source_Files {
+    AutoUpdateStarter.cpp
+    BytesReceivedMonitor.cpp
+    BytesSentMonitor.cpp
+    Constraint_Interpreter.cpp
+    Constraint_Visitor.cpp
+    CPULoadMonitor.cpp
+    LinuxNetworkInterfaceMonitor.cpp
+    MemoryUsageMonitor.cpp
+    MonitorGroup.cpp
+    MonitorQuery.cpp
+    NumThreadsMonitor.cpp
+    PacketsReceivedMonitor.cpp
+    PacketsSentMonitor.cpp
+    WindowsMonitor.cpp
+    WindowsMultiInstanceMonitor.cpp
+  }
+
+  Header_Files {
+    MonitorControl.h
+    MonitorControl_export.h
+    MonitorControl_utils.h
+  }
+
+  specific (vc6, vc7, vc71, vc8, vc9, nmake) {
+    lit_libs += pdh
+  }
+}

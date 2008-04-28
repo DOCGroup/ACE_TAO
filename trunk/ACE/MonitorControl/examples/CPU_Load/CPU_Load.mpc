@@ -1,0 +1,12 @@
+// $Id$
+
+project (*) : aceexe, ace_mc {
+  exename = cpu_load
+  after += MC_Test_Utilities
+  libs  += MC_Test_Utilities
+  
+  source_files {
+    cpu_load.cpp
+  }
+}
+
