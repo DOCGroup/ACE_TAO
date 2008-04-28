@@ -146,7 +146,7 @@ namespace ACE
            i != this->map_.end ();
            i.advance ())
         {
-          Map::ENTRY* entry;
+          Map::ENTRY* entry = 0;
           i.next (entry);
           entry->int_id_->remove_ref ();
         }
