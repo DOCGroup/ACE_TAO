@@ -46,10 +46,9 @@ public:
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+
 private:
-
   TAO_RTScheduler_Current* current_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

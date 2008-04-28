@@ -659,7 +659,10 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         thread pool created by the process and <code>3</code>
         specifies the third lane of that thread pool.  Note that
         <code>0</code> should be used for the lane when specifying
-        endpoints for thread pools without lanes.
+        endpoints for thread pools without lanes. <code>*:*</code>
+	can be used to specify all pools and lanes, <code>1:*</code> means 
+ 	all lanes from pool <code>1</code>, and <code>*:1</code> 
+        means lane <code>1</code> from all pools.
 
         <p>Sets of endpoints may be specified using multiple
         <code>-ORBLaneListenEndpoints</code> options or by delimiting

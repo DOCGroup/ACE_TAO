@@ -287,21 +287,44 @@ TAO_Thread_Lane::open (void)
   // Validate and map priority.
   this->validate_and_map_priority ();
 
-  // Create a string with the pool:thread id.
   char pool_lane_id[10];
+  TAO_ORB_Parameters *params =
+    this->pool ().manager ().orb_core ().orb_params ();
+  TAO_EndpointSet endpoint_set;
+
+  // Create a string just *:* which means all pools all thread id's
+  ACE_OS::sprintf (pool_lane_id,
+                   "*:*");
+
+  // Get the endpoints for all
+  params->get_endpoint_set (pool_lane_id, endpoint_set);
+
+  // Create a string with pool:* which means all lanes for this pool
+  ACE_OS::sprintf (pool_lane_id,
+                   "%d:*",
+                   this->pool ().id ());
+
+  // Get the endpoints for this pool.
+  params->get_endpoint_set (pool_lane_id, endpoint_set);
+
+  // Create a string with *:lane which means a lan of all pools
+  ACE_OS::sprintf (pool_lane_id,
+                   "*:%d",
+                   this->id ());
+
+  // Get the endpoints for this lane.
+  params->get_endpoint_set (pool_lane_id, endpoint_set);
+
+  // Create a string with the pool:thread id.
   ACE_OS::sprintf (pool_lane_id,
                    "%d:%d",
                    this->pool ().id (),
                    this->id ());
 
-  TAO_ORB_Parameters *params =
-    this->pool ().manager ().orb_core ().orb_params ();
-
-  TAO_EndpointSet endpoint_set;
-  bool ignore_address = false;
-
   // Get the endpoints for this lane.
   params->get_endpoint_set (pool_lane_id, endpoint_set);
+
+  bool ignore_address = false;
 
   if (endpoint_set.is_empty ())
     {
