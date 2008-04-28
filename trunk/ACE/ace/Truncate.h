@@ -7,8 +7,8 @@
  * $Id$
  *
  * @author Steve Huston  <shuston@riverace.com>
- * @author Ossama Othman <ossama_othman at symantec dot com>
- * @author Russell Mora  <russell_mora at symantec dot com>
+ * @author Ossama Othman <ossama_othman@symantec.com>
+ * @author Russell Mora  <russell_mora@symantec.com>
  */
 //=============================================================================
 
