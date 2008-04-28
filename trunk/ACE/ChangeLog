@@ -1,3 +1,16 @@
+Mon Apr 28 11:30:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ETCL/*:
+          New ETCL library for ACE
+
+        * bin/MakeProjectCreator/config/ace_etcl.mpb:
+        * bin/MakeProjectCreator/config/ace_etcl_parser.mpb:
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+          New base projects
+
+        * bin/MakeProjectCreator/config/acenosubsets.mpb:
+          Layout changes
+
 Mon Apr 28 10:31:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Monitor_Admin.cpp:
