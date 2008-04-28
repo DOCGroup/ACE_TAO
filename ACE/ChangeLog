@@ -1,3 +1,8 @@
+Mon Apr 28 13:20:40 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Vector_T.inl (ACE_Vector): Take another shot at fixing the
+          max_size() problem. 
+
 Mon Apr 28 12:45:18 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:
