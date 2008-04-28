@@ -165,7 +165,6 @@ struct counter64 {
  * CMU routines for performing ASN.1 data marshalling / representation
  */
 class ASNMP_Export asn1
-
 {
 public:
 static unsigned char *parse_int( unsigned char *data,
@@ -178,11 +177,11 @@ static unsigned char *parse_unsigned_int( unsigned char *data,
                                        unsigned char *type,
                                        unsigned long *intp,
                                        int      intsize);
-static unsigned char *build_int( unsigned char *data,
-                              int *datalength,
-                              unsigned char type,
-                              long *intp,
-                              int intsize);
+static unsigned char *build_int(unsigned char *data,
+                                int *datalength,
+                                unsigned char type,
+                                long *intp,
+                                int intsize);
 
 static unsigned char *build_unsigned_int( unsigned char *data,
                                        int *datalength,
