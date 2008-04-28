@@ -23,6 +23,8 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
+#include "MonitorControl/MonitorControl_export.h"
+
 #if defined (ACE_WIN32)
 #include "MonitorControl/WindowsMonitor.h"
 #elif defined (ACE_HAS_KSTAT)
