@@ -10,6 +10,7 @@ Mon Apr 28 17:59:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * Constraint_Interpreter.h:
         * MonitorQuery.cpp:
         * AutoUpdateStarter.cpp:
+        * MonitorControl_utils.h:
 
           Added ACE_HAS_MONITOR_FRAMEWORK guards
           similarly to the other files in the library.
