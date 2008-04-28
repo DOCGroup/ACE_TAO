@@ -69,6 +69,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #define TAO_OBJID_PICurrent           "PICurrent"
 #define TAO_OBJID_POAMANAGERFACTORY   "POAManagerFactory"
 #define TAO_OBJID_COMPRESSIONMANAGER  "CompressionManager"
+#define TAO_OBJID_MONITOR             "Monitor"
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
@@ -87,7 +88,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
         TAO_OBJID_IORTABLE, \
         TAO_OBJID_DYNANYFACTORY, \
         TAO_OBJID_TYPECODEFACTORY, \
-        TAO_OBJID_COMPRESSIONMANAGER
+        TAO_OBJID_COMPRESSIONMANAGER, \
+        TAO_OBJID_MONITOR
 // @@ Some initial references are added via other means, such as
 //    ORBInitInfo::register_initial_references().  Those should not be
 //    placed in the above list.  Ideally, we should no longer need the
