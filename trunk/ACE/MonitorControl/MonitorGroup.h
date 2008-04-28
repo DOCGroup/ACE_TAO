@@ -21,6 +21,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 #include "MonitorControl/MonitorControl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -57,6 +59,8 @@ namespace ACE
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 #include /**/ "ace/post.h"
 

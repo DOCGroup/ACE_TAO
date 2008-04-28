@@ -1,3 +1,19 @@
+Mon Apr 28 17:59:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * Constraint_Interpreter.cpp:
+        * Constraint_Visitor.h:
+        * MonitorGroup.h:
+        * MonitorQuery.h:
+        * AutoUpdateStarter.h:
+        * Constraint_Visitor.cpp:
+        * MonitorGroup.cpp:
+        * Constraint_Interpreter.h:
+        * MonitorQuery.cpp:
+        * AutoUpdateStarter.cpp:
+
+          Added ACE_HAS_MONITOR_FRAMEWORK guards
+          similarly to the other files in the library.
+
 Mon Apr 28 17:54:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MonitorControl/BytesReceivedMonitor.cpp:
