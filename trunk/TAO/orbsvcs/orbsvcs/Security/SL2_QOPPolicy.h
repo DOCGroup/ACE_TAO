@@ -50,7 +50,7 @@ namespace TAO
      */
     class QOPPolicy
       : public virtual SecurityLevel2::QOPPolicy,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
 

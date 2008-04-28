@@ -42,7 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_FT_Request_Duration_Policy
   : public FT::RequestDurationPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
 
@@ -87,7 +87,7 @@ private:
  */
 class TAO_FT_Export TAO_FT_Heart_Beat_Policy
   : public FT::HeartbeatPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
 
@@ -143,7 +143,7 @@ private:
  */
 class TAO_FT_Export TAO_FT_Heart_Beat_Enabled_Policy
   : public FT::HeartbeatEnabledPolicy,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
 

@@ -22,7 +22,7 @@
 
 class Vault_Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -52,7 +52,7 @@ private:
 
 class Vault_Client_Request_Context_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -82,7 +82,7 @@ private:
 
 class Vault_Client_Request_Dynamic_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -112,7 +112,7 @@ private:
 
 class Vault_Client_Request_NOOP_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:

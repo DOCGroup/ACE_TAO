@@ -39,7 +39,7 @@ struct FP_Scheduler_Traits
 
 class Kokyu_DSRT_Schedulers_Export FP_Segment_Sched_Param_Policy:
 public FP_Scheduling::SegmentSchedulingParameterPolicy,
-       public TAO_Local_RefCounted_Object
+       public ::CORBA::LocalObject
 {
  public:
      FP_Segment_Sched_Param_Policy ();
@@ -62,7 +62,7 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
 
 class Kokyu_DSRT_Schedulers_Export Fixed_Priority_Scheduler:
 public FP_Scheduling::FP_Scheduler,
-public TAO_Local_RefCounted_Object
+public ::CORBA::LocalObject
 {
  public:
 

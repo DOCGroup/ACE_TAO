@@ -32,7 +32,7 @@ namespace Test
 
   class IIOP_Server_Request_Interceptor
     : public virtual Test::Server_Request_Interceptor
-    , public virtual TAO_Local_RefCounted_Object
+    , public virtual ::CORBA::LocalObject
   {
   public:
 

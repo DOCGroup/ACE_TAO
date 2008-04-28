@@ -32,7 +32,7 @@
 
 class ServantActivator :
   public virtual PortableServer::ServantActivator,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
   //= TITLE
   //   Servant Activator for the test servant.

@@ -46,7 +46,7 @@ namespace TAO
      */
     class SecurityManager
       : public virtual SecurityLevel3::SecurityManager,
-        public virtual TAO_Local_RefCounted_Object
+        public virtual ::CORBA::LocalObject
     {
     public:
 

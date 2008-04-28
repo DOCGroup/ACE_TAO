@@ -16,9 +16,8 @@ MUF_Sched_Param_Policy::MUF_Sched_Param_Policy (
   )
   : CORBA::Object (),
   CORBA::Policy (),
-  CORBA::LocalObject (),
   MUF_Scheduling::SchedulingParameterPolicy (),
-  TAO_Local_RefCounted_Object (),
+  CORBA::LocalObject (),
   value_ (rhs.value_)
 {
 }
@@ -38,7 +37,7 @@ MUF_Sched_Param_Policy::value (const MUF_Scheduling::SchedulingParameter& value)
 CORBA::Policy_ptr
 MUF_Sched_Param_Policy::copy (void)
 {
-  MUF_Sched_Param_Policy* tmp;
+  MUF_Sched_Param_Policy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     MUF_Sched_Param_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,

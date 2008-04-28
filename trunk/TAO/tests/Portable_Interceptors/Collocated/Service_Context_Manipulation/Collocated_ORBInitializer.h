@@ -22,7 +22,7 @@
 /// Collocated ORB initializer.
 class Collocated_ORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
 public:
   /// Constructor

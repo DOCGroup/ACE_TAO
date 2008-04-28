@@ -9,7 +9,7 @@
 
 class Segment_Sched_Param_Policy:
 public FP_Scheduling::SegmentSchedulingParameterPolicy,
-       public TAO_Local_RefCounted_Object
+       public ::CORBA::LocalObject
 {
  public:
   virtual RTCORBA::Priority value (void);
@@ -26,7 +26,7 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
 
 class Fixed_Priority_Scheduler:
 public FP_Scheduling::FP_Scheduler,
-public TAO_Local_RefCounted_Object
+public ::CORBA::LocalObject
 {
  public:
 
@@ -91,7 +91,7 @@ public TAO_Local_RefCounted_Object
 
   virtual char * scheduling_discipline_name (void);
 
-  virtual RTScheduling::ResourceManager_ptr 
+  virtual RTScheduling::ResourceManager_ptr
     create_resource_manager (const char * name,
                              CORBA::Policy_ptr scheduling_parameter);
 

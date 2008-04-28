@@ -174,6 +174,7 @@ namespace CORBA
   };
 }   // End CORBA namespace
 
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
 /**
  * @brief This class is there to keep backwards compatibility to the
  *        v1.1 C++ mapping
@@ -199,6 +200,7 @@ class TAO_Export TAO_Local_RefCounted_Object
          const TAO_Local_RefCounted_Object &);
      //@}
 };
+#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

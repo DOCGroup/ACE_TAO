@@ -16,9 +16,8 @@ MIF_Sched_Param_Policy::MIF_Sched_Param_Policy (
   )
   : CORBA::Object (),
   CORBA::Policy (),
-  CORBA::LocalObject (),
   MIF_Scheduling::SchedulingParameterPolicy (),
-  TAO_Local_RefCounted_Object (),
+  CORBA::LocalObject (),
   value_ (rhs.value_)
 {
 }

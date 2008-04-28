@@ -42,7 +42,7 @@
  */
 class ServantLocator
   : public virtual PortableServer::ServantLocator,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

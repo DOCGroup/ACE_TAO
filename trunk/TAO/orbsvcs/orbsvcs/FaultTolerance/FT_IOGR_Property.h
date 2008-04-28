@@ -53,7 +53,7 @@ class TAO_Profile;
  */
 class TAO_FT_ORB_Utils_Export TAO_FT_IOGR_Property
   : public virtual TAO_IOP::TAO_IOR_Property,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 

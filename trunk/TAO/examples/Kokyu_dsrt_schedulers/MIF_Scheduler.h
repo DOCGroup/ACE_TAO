@@ -39,7 +39,7 @@ struct MIF_Scheduler_Traits
 
 class Kokyu_DSRT_Schedulers_Export MIF_Sched_Param_Policy:
 public MIF_Scheduling::SchedulingParameterPolicy,
-       public TAO_Local_RefCounted_Object
+       public ::CORBA::LocalObject
 {
  public:
      MIF_Sched_Param_Policy ();
@@ -59,7 +59,7 @@ public MIF_Scheduling::SchedulingParameterPolicy,
 
 class Kokyu_DSRT_Schedulers_Export MIF_Scheduler:
 public MIF_Scheduling::Scheduler,
-public TAO_Local_RefCounted_Object
+public ::CORBA::LocalObject
 {
  public:
 

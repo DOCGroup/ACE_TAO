@@ -33,7 +33,7 @@
 
 class ServantLocator :
   public virtual PortableServer::ServantLocator,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
 {
   // = TITLE
   //   This class is used by a POA with USE_SERVANT_MANAGER and

@@ -46,7 +46,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Security_Export TAO_Security_Current
   : public SecurityLevel2::Current,
-    public TAO_Local_RefCounted_Object
+    public ::CORBA::LocalObject
 {
 public:
 

@@ -32,7 +32,7 @@ class DT : public ACE_Message_Block
 
 class Segment_Sched_Param_Policy:
 public MIF_Scheduling::SegmentSchedulingParameterPolicy,
-       public TAO_Local_RefCounted_Object
+       public ::CORBA::LocalObject
 {
  public:
   virtual CORBA::Short importance (void);
@@ -51,7 +51,7 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> DT_Message_Queue;
 
 class MIF_Scheduler:
 public MIF_Scheduling::MIF_Scheduler,
-public TAO_Local_RefCounted_Object
+public ::CORBA::LocalObject
 {
  public:
 
