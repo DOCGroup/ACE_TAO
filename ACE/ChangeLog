@@ -1,3 +1,9 @@
+Mon Apr 28 19:06:10 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/MonitorControl.h:
+        
+          Added ACE_HAS_MONITOR_FRAMEWORK guard to this file.
+
 Mon Apr 28 18:24:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_wchar.h:
