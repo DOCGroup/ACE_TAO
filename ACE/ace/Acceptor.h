@@ -160,6 +160,10 @@ public:
   /// Close down the Acceptor
   virtual int close (void);
 
+  /// In the event that an accept fails, this method will be called and
+  /// the return value will be returned from handle_input().
+  virtual int handle_accept_error (void);
+
   /// Dump the state of an object.
   void dump (void) const;
 
