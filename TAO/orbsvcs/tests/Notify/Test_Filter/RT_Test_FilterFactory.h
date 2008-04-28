@@ -38,7 +38,7 @@ class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_FilterFactory
   , public virtual TAO_Notify_FilterFactory
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_RT_Test_FilterFactory (void);
 
   /// Destructor

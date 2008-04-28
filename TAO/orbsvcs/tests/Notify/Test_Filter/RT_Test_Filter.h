@@ -36,7 +36,7 @@ class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_Filter
   : public POA_CosNotifyFilter::Filter
 {
 public:
-  /// Constuctor
+  /// Constructor
   TAO_Notify_Tests_RT_Test_Filter (void);
 
   /// Destructor

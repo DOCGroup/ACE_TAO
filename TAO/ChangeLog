@@ -1,3 +1,11 @@
+Mon Apr 28 13:19:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/RT_lib/RT_Application_Command.h
+        * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.h
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.h
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.h
+          Fixed Constuctor to Constructor
+
 Mon Apr 28 13:16:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Monitor/*:
