@@ -157,6 +157,7 @@ TAO/tests/OBV/TC_Alignment/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/OBV/ValueBox/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/OBV/Truncatable/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/OBV/Simple/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT
+TAO/tests/HandleExhaustion/run_test.pl: !Win32
 TAO/tests/Hello/run_test.pl:
 TAO/tests/LongDouble/run_test.pl: !LabVIEW_RT
 TAO/tests/IPV6/run_test.pl: IPV6 !LabVIEW_RT
