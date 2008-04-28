@@ -7,6 +7,8 @@ ACE_RCSID (Monitor,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 TAO_Monitor_Init::TAO_Monitor_Init (void)
 {
 }
@@ -67,4 +69,6 @@ ACE_STATIC_SVC_DEFINE (TAO_Monitor_Init,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_Monitor, TAO_Monitor_Init)
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
