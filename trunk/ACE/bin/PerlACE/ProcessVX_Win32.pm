@@ -243,7 +243,7 @@ sub Spawn ()
 
         my($vxtest);
         my(@unload_commands);
-        if (!$config->check_config("STATIC") && !$PerlACE::VxWorks_RTP_Test) {
+        if (!$PerlACE::Static && !$PerlACE::VxWorks_RTP_Test) {
           if (handle_vxtest_file($program, \$vxtest, \@unload_commands)) {
               @cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
               @cmds[$cmdnr++] = '< ../' . $cwdrel . '/' . $vxtest;

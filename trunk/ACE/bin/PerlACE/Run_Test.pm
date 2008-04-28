@@ -26,6 +26,7 @@ my $config = new PerlACE::ConfigList;
 $PerlACE::TestConfig = $config;
 
 # load VxWorks Process helpers in case this is a VxWorks target build
+$PerlACE::Static = $config->check_config("STATIC");
 $PerlACE::VxWorks_Test = $config->check_config("VxWorks");
 $PerlACE::VxWorks_RTP_Test = $config->check_config("VxWorks_RTP");
 if ($PerlACE::VxWorks_Test or $PerlACE::VxWorks_RTP_Test) {
