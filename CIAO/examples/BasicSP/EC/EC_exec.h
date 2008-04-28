@@ -77,7 +77,7 @@ namespace MyImpl
    */
   class EC_EXEC_Export EC_exec_i :
     public virtual CIDL_EC_Impl::EC_Exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default constructor.
@@ -140,7 +140,7 @@ namespace MyImpl
    */
   class EC_EXEC_Export ECHome_exec_i :
     public virtual CIDL_EC_Impl::ECHome_Exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default ctor.

@@ -69,7 +69,7 @@ namespace CIAO
             typename COMP>
   class Context_Impl : public virtual BASE_CTX,
                        public virtual Context_Impl_Base,
-                       public virtual TAO_Local_RefCounted_Object
+                       public virtual ::CORBA::LocalObject
   {
   public:
     Context_Impl (Components::CCMHome_ptr the_home,

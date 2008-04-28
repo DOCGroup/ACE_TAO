@@ -26,7 +26,7 @@ namespace MyImpl
    */
   class BMDISPLAY_EXEC_Export BMDisplay_exec_i :
     public virtual CIDL_BMDisplay_Impl::BMDisplay_Exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default constructor.
@@ -71,7 +71,7 @@ namespace MyImpl
    */
   class BMDISPLAY_EXEC_Export BMDisplayHome_exec_impl :
     public virtual CIDL_BMDisplay_Impl::BMDisplayHome_Exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     /// Default ctor.

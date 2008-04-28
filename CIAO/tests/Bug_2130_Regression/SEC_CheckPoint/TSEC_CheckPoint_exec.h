@@ -57,7 +57,7 @@ namespace Impl
 
   class TSEC_Session_impl :
     public virtual POA_ENW::TSession,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
 
@@ -104,7 +104,7 @@ namespace Impl
 
   class TSEC_CHECKPOINT_EXEC_Export TSEC_CheckPoint_exec_i :
     public virtual ENW::TSEC_CheckPoint_Exec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
     TSEC_CheckPoint_exec_i();
@@ -224,7 +224,7 @@ namespace Impl
     */
   class TSEC_CHECKPOINT_EXEC_Export TSEC_CheckPointHome_exec_i :
     public virtual ENW::CCM_TSEC_CheckPointHome,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
 

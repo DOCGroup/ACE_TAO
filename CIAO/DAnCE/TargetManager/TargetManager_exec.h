@@ -33,7 +33,7 @@ namespace CIDL_TargetManager_i
 
   class TARGETMANAGER_EXEC_Export TargetManagerImpl_exec_i
   : public virtual TargetManagerImpl_Exec,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
   {
     public:
     TargetManagerImpl_exec_i (void);
@@ -73,7 +73,7 @@ namespace CIDL_TargetManager_i
   };
   class TARGETMANAGER_EXEC_Export TargetManager_exec_i
   : public virtual ::Deployment::CCM_TargetManager,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
   {
     public:
     TargetManager_exec_i (TargetManagerImpl_exec_i* exec,
@@ -121,7 +121,7 @@ namespace CIDL_TargetManager_i
 
   class TARGETMANAGER_EXEC_Export TargetManagerHome_exec_i
   : public virtual TargetManagerHome_Exec,
-  public virtual TAO_Local_RefCounted_Object
+  public virtual ::CORBA::LocalObject
   {
     public:
     TargetManagerHome_exec_i (void);

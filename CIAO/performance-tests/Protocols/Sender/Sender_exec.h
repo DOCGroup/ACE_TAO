@@ -10,7 +10,7 @@ namespace CIDL_SenderImpl
 {
   class SENDER_EXEC_Export SenderExec_i :
     public virtual SenderExec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
 
@@ -53,7 +53,7 @@ namespace CIDL_SenderImpl
 
   class SENDER_EXEC_Export SenderHomeExec_i :
     public virtual SenderHomeExec,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
   {
   public:
 
