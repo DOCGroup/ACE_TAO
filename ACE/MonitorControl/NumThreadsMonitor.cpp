@@ -20,7 +20,7 @@ namespace ACE
     NumThreadsMonitor::NumThreadsMonitor (const char* name)
       : Monitor_Base (name)
 #if defined (ACE_WIN32)
-      , WindowsMonitor ("\\System\\Threads")
+      , WindowsMonitor (ACE_TEXT ("\\System\\Threads"))
 #elif defined (linux)
       , file_ptr_ (0)
       , nthreads_ (0UL)
@@ -42,7 +42,7 @@ namespace ACE
       if (this->file_ptr_ == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "CPU load - opening /proc/self/status failed\n"));
+                      ACE_TEXT ("CPU load - opening /proc/self/status failed\n")));
           return;
         }
 

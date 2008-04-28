@@ -17,7 +17,7 @@ namespace ACE
       : Monitor_Base (name)
 #if defined (ACE_WIN32)
         , WindowsMultiInstanceMonitor (
-            "\\Network Interface(*)\\Bytes Received/sec")
+            ACE_TEXT ("\\Network Interface(*)\\Bytes Received/sec"))
 #elif defined (linux)
         , LinuxNetworkInterfaceMonitor (
             " %*[^:]: %lu %*u %*u %*u %*u %*u %*u %*u %*u %*u")
