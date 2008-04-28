@@ -1,3 +1,8 @@
+Mon Apr 28 13:45:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_ACE.mwc:
+          Added ETCL and MonitorControl
+
 Mon Apr 28 13:19:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/RT_lib/RT_Application_Command.h
