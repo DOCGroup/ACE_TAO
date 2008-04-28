@@ -67,6 +67,7 @@ CONTROLLED_FILES = \
         apps \
         bin \
 	configure.ac \
+	ETCL \
         lib \
 	MPC \
         docs \
@@ -79,8 +80,8 @@ CONTROLLED_FILES = \
         tests \
 	Kokyu \
 	protocols \
-        websvcs \
-  contrib
+	websvcs \
+	contrib
 
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
