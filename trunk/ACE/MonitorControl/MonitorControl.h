@@ -15,13 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Monitor_Point_Registry.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Admin_Manager.h"
 
 #include "MonitorControl/CPULoadMonitor.h"
