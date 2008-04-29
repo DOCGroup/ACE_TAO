@@ -1,3 +1,15 @@
+Tue Apr 29 18:37:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MonitorControl/AutoUpdateStarter.h:
+        * MonitorControl/Constraint_Interpreter.h:
+        * MonitorControl/Constraint_Visitor.h:
+        * MonitorControl/LinuxNetworkInterfaceMonitor.h:
+        * MonitorControl/MonitorControl.h:
+        * MonitorControl/MonitorQuery.h:
+        * MonitorControl/WindowsMonitor.h:
+        * MonitorControl/WindowsMultiInstanceMonitor.h:
+          Make sure we have at least one include before pragma once
+
 Tue Apr 29 18:27:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:

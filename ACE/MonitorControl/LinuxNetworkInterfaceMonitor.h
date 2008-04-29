@@ -15,11 +15,11 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/SString.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/SString.h"
 
 #include "MonitorControl/MonitorControl_export.h"
 

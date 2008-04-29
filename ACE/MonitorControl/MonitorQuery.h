@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Event_Handler.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
-
-#include "ace/Event_Handler.h"
 
 #include "MonitorControl/MonitorControl_export.h"
 
