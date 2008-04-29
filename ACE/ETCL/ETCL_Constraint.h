@@ -16,11 +16,12 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/SString.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
 #include "ace/CDR_Base.h"
 
 #include "ace_etcl_export.h"

@@ -17,11 +17,12 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Thread_Mutex.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
 
 #include "etcl_parser_export.h"
