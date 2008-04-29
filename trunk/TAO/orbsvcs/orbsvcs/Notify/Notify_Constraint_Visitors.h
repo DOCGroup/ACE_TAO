@@ -11,11 +11,11 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_CONSTRAINT_VISITORS_H
 #define NOTIFY_CONSTRAINT_VISITORS_H
 
 #include /**/ "ace/pre.h"
+
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Null_Mutex.h"
@@ -24,8 +24,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
-#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "ace/ETCL/ETCL_Constraint_Visitor.h"
+
+#include "tao/ETCL/TAO_ETCL_Constraint.h"
+
 #include "orbsvcs/CosNotificationC.h"
 
 #include "orbsvcs/Notify/notify_serv_export.h"
@@ -35,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Property_Constraint;
 
 class TAO_Notify_Serv_Export TAO_Notify_Constraint_Visitor
-  : public TAO_ETCL_Constraint_Visitor
+  : public ETCL_Constraint_Visitor
 {
 public:
   /// Constructor.
@@ -50,7 +52,7 @@ public:
    * doesn't. If an error occurs during the process, the traversal
    * automatically fails.
    */
-  CORBA::Boolean evaluate_constraint (TAO_ETCL_Constraint *root);
+  CORBA::Boolean evaluate_constraint (ETCL_Constraint *root);
 
   // The overridden methods.
   int visit_literal (TAO_ETCL_Literal_Constraint *);

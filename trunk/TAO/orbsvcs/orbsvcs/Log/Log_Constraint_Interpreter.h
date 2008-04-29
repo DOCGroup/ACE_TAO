@@ -19,13 +19,14 @@
 #define TAO_LOG_CONSTRAINT_INTERPRETER_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/ETCL/ETCL_Interpreter.h"
+
+#include "ace/ETCL/ETCL_Interpreter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "ace/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/DsLogAdminC.h"
 #include "orbsvcs/Log/log_serv_export.h"
 
@@ -39,7 +40,7 @@ class TAO_Log_Constraint_Visitor;
  * @brief "ETCL" Interpreter for the Log queries.
  */
 class TAO_Log_Serv_Export TAO_Log_Constraint_Interpreter :
-  public TAO_ETCL_Interpreter
+  public ETCL_Interpreter
 {
 public:
 

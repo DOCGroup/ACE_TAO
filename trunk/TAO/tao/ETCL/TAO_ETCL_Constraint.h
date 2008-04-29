@@ -14,13 +14,13 @@
 #ifndef TAO_ETCL_CONSTRAINT_H
 #define TAO_ETCL_CONSTRAINT_H
 
-#include "tao/AnyTypeCode/Any_Impl.h"
+#include "ace/ETCL/ETCL_Constraint.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ETCL_Constraint.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
 
 #include "tao_etcl_export.h"
 

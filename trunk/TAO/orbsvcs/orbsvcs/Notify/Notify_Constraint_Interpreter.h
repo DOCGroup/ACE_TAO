@@ -10,18 +10,19 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
 #define TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/ETCL/ETCL_Interpreter.h"
+
+#include "ace/ETCL/ETCL_Interpreter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "tao/ETCL/TAO_ETCL_Constraint.h"
+
 #include "orbsvcs/CosNotifyFilterC.h"
 #include "orbsvcs/Notify/notify_serv_export.h"
 
@@ -34,7 +35,8 @@ class TAO_Notify_Constraint_Visitor;
  *
  * @brief "ETCL" Interpreter for the Notify queries.
  */
-class TAO_Notify_Serv_Export TAO_Notify_Constraint_Interpreter : public TAO_ETCL_Interpreter
+class TAO_Notify_Serv_Export TAO_Notify_Constraint_Interpreter
+  : public ETCL_Interpreter
 {
 public:
   // = Initialization and termination methods.
