@@ -1,3 +1,10 @@
+Tue Apr 29 07:23:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MEM_Connector.cpp:
+        * ace/Service_Manager.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Reverted accidental commits from Doug
+
 Tue Apr 29 06:32:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/VXTestProjectCreator.pm:
