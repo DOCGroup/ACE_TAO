@@ -363,11 +363,10 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                   // Convert to 0-based for indexing, next loop check.
                   if (if_addrs[if_cnt].get_type () != AF_INET || if_addrs[if_cnt].is_loopback ())
                     continue;
-                  char hostaddr[INET6_ADDRSTRLEN];
                   if (this->join (mcast_addr,
                                   reuse_addr,
                                   ACE_TEXT_CHAR_TO_TCHAR
-                                   (if_addrs[if_cnt].get_host_addr (hostaddr, INET6_ADDRSTRLEN))) == 0)
+                                   (if_addrs[if_cnt].get_host_addr ())) == 0)
                     ++nr_subscribed;
                 }
             }
@@ -723,10 +722,9 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
                   // Convert to 0-based for indexing, next loop check
                   if (if_addrs[if_cnt].get_type () != AF_INET || if_addrs[if_cnt].is_loopback ())
                     continue;
-                  char hostaddr[INET6_ADDRSTRLEN];
                   if (this->leave (mcast_addr,
                                    ACE_TEXT_CHAR_TO_TCHAR
-                                   (if_addrs[if_cnt].get_host_addr (hostaddr, INET6_ADDRSTRLEN))) == 0)
+                                   (if_addrs[if_cnt].get_host_addr ())) == 0)
                     ++nr_unsubscribed;
                 }
             }
