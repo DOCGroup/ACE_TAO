@@ -1,3 +1,14 @@
+Tue Apr 29 17:45:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:
+        * MonitorControl/examples/Constraint/constraint.cpp:
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp:
+        * MonitorControl/examples/Group/group.cpp:
+        * MonitorControl/examples/Memory_Usage/memory_usage.cpp:
+        * MonitorControl/examples/Message_Queue_Size/message_queue_size.cpp:
+        * MonitorControl/examples/Num_Threads/num_threads.cpp:
+          Updated main for unicode
+
 Tue Apr 29 13:14:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Test_Output.cpp:

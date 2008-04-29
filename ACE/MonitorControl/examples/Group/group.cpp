@@ -58,7 +58,8 @@ public:
   }
 };
 
-int main (int /* argc */, char * /* argv */ [])
+int
+ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
   /// Creates these future group members without automatic update.
   Monitor_Base *cpu_load_monitor =
