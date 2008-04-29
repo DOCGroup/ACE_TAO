@@ -1,3 +1,11 @@
+Tue Apr 29 06:32:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/VXTestProjectCreator.pm:
+          Generate exename.vxtest instead of project name
+
+        * bin/MakeProjectCreator/templates/vxtest.mpd:
+          Don't generate ld <
+
 Mon Apr 28 22:34:10 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_UDP_Test.cpp: Fix compile errors on non-Windows.
