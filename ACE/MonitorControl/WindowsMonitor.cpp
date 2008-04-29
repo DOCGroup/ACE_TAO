@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/Log_Msg.h"
-
 #include "MonitorControl/WindowsMonitor.h"
 
 #if defined (ACE_WIN32)
+
+#include "ace/Log_Msg.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

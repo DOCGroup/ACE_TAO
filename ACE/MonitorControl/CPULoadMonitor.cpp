@@ -1,12 +1,16 @@
 // $Id$
 
+#include "MonitorControl/CPULoadMonitor.h"
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 #if defined (ACE_HAS_KSTAT)
 #include <sys/sysinfo.h>
 #endif
 
-#include "MonitorControl/CPULoadMonitor.h"
-
-#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+#if defined (linux)
+#include "ace/OS_NS_stdio.h"
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

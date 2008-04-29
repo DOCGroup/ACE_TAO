@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ETCL/ETCL_y.h"
-#include "ETCL/ETCL_Constraint.h"
-
 #include "MonitorControl/Constraint_Visitor.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
+#include "ETCL/ETCL_y.h"
+#include "ETCL/ETCL_Constraint.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
