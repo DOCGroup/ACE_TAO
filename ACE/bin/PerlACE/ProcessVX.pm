@@ -251,9 +251,9 @@ sub handle_vxtest_file
     }
     close $fh;
   } else {
-    return -1;
+    return 0;
   }
-  return 0;
+  return 1;
 }
 
 ### Check for -ExeSubDir commands, store the last one
