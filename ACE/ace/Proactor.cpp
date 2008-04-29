@@ -112,7 +112,7 @@ ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler (void)
   this->timer_event_.signal ();
 
   // Wait for the Timer Handler thread to exit.
-  this->thr_mgr ()->wait_grp (this->grp_id ());
+  this->wait ();
 }
 
 int
@@ -347,7 +347,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
            ACE_Proactor_Timer_Handler (*this));
 
   // Activate <timer_handler>.
-  if (this->timer_handler_->activate (THR_NEW_LWP) == -1)
+  if (this->timer_handler_->activate () == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
                 ACE_TEXT ("Task::activate:could not create thread\n")));
@@ -603,10 +603,9 @@ ACE_Proactor::close (void)
 {
   // Close the implementation.
   if (this->implementation ()->close () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
-                       ACE_TEXT ("ACE_Proactor::close:implementation couldnt be closed")),
-                      -1);
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                ACE_TEXT ("ACE_Proactor::close: implementation close")));
 
   // Delete the implementation.
   if (this->delete_implementation_)

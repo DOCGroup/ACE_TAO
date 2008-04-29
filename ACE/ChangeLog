@@ -1,3 +1,18 @@
+Tue Apr 29 19:52:48 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Proactor.cpp: Simplify the timer_handler_ task spawn and
+          shutdown. Also, if close() sees an error from the implementation's
+          close, don't stop closing. Things are most likely already ripped
+          apart too far to recover from, and it's likely to cause a hang to
+          just try to stop closing now.
+
+        * ace/POSIX_Asynch_IO.cpp: Correctly handle the ACE_Message_Block
+          pointers passed to operations and later updating when complete.
+          Thanks to Fernando C. Jeronymo <fernando dot fcavalcanti at
+          gmail.com> for diagnosing this problem.
+
+        * THANKS: Added Fernando C. Jeronymo to the Hall of Fame.
+
 Tue Apr 29 19:12:53 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ace_etcl_parser.mpb:
