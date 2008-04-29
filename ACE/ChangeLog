@@ -1,3 +1,8 @@
+Tue Apr 29 13:14:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Test_Output.cpp:
+          Check for ACE_VXWORKS
+
 Tue Apr 29 13:12:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MonitorControl/AutoUpdateStarter.cpp:

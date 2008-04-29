@@ -117,7 +117,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
                   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR));
   ACE_OS::strcat (temp, ACE_LOG_FILE_EXT_NAME);
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   // This is the only way I could figure out to avoid a console
   // warning about opening an existing file (w/o O_CREAT), or
   // attempting to unlink a non-existant one.
@@ -129,7 +129,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
       ACE_OS::close (fd);
       ACE_OS::unlink (temp);
     }
-# else /* ! VXWORKS */
+#else /* ! ACE_VXWORKS */
   // This doesn't seem to work on VxWorks if the directory doesn't
   // exist: it creates a plain file instead of a directory.  If the
   // directory does exist, it causes a wierd console error message
@@ -140,7 +140,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #   else
       ACE_OS::mkdir (ACE_LOG_DIRECTORY);
 #   endif  // ACE_HAS_WINCE
-# endif /* ! VXWORKS */
+#endif /* ! ACE_VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
