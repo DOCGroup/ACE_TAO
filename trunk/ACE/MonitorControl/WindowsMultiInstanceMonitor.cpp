@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ace/Log_Msg.h"
-#include "ace/SString.h"
-
 #include "MonitorControl/WindowsMultiInstanceMonitor.h"
 
 #if defined (ACE_WIN32)
+
+#include "ace/Log_Msg.h"
+#include "ace/SString.h"
 
 #include <pdhmsg.h>
 

@@ -1,12 +1,12 @@
 // $Id$
 
-#include "ace/Reactor.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/Monitor_Admin_Manager.h"
-
 #include "MonitorControl/AutoUpdateStarter.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
+#include "ace/Reactor.h"
+#include "ace/Dynamic_Service.h"
+#include "ace/Monitor_Admin_Manager.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

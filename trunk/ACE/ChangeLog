@@ -1,3 +1,18 @@
+Tue Apr 29 13:12:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MonitorControl/AutoUpdateStarter.cpp:
+        * MonitorControl/Constraint_Interpreter.cpp:
+        * MonitorControl/Constraint_Interpreter.h:
+        * MonitorControl/Constraint_Visitor.cpp:
+        * MonitorControl/Constraint_Visitor.h:
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/LinuxNetworkInterfaceMonitor.cpp:
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/WindowsMonitor.cpp:
+        * MonitorControl/WindowsMultiInstanceMonitor.cpp:
+          Updated includes to fix errors and improve compile speed when
+          this lib is disabled
+
 Tue Apr 29 08:16:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/vxtest.mpd:
