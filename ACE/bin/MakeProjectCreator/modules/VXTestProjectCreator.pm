@@ -29,7 +29,8 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return $self->get_modified_project_file_name($name, '.vxtest');
+  my($value) = $self->get_assignment('exename');
+  return $self->get_modified_project_file_name($value, '.vxtest');
 }
 
 sub get_template {
