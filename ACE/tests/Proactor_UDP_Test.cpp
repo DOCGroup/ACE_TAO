@@ -1939,7 +1939,7 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
           }
         else
           {
-            if (duplex != 0 || this->stop_writing_)
+            if (duplex != 0)
               this->initiate_read ();
             else  // half-duplex  write, after write we will start read
               this->initiate_write ();

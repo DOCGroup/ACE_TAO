@@ -13,6 +13,9 @@ Tue Apr 29 19:52:48 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * THANKS: Added Fernando C. Jeronymo to the Hall of Fame.
 
+        * tests/Proactor_UDP_Test.cpp: Fix to close down correctly in
+          half-duplex mode.
+
 Tue Apr 29 19:12:53 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ace_etcl_parser.mpb:
