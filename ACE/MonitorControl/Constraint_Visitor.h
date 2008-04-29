@@ -25,8 +25,8 @@
 
 #include "ace/Monitor_Control_Types.h"
 
-#include "ETCL/ETCL_Constraint.h"
-#include "ETCL/ETCL_Constraint_Visitor.h"
+#include "ace/ETCL/ETCL_Constraint.h"
+#include "ace/ETCL/ETCL_Constraint_Visitor.h"
 
 #include "MonitorControl/MonitorControl_export.h"
 

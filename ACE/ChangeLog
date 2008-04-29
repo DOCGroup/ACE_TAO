@@ -1,3 +1,29 @@
+Tue Apr 29 19:12:53 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ace_etcl_parser.mpb:
+
+          Changed the path of the 'includes' line to match
+          the new location of ETCL.
+
+        * MonitorControl/Constraint_Interpreter.cpp:
+        * MonitorControl/Constraint_Visitor.h:
+        * MonitorControl/Constraint_Visitor.cpp:
+        * MonitorControl/Constraint_Interpreter.h:
+
+          Updated #includes to match the new location of ETCL.
+
+        * MonitorControl/AutoUpdateStarter.h:
+
+          Moved location of enabled monitors check, it was
+          previous to any place it could see the #define in
+          an included file.
+
+        * MonitorControl/examples/Constraint/constraint.cpp:
+        * MonitorControl/examples/CPU_Load/cpu_load.cpp:
+        * MonitorControl/examples/Group/group.cpp:
+
+          Some compile warnings fixed.
+
 Tue Apr 29 18:37:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MonitorControl/AutoUpdateStarter.h:

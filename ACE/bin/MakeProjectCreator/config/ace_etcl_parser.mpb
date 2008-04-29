@@ -4,5 +4,5 @@
 project : ace_etcl {
   after += ACE_ETCL_Parser
   libs += ACE_ETCL_Parser
-  includes += $(ACE_ROOT)/ETCL/ETCL_include
+  includes += $(ACE_ROOT)/ace/ETCL/ETCL_include
 }
