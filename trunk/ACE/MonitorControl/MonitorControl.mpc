@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(MonitorControl) : acelib, ace_etcl_parser {
+project(MonitorControl) : acelib, ace_etcl_parser, ace_output, install {
   dynamicflags += MONITORCONTROL_BUILD_DLL
 
   Source_Files {
