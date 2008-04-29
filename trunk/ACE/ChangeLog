@@ -1,3 +1,18 @@
+Tue Apr 29 18:02:22 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ETCL/*:
+        
+          Moved this directory and all its contents to $ACE_ROOT/ace.
+          Also changed #includes to be relative to $ACE_ROOT.
+          
+        * ace/ace.mwc:
+        
+          Added ETCL directory.
+          
+        * docs/svn/svn-prefs.reg:
+        
+          Added *.diff to list.
+
 Tue Apr 29 17:45:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MonitorControl/examples/Bytes_Sent/bytes_sent.cpp:

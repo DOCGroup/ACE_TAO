@@ -92,6 +92,7 @@ REGEDIT4
 "*.GNU"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.rc"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.gplot"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"*.diff"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "Change?og*"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "README"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "Makefile"="svn:eol-style=native;svn:keywords=Author Date Id Revision"

@@ -16,9 +16,9 @@
 //
 // ========================================================================
 
-#include "ETCL_Interpreter.h"
-#include "ETCL_Constraint.h"
-#include "ETCL_y.h"
+#include "ace/ETCL/ETCL_Interpreter.h"
+#include "ace/ETCL/ETCL_Constraint.h"
+#include "ace/ETCL/ETCL_y.h"
 
 BEGIN_VERSIONED_NAMESPACE_MACRO
 
