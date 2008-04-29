@@ -15,11 +15,11 @@
 
 #include /**/ "ace/pre.h"
 
+#include "MonitorControl/MonitorControl_export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "MonitorControl/MonitorControl_export.h"
 
 #if defined (ACE_WIN32)
 
