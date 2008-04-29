@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ETCL_Constraint_Visitor.h"
+#include "ace/ETCL/ETCL_Constraint_Visitor.h"
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"

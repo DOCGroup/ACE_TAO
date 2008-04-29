@@ -3,8 +3,9 @@
 #include "orbsvcs/Notify/Notify_Constraint_Interpreter.h"
 #include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 
-ACE_RCSID(Notify, NS_Constraint_Interpreter, "$Id$")
-
+ACE_RCSID (Notify,
+           NS_Constraint_Interpreter,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,7 +22,7 @@ TAO_Notify_Constraint_Interpreter::build_tree (
     const char *constraints
   )
 {
-  if (TAO_ETCL_Interpreter::is_empty_string (constraints))
+  if (ETCL_Interpreter::is_empty_string (constraints))
     {
       // Root is deleted in the TAO_Interpreter's destructor.
       ACE_NEW_THROW_EX (this->root_,
@@ -31,7 +32,7 @@ TAO_Notify_Constraint_Interpreter::build_tree (
   else
     {
       // root_ is set in this base class call.
-      if (TAO_ETCL_Interpreter::build_tree (constraints) != 0)
+      if (ETCL_Interpreter::build_tree (constraints) != 0)
           throw CosNotifyFilter::InvalidConstraint ();
     }
 }

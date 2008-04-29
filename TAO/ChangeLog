@@ -1,3 +1,30 @@
+Tue Apr 29 19:55:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/ETCL/*:
+
+          Removed this directory and its contents, it is replaced
+          by $TAO_ROOT/tao/ETCL. Some code has been factored to
+          $ACE_ROOT/ace/ETCL and some identifiers have changed,
+          but no intentional changes have been made to the behavior.       
+        
+        * MPC/config/etcl.mpb:
+        * TAO_ACE.mwc:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+        * tao/ETCL/TAO_ETCL.mpc:
+
+          Changes to integrate the replacement of 
+          $TAO_ROOT/orbsvcs/orbsvcs/ETCL with
+          $TAO_ROOT/tao/ETCL and $ACE_ROOT/ace/ETCL.
+
 Tue Apr 29 15:17:52 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/ast/ast_union.cpp:
