@@ -114,7 +114,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   STOP_PERIODIC_MONITORS;
 
   /// Do this instead of 'delete' since they are refcounted.
-  trigger8k->remove_ref ();
+  removed_action->remove_ref ();
   trigger16k->remove_ref ();
   bytes_monitor->remove_ref ();
 
