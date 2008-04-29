@@ -205,8 +205,13 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
 
           break;
         case AST_Expression::EV_longlong:
+          *os << dv.u.longlong_val;
+
+          break;
         case AST_Expression::EV_ulonglong:
-          // Unimplemented.
+          *os << dv.u.ulonglong_val;
+
+          break;
         default:
           // Error caught earlier.
           ACE_ERROR_RETURN ((LM_ERROR,

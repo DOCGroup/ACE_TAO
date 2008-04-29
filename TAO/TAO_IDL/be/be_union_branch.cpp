@@ -28,8 +28,8 @@
 #include "ast_union_label.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be, 
-           be_union_branch, 
+ACE_RCSID (be,
+           be_union_branch,
            "$Id$")
 
 be_union_branch::be_union_branch (void)
@@ -171,8 +171,11 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
           break;
         }
       case AST_Expression::EV_longlong:
+        *os << dv.u.longlong_val;
+        break;
       case AST_Expression::EV_ulonglong:
-        // Unimplemented.
+        *os << dv.u.ulonglong_val;
+        break;
       default:
         // Error caught earlier.
         ACE_ERROR_RETURN ((LM_ERROR,

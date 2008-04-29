@@ -1,10 +1,29 @@
+Tue Apr 29 15:17:52 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/include/ast_union.h:
+
+          Add support for (unsigned) long long union discriminators.
+
+        * tests/Bug_3311_Regression:
+        * tests/Bug_3311_Regression/Bug_3311_Regression.mpc:
+        * tests/Bug_3311_Regression/README:
+        * tests/Bug_3311_Regression/test.idl:
+        * tests/Bug_3311_Regression/test.cpp:
+
+          Regression test for the above.
+
 Mon Apr 28 19:38:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Monitor/Monitor.h:
         * tao/Monitor/Monitor.cpp:
         * tao/Monitor/Monitor_Impl.h:
         * tao/Monitor/Monitor_Impl.cpp:
-        
+
           Added TAO_HAS_MONITOR_FRAMEWORK guards around these files.
 
 Mon Apr 28 17:57:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
