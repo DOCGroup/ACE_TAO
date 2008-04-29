@@ -122,7 +122,7 @@ main (int argc, char *argv[])
 
               for (CORBA::ULong index = 0; index < data->length (); ++index)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "MP <%s>:\n", data[index].itemname));
+                  ACE_DEBUG ((LM_DEBUG, "MP <%s>:\n", data[index].itemname.in ()));
                   Monitor::DataItem dlist = data[index];
 
                   for (CORBA::ULong valueindex = 0;
