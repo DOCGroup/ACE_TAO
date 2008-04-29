@@ -2204,6 +2204,7 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
 {
   ACE_UNUSED_ARG (protocol_family);
   this->aio_fildes = handle;
+  this->aio_buf = message_block->wr_ptr ();
   this->aio_nbytes = bytes_to_read;
   ACE_NEW (this->remote_address_, ACE_INET_Addr);
 }
@@ -2219,6 +2220,9 @@ ACE_POSIX_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
   this->success_ = success;
   this->completion_key_ = completion_key;
   this->error_ = error;
+
+  // Appropriately move the pointers in the message block.
+  this->message_block_->wr_ptr (bytes_transferred);
 
   // <errno> is available in the aiocb.
   ACE_UNUSED_ARG (error);
@@ -2284,6 +2288,7 @@ ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result
 
 {
   this->aio_fildes = handle;
+  this->aio_buf = message_block->rd_ptr ();
   this->aio_nbytes = bytes_to_write;
 }
 
@@ -2303,7 +2308,7 @@ ACE_POSIX_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
   ACE_UNUSED_ARG (error);
 
   // Appropriately move the pointers in the message block.
-  //this->message_block_.wr_ptr (bytes_transferred);
+  this->message_block_->rd_ptr (bytes_transferred);
 
   // Create the interface result class.
   ACE_Asynch_Write_Dgram::Result result (this);
