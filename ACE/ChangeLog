@@ -1,3 +1,13 @@
+Tue Apr 29 08:16:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/vxtest.mpd:
+          Zap empty line
+
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Improved handling of vxtest file
+
 Tue Apr 29 07:23:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MEM_Connector.cpp:

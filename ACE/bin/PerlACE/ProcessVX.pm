@@ -237,32 +237,24 @@ sub reboot {
 # Helper for spawning with list of kernel modules in a .vxtest file
 sub handle_vxtest_file
 {
-  my $program = shift; #example: ORB_init
+  my $vxtestfile = shift;
   my $vx_ref = shift;
   my $unld_ref = shift;
-  my $found = 0;
-  foreach my $file (glob('*.vxtest')) {
-    last if $found;
-    next unless -r $file;
-    my $fh = new FileHandle;
-    open ($fh, $file);
+  my $fh = new FileHandle;
+  if (open ($fh, $vxtestfile)) {
     my $line1 = <$fh>;
     chomp $line1;
-    if ($line1 =~ /libraries used by: $program$/) {
-      $$vx_ref = $file;
-      $found = 1;
-      while(<$fh>) {
-        chomp;
-        next unless /^ld < (\S+)$/;
-        unshift @$unld_ref, "unld \"$1\"";
-      }
+    while(<$fh>) {
+      chomp;
+      shift @$vx_ref, "ld < \"$1\"";
+      unshift @$unld_ref, "unld \"$1\"";
     }
     close $fh;
+  } else {
+    return -1;
   }
-  return $found;
+  return 0;
 }
-
-
 
 ### Check for -ExeSubDir commands, store the last one
 my @new_argv = ();

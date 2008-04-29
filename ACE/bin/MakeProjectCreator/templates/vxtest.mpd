@@ -1,5 +1,4 @@
 # VxWorks script for loading libraries used by: <%exename%>
-
 <%foreach(reverse(libs))%>
 lib<%lib%>.so
 <%endfor%>
