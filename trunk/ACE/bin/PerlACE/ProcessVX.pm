@@ -245,9 +245,10 @@ sub handle_vxtest_file
     my $line1 = <$fh>;
     chomp $line1;
     while(<$fh>) {
-      chomp;
-      shift @$vx_ref, "ld < \"$1\"";
-      unshift @$unld_ref, "unld \"$1\"";
+      $line1 = $_;
+      chomp $line1;
+      push @$vx_ref, "ld < $line1";
+      unshift @$unld_ref, "unld \"$line1\"";
     }
     close $fh;
   } else {
