@@ -1,10 +1,10 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ETCL_Interpreter.h"
-#include "ETCL_Constraint.h"
-
 #include "ace/Guard_T.h"
+
+#include "ace/ETCL/ETCL_Interpreter.h"
+#include "ace/ETCL/ETCL_Constraint.h"
 
 BEGIN_VERSIONED_NAMESPACE_MACRO
 

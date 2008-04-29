@@ -15,10 +15,10 @@
 //
 // ========================================================================
 
-#include "ETCL_grammar_macros.h"
-#include "ETCL_y.h"
-#include "ETCL_Constraint.h"
-#include "ETCL_Interpreter.h"
+#include "ace/ETCL/ETCL_y.h"
+#include "ETCL_macros.h"
+#include "ETCL_include.h"
+#include "ace/ETCL/ETCL_Interpreter.h"
 
 BEGIN_VERSIONED_NAMESPACE_MACRO
 

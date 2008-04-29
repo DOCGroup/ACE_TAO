@@ -42,4 +42,7 @@ project(ACE_ETCL_Parser) : acelib, ace_etcl, install, ace_output {
     ETCL_include/ETCL_include.h
     ETCL_include/etcl_parser_export.h
   }
+  
+  Inline_Files {
+  }
 }

@@ -10,6 +10,7 @@ workspace {
   ace_qtreactor.mpc
   ace_tkreactor.mpc
   ace_xtreactor.mpc
+  ETCL
   QoS
   SSL
 }

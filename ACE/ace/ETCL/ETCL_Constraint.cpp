@@ -3,11 +3,11 @@
 
 #include "ace/ACE.h"
 
-#include "ETCL_Constraint.h"
-#include "ETCL_Constraint_Visitor.h"
+#include "ace/ETCL/ETCL_Constraint.h"
+#include "ace/ETCL/ETCL_Constraint_Visitor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ETCL_Constraint.inl"
+#include "ace/ETCL/ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
