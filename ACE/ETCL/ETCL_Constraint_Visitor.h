@@ -15,11 +15,11 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace_etcl_export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace_etcl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
