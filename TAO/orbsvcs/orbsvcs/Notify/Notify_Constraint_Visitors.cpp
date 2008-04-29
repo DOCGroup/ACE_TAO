@@ -1,8 +1,10 @@
 // $Id$
 
-#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
-#include "orbsvcs/ETCL/ETCL_Constraint.h"
-#include "orbsvcs/ETCL/ETCL_y.h"
+#include "ace/ETCL/ETCL_y.h"
+
+#include "tao/CDR.h"
+
+#include "tao/ETCL/TAO_ETCL_Constraint.h"
 
 #include "tao/DynamicAny/DynArray_i.h"
 #include "tao/DynamicAny/DynSequence_i.h"
@@ -13,7 +15,8 @@
 #include "tao/DynamicAny/DynAnyUtils_T.h"
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "tao/CDR.h"
+
+#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -115,9 +118,7 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (const CosNotification::Str
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::evaluate_constraint (
-  TAO_ETCL_Constraint* root
-  )
+TAO_Notify_Constraint_Visitor::evaluate_constraint (ETCL_Constraint* root)
 {
   CORBA::Boolean result = 0;
   this->queue_.reset ();
@@ -210,9 +211,9 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
 
       switch (disc_val.expr_type ())
       {
-      case TAO_ETCL_INTEGER:
-      case TAO_ETCL_SIGNED:
-      case TAO_ETCL_UNSIGNED:
+      case ETCL_INTEGER:
+      case ETCL_SIGNED:
+      case ETCL_UNSIGNED:
         {
           CORBA::Any disc_any;
           CORBA::TypeCode_var disc_tc =
@@ -275,7 +276,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
 
           break;
         }
-      case TAO_ETCL_STRING:
+      case ETCL_STRING:
         {
           const char *name = (const char *) disc_val;
           CORBA::ULong count =
@@ -305,7 +306,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
         return -1;
       }
 
-      TAO_ETCL_Constraint *nested = union_pos->component ();
+      ETCL_Constraint *nested = union_pos->component ();
 
       // If there's no nested component, then we just want the
       // union member value on the queue. Otherwise, we want
@@ -386,7 +387,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
 
     CORBA::Any_var value = member->to_any ();
 
-    TAO_ETCL_Constraint *comp = pos->component ();
+    ETCL_Constraint *comp = pos->component ();
 
     if (comp == 0)
     {
@@ -434,7 +435,7 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
     return -1;
   }
 
-  TAO_ETCL_Constraint *comp = assoc->component ();
+  ETCL_Constraint *comp = assoc->component ();
   CORBA::Any *any_ptr = 0;
 
   if (comp == 0)
@@ -516,7 +517,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (TAO_ETCL_Component_Array *
 
     CORBA::Any_var value = member->to_any ();
 
-    TAO_ETCL_Constraint *comp = array->component ();
+    ETCL_Constraint *comp = array->component ();
 
     if (comp == 0)
     {
@@ -548,7 +549,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
 
     switch (special->type ())
     {
-    case TAO_ETCL_LENGTH:
+    case ETCL_LENGTH:
       {
         CORBA::ULong length;
 
@@ -578,7 +579,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
         this->queue_.enqueue_head (lit);
         return 0;
       }
-    case TAO_ETCL_DISCRIMINANT:
+    case ETCL_DISCRIMINANT:
       {
         // If the TCKind is not a union, the call to init() will
         // raise an exception, and the catch block will return -1;
@@ -594,7 +595,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
         this->queue_.enqueue_head (lit);
         return 0;
       }
-    case TAO_ETCL_TYPE_ID:
+    case ETCL_TYPE_ID:
       {
         const char *name = tc->name ();
 
@@ -602,7 +603,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
         this->queue_.enqueue_head (lit);
         return 0;
       }
-    case TAO_ETCL_REPOS_ID:
+    case ETCL_REPOS_ID:
       {
         const char *id = tc->id ();
 
@@ -625,7 +626,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
   TAO_ETCL_Component *component
   )
 {
-  TAO_ETCL_Constraint *nested = component->component ();
+  ETCL_Constraint *nested = component->component ();
   TAO_ETCL_Identifier *identifier = component->identifier ();
   ACE_CString component_name (identifier->value (),
     0,
@@ -732,7 +733,7 @@ TAO_Notify_Constraint_Visitor::visit_eval (TAO_ETCL_Eval *eval)
 int
 TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
 {
-  TAO_ETCL_Constraint *comp = def->component ();
+  ETCL_Constraint *comp = def->component ();
 
   if (comp == 0)
     return -1;
@@ -772,7 +773,7 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
 int
 TAO_Notify_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
 {
-  TAO_ETCL_Constraint *component = exist->component ();
+  ETCL_Constraint *component = exist->component ();
 
   if (component->accept (this) == 0)
   {
@@ -839,7 +840,7 @@ TAO_Notify_Constraint_Visitor::visit_unary_expr (
   TAO_ETCL_Unary_Expr *unary_expr
   )
 {
-  TAO_ETCL_Constraint *subexpr = unary_expr->subexpr ();
+  ETCL_Constraint *subexpr = unary_expr->subexpr ();
 
   if (subexpr->accept (this) == 0)
   {
@@ -849,19 +850,19 @@ TAO_Notify_Constraint_Visitor::visit_unary_expr (
 
     switch (op_type)
     {
-    case TAO_ETCL_NOT:
+    case ETCL_NOT:
       this->queue_.dequeue_head (subexpr_result);
       result = ! (CORBA::Boolean) subexpr_result;
       this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
       return 0;
-    case TAO_ETCL_MINUS:
+    case ETCL_MINUS:
       // The leading '-' was parsed separately, so we have to pull
       // the literal constraint off the queue, apply the class' own
       // unary minus operator, and put it back.
       this->queue_.dequeue_head (subexpr_result);
       this->queue_.enqueue_head (-subexpr_result);
       return 0;
-    case TAO_ETCL_PLUS:
+    case ETCL_PLUS:
       // Leave the literal constraint on the queue. The leading
       // '+' was just syntactic sugar - no action is necessary.
       return 0;
@@ -884,25 +885,25 @@ TAO_Notify_Constraint_Visitor::visit_binary_expr (
 
   switch (bin_op_type)
   {
-  case TAO_ETCL_OR:
+  case ETCL_OR:
     return this->visit_or (binary_expr);
-  case TAO_ETCL_AND:
+  case ETCL_AND:
     return this->visit_and (binary_expr);
-  case TAO_ETCL_LT:
-  case TAO_ETCL_LE:
-  case TAO_ETCL_GT:
-  case TAO_ETCL_GE:
-  case TAO_ETCL_EQ:
-  case TAO_ETCL_NE:
-  case TAO_ETCL_PLUS:
-  case TAO_ETCL_MINUS:
-  case TAO_ETCL_MULT:
-  case TAO_ETCL_DIV:
+  case ETCL_LT:
+  case ETCL_LE:
+  case ETCL_GT:
+  case ETCL_GE:
+  case ETCL_EQ:
+  case ETCL_NE:
+  case ETCL_PLUS:
+  case ETCL_MINUS:
+  case ETCL_MULT:
+  case ETCL_DIV:
     return this->visit_binary_op (binary_expr,
       bin_op_type);
-  case TAO_ETCL_TWIDDLE:
+  case ETCL_TWIDDLE:
     return this->visit_twiddle (binary_expr);
-  case TAO_ETCL_IN:
+  case ETCL_IN:
     return this->visit_in (binary_expr);
   default:
     return -1;
@@ -916,7 +917,7 @@ TAO_Notify_Constraint_Visitor::visit_or (
 {
   int return_value = -1;
   CORBA::Boolean result = 0;
-  TAO_ETCL_Constraint *lhs = binary->lhs ();
+  ETCL_Constraint *lhs = binary->lhs ();
 
   if (lhs->accept (this) == 0)
   {
@@ -927,7 +928,7 @@ TAO_Notify_Constraint_Visitor::visit_or (
     // Short-circuiting OR.
     if (result == 0)
     {
-      TAO_ETCL_Constraint *rhs = binary->rhs ();
+      ETCL_Constraint *rhs = binary->rhs ();
 
       if (rhs->accept (this) == 0)
       {
@@ -952,7 +953,7 @@ TAO_Notify_Constraint_Visitor::visit_and (TAO_ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
   CORBA::Boolean result = 0;
-  TAO_ETCL_Constraint *lhs = binary->lhs ();
+  ETCL_Constraint *lhs = binary->lhs ();
 
   if (lhs->accept (this) == 0)
   {
@@ -963,7 +964,7 @@ TAO_Notify_Constraint_Visitor::visit_and (TAO_ETCL_Binary_Expr *binary)
     // Short-circuiting AND.
     if (result == 1)
     {
-      TAO_ETCL_Constraint *rhs = binary->rhs ();
+      ETCL_Constraint *rhs = binary->rhs ();
 
       if (rhs->accept (this) == 0)
       {
@@ -988,7 +989,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (TAO_ETCL_Binary_Expr *binary,
                                                 int op_type)
 {
   int return_value = -1;
-  TAO_ETCL_Constraint *lhs = binary->lhs ();
+  ETCL_Constraint *lhs = binary->lhs ();
   CORBA::Boolean result = 0;
 
   // Perform an operation on the results of evaluating the left and
@@ -997,7 +998,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (TAO_ETCL_Binary_Expr *binary,
   {
     TAO_ETCL_Literal_Constraint left_operand;
     this->queue_.dequeue_head (left_operand);
-    TAO_ETCL_Constraint *rhs = binary->rhs ();
+    ETCL_Constraint *rhs = binary->rhs ();
 
     if (rhs->accept (this) == 0)
     {
@@ -1007,40 +1008,40 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (TAO_ETCL_Binary_Expr *binary,
 
       switch (op_type)
       {
-      case TAO_ETCL_LT:
+      case ETCL_LT:
         result = left_operand < right_operand;
         this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
         break;
-      case TAO_ETCL_LE:
+      case ETCL_LE:
         result = left_operand <= right_operand;
         this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
         break;
-      case TAO_ETCL_GT:
+      case ETCL_GT:
         result = left_operand > right_operand;
         this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
         break;
-      case TAO_ETCL_GE:
+      case ETCL_GE:
         result = left_operand >= right_operand;
         this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
         break;
-      case TAO_ETCL_EQ:
+      case ETCL_EQ:
         result = left_operand == right_operand;
         this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
         break;
-      case TAO_ETCL_NE:
+      case ETCL_NE:
         result = left_operand != right_operand;
         this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
         break;
-      case TAO_ETCL_PLUS:
+      case ETCL_PLUS:
         this->queue_.enqueue_head (left_operand + right_operand);
         break;
-      case TAO_ETCL_MINUS:
+      case ETCL_MINUS:
         this->queue_.enqueue_head (left_operand - right_operand);
         break;
-      case TAO_ETCL_MULT:
+      case ETCL_MULT:
         this->queue_.enqueue_head (left_operand * right_operand);
         break;
-      case TAO_ETCL_DIV:
+      case ETCL_DIV:
         this->queue_.enqueue_head (left_operand / right_operand);
         break;
       default:
@@ -1056,14 +1057,14 @@ int
 TAO_Notify_Constraint_Visitor::visit_twiddle (TAO_ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
-  TAO_ETCL_Constraint *lhs = binary->lhs ();
+  ETCL_Constraint *lhs = binary->lhs ();
 
   // Determine if the left operand is a substring of the right.
   if (lhs->accept (this) == 0)
   {
     TAO_ETCL_Literal_Constraint left;
     this->queue_.dequeue_head (left);
-    TAO_ETCL_Constraint *rhs = binary->rhs ();
+    ETCL_Constraint *rhs = binary->rhs ();
 
     if (rhs->accept (this) == 0)
     {
@@ -1084,7 +1085,7 @@ int
 TAO_Notify_Constraint_Visitor::visit_in (TAO_ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
-  TAO_ETCL_Constraint *lhs = binary->lhs ();
+  ETCL_Constraint *lhs = binary->lhs ();
 
   // Determine if the left operand is contained in the right.
   if (lhs->accept (this) == 0)
@@ -1092,14 +1093,14 @@ TAO_Notify_Constraint_Visitor::visit_in (TAO_ETCL_Binary_Expr *binary)
     TAO_ETCL_Literal_Constraint left;
     this->queue_.dequeue_head (left);
 
-    TAO_ETCL_Constraint *rhs = binary->rhs ();
+    ETCL_Constraint *rhs = binary->rhs ();
 
     if (rhs->accept (this) == 0)
     {
       TAO_ETCL_Literal_Constraint bag;
       this->queue_.dequeue_head (bag);
 
-      if (bag.expr_type () == TAO_ETCL_COMPONENT)
+      if (bag.expr_type () == ETCL_COMPONENT)
       {
         CORBA::Any_var component = new CORBA::Any ();
         component->replace (bag);
@@ -1348,29 +1349,29 @@ TAO_Notify_Constraint_Visitor::simple_type_match (int expr_type,
 {
   switch (expr_type)
   {
-  case TAO_ETCL_STRING:
+  case ETCL_STRING:
     if (tc_kind != CORBA::tk_string)
       return 0;
     break;
-  case TAO_ETCL_DOUBLE:
+  case ETCL_DOUBLE:
     if (tc_kind != CORBA::tk_double
       && tc_kind != CORBA::tk_float)
       return 0;
     break;
-  case TAO_ETCL_INTEGER:
-  case TAO_ETCL_SIGNED:
+  case ETCL_INTEGER:
+  case ETCL_SIGNED:
     if (tc_kind != CORBA::tk_short
       && tc_kind != CORBA::tk_long
       && tc_kind != CORBA::tk_longlong)
       return 0;
     break;
-  case TAO_ETCL_UNSIGNED:
+  case ETCL_UNSIGNED:
     if (tc_kind != CORBA::tk_ushort
       && tc_kind != CORBA::tk_ulong
       && tc_kind != CORBA::tk_ulonglong)
       return 0;
     break;
-  case TAO_ETCL_BOOLEAN:
+  case ETCL_BOOLEAN:
     if (tc_kind != CORBA::tk_boolean)
       return 0;
     break;

@@ -25,9 +25,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
-#include "orbsvcs/DsLogAdminC.h"
+#include "ace/ETCL/ETCL_Constraint_Visitor.h"
 #include "ace/Null_Mutex.h"
+
+#include "tao/ETCL/TAO_ETCL_Constraint.h"
+
+#include "orbsvcs/DsLogAdminC.h"
 
 #include "orbsvcs/Log/log_serv_export.h"
 
@@ -43,7 +46,7 @@ class TAO_Log_Property_Constraint;
  * @brief "ETCL" Visitor for the Log queries.
  */
 class TAO_Log_Serv_Export TAO_Log_Constraint_Visitor :
-  public TAO_ETCL_Constraint_Visitor
+  public ETCL_Constraint_Visitor
 {
 public:
 
@@ -56,7 +59,7 @@ public:
    * doesn't. If an error occurs during process, the traversal
    * automatically fails.
    */
-  CORBA::Boolean evaluate_constraint (TAO_ETCL_Constraint *root);
+  CORBA::Boolean evaluate_constraint (ETCL_Constraint *root);
 
   // = The overridden methods.
   int visit_literal (TAO_ETCL_Literal_Constraint *);

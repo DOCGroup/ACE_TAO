@@ -12,7 +12,7 @@ TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
     const char *constraints
   )
 {
-  if (TAO_ETCL_Interpreter::is_empty_string (constraints))
+  if (ETCL_Interpreter::is_empty_string (constraints))
     {
       // Root is deleted in the TAO_Interpreter's destructor.
       ACE_NEW_THROW_EX (this->root_,
@@ -22,7 +22,7 @@ TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
   else
   {
       // root_ is set in this base class call.
-      if (TAO_ETCL_Interpreter::build_tree (constraints) != 0)
+      if (ETCL_Interpreter::build_tree (constraints) != 0)
           throw DsLogAdmin::InvalidConstraint ();
     }
 }

@@ -1,8 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project : taolib {
-  after     += ETCL
-  libs      += TAO_ETCL
+project : tao_etcl_parser {
   tagchecks += Notify
 }
