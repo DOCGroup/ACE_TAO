@@ -2,7 +2,6 @@
 // $Id$
 
 #include "ace/MEM_Connector.h"
-#include "ace/OS_NS_netdb.h"
 
 ACE_RCSID(ace, MEM_Connector, "$Id$")
 
@@ -70,22 +69,15 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   ACE_TRACE ("ACE_MEM_Connector::connect");
 
   if (!this->address_.same_host (remote_sap))
-    {
-      char remote_hoststr[MAXHOSTNAMELEN+1] = "<unknown>";
-      remote_sap.get_host_name (remote_hoststr, MAXHOSTNAMELEN+1);
-      char local_hoststr[MAXHOSTNAMELEN+1] = "<unknown>";
-      this->address_.get_host_name (local_hoststr, MAXHOSTNAMELEN+1);
- 
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) MEM_Connector can't connect")
-                         ACE_TEXT ("to %s:%d which is not a local endpoint ")
-                         ACE_TEXT ("(local address is %s:%d)\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (remote_hoststr),
-                         remote_sap.get_port_number (),
-                         ACE_TEXT_CHAR_TO_TCHAR (local_hoststr),
-                         this->address_.get_port_number ()),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) MEM_Connector can't connect ")
+                       ACE_TEXT ("to %s:%d which is not a local endpoint ")
+                       ACE_TEXT ("(local address is %s:%d)\n"),
+                       ACE_TEXT_CHAR_TO_TCHAR (remote_sap.get_host_name ()),
+                       remote_sap.get_port_number (),
+                       ACE_TEXT_CHAR_TO_TCHAR (this->address_.get_host_name ()),
+                       this->address_.get_port_number ()),
+                      -1);
   else
     this->address_.set_port_number (remote_sap.get_port_number ());
 

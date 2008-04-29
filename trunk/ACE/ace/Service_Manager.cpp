@@ -11,7 +11,6 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_netdb.h"
 
 ACE_RCSID (ace,
            Service_Manager,
@@ -302,11 +301,10 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
       ACE_INET_Addr sa;
       if (this->client_stream_.get_remote_addr (sa) == -1)
         return -1;
-      char  hoststr[MAXHOSTNAMELEN+1] = "<unknow>";
-      sa.get_host_name (hoststr, MAXHOSTNAMELEN+1);
+
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("accepted from host %s at port %d\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (hoststr),
+                  ACE_TEXT ("accepted from host %C at port %d\n"),
+                  sa.get_host_name (),
                   sa.get_port_number ()));
     }
 
