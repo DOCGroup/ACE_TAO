@@ -157,6 +157,12 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
         case AST_PredefinedType::PT_ulong:
           this->pd_udisc_type = AST_Expression::EV_ulong;
           break;
+        case AST_PredefinedType::PT_longlong:
+          this->pd_udisc_type = AST_Expression::EV_longlong;
+          break;
+        case AST_PredefinedType::PT_ulonglong:
+          this->pd_udisc_type = AST_Expression::EV_ulonglong;
+          break;
         case AST_PredefinedType::PT_short:
           this->pd_udisc_type = AST_Expression::EV_short;
           break;
@@ -523,7 +529,12 @@ AST_Union::compute_default_value (void)
   // values of the discriminant type are covered by the cases.
 
   // Compute the total true "case" labels i.e., exclude the "default" case.
-  int total_case_members = 0;
+  ACE_UINT64 total_case_members = 0;
+
+  // In the case of a (unsigned) long long discriminant being fully used
+  // the total case count would actually overflow back to zero.
+  // This is 'end of days' programming but what the heck. We're here now.
+  bool first_case_found = false;
 
   // Instantiate a scope iterator.
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
@@ -542,6 +553,7 @@ AST_Union::compute_default_value (void)
               if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
                 {
                   ++total_case_members;
+                  first_case_found = true;
                 }
             }
         }
@@ -566,7 +578,7 @@ AST_Union::compute_default_value (void)
       break;
     case AST_Expression::EV_long:
     case AST_Expression::EV_ulong:
-      if ((unsigned int) total_case_members > ACE_UINT32_MAX)
+      if (total_case_members > ACE_UINT32_MAX)
         {
           this->default_value_.computed_ = 0;
         }
@@ -574,17 +586,13 @@ AST_Union::compute_default_value (void)
       break;
     case AST_Expression::EV_longlong:
     case AST_Expression::EV_ulonglong:
-      // Error for now.
-      this->default_value_.computed_ = -1;
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          ACE_TEXT ("(%N:%l) AST_Union::compute_default_value ")
-          ACE_TEXT ("- unimplemented discriminant type ")
-          ACE_TEXT ("(longlong or ulonglong)\n")
-        ),
-        -1
-      );
-      ACE_NOTREACHED (break;)
+      // We would wrap to 0 here - we are using a 64 bit count
+      if (first_case_found && total_case_members == 0)
+        {
+          // If anyone ever produces a "default clause is invalid here" error
+          // after passing through here I will buy them a a house.
+          this->default_value_.computed_ = 0;
+        }
     case AST_Expression::EV_char:
       if (total_case_members == ACE_OCTET_MAX + 1)
         {
@@ -621,7 +629,7 @@ AST_Union::compute_default_value (void)
 
         if (en != 0)
           {
-            if (total_case_members == en->member_count ())
+            if (total_case_members == (ACE_UINT64) en->member_count ())
               {
                 this->default_value_.computed_ = 0;
               }
@@ -706,8 +714,11 @@ AST_Union::compute_default_value (void)
       this->default_value_.u.enum_val = 0;
       break;
     case AST_Expression::EV_longlong:
+      this->default_value_.u.longlong_val = 0;
+      break;
     case AST_Expression::EV_ulonglong:
-      // Unimplemented.
+      this->default_value_.u.ulonglong_val = 0;
+      break;
     default:
       // Error caught earlier.
       break;
@@ -833,8 +844,27 @@ AST_Union::compute_default_value (void)
 
                           break;
                         case AST_Expression::EV_longlong:
+#if ! defined (ACE_LACKS_LONGLONG_T)
+                          if (this->default_value_.u.longlong_val
+                                == expr->ev ()->u.llval)
+                            {
+                              this->default_value_.u.longlong_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
+#endif
                         case AST_Expression::EV_ulonglong:
-                          // Unimplemented. right now - flag as error.
+#if ! defined (ACE_LACKS_LONGLONG_T)
+                          if (this->default_value_.u.ulonglong_val
+                                == expr->ev ()->u.ullval)
+                            {
+                              this->default_value_.u.ulonglong_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
+#endif
                         default:
                           // Error.
                           break;

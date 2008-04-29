@@ -361,7 +361,6 @@ TAO_OutStream::operator<< (const ACE_CDR::Long num)
   return *this;
 }
 
-#if defined (ACE_WIN64)
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::ULongLong num)
 {
@@ -381,7 +380,6 @@ TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
 
   return *this;
 }
-#endif /* ACE_WIN64 */
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const unsigned long num)
