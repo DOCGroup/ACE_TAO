@@ -226,6 +226,20 @@ sub Spawn ()
             $PerlACE::ProcessVX::VxDefGw = 0;
         }
 
+        my(@load_commands);
+        my(@unload_commands);
+        if (!$PerlACE::Static && !$PerlACE::VxWorks_RTP_Test) {
+          my $vxtest_file = $program . '.vxtest';
+          if (handle_vxtest_file($vxtest_file, \@load_commands, \@unload_commands)) {
+              @cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
+              push @cmds, @load_commands;
+              $cmdnr += scalar @load_commands;
+          } else {
+              print STDERR "ERROR: Cannot find <", $vxtest_file, ">\n";
+              return -1;
+          }
+        }
+
         @cmds[$cmdnr++] = 'cd "' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
@@ -239,18 +253,6 @@ sub Spawn ()
 
         if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
             @cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
-        }
-
-        my($vxtest);
-        my(@unload_commands);
-        if (!$PerlACE::Static && !$PerlACE::VxWorks_RTP_Test) {
-          if (handle_vxtest_file($program, \$vxtest, \@unload_commands)) {
-              @cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
-              @cmds[$cmdnr++] = '< ../' . $cwdrel . '/' . $vxtest;
-          } else {
-              print STDERR "ERROR: Cannot find <", $program, ".vxtest>\n";
-              return -1;
-          }
         }
 
         @cmds[$cmdnr++] = 'ld <'. $program . $PerlACE::ProcessVX::ExeExt;

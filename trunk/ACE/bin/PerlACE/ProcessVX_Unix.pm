@@ -232,14 +232,16 @@ sub Spawn ()
             $self->{SET_VX_DEFGW} = 0;
         }
 
-        my($vxtest);
+        my(@load_commands);
         my(@unload_commands);
         if (!$PerlACE::Static && !$PerlACE::VxWorks_RTP_Test) {
-          if (handle_vxtest_file($program, \$vxtest, \@unload_commands)) {
+          my $vxtest_file = $program . '.vxtest';
+          if (handle_vxtest_file($vxtest_file, \@load_commands, \@unload_commands)) {
               @cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
-              @cmds[$cmdnr++] = '< ../' . $cwdrel . '/' . $vxtest;
+              push @cmds, @load_commands;
+              $cmdnr += scalar @load_commands;
           } else {
-              print STDERR "ERROR: Cannot find <", $program, ".vxtest>\n";
+              print STDERR "ERROR: Cannot find <", $vxtest_file, ">\n";
               return -1;
           }
         }
