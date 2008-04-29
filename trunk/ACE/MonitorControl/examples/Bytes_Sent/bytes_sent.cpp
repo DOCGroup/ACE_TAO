@@ -43,7 +43,8 @@ public:
   }
 };
 
-int main (int /* argc */, char * /* argv */ [])
+int
+ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
   /// Set the timer for # of threads check at 2 sec.
   Monitor_Base *monitor =

@@ -41,7 +41,8 @@ public:
   }
 };
 
-int main (int /* argc */, char * /* argv */ [])
+int
+ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
   /// Set the timer for memory usage check at 2 sec.
   Monitor_Base *memory_usage_monitor =
