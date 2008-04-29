@@ -122,7 +122,8 @@ public:
       ACE_INT32 long_val;
       ACE_UINT32 ulong_val;
       ACE_UINT32 enum_val;
-      // TO-DO - handle (u)longlong types.
+      ACE_INT64 longlong_val;
+      ACE_UINT64 ulonglong_val;
     } u;
     long computed_;
     // computed == -1 => error condition
