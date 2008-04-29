@@ -9,7 +9,7 @@
  */
 //=============================================================================
 
-#include "ETCL_Constraint_Visitor.h"
+#include "ace/ETCL/ETCL_Constraint_Visitor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
