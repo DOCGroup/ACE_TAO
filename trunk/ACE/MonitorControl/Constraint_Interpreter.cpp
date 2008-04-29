@@ -6,7 +6,7 @@
 
 #include "ace/Log_Msg.h"
 
-#include "ETCL/ETCL_Constraint.h"
+#include "ace/ETCL/ETCL_Constraint.h"
 
 #include "MonitorControl/Constraint_Visitor.h"
 

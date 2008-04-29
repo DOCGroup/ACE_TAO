@@ -129,7 +129,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
         {
           for (unsigned long j = 0; j < 5050505; j++)
             {
-              (void) ACE::gcd (2419233733, 567715713);
+              (void) ACE::gcd (static_cast<u_long> (2419233733), 567715713);
             }
         }
 

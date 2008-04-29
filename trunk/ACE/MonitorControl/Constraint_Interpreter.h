@@ -23,7 +23,7 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ETCL/ETCL_Interpreter.h"
+#include "ace/ETCL/ETCL_Interpreter.h"
 
 #include "MonitorControl/MonitorControl_export.h"
 
