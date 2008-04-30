@@ -17,6 +17,7 @@
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Errno.h"
+#include "ace/Svc_Handler.h"
 #if defined (ACE_OPENVMS)
 # include "ace/Lib_Find.h"
 #endif
@@ -197,7 +198,7 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_ha
     result = -1;
 
   if (result == -1)
-    svc_handler->close (1);
+    svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
 
   return result;
 }
@@ -252,7 +253,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
     return this->inherited::activate_svc_handler (svc_handler, arg);
 
   if (result == -1)
-    svc_handler->close (1);
+    svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
 
   return result;
 }
@@ -354,7 +355,7 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
       ACE_Errno_Guard error(errno);
 
       // Close down handler to avoid memory leaks.
-      svc_handler->close (0);
+      svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
 
       return -1;
     }
@@ -777,7 +778,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
                                           entry) == -1)
             {
               // Close the svc handler.
-              potential_handler->close (0);
+              potential_handler->close (CLOSE_DURING_NEW_CONNECTION);
 
               return -1;
             }

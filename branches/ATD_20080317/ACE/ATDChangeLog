@@ -1,3 +1,13 @@
+Wed Apr 30 14:26:54 UTC 2008  ace  <elliott_c@ociweb.com>
+
+        * ace/Acceptor.cpp:
+        * ace/Connector.cpp:
+        * ace/Strategies_T.cpp:
+        * ace/Svc_Handler.h:
+
+          Added an enum for use within the call to close() on a service
+          handler.
+
 Mon Mar 31 15:46:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Acceptor.cpp:
