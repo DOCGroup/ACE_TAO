@@ -1,15 +1,25 @@
+Wed Apr 30 21:14:45 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.h:
+
+          Two of the backwards compatible iterators for 
+          ACE_Hash_Map_Manager incorrectly defined the iterator_category
+          trait based on the container_type, which does not have an 
+          iterator_category. Now the trait is defined in terms of its
+          base class. This resolved Bugzilla Bug #3314.
+          
 Wed Apr 30 16:49:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/PacketsSentMonitor.h:
         * MonitorControl/BytesReceivedMonitor.h:
         * MonitorControl/PacketsReceivedMonitor.h:
         * MonitorControl/BytesSentMonitor.h:
-        
+
           Added include of export header file, since it's not
           pulled in indirectly on Solaris builds.
-        
+
         * MonitorControl/WindowsMultiInstanceMonitor.cpp:
-        
+
           Fixed signed/unsigned comparison warnings on wchar builds.
 
 Wed Apr 30 16:24:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -20,7 +30,7 @@ Wed Apr 30 16:24:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * MonitorControl/MemoryUsageMonitor.cpp:
         * MonitorControl/NumThreadsMonitor.cpp:
         * MonitorControl/LinuxNetworkInterfaceMonitor.cpp:
-        
+
           Fixed wchar build errors.
 
 Wed Apr 30 13:49:52 UTC 2008  Steve Huston  <shuston@riverace.com>
