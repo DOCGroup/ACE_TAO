@@ -1,3 +1,10 @@
+Wed Apr 30 13:49:52 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/UUID.cpp (get_timestamp_and_clocksequence): Case clock sequence
+          value using ACE_UINT16 instead of u_char to prevent duplicates
+          when many UUIDs are generated quickly. Thanks to Wim van den Boogaard
+          for this fix. Resolves Bugzilla #3313.
+
 Tue Apr 29 19:52:48 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Proactor.cpp: Simplify the timer_handler_ task spawn and
