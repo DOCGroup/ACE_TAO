@@ -33,7 +33,7 @@ namespace ACE
                                                      paths,
                                                      &paths_size);
 
-      if (PDH_MORE_DATA == this->status_)
+      if (PDH_MORE_DATA == static_cast<DWORD> (this->status_))
         {
           ++paths_size;
           GlobalFree (paths);
@@ -44,7 +44,7 @@ namespace ACE
                                                          &paths_size);
         }
 
-      if (PDH_CSTATUS_VALID_DATA != this->status_)
+      if (PDH_CSTATUS_VALID_DATA != static_cast<DWORD> (this->status_))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%s: PdhExpandCounterPath failed\n"),
