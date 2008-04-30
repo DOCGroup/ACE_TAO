@@ -1,3 +1,10 @@
+Wed Apr 30 11:57:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        
+          Restored the original order of included header files to
+          eliminate template-related compile errors with gcc.
+
 Wed Apr 30 11:55:04 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Portable_Interceptors/PICurrent/run_test.pl:
