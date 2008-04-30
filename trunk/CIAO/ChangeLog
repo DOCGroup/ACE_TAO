@@ -1,3 +1,9 @@
+Wed Apr 30 22:16:13 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * CIAO_TAO_DAnCE.mwc:
+        
+          The location of ETCL moved from $ACE_ROOT to $ACE_ROOT/ace.
+
 Mon Apr 28 14:27:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Context_Impl_T.h
@@ -44,7 +50,7 @@ Mon Apr 28 14:27:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 23 01:53:32 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.6.4 released.
+        * CIAO version 0.6.4 released.
 
 Thu Mar 27 18:51:13 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
