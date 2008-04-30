@@ -1,10 +1,16 @@
+Wed Apr 30 11:51:40 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC/config/tao_vc8warnings.mpb:
+
+          Added support for vc9.
+
 Tue Apr 29 19:58:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/ETCL.mpc:
         * orbsvcs/orbsvcs/ETCL.rc:
-        
+
           Removed these files, overlooked in checkin
-          
+
           Tue Apr 29 19:55:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Apr 29 19:55:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -14,8 +20,8 @@ Tue Apr 29 19:55:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
           Removed this directory and its contents, it is replaced
           by $TAO_ROOT/tao/ETCL. Some code has been factored to
           $ACE_ROOT/ace/ETCL and some identifiers have changed,
-          but no intentional changes have been made to the behavior.       
-        
+          but no intentional changes have been made to the behavior.
+
         * MPC/config/etcl.mpb:
         * TAO_ACE.mwc:
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
@@ -30,7 +36,7 @@ Tue Apr 29 19:55:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/ETCL/TAO_ETCL_Constraint.h:
         * tao/ETCL/TAO_ETCL.mpc:
 
-          Changes to integrate the replacement of 
+          Changes to integrate the replacement of
           $TAO_ROOT/orbsvcs/orbsvcs/ETCL with
           $TAO_ROOT/tao/ETCL and $ACE_ROOT/ace/ETCL.
 
