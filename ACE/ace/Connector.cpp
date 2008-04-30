@@ -145,7 +145,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
 
   // Close Svc_Handler.
   if (svc_handler != 0)
-    svc_handler->close (0);
+    svc_handler->close (NORMAL_CLOSE_OPERATION);
 
   return retval;
 }
@@ -233,7 +233,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::activate_svc_handler (SVC_HAND
     {
       // Make sure to close down the <svc_handler> to avoid descriptor
       // leaks.
-      svc_handler->close (1);
+      svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
       return -1;
     }
   else
@@ -431,10 +431,10 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_i
       if (sh_copy == 0)
         {
           if (sh)
-            sh->close (0);
+            sh->close (CLOSE_DURING_NEW_CONNECTION);
         }
       else if (*sh_copy)
-        (*sh_copy)->close (0);
+        (*sh_copy)->close (CLOSE_DURING_NEW_CONNECTION);
     }
 
   return -1;
@@ -571,7 +571,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::nonblocking_connect
  reactor_registration_failure:
   // Close the svc_handler
 
-  sh->close (0);
+  sh->close (CLOSE_DURING_NEW_CONNECTION);
 
   return -1;
 }
@@ -617,7 +617,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::initialize_svc_handler
         this->activate_svc_handler (svc_handler);
       else // do the svc handler close below...
 #endif /* ACE_WIN32 */
-        svc_handler->close (0);
+        svc_handler->close (NORMAL_CLOSE_OPERATION);
     }
 }
 
@@ -692,7 +692,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
       this->cancel (svc_handler);
 
       // Close the associated Svc_Handler.
-      svc_handler->close (0);
+      svc_handler->close (NORMAL_CLOSE_OPERATION);
     }
 
   return 0;
