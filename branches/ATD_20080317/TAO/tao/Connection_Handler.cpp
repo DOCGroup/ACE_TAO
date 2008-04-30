@@ -10,6 +10,7 @@
 #include "ace/SOCK.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/sys/os_socket.h"
+#include "ace/Svc_Handler.h"
 
 //@@ CONNECTION_HANDLER_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
 
@@ -442,8 +443,9 @@ TAO_Connection_Handler::close_handler (u_long flags)
   transport->purge_entry();
 
   // We only need to remove the reference from the transport if there
-  // were connections pending at the time that the handler is closed.
-  if (pending || ACE_BIT_DISABLED(flags, 1))
+  // were connections pending at the time that the handler is closed or
+  // the handler is being closed during a new connection.
+  if (pending || ACE_BIT_DISABLED(flags, CLOSE_DURING_NEW_CONNECTION))
     transport->remove_reference ();
 
   return 0;
