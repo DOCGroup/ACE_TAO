@@ -28,12 +28,14 @@ namespace ACE
       /// from subsequent readings to get bytes sent since we started
       /// monitoring.
       char buf[1024];
-      FILE* fp = ACE_OS::fopen ("/proc/net/dev", "r");
+      FILE* fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
+                                ACE_TEXT ("r"));
 
       if (fp == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "bytes sent - opening /proc/net/dev failed\n"));
+                      ACE_TEXT ("bytes sent - opening ")
+                      ACE_TEXT ("/proc/net/dev failed\n")));
           return;
         }
 
@@ -60,12 +62,14 @@ namespace ACE
     LinuxNetworkInterfaceMonitor::lin_update (void)
     {
       char buf[1024];
-      FILE* fp = ACE_OS::fopen ("/proc/net/dev", "r");
+      FILE* fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
+                                ACE_TEXT ("r"));
 
       if (fp == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "bytes sent - opening /proc/net/dev failed\n"));
+                      ACE_TEXT ("bytes sent - opening ")
+                      ACE_TEXT ("/proc/net/dev failed\n")));
           return;
         }
 

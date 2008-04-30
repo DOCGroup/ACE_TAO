@@ -35,7 +35,9 @@ namespace ACE
 
       if (ERROR_SUCCESS != this->status_)
         {
-          ACE_ERROR ((LM_DEBUG, ACE_TEXT ("PdhAddCounter %s failed\n"), path));
+          ACE_ERROR ((LM_DEBUG,
+                      ACE_TEXT ("PdhAddCounter %s failed\n"),
+                      path));
         }
     }
 

@@ -41,12 +41,14 @@ namespace ACE
       /// Stores value and timestamp with thread-safety.
       this->receive (this->value_.doubleValue);
 #elif defined (linux)
-      this->file_ptr_ = ACE_OS::fopen ("/proc/self/status", "r");
+      this->file_ptr_ = ACE_OS::fopen (ACE_TEXT ("/proc/self/status"),
+                                       ACE_TEXT ("r"));
 
       if (this->file_ptr_ == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("CPU load - opening /proc/self/status failed\n")));
+                      ACE_TEXT ("CPU load - opening ")
+                      ACE_TEXT ("/proc/self/status failed\n")));
           return;
         }
 
