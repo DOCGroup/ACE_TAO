@@ -2664,7 +2664,17 @@ TAO_Transport::post_open (size_t id)
       // If the wait strategy wants us to be registered with the reactor
       // then we do so. If registeration is required and it succeeds,
       // #REFCOUNT# becomes two.
-      if (this->wait_strategy ()->register_handler () != 0)
+      if (this->wait_strategy ()->register_handler () == 0)
+        {
+          TAO_Flushing_Strategy *flushing_strategy =
+            this->orb_core ()->flushing_strategy ();
+
+          if (flushing_strategy == 0)
+            throw CORBA::INTERNAL ();
+
+          (void) flushing_strategy->schedule_output (this);
+        }
+      else
         {
           // Registration failures.
 
