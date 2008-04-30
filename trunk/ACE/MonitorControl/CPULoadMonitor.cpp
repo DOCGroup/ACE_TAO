@@ -106,11 +106,13 @@ namespace ACE
     void
     CPULoadMonitor::access_proc_stat (unsigned long *which_idle)
     {
-      this->file_ptr_ = ACE_OS::fopen ("/proc/stat", "r");
+      this->file_ptr_ = ACE_OS::fopen (ACE_TEXT ("/proc/stat"),
+                                       ACE_TEXT ("r"));
 
       if (this->file_ptr_ == 0)
         {
-          ACE_ERROR ((LM_ERROR, "CPU load - opening /proc/stat failed\n"));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("CPU load - opening /proc/stat failed\n")));
           return;
         }
 
@@ -151,7 +153,8 @@ namespace ACE
 
       if (this->kstats_ == 0)
         {
-          ACE_ERROR ((LM_ERROR, "opening kstats file failed\n"));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("opening kstats file failed\n")));
           return;
         }
 
@@ -207,7 +210,8 @@ namespace ACE
               if (! this->kstat_id_ > 0)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "kstat chain update returned null id\n"));
+                              ACE_TEXT ("kstat chain update ")
+                              ACE_TEXT ("returned null id\n")));
                   return;
                 }
             }
@@ -222,7 +226,8 @@ namespace ACE
 
       if (status != 0)
         {
-          ACE_ERROR ((LM_ERROR, "closing kstats file failed\n"));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("closing kstats file failed\n")));
         }
     }
 #endif

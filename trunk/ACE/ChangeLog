@@ -1,3 +1,14 @@
+Wed Apr 30 16:24:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/CPULoadMonitor.cpp:
+        * MonitorControl/WindowsMonitor.cpp:
+        * MonitorControl/WindowsMultiInstanceMonitor.cpp:
+        * MonitorControl/MemoryUsageMonitor.cpp:
+        * MonitorControl/NumThreadsMonitor.cpp:
+        * MonitorControl/LinuxNetworkInterfaceMonitor.cpp:
+        
+          Fixed wchar build errors.
+
 Wed Apr 30 13:49:52 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/UUID.cpp (get_timestamp_and_clocksequence): Case clock sequence
