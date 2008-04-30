@@ -9,6 +9,7 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/PI/PI.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (PICurrent,
            server,
@@ -21,23 +22,51 @@ extern PortableInterceptor::SlotId slot_id;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
-  int c;
+  bool error = false;
+  for(int i = 1; i < argc; i++)
+    {
+      if (ACE_OS::strncasecmp(argv[i], "-ORB", 4) != 0)
+        {
+          switch (argv[i][1])
+            {
+              case 'o':
+              i++;
+              if (i < argc)
+                ior_output_file = argv[i];
+              else
+                error = true;
+              break;
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv[0]),
-                          -1);
-      }
+              case 't':
+#if defined (ACE_HAS_THREADS)
+              argv[i] = const_cast<char*> ("-ORBSvcConfDirective");
+#endif /* ACE_HAS_THREADS */
+              i++;
+              if (i < argc)
+#if defined (ACE_HAS_THREADS)
+                argv[i] = const_cast<char*> ("static Server_Strategy_Factory \"-ORBConcurrency thread-per-connection\"");
+#else
+                ACE_DEBUG ((LM_DEBUG, "NOTE: Non-threaded build.  "
+                                      "Defaulting to single threaded.\n"));
+#endif /* ACE_HAS_THREADS */
+              else
+                error = true;
+              break;
+
+              default:
+                error = true;
+            }
+        }
+    }
+
+  if (error)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Usage: %s "
+                       "-o <iorfile> "
+                       "-t <1> "
+                       "\n",
+                       argv[0]),
+                      -1);
 
   // Indicates sucessful parsing of the command line
   return 0;
@@ -48,6 +77,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      if (parse_args (argc, argv) != 0)
+        return -1;
+
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
@@ -78,9 +110,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
-
-      if (parse_args (argc, argv) != 0)
-        return -1;
 
       obj = orb->resolve_initial_references ("PICurrent");
 
