@@ -1,3 +1,11 @@
+Wed Apr 30 22:01:10 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/RW_Process_Mutex_Test.cpp: New test for proper functioning
+          of ACE_RW_Process_Mutex.
+
+        * tests/tests.mpc:
+        * tests/run_test.lst: Add RW_Process_Mutex_Test.
+
 Wed Apr 30 21:14:45 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * ace/Hash_Map_Manager_T.h:
