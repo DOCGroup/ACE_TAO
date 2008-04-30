@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ace/ETCL/ETCL_y.h"
+#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 
-#include "tao/CDR.h"
+#include "ace/ETCL/ETCL_y.h"
 
 #include "tao/ETCL/TAO_ETCL_Constraint.h"
 
@@ -15,8 +15,7 @@
 #include "tao/DynamicAny/DynAnyUtils_T.h"
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-
-#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
+#include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
