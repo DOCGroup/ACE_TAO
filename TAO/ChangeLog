@@ -1,3 +1,15 @@
+Wed Apr 30 11:55:04 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Portable_Interceptors/PICurrent/run_test.pl:
+        * tests/Portable_Interceptors/PICurrent/server.cpp:
+
+          Modified this test to use -SvcConfDirective instead of creating an
+          svc.conf.  For single-threaded builds, the thread-per-connection
+          setting does not work.  So, when threads are enabled add the
+          -SvcConfDirective to enable thread-per-connection.  When threads
+          are disabled, issue a notice and continue on in single-threaded
+          mode.
+
 Wed Apr 30 11:51:40 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * MPC/config/tao_vc8warnings.mpb:

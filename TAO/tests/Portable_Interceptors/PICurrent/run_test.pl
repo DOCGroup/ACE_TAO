@@ -15,13 +15,14 @@ unlink $cvsfile;
 
 sub DoTest
 {
+  my $opt = shift;
   $status = 0;
 
   if (PerlACE::is_vxworks_test()) {
-      $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
+      $SV = new PerlACE::ProcessVX ("server", "-o test.ior $opt");
   }
   else {
-      $SV = new PerlACE::Process ("server", "-o $file");    
+      $SV = new PerlACE::Process ("server", "-o $file $opt");    
   }
   $CL = new PerlACE::Process ("client", "-k file://$file");
 
@@ -53,23 +54,18 @@ sub DoTest
   return $status;
 }
 
-print STDERR "\n\n==== Without svc.conf (single-threaded)\n";
+print STDERR "\n\n==== single-threaded\n";
 $status= DoTest();
 if (0 != $status) {
    exit $status
 }
 
-$line= "static Server_Strategy_Factory \"-ORBConcurrency thread-per-connection\"\n";
-open ($fh, '>', $cvsfile);
-syswrite ($fh, $line);
-close ($fh);
-print STDERR "\n\n==== With svc.conf (thread-per-connection)\n";
-$status= DoTest();
+print STDERR "\n\n==== thread-per-connection\n";
+$status= DoTest('-t 1');
 if (0 != $status) {
    exit $status
 }
 
 unlink $file;
-unlink $cvsfile;
 
 exit $status;
