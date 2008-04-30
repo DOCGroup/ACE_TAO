@@ -593,6 +593,8 @@ AST_Union::compute_default_value (void)
           // after passing through here I will buy them a a house.
           this->default_value_.computed_ = 0;
         }
+
+      break;
     case AST_Expression::EV_char:
       if (total_case_members == ACE_OCTET_MAX + 1)
         {
