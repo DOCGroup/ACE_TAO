@@ -485,7 +485,7 @@ namespace ACE_Utils
     // Account for the clock being set back. Increment the clock /
     // sequence.
     if (timestamp <= time_last_)
-      uuid_state_.clock_sequence = static_cast<u_char> ((uuid_state_.clock_sequence + 1) & ACE_UUID_CLOCK_SEQ_MASK);
+      uuid_state_.clock_sequence = static_cast<ACE_UINT16> ((uuid_state_.clock_sequence + 1) & ACE_UUID_CLOCK_SEQ_MASK);
 
     // If the system time ticked since the last UUID was
     // generated. Set / the clock sequence back.
