@@ -968,6 +968,14 @@ project(Reverse Lock Test) : acetest {
   }
 }
 
+project(RW Process Mutex Test) : acetest {
+  avoids += ace_for_tao
+  exename = RW_Process_Mutex_Test
+  Source_Files {
+    RW_Process_Mutex_Test.cpp
+  }
+}
+
 project(Semaphore Test) : acetest {
   avoids += ace_for_tao
   exename = Semaphore_Test
