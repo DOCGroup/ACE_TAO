@@ -1,3 +1,9 @@
+Wed Apr 30 14:28:52 UTC 2008  tao/  <elliott_c@ociweb.com>
+
+        * tao/Connection_Handler.cpp:
+
+          Use the enum in checking the close value instead of a magic number.
+
 Wed Apr 30 14:24:01 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Transport.cpp:
