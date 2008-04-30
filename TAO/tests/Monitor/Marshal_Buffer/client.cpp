@@ -4,6 +4,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Task.h"
 #include "ace/streams.h"
+#include "ace/CORBA_macros.h"
 
 #include "MonitorControl/MonitorControl.h"
 

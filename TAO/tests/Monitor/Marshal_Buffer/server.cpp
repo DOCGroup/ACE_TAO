@@ -2,6 +2,7 @@
 
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/CORBA_macros.h"
 
 const char *ior_output_file = "test.ior";
 
@@ -11,7 +12,6 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
