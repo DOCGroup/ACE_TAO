@@ -1,5 +1,4 @@
 // $Id$
-#define ENABLE_MONITORS
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"

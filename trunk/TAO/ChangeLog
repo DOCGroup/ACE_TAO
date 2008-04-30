@@ -1,3 +1,10 @@
+Wed Apr 30 17:01:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+        * tests/Monitor/Marshal_Buffer/marshal_buffer.mpc:
+        
+          Removed ENABLE_MONITORS macro which is no longer used.
+
 Wed Apr 30 12:13:59 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/ast/ast_union.cpp:
