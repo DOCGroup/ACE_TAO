@@ -1,7 +1,18 @@
+Wed Apr 30 12:13:59 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/ast/ast_union.cpp:
+
+          Added missing break.
+
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+
+          Ugly macros to get this to compile portably.
+
 Wed Apr 30 11:57:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
-        
+
           Restored the original order of included header files to
           eliminate template-related compile errors with gcc.
 
