@@ -47,7 +47,7 @@ namespace ACE
       if (PDH_CSTATUS_VALID_DATA != this->status_)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s: PdhExpandCounterPath failed\n",
+                      ACE_TEXT ("%s: PdhExpandCounterPath failed\n"),
                       wildcard_path));
         }
 
