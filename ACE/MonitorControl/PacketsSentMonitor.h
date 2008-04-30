@@ -29,6 +29,8 @@
 #include "MonitorControl/LinuxNetworkInterfaceMonitor.h"
 #endif
 
+#include "MonitorControl/MonitorControl_export.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
