@@ -1,3 +1,12 @@
+Wed Apr 30 17:16:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+        * tests/Monitor/Marshal_Buffer/server.cpp:
+        
+          Added include to pull in ACE_PRINT_EXCEPTION and 
+          ACE_ANY_EXCEPTION macros, which were not recognized
+          in some Debian builds.
+
 Wed Apr 30 17:01:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Monitor/Marshal_Buffer/client.cpp:
