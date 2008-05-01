@@ -1,3 +1,9 @@
+Thu May  1 18:32:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+        * tests/Monitor/Marshal_Buffer/server.cpp:
+          Don't use deprecated macros
+
 Thu May  1 18:27:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ETCL/TAO_ETCL_Constraint.cpp:

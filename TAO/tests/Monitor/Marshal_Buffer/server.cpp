@@ -58,10 +58,9 @@ main (int argc, char *argv[])
       root_poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Server: exception caught - ");
+      ex._tao_print_exception ("Server: exception caught:");
       return 1;
     }
 
