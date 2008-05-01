@@ -8,8 +8,6 @@ workspace {
   $(ACE_ROOT)/ACEXML/parser/parser
   $(ACE_ROOT)/ACEXML/apps/svcconf
   $(ACE_ROOT)/contrib
-  $(ACE_ROOT)/ace/ETCL
-  $(ACE_ROOT)/MonitorControl
   $(TAO_ROOT)/tao
   $(TAO_ROOT)/TAO_IDL
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent.mpc
