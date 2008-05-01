@@ -1,3 +1,10 @@
+Thu May  1 17:31:01 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp: Removed an assert guarding the case when
+        the current thread has no associated configuration context. Added
+        code that would initialize the thread's configuration context with
+        the global, instead. This addresses bug# 3315.
+
 Thu May  1 17:11:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/ace.mwc:
@@ -51,12 +58,12 @@ Thu May  1 15:27:25 UTC 2008  Steve Huston  <shuston@riverace.com>
 Thu May  1 14:47:33 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/*:
-        
+
           Removed this directory and moved its contents to
           $ACE_ROOT/examples/Monitor.
-          
+
         * bin/MakeProjectCreator/config/acelib.mpb:
-        
+
           Cosmetic changes.
 
 Thu May  1 14:37:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>

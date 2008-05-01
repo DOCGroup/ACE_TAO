@@ -453,8 +453,24 @@ ACE_Service_Gestalt*
 ACE_Service_Config::current (void)
 {
   void* temp = ACE_Service_Config::singleton()->threadkey_.get ();
-  ACE_ASSERT (temp != 0);
+  if (temp == 0) {
+
+    // The most likely reason is that the current thread was spawned
+    // by some native primitive, like pthreads or Windows API - not
+    // from ACE. This is perfectly legal for callers who are not, or
+    // do not need to be ACE-aware. Such callers must have no
+    // expectation that the pluggable, multi-context configuration
+    // support will work - they would always get the global context,
+    // because at this point there is no information what the "parent"
+    // thread's configuration context was.
+
+    temp = global();
+    singleton()->threadkey_.set (temp);
+  }
+
   return static_cast<ACE_Service_Gestalt*> (temp);
+
+
 }
 
 /// A mutator to set the "current" (TSS) gestalt instance.
