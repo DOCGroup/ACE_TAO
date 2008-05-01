@@ -24,10 +24,10 @@
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 #if defined (ACE_WIN32)
-#include "MonitorControl/WindowsMonitor.h"
+#include "ace/MonitorControl/WindowsMonitor.h"
 #endif
 
-#include "MonitorControl/MonitorControl_export.h"
+#include "ace/MonitorControl/MonitorControl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

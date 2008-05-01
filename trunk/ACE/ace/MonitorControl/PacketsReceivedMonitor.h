@@ -24,12 +24,12 @@
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 #if defined (ACE_WIN32)
-#include "MonitorControl/WindowsMultiInstanceMonitor.h"
+#include "ace/MonitorControl/WindowsMultiInstanceMonitor.h"
 #elif defined (linux)
-#include "MonitorControl/LinuxNetworkInterfaceMonitor.h"
+#include "ace/MonitorControl/LinuxNetworkInterfaceMonitor.h"
 #endif
 
-#include "MonitorControl/MonitorControl_export.h"
+#include "ace/MonitorControl/MonitorControl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
