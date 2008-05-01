@@ -1,6 +1,6 @@
 // $Id$
 
-#include "MonitorControl/MonitorGroup.h"
+#include "ace/MonitorControl/MonitorGroup.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 

@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "MonitorControl/WindowsMonitor.h"
+#include "ace/MonitorControl/WindowsMonitor.h"
 
 #if defined (ACE_WIN32)
 

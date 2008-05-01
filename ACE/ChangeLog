@@ -1,3 +1,24 @@
+Thu May  1 17:05:37 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/MonitorControl/PacketsSentMonitor.h:
+        * ace/MonitorControl/WindowsMultiInstanceMonitor.cpp:
+        * ace/MonitorControl/WindowsMonitor.cpp:
+        * ace/MonitorControl/PacketsReceivedMonitor.cpp:
+        * ace/MonitorControl/MonitorGroup.h:
+        * ace/MonitorControl/MonitorQuery.h:
+        * ace/MonitorControl/NumThreadsMonitor.cpp:
+        * ace/MonitorControl/PacketsSentMonitor.cpp:
+        * ace/MonitorControl/MonitorGroup.cpp:
+        * ace/MonitorControl/WindowsMultiInstanceMonitor.h:
+        * ace/MonitorControl/WindowsMonitor.h:
+        * ace/MonitorControl/MonitorControl_utils.h:
+        * ace/MonitorControl/MonitorQuery.cpp:
+        * ace/MonitorControl/PacketsReceivedMonitor.h:
+        * ace/MonitorControl/NumThreadsMonitor.h:
+
+          Changed header includes to be consistently relative
+          to $ACE_ROOT.
+
 Thu May  1 16:11:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/*:

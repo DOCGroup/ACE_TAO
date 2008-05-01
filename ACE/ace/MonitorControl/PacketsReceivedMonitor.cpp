@@ -1,6 +1,6 @@
 // $Id$
 
-#include "MonitorControl/PacketsReceivedMonitor.h"
+#include "ace/MonitorControl/PacketsReceivedMonitor.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 

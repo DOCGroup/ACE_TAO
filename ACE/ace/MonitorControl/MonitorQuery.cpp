@@ -4,9 +4,9 @@
 #include "ace/Monitor_Base.h"
 #include "ace/Monitor_Control_Action.h"
 
-#include "MonitorControl/MonitorQuery.h"
-#include "MonitorControl/Constraint_Interpreter.h"
-#include "MonitorControl/Constraint_Visitor.h"
+#include "ace/MonitorControl/MonitorQuery.h"
+#include "ace/MonitorControl/Constraint_Interpreter.h"
+#include "ace/MonitorControl/Constraint_Visitor.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
