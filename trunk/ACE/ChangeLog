@@ -1,3 +1,9 @@
+Thu May  1 22:35:17 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/MonitorControl/MonitorControl.mpc:
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+          Avoid wince - it lacks the needed PDH capability.
+
 Thu May  1 18:27:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MonitorControl/MonitorControl.mpc:
