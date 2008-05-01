@@ -1,7 +1,13 @@
+Thu May  1 00:48:38 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * CIAO_TAO.mwc:
+
+          The location of ETCL moved from $ACE_ROOT to $ACE_ROOT/ace.
+
 Wed Apr 30 22:16:13 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
-        
+
           The location of ETCL moved from $ACE_ROOT to $ACE_ROOT/ace.
 
 Mon Apr 28 14:27:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
