@@ -4,6 +4,11 @@ Thu May  1 15:27:25 UTC 2008  Steve Huston  <shuston@riverace.com>
           of 50,000 instead of 100,000, blocks. The test is timing out on a
           number of platforms.
 
+        * tests/RW_Process_Mutex_Test.cpp: Fix signed/unsigned warnings and
+          change the default lock name to something other than the program's
+          name. Using the program name produces "text file busy" when
+          attempting a file lock on it... doh...
+
 Thu May  1 14:47:33 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/*:

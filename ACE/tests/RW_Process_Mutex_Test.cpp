@@ -145,7 +145,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("c:n:p:"));
 
-  mutex_name.set ("RW_Process_Mutex_Test");    // Default name
+  mutex_name.set ("RW_Process_Mutex_Test.lock");    // Default name
   int c;
   while ((c = get_opt ()) != -1)
     switch (c)
@@ -461,7 +461,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // lock.
       Child writer;
       Child readers[Nr_Processes - 1];
-      size_t i;
+      int i;
 
       for (i = 0; i < Nr_Processes; i++)
         {
@@ -469,13 +469,13 @@ run_main (int argc, ACE_TCHAR *argv[])
           ACE_Process_Options options;
           options.command_line (format,
                                 argv[0],
-                                (int)i,
+                                i,
                                 (unsigned int)me.get_port_number (),
                                 mutex_name.c_str ());
           if (child->spawn (options) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("spawn of child %B %p\n"),
+                                 ACE_TEXT ("spawn of child %d %p\n"),
                                  i,
                                  ACE_TEXT ("failed")),
                                 -1);
@@ -483,7 +483,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           else
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Child process %B has pid = %d.\n"),
+                          ACE_TEXT ("Child process %d has pid = %d.\n"),
                           i,
                           (int)(child->getpid ())));
             }
@@ -539,7 +539,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               // See if the child has exited.
               int wait_result = children[i]->wait (poll, &child_status);
               if (wait_result == -1)
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("Wait for child %B, %p\n"),
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("Wait for child %d, %p\n"),
                             i, ACE_TEXT ("error")));
               else if (wait_result != 0)
                 {
@@ -581,7 +581,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       // And there should be some overlap between readers.
       bool reader_overlap = false;
-      for (int i = 0; i < Nr_Processes - 1; ++i)
+      for (i = 0; i < Nr_Processes - 1; ++i)
         {
           // Just compare to those higher, else it compares the same ones,
           // only in reverse.
