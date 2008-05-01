@@ -3,6 +3,7 @@
 
 project(MonitorControl) : acelib, ace_etcl_parser, ace_output, install {
   dynamicflags += MONITORCONTROL_BUILD_DLL
+  sharedname   = MonitorControl
 
   Source_Files {
     AutoUpdateStarter.cpp
