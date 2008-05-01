@@ -4,7 +4,7 @@
 #include "ace/Monitor_Control_Action.h"
 
 #include "MonitorControl/MonitorControl.h"
-#include "MonitorControl/examples/MC_Test_Utilities.h"
+#include "examples/Monitor/MC_Test_Utilities.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
 
