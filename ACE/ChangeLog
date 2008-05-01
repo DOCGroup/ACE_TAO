@@ -1,3 +1,9 @@
+Thu May  1 17:11:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/ace.mwc:
+        
+          Added MonitorControl directory to the workspace.
+
 Thu May  1 17:05:37 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/MonitorControl/PacketsSentMonitor.h:
