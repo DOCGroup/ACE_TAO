@@ -145,7 +145,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("c:n:p:"));
 
-  mutex_name.set ("RW_Process_Mutex_Test.lock");    // Default name
+  mutex_name.set (ACE_TEXT ("RW_Process_Mutex_Test.lock"));    // Default name
   int c;
   while ((c = get_opt ()) != -1)
     switch (c)
