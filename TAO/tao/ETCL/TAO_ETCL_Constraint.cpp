@@ -10,10 +10,10 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
-#include "TAO_ETCL_Constraint.h"
+#include "tao/ETCL/TAO_ETCL_Constraint.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "TAO_ETCL_Constraint.inl"
+#include "tao/ETCL/TAO_ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

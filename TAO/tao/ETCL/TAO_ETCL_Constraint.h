@@ -22,7 +22,7 @@
 
 #include "tao/AnyTypeCode/Any_Impl.h"
 
-#include "tao_etcl_export.h"
+#include "tao/ETCL/tao_etcl_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
