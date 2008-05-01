@@ -40,7 +40,7 @@ Bug_2659_Regression_Test: !ST !VxWorks64 !VxWorks65
 Bug_2653_Regression_Test: !ST
 Bug_2815_Regression_Test
 Bug_2820_Regression_Test
-Bug_2980_Regression_Test: !STATIC !MSVC !VxWorks !LynxOS !WCHAR
+Bug_2980_Regression_Test: !STATIC !Win32 !VxWorks !LynxOS !WCHAR
 Bug_3102_Regression_Test
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
