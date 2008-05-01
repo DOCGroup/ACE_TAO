@@ -13,7 +13,7 @@
 #include "testC.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
-  
+
 const char *ior_input_file = "file://test.ior";
 const char *monitor_output_file = "monitor.ior";
 
@@ -119,7 +119,7 @@ main (int argc, char *argv[])
       ACE_OS::sleep (15);
 
       STOP_PERIODIC_MONITORS;
-      
+
       bytes_sent_monitor->remove_ref ();
       cpu_load_monitor->remove_ref ();
       memory_usage_monitor->remove_ref ();
@@ -127,10 +127,9 @@ main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client: exception caught - ");
+      ex._tao_print_exception ("Client: exception caught:");
       return 1;
     }
 
