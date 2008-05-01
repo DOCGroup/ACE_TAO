@@ -67,7 +67,6 @@ CONTROLLED_FILES = \
         apps \
         bin \
 	configure.ac \
-	ETCL \
         lib \
 	MPC \
         docs \
