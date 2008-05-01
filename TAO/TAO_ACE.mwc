@@ -8,7 +8,6 @@ workspace {
   $(ACE_ROOT)/ACEXML/parser/parser
   $(ACE_ROOT)/ACEXML/apps/svcconf
   $(ACE_ROOT)/Kokyu/Kokyu.mpc
-  $(ACE_ROOT)/MonitorControl/MonitorControl.mpc
   $(ACE_ROOT)/protocols
   tao
   TAO_IDL
