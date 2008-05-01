@@ -3,7 +3,7 @@
 #include "ace/Date_Time.h"
 #include "ace/streams.h"
 
-#include "MonitorControl/examples/MC_Test_Utilities.h"
+#include "examples/Monitor/MC_Test_Utilities.h"
 
 void
 MC_Test_Utilities::display_timestamp (

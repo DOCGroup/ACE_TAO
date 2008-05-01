@@ -3,7 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include "MonitorControl/MonitorControl.h"
-#include "MonitorControl/examples/MC_Test_Utilities.h"
+#include "examples/Monitor/MC_Test_Utilities.h"
 
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
@@ -18,10 +18,10 @@ public:
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::MonitorControl::Monitor_Base *memory_monitor =
-      mgr->admin ().monitor_point ("OS/Memory/TotalUsage");
+    ACE::MonitorControl::Monitor_Base *cpu_monitor =
+      mgr->admin ().monitor_point ("OS/Processor/CPULoad");
 
-    if (memory_monitor != 0)
+    if (cpu_monitor != 0)
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
@@ -30,11 +30,11 @@ public:
             ACE_OS::sleep (2);
 
             Monitor_Control_Types::Data data;
-            memory_monitor->retrieve (data);
-            MC_Test_Utilities::display_memory_usage (data);
+            cpu_monitor->retrieve (data);
+            MC_Test_Utilities::display_cpu_load (data);
           }
 
-        memory_monitor->remove_ref ();
+        cpu_monitor->remove_ref ();
       }
 
     return 0;
@@ -44,9 +44,17 @@ public:
 int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
-  /// Set the timer for memory usage check at 2 sec.
-  Monitor_Base *memory_usage_monitor =
-    create_os_monitor<MEMORY_USAGE_MONITOR> (0, ACE_Time_Value (2));
+  /// The Admin class will own the reactor and destroy it. We are
+  /// passing a vanilla reactor to show how it works, but in real
+  /// life it could be some specialized reactor.
+  ACE_Reactor new_reactor;
+  MC_ADMINMANAGER* mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  mgr->admin ().reactor (&new_reactor);
+
+  /// Set the timer for CPU load check at 2 sec.
+  Monitor_Base *cpu_monitor =
+    create_os_monitor<CPU_LOAD_MONITOR> (0, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
@@ -56,28 +64,30 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   MonitorChecker monitor_checker;
   monitor_checker.activate ();
 
-  char * str_array[5] = {0};
+  /// Make sure the monitor checker is spawned before doing anything.
+  ACE_OS::sleep (1);
 
   for (int i = 0; i < 10; ++i)
     {
-      ACE_OS::sleep (2);
-
-      /// Allocate a large string in each of the first 5 loops,
-      /// free them in the last 5 loops.
-      if (i < 5)
+      /// Alternate between letting the CPU sleep and keeping it
+      /// busy.
+      if (i % 2 == 0)
         {
-          str_array[i] = new char[1024*1024*10];
+          ACE_OS::sleep (1);
         }
       else
         {
-          delete [] str_array[i - 5];
+          for (unsigned long j = 0; j < 5050505; j++)
+            {
+              (void) ACE::gcd (static_cast<u_long> (2419233733), 567715713);
+            }
         }
     }
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
 
-  memory_usage_monitor->remove_ref ();
+  cpu_monitor->remove_ref ();
 
   return 0;
 }
