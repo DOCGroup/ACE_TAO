@@ -21,7 +21,7 @@
 
 #include "ace/Monitor_Control_Types.h"
 
-#include "MonitorControl/examples/MC_Test_Utilities_export.h"
+#include "examples/Monitor/MC_Test_Utilities_export.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
 

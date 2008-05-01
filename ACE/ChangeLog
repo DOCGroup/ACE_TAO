@@ -1,3 +1,14 @@
+Thu May  1 14:47:33 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MonitorControl/examples/*:
+        
+          Removed this directory and moved its contents to
+          $ACE_ROOT/examples/Monitor.
+          
+        * bin/MakeProjectCreator/config/acelib.mpb:
+        
+          Cosmetic changes.
+
 Thu May  1 14:37:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/VXTestProjectCreator.pm:

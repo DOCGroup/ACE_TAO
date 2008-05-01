@@ -3,7 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include "MonitorControl/MonitorControl.h"
-#include "MonitorControl/examples/MC_Test_Utilities.h"
+#include "examples/Monitor/MC_Test_Utilities.h"
 
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
