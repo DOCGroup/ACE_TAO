@@ -73,7 +73,6 @@ CONTROLLED_FILES = \
         etc \
         examples \
         include \
-	MonitorControl \
         m4 \
         netsvcs \
         performance-tests \
