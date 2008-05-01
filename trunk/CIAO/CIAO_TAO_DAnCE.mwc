@@ -2,34 +2,15 @@
 // $Id$
 
 workspace {
-  $(ACE_ROOT)/ace/ace.mpc
-  $(ACE_ROOT)/apps/gperf/src/gperf.mpc
+  $(ACE_ROOT)/ace
+  $(ACE_ROOT)/apps/gperf/src
   $(ACE_ROOT)/contrib/minizip/minizip.mpc
   $(ACE_ROOT)/ACEXML/common
   $(ACE_ROOT)/ACEXML/parser/parser
   $(ACE_ROOT)/ACEXML/apps/svcconf
   $(ACE_ROOT)/contrib
-  $(ACE_ROOT)/ace/ETCL
-  $(ACE_ROOT)/MonitorControl
   $(TAO_ROOT)/TAO_IDL
-  $(TAO_ROOT)/tao/tao.mpc
-  $(TAO_ROOT)/tao/PortableServer.mpc
-  $(TAO_ROOT)/tao/Valuetype.mpc
-  $(TAO_ROOT)/tao/AnyTypeCode.mpc
-  $(TAO_ROOT)/tao/DynamicAny.mpc
-  $(TAO_ROOT)/tao/IFR_Client.mpc
-  $(TAO_ROOT)/tao/TypeCodeFactory.mpc
-  $(TAO_ROOT)/tao/CodecFactory.mpc
-  $(TAO_ROOT)/tao/Codeset.mpc
-  $(TAO_ROOT)/tao/IORTable.mpc
-  $(TAO_ROOT)/tao/PI.mpc
-  $(TAO_ROOT)/tao/Messaging.mpc
-  $(TAO_ROOT)/tao/RTCORBA.mpc
-  $(TAO_ROOT)/tao/ImR_Client.mpc
-  $(TAO_ROOT)/tao/RTPortableServer.mpc
-  $(TAO_ROOT)/tao/DiffServPolicy.mpc
-  $(TAO_ROOT)/tao/Strategies.mpc
-  $(TAO_ROOT)/tao/Utils.mpc
+  $(TAO_ROOT)/tao
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Serv.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Skel.mpc
