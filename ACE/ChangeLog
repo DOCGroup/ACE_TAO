@@ -1,3 +1,9 @@
+Thu May  1 15:27:25 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Message_Queue_Test.cpp: In the counting test, run multiples
+          of 50,000 instead of 100,000, blocks. The test is timing out on a
+          number of platforms.
+
 Thu May  1 14:47:33 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/examples/*:

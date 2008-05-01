@@ -121,7 +121,7 @@ Counting_Test_Producer::svc (void)
   ACE_OS::srand ((u_int)ACE_Thread::self ());
   int multiple = ACE_OS::rand () % 10;
   int delay_ms = ACE_OS::rand () % 10;
-  long count = 100000 * (multiple ? multiple : 1);
+  long count = 50000 * (multiple ? multiple : 1);
   long produced = 0;
   // Some of the threads enqueue single blocks, others sequences.
   long lsequence = ++(this->sequence_);
@@ -207,7 +207,7 @@ Counting_Test_Consumer::svc (void)
   ACE_OS::srand ((u_int)ACE_Thread::self ());
   int multiple = ACE_OS::rand () % 10;
   int delay_ms = ACE_OS::rand () % 10;
-  long count = 100000 * (multiple ? multiple : 1);
+  long count = 50000 * (multiple ? multiple : 1);
   long consumed = 0;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Consumer will dequeue %B blocks, ")
