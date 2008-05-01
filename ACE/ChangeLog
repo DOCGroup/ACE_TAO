@@ -1,3 +1,9 @@
+Thu May  1 18:27:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MonitorControl/MonitorControl.mpc:
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+          Use ACE_MonitorControl as shared library name
+
 Thu May  1 17:31:01 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.cpp: Removed an assert guarding the case when
@@ -8,7 +14,7 @@ Thu May  1 17:31:01 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
 Thu May  1 17:11:48 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/ace.mwc:
-        
+
           Added MonitorControl directory to the workspace.
 
 Thu May  1 17:05:37 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -35,7 +41,7 @@ Thu May  1 17:05:37 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu May  1 16:11:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MonitorControl/*:
-        
+
           Moved this directory to $ACE_ROOT/ace.
 
 Thu May  1 15:56:58 UTC 2008  Steve Huston  <shuston@riverace.com>
