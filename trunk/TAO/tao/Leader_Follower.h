@@ -220,7 +220,7 @@ private:
   /// To synchronize access to the members.
   TAO_SYNCH_MUTEX lock_;
 
-  /// do protect the access to the following three members
+  /// Do protect the access to the following three members
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock_;
 
   /// Implement the Leader/Followers set using an intrusive list

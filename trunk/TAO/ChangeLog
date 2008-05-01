@@ -1,13 +1,22 @@
+Thu May  1 18:27:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+          Use a full include path
+
+        * tao/Leader_Follower.h:
+          Docu change
+
 Thu May  1 18:09:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_ACE.mwc:
-        
+
           Removed $ACE_ROOT/MonitorControl/MonitorControl.mpc, this MPC
           file has been relocated and is now covered under $ACE_ROOT/ace.
-          
+
         * tao/Monitor/Monitor_Impl.cpp:
         * tests/Monitor/Marshal_Buffer/client.cpp:
-        
+
           Changed header include paths to reflect the relocation of
           the MonitorControl library.
 
@@ -15,8 +24,8 @@ Wed Apr 30 17:16:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Monitor/Marshal_Buffer/client.cpp:
         * tests/Monitor/Marshal_Buffer/server.cpp:
-        
-          Added include to pull in ACE_PRINT_EXCEPTION and 
+
+          Added include to pull in ACE_PRINT_EXCEPTION and
           ACE_ANY_EXCEPTION macros, which were not recognized
           in some Debian builds.
 
@@ -24,7 +33,7 @@ Wed Apr 30 17:01:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Monitor/Marshal_Buffer/client.cpp:
         * tests/Monitor/Marshal_Buffer/marshal_buffer.mpc:
-        
+
           Removed ENABLE_MONITORS macro which is no longer used.
 
 Wed Apr 30 12:13:59 UTC 2008  Simon McQueen  <sm@prismtech.com>
