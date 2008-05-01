@@ -1,3 +1,16 @@
+Thu May  1 18:09:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_ACE.mwc:
+        
+          Removed $ACE_ROOT/MonitorControl/MonitorControl.mpc, this MPC
+          file has been relocated and is now covered under $ACE_ROOT/ace.
+          
+        * tao/Monitor/Monitor_Impl.cpp:
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+        
+          Changed header include paths to reflect the relocation of
+          the MonitorControl library.
+
 Wed Apr 30 17:16:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Monitor/Marshal_Buffer/client.cpp:
