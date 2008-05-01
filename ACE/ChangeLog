@@ -1,3 +1,9 @@
+Thu May  1 15:56:58 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.lst: Change Bug_2980_Regression_Test's !MSVC to
+          !Win32. The test won't run on Windows per its comments, but no
+          XML configs set MSVC - they set Win32.
+
 Thu May  1 15:27:25 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Message_Queue_Test.cpp: In the counting test, run multiples
