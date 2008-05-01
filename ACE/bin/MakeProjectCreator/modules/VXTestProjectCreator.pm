@@ -54,4 +54,8 @@ sub need_to_write_project {
   return 0;
 }
 
+sub warn_useless_project {
+  return 0;
+}
+
 1;
