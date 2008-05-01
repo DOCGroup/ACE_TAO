@@ -3,5 +3,5 @@
 
 project : ace_etcl_parser {
   after += MonitorControl
-  libs += MonitorControl
+  libs += ACE_MonitorControl
 }
