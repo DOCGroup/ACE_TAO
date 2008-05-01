@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "MonitorControl/MonitorControl_export.h"
+#include "ace/MonitorControl/MonitorControl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

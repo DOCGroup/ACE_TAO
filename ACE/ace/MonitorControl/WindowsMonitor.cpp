@@ -1,6 +1,6 @@
 // $Id$
 
-#include "MonitorControl/WindowsMonitor.h"
+#include "ace/MonitorControl/WindowsMonitor.h"
 
 #if defined (ACE_WIN32)
 
