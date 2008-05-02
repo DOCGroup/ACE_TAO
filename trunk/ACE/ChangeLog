@@ -1,3 +1,9 @@
+Fri May  2 18:36:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/ETCL/ETCL_Interpreter.h:
+        
+          Fix for build problems with versioned namespaces turned on.
+
 Fri May  2 17:50:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
