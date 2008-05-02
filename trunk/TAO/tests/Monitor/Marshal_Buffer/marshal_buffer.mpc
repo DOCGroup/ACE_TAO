@@ -9,7 +9,7 @@ project(*idl): taoidldefaults {
 }
 
 
-project(*client): taoclient, monitor, ace_mc {
+project(*client): taoclient, tao_monitor, ace_mc {
   after += *idl
 
   IDL_Files {
