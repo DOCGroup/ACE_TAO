@@ -28,9 +28,13 @@
 #include "etcl_parser_export.h"
 #include "ETCL_macros.h"
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ETCL_Constraint;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+BEGIN_VERSIONED_NAMESPACE_MACRO
 
 /**
  * @class ETCL_Interpreter
@@ -101,7 +105,7 @@ private:
 /// The union used by lex and bison to build the Abstract Syntax Tree.
 typedef union
 {
-  ETCL_Constraint* constraint;
+  ACE_VERSIONED_NAMESPACE_NAME::ETCL_Constraint* constraint;
 } YYSTYPE;
 
 extern YYSTYPE yylval;
