@@ -468,16 +468,6 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
     use_fixed_addr_ = FIRSTCALL_FIXED;
 }
 
-// Handle SIGSEGV and SIGBUS signals to remap memory properly.  When a
-// process reads or writes to non-mapped memory a signal (SIGBUS or
-// SIGSEGV) will be triggered.  At that point, the ACE_Sig_Handler
-// (which is part of the ACE_Reactor) will catch the signal and
-// dispatch the handle_signal() method defined here.  If the SIGSEGV
-// signal occurred due to the fact that the mapping wasn't uptodate
-// with respect to the backing store, the handler method below will
-// update the mapping accordingly.  When the signal handler returns,
-// the instruction should be restarted and the operation should work.
-
 #if !defined (ACE_WIN32)
 int
 ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
