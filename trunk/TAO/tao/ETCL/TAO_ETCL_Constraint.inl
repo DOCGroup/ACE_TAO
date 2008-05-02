@@ -5,7 +5,7 @@
 
 ACE_INLINE
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (void)
-  : ETCL_Literal_Constraint ()
+  : any_ (0)
 {
 }
 

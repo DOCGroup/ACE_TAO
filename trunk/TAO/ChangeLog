@@ -1,3 +1,13 @@
+Fri May  2 20:48:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.inl:
+        
+          For all constructors except the one that takes an Any*,
+          initialize the Any_Impl* member to 0, in order that
+          _remove_ref() isn't called on an uninitialized pointer
+          in the destructor.
+
 Fri May  2 19:33:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ETCL/ETCL_y.cpp:
