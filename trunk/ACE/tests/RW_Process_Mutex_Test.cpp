@@ -565,7 +565,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Comparing time ranges...\n")));
       // The writer should never overlap any readers
       bool writer_overlap = false;
-      for (int i = 0; i < Nr_Processes - 1; ++i)
+      for (i = 0; i < Nr_Processes - 1; ++i)
         {
           if (writer.any_overlaps (readers[i]))
             {
