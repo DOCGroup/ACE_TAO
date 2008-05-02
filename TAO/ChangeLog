@@ -1,3 +1,9 @@
+Fri May  2 18:38:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+        
+          Fix for build problems with versioned namespaces turned on.
+
 Fri May  2 09:35:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3315_Regression/*:
