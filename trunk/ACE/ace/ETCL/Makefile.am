@@ -45,7 +45,7 @@ lib_LTLIBRARIES += libACE_ETCL_Parser.la
 libACE_ETCL_Parser_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -IETCL_include \
+  -I$(srcdir)/ETCL_include \
   -DACE_ETCL_PARSER_BUILD_DLL
 
 libACE_ETCL_Parser_la_SOURCES = \

@@ -1,3 +1,13 @@
+Fri May  2 23:29:06 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/ETCL/Makefile.am:
+
+          Regenerated.
+
+        * ace/ETCL/ETCL.mpc:
+
+          Add automake specific rule for includes.
+
 Fri May  2 22:53:46 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
