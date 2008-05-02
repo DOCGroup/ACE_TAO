@@ -120,8 +120,11 @@ Counting_Test_Producer::svc (void)
   // back and forth, make the producers randomly delay between blocks.
   ACE_OS::srand ((u_int)ACE_Thread::self ());
   int multiple = ACE_OS::rand () % 10;
-  int delay_ms = ACE_OS::rand () % 10;
-  long count = 50000 * (multiple ? multiple : 1);
+  int delay_ms = (ACE_OS::rand () % 10) / 2;
+  // The delay usually causes the test to time out in the automated
+  // regression testing. I just left it here in case it's needed someday.
+  delay_ms = 0;
+  long count = 100000 * (multiple ? multiple : 1);
   long produced = 0;
   // Some of the threads enqueue single blocks, others sequences.
   long lsequence = ++(this->sequence_);
@@ -189,7 +192,8 @@ Counting_Test_Producer::svc (void)
           break;
         }
       produced += seq;
-      ACE_OS::sleep (delay);
+      if (delay_ms)
+        ACE_OS::sleep (delay);
     }
   this->produced_ += produced;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Producer done\n")));
@@ -207,7 +211,10 @@ Counting_Test_Consumer::svc (void)
   ACE_OS::srand ((u_int)ACE_Thread::self ());
   int multiple = ACE_OS::rand () % 10;
   int delay_ms = ACE_OS::rand () % 10;
-  long count = 50000 * (multiple ? multiple : 1);
+  // The delay usually causes the test to time out in the automated
+  // regression testing. I just left it here in case it's needed someday.
+  delay_ms = 0;
+  long count = 100000 * (multiple ? multiple : 1);
   long consumed = 0;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Consumer will dequeue %B blocks, ")
@@ -236,7 +243,8 @@ Counting_Test_Consumer::svc (void)
         }
       ++consumed;
       b->release ();
-      ACE_OS::sleep (delay);
+      if (delay_ms)
+        ACE_OS::sleep (delay);
     }
   this->consumed_ += consumed;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Consumer done\n")));
@@ -248,7 +256,7 @@ counting_test (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting counting test\n")));
 
-  ACE_Message_Queue<ACE_MT_SYNCH> q;
+  ACE_Message_Queue<ACE_MT_SYNCH> q (2 * 1024 * 1024);  // 2MB high water
   Counting_Test_Producer p (&q);
   Counting_Test_Consumer c (&q);
   // Activate consumers first; if the producers fail to start, consumers will
