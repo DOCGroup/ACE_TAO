@@ -1,3 +1,12 @@
+Fri May  2 08:15:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/config/monitor.mpb:
+        * tao/config/tao_monitor.mpb:
+          Renamed monitor to tao_monitor
+
+        * utils/monitor/monitor.mpc:
+          updated base project
+
 Thu May  1 18:32:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Monitor/Marshal_Buffer/client.cpp:
