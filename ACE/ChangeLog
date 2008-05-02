@@ -1,3 +1,9 @@
+Fri May  2 17:20:37 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Message_Queue_Test.cpp: Removed the delay sleep between loop
+          iterations - it causes the test to time out too often. Increased
+          the message count back to multiples of 100,000.
+
 Fri May  2 15:34:55 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/RW_Process_Mutex_Test.cpp: Fixed compile warning about
