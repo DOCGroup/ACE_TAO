@@ -182,7 +182,7 @@ TAO_IIOP_Connection_Handler::open (void*)
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
-                ACE_TEXT("The local addr is <%s:%d> \n"),
+                ACE_TEXT("The local addr is <%C:%d> \n"),
                 local_addr.get_host_addr (),
                 local_addr.get_port_number()));
 
@@ -403,9 +403,9 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
                       ACE_TEXT("process_listen_point_list, ")
-                      ACE_TEXT("Listening port [%d] on [%s]\n"),
+                      ACE_TEXT("Listening port [%d] on [%C]\n"),
                       listen_point.port,
-                      ACE_TEXT_CHAR_TO_TCHAR(listen_point.host.in ())));
+                      listen_point.host.in ()));
         }
 
       // Construct an  IIOP_Endpoint object using the host as provided
