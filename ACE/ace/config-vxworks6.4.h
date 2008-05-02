@@ -40,7 +40,9 @@
 # if defined (__RTP__) && !defined (_HAS_C9X)
 // Workaround for the fact that under RTP the log2 method can't be used
 // without this define set, see TSR560446
-#  define _C99
+#  if !defined (_C99)
+#   define _C99
+#  endif
 # endif
 
 #elif defined (__DCC__)
