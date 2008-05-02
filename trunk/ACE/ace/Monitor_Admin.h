@@ -34,7 +34,7 @@ namespace ACE
     class MonitorQuery;
 
     /**
-     * @class MonitorPointAutoUpdater
+     * @class Monitor_Point_Auto_Updater
      *
      * @brief Automates periodic updating of monitor point classes.
      *
@@ -48,11 +48,12 @@ namespace ACE
      * call the appropriate method on the monitor point to get
      * it to update its data.
      */
-    struct MonitorPointAutoUpdater : ACE_Event_Handler
+    class Monitor_Point_Auto_Updater : public ACE_Event_Handler
     {
-      /// Override of ACE base class method.
-      virtual int handle_timeout (const ACE_Time_Value& interval,
-                                  const void* monitor_point);
+      public:
+        /// Override of ACE base class method.
+        virtual int handle_timeout (const ACE_Time_Value& interval,
+                                    const void* monitor_point);
     };
 
     /**
@@ -92,7 +93,7 @@ namespace ACE
       ACE_Reactor* reactor (void) const;
 
     private:
-      MonitorPointAutoUpdater auto_updater_;
+      Monitor_Point_Auto_Updater auto_updater_;
       ACE_Reactor* reactor_;
       bool default_reactor_;
     };

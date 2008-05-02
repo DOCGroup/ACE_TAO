@@ -14,7 +14,7 @@ namespace ACE
   namespace MonitorControl
   {
     int
-    MonitorPointAutoUpdater::handle_timeout (
+    Monitor_Point_Auto_Updater::handle_timeout (
       const ACE_Time_Value& /* current_time */,
       const void* monitor_point)
     {

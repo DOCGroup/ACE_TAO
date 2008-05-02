@@ -15,7 +15,7 @@ namespace ACE
   namespace MonitorControl
   {
     int
-    AutoUpdateStarter::svc (void)
+    Auto_Update_Starter::svc (void)
     {
       MC_ADMINMANAGER* mgr =
         ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
