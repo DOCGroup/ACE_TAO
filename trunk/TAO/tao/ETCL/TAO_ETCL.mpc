@@ -35,9 +35,9 @@ project(TAO_ETCL_Parser) : taolib, tao_etcl, install, tao_output {
   includes += $(TAO_ROOT)/tao/ETCL/ETCL_include
 
   Source_Files {
-    $(ACE_ROOT)/ace/ETCL/ETCL_Interpreter.cpp
-    $(ACE_ROOT)/ace/ETCL/ETCL_l.cpp
-    $(ACE_ROOT)/ace/ETCL/ETCL_y.cpp
+    ETCL_Interpreter.cpp
+    ETCL_l.cpp
+    ETCL_y.cpp
   }
 
   Header_Files {
