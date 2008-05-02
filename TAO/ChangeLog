@@ -1,3 +1,12 @@
+Fri May  2 09:35:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3315_Regression/*:
+          New regression for bugzilla 3315. When TAO is used from a thread
+          created without ACE it leads to an assert in ACE. When we have
+          pthread we use the pthread api, else we just use ACE. Without
+          the change from Iliyan in ace/Service_Config.cpp this test fails
+          but with his change this test runs
+
 Fri May  2 08:27:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connection_Handler.cpp:
