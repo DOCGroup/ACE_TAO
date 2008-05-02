@@ -6,6 +6,13 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN ACE-5.6.4 and ACE-5.6.5
 ====================================================
 
+. Added new Monitoring lib that can be used to store and retrieve
+  counters. This is disabled by default because it is not 100%
+  finished yet, with the next release it will be enabled by default
+
+. Fixed bug in ACE_Service_Config when it was used from a thread
+  not spawned by ACE
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.3 and ACE-5.6.4
 ====================================================
 
