@@ -1,3 +1,8 @@
+Fri May  2 08:15:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Added new monitor files
+
 Fri May  2 08:04:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Monitor_Admin.cpp
