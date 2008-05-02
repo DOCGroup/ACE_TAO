@@ -4,6 +4,9 @@
 # build using msvc_static_compile.pl
 
 ace/ace
+ace/ACE_ETCL
+ace/ACE_ETCL_Parser
+ace/MonitorControl/MonitorControl
 Kokyu/Kokyu
 ACEXML/parser/parser/ACEXML_Parser
 ACEXML/common/ACEXML
@@ -39,6 +42,7 @@ TAO/tao/CSD_Framework
 TAO/tao/CSD_ThreadPool
 TAO/tao/TC
 TAO/tao/DiffServPolicy
+TAO/tao/Monitor
 TAO/orbsvcs/orbsvcs/Svc_Utils
 TAO/orbsvcs/orbsvcs/CosNaming_IDL
 TAO/orbsvcs/orbsvcs/CosNaming
