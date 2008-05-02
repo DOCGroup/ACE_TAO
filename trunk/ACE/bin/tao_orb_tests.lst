@@ -122,6 +122,7 @@ TAO/tests/Bug_3198_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_3251_Regression/run_test.pl: !ST !LabVIEW_RT !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC
 TAO/tests/Bug_3276_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_3299_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/Bug_3315_Regression/run_test.pl: !ST !LabVIEW_RT
 TAO/tests/DIOP/run_test.pl: !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/DIOP/run_test_ipv6.pl: IPV6 !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LabVIEW_RT
