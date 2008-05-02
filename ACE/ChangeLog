@@ -1,3 +1,12 @@
+Fri May  2 08:04:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Admin.cpp
+        * ace/Monitor_Admin.h
+        * ace/MonitorControl/AutoUpdateStarter.cpp
+        * ace/MonitorControl/AutoUpdateStarter.h
+        * ace/MonitorControl/MonitorControl_utils.h
+          Updated for naming conventions
+
 Fri May  2 07:47:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Monitor/Bytes_Sent/bytes_sent.cpp

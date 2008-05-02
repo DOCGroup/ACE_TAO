@@ -21,8 +21,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Task.h"
-
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 #include "ace/MonitorControl/MonitorControl_export.h"
@@ -34,7 +32,7 @@ namespace ACE
   namespace MonitorControl
   {
     /**
-     * @class AutoUpdateStarter
+     * @class Auto_Update_Starter
      *
      * @brief Starts reactor event loop that handles registered timers.
      *
@@ -44,7 +42,7 @@ namespace ACE
      * isn't blocked. A very simple class inheriting from ACE_Task_Base
      * and overriding the svc() method suffices.
      */
-    class MONITORCONTROL_Export AutoUpdateStarter : public ACE_Task_Base
+    class MONITORCONTROL_Export Auto_Update_Starter : public ACE_Task_Base
     {
       public:
         int svc (void);
@@ -52,7 +50,7 @@ namespace ACE
   }
 }
 
-typedef ACE::MonitorControl::AutoUpdateStarter STARTER;
+typedef ACE::MonitorControl::Auto_Update_Starter STARTER;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
