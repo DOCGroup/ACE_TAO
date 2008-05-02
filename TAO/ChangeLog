@@ -1,3 +1,26 @@
+Fri May  2 19:33:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/ETCL_y.cpp:
+        * tao/ETCL/ETCL_l.cpp:
+        * tao/ETCL/ETCL_Interpreter.cpp:
+        
+          New files that simply include their counterparts in
+          $ACE_ROOT/ace/ETCL. The lex and yacc files are generated
+          and can't be factored into CORBA and non-CORBA pieces as
+          the other ETCL files have been. On the other hand, there
+          doesn't seem to be any way found so far to get makefiles
+          to recompile a set of source files into a different set
+          of object files in a different location, so that things
+          like realclean will depend on the new object files. This
+          workaround in similar to what has been done for the IDL
+          compiler driver, which is composed of the same source
+          but links to different backends.
+          
+        * tao/ETCL/TAO_ETCL.mpc:
+        
+          Changed the TAO_ETCL_Parser project to reflect the changes
+          above.
+
 Fri May  2 18:38:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ETCL/TAO_ETCL_Constraint.h:
