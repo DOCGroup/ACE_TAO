@@ -2,6 +2,6 @@
 // $Id$
 
 project : portableserver, tao_etcl_parser, ace_mc {
-  after    += Monitor
+  after    += TAO_Monitor
   libs     += TAO_Monitor
 }
