@@ -50,7 +50,7 @@ namespace TAO
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_WARNING,
-                        ACE_TEXT("(%P|%t) WARNING - No <%s> found in Service")
+                        ACE_TEXT("(%P|%t) WARNING - No <%C> found in Service")
                         ACE_TEXT(" Repository. Using default instance.\n"),
                         name));
 
@@ -86,8 +86,8 @@ namespace TAO
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) Unable to add ")
-                      ACE_TEXT("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(item->protocol_name ().c_str ())));
+                      ACE_TEXT("<%C> to protocol factory set.\n"),
+                      item->protocol_name ().c_str ()));
 
           delete item;
 
@@ -101,7 +101,7 @@ namespace TAO
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) Loaded default ")
-                      ACE_TEXT("protocol <%s>\n"),
+                      ACE_TEXT("protocol <%C>\n"),
                       name));
         }
 
