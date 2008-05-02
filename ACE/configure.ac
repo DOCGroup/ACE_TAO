@@ -7997,7 +7997,7 @@ AC_CONFIG_FILES([
   Makefile
   ace/Makefile
   ace/ETCL/Makefile
-  ace/MonitorControl
+  ace/MonitorControl/Makefile
   ace/QoS/Makefile
   ace/SSL/Makefile
   apps/Makefile
