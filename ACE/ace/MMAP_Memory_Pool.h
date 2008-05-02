@@ -178,14 +178,14 @@ public:
 
   /**
    * Change the protection of the pages of the mapped region to @a prot
-   * starting at <this->base_addr_> up to @a len bytes.  If @a len == -1
+   * starting at @c this->base_addr_ up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (size_t len, int prot = PROT_RDWR);
 
   /**
    * Change the protection of all the pages of the mapped region to @a prot
-   * starting at <this->base_addr_>.
+   * starting at @c this->base_addr_.
    */
   virtual int protect (int prot = PROT_RDWR);
 
@@ -243,8 +243,17 @@ protected:
   virtual int map_file (size_t map_size);
 
 #if !defined (ACE_WIN32)
-  /// Handle SIGSEGV and SIGBUS signals to remap shared memory
-  /// properly.
+  /**
+   * Handle SIGSEGV and SIGBUS signals to remap memory properly.  When a
+   * process reads or writes to non-mapped memory a signal (SIGBUS or
+   * SIGSEGV) will be triggered.  At that point, the ACE_Sig_Handler
+   * (which is part of the ACE_Reactor) will catch the signal and
+   * dispatch the handle_signal() method defined here.  If the SIGSEGV
+   * signal occurred due to the fact that the mapping wasn't uptodate
+   * with respect to the backing store, the handler method below will
+   * update the mapping accordingly.  When the signal handler returns,
+   * the instruction should be restarted and the operation should work.
+   */
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
 #endif
 
@@ -266,7 +275,7 @@ protected:
   /// Must we use the @c base_addr_ or can we let mmap(2) select it?
   int use_fixed_addr_;
 
-  /// Flags passed into <ACE_OS::mmap>.
+  /// Flags passed into ACE_OS::mmap().
   int flags_;
 
   /// Should we write a byte to each page to forceably allocate memory
@@ -303,7 +312,7 @@ protected:
  *
  * This implementation allows memory to be shared between
  * processes.  However, unlike the ACE_MMAP_Memory_Pool
- * the <sync> methods are no-ops, which means that we don't pay
+ * the @c sync methods are no-ops, which means that we don't pay
  * for the price of flushing the memory to the backing store on
  * every update.  Naturally, this trades off increased
  * performance for less reliability if the machine crashes.
