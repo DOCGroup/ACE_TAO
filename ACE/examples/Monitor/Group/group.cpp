@@ -5,7 +5,7 @@
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Admin_Manager.h"
 
-#include "MonitorControl/MonitorControl.h"
+#include "ace/MonitorControl/MonitorControl.h"
 #include "examples/Monitor/MC_Test_Utilities.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;

@@ -1,3 +1,22 @@
+Fri May  2 07:47:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Monitor/Bytes_Sent/bytes_sent.cpp
+        * examples/Monitor/Constraint/constraint.cpp
+        * examples/Monitor/CPU_Load/cpu_load.cpp
+        * examples/Monitor/Group/group.cpp
+        * examples/Monitor/Memory_Usage/memory_usage.cpp
+        * examples/Monitor/Message_Queue_Size/message_queue_size.cpp
+        * examples/Monitor/Num_Threads/num_threads.cpp
+          Updated include
+
+        * examples/Monitor/Bytes_Sent/Bytes_Sent.mpc
+        * examples/Monitor/Constraint/Constraint.mpc
+        * examples/Monitor/Num_Threads/Num_Threads.mpc
+        * examples/Monitor/Group/Group.mpc
+        * examples/Monitor/CPU_Load/CPU_Load.mpc
+        * examples/Monitor/Message_Queue_Size/Message_Queue_Size.mpc
+          Don't build with ace_for_tao
+
 Thu May  1 22:35:17 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/MonitorControl/MonitorControl.mpc:
