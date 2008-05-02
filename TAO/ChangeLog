@@ -1,3 +1,11 @@
+Fri May  2 08:27:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Load_Protocol_Factory_T.h:
+          Fixed incorrect debug statements which print garbage when
+          unicode is enabled. Thanks to Karl-Heinz Wind <wind at itq dot de>
+          for reporting this. This fixes bugzilla 3309
+
 Fri May  2 08:15:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/config/monitor.mpb:
