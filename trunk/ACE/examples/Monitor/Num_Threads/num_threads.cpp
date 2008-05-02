@@ -2,7 +2,7 @@
 
 #include "ace/OS_NS_unistd.h"
 
-#include "MonitorControl/MonitorControl.h"
+#include "ace/MonitorControl/MonitorControl.h"
 #include "examples/Monitor/MC_Test_Utilities.h"
 
 class Worker : public ACE_Task_Base

@@ -1,10 +1,10 @@
 // $Id$
 
-project (*) : aceexe, ace_mc {
+project (*) : aceexe, ace_mc, avoids_ace_for_tao {
   exename = memory_usage
   after += MC_Test_Utilities
   libs  += MC_Test_Utilities
-  
+
   source_files {
     memory_usage.cpp
   }

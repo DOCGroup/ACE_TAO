@@ -3,7 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Monitor_Control_Action.h"
 
-#include "MonitorControl/MonitorControl.h"
+#include "ace/MonitorControl/MonitorControl.h"
 #include "examples/Monitor/MC_Test_Utilities.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;

@@ -1,6 +1,6 @@
 // $Id$
 
-project (*) : aceexe, ace_mc {
+project (*) : aceexe, ace_mc, avoids_ace_for_tao {
   exename = constraint
   after += MC_Test_Utilities
   libs  += MC_Test_Utilities

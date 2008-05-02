@@ -1,11 +1,11 @@
 // $Id$
 
-project (*) : aceexe, ace_mc {
+project (*) : aceexe, ace_mc, avoids_ace_for_tao {
   exename = message_queue_size
   after += MC_Test_Utilities
   libs  += MC_Test_Utilities
   macros += ENABLE_MONITORS ENABLE_ACE_MONITORS
-  
+
   source_files {
     message_queue_size.cpp
   }
