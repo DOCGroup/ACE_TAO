@@ -73,7 +73,11 @@ peer_SOURCES = \
   peer.cpp \
   testC.cpp \
   testS.cpp \
-  Peer_i.h
+  Peer_i.h \
+  testC.h \
+  testC.inl \
+  testS.h \
+  testS.inl
 
 peer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -115,7 +119,11 @@ progress_SOURCES = \
   progress.cpp \
   testC.cpp \
   testS.cpp \
-  Progress_i.h
+  Progress_i.h \
+  testC.h \
+  testC.inl \
+  testS.h \
+  testS.inl
 
 progress_LDFLAGS = \
  $(ACE_FLTK_LDFLAGS)

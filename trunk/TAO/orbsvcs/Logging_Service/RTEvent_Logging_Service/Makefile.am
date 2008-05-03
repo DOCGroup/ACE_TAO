@@ -28,7 +28,9 @@ RTEvent_Logging_Service_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(ACE_ROOT)/ETCL \
+  -I$(TAO_ROOT)/tao/ETCL/ETCL_include
 
 RTEvent_Logging_Service_SOURCES = \
   RTEvent_Logging_Server.cpp \
@@ -41,7 +43,9 @@ RTEvent_Logging_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \

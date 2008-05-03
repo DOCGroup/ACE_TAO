@@ -223,30 +223,18 @@ dnl created first.
 AC_CONFIG_FILES([
   Makefile
   TAO_IDL/Makefile
-  docs/Makefile
-  docs/tutorials/Makefile
-  docs/tutorials/Quoter/AMI/Makefile
-  docs/tutorials/Quoter/Event_Service/Makefile
-  docs/tutorials/Quoter/Makefile
-  docs/tutorials/Quoter/Naming_Service/Makefile
-  docs/tutorials/Quoter/On_Demand_Activation/Makefile
-  docs/tutorials/Quoter/RTCORBA/Makefile
-  docs/tutorials/Quoter/RT_Event_Service/Makefile
-  docs/tutorials/Quoter/Simple/Client/Makefile
-  docs/tutorials/Quoter/Simple/Impl-Repo/Makefile
-  docs/tutorials/Quoter/Simple/ImprovedServer/Makefile
-  docs/tutorials/Quoter/Simple/Makefile
-  docs/tutorials/Quoter/Simple/Persistent/Makefile
-  docs/tutorials/Quoter/Simple/Server/Makefile
-  docs/tutorials/Quoter/idl/Makefile
+  tao/Makefile
+  tao/ETCL/Makefile
+  orbsvcs/Makefile
+  orbsvcs/orbsvcs/Makefile
   orbsvcs/Concurrency_Service/Makefile
   orbsvcs/CosEvent_Service/Makefile
   orbsvcs/Dump_Schedule/Makefile
   orbsvcs/Event_Service/Makefile
+  orbsvcs/FTRT_Event_Service/Makefile
   orbsvcs/FTRT_Event_Service/Event_Service/Makefile
   orbsvcs/FTRT_Event_Service/Factory_Service/Makefile
   orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile
-  orbsvcs/FTRT_Event_Service/Makefile
   orbsvcs/FT_ReplicationManager/Makefile
   orbsvcs/Fault_Detector/Makefile
   orbsvcs/Fault_Notifier/Makefile
@@ -254,32 +242,261 @@ AC_CONFIG_FILES([
   orbsvcs/ImplRepo_Service/Makefile
   orbsvcs/LifeCycle_Service/Makefile
   orbsvcs/LoadBalancer/Makefile
+  orbsvcs/Logging_Service/Makefile
   orbsvcs/Logging_Service/Basic_Logging_Service/Makefile
   orbsvcs/Logging_Service/Event_Logging_Service/Makefile
-  orbsvcs/Logging_Service/Makefile
   orbsvcs/Logging_Service/Notify_Logging_Service/Makefile
   orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile
-  orbsvcs/Makefile
   orbsvcs/Naming_Service/Makefile
   orbsvcs/Notify_Service/Makefile
   orbsvcs/Scheduling_Service/Makefile
   orbsvcs/TAO_Service/Makefile
   orbsvcs/Time_Service/Makefile
   orbsvcs/Trading_Service/Makefile
-  orbsvcs/orbsvcs/Makefile
-  tao/Makefile
+  orbsvcs/examples/Makefile
+  orbsvcs/examples/CosEC/Makefile
+  orbsvcs/examples/CosEC/Factory/Makefile
+  orbsvcs/examples/CosEC/RtEC_Based/Makefile
+  orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile
+  orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile
+  orbsvcs/examples/CosEC/RtEC_Based/tests/Makefile
+  orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile
+  orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile
+  orbsvcs/examples/CosEC/Simple/Makefile
+  orbsvcs/examples/CosEC/TypedSimple/Makefile
+  orbsvcs/examples/FaultTolerance/Makefile
+  orbsvcs/examples/FaultTolerance/RolyPoly/Makefile
+  orbsvcs/examples/ImR/Makefile
+  orbsvcs/examples/ImR/Advanced/Makefile
+  orbsvcs/examples/ImR/Combined_Service/Makefile
+  orbsvcs/examples/LoadBalancing/Makefile
+  orbsvcs/examples/Log/Makefile
+  orbsvcs/examples/Log/Basic/Makefile
+  orbsvcs/examples/Log/Event/Makefile
+  orbsvcs/examples/Log/Notify/Makefile
+  orbsvcs/examples/Log/RTEvent/Makefile
+  orbsvcs/examples/Notify/Makefile
+  orbsvcs/examples/Notify/Federation/Makefile
+  orbsvcs/examples/Notify/Federation/Gate/Makefile
+  orbsvcs/examples/Notify/Federation/Agent/Makefile
+  orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile
+  orbsvcs/examples/Notify/Filter/Makefile
+  orbsvcs/tests/Makefile
+  orbsvcs/tests/Notify/Makefile
+  orbsvcs/tests/Notify/lib/Makefile
+  orbsvcs/examples/Notify/Lanes/Makefile
+  orbsvcs/examples/Notify/MC/Makefile
+  orbsvcs/examples/Notify/MC/monitor/Makefile
+  orbsvcs/examples/Notify/Subscribe/Makefile
+  orbsvcs/examples/Notify/ThreadPool/Makefile
+  orbsvcs/examples/ORT/Makefile
+  orbsvcs/examples/RtEC/Makefile
+  orbsvcs/examples/RtEC/IIOPGateway/Makefile
+  orbsvcs/examples/RtEC/Kokyu/Makefile
+  orbsvcs/examples/RtEC/MCast/Makefile
+  orbsvcs/examples/RtEC/Schedule/Makefile
+  orbsvcs/examples/RtEC/Simple/Makefile
+  orbsvcs/examples/Security/Makefile
+  orbsvcs/examples/Security/Send_File/Makefile
+  orbsvcs/performance-tests/Makefile
+  orbsvcs/performance-tests/LoadBalancing/Makefile
+  orbsvcs/performance-tests/LoadBalancing/LBPerf/Makefile
+  orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile
+  orbsvcs/performance-tests/RTEvent/Makefile
+  orbsvcs/performance-tests/RTEvent/lib/Makefile
+  orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile
+  orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile
+  orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile
+  orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile
+  orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile
+  orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile
+  orbsvcs/tests/AVStreams/Makefile
+  orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile
+  orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile
+  orbsvcs/tests/AVStreams/Component_Switching/Makefile
+  orbsvcs/tests/AVStreams/Full_Profile/Makefile
+  orbsvcs/tests/AVStreams/Latency/Makefile
+  orbsvcs/tests/AVStreams/Modify_QoS/Makefile
+  orbsvcs/tests/AVStreams/Multicast/Makefile
+  orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile
+  orbsvcs/tests/AVStreams/Multiple_Flows/Makefile
+  orbsvcs/tests/AVStreams/Pluggable/Makefile
+  orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile
+  orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile
+  orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile
+  orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile
+  orbsvcs/tests/BiDir_CORBALOC/Makefile
+  orbsvcs/tests/Bug_1334_Regression/Makefile
+  orbsvcs/tests/Bug_1393_Regression/Makefile
+  orbsvcs/tests/Bug_1395_Regression/Makefile
+  orbsvcs/tests/Bug_1630_Regression/Makefile
+  orbsvcs/tests/Bug_2074_Regression/Makefile
+  orbsvcs/tests/Bug_2137_Regression/Makefile
+  orbsvcs/tests/Bug_2247_Regression/Makefile
+  orbsvcs/tests/Bug_2248_Regression/Makefile
+  orbsvcs/tests/Bug_2285_Regression/Makefile
+  orbsvcs/tests/Bug_2287_Regression/Makefile
+  orbsvcs/tests/Bug_2316_Regression/Makefile
+  orbsvcs/tests/Bug_2377_Regression/Makefile
+  orbsvcs/tests/Bug_2615_Regression/Makefile
+  orbsvcs/tests/Bug_2709_Regression/Makefile
+  orbsvcs/tests/Bug_2800_Regression/Makefile
+  orbsvcs/tests/Bug_2925_Regression/Makefile
+  orbsvcs/tests/Bug_2926_Regression/Makefile
+  orbsvcs/tests/Bug_3215_Regression/Makefile
+  orbsvcs/tests/Bug_3216_Regression/Makefile
+  orbsvcs/tests/COIOP_Naming_Test/Makefile
+  orbsvcs/tests/Concurrency/Makefile
+  orbsvcs/tests/CosEvent/Makefile
+  orbsvcs/tests/CosEvent/lib/Makefile
+  orbsvcs/tests/CosEvent/Basic/Makefile
+  orbsvcs/tests/CosEvent/Timeout/Makefile
+  orbsvcs/tests/EC_Custom_Marshal/Makefile
+  orbsvcs/tests/EC_MT_Mcast/Makefile
+  orbsvcs/tests/EC_Mcast/Makefile
+  orbsvcs/tests/EC_Multiple/Makefile
+  orbsvcs/tests/EC_Throughput/Makefile
+  orbsvcs/tests/Event/Makefile
+  orbsvcs/tests/Event/lib/Makefile
+  orbsvcs/tests/Event/Basic/Makefile
+  orbsvcs/tests/Event/Mcast/Makefile
+  orbsvcs/tests/Event/Mcast/AddrServer/Makefile
+  orbsvcs/tests/Event/Mcast/Common/Makefile
+  orbsvcs/tests/Event/Mcast/Complex/Makefile
+  orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/Makefile
+  orbsvcs/tests/Event/Mcast/Simple/Makefile
+  orbsvcs/tests/Event/Mcast/Two_Way/Makefile
+  orbsvcs/tests/Event/Performance/Makefile
+  orbsvcs/tests/Event/ThreadFlags/Makefile
+  orbsvcs/tests/Event/UDP/Makefile
+  orbsvcs/tests/FT_App/Makefile
+  orbsvcs/tests/FaultTolerance/Makefile
+  orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile
+  orbsvcs/tests/FaultTolerance/IOGR/Makefile
+  orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile
+  orbsvcs/tests/FtRtEvent/Makefile
+  orbsvcs/tests/HTIOP/Makefile
+  orbsvcs/tests/HTIOP/AMI/Makefile
+  orbsvcs/tests/HTIOP/BiDirectional/Makefile
+  orbsvcs/tests/HTIOP/Hello/Makefile
+  orbsvcs/tests/IOR_MCast/Makefile
+  orbsvcs/tests/ImplRepo/Makefile
+  orbsvcs/tests/ImplRepo/Bug_2604_Regression/Makefile
+  orbsvcs/tests/ImplRepo/Bug_689_Regression/Makefile
+  orbsvcs/tests/ImplRepo/NameService/Makefile
+  orbsvcs/tests/ImplRepo/scale/Makefile
+  orbsvcs/tests/InterfaceRepo/Makefile
+  orbsvcs/tests/InterfaceRepo/Application_Test/Makefile
+  orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/Makefile
+  orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/Makefile
+  orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/Makefile
+  orbsvcs/tests/InterfaceRepo/IDL3_Test/Makefile
+  orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/Makefile
+  orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile
+  orbsvcs/tests/InterfaceRepo/Latency_Test/Makefile
+  orbsvcs/tests/InterfaceRepo/Persistence_Test/Makefile
+  orbsvcs/tests/Interoperable_Naming/Makefile
+  orbsvcs/tests/LoadBalancing/Makefile
+  orbsvcs/tests/LoadBalancing/GenericFactory/Makefile
+  orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile
+  orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile
+  orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile
+  orbsvcs/tests/LoadBalancing/LoadMonitor/Makefile
+  orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile
+  orbsvcs/tests/Log/Makefile
+  orbsvcs/tests/Log/Basic_Log_Test/Makefile
+  orbsvcs/tests/Miop/Makefile
+  orbsvcs/tests/Miop/McastHello/Makefile
+  orbsvcs/tests/Notify/Basic/Makefile
+  orbsvcs/tests/Notify/Blocking/Makefile
+  orbsvcs/tests/Notify/Bug_1385_Regression/Makefile
+  orbsvcs/tests/Notify/Bug_2561_Regression/Makefile
+  orbsvcs/tests/Notify/Bug_3252_Regression/Makefile
+  orbsvcs/tests/Notify/Destroy/Makefile
+  orbsvcs/tests/Notify/Discarding/Makefile
+  orbsvcs/tests/Notify/Driver/Makefile
+  orbsvcs/tests/Notify/MC/Makefile
+  orbsvcs/tests/Notify/MT_Dispatching/Makefile
+  orbsvcs/tests/Notify/Ordering/Makefile
+  orbsvcs/tests/Notify/Persistent_POA/Makefile
+  orbsvcs/tests/Notify/PluggableTopology/Makefile
+  orbsvcs/tests/Notify/RT_lib/Makefile
+  orbsvcs/tests/Notify/Reconnecting/Makefile
+  orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile
+  orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile
+  orbsvcs/tests/Notify/Structured_Filter/Makefile
+  orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile
+  orbsvcs/tests/Notify/Test_Filter/Makefile
+  orbsvcs/tests/Notify/XML_Persistence/Makefile
+  orbsvcs/tests/Notify/performance-tests/Makefile
+  orbsvcs/tests/Notify/performance-tests/Filter/Makefile
+  orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile
+  orbsvcs/tests/Notify/performance-tests/Throughput/Makefile
+  orbsvcs/tests/Property/Makefile
+  orbsvcs/tests/Redundant_Naming/Makefile
+  orbsvcs/tests/Sched/Makefile
+  orbsvcs/tests/Sched_Conf/Makefile
+  orbsvcs/tests/Security/Makefile
+  orbsvcs/tests/Security/BiDirectional/Makefile
+  orbsvcs/tests/Security/Big_Request/Makefile
+  orbsvcs/tests/Security/Bug_1107_Regression/Makefile
+  orbsvcs/tests/Security/Bug_2908_Regression/Makefile
+  orbsvcs/tests/Security/Callback/Makefile
+  orbsvcs/tests/Security/Crash_Test/Makefile
+  orbsvcs/tests/Security/EndpointPolicy/Makefile
+  orbsvcs/tests/Security/InsecureReferences/Makefile
+  orbsvcs/tests/Security/MT_IIOP_SSL/Makefile
+  orbsvcs/tests/Security/MT_SSLIOP/Makefile
+  orbsvcs/tests/Security/Secure_Invocation/Makefile
+  orbsvcs/tests/Security/mixed_security_test/Makefile
+  orbsvcs/tests/Security/ssliop_CSD/Makefile
+  orbsvcs/tests/Security/ssliop_corbaloc/Makefile
+  orbsvcs/tests/Simple_Naming/Makefile
+  orbsvcs/tests/Time/Makefile
+  orbsvcs/tests/Trading/Makefile
+  orbsvcs/tests/ior_corbaname/Makefile
+  orbsvcs/tests/tests_svc_loader/Makefile
+  orbsvcs/tests/unit/Makefile
+  orbsvcs/tests/unit/Notify/Makefile
+  orbsvcs/tests/unit/Notify/MC/Makefile
+  orbsvcs/tests/unit/Notify/MC/Control/Makefile
+  orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile
+  orbsvcs/tests/unit/Notify/MC/MonitorManager/Makefile
+  orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/Makefile
+  orbsvcs/tests/unit/Notify/MC/Statistic/Makefile
+  orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Makefile
+  orbsvcs/tests/unit/Trading/Makefile
+  orbsvcs/tests/unit/Trading/Interpreter/Makefile
+  docs/Makefile
+  docs/tutorials/Makefile
+  docs/tutorials/Quoter/Makefile
+  docs/tutorials/Quoter/AMI/Makefile
+  docs/tutorials/Quoter/Event_Service/Makefile
+  docs/tutorials/Quoter/idl/Makefile
+  docs/tutorials/Quoter/Naming_Service/Makefile
+  docs/tutorials/Quoter/On_Demand_Activation/Makefile
+  docs/tutorials/Quoter/RTCORBA/Makefile
+  docs/tutorials/Quoter/RT_Event_Service/Makefile
+  docs/tutorials/Quoter/Simple/Makefile
+  docs/tutorials/Quoter/Simple/Client/Makefile
+  docs/tutorials/Quoter/Simple/Impl-Repo/Makefile
+  docs/tutorials/Quoter/Simple/ImprovedServer/Makefile
+  docs/tutorials/Quoter/Simple/Persistent/Makefile
+  docs/tutorials/Quoter/Simple/Server/Makefile
   utils/Makefile
   utils/catior/Makefile
+  utils/monitor/Makefile
   utils/nslist/Makefile
   utils/wxNamingViewer/Makefile
  ])
 
 if test $tao_build_examples = yes; then
   AC_CONFIG_FILES([
+    examples/Makefile
     examples/AMH/Makefile
     examples/AMH/Sink_Server/Makefile
-    examples/AMI/FL_Callback/Makefile
     examples/AMI/Makefile
+    examples/AMI/FL_Callback/Makefile
     examples/Advanced/Makefile
     examples/Advanced/ch_3/Makefile
     examples/Buffered_AMI/Makefile
@@ -292,9 +509,9 @@ if test $tao_build_examples = yes; then
     examples/CSD_Strategy/ThreadPool5/Makefile
     examples/CSD_Strategy/ThreadPool6/Makefile
     examples/Callback_Quoter/Makefile
+    examples/Content_Server/Makefile
     examples/Content_Server/AMI_Iterator/Makefile
     examples/Content_Server/AMI_Observer/Makefile
-    examples/Content_Server/Makefile
     examples/Content_Server/SMI_Iterator/Makefile
     examples/Event_Comm/Makefile
     examples/Kokyu_dsrt_schedulers/Makefile
@@ -304,7 +521,6 @@ if test $tao_build_examples = yes; then
     examples/Load_Balancing/Makefile
     examples/Load_Balancing_persistent/Makefile
     examples/Logging/Makefile
-    examples/Makefile
     examples/OBV/Makefile
     examples/OBV/Typed_Events/Makefile
     examples/Persistent_Grid/Makefile
@@ -313,11 +529,11 @@ if test $tao_build_examples = yes; then
     examples/PluggableUDP/tests/Performance/Makefile
     examples/PluggableUDP/tests/SimplePerformance/Makefile
     examples/Quoter/Makefile
-    examples/RTCORBA/Activity/Makefile
     examples/RTCORBA/Makefile
-    examples/RTScheduling/Fixed_Priority_Scheduler/Makefile
-    examples/RTScheduling/MIF_Scheduler/Makefile
+    examples/RTCORBA/Activity/Makefile
     examples/RTScheduling/Makefile
+    examples/RTScheduling/MIF_Scheduler/Makefile
+    examples/RTScheduling/Fixed_Priority_Scheduler/Makefile
     examples/Simple/Makefile
     examples/Simple/bank/Makefile
     examples/Simple/chat/Makefile
@@ -325,276 +541,70 @@ if test $tao_build_examples = yes; then
     examples/Simple/grid/Makefile
     examples/Simple/time-date/Makefile
     examples/Simple/time/Makefile
-    examples/Simulator/Event_Supplier/Makefile
     examples/Simulator/Makefile
+    examples/Simulator/Event_Supplier/Makefile
     examples/TypeCode_Creation/Makefile
     examples/ior_corbaloc/Makefile
     examples/mfc/Makefile
-    orbsvcs/examples/CosEC/Factory/Makefile
-    orbsvcs/examples/CosEC/Makefile
-    orbsvcs/examples/CosEC/RtEC_Based/Makefile
-    orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile
-    orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile
-    orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile
-    orbsvcs/examples/CosEC/RtEC_Based/tests/Makefile
-    orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile
-    orbsvcs/examples/CosEC/Simple/Makefile
-    orbsvcs/examples/CosEC/TypedSimple/Makefile
-    orbsvcs/examples/FaultTolerance/Makefile
-    orbsvcs/examples/FaultTolerance/RolyPoly/Makefile
-    orbsvcs/examples/ImR/Advanced/Makefile
-    orbsvcs/examples/ImR/Combined_Service/Makefile
-    orbsvcs/examples/ImR/Makefile
-    orbsvcs/examples/LoadBalancing/Makefile
-    orbsvcs/examples/Log/Basic/Makefile
-    orbsvcs/examples/Log/Event/Makefile
-    orbsvcs/examples/Log/Makefile
-    orbsvcs/examples/Log/Notify/Makefile
-    orbsvcs/examples/Log/RTEvent/Makefile
-    orbsvcs/examples/Makefile
-    orbsvcs/examples/Notify/Federation/Agent/Makefile
-    orbsvcs/examples/Notify/Federation/Gate/Makefile
-    orbsvcs/examples/Notify/Federation/Makefile
-    orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile
-    orbsvcs/examples/Notify/Filter/Makefile
-    orbsvcs/examples/Notify/Lanes/Makefile
-    orbsvcs/examples/Notify/Makefile
-    orbsvcs/examples/Notify/Subscribe/Makefile
-    orbsvcs/examples/Notify/ThreadPool/Makefile
-    orbsvcs/examples/Notify/MC/Makefile                         
-    orbsvcs/examples/Notify/MC/monitor/Makefile                 
-    orbsvcs/examples/ORT/Makefile
-    orbsvcs/examples/RtEC/IIOPGateway/Makefile
-    orbsvcs/examples/RtEC/Kokyu/Makefile
-    orbsvcs/examples/RtEC/MCast/Makefile
-    orbsvcs/examples/RtEC/Makefile
-    orbsvcs/examples/RtEC/Schedule/Makefile
-    orbsvcs/examples/RtEC/Simple/Makefile
-    orbsvcs/examples/Security/Makefile
-    orbsvcs/examples/Security/Send_File/Makefile
   ])
 fi
 
 if test $tao_build_tests = yes; then
   AC_CONFIG_FILES([
-    interop-tests/Makefile
-    interop-tests/wchar/Makefile
+
+    performance-tests/Makefile
     performance-tests/Anyop/Makefile
     performance-tests/CSD_Strategy/Makefile
-    performance-tests/CSD_Strategy/TestApps/Makefile
     performance-tests/CSD_Strategy/TestInf/Makefile
     performance-tests/CSD_Strategy/TestServant/Makefile
+    performance-tests/CSD_Strategy/TestApps/Makefile
     performance-tests/Callback/Makefile
     performance-tests/Cubit/Makefile
-    performance-tests/Cubit/TAO/DII_Cubit/Makefile
-    performance-tests/Cubit/TAO/IDL_Cubit/Makefile
-    performance-tests/Cubit/TAO/MT_Cubit/Makefile
     performance-tests/Cubit/TAO/Makefile
+    performance-tests/Cubit/TAO/IDL_Cubit/Makefile
+    performance-tests/Cubit/TAO/DII_Cubit/Makefile
+    performance-tests/Cubit/TAO/MT_Cubit/Makefile
+    performance-tests/Latency/Makefile
     performance-tests/Latency/AMH_Single_Threaded/Makefile
     performance-tests/Latency/AMI/Makefile
     performance-tests/Latency/Collocation/Makefile
     performance-tests/Latency/DII/Makefile
     performance-tests/Latency/DSI/Makefile
     performance-tests/Latency/Deferred/Makefile
-    performance-tests/Latency/Makefile
     performance-tests/Latency/Single_Threaded/Makefile
     performance-tests/Latency/Thread_Per_Connection/Makefile
     performance-tests/Latency/Thread_Pool/Makefile
-    performance-tests/Makefile
-    performance-tests/Memory/IORsize/Makefile
     performance-tests/Memory/Makefile
+    performance-tests/Memory/IORsize/Makefile
     performance-tests/Memory/Single_Threaded/Makefile
+    performance-tests/POA/Makefile
     performance-tests/POA/Create_Reference/Makefile
     performance-tests/POA/Demux/Makefile
     performance-tests/POA/Implicit_Activation/Makefile
-    performance-tests/POA/Makefile
     performance-tests/POA/Object_Creation_And_Registration/Makefile
     performance-tests/Pluggable/Makefile
     performance-tests/Protocols/Makefile
     performance-tests/RTCorba/Makefile
-    performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile
     performance-tests/RTCorba/Multiple_Endpoints/Makefile
+    performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile
     performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile
     performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile
     performance-tests/RTCorba/Oneways/Makefile
     performance-tests/RTCorba/Oneways/Reliable/Makefile
     performance-tests/RTCorba/Thread_Pool/Makefile
+    performance-tests/Sequence_Latency/Makefile
     performance-tests/Sequence_Latency/AMH_Single_Threaded/Makefile
     performance-tests/Sequence_Latency/AMI/Makefile
     performance-tests/Sequence_Latency/DII/Makefile
     performance-tests/Sequence_Latency/DSI/Makefile
     performance-tests/Sequence_Latency/Deferred/Makefile
-    performance-tests/Sequence_Latency/Makefile
     performance-tests/Sequence_Latency/Single_Threaded/Makefile
     performance-tests/Sequence_Latency/Thread_Per_Connection/Makefile
     performance-tests/Sequence_Latency/Thread_Pool/Makefile
     performance-tests/Throughput/Makefile
-    orbsvcs/performance-tests/LoadBalancing/LBPerf/Makefile
-    orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile
-    orbsvcs/performance-tests/LoadBalancing/Makefile
-    orbsvcs/performance-tests/Makefile
-    orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile
-    orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile
-    orbsvcs/performance-tests/RTEvent/Makefile
-    orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile
-    orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile
-    orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile
-    orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile
-    orbsvcs/performance-tests/RTEvent/lib/Makefile
-    orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile
-    orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile
-    orbsvcs/tests/AVStreams/Component_Switching/Makefile
-    orbsvcs/tests/AVStreams/Full_Profile/Makefile
-    orbsvcs/tests/AVStreams/Latency/Makefile
-    orbsvcs/tests/AVStreams/Makefile
-    orbsvcs/tests/AVStreams/Modify_QoS/Makefile
-    orbsvcs/tests/AVStreams/Multicast/Makefile
-    orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile
-    orbsvcs/tests/AVStreams/Multiple_Flows/Makefile
-    orbsvcs/tests/AVStreams/Pluggable/Makefile
-    orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile
-    orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile
-    orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile
-    orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile
-    orbsvcs/tests/BiDir_CORBALOC/Makefile
-    orbsvcs/tests/Bug_1334_Regression/Makefile
-    orbsvcs/tests/Bug_1393_Regression/Makefile
-    orbsvcs/tests/Bug_1395_Regression/Makefile
-    orbsvcs/tests/Bug_1630_Regression/Makefile
-    orbsvcs/tests/Bug_2074_Regression/Makefile
-    orbsvcs/tests/Bug_2137_Regression/Makefile
-    orbsvcs/tests/Bug_2247_Regression/Makefile
-    orbsvcs/tests/Bug_2248_Regression/Makefile
-    orbsvcs/tests/Bug_2285_Regression/Makefile
-    orbsvcs/tests/Bug_2287_Regression/Makefile
-    orbsvcs/tests/Bug_2316_Regression/Makefile
-    orbsvcs/tests/Bug_2377_Regression/Makefile
-    orbsvcs/tests/Bug_2615_Regression/Makefile
-    orbsvcs/tests/Bug_2709_Regression/Makefile
-    orbsvcs/tests/Bug_2800_Regression/Makefile
-    orbsvcs/tests/Bug_2925_Regression/Makefile
-    orbsvcs/tests/Bug_2926_Regression/Makefile
-    orbsvcs/tests/COIOP_Naming_Test/Makefile
-    orbsvcs/tests/Concurrency/Makefile
-    orbsvcs/tests/CosEvent/Basic/Makefile
-    orbsvcs/tests/CosEvent/Makefile
-    orbsvcs/tests/CosEvent/Timeout/Makefile
-    orbsvcs/tests/CosEvent/lib/Makefile
-    orbsvcs/tests/EC_Custom_Marshal/Makefile
-    orbsvcs/tests/EC_MT_Mcast/Makefile
-    orbsvcs/tests/EC_Mcast/Makefile
-    orbsvcs/tests/EC_Multiple/Makefile
-    orbsvcs/tests/EC_Throughput/Makefile
-    orbsvcs/tests/Event/Basic/Makefile
-    orbsvcs/tests/Event/Makefile
-    orbsvcs/tests/Event/Mcast/AddrServer/Makefile
-    orbsvcs/tests/Event/Mcast/Common/Makefile
-    orbsvcs/tests/Event/Mcast/Complex/Makefile
-    orbsvcs/tests/Event/Mcast/Makefile
-    orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/Makefile
-    orbsvcs/tests/Event/Mcast/Simple/Makefile
-    orbsvcs/tests/Event/Mcast/Two_Way/Makefile
-    orbsvcs/tests/Event/Performance/Makefile
-    orbsvcs/tests/Event/ThreadFlags/Makefile
-    orbsvcs/tests/Event/UDP/Makefile
-    orbsvcs/tests/Event/lib/Makefile
-    orbsvcs/tests/FT_App/Makefile
-    orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile
-    orbsvcs/tests/FaultTolerance/IOGR/Makefile
-    orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile
-    orbsvcs/tests/FaultTolerance/Makefile
-    orbsvcs/tests/FtRtEvent/Makefile
-    orbsvcs/tests/HTIOP/AMI/Makefile
-    orbsvcs/tests/HTIOP/BiDirectional/Makefile
-    orbsvcs/tests/HTIOP/Hello/Makefile
-    orbsvcs/tests/HTIOP/Makefile
-    orbsvcs/tests/IOR_MCast/Makefile
-    orbsvcs/tests/ImplRepo/Makefile
-    orbsvcs/tests/ImplRepo/Bug_2604_Regression/Makefile
-    orbsvcs/tests/ImplRepo/Bug_689_Regression/Makefile
-    orbsvcs/tests/ImplRepo/NameService/Makefile
-    orbsvcs/tests/ImplRepo/scale/Makefile
-    orbsvcs/tests/InterfaceRepo/Application_Test/Makefile
-    orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/Makefile
-    orbsvcs/tests/InterfaceRepo/IDL3_Test/Makefile
-    orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/Makefile
-    orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile
-    orbsvcs/tests/InterfaceRepo/Latency_Test/Makefile
-    orbsvcs/tests/InterfaceRepo/Makefile
-    orbsvcs/tests/InterfaceRepo/Persistence_Test/Makefile
-    orbsvcs/tests/Interoperable_Naming/Makefile
-    orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile
-    orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile
-    orbsvcs/tests/LoadBalancing/GenericFactory/Makefile
-    orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile
-    orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile
-    orbsvcs/tests/LoadBalancing/LoadMonitor/Makefile
-    orbsvcs/tests/LoadBalancing/Makefile
-    orbsvcs/tests/Log/Basic_Log_Test/Makefile
-    orbsvcs/tests/Log/Makefile
-    orbsvcs/tests/Makefile
-    orbsvcs/tests/Miop/Makefile
-    orbsvcs/tests/Miop/McastHello/Makefile
-    orbsvcs/tests/Notify/Basic/Makefile
-    orbsvcs/tests/Notify/Blocking/Makefile
-    orbsvcs/tests/Notify/Bug_1385_Regression/Makefile
-    orbsvcs/tests/Notify/Bug_2561_Regression/Makefile
-    orbsvcs/tests/Notify/Destroy/Makefile
-    orbsvcs/tests/Notify/Discarding/Makefile
-    orbsvcs/tests/Notify/Driver/Makefile
-    orbsvcs/tests/Notify/MC/Makefile
-    orbsvcs/tests/Notify/MT_Dispatching/Makefile
-    orbsvcs/tests/Notify/Makefile
-    orbsvcs/tests/Notify/Ordering/Makefile
-    orbsvcs/tests/Notify/Persistent_POA/Makefile
-    orbsvcs/tests/Notify/PluggableTopology/Makefile
-    orbsvcs/tests/Notify/RT_lib/Makefile
-    orbsvcs/tests/Notify/Reconnecting/Makefile
-    orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile
-    orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile
-    orbsvcs/tests/Notify/Structured_Filter/Makefile
-    orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile
-    orbsvcs/tests/Notify/Test_Filter/Makefile
-    orbsvcs/tests/Notify/XML_Persistence/Makefile
-    orbsvcs/tests/Notify/lib/Makefile
-    orbsvcs/tests/Notify/performance-tests/Filter/Makefile
-    orbsvcs/tests/Notify/performance-tests/Makefile
-    orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile
-    orbsvcs/tests/Notify/performance-tests/Throughput/Makefile
-    orbsvcs/tests/Property/Makefile
-    orbsvcs/tests/Redundant_Naming/Makefile
-    orbsvcs/tests/Sched/Makefile
-    orbsvcs/tests/Sched_Conf/Makefile
-    orbsvcs/tests/Security/BiDirectional/Makefile
-    orbsvcs/tests/Security/Big_Request/Makefile
-    orbsvcs/tests/Security/Bug_1107_Regression/Makefile
-    orbsvcs/tests/Security/Bug_2908_Regression/Makefile
-    orbsvcs/tests/Security/Callback/Makefile
-    orbsvcs/tests/Security/Crash_Test/Makefile
-    orbsvcs/tests/Security/EndpointPolicy/Makefile
-    orbsvcs/tests/Security/InsecureReferences/Makefile
-    orbsvcs/tests/Security/MT_IIOP_SSL/Makefile
-    orbsvcs/tests/Security/MT_SSLIOP/Makefile
-    orbsvcs/tests/Security/Makefile
-    orbsvcs/tests/Security/Secure_Invocation/Makefile
-    orbsvcs/tests/Security/mixed_security_test/Makefile
-    orbsvcs/tests/Security/ssliop_corbaloc/Makefile
-    orbsvcs/tests/Simple_Naming/Makefile
-    orbsvcs/tests/Time/Makefile
-    orbsvcs/tests/Trading/Makefile
-    orbsvcs/tests/ior_corbaname/Makefile
-    orbsvcs/tests/tests_svc_loader/Makefile
-    orbsvcs/tests/unit/Makefile
-    orbsvcs/tests/unit/Trading/Makefile
-    orbsvcs/tests/unit/Trading/Interpreter/Makefile
-    orbsvcs/tests/unit/Notify/Makefile  
-    orbsvcs/tests/unit/Notify/MC/Makefile
-    orbsvcs/tests/unit/Notify/MC/Control/Makefile
-    orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile
-    orbsvcs/tests/unit/Notify/MC/MonitorManager/Makefile  
-    orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/Makefile
-    orbsvcs/tests/unit/Notify/MC/Statistic/Makefile                
-    orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Makefile
+    interop-tests/Makefile
+    interop-tests/wchar/Makefile
+    tests/Makefile
     tests/AMH_Exceptions/Makefile
     tests/AMH_Oneway/Makefile
     tests/AMI/Makefile
@@ -679,6 +689,7 @@ if test $tao_build_tests = yes; then
     tests/Bug_2678_Regression/Makefile
     tests/Bug_2683_Regression/Makefile
     tests/Bug_2702_Regression/Makefile
+    tests/Bug_2734_Regression/Makefile
     tests/Bug_2735_Regression/Makefile
     tests/Bug_2768_Regression/Makefile
     tests/Bug_2791_Regression/Makefile
@@ -692,19 +703,31 @@ if test $tao_build_tests = yes; then
     tests/Bug_2869_Regression/Makefile
     tests/Bug_2909_Regression/Makefile
     tests/Bug_2918_Regression/Makefile
+    tests/Bug_2935_Regression/Makefile
     tests/Bug_2936_Regression/Makefile
     tests/Bug_2953_Regression/Makefile
     tests/Bug_2966_Regression/Makefile
+    tests/Bug_3000_Regression/Makefile
+    tests/Bug_3042_Regression/Makefile
+    tests/Bug_3108_Regression/Makefile
+    tests/Bug_3163_Regression/Makefile
+    tests/Bug_3171_Regression/Makefile
+    tests/Bug_3198_Regression/Makefile
+    tests/Bug_3251_Regression/Makefile
+    tests/Bug_3276_Regression/Makefile
+    tests/Bug_3299_Regression/Makefile
+    tests/Bug_3311_Regression/Makefile
+    tests/Bug_3315_Regression/Makefile
     tests/Bug_933_Regression/Makefile
-
     tests/CDR/Makefile
     tests/COIOP/Makefile
     tests/CORBA_e_Implicit_Activation/Makefile
-    tests/CSD_Strategy_Tests/Broken/Makefile
+    tests/CSD_Collocation/Makefile
     tests/CSD_Strategy_Tests/Makefile
     tests/CSD_Strategy_Tests/TP_Common/Makefile
-    tests/CSD_Strategy_Tests/TP_Foo_A/Makefile
     tests/CSD_Strategy_Tests/TP_Foo_B/Makefile
+    tests/CSD_Strategy_Tests/Broken/Makefile
+    tests/CSD_Strategy_Tests/TP_Foo_A/Makefile
     tests/CSD_Strategy_Tests/TP_Foo_C/Makefile
     tests/CSD_Strategy_Tests/TP_Test_1/Makefile
     tests/CSD_Strategy_Tests/TP_Test_2/Makefile
@@ -716,11 +739,13 @@ if test $tao_build_tests = yes; then
     tests/CallbackTest/Makefile
     tests/Client_Leaks/Makefile
     tests/CodeSets/Makefile
-    tests/CodeSets/libs/IBM1047_ISO8859/Makefile
     tests/CodeSets/libs/Makefile
+    tests/CodeSets/libs/IBM1047_ISO8859/Makefile
     tests/CodeSets/libs/UCS4_UTF16/Makefile
+    tests/CodeSets/libs/UTF16_UCS2/Makefile
     tests/CodeSets/simple/Makefile
     tests/Codec/Makefile
+    tests/Collocated_Forwarding/Makefile
     tests/Collocation/Makefile
     tests/CollocationLockup/Makefile
     tests/Collocation_Exception_Test/Makefile
@@ -734,6 +759,7 @@ if test $tao_build_tests = yes; then
     tests/Connection_Timeout/Makefile
     tests/Crash_On_Write/Makefile
     tests/Crashed_Callback/Makefile
+    tests/DII_AMI_Forward/Makefile
     tests/DII_Collocation_Tests/Makefile
     tests/DII_Collocation_Tests/oneway/Makefile
     tests/DII_Collocation_Tests/twoway/Makefile
@@ -744,16 +770,16 @@ if test $tao_build_tests = yes; then
     tests/DSI_Gateway/Makefile
     tests/DiffServ/Makefile
     tests/DynAny_Test/Makefile
-    tests/Explicit_Event_Loop/Makefile
     tests/DynUnion_Test/Makefile
+    tests/Explicit_Event_Loop/Makefile
     tests/Exposed_Policies/Makefile
     tests/FL_Cube/Makefile
     tests/Faults/Makefile
     tests/File_IO/Makefile
     tests/Forwarding/Makefile
+    tests/GIOP_Fragments/Makefile
     tests/GIOP_Fragments/Java_Big_Reply/Makefile
     tests/GIOP_Fragments/Java_Big_Request/Makefile
-    tests/GIOP_Fragments/Makefile
     tests/GIOP_Fragments/PMB_With_Fragments/Makefile
     tests/HandleExhaustion/Makefile
     tests/Hang_Shutdown/Makefile
@@ -775,34 +801,34 @@ if test $tao_build_tests = yes; then
     tests/MT_Client/Makefile
     tests/MT_Server/Makefile
     tests/MT_Timeout/Makefile
-    tests/Makefile
+    tests/Monitor/Makefile
+    tests/Monitor/Marshal_Buffer/Makefile
     tests/Multiple/Makefile
     tests/Multiple_Inheritance/Makefile
     tests/Muxed_GIOP_Versions/Makefile
     tests/Muxing/Makefile
     tests/Native_Exceptions/Makefile
-    tests/NestedUpcall/MT_Client_Test/Makefile
     tests/NestedUpcall/Makefile
+    tests/NestedUpcall/MT_Client_Test/Makefile
     tests/NestedUpcall/Simple/Makefile
     tests/NestedUpcall/Triangle_Test/Makefile
     tests/Nested_Event_Loop/Makefile
     tests/Nested_Upcall_Crash/Makefile
     tests/No_Server_MT_Connect_Test/Makefile
-    tests/objref_comparison_test/Makefile
+    tests/OBV/Makefile
     tests/OBV/Any/Makefile
-    tests/OBV/Collocated/Forward/Makefile
     tests/OBV/Collocated/Makefile
+    tests/OBV/Collocated/Forward/Makefile
     tests/OBV/Factory/Makefile
     tests/OBV/Forward/Makefile
-    tests/OBV/Makefile
     tests/OBV/Simple/Makefile
     tests/OBV/TC_Alignment/Makefile
     tests/OBV/Truncatable/Makefile
     tests/OBV/ValueBox/Makefile
+    tests/ORB_Local_Config/Makefile
     tests/ORB_Local_Config/Bug_1459/Makefile
     tests/ORB_Local_Config/Bug_2612/Makefile
     tests/ORB_Local_Config/Bunch/Makefile
-    tests/ORB_Local_Config/Makefile
     tests/ORB_Local_Config/Separation/Makefile
     tests/ORB_Local_Config/Service_Dependency/Makefile
     tests/ORB_Local_Config/Shared/Makefile
@@ -818,50 +844,52 @@ if test $tao_build_tests = yes; then
     tests/OctetSeq/Makefile
     tests/Ondemand_Write/Makefile
     tests/Oneway_Buffering/Makefile
+    tests/Oneway_Send_Timeouts/Makefile
     tests/Oneway_Timeouts/Makefile
     tests/Oneways_Invoking_Twoways/Makefile
     tests/Optimized_Connection/Makefile
+    tests/POA/Makefile
+    tests/POA/Generic_Servant/Makefile
+    tests/POA/Adapter_Activator/Makefile
     tests/POA/Bug_1592_Regression/Makefile
     tests/POA/Bug_2511_Regression/Makefile
     tests/POA/Current/Makefile
+    tests/POA/DSI/Makefile
     tests/POA/Deactivate_Object/Makefile
     tests/POA/Default_Servant/Makefile
+    tests/POA/Default_Servant2/Makefile
     tests/POA/EndpointPolicy/Makefile
     tests/POA/Etherealization/Makefile
     tests/POA/Excessive_Object_Deactivations/Makefile
+    tests/POA/Explicit_Activation/Makefile
+    tests/POA/Explicit_Activation/Alt_Resources/Makefile
+    tests/POA/FindPOA/Makefile
     tests/POA/Forwarding/Makefile
     tests/POA/Identity/Makefile
+    tests/POA/Loader/Makefile
     tests/POA/MT_Servant_Locator/Makefile
-    tests/POA/Makefile
     tests/POA/Nested_Non_Servant_Upcalls/Makefile
+    tests/POA/NewPOA/Makefile
     tests/POA/Non_Servant_Upcalls/Makefile
     tests/POA/Object_Reactivation/Makefile
+    tests/POA/On_Demand_Activation/Makefile
+    tests/POA/On_Demand_Loading/Makefile
     tests/POA/POAManagerFactory/Makefile
+    tests/POA/POA_BiDir/Makefile
     tests/POA/POA_Destruction/Makefile
     tests/POA/Persistent_ID/Makefile
     tests/POA/Policies/Makefile
-    tests/POA/Reference_Counting/Makefile
-    tests/POA/Single_Threaded_POA/Makefile
-    tests/POA/wait_for_completion/Makefile
-    tests/POA/Adapter_Activator/Makefile
-    tests/POA/DSI/Makefile
-    tests/POA/Default_Servant2/Makefile
-    tests/POA/Explicit_Activation/Alt_Resources/Makefile
-    tests/POA/Explicit_Activation/Makefile
-    tests/POA/FindPOA/Makefile
-    tests/POA/Generic_Servant/Makefile
-    tests/POA/Loader/Makefile
-    tests/POA/NewPOA/Makefile
-    tests/POA/On_Demand_Activation/Makefile
-    tests/POA/On_Demand_Loading/Makefile
-    tests/POA/POA_BiDir/Makefile
     tests/POA/Reference_Counted_Servant/Makefile
+    tests/POA/Reference_Counting/Makefile
     tests/POA/RootPOA/Makefile
+    tests/POA/Single_Threaded_POA/Makefile
     tests/POA/TIE/Makefile
+    tests/POA/wait_for_completion/Makefile
     tests/Parallel_Connect_Strategy/Makefile
     tests/Param_Test/Makefile
     tests/Permanent_Forward/Makefile
     tests/Policies/Makefile
+    tests/Portable_Interceptors/Makefile
     tests/Portable_Interceptors/AMI/Makefile
     tests/Portable_Interceptors/AdvSlot/Makefile
     tests/Portable_Interceptors/AdvSlotDblCpy/Makefile
@@ -869,19 +897,21 @@ if test $tao_build_tests = yes; then
     tests/Portable_Interceptors/Benchmark/Makefile
     tests/Portable_Interceptors/Bug_1559/Makefile
     tests/Portable_Interceptors/Bug_2088/Makefile
+    tests/Portable_Interceptors/Bug_2133/Makefile
     tests/Portable_Interceptors/Bug_2510_Regression/Makefile
-    tests/Portable_Interceptors/Collocated/Dynamic/Makefile
+    tests/Portable_Interceptors/Bug_3079/Makefile
+    tests/Portable_Interceptors/Bug_3080/Makefile
     tests/Portable_Interceptors/Collocated/Makefile
+    tests/Portable_Interceptors/Collocated/Dynamic/Makefile
     tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Makefile
     tests/Portable_Interceptors/Dynamic/Makefile
     tests/Portable_Interceptors/ForwardRequest/Makefile
     tests/Portable_Interceptors/IORInterceptor/Makefile
-    tests/Portable_Interceptors/Makefile
     tests/Portable_Interceptors/ORB_Shutdown/Makefile
     tests/Portable_Interceptors/PICurrent/Makefile
     tests/Portable_Interceptors/PolicyFactory/Makefile
-    tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Makefile
     tests/Portable_Interceptors/Processing_Mode_Policy/Makefile
+    tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Makefile
     tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Makefile
     tests/Portable_Interceptors/Recursive_ORBInitializer/Makefile
     tests/Portable_Interceptors/Redirection/Makefile
@@ -891,6 +921,7 @@ if test $tao_build_tests = yes; then
     tests/Portable_Interceptors/Slot/Makefile
     tests/QtTests/Makefile
     tests/Queued_Message_Test/Makefile
+    tests/RTCORBA/Makefile
     tests/RTCORBA/Activate_Object_Multiple_ORBs/Makefile
     tests/RTCORBA/Banded_Connections/Makefile
     tests/RTCORBA/Client_Propagated/Makefile
@@ -902,7 +933,6 @@ if test $tao_build_tests = yes; then
     tests/RTCORBA/Explicit_Binding/Makefile
     tests/RTCORBA/Linear_Priority/Makefile
     tests/RTCORBA/MT_Client_Protocol_Priority/Makefile
-    tests/RTCORBA/Makefile
     tests/RTCORBA/ORB_init/Makefile
     tests/RTCORBA/Persistent_IOR/Makefile
     tests/RTCORBA/Policies/Makefile
@@ -914,9 +944,9 @@ if test $tao_build_tests = yes; then
     tests/RTCORBA/Server_Declared/Makefile
     tests/RTCORBA/Server_Protocol/Makefile
     tests/RTCORBA/Thread_Pool/Makefile
+    tests/RTScheduling/Makefile
     tests/RTScheduling/Current/Makefile
     tests/RTScheduling/DT_Spawn/Makefile
-    tests/RTScheduling/Makefile
     tests/RTScheduling/Scheduling_Interceptor/Makefile
     tests/RTScheduling/Thread_Cancel/Makefile
     tests/RTScheduling/VoidData/Makefile
@@ -927,9 +957,9 @@ if test $tao_build_tests = yes; then
     tests/Server_Leaks/Makefile
     tests/Server_Port_Zero/Makefile
     tests/Single_Read/Makefile
+    tests/Smart_Proxies/Makefile
     tests/Smart_Proxies/Benchmark/Makefile
     tests/Smart_Proxies/Collocation/Makefile
-    tests/Smart_Proxies/Makefile
     tests/Smart_Proxies/On_Demand/Makefile
     tests/Smart_Proxies/Policy/Makefile
     tests/Smart_Proxies/dtor/Makefile
@@ -937,14 +967,15 @@ if test $tao_build_tests = yes; then
     tests/Strategies/Makefile
     tests/Timed_Buffered_Oneways/Makefile
     tests/Timeout/Makefile
-    tests/TransportCurrent/Framework/Makefile
-    tests/TransportCurrent/IIOP/Makefile
     tests/TransportCurrent/Makefile
     tests/TransportCurrent/lib/Makefile
+    tests/TransportCurrent/Framework/Makefile
+    tests/TransportCurrent/IIOP/Makefile
     tests/Two_Objects/Makefile
     tests/Typedef_String_Array/Makefile
     tests/UNKNOWN_Exception/Makefile
     tests/Xt_Stopwatch/Makefile
+    tests/objref_comparison_test/Makefile
   ])
   AC_CONFIG_COMMANDS([bug_2399], [
       mkdir tests/Bug_2399_Regression/mytmp

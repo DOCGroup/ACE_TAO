@@ -16,36 +16,41 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
-BUILT_SOURCES =
 noinst_PROGRAMS =
+
+## Makefile.mixed_security_idl.am
+
+BUILT_SOURCES = \
+  FooC.cpp \
+  FooC.h \
+  FooC.inl \
+  FooS.cpp \
+  FooS.h \
+  FooS.inl
+
+CLEANFILES = \
+  Foo-stamp \
+  FooC.cpp \
+  FooC.h \
+  FooC.inl \
+  FooS.cpp \
+  FooS.h \
+  FooS.inl
+
+FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
+
+Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Foo.idl
+	@touch $@
+
+noinst_HEADERS = \
+  Foo.idl
 
 ## Makefile.mixed_security_security_client.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
-
-BUILT_SOURCES += \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl
-
-CLEANFILES += \
-  Foo-stamp \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl
-
-FooC.cpp FooC.h FooC.inl FooS.h FooS.inl: Foo-stamp
-
-Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Foo.idl
-	@touch $@
 
 noinst_PROGRAMS += client
 
@@ -60,10 +65,8 @@ client_CPPFLAGS = \
 client_SOURCES = \
   FooC.cpp \
   client.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl
+  Foo_i.h \
+  constants.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
@@ -86,26 +89,6 @@ if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
 if BUILD_SSL
 
-BUILT_SOURCES += \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.cpp \
-  FooS.h \
-  FooS.inl
-
-CLEANFILES += \
-  Foo-stamp \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.cpp \
-  FooS.h \
-  FooS.inl
-
-FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
-
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -123,10 +106,6 @@ server_SOURCES = \
   FooS.cpp \
   Foo_i.cpp \
   server.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl \
   Foo_i.h
 
 server_LDFLAGS = \

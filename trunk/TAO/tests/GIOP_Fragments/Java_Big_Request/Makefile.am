@@ -72,27 +72,30 @@ CLEANFILES += \
 client.class: $(srcdir)/client.java
 	javac -d . $(srcdir)/client.java
 
-noinst_LTLIBRARIES = libJava_Big_Request.la
+noinst_PROGRAMS = server
 
-libJava_Big_Request_la_CPPFLAGS = \
+server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-libJava_Big_Request_la_SOURCES = \
+server_SOURCES = \
   Payload_Receiver.cpp \
   TestC.cpp \
   TestS.cpp \
-  server.cpp
-
-noinst_HEADERS = \
+  server.cpp \
   Payload_Receiver.h \
-  Test.idl \
   TestC.h \
   TestC.inl \
   TestS.h \
   TestS.inl
+
+server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_JAVA
 endif BUILD_EXCEPTIONS

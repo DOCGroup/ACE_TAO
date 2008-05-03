@@ -81,6 +81,16 @@ client_SOURCES = \
   client.cpp \
   Callback.h
 
+../lib:
+	mkdir -p ../lib
+
+
+client_DEPENDENCIES = \
+ ../lib
+
+client_LDFLAGS = \
+  -L../lib
+
 client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/performance-tests/RTEvent/lib/libTAO_RTEC_Perf.la \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
@@ -132,6 +142,16 @@ server_SOURCES = \
   server.cpp \
   Session.h \
   Session_Factory.h
+
+../lib:
+	mkdir -p ../lib
+
+
+server_DEPENDENCIES = \
+ ../lib
+
+server_LDFLAGS = \
+  -L../lib
 
 server_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/performance-tests/RTEvent/lib/libTAO_RTEC_Perf.la \

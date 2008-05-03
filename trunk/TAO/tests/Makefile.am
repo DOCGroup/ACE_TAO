@@ -92,6 +92,7 @@ SUBDIRS = \
         Bug_2678_Regression \
         Bug_2683_Regression \
         Bug_2702_Regression \
+        Bug_2734_Regression \
         Bug_2735_Regression \
         Bug_2768_Regression \
         Bug_2791_Regression \
@@ -105,19 +106,33 @@ SUBDIRS = \
         Bug_2869_Regression \
         Bug_2909_Regression \
         Bug_2918_Regression \
+        Bug_2935_Regression \
         Bug_2936_Regression \
         Bug_2953_Regression \
         Bug_2966_Regression \
+        Bug_3000_Regression \
+        Bug_3042_Regression \
+        Bug_3108_Regression \
+        Bug_3163_Regression \
+        Bug_3171_Regression \
+        Bug_3198_Regression \
+        Bug_3251_Regression \
+        Bug_3276_Regression \
+        Bug_3299_Regression \
+        Bug_3311_Regression \
+        Bug_3315_Regression \
         Bug_933_Regression \
         CDR \
         COIOP \
         CORBA_e_Implicit_Activation \
+        CSD_Collocation \
         CSD_Strategy_Tests \
         Cache_Growth_Test \
         CallbackTest \
         Client_Leaks \
         CodeSets \
         Codec \
+        Collocated_Forwarding \
         Collocation \
         CollocationLockup \
         Collocation_Exception_Test \
@@ -131,6 +146,7 @@ SUBDIRS = \
         Connection_Timeout \
         Crash_On_Write \
         Crashed_Callback \
+        DII_AMI_Forward \
         DII_Collocation_Tests \
         DIOP \
         DLL_ORB \
@@ -166,6 +182,7 @@ SUBDIRS = \
         MT_Client \
         MT_Server \
         MT_Timeout \
+        Monitor \
         Multiple \
         Multiple_Inheritance \
         Muxed_GIOP_Versions \
@@ -186,6 +203,7 @@ SUBDIRS = \
         OctetSeq \
         Ondemand_Write \
         Oneway_Buffering \
+        Oneway_Send_Timeouts \
         Oneway_Timeouts \
         Oneways_Invoking_Twoways \
         Optimized_Connection \

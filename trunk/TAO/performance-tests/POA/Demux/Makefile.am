@@ -16,6 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
 
 ## Makefile.Demux_Poa_Idl.am
 
@@ -49,9 +50,9 @@ noinst_HEADERS = \
 
 if BUILD_EXCEPTIONS
 
-noinst_LTLIBRARIES = libDemux_Poa_Client.la
+noinst_PROGRAMS += client
 
-libDemux_Poa_Client_la_CPPFLAGS = \
+client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -59,15 +60,20 @@ libDemux_Poa_Client_la_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs
 
-libDemux_Poa_Client_la_SOURCES = \
+client_SOURCES = \
   client.cpp \
   demux_testC.cpp \
   demux_testS.cpp \
-  demux_test_client.cpp
-
-noinst_HEADERS += \
+  demux_test_client.cpp \
   demux_test_client.h \
   demux_test_client.inl
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
 
@@ -75,7 +81,7 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS = server
+noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
   -I$(ACE_ROOT) \

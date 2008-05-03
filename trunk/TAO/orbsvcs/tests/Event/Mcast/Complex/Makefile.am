@@ -36,6 +36,16 @@ consumer_SOURCES = \
   consumer.cpp \
   Constants.h
 
+../Common:
+	mkdir -p ../Common
+
+
+consumer_DEPENDENCIES = \
+ ../Common
+
+consumer_LDFLAGS = \
+  -L../Common
+
 consumer_LDADD = \
   $(top_builddir)/orbsvcs/tests/Event/Mcast/Common/libECMcastTests.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -77,6 +87,16 @@ gateway_ec_SOURCES = \
   gateway-ec.cpp \
   Constants.h
 
+../Common:
+	mkdir -p ../Common
+
+
+gateway_ec_DEPENDENCIES = \
+ ../Common
+
+gateway_ec_LDFLAGS = \
+  -L../Common
+
 gateway_ec_LDADD = \
   $(top_builddir)/orbsvcs/tests/Event/Mcast/Common/libECMcastTests.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -117,6 +137,16 @@ supplier_CPPFLAGS = \
 supplier_SOURCES = \
   supplier.cpp \
   Constants.h
+
+../Common:
+	mkdir -p ../Common
+
+
+supplier_DEPENDENCIES = \
+ ../Common
+
+supplier_LDFLAGS = \
+  -L../Common
 
 supplier_LDADD = \
   $(top_builddir)/orbsvcs/tests/Event/Mcast/Common/libECMcastTests.la \

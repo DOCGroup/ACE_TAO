@@ -16,37 +16,14 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-BUILT_SOURCES =
 CLEANFILES =
+BUILT_SOURCES =
 
 ## Makefile.CSD_Test_ThreadPool4_Server.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if BUILD_THREADS
-
-BUILT_SOURCES += \
-  CallbackC.cpp \
-  CallbackC.h \
-  CallbackC.inl \
-  CallbackS.cpp \
-  CallbackS.h \
-  CallbackS.inl
-
-CLEANFILES += \
-  Callback-stamp \
-  CallbackC.cpp \
-  CallbackC.h \
-  CallbackC.inl \
-  CallbackS.cpp \
-  CallbackS.h \
-  CallbackS.inl
-
-CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl: Callback-stamp
-
-Callback-stamp: $(srcdir)/Callback.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Callback.idl
-	@touch $@
 
 BUILT_SOURCES += \
   FooC.cpp \
@@ -69,6 +46,29 @@ FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  CallbackC.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.cpp \
+  CallbackS.h \
+  CallbackS.inl
+
+CLEANFILES += \
+  Callback-stamp \
+  CallbackC.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.cpp \
+  CallbackS.h \
+  CallbackS.inl
+
+CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl: Callback-stamp
+
+Callback-stamp: $(srcdir)/Callback.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Callback.idl
 	@touch $@
 
 noinst_PROGRAMS = server_main

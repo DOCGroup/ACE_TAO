@@ -31,6 +31,16 @@ server_CPPFLAGS = \
 server_SOURCES = \
   server.cpp
 
+../Generic_Servant:
+	mkdir -p ../Generic_Servant
+
+
+server_DEPENDENCIES = \
+ ../Generic_Servant
+
+server_LDFLAGS = \
+  -L../Generic_Servant
+
 server_LDADD = \
   $(top_builddir)/tests/POA/Generic_Servant/libGeneric_Servant.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

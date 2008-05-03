@@ -24,27 +24,6 @@ BUILT_SOURCES =
 if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
-  TestTypeC.cpp \
-  TestTypeC.h \
-  TestTypeC.inl \
-  TestTypeS.h \
-  TestTypeS.inl
-
-CLEANFILES += \
-  TestType-stamp \
-  TestTypeC.cpp \
-  TestTypeC.h \
-  TestTypeC.inl \
-  TestTypeS.h \
-  TestTypeS.inl
-
-TestTypeC.cpp TestTypeC.h TestTypeC.inl TestTypeS.h TestTypeS.inl: TestType-stamp
-
-TestType-stamp: $(srcdir)/TestType.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/TestType.idl
-	@touch $@
-
-BUILT_SOURCES += \
   TestCaseC.cpp \
   TestCaseC.h \
   TestCaseC.inl \
@@ -63,6 +42,27 @@ TestCaseC.cpp TestCaseC.h TestCaseC.inl TestCaseS.h TestCaseS.inl: TestCase-stam
 
 TestCase-stamp: $(srcdir)/TestCase.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/TestCase.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  TestTypeC.cpp \
+  TestTypeC.h \
+  TestTypeC.inl \
+  TestTypeS.h \
+  TestTypeS.inl
+
+CLEANFILES += \
+  TestType-stamp \
+  TestTypeC.cpp \
+  TestTypeC.h \
+  TestTypeC.inl \
+  TestTypeS.h \
+  TestTypeS.inl
+
+TestTypeC.cpp TestTypeC.h TestTypeC.inl TestTypeS.h TestTypeS.inl: TestType-stamp
+
+TestType-stamp: $(srcdir)/TestType.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/TestType.idl
 	@touch $@
 
 noinst_PROGRAMS = client

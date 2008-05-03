@@ -33,6 +33,16 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp
 
+../Common:
+	mkdir -p ../Common
+
+
+client_DEPENDENCIES = \
+ ../Common
+
+client_LDFLAGS = \
+  -L../Common
+
 client_LDADD = \
   $(top_builddir)/performance-tests/RTCorba/Multiple_Endpoints/Common/libRTCORBA_Common.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -64,6 +74,16 @@ server_CPPFLAGS = \
 
 server_SOURCES = \
   server.cpp
+
+../Common:
+	mkdir -p ../Common
+
+
+server_DEPENDENCIES = \
+ ../Common
+
+server_LDFLAGS = \
+  -L../Common
 
 server_LDADD = \
   $(top_builddir)/performance-tests/RTCorba/Multiple_Endpoints/Common/libRTCORBA_Common.la \

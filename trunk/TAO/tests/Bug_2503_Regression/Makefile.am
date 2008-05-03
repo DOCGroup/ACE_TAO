@@ -74,10 +74,6 @@ client_SOURCES = \
   client.cpp \
   common.cpp \
   test_i.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   common.h \
   test_i.h
 
@@ -115,10 +111,6 @@ server_SOURCES = \
   common.cpp \
   server.cpp \
   test_i.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   common.h \
   test_i.h
 
