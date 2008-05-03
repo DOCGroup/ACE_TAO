@@ -28,6 +28,8 @@ SUBDIRS = \
         Bug_2800_Regression \
         Bug_2925_Regression \
         Bug_2926_Regression \
+        Bug_3215_Regression \
+        Bug_3216_Regression \
         COIOP_Naming_Test \
         Concurrency \
         CosEvent \

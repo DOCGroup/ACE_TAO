@@ -40,7 +40,7 @@ CLEANFILES = \
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Sp $(srcdir)/Test.idl
 	@touch $@
 
 noinst_HEADERS = \

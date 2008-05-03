@@ -95,6 +95,8 @@ Supplier_SOURCES = \
   Multiple.h \
   Supplier.h
 
+../../lib:
+	mkdir -p ../../lib
 
 
 Supplier_DEPENDENCIES = \

@@ -93,8 +93,7 @@ client_CPPFLAGS = \
 client_SOURCES = \
   TestC.cpp \
   client.cpp \
-  TestC.h \
-  TestC.inl
+  TestC.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \

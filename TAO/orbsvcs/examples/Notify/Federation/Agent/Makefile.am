@@ -30,11 +30,23 @@ agent_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(ACE_ROOT)/ETCL \
+  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(srcdir)/.. \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 agent_SOURCES = \
   Agent.cpp
+
+../Gate/.:
+	mkdir -p ../Gate/.
+
+
+agent_DEPENDENCIES = \
+ ../Gate/.
+
+agent_LDFLAGS = \
+  -L../Gate/.
 
 agent_LDADD = \
   $(top_builddir)/orbsvcs/examples/Notify/Federation/Gate/libGate.la \
@@ -43,7 +55,9 @@ agent_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \

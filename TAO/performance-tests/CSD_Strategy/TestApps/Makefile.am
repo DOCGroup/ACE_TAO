@@ -35,6 +35,9 @@ client_main_SOURCES = \
   client_main.cpp \
   ClientApp.h
 
+client_main_LDFLAGS = \
+  -L$(TAO_ROOT)/performance-tests/CSD_Strategy/TestInf -L$(TAO_ROOT)/performance-tests/CSD_Strategy/TestServant
+
 client_main_LDADD = \
   $(top_builddir)/performance-tests/CSD_Strategy/TestServant/libCSD_PT_TestServant.la \
   $(top_builddir)/performance-tests/CSD_Strategy/TestInf/libCSD_PT_TestInf.la \
@@ -69,6 +72,9 @@ server_main_SOURCES = \
   ServerApp.cpp \
   server_main.cpp \
   ServerApp.h
+
+server_main_LDFLAGS = \
+  -L$(TAO_ROOT)/performance-tests/CSD_Strategy/TestInf -L$(TAO_ROOT)/performance-tests/CSD_Strategy/TestServant
 
 server_main_LDADD = \
   $(top_builddir)/performance-tests/CSD_Strategy/TestServant/libCSD_PT_TestServant.la \

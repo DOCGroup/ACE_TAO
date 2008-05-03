@@ -41,7 +41,7 @@ TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
-	@touch "$@"
+	@touch $@
 
 noinst_HEADERS = \
   Test.idl
@@ -92,11 +92,6 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
-
-
-ACLOCAL = @ACLOCAL@
-ACLOCAL_AMFLAGS = -I m4
-AUTOMAKE_OPTIONS = foreign
 
 ## Clean up template repositories, etc.
 clean-local:

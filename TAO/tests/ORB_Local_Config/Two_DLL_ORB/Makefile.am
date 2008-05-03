@@ -76,6 +76,7 @@ endif BUILD_EXCEPTIONS
 
 ## Makefile.ORB_DLL_Server.am
 
+if BUILD_EXCEPTIONS
 if BUILD_THREADS
 
 noinst_LTLIBRARIES += libORB_DLL_Server.la
@@ -101,6 +102,7 @@ noinst_HEADERS += \
   Test_i.h
 
 endif BUILD_THREADS
+endif BUILD_EXCEPTIONS
 
 ## Makefile.Two_DLL_ORB.am
 
@@ -123,7 +125,11 @@ CLEANFILES += \
   TestS.h \
   TestS.inl
 
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
+Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
+	@touch $@
 
 noinst_PROGRAMS = Test
 

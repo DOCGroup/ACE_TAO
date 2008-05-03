@@ -50,24 +50,6 @@ noinst_HEADERS = \
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.h TestS.inl: Test-stamp
-
-
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -81,10 +63,9 @@ client_CPPFLAGS = \
 client_SOURCES = \
   TestC.cpp \
   client.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Hello.h \
+  NamingTask.h \
+  NsShutdown.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -97,25 +78,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.Bug_2800_Regression_NsMain.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-
 
 noinst_PROGRAMS += nsmain
 
@@ -136,11 +98,7 @@ nsmain_SOURCES = \
   nsmain.cpp \
   Hello.h \
   NamingTask.h \
-  NsShutdown.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  NsShutdown.h
 
 nsmain_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Serv.la \
@@ -163,25 +121,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -197,11 +136,7 @@ server_SOURCES = \
   TestC.cpp \
   TestS.cpp \
   server.cpp \
-  Hello.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Hello.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

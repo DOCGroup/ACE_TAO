@@ -18,7 +18,7 @@ TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 
-## Makefile.PI_Redirection_Idl.am
+## Makefile.Bug_3080_Idl.am
 
 BUILT_SOURCES = \
   testC.cpp \
@@ -46,7 +46,7 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   test.idl
 
-## Makefile.PI_Redirection_Client.am
+## Makefile.Bug_3080_Client.am
 
 if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
@@ -68,8 +68,6 @@ client_SOURCES = \
   Client_Request_Interceptor.h
 
 client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
@@ -80,10 +78,9 @@ client_LDADD = \
 endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
 
-## Makefile.PI_Redirection_Server.am
+## Makefile.Bug_3080_Server.am
 
 if BUILD_EXCEPTIONS
-if BUILD_INTERCEPTORS
 
 noinst_PROGRAMS += server
 
@@ -94,29 +91,18 @@ server_CPPFLAGS = \
   -I$(TAO_BUILDDIR)
 
 server_SOURCES = \
-  CrashPoint.cpp \
-  Server_ORBInitializer.cpp \
-  Server_Request_Interceptor.cpp \
   server.cpp \
   testC.cpp \
   testS.cpp \
   test_i.cpp \
-  CrashPoint.h \
-  Server_ORBInitializer.h \
-  Server_Request_Interceptor.h \
   test_i.h
 
 server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

@@ -61,8 +61,8 @@ client_CPPFLAGS = \
 client_SOURCES = \
   QuoterC.cpp \
   client.cpp \
-  QuoterC.h \
-  QuoterC.inl
+  Stock_Factory_i.h \
+  Stock_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -88,10 +88,6 @@ server_SOURCES = \
   Stock_Factory_i.cpp \
   Stock_i.cpp \
   server.cpp \
-  QuoterC.h \
-  QuoterC.inl \
-  QuoterS.h \
-  QuoterS.inl \
   Stock_Factory_i.h \
   Stock_i.h
 

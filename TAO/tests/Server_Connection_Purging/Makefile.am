@@ -97,6 +97,30 @@ server_LDADD = \
 
 endif BUILD_EXCEPTIONS
 
+## Makefile.Server_Connection_Purging_ShutCl.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += shutdown_client
+
+shutdown_client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+shutdown_client_SOURCES = \
+  TestC.cpp \
+  client2.cpp \
+  Test_i.h
+
+shutdown_client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
 ## Clean up template repositories, etc.
 clean-local:
 	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*

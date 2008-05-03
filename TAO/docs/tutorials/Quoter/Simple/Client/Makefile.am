@@ -31,6 +31,16 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp
 
+../../idl:
+	mkdir -p ../../idl
+
+
+client_DEPENDENCIES = \
+ ../../idl
+
+client_LDFLAGS = \
+  -L../../idl
+
 client_LDADD = \
   $(top_builddir)/docs/tutorials/Quoter/idl/libQuoter_Idl_Lib.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

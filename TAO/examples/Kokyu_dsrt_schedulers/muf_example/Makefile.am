@@ -70,6 +70,9 @@ muf_client_SOURCES = \
   test_i.h \
   test_i.inl
 
+muf_client_LDFLAGS = \
+  -L$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
+
 muf_client_LDADD = \
   $(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
@@ -110,6 +113,9 @@ muf_server_SOURCES = \
   test_i.cpp \
   test_i.h \
   test_i.inl
+
+muf_server_LDFLAGS = \
+  -L$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
 
 muf_server_LDADD = \
   $(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \

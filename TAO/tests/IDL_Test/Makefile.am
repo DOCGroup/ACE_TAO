@@ -430,6 +430,222 @@ nested_scope-stamp: $(srcdir)/nested_scope.idl $(TAO_IDL_DEP)
 	@touch $@
 
 BUILT_SOURCES += \
+  old_arrayC.cpp \
+  old_arrayC.h \
+  old_arrayC.inl \
+  old_arrayS.cpp \
+  old_arrayS.h \
+  old_arrayS.inl \
+  old_arrayS_T.cpp \
+  old_arrayS_T.h
+
+CLEANFILES += \
+  old_array-stamp \
+  old_arrayC.cpp \
+  old_arrayC.h \
+  old_arrayC.inl \
+  old_arrayS.cpp \
+  old_arrayS.h \
+  old_arrayS.inl \
+  old_arrayS_T.cpp \
+  old_arrayS_T.h
+
+old_arrayC.cpp old_arrayC.h old_arrayC.inl old_arrayS.cpp old_arrayS.h old_arrayS.inl old_arrayS_T.cpp old_arrayS_T.h: old_array-stamp
+
+old_array-stamp: $(srcdir)/old_array.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/old_array.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  old_constantsC.cpp \
+  old_constantsC.h \
+  old_constantsC.inl \
+  old_constantsS.cpp \
+  old_constantsS.h \
+  old_constantsS.inl \
+  old_constantsS_T.cpp \
+  old_constantsS_T.h
+
+CLEANFILES += \
+  old_constants-stamp \
+  old_constantsC.cpp \
+  old_constantsC.h \
+  old_constantsC.inl \
+  old_constantsS.cpp \
+  old_constantsS.h \
+  old_constantsS.inl \
+  old_constantsS_T.cpp \
+  old_constantsS_T.h
+
+old_constantsC.cpp old_constantsC.h old_constantsC.inl old_constantsS.cpp old_constantsS.h old_constantsS.inl old_constantsS_T.cpp old_constantsS_T.h: old_constants-stamp
+
+old_constants-stamp: $(srcdir)/old_constants.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/old_constants.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  old_sequenceC.cpp \
+  old_sequenceC.h \
+  old_sequenceC.inl \
+  old_sequenceS.cpp \
+  old_sequenceS.h \
+  old_sequenceS.inl \
+  old_sequenceS_T.cpp \
+  old_sequenceS_T.h
+
+CLEANFILES += \
+  old_sequence-stamp \
+  old_sequenceC.cpp \
+  old_sequenceC.h \
+  old_sequenceC.inl \
+  old_sequenceS.cpp \
+  old_sequenceS.h \
+  old_sequenceS.inl \
+  old_sequenceS_T.cpp \
+  old_sequenceS_T.h
+
+old_sequenceC.cpp old_sequenceC.h old_sequenceC.inl old_sequenceS.cpp old_sequenceS.h old_sequenceS.inl old_sequenceS_T.cpp old_sequenceS_T.h: old_sequence-stamp
+
+old_sequence-stamp: $(srcdir)/old_sequence.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/old_sequence.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  simpleC.cpp \
+  simpleC.h \
+  simpleC.inl \
+  simpleS.cpp \
+  simpleS.h \
+  simpleS.inl \
+  simpleS_T.cpp \
+  simpleS_T.h
+
+CLEANFILES += \
+  simple-stamp \
+  simpleC.cpp \
+  simpleC.h \
+  simpleC.inl \
+  simpleS.cpp \
+  simpleS.h \
+  simpleS.inl \
+  simpleS_T.cpp \
+  simpleS_T.h
+
+simpleC.cpp simpleC.h simpleC.inl simpleS.cpp simpleS.h simpleS.inl simpleS_T.cpp simpleS_T.h: simple-stamp
+
+simple-stamp: $(srcdir)/simple.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/simple.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  simple2C.cpp \
+  simple2C.h \
+  simple2C.inl \
+  simple2S.cpp \
+  simple2S.h \
+  simple2S.inl \
+  simple2S_T.cpp \
+  simple2S_T.h
+
+CLEANFILES += \
+  simple2-stamp \
+  simple2C.cpp \
+  simple2C.h \
+  simple2C.inl \
+  simple2S.cpp \
+  simple2S.h \
+  simple2S.inl \
+  simple2S_T.cpp \
+  simple2S_T.h
+
+simple2C.cpp simple2C.h simple2C.inl simple2S.cpp simple2S.h simple2S.inl simple2S_T.cpp simple2S_T.h: simple2-stamp
+
+simple2-stamp: $(srcdir)/simple2.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/simple2.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  old_structC.cpp \
+  old_structC.h \
+  old_structC.inl \
+  old_structS.cpp \
+  old_structS.h \
+  old_structS.inl \
+  old_structS_T.cpp \
+  old_structS_T.h
+
+CLEANFILES += \
+  old_struct-stamp \
+  old_structC.cpp \
+  old_structC.h \
+  old_structC.inl \
+  old_structS.cpp \
+  old_structS.h \
+  old_structS.inl \
+  old_structS_T.cpp \
+  old_structS_T.h
+
+old_structC.cpp old_structC.h old_structC.inl old_structS.cpp old_structS.h old_structS.inl old_structS_T.cpp old_structS_T.h: old_struct-stamp
+
+old_struct-stamp: $(srcdir)/old_struct.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/old_struct.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  old_unionC.cpp \
+  old_unionC.h \
+  old_unionC.inl \
+  old_unionS.cpp \
+  old_unionS.h \
+  old_unionS.inl \
+  old_unionS_T.cpp \
+  old_unionS_T.h
+
+CLEANFILES += \
+  old_union-stamp \
+  old_unionC.cpp \
+  old_unionC.h \
+  old_unionC.inl \
+  old_unionS.cpp \
+  old_unionS.h \
+  old_unionS.inl \
+  old_unionS_T.cpp \
+  old_unionS_T.h
+
+old_unionC.cpp old_unionC.h old_unionC.inl old_unionS.cpp old_unionS.h old_unionS.inl old_unionS_T.cpp old_unionS_T.h: old_union-stamp
+
+old_union-stamp: $(srcdir)/old_union.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/old_union.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  old_union2C.cpp \
+  old_union2C.h \
+  old_union2C.inl \
+  old_union2S.cpp \
+  old_union2S.h \
+  old_union2S.inl \
+  old_union2S_T.cpp \
+  old_union2S_T.h
+
+CLEANFILES += \
+  old_union2-stamp \
+  old_union2C.cpp \
+  old_union2C.h \
+  old_union2C.inl \
+  old_union2S.cpp \
+  old_union2S.h \
+  old_union2S.inl \
+  old_union2S_T.cpp \
+  old_union2S_T.h
+
+old_union2C.cpp old_union2C.h old_union2C.inl old_union2S.cpp old_union2S.h old_union2S.inl old_union2S_T.cpp old_union2S_T.h: old_union2-stamp
+
+old_union2-stamp: $(srcdir)/old_union2.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT $(srcdir)/old_union2.idl
+	@touch $@
+
+BUILT_SOURCES += \
   paramsC.cpp \
   paramsC.h \
   paramsC.inl \
@@ -801,6 +1017,130 @@ keywords-stamp: $(srcdir)/keywords.idl $(TAO_IDL_DEP)
 	@touch $@
 
 BUILT_SOURCES += \
+  dif2A.cpp \
+  dif2A.h \
+  dif2C.cpp \
+  dif2C.h \
+  dif2C.inl \
+  dif2S.cpp \
+  dif2S.h \
+  dif2S.inl \
+  dif2S_T.cpp \
+  dif2S_T.h
+
+CLEANFILES += \
+  dif2-stamp \
+  dif2A.cpp \
+  dif2A.h \
+  dif2C.cpp \
+  dif2C.h \
+  dif2C.inl \
+  dif2S.cpp \
+  dif2S.h \
+  dif2S.inl \
+  dif2S_T.cpp \
+  dif2S_T.h
+
+dif2A.cpp dif2A.h dif2C.cpp dif2C.h dif2C.inl dif2S.cpp dif2S.h dif2S.inl dif2S_T.cpp dif2S_T.h: dif2-stamp
+
+dif2-stamp: $(srcdir)/dif2.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT -GA $(srcdir)/dif2.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  inheritA.cpp \
+  inheritA.h \
+  inheritC.cpp \
+  inheritC.h \
+  inheritC.inl \
+  inheritS.cpp \
+  inheritS.h \
+  inheritS.inl \
+  inheritS_T.cpp \
+  inheritS_T.h
+
+CLEANFILES += \
+  inherit-stamp \
+  inheritA.cpp \
+  inheritA.h \
+  inheritC.cpp \
+  inheritC.h \
+  inheritC.inl \
+  inheritS.cpp \
+  inheritS.h \
+  inheritS.inl \
+  inheritS_T.cpp \
+  inheritS_T.h
+
+inheritA.cpp inheritA.h inheritC.cpp inheritC.h inheritC.inl inheritS.cpp inheritS.h inheritS.inl inheritS_T.cpp inheritS_T.h: inherit-stamp
+
+inherit-stamp: $(srcdir)/inherit.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT -GA $(srcdir)/inherit.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  moduleA.cpp \
+  moduleA.h \
+  moduleC.cpp \
+  moduleC.h \
+  moduleC.inl \
+  moduleS.cpp \
+  moduleS.h \
+  moduleS.inl \
+  moduleS_T.cpp \
+  moduleS_T.h
+
+CLEANFILES += \
+  module-stamp \
+  moduleA.cpp \
+  moduleA.h \
+  moduleC.cpp \
+  moduleC.h \
+  moduleC.inl \
+  moduleS.cpp \
+  moduleS.h \
+  moduleS.inl \
+  moduleS_T.cpp \
+  moduleS_T.h
+
+moduleA.cpp moduleA.h moduleC.cpp moduleC.h moduleC.inl moduleS.cpp moduleS.h moduleS.inl moduleS_T.cpp moduleS_T.h: module-stamp
+
+module-stamp: $(srcdir)/module.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT -GA $(srcdir)/module.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  primtypesA.cpp \
+  primtypesA.h \
+  primtypesC.cpp \
+  primtypesC.h \
+  primtypesC.inl \
+  primtypesS.cpp \
+  primtypesS.h \
+  primtypesS.inl \
+  primtypesS_T.cpp \
+  primtypesS_T.h
+
+CLEANFILES += \
+  primtypes-stamp \
+  primtypesA.cpp \
+  primtypesA.h \
+  primtypesC.cpp \
+  primtypesC.h \
+  primtypesC.inl \
+  primtypesS.cpp \
+  primtypesS.h \
+  primtypesS.inl \
+  primtypesS_T.cpp \
+  primtypesS_T.h
+
+primtypesA.cpp primtypesA.h primtypesC.cpp primtypesC.h primtypesC.inl primtypesS.cpp primtypesS.h primtypesS.inl primtypesS_T.cpp primtypesS_T.h: primtypes-stamp
+
+primtypes-stamp: $(srcdir)/primtypes.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GT -GA $(srcdir)/primtypes.idl
+	@touch $@
+
+BUILT_SOURCES += \
   pragmaA.cpp \
   pragmaA.h \
   pragmaC.cpp \
@@ -987,6 +1327,9 @@ main_SOURCES = \
   constantsA.cpp \
   constantsC.cpp \
   constantsS.cpp \
+  dif2A.cpp \
+  dif2C.cpp \
+  dif2S.cpp \
   enum_in_structC.cpp \
   enum_in_structS.cpp \
   fullC.cpp \
@@ -1002,19 +1345,40 @@ main_SOURCES = \
   includedS.cpp \
   includingC.cpp \
   includingS.cpp \
+  inheritA.cpp \
+  inheritC.cpp \
+  inheritS.cpp \
   interfaceC.cpp \
   interfaceS.cpp \
   keywordsA.cpp \
   keywordsC.cpp \
   keywordsS.cpp \
   main.cpp \
+  moduleA.cpp \
+  moduleC.cpp \
+  moduleS.cpp \
   nested_scopeC.cpp \
   nested_scopeS.cpp \
+  old_arrayC.cpp \
+  old_arrayS.cpp \
+  old_constantsC.cpp \
+  old_constantsS.cpp \
+  old_sequenceC.cpp \
+  old_sequenceS.cpp \
+  old_structC.cpp \
+  old_structS.cpp \
+  old_union2C.cpp \
+  old_union2S.cpp \
+  old_unionC.cpp \
+  old_unionS.cpp \
   paramsC.cpp \
   paramsS.cpp \
   pragmaA.cpp \
   pragmaC.cpp \
   pragmaS.cpp \
+  primtypesA.cpp \
+  primtypesC.cpp \
+  primtypesS.cpp \
   reopen_include1C.cpp \
   reopen_include1S.cpp \
   reopen_include2C.cpp \
@@ -1026,6 +1390,10 @@ main_SOURCES = \
   repo_id_modS.cpp \
   sequenceC.cpp \
   sequenceS.cpp \
+  simple2C.cpp \
+  simple2S.cpp \
+  simpleC.cpp \
+  simpleS.cpp \
   structC.cpp \
   structS.cpp \
   typecodeA.cpp \
@@ -1094,6 +1462,12 @@ main_SOURCES = \
   constantsS.h \
   constantsS.inl \
   constantsS_T.h \
+  dif2A.h \
+  dif2C.h \
+  dif2C.inl \
+  dif2S.h \
+  dif2S.inl \
+  dif2S_T.h \
   enum_in_structC.h \
   enum_in_structC.inl \
   enum_in_structS.h \
@@ -1130,6 +1504,12 @@ main_SOURCES = \
   includingS.h \
   includingS.inl \
   includingS_T.h \
+  inheritA.h \
+  inheritC.h \
+  inheritC.inl \
+  inheritS.h \
+  inheritS.inl \
+  inheritS_T.h \
   interfaceC.h \
   interfaceC.inl \
   interfaceS.h \
@@ -1141,11 +1521,47 @@ main_SOURCES = \
   keywordsS.h \
   keywordsS.inl \
   keywordsS_T.h \
+  moduleA.h \
+  moduleC.h \
+  moduleC.inl \
+  moduleS.h \
+  moduleS.inl \
+  moduleS_T.h \
   nested_scopeC.h \
   nested_scopeC.inl \
   nested_scopeS.h \
   nested_scopeS.inl \
   nested_scopeS_T.h \
+  old_arrayC.h \
+  old_arrayC.inl \
+  old_arrayS.h \
+  old_arrayS.inl \
+  old_arrayS_T.h \
+  old_constantsC.h \
+  old_constantsC.inl \
+  old_constantsS.h \
+  old_constantsS.inl \
+  old_constantsS_T.h \
+  old_sequenceC.h \
+  old_sequenceC.inl \
+  old_sequenceS.h \
+  old_sequenceS.inl \
+  old_sequenceS_T.h \
+  old_structC.h \
+  old_structC.inl \
+  old_structS.h \
+  old_structS.inl \
+  old_structS_T.h \
+  old_union2C.h \
+  old_union2C.inl \
+  old_union2S.h \
+  old_union2S.inl \
+  old_union2S_T.h \
+  old_unionC.h \
+  old_unionC.inl \
+  old_unionS.h \
+  old_unionS.inl \
+  old_unionS_T.h \
   paramsC.h \
   paramsC.inl \
   paramsS.h \
@@ -1157,6 +1573,12 @@ main_SOURCES = \
   pragmaS.h \
   pragmaS.inl \
   pragmaS_T.h \
+  primtypesA.h \
+  primtypesC.h \
+  primtypesC.inl \
+  primtypesS.h \
+  primtypesS.inl \
+  primtypesS_T.h \
   reopen_include1C.h \
   reopen_include1C.inl \
   reopen_include1S.h \
@@ -1183,6 +1605,16 @@ main_SOURCES = \
   sequenceS.h \
   sequenceS.inl \
   sequenceS_T.h \
+  simple2C.h \
+  simple2C.inl \
+  simple2S.h \
+  simple2S.inl \
+  simple2S_T.h \
+  simpleC.h \
+  simpleC.inl \
+  simpleS.h \
+  simpleS.inl \
+  simpleS_T.h \
   structC.h \
   structC.inl \
   structS.h \

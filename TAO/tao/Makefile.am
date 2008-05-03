@@ -19,6 +19,10 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+SUBDIRS = \
+        . \
+        ETCL
+
 lib_LTLIBRARIES =
 pkgconfig_DATA =
 CLEANFILES =
@@ -1359,6 +1363,7 @@ nobase_include_HEADERS = \
   Queued_Data.h \
   Queued_Data.inl \
   Queued_Message.h \
+  Queued_Message.inl \
   Range_Checking_T.h \
   Reactive_Connect_Strategy.h \
   Reactive_Flushing_Strategy.h \
@@ -2542,8 +2547,8 @@ libTAO_BiDirGIOP_la_SOURCES = \
   BiDir_GIOP/BiDirPolicy_Validator.cpp \
   BiDir_GIOP/BiDir_ORBInitializer.cpp \
   BiDir_GIOP/BiDir_PolicyFactory.cpp \
-  BiDir_GIOP/BiDir_Service_Context_Handler.cpp \
-  BiDir_GIOP/BiDir_Policy_i.cpp
+  BiDir_GIOP/BiDir_Policy_i.cpp \
+  BiDir_GIOP/BiDir_Service_Context_Handler.cpp
 
 libTAO_BiDirGIOP_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2564,8 +2569,8 @@ nobase_include_HEADERS += \
   BiDir_GIOP/BiDirPolicy_Validator.h \
   BiDir_GIOP/BiDir_ORBInitializer.h \
   BiDir_GIOP/BiDir_PolicyFactory.h \
-  BiDir_GIOP/BiDir_Service_Context_Handler.h \
   BiDir_GIOP/BiDir_Policy_i.h \
+  BiDir_GIOP/BiDir_Service_Context_Handler.h \
   BiDir_GIOP/bidirgiop_export.h
 
 pkgconfig_DATA += \
@@ -5878,6 +5883,120 @@ endif BUILD_GL
 endif BUILD_FL
 endif BUILD_EXCEPTIONS
 endif BUILD_ACE_FLREACTOR
+
+## Makefile.TAO_Monitor.am
+
+if BUILD_EXCEPTIONS
+if !BUILD_WINCE
+
+BUILT_SOURCES += \
+  Monitor/Monitor_includeC.cpp \
+  Monitor/Monitor_includeC.h \
+  Monitor/Monitor_includeC.inl \
+  Monitor/Monitor_includeS.cpp \
+  Monitor/Monitor_includeS.h \
+  Monitor/Monitor_includeS.inl
+
+CLEANFILES += \
+  Monitor/Monitor_include-stamp \
+  Monitor/Monitor_includeC.cpp \
+  Monitor/Monitor_includeC.h \
+  Monitor/Monitor_includeC.inl \
+  Monitor/Monitor_includeS.cpp \
+  Monitor/Monitor_includeS.h \
+  Monitor/Monitor_includeS.inl
+
+Monitor/Monitor_includeC.cpp Monitor/Monitor_includeC.h Monitor/Monitor_includeC.inl Monitor/Monitor_includeS.cpp Monitor/Monitor_includeS.h Monitor/Monitor_includeS.inl: Monitor/Monitor_include-stamp
+
+Monitor/Monitor_include-stamp: $(srcdir)/Monitor/Monitor_include.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -Sa -St -Wb,unique_include=tao/Monitor/Monitor.h $(srcdir)/Monitor/Monitor_include.pidl
+	@touch $@
+
+BUILT_SOURCES += \
+  Monitor/MonitorC.cpp \
+  Monitor/MonitorC.h \
+  Monitor/MonitorC.inl \
+  Monitor/MonitorS.cpp \
+  Monitor/MonitorS.h \
+  Monitor/MonitorS.inl
+
+CLEANFILES += \
+  Monitor/Monitor-stamp \
+  Monitor/MonitorC.cpp \
+  Monitor/MonitorC.h \
+  Monitor/MonitorC.inl \
+  Monitor/MonitorS.cpp \
+  Monitor/MonitorS.h \
+  Monitor/MonitorS.inl
+
+Monitor/MonitorC.cpp Monitor/MonitorC.h Monitor/MonitorC.inl Monitor/MonitorS.cpp Monitor/MonitorS.h Monitor/MonitorS.inl: Monitor/Monitor-stamp
+
+Monitor/Monitor-stamp: $(srcdir)/Monitor/Monitor.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -Wb,include_guard=TAO_MONITOR_SAFE_INCLUDE -Wb,safe_include=tao/Monitor/Monitor.h $(srcdir)/Monitor/Monitor.pidl
+	@touch $@
+
+lib_LTLIBRARIES += libTAO_Monitor.la
+
+libTAO_Monitor_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(ACE_ROOT)/ace/ETCL/ETCL_include \
+  -DTAO_MONITOR_BUILD_DLL
+
+libTAO_Monitor_la_SOURCES = \
+  Monitor/Monitor.cpp \
+  Monitor/MonitorC.cpp \
+  Monitor/MonitorS.cpp \
+  Monitor/Monitor_Impl.cpp \
+  Monitor/Monitor_includeC.cpp \
+  Monitor/Monitor_includeS.cpp
+
+libTAO_Monitor_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_Monitor_la_LIBADD = \
+  $(ACE_BUILDDIR)/ace/MonitorControl/libACE_MonitorControl.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
+  libTAO_PortableServer.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Monitor/Monitor.h \
+  Monitor/Monitor.pidl \
+  Monitor/Monitor.pidl \
+  Monitor/MonitorC.h \
+  Monitor/MonitorC.inl \
+  Monitor/MonitorS.h \
+  Monitor/MonitorS.inl \
+  Monitor/Monitor_Impl.h \
+  Monitor/Monitor_export.h \
+  Monitor/Monitor_include.pidl \
+  Monitor/Monitor_include.pidl \
+  Monitor/Monitor_includeC.h \
+  Monitor/Monitor_includeC.inl \
+  Monitor/Monitor_includeS.h \
+  Monitor/Monitor_includeS.inl
+
+pkgconfig_DATA += \
+  TAO_Monitor.pc
+
+CLEANFILES += \
+  TAO_Monitor.pc
+
+TAO_Monitor.pc: ${top_builddir}/config.status ${srcdir}/Monitor/TAO_Monitor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Monitor/TAO_Monitor.pc.in
+
+endif !BUILD_WINCE
+endif BUILD_EXCEPTIONS
+
+EXTRA_DIST += \
+  Monitor/TAO_Monitor.pc.in
+
 
 ## Makefile.TAO_QtResource.am
 

@@ -11,6 +11,8 @@
 SUBDIRS = \
         Application_Test \
         Bug_2962_Regression \
+        Bug_3155_Regression \
+        Bug_3174_Regression \
         IDL3_Test \
         IFR_Inheritance_Test \
         IFR_Test \

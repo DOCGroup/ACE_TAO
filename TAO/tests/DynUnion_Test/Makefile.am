@@ -72,6 +72,9 @@ CLEANFILES += \
 
 dynanyC.cpp dynanyC.h dynanyC.inl dynanyS.h dynanyS.inl: dynany-stamp
 
+dynany-stamp: $(srcdir)/dynany.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/dynany.idl
+	@touch $@
 
 noinst_PROGRAMS = dynuniontest
 

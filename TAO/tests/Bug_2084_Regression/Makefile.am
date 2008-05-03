@@ -67,7 +67,8 @@ server_SOURCES = \
   TestC.h \
   TestC.inl \
   TestS.h \
-  TestS.inl
+  TestS.inl \
+  tid_to_int.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
