@@ -21,9 +21,9 @@ SUBDIRS = \
         MIF_Scheduler \
         Fixed_Priority_Scheduler
 
-BUILT_SOURCES =
 noinst_LTLIBRARIES =
 CLEANFILES =
+BUILT_SOURCES =
 noinst_HEADERS =
 
 ## Makefile.RTSchedSynch.am

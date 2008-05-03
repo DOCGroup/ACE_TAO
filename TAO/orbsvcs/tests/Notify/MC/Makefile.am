@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -type automake -noreldefs foo.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -41,7 +41,7 @@ MonitorTestInterfaceC.cpp MonitorTestInterfaceC.h MonitorTestInterfaceC.inl Moni
 
 MonitorTestInterface-stamp: $(srcdir)/MonitorTestInterface.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/MonitorTestInterface.idl
-	@touch "$@"
+	@touch $@
 
 noinst_HEADERS = \
   MonitorTestInterface.idl
@@ -60,6 +60,8 @@ Structured_Consumer_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(ACE_ROOT)/ETCL \
+  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -69,6 +71,9 @@ Structured_Consumer_SOURCES = \
   Notify_Structured_Push_Consumer.cpp \
   Structured_Consumer.cpp \
   Notify_Structured_Push_Consumer.h
+
+Structured_Consumer_LDFLAGS = \
+  -L$(TAO_ROOT)/orbsvcs/tests/Notify/lib
 
 Structured_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
@@ -82,7 +87,9 @@ Structured_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
@@ -117,7 +124,11 @@ CLEANFILES += \
   MonitorTestInterfaceS.h \
   MonitorTestInterfaceS.inl
 
+MonitorTestInterfaceC.cpp MonitorTestInterfaceC.h MonitorTestInterfaceC.inl MonitorTestInterfaceS.cpp MonitorTestInterfaceS.h MonitorTestInterfaceS.inl: MonitorTestInterface-stamp
 
+MonitorTestInterface-stamp: $(srcdir)/MonitorTestInterface.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/MonitorTestInterface.idl
+	@touch $@
 
 noinst_PROGRAMS += test_monitor
 
@@ -128,6 +139,8 @@ test_monitor_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(ACE_ROOT)/ETCL \
+  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 test_monitor_SOURCES = \
@@ -147,7 +160,9 @@ test_monitor_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
@@ -174,6 +189,8 @@ Structured_Supplier_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(ACE_ROOT)/ETCL \
+  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -182,6 +199,9 @@ Structured_Supplier_SOURCES = \
   MonitorTestInterfaceC.cpp \
   Structured_Supplier.cpp \
   Notify_Structured_Push_Consumer.h
+
+Structured_Supplier_LDFLAGS = \
+  -L$(TAO_ROOT)/orbsvcs/tests/Notify/lib
 
 Structured_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
@@ -195,7 +215,9 @@ Structured_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \

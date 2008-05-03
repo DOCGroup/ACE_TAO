@@ -38,6 +38,9 @@ Starter_SOURCES = \
   ../Starter.cpp \
   ../Starter.h
 
+Starter_LDFLAGS = \
+  -L..
+
 Starter_LDADD = \
   $(top_builddir)/examples/RTScheduling/libRTSchedSynch.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -95,6 +98,9 @@ test_SOURCES = \
   FP_Task.h \
   fp_dt_creator_export.h \
   test.h
+
+test_LDFLAGS = \
+  -L..
 
 test_LDADD = \
   $(top_builddir)/examples/RTScheduling/libRTSchedTestLib.la \

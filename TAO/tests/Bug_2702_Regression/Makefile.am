@@ -17,32 +17,41 @@ TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROO
 TAO_ROOT = $(top_srcdir)
 
 
-## Makefile.CloseConnection_Client.am
-
-if BUILD_EXCEPTIONS
+## Makefile.CloseConnection_Idl.am
 
 BUILT_SOURCES = \
+  TestA.cpp \
   TestA.h \
   TestC.cpp \
   TestC.h \
   TestC.inl \
+  TestS.cpp \
   TestS.h \
   TestS.inl
 
 CLEANFILES = \
   Test-stamp \
+  TestA.cpp \
   TestA.h \
   TestC.cpp \
   TestC.h \
   TestC.inl \
+  TestS.cpp \
   TestS.h \
   TestS.inl
 
-TestA.h TestC.cpp TestC.h TestC.inl TestS.h TestS.inl: Test-stamp
+TestA.cpp TestA.h TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -GA $(srcdir)/Test.idl
 	@touch $@
+
+noinst_HEADERS = \
+  Test.idl
+
+## Makefile.CloseConnection_Client.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS = client
 
@@ -54,12 +63,7 @@ client_CPPFLAGS = \
 
 client_SOURCES = \
   TestC.cpp \
-  client.cpp \
-  TestA.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  client.cpp
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \

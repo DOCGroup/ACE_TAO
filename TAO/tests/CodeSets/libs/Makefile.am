@@ -10,5 +10,6 @@
 
 SUBDIRS = \
         IBM1047_ISO8859 \
-        UCS4_UTF16
+        UCS4_UTF16 \
+        UTF16_UCS2
 

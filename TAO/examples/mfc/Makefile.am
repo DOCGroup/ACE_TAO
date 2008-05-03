@@ -17,7 +17,7 @@ TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROO
 TAO_ROOT = $(top_srcdir)
 
 
-## Makefile.MFC_client.am
+## Makefile.MFC_Client.am
 
 if BUILD_EXCEPTIONS
 

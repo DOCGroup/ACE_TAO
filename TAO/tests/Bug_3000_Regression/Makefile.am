@@ -18,7 +18,7 @@ TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 
-## Makefile.CallbackTest_Idl.am
+## Makefile.Bug_3000_Regression_Idl.am
 
 BUILT_SOURCES = \
   TestC.cpp \
@@ -46,7 +46,7 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
-## Makefile.CallbackTest_Client.am
+## Makefile.Bug_3000_Regression_Client.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
@@ -79,7 +79,7 @@ client_LDADD = \
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.CallbackTest_Server.am
+## Makefile.Bug_3000_Regression_Server.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS

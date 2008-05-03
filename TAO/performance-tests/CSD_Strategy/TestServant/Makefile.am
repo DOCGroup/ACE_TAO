@@ -64,6 +64,9 @@ libCSD_PT_TestServant_la_SOURCES = \
   Foo_Statistics.cpp \
   Foo_i.cpp
 
+libCSD_PT_TestServant_la_LDFLAGS = \
+ -L$(TAO_ROOT)/performance-tests/CSD_Strategy/TestInf
+
 noinst_HEADERS = \
   Foo.idl \
   FooC.h \

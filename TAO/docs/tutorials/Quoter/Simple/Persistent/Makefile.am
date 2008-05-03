@@ -34,6 +34,16 @@ client_SOURCES = \
   Stock_Factory_i.h \
   Stock_i.h
 
+../../idl:
+	mkdir -p ../../idl
+
+
+client_DEPENDENCIES = \
+ ../../idl
+
+client_LDFLAGS = \
+  -L../../idl
+
 client_LDADD = \
   $(top_builddir)/docs/tutorials/Quoter/idl/libQuoter_Idl_Lib.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -63,6 +73,16 @@ server_SOURCES = \
   server.cpp \
   Stock_Factory_i.h \
   Stock_i.h
+
+../../idl:
+	mkdir -p ../../idl
+
+
+server_DEPENDENCIES = \
+ ../../idl
+
+server_LDFLAGS = \
+  -L../../idl
 
 server_LDADD = \
   $(top_builddir)/docs/tutorials/Quoter/idl/libQuoter_Idl_Lib.la \

@@ -12,36 +12,36 @@ SUBDIRS = \
         Bug_1592_Regression \
         Bug_2511_Regression \
         Current \
+        DSI \
         Deactivate_Object \
         Default_Servant \
+        Default_Servant2 \
         EndpointPolicy \
         Etherealization \
         Excessive_Object_Deactivations \
-        Identity \
-        Forwarding \
-        MT_Servant_Locator \
-        Nested_Non_Servant_Upcalls \
-        Non_Servant_Upcalls \
-        Object_Reactivation \
-        POAManagerFactory \
-        POA_Destruction \
-        Persistent_ID \
-        Policies \
-        Reference_Counting \
-        Single_Threaded_POA \
-        wait_for_completion \
-        DSI \
-        Default_Servant \
         FindPOA \
+        Forwarding \
         Generic_Servant \
         Explicit_Activation \
         Adapter_Activator \
+        Identity \
         Loader \
+        MT_Servant_Locator \
+        Nested_Non_Servant_Upcalls \
         NewPOA \
+        Non_Servant_Upcalls \
+        Object_Reactivation \
         On_Demand_Activation \
         On_Demand_Loading \
+        POAManagerFactory \
         POA_BiDir \
+        POA_Destruction \
+        Persistent_ID \
+        Policies \
         Reference_Counted_Servant \
+        Reference_Counting \
         RootPOA \
-        TIE
+        Single_Threaded_POA \
+        TIE \
+        wait_for_completion
 

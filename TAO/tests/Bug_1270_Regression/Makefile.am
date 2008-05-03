@@ -133,7 +133,6 @@ shutdown_SOURCES = \
   shutdown.cpp \
   Echo.h \
   Echo_Caller.h \
-  ORB_Task.h \
   Server_Timer.h
 
 shutdown_LDADD = \

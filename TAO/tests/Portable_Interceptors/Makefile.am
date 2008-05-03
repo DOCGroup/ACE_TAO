@@ -16,7 +16,10 @@ SUBDIRS = \
         Benchmark \
         Bug_1559 \
         Bug_2088 \
+        Bug_2133 \
         Bug_2510_Regression \
+        Bug_3079 \
+        Bug_3080 \
         Collocated \
         Dynamic \
         ForwardRequest \

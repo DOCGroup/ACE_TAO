@@ -9,6 +9,7 @@
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
+        Bug_3252_Regression \
         PluggableTopology \
         Test_Filter \
         XML_Persistence \

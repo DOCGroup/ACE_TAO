@@ -10,6 +10,7 @@
 
 SUBDIRS = \
         catior \
+        monitor \
         nslist \
         wxNamingViewer
 

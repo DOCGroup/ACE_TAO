@@ -16,6 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
 
 ## Makefile.generate_ior.am
 
@@ -44,7 +45,7 @@ bogus-stamp: $(srcdir)/bogus.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/bogus.idl
 	@touch $@
 
-noinst_PROGRAMS = generate_ior
+noinst_PROGRAMS += generate_ior
 
 generate_ior_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -73,17 +74,18 @@ endif BUILD_EXCEPTIONS
 
 ## Makefile.list_interfaces.am
 
-noinst_LTLIBRARIES = liblist_interfaces.la
+noinst_PROGRAMS += list_interfaces
 
-liblist_interfaces_la_CPPFLAGS = \
+list_interfaces_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
-liblist_interfaces_la_SOURCES = \
-  list_interfaces.cpp
-
-noinst_HEADERS = \
+list_interfaces_SOURCES = \
+  list_interfaces.cpp \
   bogus_i.h
+
+list_interfaces_LDADD = \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

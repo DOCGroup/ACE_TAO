@@ -16,8 +16,8 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
+CLEANFILES =
 BUILT_SOURCES =
 
 ## Makefile.Bug_2925_Regression_Client.am
@@ -106,7 +106,11 @@ CLEANFILES += \
   HelloS.h \
   HelloS.inl
 
+HelloC.cpp HelloC.h HelloC.inl HelloS.cpp HelloS.h HelloS.inl: Hello-stamp
 
+Hello-stamp: $(srcdir)/Hello.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Hello.idl
+	@touch $@
 
 noinst_PROGRAMS += server
 

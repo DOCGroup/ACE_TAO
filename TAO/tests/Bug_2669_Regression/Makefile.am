@@ -26,29 +26,6 @@ if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
-  ChildC.cpp \
-  ChildC.h \
-  ChildC.inl \
-  ChildS.cpp \
-  ChildS.h \
-  ChildS.inl
-
-CLEANFILES += \
-  Child-stamp \
-  ChildC.cpp \
-  ChildC.h \
-  ChildC.inl \
-  ChildS.cpp \
-  ChildS.h \
-  ChildS.inl
-
-ChildC.cpp ChildC.h ChildC.inl ChildS.cpp ChildS.h ChildS.inl: Child-stamp
-
-Child-stamp: $(srcdir)/Child.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Child.idl
-	@touch $@
-
-BUILT_SOURCES += \
   ParentC.cpp \
   ParentC.h \
   ParentC.inl \
@@ -69,6 +46,29 @@ ParentC.cpp ParentC.h ParentC.inl ParentS.cpp ParentS.h ParentS.inl: Parent-stam
 
 Parent-stamp: $(srcdir)/Parent.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Parent.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  ChildC.cpp \
+  ChildC.h \
+  ChildC.inl \
+  ChildS.cpp \
+  ChildS.h \
+  ChildS.inl
+
+CLEANFILES += \
+  Child-stamp \
+  ChildC.cpp \
+  ChildC.h \
+  ChildC.inl \
+  ChildS.cpp \
+  ChildS.h \
+  ChildS.inl
+
+ChildC.cpp ChildC.h ChildC.inl ChildS.cpp ChildS.h ChildS.inl: Child-stamp
+
+Child-stamp: $(srcdir)/Child.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Child.idl
 	@touch $@
 
 noinst_PROGRAMS = client

@@ -35,6 +35,16 @@ driver_CPPFLAGS = \
 driver_SOURCES = \
   driver.cpp
 
+../lib:
+	mkdir -p ../lib
+
+
+driver_DEPENDENCIES = \
+ ../lib
+
+driver_LDFLAGS = \
+  -L../lib
+
 driver_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/performance-tests/RTEvent/lib/libTAO_RTEC_Perf.la \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
