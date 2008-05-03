@@ -1,3 +1,9 @@
+Sat May  3 23:39:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add AM_CONDITIONAL for BUILD_WINCE.
+
 Sat May  3 22:23:22 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         The below changes should be most of the work necessary to fix
