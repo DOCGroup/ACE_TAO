@@ -1,3 +1,10 @@
+Sat May  3 17:00:07 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Add relative libdirs for new ACE_ETCL, ACE_ETCL_Parser, and 
+	  ACE_MonitorControl libraries.
+
 Sat May  3 13:47:21 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/Makefile.am:
