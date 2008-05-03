@@ -8101,6 +8101,14 @@ if test "$ace_build_examples" = yes; then
     examples/Mem_Map/IO-tests/Makefile
     examples/Mem_Map/file-reverse/Makefile
     examples/Misc/Makefile
+    examples/Monitor/Makefile
+    examples/Monitor/Bytes_Sent/Makefile
+    examples/Monitor/Message_Queue_Size/Makefile
+    examples/Monitor/Constraint/Makefile
+    examples/Monitor/CPU_Load/Makefile
+    examples/Monitor/Num_Threads/Makefile
+    examples/Monitor/Group/Makefile
+    examples/Monitor/Memory_Usage/Makefile
     examples/NT_Service/Makefile
     examples/Naming/Makefile
     examples/OS/Makefile
@@ -8120,6 +8128,7 @@ if test "$ace_build_examples" = yes; then
     examples/Reactor/TP_Reactor/Makefile
     examples/Reactor/WFMO_Reactor/Makefile
     examples/Registry/Makefile
+    examples/Semaphores/Makefile
     examples/Service_Configurator/Makefile
     examples/Service_Configurator/IPC-tests/Makefile
     examples/Service_Configurator/IPC-tests/client/Makefile
