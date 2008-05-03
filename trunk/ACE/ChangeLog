@@ -1,3 +1,21 @@
+Fri May  2 23:58:38 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Build new example directories.
+
+        * examples/Monitor/Bytes_Sent/Makefile.am:
+        * examples/Monitor/Message_Queue_Size/Makefile.am:
+        * examples/Monitor/Constraint/Makefile.am:
+        * examples/Monitor/CPU_Load/Makefile.am:
+        * examples/Monitor/Num_Threads/Makefile.am:
+        * examples/Monitor/Group/Makefile.am:
+        * examples/Monitor/Memory_Usage/Makefile.am:
+        * examples/Monitor/Makefile.am:
+        * examples/Semaphores/Makefile.am:
+
+          New Makefile.am's.
+
 Fri May  2 23:29:06 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/ETCL/Makefile.am:
