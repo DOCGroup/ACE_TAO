@@ -1,3 +1,9 @@
+Sat May  3 13:47:21 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * examples/Makefile.am:
+
+          Regenerated.
+
 Fri May  2 23:58:38 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
