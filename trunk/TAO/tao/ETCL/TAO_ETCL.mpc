@@ -47,4 +47,8 @@ project(TAO_ETCL_Parser) : taolib, tao_etcl, install, tao_output {
     $(TAO_ROOT)/tao/ETCL/ETCL_include/ETCL_include.h
     $(TAO_ROOT)/tao/ETCL/ETCL_include/etcl_parser_export.h
   }
+
+  Pkgconfig_Files {
+    TAO_ETCL_Parser.pc.in
+  }
 }
