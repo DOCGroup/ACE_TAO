@@ -26,14 +26,13 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(ZLIB_ROOT)/include \
-  -DZLIB
+  $(ACE_ZLIB_CPPFLAGS)
 
 server_SOURCES = \
   server.cpp
 
 server_LDFLAGS = \
-  -L$(ZLIB_ROOT)/lib
+  $(ACE_ZLIB_LDFLAGS)
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_ZlibCompressor.la \
@@ -42,7 +41,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  -lz
+  $(ACE_ZLIB_LIBS)
 
 endif BUILD_ZLIB
 endif BUILD_EXCEPTIONS

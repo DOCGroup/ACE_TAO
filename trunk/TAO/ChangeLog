@@ -1,3 +1,13 @@
+Sun May  4 15:50:25 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * tao/Makefile.am:
+        * tests/Compression/Makefile.am:
+
+          Hand-tweak for ZLIB/ZZIP support, as we want to defer this
+          decision from MPC to configure.
+
 Sun May  4 15:02:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/Notify/MC/Makefile.am:
