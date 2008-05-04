@@ -107,29 +107,6 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  MonitorTestInterfaceC.cpp \
-  MonitorTestInterfaceC.h \
-  MonitorTestInterfaceC.inl \
-  MonitorTestInterfaceS.cpp \
-  MonitorTestInterfaceS.h \
-  MonitorTestInterfaceS.inl
-
-CLEANFILES += \
-  MonitorTestInterface-stamp \
-  MonitorTestInterfaceC.cpp \
-  MonitorTestInterfaceC.h \
-  MonitorTestInterfaceC.inl \
-  MonitorTestInterfaceS.cpp \
-  MonitorTestInterfaceS.h \
-  MonitorTestInterfaceS.inl
-
-MonitorTestInterfaceC.cpp MonitorTestInterfaceC.h MonitorTestInterfaceC.inl MonitorTestInterfaceS.cpp MonitorTestInterfaceS.h MonitorTestInterfaceS.inl: MonitorTestInterface-stamp
-
-MonitorTestInterface-stamp: $(srcdir)/MonitorTestInterface.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/MonitorTestInterface.idl
-	@touch $@
-
 noinst_PROGRAMS += test_monitor
 
 test_monitor_CPPFLAGS = \
@@ -147,10 +124,7 @@ test_monitor_SOURCES = \
   MonitorTestInterfaceC.cpp \
   MonitorTestInterfaceS.cpp \
   test_monitor.cpp \
-  MonitorTestInterfaceC.h \
-  MonitorTestInterfaceC.inl \
-  MonitorTestInterfaceS.h \
-  MonitorTestInterfaceS.inl
+  Notify_Structured_Push_Consumer.h
 
 test_monitor_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_MC_Ext.la \
