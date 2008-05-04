@@ -1,3 +1,19 @@
+Sun May  4 22:15:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/ETCL/TAO_ETCL.mpc:
+
+          Add Pkgconfig_Files section for TAO_ETCL_Parser library.
+
+        * orbsvcs/orbsvcs/TAO_ETCL.pc.in:
+
+          Remove pkgconfig template file from old TAO ETCL library.
+
+        * tao/ETCL/TAO_ETCL.pc.in:
+        * tao/ETCL/TAO_ETCL_Parser.pc.in:
+        * tao/Monitor/TAO_Monitor.pc.in:
+
+          Added pkgconfig template files for new TAO libraries.
+
 Sun May  4 15:50:25 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
