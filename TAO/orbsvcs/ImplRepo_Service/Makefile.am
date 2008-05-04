@@ -163,7 +163,6 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_ACEXML
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if BUILD_ZLIB
 if !BUILD_ACE_FOR_TAO
 
 noinst_LTLIBRARIES += libTAO_ImR_Activator.la
@@ -176,17 +175,30 @@ libTAO_ImR_Activator_la_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(ACE_ROOT)/ACEXML/common \
-  $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS) \
   -DACTIVATOR_BUILD_DLL
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+libTAO_ImR_Activator_la_CPPFLAGS += \
+  $(ACE_ZZIP_CPPFLAGS) \
+  $(ACE_ZLIB_CPPFLAGS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 libTAO_ImR_Activator_la_SOURCES = \
   Activator_Loader.cpp \
   Activator_Options.cpp \
   ImR_Activator_i.cpp
 
-libTAO_ImR_Activator_la_LDFLAGS = \
- $(ACE_ZZIP_LDFLAGS) $(ACE_ZLIB_LDFLAGS)
+libTAO_ImR_Activator_la_LDFLAGS = 
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+libTAO_ImR_Activator_la_LDFLAGS += \
+  $(ACE_ZZIP_LDFLAGS) \
+  $(ACE_ZLIB_LDFLAGS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 noinst_HEADERS += \
   Activator_Loader.h \
@@ -195,7 +207,6 @@ noinst_HEADERS += \
   activator_export.h
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_ZLIB
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACEXML
@@ -205,7 +216,6 @@ endif BUILD_ACEXML
 if BUILD_ACEXML
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if BUILD_ZLIB
 if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS += ImR_Activator
@@ -217,17 +227,30 @@ ImR_Activator_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+ImR_Activator_CPPFLAGS += \
   $(ACE_ZZIP_CPPFLAGS) \
   $(ACE_ZLIB_CPPFLAGS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 ImR_Activator_SOURCES = \
   Activator_NT_Service.cpp \
   ImR_Activator.cpp \
   Activator_NT_Service.h
 
-ImR_Activator_LDFLAGS = \
- $(ACE_ZZIP_LDFLAGS) $(ACE_ZLIB_LDFLAGS)
+ImR_Activator_LDFLAGS = 
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+ImR_Activator_LDFLAGS += \
+  $(ACE_ZZIP_LDFLAGS) \
+  $(ACE_ZLIB_LDFLAGS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 ImR_Activator_LDADD = \
   libTAO_ImR_Activator.la \
@@ -244,12 +267,17 @@ ImR_Activator_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+ImR_Activator_LDADD += \
   $(ACE_ZZIP_LIBS) \
   $(ACE_ZLIB_LIBS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_ZLIB
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACEXML
@@ -259,7 +287,6 @@ endif BUILD_ACEXML
 if BUILD_ACEXML
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if BUILD_ZLIB
 if !BUILD_ACE_FOR_TAO
 
 noinst_LTLIBRARIES += libTAO_ImR_Locator.la
@@ -272,9 +299,15 @@ libTAO_ImR_Locator_la_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(ACE_ROOT)/ACEXML/common \
+  -DLOCATOR_BUILD_DLL
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+libTAO_ImR_Locator_la_CPPFLAGS += \
   $(ACE_ZZIP_CPPFLAGS) \
   $(ACE_ZLIB_CPPFLAGS) \
-  -DLOCATOR_BUILD_DLL
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 libTAO_ImR_Locator_la_SOURCES = \
   Activator_Info.cpp \
@@ -290,8 +323,15 @@ libTAO_ImR_Locator_la_SOURCES = \
   Locator_XMLHandler.cpp \
   Server_Info.cpp
 
-libTAO_ImR_Locator_la_LDFLAGS = \
- $(ACE_ZZIP_LDFLAGS) $(ACE_ZLIB_LDFLAGS)
+libTAO_ImR_Locator_la_LDFLAGS = 
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+libTAO_ImR_Locator_la_LDFLAGS += \
+  $(ACE_ZZIP_LDFLAGS) \
+  $(ACE_ZLIB_LDFLAGS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 noinst_HEADERS += \
   Activator_Info.h \
@@ -310,7 +350,6 @@ noinst_HEADERS += \
   utils.h
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_ZLIB
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACEXML
@@ -320,7 +359,6 @@ endif BUILD_ACEXML
 if BUILD_ACEXML
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if BUILD_ZLIB
 if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS += ImplRepo_Service
@@ -332,17 +370,30 @@ ImplRepo_Service_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+ImplRepo_Service_CPPFLAGS += \
   $(ACE_ZZIP_CPPFLAGS) \
   $(ACE_ZLIB_CPPFLAGS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 ImplRepo_Service_SOURCES = \
   ImR_Locator.cpp \
   Locator_NT_Service.cpp \
   Locator_NT_Service.h
 
-ImplRepo_Service_LDFLAGS = \
- $(ACE_ZZIP_LDFLAGS) $(ACE_ZLIB_LDFLAGS)
+ImplRepo_Service_LDFLAGS =
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+ImplRepo_Service_LDFLAGS += \
+  $(ACE_ZZIP_LDFLAGS) \
+  $(ACE_ZLIB_LDFLAGS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 ImplRepo_Service_LDADD = \
   libTAO_ImR_Locator.la \
@@ -361,12 +412,17 @@ ImplRepo_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+if BUILD_ZLIB
+if BUILD_ZZIP
+ImplRepo_Service_LDADD += \
   $(ACE_ZZIP_LIBS) \
   $(ACE_ZLIB_LIBS)
+endif BUILD_ZZIP
+endif BUILD_ZLIB
 
 endif !BUILD_ACE_FOR_TAO
-endif BUILD_ZLIB
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACEXML
