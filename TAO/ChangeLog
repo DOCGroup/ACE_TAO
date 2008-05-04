@@ -1,3 +1,20 @@
+Sun May  4 15:02:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Notify/MC/Makefile.am:
+        * tests/Object_Loader/Makefile.am:
+        * tests/Oneway_Send_Timeouts/Makefile.am:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/tests/Notify/MC/MonitorControl.mpc:
+        * tests/Object_Loader/Object_Loader.mpc:
+        * tests/Oneway_Send_Timeouts/Oneway_scenarios.mpc:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+
+          Add empty IDL_Files section to avoid emitting duplicate IDL
+          compilation rules in generated Makefile.am's.
+
 Sat May  3 23:39:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

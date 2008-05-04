@@ -50,29 +50,6 @@ noinst_HEADERS = \
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS = oneway_test
 
 oneway_test_CPPFLAGS = \
@@ -90,10 +67,6 @@ oneway_test_SOURCES = \
   main.cpp \
   Client.h \
   Server.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   Test_i.h
 
 oneway_test_LDADD = \

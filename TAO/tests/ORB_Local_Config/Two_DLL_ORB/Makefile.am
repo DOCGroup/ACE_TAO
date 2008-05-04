@@ -108,29 +108,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS = Test
 
 Test_CPPFLAGS = \
@@ -142,12 +119,9 @@ Test_CPPFLAGS = \
 
 Test_SOURCES = \
   Test.cpp \
-  TestC.cpp \
-  TestS.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  ORB_DLL.h \
+  ORB_DLL_Export.h \
+  Test_i.h
 
 Test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

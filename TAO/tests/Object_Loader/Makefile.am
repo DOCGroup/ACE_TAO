@@ -49,29 +49,6 @@ noinst_HEADERS = \
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
-	@touch $@
-
 noinst_LTLIBRARIES = libTest_DLL.la
 
 libTest_DLL_la_CPPFLAGS = \
@@ -89,11 +66,6 @@ libTest_DLL_la_SOURCES = \
 
 noinst_HEADERS += \
   Loader.h \
-  Test.idl \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   Test_i.h
 
 endif BUILD_EXCEPTIONS
@@ -101,27 +73,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.Object_Loader_Driver.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
-	@touch $@
 
 noinst_PROGRAMS = driver
 
@@ -134,10 +85,9 @@ driver_CPPFLAGS = \
 driver_SOURCES = \
   TestC.cpp \
   driver.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Loader.h \
+  OLT_Export.h \
+  Test_i.h
 
 driver_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

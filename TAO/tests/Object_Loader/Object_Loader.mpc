@@ -13,6 +13,9 @@ project(*Test): taolib_with_idl, portableserver {
   sharedname   = Test_DLL
   dynamicflags = OLT_BUILD_DLL
 
+  IDL_Files {
+  }
+
   Source_Files {
     TestC.cpp
     TestS.cpp
@@ -24,6 +27,10 @@ project(*Test): taolib_with_idl, portableserver {
 project(*Driver): taoserver {
   exename = driver
   after += *Test *idl
+
+  IDL_Files {
+  }
+
   Source_Files {
     TestC.cpp
     driver.cpp

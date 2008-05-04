@@ -8,6 +8,9 @@ project(*monitor): notification_mc_ext {
   after  += *idl
   exename = test_monitor
 
+  IDL_Files {
+  }
+
   Source_Files {
     MonitorTestInterfaceC.cpp
     MonitorTestInterfaceS.cpp
