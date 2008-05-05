@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    os_poll.h
+ *  @file    os_pdh.h
  *
  *  definitions for the windows pdh API
  *
