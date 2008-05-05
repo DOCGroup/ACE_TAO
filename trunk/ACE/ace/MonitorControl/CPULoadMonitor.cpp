@@ -23,7 +23,7 @@ namespace ACE
 
     CPULoadMonitor::CPULoadMonitor (const char* name)
       : Monitor_Base (name)
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
       , WindowsMonitor (ACE_TEXT("\\Processor(_Total)\\% Processor Time"))
 #endif
 #if defined (linux) || defined (ACE_HAS_KSTAT)
@@ -62,7 +62,7 @@ namespace ACE
     void
     CPULoadMonitor::update (void)
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
       this->win_update ();
 
       /// Stores value and timestamp with thread-safety.

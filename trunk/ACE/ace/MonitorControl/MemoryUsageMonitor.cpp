@@ -19,7 +19,7 @@ namespace ACE
 
     MemoryUsageMonitor::MemoryUsageMonitor (const char* name)
       : Monitor_Base (name)
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
       , WindowsMonitor (ACE_TEXT ("\\Memory\\% Committed Bytes In Use"))
 #elif defined (ACE_HAS_KSTAT)
 #endif
@@ -29,7 +29,7 @@ namespace ACE
     void
     MemoryUsageMonitor::update (void)
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
       this->win_update ();
 
       /// Stores value and timestamp with thread-safety.

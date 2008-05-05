@@ -23,7 +23,7 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
 #include "ace/MonitorControl/WindowsMonitor.h"
 #endif
 
@@ -42,7 +42,7 @@ namespace ACE
      */
     class MONITORCONTROL_Export NumThreadsMonitor
       : public Monitor_Base
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
       , public WindowsMonitor
 #endif
     {
