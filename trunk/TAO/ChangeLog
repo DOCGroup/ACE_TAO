@@ -1,3 +1,9 @@
+Mon May  5 14:45:45 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+
+          Fix "extra trailing-backslash" typo in automake conditional.
+
 Sun May  4 22:15:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/ETCL/TAO_ETCL.mpc:
