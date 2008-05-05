@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(MC_Test_Utilities) : acelib, ace_output {
+project(MC_Test_Utilities) : acelib, ace_output, avoids_ace_for_tao {
   dynamicflags += MC_TEST_UTILITIES_BUILD_DLL
 
   Source_Files {
