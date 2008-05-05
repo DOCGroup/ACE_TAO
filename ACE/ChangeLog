@@ -1,8 +1,13 @@
+Mon May  5 07:30:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Monitor/MC_Test_Utilities.mpc:
+          Don't build with ace_for_tao enabled
+
 Sat May  3 17:00:07 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
 
-          Add relative libdirs for new ACE_ETCL, ACE_ETCL_Parser, and 
+          Add relative libdirs for new ACE_ETCL, ACE_ETCL_Parser, and
 	  ACE_MonitorControl libraries.
 
 Sat May  3 13:47:21 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
