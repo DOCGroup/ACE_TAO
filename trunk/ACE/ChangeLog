@@ -1,3 +1,10 @@
+Mon May  5 17:09:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_exe.bor:
+        * include/makeinclude/build_lib.bor:
+          Handle files with cxx extension just as we could handle cpp files
+
 Mon May  5 07:53:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_pdh.h:

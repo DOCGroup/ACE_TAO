@@ -58,6 +58,10 @@ INSTALL_TYPES =	lib includes
 .path.cpp = $(CPPDIR)
 !endif
 
+!ifdef CPPDIR
+.path.cxx = $(CPPDIR)
+!endif
+
 !ifdef CDIR
 .path.c	= $(CDIR)
 !endif
@@ -78,6 +82,16 @@ USE_FULL_PATH = 1
 !else
 	$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
 !endif
+
+.cxx.$(OBJ_EXT):
+        @$(MAKE_OBJDIR)
+!ifdef USE_FULL_PATH
+        @for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$(<:.\=)
+        @for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$(<:.\=)
+!else
+        $(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+!endif
+
 
 .c.$(OBJ_EXT):
 	@$(MAKE_OBJDIR)
