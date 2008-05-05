@@ -306,6 +306,11 @@ CORBA::Object::_hash (CORBA::ULong maximum)
 CORBA::Boolean
 CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj)
 {
+  if (other_obj == 0)
+    {
+      return false;
+    }
+  
   if (other_obj == this)
     {
       return true;
@@ -352,6 +357,7 @@ CORBA::Object::_proxy_broker (TAO::Object_Proxy_Broker *proxy_broker)
 CORBA::Boolean
 CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
 {
+
   // If the profile length is zero for a non-evaluted IOR it is a
   // null-object.
   if ((!obj->is_evaluated ()) && obj->ior ().profiles.length () == 0)
