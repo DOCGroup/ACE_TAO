@@ -2,7 +2,7 @@
 
 #include "ace/MonitorControl/WindowsMultiInstanceMonitor.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
 
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
@@ -97,4 +97,4 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* defined (ACE_WIN32) */
+#endif /* defined (ACE_HAS_WIN32_PDH) */

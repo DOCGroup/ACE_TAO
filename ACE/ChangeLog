@@ -1,3 +1,40 @@
+Mon May  5 07:53:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_pdh.h:
+          New os_include file for pdh.h
+
+        * ace/configure.ac:
+          Added check for pdh.h
+
+        * ace/Makefile.am:
+          Added new file
+
+        * ace/config-win32-common.h:
+        * ace/config-win32-mingw.h:
+        * ace/config-WinCE.h:
+          Windows has pdh.h, but not MinGW and not WinCE
+
+        * ace/MonitorControl/BytesReceivedMonitor.cpp:
+        * ace/MonitorControl/BytesReceivedMonitor.h:
+        * ace/MonitorControl/BytesSentMonitor.cpp:
+        * ace/MonitorControl/BytesSentMonitor.h:
+        * ace/MonitorControl/CPULoadMonitor.cpp:
+        * ace/MonitorControl/CPULoadMonitor.h:
+        * ace/MonitorControl/MemoryUsageMonitor.cpp:
+        * ace/MonitorControl/MemoryUsageMonitor.h:
+        * ace/MonitorControl/NumThreadsMonitor.cpp:
+        * ace/MonitorControl/NumThreadsMonitor.h:
+        * ace/MonitorControl/PacketsReceivedMonitor.cpp:
+        * ace/MonitorControl/PacketsReceivedMonitor.h:
+        * ace/MonitorControl/PacketsSentMonitor.cpp:
+        * ace/MonitorControl/PacketsSentMonitor.h:
+        * ace/MonitorControl/WindowsMonitor.cpp:
+        * ace/MonitorControl/WindowsMonitor.h:
+        * ace/MonitorControl/WindowsMultiInstanceMonitor.cpp:
+        * ace/MonitorControl/WindowsMultiInstanceMonitor.h:
+          Use ACE_HAS_WIN32_PDH instead of ACE_WIN32 because with WinCE and
+          MinGW we don't have pdh on windows
+
 Mon May  5 07:37:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Monitor/CPU_Load/cpu_load.cpp:

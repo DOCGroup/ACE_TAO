@@ -15,7 +15,7 @@ namespace ACE
 
     BytesSentMonitor::BytesSentMonitor (const char* name)
       : Monitor_Base (name)
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
         , WindowsMultiInstanceMonitor (
             ACE_TEXT ("\\Network Interface(*)\\Bytes Sent/sec"))
 #elif defined (linux)
@@ -28,7 +28,7 @@ namespace ACE
     void
     BytesSentMonitor::update (void)
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
       this->win_update ();
 
       /// Stores value and timestamp with thread-safety.

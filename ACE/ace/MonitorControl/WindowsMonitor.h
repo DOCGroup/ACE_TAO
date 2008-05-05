@@ -21,11 +21,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32)
+#include "ace/os_include/os_pdh.h"
 
-/// Must include this after the ACE headers to avoid many redefinition
-/// errors.
-#include <pdh.h>
+#if defined (ACE_HAS_WIN32_PDH)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -64,6 +62,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif /* defined (ACE_WIN32) */
+#endif /* defined (ACE_HAS_WIN32_PDH) */
 
 #endif // WINDOWSMONITOR_H

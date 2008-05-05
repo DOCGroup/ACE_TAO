@@ -38,7 +38,7 @@
 #endif /* _WIN64 || WIN64 */
 
 #if !defined (_WIN32_WINNT)
-# define _WIN32_WINNT 0x0400 // pretend it's at least WinNT 4.0
+# define _WIN32_WINNT 0x0501 // pretend it's at least Windows XP or Win2003
 #endif
 
 // If the invoking procedure turned off debugging by setting NDEBUG, then
@@ -265,6 +265,8 @@
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_IOVEC
 #define ACE_LACKS_LOG2
+
+#define ACE_HAS_PDH_H
 
 #define ACE_HAS_VFWPRINTF
 
@@ -615,7 +617,7 @@
 ///////////////////////////////////////
 // windows version-specific definitions
 // see: http://msdn2.microsoft.com/en-us/library/aa383745.aspx
-// 
+//
 // For TSS information
 // see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dllproc/base/thread_local_storage.asp
 
@@ -646,7 +648,7 @@
 #    define ACE_DEFAULT_THREAD_KEYS 80
 #  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
 #else
-// antique windows 
+// antique windows
 #  if ! defined(ACE_DEFAULT_THREAD_KEYS)
 #    define ACE_DEFAULT_THREAD_KEYS 64
 #  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
