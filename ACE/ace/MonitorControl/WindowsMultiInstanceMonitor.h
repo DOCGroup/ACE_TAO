@@ -23,7 +23,7 @@
 
 #include "ace/MonitorControl/WindowsMonitor.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,6 +67,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif /* defined (ACE_WIN32) */
+#endif /* defined (ACE_HAS_WIN32_PDH) */
 
 #endif // WINDOWSMULTIINSTANCEMONITOR_H

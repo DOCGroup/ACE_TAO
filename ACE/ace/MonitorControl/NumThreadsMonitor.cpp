@@ -23,7 +23,7 @@ namespace ACE
 
     NumThreadsMonitor::NumThreadsMonitor (const char* name)
       : Monitor_Base (name)
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
       , WindowsMonitor (ACE_TEXT ("\\System\\Threads"))
 #elif defined (linux)
       , file_ptr_ (0)
@@ -35,7 +35,7 @@ namespace ACE
     void
     NumThreadsMonitor::update (void)
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
       this->win_update ();
 
       /// Stores value and timestamp with thread-safety.

@@ -23,7 +23,7 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
 #include "ace/MonitorControl/WindowsMultiInstanceMonitor.h"
 #elif defined (linux)
 #include "ace/MonitorControl/LinuxNetworkInterfaceMonitor.h"
@@ -44,7 +44,7 @@ namespace ACE
      */
     class MONITORCONTROL_Export BytesSentMonitor
       : public Monitor_Base
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
         , public WindowsMultiInstanceMonitor
 #elif defined (linux)
         , public LinuxNetworkInterfaceMonitor

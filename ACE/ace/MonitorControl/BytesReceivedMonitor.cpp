@@ -15,7 +15,7 @@ namespace ACE
 
     BytesReceivedMonitor::BytesReceivedMonitor (const char* name)
       : Monitor_Base (name)
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
         , WindowsMultiInstanceMonitor (
             ACE_TEXT ("\\Network Interface(*)\\Bytes Received/sec"))
 #elif defined (linux)
@@ -28,7 +28,7 @@ namespace ACE
     void
     BytesReceivedMonitor::update (void)
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_PDH)
       this->win_update ();
 
       /// Stores value and timestamp with thread-safety.
