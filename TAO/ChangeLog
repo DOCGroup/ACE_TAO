@@ -1,3 +1,9 @@
+Mon May  5 20:40:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tao/Object.cpp:
+        
+          Fix a segfault in a nil pointer is passed to _is_equivalent.
+
 Mon May  5 14:45:45 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/ImplRepo_Service/Makefile.am:
