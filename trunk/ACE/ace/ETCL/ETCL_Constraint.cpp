@@ -549,6 +549,153 @@ ETCL_Identifier::accept (ETCL_Constraint_Visitor *visitor)
 
 // ****************************************************************
 
+ETCL_Union_Value::~ETCL_Union_Value (void)
+{
+  delete this->string_;
+  delete this->integer_;
+}
+
+int
+ETCL_Union_Value::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_union_value (this);
+}
+
+// ****************************************************************
+
+ETCL_Union_Pos::~ETCL_Union_Pos (void)
+{
+  delete this->component_;
+  delete this->union_value_;
+}
+
+int
+ETCL_Union_Pos::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_union_pos (this);
+}
+
+// ****************************************************************
+
+ETCL_Component_Pos::~ETCL_Component_Pos (void)
+{
+  delete this->component_;
+  delete this->integer_;
+}
+
+int
+ETCL_Component_Pos::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_component_pos (this);
+}
+
+// ****************************************************************
+
+ETCL_Component_Assoc::~ETCL_Component_Assoc (void)
+{
+  delete this->component_;
+  delete this->identifier_;
+}
+
+int
+ETCL_Component_Assoc::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_component_assoc (this);
+}
+
+// ****************************************************************
+
+ETCL_Component_Array::~ETCL_Component_Array (void)
+{
+  delete this->component_;
+  delete this->integer_;
+}
+
+int
+ETCL_Component_Array::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_component_array (this);
+}
+
+// ****************************************************************
+
+ETCL_Special::~ETCL_Special (void)
+{}
+
+int
+ETCL_Special::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_special (this);
+}
+
+// ****************************************************************
+
+ETCL_Component::~ETCL_Component (void)
+{
+  delete this->component_;
+  delete this->identifier_;
+}
+
+int
+ETCL_Component::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_component (this);
+}
+
+// ****************************************************************
+
+ETCL_Dot::~ETCL_Dot (void)
+{
+  delete this->component_;
+}
+
+int
+ETCL_Dot::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_dot (this);
+}
+
+// ****************************************************************
+
+ETCL_Eval::~ETCL_Eval (void)
+{
+  delete this->component_;
+}
+
+int
+ETCL_Eval::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_eval (this);
+}
+
+// ****************************************************************
+
+ETCL_Default::~ETCL_Default (void)
+{
+  delete this->component_;
+}
+
+int
+ETCL_Default::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_default (this);
+}
+
+// ****************************************************************
+
+ETCL_Exist::~ETCL_Exist (void)
+{
+  delete this->component_;
+}
+
+int
+ETCL_Exist::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_exist (this);
+}
+
+// ****************************************************************
+
 ETCL_Unary_Expr::~ETCL_Unary_Expr (void)
 {
   delete this->subexpr_;
@@ -572,6 +719,19 @@ int
 ETCL_Binary_Expr::accept (ETCL_Constraint_Visitor *visitor)
 {
   return visitor->visit_binary_expr (this);
+}
+
+// ****************************************************************
+
+ETCL_Preference::~ETCL_Preference (void)
+{
+  delete this->subexpr_;
+}
+
+int
+ETCL_Preference::accept (ETCL_Constraint_Visitor *visitor)
+{
+  return visitor->visit_preference (this);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

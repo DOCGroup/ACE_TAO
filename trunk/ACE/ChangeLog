@@ -1,3 +1,14 @@
+Tue May  6 12:37:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/ETCL/ETCL_Constraint.h:
+        * ace/ETCL/ETCL_Constraint_Visitor.cpp:
+        * ace/ETCL/ETCL_Constraint_Visitor.h:
+        * ace/ETCL/ETCL_Constraint.inl:
+        * ace/ETCL/ETCL_Constraint.cpp:
+        
+          Moved code from the TAO ETCL classes to base classes
+          here.
+
 Tue May  6 08:27:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
