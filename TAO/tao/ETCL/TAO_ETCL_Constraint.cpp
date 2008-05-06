@@ -26,8 +26,8 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
   this->copy (lit);
 }
 
-TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
-  CORBA::Any * any)
+TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
+  : any_ (0)
 {
   CORBA::Any& any_ref = *any;
   CORBA::TypeCode_var type = any_ref.type ();
@@ -82,8 +82,10 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
               TAO::Unknown_IDL_Type *unk =
                 dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
-              if (!unk)
-                throw CORBA::INTERNAL ();
+              if (unk == 0)
+                {
+                  throw CORBA::INTERNAL ();
+                }
 
               // We don't want unk's rd_ptr to move, in case we are shared by
               // another Any, so we use this to copy the state, not the buffer.
@@ -278,7 +280,6 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
   try
   {
     kind = type->kind ();
-
     CORBA::TypeCode_var tmp = CORBA::TypeCode::_duplicate (type);
 
     while (kind == CORBA::tk_alias)
@@ -292,7 +293,7 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
   {
     return return_value;
   }
-  // Since this is a "top level try block, no need to check again.
+  // Since this is a top level try block, no need to check again.
 
   switch (kind)
     {
@@ -464,9 +465,9 @@ TAO_ETCL_Literal_Constraint::widest_type (
   if (rhs_type == ACE_ETCL_COMPONENT)
     {
       const TAO_ETCL_Literal_Constraint& actual =
-        dynamic_cast<const TAO_ETCL_Literal_Constraint&> (rhs);
+        dynamic_cast<const TAO_ETCL_Literal_Constraint&> (rhs);   
       CORBA::TypeCode_var tc = actual.any_->type ();
-      rhs_type = this->comparable_type (tc.in ());
+      rhs_type = TAO_ETCL_Literal_Constraint::comparable_type (tc.in ());
       return return_value;
     }
     
@@ -501,174 +502,71 @@ TAO_ETCL_Literal_Constraint::copy (const TAO_ETCL_Literal_Constraint &lit)
 // ****************************************************************
 
 TAO_ETCL_Union_Value::~TAO_ETCL_Union_Value (void)
-{
-  delete this->string_;
-  delete this->integer_;
-}
-
-int
-TAO_ETCL_Union_Value::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_union_value (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Union_Pos::~TAO_ETCL_Union_Pos (void)
-{
-  delete this->component_;
-  delete this->union_value_;
-}
-
-int
-TAO_ETCL_Union_Pos::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_union_pos (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Component_Pos::~TAO_ETCL_Component_Pos (void)
-{
-  delete this->component_;
-  delete this->integer_;
-}
-
-int
-TAO_ETCL_Component_Pos::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_component_pos (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Component_Assoc::~TAO_ETCL_Component_Assoc (void)
-{
-  delete this->component_;
-  delete this->identifier_;
-}
-
-int
-TAO_ETCL_Component_Assoc::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_component_assoc (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Component_Array::~TAO_ETCL_Component_Array (void)
-{
-  delete this->component_;
-  delete this->integer_;
-}
-
-int
-TAO_ETCL_Component_Array::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_component_array (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Special::~TAO_ETCL_Special (void)
-{
-}
-
-int
-TAO_ETCL_Special::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_special (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Component::~TAO_ETCL_Component (void)
-{
-  delete this->component_;
-  delete this->identifier_;
-}
-
-int
-TAO_ETCL_Component::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_component (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Dot::~TAO_ETCL_Dot (void)
-{
-  delete this->component_;
-}
-
-int
-TAO_ETCL_Dot::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_dot (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Eval::~TAO_ETCL_Eval (void)
-{
-  delete this->component_;
-}
-
-int
-TAO_ETCL_Eval::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_eval (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Default::~TAO_ETCL_Default (void)
-{
-  delete this->component_;
-}
-
-int
-TAO_ETCL_Default::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_default (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Exist::~TAO_ETCL_Exist (void)
-{
-  delete this->component_;
-}
-
-int
-TAO_ETCL_Exist::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_exist (this);
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Unary_Expr::~TAO_ETCL_Unary_Expr (void)
-{
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Binary_Expr::~TAO_ETCL_Binary_Expr (void)
-{
-}
+{}
 
 // ****************************************************************
 
 TAO_ETCL_Preference::~TAO_ETCL_Preference (void)
-{
-  delete this->subexpr_;
-}
-
-int
-TAO_ETCL_Preference::accept (ETCL_Constraint_Visitor *visitor)
-{
-  return visitor->visit_preference (this);
-}
+{}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
