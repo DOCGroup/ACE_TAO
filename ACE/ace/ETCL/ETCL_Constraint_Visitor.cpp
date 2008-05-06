@@ -113,5 +113,11 @@ ETCL_Constraint_Visitor::visit_preference (ETCL_Preference *)
   return 0;
 }
 
+ETCL_Literal_Constraint *
+ETCL_Constraint_Visitor::create_literal_with_any (CORBA::Any *)
+{
+  return 0;
+}
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
