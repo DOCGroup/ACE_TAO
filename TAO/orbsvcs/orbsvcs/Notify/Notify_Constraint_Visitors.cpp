@@ -821,8 +821,8 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
       // it to the filterable data and set up the value pointer
       else if (this->implicit_id_ == EMPTY)
         {
-          TAO_ETCL_Identifier* ident =
-            dynamic_cast<TAO_ETCL_Identifier*> (component);
+          ETCL_Identifier* ident =
+            dynamic_cast<ETCL_Identifier*> (component);
           if (ident != 0)
             {
               this->implicit_id_ = FILTERABLE_DATA;
@@ -992,7 +992,7 @@ TAO_Notify_Constraint_Visitor::visit_and (ETCL_Binary_Expr *binary)
       result = (CORBA::Boolean) lhs_result;
 
       // Short-circuiting AND.
-      if (result == 1)
+      if (result == true)
         {
           ETCL_Constraint *rhs = binary->rhs ();
 

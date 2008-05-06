@@ -1,3 +1,10 @@
+Tue May  6 19:45:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp(visit_exist):
+        
+          Fixed an incorrect template argument to dynamic_cast<>,
+          causing it to always return 0.
+
 Tue May  6 12:49:47 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
