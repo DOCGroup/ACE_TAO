@@ -26,14 +26,16 @@ TAO_Notify_Constraint_Interpreter::build_tree (
     {
       // Root is deleted in the TAO_Interpreter's destructor.
       ACE_NEW_THROW_EX (this->root_,
-                        TAO_ETCL_Literal_Constraint ((CORBA::Boolean) 1),
+                        ETCL_Literal_Constraint (true),
                         CORBA::NO_MEMORY ());
     }
   else
     {
       // root_ is set in this base class call.
       if (ETCL_Interpreter::build_tree (constraints) != 0)
+        {
           throw CosNotifyFilter::InvalidConstraint ();
+        }
     }
 }
 
