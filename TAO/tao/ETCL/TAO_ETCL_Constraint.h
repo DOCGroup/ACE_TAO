@@ -123,18 +123,6 @@ public:
                         ETCL_Constraint *integer);
   TAO_ETCL_Union_Value (ETCL_Constraint *string);
   virtual ~TAO_ETCL_Union_Value (void);
-
-  int sign (void) const;
-  TAO_ETCL_Literal_Constraint *integer (void) const;
-  TAO_ETCL_Literal_Constraint *string (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  int sign_;
-  TAO_ETCL_Literal_Constraint *integer_;
-  TAO_ETCL_Literal_Constraint *string_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Union_Pos : public ETCL_Union_Pos
@@ -143,16 +131,6 @@ public:
   TAO_ETCL_Union_Pos (ETCL_Constraint *union_value,
                       ETCL_Constraint *component);
   virtual ~TAO_ETCL_Union_Pos (void);
-
-  TAO_ETCL_Union_Value *union_value (void) const;
-  ETCL_Constraint *component (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  TAO_ETCL_Union_Value *union_value_;
-  ETCL_Constraint *component_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Component_Pos : public ETCL_Component_Pos
@@ -161,16 +139,6 @@ public:
   TAO_ETCL_Component_Pos (ETCL_Constraint *integer,
                           ETCL_Constraint *component);
   virtual ~TAO_ETCL_Component_Pos (void);
-
-  TAO_ETCL_Literal_Constraint *integer (void) const;
-  ETCL_Constraint *component (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  TAO_ETCL_Literal_Constraint *integer_;
-  ETCL_Constraint *component_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Component_Assoc : public ETCL_Component_Assoc
@@ -179,16 +147,6 @@ public:
   TAO_ETCL_Component_Assoc (ETCL_Constraint *identifier,
                             ETCL_Constraint *component);
   virtual ~TAO_ETCL_Component_Assoc (void);
-
-  TAO_ETCL_Identifier *identifier (void) const;
-  ETCL_Constraint *component (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  TAO_ETCL_Identifier *identifier_;
-  ETCL_Constraint *component_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Component_Array : public ETCL_Component_Array
@@ -197,16 +155,6 @@ public:
   TAO_ETCL_Component_Array (ETCL_Constraint *integer,
                             ETCL_Constraint *component);
   virtual ~TAO_ETCL_Component_Array (void);
-
-  TAO_ETCL_Literal_Constraint *integer (void) const;
-  ETCL_Constraint *component (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  TAO_ETCL_Literal_Constraint *integer_;
-  ETCL_Constraint *component_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Special : public ETCL_Special
@@ -214,14 +162,6 @@ class TAO_ETCL_Export TAO_ETCL_Special : public ETCL_Special
 public:
   TAO_ETCL_Special (int type);
   virtual ~TAO_ETCL_Special (void);
-
-  int type (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  int type_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Component : public ETCL_Component
@@ -230,16 +170,6 @@ public:
   TAO_ETCL_Component (ETCL_Constraint *identifier,
                       ETCL_Constraint *component);
   virtual ~TAO_ETCL_Component (void);
-
-  TAO_ETCL_Identifier *identifier (void) const;
-  ETCL_Constraint *component (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  TAO_ETCL_Identifier *identifier_;
-  ETCL_Constraint *component_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Dot : public ETCL_Dot
@@ -247,14 +177,6 @@ class TAO_ETCL_Export TAO_ETCL_Dot : public ETCL_Dot
 public:
   TAO_ETCL_Dot (ETCL_Constraint *component);
   virtual ~TAO_ETCL_Dot (void);
-
-  ETCL_Constraint *component (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  ETCL_Constraint *component_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Eval : public ETCL_Eval
@@ -262,14 +184,6 @@ class TAO_ETCL_Export TAO_ETCL_Eval : public ETCL_Eval
 public:
   TAO_ETCL_Eval (ETCL_Constraint *component);
   virtual ~TAO_ETCL_Eval (void);
-
-  ETCL_Constraint *component (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  ETCL_Constraint *component_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Default : public ETCL_Default
@@ -277,14 +191,6 @@ class TAO_ETCL_Export TAO_ETCL_Default : public ETCL_Default
 public:
   TAO_ETCL_Default (ETCL_Constraint *component);
   virtual ~TAO_ETCL_Default (void);
-
-  ETCL_Constraint *component (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  ETCL_Constraint *component_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Exist : public ETCL_Exist
@@ -292,14 +198,6 @@ class TAO_ETCL_Export TAO_ETCL_Exist : public ETCL_Exist
 public:
   TAO_ETCL_Exist (ETCL_Constraint *component);
   virtual ~TAO_ETCL_Exist (void);
-
-  ETCL_Constraint *component (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  ETCL_Constraint *component_;
 };
 
 class TAO_ETCL_Export TAO_ETCL_Unary_Expr : public ETCL_Unary_Expr
@@ -325,16 +223,6 @@ public:
   TAO_ETCL_Preference (int type,
                        ETCL_Constraint *subexpr = 0);
   virtual ~TAO_ETCL_Preference (void);
-
-  int type (void) const;
-  ETCL_Constraint *subexpr (void) const;
-
-  // = The Constraint methods.
-  int accept (ETCL_Constraint_Visitor *visitor);
-
-private:
-  int type_;
-  ETCL_Constraint *subexpr_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

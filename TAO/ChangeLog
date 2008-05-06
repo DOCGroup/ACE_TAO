@@ -1,3 +1,29 @@
+Tue May  6 12:49:47 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.inl:
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+
+          - Factored code from the TAO ETCL constraint classes to
+            base classes in ACE_ROOT/ace/ETCL.
+
+          - Changed the signatures of the visitor methods in the
+            logging and notification services to take the ace/ETCL
+            constraint classes as arguments.
+
+          - Changed the literal constraint queues in the above
+            services to contain ETCL_Literal_Constraint instead
+            of TAO_ETCL_Literal_Constraint.
+
+          - Replaced CORBA::Boolean 0s and 1s with 'true' and
+            'false'.
+
 Mon May  5 20:40:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tao/Object.cpp:
