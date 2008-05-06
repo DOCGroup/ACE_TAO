@@ -304,6 +304,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::share
                                                                                         ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
                                                                                         size_t &loc)
 {
+  if (this->total_size_ == 0) return -1;
+  
   loc = this->hash (ext_id) % this->total_size_;
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc].next_;

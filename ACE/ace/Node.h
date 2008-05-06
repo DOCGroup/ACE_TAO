@@ -24,9 +24,9 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
-template <class T> class ACE_Unbounded_Set;
-template <class T> class ACE_Unbounded_Set_Iterator;
-template <class T> class ACE_Unbounded_Set_Const_Iterator;
+template <class T, class C> class ACE_Unbounded_Set_Ex;
+template <class T, class C> class ACE_Unbounded_Set_Ex_Iterator;
+template <class T, class C> class ACE_Unbounded_Set_Ex_Const_Iterator;
 template <class T> class ACE_Unbounded_Queue;
 template <class T> class ACE_Unbounded_Queue_Iterator;
 template <class T> class ACE_Unbounded_Queue_Const_Iterator;
@@ -38,16 +38,16 @@ template <class T> class ACE_Unbounded_Stack_Iterator;
  *
  * @brief Implementation element in a Queue, Set, and Stack.
  */
-template<class T>
+template<class T, class C = void>
 class ACE_Node
 {
 public:
   friend class ACE_Unbounded_Queue<T>;
   friend class ACE_Unbounded_Queue_Iterator<T>;
   friend class ACE_Unbounded_Queue_Const_Iterator<T>;
-  friend class ACE_Unbounded_Set<T>;
-  friend class ACE_Unbounded_Set_Iterator<T>;
-  friend class ACE_Unbounded_Set_Const_Iterator<T>;
+  friend class ACE_Unbounded_Set_Ex<T, C>;
+  friend class ACE_Unbounded_Set_Ex_Iterator<T, C>;
+  friend class ACE_Unbounded_Set_Ex_Const_Iterator<T, C>;
   friend class ACE_Unbounded_Stack<T>;
   friend class ACE_Unbounded_Stack_Iterator<T>;
 
@@ -56,16 +56,16 @@ public:
 
 private:
   // = Initialization methods
-  ACE_Node (const T &i, ACE_Node<T> *n);
-  ACE_Node (ACE_Node<T> *n = 0, int = 0);
-  ACE_Node (const ACE_Node<T> &n);
+  ACE_Node (const T &i, ACE_Node<T, C> *n);
+  ACE_Node (ACE_Node<T, C> *n = 0, int = 0);
+  ACE_Node (const ACE_Node<T, C> &n);
 private:
   /// Not possible
-  void operator= (const ACE_Node<T> &);
+  void operator= (const ACE_Node<T, C> &);
 
 private:
   /// Pointer to next element in the list of ACE_Nodes.
-  ACE_Node<T> *next_;
+  ACE_Node<T, C> *next_;
 
   /// Current value of the item in this node.
   T item_;

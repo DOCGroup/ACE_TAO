@@ -372,10 +372,10 @@ public:
   /// Set trace depth.
   void trace_depth (int);
 
-  /// Set trace active status.
+  /// Get trace active status.
   bool trace_active (void) const;
 
-  /// Get trace active status.
+  /// Set  trace active status.
   void trace_active (bool value);
 
   /// Get the TSS thread descriptor.

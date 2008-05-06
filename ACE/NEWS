@@ -13,6 +13,13 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.4 and ACE-5.6.5
 
 . Add VxWorks 6.x kernel mode with shared library support to ACE
 
+. Extended the implementation of Unbounded_Set, which has been
+  renamed Unbounded_Set_Ex, to accept a second parameter which is
+  a comparator that implements operator() which returns true if 
+  the items are equivalent.  Unbounded_Set has been reimplemented
+  in terms of Unbounded_Set_Ex using a comparator that uses operator==,
+  which captures the previous behavior.  
+ 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.3 and ACE-5.6.4
 ====================================================
 

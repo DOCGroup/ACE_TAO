@@ -31,7 +31,7 @@ struct MyNode
   MyNode () : k (0) {}
   MyNode (int pk) : k (pk) {}
   MyNode (const MyNode& o) : k (o.k) {}
-  bool operator== (const MyNode& o) { return (k == o.k); }
+  bool operator== (const MyNode& o) const { return (k == o.k); }
 };
 
 size_t count_const_set (const ACE_Unbounded_Set<MyNode>& cubs)
