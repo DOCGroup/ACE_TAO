@@ -295,7 +295,7 @@ sub Spawn ()
                 $telnet_port = 23;
               }
             my $t = new Net::Telnet(Timeout => 600, Errmode => 'return', Host => $telnet_host, Port => $telnet_port);
-            $t->open($ENV{'ACE_RUN_VX_TGTHOST'});
+            $t->open();
             $t->print("");
 
             my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
