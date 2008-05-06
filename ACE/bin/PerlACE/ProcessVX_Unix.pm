@@ -286,8 +286,15 @@ sub Spawn ()
               print "$cmdline\n";
             }
 
-            my $t;
-            $t = new Net::Telnet(Timeout => 600, Errmode => 'return');
+            my $telnet_port = $ENV{'ACE_RUN_VX_TGT_TELNET_PORT'};
+            my $telnet_host = $ENV{'ACE_RUN_VX_TGT_TELNET_HOST'};
+            if (!defined $telnet_host)  {
+              $telnet_host = $ENV{'ACE_RUN_VX_TGTHOST'};
+            }
+            if (!defined $telnet_port)  {
+                $telnet_port = 23;
+              }
+            my $t = new Net::Telnet(Timeout => 600, Errmode => 'return', Host => $telnet_host, Port => $telnet_port);
             $t->open($ENV{'ACE_RUN_VX_TGTHOST'});
             $t->print("");
 
