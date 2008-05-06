@@ -6,18 +6,44 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class T> ACE_INLINE bool
-ACE_Unbounded_Set<T>::is_empty (void) const
+template <typename T> ACE_INLINE bool
+ACE_Unbounded_Set_Default_Comparator<T>::operator () (const T  &lhs, const T &rhs) const
 {
-  ACE_TRACE ("ACE_Unbounded_Set<T>::is_empty");
-  return this->head_ == this->head_->next_;
+  return lhs == rhs;
 }
 
-template <class T> ACE_INLINE bool
-ACE_Unbounded_Set<T>::is_full (void) const
+template<typename T>
+ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, 
+                                                           bool end)
+  : BASE (s, end)
 {
-  ACE_TRACE ("ACE_Unbounded_Set<T>::is_full");
-  return 0; // We should implement a "node of last resort for this..."
 }
+
+template<typename T>
+ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (const BASE & s)
+  : BASE  (s)
+{
+}
+
+template<typename T>
+ACE_Unbounded_Set_Const_Iterator<T>::
+ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s,
+                                  bool end)
+  : BASE (s, false)
+{
+}
+
+template<typename T>
+ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator (const BASE & s)
+  : BASE  (s)
+{
+}
+
+template<typename T>
+ACE_Unbounded_Set<T>::ACE_Unbounded_Set (ACE_Allocator *alloc)
+  : ACE_Unbounded_Set_Ex<T, ACE_Unbounded_Set_Default_Comparator<T> > (alloc)
+{
+}
+
 
 ACE_END_VERSIONED_NAMESPACE_DECL

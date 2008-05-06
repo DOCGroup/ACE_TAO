@@ -25,6 +25,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/Unbounded_Queue.h"
+#include "ace/Unbounded_Set.h"
 #include "ace/Service_Repository.h"
 #include "ace/Singleton.h"
 #include "ace/OS_NS_signal.h"
