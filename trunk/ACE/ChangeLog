@@ -1,3 +1,8 @@
+Wed May  7 19:28:35 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Unbounded_Set.{h inl}: Replaced typedef BASE with base_type.
+          Avoids a BASE macro on AIX.
+
 Wed May  7 19:02:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/ETCL/ETCL_include:
