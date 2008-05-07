@@ -1,3 +1,9 @@
+Wed May  7 10:52:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Hash_Map_Manager_T.cpp:
+          Fixed GCC warning about maybe unitialised use and also
+          use prefix decrement and no need for some intermediate variables
+
 Wed May  7 08:42:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:
