@@ -1,3 +1,9 @@
+Wed May  7 06:33:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/Unbounded_Set.inl
+         
+          Fix unused argument warning. 
+
 Tue May  6 17:03:17 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/Hash_Map_Manager_T.cpp:
