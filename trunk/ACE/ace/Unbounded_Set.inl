@@ -29,7 +29,7 @@ template<typename T>
 ACE_Unbounded_Set_Const_Iterator<T>::
 ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s,
                                   bool end)
-  : BASE (s, false)
+  : BASE (s, end)
 {
 }
 
