@@ -16,11 +16,10 @@
 // ========================================================================
 
 #include "ace/ETCL/ETCL_y.h"
-#include "ETCL_macros.h"
-#include "ETCL_include.h"
+#include "ace/ETCL/ETCL_constraint.h"
 #include "ace/ETCL/ETCL_Interpreter.h"
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 extern int yylex (void);
 extern void yyflush_current_buffer (void);
@@ -31,11 +30,11 @@ static void yyerror (const char *)
   // Ignore error messages
 }
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include <stdio.h>
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 %}
 
@@ -267,4 +266,4 @@ union_val:  /* empty */
 
 %%
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL

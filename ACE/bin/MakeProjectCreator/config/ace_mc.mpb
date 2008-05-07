@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ace_etcl_parser {
+project : etcl_parser {
   after += MonitorControl
   libs += ACE_MonitorControl
   avoids += wince

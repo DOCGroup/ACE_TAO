@@ -26,7 +26,6 @@
 #include "ace/Synch_Traits.h"
 
 #include "etcl_parser_export.h"
-#include "ETCL_macros.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,7 +33,7 @@ class ETCL_Constraint;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ETCL_Interpreter
@@ -43,7 +42,7 @@ BEGIN_VERSIONED_NAMESPACE_MACRO
  * Its build tree method invokes the yacc parser to parse a constraint
  * or preference string.
  */
-class ETCL_PARSER_EXPORT_MACRO ETCL_Interpreter
+class ETCL_Parser_Export ETCL_Interpreter
 {
 protected:
   // = Initialization and termination methods.
@@ -111,7 +110,7 @@ typedef union
 extern YYSTYPE yylval;
 extern YYSTYPE yyval;
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

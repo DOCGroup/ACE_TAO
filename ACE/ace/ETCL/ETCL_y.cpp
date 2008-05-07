@@ -55,7 +55,7 @@
 // ========================================================================
 //
 // = LIBRARY
-//   ACE_ETCL / Extended Trader Constraint Language parser.
+//   ace/ETCL / Extended Trader Constraint Language parser.
 //
 // = FILENAME
 //   ETCL.yy
@@ -67,11 +67,10 @@
 // ========================================================================
 
 #include "ace/ETCL/ETCL_y.h"
-#include "ETCL_macros.h"
-#include "ETCL_include.h"
+#include "ace/ETCL/ETCL_constraint.h"
 #include "ace/ETCL/ETCL_Interpreter.h"
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 extern int yylex (void);
 extern void yyflush_current_buffer (void);
@@ -82,11 +81,11 @@ static void yyerror (const char *)
   // Ignore error messages
 }
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include <stdio.h>
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifndef __cplusplus
 #ifndef __STDC__
@@ -331,7 +330,7 @@ static const short yycheck[] = {    17,
   It was written by Richard Stallman by simplifying the hairy parser
   used when %semantic_parser is specified.  */
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #ifndef YYSTACK_USE_ALLOCA
 #ifdef alloca
@@ -433,7 +432,7 @@ while (0)
 #endif /* not YYLSP_NEEDED */
 #endif
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /* If nonreentrant, generate the variables here */
 
@@ -848,87 +847,87 @@ yyreduce:
 
 case 3:
 //#line 97 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_PREFERENCE_CLASS (ETCL_MIN, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Preference (ETCL_MIN, yyvsp[0].constraint); ;
     break;}
 case 4:
 //#line 99 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_PREFERENCE_CLASS (ETCL_MAX, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Preference (ETCL_MAX, yyvsp[0].constraint); ;
     break;}
 case 5:
 //#line 101 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_PREFERENCE_CLASS (ETCL_WITH, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Preference (ETCL_WITH, yyvsp[0].constraint); ;
     break;}
 case 6:
 //#line 103 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_PREFERENCE_CLASS (ETCL_FIRST); ;
+{ yyval.constraint = new ETCL_Preference (ETCL_FIRST); ;
     break;}
 case 7:
 //#line 105 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_PREFERENCE_CLASS (ETCL_RANDOM); ;
+{ yyval.constraint = new ETCL_Preference (ETCL_RANDOM); ;
     break;}
 case 8:
 //#line 109 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_OR, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_OR, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 10:
 //#line 114 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_AND, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_AND, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 12:
 //#line 119 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_EQ, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_EQ, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 13:
 //#line 121 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_NE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_NE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 14:
 //#line 123 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_GT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_GT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 15:
 //#line 125 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_GE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_GE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 16:
 //#line 127 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_LT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_LT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 17:
 //#line 129 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_LE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_LE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 19:
 //#line 134 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_IN, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_IN, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 20:
 //#line 136 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_IN, yyvsp[-3].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_IN, yyvsp[-3].constraint, yyvsp[0].constraint); ;
     break;}
 case 22:
 //#line 141 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_TWIDDLE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_TWIDDLE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 24:
 //#line 146 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_PLUS, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_PLUS, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 25:
 //#line 148 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_MINUS, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_MINUS, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 27:
 //#line 153 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_MULT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_MULT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 28:
 //#line 155 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_BINARY_EXPR_CLASS (ETCL_DIV, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Binary_Expr (ETCL_DIV, yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 30:
 //#line 160 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_UNARY_EXPR_CLASS (ETCL_NOT, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Unary_Expr (ETCL_NOT, yyvsp[0].constraint); ;
     break;}
 case 32:
 //#line 165 "ETCL/ETCL.yy"
@@ -944,7 +943,7 @@ case 34:
     break;}
 case 35:
 //#line 171 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_UNARY_EXPR_CLASS (ETCL_MINUS, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Unary_Expr (ETCL_MINUS, yyvsp[0].constraint); ;
     break;}
 case 36:
 //#line 173 "ETCL/ETCL.yy"
@@ -952,11 +951,11 @@ case 36:
     break;}
 case 37:
 //#line 175 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_UNARY_EXPR_CLASS (ETCL_PLUS, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Unary_Expr (ETCL_PLUS, yyvsp[0].constraint); ;
     break;}
 case 38:
 //#line 177 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_UNARY_EXPR_CLASS (ETCL_MINUS, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Unary_Expr (ETCL_MINUS, yyvsp[0].constraint); ;
     break;}
 case 39:
 //#line 179 "ETCL/ETCL.yy"
@@ -968,19 +967,19 @@ case 40:
     break;}
 case 41:
 //#line 183 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_EXIST_CLASS (yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Exist (yyvsp[0].constraint); ;
     break;}
 case 42:
 //#line 185 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_EXIST_CLASS (yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Exist (yyvsp[0].constraint); ;
     break;}
 case 43:
 //#line 187 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_DEFAULT_CLASS (yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Default (yyvsp[0].constraint); ;
     break;}
 case 44:
 //#line 189 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_EVAL_CLASS (yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Eval (yyvsp[0].constraint); ;
     break;}
 case 45:
 //#line 191 "ETCL/ETCL.yy"
@@ -992,11 +991,11 @@ case 46:
     break;}
 case 47:
 //#line 197 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_DOT_CLASS (yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Dot (yyvsp[0].constraint); ;
     break;}
 case 48:
 //#line 200 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_COMPONENT_CLASS (yyvsp[-1].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Component (yyvsp[-1].constraint, yyvsp[0].constraint); ;
     break;}
 case 51:
 //#line 207 "ETCL/ETCL.yy"
@@ -1004,11 +1003,11 @@ case 51:
     break;}
 case 52:
 //#line 209 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_DOT_CLASS (yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Dot (yyvsp[0].constraint); ;
     break;}
 case 55:
 //#line 216 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_COMPONENT_CLASS (yyvsp[-1].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Component (yyvsp[-1].constraint, yyvsp[0].constraint); ;
     break;}
 case 56:
 //#line 218 "ETCL/ETCL.yy"
@@ -1016,31 +1015,31 @@ case 56:
     break;}
 case 57:
 //#line 220 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_SPECIAL_CLASS (ETCL_DISCRIMINANT); ;
+{ yyval.constraint = new ETCL_Special (ETCL_DISCRIMINANT); ;
     break;}
 case 58:
 //#line 222 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_SPECIAL_CLASS (ETCL_TYPE_ID); ;
+{ yyval.constraint = new ETCL_Special (ETCL_TYPE_ID); ;
     break;}
 case 59:
 //#line 224 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_SPECIAL_CLASS (ETCL_REPOS_ID); ;
+{ yyval.constraint = new ETCL_Special (ETCL_REPOS_ID); ;
     break;}
 case 62:
 //#line 230 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_COMPONENT_ARRAY_CLASS (yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Component_Array (yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 63:
 //#line 234 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_COMPONENT_ASSOC_CLASS (yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Component_Assoc (yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 64:
 //#line 238 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_COMPONENT_POS_CLASS (yyvsp[-1].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Component_Pos (yyvsp[-1].constraint, yyvsp[0].constraint); ;
     break;}
 case 65:
 //#line 242 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_UNION_POS_CLASS (yyvsp[-2].constraint, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Union_Pos (yyvsp[-2].constraint, yyvsp[0].constraint); ;
     break;}
 case 66:
 //#line 246 "ETCL/ETCL.yy"
@@ -1048,19 +1047,19 @@ case 66:
     break;}
 case 67:
 //#line 248 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_UNION_VALUE_CLASS (+1, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Union_Value (+1, yyvsp[0].constraint); ;
     break;}
 case 68:
 //#line 250 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_UNION_VALUE_CLASS (+1, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Union_Value (+1, yyvsp[0].constraint); ;
     break;}
 case 69:
 //#line 252 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_UNION_VALUE_CLASS (-1, yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Union_Value (-1, yyvsp[0].constraint); ;
     break;}
 case 70:
 //#line 254 "ETCL/ETCL.yy"
-{ yyval.constraint = new ETCL_UNION_VALUE_CLASS (yyvsp[0].constraint); ;
+{ yyval.constraint = new ETCL_Union_Value (yyvsp[0].constraint); ;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
@@ -1292,5 +1291,4 @@ yyerrhandle:
 }
 //#line 257 "ETCL/ETCL.yy"
 
-
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL
