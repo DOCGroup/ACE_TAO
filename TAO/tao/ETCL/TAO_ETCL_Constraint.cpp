@@ -139,41 +139,6 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
     }
 }
 
-TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
-  CORBA::ULong uinteger)
-  : ETCL_Literal_Constraint (uinteger),
-    any_ (0)
-{
-}
-
-TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
-  CORBA::Long integer)
-  : ETCL_Literal_Constraint (integer),
-    any_ (0)
-{
-}
-
-TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
-  CORBA::Boolean boolean)
-  : ETCL_Literal_Constraint (boolean),
-    any_ (0)
-{
-}
-
-TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
-  CORBA::Double doub)
-  : ETCL_Literal_Constraint (doub),
-    any_ (0)
-{
-}
-
-TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
-  const char* str)
-  : ETCL_Literal_Constraint (str),
-    any_ (0)
-{
-}
-
 TAO_ETCL_Literal_Constraint::~TAO_ETCL_Literal_Constraint (void)
 {
   if (this->any_ != 0)
@@ -498,75 +463,5 @@ TAO_ETCL_Literal_Constraint::copy (const TAO_ETCL_Literal_Constraint &lit)
     break;
   }
 }
-
-// ****************************************************************
-
-TAO_ETCL_Union_Value::~TAO_ETCL_Union_Value (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Union_Pos::~TAO_ETCL_Union_Pos (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Component_Pos::~TAO_ETCL_Component_Pos (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Component_Assoc::~TAO_ETCL_Component_Assoc (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Component_Array::~TAO_ETCL_Component_Array (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Special::~TAO_ETCL_Special (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Component::~TAO_ETCL_Component (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Dot::~TAO_ETCL_Dot (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Eval::~TAO_ETCL_Eval (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Default::~TAO_ETCL_Default (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Exist::~TAO_ETCL_Exist (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Unary_Expr::~TAO_ETCL_Unary_Expr (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Binary_Expr::~TAO_ETCL_Binary_Expr (void)
-{}
-
-// ****************************************************************
-
-TAO_ETCL_Preference::~TAO_ETCL_Preference (void)
-{}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

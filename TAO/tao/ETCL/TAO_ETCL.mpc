@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_ETCL) : dynamicany, ace_etcl, install, tao_output {
+project(TAO_ETCL) : anytypecode, ace_etcl, install, tao_output {
   sharedname   = TAO_ETCL
   dynamicflags = TAO_ETCL_BUILD_DLL
 
@@ -26,29 +26,5 @@ project(TAO_ETCL) : dynamicany, ace_etcl, install, tao_output {
 
   Pkgconfig_Files {
     TAO_ETCL.pc.in
-  }
-}
-
-project(TAO_ETCL_Parser) : taolib, tao_etcl, install, tao_output {
-  sharedname   = TAO_ETCL_Parser
-  dynamicflags = TAO_ETCL_PARSER_BUILD_DLL
-  includes += $(TAO_ROOT)/tao/ETCL/ETCL_include
-
-  Source_Files {
-    ETCL_Interpreter.cpp
-    ETCL_l.cpp
-    ETCL_y.cpp
-  }
-
-  Header_Files {
-    $(ACE_ROOT)/ace/ETCL/ETCL_Interpreter.h
-    $(ACE_ROOT)/ace/ETCL/ETCL_y.h
-    $(TAO_ROOT)/tao/ETCL/ETCL_include/ETCL_macros.h
-    $(TAO_ROOT)/tao/ETCL/ETCL_include/ETCL_include.h
-    $(TAO_ROOT)/tao/ETCL/ETCL_include/etcl_parser_export.h
-  }
-
-  Pkgconfig_Files {
-    TAO_ETCL_Parser.pc.in
   }
 }

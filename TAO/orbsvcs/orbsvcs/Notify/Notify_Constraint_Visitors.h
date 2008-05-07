@@ -83,15 +83,15 @@ protected:
 
   // These use dynamic anys to look inside the ETCL component.
   CORBA::Boolean sequence_does_contain (const CORBA::Any *any,
-                                        ETCL_Literal_Constraint &item);
+                                        TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean array_does_contain (const CORBA::Any *any,
-                                     ETCL_Literal_Constraint &item);
+                                     TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean struct_does_contain (const CORBA::Any *any,
-                                      ETCL_Literal_Constraint &item);
+                                      TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean union_does_contain (const CORBA::Any *any,
-                                     ETCL_Literal_Constraint &item);
+                                     TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean any_does_contain (const CORBA::Any *any,
-                                   ETCL_Literal_Constraint &item);
+                                   TAO_ETCL_Literal_Constraint &item);
 
   /// Utility function to compare a TAO_ETCL_Literal_Constraint type
   /// and a type code.
@@ -152,7 +152,7 @@ protected:
   CORBA::Any remainder_of_body_;
 
   /// The result of a non_boolean operation.
-  ACE_Unbounded_Queue <ETCL_Literal_Constraint> queue_;
+  ACE_Unbounded_Queue <TAO_ETCL_Literal_Constraint> queue_;
 
   /// Holder for a value found in the event fields filterable_data,
   /// variable_header or remainder_of_body.

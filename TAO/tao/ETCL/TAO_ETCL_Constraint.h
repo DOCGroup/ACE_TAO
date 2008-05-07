@@ -53,8 +53,9 @@ public:
   explicit TAO_ETCL_Literal_Constraint (const char* str);
   explicit TAO_ETCL_Literal_Constraint (CORBA::Any* any);
 
-  /// Copy constructor
+  /// Copy constructors
   TAO_ETCL_Literal_Constraint (const TAO_ETCL_Literal_Constraint& lit);
+  TAO_ETCL_Literal_Constraint (const ETCL_Literal_Constraint *lit);
 
   /// Destructor.
   virtual ~TAO_ETCL_Literal_Constraint(void);
@@ -104,125 +105,6 @@ private:
 
   /// Possible literal type not covered by the base class.
   TAO::Any_Impl* any_;
-};
-
-// ****************************************************************
-
-class TAO_ETCL_Export TAO_ETCL_Identifier : public ETCL_Identifier
-{
-public:
-  TAO_ETCL_Identifier (const char *value);
-};
-
-// ****************************************************************
-
-class TAO_ETCL_Export TAO_ETCL_Union_Value : public ETCL_Union_Value
-{
-public:
-  TAO_ETCL_Union_Value (int sign,
-                        ETCL_Constraint *integer);
-  TAO_ETCL_Union_Value (ETCL_Constraint *string);
-  virtual ~TAO_ETCL_Union_Value (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Union_Pos : public ETCL_Union_Pos
-{
-public:
-  TAO_ETCL_Union_Pos (ETCL_Constraint *union_value,
-                      ETCL_Constraint *component);
-  virtual ~TAO_ETCL_Union_Pos (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Component_Pos : public ETCL_Component_Pos
-{
-public:
-  TAO_ETCL_Component_Pos (ETCL_Constraint *integer,
-                          ETCL_Constraint *component);
-  virtual ~TAO_ETCL_Component_Pos (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Component_Assoc : public ETCL_Component_Assoc
-{
-public:
-  TAO_ETCL_Component_Assoc (ETCL_Constraint *identifier,
-                            ETCL_Constraint *component);
-  virtual ~TAO_ETCL_Component_Assoc (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Component_Array : public ETCL_Component_Array
-{
-public:
-  TAO_ETCL_Component_Array (ETCL_Constraint *integer,
-                            ETCL_Constraint *component);
-  virtual ~TAO_ETCL_Component_Array (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Special : public ETCL_Special
-{
-public:
-  TAO_ETCL_Special (int type);
-  virtual ~TAO_ETCL_Special (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Component : public ETCL_Component
-{
-public:
-  TAO_ETCL_Component (ETCL_Constraint *identifier,
-                      ETCL_Constraint *component);
-  virtual ~TAO_ETCL_Component (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Dot : public ETCL_Dot
-{
-public:
-  TAO_ETCL_Dot (ETCL_Constraint *component);
-  virtual ~TAO_ETCL_Dot (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Eval : public ETCL_Eval
-{
-public:
-  TAO_ETCL_Eval (ETCL_Constraint *component);
-  virtual ~TAO_ETCL_Eval (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Default : public ETCL_Default
-{
-public:
-  TAO_ETCL_Default (ETCL_Constraint *component);
-  virtual ~TAO_ETCL_Default (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Exist : public ETCL_Exist
-{
-public:
-  TAO_ETCL_Exist (ETCL_Constraint *component);
-  virtual ~TAO_ETCL_Exist (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Unary_Expr : public ETCL_Unary_Expr
-{
-public:
-  TAO_ETCL_Unary_Expr (int type,
-                       ETCL_Constraint *subexpr);
-  virtual ~TAO_ETCL_Unary_Expr (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Binary_Expr : public ETCL_Binary_Expr
-{
-public:
-  TAO_ETCL_Binary_Expr (int type,
-                        ETCL_Constraint *lhs,
-                        ETCL_Constraint *rhs);
-  virtual ~TAO_ETCL_Binary_Expr (void);
-};
-
-class TAO_ETCL_Export TAO_ETCL_Preference : public ETCL_Preference
-{
-public:
-  TAO_ETCL_Preference (int type,
-                       ETCL_Constraint *subexpr = 0);
-  virtual ~TAO_ETCL_Preference (void);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

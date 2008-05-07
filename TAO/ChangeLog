@@ -1,3 +1,41 @@
+Wed May  7 19:16:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/ETCL_include:
+        * tao/ETCL/ETCL_y.cpp:
+        * tao/ETCL/ETCL_l.cpp:
+        * tao/ETCL/ETCL_Interpreter.cpp:
+        * tao/ETCL/TAO_ETCL_Parser.pc.in:
+
+          Removed these files and the directory, by way
+          of eliminating the TAO ETCL parser, only the
+          ETCL parser in ACE_ROOT/ace/ETCL is needed.
+
+        * MPC/config/tao_etcl.mpb:
+        * MPC/config/tao_monitor.mpb:
+        * MPC/config/etcl.mpb:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.inl:
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+        * tao/ETCL/TAO_ETCL.mpc:
+
+          - Changes required by the TAO ETCL parser's removal.
+
+          - Reverted a change to the Notify and Log constraint
+            visitors that made their internal literal constraint
+            queue be of type ETCL_Literal_Constraint. Changed
+            the type of queue element back to 
+            TAO_ETCL_Literal_Constraint.
+
+          - Removed all constraint classes from TAO_ETCL except
+            TAO_ETCL_Literal_Constraint. This class is the only
+            one that uses CORBA::Any and is thus CORBA-specific,
+            all the other classes can be represented by their
+            base classes in ACE_ROOT/ace/ETCL.
+
 Wed May  7 18:44:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/BasicLog_i.h:

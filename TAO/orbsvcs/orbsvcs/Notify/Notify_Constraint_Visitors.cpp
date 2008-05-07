@@ -127,7 +127,7 @@ TAO_Notify_Constraint_Visitor::evaluate_constraint (ETCL_Constraint* root)
     {
       if ((root->accept (this) == 0) && (! this->queue_.is_empty ()))
         {
-          ETCL_Literal_Constraint top;
+          TAO_ETCL_Literal_Constraint top;
           this->queue_.dequeue_head (top);
           result = (CORBA::Boolean) top;
         }
@@ -142,7 +142,8 @@ TAO_Notify_Constraint_Visitor::visit_literal (
     ETCL_Literal_Constraint *literal
   )
 {
-  this->queue_.enqueue_head (*literal);
+  TAO_ETCL_Literal_Constraint lit (literal);
+  this->queue_.enqueue_head (lit);
   return 0;
 }
 
@@ -175,13 +176,23 @@ TAO_Notify_Constraint_Visitor::visit_union_value (
   switch (union_value->sign ())
   {
     case 0:
-      this->queue_.enqueue_head (*union_value->string ());
+      {
+        TAO_ETCL_Literal_Constraint lit (union_value->string ());
+        this->queue_.enqueue_head (lit);
+      }
       break;
     case -1:
-      this->queue_.enqueue_head (-(*union_value->integer ()));
+      {
+        CORBA::Long value = -(*union_value->integer ());
+        TAO_ETCL_Literal_Constraint lit (value);
+        this->queue_.enqueue_head (lit);
+      }
       break;
     case 1:
-      this->queue_.enqueue_head (*union_value->integer ());
+      {
+        TAO_ETCL_Literal_Constraint lit (union_value->integer ());
+        this->queue_.enqueue_head (lit);
+      }
       break;
     default:
       return -1;
@@ -199,7 +210,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
   {
     if (union_pos->union_value ()->accept (this) == 0)
       {
-        ETCL_Literal_Constraint disc_val;
+        TAO_ETCL_Literal_Constraint disc_val;
         this->queue_.dequeue_head (disc_val);
 
         TAO_DynUnion_i dyn_union;
@@ -442,30 +453,30 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
   CORBA::Any *any_ptr = 0;
 
   if (comp == 0)
-  {
-    TAO_ETCL_Literal_Constraint result (&any);
-    this->queue_.enqueue_head (result);
+    {
+      TAO_ETCL_Literal_Constraint result (&any);
+      this->queue_.enqueue_head (result);
 
-    // If we're at the end of the line, put the name into
-    // current_value_ so visit_exist can use it.
-    ACE_NEW_RETURN (any_ptr,
-                    CORBA::Any,
-                    -1);
-                    
-    (*any_ptr) <<= name.c_str ();
-    this->current_value_ = any_ptr;
+      // If we're at the end of the line, put the name into
+      // current_value_ so visit_exist can use it.
+      ACE_NEW_RETURN (any_ptr,
+                      CORBA::Any,
+                      -1);
+                      
+      (*any_ptr) <<= name.c_str ();
+      this->current_value_ = any_ptr;
 
-    return 0;
-  }
+      return 0;
+    }
   else
-  {
-    ACE_NEW_RETURN (any_ptr,
-                    CORBA::Any (any),
-                    -1);
-                    
-    this->current_value_ = any_ptr;
-    return comp->accept (this);
-  }
+    {
+      ACE_NEW_RETURN (any_ptr,
+                      CORBA::Any (any),
+                      -1);
+                      
+      this->current_value_ = any_ptr;
+      return comp->accept (this);
+    }
 }
 
 int
@@ -577,7 +588,7 @@ TAO_Notify_Constraint_Visitor::visit_special (ETCL_Special *special)
           return -1;
         }
 
-        ETCL_Literal_Constraint lit (length);
+        TAO_ETCL_Literal_Constraint lit (length);
         this->queue_.enqueue_head (lit);
         return 0;
       }
@@ -601,7 +612,7 @@ TAO_Notify_Constraint_Visitor::visit_special (ETCL_Special *special)
       {
         const char *name = tc->name ();
 
-        ETCL_Literal_Constraint lit (name);
+        TAO_ETCL_Literal_Constraint lit (name);
         this->queue_.enqueue_head (lit);
         return 0;
       }
@@ -609,7 +620,7 @@ TAO_Notify_Constraint_Visitor::visit_special (ETCL_Special *special)
       {
         const char *id = tc->id ();
 
-        ETCL_Literal_Constraint lit (id);
+        TAO_ETCL_Literal_Constraint lit (id);
         this->queue_.enqueue_head (lit);
         return 0;
       }
@@ -652,14 +663,14 @@ TAO_Notify_Constraint_Visitor::visit_component (
   // nested component, if any.
   if (this->implicit_id_ == TAO_Notify_Constraint_Visitor::EMPTY)
     {
+      ACE_NEW_RETURN (any_ptr,
+                      CORBA::Any,
+                      -1);
+
       if (nested == 0)
         {
           // If this is the end of the line, we put the component name
           // into current_value_ so visit_exist can use it.
-          ACE_NEW_RETURN (any_ptr,
-                          CORBA::Any,
-                          -1);
-                          
           (*any_ptr) <<= component_name.c_str ();
           this->current_value_ = any_ptr;
           return identifier->accept (this);
@@ -673,25 +684,10 @@ TAO_Notify_Constraint_Visitor::visit_component (
               return result;
             }
 
-          ETCL_Literal_Constraint id;
+          TAO_ETCL_Literal_Constraint id;
           this->queue_.dequeue_head (id);
-          TAO_ETCL_Literal_Constraint *comp_lit =
-            dynamic_cast<TAO_ETCL_Literal_Constraint*> (&id);
-            
-          if (comp_lit == 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("Notify_Constraint_Visitors::")
-                                 ACE_TEXT ("visit_component - ")
-                                 ACE_TEXT ("downcast failed\n")),
-                                 -1);
-            }
-            
-          ACE_NEW_RETURN (any_ptr,
-                          CORBA::Any (),
-                          -1);
                           
-          any_ptr->replace (*comp_lit);
+          any_ptr->replace (id);
           any_ptr->impl ()->_add_ref ();
           this->current_value_ = any_ptr;
         }
@@ -707,19 +703,19 @@ TAO_Notify_Constraint_Visitor::visit_component (
       {
       case TYPE_NAME:
         {
-          ETCL_Literal_Constraint tn (this->type_name_.in ());
+          TAO_ETCL_Literal_Constraint tn (this->type_name_.in ());
           this->queue_.enqueue_head (tn);
           return 0;
         }
       case EVENT_NAME:
         {
-          ETCL_Literal_Constraint en (this->event_name_.in ());
+          TAO_ETCL_Literal_Constraint en (this->event_name_.in ());
           this->queue_.enqueue_head (en);
           return 0;
         }
       case DOMAIN_NAME:
         {
-          ETCL_Literal_Constraint dn (this->domain_name_.in ());
+          TAO_ETCL_Literal_Constraint dn (this->domain_name_.in ());
           this->queue_.enqueue_head (dn);
           return 0;
         }
@@ -780,16 +776,16 @@ TAO_Notify_Constraint_Visitor::visit_default (ETCL_Default *def)
     // No default index.
     if (default_index == -1)
     {
-      ETCL_Literal_Constraint result (false);
+      TAO_ETCL_Literal_Constraint result (false);
       this->queue_.enqueue_head (result);
       return 0;
     }
 
     // Okay, there's a default index, but is it active?
-
-    ETCL_Literal_Constraint disc_value;
+    TAO_ETCL_Literal_Constraint disc_value;
     this->queue_.dequeue_head (disc_value);
-    ETCL_Literal_Constraint default_index_value (default_index);
+    TAO_ETCL_Literal_Constraint default_index_value (default_index);
+    
     return (disc_value == default_index_value);
   }
   catch (const CORBA::Exception&)
@@ -813,21 +809,23 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
       // lookup. For an existence test, we want the key value, which
       // is stored in the current_value_ member.
       if (this->implicit_id_ == FILTERABLE_DATA
-        || this->implicit_id_ == VARIABLE_HEADER)
-      {
-        this->current_value_ >>= value;
-      }
-      // If the implicit id is empty, then we must default
-      // it to the filterable data and set up the value pointer
+          || this->implicit_id_ == VARIABLE_HEADER)
+        {
+          this->current_value_ >>= value;
+        }
       else if (this->implicit_id_ == EMPTY)
         {
+          // If the implicit id is empty, then we must default
+          // it to the filterable data and set up the value pointer.
+          
           ETCL_Identifier* ident =
             dynamic_cast<ETCL_Identifier*> (component);
+            
           if (ident != 0)
             {
               this->implicit_id_ = FILTERABLE_DATA;
               value = ident->value ();
-          }
+            }
         }
 
       switch (this->implicit_id_)
@@ -854,7 +852,7 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
         return -1;
       }
 
-      this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+      this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
 
       return 0;
     }
@@ -871,7 +869,7 @@ TAO_Notify_Constraint_Visitor::visit_unary_expr (
 
   if (subexpr->accept (this) == 0)
     {
-      ETCL_Literal_Constraint subexpr_result;
+      TAO_ETCL_Literal_Constraint subexpr_result;
       CORBA::Boolean result = false;
       int op_type = unary_expr->type ();
 
@@ -880,7 +878,7 @@ TAO_Notify_Constraint_Visitor::visit_unary_expr (
       case ETCL_NOT:
         this->queue_.dequeue_head (subexpr_result);
         result = ! (CORBA::Boolean) subexpr_result;
-        this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+        this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
         return 0;
       case ETCL_MINUS:
         // The leading '-' was parsed separately, so we have to pull
@@ -947,23 +945,23 @@ TAO_Notify_Constraint_Visitor::visit_or (
 
   if (lhs->accept (this) == 0)
     {
-      ETCL_Literal_Constraint lhs_result;
+      TAO_ETCL_Literal_Constraint lhs_result;
       this->queue_.dequeue_head (lhs_result);
       result = (CORBA::Boolean) lhs_result;
 
       // Short-circuiting OR.
       if (result == 0)
-      {
-        ETCL_Constraint *rhs = binary->rhs ();
-
-        if (rhs->accept (this) == 0)
         {
-          ETCL_Literal_Constraint rhs_result;
-          this->queue_.dequeue_head (rhs_result);
-          result = (CORBA::Boolean) rhs_result;
-          return_value = 0;
+          ETCL_Constraint *rhs = binary->rhs ();
+
+          if (rhs->accept (this) == 0)
+            {
+              TAO_ETCL_Literal_Constraint rhs_result;
+              this->queue_.dequeue_head (rhs_result);
+              result = (CORBA::Boolean) rhs_result;
+              return_value = 0;
+            }
         }
-      }
     else
       {
         return_value = 0;
@@ -972,7 +970,7 @@ TAO_Notify_Constraint_Visitor::visit_or (
 
   if (return_value == 0)
     {
-      this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+      this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
     }
 
   return return_value;
@@ -987,7 +985,7 @@ TAO_Notify_Constraint_Visitor::visit_and (ETCL_Binary_Expr *binary)
 
   if (lhs->accept (this) == 0)
     {
-      ETCL_Literal_Constraint lhs_result;
+      TAO_ETCL_Literal_Constraint lhs_result;
       this->queue_.dequeue_head (lhs_result);
       result = (CORBA::Boolean) lhs_result;
 
@@ -998,7 +996,7 @@ TAO_Notify_Constraint_Visitor::visit_and (ETCL_Binary_Expr *binary)
 
           if (rhs->accept (this) == 0)
           {
-            ETCL_Literal_Constraint rhs_result;
+            TAO_ETCL_Literal_Constraint rhs_result;
             this->queue_.dequeue_head (rhs_result);
             result = (CORBA::Boolean) rhs_result;
             return_value = 0;
@@ -1012,7 +1010,7 @@ TAO_Notify_Constraint_Visitor::visit_and (ETCL_Binary_Expr *binary)
 
   if (return_value == 0)
     {
-      this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+      this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
     }
 
   return return_value;
@@ -1030,7 +1028,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (ETCL_Binary_Expr *binary,
   // right branches of this subtree.
   if (lhs->accept (this) == 0)
     {
-      ETCL_Literal_Constraint left_operand;
+      TAO_ETCL_Literal_Constraint left_operand;
       this->queue_.dequeue_head (left_operand);
       ETCL_Constraint *rhs = binary->rhs ();
 
@@ -1044,27 +1042,27 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (ETCL_Binary_Expr *binary,
           {
           case ETCL_LT:
             result = left_operand < right_operand;
-            this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+            this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_LE:
             result = left_operand <= right_operand;
-            this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+            this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_GT:
             result = left_operand > right_operand;
-            this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+            this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_GE:
             result = left_operand >= right_operand;
-            this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+            this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_EQ:
             result = left_operand == right_operand;
-            this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+            this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_NE:
             result = left_operand != right_operand;
-            this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+            this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_PLUS:
             this->queue_.enqueue_head (left_operand + right_operand);
@@ -1096,18 +1094,18 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (ETCL_Binary_Expr *binary)
   // Determine if the left operand is a substring of the right.
   if (lhs->accept (this) == 0)
     {
-      ETCL_Literal_Constraint left;
+      TAO_ETCL_Literal_Constraint left;
       this->queue_.dequeue_head (left);
       ETCL_Constraint *rhs = binary->rhs ();
 
       if (rhs->accept (this) == 0)
         {
-          ETCL_Literal_Constraint right;
+          TAO_ETCL_Literal_Constraint right;
           this->queue_.dequeue_head (right);
           CORBA::Boolean result =
             (ACE_OS::strstr ((const char *) right,
                              (const char *) left) != 0);
-          this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+          this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
           return_value = 0;
         }
     }
@@ -1124,28 +1122,25 @@ TAO_Notify_Constraint_Visitor::visit_in (ETCL_Binary_Expr *binary)
   // Determine if the left operand is contained in the right.
   if (lhs->accept (this) == 0)
     {
-      ETCL_Literal_Constraint left;
+      TAO_ETCL_Literal_Constraint left;
       this->queue_.dequeue_head (left);
 
       ETCL_Constraint *rhs = binary->rhs ();
 
       if (rhs->accept (this) == 0)
         {
-          ETCL_Literal_Constraint bag;
+          TAO_ETCL_Literal_Constraint bag;
           this->queue_.dequeue_head (bag);
 
           if (bag.expr_type () == ETCL_COMPONENT)
             {
-              TAO_ETCL_Literal_Constraint *derived_lit =
-                dynamic_cast<TAO_ETCL_Literal_Constraint*> (&bag);
-                
-              if (derived_lit == 0)
-                {
-                  return -1;
-                }
-                
-              CORBA::Any_var component = new CORBA::Any ();
-              component->replace (*derived_lit);
+              CORBA::Any_ptr any_ptr = 0;
+              ACE_NEW_RETURN (any_ptr,
+                              CORBA::Any,
+                              -1);
+                              
+              CORBA::Any_var component = any_ptr;
+              component->replace (bag);
               component->impl ()->_add_ref ();
               CORBA::TCKind kind = CORBA::tk_null;
 
@@ -1187,7 +1182,7 @@ TAO_Notify_Constraint_Visitor::visit_in (ETCL_Binary_Expr *binary)
                 return return_value;
               }
 
-              this->queue_.enqueue_head (ETCL_Literal_Constraint (result));
+              this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
               return_value = 0;
             }
         }
@@ -1209,7 +1204,7 @@ TAO_Notify_Constraint_Visitor::visit_preference (ETCL_Preference *)
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::sequence_does_contain (
     const CORBA::Any *any,
-    ETCL_Literal_Constraint &item
+    TAO_ETCL_Literal_Constraint &item
   )
 {
   try
@@ -1261,7 +1256,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::array_does_contain (
     const CORBA::Any *any,
-    ETCL_Literal_Constraint &item
+    TAO_ETCL_Literal_Constraint &item
   )
 {
   try
@@ -1308,7 +1303,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::struct_does_contain (
     const CORBA::Any *any,
-    ETCL_Literal_Constraint &item
+    TAO_ETCL_Literal_Constraint &item
   )
 {
   try
@@ -1358,7 +1353,7 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::union_does_contain (
     const CORBA::Any *any,
-    ETCL_Literal_Constraint &item
+    TAO_ETCL_Literal_Constraint &item
   )
 {
   try
@@ -1398,7 +1393,7 @@ TAO_Notify_Constraint_Visitor::union_does_contain (
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::any_does_contain (
     const CORBA::Any *any,
-    ETCL_Literal_Constraint &item
+    TAO_ETCL_Literal_Constraint &item
   )
 {
   const CORBA::Any *result = 0;
