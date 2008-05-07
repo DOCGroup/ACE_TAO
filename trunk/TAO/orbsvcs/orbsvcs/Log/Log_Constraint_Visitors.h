@@ -90,15 +90,15 @@ private:
 
   // = These use dynamic anys look inside the ETCL component.
   CORBA::Boolean sequence_does_contain (const CORBA::Any *any,
-                                        ETCL_Literal_Constraint &item);
+                                        TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean array_does_contain (const CORBA::Any *any,
-                                     ETCL_Literal_Constraint &item);
+                                     TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean struct_does_contain (const CORBA::Any *any,
-                                      ETCL_Literal_Constraint &item);
+                                      TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean union_does_contain (const CORBA::Any *any,
-                                     ETCL_Literal_Constraint &item);
+                                     TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean any_does_contain (const CORBA::Any *any,
-                                   ETCL_Literal_Constraint &item);
+                                   TAO_ETCL_Literal_Constraint &item);
 
   /// Utility function to compare a ETCL_Literal_Constraint type
   /// and a type code.
