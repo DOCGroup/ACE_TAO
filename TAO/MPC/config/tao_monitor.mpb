@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : portableserver, tao_etcl_parser, ace_mc {
+project : portableserver, etcl_parser, tao_etcl, ace_mc {
   after    += TAO_Monitor
   libs     += TAO_Monitor
 }
