@@ -8,7 +8,7 @@ ACE_RCSID (PortableGroup,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-TAO_PG_MemberInfo::operator== (const TAO_PG_MemberInfo & rhs)
+TAO_PG_MemberInfo::operator== (const TAO_PG_MemberInfo & rhs) const
 {
   // For the purposes of the member info set, only the location is
   // important.
