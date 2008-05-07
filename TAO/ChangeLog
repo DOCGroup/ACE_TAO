@@ -1,3 +1,13 @@
+Wed May  7 19:33:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        
+          Changes of method signatures back to using
+          TAO_ETCL_Literal_Constraint that were overlooked in
+          
+          Wed May  7 19:16:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Wed May  7 19:16:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ETCL/ETCL_include:
