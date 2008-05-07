@@ -1,3 +1,9 @@
+Wed May  7 07:03:29 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/Unbounded_Set.h
+        
+          Fuzz fix.
+
 Wed May  7 06:33:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/Unbounded_Set.inl
