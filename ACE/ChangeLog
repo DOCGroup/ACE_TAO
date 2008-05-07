@@ -1,24 +1,29 @@
+Wed May  7 08:42:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Added ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+
 Wed May  7 07:03:29 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/Unbounded_Set.h
-        
+
           Fuzz fix.
 
 Wed May  7 06:33:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/Unbounded_Set.inl
-         
-          Fix unused argument warning. 
+
+          Fix unused argument warning.
 
 Tue May  6 17:03:17 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/Hash_Map_Manager_T.cpp:
           Fixed segfault if shared_find is called on a map of size zero.
-        
+
         * ace/Log_Msg.h:
-        
-          Comments for trace_active were swapped. 
-        
+
+          Comments for trace_active were swapped.
+
         * ace/Node.h:
         * ace/Node.cpp:
         * ace/Unbounded_Set.h:
@@ -27,23 +32,23 @@ Tue May  6 17:03:17 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ace/Unbounded_Set_Ex.h:
         * ace/Unbounded_Set_Ex.inl:
         * ace/Unbounded_Set_Ex.cpp:
-        
+
           Extended the Unbounded_Set to include a comparator template parameter,
           which must implement operator (), which returns true if the items are
-          equivalent.  This class has been renamed Unbounded_Set_Ex. 
-        
+          equivalent.  This class has been renamed Unbounded_Set_Ex.
+
           Unbounded_Set is now implemented in terms of Unbounded_Set_Ex with a
-          comparator that uses operator== to compare the items.  
-        
+          comparator that uses operator== to compare the items.
+
         * ace/Service_Gestalt.h:
         * tests/Unbounded_Set_Test.cpp:
-        
-          Slight updates to conform with new implementation.  
+
+          Slight updates to conform with new implementation.
 
         * NEWS
-          
-          Added description for above. 
-        
+
+          Added description for above.
+
 Tue May  6 12:37:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/ETCL/ETCL_Constraint.h:
@@ -51,7 +56,7 @@ Tue May  6 12:37:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * ace/ETCL/ETCL_Constraint_Visitor.h:
         * ace/ETCL/ETCL_Constraint.inl:
         * ace/ETCL/ETCL_Constraint.cpp:
-        
+
           Moved code from the TAO ETCL classes to base classes
           here.
 
