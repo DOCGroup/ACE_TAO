@@ -89,6 +89,7 @@
 #endif /* ! __GNUG__ && ! ghs */
 
 // OS-specific configuration
+#define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
 #define ACE_MKDIR_LACKS_MODE
 #define ACE_HAS_NONCONST_GETBY
