@@ -1,3 +1,10 @@
+Wed May  7 14:12:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3319_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added regression for bugzilla 3319
+
 Wed May  7 10:52:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Hash_Map_Manager_T.cpp:
