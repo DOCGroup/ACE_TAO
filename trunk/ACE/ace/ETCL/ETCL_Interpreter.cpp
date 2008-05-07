@@ -6,9 +6,9 @@
 #include "ace/ETCL/ETCL_Interpreter.h"
 #include "ace/ETCL/ETCL_Constraint.h"
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ETCL_PARSER_EXPORT_MACRO ACE_SYNCH_MUTEX ETCL_Interpreter::parserMutex__;
+ETCL_Parser_Export ACE_SYNCH_MUTEX ETCL_Interpreter::parserMutex__;
 
 ETCL_Interpreter::ETCL_Interpreter (void)
   : root_ (0)
@@ -106,4 +106,4 @@ Lex_String_Input::reset (char* input_string)
     input_string + ACE_OS::strlen (Lex_String_Input::string_);
 }
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL
