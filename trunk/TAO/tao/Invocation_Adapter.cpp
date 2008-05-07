@@ -166,16 +166,14 @@ namespace TAO
 
     status = coll_inv.invoke (this->cpb_, strat);
 
-    if (status == TAO_INVOKE_RESTART && coll_inv.is_forwarded ())
+    if (status == TAO_INVOKE_RESTART &&
+        (coll_inv.reply_status () == GIOP::LOCATION_FORWARD ||
+         coll_inv.reply_status () == GIOP::LOCATION_FORWARD_PERM))
       {
-        effective_target = coll_inv.steal_forwarded_reference ();
-
-#if TAO_HAS_INTERCEPTORS == 1
         CORBA::Boolean const is_permanent_forward =
-          (coll_inv.pi_reply_status() == GIOP::LOCATION_FORWARD_PERM);
-#else
-        CORBA::Boolean const is_permanent_forward = false;
-#endif
+          (coll_inv.reply_status () == GIOP::LOCATION_FORWARD_PERM);
+
+        effective_target = coll_inv.steal_forwarded_reference ();
 
         this->object_forwarded (effective_target, stub, is_permanent_forward);
       }
@@ -302,16 +300,13 @@ namespace TAO
     Invocation_Status const status = synch.remote_twoway (max_wait_time);
 
     if (status == TAO_INVOKE_RESTART &&
-        synch.is_forwarded ())
+        (synch.reply_status () == GIOP::LOCATION_FORWARD ||
+         synch.reply_status () == GIOP::LOCATION_FORWARD_PERM))
       {
-        effective_target = synch.steal_forwarded_reference ();
-
-#if TAO_HAS_INTERCEPTORS == 1
         CORBA::Boolean const is_permanent_forward =
-          (synch.pi_reply_status() == GIOP::LOCATION_FORWARD_PERM);
-#else
-        CORBA::Boolean const is_permanent_forward = false;
-#endif
+          (synch.reply_status () == GIOP::LOCATION_FORWARD_PERM);
+
+        effective_target = synch.steal_forwarded_reference ();
 
         this->object_forwarded (effective_target,
                                 r.stub (),
@@ -331,16 +326,15 @@ namespace TAO
 
     Invocation_Status const s = synch.remote_oneway (max_wait_time);
 
-    if (s == TAO_INVOKE_RESTART && synch.is_forwarded ())
+    if (s == TAO_INVOKE_RESTART &&
+        (synch.reply_status () == GIOP::LOCATION_FORWARD ||
+         synch.reply_status () == GIOP::LOCATION_FORWARD_PERM))
       {
+        CORBA::Boolean const is_permanent_forward =
+          (synch.reply_status () == GIOP::LOCATION_FORWARD_PERM);
+
         effective_target = synch.steal_forwarded_reference ();
 
-#if TAO_HAS_INTERCEPTORS == 1
-        CORBA::Boolean const is_permanent_forward =
-          (synch.pi_reply_status() == GIOP::LOCATION_FORWARD_PERM);
-#else
-        CORBA::Boolean const is_permanent_forward = false;
-#endif
         this->object_forwarded (effective_target,
                                 r.stub (),
                                 is_permanent_forward);

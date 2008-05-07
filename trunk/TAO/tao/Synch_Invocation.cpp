@@ -381,6 +381,9 @@ namespace TAO
 
                    throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
                 }
+
+              // This is the only place where we set in permanent forward state.
+              this->reply_status (GIOP::LOCATION_FORWARD_PERM);
             }
 
           return s;

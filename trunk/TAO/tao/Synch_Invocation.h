@@ -169,8 +169,8 @@ namespace TAO
 
     Reply_Guard (Invocation_Base *s, Invocation_Status is);
 
-    /// The destructor calls Invocation_Base::reply_received with the
-    /// right reply status, which is useful for PI's.
+    /// The destructor calls Invocation_Base::invoke_status with the
+    /// right invoke status, which is useful for PI's.
     ~Reply_Guard (void);
 
     /// Mutator to set the invocation status.

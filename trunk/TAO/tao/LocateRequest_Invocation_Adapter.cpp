@@ -80,16 +80,15 @@ namespace TAO
             TAO::LocateRequest_Invocation synch (this->target_, resolver, op);
 
             s = synch.invoke (max_wait_time);
-            if (s == TAO_INVOKE_RESTART && synch.is_forwarded ())
+            if (s == TAO_INVOKE_RESTART &&
+                (synch.reply_status () == GIOP::LOCATION_FORWARD ||
+                 synch.reply_status () == GIOP::LOCATION_FORWARD_PERM))
               {
+                CORBA::Boolean const is_permanent_forward =
+                  (synch.reply_status () == GIOP::LOCATION_FORWARD_PERM);
+
                 effective_target = synch.steal_forwarded_reference ();
 
-#if TAO_HAS_INTERCEPTORS == 1
-                CORBA::Boolean const is_permanent_forward =
-                  (synch.pi_reply_status() == GIOP::LOCATION_FORWARD_PERM);
-#else
-                CORBA::Boolean const is_permanent_forward = false;
-#endif
                 this->object_forwarded (effective_target,
                                         resolver.stub (),
                                         is_permanent_forward);

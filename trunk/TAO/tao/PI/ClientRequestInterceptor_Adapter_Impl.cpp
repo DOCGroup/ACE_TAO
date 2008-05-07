@@ -276,7 +276,8 @@ namespace TAO
         reply_status = PortableInterceptor::SUCCESSFUL;
         break;
       case TAO::TAO_INVOKE_RESTART:
-        if (invocation_base.is_forwarded ())
+        if (invocation_base.reply_status () == GIOP::LOCATION_FORWARD ||
+            invocation_base.reply_status () == GIOP::LOCATION_FORWARD_PERM)
           reply_status = PortableInterceptor::LOCATION_FORWARD;
         else
           reply_status = PortableInterceptor::TRANSPORT_RETRY;
