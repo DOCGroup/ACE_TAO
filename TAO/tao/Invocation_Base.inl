@@ -22,7 +22,7 @@ namespace TAO
   Invocation_Base::forwarded_reference (CORBA::Object_ptr o)
   {
     this->forwarded_to_ = CORBA::Object::_duplicate (o);
-    this->is_forwarded_ = true;
+    this->reply_status_ = GIOP::LOCATION_FORWARD;
   }
 
   ACE_INLINE CORBA::Object_ptr
@@ -34,20 +34,26 @@ namespace TAO
   ACE_INLINE CORBA::Object_ptr
   Invocation_Base::steal_forwarded_reference (void)
   {
-    this->is_forwarded_ = false;
+    this->reply_status_ = GIOP::NO_EXCEPTION;
     return this->forwarded_to_._retn ();
-  }
-
-  ACE_INLINE bool
-  Invocation_Base::is_forwarded (void) const
-  {
-    return this->is_forwarded_;
   }
 
   ACE_INLINE CORBA::Boolean
   Invocation_Base::response_expected (void) const
   {
     return this->response_expected_;
+  }
+
+  ACE_INLINE GIOP::ReplyStatusType
+  Invocation_Base::reply_status (void) const
+  {
+    return this->reply_status_;
+  }
+
+  ACE_INLINE void
+  Invocation_Base::reply_status (GIOP::ReplyStatusType s)
+  {
+    this->reply_status_ = s;
   }
 
   ACE_INLINE CORBA::Object_ptr
@@ -85,6 +91,12 @@ namespace TAO
   Invocation_Base::invoke_status (void) const
   {
     return this->invoke_status_;
+  }
+
+  ACE_INLINE void
+  Invocation_Base::invoke_status (Invocation_Status s)
+  {
+    this->invoke_status_ = s;
   }
 
   ACE_INLINE bool

@@ -88,12 +88,6 @@ namespace TAO
     /// Return the forwarded object location by loosing ownership.
     CORBA::Object_ptr steal_forwarded_reference (void);
 
-    /// Did the invocation got forwarded to a new location?
-    bool is_forwarded (void) const;
-
-    /// Mutator to set the reply status of the invocation.
-    void reply_received (Invocation_Status s);
-
     /// Return the effective target of the invocation.
     /**
      * Please see the PortableInterceptor specification in the CORBA
@@ -106,6 +100,10 @@ namespace TAO
 
     /// Does this invocation return a response?
     CORBA::Boolean response_expected (void) const;
+
+    /// Accessor and mutator of reply_status of the invocation.
+    GIOP::ReplyStatusType reply_status (void) const;
+    void reply_status (GIOP::ReplyStatusType s);
 
     /// The operaton details of the invocation
     TAO_Operation_Details &operation_details (void);
@@ -138,11 +136,11 @@ namespace TAO
     /// Forwarded object reference.
     CORBA::Object_var forwarded_to_;
 
-    /// If we get nil forward reference we need more reliable indication of forwarding.
-    bool is_forwarded_;
-
     /// Is response expected?
     bool response_expected_;
+
+    /// A GIOP reply status of the invocation.
+    GIOP::ReplyStatusType reply_status_;
 
   private:
 
@@ -189,8 +187,10 @@ namespace TAO
     /// Change the exception status.
     void exception (CORBA::Exception *exception);
 
-    /// Invoke status
+    /// Invocation status.
     TAO::Invocation_Status invoke_status (void) const;
+    /// Mutator to set the invocation status.
+    void invoke_status (Invocation_Status s);
 
     PortableInterceptor::ReplyStatus pi_reply_status (void) const;
 
