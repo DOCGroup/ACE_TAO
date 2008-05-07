@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ace_etcl {
+project : ace_etcl, dynamicany {
   after += TAO_ETCL
   libs += TAO_ETCL
   includes += $(ACE_ROOT)/ETCL
