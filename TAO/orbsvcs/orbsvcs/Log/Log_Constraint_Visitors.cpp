@@ -1026,7 +1026,7 @@ TAO_Log_Constraint_Visitor::visit_preference (
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::sequence_does_contain (
     const CORBA::Any *any,
-    ETCL_Literal_Constraint &item
+    TAO_ETCL_Literal_Constraint &item
   )
 {
   try
@@ -1072,7 +1072,7 @@ TAO_Log_Constraint_Visitor::sequence_does_contain (
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::array_does_contain (
     const CORBA::Any *any,
-    ETCL_Literal_Constraint &item
+    TAO_ETCL_Literal_Constraint &item
   )
 {
   try
@@ -1119,7 +1119,7 @@ TAO_Log_Constraint_Visitor::array_does_contain (
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::struct_does_contain (
     const CORBA::Any *any,
-    ETCL_Literal_Constraint &item
+    TAO_ETCL_Literal_Constraint &item
   )
 {
   try
@@ -1168,7 +1168,7 @@ TAO_Log_Constraint_Visitor::struct_does_contain (
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::union_does_contain (
     const CORBA::Any *any,
-    ETCL_Literal_Constraint &item
+    TAO_ETCL_Literal_Constraint &item
   )
 {
   try
@@ -1207,7 +1207,7 @@ TAO_Log_Constraint_Visitor::union_does_contain (
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::any_does_contain (
     const CORBA::Any *any,
-    ETCL_Literal_Constraint &item
+    TAO_ETCL_Literal_Constraint &item
   )
 {
   const CORBA::Any *result = 0;
