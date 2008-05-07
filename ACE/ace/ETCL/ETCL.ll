@@ -17,10 +17,9 @@
 // ========================================================================
 
 #include "ace/ETCL/ETCL_Interpreter.h"
-#include "ace/ETCL/ETCL_Constraint.h"
 #include "ace/ETCL/ETCL_y.h"
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static const char * extract_string(char*);
 
@@ -157,4 +156,4 @@ yywrap (void)
   return 1;
 }
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL

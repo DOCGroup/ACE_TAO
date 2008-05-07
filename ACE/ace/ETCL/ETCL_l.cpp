@@ -19,7 +19,7 @@
 
 #include "ace/OS.h"
 
-#include "ETCL_macros.h"
+#include "ace/ETCL/ETCL_constraint.h"
 
 #ifdef __cplusplus
 
@@ -95,7 +95,7 @@
 /* Size of default input buffer. */
 #define YY_BUF_SIZE 16384
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 
@@ -448,7 +448,7 @@ char *yytext;
 //#line 1 "ETCL/ETCL.ll"
 #define INITIAL 0
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 //#line 4 "ETCL/ETCL.ll"
 // $Id$
@@ -467,10 +467,9 @@ END_VERSIONED_NAMESPACE_MACRO
 // ========================================================================
 
 #include "ace/ETCL/ETCL_Interpreter.h"
-#include "ace/ETCL/ETCL_Constraint.h"
 #include "ace/ETCL/ETCL_y.h"
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static const char* extract_string(char*);
 //static const char * extract_string(char*);
@@ -535,7 +534,7 @@ static int yy_top_state YY_PROTO(( void ));
 #define YY_NO_TOP_STATE 1
 #endif
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef YY_MALLOC_DECL
 YY_MALLOC_DECL
@@ -630,7 +629,7 @@ YY_MALLOC_DECL
 #define YY_RULE_SETUP \
   YY_USER_ACTION
 
-BEGIN_VERSIONED_NAMESPACE_MACRO
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 YY_DECL
   {
@@ -1883,4 +1882,4 @@ yywrap (void)
   return 1;
 }
 
-END_VERSIONED_NAMESPACE_MACRO
+ACE_END_VERSIONED_NAMESPACE_DECL

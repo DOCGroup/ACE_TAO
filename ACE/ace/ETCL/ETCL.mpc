@@ -24,15 +24,9 @@ project(ACE_ETCL) : acelib, install, ace_output {
   }
 }
 
-project(ACE_ETCL_Parser) : acelib, ace_etcl, install, ace_output {
-  sharedname   = ACE_ETCL_Parser
-  dynamicflags = ACE_ETCL_PARSER_BUILD_DLL
-
-  specific (automake) {
-    includes += $(srcdir)/ETCL_include
-  } else {
-    includes += ETCL_include
-  }
+project(ETCL_Parser) : acelib, ace_etcl, install, ace_output {
+  sharedname   = ETCL_Parser
+  dynamicflags = ETCL_PARSER_BUILD_DLL
 
   Source_Files {
     ETCL_Interpreter.cpp
@@ -43,9 +37,7 @@ project(ACE_ETCL_Parser) : acelib, ace_etcl, install, ace_output {
   Header_Files {
     ETCL_Interpreter.h
     ETCL_y.h
-    ETCL_include/ETCL_macros.h
-    ETCL_include/ETCL_include.h
-    ETCL_include/etcl_parser_export.h
+    etcl_parser_export.h
   }
   
   Inline_Files {

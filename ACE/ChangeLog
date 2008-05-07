@@ -1,3 +1,32 @@
+Wed May  7 19:02:51 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/ETCL/ETCL_include:
+
+          Removed this directory.
+
+        * ace/ETCL/etcl_parser_export.h:
+
+          Relocated here from ace/ETCL/ETCL_include.
+
+        * bin/MakeProjectCreator/config/etcl_parser.mpb:
+
+          Renamed this file from ace_etcl_parser.mpb.
+
+        * ace/ETCL/ETCL_l.cpp:
+        * ace/ETCL/ETCL.yy
+        * ace/ETCL/ETCL_Interpreter.cpp:
+        * ace/ETCL/ETCL.ll:
+        * ace/ETCL/ETCL_y.cpp:
+        * ace/ETCL/ETCL_Interpreter.h:
+        * ace/ETCL/ETCL.mpc:
+        * ace/MonitorControl/MonitorControl.mpc:
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+
+          All changes in this checkin are to remove
+          unnecessary things as a result of making the
+          ETCL parser the only one used. The corresponding
+          parser in TAO is eliminated.
+
 Wed May  7 17:11:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
