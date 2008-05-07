@@ -15,13 +15,13 @@ ACE_Unbounded_Set_Default_Comparator<T>::operator () (const T  &lhs, const T &rh
 template<typename T>
 ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, 
                                                            bool end)
-  : BASE (s, end)
+  : base_type (s, end)
 {
 }
 
 template<typename T>
-ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (const BASE & s)
-  : BASE  (s)
+ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (const base_type & s)
+  : base_type  (s)
 {
 }
 
@@ -29,13 +29,13 @@ template<typename T>
 ACE_Unbounded_Set_Const_Iterator<T>::
 ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s,
                                   bool end)
-  : BASE (s, end)
+  : base_type (s, end)
 {
 }
 
 template<typename T>
-ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator (const BASE & s)
-  : BASE  (s)
+ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator (const base_type & s)
+  : base_type  (s)
 {
 }
 
