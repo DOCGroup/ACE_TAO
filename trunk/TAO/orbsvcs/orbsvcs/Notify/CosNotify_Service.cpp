@@ -38,7 +38,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
   int consumer_threads = 0;
   int supplier_threads = 0;
 
-  int task_per_proxy = 0;
+  bool task_per_proxy = false;
 
   TAO_Notify_Properties *properties = TAO_Notify_PROPERTIES::instance();
 
@@ -108,7 +108,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllocateTaskperProxy")) == 0)
         {
-          task_per_proxy = 1;
+          task_per_proxy = true;
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
@@ -157,7 +157,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
     properties->default_event_channel_qos_properties (qos);
   }
 
-  if (task_per_proxy == 0)
+  if (!task_per_proxy)
     {
       // Set the per ConsumerAdmin QoS
       {
@@ -215,6 +215,7 @@ TAO_CosNotify_Service::set_threads (CosNotification::QoSProperties &qos, int thr
 int
 TAO_CosNotify_Service::fini (void)
 {
+  TAO_Notify_Properties::instance()->close ();
   return 0;
 }
 
@@ -403,7 +404,6 @@ TAO_CosNotify_Service::builder (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 /*********************************************************************************************************************/
 

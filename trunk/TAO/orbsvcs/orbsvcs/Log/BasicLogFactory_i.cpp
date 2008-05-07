@@ -21,7 +21,6 @@ TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
 {
   TAO_LogMgr_i::init (orb, poa);
 
-
   PortableServer::ObjectId_var oid =
     this->factory_poa_->activate_object (this);
 
@@ -98,11 +97,11 @@ TAO_BasicLogFactory_i::create_repositoryid ()
 PortableServer::ServantBase*
 TAO_BasicLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 {
-  TAO_BasicLog_i* basic_log_i;
+  TAO_BasicLog_i* basic_log_i = 0;
 
   ACE_NEW_THROW_EX (basic_log_i,
                     TAO_BasicLog_i (this->orb_.in (),
-				    this->log_poa_.in (),
+                                    this->log_poa_.in (),
                                     *this,
                                     this->log_mgr_.in (),
                                     id),

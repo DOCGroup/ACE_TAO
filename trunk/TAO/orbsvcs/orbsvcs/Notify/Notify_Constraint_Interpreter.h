@@ -47,7 +47,7 @@ public:
 
   /**
    * This method builds an expression tree representing the
-   * constraint specified in <constraints>, and throws an Illegal
+   * constraint specified in @a constraints, and throws an Illegal
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
