@@ -216,7 +216,7 @@ Notifier_i::shutdown (void)
 }
 
 bool
-Notifier_i::Consumer_Data::operator== (const Consumer_Data &rhs)
+Notifier_i::Consumer_Data::operator== (const Consumer_Data &rhs) const
 {
   // The <_is_equivalent> function checks if the _var and _ptr objects
   // are the same.  NOTE: this call might not behave well on other

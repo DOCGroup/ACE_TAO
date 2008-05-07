@@ -49,7 +49,7 @@ struct TAO_PG_MemberInfo
    * important.  In particular, if a member already resides at the
    * given location, this equality operator will return true.
    */
-  bool operator== (const TAO_PG_MemberInfo & rhs);
+  bool operator== (const TAO_PG_MemberInfo & rhs) const;
 
 };
 

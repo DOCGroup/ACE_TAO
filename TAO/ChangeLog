@@ -1,7 +1,16 @@
+Wed May  7 06:49:33 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/Callback_Quoter/Notifier_i.h:
+        * examples/Callback_Quoter/Notifier_i.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.cpp:
+
+          Qualified equality operators with const to fix errors with Unbounded_Set.
+        
 Tue May  6 19:45:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp(visit_exist):
-        
+
           Fixed an incorrect template argument to dynamic_cast<>,
           causing it to always return 0.
 
@@ -34,7 +43,7 @@ Tue May  6 12:49:47 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon May  5 20:40:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tao/Object.cpp:
-        
+
           Fix a segfault in a nil pointer is passed to _is_equivalent.
 
 Mon May  5 14:45:45 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
@@ -98,171 +107,171 @@ Sat May  3 22:23:22 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
         automake build errors.  A few hand tweaks more will be needed
         to resolve the rest.
 
-	* configure.ac:
+        * configure.ac:
 
           Updated for new directories.
 
-	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/Notify_Service/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
-	* orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile.am:
-	* orbsvcs/tests/Event/Basic/Makefile.am:
-	* orbsvcs/tests/Event/Performance/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
-	* orbsvcs/tests/Log/Basic_Log_Test/Makefile.am:
-	* orbsvcs/tests/Bug_2800_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_2925_Regression/Makefile.am:
-	* orbsvcs/tests/Security/mixed_security_test/Makefile.am:
-	* orbsvcs/tests/Security/Makefile.am:
-	* orbsvcs/tests/Property/Makefile.am:
-	* orbsvcs/tests/CosEvent/Basic/Makefile.am:
-	* orbsvcs/tests/InterfaceRepo/Makefile.am:
-	* orbsvcs/tests/Bug_2926_Regression/Makefile.am:
-	* orbsvcs/tests/Notify/Basic/Makefile.am:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/Test_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/Blocking/Makefile.am:
-	* orbsvcs/tests/Notify/Destroy/Makefile.am:
-	* orbsvcs/tests/Notify/Bug_2561_Regression/Makefile.am:
-	* orbsvcs/tests/Notify/Driver/Makefile.am:
-	* orbsvcs/tests/Notify/MT_Dispatching/Makefile.am:
-	* orbsvcs/tests/Notify/Bug_1385_Regression/Makefile.am:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/PluggableTopology/Makefile.am:
-	* orbsvcs/tests/Notify/Persistent_POA/Makefile.am:
-	* orbsvcs/tests/Notify/MC/Makefile.am:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.am:
-	* orbsvcs/tests/Notify/XML_Persistence/Makefile.am:
-	* orbsvcs/tests/Notify/lib/Makefile.am:
-	* orbsvcs/tests/Notify/Discarding/Makefile.am:
-	* orbsvcs/tests/Notify/Ordering/Makefile.am:
-	* orbsvcs/tests/Notify/Structured_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/Makefile.am:
-	* orbsvcs/tests/Notify/RT_lib/Makefile.am:
-	* orbsvcs/tests/Notify/Reconnecting/Makefile.am:
-	* orbsvcs/tests/Makefile.am:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
-	* orbsvcs/ImplRepo_Service/Makefile.am:
-	* orbsvcs/Fault_Notifier/Makefile.am:
-	* orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile.am:
-	* orbsvcs/examples/Notify/Federation/Agent/Makefile.am:
-	* orbsvcs/examples/Notify/ThreadPool/Makefile.am:
-	* orbsvcs/examples/Notify/Lanes/Makefile.am:
-	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile.am:
-	* tao/Makefile.am:
-	* docs/tutorials/Quoter/Naming_Service/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Server/Makefile.am:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Client/Makefile.am:
-	* docs/tutorials/Quoter/RTCORBA/Makefile.am:
-	* utils/Makefile.am:
-	* performance-tests/POA/Demux/Makefile.am:
-	* performance-tests/Anyop/Makefile.am:
-	* performance-tests/CSD_Strategy/TestServant/Makefile.am:
-	* performance-tests/CSD_Strategy/TestApps/Makefile.am:
-	* performance-tests/Callback/Makefile.am:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
-	* performance-tests/Latency/DSI/Makefile.am:
-	* tests/Server_Connection_Purging/Makefile.am:
-	* tests/Bug_2222_Regression/Makefile.am:
-	* tests/Bug_1270_Regression/Makefile.am:
-	* tests/Bug_2702_Regression/Makefile.am:
-	* tests/Any/Recursive/Makefile.am:
-	* tests/Bug_2560_Regression/Makefile.am:
-	* tests/Object_Loader/Makefile.am:
-	* tests/DynUnion_Test/Makefile.am:
-	* tests/Bug_2669_Regression/Makefile.am:
-	* tests/QtTests/Makefile.am:
-	* tests/DLL_ORB/Makefile.am:
-	* tests/Bug_2503_Regression/Makefile.am:
-	* tests/HandleExhaustion/Makefile.am:
-	* tests/Hello/Makefile.am:
-	* tests/Bug_2122_Regression/Makefile.am:
-	* tests/Makefile.am:
-	* tests/IOR_Endpoint_Hostnames/Makefile.am:
-	* tests/Bug_2084_Regression/Makefile.am:
-	* tests/FL_Cube/Makefile.am:
-	* tests/Portable_Interceptors/Bug_3080/Makefile.am:
-	* tests/Portable_Interceptors/Makefile.am:
-	* tests/Bug_2417_Regression/Makefile.am:
-	* tests/Bug_3000_Regression/Makefile.am:
-	* tests/POA/Adapter_Activator/Makefile.am:
-	* tests/POA/Explicit_Activation/Makefile.am:
-	* tests/POA/On_Demand_Activation/Makefile.am:
-	* tests/POA/Reference_Counted_Servant/Makefile.am:
-	* tests/POA/Makefile.am:
-	* tests/Optimized_Connection/Makefile.am:
-	* tests/Xt_Stopwatch/Makefile.am:
-	* tests/GIOP_Fragments/Java_Big_Request/Makefile.am:
-	* tests/GIOP_Fragments/Java_Big_Reply/Makefile.am:
-	* tests/IDL_Test/Makefile.am:
-	* tests/CodeSets/libs/Makefile.am:
-	* tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
-	* tests/OBV/Forward/Makefile.am:
-	* tests/OBV/Truncatable/Makefile.am:
-	* tests/OBV/ValueBox/Makefile.am:
-	* tests/OBV/Collocated/Forward/Makefile.am:
-	* tests/Oneway_Timeouts/Makefile.am:
-	* tests/DSI_AMH/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/Makefile.am:
-	* examples/Simple/time-date/Makefile.am:
-	* examples/CSD_Strategy/ThreadPool4/Makefile.am:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
-	* examples/RTScheduling/MIF_Scheduler/Makefile.am:
-	* examples/RTScheduling/Makefile.am:
-	* examples/mfc/Makefile.am:
-	* examples/AMI/FL_Callback/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/Notify_Service/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile.am:
+        * orbsvcs/tests/Event/Basic/Makefile.am:
+        * orbsvcs/tests/Event/Performance/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+        * orbsvcs/tests/Log/Basic_Log_Test/Makefile.am:
+        * orbsvcs/tests/Bug_2800_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2925_Regression/Makefile.am:
+        * orbsvcs/tests/Security/mixed_security_test/Makefile.am:
+        * orbsvcs/tests/Security/Makefile.am:
+        * orbsvcs/tests/Property/Makefile.am:
+        * orbsvcs/tests/CosEvent/Basic/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/Makefile.am:
+        * orbsvcs/tests/Bug_2926_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Basic/Makefile.am:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Test_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Blocking/Makefile.am:
+        * orbsvcs/tests/Notify/Destroy/Makefile.am:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Driver/Makefile.am:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile.am:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/PluggableTopology/Makefile.am:
+        * orbsvcs/tests/Notify/Persistent_POA/Makefile.am:
+        * orbsvcs/tests/Notify/MC/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.am:
+        * orbsvcs/tests/Notify/XML_Persistence/Makefile.am:
+        * orbsvcs/tests/Notify/lib/Makefile.am:
+        * orbsvcs/tests/Notify/Discarding/Makefile.am:
+        * orbsvcs/tests/Notify/Ordering/Makefile.am:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Makefile.am:
+        * orbsvcs/tests/Notify/RT_lib/Makefile.am:
+        * orbsvcs/tests/Notify/Reconnecting/Makefile.am:
+        * orbsvcs/tests/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/Fault_Notifier/Makefile.am:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile.am:
+        * orbsvcs/examples/Notify/Federation/Agent/Makefile.am:
+        * orbsvcs/examples/Notify/ThreadPool/Makefile.am:
+        * orbsvcs/examples/Notify/Lanes/Makefile.am:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile.am:
+        * tao/Makefile.am:
+        * docs/tutorials/Quoter/Naming_Service/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Server/Makefile.am:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Client/Makefile.am:
+        * docs/tutorials/Quoter/RTCORBA/Makefile.am:
+        * utils/Makefile.am:
+        * performance-tests/POA/Demux/Makefile.am:
+        * performance-tests/Anyop/Makefile.am:
+        * performance-tests/CSD_Strategy/TestServant/Makefile.am:
+        * performance-tests/CSD_Strategy/TestApps/Makefile.am:
+        * performance-tests/Callback/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
+        * performance-tests/Latency/DSI/Makefile.am:
+        * tests/Server_Connection_Purging/Makefile.am:
+        * tests/Bug_2222_Regression/Makefile.am:
+        * tests/Bug_1270_Regression/Makefile.am:
+        * tests/Bug_2702_Regression/Makefile.am:
+        * tests/Any/Recursive/Makefile.am:
+        * tests/Bug_2560_Regression/Makefile.am:
+        * tests/Object_Loader/Makefile.am:
+        * tests/DynUnion_Test/Makefile.am:
+        * tests/Bug_2669_Regression/Makefile.am:
+        * tests/QtTests/Makefile.am:
+        * tests/DLL_ORB/Makefile.am:
+        * tests/Bug_2503_Regression/Makefile.am:
+        * tests/HandleExhaustion/Makefile.am:
+        * tests/Hello/Makefile.am:
+        * tests/Bug_2122_Regression/Makefile.am:
+        * tests/Makefile.am:
+        * tests/IOR_Endpoint_Hostnames/Makefile.am:
+        * tests/Bug_2084_Regression/Makefile.am:
+        * tests/FL_Cube/Makefile.am:
+        * tests/Portable_Interceptors/Bug_3080/Makefile.am:
+        * tests/Portable_Interceptors/Makefile.am:
+        * tests/Bug_2417_Regression/Makefile.am:
+        * tests/Bug_3000_Regression/Makefile.am:
+        * tests/POA/Adapter_Activator/Makefile.am:
+        * tests/POA/Explicit_Activation/Makefile.am:
+        * tests/POA/On_Demand_Activation/Makefile.am:
+        * tests/POA/Reference_Counted_Servant/Makefile.am:
+        * tests/POA/Makefile.am:
+        * tests/Optimized_Connection/Makefile.am:
+        * tests/Xt_Stopwatch/Makefile.am:
+        * tests/GIOP_Fragments/Java_Big_Request/Makefile.am:
+        * tests/GIOP_Fragments/Java_Big_Reply/Makefile.am:
+        * tests/IDL_Test/Makefile.am:
+        * tests/CodeSets/libs/Makefile.am:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
+        * tests/OBV/Forward/Makefile.am:
+        * tests/OBV/Truncatable/Makefile.am:
+        * tests/OBV/ValueBox/Makefile.am:
+        * tests/OBV/Collocated/Forward/Makefile.am:
+        * tests/Oneway_Timeouts/Makefile.am:
+        * tests/DSI_AMH/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/Makefile.am:
+        * examples/Simple/time-date/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool4/Makefile.am:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
+        * examples/RTScheduling/MIF_Scheduler/Makefile.am:
+        * examples/RTScheduling/Makefile.am:
+        * examples/mfc/Makefile.am:
+        * examples/AMI/FL_Callback/Makefile.am:
 
           Regenerated.
 
         * orbsvcs/tests/Bug_3216_Regression/Makefile.am:
-	* orbsvcs/tests/Security/ssliop_CSD/Makefile.am:
-	* orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/Makefile.am:
-	* orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_3215_Regression/Makefile.am:
-	* orbsvcs/tests/Notify/Bug_3252_Regression/Makefile.am:
-	* tao/ETCL/Makefile.am:
-	* utils/monitor/Makefile.am:
-	* tests/DII_AMI_Forward/Makefile.am:
-	* tests/Bug_3315_Regression/Makefile.am:
-	* tests/Bug_2935_Regression/Makefile.am:
-	* tests/Monitor/Marshal_Buffer/Makefile.am:
-	* tests/Monitor/Makefile.am:
-	* tests/Bug_3171_Regression/Makefile.am:
-	* tests/Bug_3108_Regression/Makefile.am:
-	* tests/Bug_2734_Regression/Makefile.am:
-	* tests/Oneway_Send_Timeouts/Makefile.am:
-	* tests/Bug_3311_Regression/Makefile.am:
-	* tests/Bug_3042_Regression/Makefile.am:
-	* tests/Bug_3163_Regression/Makefile.am:
-	* tests/Collocated_Forwarding/Makefile.am:
-	* tests/Portable_Interceptors/Bug_2133/Makefile.am:
-	* tests/Portable_Interceptors/Bug_3079/Makefile.am:
-	* tests/Bug_3276_Regression/Makefile.am:
-	* tests/CSD_Collocation/Makefile.am:
-	* tests/CodeSets/libs/UTF16_UCS2/Makefile.am:
-	* tests/Bug_3251_Regression/Makefile.am:
-	* tests/Bug_3198_Regression/Makefile.am:
-	* tests/Bug_3299_Regression/Makefile.am:
+        * orbsvcs/tests/Security/ssliop_CSD/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_3215_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Bug_3252_Regression/Makefile.am:
+        * tao/ETCL/Makefile.am:
+        * utils/monitor/Makefile.am:
+        * tests/DII_AMI_Forward/Makefile.am:
+        * tests/Bug_3315_Regression/Makefile.am:
+        * tests/Bug_2935_Regression/Makefile.am:
+        * tests/Monitor/Marshal_Buffer/Makefile.am:
+        * tests/Monitor/Makefile.am:
+        * tests/Bug_3171_Regression/Makefile.am:
+        * tests/Bug_3108_Regression/Makefile.am:
+        * tests/Bug_2734_Regression/Makefile.am:
+        * tests/Oneway_Send_Timeouts/Makefile.am:
+        * tests/Bug_3311_Regression/Makefile.am:
+        * tests/Bug_3042_Regression/Makefile.am:
+        * tests/Bug_3163_Regression/Makefile.am:
+        * tests/Collocated_Forwarding/Makefile.am:
+        * tests/Portable_Interceptors/Bug_2133/Makefile.am:
+        * tests/Portable_Interceptors/Bug_3079/Makefile.am:
+        * tests/Bug_3276_Regression/Makefile.am:
+        * tests/CSD_Collocation/Makefile.am:
+        * tests/CodeSets/libs/UTF16_UCS2/Makefile.am:
+        * tests/Bug_3251_Regression/Makefile.am:
+        * tests/Bug_3198_Regression/Makefile.am:
+        * tests/Bug_3299_Regression/Makefile.am:
 
           New Makefile.am's.
 
