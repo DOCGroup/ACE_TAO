@@ -1,3 +1,9 @@
+Wed May  7 14:28:54 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/ChangeLogEditor/FileLocatorFactory.pm:
+
+          Changed to detect Subversion before CVS.
+
 Wed May  7 14:12:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3319_Regression_Test.cpp:
