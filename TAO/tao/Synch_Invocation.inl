@@ -17,7 +17,9 @@ namespace TAO
   ACE_INLINE
   Reply_Guard::~Reply_Guard (void)
   {
-    this->invocation_->reply_received (this->status_);
+#if TAO_HAS_INTERCEPTORS == 1
+    this->invocation_->invoke_status (this->status_);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
   }
 
   ACE_INLINE void

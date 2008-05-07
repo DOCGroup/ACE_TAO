@@ -76,36 +76,46 @@ namespace TAO
                                   request,
                                   this->forwarded_to_.out ());
 
-            this->is_forwarded_ = request.is_forwarded ();
+            if (request.is_forwarded ())
+              {
+                this->reply_status_ = GIOP::LOCATION_FORWARD;
+              }
           }
         else
           {
+            bool is_forwarded = false;
+
             cpb->dispatch (this->effective_target (),
                            this->forwarded_to_.out (),
-                           this->is_forwarded_,
+                           is_forwarded,
                            this->details_.args (),
                            this->details_.args_num (),
                            this->details_.opname (),
                            this->details_.opname_len (),
                            strat);
+
+            if (is_forwarded)
+              {
+                this->reply_status_ = GIOP::LOCATION_FORWARD;
+              }
           }
 
         // Invocation completed succesfully
         s = TAO_INVOKE_SUCCESS;
 
 #if TAO_HAS_INTERCEPTORS == 1
-        if (this->is_forwarded_ ||
+        if (this->reply_status_ == GIOP::LOCATION_FORWARD ||
             this->response_expected_ == false)
           {
-            if (this->is_forwarded_)
-              this->reply_received (TAO_INVOKE_RESTART);
+            if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+              this->invoke_status (TAO_INVOKE_RESTART);
 
             s = this->receive_other_interception ();
           }
         // NOTE: Any other condition that needs handling?
         else if (this->response_expected ())
           {
-            this->reply_received (TAO_INVOKE_SUCCESS);
+            this->invoke_status (TAO_INVOKE_SUCCESS);
 
             s = this->receive_reply_interception ();
           }
@@ -175,7 +185,7 @@ namespace TAO
       }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-    if (this->is_forwarded_)
+    if (this->reply_status_ == GIOP::LOCATION_FORWARD)
       s =  TAO_INVOKE_RESTART;
 
     return s;

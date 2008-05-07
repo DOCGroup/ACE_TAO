@@ -1,3 +1,28 @@
+Wed May  7 09:06:56 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tao/Stub.cpp:
+
+          Fixed a memory leak in forward_profiles_perm_.
+
+        * tao/Invocation_Base.h:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/Synch_Invocation.inl:
+        * tao/Collocated_Invocation.cpp:
+        * tao/Synch_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Invocation_Base.inl:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Synch_Invocation.cpp:
+
+          Added reply_status to Invocation_Base and changed the code that need
+          to handle permanent locacation accordingly. Now in order to find out
+          whether the invocation is forwarded reply_status must be checked.
+          Also renamed reply_received to invoke_status in Invocation_Base.
+          This is for fix of bug 3277.
+
 Wed May  7 06:49:33 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Callback_Quoter/Notifier_i.h:
@@ -6,7 +31,7 @@ Wed May  7 06:49:33 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.cpp:
 
           Qualified equality operators with const to fix errors with Unbounded_Set.
-        
+
 Tue May  6 19:45:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp(visit_exist):

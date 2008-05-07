@@ -192,16 +192,13 @@ namespace TAO
     Invocation_Status const s = asynch.remote_invocation (max_wait_time);
 
     if (s == TAO_INVOKE_RESTART &&
-        asynch.is_forwarded ())
+        (asynch.reply_status () == GIOP::LOCATION_FORWARD ||
+         asynch.reply_status () == GIOP::LOCATION_FORWARD_PERM))
       {
-        effective_target = asynch.steal_forwarded_reference ();
-
-#if TAO_HAS_INTERCEPTORS == 1
         CORBA::Boolean const permanent_forward =
-          (asynch.pi_reply_status() == GIOP::LOCATION_FORWARD_PERM);
-#else
-        CORBA::Boolean const permanent_forward = false;
-#endif
+          (asynch.reply_status () == GIOP::LOCATION_FORWARD_PERM);
+
+        effective_target = asynch.steal_forwarded_reference ();
 
         this->object_forwarded (effective_target, r.stub (), permanent_forward);
       }

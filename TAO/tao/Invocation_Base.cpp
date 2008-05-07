@@ -41,8 +41,8 @@ namespace TAO
                                     bool TAO_INTERCEPTOR (request_is_remote))
     : details_ (details)
     , forwarded_to_ (0)
-    , is_forwarded_ (false)
     , response_expected_ (response_expected)
+    , reply_status_ (GIOP::NO_EXCEPTION)
     , otarget_ (ot)
     , target_ (t)
     , orb_core_ (stub->orb_core ())
@@ -59,15 +59,7 @@ namespace TAO
 
   Invocation_Base::~Invocation_Base (void)
   {
-#if TAO_HAS_INTERCEPTORS == 1
-    adapter_ = 0;
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
-  }
-
-  void
-  Invocation_Base::reply_received (Invocation_Status TAO_INTERCEPTOR (s))
-  {
-    TAO_INTERCEPTOR (invoke_status_ = s);
+    TAO_INTERCEPTOR (adapter_ = 0);
   }
 
   TAO_Service_Context &
@@ -105,7 +97,7 @@ namespace TAO
             throw;
           }
 
-        if (this->is_forwarded_)
+        if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           return TAO_INVOKE_RESTART;
       }
 
@@ -133,11 +125,7 @@ namespace TAO
             throw;
           }
 
-        PortableInterceptor::ReplyStatus const status =
-          this->adapter_->pi_reply_status (*this);
-
-        if (status == PortableInterceptor::LOCATION_FORWARD ||
-            status == PortableInterceptor::TRANSPORT_RETRY)
+        if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           return TAO_INVOKE_RESTART;
       }
 
@@ -164,7 +152,7 @@ namespace TAO
             throw;
           }
 
-        if (this->is_forwarded_)
+        if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           return TAO_INVOKE_RESTART;
       }
 
@@ -183,7 +171,7 @@ namespace TAO
       {
         this->adapter_->receive_exception (*this);
 
-        if (this->is_forwarded_)
+        if (this->reply_status_ == GIOP::LOCATION_FORWARD)
           {
             status = PortableInterceptor::LOCATION_FORWARD;
           }
@@ -223,7 +211,7 @@ namespace TAO
       this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
 
     this->forwarded_to_ = CORBA::Object::_nil ();
-    this->is_forwarded_ = false;
+    this->reply_status_ = GIOP::NO_EXCEPTION;
     this->caught_exception_ = exception;
   }
 

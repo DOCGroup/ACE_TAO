@@ -90,6 +90,9 @@ TAO_Stub::~TAO_Stub (void)
   if (this->forward_profiles_)
     reset_profiles ();
 
+  // reset_profiles doesn't delete forward_profiles_perm_.
+  delete this->forward_profiles_perm_;
+
   if (this->profile_in_use_ != 0)
     {
       // decrease reference count on profile
@@ -124,6 +127,9 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
 
   if (permanent_forward)
     {
+      // If forward_profiles_perm_ is not 0 then delete it.
+      delete this->forward_profiles_perm_;
+
       // paranoid, reset the bookmark, then clear the forward-stack
       this->forward_profiles_perm_ = 0;
 
