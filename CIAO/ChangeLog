@@ -1,3 +1,10 @@
+Wed May  7 06:53:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/Deployment_common.h:
+         
+          Qualified equality operator with const to fix error with
+          Unbounded_Set.
+
 Thu May  1 00:48:38 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * CIAO_TAO.mwc:
