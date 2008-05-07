@@ -38,7 +38,7 @@ namespace CIAO
 
     Deployment::Connections_var providedReference_;
 
-    bool operator==(const struct _component_binding & comp)
+    bool operator==(const struct _component_binding & comp) const
     {
       if (this->name_ == comp.name_ &&
           this->plan_uuid_ == comp.plan_uuid_ &&
