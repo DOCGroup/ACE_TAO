@@ -51,7 +51,7 @@ public:
 
   virtual int fini (void);
 
-  /// separate dispatching orb Init
+  /// separate dispatching orb init
   virtual void init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb);
 
   /// Finalize the service.
@@ -80,7 +80,7 @@ private:
   /// Create the Builder for Notify objects.
   virtual TAO_Notify_Builder* create_builder (void);
 
-  /// Set thread options on <qos>.
+  /// Set thread options on @a qos.
   void set_threads (CosNotification::QoSProperties &qos, int threads);
 
   TAO_Notify_Factory& factory();
