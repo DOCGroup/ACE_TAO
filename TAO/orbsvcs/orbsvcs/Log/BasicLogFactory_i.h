@@ -77,8 +77,7 @@ public:
                     CORBA::ULongLong max_size);
 
 protected:
-  virtual CORBA::RepositoryId
-    create_repositoryid ();
+  virtual CORBA::RepositoryId create_repositoryid ();
 
   virtual PortableServer::ServantBase*
     create_log_servant (DsLogAdmin::LogId id);

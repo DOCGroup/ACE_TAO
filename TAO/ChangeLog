@@ -1,7 +1,23 @@
+Wed May  7 18:44:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+          Layout issues
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+          Doxygen change
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.h:
+          Doxygen changes
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+          Close the notify singleton when the service is closed
+
 Wed May  7 14:24:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp(scheduled):
-        
+
           Replaced use of native type timeval with ACE_Time_Value,
           to eliminate Windows warnings.
 
