@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project : tao_etcl_parser {
+project : tao_etcl, etcl_parser {
   tagchecks += Notify
 }
