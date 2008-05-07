@@ -958,48 +958,49 @@ TAO_Log_i::scheduled (void)
     this->recordstore_->get_interval ();
 
   TimeBase::TimeT current_time;
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ORBSVCS_Time::Time_Value_to_TimeT (current_time, now);
+  ACE_Time_Value tv = ACE_OS::gettimeofday ();
+  ORBSVCS_Time::Time_Value_to_TimeT (current_time, tv);
 
-  if ((current_time >= interval.start) &&
-          ((current_time <= interval.stop) || (interval.stop == 0)) )
-  {
-    if (weekly_intervals_.length () > 0)
+  if (current_time >= interval.start
+      && (current_time <= interval.stop || interval.stop == 0))
     {
-      // work out when sunday is in nanoseconds.
-      timeval t;
-      t = (timeval) now;
-      struct tm *sunday;
-
-      time_t clock = (time_t) t.tv_sec;
-      sunday = ACE_OS::localtime (&clock);
-
-      sunday->tm_sec = 0;
-      sunday->tm_min = 0;
-      sunday->tm_hour = 0;
-      sunday->tm_mday -= sunday->tm_wday;
-
-      t.tv_sec = ACE_OS::mktime (sunday) ;
-      t.tv_usec = 0;
-
-      TimeBase::TimeT nano_sunday =
-        (CORBA::ULongLong) t.tv_sec * 10000000;
-
-      for (CORBA::ULong i = 0; i < weekly_intervals_.length (); ++i)
+      if (weekly_intervals_.length () > 0)
         {
-          if (current_time >= (weekly_intervals_[i].start + nano_sunday) &&
-              current_time <= (weekly_intervals_[i].stop + nano_sunday))
+          // Work out when sunday is in nanoseconds.
+          time_t clock = tv.sec ();
+          struct tm *sunday = ACE_OS::localtime (&clock);
+
+          sunday->tm_sec = 0;
+          sunday->tm_min = 0;
+          sunday->tm_hour = 0;
+          sunday->tm_mday -= sunday->tm_wday;
+
+          tv.sec (ACE_OS::mktime (sunday));
+          tv.usec (0);
+
+          TimeBase::TimeT nano_sunday =
+            (CORBA::ULongLong) tv.sec () * 10000000;
+
+          for (CORBA::ULong i = 0; i < weekly_intervals_.length (); ++i)
             {
-              return true;
+              if (current_time >= (weekly_intervals_[i].start + nano_sunday)
+                  && current_time <= (weekly_intervals_[i].stop + nano_sunday))
+                {
+                  return true;
+                }
             }
+            
+          return false;
         }
+      else
+        {
+          return true;
+        }
+    }
+  else
+    {
       return false;
     }
-    else
-      return true;
-  }
-  else
-    return false;
 }
 
 void
