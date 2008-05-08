@@ -1,11 +1,19 @@
+Thu May  8 07:38:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3321_Regression/*:
+          New regression test for bugzilla 3321
+
+        * tests/Bug_3315_Regression/main.cpp:
+          Improved result handling
+
 Wed May  7 19:33:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
-        
+
           Changes of method signatures back to using
           TAO_ETCL_Literal_Constraint that were overlooked in
-          
+
           Wed May  7 19:16:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed May  7 19:16:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -37,7 +45,7 @@ Wed May  7 19:16:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
           - Reverted a change to the Notify and Log constraint
             visitors that made their internal literal constraint
             queue be of type ETCL_Literal_Constraint. Changed
-            the type of queue element back to 
+            the type of queue element back to
             TAO_ETCL_Literal_Constraint.
 
           - Removed all constraint classes from TAO_ETCL except
