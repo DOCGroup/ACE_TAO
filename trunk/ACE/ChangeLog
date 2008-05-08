@@ -1,3 +1,10 @@
+Thu May  8 23:03:15 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/config/ace_zlib.mpb:
+
+          ACE-specific zlib base project that overrides library settings
+          in MPC's own zlib base project for the automake build.
+
 Thu May  8 22:13:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
