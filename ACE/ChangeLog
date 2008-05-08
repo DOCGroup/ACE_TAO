@@ -1,3 +1,8 @@
+Fri May  2 17:45:13 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/ACE-guidelines.html: Updated the style guide to discuss the
+          use of '_' vs intercaps.
+
 Thu May  8 10:51:29 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_sunos5_g++.GNU: Ensure -pipe is not
@@ -267,6 +272,7 @@ Fri May  2 17:50:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/config-vxworks6.4.h:
           Only define _C99 when it is not defined yet
 
+>>>>>>> .r81617
 Fri May  2 17:20:37 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Message_Queue_Test.cpp: Removed the delay sleep between loop

@@ -145,6 +145,32 @@ bgcolor="#ffffff">
 
   </ul>
 
+  <li><strong>Coding Style</strong><p>
+  <ul>
+  <LI> When writing ACE, TAO, and CIAO class and method names make sure to use underscores ('_') to separate the parts of a name rather than intercaps.  For example, use
+
+        <pre>
+        class ACE_Monitor_Control
+        {
+        public:
+          int read_monitor (void);
+          // ...
+        };
+        </PRE>
+
+rather than
+
+        <pre>
+        class ACEMonitorControl
+        {
+        public:
+          int readMonitor (void);
+          // ...
+        };
+        </PRE>
+
+  </UL>
+
   <li><strong>Code Documentation</strong><p>
   <ul>
     <li>Use comments and whitespace (:-) liberally.  Comments
