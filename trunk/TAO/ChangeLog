@@ -1,3 +1,9 @@
+Thu May  8 22:51:38 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Fix missing \ in ZlibCompressor project.
+
 Thu May  8 07:38:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3321_Regression/*:
