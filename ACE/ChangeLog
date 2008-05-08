@@ -1,3 +1,10 @@
+Thu May  8 10:51:29 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_sunos5_g++.GNU: Ensure -pipe is not
+          inserted into CCFLAGS twice. Similar to earlier change from
+          Wed Jan 23 17:23:31 UTC 2008  Steve Huston  <shuston@riverace.com>
+          Fixes Bugzilla #3232.
+
 Thu May  8 08:06:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ETCL/ETCL_l.cpp:
