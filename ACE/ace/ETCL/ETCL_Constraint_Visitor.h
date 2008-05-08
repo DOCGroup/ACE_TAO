@@ -21,14 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/// Forward declaration so we can use an Any* in the signature
-/// of a virtual method that takes the place of direct calls to
-/// the constructor taking an Any.
-namespace CORBA
-{
-  class Any;
-}
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ETCL_Literal_Constraint;
@@ -69,9 +61,6 @@ public:
   virtual int visit_unary_expr (ETCL_Unary_Expr *);
   virtual int visit_binary_expr (ETCL_Binary_Expr *);
   virtual int visit_preference (ETCL_Preference *);
-  
-  /// A no-op except in derived visitors.
-  virtual ETCL_Literal_Constraint *create_literal_with_any (CORBA::Any *any);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
