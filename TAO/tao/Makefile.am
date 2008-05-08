@@ -6410,7 +6410,7 @@ libTAO_ZlibCompressor_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  $(ACE_ZLIB_CPPFLAGS)
+  $(ACE_ZLIB_CPPFLAGS) \
   -DTAO_ZLIBCOMPRESSOR_BUILD_DLL
 
 libTAO_ZlibCompressor_la_SOURCES = \
