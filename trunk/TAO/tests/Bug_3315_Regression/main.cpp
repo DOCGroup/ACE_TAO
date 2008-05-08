@@ -5,6 +5,8 @@
 #include "ace/Thread.h"
 #include "ace/os_include/os_pthread.h"
 
+int result = 0;
+
 ACE_THR_FUNC_RETURN main_orb(void*)
 {
   try
@@ -16,7 +18,8 @@ ACE_THR_FUNC_RETURN main_orb(void*)
   }
   catch(...)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unknown error\n"), 0);
+    result = 1
+    ACE_ERROR ((LM_ERROR, " (%P|%t) Unknown error\n"));
   }
 
   return 0;
@@ -32,5 +35,5 @@ int ACE_TMAIN(int, ACE_TCHAR*[])
 #endif
   ACE_Thread::join( thread1);
 
-  return 0;
+  return result;
 }
