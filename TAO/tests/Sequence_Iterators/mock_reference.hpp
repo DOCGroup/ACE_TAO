@@ -12,8 +12,6 @@
  */
 #include "ace/config-all.h"
 
-#include "testing_counters.hpp"
-
 #include "tao/Basic_Types.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -56,13 +54,8 @@ public:
   static mock_reference * allocate(int id);
   static mock_reference * _nil();
 
-  static call_counter duplicate_calls;
   static mock_reference * _duplicate(mock_reference * rhs);
-  static call_counter release_calls;
   static void _tao_release(mock_reference * rhs);
-  static call_counter serialize_calls;
-  static call_counter deserialize_calls;
-  static call_counter marshal_calls;
 
   inline bool operator==(mock_reference const & rhs) const
   {

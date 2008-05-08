@@ -9,12 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-call_counter mock_reference::duplicate_calls;
-call_counter mock_reference::release_calls;
-call_counter mock_reference::serialize_calls;
-call_counter mock_reference::deserialize_calls;
-call_counter mock_reference::marshal_calls;
-
 mock_reference::
 ~mock_reference()
 {
@@ -35,7 +29,6 @@ _nil()
 mock_reference * mock_reference::
 _duplicate(mock_reference * rhs)
 {
-  duplicate_calls();
   if (rhs == 0)
   {
     return 0;
@@ -46,7 +39,6 @@ _duplicate(mock_reference * rhs)
 void mock_reference::
 _tao_release(mock_reference * rhs)
 {
-  release_calls();
   delete rhs;
 }
 
@@ -83,18 +75,15 @@ TAO::Objref_Traits<mock_reference>::marshal (
     TAO_OutputCDR &
   )
 {
-  mock_reference::marshal_calls ();
   return true;
 }
 
 CORBA::Boolean operator<< (TAO_OutputCDR &, const mock_reference *)
 {
-  mock_reference::serialize_calls ();
   return true;
 }
 CORBA::Boolean operator>> (TAO_InputCDR &, mock_reference *&)
 {
-  mock_reference::deserialize_calls ();
   return true;
 }
 
