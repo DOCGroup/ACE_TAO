@@ -11,7 +11,6 @@
  *  implementation of the Active Object pattern, which is available
  *  at <http://www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.
  *
- *
  *  @author Johnny Tucker <johnny_tucker@yahoo.com>
  */
 //=============================================================================
