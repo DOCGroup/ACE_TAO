@@ -1,3 +1,9 @@
+Thu May  8 08:06:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ETCL/ETCL_l.cpp:
+        * ace/ETCL/ETCL_y.cpp:
+          Fixed casing of include
+
 Wed May  7 19:28:35 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Unbounded_Set.{h inl}: Replaced typedef BASE with base_type.
