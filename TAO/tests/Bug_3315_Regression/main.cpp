@@ -18,8 +18,8 @@ ACE_THR_FUNC_RETURN main_orb(void*)
   }
   catch(...)
   {
-    result = 1
-    ACE_ERROR ((LM_ERROR, " (%P|%t) Unknown error\n"));
+    result = 1;
+    ACE_ERROR ((LM_ERROR, ACE_TEXT("(%P|%t) Unknown error\n")));
   }
 
   return 0;
