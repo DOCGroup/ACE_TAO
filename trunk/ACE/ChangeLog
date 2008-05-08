@@ -1,8 +1,24 @@
+Thu May  8 22:07:40 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/ETCL/Makefile.am:
+
+          Regenerated.
+
+        * ace/ETCL/ACE_ETCL.pc.in:
+        * ace/ETCL/ETCL_Parser.pc.in:
+
+          New pkg-config template files.
+
+        * ace/ETCL/ETCL.mpc:
+
+          Add Pkgconfig_Files sections for ACE_ETCL and ETCL_Parser
+          projects.
+
 Thu May  8 21:06:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/ETCL/ETCL_Constraint_Visitor.h:
         * ace/ETCL/ETCL_Constraint_Visitor.cpp:
-        
+
           Removed a no-op method mean to be overridden
           in derived visitors, but then abandoned.
 
@@ -280,7 +296,6 @@ Fri May  2 17:50:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/config-vxworks6.4.h:
           Only define _C99 when it is not defined yet
 
->>>>>>> .r81617
 Fri May  2 17:20:37 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Message_Queue_Test.cpp: Removed the delay sleep between loop

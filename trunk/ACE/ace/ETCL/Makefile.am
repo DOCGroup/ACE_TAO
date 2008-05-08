@@ -9,6 +9,7 @@
 ## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
 
 includedir = @includedir@/ace/ETCL
+pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -38,34 +39,57 @@ nobase_include_HEADERS = \
   ETCL_Constraint_Visitor.h \
   ace_etcl_export.h
 
-## Makefile.ACE_ETCL_Parser.am
+pkgconfig_DATA = \
+  ACE_ETCL.pc
 
-lib_LTLIBRARIES += libACE_ETCL_Parser.la
+CLEANFILES = \
+  ACE_ETCL.pc
 
-libACE_ETCL_Parser_la_CPPFLAGS = \
+ACE_ETCL.pc: ${top_builddir}/config.status ${srcdir}/ACE_ETCL.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_ETCL.pc.in
+
+EXTRA_DIST = \
+  ACE_ETCL.pc.in
+
+
+## Makefile.ETCL_Parser.am
+
+lib_LTLIBRARIES += libETCL_Parser.la
+
+libETCL_Parser_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(srcdir)/ETCL_include \
-  -DACE_ETCL_PARSER_BUILD_DLL
+  -DETCL_PARSER_BUILD_DLL
 
-libACE_ETCL_Parser_la_SOURCES = \
+libETCL_Parser_la_SOURCES = \
   ETCL_Interpreter.cpp \
   ETCL_l.cpp \
   ETCL_y.cpp
 
-libACE_ETCL_Parser_la_LDFLAGS = \
+libETCL_Parser_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@
 
-libACE_ETCL_Parser_la_LIBADD = \
+libETCL_Parser_la_LIBADD = \
   libACE_ETCL.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
   ETCL_Interpreter.h \
-  ETCL_include/ETCL_include.h \
-  ETCL_include/ETCL_macros.h \
-  ETCL_include/etcl_parser_export.h \
-  ETCL_y.h
+  ETCL_y.h \
+  etcl_parser_export.h
+
+pkgconfig_DATA += \
+  ETCL_Parser.pc
+
+CLEANFILES += \
+  ETCL_Parser.pc
+
+ETCL_Parser.pc: ${top_builddir}/config.status ${srcdir}/ETCL_Parser.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ETCL_Parser.pc.in
+
+EXTRA_DIST += \
+  ETCL_Parser.pc.in
+
 
 ## Clean up template repositories, etc.
 clean-local:

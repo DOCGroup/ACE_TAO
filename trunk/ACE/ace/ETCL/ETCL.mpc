@@ -22,6 +22,10 @@ project(ACE_ETCL) : acelib, install, ace_output {
 
   Template_Files {
   }
+
+  Pkgconfig_Files {
+    ACE_ETCL.pc.in
+  }
 }
 
 project(ETCL_Parser) : acelib, ace_etcl, install, ace_output {
@@ -41,5 +45,12 @@ project(ETCL_Parser) : acelib, ace_etcl, install, ace_output {
   }
   
   Inline_Files {
+  }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    ETCL_Parser.pc.in
   }
 }
