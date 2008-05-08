@@ -19,7 +19,7 @@
 
 #include "ace/OS.h"
 
-#include "ace/ETCL/ETCL_constraint.h"
+#include "ace/ETCL/ETCL_Constraint.h"
 
 #ifdef __cplusplus
 

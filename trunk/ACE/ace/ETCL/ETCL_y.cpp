@@ -67,7 +67,7 @@
 // ========================================================================
 
 #include "ace/ETCL/ETCL_y.h"
-#include "ace/ETCL/ETCL_constraint.h"
+#include "ace/ETCL/ETCL_Constraint.h"
 #include "ace/ETCL/ETCL_Interpreter.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
