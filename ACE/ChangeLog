@@ -28,7 +28,7 @@ Fri May  9 14:17:11 UTC 2008  William R. Otte  <wotte@william-r-ottes-macbook-pr
 
           Support for ICC on Intel Macs.
 
-Fri May  9 12:04:15 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+Fri May  9 12:04:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-all.h:
           Added ACE_HAS_MONITOR_POINTS which currently is set to 0. We will
