@@ -1,3 +1,9 @@
+Fri May  9 10:40:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Internal.cpp:
+          Don't try to load the Codeset lib when it is not available
+          with VxWorks shared lib kernel mode
+
 Thu May  8 22:51:38 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:

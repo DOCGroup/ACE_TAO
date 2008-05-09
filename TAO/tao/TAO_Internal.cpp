@@ -519,7 +519,7 @@ namespace
 
         if (factory == 0 || factory->is_default ())
           {
-#if !defined (TAO_AS_STATIC_LIBS)
+#if !defined (TAO_AS_STATIC_LIBS) && !(defined (ACE_VXWORKS) && !defined (__RTP__))
             // only for dynamic libs, check to see if default factory
             // and if so, remove it
             ACE_Service_Config::process_directive (
