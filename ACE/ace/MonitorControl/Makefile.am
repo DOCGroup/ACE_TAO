@@ -23,7 +23,6 @@ lib_LTLIBRARIES = libACE_MonitorControl.la
 libACE_MonitorControl_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(ACE_ROOT)/ace/ETCL/ETCL_include \
   -DMONITORCONTROL_BUILD_DLL
 
 libACE_MonitorControl_la_SOURCES = \

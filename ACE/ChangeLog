@@ -1,7 +1,21 @@
+Fri May  9 17:55:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * examples/Monitor/Bytes_Sent/Makefile.am:
+        * examples/Monitor/Message_Queue_Size/Makefile.am:
+        * examples/Monitor/Constraint/Makefile.am:
+        * examples/Monitor/CPU_Load/Makefile.am:
+        * examples/Monitor/Num_Threads/Makefile.am:
+        * examples/Monitor/Group/Makefile.am:
+        * examples/Monitor/Memory_Usage/Makefile.am:
+        * ace/ETCL/Makefile.am:
+        * ace/MonitorControl/Makefile.am:
+
+          Regenerated.
+
 Fri May  9 14:17:11 UTC 2008  William R. Otte  <wotte@william-r-ottes-macbook-pro.local>
 
         * include/makeinclude/platform_macosx_icc.GNU:
-        
+
           Support for ICC on Intel Macs.
 
 Fri May  9 12:04:15 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>

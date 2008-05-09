@@ -20,8 +20,7 @@ noinst_PROGRAMS = num_threads
 
 num_threads_CPPFLAGS = \
   -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(ACE_ROOT)/ace/ETCL/ETCL_include
+  -I$(ACE_BUILDDIR)
 
 num_threads_SOURCES = \
   num_threads.cpp
