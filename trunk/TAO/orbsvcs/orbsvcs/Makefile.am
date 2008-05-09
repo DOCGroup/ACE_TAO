@@ -2125,8 +2125,6 @@ libTAO_CosNotification_Serv_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_NOTIFY_SERV_BUILD_DLL
 
@@ -2218,7 +2216,7 @@ libTAO_CosNotification_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_CosNotification_Serv_la_LIBADD = \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -2395,8 +2393,6 @@ libTAO_CosNotification_MC_Ext_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_NOTIFY_MC_EXT_BUILD_DLL
 
@@ -2420,7 +2416,7 @@ libTAO_CosNotification_MC_Ext_la_LIBADD = \
   libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   libTAO_CosNotification_Skel.la \
@@ -2453,6 +2449,7 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_ACEXML
 if BUILD_EXCEPTIONS
+if BUILD_ZLIB
 if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES += libTAO_CosNotification_Persist.la
@@ -2464,19 +2461,11 @@ libTAO_CosNotification_Persist_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(ACE_ROOT)/ACEXML/common \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
-  -DTAO_NOTIFY_PERSIST_BUILD_DLL
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_CosNotification_Persist_la_CPPFLAGS += \
   $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
+  $(ACE_ZLIB_CPPFLAGS) \
+  -DTAO_NOTIFY_PERSIST_BUILD_DLL
 
 libTAO_CosNotification_Persist_la_SOURCES = \
   Notify/XML_Loader.cpp \
@@ -2484,15 +2473,7 @@ libTAO_CosNotification_Persist_la_SOURCES = \
   Notify/XML_Topology_Factory.cpp
 
 libTAO_CosNotification_Persist_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ 
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_CosNotification_Persist_la_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_ZZIP_LDFLAGS) $(ACE_ZLIB_LDFLAGS)
 
 libTAO_CosNotification_Persist_la_LIBADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
@@ -2500,7 +2481,7 @@ libTAO_CosNotification_Persist_la_LIBADD = \
   libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   libTAO_CosNotification_Skel.la \
@@ -2511,15 +2492,9 @@ libTAO_CosNotification_Persist_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_CosNotification_Persist_la_LIBADD += \
+  $(ACE_BUILDDIR)/ace/libACE.la \
   $(ACE_ZZIP_LIBS) \
   $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 nobase_include_HEADERS += \
   Notify/XML_Loader.h \
@@ -2528,6 +2503,7 @@ nobase_include_HEADERS += \
   Notify/notify_persist_export.h
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_ZLIB
 endif BUILD_EXCEPTIONS
 endif BUILD_ACEXML
 
@@ -3142,8 +3118,6 @@ libTAO_DsLogAdmin_Serv_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -DTAO_LOG_SERV_BUILD_DLL
 
 libTAO_DsLogAdmin_Serv_la_SOURCES = \
@@ -3172,7 +3146,7 @@ libTAO_DsLogAdmin_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -3287,8 +3261,6 @@ libTAO_DsEventLogAdmin_Serv_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_EVENTLOG_SERV_BUILD_DLL
 
@@ -3312,7 +3284,7 @@ libTAO_DsEventLogAdmin_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -3505,8 +3477,6 @@ libTAO_DsNotifyLogAdmin_Serv_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_NOTIFYLOG_SERV_BUILD_DLL
 
@@ -3525,7 +3495,7 @@ libTAO_DsNotifyLogAdmin_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -5385,8 +5355,6 @@ libTAO_RTEventLogAdmin_Serv_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -DTAO_RTEVENTLOG_SERV_BUILD_DLL
 
 libTAO_RTEventLogAdmin_Serv_la_SOURCES = \
@@ -5404,7 +5372,7 @@ libTAO_RTEventLogAdmin_Serv_la_LIBADD = \
   libTAO_RTEvent_Serv.la \
   libTAO_DsLogAdmin_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -5585,8 +5553,6 @@ libTAO_RT_Notification_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_RT_NOTIFY_BUILD_DLL
 
@@ -5605,7 +5571,7 @@ libTAO_RT_Notification_la_LIBADD = \
   libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   libTAO_CosNotification_Skel.la \

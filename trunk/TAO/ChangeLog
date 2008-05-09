@@ -1,3 +1,67 @@
+Fri May  9 18:26:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	* orbsvcs/Notify_Service/Makefile.am:
+	* orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile.am:
+	* orbsvcs/tests/Log/Basic_Log_Test/Makefile.am:
+	* orbsvcs/tests/Bug_2926_Regression/Makefile.am:
+	* orbsvcs/tests/Notify/Basic/Makefile.am:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile.am:
+	* orbsvcs/tests/Notify/Test_Filter/Makefile.am:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
+	* orbsvcs/tests/Notify/Bug_3252_Regression/Makefile.am:
+	* orbsvcs/tests/Notify/Blocking/Makefile.am:
+	* orbsvcs/tests/Notify/Destroy/Makefile.am:
+	* orbsvcs/tests/Notify/Bug_2561_Regression/Makefile.am:
+	* orbsvcs/tests/Notify/Driver/Makefile.am:
+	* orbsvcs/tests/Notify/MT_Dispatching/Makefile.am:
+	* orbsvcs/tests/Notify/Bug_1385_Regression/Makefile.am:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
+	* orbsvcs/tests/Notify/PluggableTopology/Makefile.am:
+	* orbsvcs/tests/Notify/Persistent_POA/Makefile.am:
+	* orbsvcs/tests/Notify/MC/Makefile.am:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.am:
+	* orbsvcs/tests/Notify/XML_Persistence/Makefile.am:
+	* orbsvcs/tests/Notify/lib/Makefile.am:
+	* orbsvcs/tests/Notify/Discarding/Makefile.am:
+	* orbsvcs/tests/Notify/Ordering/Makefile.am:
+	* orbsvcs/tests/Notify/Structured_Filter/Makefile.am:
+	* orbsvcs/tests/Notify/RT_lib/Makefile.am:
+	* orbsvcs/tests/Notify/Reconnecting/Makefile.am:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+	* orbsvcs/Fault_Notifier/Makefile.am:
+	* orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile.am:
+	* orbsvcs/examples/Notify/Federation/Agent/Makefile.am:
+	* orbsvcs/examples/Notify/ThreadPool/Makefile.am:
+	* orbsvcs/examples/Notify/Lanes/Makefile.am:
+	* tao/ETCL/Makefile.am:
+	* tao/Makefile.am:
+	* utils/monitor/Makefile.am:
+	* tests/Monitor/Marshal_Buffer/Makefile.am:
+	* tests/Makefile.am:
+	* tests/Compression/Makefile.am:
+
+          Regenerated.
+
+	* configure.ac:
+
+          build new directory.
+
+        * tests/Bug_3321_Regression/Makefile.am:
+
+          New Makefile.am.
+
+	* tao/ZlibCompressor.mpc:
+	* MPC/config/zlibcompressor.mpb:
+
+          Changed to derive from MPC's own zlib base project to ace_zlib
+          base project to get settings overriden for the automake build.
+
 Fri May  9 18:13:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/PI.h:

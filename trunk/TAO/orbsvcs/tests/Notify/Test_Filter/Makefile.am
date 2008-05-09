@@ -28,8 +28,6 @@ libTAO_RT_NotifyTests_Filter_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_RT_Test_Filter_BUILD_DLL
 
