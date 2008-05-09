@@ -1,3 +1,13 @@
+Fri May  9 17:58:21 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Revert changes of:
+          Thu May  8 22:13:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+          Now that ETCL Parser library has been renamed back to
+          ACE_ETCL_Parser.
+
 Fri May  9 17:55:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * examples/Monitor/Bytes_Sent/Makefile.am:
