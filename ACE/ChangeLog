@@ -1,3 +1,22 @@
+Fri May  9 12:04:15 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-all.h:
+          Added ACE_HAS_MONITOR_POINTS which currently is set to 0. We will
+          enable this in a few builds to test them in detail. This way the
+          user can decide to enable the monitor framework but not get the
+          ACE builtin monitor points
+
+        * ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.inl:
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_T.h:
+          Added monitor points
+
+        * ace/Codeset_IBM1047.cpp:
+          Removed code to silence the hp compiler, this is not needed in other
+          files
+
 Fri May  9 11:44:59 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ace_etcl_parser.mpb:
@@ -6,9 +25,9 @@ Fri May  9 11:44:59 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
           above, for consistency in the names of ACE-related
           files. Also changed the corresponding library name
           to ACE_ETCL_Parser.
-          
+
         * ace/ETCL/ACE_ETCL_Parser.pc.in:
-        
+
           Changed the name of ETCL_Parser.pc.in likewise.
           Also changed the contents of this file accordingly.
 
