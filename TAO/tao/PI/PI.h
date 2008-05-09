@@ -37,7 +37,7 @@ public:
   static int Initializer (void);
 };
 
-#if defined (TAO_AS_STATIC_LIBS)
+#if defined (TAO_AS_STATIC_LIBS) || (defined (ACE_VXWORKS) && !defined (__RTP__))
 // only do this for static builds, it causes a circular
 // dependency for dynamic builds.
 static int

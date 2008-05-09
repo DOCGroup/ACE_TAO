@@ -1,7 +1,13 @@
+Fri May  9 18:13:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PI.h:
+          Also enable the static initializer in vxworks kernel mode
+          with shared libs
+
 Fri May  9 13:36:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
-        
+
           Fixed name of included ACE size monitor file.
 
 Fri May  9 12:55:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
