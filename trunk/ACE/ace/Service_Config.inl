@@ -16,11 +16,18 @@ ACE_Service_Config::open (const ACE_TCHAR program_name[],
                           bool ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Config::open");
-  return ACE_Service_Config::current()->open (program_name,
-                                              logger_key,
-                                              ignore_static_svcs,
-                                              ignore_default_svc_conf,
-                                              ignore_debug_flag);
+  if (singleton()->open_i (program_name,
+                           logger_key,
+                           ignore_static_svcs,
+                           ignore_default_svc_conf,
+                           ignore_debug_flag) == -1)
+    return -1;
+
+  return current()->open (program_name,
+                          logger_key,
+                          ignore_static_svcs,
+                          ignore_default_svc_conf,
+                          ignore_debug_flag);
 }
 
 
@@ -33,12 +40,19 @@ ACE_Service_Config::open (int argc,
                           bool ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Config::open");
-  return ACE_Service_Config::current()->open (argc,
-                                              argv,
-                                              logger_key,
-                                              ignore_static_svcs,
-                                              ignore_default_svc_conf,
-                                              ignore_debug_flag);
+  if (singleton()->open_i (argv[0],
+                           logger_key,
+                           ignore_static_svcs,
+                           ignore_default_svc_conf,
+                           ignore_debug_flag) == -1)
+    return -1;
+
+  return current()->open (argc,
+                          argv,
+                          logger_key,
+                          ignore_static_svcs,
+                          ignore_default_svc_conf,
+                          ignore_debug_flag);
 }
 
 // Handle the command-line options intended for the

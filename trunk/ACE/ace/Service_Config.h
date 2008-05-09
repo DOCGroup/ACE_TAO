@@ -596,6 +596,14 @@ protected:
 
 private:
 
+  /// Have we called ACE_Service_Config::open() yet?
+  bool is_opened_;
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  /// Synchronization variable for open, etc.
+  mutable ACE_SYNCH_MUTEX lock_;
+#endif /* ACE_MT_SAFE */
+
   /// True if reconfiguration occurred.
   static sig_atomic_t reconfig_occurred_;
 

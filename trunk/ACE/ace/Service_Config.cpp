@@ -153,9 +153,8 @@ ACE_TCHAR *ACE_Service_Config::pid_file_name_ = 0;
 /// Shall we become a daemon process?
 bool ACE_Service_Config::be_a_daemon_ = false;
 
-// Number of the signal used to trigger reconfiguration.
+/// Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
-
 
 void
 ACE_Service_Config::dump (void) const
@@ -236,40 +235,31 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
 int
 ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
                             const ACE_TCHAR *logger_key,
-                            bool ignore_static_svcs,
-                            bool ignore_default_svc_conf_file,
-                            bool ignore_debug_flag)
+                            bool ,
+                            bool ,
+                            bool )
 {
-  int result = 0;
   ACE_TRACE ("ACE_Service_Config::open_i");
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
+
   ACE_Log_Msg *log_msg = ACE_LOG_MSG;
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SC::open_i - this=%@, opened=%d, ")
-                ACE_TEXT ("loadstatics=%d\n"),
-                this, instance_->is_opened_, instance_->no_static_svcs_));
+                ACE_TEXT ("ACE (%P|%t) SC::open_i - this=%@, opened=%d\n"),
+                this, this->is_opened_));
 
-  // Guard against reentrant processing. For example,
-  // if the singleton gestalt (ubergestalt) was already open,
-  // do not open it again...
-  // The base class open_i increments this and we are
-  // forwarding to it, so we don't have to increment here.
-  if (instance_->is_opened_ != 0)
-    return instance_->open_i (program_name,
-                              logger_key,
-                              ignore_static_svcs,
-                              ignore_default_svc_conf_file,
-                              ignore_debug_flag);
+  // Guard against reentrant processing.
+  if (this->is_opened_)
+    return 0;
+
+  this->is_opened_ = true;
 
   // Check for things we need to do on a per-process basis and which
   // may not be safe, or wise to do an a per instance basis
 
-  // Override any defaults, if required
-  instance_->no_static_svcs_ = ignore_static_svcs;
-
   // Become a daemon before doing anything else.
-  if (this->be_a_daemon_)
+  if (ACE_Service_Config::be_a_daemon_)
     ACE::daemonize ();
 
   // Write process id to file.
@@ -299,54 +289,45 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     // Only use the static <logger_key_> if the caller doesn't
     // override it in the parameter list or if the key supplied is
     // equal to the default static logger key.
-    key = instance_->logger_key_;
+    key = ACE_Service_Config::current()->logger_key_;
   else
     ACE_SET_BITS (flags, ACE_Log_Msg::LOGGER);
 
   if (log_msg->open (program_name,
                      flags,
                      key) == -1)
-    result = -1;
-  else
-    {
-      if (ACE::debug ())
-        ACE_DEBUG ((LM_STARTUP,
-                    ACE_TEXT ("starting up daemon %n\n")));
-
-      // Initialize the Service Repository (this will still work if
-      // user forgets to define an object of type ACE_Service_Config).
-      ACE_Service_Repository::instance (ACE_Service_Gestalt::MAX_SERVICES);
-
-      // Initialize the ACE_Reactor (the ACE_Reactor should be the
-      // same size as the ACE_Service_Repository).
-      ACE_Reactor::instance ();
-
-      // There's no point in dealing with this on NT since it doesn't
-      // really support signals very well...
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
-      // Only attempt to register a signal handler for positive
-      // signal numbers.
-      if (ACE_Service_Config::signum_ > 0)
-        {
-          ACE_Sig_Set ss;
-          ss.sig_add (ACE_Service_Config::signum_);
-          if ((ACE_Reactor::instance () != 0) &&
-              (ACE_Reactor::instance ()->register_handler
-               (ss, ACE_Service_Config::signal_handler_) == -1))
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("can't register signal handler\n")));
-        }
-#endif /* ACE_LACKS_UNIX_SIGNALS */
-    }
-
-  if (result == -1)
     return -1;
 
-  return instance_->open_i (program_name,
-                            logger_key,
-                            ignore_static_svcs,
-                            ignore_default_svc_conf_file,
-                            ignore_debug_flag);
+    if (ACE::debug ())
+      ACE_DEBUG ((LM_STARTUP,
+                  ACE_TEXT ("starting up daemon %n\n")));
+
+    // Initialize the Service Repository (this will still work if
+    // user forgets to define an object of type ACE_Service_Config).
+    ACE_Service_Repository::instance (ACE_Service_Gestalt::MAX_SERVICES);
+
+    // Initialize the ACE_Reactor (the ACE_Reactor should be the
+    // same size as the ACE_Service_Repository).
+    ACE_Reactor::instance ();
+
+    // There's no point in dealing with this on NT since it doesn't
+    // really support signals very well...
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+    // Only attempt to register a signal handler for positive
+    // signal numbers.
+    if (ACE_Service_Config::signum_ > 0)
+      {
+        ACE_Sig_Set ss;
+        ss.sig_add (ACE_Service_Config::signum_);
+        if ((ACE_Reactor::instance () != 0) &&
+            (ACE_Reactor::instance ()->register_handler
+             (ss, ACE_Service_Config::signal_handler_) == -1))
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("can't register signal handler\n")));
+      }
+#endif /* ACE_LACKS_UNIX_SIGNALS */
+
+    return 0;
 }
 
 /// Return the global configuration instance. Always returns the same
@@ -410,6 +391,7 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (size, false, ignore_static_svcs));
 
+  this->is_opened_ = false;
   this->instance_ = tmp;
   this->threadkey_.set (tmp);
 
@@ -428,6 +410,7 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
 
+  this->is_opened_ = false;
   this->instance_ = tmp;
   this->threadkey_.set (tmp);
 
