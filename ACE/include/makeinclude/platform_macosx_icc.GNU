@@ -1,3 +1,5 @@
+# $Id$
+
 exceptions ?= 1
 threads ?= 1
 debug ?= 1
@@ -19,7 +21,6 @@ endif
 
 ifeq (10.0,$(findstring 10.0,$(CXX_VERSION)))
   CFLAGS += -wd1684
-  no_hidden_visibility ?= 1
 endif
 ifeq (10.1,$(findstring 10.1,$(CXX_VERSION)))
   CFLAGS += -wd1684
@@ -82,7 +83,7 @@ PRELIB  = @true
 
 ifeq ($(shared_libs), 1)
   ifneq ($static_libs_only), 1)
-    LDFLAGS += 
+    LDFLAGS +=
 
     ifneq ($(no_hidden_visibility),1)
       CCFLAGS += -fvisibility=hidden
