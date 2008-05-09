@@ -1,3 +1,9 @@
+Fri May  9 13:36:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        
+          Fixed name of included ACE size monitor file.
+
 Fri May  9 12:55:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bug_3321_Regression/Bug_3321_Regression.mpc:
