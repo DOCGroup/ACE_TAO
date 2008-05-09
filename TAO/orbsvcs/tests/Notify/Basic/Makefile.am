@@ -29,8 +29,6 @@ AdminProperties_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -54,7 +52,7 @@ AdminProperties_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -84,8 +82,6 @@ ConnectDisconnect_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -109,7 +105,7 @@ ConnectDisconnect_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -139,8 +135,6 @@ Events_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -164,7 +158,7 @@ Events_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -194,8 +188,6 @@ Filter_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -219,7 +211,7 @@ Filter_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -249,8 +241,6 @@ IdAssignment_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -274,7 +264,7 @@ IdAssignment_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -304,8 +294,6 @@ LifeCycle_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -329,7 +317,7 @@ LifeCycle_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -359,8 +347,6 @@ MultiTypes_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -384,7 +370,7 @@ MultiTypes_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -414,8 +400,6 @@ Sequence_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -439,7 +423,7 @@ Sequence_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -469,8 +453,6 @@ Simple_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -494,7 +476,7 @@ Simple_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -524,8 +506,6 @@ Updates_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
@@ -549,7 +529,7 @@ Updates_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \

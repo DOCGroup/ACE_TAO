@@ -32,7 +32,7 @@ server_SOURCES = \
   server.cpp
 
 server_LDFLAGS = \
-  $(ACE_ZLIB_LDFLAGS)
+ $(ACE_ZLIB_LDFLAGS)
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_ZlibCompressor.la \

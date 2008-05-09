@@ -27,8 +27,6 @@ Notify_Logging_Service_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Notify_Logging_Service_SOURCES = \
@@ -44,7 +42,7 @@ Notify_Logging_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \

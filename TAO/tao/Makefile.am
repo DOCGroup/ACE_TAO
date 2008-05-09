@@ -5942,7 +5942,6 @@ libTAO_Monitor_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(ACE_ROOT)/ace/ETCL/ETCL_include \
   -DTAO_MONITOR_BUILD_DLL
 
 libTAO_Monitor_la_SOURCES = \
@@ -6418,8 +6417,7 @@ libTAO_ZlibCompressor_la_SOURCES = \
   Compression/zlib/ZlibCompressor_Factory.cpp
 
 libTAO_ZlibCompressor_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ \
- $(ACE_ZLIB_LDFLAGS) 
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_ZLIB_LDFLAGS)
 
 libTAO_ZlibCompressor_la_LIBADD = \
   libTAO_Compression.la \
