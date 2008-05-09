@@ -7,10 +7,9 @@
 
 #include "tao/ORB.h"
 #include "ace/Log_Msg.h"
-#include "tao/Messaging/TAO_ExtC.h"
-#include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Policy_Manager.h"
+#include "tao/TimeBaseC.h"
 
 int result = 0;
 
@@ -20,9 +19,6 @@ ACE_THR_FUNC_RETURN main_orb(void*)
   {
     int argc = 0;
     CORBA::ORB_var orb = CORBA::ORB_init (argc, 0);
-
-    ACE_Time_Value const connectionTimout(100);
-    ACE_Time_Value const requestReplyTimeout(100);
 
     TimeBase::TimeT CONNECTION_TIMEOUT = 1000000;
     TimeBase::TimeT ROUND_TRIP_TIMEOUT = 1000000;
