@@ -28,8 +28,8 @@ project(ACE_ETCL) : acelib, install, ace_output {
   }
 }
 
-project(ETCL_Parser) : acelib, ace_etcl, install, ace_output {
-  sharedname   = ETCL_Parser
+project(ACE_ETCL_Parser) : acelib, ace_etcl, install, ace_output {
+  sharedname   = ACE_ETCL_Parser
   dynamicflags = ETCL_PARSER_BUILD_DLL
 
   Source_Files {
@@ -51,6 +51,6 @@ project(ETCL_Parser) : acelib, ace_etcl, install, ace_output {
   }
 
   Pkgconfig_Files {
-    ETCL_Parser.pc.in
+    ACE_ETCL_Parser.pc.in
   }
 }
