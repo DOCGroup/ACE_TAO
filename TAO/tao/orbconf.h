@@ -242,6 +242,10 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #  define TAO_HAS_MONITOR_FRAMEWORK 0
 #endif /* ACE_HAS_MONITOR_FRAMEWORK*/
 
+#if !defined (TAO_HAS_MONITOR_POINTS)
+# define TAO_HAS_MONITOR_POINTS ACE_HAS_MONITOR_POINTS
+#endif
+
 // Avoid namespace pollution that's common on older UNIXes...
 #if defined (minor)
 #undef minor

@@ -41,11 +41,25 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                  TAO_DEF_GIOP_MAJOR,
                  TAO_DEF_GIOP_MINOR)
 {
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+  const int nibbles = 2 * sizeof (size_t);
+  char hex_string[nibbles + 1];
+  ACE_OS::sprintf (hex_string,
+                   "%8.8X",
+                   transport->id ());
+  hex_string[nibbles] = '\0';
+  ACE_CString monitor_name ("OutputCDR_");
+  monitor_name += hex_string;
+  this->out_stream_.register_monitor (monitor_name.c_str ());
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 
 
 TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 {
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+  this->out_stream_.unregister_monitor ();
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 
 void

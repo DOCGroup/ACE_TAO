@@ -121,54 +121,41 @@ public:
       const char *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members
-    )
-    = 0;
+      const CORBA::ValueMemberSeq &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_value_box_tc (
       const char *id,
       const char *name,
-      CORBA::TypeCode_ptr boxed_type
-    )
-    = 0;
+      CORBA::TypeCode_ptr boxed_type) = 0;
 
   virtual CORBA::TypeCode_ptr create_native_tc (
       const char *id,
-      const char *name
-    )
-    = 0;
+      const char *name) = 0;
 
-  virtual CORBA::TypeCode_ptr create_recursive_tc (
-      const char *id)
-    = 0;
+  virtual CORBA::TypeCode_ptr create_recursive_tc (const char *id) = 0;
 
   virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
       const char *id,
-      const char *name)
-    = 0;
+      const char *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_local_interface_tc (
       const char *id,
-      const char *name)
-    = 0;
+      const char *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_component_tc (
       const char *id,
-      const char *name)
-    = 0;
+      const char *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_home_tc (
       const char *id,
-      const char *name)
-    = 0;
+      const char *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_event_tc (
       const char *id,
       const char *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members)
-    = 0;
+      const CORBA::ValueMemberSeq &members) = 0;
 
   // --
 
@@ -184,8 +171,7 @@ public:
     char const * id,
     char const * name,
     ACE_Array_Base<CORBA::String_var> const & enumerators,
-    CORBA::ULong ncases
-    ) = 0;
+    CORBA::ULong ncases) = 0;
 
   /// Create a structure or exception TypeCode.
   virtual CORBA::TypeCode_ptr create_struct_except_tc (
@@ -195,8 +181,7 @@ public:
     ACE_Array_Base<
       TAO::TypeCode::Struct_Field<CORBA::String_var,
                                   CORBA::TypeCode_var> > const & fields,
-    CORBA::ULong nfields
-    ) = 0;
+    CORBA::ULong nfields) = 0;
 
   /// Create a union TypeCode.
   virtual CORBA::TypeCode_ptr create_union_tc (
@@ -208,8 +193,7 @@ public:
     CORBA::ULong ncases,
     CORBA::Long default_index,
     char const * default_case_name,
-    CORBA::TypeCode_ptr default_case_type
-    ) = 0;
+    CORBA::TypeCode_ptr default_case_type) = 0;
 
   /// Create a valuetype or eventtype TypeCode.
   virtual CORBA::TypeCode_ptr create_value_event_tc (
@@ -221,10 +205,8 @@ public:
     ACE_Array_Base<
       TAO::TypeCode::Value_Field<CORBA::String_var,
                                  CORBA::TypeCode_var> > const & fields,
-    CORBA::ULong nfields
-    ) = 0;
+    CORBA::ULong nfields) = 0;
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

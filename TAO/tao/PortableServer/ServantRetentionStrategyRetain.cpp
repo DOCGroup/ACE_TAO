@@ -19,8 +19,12 @@
 #include "tao/PortableServer/Active_Object_Map.h"
 #include "tao/PortableServer/Active_Object_Map_Entry.h"
 
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+#include "ace/Size_Monitor.h"
+#endif /* TAO_HAS_MONITOR_POINTS */
+
 ACE_RCSID (PortableServer,
-           Servant_Retention_Strategy,
+           ServantRetentionStrategyRetain,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -51,10 +55,17 @@ namespace TAO
                                               ), CORBA::NO_MEMORY ());
 
       ACE_auto_ptr_reset (this->active_object_map_, active_object_map);
+
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+      ACE_CString name_str ("Active_Object_Map_");
+      name_str += poa->the_name ();
+      active_object_map->monitor_->name (name_str.c_str ());
+      active_object_map->monitor_->add_to_registry ();
+#endif /* TAO_HAS_MONITOR_POINTS */
     }
 
     void
-    ServantRetentionStrategyRetain::strategy_cleanup(void)
+    ServantRetentionStrategyRetain::strategy_cleanup (void)
     {
     }
 
@@ -182,10 +193,7 @@ namespace TAO
       // associated with that object in the Active Object Map.
       PortableServer::Servant servant = 0;
 
-      int const result =
-        this->active_object_map_->find_servant_using_user_id (id, servant);
-
-      if (result == -1)
+      if (this->active_object_map_->find_servant_using_user_id (id, servant) == -1)
         {
           throw PortableServer::POA::ObjectNotActive ();
         }
@@ -238,8 +246,7 @@ namespace TAO
       // Find user id from system id.
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map_->
-          find_user_id_using_system_id (system_id,
-                                        user_id.out()) != 0)
+          find_user_id_using_system_id (system_id, user_id.out()) != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }
@@ -459,9 +466,9 @@ namespace TAO
         = this->active_object_map_->user_id_map_->end ();
 
       for (TAO_Active_Object_Map::user_id_map::iterator iter
-             = this->active_object_map_->user_id_map_->begin ();
-           iter != end;
-           ++iter)
+              = this->active_object_map_->user_id_map_->begin ();
+            iter != end;
+            ++iter)
         {
           TAO_Active_Object_Map::user_id_map::value_type map_pair = *iter;
           TAO_Active_Object_Map_Entry *active_object_map_entry = map_pair.second ();
@@ -474,8 +481,8 @@ namespace TAO
         }
 
       for (size_t i = 0;
-           i < counter;
-           ++i)
+            i < counter;
+            ++i)
         {
           this->deactivate_map_entry (map_entries[i]);
         }
