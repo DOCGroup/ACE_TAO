@@ -1,4 +1,4 @@
 // $Id$
 
-project : taoserver, threads, messaging {
+project : taoserver, threads {
 }
