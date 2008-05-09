@@ -220,8 +220,7 @@ namespace TAO
     /// contexts.
     IOP::ServiceContext * get_service_context_i (
         TAO_Service_Context & service_context_list,
-        IOP::ServiceId id
-        );
+        IOP::ServiceId id);
 
   protected:
 

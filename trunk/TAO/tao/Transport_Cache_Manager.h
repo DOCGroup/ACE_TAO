@@ -25,6 +25,10 @@
 #include "tao/Cache_Entries.h"
 #include "tao/orbconf.h"
 
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+#include "ace/Monitor_Size.h"
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Handle_Set;
 template <class T> class ACE_Unbounded_Set;
@@ -261,6 +265,14 @@ namespace TAO
     /// is put back is cached here. This should prevent all th threads
     /// trying to search for their required entry.
     Cache_ExtId *last_entry_returned_;
+
+#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
+    /// Connection cache purge monitor.
+    ACE::MonitorControl::Size_Monitor *purge_monitor_;
+
+    /// Connection cache size monitor.
+    ACE::MonitorControl::Size_Monitor *size_monitor_;
+#endif /* TAO_HAS_MONITOR_POINTS==1 */
   };
 
 }

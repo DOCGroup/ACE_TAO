@@ -16,8 +16,7 @@ namespace TAO
                               *this->cache_lock_,
                               -1));
 
-    return this->bind_i (ext_id,
-                         int_id);
+    return this->bind_i (ext_id, int_id);
   }
 
   ACE_INLINE int
@@ -39,8 +38,7 @@ namespace TAO
       // Do as the semantics of this method dictates
       int_id.recycle_state (ENTRY_BUSY);
 
-      retval = this->bind_i (ext_id,
-                             int_id);
+      retval = this->bind_i (ext_id, int_id);
     }
 
     return retval;
@@ -64,8 +62,7 @@ namespace TAO
 
       // Do as the semantics of this method dictates
       int_id.recycle_state (ENTRY_IDLE_AND_PURGABLE);
-      retval = this->bind_i (ext_id,
-                             int_id);
+      retval = this->bind_i (ext_id, int_id);
     }
 
     return retval;
