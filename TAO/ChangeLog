@@ -1,3 +1,10 @@
+Fri May  9 11:59:52 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/etcl.mpb:
+        
+          Changed the name of a base project that was changed
+          in ACE_RROT/bin/MakeProjectCreator/config.
+
 Fri May  9 10:40:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Internal.cpp:
