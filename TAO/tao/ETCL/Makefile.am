@@ -16,13 +16,12 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
-lib_LTLIBRARIES =
 
 ## Makefile.TAO_ETCL.am
 
 if BUILD_EXCEPTIONS
 
-lib_LTLIBRARIES += libTAO_ETCL.la
+lib_LTLIBRARIES = libTAO_ETCL.la
 
 libTAO_ETCL_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -39,8 +38,6 @@ libTAO_ETCL_la_LDFLAGS = \
 
 libTAO_ETCL_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -64,45 +61,6 @@ endif BUILD_EXCEPTIONS
 EXTRA_DIST = \
   TAO_ETCL.pc.in
 
-
-## Makefile.TAO_ETCL_Parser.am
-
-if BUILD_EXCEPTIONS
-
-lib_LTLIBRARIES += libTAO_ETCL_Parser.la
-
-libTAO_ETCL_Parser_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
-  -DTAO_ETCL_PARSER_BUILD_DLL
-
-libTAO_ETCL_Parser_la_SOURCES = \
-  ETCL_Interpreter.cpp \
-  ETCL_l.cpp \
-  ETCL_y.cpp
-
-libTAO_ETCL_Parser_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_ETCL_Parser_la_LIBADD = \
-  libTAO_ETCL.la \
-  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  $(ACE_ROOT)/ace/ETCL/ETCL_Interpreter.h \
-  $(ACE_ROOT)/ace/ETCL/ETCL_y.h \
-  $(TAO_ROOT)/tao/ETCL/ETCL_include/ETCL_include.h \
-  $(TAO_ROOT)/tao/ETCL/ETCL_include/ETCL_macros.h \
-  $(TAO_ROOT)/tao/ETCL/ETCL_include/etcl_parser_export.h \
-  TAO_ETCL_Constraint.inl
-
-endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

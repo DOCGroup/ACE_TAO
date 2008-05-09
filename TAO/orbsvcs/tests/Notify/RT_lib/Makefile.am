@@ -29,8 +29,6 @@ libTAO_RT_NotifyTests_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
   -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \

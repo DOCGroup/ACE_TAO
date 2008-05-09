@@ -121,6 +121,7 @@ SUBDIRS = \
         Bug_3299_Regression \
         Bug_3311_Regression \
         Bug_3315_Regression \
+        Bug_3321_Regression \
         Bug_933_Regression \
         CDR \
         COIOP \

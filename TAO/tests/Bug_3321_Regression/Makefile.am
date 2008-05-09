@@ -14,38 +14,29 @@ TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
 
-## Makefile.Log_Basic_Log_Test.am
+## Makefile.Bug_3321_Regression.am
 
 if BUILD_EXCEPTIONS
+if BUILD_THREADS
 
-noinst_PROGRAMS = client
+noinst_PROGRAMS = server
 
-client_CPPFLAGS = \
+server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)
 
-client_SOURCES = \
-  Basic_Log_Test.cpp \
-  client.cpp \
-  Basic_Log_Test.h
+server_SOURCES = \
+  main.cpp
 
-client_LDADD = \
-  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
-  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin.la \
+server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_THREADS
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

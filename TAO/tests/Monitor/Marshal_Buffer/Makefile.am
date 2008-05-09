@@ -57,10 +57,7 @@ client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(ACE_ROOT)/ETCL \
-  -I$(TAO_ROOT)/tao/ETCL/ETCL_include \
-  -I$(ACE_ROOT)/ace/ETCL/ETCL_include
+  -I$(TAO_BUILDDIR)
 
 client_SOURCES = \
   client.cpp \
@@ -72,7 +69,6 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Monitor.la \
   $(ACE_BUILDDIR)/ace/MonitorControl/libACE_MonitorControl.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
-  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
