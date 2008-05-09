@@ -1022,13 +1022,15 @@ ACE_Service_Gestalt::init_svc_conf_file_queue (void)
 int
 ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
                              const ACE_TCHAR* /*logger_key*/,
-                             bool /*ignore_static_svcs*/,
+                             bool ignore_static_svcs,
                              bool ignore_default_svc_conf_file,
                              bool ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Gestalt::open_i");
   int result = 0;
   ACE_Log_Msg *log_msg = ACE_LOG_MSG;
+
+  no_static_svcs_ = ignore_static_svcs;
 
   // Record the current log setting upon entering this thread.
   u_long old_process_mask = log_msg->priority_mask
