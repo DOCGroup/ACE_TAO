@@ -91,22 +91,18 @@ public:
 
   int dispatch_servant (const TAO::ObjectKey &key,
                         TAO_ServerRequest &req,
-                        CORBA::Object_out forward_to
-                       );
+                        CORBA::Object_out forward_to);
 
-  int locate_servant (const TAO::ObjectKey &key
-                     );
+  int locate_servant (const TAO::ObjectKey &key);
 
   TAO_SERVANT_LOCATION find_servant (const TAO::ObjectKey &key,
-                                     PortableServer::Servant &servant
-                                    );
+                                     PortableServer::Servant &servant);
 
   int find_poa (const poa_name &system_name,
                 CORBA::Boolean activate_it,
                 CORBA::Boolean root,
                 const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
-                TAO_Root_POA *&poa
-               );
+                TAO_Root_POA *&poa);
 
   int bind_poa (const poa_name &folded_name,
                 TAO_Root_POA *poa,
@@ -117,8 +113,7 @@ public:
                   const poa_name &system_name);
 
   int activate_poa (const poa_name &folded_name,
-                    TAO_Root_POA *&poa
-                   );
+                    TAO_Root_POA *&poa);
 
   ACE_Lock &lock (void);
 
@@ -160,15 +155,12 @@ public:
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
   virtual void open (void);
-  virtual void close (int wait_for_completion
-                     );
-  virtual void check_close (int wait_for_completion
-                           );
+  virtual void close (int wait_for_completion);
+  virtual void check_close (int wait_for_completion);
   virtual int priority (void) const;
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out forward_to
-                       );
+                        CORBA::Object_out forward_to);
   virtual const char *name (void) const;
   virtual CORBA::Object_ptr root (void);
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
@@ -178,35 +170,27 @@ public:
 
 protected:
 
-  int locate_servant_i (const TAO::ObjectKey &key
-                       );
+  int locate_servant_i (const TAO::ObjectKey &key);
 
   TAO_SERVANT_LOCATION find_servant_i (const TAO::ObjectKey &key,
-                                       PortableServer::Servant &servant
-                                      );
+                                       PortableServer::Servant &servant);
 
   void dispatch_servant_i (const TAO::ObjectKey &key,
                            TAO_ServerRequest &req,
-                           void *context
-                          );
+                           void *context);
 
   void locate_poa (const TAO::ObjectKey &key,
                    PortableServer::ObjectId &id,
-                   TAO_Root_POA *&poa
-                  );
+                   TAO_Root_POA *&poa                  );
 
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,
                           const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
-                          TAO_Root_POA *&poa
-                         );
+                          TAO_Root_POA *&poa);
 
-  int find_persistent_poa (const poa_name &system_name,
-                           TAO_Root_POA *&poa
-                          );
+  int find_persistent_poa (const poa_name &system_name, TAO_Root_POA *&poa);
 
-  int bind_transient_poa (TAO_Root_POA *poa,
-                          poa_name_out system_name);
+  int bind_transient_poa (TAO_Root_POA *poa, poa_name_out system_name);
 
   int bind_persistent_poa (const poa_name &folded_name,
                            TAO_Root_POA *poa,
@@ -221,8 +205,7 @@ protected:
                                 TAO_SYNCH_MUTEX &thread_lock);
 
   virtual void do_dispatch (TAO_ServerRequest& req,
-                            TAO::Portable_Server::Servant_Upcall& upcall
-                           );
+                            TAO::Portable_Server::Servant_Upcall& upcall);
 
 public:
 
@@ -241,8 +224,7 @@ public:
     virtual ~Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_Root_POA *&poa
-                                     ) = 0;
+                                     TAO_Root_POA *&poa) = 0;
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_Root_POA *poa,
@@ -276,8 +258,7 @@ public:
     virtual ~Active_Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_Root_POA *&poa
-                                    );
+                                     TAO_Root_POA *&poa);
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_Root_POA *poa,
@@ -314,8 +295,7 @@ public:
     virtual ~No_Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_Root_POA *&poa
-                                    );
+                                     TAO_Root_POA *&poa);
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_Root_POA *poa,

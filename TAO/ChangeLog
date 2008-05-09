@@ -1,13 +1,42 @@
+Fri May  9 12:42:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+          Added TAO_HAS_MONITOR_POINTS which is default defined to
+          ACE_HAS_MONITOR_POINTS (which is 0 at this moment)
+
+        * tao/GIOP_Message_Base.cpp:
+          Added monitor points
+
+        * tao/Messaging/Buffering_Constraint_Policy.h:
+          Doxygen change
+
+        * tao/PI/PICurrent_Loader.cpp:
+          Changed initialisation
+
+        * tao/PI_Server/ServerRequestInfo.h:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/TypeCodeFactory_Adapter.h:
+          Layout change
+
+        * tao/PortableServer/Active_Object_Map.{h,cpp,inl}:
+          Added monitor points and code layout changes
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+          Corrected rcsid
+
+        * tao/Transport_Cache_Manager.{h,cpp}:
+          Added monitor points
+
 Fri May  9 12:25:13 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/tao_monitor.mpb:
-        
+
           Removed unneeded base project.
 
 Fri May  9 11:59:52 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/etcl.mpb:
-        
+
           Changed the name of a base project that was changed
           in ACE_RROT/bin/MakeProjectCreator/config.
 

@@ -18,7 +18,7 @@
 #include "tao/debug.h"
 
 ACE_RCSID (PortableServer,
-           Servant_Retention_Strategy,
+           ServantRetentionStrategyNonRetain,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
