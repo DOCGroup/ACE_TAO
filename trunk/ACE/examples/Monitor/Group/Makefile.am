@@ -20,8 +20,7 @@ noinst_PROGRAMS = group
 
 group_CPPFLAGS = \
   -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(ACE_ROOT)/ace/ETCL/ETCL_include
+  -I$(ACE_BUILDDIR)
 
 group_SOURCES = \
   group.cpp

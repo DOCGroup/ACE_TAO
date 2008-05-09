@@ -20,8 +20,7 @@ noinst_PROGRAMS = constraint
 
 constraint_CPPFLAGS = \
   -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(ACE_ROOT)/ace/ETCL/ETCL_include
+  -I$(ACE_BUILDDIR)
 
 constraint_SOURCES = \
   constraint.cpp

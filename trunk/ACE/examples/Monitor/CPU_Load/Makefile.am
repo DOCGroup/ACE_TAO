@@ -20,8 +20,7 @@ noinst_PROGRAMS = cpu_load
 
 cpu_load_CPPFLAGS = \
   -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(ACE_ROOT)/ace/ETCL/ETCL_include
+  -I$(ACE_BUILDDIR)
 
 cpu_load_SOURCES = \
   cpu_load.cpp

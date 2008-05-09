@@ -20,8 +20,7 @@ noinst_PROGRAMS = bytes_sent
 
 bytes_sent_CPPFLAGS = \
   -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(ACE_ROOT)/ace/ETCL/ETCL_include
+  -I$(ACE_BUILDDIR)
 
 bytes_sent_SOURCES = \
   bytes_sent.cpp
