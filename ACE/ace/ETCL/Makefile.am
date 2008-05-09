@@ -52,24 +52,24 @@ EXTRA_DIST = \
   ACE_ETCL.pc.in
 
 
-## Makefile.ETCL_Parser.am
+## Makefile.ACE_ETCL_Parser.am
 
-lib_LTLIBRARIES += libETCL_Parser.la
+lib_LTLIBRARIES += libACE_ETCL_Parser.la
 
-libETCL_Parser_la_CPPFLAGS = \
+libACE_ETCL_Parser_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -DETCL_PARSER_BUILD_DLL
 
-libETCL_Parser_la_SOURCES = \
+libACE_ETCL_Parser_la_SOURCES = \
   ETCL_Interpreter.cpp \
   ETCL_l.cpp \
   ETCL_y.cpp
 
-libETCL_Parser_la_LDFLAGS = \
+libACE_ETCL_Parser_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@
 
-libETCL_Parser_la_LIBADD = \
+libACE_ETCL_Parser_la_LIBADD = \
   libACE_ETCL.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -79,16 +79,16 @@ nobase_include_HEADERS += \
   etcl_parser_export.h
 
 pkgconfig_DATA += \
-  ETCL_Parser.pc
+  ACE_ETCL_Parser.pc
 
 CLEANFILES += \
-  ETCL_Parser.pc
+  ACE_ETCL_Parser.pc
 
-ETCL_Parser.pc: ${top_builddir}/config.status ${srcdir}/ETCL_Parser.pc.in
-	${top_builddir}/config.status --file "$@":${srcdir}/ETCL_Parser.pc.in
+ACE_ETCL_Parser.pc: ${top_builddir}/config.status ${srcdir}/ACE_ETCL_Parser.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_ETCL_Parser.pc.in
 
 EXTRA_DIST += \
-  ETCL_Parser.pc.in
+  ACE_ETCL_Parser.pc.in
 
 
 ## Clean up template repositories, etc.

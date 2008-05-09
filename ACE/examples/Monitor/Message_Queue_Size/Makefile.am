@@ -21,7 +21,6 @@ noinst_PROGRAMS = message_queue_size
 message_queue_size_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(ACE_ROOT)/ace/ETCL/ETCL_include \
   -DENABLE_MONITORS \
   -DENABLE_ACE_MONITORS
 

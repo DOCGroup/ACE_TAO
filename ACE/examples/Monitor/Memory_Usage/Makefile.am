@@ -20,8 +20,7 @@ noinst_PROGRAMS = memory_usage
 
 memory_usage_CPPFLAGS = \
   -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(ACE_ROOT)/ace/ETCL/ETCL_include
+  -I$(ACE_BUILDDIR)
 
 memory_usage_SOURCES = \
   memory_usage.cpp
