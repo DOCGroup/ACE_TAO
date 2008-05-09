@@ -20,7 +20,7 @@
 #include "tao/PortableServer/Active_Object_Map_Entry.h"
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-#include "ace/Size_Monitor.h"
+#include "ace/Monitor_Size.h"
 #endif /* TAO_HAS_MONITOR_POINTS */
 
 ACE_RCSID (PortableServer,
