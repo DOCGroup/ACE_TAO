@@ -306,7 +306,4 @@ ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#elif defined (__HP_aCC)
-// Make aC++ stop complaining about an empty translation unit
-static int const shut_up_aCC = 0;
 #endif /* ACE_HAS_EBCDIC */

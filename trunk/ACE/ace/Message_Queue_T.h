@@ -12,6 +12,7 @@
 
 #ifndef ACE_MESSAGE_QUEUE_T_H
 #define ACE_MESSAGE_QUEUE_T_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Message_Queue.h"
@@ -32,6 +33,16 @@ class ACE_Message_Queue_Vx;
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 class ACE_Message_Queue_NT;
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO*/
+
+#if defined (ACE_HAS_MONITOR_POINTS) && ACE_HAS_MONITOR_POINTS == 1
+namespace ACE
+{
+  namespace MonitorControl
+  {
+    class Size_Monitor;
+  }
+}
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 /**
  * @class ACE_Message_Queue
@@ -592,6 +603,11 @@ protected:
 
   /// Used to make threads sleep until the queue is no longer full.
   ACE_SYNCH_CONDITION_T not_full_cond_;
+
+  /// Sends the size of the queue whenever it changes.
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+  ACE::MonitorControl::Size_Monitor *monitor_;
+#endif
 
 private:
 
@@ -1473,4 +1489,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_MESSAGE_QUEUE_T_H */
