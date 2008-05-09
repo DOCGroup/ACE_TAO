@@ -1,3 +1,23 @@
+Fri May  9 11:44:59 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ace_etcl_parser.mpb:
+
+          Changed the filename etcl_parser.mpb to the one
+          above, for consistency in the names of ACE-related
+          files. Also changed the corresponding library name
+          to ACE_ETCL_Parser.
+          
+        * ace/ETCL/ACE_ETCL_Parser.pc.in:
+        
+          Changed the name of ETCL_Parser.pc.in likewise.
+          Also changed the contents of this file accordingly.
+
+        * ace/ETCL/ETCL.mpc:
+        * ace/MonitorControl/MonitorControl.mpc:
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+
+          Changes corresponding to the name changes above.
+
 Thu May  8 23:03:15 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/config/ace_zlib.mpb:
