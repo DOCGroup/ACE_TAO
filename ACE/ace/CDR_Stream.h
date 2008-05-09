@@ -72,6 +72,16 @@ class ACE_WChar_Codeset_Translator;
 
 class ACE_InputCDR;
 
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+namespace ACE
+{
+  namespace MonitorControl
+  {
+    class Size_Monitor;
+  }
+}
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
+
 /**
  * @class ACE_OutputCDR
  *
@@ -292,7 +302,7 @@ public:
         ...   // insert more values
         ACE_CDR::Long real_val;       // Somehow assign the "correct" value
         strm.replace (real_val, pos); // Replace earlier placeholder
-      @endcode 
+      @endcode
   */
 
   /**
@@ -464,6 +474,12 @@ public:
   /// Set the underlying GIOP version..
   void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
 
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+  /// Register and unregister our buffer size monitor.
+  void register_monitor (const char* id);
+  void unregister_monitor (void);
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
+
 private:
 
   // Find the message block in the chain of message blocks
@@ -555,6 +571,10 @@ private:
 
   /// Break-even point for copying.
   size_t const memcpy_tradeoff_;
+
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+  ACE::MonitorControl::Size_Monitor *monitor_;
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 protected:
   /// GIOP version information
@@ -962,6 +982,12 @@ public:
   /// Set the underlying GIOP version..
   void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
 
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+  /// Register and unregister our buffer size monitor.
+  void register_monitor (const char* id);
+  void unregister_monitor (void);
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
+
 protected:
 
   /// The start of the chain of message blocks, even though in the
@@ -982,6 +1008,10 @@ protected:
   /// If not nil, invoke for translation of character and string data.
   ACE_Char_Codeset_Translator *char_translator_;
   ACE_WChar_Codeset_Translator *wchar_translator_;
+
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+  ACE::MonitorControl::Size_Monitor *monitor_;
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 private:
 
