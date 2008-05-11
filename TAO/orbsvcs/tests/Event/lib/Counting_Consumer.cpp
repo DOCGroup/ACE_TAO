@@ -60,16 +60,18 @@ EC_Counting_Consumer::dump_results (int expected_count, int tolerance)
   if (diff > tolerance || diff < -tolerance)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "ERROR - %s unexpected number of events  <%d>\n",
+                  "ERROR - %s unexpected number of events <%d> instead of <%d>\n",
                   this->name_,
-                  this->event_count));
+                  this->event_count,
+                  expected_count));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s - number of events <%d> within margins\n",
+                  "%s - number of events <%d> within margins expected <%d>\n",
                   this->name_,
-                  this->event_count));
+                  this->event_count,
+                  expected_count));
     }
 }
 
