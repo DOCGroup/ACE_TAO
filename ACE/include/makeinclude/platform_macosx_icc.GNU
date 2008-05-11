@@ -7,6 +7,7 @@ optimize ?= 0
 ssl ?= 1
 versioned_so ?= 0
 universal ?= 0
+insure ?= 0
 
 AR      = xiar
 
