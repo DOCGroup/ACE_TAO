@@ -12,6 +12,8 @@
 
 #include "testC.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
 
 const char *ior_input_file = "file://test.ior";
@@ -36,9 +38,13 @@ public:
   }
 };
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
 int
 main (int argc, char *argv[])
 {
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -132,6 +138,8 @@ main (int argc, char *argv[])
       ex._tao_print_exception ("Client: exception caught:");
       return 1;
     }
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;
 }
