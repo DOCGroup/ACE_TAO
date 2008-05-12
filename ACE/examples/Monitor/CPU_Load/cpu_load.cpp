@@ -3,7 +3,10 @@
 #include "ace/OS_NS_unistd.h"
 
 #include "ace/MonitorControl/MonitorControl.h"
+
 #include "examples/Monitor/MC_Test_Utilities.h"
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
@@ -41,9 +44,13 @@ public:
   }
 };
 
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+
 int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
   /// The Admin class will own the reactor and destroy it. We are
   /// passing a vanilla reactor to show how it works, but in real
   /// life it could be some specialized reactor.
@@ -88,6 +95,8 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   STOP_PERIODIC_MONITORS;
 
   cpu_monitor->remove_ref ();
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;
 }

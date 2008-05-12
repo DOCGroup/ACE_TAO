@@ -23,7 +23,11 @@
 
 #include "examples/Monitor/MC_Test_Utilities_export.h"
 
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 /**
  * @struct MC_Test_Utilities
@@ -34,6 +38,8 @@ using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
  */
 struct MC_TEST_UTILITIES_Export MC_Test_Utilities
 {
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
   static void display_timestamp (const Monitor_Control_Types::Data &data);
   static void display_num_threads (const Monitor_Control_Types::Data &data);
   static void display_mq_size (const Monitor_Control_Types::Data &data);
@@ -43,6 +49,8 @@ struct MC_TEST_UTILITIES_Export MC_Test_Utilities
   static void display_bytes_received (const Monitor_Control_Types::Data &data);
   static void display_packets_sent (const Monitor_Control_Types::Data &data);
   static void display_packets_received (const Monitor_Control_Types::Data &data);
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 };
 
 #include /**/ "ace/post.h"

@@ -5,6 +5,8 @@
 
 #include "examples/Monitor/MC_Test_Utilities.h"
 
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 void
 MC_Test_Utilities::display_timestamp (
   const Monitor_Control_Types::Data &data)
@@ -94,6 +96,8 @@ MC_Test_Utilities::display_packets_received (
   display_timestamp (data);
   cout << static_cast<ACE_UINT64> (data.value_) << endl;
 }
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 
 

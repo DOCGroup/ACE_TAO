@@ -3,7 +3,10 @@
 #include "ace/OS_NS_unistd.h"
 
 #include "ace/MonitorControl/MonitorControl.h"
+
 #include "examples/Monitor/MC_Test_Utilities.h"
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
 
@@ -43,9 +46,13 @@ public:
   }
 };
 
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+
 int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
   /// Set the timer for # of threads check at 2 sec.
   Monitor_Base *monitor =
     create_os_monitor<BYTES_SENT_MONITOR> (0, ACE_Time_Value (2));
@@ -64,6 +71,8 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   STOP_PERIODIC_MONITORS;
 
   monitor->remove_ref ();
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;
 }
