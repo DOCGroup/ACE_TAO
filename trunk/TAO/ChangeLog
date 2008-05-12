@@ -1,7 +1,14 @@
+Mon May 12 15:51:28 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tao/Stub.cpp:
+
+          Removed one line that I added along with a fix of memory leak.
+          This particular line turned out to be erroneous.
+
 Mon May 12 12:30:01 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Monitor/Marshal_Buffer/client.cpp:
-        
+
           Added appropriate preprocessor guards to get a successful
           build when TAO_HAS_MONITOR_FRAMEWORK is defined as 0.
 
