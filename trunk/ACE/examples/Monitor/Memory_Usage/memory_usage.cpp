@@ -3,7 +3,10 @@
 #include "ace/OS_NS_unistd.h"
 
 #include "ace/MonitorControl/MonitorControl.h"
+
 #include "examples/Monitor/MC_Test_Utilities.h"
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
@@ -41,9 +44,13 @@ public:
   }
 };
 
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+
 int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
   /// Set the timer for memory usage check at 2 sec.
   Monitor_Base *memory_usage_monitor =
     create_os_monitor<MEMORY_USAGE_MONITOR> (0, ACE_Time_Value (2));
@@ -79,5 +86,8 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   memory_usage_monitor->remove_ref ();
 
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+
   return 0;
 }
+

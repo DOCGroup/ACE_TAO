@@ -6,7 +6,10 @@
 #include "ace/Monitor_Admin_Manager.h"
 
 #include "ace/MonitorControl/MonitorControl.h"
+
 #include "examples/Monitor/MC_Test_Utilities.h"
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
 
@@ -58,9 +61,13 @@ public:
   }
 };
 
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+
 int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
   /// Creates these future group members without automatic update.
   Monitor_Base *cpu_load_monitor =
     create_os_monitor<CPU_LOAD_MONITOR> ();
@@ -152,6 +159,8 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   bytes_sent_monitor->remove_ref ();
   memory_usage_monitor->remove_ref ();
   group->remove_ref ();
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;
 }
