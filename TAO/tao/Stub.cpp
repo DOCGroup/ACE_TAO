@@ -127,9 +127,6 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
 
   if (permanent_forward)
     {
-      // If forward_profiles_perm_ is not 0 then delete it.
-      delete this->forward_profiles_perm_;
-
       // paranoid, reset the bookmark, then clear the forward-stack
       this->forward_profiles_perm_ = 0;
 
