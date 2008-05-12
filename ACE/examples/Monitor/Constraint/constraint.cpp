@@ -4,7 +4,10 @@
 #include "ace/Monitor_Control_Action.h"
 
 #include "ace/MonitorControl/MonitorControl.h"
+
 #include "examples/Monitor/MC_Test_Utilities.h"
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
 
@@ -63,9 +66,13 @@ public:
   }
 };
 
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+
 int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
   /// Set the timer for # of threads check at 2 sec.
   Monitor_Base *bytes_monitor =
     create_os_monitor<BYTES_RECEIVED_MONITOR> (0, ACE_Time_Value (2));
@@ -117,6 +124,8 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   removed_action->remove_ref ();
   trigger16k->remove_ref ();
   bytes_monitor->remove_ref ();
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;
 }
