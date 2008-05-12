@@ -15,11 +15,13 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.4 and ACE-5.6.5
 
 . Extended the implementation of Unbounded_Set, which has been
   renamed Unbounded_Set_Ex, to accept a second parameter which is
-  a comparator that implements operator() which returns true if 
+  a comparator that implements operator() which returns true if
   the items are equivalent.  Unbounded_Set has been reimplemented
   in terms of Unbounded_Set_Ex using a comparator that uses operator==,
-  which captures the previous behavior.  
- 
+  which captures the previous behavior.
+
+. Added for support for Intel C++ on MacOSX
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.3 and ACE-5.6.4
 ====================================================
 
