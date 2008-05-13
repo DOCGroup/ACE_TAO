@@ -15,10 +15,10 @@ my $new_errors_only = 0; # Show new errors only
 my $clean_builds_only = 1; # Only diff todays clean builds
 
 # The root of the test statistics
-my $teststaturl = "http://www.dre.vanderbilt.edu/~remedynl/teststat/builds/";
+my $teststaturl = "http://download.theaceorb.nl/teststat/builds/";
 
-my $allbuildsurl = "http://www.dre.vanderbilt.edu/~remedynl/teststat/buildscore.log";
-my $cleanbuildsurl = "http://www.dre.vanderbilt.edu/~remedynl/teststat/cleanbuildtests.log";
+my $allbuildsurl = "http://download.theaceorb.nl/teststat/buildscore.txt";
+my $cleanbuildsurl = "http://download.theaceorb.nl/teststat/cleanbuildtests.txt";
 
 # Determine the available timestamps for a build on a date,
 # by scanning the index page (build.html)
@@ -125,10 +125,10 @@ sub load_failed_tests_list ($$)
     my ($fh, $tmpfile) = tempfile ($fullfile . ".XXXXXX", UNLINK => 1, DIR => $tmpdir);
 
     print "wget " . $verbose . " \'" .$teststaturl 
-            . $fullfile . ".log\' -O - | sort >\'" . $tmpfile . '\'' . "\n" unless !$debugging;
+            . $fullfile . ".txt\' -O - | sort >\'" . $tmpfile . '\'' . "\n" unless !$debugging;
 
     system ("wget " . $verbose . " \'" .$teststaturl 
-            . $fullfile . ".log\' -O - | sort >\'" . $tmpfile . '\'');
+            . $fullfile . ".txt\' -O - | sort >\'" . $tmpfile . '\'');
     close ($fh);
     
     return $tmpfile;
