@@ -215,7 +215,7 @@ TAO_CosNotify_Service::set_threads (CosNotification::QoSProperties &qos, int thr
 int
 TAO_CosNotify_Service::fini (void)
 {
-//  TAO_Notify_Properties::instance()->close ();
+  TAO_Notify_Properties::instance()->close ();
   return 0;
 }
 
