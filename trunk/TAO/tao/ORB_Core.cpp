@@ -1371,7 +1371,7 @@ TAO_ORB_Core::fini (void)
   ::CORBA::release (this->ior_manip_factory_);
 
   ::CORBA::release (this->ior_table_);
-  
+
   ::CORBA::release (this->monitor_);
 
   if (TAO_debug_level > 2)
@@ -1594,7 +1594,7 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
       (this->configuration (),
        ACE_TEXT ("ORBInitializer_Registry"));
 
-#if !defined (TAO_AS_STATIC_LIBS)
+#if !defined (TAO_AS_STATIC_LIBS) && !(defined (ACE_VXWORKS) && !defined (__RTP__))
       // In case we build shared, try to load the PI Client library, in a
       // static build we just can't do this, so don't try it, lower layers
       // output an error then.
@@ -1610,7 +1610,7 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
           (this->configuration (),
            ACE_TEXT ("ORBInitializer_Registry"));
     }
-#endif /* !TAO_AS_STATIC_LIBS */
+#endif /* !TAO_AS_STATIC_LIBS && !(ACE_VXWORKS && !__RTP__) */
 
   return this->orbinitializer_registry_;
 }
