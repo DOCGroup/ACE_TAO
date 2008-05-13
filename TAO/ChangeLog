@@ -1,3 +1,12 @@
+Tue May 13 14:50:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp (fini):
+          Also destroy the dispatching ORB when it has one and
+          the nofication service is configured to use one
+
+        * tests/Explicit_Event_Loop/server.cpp:
+          No need to pass in an empty orb name
+
 Tue May 13 07:37:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
