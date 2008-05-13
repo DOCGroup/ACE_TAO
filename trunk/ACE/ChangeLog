@@ -1,3 +1,8 @@
+Tue May 13 19:20:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds.pl:
+          Updated for move of test stats
+
 Mon May 12 12:19:15 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Monitor/MC_Test_Utilities.h:
@@ -9,7 +14,7 @@ Mon May 12 12:19:15 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/Monitor/Group/group.cpp:
         * examples/Monitor/Memory_Usage/memory_usage.cpp:
 
-          Added appropriate preprocessor guards to ensure a 
+          Added appropriate preprocessor guards to ensure a
           successful build when ACE_HAS_MONITOR_FRAMEWORK is
           defined as 0.
 
