@@ -1,3 +1,23 @@
+Tue May 13 07:37:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Don't try to load the TAO PI library in VxWorks kernel mode
+          with shared libraries
+
+        * tests/ORB_Local_Config/Bug_1459/run_test.pl:
+        * tests/ORB_Local_Config/Bug_2612/run_test.pl:
+        * tests/ORB_Local_Config/Bunch/run_test.pl:
+        * tests/ORB_Local_Config/run_tests_all.pl:
+        * tests/ORB_Local_Config/Separation/run_test.pl:
+        * tests/ORB_Local_Config/Service_Dependency/run_test.pl:
+        * tests/ORB_Local_Config/Shared/run_test.pl:
+        * tests/ORB_Local_Config/Simple/run_test.pl:
+        * tests/ORB_Local_Config/Two_DLL_ORB/run_test.pl:
+          Updated for VxWorks cross platform testing
+
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.h:
+          Layout change
+
 Mon May 12 15:51:28 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * tao/Stub.cpp:
