@@ -684,6 +684,8 @@ ACE_CHECK_LACKS_HEADERS(sys/sysctl.h, [], [],
 #endif
 ])
 
+ACE_CHECK_HAS_HEADERS(sys/sysinfo.h)
+
 ACE_CHECK_LACKS_HEADERS(sys/time.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/uio.h)

@@ -24,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_types.h"
-
 #if !defined (ACE_LACKS_SYS_STATVFS_H)
 #  include /**/ <sys/statvfs.h>
 #endif /* !ACE_LACKS_SYS_STATVFS_H */

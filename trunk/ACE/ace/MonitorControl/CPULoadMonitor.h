@@ -26,7 +26,7 @@
 #if defined (ACE_HAS_WIN32_PDH)
 #include "ace/MonitorControl/WindowsMonitor.h"
 #elif defined (ACE_HAS_KSTAT)
-#include <kstat.h>
+#include "ace/os_include/os_kstat.h"
 #endif
 
 #include "ace/MonitorControl/MonitorControl_export.h"
