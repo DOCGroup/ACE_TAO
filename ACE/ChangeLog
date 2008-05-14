@@ -1,3 +1,21 @@
+Wed May 14 12:34:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_pdhmsg.h:
+          New file
+
+        * ace/config-win32-common.h:
+          Added ACE_HAS_PDHMSG_H
+
+        * ace/config-win32-mingw.h:
+        * ace/config-WinCE.h:
+          Added ACE_LACKS_PDHMSG_H
+
+        * ace/Makefile.am:
+          Added new file
+
+        * ace/MonitorControl/WindowsMultiInstanceMonitor.cpp:
+          Use new os_pdhmsg.h
+
 Wed May 14 12:24:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_kstat.h:

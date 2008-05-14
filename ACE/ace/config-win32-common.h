@@ -267,6 +267,7 @@
 #define ACE_LACKS_LOG2
 
 #define ACE_HAS_PDH_H
+#define ACE_HAS_PDHMSG_H
 
 #define ACE_HAS_VFWPRINTF
 

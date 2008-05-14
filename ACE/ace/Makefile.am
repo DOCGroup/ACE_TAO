@@ -1173,6 +1173,7 @@ nobase_include_HEADERS += \
   os_include/os_netdb.h \
   os_include/os_nl_types.h \
   os_include/os_pdh.h \
+  os_include/os_pdhmsg.h \
   os_include/os_poll.h \
   os_include/os_pthread.h \
   os_include/os_pwd.h \
