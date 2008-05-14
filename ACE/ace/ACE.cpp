@@ -3369,32 +3369,32 @@ ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
   while (*s != '\0')
     {
       if (*p == '*')
-  {
-    star = true;
-    pat = p;
-    while (*++pat == '*');
+        {
+          star = true;
+          pat = p;
+          while (*++pat == '*');
 
-    if (*pat == '\0')
-      return true;
-    p = pat;
-  }
+          if (*pat == '\0')
+            return true;
+          p = pat;
+        }
       else if (*p == '?')
-  {
-    ++s;
-    ++p;
-  }
+        {
+          ++s;
+          ++p;
+        }
       else if (! equal_char(*s, *p, case_sensitive))
-  {
-    if (!star)
-      return false;
-    s = ++str;
-    p = pat;
-  }
+        {
+          if (!star)
+            return false;
+          s = ++str;
+          p = pat;
+        }
       else
-  {
-    ++s;
-    ++p;
-  }
+        {
+          ++s;
+          ++p;
+        }
     }
   if (*p == '*')
     while (*++p == '*');

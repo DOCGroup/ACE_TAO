@@ -37,7 +37,7 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
   else
     priority_mask = thread_priority_mask_;
 
-  ACE_TCHAR *strtokp;
+  ACE_TCHAR *strtokp = 0;
 
   // Parse string and alternate priority mask.
 
