@@ -2,19 +2,16 @@
 
 //=============================================================================
 /**
- *  @file    os_glob.h
- *
- *  pathname pattern-matching types
+ *  @file    os_kstat.h
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@dresystems.com>
- *  @author This code was originally in various places including ace/OS.h.
+ *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_OS_GLOB_H
-#define ACE_OS_INCLUDE_OS_GLOB_H
+#ifndef ACE_OS_INCLUDE_OS_KSTAT_H
+#define ACE_OS_INCLUDE_OS_KSTAT_H
 
 #include /**/ "ace/pre.h"
 
@@ -24,9 +21,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_LACKS_GLOB_H)
-# include /**/ <glob.h>
-#endif /* !ACE_LACKS_GLOB_H */
+#if defined (ACE_HAS_KSTAT)
+# define ACE_HAS_KSTAT_H
+#endif /* ACE_HAS_KSTAT */
+
+#if defined (ACE_HAS_KSTAT_H)
+# include <kstat.h>
+#endif /* ACE_HAS_KSTAT_H */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
@@ -39,4 +40,4 @@ extern "C"
 #endif /* __cplusplus */
 
 #include /**/ "ace/post.h"
-#endif /* ACE_OS_INCLUDE_OS_GLOB_H */
+#endif /* ACE_OS_INCLUDE_OS_KSTAT_H */

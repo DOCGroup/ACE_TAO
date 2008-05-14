@@ -1,3 +1,27 @@
+Wed May 14 12:24:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_kstat.h:
+        * ace/os_include/sys/os_sysinfo.h:
+          New header files
+
+        * ace/os_include/os_glob.h:
+        * ace/os_include/sys/os_statvfs.h:
+          Removed not needed includes
+
+        * configure.ac:
+          Added check for sysinfo.h
+
+        * ace/config-linux-common.h:
+          Added ACE_HAS_SYSINFO and ACE_HAS_SYSINFO_H
+
+        * ace/Makefile.am:
+          Added new files
+
+        * ace/MonitorControl/CPULoadMonitor.h:
+        * ace/MonitorControl/MemoryUsageMonitor.cpp:
+        * ace/MonitorControl/MemoryUsageMonitor.h:
+          Use the new defines and header files
+
 Wed May 14 10:41:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/*:
