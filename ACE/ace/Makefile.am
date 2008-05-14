@@ -1161,6 +1161,7 @@ nobase_include_HEADERS += \
   os_include/os_intrin.h \
   os_include/os_inttypes.h \
   os_include/os_iso646.h \
+  os_include/os_kstat.h \
   os_include/os_langinfo.h \
   os_include/os_libgen.h \
   os_include/os_limits.h \
@@ -1218,6 +1219,7 @@ nobase_include_HEADERS += \
   os_include/sys/os_stat.h \
   os_include/sys/os_statvfs.h \
   os_include/sys/os_sysctl.h \
+  os_include/sys/os_sysinfo.h \
   os_include/sys/os_time.h \
   os_include/sys/os_timeb.h \
   os_include/sys/os_times.h \

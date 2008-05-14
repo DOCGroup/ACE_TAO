@@ -258,6 +258,8 @@
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
+#define ACE_HAS_SYS_SYSINFO_H
+#define ACE_HAS_SYSINFO
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
