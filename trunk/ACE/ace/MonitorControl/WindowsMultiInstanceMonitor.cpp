@@ -6,8 +6,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
-
-#include <pdhmsg.h>
+#include "ace/os_include/os_pdhmsg.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
