@@ -40,7 +40,7 @@ class ETCL_Constraint;
 
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     /**
      * @class Constraint_Visitor

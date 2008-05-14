@@ -37,7 +37,7 @@ class ACE_Message_Queue_NT;
 #if defined (ACE_HAS_MONITOR_POINTS) && ACE_HAS_MONITOR_POINTS == 1
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     class Size_Monitor;
   }
@@ -606,7 +606,7 @@ protected:
 
   /// Sends the size of the queue whenever it changes.
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-  ACE::MonitorControl::Size_Monitor *monitor_;
+  ACE::Monitor_Control::Size_Monitor *monitor_;
 #endif
 
 private:

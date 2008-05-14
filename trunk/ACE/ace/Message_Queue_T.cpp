@@ -940,7 +940,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
 
   /// Make a unique name using our hex address.
   const int nibbles = 2 * sizeof (ptrdiff_t);

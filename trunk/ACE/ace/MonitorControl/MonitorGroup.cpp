@@ -8,7 +8,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     MonitorGroup::MonitorGroup (const char* name)
       : Monitor_Base (name)

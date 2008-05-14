@@ -315,7 +315,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 

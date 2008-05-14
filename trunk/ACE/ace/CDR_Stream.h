@@ -75,7 +75,7 @@ class ACE_InputCDR;
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     class Size_Monitor;
   }
@@ -573,7 +573,7 @@ private:
   size_t const memcpy_tradeoff_;
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-  ACE::MonitorControl::Size_Monitor *monitor_;
+  ACE::Monitor_Control::Size_Monitor *monitor_;
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 protected:
@@ -1010,7 +1010,7 @@ protected:
   ACE_WChar_Codeset_Translator *wchar_translator_;
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-  ACE::MonitorControl::Size_Monitor *monitor_;
+  ACE::Monitor_Control::Size_Monitor *monitor_;
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 private:

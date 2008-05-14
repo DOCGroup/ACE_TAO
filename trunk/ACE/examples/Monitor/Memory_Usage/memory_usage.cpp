@@ -21,7 +21,7 @@ public:
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::MonitorControl::Monitor_Base *memory_monitor =
+    ACE::Monitor_Control::Monitor_Base *memory_monitor =
       mgr->admin ().monitor_point ("OS/Memory/TotalUsage");
 
     if (memory_monitor != 0)

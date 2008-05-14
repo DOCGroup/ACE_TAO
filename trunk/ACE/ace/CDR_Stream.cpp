@@ -57,7 +57,7 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (this->total_length ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -100,7 +100,7 @@ ACE_OutputCDR::ACE_OutputCDR (char *data,
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (this->total_length ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -132,7 +132,7 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Data_Block *data_block,
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (this->total_length ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -161,7 +161,7 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (this->total_length ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -864,7 +864,7 @@ ACE_InputCDR::ACE_InputCDR (const char *buf,
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (bufsiz);
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -883,7 +883,7 @@ ACE_InputCDR::ACE_InputCDR (size_t bufsiz,
 {
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (bufsiz);
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -902,7 +902,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
 {
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (this->start_.total_size ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
@@ -924,7 +924,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
 {
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (data->size ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -957,7 +957,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (data->size ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -999,7 +999,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (this->start_.total_size ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -1046,7 +1046,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (this->start_.total_size ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -1075,7 +1075,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (this->start_.total_size ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -1097,7 +1097,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (this->start_.total_size ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
@@ -1156,7 +1156,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
-           ACE::MonitorControl::Size_Monitor);
+           ACE::Monitor_Control::Size_Monitor);
   this->monitor_->receive (this->start_.total_size ());
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }

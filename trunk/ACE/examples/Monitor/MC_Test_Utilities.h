@@ -25,7 +25,7 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 

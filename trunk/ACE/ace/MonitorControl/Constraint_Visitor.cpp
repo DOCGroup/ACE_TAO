@@ -11,7 +11,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     Constraint_Visitor::Constraint_Visitor (
       const Monitor_Control_Types::Data& data)

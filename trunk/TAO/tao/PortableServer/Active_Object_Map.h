@@ -264,7 +264,7 @@ public:
   static size_t system_id_size_;
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-  ACE::MonitorControl::Size_Monitor *monitor_;
+  ACE::Monitor_Control::Size_Monitor *monitor_;
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 };
 
