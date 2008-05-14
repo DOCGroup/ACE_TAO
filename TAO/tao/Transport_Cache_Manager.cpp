@@ -52,9 +52,9 @@ namespace TAO
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     ACE_NEW (this->purge_monitor_,
-             ACE::MonitorControl::Size_Monitor ("Connection_Cache_Purge"));
+             ACE::Monitor_Control::Size_Monitor ("Connection_Cache_Purge"));
     ACE_NEW (this->size_monitor_,
-             ACE::MonitorControl::Size_Monitor ("Connection_Cache_Size"));
+             ACE::Monitor_Control::Size_Monitor ("Connection_Cache_Size"));
     this->purge_monitor_->add_to_registry ();
     this->size_monitor_->add_to_registry ();
 #endif /* TAO_HAS_MONITOR_POINTS==1 */

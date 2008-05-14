@@ -29,7 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     /**
      * @class Auto_Update_Starter
@@ -50,7 +50,7 @@ namespace ACE
   }
 }
 
-typedef ACE::MonitorControl::Auto_Update_Starter STARTER;
+typedef ACE::Monitor_Control::Auto_Update_Starter STARTER;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

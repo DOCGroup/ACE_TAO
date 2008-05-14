@@ -21,7 +21,7 @@ public:
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::MonitorControl::Monitor_Base *cpu_monitor =
+    ACE::Monitor_Control::Monitor_Base *cpu_monitor =
       mgr->admin ().monitor_point ("OS/Processor/CPULoad");
 
     if (cpu_monitor != 0)

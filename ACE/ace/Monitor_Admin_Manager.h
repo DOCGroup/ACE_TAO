@@ -29,7 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     /**
      * @class Monitor_Admin_Manager
@@ -44,7 +44,7 @@ namespace ACE
     {
     public:
       /// Access the admin instance.
-      ACE::MonitorControl::Monitor_Admin& admin (void);
+      ACE::Monitor_Control::Monitor_Admin& admin (void);
 
       /// Used to force initialization of the MC service.
       static int Initializer (void);
@@ -56,7 +56,7 @@ namespace ACE
 }
 
 /// For the ACE_FACTORY_DEFINE macro in the .cpp file.
-typedef ACE::MonitorControl::Monitor_Admin_Manager MC_ADMINMANAGER;
+typedef ACE::Monitor_Control::Monitor_Admin_Manager MC_ADMINMANAGER;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

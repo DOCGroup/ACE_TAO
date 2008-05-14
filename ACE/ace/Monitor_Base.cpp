@@ -19,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     Monitor_Base::Monitor_Base (void)
       : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)

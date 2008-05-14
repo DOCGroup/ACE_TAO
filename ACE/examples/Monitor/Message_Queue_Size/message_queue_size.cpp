@@ -37,7 +37,7 @@ public:
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::MonitorControl::Monitor_Base *mq_monitor =
+    ACE::Monitor_Control::Monitor_Base *mq_monitor =
       mgr->admin ().monitor_point (name_str.c_str ());
 
     if (mq_monitor != 0)

@@ -11,7 +11,7 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
@@ -25,13 +25,13 @@ public:
     MC_ADMINMANAGER* mgr =
       ACE_Dynamic_Service<Monitor_Admin_Manager>::instance ("MC_ADMINMANAGER");
 
-    ACE::MonitorControl::Monitor_Base *cpu_monitor =
+    ACE::Monitor_Control::Monitor_Base *cpu_monitor =
       mgr->admin ().monitor_point ("OS/Processor/CPULoad");
 
-    ACE::MonitorControl::Monitor_Base *memory_monitor =
+    ACE::Monitor_Control::Monitor_Base *memory_monitor =
       mgr->admin ().monitor_point ("OS/Memory/TotalUsage");
 
-    ACE::MonitorControl::Monitor_Base *bytes_monitor =
+    ACE::Monitor_Control::Monitor_Base *bytes_monitor =
       mgr->admin ().monitor_point ("OS/Network/BytesSent");
 
     /// Query the monitor for its data every 2 seconds, and call the

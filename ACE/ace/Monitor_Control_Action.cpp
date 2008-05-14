@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     Control_Action::Control_Action (void)
       : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
