@@ -1,3 +1,25 @@
+Wed May 14 18:30:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-irix6.x-common.h:
+        * ace/config-linux-common.h:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-tandem.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/MonitorControl/MemoryUsageMonitor.cpp:
+        * ace/MonitorControl/MemoryUsageMonitor.h:
+        * ace/OS.inl:
+        * ace/os_include/os_unistd.h:
+        * ace/os_include/sys/os_resource.h:
+        * ace/POSIX_Proactor.cpp:
+        * ace/configure.ac:
+          Seems we already had a ACE_HAS_SYSINFO but this is a different
+          method but with the same name as we use in the monitoring code.
+          Added ACE_HAS_SYS_SYSTEMINFO_H as new define, renamed the
+          linux define to ACE_HAS_LINUX_SYSINFO
+
 Wed May 14 18:14:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:

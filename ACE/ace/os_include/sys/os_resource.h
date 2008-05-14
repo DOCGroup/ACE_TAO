@@ -31,9 +31,9 @@
 #  include /**/ <sys/resource.h>
 #endif /* !ACE_LACKS_SYS_RESOURCE_H */
 
-#if defined (ACE_HAS_SYSINFO)
+#if defined (ACE_HAS_SYS_SYSTEMINFO_H)
 #  include /**/ <sys/systeminfo.h>
-#endif /* ACE_HAS_SYS_INFO */
+#endif /* ACE_HAS_SYS_SYSTEMINFO_H */
 
 #if defined (ACE_HAS_SYS_SYSCALL_H)
 #  include /**/ <sys/syscall.h>

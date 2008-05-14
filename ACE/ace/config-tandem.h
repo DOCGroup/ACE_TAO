@@ -40,6 +40,7 @@
 #define ACE_HAS_NONCONST_SENDMSG
 
 //Platform supports system configuration information
+#define ACE_HAS_SYS_SYSTEMINFO_H
 #define ACE_HAS_SYSINFO
 
 //Platform supports the POSIX regular expression library
