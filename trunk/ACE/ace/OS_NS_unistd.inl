@@ -21,7 +21,7 @@
 
 #if defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
 #  include "ace/os_include/os_unistd.h"
-#  if defined (ACE_VXWORKS) && ((ACE_VXWORKS >= 0x620) && (ACE_VXWORKS <= 0x660))
+#  if defined (ACE_VXWORKS) && (((ACE_VXWORKS >= 0x620) && (ACE_VXWORKS <= 0x660)) || defined (ACE_HAS_VXWORKS551_MEDUSA))
 #    if defined (__RTP__)
 #      include "ace/os_include/os_strings.h"
 #    else
