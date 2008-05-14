@@ -25,7 +25,7 @@
 
 #if defined (ACE_HAS_WIN32_PDH)
 #include "ace/MonitorControl/WindowsMonitor.h"
-#elif defined (ACE_HAS_SYSINFO)
+#elif defined (ACE_HAS_LINUX_SYSINFO)
 #include "ace/os_include/sys/os_sysinfo.h"
 #endif
 
@@ -60,7 +60,7 @@ namespace ACE
     private:
       static const char* default_name_;
 
-#if defined (ACE_HAS_SYSINFO)
+#if defined (ACE_HAS_LINUX_SYSINFO)
       struct sysinfo sysinfo_;
 #elif defined (ACE_HAS_KSTAT)
 #endif

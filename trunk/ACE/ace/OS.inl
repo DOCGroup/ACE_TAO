@@ -62,9 +62,9 @@ using std::strftime;
 #   include /**/ <regexpr.h>
 # endif /* ACE_HAS_REGEX */
 
-# if defined (ACE_HAS_SYSINFO)
+# if defined (ACE_HAS_SYS_SYSTEMINFO_H)
 #   include /**/ <sys/systeminfo.h>
-# endif /* ACE_HAS_SYS_INFO */
+# endif /* ACE_HAS_SYS_SYSTEMINFO_H */
 
 # if defined (ACE_HAS_SYS_SYSCALL_H)
 #   include /**/ <sys/syscall.h>
