@@ -268,10 +268,10 @@ namespace TAO
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     /// Connection cache purge monitor.
-    ACE::MonitorControl::Size_Monitor *purge_monitor_;
+    ACE::Monitor_Control::Size_Monitor *purge_monitor_;
 
     /// Connection cache size monitor.
-    ACE::MonitorControl::Size_Monitor *size_monitor_;
+    ACE::Monitor_Control::Size_Monitor *size_monitor_;
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
   };
 

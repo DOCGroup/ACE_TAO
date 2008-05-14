@@ -28,7 +28,7 @@ public:
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::MonitorControl::Monitor_Base *thread_monitor =
+    ACE::Monitor_Control::Monitor_Base *thread_monitor =
       mgr->admin ().monitor_point ("OS/System/NumThreads");
 
     if (thread_monitor != 0)

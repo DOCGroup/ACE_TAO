@@ -86,7 +86,7 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
-      ACE::MonitorControl::Monitor_Base *monitor =
+      ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
       if (monitor != 0)
@@ -132,7 +132,7 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
-      ACE::MonitorControl::Monitor_Base *monitor =
+      ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
       if (monitor != 0)
@@ -177,7 +177,7 @@ Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
-      ACE::MonitorControl::Monitor_Base *monitor =
+      ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
       if (monitor != 0)
@@ -212,7 +212,7 @@ Monitor_Impl::register_constraint (
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
-      ACE::MonitorControl::Monitor_Base *monitor =
+      ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
       if (monitor != 0)
@@ -242,12 +242,12 @@ Monitor_Impl::unregister_constraints (
   for (CORBA::ULong index = 0; index < constraint.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
-      ACE::MonitorControl::Monitor_Base *monitor =
+      ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (constraint[index].itemname.in ());
 
       if (monitor != 0)
         {
-          ACE::MonitorControl::Control_Action *action =
+          ACE::Monitor_Control::Control_Action *action =
             monitor->remove_constraint (constraint[index].id);
 
           if (action != 0)

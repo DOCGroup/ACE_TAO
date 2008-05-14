@@ -33,7 +33,7 @@ class ETCL_Constraint;
 
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     class Control_Action;
 

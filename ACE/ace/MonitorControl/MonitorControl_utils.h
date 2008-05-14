@@ -27,22 +27,22 @@
 
 #include "ace/MonitorControl/AutoUpdateStarter.h"
 
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::CPULoadMonitor
+typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::CPULoadMonitor
   CPU_LOAD_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::MemoryUsageMonitor
+typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::MemoryUsageMonitor
   MEMORY_USAGE_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::NumThreadsMonitor
+typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::NumThreadsMonitor
   NUM_THREADS_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::BytesSentMonitor
+typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::BytesSentMonitor
   BYTES_SENT_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::PacketsSentMonitor
+typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::PacketsSentMonitor
   PACKETS_SENT_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::BytesReceivedMonitor
+typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::BytesReceivedMonitor
   BYTES_RECEIVED_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl::PacketsReceivedMonitor
+typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::PacketsReceivedMonitor
   PACKETS_RECEIVED_MONITOR;
 
-using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::MonitorControl;
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 template<typename OS_MP_TYPE>
 Monitor_Base*

@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  namespace MonitorControl
+  namespace Monitor_Control
   {
     WindowsMonitor::WindowsMonitor (const ACE_TCHAR *path)
       : query_ (0),
