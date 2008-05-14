@@ -47,9 +47,9 @@ CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
 Cache_Map_Manager_Test
-Cached_Accept_Conn_Test: !VxWorks !ACE_FOR_TAO !LabVIEW_RT
+Cached_Accept_Conn_Test: !ACE_FOR_TAO !LabVIEW_RT
 Cached_Allocator_Test: !ACE_FOR_TAO
-Cached_Conn_Test: !VxWorks !ACE_FOR_TAO !LabVIEW_RT
+Cached_Conn_Test: !ACE_FOR_TAO !LabVIEW_RT
 Capabilities_Test: !ACE_FOR_TAO
 Codecs_Test: !NO_CODECS !ACE_FOR_TAO
 Collection_Test
@@ -143,7 +143,7 @@ Reference_Counted_Event_Handler_Test
 Reverse_Lock_Test
 RW_Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Sendfile_Test: !QNX !NO_NETWORK !VxWorks
-Signal_Test: !VxWorks64 !VxWorks65 !LynxOS
+Signal_Test: !VxWorks63 !VxWorks64 !VxWorks65 !LynxOS
 SOCK_Connector_Test: !NO_NETWORK
 SOCK_Netlink_Test: !ACE_FOR_TAO
 SOCK_Send_Recv_Test: !NO_NETWORK
