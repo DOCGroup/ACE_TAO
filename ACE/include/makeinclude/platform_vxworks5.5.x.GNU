@@ -93,6 +93,27 @@ endif
 PRJ_TYPE = vxApp
 TARGET_DIR = $(WIND_BASE)/target/h
 TGT_DIR = $(WIND_BASE)/target
+MEDUSA_DIR = $(WIND_BASE)/target/h/make/config/featureSet
+PID_DIR = $(MEDUSA_DIR)/pid
+PCD_DIR = $(MEDUSA_DIR)/pcd
+PNE_DIR = $(MEDUSA_DIR)/pne
+
+PID_INSTALLED = $(shell test -d $(PID_DIR) && echo 1)
+PCD_INSTALLED = $(shell test -d $(PCD_DIR) && echo 1)
+PNE_INSTALLED = $(shell test -d $(PNE_DIR) && echo 1)
+
+ifeq ($(PID_INSTALLED),1)
+  CCFLAGS += -DACE_HAS_VXWORKS55_PID
+  CFLAGS += -DACE_HAS_VXWORKS55_PID
+endif
+ifeq ($(PCD_INSTALLED),1)
+  CCFLAGS += -DACE_HAS_VXWORKS55_PCD
+  CFLAGS += -DACE_HAS_VXWORKS55_PCD
+endif
+ifeq ($(PNE_INSTALLED),1)
+  CCFLAGS += -DACE_HAS_VXWORKS55_PNE
+  CFLAGS += -DACE_HAS_VXWORKS55_PNE
+endif
 
 ifeq ($(CPU),)
   # default CPU
