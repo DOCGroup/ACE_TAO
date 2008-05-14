@@ -368,13 +368,13 @@ typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, 
  * all threads under it's management when it gets destructed.
  * Therefore, remember to remove a thread from thread manager if
  * you don't want it to wait for the thread. There are also
- * function to disable this default wait-on-exit behavior.
+ * functions to disable this default wait-on-exit behavior.
  * However, if your program depends on turning this off to run
  * correctly, you are probably doing something wrong.  Rule of
  * thumb, use ACE_Thread to manage your daemon threads.
- * Notice that if there're threads live beyond the scope of
- * <main>, you are sure to have resource leaks in your program.
- * Remember to wait on threads before exiting <main> if that
+ * Notice that if there're threads which live beyond the scope of
+ * main(), you are sure to have resource leaks in your program.
+ * Remember to wait on threads before exiting your main program if that
  * could happen in your programs.
  */
 class ACE_Export ACE_Thread_Manager
@@ -419,7 +419,6 @@ public:
     ACE_THR_JOINING = 0x10000000
   };
 
-  // = Initialization and termination methods.
   /**
    * @brief Initialization and termination methods.
    *
@@ -454,22 +453,68 @@ public:
 
   /**
    * Release all resources.
-   * By default, this method will wait till all threads
-   * exit.  However, when called from <close_singleton>, most global resources
-   * are destroyed and thus, we don't try to wait but just clean up the thread
-   * descriptor list.
+   * By default, this method will wait until all threads exit.
+   * However, when called from close_singleton(), most global resources
+   * are destroyed and thus, close() does not try to wait; it simply cleans
+   * up internal thread records (the thread descriptor list).
    */
   int close (void);
 
   /**
    * Create a new thread, which executes @a func with argument @a arg.
-   * Returns: on success a unique group id that can be used to control
-   * other threads added to the same group.  On failure, returns -1.
+   *
+   * @param func        The function that is called in the spawned thread.
+   *
+   * @param arg         The value passed to each spawned thread's @a func.
+   *
+   * @param flags       Flags to control attributes of the spawned threads.
+   *                    @sa ACE_OS::thr_create() for descriptions of the
+   *                    possible flags values and their interactions.
+   *
+   * @param t_id        Pointer to a location to receive the spawned thread's
+   *                    ID. If 0, the ID is not returned.
+   *
+   * @param t_handle    Pointer to a location to receive the spawned thread's
+   *                    thread handle. If 0, the handle is not returned.
+   *
+   * @param priority    The priority at which the thread is spawned.
+   *
+   * @param grp_id      The thread group that the spawned thread is
+   *                    added to. If -1 is specified, a new thread group is
+   *                    created for the spawned thread.
+   *
+   * @param stack       Pointers to the base of a pre-allocated stack space
+   *                    for the thread's stack. If 0, the platform allocates
+   *                    stack space for the thread. If a stack is specified,
+   *                    it is recommended that @a stack_size also be supplied
+   *                    to specify the size of the stack.
+   *                    Not all platforms support pre-allocated stacks. If
+   *                    @a stack is specified for a platform which does not
+   *                    allow pre-allocated stack space this parameter is
+   *                    ignored.
+   *
+   * @param stack_size  Indicate how large the thread's stack should be, in
+   *                    bytes. If a pre-allocated stack pointer is passed in
+   *                    @a stack, @a stack_size indicates the size of that
+   *                    stack area. If no pre-allocated stack is passed,
+   *                    the stack size specified is passed to the
+   *                    operating system to request that it allocate a stack
+   *                    of the specified size.
+   *
+   * @param thr_name    Pointer to a name to assign to the spawned thread.
+   *                    This is only meaningful for platforms that have a
+   *                    capacity to name threads (e.g., VxWorks and some
+   *                    varieties of Pthreads). This argument is ignored if
+   *                    specified as 0 and on platforms that do not have the
+   *                    capability to name threads.
+   *
+   * @retval   -1 on failure; @c errno contains an error value.
+   * @retval   The group id of the spawned thread.
    */
   int spawn (ACE_THR_FUNC func,
              void *arg = 0,
              long flags = THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
-             ACE_thread_t * = 0,
+             ACE_thread_t *t_id = 0,
              ACE_hthread_t *t_handle = 0,
              long priority = ACE_DEFAULT_THREAD_PRIORITY,
              int grp_id = -1,
@@ -478,33 +523,69 @@ public:
              const char** thr_name = 0);
 
   /**
-   * Spawn N new threads, which execute @a func with argument @a arg.
-   * If <thread_ids> != 0 the thread_ids of successfully spawned
-   * threads will be placed into the <thread_ids> buffer (which must
-   * be the same size as @a n).  If @a stack != 0 it is assumed to be an
-   * array of @a n pointers to the base of the stacks to use for the
-   * threads being spawned.  If @a stack_size != 0 it is assumed to be
-   * an array of @a n values indicating how big each of the
-   * corresponding @a stacks are.  If @a thread_handles != 0 it is
-   * assumed to be an array of @a n thread_handles that will be
-   * assigned the values of the thread handles being spawned.
+   * Spawn a specified number of threads, all of which execute @a func
+   * with argument @a arg.
    *
-   * Threads in Thread_Manager can be manipulated in groups based on
+   * @param n           The number of threads to spawn.
+   *
+   * @param func        The function that is called in the spawned thread.
+   *
+   * @param arg         The value passed to each spawned thread's @a func.
+   *
+   * @param flags       Flags to control attributes of the spawned threads.
+   *                    @sa ACE_OS::thr_create() for descriptions of the
+   *                    possible flags values and their interactions.
+   *
+   * @param priority    The priority at which the threads are spawned.
+   *
+   * @param grp_id      The thread group that the spawned threads are
+   *                    added to. If -1 is specified, a new thread group is
+   *                    created for the spawned threads.
+   *
+   * @param task        The ACE_Task that the spawned threads are associated
+   *                    with. If 0, the threads are not associated with an
+   *                    ACE_Task. This argument is usually assigned by the
+   *                    ACE_Task_Base::activate() method to associate the
+   *                    spawned threads with the spawning ACE_Task object.
+   *
+   * @param thread_handles An array of @a n entries which will receive
+   *                    the thread handles of the spawned threads.
+   *
+   * @param stack       An array of @a n pointers to pre-allocated stack space
+   *                    for each thread's stack. If specified as 0, the
+   *                    platform allocates stack space for each thread. If
+   *                    a stack is specified, it is recommended that a
+   *                    @a stack_size element also be supplied that specifies
+   *                    the size of the stack.
+   *                    Not all platforms support pre-allocated stacks. If
+   *                    @a stack is specified for a platform which does not
+   *                    allow pre-allocated stack space this parameter is
+   *                    ignored.
+   *
+   * @param stack_size  An array of @a n values which indicate how large
+   *                    each thread's stack should be, in bytes.
+   *                    If pre-allocated stacks are passed in @a stacks, these
+   *                    sizes are for those stacks. If no pre-allocated stacks
+   *                    are passed, the stack sizes are specified to the
+   *                    operating system to request that it allocate stacks
+   *                    of the specified sizes. If an array entry is 0, the
+   *                    platform defaults are used for the corresponding thread.
+   *                    If a 0 array pointer is specified, platform defaults
+   *                    are used for all thread stack sizes.
+   *
+   * @param thr_name    An array of names to assign to the spawned threads.
+   *                    This is only meaningful for platforms that have a
+   *                    capacity to name threads (e.g., VxWorks and some
+   *                    varieties of Pthreads). This argument is ignored if
+   *                    specified as 0 and on platforms that do not have the
+   *                    capability to name threads.
+   *
+   * ACE_Thread_Manager can manipulate threads in groups based on
    * @a grp_id or @a task using functions such as kill_grp() or
    * cancel_task().
    *
-   * If @a grp_id is assigned, the newly spawned threads are added into
-   * the group.  Otherwise, the Thread_Manager assigns these @a n
-   * threads with a grp_id.  You should choose either assigning
-   * @a grp_id everytime, or let the Thread_Manager handles it for
-   * you consistently.
-   *
-   * The argument @a task is usually assigned by
-   * <ACE_Task_Base::activate>.  It associates the newly spawned
-   * threads with an ACE_Task instance, which defaults to @c this.
-   *
-   * @retval -1 on failure (@c errno will explain...), otherwise returns the
-   * group id of the threads.
+   * @retval   -1 on failure; @c errno contains an error value.
+   * @retval   The group id of the threads.
    */
   int spawn_n (size_t n,
                ACE_THR_FUNC func,
@@ -519,33 +600,74 @@ public:
                const char* thr_name[] = 0);
 
   /**
-   * Spawn N new threads, which execute @a func with argument @a arg.
-   * If <thread_ids> != 0 the thread_ids of successfully spawned
-   * threads will be placed into the <thread_ids> buffer (which must
-   * be the same size as @a n).  If @a stack != 0 it is assumed to be an
-   * array of @a n pointers to the base of the stacks to use for the
-   * threads being spawned.  If @a stack_size != 0 it is assumed to be
-   * an array of @a n values indicating how big each of the
-   * corresponding @a stacks are.  If @a thread_handles != 0 it is
-   * assumed to be an array of @a n thread_handles that will be
-   * assigned the values of the thread handles being spawned.
+   * Spawn a specified number of threads, all of which execute @a func
+   * with argument @a arg.
    *
-   * Threads in Thread_Manager can be manipulated in groups based on
+   * @param thread_ids  An array to receive the thread IDs of successfully
+   *                    spawned buffer. If 0, the thread IDs are not returned.
+   *                    If specified, the array must be at least @a n entries.
+   *
+   * @param n           The number of threads to spawn.
+   *
+   * @param func        The function that is called in the spawned thread.
+   *
+   * @param arg         The value passed to each spawned thread's @a func.
+   *
+   * @param flags       Flags to control attributes of the spawned threads.
+   *                    @sa ACE_OS::thr_create() for descriptions of the
+   *                    possible flags values and their interactions.
+   *
+   * @param priority    The priority at which the threads are spawned.
+   *
+   * @param grp_id      The thread group that the spawned threads are
+   *                    added to. If -1 is specified, a new thread group is
+   *                    created for the spawned threads.
+   *
+   * @param stack       An array of @a n pointers to pre-allocated stack space
+   *                    for each thread's stack. If specified as 0, the
+   *                    platform allocates stack space for each thread. If
+   *                    a stack is specified, it is recommended that a
+   *                    @a stack_size element also be supplied that specifies
+   *                    the size of the stack.
+   *                    Not all platforms support pre-allocated stacks. If
+   *                    @a stack is specified for a platform which does not
+   *                    allow pre-allocated stack space this parameter is
+   *                    ignored.
+   *
+   * @param stack_size  An array of @a n values which indicate how large
+   *                    each thread's stack should be, in bytes.
+   *                    If pre-allocated stacks are passed in @a stacks, these
+   *                    sizes are for those stacks. If no pre-allocated stacks
+   *                    are passed, the stack sizes are specified to the
+   *                    operating system to request that it allocate stacks
+   *                    of the specified sizes. If an array entry is 0, the
+   *                    platform defaults are used for the corresponding thread.
+   *                    If a 0 array pointer is specified, platform defaults
+   *                    are used for all thread stack sizes.
+   *
+   * @param thread_handles An array of @a n entries which will receive
+   *                    the thread handles of the spawned threads.
+   *
+   * @param task        The ACE_Task that the spawned threads are associated
+   *                    with. If 0, the threads are not associated with an
+   *                    ACE_Task. This argument is usually assigned by the
+   *                    ACE_Task_Base::activate() method to associate the
+   *                    spawned threads with the spawning ACE_Task object.
+   *
+   * @param thr_name    An array of names to assign to the spawned threads.
+   *                    This is only meaningful for platforms that have a
+   *                    capacity to name threads (e.g., VxWorks and some
+   *                    varieties of Pthreads). This argument is ignored if
+   *                    specified as 0 and on platforms that do not have the
+   *                    capability to name threads.
+   *
+   * ACE_Thread_Manager can manipulate threads in groups based on
    * @a grp_id or @a task using functions such as kill_grp() or
    * cancel_task().
    *
-   * If @a grp_id is assigned, the newly spawned threads are added into
-   * the group.  Otherwise, the Thread_Manager assigns these @a n
-   * threads with a grp_id.  You should choose either assigning
-   * @a grp_id everytime, or let the Thread_Manager handles it for
-   * you consistently.
-   *
-   * The argument @a task is usually assigned by
-   * <ACE_Task_Base::activate>.  It associates the newly spawned
-   * threads with an ACE_Task instance, which defaults to @c this.
-   *
-   * @retval -1 on failure (@c errno will explain...), otherwise returns the
-   * group id of the threads.
+   * @retval   -1 on failure; @c errno contains an error value.
+   * @retval   The group id of the threads.
+
    */
   int spawn_n (ACE_thread_t thread_ids[],
                size_t n,
@@ -620,7 +742,7 @@ public:
   /**
    * Return the "real" handle to the calling thread, caching it if
    * necessary in TSS to speed up subsequent lookups. This is
-   * necessary since on some platforms (e.g., Win32) we can't get this
+   * necessary since on some platforms (e.g., Windows) we can't get this
    * handle via direct method calls.  Notice that you should *not*
    * close the handle passed back from this method.  It is used
    * internally by Thread Manager.  On the other hand, you *have to*
@@ -630,9 +752,8 @@ public:
   int thr_self (ACE_hthread_t &);
 
   /**
-   * Return the unique ID of the thread.  This is not strictly
-   * necessary (because a thread can always just call
-   * <ACE_Thread::self>).  However, we put it here to be complete.
+   * Return the unique ID of the calling thread.
+   * Same as calling ACE_Thread::self().
    */
   ACE_thread_t thr_self (void);
 
@@ -643,7 +764,14 @@ public:
    */
   ACE_Task_Base *task (void);
 
-  // = Suspend methods, which isn't supported on POSIX pthreads (will not block).
+  /**
+   * @name Suspend and resume methods
+   *
+   * Suspend/resume is not supported on all platforms. For example, Pthreads
+   * does not support these functions.
+   */
+  //@{
+
   /// Suspend all threads
   int suspend_all (void);
 
@@ -659,7 +787,6 @@ public:
    */
   int testsuspend (ACE_thread_t t_id);
 
-  // = Resume methods, which isn't supported on POSIX pthreads (will not block).
   /// Resume all stopped threads
   int resume_all (void);
 
@@ -674,6 +801,8 @@ public:
    * return false if @a t_id is not managed by the Thread_Manager.
    */
   int testresume (ACE_thread_t t_id);
+
+  //@}
 
   // = Send signals to one or more threads without blocking.
   /**
@@ -730,13 +859,10 @@ public:
   int get_grp (ACE_thread_t,
                int &grp_id);
 
-  // = The following methods are new methods which resemble current
-  // methods in <ACE_Thread Manager>. For example, the <apply_task>
-  // method resembles the <apply_thr> method, and <suspend_task>
-  // resembles <suspend_thr>.
-
-  // = Operations on ACE_Tasks.
-
+  /**
+   * @name Task-related operations
+   */
+  //@{
   /**
    * Block until there are no more threads running in a specified task.
    * This method will not wait for either detached or daemon threads;
@@ -773,6 +899,8 @@ public:
    * cancellation.
    */
   int cancel_task (ACE_Task_Base *task, int async_cancel = 0);
+
+  //@}
 
   // = Collect thread handles in the thread manager.  Notice that
   //   the collected information is just a snapshot.
