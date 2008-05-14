@@ -1,3 +1,8 @@
+Wed May 14 20:41:17  2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Thread_Manager.h: Expanded the documentation, particularly for
+          spawn[_n].
+
 Wed May 14 18:30:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-irix6.x-common.h:
