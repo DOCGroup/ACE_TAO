@@ -1153,7 +1153,7 @@ get_ip_interfaces_aix (size_t &count,
   return 0;
 }
 
-#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)
+#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600) && !defined (ACE_HAS_VXWORKS551_MEDUSA)
 int
 get_ip_interfaces_vxworks_lt600 (size_t &count,
                                  ACE_INET_Addr *&addrs)
@@ -1234,7 +1234,7 @@ ACE::get_ip_interfaces (size_t &count,
   return get_ip_interfaces_hpux (count, addrs);
 #elif defined (_AIX)
   return get_ip_interfaces_aix (count, addrs);
-#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)
+#elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600) && !defined (ACE_HAS_VXWORKS551_MEDUSA)
   return get_ip_interfaces_vxworks_lt600 (count, addrs);
 #elif (defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (ACE_OPENVMS) || (defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x650)) || defined (ACE_HAS_RTEMS)) && !defined (ACE_LACKS_NETWORKING)
   // COMMON (SVR4 and BSD) UNIX CODE

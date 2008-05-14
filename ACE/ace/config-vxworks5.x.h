@@ -274,6 +274,14 @@
 #define ACE_LACKS_FGETWS
 #define ACE_LACKS_FPUTWS
 
+#if defined (ACE_HAS_VXWORKS551_PID) || (ACE_HAS_VXWORKS551_PCD) || (ACE_HAS_VXWORKS551_PNE)
+# define ACE_HAS_VXWORKS551_MEDUSA
+#endif
+
+#if defined (ACE_HAS_VXWORKS551_MEDUSA)
+# define ACE_HAS_GETIFADDRS
+#endif
+
 // It is possible to enable pthread support with VxWorks, when the user decides
 // to use this, we need some more defines
 #if defined ACE_HAS_PTHREADS
