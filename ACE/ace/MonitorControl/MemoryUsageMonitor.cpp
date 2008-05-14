@@ -34,8 +34,8 @@ namespace ACE
 
       /// Stores value and timestamp with thread-safety.
       this->receive (this->value_.doubleValue);
-#elif defined (ACE_HAS_SYSINFO)
-      if (sysinfo (&this->sysinfo_) != 0)
+#elif defined (ACE_HAS_LINUX_SYSINFO)
+      if (::sysinfo (&this->sysinfo_) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Memory usage - sysinfo() failed\n")));

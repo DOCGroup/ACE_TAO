@@ -182,6 +182,7 @@
 #define ACE_LACKS_STDINT_H
 #define ACE_HAS_SYSENT_H
 #define ACE_HAS_SYSINFO
+#define ACE_HAS_SYS_SYSTEMINFO_H
 
 // Platform has support for multi-byte character support compliant
 // with the XPG4 Worldwide Portability Interface wide-character
