@@ -1207,7 +1207,7 @@ Brian Gilmer <Brian dot Gilmer at jhuapl dot edu>
 James Dunham <James dot Dunham at esecurityinc dot com>
 Juergen Pfreundt <Juergen dot Pfreundt at gft dot com>
 Joel Sherrill <joel at OARcorp dot com>
-Jules Colding <colding at 42tools dot com> 
+Jules Colding <colding at 42tools dot com>
 Stephane Pion <PION_Stephane at stna dot dgac dot fr>
 Raghu Narayan <raghu_narayan at non dot hp dot com>
 Richard Goold <rgoold at inexum dot com>
@@ -2242,6 +2242,7 @@ Michael Carter <mcarter at swri dot org>
 Alain Kocelniak <alain at corys dot fr>
 Alvaro Vega Garcia <avega at tid dot es>
 Fernando C. Jeronymo <fernando dot fcavalcanti at gmail.com>
+Tim <tim at burmair dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
