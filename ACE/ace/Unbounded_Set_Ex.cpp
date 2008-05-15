@@ -217,7 +217,7 @@ template <class T, class C> int
 ACE_Unbounded_Set_Ex<T, C>::insert (const T &item)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::insert");
-  if (this->find (item), 0)
+  if (this->find (item) == 0)
     return 1;
   else
     return this->insert_tail (item);
