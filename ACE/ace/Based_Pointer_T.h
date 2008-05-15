@@ -100,7 +100,7 @@ public:
   void operator = (const ACE_Based_Pointer_Basic<CONCRETE> &);
 
   /// Dereference operator.
-  CONCRETE& operator * (void) const;
+  CONCRETE operator * (void) const;
 
   /// Less than operator.
   bool operator < (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
@@ -121,7 +121,7 @@ public:
   bool operator != (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
 
   /// Subscript operator.
-  CONCRETE& operator [](int index) const;
+  CONCRETE operator [](int index) const;
 
   /// Increment operator.
   void operator+= (int index);

@@ -38,7 +38,7 @@ ACE_Based_Pointer<CONCRETE>::operator = (CONCRETE *rhs)
                      - ((char *) this - this->base_offset_));
 }
 
-template <class CONCRETE> ACE_INLINE CONCRETE&
+template <class CONCRETE> ACE_INLINE CONCRETE
 ACE_Based_Pointer_Basic<CONCRETE>::operator *(void) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator *");
@@ -64,7 +64,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::operator CONCRETE *() const
   return this->addr ();
 }
 
-template <class CONCRETE> ACE_INLINE CONCRETE&
+template <class CONCRETE> ACE_INLINE CONCRETE
 ACE_Based_Pointer_Basic<CONCRETE>::operator [] (int index) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator []");
