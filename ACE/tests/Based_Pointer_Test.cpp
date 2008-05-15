@@ -36,7 +36,7 @@ ACE_RCSID (tests,
 class Foo
 {
 private:
-  Foo(const Foo &foo)
+  Foo(const Foo &)
   {
   }
 };
