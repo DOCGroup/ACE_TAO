@@ -27,10 +27,23 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/PI_Malloc.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Based_Pointer_T.h"
 
 ACE_RCSID (tests,
            Based_Pointer_Repository_Test,
            "$Id$")
+
+class Foo
+{
+private:
+  Foo(const Foo &foo)
+  {
+  }
+};
+
+class Void_Pointer : public ACE_Based_Pointer<void>
+{
+};
 
 #ifdef ACE_HAS_POSITION_INDEPENDENT_POINTERS
 
@@ -411,6 +424,8 @@ run_main (int, ACE_TCHAR *[])
     retval += mmap_persistent_map_test();
     retval += mmap_remap_test();
 
+    ACE_Based_Pointer_Basic<Foo> Foo_Ptr;
+
     ACE_END_TEST;
     return retval == 0 ? 0 : 1;
 }
@@ -421,6 +436,7 @@ int
 run_main (int, ACE_TCHAR *[])
 {
     ACE_START_TEST (ACE_TEXT ("Based_Pointer_Test"));
+    ACE_Based_Pointer_Basic<Foo> Foo_Ptr;
     ACE_END_TEST;
     return 0;
 }
