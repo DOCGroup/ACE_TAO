@@ -1,3 +1,9 @@
+Thu May 15 07:09:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc:
+          Added config-win32-msvc9.h, thanks to <tim at burmair dot com> for
+          reporting this
+
 Wed May 14 20:41:17  2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Thread_Manager.h: Expanded the documentation, particularly for

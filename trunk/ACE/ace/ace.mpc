@@ -449,6 +449,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     config-win32-ghs.h
     config-win32-msvc-7.h
     config-win32-msvc-8.h
+    config-win32-msvc-9.h
     config-win32-msvc.h
     config-win32.h
     config.h
