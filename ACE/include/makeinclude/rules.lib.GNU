@@ -156,8 +156,8 @@ $(VLIB): $(VLOBJS)
         #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
   endif # ace_lib_prelink
-  ifeq (1,$(ACE_OPENVMS_IA64))
-	$(AR) $(ARFLAGS) $@ $(AREXTRA) $(filter %.o, $?)
+  ifeq (1,$(ACE_OPENVMS))
+	find $(TMPINCDIR:%=%) -name "*.o" -or -name "*.obj" | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
   else
 	([ "`echo $(TMPINCDIR:%=%/*.o)`" != "$(TMPINCDIR:%=%/*.o)" ] && echo $(TMPINCDIR:%=%/*.o); \
 	echo $(filter %.o, $?)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
