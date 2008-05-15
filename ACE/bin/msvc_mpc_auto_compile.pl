@@ -31,8 +31,9 @@ else {
                   "$ACE_ROOT\\TAO\\tao",
                   "$ACE_ROOT\\TAO\\tests");
 
-@ciao_core_dirs = ("$ACE_ROOT\\TAO\\orbsvcs\\orbsvcs", # CIAO dependancy
-                   "$ACE_ROOT\\TAO\\CIAO");
+@orbsvcs_core_dirs = ("$ACE_ROOT\\TAO\\orbsvcs\\orbsvcs");
+
+@ciao_core_dirs = ("$ACE_ROOT\\TAO\\CIAO");
 
 $debug = 0;
 $verbose = 0;
@@ -156,6 +157,7 @@ sub Build_All ()
 {
     push @directories, @ace_core_dirs;
     push @directories, @tao_core_dirs;
+    push @directories, @orbsvcs_core_dirs;
     push @directories, @ciao_core_dirs;
 
     print STDERR "First pass (libraries)\n" if ($print_status == 1);
@@ -216,6 +218,7 @@ sub Build_All_VC7 ()
 {
     push @directories, @ace_core_dirs;
     push @directories, @tao_core_dirs;
+    push @directories, @orbsvcs_core_dirs;
     push @directories, @ciao_core_dirs;
 
     print STDERR "First pass (libraries)\n" if ($print_status == 1);
@@ -286,12 +289,20 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         push @directories, @ace_core_dirs;
         push @directories, @tao_core_dirs;
     }
+    elsif ($ARGV[0] =~ '-ORBSVCS') {# Build TAO/ORBSVCS and its tests
+        print "Building ACE+TAO+orbsvcs\n" if ( $verbose );
+        $use_custom_dir = 1;
+        push @directories, @ace_core_dirs;
+        push @directories, @tao_core_dirs;
+        push @directories, @orbsvcs_core_dirs;
+    }
     elsif ($ARGV[0] =~ '-CIAO') {# Build the CIAO and related
                                  # libraries
         print "Building only CIAO\n" if ( $verbose );
         $use_custom_dir = 1;
         push @directories, @ace_core_dirs;
         push @directories, @tao_core_dirs;
+        push @directories, @orbsvcs_core_dirs;
         push @directories, @ciao_core_dirs;
     }
     elsif ($ARGV[0] =~ '-ALL') {# Build the CIAO and related
@@ -331,9 +342,10 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-vc7       = Use MSVC 7 toolset\n";
         print "-vc8       = Use MSVC 8 toolset\n";
         print "\n";
-        print "-CORE      = Build ACE+TAO+CIAO core \n";
         print "-ACE       = Build ACE and its tests\n";
-        print "-TAO       = Build TAO and its tests\n";
+        print "-TAO       = Build ACE+TAO and its tests\n";
+        print "-ORBSVCS   = Build ACE+TAO+ORBSVCS and its tests\n";
+        print "-CIAO      = Build ACE+TAO+ORBSVCS+CIAO and its tests\n";
         print "-dir <dir> = Compile custom directories\n";
         print "\n";
         print "-rebuild   = Rebuild All\n";
