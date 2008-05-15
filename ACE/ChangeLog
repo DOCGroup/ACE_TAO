@@ -1,14 +1,22 @@
+Thu May 15 14:00:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Based_Pointer_T.{h,inl}:
+        * tests/Based_Pointer_Test.cpp:
+          Fixed bugzilla 3285, make it possible to use
+          ACE_Based_Pointer<void>. Thanks to Thomas Brownridge
+          <thomas dot brownridge at lmco dot com> for reporting this.
+
 Thu May 15 12:36:42 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/MMAP_Memory_Pool.cpp:
           When using a default base address of 0x0 and otherwise wanting
           a fixed address, a special flag was used to imply that after the
-          first address is selected the system in a call to ::mmap() 
+          first address is selected the system in a call to ::mmap()
           subsequent calls to ::mmap() reuse the selected base address
           as a fixed address. This may cause problems with reloading
-          persistent data if the stored data contains pointers and the 
+          persistent data if the stored data contains pointers and the
           system selected base address changes from run to run.
-	
+
         * ace/config-linux-common.h:
           The default base address for the x86-64 platform cannot be 0x0.
           Doing so causes the system to choose an address which for some
@@ -20,7 +28,7 @@ Thu May 15 12:36:42 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
           are then wrong and cause SEGV crashs. By experimentation, it
           seems the default base address for powerpc is appropriate for
           x86-64.
-          
+
 Thu May 15 10:19:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.lib.GNU:
