@@ -369,7 +369,15 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
     {
       // First time in, so need to acquire memory.
       first_time = 1;
-      return this->acquire (nbytes, rounded_bytes);
+
+      void *result = this->acquire (nbytes, rounded_bytes);
+      // After the first time, reset the flag so that subsequent calls
+      // will use MAP_FIXED
+      if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::FIRSTCALL_FIXED)
+        {
+          ACE_SET_BITS (flags_, MAP_FIXED);
+        }
+      return result;
     }
   else if (errno == EEXIST)
     {
@@ -388,7 +396,12 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("MMAP_Memory_Pool::init_acquire, EEXIST")),
                           0);
-
+      // After the first time, reset the flag so that subsequent calls
+      // will use MAP_FIXED
+      if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::FIRSTCALL_FIXED)
+        {
+          ACE_SET_BITS (flags_, MAP_FIXED);
+        }
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
       // Update the mapped segment information
       ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->mmap_.addr(),

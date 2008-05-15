@@ -52,11 +52,11 @@
 
 // First the machine specific part
 
-#if defined (__powerpc__)
+#if defined (__powerpc__) || defined (__x86_64__)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 #   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
-#elif defined (__ia64) || defined (__x86_64__)
+#elif defined (__ia64)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 // Zero base address should work fine for Linux of IA-64: it just lets
 // the kernel to choose the right value.
