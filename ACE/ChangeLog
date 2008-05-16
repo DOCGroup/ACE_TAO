@@ -1,3 +1,9 @@
+Fri May 16 07:50:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Based_Pointer_Test.cpp:
+          Also define a public destructor to silence the gnu warning that
+          we only have private
+
 Fri May 16 07:49:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Monitor/Num_Threads/num_threads.cpp:

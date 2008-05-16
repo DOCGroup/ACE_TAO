@@ -39,6 +39,10 @@ private:
   Foo(const Foo &)
   {
   }
+public:
+  ~Foo ()
+  {
+  }
 };
 
 class Void_Pointer : public ACE_Based_Pointer<void>
