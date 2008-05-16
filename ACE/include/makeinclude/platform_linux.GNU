@@ -65,8 +65,8 @@ CPPFLAGS += -D_GNU_SOURCE
 
 DCFLAGS  += -g
 DCCFLAGS += -g
-DLD     ?= $(CXX)
-LD      ?= $(CXX)
+DLD      = $(CXX)
+LD       = $(CXX)
 LIBS     += -ldl
 
 ifeq ($(threads),1)
