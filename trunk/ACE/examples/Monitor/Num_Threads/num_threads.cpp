@@ -5,6 +5,8 @@
 #include "ace/MonitorControl/MonitorControl.h"
 #include "examples/Monitor/MC_Test_Utilities.h"
 
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 class Worker : public ACE_Task_Base
 {
 public:
@@ -50,10 +52,12 @@ public:
     return 0;
   }
 };
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
   /// Set the timer for # of threads check at 2 sec.
   Monitor_Base *num_threads_monitor =
     create_os_monitor<NUM_THREADS_MONITOR> (0, ACE_Time_Value (2));
@@ -76,6 +80,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   STOP_PERIODIC_MONITORS;
 
   num_threads_monitor->remove_ref ();
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;
 }
