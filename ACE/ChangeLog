@@ -1,3 +1,13 @@
+Fri May 16 07:18:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_linux_common.GNU:
+          Support lib64 paths to detect certain features. Thanks to Ken
+          Sedgwick <ksedgwick at bonsai dot com> for reporting this
+
+        * include/makeinclude/platform_linux.GNU:
+          Only set DLD and LD when they are not set yet
+
 Thu May 15 14:00:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Based_Pointer_T.{h,inl}:

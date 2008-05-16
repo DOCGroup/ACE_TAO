@@ -47,8 +47,8 @@ PLATFORM_TCL_CPPFLAGS=
 PLATFORM_TCL_LIBS=-ltcl
 PLATFORM_TCL_LDFLAGS=
 
-PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
-PLATFORM_TK_LIBS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
+PLATFORM_TK_LIBS=$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_LIB_FLAG)
 PLATFORM_TK_LDFLAGS=
 
 PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
@@ -71,7 +71,7 @@ ifeq ($(sctp),lksctp)
 endif
 
 PLATFORM_AIO_SUPPORT := \
-       $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -DACE_HAS_AIO_CALLS)
+       $(shell test "`ls -L /usr/lib*/librt.so* /lib*/librt.so*`" && echo -DACE_HAS_AIO_CALLS)
 
 GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION)
 ifeq (NPTL, $(word 1,$(GNU_LIBPTHREAD_VERSION)))
