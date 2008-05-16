@@ -243,7 +243,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
     if (tail == 0)
       ACE_NEW_RETURN (tail,
-                      Module (ACE_TEXT ("End Module"), new EndTask ()),
+                      Module (ACE_TEXT ("End Module"), new TheEndTask ()),
                       -1);
     this->inherited::open (arg, head, tail);
     // Listing 1000
