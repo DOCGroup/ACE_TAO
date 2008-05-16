@@ -9,8 +9,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use strict;
 
-if ($^O eq 'hpux') {
-  print "This test will not run properly on HP-UX.\n",
+if ($^O eq 'hpux' || $^O eq 'lynxos') {
+  print "This test will not run properly on HP-UX or LynxOS.\n",
         "When one process uses up all of the file descriptors, no other\n",
         "processes run by the same user can start.\n";
   exit(0);
@@ -77,6 +77,10 @@ if ($status == 0) {
       print "ERROR: The acceptor was not reregistered\n";
       ++$status;
     }
+  }
+  else {
+    print "ERROR: Unable to read $logfile\n";
+    ++$status;
   }
 }
 

@@ -2,9 +2,11 @@
 
 #include "TestS.h"
 #include "ace/Get_Opt.h"
+#include "ace/Handle_Set.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_resource.h"
 
 ACE_RCSID (ConnectionSpinning,
            server, "$Id$")
@@ -36,6 +38,22 @@ public:
    : slast_ (ACE_INVALID_HANDLE),
      last_ (ACE_INVALID_HANDLE),
      ok_ (false) {
+
+    // We must make sure that our file descriptor limit does not exceed
+    // the size allowed (in the fd set) by the reactor.  If it does, this
+    // test will fail (in a different way than expected) which is a
+    // completely different bug than this test is designed to address
+    // (see Bug #3326).
+    rlimit rlim;
+    if (ACE_OS::getrlimit(RLIMIT_NOFILE, &rlim) == 0)
+      {
+        if (rlim.rlim_cur >
+            static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE))
+          {
+            rlim.rlim_cur = ACE_DEFAULT_SELECT_REACTOR_SIZE;
+            ACE_OS::setrlimit(RLIMIT_NOFILE, &rlim);
+          }
+      }
   }
 
   int allow_accepts (void) {
