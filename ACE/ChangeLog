@@ -1,3 +1,8 @@
+Fri May 16 07:49:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Monitor/Num_Threads/num_threads.cpp:
+          Fixed compile errors when monitoring framework is disabled
+
 Fri May 16 07:41:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Streams/Answerer.cpp:
