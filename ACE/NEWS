@@ -20,7 +20,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.4 and ACE-5.6.5
   in terms of Unbounded_Set_Ex using a comparator that uses operator==,
   which captures the previous behavior.
 
-. Added for support for Intel C++ on MacOSX
+. Added support for Intel C++ on MacOSX
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.3 and ACE-5.6.4
 ====================================================
