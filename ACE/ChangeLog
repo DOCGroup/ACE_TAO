@@ -1,3 +1,10 @@
+Fri May 16 07:41:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Streams/Answerer.cpp:
+        * examples/APG/Streams/EndTask.h:
+          Replaced EndTask with TheEndTask to resolve a name conflict
+          when using MinGW
+
 Fri May 16 07:18:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU:
