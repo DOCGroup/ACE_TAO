@@ -429,6 +429,7 @@ run_main (int, ACE_TCHAR *[])
     retval += mmap_remap_test();
 
     ACE_Based_Pointer_Basic<Foo> Foo_Ptr;
+    ACE_UNUSED_ARG (Foo_Ptr);
 
     ACE_END_TEST;
     return retval == 0 ? 0 : 1;
@@ -441,6 +442,7 @@ run_main (int, ACE_TCHAR *[])
 {
     ACE_START_TEST (ACE_TEXT ("Based_Pointer_Test"));
     ACE_Based_Pointer_Basic<Foo> Foo_Ptr;
+    ACE_UNUSED_ARG (Foo_Ptr);
     ACE_END_TEST;
     return 0;
 }
