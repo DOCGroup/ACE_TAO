@@ -1,3 +1,9 @@
+Sat May 17 01:57:30 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/HandleExhaustion/server.cpp:
+
+          Only call set the rlimit if ACE_LACKS_RLIMIT is not defined.
+
 Fri May 16 12:59:22 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/HandleExhaustion/run_test.pl:
