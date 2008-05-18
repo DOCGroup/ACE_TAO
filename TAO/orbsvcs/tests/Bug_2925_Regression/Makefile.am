@@ -17,15 +17,13 @@ TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROO
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Bug_2925_Regression_Client.am
+## Makefile.Bug_2925_Regression_IDL.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   HelloC.cpp \
   HelloC.h \
   HelloC.inl \
@@ -33,7 +31,7 @@ BUILT_SOURCES += \
   HelloS.h \
   HelloS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Hello-stamp \
   HelloC.cpp \
   HelloC.h \
@@ -48,6 +46,17 @@ Hello-stamp: $(srcdir)/Hello.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Hello.idl
 	@touch $@
 
+noinst_HEADERS = \
+  Hello.idl
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.Bug_2925_Regression_Client.am
+
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -60,12 +69,8 @@ client_CPPFLAGS = \
 
 client_SOURCES = \
   HelloC.cpp \
-  HelloS.cpp \
   client.cpp \
-  HelloC.h \
-  HelloC.inl \
-  HelloS.h \
-  HelloS.inl
+  Hello_Impl.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_DiffServPolicy.la \
@@ -89,29 +94,6 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  HelloC.cpp \
-  HelloC.h \
-  HelloC.inl \
-  HelloS.cpp \
-  HelloS.h \
-  HelloS.inl
-
-CLEANFILES += \
-  Hello-stamp \
-  HelloC.cpp \
-  HelloC.h \
-  HelloC.inl \
-  HelloS.cpp \
-  HelloS.h \
-  HelloS.inl
-
-HelloC.cpp HelloC.h HelloC.inl HelloS.cpp HelloS.h HelloS.inl: Hello-stamp
-
-Hello-stamp: $(srcdir)/Hello.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Hello.idl
-	@touch $@
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -127,10 +109,6 @@ server_SOURCES = \
   HelloS.cpp \
   Hello_Impl.cpp \
   server.cpp \
-  HelloC.h \
-  HelloC.inl \
-  HelloS.h \
-  HelloS.inl \
   Hello_Impl.h
 
 server_LDADD = \

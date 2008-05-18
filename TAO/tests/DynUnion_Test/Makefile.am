@@ -16,14 +16,12 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
-BUILT_SOURCES =
 
 ## Makefile.dynunion_test_IDL.am
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   dynanyC.cpp \
   dynanyC.h \
   dynanyC.inl \
@@ -31,7 +29,7 @@ BUILT_SOURCES += \
   dynanyS.h \
   dynanyS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   dynany-stamp \
   dynanyC.cpp \
   dynanyC.h \
@@ -55,27 +53,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  dynanyC.cpp \
-  dynanyC.h \
-  dynanyC.inl \
-  dynanyS.h \
-  dynanyS.inl
-
-CLEANFILES += \
-  dynany-stamp \
-  dynanyC.cpp \
-  dynanyC.h \
-  dynanyC.inl \
-  dynanyS.h \
-  dynanyS.inl
-
-dynanyC.cpp dynanyC.h dynanyC.inl dynanyS.h dynanyS.inl: dynany-stamp
-
-dynany-stamp: $(srcdir)/dynany.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/dynany.idl
-	@touch $@
-
 noinst_PROGRAMS = dynuniontest
 
 dynuniontest_CPPFLAGS = \
@@ -86,11 +63,7 @@ dynuniontest_CPPFLAGS = \
 
 dynuniontest_SOURCES = \
   DynUnionTest.cpp \
-  dynanyC.cpp \
-  dynanyC.h \
-  dynanyC.inl \
-  dynanyS.h \
-  dynanyS.inl
+  dynanyC.cpp
 
 dynuniontest_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_TypeCodeFactory.la \

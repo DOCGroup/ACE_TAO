@@ -1,3 +1,12 @@
+Sun May 18 22:50:47 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Bug_2925_Regression/Makefile.am:
+        * tests/DynUnion_Test/Makefile.am:
+
+          Hand tweak generated makefiles to avoid make warnings due to
+          duplicate IDL compilation rules.  We'll update the MPC
+          configuration so this isn't needed in a future release.
+
 Sun May 18 21:48:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Makefile.am:
