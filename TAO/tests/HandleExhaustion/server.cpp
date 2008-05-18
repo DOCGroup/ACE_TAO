@@ -38,7 +38,7 @@ public:
    : slast_ (ACE_INVALID_HANDLE),
      last_ (ACE_INVALID_HANDLE),
      ok_ (false) {
-#if !defined (ACE_LACKS_RLIMIT)
+#if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
     // We must make sure that our file descriptor limit does not exceed
     // the size allowed (in the fd set) by the reactor.  If it does, this
     // test will fail (in a different way than expected) which is a
@@ -54,7 +54,7 @@ public:
             ACE_OS::setrlimit(RLIMIT_NOFILE, &rlim);
           }
       }
-#endif /* !ACE_LACKS_RLIMIT */
+#endif /* !ACE_LACKS_RLIMIT && RLIMIT_NOFILE */
   }
 
   int allow_accepts (void) {
