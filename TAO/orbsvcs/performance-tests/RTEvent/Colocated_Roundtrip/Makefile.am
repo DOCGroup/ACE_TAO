@@ -35,13 +35,6 @@ driver_CPPFLAGS = \
 driver_SOURCES = \
   driver.cpp
 
-../lib:
-	mkdir -p ../lib
-
-
-driver_DEPENDENCIES = \
- ../lib
-
 driver_LDFLAGS = \
   -L../lib
 

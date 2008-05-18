@@ -81,13 +81,6 @@ client_SOURCES = \
   client.cpp \
   Callback.h
 
-../lib:
-	mkdir -p ../lib
-
-
-client_DEPENDENCIES = \
- ../lib
-
 client_LDFLAGS = \
   -L../lib
 
@@ -142,13 +135,6 @@ server_SOURCES = \
   server.cpp \
   Session.h \
   Session_Factory.h
-
-../lib:
-	mkdir -p ../lib
-
-
-server_DEPENDENCIES = \
- ../lib
 
 server_LDFLAGS = \
   -L../lib

@@ -36,13 +36,6 @@ Atomic_Reconnect_SOURCES = \
   Atomic_Reconnect.cpp \
   Atomic_Reconnect.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Atomic_Reconnect_DEPENDENCIES = \
- ../lib
-
 Atomic_Reconnect_LDFLAGS = \
   -L../lib
 
@@ -87,13 +80,6 @@ BCast_CPPFLAGS = \
 BCast_SOURCES = \
   BCast.cpp \
   BCast.h
-
-../lib:
-	mkdir -p ../lib
-
-
-BCast_DEPENDENCIES = \
- ../lib
 
 BCast_LDFLAGS = \
   -L../lib
@@ -148,13 +134,6 @@ Bitmask_SOURCES = \
   Schedule.h \
   Shutdown.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Bitmask_DEPENDENCIES = \
- ../lib
-
 Bitmask_LDFLAGS = \
   -L../lib
 
@@ -208,13 +187,6 @@ Complex_SOURCES = \
   Schedule.h \
   Shutdown.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Complex_DEPENDENCIES = \
- ../lib
-
 Complex_LDFLAGS = \
   -L../lib
 
@@ -259,13 +231,6 @@ Control_CPPFLAGS = \
 Control_SOURCES = \
   Control.cpp \
   Control.h
-
-../lib:
-	mkdir -p ../lib
-
-
-Control_DEPENDENCIES = \
- ../lib
 
 Control_LDFLAGS = \
   -L../lib
@@ -320,13 +285,6 @@ Disconnect_SOURCES = \
   Schedule.h \
   Shutdown.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Disconnect_DEPENDENCIES = \
- ../lib
-
 Disconnect_LDFLAGS = \
   -L../lib
 
@@ -380,13 +338,6 @@ Gateway_SOURCES = \
   Schedule.h \
   Shutdown.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Gateway_DEPENDENCIES = \
- ../lib
-
 Gateway_LDFLAGS = \
   -L../lib
 
@@ -431,13 +382,6 @@ MT_Disconnect_CPPFLAGS = \
 MT_Disconnect_SOURCES = \
   MT_Disconnect.cpp \
   MT_Disconnect.h
-
-../lib:
-	mkdir -p ../lib
-
-
-MT_Disconnect_DEPENDENCIES = \
- ../lib
 
 MT_Disconnect_LDFLAGS = \
   -L../lib
@@ -492,13 +436,6 @@ Negation_SOURCES = \
   Schedule.h \
   Shutdown.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Negation_DEPENDENCIES = \
- ../lib
-
 Negation_LDFLAGS = \
   -L../lib
 
@@ -543,13 +480,6 @@ Observer_CPPFLAGS = \
 Observer_SOURCES = \
   Observer.cpp \
   Observer.h
-
-../lib:
-	mkdir -p ../lib
-
-
-Observer_DEPENDENCIES = \
- ../lib
 
 Observer_LDFLAGS = \
   -L../lib
@@ -596,13 +526,6 @@ Random_SOURCES = \
   Random.cpp \
   Random.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Random_DEPENDENCIES = \
- ../lib
-
 Random_LDFLAGS = \
   -L../lib
 
@@ -648,13 +571,6 @@ Reconnect_SOURCES = \
   Reconnect.cpp \
   Reconnect.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Reconnect_DEPENDENCIES = \
- ../lib
-
 Reconnect_LDFLAGS = \
   -L../lib
 
@@ -699,13 +615,6 @@ Shutdown_CPPFLAGS = \
 Shutdown_SOURCES = \
   Shutdown.cpp \
   Shutdown.h
-
-../lib:
-	mkdir -p ../lib
-
-
-Shutdown_DEPENDENCIES = \
- ../lib
 
 Shutdown_LDFLAGS = \
   -L../lib
@@ -760,13 +669,6 @@ Timeout_SOURCES = \
   Schedule.h \
   Shutdown.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Timeout_DEPENDENCIES = \
- ../lib
-
 Timeout_LDFLAGS = \
   -L../lib
 
@@ -819,13 +721,6 @@ Wildcard_SOURCES = \
   Reconnect.h \
   Schedule.h \
   Shutdown.h
-
-../lib:
-	mkdir -p ../lib
-
-
-Wildcard_DEPENDENCIES = \
- ../lib
 
 Wildcard_LDFLAGS = \
   -L../lib

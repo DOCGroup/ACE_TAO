@@ -37,13 +37,6 @@ Disconnect_SOURCES = \
   MT_Disconnect.h \
   Random.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Disconnect_DEPENDENCIES = \
- ../lib
-
 Disconnect_LDFLAGS = \
   -L../lib
 
@@ -89,13 +82,6 @@ MT_Disconnect_CPPFLAGS = \
 MT_Disconnect_SOURCES = \
   MT_Disconnect.cpp \
   MT_Disconnect.h
-
-../lib:
-	mkdir -p ../lib
-
-
-MT_Disconnect_DEPENDENCIES = \
- ../lib
 
 MT_Disconnect_LDFLAGS = \
   -L../lib
@@ -144,13 +130,6 @@ Pull_Push_Event_SOURCES = \
   MT_Disconnect.h \
   Random.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Pull_Push_Event_DEPENDENCIES = \
- ../lib
-
 Pull_Push_Event_LDFLAGS = \
   -L../lib
 
@@ -198,13 +177,6 @@ Push_Event_SOURCES = \
   MT_Disconnect.h \
   Random.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Push_Event_DEPENDENCIES = \
- ../lib
-
 Push_Event_LDFLAGS = \
   -L../lib
 
@@ -250,13 +222,6 @@ Random_CPPFLAGS = \
 Random_SOURCES = \
   Random.cpp \
   Random.h
-
-../lib:
-	mkdir -p ../lib
-
-
-Random_DEPENDENCIES = \
- ../lib
 
 Random_LDFLAGS = \
   -L../lib
@@ -304,13 +269,6 @@ Shutdown_SOURCES = \
   Shutdown.cpp \
   MT_Disconnect.h \
   Random.h
-
-../lib:
-	mkdir -p ../lib
-
-
-Shutdown_DEPENDENCIES = \
- ../lib
 
 Shutdown_LDFLAGS = \
   -L../lib

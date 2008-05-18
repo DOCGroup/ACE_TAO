@@ -37,13 +37,6 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp
 
-../lib:
-	mkdir -p ../lib
-
-
-client_DEPENDENCIES = \
- ../lib
-
 client_LDFLAGS = \
   -L../lib
 
@@ -93,13 +86,6 @@ server_CPPFLAGS = \
 
 server_SOURCES = \
   server.cpp
-
-../lib:
-	mkdir -p ../lib
-
-
-server_DEPENDENCIES = \
- ../lib
 
 server_LDFLAGS = \
   -L../lib
