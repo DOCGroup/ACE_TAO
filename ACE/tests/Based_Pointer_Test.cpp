@@ -40,10 +40,8 @@ private:
   {
   }
 public:
+  friend class ace_dewarn_gplusplus;
   ~Foo ()
-  {
-  }
-  void my_foo ()
   {
   }
 };
