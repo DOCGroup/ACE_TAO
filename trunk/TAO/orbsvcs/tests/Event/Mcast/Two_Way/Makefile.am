@@ -36,13 +36,6 @@ application_SOURCES = \
   application.cpp \
   Constants.h
 
-../Common:
-	mkdir -p ../Common
-
-
-application_DEPENDENCIES = \
- ../Common
-
 application_LDFLAGS = \
   -L../Common
 
@@ -86,13 +79,6 @@ gateway_ec_CPPFLAGS = \
 gateway_ec_SOURCES = \
   gateway-ec.cpp \
   Constants.h
-
-../Common:
-	mkdir -p ../Common
-
-
-gateway_ec_DEPENDENCIES = \
- ../Common
 
 gateway_ec_LDFLAGS = \
   -L../Common

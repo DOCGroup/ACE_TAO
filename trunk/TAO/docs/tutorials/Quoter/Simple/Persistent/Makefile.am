@@ -34,13 +34,6 @@ client_SOURCES = \
   Stock_Factory_i.h \
   Stock_i.h
 
-../../idl:
-	mkdir -p ../../idl
-
-
-client_DEPENDENCIES = \
- ../../idl
-
 client_LDFLAGS = \
   -L../../idl
 
@@ -73,13 +66,6 @@ server_SOURCES = \
   server.cpp \
   Stock_Factory_i.h \
   Stock_i.h
-
-../../idl:
-	mkdir -p ../../idl
-
-
-server_DEPENDENCIES = \
- ../../idl
 
 server_LDFLAGS = \
   -L../../idl

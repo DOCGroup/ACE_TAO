@@ -36,13 +36,6 @@ RtEC_Based_CosEC_SOURCES = \
   RtEC_Based_CosEC.cpp \
   RtEC_Based_CosEC.h
 
-../lib:
-	mkdir -p ../lib
-
-
-RtEC_Based_CosEC_DEPENDENCIES = \
- ../lib
-
 RtEC_Based_CosEC_LDFLAGS = \
   -L../lib
 

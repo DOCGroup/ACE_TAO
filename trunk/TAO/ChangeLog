@@ -1,3 +1,32 @@
+Sun May 18 21:48:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Hand-tweak for ZLIB/ZZIP support, as we want to defer this
+          decision from MPC to configure.
+
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+	* orbsvcs/tests/Event/Basic/Makefile.am:
+	* orbsvcs/tests/Event/Performance/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+	* orbsvcs/tests/CosEvent/Basic/Makefile.am:
+	* orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile.am:
+	* docs/tutorials/Quoter/Naming_Service/Makefile.am:
+	* docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/Makefile.am:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
+          Hand tweak generated makefiles to avoid make warnings.  We'll
+          update the MPC configuration so this isn't needed in a future
+          release.
+
 Sun May 18 12:12:36 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/HandleExhaustion/server.cpp:
