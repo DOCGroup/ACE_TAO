@@ -43,6 +43,9 @@ public:
   ~Foo ()
   {
   }
+  void my_foo ()
+  {
+  }
 };
 
 class Void_Pointer : public ACE_Based_Pointer<void>
