@@ -36,13 +36,6 @@ Connect_SOURCES = \
   Connect.cpp \
   Connect.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Connect_DEPENDENCIES = \
- ../lib
-
 Connect_LDFLAGS = \
   -L../lib
 
@@ -88,13 +81,6 @@ Inversion_SOURCES = \
   Inversion.cpp \
   Inversion.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Inversion_DEPENDENCIES = \
- ../lib
-
 Inversion_LDFLAGS = \
   -L../lib
 
@@ -139,13 +125,6 @@ Latency_CPPFLAGS = \
 Latency_SOURCES = \
   Latency.cpp \
   Latency.h
-
-../lib:
-	mkdir -p ../lib
-
-
-Latency_DEPENDENCIES = \
- ../lib
 
 Latency_LDFLAGS = \
   -L../lib
@@ -196,13 +175,6 @@ Latency_Server_SOURCES = \
   Latency.h \
   Throughput.h
 
-../lib:
-	mkdir -p ../lib
-
-
-Latency_Server_DEPENDENCIES = \
- ../lib
-
 Latency_Server_LDFLAGS = \
   -L../lib
 
@@ -248,13 +220,6 @@ Throughput_CPPFLAGS = \
 Throughput_SOURCES = \
   Throughput.cpp \
   Throughput.h
-
-../lib:
-	mkdir -p ../lib
-
-
-Throughput_DEPENDENCIES = \
- ../lib
 
 Throughput_LDFLAGS = \
   -L../lib

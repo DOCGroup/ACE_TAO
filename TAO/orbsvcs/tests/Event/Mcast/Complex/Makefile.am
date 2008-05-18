@@ -36,13 +36,6 @@ consumer_SOURCES = \
   consumer.cpp \
   Constants.h
 
-../Common:
-	mkdir -p ../Common
-
-
-consumer_DEPENDENCIES = \
- ../Common
-
 consumer_LDFLAGS = \
   -L../Common
 
@@ -87,13 +80,6 @@ gateway_ec_SOURCES = \
   gateway-ec.cpp \
   Constants.h
 
-../Common:
-	mkdir -p ../Common
-
-
-gateway_ec_DEPENDENCIES = \
- ../Common
-
 gateway_ec_LDFLAGS = \
   -L../Common
 
@@ -137,13 +123,6 @@ supplier_CPPFLAGS = \
 supplier_SOURCES = \
   supplier.cpp \
   Constants.h
-
-../Common:
-	mkdir -p ../Common
-
-
-supplier_DEPENDENCIES = \
- ../Common
 
 supplier_LDFLAGS = \
   -L../Common
