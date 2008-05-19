@@ -234,7 +234,7 @@ test_log_msg_features (const ACE_TCHAR *program)
 // Platforms that define ACE_LACKS_VSNPRINTF are candidates to fail here.
 // This then proves that logging to big messages is problematic but on VxWorks
 // we know this and we want to rest of the test to continue
-#if !defined (VXWORKS) && !defined (__Lynx__)
+#if !defined (ACE_LACKS_VSNPRINTF)
   // Try a log operation that would overflow the logging buffer if not
   // properly guarded.
   ACE_TCHAR big[ACE_Log_Record::MAXLOGMSGLEN + 1];
@@ -247,7 +247,7 @@ test_log_msg_features (const ACE_TCHAR *program)
       big[index] = alphabet[i % j];
     }
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("This is too big: %s\n"), big));
-#endif /* !VXWORKS */
+#endif /* !ACE_LACKS_VSNPRINTF */
 
   // Exercise many different combinations of OSTREAM.
 

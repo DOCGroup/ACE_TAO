@@ -1,3 +1,10 @@
+Mon May 19 19:26:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Log_Msg_Test.cpp:
+          On VxWorks/LynxOS we didn't test the buffer overflow, but we
+          shouldn't test this when ACE_LACKS_VSNPRINTF is defined
+          because it will then fail
+
 Mon May 19 19:13:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Hash_Map_Manager_T.h:
