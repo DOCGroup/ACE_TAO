@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// Bug_2183_Regression.mpc,v 1.0 2005/10/28 09:42:00 Jules Colding <colding@omesc.com>
+// $Id$
 
 project: taoexe {
   exename = ORB_object_to_string
