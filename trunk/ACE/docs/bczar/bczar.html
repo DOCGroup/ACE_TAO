@@ -139,8 +139,8 @@ $ ssh bczar@anduril.dre.vanderbilt.edu<br>
 No default printer<br>
 -bash-3.00$ cd /export/anduriltmp/bczar<br>
 -bash-3.00$ export DOC_ROOT=$PWD/DOC_ROOT<br>
--bash-3.00$ export SIGNATURE="Simon McQueen"<br>
--bash-3.00$ export MAILID=sm@prismtech.com<br>
+-bash-3.00$ export SIGNATURE="Johnny Willemsen"<br>
+-bash-3.00$ export MAILID=jwillemsen@remedy.nl<br>
 -bash-3.00$ svn co https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT<br>
 -bash-3.00$ svn co https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC<br>
 -bash-3.00$ cd DOC_ROOT/<br>
@@ -252,17 +252,17 @@ the made release. This is used by the integrated scoreboard on http://remedy.nl<
 this after the doxygen documentation packages are ready so that these are also archived.
 <ul>
 <li><code>cd /export/www/download.dre/ACE+TAO-distribution</code></li>
-<li>Modify <code>/export/anduriltmp/bczar/copy_script</code> to use the correct version X.Y.Z and run it.
+<li>Modify <code>/export/anduriltmp/bczar/copy_script.sh</code> to use the correct version X.Y.Z and run it.
 </ul>
 <li>Mail the approved release announcement out to, at minimum the following:
-<tt>ciao-users@cs.wustl.edu</tt>,
-<tt>tao-users@cs.wustl.edu</tt>,
-<tt>tao-announce@cs.wustl.edu</tt>,
-<tt>ace-users@cs.wustl.edu</tt>,
-<tt>ace-announce@cs.wustl.edu</tt>.  Do this as yourself (not as bugzilla).
+<tt>ciao-users@list.isis.vanderbilt.edu</tt>,
+<tt>tao-users@list.isis.vanderbilt.edu</tt>,
+<tt>tao-announce@list.isis.vanderbilt.edu</tt>,
+<tt>ace-users@list.isis.vanderbilt.edu</tt>,
+<tt>ace-announce@list.isis.vanderbilt.edu</tt>.  Do this as yourself (not as bugzilla).
 <b>N.B.</b> You will not be able to post to the users' lists unless you are
 subscribed to them. Odds are you will not be able to post to the announce lists
-at all. Ask someone else (like Doug) to do this step.
+at all. Ask someone else (like Doug or Johnny) to do this step.
 <li>When all cidlc builds are ready with the new version, login to naboo.dre.vanderbilt.edu
 as bczar and run <code>./cut_cidlc.sh version-number</code> fe <code>./cut_cidlc.sh 0.6.0</code>. If this
 script is not in its place, then the original is in the bin directory of the distribution.</li>
