@@ -38,23 +38,6 @@ public:
    : slast_ (ACE_INVALID_HANDLE),
      last_ (ACE_INVALID_HANDLE),
      ok_ (false) {
-#if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
-    // We must make sure that our file descriptor limit does not exceed
-    // the size allowed (in the fd set) by the reactor.  If it does, this
-    // test will fail (in a different way than expected) which is a
-    // completely different bug than this test is designed to address
-    // (see Bug #3326).
-    rlimit rlim;
-    if (ACE_OS::getrlimit(RLIMIT_NOFILE, &rlim) == 0)
-      {
-        if (rlim.rlim_cur >
-            static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE))
-          {
-            rlim.rlim_cur = ACE_DEFAULT_SELECT_REACTOR_SIZE;
-            ACE_OS::setrlimit(RLIMIT_NOFILE, &rlim);
-          }
-      }
-#endif /* !ACE_LACKS_RLIMIT && RLIMIT_NOFILE */
   }
 
   int allow_accepts (void) {
@@ -119,6 +102,31 @@ main (int argc, char *argv[])
 {
   try
     {
+#if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
+    // We must make sure that our file descriptor limit does not exceed
+    // the size allowed (in the fd set) by the reactor.  If it does, this
+    // test will fail (in a different way than expected) which is a
+    // completely different bug than this test is designed to address
+    // (see Bug #3326).  
+    //
+    // We must also make sure that this happens before creating the first
+    // ORB.  Otherwise, the reactor will be created with a maximum size of
+    // the current rlimit for file desriptors (which will later on be
+    // increased).
+    rlimit rlim;
+    if (ACE_OS::getrlimit(RLIMIT_NOFILE, &rlim) == 0)
+      {
+        if (rlim.rlim_cur < rlim.rlim_max &&
+	    rlim.rlim_max >
+	    static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE))
+          {
+            rlim.rlim_cur = ACE_DEFAULT_SELECT_REACTOR_SIZE;
+            rlim.rlim_max = ACE_DEFAULT_SELECT_REACTOR_SIZE;
+            ACE_OS::setrlimit(RLIMIT_NOFILE, &rlim);
+          }
+      }
+#endif /* !ACE_LACKS_RLIMIT && RLIMIT_NOFILE */
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "");
 
