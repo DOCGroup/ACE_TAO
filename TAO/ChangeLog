@@ -1,3 +1,9 @@
+Mon May 19 12:49:09 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/HandleExhaustion/server.cpp:
+
+          Change the location of the setting of the file descriptor rlimit.
+
 Mon May 19 02:53:21 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO version 1.6.5 released.
