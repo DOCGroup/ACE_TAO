@@ -1,3 +1,16 @@
+Mon May 19 15:12:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Reply/run_test.pl:
+        * tests/Big_Request_Muxing/run_test.pl:
+          Improved this script
+
+        * tests/Big_Twoways/run_test.pl:
+          Dottedecimaladdresses isn't required for vxworks
+
+        * tests/Bug_1476_Test/client.cpp:
+        * tests/Bug_2494_Regression/client.cpp:
+          Use error in the error message
+
 Mon May 19 14:29:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2085_Regression/*:
