@@ -300,6 +300,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::share
 {
   if (this->total_size_ == 0)
     {
+      errno = ENOENT;
       return -1;
     }
 

@@ -1,3 +1,11 @@
+Mon May 19 19:13:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Hash_Map_Manager_T.h:
+          Doxygen change
+
+        * ace/Hash_Map_Manager_T.cpp (shared_find)
+          Set errno to ENOENT when the size is zero
+
 Mon May 19 19:08:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
