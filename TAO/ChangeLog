@@ -1,3 +1,7 @@
+Mon May 19 02:53:21 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO version 1.6.5 released.
+
 Sun May 18 22:50:47 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/Bug_2925_Regression/Makefile.am:
