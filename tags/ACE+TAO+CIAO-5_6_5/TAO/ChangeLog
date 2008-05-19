@@ -1,0 +1,3261 @@
+Mon May 19 02:53:21 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO version 1.6.5 released.
+
+Sun May 18 22:50:47 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Bug_2925_Regression/Makefile.am:
+        * tests/DynUnion_Test/Makefile.am:
+
+          Hand tweak generated makefiles to avoid make warnings due to
+          duplicate IDL compilation rules.  We'll update the MPC
+          configuration so this isn't needed in a future release.
+
+Sun May 18 21:48:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Hand-tweak for ZLIB/ZZIP support, as we want to defer this
+          decision from MPC to configure.
+
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+	* orbsvcs/tests/Event/Basic/Makefile.am:
+	* orbsvcs/tests/Event/Performance/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+	* orbsvcs/tests/CosEvent/Basic/Makefile.am:
+	* orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile.am:
+	* docs/tutorials/Quoter/Naming_Service/Makefile.am:
+	* docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/Makefile.am:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
+          Hand tweak generated makefiles to avoid make warnings.  We'll
+          update the MPC configuration so this isn't needed in a future
+          release.
+
+Sun May 18 12:12:36 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/HandleExhaustion/server.cpp:
+
+          Make sure RLIMIT_NOFILE is defined.
+
+Sat May 17 01:57:30 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/HandleExhaustion/server.cpp:
+
+          Only call set the rlimit if ACE_LACKS_RLIMIT is not defined.
+
+Fri May 16 12:59:22 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/HandleExhaustion/run_test.pl:
+
+          This test has the same issues on LynxOS as HP-UX and can't be run.
+
+        * tests/HandleExhaustion/server.cpp:
+
+          Changed to set the rlimit for file descriptors.
+
+Wed May 14 11:03:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/*:
+          Renamed MonitorControl namespace to Monitor_Control to comply
+          to ACE coding guidelines
+
+Tue May 13 15:04:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+          Extended this test as mentioned in bugzilla 3252. Thanks for
+          Lothar Werzinger <lothar at tradescape dot biz> for extending
+          this test
+
+Tue May 13 14:50:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp (fini):
+          Also destroy the dispatching ORB when it has one and
+          the nofication service is configured to use one
+
+        * tests/Explicit_Event_Loop/server.cpp:
+          No need to pass in an empty orb name
+
+Tue May 13 07:37:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Don't try to load the TAO PI library in VxWorks kernel mode
+          with shared libraries
+
+        * tests/ORB_Local_Config/Bug_1459/run_test.pl:
+        * tests/ORB_Local_Config/Bug_2612/run_test.pl:
+        * tests/ORB_Local_Config/Bunch/run_test.pl:
+        * tests/ORB_Local_Config/run_tests_all.pl:
+        * tests/ORB_Local_Config/Separation/run_test.pl:
+        * tests/ORB_Local_Config/Service_Dependency/run_test.pl:
+        * tests/ORB_Local_Config/Shared/run_test.pl:
+        * tests/ORB_Local_Config/Simple/run_test.pl:
+        * tests/ORB_Local_Config/Two_DLL_ORB/run_test.pl:
+          Updated for VxWorks cross platform testing
+
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.h:
+          Layout change
+
+Mon May 12 15:51:28 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tao/Stub.cpp:
+
+          Removed one line that I added along with a fix of memory leak.
+          This particular line turned out to be erroneous.
+
+Mon May 12 12:30:01 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+
+          Added appropriate preprocessor guards to get a successful
+          build when TAO_HAS_MONITOR_FRAMEWORK is defined as 0.
+
+Fri May  9 18:26:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+              * orbsvcs/orbsvcs/Makefile.am:
+              * orbsvcs/Notify_Service/Makefile.am:
+              * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile.am:
+              * orbsvcs/tests/Log/Basic_Log_Test/Makefile.am:
+              * orbsvcs/tests/Bug_2926_Regression/Makefile.am:
+              * orbsvcs/tests/Notify/Basic/Makefile.am:
+              * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile.am:
+              * orbsvcs/tests/Notify/Test_Filter/Makefile.am:
+              * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
+              * orbsvcs/tests/Notify/Bug_3252_Regression/Makefile.am:
+              * orbsvcs/tests/Notify/Blocking/Makefile.am:
+              * orbsvcs/tests/Notify/Destroy/Makefile.am:
+              * orbsvcs/tests/Notify/Bug_2561_Regression/Makefile.am:
+              * orbsvcs/tests/Notify/Driver/Makefile.am:
+              * orbsvcs/tests/Notify/MT_Dispatching/Makefile.am:
+              * orbsvcs/tests/Notify/Bug_1385_Regression/Makefile.am:
+              * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
+              * orbsvcs/tests/Notify/PluggableTopology/Makefile.am:
+              * orbsvcs/tests/Notify/Persistent_POA/Makefile.am:
+              * orbsvcs/tests/Notify/MC/Makefile.am:
+              * orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
+              * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
+              * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.am:
+              * orbsvcs/tests/Notify/XML_Persistence/Makefile.am:
+              * orbsvcs/tests/Notify/lib/Makefile.am:
+              * orbsvcs/tests/Notify/Discarding/Makefile.am:
+              * orbsvcs/tests/Notify/Ordering/Makefile.am:
+              * orbsvcs/tests/Notify/Structured_Filter/Makefile.am:
+              * orbsvcs/tests/Notify/RT_lib/Makefile.am:
+              * orbsvcs/tests/Notify/Reconnecting/Makefile.am:
+              * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+              * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+              * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+              * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+              * orbsvcs/Fault_Notifier/Makefile.am:
+              * orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile.am:
+              * orbsvcs/examples/Notify/Federation/Agent/Makefile.am:
+              * orbsvcs/examples/Notify/ThreadPool/Makefile.am:
+              * orbsvcs/examples/Notify/Lanes/Makefile.am:
+              * tao/ETCL/Makefile.am:
+              * tao/Makefile.am:
+              * utils/monitor/Makefile.am:
+              * tests/Monitor/Marshal_Buffer/Makefile.am:
+              * tests/Makefile.am:
+              * tests/Compression/Makefile.am:
+
+          Regenerated.
+
+              * configure.ac:
+
+          build new directory.
+
+        * tests/Bug_3321_Regression/Makefile.am:
+
+          New Makefile.am.
+
+              * tao/ZlibCompressor.mpc:
+              * MPC/config/zlibcompressor.mpb:
+
+          Changed to derive from MPC's own zlib base project to ace_zlib
+          base project to get settings overriden for the automake build.
+
+Fri May  9 18:13:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PI.h:
+          Also enable the static initializer in vxworks kernel mode
+          with shared libs
+
+Fri May  9 13:36:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+
+          Fixed name of included ACE size monitor file.
+
+Fri May  9 12:55:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bug_3321_Regression/Bug_3321_Regression.mpc:
+        * tao/Bug_3321_Regression/main.cpp:
+          Messaging is not used here
+
+Fri May  9 12:42:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+          Added TAO_HAS_MONITOR_POINTS which is default defined to
+          ACE_HAS_MONITOR_POINTS (which is 0 at this moment)
+
+        * tao/GIOP_Message_Base.cpp:
+          Added monitor points
+
+        * tao/Messaging/Buffering_Constraint_Policy.h:
+          Doxygen change
+
+        * tao/PI/PICurrent_Loader.cpp:
+          Changed initialisation
+
+        * tao/PI_Server/ServerRequestInfo.h:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/TypeCodeFactory_Adapter.h:
+          Layout change
+
+        * tao/PortableServer/Active_Object_Map.{h,cpp,inl}:
+          Added monitor points and code layout changes
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+          Corrected rcsid
+
+        * tao/Transport_Cache_Manager.{h,cpp}:
+          Added monitor points
+
+Fri May  9 12:25:13 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/tao_monitor.mpb:
+
+          Removed unneeded base project.
+
+Fri May  9 11:59:52 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/etcl.mpb:
+
+          Changed the name of a base project that was changed
+          in ACE_RROT/bin/MakeProjectCreator/config.
+
+Fri May  9 10:40:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Internal.cpp:
+          Don't try to load the Codeset lib when it is not available
+          with VxWorks shared lib kernel mode
+
+Thu May  8 22:51:38 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Fix missing \ in ZlibCompressor project.
+
+Thu May  8 07:38:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3321_Regression/*:
+          New regression test for bugzilla 3321
+
+        * tests/Bug_3315_Regression/main.cpp:
+          Improved result handling
+
+Wed May  7 19:33:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+
+          Changes of method signatures back to using
+          TAO_ETCL_Literal_Constraint that were overlooked in
+
+          Wed May  7 19:16:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+Wed May  7 19:16:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/ETCL_include:
+        * tao/ETCL/ETCL_y.cpp:
+        * tao/ETCL/ETCL_l.cpp:
+        * tao/ETCL/ETCL_Interpreter.cpp:
+        * tao/ETCL/TAO_ETCL_Parser.pc.in:
+
+          Removed these files and the directory, by way
+          of eliminating the TAO ETCL parser, only the
+          ETCL parser in ACE_ROOT/ace/ETCL is needed.
+
+        * MPC/config/tao_etcl.mpb:
+        * MPC/config/tao_monitor.mpb:
+        * MPC/config/etcl.mpb:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.inl:
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+        * tao/ETCL/TAO_ETCL.mpc:
+
+          - Changes required by the TAO ETCL parser's removal.
+
+          - Reverted a change to the Notify and Log constraint
+            visitors that made their internal literal constraint
+            queue be of type ETCL_Literal_Constraint. Changed
+            the type of queue element back to
+            TAO_ETCL_Literal_Constraint.
+
+          - Removed all constraint classes from TAO_ETCL except
+            TAO_ETCL_Literal_Constraint. This class is the only
+            one that uses CORBA::Any and is thus CORBA-specific,
+            all the other classes can be represented by their
+            base classes in ACE_ROOT/ace/ETCL.
+
+Wed May  7 18:44:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+          Layout issues
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+          Doxygen change
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.h:
+          Doxygen changes
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+          Close the notify singleton when the service is closed
+
+Wed May  7 14:24:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp(scheduled):
+
+          Replaced use of native type timeval with ACE_Time_Value,
+          to eliminate Windows warnings.
+
+Wed May  7 10:18:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/tao_etcl.mpb:
+          Requires dynamicany
+
+Wed May  7 09:06:56 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * tao/Stub.cpp:
+
+          Fixed a memory leak in forward_profiles_perm_.
+
+        * tao/Invocation_Base.h:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/Synch_Invocation.inl:
+        * tao/Collocated_Invocation.cpp:
+        * tao/Synch_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Invocation_Base.inl:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Synch_Invocation.cpp:
+
+          Added reply_status to Invocation_Base and changed the code that need
+          to handle permanent locacation accordingly. Now in order to find out
+          whether the invocation is forwarded reply_status must be checked.
+          Also renamed reply_received to invoke_status in Invocation_Base.
+          This is for fix of bug 3277.
+
+Wed May  7 06:49:33 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/Callback_Quoter/Notifier_i.h:
+        * examples/Callback_Quoter/Notifier_i.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.cpp:
+
+          Qualified equality operators with const to fix errors with Unbounded_Set.
+
+Tue May  6 19:45:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp(visit_exist):
+
+          Fixed an incorrect template argument to dynamic_cast<>,
+          causing it to always return 0.
+
+Tue May  6 12:49:47 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.inl:
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+
+          - Factored code from the TAO ETCL constraint classes to
+            base classes in ACE_ROOT/ace/ETCL.
+
+          - Changed the signatures of the visitor methods in the
+            logging and notification services to take the ace/ETCL
+            constraint classes as arguments.
+
+          - Changed the literal constraint queues in the above
+            services to contain ETCL_Literal_Constraint instead
+            of TAO_ETCL_Literal_Constraint.
+
+          - Replaced CORBA::Boolean 0s and 1s with 'true' and
+            'false'.
+
+Mon May  5 20:40:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tao/Object.cpp:
+
+          Fix a segfault in a nil pointer is passed to _is_equivalent.
+
+Mon May  5 14:45:45 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+
+          Fix "extra trailing-backslash" typo in automake conditional.
+
+Sun May  4 22:15:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/ETCL/TAO_ETCL.mpc:
+
+          Add Pkgconfig_Files section for TAO_ETCL_Parser library.
+
+        * orbsvcs/orbsvcs/TAO_ETCL.pc.in:
+
+          Remove pkgconfig template file from old TAO ETCL library.
+
+        * tao/ETCL/TAO_ETCL.pc.in:
+        * tao/ETCL/TAO_ETCL_Parser.pc.in:
+        * tao/Monitor/TAO_Monitor.pc.in:
+
+          Added pkgconfig template files for new TAO libraries.
+
+Sun May  4 15:50:25 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * tao/Makefile.am:
+        * tests/Compression/Makefile.am:
+
+          Hand-tweak for ZLIB/ZZIP support, as we want to defer this
+          decision from MPC to configure.
+
+Sun May  4 15:02:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Notify/MC/Makefile.am:
+        * tests/Object_Loader/Makefile.am:
+        * tests/Oneway_Send_Timeouts/Makefile.am:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/tests/Notify/MC/MonitorControl.mpc:
+        * tests/Object_Loader/Object_Loader.mpc:
+        * tests/Oneway_Send_Timeouts/Oneway_scenarios.mpc:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+
+          Add empty IDL_Files section to avoid emitting duplicate IDL
+          compilation rules in generated Makefile.am's.
+
+Sat May  3 23:39:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add AM_CONDITIONAL for BUILD_WINCE.
+
+Sat May  3 22:23:22 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        The below changes should be most of the work necessary to fix
+        automake build errors.  A few hand tweaks more will be needed
+        to resolve the rest.
+
+        * configure.ac:
+
+          Updated for new directories.
+
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/Notify_Service/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile.am:
+        * orbsvcs/tests/Event/Basic/Makefile.am:
+        * orbsvcs/tests/Event/Performance/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+        * orbsvcs/tests/Log/Basic_Log_Test/Makefile.am:
+        * orbsvcs/tests/Bug_2800_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2925_Regression/Makefile.am:
+        * orbsvcs/tests/Security/mixed_security_test/Makefile.am:
+        * orbsvcs/tests/Security/Makefile.am:
+        * orbsvcs/tests/Property/Makefile.am:
+        * orbsvcs/tests/CosEvent/Basic/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/Makefile.am:
+        * orbsvcs/tests/Bug_2926_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Basic/Makefile.am:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Test_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Blocking/Makefile.am:
+        * orbsvcs/tests/Notify/Destroy/Makefile.am:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Driver/Makefile.am:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile.am:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/PluggableTopology/Makefile.am:
+        * orbsvcs/tests/Notify/Persistent_POA/Makefile.am:
+        * orbsvcs/tests/Notify/MC/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.am:
+        * orbsvcs/tests/Notify/XML_Persistence/Makefile.am:
+        * orbsvcs/tests/Notify/lib/Makefile.am:
+        * orbsvcs/tests/Notify/Discarding/Makefile.am:
+        * orbsvcs/tests/Notify/Ordering/Makefile.am:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Makefile.am:
+        * orbsvcs/tests/Notify/RT_lib/Makefile.am:
+        * orbsvcs/tests/Notify/Reconnecting/Makefile.am:
+        * orbsvcs/tests/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/Fault_Notifier/Makefile.am:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile.am:
+        * orbsvcs/examples/Notify/Federation/Agent/Makefile.am:
+        * orbsvcs/examples/Notify/ThreadPool/Makefile.am:
+        * orbsvcs/examples/Notify/Lanes/Makefile.am:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile.am:
+        * tao/Makefile.am:
+        * docs/tutorials/Quoter/Naming_Service/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Server/Makefile.am:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Client/Makefile.am:
+        * docs/tutorials/Quoter/RTCORBA/Makefile.am:
+        * utils/Makefile.am:
+        * performance-tests/POA/Demux/Makefile.am:
+        * performance-tests/Anyop/Makefile.am:
+        * performance-tests/CSD_Strategy/TestServant/Makefile.am:
+        * performance-tests/CSD_Strategy/TestApps/Makefile.am:
+        * performance-tests/Callback/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
+        * performance-tests/Latency/DSI/Makefile.am:
+        * tests/Server_Connection_Purging/Makefile.am:
+        * tests/Bug_2222_Regression/Makefile.am:
+        * tests/Bug_1270_Regression/Makefile.am:
+        * tests/Bug_2702_Regression/Makefile.am:
+        * tests/Any/Recursive/Makefile.am:
+        * tests/Bug_2560_Regression/Makefile.am:
+        * tests/Object_Loader/Makefile.am:
+        * tests/DynUnion_Test/Makefile.am:
+        * tests/Bug_2669_Regression/Makefile.am:
+        * tests/QtTests/Makefile.am:
+        * tests/DLL_ORB/Makefile.am:
+        * tests/Bug_2503_Regression/Makefile.am:
+        * tests/HandleExhaustion/Makefile.am:
+        * tests/Hello/Makefile.am:
+        * tests/Bug_2122_Regression/Makefile.am:
+        * tests/Makefile.am:
+        * tests/IOR_Endpoint_Hostnames/Makefile.am:
+        * tests/Bug_2084_Regression/Makefile.am:
+        * tests/FL_Cube/Makefile.am:
+        * tests/Portable_Interceptors/Bug_3080/Makefile.am:
+        * tests/Portable_Interceptors/Makefile.am:
+        * tests/Bug_2417_Regression/Makefile.am:
+        * tests/Bug_3000_Regression/Makefile.am:
+        * tests/POA/Adapter_Activator/Makefile.am:
+        * tests/POA/Explicit_Activation/Makefile.am:
+        * tests/POA/On_Demand_Activation/Makefile.am:
+        * tests/POA/Reference_Counted_Servant/Makefile.am:
+        * tests/POA/Makefile.am:
+        * tests/Optimized_Connection/Makefile.am:
+        * tests/Xt_Stopwatch/Makefile.am:
+        * tests/GIOP_Fragments/Java_Big_Request/Makefile.am:
+        * tests/GIOP_Fragments/Java_Big_Reply/Makefile.am:
+        * tests/IDL_Test/Makefile.am:
+        * tests/CodeSets/libs/Makefile.am:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Makefile.am:
+        * tests/OBV/Forward/Makefile.am:
+        * tests/OBV/Truncatable/Makefile.am:
+        * tests/OBV/ValueBox/Makefile.am:
+        * tests/OBV/Collocated/Forward/Makefile.am:
+        * tests/Oneway_Timeouts/Makefile.am:
+        * tests/DSI_AMH/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/Makefile.am:
+        * examples/Simple/time-date/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool4/Makefile.am:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
+        * examples/RTScheduling/MIF_Scheduler/Makefile.am:
+        * examples/RTScheduling/Makefile.am:
+        * examples/mfc/Makefile.am:
+        * examples/AMI/FL_Callback/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/tests/Bug_3216_Regression/Makefile.am:
+        * orbsvcs/tests/Security/ssliop_CSD/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_3215_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Bug_3252_Regression/Makefile.am:
+        * tao/ETCL/Makefile.am:
+        * utils/monitor/Makefile.am:
+        * tests/DII_AMI_Forward/Makefile.am:
+        * tests/Bug_3315_Regression/Makefile.am:
+        * tests/Bug_2935_Regression/Makefile.am:
+        * tests/Monitor/Marshal_Buffer/Makefile.am:
+        * tests/Monitor/Makefile.am:
+        * tests/Bug_3171_Regression/Makefile.am:
+        * tests/Bug_3108_Regression/Makefile.am:
+        * tests/Bug_2734_Regression/Makefile.am:
+        * tests/Oneway_Send_Timeouts/Makefile.am:
+        * tests/Bug_3311_Regression/Makefile.am:
+        * tests/Bug_3042_Regression/Makefile.am:
+        * tests/Bug_3163_Regression/Makefile.am:
+        * tests/Collocated_Forwarding/Makefile.am:
+        * tests/Portable_Interceptors/Bug_2133/Makefile.am:
+        * tests/Portable_Interceptors/Bug_3079/Makefile.am:
+        * tests/Bug_3276_Regression/Makefile.am:
+        * tests/CSD_Collocation/Makefile.am:
+        * tests/CodeSets/libs/UTF16_UCS2/Makefile.am:
+        * tests/Bug_3251_Regression/Makefile.am:
+        * tests/Bug_3198_Regression/Makefile.am:
+        * tests/Bug_3299_Regression/Makefile.am:
+
+          New Makefile.am's.
+
+Fri May  2 20:48:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.inl:
+
+          For all constructors except the one that takes an Any*,
+          initialize the Any_Impl* member to 0, in order that
+          _remove_ref() isn't called on an uninitialized pointer
+          in the destructor.
+
+Fri May  2 19:33:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/ETCL_y.cpp:
+        * tao/ETCL/ETCL_l.cpp:
+        * tao/ETCL/ETCL_Interpreter.cpp:
+
+          New files that simply include their counterparts in
+          $ACE_ROOT/ace/ETCL. The lex and yacc files are generated
+          and can't be factored into CORBA and non-CORBA pieces as
+          the other ETCL files have been. On the other hand, there
+          doesn't seem to be any way found so far to get makefiles
+          to recompile a set of source files into a different set
+          of object files in a different location, so that things
+          like realclean will depend on the new object files. This
+          workaround in similar to what has been done for the IDL
+          compiler driver, which is composed of the same source
+          but links to different backends.
+
+        * tao/ETCL/TAO_ETCL.mpc:
+
+          Changed the TAO_ETCL_Parser project to reflect the changes
+          above.
+
+Fri May  2 18:38:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+
+          Fix for build problems with versioned namespaces turned on.
+
+Fri May  2 09:35:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3315_Regression/*:
+          New regression for bugzilla 3315. When TAO is used from a thread
+          created without ACE it leads to an assert in ACE. When we have
+          pthread we use the pthread api, else we just use ACE. Without
+          the change from Iliyan in ace/Service_Config.cpp this test fails
+          but with his change this test runs. Thanks to Abdul Sowayan for
+          creating this regression test.
+
+Fri May  2 08:27:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Load_Protocol_Factory_T.h:
+          Fixed incorrect debug statements which print garbage when
+          unicode is enabled. Thanks to Karl-Heinz Wind <wind at itq dot de>
+          for reporting this. This fixes bugzilla 3309
+
+Fri May  2 08:15:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/config/monitor.mpb:
+        * tao/config/tao_monitor.mpb:
+          Renamed monitor to tao_monitor
+
+        * utils/monitor/monitor.mpc:
+          updated base project
+
+Thu May  1 18:32:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+        * tests/Monitor/Marshal_Buffer/server.cpp:
+          Don't use deprecated macros
+
+Thu May  1 18:27:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+          Use a full include path
+
+        * tao/Leader_Follower.h:
+          Docu change
+
+Thu May  1 18:09:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_ACE.mwc:
+
+          Removed $ACE_ROOT/MonitorControl/MonitorControl.mpc, this MPC
+          file has been relocated and is now covered under $ACE_ROOT/ace.
+
+        * tao/Monitor/Monitor_Impl.cpp:
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+
+          Changed header include paths to reflect the relocation of
+          the MonitorControl library.
+
+Wed Apr 30 17:16:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+        * tests/Monitor/Marshal_Buffer/server.cpp:
+
+          Added include to pull in ACE_PRINT_EXCEPTION and
+          ACE_ANY_EXCEPTION macros, which were not recognized
+          in some Debian builds.
+
+Wed Apr 30 17:01:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+        * tests/Monitor/Marshal_Buffer/marshal_buffer.mpc:
+
+          Removed ENABLE_MONITORS macro which is no longer used.
+
+Wed Apr 30 12:13:59 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/ast/ast_union.cpp:
+
+          Added missing break.
+
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+
+          Ugly macros to get this to compile portably.
+
+Wed Apr 30 11:57:18 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+
+          Restored the original order of included header files to
+          eliminate template-related compile errors with gcc.
+
+Wed Apr 30 11:55:04 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Portable_Interceptors/PICurrent/run_test.pl:
+        * tests/Portable_Interceptors/PICurrent/server.cpp:
+
+          Modified this test to use -SvcConfDirective instead of creating an
+          svc.conf.  For single-threaded builds, the thread-per-connection
+          setting does not work.  So, when threads are enabled add the
+          -SvcConfDirective to enable thread-per-connection.  When threads
+          are disabled, issue a notice and continue on in single-threaded
+          mode.
+
+Wed Apr 30 11:51:40 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC/config/tao_vc8warnings.mpb:
+
+          Added support for vc9.
+
+Tue Apr 29 19:58:21 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/ETCL.mpc:
+        * orbsvcs/orbsvcs/ETCL.rc:
+
+          Removed these files, overlooked in checkin
+
+          Tue Apr 29 19:55:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+Tue Apr 29 19:55:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/ETCL/*:
+
+          Removed this directory and its contents, it is replaced
+          by $TAO_ROOT/tao/ETCL. Some code has been factored to
+          $ACE_ROOT/ace/ETCL and some identifiers have changed,
+          but no intentional changes have been made to the behavior.
+
+        * MPC/config/etcl.mpb:
+        * TAO_ACE.mwc:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+        * tao/ETCL/TAO_ETCL_Constraint.h:
+        * tao/ETCL/TAO_ETCL.mpc:
+
+          Changes to integrate the replacement of
+          $TAO_ROOT/orbsvcs/orbsvcs/ETCL with
+          $TAO_ROOT/tao/ETCL and $ACE_ROOT/ace/ETCL.
+
+Tue Apr 29 15:17:52 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/include/ast_union.h:
+
+          Add support for (unsigned) long long union discriminators.
+
+        * tests/Bug_3311_Regression:
+        * tests/Bug_3311_Regression/Bug_3311_Regression.mpc:
+        * tests/Bug_3311_Regression/README:
+        * tests/Bug_3311_Regression/test.idl:
+        * tests/Bug_3311_Regression/test.cpp:
+
+          Regression test for the above.
+
+Mon Apr 28 19:38:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Monitor/Monitor.h:
+        * tao/Monitor/Monitor.cpp:
+        * tao/Monitor/Monitor_Impl.h:
+        * tao/Monitor/Monitor_Impl.cpp:
+
+          Added TAO_HAS_MONITOR_FRAMEWORK guards around these files.
+
+Mon Apr 28 17:57:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.mpc:
+          Made project name more unique
+
+        * orbsvcs/orbsvcs/AV/Flows_T.cpp:
+          Initialise pointer with 0
+
+Mon Apr 28 14:24:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduler.h
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.h
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.h
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.h
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.h
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.h
+        * orbsvcs/examples/LoadBalancing/ORBInitializer.h
+        * orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h
+        * orbsvcs/examples/ORT/Server_IORInterceptor.h
+        * orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.h
+        * orbsvcs/ImplRepo_Service/INS_Locator.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicyFactory.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.inl
+        * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicyFactory.h
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ORBInitializer.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ClientORBInitializer.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ORBInitializer.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h
+        * orbsvcs/orbsvcs/Security/Security_Current.h
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.h
+        * orbsvcs/orbsvcs/Security/Security_PolicyFactory.h
+        * orbsvcs/orbsvcs/Security/SL2_EstablishTrustPolicy.h
+        * orbsvcs/orbsvcs/Security/SL2_QOPPolicy.h
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.h
+        * orbsvcs/orbsvcs/Security/SL3_ContextEstablishmentPolicy.h
+        * orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h
+        * orbsvcs/orbsvcs/Security/SL3_ObjectCredentialsPolicy.h
+        * orbsvcs/orbsvcs/Security/SL3_PolicyFactory.h
+        * orbsvcs/orbsvcs/Security/SL3_SecurityCurrent.h
+        * orbsvcs/orbsvcs/Security/SL3_SecurityManager.h
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/ORBInitializer.h
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ORBInitializer.h
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h
+        * orbsvcs/tests/Bug_2248_Regression/Server_ORBInitializer.h
+        * orbsvcs/tests/Bug_2248_Regression/Server_Request_Interceptor.h
+        * orbsvcs/tests/Bug_2285_Regression/ServerORBInitializer.h
+        * orbsvcs/tests/Bug_2285_Regression/ServerORBInitializer2.h
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor.h
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor2.h
+        * orbsvcs/tests/Bug_2287_Regression/ServerORBInitializer2.h
+        * orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.h
+        * orbsvcs/tests/Bug_2615_Regression/ServerORBInitializer2.h
+        * orbsvcs/tests/Bug_2615_Regression/ServerRequest_Interceptor2.h
+        * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.h
+        * orbsvcs/tests/Bug_3215_Regression/ServerRequest_Interceptor2.h
+        * orbsvcs/tests/Bug_3216_Regression/ServerORBInitializer.h
+        * orbsvcs/tests/Bug_3216_Regression/ServerRequest_Interceptor.h
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_ORBInitializer.h
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.h
+        * tao/LocalObject.h
+        * tao/LocalObject.inl
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp
+        * tests/Bug_1495_Regression/client_interceptor.h
+        * tests/Bug_1495_Regression/Client_ORBInitializer.h
+        * tests/Bug_1495_Regression/server_interceptor.h
+        * tests/Bug_1495_Regression/Server_ORBInitializer.h
+        * tests/Bug_3276_Regression/Servant_Locator.h
+        * tests/Collocated_Forwarding/Server_ORBInitializer.h
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.h
+        * tests/ORT/ORT_test_IORInterceptor.h
+        * tests/ORT/ServerORBInitializer.h
+        * tests/ORT/ServerRequestInterceptor.h
+        * tests/POA/Bug_1592_Regression/ServantLocator.h
+        * tests/POA/Bug_1592_Regression/Server_ORBInitializer.h
+        * tests/POA/Bug_1592_Regression/Server_Request_Interceptor.h
+        * tests/POA/Forwarding/Servant_Activator.h
+        * tests/POA/Loader/Servant_Activator.h
+        * tests/POA/Loader/Servant_Locator.h
+        * tests/POA/On_Demand_Activation/Servant_Activator.h
+        * tests/POA/On_Demand_Activation/Servant_Locator.h
+        * tests/POA/On_Demand_Loading/Servant_Activator.h
+        * tests/POA/On_Demand_Loading/Servant_Locator.h
+        * tests/Portable_Interceptors/AdvSlot/server.cpp
+        * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp
+        * tests/Portable_Interceptors/AdvSlotExt/server.cpp
+        * tests/Portable_Interceptors/AMI/Client_Interceptor.h
+        * tests/Portable_Interceptors/AMI/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/AMI/Server_Interceptor.h
+        * tests/Portable_Interceptors/AMI/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Benchmark/client_interceptors.h
+        * tests/Portable_Interceptors/Benchmark/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Benchmark/server_interceptors.h
+        * tests/Portable_Interceptors/Benchmark/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_1559/client_interceptor.h
+        * tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_1559/server_interceptor.h
+        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_2088/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_2133/ClientORBInitializer.h
+        * tests/Portable_Interceptors/Bug_2133/ClientRequest_Interceptor.h
+        * tests/Portable_Interceptors/Bug_2510_Regression/client_interceptor.h
+        * tests/Portable_Interceptors/Bug_2510_Regression/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_2510_Regression/server_interceptor.h
+        * tests/Portable_Interceptors/Bug_2510_Regression/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_3079/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_3079/Client_Request_Interceptor.h
+        * tests/Portable_Interceptors/Bug_3079/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_3079/Server_Request_Interceptor.h
+        * tests/Portable_Interceptors/Bug_3080/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Bug_3080/Client_Request_Interceptor.h
+        * tests/Portable_Interceptors/Collocated/Dynamic/Echo_Collocated_ORBInitializer.h
+        * tests/Portable_Interceptors/Collocated/Dynamic/interceptors.h
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_ORBInitializer.h
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptors.h
+        * tests/Portable_Interceptors/Dynamic/client_interceptor.h
+        * tests/Portable_Interceptors/Dynamic/Echo_Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Dynamic/Echo_Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Dynamic/server_interceptor.h
+        * tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.h
+        * tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h
+        * tests/Portable_Interceptors/IORInterceptor/FOO_Client_ORBInitializer.h
+        * tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.h
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor_ORBInitializer.h
+        * tests/Portable_Interceptors/ORB_Shutdown/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.h
+        * tests/Portable_Interceptors/PICurrent/ClientORBInitializer.h
+        * tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.h
+        * tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor2.h
+        * tests/Portable_Interceptors/PICurrent/ServerORBInitializer.h
+        * tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.h
+        * tests/Portable_Interceptors/PolicyFactory/IORInterceptor.h
+        * tests/Portable_Interceptors/PolicyFactory/Policy.h
+        * tests/Portable_Interceptors/PolicyFactory/PolicyFactory.h
+        * tests/Portable_Interceptors/PolicyFactory/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Echo_Collocated_ORBInitializer.h
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/interceptors.h
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_interceptor.h
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Echo_Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Echo_Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_interceptor.h
+        * tests/Portable_Interceptors/Recursive_ORBInitializer/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Redirection/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Redirection/Client_Request_Interceptor.h
+        * tests/Portable_Interceptors/Redirection/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Redirection/Server_Request_Interceptor.h
+        * tests/Portable_Interceptors/Register_Initial_References/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.h
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.h
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client_interceptor.h
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Client_ORBInitializer.h
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server_interceptor.h
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Server_ORBInitializer.h
+        * tests/Portable_Interceptors/Slot/driver.cpp
+        * tests/RTCORBA/Client_Propagated/Client_ORBInitializer.h
+        * tests/RTCORBA/Client_Propagated/interceptors.h
+        * tests/RTScheduling/Scheduler.h
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.h
+        * tests/TransportCurrent/lib/Client_ORBInitializer.h
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.h
+        * tests/TransportCurrent/lib/Server_ORBInitializer.h
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.h
+          Don't use TAO_Local_RefCounted_Object but ::CORBA::LocalObject now
+          LocalObject is also refcounted. Users can still sue TAO_Local_RefCounted_Object,
+          it just does nothing, actions have been takin in LocalObject.h
+          to prevent the usage of TAO_Local_RefCounted_Object in the
+          TAO distribution itself
+
+Mon Apr 28 13:45:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_ACE.mwc:
+          Added ETCL and MonitorControl
+
+Mon Apr 28 13:19:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/RT_lib/RT_Application_Command.h
+        * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.h
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.h
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.h
+          Fixed Constuctor to Constructor
+
+Mon Apr 28 13:16:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Monitor/*:
+          New test for the monitoring framework
+
+Mon Apr 28 13:10:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/monitor.mpb:
+        * MPC/config/tao_etcl.mpb:
+        * MPC/config/tao_etcl_parser.mpb:
+          New base projects
+
+        * tao/ETCL/*:
+          New TAO ETCL library which uses the ACE ETCL library. This will
+          replace the orbsvcs ETCL lib
+
+        * tao/Monitor/*:
+          New TAO library to get/clear monitor points from a corba client
+
+        * tao/objectid.h:
+          Added an id for the Monitor
+
+        * utils/monitor/*:
+          Commandline client to retrieve monitor points from a TAO server
+
+        * tao/ORB.cpp:
+          Extended rir for Monitor
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+          Added code to get and store the Monitor
+
+        * tao/orbconf.h:
+          When ACE has monitoring enabled we also enable it for TAO
+
+Mon Apr 28 12:42:36 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+        * tao/params.cpp:
+        * docs/Options.html:
+        * NEWS:
+
+          Added a new ORB parameter, -ORBAcceptErrorDelay, that controls the
+          amount of time to wait before attempting to accept new connections
+          when a possibly transient error occurs during accepting a new
+          connection. A delay of zero indicates that accepting should not be
+          attempted again after the transient error and the handler will be
+          removed from the reactor.
+
+        * tao/Transport_Acceptor.h:
+        * tao/Transport_Acceptor.inl:
+        * tao/Transport_Acceptor.cpp:
+
+          Added code to inspect the error behind an accept() failure and
+          take action according to the above ORB parameter.  This includes a
+          template that derives from ACE_Strategy_Acceptor that allows the
+          sub-classed accptors to use this error handling with minimal code
+          changes.
+
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Acceptor.h:
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Acceptor.h:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+
+          Use the new template provided by TAO_Acceptor and set the accept
+          error delay based on the ORB parameter.
+
+        * configure.ac:
+        * tests/HandleExhaustion:
+        * tests/HandleExhaustion/HandleExhaustion.mpc:
+        * tests/HandleExhaustion/Makefile.am:
+        * tests/HandleExhaustion/README:
+        * tests/HandleExhaustion/Test.idl:
+        * tests/HandleExhaustion/client.cpp:
+        * tests/HandleExhaustion/run_test.pl:
+        * tests/HandleExhaustion/server.cpp:
+        * tests/Makefile.am:
+
+          Added a test to exersice the above changes.
+
+Mon Apr 28 11:39:21 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_1269_Regression/client.cpp:
+        * tests/Bug_1270_Regression/client.cpp:
+
+          Removed #include of ORB_Task.h.
+
+        * tests/Bug_1269_Regression/ORB_Task.h:
+        * tests/Bug_1269_Regression/ORB_Task.cpp:
+        * tests/Bug_1270_Regression/ORB_Task.h:
+        * tests/Bug_1270_Regression/ORB_Task.cpp:
+
+          Removed these files.  There were not used.
+
+Mon Apr 28 10:26:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype_Adapter.h:
+        * tao/RTScheduling/RTScheduler_Initializer.h:
+        * tao/PI/PI_ORBInitializer.h:
+        * tao/PI_Server/PortableServer_ORBInitializer.h:
+          Layout changes
+
+        * tao/Thread_Lane_Resources.cpp:
+          No need for intermediate variable
+
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * docs/Options.html:
+          Extended the -ORBLaneListenEndpoints commandline option with
+          support for *, *:* means all pools and all lanes, *:1 means
+          lane 1 of all pools, 1:* means all lanes for pool 1. This makes
+          it easier to specify an endpoint in a dynamic system. This
+          fixes bugzilla 3308
+
+Mon Apr 28 07:45:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * tests/Bug_3299_Regression/Hello.cpp:
+        Renamed (and rescoped) variable count due to vxworks 5.5 system
+        over-used of common variable name.
+
+Fri Apr 25 13:24:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Registry.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/params.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/Thread_Lane_Resources.cpp:
+          layout changes
+
+Fri Apr 25 09:25:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * examples/MFC/server.cpp:
+        * examples/MFC/server_unicode.mpc:
+        * utils/NamingViewer/NamingViewUnicode.mpc:
+        * utils/NamingViewer/NamingViewer.cpp:
+        * utils/NamingViewer/SelectNSDialog.cpp:
+
+          Split out the unicode versions of these.
+
+Fri Apr 25 09:25:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * examples/MFC/server.mpc:
+        * utils/NamingViewer/NamingView.mpc:
+
+          Feature name "uses_wchar" already used within ACE/TAO. Replaces
+          the "unicode" feature name. Template / project name within MPC
+          still named unicode.
+
+Fri Apr 25 09:10:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
+        * tao/Messaging/Buffering_Constraint_Policy.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+          Fixed gnu warnings
+
+Fri Apr 25 07:27:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.h:
+          Doxygen change
+
+        * tao/RTCORBA/RT_Policy_i.cpp:
+          Fixed gnu warning
+
+Thu Apr 24 19:23:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
+          Use bool and removed not used flag
+
+Thu Apr 24 18:33:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDir_ORBInitializer.h
+        * tao/BiDir_GIOP/BiDir_PolicyFactory.h
+        * tao/CodecFactory/CDR_Encaps_Codec.h
+        * tao/CodecFactory/CodecFactory_impl.h
+        * tao/Codeset/Codeset_Manager_i.cpp
+        * tao/Compression/Base_Compressor.h
+        * tao/Compression/Compression_Manager.h
+        * tao/Compression/Compressor_Factory.h
+        * tao/Configurable_Refcount.h
+        * tao/CSD_Framework/CSD_ORBInitializer.h
+        * tao/CSD_Framework/CSD_Strategy_Base.h
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.cpp
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.h
+        * tao/DiffServPolicy/DiffServPolicy_Factory.h
+        * tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.h
+        * tao/DynamicAny/DynAny_i.h
+        * tao/DynamicAny/DynAnyFactory.h
+        * tao/DynamicAny/DynArray_i.h
+        * tao/DynamicAny/DynEnum_i.h
+        * tao/DynamicAny/DynSequence_i.h
+        * tao/DynamicAny/DynStruct_i.h
+        * tao/DynamicAny/DynUnion_i.h
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.h
+        * tao/DynamicInterface/DII_Reply_Handler.h
+        * tao/EndpointPolicy/EndpointPolicy_Factory.h
+        * tao/EndpointPolicy/EndpointPolicy_i.cpp
+        * tao/EndpointPolicy/EndpointPolicy_i.h
+        * tao/EndpointPolicy/EndpointPolicy_ORBInitializer.h
+        * tao/EndpointPolicy/IIOPEndpointValue_i.cpp
+        * tao/EndpointPolicy/IIOPEndpointValue_i.h
+        * tao/IORInterceptor/IORInfo.h
+        * tao/IORManipulation/IORManipulation.h
+        * tao/IORTable/IOR_Table_Impl.h
+        * tao/Messaging/AMH_Response_Handler.h
+        * tao/Messaging/Buffering_Constraint_Policy.cpp
+        * tao/Messaging/Buffering_Constraint_Policy.h
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp
+        * tao/Messaging/Connection_Timeout_Policy_i.h
+        * tao/Messaging/Messaging_ORBInitializer.h
+        * tao/Messaging/Messaging_Policy_i.cpp
+        * tao/Messaging/Messaging_Policy_i.h
+        * tao/Messaging/Messaging_PolicyFactory.h
+        * tao/MProfile.inl
+        * tao/ORB_Core.cpp
+        * tao/PI/ClientRequestInfo.h
+        * tao/PI/ORBInitInfo.h
+        * tao/PI/PI_ORBInitializer.h
+        * tao/PI/PI_PolicyFactory.h
+        * tao/PI/PICurrent.h
+        * tao/PI/ProcessingModePolicy.h
+        * tao/PI_Server/PortableServer_ORBInitializer.h
+        * tao/PI_Server/PortableServer_PolicyFactory.h
+        * tao/PI_Server/ServerRequestInfo.h
+        * tao/Policy_Current.h
+        * tao/Policy_Manager.h
+        * tao/PortableServer/IdAssignmentPolicy.h
+        * tao/PortableServer/IdUniquenessPolicy.h
+        * tao/PortableServer/ImplicitActivationPolicy.h
+        * tao/PortableServer/LifespanPolicy.h
+        * tao/PortableServer/POA_Current.h
+        * tao/PortableServer/POAManager.h
+        * tao/PortableServer/POAManagerFactory.h
+        * tao/PortableServer/RequestProcessingPolicy.h
+        * tao/PortableServer/Root_POA.cpp
+        * tao/PortableServer/Root_POA.h
+        * tao/PortableServer/Servant_Base.cpp
+        * tao/PortableServer/ServantRetentionPolicy.h
+        * tao/PortableServer/ThreadPolicy.h
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.h
+        * tao/RTCORBA/Priority_Mapping_Manager.h
+        * tao/RTCORBA/RT_Current.h
+        * tao/RTCORBA/RT_Mutex.h
+        * tao/RTCORBA/RT_ORB.h
+        * tao/RTCORBA/RT_ORBInitializer.h
+        * tao/RTCORBA/RT_Policy_i.cpp
+        * tao/RTCORBA/RT_Policy_i.h
+        * tao/RTCORBA/RT_PolicyFactory.h
+        * tao/RTCORBA/RT_Transport_Descriptor.h
+        * tao/RTCORBA/RT_Transport_Descriptor_Property.h
+        * tao/RTScheduling/Current.h
+        * tao/RTScheduling/Distributable_Thread.h
+        * tao/RTScheduling/Request_Interceptor.h
+        * tao/RTScheduling/RTScheduler_Initializer.h
+        * tao/RTScheduling/RTScheduler_Manager.h
+        * tao/RTScheduling/ThreadAction.h
+        * tao/SmartProxies/Smart_Proxies.h
+        * tao/Strategies/Strategies_ORBInitializer.h
+        * tao/Stub.inl
+        * tao/target_specification.h
+        * tao/Thread_Lane_Resources_Manager.h
+        * tao/TransportCurrent/Current_Impl.h
+        * tao/TransportCurrent/Current_ORBInitializer_Base.h
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h
+          Use CORBA::LocalObject instead of TAO_Local_RefCounted_Object
+
+        * tao/Object.cpp
+        * tao/Object.h
+          Added _refcount_value as mentioned in the C++ mapping
+
+        * tao/Profile.cpp
+        * tao/Profile.inl
+          Moved refcount methods inline
+
+Thu Apr 24 14:08:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LocalObject.{h,inl}:
+          Give TAO_Local_RefCounted_Object again a constructor and
+          assignment/copy constructor. Footprint increased after
+          removing these.
+
+Thu Apr 24 13:59:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Notify/Lanes/Consumer.h
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.h
+        * orbsvcs/examples/Notify/Lanes/ORB_Objects.h
+        * orbsvcs/examples/Notify/Lanes/ORB_Run_Task.h
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.h
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.h
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h
+        * orbsvcs/examples/Notify/ThreadPool/ORB_Objects.h
+        * orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.h
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h
+        * orbsvcs/tests/Notify/lib/Activation_Manager.h
+        * orbsvcs/tests/Notify/lib/Application_Command.h
+        * orbsvcs/tests/Notify/lib/Command.h
+        * orbsvcs/tests/Notify/lib/Command_Builder.h
+        * orbsvcs/tests/Notify/lib/Command_Factory.h
+        * orbsvcs/tests/Notify/lib/Command_Factory_T.h
+        * orbsvcs/tests/Notify/lib/Consumer_T.h
+        * orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.h
+        * orbsvcs/tests/Notify/lib/Direct_Consumer.h
+        * orbsvcs/tests/Notify/lib/Direct_Supplier.h
+        * orbsvcs/tests/Notify/lib/Driver.h
+        * orbsvcs/tests/Notify/lib/EventChannel_Command.h
+        * orbsvcs/tests/Notify/lib/Filter_Command.h
+        * orbsvcs/tests/Notify/lib/LookupManager.h
+        * orbsvcs/tests/Notify/lib/Options_Parser.h
+        * orbsvcs/tests/Notify/lib/Peer.h
+        * orbsvcs/tests/Notify/lib/Peer_T.h
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.h
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.h
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.h
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.h
+        * orbsvcs/tests/Notify/lib/PushConsumer.h
+        * orbsvcs/tests/Notify/lib/PushSupplier.h
+        * orbsvcs/tests/Notify/lib/Relay_Consumer.h
+        * orbsvcs/tests/Notify/lib/SequencePushConsumer.h
+        * orbsvcs/tests/Notify/lib/SequencePushSupplier.h
+        * orbsvcs/tests/Notify/lib/StructuredEvent.h
+        * orbsvcs/tests/Notify/lib/StructuredPushConsumer.h
+        * orbsvcs/tests/Notify/lib/StructuredPushSupplier.h
+        * orbsvcs/tests/Notify/lib/Supplier_T.h
+        * orbsvcs/tests/Notify/lib/SupplierAdmin_Command.h
+          Fixed Constuctor to Constructor
+
+        * orbsvcs/orbsvcs/Notify/Properties.{h,cpp}:
+          Added close method
+
+Thu Apr 24 10:41:42 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Synch_Invocation.cpp:
+
+          Fixed a bug where TAO did not honour the required CORBA 'at most
+          once' invocation rules whenever an IOR had more than one profile.
+
+        * tests/Bug_3299_Regression:
+        * tests/Bug_3299_Regression/Bug_3299_Regression.mpc:
+        * tests/Bug_3299_Regression/Hello.h:
+        * tests/Bug_3299_Regression/Hello.cpp:
+        * tests/Bug_3299_Regression/README:
+        * tests/Bug_3299_Regression/Test.idl:
+        * tests/Bug_3299_Regression/client.cpp:
+        * tests/Bug_3299_Regression/run_test.pl:
+        * tests/Bug_3299_Regression/server.cpp:
+
+          Regression test for the above.
+
+Thu Apr 24 12:13:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Admin.h
+        * orbsvcs/orbsvcs/Notify/AdminProperties.h
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Consumer.h
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h
+        * orbsvcs/orbsvcs/Notify/Container_T.h
+        * orbsvcs/orbsvcs/Notify/CosNotify_Initializer.h
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.h
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.h
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h
+        * orbsvcs/orbsvcs/Notify/Event.h
+        * orbsvcs/orbsvcs/Notify/Event_Manager.h
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.h
+        * orbsvcs/orbsvcs/Notify/EventChannel.h
+        * orbsvcs/orbsvcs/Notify/EventType.h
+        * orbsvcs/orbsvcs/Notify/ID_Factory.h
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.h
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.h
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.h
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h
+        * orbsvcs/orbsvcs/Notify/Peer.h
+        * orbsvcs/orbsvcs/Notify/Properties.h
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.h
+        * orbsvcs/orbsvcs/Notify/Property_T.h
+        * orbsvcs/orbsvcs/Notify/PropertySeq.h
+        * orbsvcs/orbsvcs/Notify/Proxy.h
+        * orbsvcs/orbsvcs/Notify/Proxy_T.h
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.h
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.h
+        * orbsvcs/orbsvcs/Notify/QoSProperties.h
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h
+        * orbsvcs/orbsvcs/Notify/RT_Builder.h
+        * orbsvcs/orbsvcs/Notify/RT_Factory.h
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.h
+        * orbsvcs/orbsvcs/Notify/RT_Properties.h
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.h
+        * orbsvcs/orbsvcs/Notify/Supplier.h
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.h
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.h
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h
+          Fixed Constuctor to Constructor
+
+Thu Apr 24 12:16:30 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/RTScheduling/DT_Creator.h:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+
+          Changed to not hold onto the RTScheduling::Current, RTCORBA::RTORB
+          or PortableServer::POA.  They are retrieved on demand.  Otherwise,
+          static destruction causes problems on some platforms.
+
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
+
+          Modified this test to convert the native priority to the CORBA
+          priority before passing it to the RTCORBA::Current::the_priority()
+          method.  It expects an RTCORBA priority, not a native priority.
+
+        * examples/RTScheduling/Task_Stats.cpp:
+
+          Changed to only dump statistics if the object has been
+          initialized.
+
+        * tao/RTScheduling/RTScheduler_Manager.h:
+
+          Fixed the header guard.  It was the same as the
+          Priority_Mapping_Manager.h guard.
+
+Thu Apr 24 12:13:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h
+        * orbsvcs/orbsvcs/Notify/Object.h
+        * orbsvcs/orbsvcs/Notify/Object.inl
+        * orbsvcs/orbsvcs/Notify/Peer.h
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h
+          Layout, bool and doxygen changes
+
+Thu Apr 24 11:34:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.cpp
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.h
+        * orbsvcs/orbsvcs/Notify/Proxy.h
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.h
+        * orbsvcs/orbsvcs/Notify/Reconnect_Worker_T.h
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.h
+        * orbsvcs/orbsvcs/Notify/Refcountable.h
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.h
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.h
+        * orbsvcs/orbsvcs/Notify/RT_Properties.h
+        * orbsvcs/orbsvcs/Notify/Seq_Worker_T.h
+          Layout, bool and doxygen changes
+
+Thu Apr 24 11:10:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp
+        * orbsvcs/orbsvcs/Notify/Admin.h
+        * orbsvcs/orbsvcs/Notify/AdminProperties.h
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h
+        * orbsvcs/orbsvcs/Notify/Consumer.h
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.h
+        * orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.h
+        * orbsvcs/orbsvcs/Notify/EventChannel.h
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h
+        * orbsvcs/orbsvcs/Notify/EventType.h
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h
+        * orbsvcs/orbsvcs/Notify/ID_Factory.h
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp
+          Layout and doxygen changes
+
+Thu Apr 24 10:38:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
+
+        * orbsvcs/tests/Security/mixed_security_test/mixed_security.mpc:
+        * orbsvcs/tests/Security/ssliop_CSD/ssliop_CSD.mpc:
+
+          Stopped multi-build conflicts with VC8.
+
+        * examples/MFC/client.mpc:
+        * examples/MFC/server.mpc:
+
+          Stopped multi-build conflicts with VC8 (Avoid Unicode for now).
+
+        * utils/NamingViewer/NamingViewer.mpc:
+
+          Avoid unicode for now.
+
+Thu Apr 24 10:25:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.h:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/NotifyExt.idl:
+        * orbsvcs/orbsvcs/PortableGroup/GOA.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/GOA.h:
+          Layout changes
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.{h,cpp}:
+          Changed released flag to a bool
+
+Thu Apr 24 09:49:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+        * tao/BiDir_GIOP/BiDir_Policy_i.h:
+          Get rid of TAO_Local_RefCounted_Object. If this doesn't lead to
+          compile warnings I will commit more changes to the core TAO libs
+
+Thu Apr 24 09:21:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Adapter_Registry.{h,cpp}:
+        * tao/Compression/Compression.h:
+        * tao/PortableServer/Adapter_Activator.cpp:
+        * tao/ORB_Core.h:
+          Layout changes
+
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+          Initialise pointer with 0
+
+        * tao/IORTable/IORTable.pidl:
+          Doxygen changes
+
+        * tao/PortableServer/Root_POA.cpp:
+          Layout and bool changes
+
+        * tao/Object.{h,cpp,inl}:
+        * tao/LocalObject.{h,cpp,inl}:
+          Updated TAO to the 1.2 IDL to C++ mapping. LocalObject is now
+          refcounted by default. TAO_Local_RefCounted_Object is now an
+          empty class kept for backward compatibility. CORBA::LocalObject
+          can be used directly now, we have to update the other parts
+          of TAO to not use this class anymore
+
+Wed Apr 23 18:12:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+
+          A change made to this file back on Tue June 24 16:26:06 2003
+          caused the Simple_Three_Stage test to fail 100% of the time.  I'm
+          not sure how this went unnoticed.  I reworked the change to retain
+          the intended functionality, but still allow the test pass.
+
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.inl:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+
+          Cleaned up memory errors and leaks.
+
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+
+          Initialize the ref_count data member.
+
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+
+          Use the correct return type for the call to ACE_OS::fread().
+
+Wed Apr 23 15:22:20 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Client.cpp:
+        * tests/Oneway_Send_Timeouts/Server.cpp:
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+          Fix minor memory leak. Fix mismatched delete.
+
+Wed Apr 23 14:08:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2494_Regression/run_test.pl:
+          Check return value of spawn
+
+        * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.h:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Translator.h:
+          Layout changes
+
+        * tests/OBV/Forward/run_test.pl:
+          Changed wait time
+
+        * tests/Portable_Interceptors/Dynamic/run_test.pl:
+          Removed duplicated names
+
+Wed Apr 23 14:05:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.cpp:
+          Handle TAG_RMI_CUSTOM_MAX_STREAM_FORMAT and IBM_PARTNER_VERSION
+
+Wed Apr 23 14:03:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_export.h:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Factory.cpp:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Factory.h:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Translator.cpp:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Translator.h:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Translator.mpc:
+          Ported UTF16_UCS2 translator from OCI 1.4a to svn head. Fixes
+          bugzilla 3296
+
+Wed Apr 23 01:53:32 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 1.6.4 released.
+
+Wed Apr 16 13:03:25 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+        Synthetic arguments for -ORBSvcConfDirective must be quoted to
+        ensure correct interpretation.
+
+Tue Apr 15 12:15:35 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Turns out ACE_ARGV only allows "iterative" use (e.g. adding new
+          arguments to the list), when created with one of the ctors.
+
+Mon Apr 14 20:14:18 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB.cpp:
+        * tao/TAO_Internal.h:
+
+          Adding a wchar/char conversion before calling the
+          initialization.
+
+        * tao/TAO_Internal.cpp:
+
+          Removing the use of CORBA::StringSeq to store intermediate
+          argument lists in favor of ACE_ARGV, which is more wchar-aware.
+
+Fri Apr 11 10:50:37 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Adding ACE_TEXT
+
+Thu Apr 10 22:40:22 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/TAO_Internal.cpp:
+
+          Eliminating the typedef for
+          ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt>.
+
+Thu Apr 10 12:42:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CodeSets/simple/run_test.pl:
+          Fixed bug in add_lib_paths
+
+Thu Apr 10 11:42:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+          Fixed invalid delete
+
+Thu Apr 10 11:29:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.{h,cpp}:
+          Use an auto_ptr to store the members, simplifies our code
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.{h,cpp}:
+          Don't use an auto_ptr in the constructor, just use it as member. This was
+          a left over of emulated exception support, thanks to Jeff Parsons
+          for finding this
+
+        * tao/Transport.cpp:
+          Layout change
+
+Thu Apr 10 08:15:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/performance-tests/RTEvent/lib/RIR_Narrow.cpp:
+
+          Another "interface" VC8 MFC conflict.
+
+        * tests/DII_AMI_Forward/DII_AMI_Forward.mpc:
+
+          VC8 multi-build conflict (both server + client) over the test.idl
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.inl:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+
+          Place this specialised UUID class into it's own TAO_FtRt namespace.
+
+Wed Apr  9 18:01:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Default_Thread_Lane_Resources_Manager.cpp:
+        * tao/IORManipulation/IORManip_Loader.cpp:
+          Layout changes
+
+        * tao/IORManipulation/IORManipulation.h:
+          Doxygen and layout changes
+
+        * tao/ORBInitializer_Registry.cpp:
+          Removed VxWorks specific code, with the new SG/SC implementation
+          this shouldn't be needed anymore.
+
+        * tao/Transport_Cache_Manager.cpp:
+          Const and layout changes
+
+Wed Apr  9 14:00:34 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB.cpp:
+
+          Fixing a complaint about the use of a implicit temporary with
+          operator=().
+
+Tue Apr  8 12:58:34 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Fixing a fuzz complaint
+
+Tue Apr  8 12:04:20 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This is the last batch of changes related to the re-factoring of
+          the service configuration, which aims to eliminate a number of
+          related memory leaks and bugs. The changes are being ported back
+          from the "iliyan-gestalt" branch.
+
+        * tao/ORB.h:
+        * tao/ORB.cpp (ORB_init,init_orb_globals,find_orb_context):
+
+          Modified ORB_init to accept -ORBGestalt command line parameter
+          which specifies which service configuration context the new ORB
+          will use.  Acceptable values (case-insensitive) include "LOCAL"
+          forces the ORB to manage its own, local service configuration
+          context (gestalt).  "GLOBAL" forces the new ORB to use (but not
+          own) the process-global gestalt. The caller can also identify a
+          particular existing ORB, who will share its ownership of a gestalt
+          with the new ORB. The existing ORB ID must be prefixed with "ORB:"
+          and the resulting string as a whole is case-sensitive. Removed
+          init_orb_globals.
+
+        * tao/ORB_Core.h (TAO_ORB_Core):
+        * tao/ORB_Core.inl (configuration):
+        * tao/ORB_Core.cpp (TAO_ORB_Core,orbinitializer_registry_i):
+
+          Modified tor to take a smart pointer for the service
+          configuration. The core now has a smart pointer member which
+          allows us to destroy local service configuration contexts
+          _exactly_ when they are no longer needed and eliminate memory
+          leaks.
+
+        * tao/TAO_Internal.h:
+        * tao/TAO_Internal.cpp (close_services,open_services):
+
+          Updated for the use of smart pointer for the gestalt
+
+        * tests/ORB_Local_Config/Shared/Test.cpp (testReusingGlobals):
+
+Sun Apr  6 00:03:27 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * tests/ORB_Local_Config/Separation/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Shared/Test.cpp:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+
+        Changes to account for the intrusive-recounted-ness of
+        ACE_Service_Gestalt instances.
+
+Fri Apr  4 22:15:16 UTC 2008  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        This is the first batch of changes related to the refactoring of
+        the service configuration, which aims to eliminate a number of
+        related memory leaks and bugs. The changes are being ported back
+        from the "iliyan-gestalt" branch.
+
+        * orbsvcs/tests/Bug_3216_Regression/run_test.pl:
+
+        Fixed to use $ACE_ROOT instead of '../..', to search for PerlACE.
+
+        * tao/ORBInitializer_Registry.cpp:
+
+        Removing a misplaced call to TAO::ORB::init_orb_globals(). Now
+        that the latter has non-trivial functionality, calling it from an
+        ORB initializer would be wrong.
+
+        * tests/Bug_2735_Regression/server.cpp:
+
+        The argv must be 0-terminated to fulfill the contract with C's
+        argv.
+
+        * tests/Bug_2936_Regression/PersistentPOA.cpp:
+
+        Fixing (what seems to be) a bad ownership transfer of Object's,
+        causing memory leaks.
+
+        * tests/Bug_3251_Regression/Bug_3251.conf:
+        * tests/Bug_3251_Regression/PersistentPoa.h:
+        * tests/Bug_3251_Regression/server.cpp:
+
+        Changes to make it compile (but not test anything) on
+        Windows. Also added a call to sync (after fork) so we get the
+        correct values for PID in the child.
+
+        * tests/ORB_Local_Config/run_tests_all.pl:
+
+        Fixed a bug that was preventing it from running.
+
+Fri Apr  4 10:20:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+
+          Another "interface" VC8 MFC conflict.
+
+Thu Apr  3 15:15:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+
+          Another "interface" VC8 MFC conflict.
+
+Thu Apr  3 09:40:00 UTC 2008  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+
+          Using "interface" as the descriptive name of a parameter seems to
+          cause VC8 (when building with MFC) to assume you mean a struct type
+          and it raises an incorrect systax error.
+
+Thu Apr  3 01:18:45 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DSI_Gateway/client.cpp:
+
+          Reworded exception handlers to avoid having the nightly build
+          scoreboard detect expected exceptions as errors. This is the
+          same error that was documented in bug 2879.
+
+Wed Apr  2 12:13:50 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DSI_AMI_Gateway/client.cpp:
+
+          Reworded exception handlers to avoid having the nightly build
+          scoreboard detect expected exceptions as errors. This resolves
+          bug 2879.
+
+Wed Apr  2 11:47:45 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Collocated_Forwarding/Server_ORBInitializer.h:
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.h:
+        * tests/Collocated_Forwarding/test_i.h:
+
+          Added Id svn keyword to those headers.
+
+Wed Apr  2 11:33:48 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+          Fixed a warning.
+
+        * tests/Collocated_Forwarding/Collocated_Forwarding.mpc:
+          Added avoids_minimum_corba, avoids_corba_e_compact, and
+          avoids_corba_e_micro.
+
+Tue Apr  1 14:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocated_Forwarding/run_test.pl:
+          VxWorks updates
+
+        * tests/Collocated_Forwarding/Collocated_Forwarding.mpc:
+          Simplified
+
+Tue Apr  1 14:11:00 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Fixed a memory leak that was happening because a forward
+          reference was duplicated twice.
+
+        * tests/Collocated_Forwarding/Server_ORBInitializer.h:
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.h:
+        * tests/Collocated_Forwarding/test.idl:
+        * tests/Collocated_Forwarding/server.cpp:
+        * tests/Collocated_Forwarding/test_i.cpp:
+        * tests/Collocated_Forwarding/Collocated_Forwarding.mpc:
+        * tests/Collocated_Forwarding/Server_ORBInitializer.cpp:
+        * tests/Collocated_Forwarding/Server_Request_Interceptor.cpp:
+        * tests/Collocated_Forwarding/run_test.pl:
+        * tests/Collocated_Forwarding/test_i.h:
+          Added a new test for collocated forwarding case.
+          For details see Bug#3276.
+
+        * tests/Bug_3276_Regression/client.cpp:
+        * tests/Bug_3276_Regression/Servant_Locator.cpp:
+        * tests/Bug_3276_Regression/Manager.cpp:
+          Changed main to ACE_TMAIN.
+
+Tue Apr  1 13:17:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Load_Balancing/run_test.pl:
+        * examples/Logging/run_test.pl:
+        * examples/TypeCode_Creation/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 13:13:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/run_test.pl:
+        * examples/Buffered_AMI/run_test.pl:
+        * examples/OBV/Typed_Events/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 12:59:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/AnySeq.pidl
+        * tao/AnyTypeCode/Dynamic.pidl
+        * tao/AnyTypeCode/Dynamic_Parameter.pidl
+        * tao/AnyTypeCode/ValueModifier.pidl
+        * tao/AnyTypeCode/Visibility.pidl
+        * tao/BiDir_GIOP/BiDirPolicy.pidl
+        * tao/CharSeq.pidl
+        * tao/CSD_Framework/CSD_Framework.pidl
+        * tao/DoubleSeq.pidl
+        * tao/EndpointPolicy/EndpointPolicyType.pidl
+        * tao/FloatSeq.pidl
+        * tao/GIOP.pidl
+        * tao/IFR_Client/IFR_Base.pidl
+        * tao/IFR_Client/IFR_Basic.pidl
+        * tao/IFR_Client/IFR_Components.pidl
+        * tao/IFR_Client/IFR_Extended.pidl
+        * tao/IIOP.pidl
+        * tao/IIOP_Endpoints.pidl
+        * tao/ImR_Client/ImplRepo.pidl
+        * tao/ImR_Client/ServerObject.pidl
+        * tao/IORInterceptor/IORInfo.pidl
+        * tao/IORInterceptor/IORInterceptor.pidl
+        * tao/IORManipulation/IOR.pidl
+        * tao/IORTable/IORTable.pidl
+        * tao/LongDoubleSeq.pidl
+        * tao/LongLongSeq.pidl
+        * tao/LongSeq.pidl
+        * tao/Messaging/Messaging.pidl
+        * tao/Messaging/Messaging_No_Impl.pidl
+        * tao/Messaging/Messaging_RT_Policy.pidl
+        * tao/Messaging/Messaging_SyncScope_Policy.pidl
+        * tao/Messaging/Messaging_Types.pidl
+        * tao/Messaging/Pollable.pidl
+        * tao/Messaging_PolicyValue.pidl
+        * tao/Messaging_SyncScope.pidl
+        * tao/Object_Key.pidl
+        * tao/orb_types.pidl
+        * tao/ParameterMode.pidl
+        * tao/PI/ClientRequestInfo.pidl
+        * tao/PI/ClientRequestInterceptor.pidl
+        * tao/PI/Interceptor.pidl
+        * tao/PI/InvalidSlot.pidl
+        * tao/PI/ORBInitializer.pidl
+        * tao/PI/ORBInitInfo.pidl
+        * tao/PI/PIForwardRequest.pidl
+        * tao/PI/RequestInfo.pidl
+        * tao/PI_Server/ServerRequestInfo.pidl
+        * tao/PI_Server/ServerRequestInterceptor.pidl
+        * tao/PortableInterceptor.pidl
+        * tao/PortableServer/POA.pidl
+        * tao/PortableServer/PortableServer.pidl
+        * tao/PortableServer/PS_Forward.pidl
+        * tao/PortableServer/ServantActivator.pidl
+        * tao/PortableServer/ServantLocator.pidl
+        * tao/PortableServer/ServantManager.pidl
+        * tao/RTCORBA/RTCORBA.pidl
+        * tao/RTPortableServer/RTPortableServer.pidl
+        * tao/RTScheduling/RTScheduler.pidl
+        * tao/Services.pidl
+        * tao/ShortSeq.pidl
+        * tao/Strategies/COIOP_Endpoints.pidl
+        * tao/Strategies/sciop_endpoints.pidl
+        * tao/Strategies/uiop_endpoints.pidl
+        * tao/StringSeq.pidl
+        * tao/TimeBase.pidl
+        * tao/UShortSeq.pidl
+        * tao/WCharSeq.pidl
+        * tao/WStringSeq.pidl
+          Updated regeneration instructions
+
+Tue Apr  1 12:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Logging/run_test.pl:
+        * examples/OBV/Typed_Events/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 12:51:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/run_test_ipv6.pl:
+        * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
+        * examples/PluggableUDP/tests/SimplePerformance/run_test_ipv6.pl:
+        * tests/DIOP/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 12:40:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DSI_AMI_Gateway/run_exception_test.pl:
+        * tests/DSI_AMI_Gateway/run_test.pl:
+        * tests/DSI_Gateway/run_exception_test.pl:
+        * tests/DSI_Gateway/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 10:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTScheduling/Scheduling_Interceptor/run_test.pl:
+        * tests/AMH_Exceptions/run_test.pl:
+        * tests/AMH_Oneway/run_test.pl:
+        * tests/TransportCurrent/Framework/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 08:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/BiDir_CORBALOC/run_test.pl:
+        * orbsvcs/tests/Bug_2800_Regression/run_test_federated.pl:
+        * orbsvcs/tests/Event/Mcast/Complex/run_test.pl:
+        * orbsvcs/tests/Event/Mcast/Simple/run_test.pl:
+        * orbsvcs/tests/Event/Mcast/Two_Way/run_test.pl:
+        * orbsvcs/tests/Interoperable_Naming/run_test.pl:
+        * orbsvcs/tests/Redundant_Naming/run_test.pl:
+        * orbsvcs/tests/Security/ssliop_corbaloc/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+        * orbsvcs/tests/Trading/run_test.pl:
+          Improved these scripts
+
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+          No need to specify empty orb name
+
+Tue Apr  1 08:46:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_18/run_test.pl:
+        * examples/Callback_Quoter/run_test.pl:
+        * examples/ior_corbaloc/run_test.pl:
+        * examples/Logging/run_test.pl:
+        * examples/Quoter/run_test.pl:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+        * examples/RTScheduling/MIF_Scheduler/run_test.pl:
+          Improved these scripts
+
+Tue Apr  1 07:34:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/run_test.pl:
+        * examples/Load_Balancing/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/run_test_ipv6.pl:
+          Updated to support VxWorks
+
+Tue Apr  1 07:26:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/run_test.pl:
+          Also test nsdel
+
+Tue Apr  1 06:55:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool2/ClientApp.cpp:
+          Layout changes
+
+        * examples/CSD_Strategy/ThreadPool2/Foo_i.cpp:
+          Removed not needed semi colon
+
+        * examples/Simple/bank/run_test.pl:
+        * examples/Simple/echo/run_test.pl:
+        * examples/Simple/grid/run_test.pl:
+        * examples/Simple/time-date/run_test.pl:
+        * examples/Simple/time/run_test.pl:
+          Updated to support VxWorks
+
+Mon Mar 31 18:20:01 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/Client.cpp:
+        * tests/Oneway_Send_Timeouts/Server.cpp:
+        * tests/Oneway_Send_Timeouts/Server_Task.h:
+        * tests/Oneway_Send_Timeouts/Test_i.h:
+        * tests/Oneway_Send_Timeouts/Test_i.cpp:
+        * tests/Oneway_Send_Timeouts/main.cpp:
+          Thread cleanup fixes.
+
+Mon Mar 31 15:55:18 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+        * tao/Collocation_Proxy_Broker.h:
+        * tao/Collocated_Invocation.cpp:
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+
+          Provided additional fix for Bug#2376. In particular added is_forwaded
+          argument to Collocation_Proxy_Broker::dispatch which will indicate a
+          forwarding case. Changed code generation in tao_idl according to the
+          new signature of that dispatch method. Also found another place in
+          Upcall_Wrapper.cpp that assumes that forwarding must be done if a
+          forward reference is not nil. And since TAO_ServerRequest has both
+          pi_reply_status and reply_status features added a code that set to
+          forwarding state each of them if only one changes. So, that if
+          reply_status is set GIOP::LOCATION_FORWARD then pi_reply_status
+          is set to PortableInterceptor::LOCATION_FORWARD immediately after
+          that.
+
+Mon Mar 31 08:45:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Improved TAO autoconf support, fixes bugzilla 3274
+          This to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this
+
+Mon Mar 31 08:39:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+          Corrected length of MIOP packet_length. This fixes bugzilla 3275. Thanks
+          to Alvaro Vega Garcia <avega at tid dot es> for reporting this
+
+        * orbsvcs/examples/PSS/server.cpp:
+        * orbsvcs/examples/PSS/Simple_Naming.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          No need to specify empty orb name
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          Const change
+
+        * orbsvcvs/tests/Notify/Test_Filter/Test_Filter.mpc:
+          Layout changes
+
+Mon Mar 31 08:31:18 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3276_Regression/Manager.h:
+        * tests/Bug_3276_Regression/Manager.cpp:
+        * tests/Bug_3276_Regression/Servant_Locator.h:
+        * tests/Bug_3276_Regression/Bug_3276_Regression.mpc:
+
+          Changed a bit the tests in spirit of TAO and excluded it from
+          corba_e_compact and corba_e_micro builds.
+
+Fri Mar 28 15:30:12 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Invocation_Base.h:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/ClientRequestInterceptor_Adapter.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/Invocation_Adapter.cpp:
+
+          Changed reply_status to pi_reply_status as agreed in Bug#2377.
+
+Fri Mar 28 14:57:25 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+
+          Use .in() on a var to avoid warnings from gcc.
+
+Fri Mar 28 14:34:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/cosnaming_serv_persistence.mpb:
+
+          Pulled the persistence related files into it's own base project
+          that's only enabled when the 'corba_e_micro' feature is disabled.
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+
+          Made modifications to allow the server library to compile when
+          'corba_e_micro' is enabled.  All persistence is disabled in this
+          case.  It requires more functionality than is provided by the POA.
+
+Fri Mar 28 09:07:14 UTC 2008  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/Invocation_Base.h:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/Collocated_Invocation.cpp:
+        * tao/ORB_Core.inl:
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Invocation_Base.inl:
+        * tao/Adapter_Registry.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/TAO_Server_Request.inl:
+
+          Fixed a bug in the server side code with incorrect handling
+          of forward request exception that was contstructed with nil
+          object reference. Added throwing of a TRANSIENT exception on
+          the client side in case server forwards to nil object.
+
+        * tests/Bug_3276_Regression/client.cpp:
+        * tests/Bug_3276_Regression/Manager.h:
+        * tests/Bug_3276_Regression/Servant_Locator.cpp:
+        * tests/Bug_3276_Regression/test.idl:
+        * tests/Bug_3276_Regression/test_i.cpp:
+        * tests/Bug_3276_Regression/Manager.cpp:
+        * tests/Bug_3276_Regression/Servant_Locator.h:
+        * tests/Bug_3276_Regression/Bug_3276_Regression.mpc:
+        * tests/Bug_3276_Regression/README:
+        * tests/Bug_3276_Regression/run_test.pl:
+        * tests/Bug_3276_Regression/test_i.h:
+
+          Added a regression test.
+
+Thu Mar 27 18:44:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Fixed bugzilla links
+
+Thu Mar 27 13:15:39 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/diffs/Object_Key.diff:
+
+          Fixed this malformed patch.
+
+Thu Mar 27 12:02:29 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/DllOrb.cpp:
+        * tests/Bug_3251_Regression/DllOrb.cpp:
+
+          Use ACE_auto_ptr_reset() instead of directly assigning to an
+          auto_ptr.  This doesn't work for VxWorks 6.4 (gcc 3.4.4).
+
+Thu Mar 27 11:50:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+
+          Removed build warning from gcc on Solaris.
+
+Wed Mar 26 22:35:31 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * docs/ORBEndpoint.html:
+        * tao/ORB_Core.h:
+
+          Removed references to ORBListenEndpoint (singular) from comments and
+          HTML documentation.  The option is called ORBListenEndpoints (plural).
+
+Tue Mar 25 18:01:58 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/CDR/allocator.cpp:
+        * tests/OctetSeq/client.cpp:
+        * tests/RTCORBA/RTMutex/server.cpp:
+
+          Added casts to avoid compiler warnings.
+
+Tue Mar 25 17:50:23 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+
+          Use .in() to avoid warnings from gcc.
+
+Tue Mar 25 14:13:15 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/notify_serv.mpb:
+
+          Changed the order of Notification_Serv and Notification_Skel so they
+          are in the correct dependency order.
+
+        * orbsvcs/tests/Bug_2926_Regression/Bug_2926_Regression.mpc:
+
+          Removed a redundant base project.
+
+Mon Mar 24 21:17:12 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * utils/nslist/Makefile.am:
+
+          Regenerated.
+
+Mon Mar 24 17:28:37 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.inl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
+
+          Switch from using ACE_SYNCH_* to TAO_SYNCH_* to avoid fuzz errors.
+
+Mon Mar 24 12:33:47 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Added an entry for this feature addition.
+
+        * docs/notification/using_monitor_extensions.html:
+
+          Documented the ability to create named consumer and supplier
+          admins.
+
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/MonitorControl.pm:
+
+          Changed to avoid displaying queue size if the queue size is zero.
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+
+          Added commands to remove consumer and supplier admins.
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+
+          Fixed a bug where memory was accessed after it was deleted.
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExt.idl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
+
+          Added a statistic to track the queue size for each ConsumerAdmin.
+          Each time a message is added to or removed from the queue, a queue
+          measurement is taken.  This allows the statistic observer to see
+          the average queue size for each consumer admin.
+
+          Conversly, the event channel queue size is calculated by adding up
+          all the consumer admin queues and is only accessed when the
+          statistic observer requests it.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMC.idl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+
+          Added the ability to remove individual consumers and suppliers
+          from the event channel.  Technically, the supplier proxy and
+          consumer proxy are the objects that are removed.
+
+          Added operations to remove consumer and supplier admins through
+          the monitor interface.
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.cpp:
+
+          Added statistics to track the names and counts of consumer and
+          supplier admins.  Also added code to remove consumer and supplier
+          admins by name.
+
+        * orbsvcs/tests/Notify/MC/test_monitor.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Control/Control.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+
+          Updated tests for the changes above.
+
+Mon Mar 24 02:25:48 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * COPYING: Updated the license a bit based on feedback from Tom
+          Callaway" <tcallawa at redhat dot com>.  These changes will
+          enable ACE+TAO to be shipped with Fedora.
+
+Fri Mar 21 15:43:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3251_Regression/server.cpp:
+          Fixed warnings in vxworks build
+
+Fri Mar 21 15:41:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/nslist.cpp:
+        * utils/nslist/nsdel.cpp:
+          Added missign duplicate calls
+
+Thu Mar 20 18:29:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/nslist.cpp:
+          Fixed argument not used warning
+
+Thu Mar 20 14:09:06 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/DllOrb.cpp:
+
+          Same fix as my previous commit, applied to this copy of DllOrb.cpp:
+          Tue Mar 18 15:07:23 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+Wed Mar 19 15:16:46 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+
+          Updated to throw an exception instead of crashing when the IFR
+          encounters an incomplete type during a query operation.
+
+Wed Mar 19 14:54:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+          Set project name
+
+        * tests/DII_AMI_Forward/DII_AMI_Forward.mpc:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+          Simplified this file
+
+        * tests/DSI_AMH/server.cpp:
+          Initialise pointer with 0
+
+Wed Mar 19 14:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Latency/DSI/DSI.mpc:
+          Added custom idl project
+
+Wed Mar 19 08:48:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/nsdell.cpp:
+        * utils/nslist/nslist.cpp:
+        * utils/nslist/nslist.mpc:
+          Improved these utilities to work better when servers are not
+          responding
+
+Tue Mar 18 20:47:25 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/AMH_Exceptions/run_test.pl:
+        * tests/Param_Test/run_test.pl:
+        * tests/Hello/run_test.pl:
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+        * tests/CallbackTest/run_test.pl: On LabVIEW RT, run the server part on
+          the target and the client on the host.
+
+Tue Mar 18 15:07:23 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_3251_Regression/DllOrb.cpp:
+
+          Use ACE_auto_ptr_reset instead of auto_ptr::reset() for compatibility
+          with older std library implementations.
+
+Tue Mar 18 09:41:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_helper.cpp:
+          Print the TAO_IDL version in the header of the generated files.
+          This fixes bugzilla 3255
+
+Tue Mar 18 09:24:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.h:
+          Doxygen changes
+
+Tue Mar 18 07:33:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          For OpenVMS add -Wc/DISTINGUISH_NESTED_ENUMS to the compiler
+          flags which is only required for one of the generated files
+          in this test
+
+Tue Mar 18 07:29:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted this change of yesterday
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+          Set explicit project name to resolve issues on VMS
+
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.h:
+          Layout changes
+
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.{h,cpp}:
+          Updated because of interface changes of yesterday
+
+Mon Mar 17 15:39:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+          Set explicit project name to resolve issues on VMS
+
+Mon Mar 17 13:39:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+          Changed build_filter_factory to accept a POA_ptr instead
+          of retrieving it here
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+          Use CORBA::is_nil to check for a nil object reference
+
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
+          Store the POA used to activate the filter, use it then
+          when cleaning up
+
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
+        * orbsvcs/orbsvcs/Notify/FilterFactory.h:
+          Don't use _this but the POA passed. Also changed the
+          signatures of some methods to get the regular memory
+          management
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+          Create a filter factory for each event channel instead
+          of a global singleton
+
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+          Removed the global event filter factory
+
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+          Layout changes
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+          Use 5 load/unload iterations
+
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+          Const change
+
+Mon Mar 17 10:42:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/Persistent_POA.{h,cpp}:
+          Removed
+
+        * orbsvcstests/Notify/Bug_3252_Regression/Bug_3252_Regression.mpc:
+          Updated
+
+Mon Mar 17 09:02:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/*:
+          New test for bugzilla 3252
+
+Mon Mar 17 09:02:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3251_Regression/*:
+          New test for bugzilla 3251
+
+Fri Mar 14 14:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IOP.pidl:
+          Added an empty pragma prefix so that the Visual Age preprocessor
+          not drops these files
+
+Fri Mar 14 14:55:35 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/tests/Notify/Persistent_POA/run_test.pl:
+          Add test lib path.
+
+Fri Mar 14 14:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PI_include.pidl:
+        * tao/RTScheduling/RTScheduler_include.pidl:
+        * tao/CodecFactory/IOP_Codec_include.pidl:
+          Added an empty pragma prefix so that the Visual Age preprocessor
+          not drops these files
+
+Fri Mar 14 13:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.h:
+          Fixed Visual Age 6 warning
+
+Fri Mar 14 11:18:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Optimized_Connection/Optimized_Connection.mpc:
+        * tests/DSI_AMH/DSI_AMH.mpc:
+        * tests/Bug_2702_Regression/CloseConnection.mpc:
+        * tests/Bug_2122_Regression/Bug_2122_Regression.mpc:
+        * orbsvcs/tests/Bug_2800_Regression/Bug_2800_Regression.mpc:
+          Added custom idl project to resolve problems on OpenVMS
+
+Thu Mar 13 09:31:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp:
+          Get the acceptor filter in the constructor and then check it
+          when we need it.
+
+Wed Mar 12 13:43:34 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+          Fixed a comment that was triggering an error in the fuzz build.
+
+Wed Mar 12 12:59:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added support for fox, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
+Wed Mar 12 11:55:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ForResource/TAO_FoxResource_Export.h:
+          Corrected this file, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
+Wed Mar 12 07:08:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/FoxResource/FoxResource_Loader.h:
+          Added missing fox include, thanks to Thomas Girard
+          <thomas dot g dot girard at free dot fr> for reporting this
+
+Tue Mar 11 20:25:13 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/ast/ast_component.cpp:
+
+          Removed AST_Component override of redef_clash(), it does
+          nothing but call the base class version in AST_Interface.
+          Also made the AST_Interface version non-virtual.
+
+Tue Mar 11 19:46:44 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+          The IFR now throws an exception when referenced types are
+          unknown, rather than crashing without an error.
+
+Tue Mar 11 18:51:10 UTC 2008  Jonathan Pollack  <pollack_j@ociweb.com>
+
+        * TAO_IDL/ast/ast_interface.cpp:
+
+          The -Cw option generated a warning message instead of an error,
+          but it had the same end result: a premature exit from a method
+          call. This has been fixed.
+
+Mon Mar 10 08:02:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dynamicinterface.mpb:
+          DII is not available with minimum corba and corba/e
+
+        * tao/DynamicInterface.mpc:
+          Use regular base prject
+
+        * tao/DynamicInterface/Context.h:
+        * tao/IIOP_Transport.cpp:
+          Layout changes
+
+Sat Mar  8 07:15:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Added new files
+
+Sat Mar  8 07:12:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode.mpc:
+        * tao/BiDir_GIOP.mpc:
+        * tao/CodecFactory.mpc:
+        * tao/Codeset.mpc:
+        * tao/Compression.mpc:
+        * tao/CSD_Framework.mpc:
+        * tao/CSD_ThreadPool.mpc:
+        * tao/DiffServPolicy.mpc:
+        * tao/DynamicAny.mpc:
+        * tao/DynamicInterface.mpc:
+        * tao/EndpointPolicy.mpc:
+        * tao/IFR_Client.mpc:
+        * tao/ImR_Client.mpc:
+        * tao/IORInterceptor.mpc:
+        * tao/IORManipulation.mpc:
+        * tao/IORTable.mpc:
+        * tao/Messaging.mpc:
+        * tao/ObjRefTemplate.mpc:
+        * tao/PI.mpc:
+        * tao/PI_Server.mpc:
+        * tao/PortableServer.mpc:
+        * tao/RTCORBA.mp:
+        * tao/RTPortableServer.mpc:
+        * tao/RTScheduler.mpc:
+        * tao/SmartProxies.mpc:
+        * tao/Strategies.mpc:
+        * tao/TC.mpc:
+        * tao/TC_IIOP.mpc:
+        * tao/TypeCodeFactory.mpc:
+        * tao/Valuetype.mpc:
+        * tao/ZlibCompressor.mpc:
+          Explicitly specify the project name, on VMS the filenames
+          are returned lower case and MPC compares project names
+          case sensitive.
+
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.h:
+          _repository_id must be available with CORBA/e
+
+Fri Mar  7 13:47:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.cpp:
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.h:
+        * tao/BiDir_GIOP/BiDirPolicy_Validator.h:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.h:
+        * tao/Service_Context_Handler.cpp:
+        * tao/Service_Context_Handler.h:
+        * tao/Service_Context_Handler_Registry.cpp:
+        * tao/Service_Context_Handler_Registry.h:
+        * tao/tao.mpc:
+          Made the handling of service contexts pluggable. Previously
+          the core of TAO did know how to handle the IOP::BI_DIR_IIOP
+          service context. Introduced a new Service Context Handler
+          base class from which concrete handlers are derived, these
+          handlers are then registered with the service context handler
+          registry for a certain context id. This way the BiDIR
+          library handles the BiDIR service context. The future
+          compression support can now also be implemented without
+          that the core knows much about this. The next step is to
+          refactor the adding of the bidir service context to a message
+          in such a way that it is pluggable.
+
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+          Check the return value of several streaming operators
+
+        * tao/Object.{h,cpp}:
+          Disable the _request operation with CORBA/e
+
+        * tao/LocalObject.{h,cpp}:
+          Disabled a few operations with CORBA/e
+
+        * tao/Service_Callbacks.h:
+        * tao/Service_Context.cpp:
+        * tao/Service_Context.h:
+        * tao/Service_Context.inl:
+          Layout changes
+
+Tue Mar  4 10:10:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Table.{h,cpp,inl}:
+          Removed obsolete methods and members
+
+        * tao/PI/Interceptor_List_T.{h,cpp}:
+          Const changes
+
+        * tao/Policy_Validator.h:
+        * tao/TAO_Server_Request.h:
+          Layout changes
+
+Mon Mar  3 14:52:30 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/GIOP_Message_Generator_Parser_10.h:
+        * tao/GIOP_Message_Generator_Parser_11.h:
+        * tao/GIOP_Message_Generator_Parser_12.h:
+        * tao/GIOP_Message_Generator_Parser_Impl.h:
+          No need to export these classes from the TAO library
+
+Sat Mar  1 19:14:30 UTC 2008  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/mcpp.mpb:
+        * TAO_IDL/contrib/mcpp/directive.cpp:
+        * TAO_IDL/contrib/mcpp/expand.cpp:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/preproc.mpb:
+
+          Fuzz fixes.
+
+Fri Feb 29 16:24:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+          Fixed signed/unsigned mismatch warning on Debian, introduced
+          by changes in
+
+          Thu Feb 28 19:16:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+Fri Feb 28 10:54:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3154_Regression/run_test.pl:
+          Updated for VxWorks cross platform testing
+
+Thu Feb 28 19:16:43 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.h:
+
+          Cosmetic changes.
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+          Changed creation of IOR output file to use
+          ACE_DEFAULT_FILE_PERMS. Also added more error checking to
+          cover the open, write and close steps. Thanks to Jules
+          Colding <colding at 42tools dot com> for reporting that
+          the previous code created a file that was world writable.
+
+Thu Feb 28 13:26:12 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/eval.cpp:
+        * TAO_IDL/contrib/mcpp/expand.cpp:
+        * TAO_IDL/contrib/mcpp/mbchar.cpp:
+        * TAO_IDL/contrib/mcpp/mcpp.mpc:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Compile error fixes.
+
+Thu Feb 28 06:01:19 UTC 2008  Sumant Tambe  <sutambe@nospam>
+
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          #included OS_NS_stdlib.h header for ACE_OS::free,
+          ACE_OS::malloc, and ACE_OS::realloc.
+
+Wed Feb 27 19:24:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/LICENSE:
+        * TAO_IDL/contrib/mcpp/Makefile.am:
+        * TAO_IDL/contrib/mcpp/Makefile.in:
+        * TAO_IDL/contrib/mcpp/cc1.cpp:
+        * TAO_IDL/contrib/mcpp/config.h.in:
+        * TAO_IDL/contrib/mcpp/configed.H:
+        * TAO_IDL/contrib/mcpp/directive.cpp:
+        * TAO_IDL/contrib/mcpp/eval.cpp:
+        * TAO_IDL/contrib/mcpp/expand.cpp:
+        * TAO_IDL/contrib/mcpp/internal.H:
+        * TAO_IDL/contrib/mcpp/lib.cpp:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/mbchar.cpp:
+        * TAO_IDL/contrib/mcpp/mcpp.mpc:
+        * TAO_IDL/contrib/mcpp/mcpp_lib.h:
+        * TAO_IDL/contrib/mcpp/mcpp_lib.cpp:
+        * TAO_IDL/contrib/mcpp/mcpp_lib_export.h:
+        * TAO_IDL/contrib/mcpp/noconfig.H:
+        * TAO_IDL/contrib/mcpp/preproc.cpp:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.H:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+        * TAO_IDL/contrib/mcpp/testmain.cpp:
+
+          An open source, BSD licensed C preprocessor.
+
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+
+          Derived from drv_preproc.cpp, invokes the MCPP preprocessor
+          as a library call instad of spawning a process.
+
+        * TAO_IDL/preproc.mpb:
+        * TAO_IDL/tao_idl.mpc:
+        * MPC/config/mcpp.mpb:
+
+          Modifications supporting selection of drv_preproc/drv_mcpp_preproc
+          based on the mcpp feature.
+
+Wed Feb 27 15:21:48 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+        * orbsvcs/examples/CosEC/Simple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/Simple/Service.cpp:
+        * orbsvcs/examples/CosEC/Simple/Supplier.cpp:
+        * orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/TypedSimple/Supplier.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/test.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/Consumer.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/EC.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/Gateway.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp:
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+        * orbsvcs/examples/RtEC/Simple/Consumer.cpp:
+        * orbsvcs/examples/RtEC/Simple/Service.cpp:
+        * orbsvcs/examples/RtEC/Simple/Supplier.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+        * orbsvcs/tests/Sched/DynSched_Test.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * orbsvcs/examples/CosEC/Simple/CosEC_Simple.mpc:
+        * orbsvcs/examples/CosEC/TypedSimple/CosEC_TypedSimple.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/examples/RtEC/Kokyu/RtECKokyu.mpc:
+        * orbsvcs/examples/RtEC/IIOPGateway/RtEC_IIOPGateway.mpc:
+        * orbsvcs/examples/RtEC/MCast/RtEC_MCast.mpc:
+        * orbsvcs/examples/RtEC/Schedule/RtEC_Schedule.mpc:
+        * orbsvcs/examples/RtEC/Simple/RtEC_Simple.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
+Wed Feb 27 08:36:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+          Check the return value of operator<<
+
+        * tao/Invocation_Base.{cpp,inl}:
+          Moved a few methods to the inline file
+
+        * tao/LocalObject.h:
+        * tao/TAO_Server_Request.cpp:
+          Layout change
+
+Tue Feb 26 16:16:16 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * TAO_IDL/tao_idl.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+Mon Feb 25 22:19:46 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+        * orbsvcs/examples/CosEC/Factory/main.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
+        * orbsvcs/examples/LoadBalancing/client.cpp:
+        * orbsvcs/examples/LoadBalancing/server.cpp:
+        * orbsvcs/examples/Notify/Filter/main.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/Subscribe/main.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+        * orbsvcs/examples/ORT/client.cpp:
+        * orbsvcs/examples/ORT/gateway_server.cpp:
+        * orbsvcs/examples/ORT/server.cpp:
+        * orbsvcs/examples/PSS/Simple_Naming.cpp:
+        * orbsvcs/examples/PSS/server.cpp:
+        * orbsvcs/examples/Security/SecurityLevel1/client.cpp:
+        * orbsvcs/examples/Security/SecurityLevel1/server.cpp:
+        * orbsvcs/examples/Security/Send_File/client.cpp:
+        * orbsvcs/examples/Security/Send_File/server.cpp:
+        * orbsvcs/tests/Notify/Destroy/main.cpp:
+        * orbsvcs/tests/Notify/Driver/main.cpp:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
+        * orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+        * orbsvcs/examples/ORT/ORT.mpc:
+        * orbsvcs/examples/Security/Send_File/Security_Send_File.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
+Mon Feb 25 20:14:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ORB_Local_Config/run_tests_all.pl:
+        * tests/Parallel_Connect_Strategy/run_test.pl:
+          Updated for VxWorks
+
+        * tests/CSD_Collocation/run_test.pl:
+          No need to set libpath
+
+Mon Feb 25 19:47:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2183_Regression/run_test.pl:
+        * tests/Bug_2702_Regression/run_test.pl:
+          Use the new IgnoreHostRoot support when spawning perl
+
+        * tests/Bug_3154_Regression/run_test.pl:
+          Don't use HOST_ROOT to get tao_idl, the test framework will
+          do this
+
+        * tests/Hang_Shutdown/client.cpp:
+        * tests/Hang_Shutdown/server.cpp
+          Fixed typo and no need to pass in an empty orb name
+
+        * tests/Leader_Followers/run_test.pl:
+        * tests/MT_Timeout/run_test.pl:
+        * tests/MProfile_Connection_Timeout/run_test.pl:
+          Only store the ior filename once
+
+        * tests/OctetSeq/test_i.cpp
+          Initialise pointer with 0
+
+        * tests/MT_Timeout/Client_Task.cpp:
+          Use prefix increment
+
+        * tests/MProfile_Connection_Timeout/client.cpp:
+          Laout changes
+
+Mon Feb 25 15:36:17 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/compare_histo.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/server.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/server.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/server.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
+Mon Feb 25 09:45:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Loader/Servant_Locator.cpp:
+        * tests/POA/On_Demand_Loading/Servant_Manager.cpp:
+          Fixed OpenVMS IA64 warnings
+
+Sun Feb 24 19:48:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3154_Regression/run_test.pl:
+          Extended timeout for OpenVMS
+
+Sun Feb 24 19:44:37 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+          No need to pass in empty orb name
+
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
+          Small code simplification
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+          Doxygen change
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+          Layout change
+
+        * orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.cpp:
+          Use true instead of 1
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+          Use LM_DEBUG with ACE_DEBUG
+
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3200_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:
+          Just check whether the spawn worked or not instead of trying to
+          check for the existince of the executable. The tests did fail on
+          OpenVMS and VxWorks
+
+Fri Feb 22 18:27:39 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Bug_2935_Regression/middle.cpp:
+        * tests/Bug_2935_Regression/sink.cpp:
+        * tests/Bug_2935_Regression/source.cpp:
+        * tests/DII_AMI_Forward/client.cpp:
+        * tests/DII_AMI_Forward/server.cpp:
+        * tests/POA/Adapter_Activator/server.cpp:
+        * tests/POA/DSI/client.cpp:
+        * tests/POA/DSI/server.cpp:
+        * tests/POA/Default_Servant2/client.cpp:
+        * tests/POA/Default_Servant2/server.cpp:
+        * tests/POA/Explicit_Activation/server.cpp:
+        * tests/POA/FindPOA/FindPOA.cpp:
+        * tests/POA/Forwarding/client.cpp:
+        * tests/POA/Forwarding/server.cpp:
+        * tests/POA/Generic_Servant/client.cpp:
+        * tests/POA/Loader/server.cpp:
+        * tests/POA/NewPOA/NewPOA.cpp:
+        * tests/POA/On_Demand_Activation/server.cpp:
+        * tests/POA/On_Demand_Loading/server.cpp:
+        * tests/POA/POA_BiDir/POA_BiDir.cpp:
+        * tests/POA/Reference_Counted_Servant/server.cpp:
+        * tests/POA/RootPOA/RootPOA.cpp:
+        * tests/POA/TIE/client.cpp:
+        * tests/POA/TIE/server.cpp:
+        * tests/Portable_Interceptors/Bug_2133/client.cpp:
+        * tests/Portable_Interceptors/Bug_2133/server.cpp:
+        * tests/objref_comparison_test/main.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+        * tests/POA/Generic_Servant/POA_Generic_Servant.mpc:
+        * tests/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+        * tests/POA/On_Demand_Loading/POA_On_Demand_Loading.mpc:
+        * tests/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+
+          MPC doesn't recognize ACE_TMAIN as an entry point, as such, we need
+          to explicitly set exename in the MPC file.
+
+Fri Feb 22 17:01:26 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/RTCORBA/Admin.cpp:
+        * docs/tutorials/Quoter/RTCORBA/Broker.cpp:
+        * docs/tutorials/Quoter/RTCORBA/Distributor.cpp:
+
+          Use ACE_TMAIN instead of main as the program entry point to comply
+          with ACE/TAO/CIAO coding standards.
+
+Fri Feb 22 08:57:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/optimize_collocated_invocations.mpb:
+          New file, when this feature is set to 0 we pass -Sp -Sd to the
+          idl compiler. In the future we can also change the core libraries
+          to disable certain classes
+
+        * MPC/config/taoidldefaults.mpb:
+          Derive from optimize_collocated_invocations
+
+Fri Feb 22 00:39:46 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Param_Test/run_test.pl: Use target class to wait for, and
+          delete, the IOR files. Allows good execution on LabVIEW_RT.
+
+        * tests/AMH_Exceptions/run_test.pl: Correct the target obj creation.
+
+Thu Feb 21 19:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+          When collocation optimizations have been disabled also don't
+          generate a collocated proxy broker function and the checks
+          for this cpb function, this results in a footprint reduction
+          for each interface but also for each operation. This fixes
+          bugzilla 2971
+
+Thu Feb 21 15:35:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/corba_e_compact.mpb:
+        * MPC/config/corba_e_micro.mpb:
+        * MPC/config/core_minimum_corba.mpb:
+        * MPC/config/minimum_corba.mpb:
+        * MPC/config/taoidldefaults.mpb:
+        * MPC/config/taobaseidldefaults.mpb:
+          Moved the contents of taoidldefaults to taobaseidldefaults,
+          taoidldefaults now also derives from the CORBA profiles
+          so that when we compile IDL we also generate code focused
+          for the set profile. This reduces the size of the generated
+          code, this fixes bugzilla 3233
+
+Thu Feb 21 02:34:37 CST 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 1.6.3 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

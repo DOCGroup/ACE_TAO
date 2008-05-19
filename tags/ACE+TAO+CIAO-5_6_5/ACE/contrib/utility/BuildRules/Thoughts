@@ -1,0 +1,55 @@
+
+Makefile variable naming style.
+
+* Each target is usually invoking one or more commands of the following type:
+
+  (1) translator which translates target's prerequsites to target(s)
+
+  (2) arbitrary command which doesn't create target (aka PHONY targets)
+
+Examples of type (1) are:
+
+  - translation of c++ source to object code
+
+  - translation of object code to executable/shared
+
+Examples of type (2) are:
+
+  - test: terget
+
+  - clean: target
+
+
+Some properties of these types of targets:
+
+  (1)   - usually implemented as an implicit rule
+
+        - sometimes the same program is used as two separate translators
+          (e.g. CXX is used as a compiler and as a linker)
+
+
+
+  (2)   - seldom (never?) implemented as an implicit rule
+
+
+
+Approach #1
+
+For type (1) name is derived from the translator's name e.g.
+
+CXX_COMPILE_FLAGS
+CXX_PREPROCESS_FLAGS
+CXX_LINK_FLAGS
+CXX_LINK_LIBS
+
+CC_
+LD_
+
+
+For type (2) name is derived from the target's name e.g.
+
+TEST_FLAGS
+CLEAN_FLAGS
+INSTALL_FLAGS
+
+$Id$

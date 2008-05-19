@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project : orbsvcsexe, install, rtevent_serv, rtschedevent, bidir_giop {
+  exename  = Event_Service
+}

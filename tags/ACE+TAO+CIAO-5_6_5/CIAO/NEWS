@@ -1,0 +1,894 @@
+PLANNED MAJOR CHANGES FOR NEXT RELEASE (i.e., after 0.5.7)
+===========================================================================
+. Start update of IDL/semantics to conform to 06-04-01 specification.
+  This will immediately break most CIAO specific extensions, such as shared
+  components and ReDaC.
+
+. Expand support for complex types in deployment XML.
+
+. Enable use of CDR encoded deployment plans.
+
+PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
+===========================================================================
+
+. Enhance Execution Manager and Domain Application Manager to make calls
+  on the Target Manager to get resource information.
+
+. Enhance Node Manager to integrate resource monitoring capacity within
+  individual Nodes.
+
+. Add assembly-wide component activation/deactivation feature.
+
+    - This should allow system deployers to specify the dependencies
+      among component instances within the assembly.
+
+    - Add support in DAnCE so DAnCE could enforce the order in which
+      components are to be activated within the assembly.
+
+. Add AMI support in DAnCE toolchain to when the DomainApplicationManager
+  contacts node-level managers to deploy components, all the node-level
+  managers could performe the deployment concurrently.
+
+. Integrate RT-CORBA 1.2 dynamic scheduling feature into CIAO, which
+  will allow the application developers to use dynamica scheduling
+  through meta-programming model.
+
+. Enhance DAnCE to support OpenCCM components.
+
+. Update DAnCE IDL data structures and interfaces to comply with the
+  06-04-01 version of the DnC specification, and perform
+  interoperability testing with other DnC implementations.  Note this
+  work may change the functionality and semantics of some proprietary
+  DAnCE extensions, notably ReDaC, Shared Compoents, and RTEC
+  integration, and may even be absent until such a time as they
+  can be implemented in such a way as to not break copliance with the DnC
+  specification.
+
+. Implement Resource Allocation and Control Engine (RACE), which is a
+  component middleware framework built atop of CIAO/DAnCE that integrates
+  multiple resource allocation/control algorithms for (re)deploying and
+  (re)configuring component applications. RACE enables (1) system
+  developers to configure algorithms depending on the characteristics of
+  applications and operating environment, and (2) swapping in and swapping
+  out multiple algorithms to make different resource allocation and control
+  decisions, without handcrafting the mechanisms needed to (1) configure
+  the algorithms and (2) deploy the decisions made by the algorithms.
+
+. Implement support for more complex type initialization with XML.
+
+. Decouple dependencies to NodeApplication from other DAnCE tools.
+  These dependencies were added to support static configurator.  We
+  need to have these tools in both conventional version and static
+  configuration version.
+
+. Support tool-specific debug levels and added CIAO_DEBUG macros to
+  simplify adding debug printouts based on various tool-specific debug
+  levels.
+
+. Add support for querying for interface types to the
+  RepositoryManager.
+
+. Implement a planner to query the TargetManager and RepositoryManager
+  and generate deployment plans on the fly.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.6.4 and CIAO-0.6.5
+======================================================
+
+. None
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.6.3 and CIAO-0.6.4
+======================================================
+
+. None
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.6.2 and CIAO-0.6.3
+======================================================
+
+. None
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.6.1 and CIAO-0.6.2
+======================================================
+
+. Removed 24 unnecessary builds from the CIAO_TAO_DAnCE.mwc
+  MPC workspace file
+
+. Changes to the generate_component_mpc.pl Perl scrip, CIDL compiler
+  generation of empty executor implementation classes, and existing
+  tests and examples to make servant dependency on executor the
+  default, instead of vice versa as previously
+
+. Made the processing of IDL and CIDL files into separate build steps
+  for tests, examples, and for DAnCE's TargetManager
+
+. Added additional tests for CIAOEvents Integration, which executes
+  several scenarios for components using Real-time EventChannels
+  as event mechanism.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.6 and CIAO-0.6.1
+====================================================
+
+. Fixed broken static deployment support
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.10 and CIAO-0.6.0
+=======================================================
+
+. Added support for building CIAO statically with Microsoft Visual C++
+
+. Fixes to idl3_to_idl2 conversion tool, which
+  - handle the mapping of IDL identifiers that are
+    escaped (due to a clash with an IDL keyword) or
+    that clash with a C++ keyword
+  - handle the mapping of #includes of IDL files
+    that aren't themselves processed by the tool
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.9 and CIAO-0.5.10
+=======================================================
+
+. Extended IDL3_to_IDL2
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.8 and CIAO-0.5.9
+======================================================
+
+. Added a new deployment algorithm to DAnCE for optimization of large
+  scale deployment. In this algorithm, the number of threads spawned is
+  based on the deployment plan, i.e, by parsing the deployment plan
+  information, DAnCE decides how many threads to spawn (one thread per
+  node). This algorithm knows how to "initialize" each thread since
+  each thread will have different execution context, i.e., which
+  components to deploy to which node, component configuration, etc.
+
+. Added a NA component server callback wait strategy in NAM, which uses
+  conditional variable to signal the NA call back so it can work with
+  multi-threaded configuration, such as thread-per-connection mode. The
+  original implementation uses the main thread to run the ORB event
+  loop, which will not work for multi-threaded environment.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.7 and CIAO-0.5.8
+======================================================
+
+. Improved the option handling of the Execution_Manager and plan_launcher.
+
+. Added a utility library to manipulate the deployment plan, such as
+  adding/removing instances, adding/removing connections, and pretty print.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.6 and CIAO-0.5.7
+======================================================
+
+. Removed ACE_THROW_RETURN
+
+. Remove exception specifications from ORB mediated operations (C++
+  mapping requirement)
+
+. All DAnCE core idl files are moved to DAnCE/Deployment
+
+. QoS4CCM IDL files are moved to ciao/extension
+
+. RACE has been fully removed from the distribution, a new version
+  is work in progress and will be added again to the distribution
+  when it is ready
+
+. MPC base projects that contained _dnc_ have been renamed to not
+  include that string.
+
+. DAnCE executables are now installed into $CIAO_ROOT/bin
+
+. Added a new TAO policy for specifying the DiffServ code points
+ (DSCP) to be added to request and reply IP packets of an
+ application. The policy can be added at the following levels: OBJECT,
+ THREAD, and ORB.
+
+. Extended the CIAOServerResources schema to allow the specification
+  of request and reply DSCPs to be added to the IP packets of an
+  application. Extended CIAO NodeApplication libraries, to read the
+  CIAOServerResources specification, to create DiffServ policies on the
+  objects, to allow automatic addition of DSCPs on the CCM port
+  objects.
+
+. Updated the Target Manager interface to comply with the latest OMG
+  specification. This includes the addition of a new entity,
+  ResourceCommitmentManager for the management of committed resources.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.5 and CIAO-0.5.6
+======================================================
+. Updated the Target Manager interface to comply with the latest OMG
+  specification. This includes the addition of a new entity,
+  ResourceCommitmentManager for the management of committed resources.
+
+. Removed all exception environment macros except ACE_THROW_RETURN
+  and ACE_THROW_SPEC
+
+. All CIAO libraries built on UNIX systems will now have the correct library
+  version numbers.  Previously they had the same version numbers as TAO
+  libraries.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.4 and CIAO-0.5.5
+======================================================
+
+. Fixed problems and added command line options to the
+  generate_component_mpc.pl Perl script. Also added an HTML
+  documentation file for this script.
+
+. All IDL has been refactored to get a smaller footprint
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.3 and CIAO-0.5.4
+======================================================
+
+. Adding support to manage multiple interconnected assemblies, which will
+  involve the work through ExternalReferenceEndPoint idea.
+
+. Seamless integration of swapping into the main line programming model,
+  so that DAnCE can actually kickstart swapping.
+
+. Integrated real-time event service into CIAO and DAnCE.
+
+. Improved syntax error checking and reporting in the CIDL compiler.
+
+. Add Null Component to be able to measure footprint in detail
+
+. Added the naming service & the implementation of createPackage function
+  to RepoMan.
+
+. Added the code to save the state of the RepoMan at exit and load the
+  state of it at start.
+
+. Reimplemented the findNamesByType () and getAllTypes () operations of
+  RepoMan, which use the newly generated    ACE_Hash_MultiMap_Manager class
+  and its corresponding classes.
+
+. Added Plan_Generator project. This project is used to retrieve information
+  from Repoman and generate/modify DeploymentPlans based on different demands.
+
+. A succesfull static deployment of the Hello example has been tested on
+  VxWorks 6.3
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.2 and CIAO-0.5.3
+======================================================
+
+. Improve documentation for CoSMiC Quoter tutorial to reflect the latest update
+
+. Reimplemented the findNamesByType () and getAllTypes () operations
+  of Repository Manager, which use the newly generated
+  ACE_Hash_MultiMap_Manager class and its corresponding classes.
+
+. Added the replace argument in installPackage () and createPackage ()
+  functions to Repoman and extend the functionalities of these two
+  functions based on the latest D&C spec.
+
+. Added the Plan_Generator project. This project is used to retrieve
+  information from Repoman and generate/modify DeploymentPlans based
+  on different demands. Removed the planner project.
+
+. Added C++ keyword mangling to the CIDL compiler (bug#2427).
+
+. Fixed the CIDL compiler source code to build with Intel C++ (bug#2387).
+
+. Reimplemented the CIDL compiler command line handling to make use
+  of '--' to separate options from arguments unnecessary (bug#2426).
+
+. Added file and line number to the semantic errors printed by the CIDL
+  compiler.
+
+. Fixed a number of bugs in the CIDL compiler error handling and recovery
+  mechanisms.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
+======================================================
+
+. Changed CIDL compiler code generation for facet servant classes
+  to enable reuse if the same interface is used as a facet more
+  than once in a single translation unit.
+
+. Fixed code that fetches component DLL entry points to be portable
+  across all supported compilers.
+
+. Fixed bugs in the recent implementation of component servant methods
+  get_all_receptacles() and get_all_publishers().
+
+. Simplified template code in component servant and home servant
+  base classes.
+
+. Added the naming service & the implementation of createPackage function
+  to RepoMan.
+
+. Added the code to save the state of the RepoMan at exit and load the
+  state of it at start.
+
+. A new perl library has been added to the bin directory. PerlCIAO is
+  a wrapper around PerlACE with extensions to aid in scripting CIAO
+  tests.
+
+. DAnCE/Planner - a planner which contacts the RepositoryManager, gets a
+  PackageConfiguration by name, and builds a DeploymentPlan on
+  the fly. Note that the node information is currently not populated.
+
+. Added two RACE utilities, the LocationUpdater and PlanGenerator.
+  The LocationUpdater modifies the location field of artifacts in
+  flattened plans to correspond to HTTP URLs pointing at the
+  RepositoryManager.  The PlanGenerator is the Planner utility
+  modified to work with RACE. Note that most RACE functionality is
+  still in development and is not included with this release.
+
+. Added support for parsing packaging descriptors to the
+  Config_Handlers, and improved support for IDL->XML serialization.
+
+. Added a Planner utility which, when given the name of a package,
+  will contact the RepositoryManager and construct a flattened
+  deployment plan on the fly.  Note this utility currently does not
+  populate node assignments.
+
+. Several important bugfixes for ReDaC and shared components.
+
+. Changed Components.idl to include CCM_Component.idl instead of
+  CCM_Container.idl. This removes a dependancy on the container
+  library for stub projects.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
+======================================================
+
+. Added the support of integrating real-time event service into the
+  CIAO core framework. Enhanced DAnCE to support declaratively configure
+  and deploy real-time event channels to mediate event communication
+  among components.
+
+. Fixed a bug in detecting External connection and Internal
+  connections when components are shared across different
+  deployment plans. Earlier when removing connections attached
+  to an external/shared component, not *all* connections
+  associated with this components are purged from the
+  to-be-removed connections list.
+
+. Fixed a bug when redeploying components using the same set
+  of NodeManagers, the destroy of applications results not
+  all internal components and external/shared components
+  are unbinded from the cached map, which sometimes causes
+  duplicate instance exception thrown.
+
+. Fixed bug in detecting name clashes between names of ports of the same
+  category (facet, event sink, etc.) in the same component.
+
+. Added support for attribute exceptions in code generated for executor
+  implementation classes.
+
+. Implemented spec-defined component methods get_all_receptacles(),
+  get_all_publishers(), and disconnect_consumer().
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.10 and CIAO-0.5.0
+=======================================================
+
+. Changed MPC configuration of Config_Handlers to turn off hidden
+  visibility if applicable when compiling Config_Handlers or projects
+  that use Config_Handlers on linux.This change was to work around symbol
+  visibility inconsistencies in GNU standard C++ library when using g++
+  4.x's symbol visibility features.
+
+. Enhanced ReDaC service to enforce the correct
+  assembly redeployment and reconfiguration order.
+
+. Some bug fixes in ReDaC about removing components.
+
+. Fixed NodeApplication to unbind a component with naming service
+  when removing it from the container.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.9 and CIAO-0.4.10
+=======================================================
+
+. Enhanced DAnCE ReDaC service to enforce the correct
+  assembly redeployment and reconfiguration order.
+
+  The order that ReDaC currently enforces:
+
+  (1) Install new components,
+  (2) Set up new connections,
+  (3) Activate new components,
+  (4) Passivate old components,
+  (5) Remove old connections
+  (6) Remove old components.
+
+. Enhanced DAnCE to create hierarchical naming context
+  path through XML descriptors.
+
+. Enhanced DAnCE to maintain a component state map in
+  the component server to manage component life cycle.
+
+. Some bug fixes in DAnCE.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
+======================================================
+. RTTI enabled versions of the Xerces library are no longer needed on
+  Windows platforms.
+
+. The CIDLC compiler now supports basic preprocessor directives:
+  #ifdef, #ifndef, #else, and #endif as well as the -D command-
+  line option.
+
+. The CIDLC compiler now supports incomplete struct and union
+  semantics which will appear in CORBA 3.1.
+
+. DAnCE now supports dynamically adding/removing components
+  to/from the existing running assembly without shutting down the
+  running appliation.  This will allow the application developers to
+  evolve their applications on the fly without incuring service down
+  time. The service is called ReDaC (Redeployment and Reconfiguration)
+
+  Basically ReDAC provides a whole range of redeployment and
+  reconfiguration granularity level, including:
+
+  1) Install/remove component instances of the existing component types.
+  2) Install/remove component instances of a different type, i.e., a
+     totally new type of component.
+  3) Install/remove component instances from an existing container.
+  4) Install new component instances into a dynamically created brand
+     new container.
+     Move around existing components from one existing container to
+     another existing/new container.
+  5) Install new component instances into another component server in
+     the same physical node.
+  6) Install new component instances into another component server
+     into a remote host.
+
+  To see how to use this feature, please see the ReDaC-Usage.html
+  under the $CIAO_ROOT/examples/Hello/ directory.
+
+. Removed the Old Config Handlers, which have been deprecated for some
+  time.  Please see tools/Config_Handlers for the current version.
+
+. Added a step-by-step CoSMIC tutorial for modeling CIAO components
+  using PICML($CIAO_ROOT/docs/tutorials/CoSMIC). Using a simple Stock
+  Quoter system as example, this tutorial demonstrates all the steps
+  that needed to model Component-Based applications.
+
+. DAnCE now supports making connections among components across
+  different assemblies, and allow components to be "shared"
+  across assemblies seamlessly.
+
+  Internally, DAnCE provides a reference counting mechanism when
+  deploying/destroying components, and a reference count table
+  is maintained on each NodeManager.
+
+  From a deployer's point of view, if he/she chooses to deploy
+  a new assembly of component and simultaneously wants to reuse
+  previous deployed components in an existing running assembly,
+  then in the new deployment plan descriptor, he could refer
+  to an old component instance in the <InstanceDeploymentDescriptions>
+  XML tag. The "key" to identify the old component instance is
+  through the <Component_UUID, Node> pair, if such a key is found
+  present in a previous deployed assembly, then DAnCE won't
+  install this component instance (specified by the <Component_UUID>)
+  again, but instead it will increase the reference count of this
+  component instance.
+
+  DAnCE also supports making connections from existing running
+  components to newly deployed components in another assembly, and
+  vice versa.
+
+. The RepositoryManager has been enhanced to support standards based
+  interfaces. A number of techniques have been used to ensure high
+  performance and scalability.
+
+. The RepositoryManager can now retrieve packages from remote locations via
+  HTTP.
+
+. The Target Manager is released with this CIAO release. It is an
+  infrastructure component which keeps track of resource usage in the
+  target domain. The initial domain configuration remains with the
+  Target Manager. A monitor framework has been built into Node Manager which
+  monitors the resources used within each host. This monitor reports its
+  data intermittently to the Target Manager which aggregates the data
+  received across all such hosts acroos the Target domain. The monitor
+  is implemented using a strategy pattern, thus enabling the plug-in of
+  new monitors which can monitor different resources in the domain. The
+  Target manager is a component thus it needs to be started using a
+  deployment plan. It is right now a optional component in the DAnCE
+  tool chain.
+
+. We added a skeleton implementation of the Resource Allocation and
+  Control Engine (RACE) which is a middleware framework built atop
+  CIAO/DAnCE that integrates multiple resource management algorithms for
+  (re)deploying and (re)configuring application components. We are in
+  the process of developing resource management algorithms (both
+  resource allocation and control algorithms) that will be a part of
+  future releases.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
+======================================================
+. The deprecated RepositoryManager implementation, under
+  DAnCE/RepositoryManager, has been removed from this release. Please
+  use the Plan_Launcher and flattened deployment plans to deploy
+  component assemblies.
+
+. The CIDL compiler frontend now supports constants, const expressions,
+  bounded strings, bounded sequences, and arrays.
+
+. The CIDL compiler frontend now supports automatic indentation of
+  function arguments (both "new line" and "same line" styles are
+  supported).
+
+. Added backend CIDL compiler support for constants, arrays, bounded
+  strings, bounded sequences, and attribute exceptions, corresponding
+  to frontend support added by Boris Kolpackov <boris@kolpackov.net>.
+
+. Updated documentation to include instructions for building
+  the CIDL compiler using MakeProjectCreator (MPC).
+
+. Fixed a bug in the CIDL compiler's determination if an IDL
+  type is of fixed or variable size type, when it is declared
+  in the scope of an interface, valuetype or home.
+
+. Changes to generate servant code to support component
+  swapping.
+
+. Added capability to pass a base class event consumer to a
+  subscribe() operation generated for a derived event type.
+
+. Added support for .cdl file extension, which was belatedly
+  standardized by the OMG.
+
+. Added documentation on using Rational Purify with CIAO and
+  DAnCE.
+
+. Added tests and documentation for the IDL3-to-IDL2 converter tool.
+
+. RepositoryManager:
+  - enhanced the implementation to use various optimization techniques
+  - added HTTP support
+  - added PackageConfiguration visitor to update the locations of the
+    implementation artifacts with relevant HTTP URLs
+  - refactored some of the code and added a number of helpers functions
+
+. The XSC based config handlers have been heavily optimized, resulting
+  in greatly reduced parsing overhead for large deployments.
+
+. The DAnCE toolchain now supports initializing attributes which have
+  enumerated types. Support for other complex types is planned for the
+  future. Please see examples/Hello/descriptors/
+  flattened_deploymentplan_without_ns.cdp for an example of how to
+  populate enumerated attributes.
+
+. Integrated Real-time QoS support into the DAnCE-based runtime and
+  deployment tools based on the new OMG Deployment and Configuration
+  (D&C) specification.  Such effort allows application developers to
+  use real-time CORBA 1.0 features within their CCM appliation through
+  meta-programming (via XML metadata through DAnCE toolchain).  The old
+  run-time and deployment tools based on original Packaging and Deployment
+  section of the CCM specification have been completely removed.  This
+  work includes extensions to D&C schema, schema parsers, container and
+  NodeApplication.
+
+. Added functionality in XML parsing code to resolve schema in
+  $CIAO_ROOT/docs/schema instead of the local directory only. All
+  DeploymentPlans should use Deployment.xsd instead of
+  Modified_Deployment.xsd, which has been removed.
+
+. Fixed bug in CIDL code generation for some types of component and
+  home attributes.
+
+. Packaging and Deployment (P&D) tools have been completely removed
+  from this release.  DAnCE is now the only supported method of
+  deploying components.
+
+. The CIAO directory structure has changed in support of the previous
+  item. The following important directory moves have been made:
+
+  * $CIAO_ROOT/DAnCE/ciao => $CIAO_ROOT/ciao
+  * $CIAO_ROOT/DAnCE/examples => $CIAO_ROOT/examples
+  * $CIAO_ROOT/DAnCE/Config_Handlers => $CIAO_ROOT/tools/Config_Handlers
+  * Various obsolete examples/tutorials/tests have been removed.
+
+. Error reporting during component deployment has been greatly
+  improved.  While debugging using CIAO_DEBUG_LEVEL is still
+  available, detailed error messages are now generated and propagated
+  to the Plan_Launcher using exceptions.
+
+. generate_component_mpc.pl has been updated to generate MPC files
+  useful by the modern CIAO infrastructure.  This script now also
+  automatically generates export files.
+
+. DAnCE has been enhanced to support deploying multiple assemblies
+  with the same set of ExecutionManager and NodeMangers.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.6 and CIAO-0.4.7
+======================================================
+. Added a component packaging tool to DAnCE. This tool will allow
+  component packagers to create from deployment plan archived
+  packages that wrap up all relevant component properties,
+  descriptors and implementation artifacts.The component packages
+  generated from this tool will be distributed to Repository
+  Manager.
+
+. Enhanced DAnCE to allow more than one NodeApplicationManagers within
+  a NodeManager.
+
+. Enhanced DAnCE to support configurable output of debugging information.
+  Support for debugging information will be added at the level of both the
+  DAnCE/CIAO infrastructure as well as individual component instances.
+  Support for tracing of the DAnCE/CIAO infrastructure will also be added.
+  Together, these efforts will help developers to understand the execution of
+  their component-based applications, as well as allowing customization of
+  the amount of debugging information logged
+
+. Added binding component to the Naming Service. A system deployer
+  could configure this through XML-based flattened deployment plan
+  descriptor.
+  See $CIAO_ROOT/DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
+  for details. Currently DAnCE only provides resolving naming service
+  reference through multicast, so be sure to initialize the naming service
+  with multicast port.
+
+. Added the first cut of the RepositoryManager implementation.
+
+. Changed scoping of code generated by the CIDL compiler to accommodate
+  cases where the composition declaration is enclosed in one or more
+  IDL modules, and/or when the composition declaration is in a different
+  scope than the associated component IDL declarations.
+
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.5 and CIAO-0.4.6
+======================================================
+
+. Added support for handle component activation/passivation in D&C
+  assemblies.
+
+. Added a test for the tool that converts IDL3 into equivalent IDL2.
+
+. Fixed CIDL compiler bug in code generation for sequence type
+  attributes of components.
+
+. Added more examples for CIAO, including a new Quoter example that is
+  similar to the one in TAO, as well as GUI-based example.
+
+. Added support for handle component activation/passivation in D&C
+  assemblies.
+
+. Added support for deactivating facets/event consumers when component
+  is getting deactivated.
+
+. Added support for destroying the component executors, when the
+  component is getting deactivated.
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.4 and CIAO-0.4.5
+======================================================
+
+. Split the previous NodeApplication interface into NodeApplication
+  and Container interfaces to allow multi-container NodeApplication
+  support. This will be particularly useful to provide an optimized
+  CIAO container support for RT-CORBA features.
+
+. Enhanced CIAO to handle dynamic replacement of components. Please
+  see an example in $CIAO_ROOT/DAnCE/examples/Swapping
+
+. The Config Handlers have been modified to use XML parsing code
+  generated by the XML Schema Compiler (XSC).  Binary releases of XSC can
+  currently be found at (http://www.dre.vanderbilt.edu/~boris/xsc), and a
+  recent snapshot of the CVS repository can be found at
+  (http://www.dre.vanderbilt.edu/~wotte/xsc.tbz2).
+
+  Please direct all XSC inquiries/bug reports to wotte at
+  dre.vanderbilt.edu
+
+. Supported initializing attribute values on Component through XML
+  tags. Please refer to the $CIAO_ROOT/DAnCE/examples/Hello for
+  details, particularly the Hello.cid descriptor file.
+
+. Supported parsing component instance names and using them to generate
+  unique component port references, so that multiple instances of the
+  same component can be deployed in a single container and the client
+  requests could be properly designated to the appropriate ports.
+
+. Enhance CIAO to support establishing connections between derived
+  type ports and base type ports. For example, application deployer
+  could set up event connections between base event sink port type and
+  derived event source port type.
+
+. Enhanced the existing set of DAnCE tools to support flattened
+  Deployment Plan based deployment. Please refer an example in
+  $CIAO_ROOT/DAnCE/examples/BasicSP/flattened_deploymentplan.cdp
+  to see how the flattened deployment plan descriptor is used to
+  deploy the BasicSP example.
+
+. Develop regression/performance tests (similar to TAO
+  regression/performance tests) that will test/evaluate the
+  performance of various features of CIAO.
+
+. Added regression test script to the nightly build for DAnCE example.
+  This will make sure DAnCE tools could be ready to use out of
+  box in various platforms.
+
+. Improved documentation pages in various places.
+
+. Some bug fixes.
+
+. Added support for reception of eventtypes of a more derived type than
+  the type of the event sink. Subscription will succeed if the passed
+  event consumer is associated with an eventtype that is an ancestor of
+  the published eventtype.
+
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.3 and CIAO-0.4.4
+======================================================
+
+. Minor bugfixes.
+
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.2 and CIAO-0.4.3
+======================================================
+
+. CIDLC can generate empty executor implementations for a given
+  composition, which makes it easier to write executors.  This can be
+  trigerred by passing --gen-exec-impl option while invoking CIDLC.
+
+. Generated container code has been refactored into base classes,
+  thereby reducing the amount of code generated by CIDLC.
+
+. A new tool for generating equivalent IDL2 declarations from IDL3
+  declarations has been added.
+
+. Fixed a problem with DAnCE that prevented ports from getting activated
+  properly.
+
+. Added support for eventtype factories within CIDLC.
+
+. DAncE compiles clean and works with VC6 and Borland compilers.
+
+. Fixed compile errors and memory related errors on many platforms.
+
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.1 and CIAO-0.4.2
+======================================================
+
+. Overall
+  - Support for g++ 3.4.1.
+  - Support added for latest HP aCC compiler.
+
+. CCM Deployment and Configuration specification has largely been
+  implemented.  The implementation is called "DAnCE", the Deployment
+  and Configuration Engine.  For more information about DAnCE, and a
+  list of supported features, please refer to
+  $CIAO_ROOT/docs/releasenotes/dance.html.
+
+. CIDL compiler
+ . Added missing generation of servant code for operations and
+   attributes of ancestors of interfaces supported and used as ports.
+ . Added missing generation of factory operation(s) from inherited
+   home(s).
+ . Added support for "uses multiple" in generated code.
+ . Fixed bugs in generation of inherited:     [Bug 1800]
+        home operations
+        attribute operations
+        port operations
+        home factory operations
+        supported operations
+  . Added automatic registration of value factories for event
+    consumers.
+  . Added support for emits-related navigation.
+  . Fixed bug with multiple facets that provide the same interface.
+  . Implemented get_all_facets() and get_all_consumers() navigation
+    methods.
+
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.4 and CIAO-0.4.1
+====================================================
+
+CIAO
+----
+
+. Added support for statically configuring an assembly. Please see
+  $CIAO_ROOT/docs/static_toc_ciao.html for details.
+
+CIDL:
+-----
+. Fixed incorrect generation of ACE environment macros in servant glue
+  code operations.
+
+. Fixed incorrect code generation in the body of a servant operation
+  that delegates to the executor class.
+
+. Added support for attributes in facets and supported
+  interfaces.
+
+. Fixed bug in code servant glue code generation when there are
+  multiple nested modules in the IDL and/or CIDL files.
+
+. Added missing code generation of enum type names.
+
+. Fixed a bug in the generation of the scoped name of a local variable
+  which is a _var of an executor interface for a facet. These types
+  are required by the CCM spec to be generated in the same scope as
+  the interface that underlies the facet.
+
+. Fixed a bug in the generation of *S.h file includes corresponding to
+  IDL files included in the CIDL file.
+
+. Added ACE style Makefiles.
+
+. Added support for bounded strings
+
+MPC
+===
+. Removed all of the project type specific and unnecessary keywords.
+
+. Changed the defaulting rules for idl files (generated source files
+  will be automatically added even if idl files are explicitly
+  listed).
+
+. The makefiles generated by the gnuace type are now named GNUmakefile
+  instead of Makefile.
+
+. The IDL_Files section is no longer a built-in MPC type.  It is a
+  custom build type defined in taoidldefaults.mpb.
+
+. Added support for Borland Makefiles that aren't tied to ACE_wrappers
+  (the bmake project type).
+
+. Added wild-cards to the default.rel file.  Now, environment
+  variables that end in _ROOT are automatically considered as if they
+  were used with the -relative option.
+
+. Added an environment variable,
+  MPC_DEPENDENCY_COMBINED_STATIC_LIBRARY, to force MPC to put
+  inter-project dependencies in static vc6 and vc71 workspaces.
+
+. Added an html project type (originally by Justin Michel) to aid in
+  the debugging of mpc files.
+
+. Added a new keyword, pure_libs, that is put into a project
+  unmodified (unlike the libs and lit_libs keywords).
+
+. The behavior obtained through the use of the -hierarchy option is
+  now the default for all "make" based project types.  This includes
+  borland, bmake, gnuace, make and nmake.
+
+. Added support for referencing workspace files (.mwc) from within
+  other workspaces.
+
+. Added an option, -genins, that causes MPC to generate .ins files
+  that can be used with prj_install.pl.  This will help users install
+  portions of their projects into alternate directories.
+
+. Modified the gnuace workspace output to be based on directory
+  recursion instead of having inter-project dependencies built into
+  each workspace level GNUmakefile.
+
+. Added a new keyword, dependent, for use within a Define_Custom that
+  causes MPC to add a dependency to generated files upon the custom
+  command.
+
+. Assignments within a 'specific' section that are not recognized MPC
+  keywords are assumed to be template value overrides (similar to
+  using the -value_template option).
+
+. Partial support for Visual SlickEdit has been added.
+
+. Various bug fixes and optimizations have been added as well.
+
+
+USER VISIBLE CHANGES BETWEEN CIAO-0.3.6 and CIAO-0.4
+====================================================
+
+. Added Makefiles to build the ciao and tools subdirs by default.
+
+. The suport for the following IDL features have been added to the
+  CIDL since the last beta
+
+  - exception (exception declaration and raises() specification)
+  - valuetype
+  - enum
+  - const declaration
+  - const expression and literals
+  - native
+  - home finder
+  - oneway operation
+  - readonly attribute
+  - type declaration inside interfaces, valuetypes
+  - union
+
+  CIDL doesn't yet support the following features
+
+  - Complete error detection and recovery
+  - Attribute exception specification
+  - Array
+  - Bounded sequence
+  - Fixed type
+  - Floating-point and Fixed-point constant expressions & literal.
+
+  though we plan to add this support over the next several months,
+  depending on user/sponsor needs.

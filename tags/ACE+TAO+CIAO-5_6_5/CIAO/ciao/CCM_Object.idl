@@ -1,0 +1,106 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../.. -I ../../orbsvcs/orbsvcs \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Component.idl
+ */
+
+#if !defined (CCM_OBJECT_IDL)
+#define CCM_OBJECT_IDL
+
+#include "ciao/CCM_Events.idl"
+#include "ciao/CCM_Navigation.idl"
+#include "ciao/CCM_Home.idl"
+#include "ciao/CCM_PrimaryKeyBase.idl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  /// This typedef and consts shouldn't be here but are here because of CIAO
+  /// specific additions
+  typedef FailureReason InvalidConfigurationReason;
+  const InvalidConfigurationReason UnknownConfigValueName = 0;
+  const InvalidConfigurationReason InvalidConfigValueType = 1;
+  const InvalidConfigurationReason ConfigValueRequired = 2;
+  const InvalidConfigurationReason ConfigValueNotExpected = 3;
+
+  /// Shouldn't be here but is now here because of CIAO additions
+  exception InvalidConfiguration
+  {
+    InvalidConfigurationReason reason;
+    FeatureName name;
+  };
+
+  valuetype ComponentPortDescription
+  {
+    public FacetDescriptions facets;
+    public ReceptacleDescriptions receptacles;
+    public ConsumerDescriptions consumers;
+    public EmitterDescriptions emitters;
+    public PublisherDescriptions publishers;
+  };
+
+  /// CIAO specific forward declaration, shouldn't be here
+  interface StandardConfigurator;
+
+  exception NoKeyAvailable {};
+
+  interface CCMObject : Navigation, Receptacles, Events
+  {
+    CORBA::IRObject get_component_def ( );
+    CCMHome get_ccm_home( );
+    PrimaryKeyBase get_primary_key( )
+      raises (NoKeyAvailable);
+    void configuration_complete ()
+      raises (InvalidConfiguration);
+    void remove()
+      raises (RemoveFailure);
+    ComponentPortDescription get_all_ports ();
+
+    /// Factory method to return a StandardConfigurator interface.
+    /// CIAO specific
+    StandardConfigurator get_standard_configurator ( );
+
+    /// CIAO specific operations to have some control on when and how
+    /// to activate  components.
+    /**
+     * This is all from our work on ARMS where we needed to know whether
+     * every component has been configured, say for example to use
+     * logging in the assembly which could in turn be provided by a
+     * component. To get around all this we are adding some methods on
+     * this till we think of some standard way to do this. The problem
+     * is that the deployer should be able to call this as opposed to
+     * the home calling it as soon as the component is created.
+     *
+     * All these operations are called in the order mentioned, ie. the
+     * deployer calls ciao_preactivate () on all components, then
+     * ciao_activate and then ciao_postactivate (). The speciality is
+     * that these operations would be invoked on every target object
+     * before the next call is made. It is similar to the way
+     * portable interceptors work, trying to get everything onto the
+     * flow stack, but differ in the intention.
+     */
+    void ciao_preactivate ()
+      raises (InvalidConfiguration);
+
+    /// CIAO specific
+    void ciao_activate ()
+      raises (InvalidConfiguration);
+
+    /// CIAO specific
+    void ciao_postactivate ()
+      raises (InvalidConfiguration);
+
+    /// CIAO specific
+    void ciao_passivate ()
+      raises (InvalidConfiguration);
+  };
+};
+#endif /* CCM_OBJECT_IDL */

@@ -1,0 +1,71 @@
+// -*- MPC -*-
+// $Id$
+
+project(TAO_IDL3_TO_IDL2_BE) : acelib, install, tao_output, crosscompile {
+  after       += TAO_IDL_FE
+  sharedname   = TAO_IDL3_TO_IDL2_BE
+  libs        += TAO_IDL_FE
+  dynamicflags = TAO_IDL3_TO_IDL2_BE_BUILD_DLL
+  includes    += $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  Source_Files {
+    basic_visitor.cpp
+    be_global.cpp
+    be_helper.cpp
+    be_init.cpp
+    be_produce.cpp
+    be_sunsoft.cpp
+    checking_visitor.cpp
+    identifier_helper.cpp
+    idl3_to_idl2_visitor.cpp
+  }
+
+  Header_Files {
+    basic_visitor.h
+    be_extern.h
+    be_global.h
+    be_helper.h
+    be_sunsoft.h
+    checking_visitor.h
+    identifier_helper.h
+    idl3_to_idl2_visitor.h
+    TAO_IDL3_TO_IDL2_BE_Export.h
+  }
+}
+
+
+project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile {
+  after          += TAO_IDL3_TO_IDL2_BE TAO_IDL_FE
+  exename         = tao_idl3_to_idl2
+  libs           += TAO_IDL3_TO_IDL2_BE TAO_IDL_FE
+  includes       += . $(TAO_ROOT)/TAO_IDL/include \
+                    $(TAO_ROOT)/TAO_IDL/fe \
+                    $(TAO_ROOT)
+  libpaths       += $(TAO_ROOT)/TAO_IDL
+  exeout          = $(ACE_ROOT)/bin
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
+  verbatim(gnuace, local) {
+    ifeq ($(TAO_IDL_PREPROCESSOR),)
+      CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
+    else
+      CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
+    endif
+  }
+
+  Source_Files {
+    $(TAO_ROOT)/TAO_IDL/driver/drv_args.cpp
+    $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp
+    $(TAO_ROOT)/TAO_IDL/tao_idl.cpp
+  }
+
+  Header_Files {
+    $(TAO_ROOT)/TAO_IDL/include/drv_extern.h
+  }
+}
+
