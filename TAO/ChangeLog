@@ -1,3 +1,15 @@
+Mon May 19 14:29:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2085_Regression/*:
+          New regression test for the fact that string_to_object doesn't
+          return an exception. Thanks to Frank Pilhofer <fpilhofe at mc dot com>
+          for reporting this.
+
+        * tests/Bug_2243_Regression/*:
+          New regression test for bugzilla 2243 which is about
+          interoperability with orbit. Thanks to Jules Colding
+          <colding at 42tools dot com> for reporting this.
+
 Mon May 19 12:49:09 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/HandleExhaustion/server.cpp:
