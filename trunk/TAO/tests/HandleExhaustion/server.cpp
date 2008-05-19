@@ -116,7 +116,8 @@ main (int argc, char *argv[])
     rlimit rlim;
     if (ACE_OS::getrlimit(RLIMIT_NOFILE, &rlim) == 0)
       {
-        if (rlim.rlim_cur < rlim.rlim_max &&
+        if (rlim.rlim_cur <
+            static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE) &&
 	    rlim.rlim_max >
 	    static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE))
           {
