@@ -1,3 +1,13 @@
+Mon May 19 18:34:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp:
+          Use false instead of 0
+
+        * tao/ORB.cpp (object_to_string):
+          Handle objrefstyle url with orbit references where some of the
+          profile are of an unknown type. This fixes bugzilla 2243, thanks
+          to Jules Colding <colding at 42tools dot com> for reporting this.
+
 Mon May 19 15:12:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Reply/run_test.pl:
