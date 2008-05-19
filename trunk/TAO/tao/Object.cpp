@@ -836,11 +836,11 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       CORBA::String_var type_hint;
 
       if ((cdr >> type_hint.inout ()) == 0)
-        return 0;
+        return false;
 
       CORBA::ULong profile_count;
       if ((cdr >> profile_count) == 0)
-        return 0;
+        return false;
 
       if (profile_count == 0)
         {
@@ -891,7 +891,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
                                  ACE_TEXT ("profiles while extracting object\n")
                                  ACE_TEXT ("TAO (%P|%t) ERROR: reference from the ")
                                  ACE_TEXT ("CDR stream.\n")),
-                                0);
+                                false);
             }
 
           objdata = orb_core->create_stub (type_hint.in (), mp);
@@ -904,14 +904,14 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
               ACE_TEXT ("object when demarshaling object ")
               ACE_TEXT ("reference.\n"));
 
-          return 0;
+          return false;
         }
 
       TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
       x = orb_core->create_object (safe_objdata.get ());
       if (x == 0)
-        return 0;
+        return false;
 
       // Transfer ownership to the CORBA::Object
       (void) safe_objdata.release ();

@@ -1461,25 +1461,24 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 
       TAO_MProfile &mp = obj->_stubobj ()->base_profiles ();
 
-      if (mp.profile_count () == 0)
+      // Try the profiles until one returns a string
+      for (CORBA::ULong index = 0; index < mp.profile_count(); ++index)
         {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Cannot stringify given ")
-                        ACE_TEXT ("object.  No profiles.\n")));
-
-
-          throw ::CORBA::MARSHAL (
-            CORBA::SystemException::_tao_minor_code (
-              0,
-              EINVAL),
-            CORBA::COMPLETED_NO);
+          char * result = mp.get_profile (index)->to_string();
+          if (result)
+            return result;
         }
 
-      // For now we just use the first profile.
-      TAO_Profile *profile = mp.get_profile (0);
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Cannot stringify given ")
+                    ACE_TEXT ("object.  No or only unknown profiles.\n")));
 
-      return profile->to_string ();
+      throw ::CORBA::MARSHAL (
+        CORBA::SystemException::_tao_minor_code (
+          0,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 }
 
@@ -1606,7 +1605,7 @@ CORBA::ORB::ior_string_to_object (const char *str)
   // Create deencapsulation stream ... then unmarshal objref from that
   // stream.
 
-  int byte_order = *(mb.rd_ptr ());
+  int const byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);
   TAO_InputCDR stream (&mb,
@@ -1636,10 +1635,7 @@ CORBA::ORB::url_ior_string_to_object (const char* str)
 
   TAO_Connector_Registry *conn_reg = this->orb_core_->connector_registry ();
 
-  int const retv = conn_reg->make_mprofile (str, mprofile);
-  // Return nil.
-
-  if (retv != 0)
+  if (conn_reg->make_mprofile (str, mprofile) != 0)
     {
       throw ::CORBA::INV_OBJREF (
         CORBA::SystemException::_tao_minor_code (
