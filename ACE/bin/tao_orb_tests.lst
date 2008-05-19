@@ -70,6 +70,7 @@ TAO/tests/Bug_1551_Regression/run_test.pl: !VxWorks !MINIMUM !CORBA_E_COMPACT !C
 TAO/tests/Bug_1551_Regression/run_test.pl -quick: QUICK !LabVIEW_RT
 TAO/tests/Bug_1676_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_2084_Regression/run_test.pl: !ST !LabVIEW_RT
+TAO/tests/Bug_2085_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_2134_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_2174_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_2183_Regression/run_test.pl: !ACE_FOR_TAO !LabVIEW_RT
@@ -77,6 +78,7 @@ TAO/tests/Bug_2186_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_2188_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_2201_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_2234_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !LabVIEW_RT
+TAO/tests/Bug_2243_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_2289_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_2319_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_2328_Regression/run_test.pl: !LabVIEW_RT
