@@ -8,10 +8,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorfilebase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -e 400 -l 800");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase -e 400 -l 800");
 }
 else {
     $SV  = new PerlACE::Process ("server", "-o $iorfile -e 400 -l 800");

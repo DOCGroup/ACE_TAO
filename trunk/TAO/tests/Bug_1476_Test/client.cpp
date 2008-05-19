@@ -201,9 +201,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
-      ACE_ERROR ((LM_ERROR, "Exception caught: %s\"%s\"\n"
+      ACE_ERROR ((LM_ERROR, "ERROR: Exception caught: %s\"%s\"\n"
       , ex._name(), ex._rep_id ()));
       return 1;
     }
