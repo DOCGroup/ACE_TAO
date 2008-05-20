@@ -31,6 +31,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward decls.
 class ACE_Connection_Recycling_Strategy;
 
+// This enum is used as the flags parameter when calling the close()
+// method on the ACE_Svc_Handler.
+enum ACE_Svc_Handler_Close { NORMAL_CLOSE_OPERATION = 0x00,
+                             CLOSE_DURING_NEW_CONNECTION = 0x01
+                           };
+
 /**
  * @class ACE_Svc_Handler
  *

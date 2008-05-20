@@ -1,3 +1,16 @@
+Tue May 20 17:55:39 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Svc_Handler.h:
+
+          Added an enum to be used as flags parameter for close().
+
+        * ace/Acceptor.cpp:
+        * ace/Connector.cpp:
+        * ace/Strategies_T.cpp:
+
+          Use the new enum during the call to close() on the service handler
+          to indicate the circumstances behind the closure.
+
 Tue May 20 09:45:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Ping_Socket.{h,cpp}:
@@ -37,7 +50,7 @@ Mon May 19 14:19:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May 19 02:53:21 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.6.5 released.
+        * ACE version 5.6.5 released.
 
 Fri May 16 10:13:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
