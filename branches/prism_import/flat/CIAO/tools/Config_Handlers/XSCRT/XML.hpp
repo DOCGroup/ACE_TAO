@@ -462,8 +462,8 @@ namespace XSCRT
     {
       string xns (ns);
 
-      XMLCh const* p (
-        e.dom_element ()->lookupNamespacePrefix (xns.c_str (), false));
+      XMLCh const* p (e.dom_element ()->lookupPrefix (xns.c_str ()));
+      
 
       if (p == 0)
       {

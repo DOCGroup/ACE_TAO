@@ -12,7 +12,7 @@
 #include <ace/String_Base.h>
 #include <ace/Task.h>
 #include <tao/ORB.h>
-
+#include <ciao/Logger/Logger_Service.h>
 
 namespace CIAO
 {
@@ -54,8 +54,8 @@ namespace CIAO
       
       
       CORBA::ORB_var orb_;
-      int log_level_;
-      bool log_enable_tracing_;
+      
+      auto_ptr<CIAO::Logger_Service> logger_;
       
       ACE_CString uuid_;
       ACE_CString callback_ior_str_;

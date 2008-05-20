@@ -7,6 +7,10 @@
 #include <ccm/CCM_HomeC.h>
 
 
+const ACE_TCHAR *SVNT_ENTRYPT = "edu.vanderbilt.dre.ServantEntrypoint";
+const ACE_TCHAR *SVNT_ARTIFACT = "edu.vanderbilt.dre.ServantArtifact";
+const ACE_TCHAR *EXEC_ARTIFACT = "edu.vanderbilt.dre.ExecutorArtifact";
+
 namespace CIAO
 {
   namespace Deployment
@@ -121,17 +125,70 @@ namespace CIAO
 		      "No executor entrypoint found.\n"));
 	  throw ::Components::Deployment::InvalidConfiguration ();
 	}
-
+      
       CIAO_DEBUG ((LM_INFO, CLINFO "CIAO_Container_i::install_home - "
 		  "Attempting to install home with id [%s]\n",
 		  id));
 
-      CIAO::Utility::CONFIGVALUE_MAP cm;
       CIAO_DEBUG ((LM_TRACE, CLINFO 
 		  "CIAO_Container_i::install_home - "
 		  "Extracting ConfigValues from sequence of length [%u]\n",
 		  config.length ()));
+
+      CIAO::Utility::CONFIGVALUE_MAP cm;
       CIAO::Utility::build_config_values_map (cm, config);
+      CORBA::Any val;
+      
+      const char *tmp;
+      CORBA::String_var exec_art, svnt_art, svnt_entry;
+      if (cm.find (SVNT_ENTRYPT, val) == 0)
+        {
+          val >>= tmp;
+          svnt_entry = tmp;
+          CIAO_DEBUG ((LM_TRACE, CLINFO 
+                       "CIAO_Container_i::install_home - "
+                       "Found Servant entrypoint %s\n", svnt_entry.in ()));
+        }
+      else
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "CIAO_Container_i::install_home - "
+                       "Error:  No Servant entrypoint porovided, aborting installation\n"));
+          throw Components::InvalidConfiguration ();
+        }
+      
+      if (cm.find (SVNT_ARTIFACT, val) == 0)
+        {
+          val >>= tmp;
+          svnt_art = tmp;
+          CIAO_DEBUG ((LM_TRACE, CLINFO 
+                       "CIAO_Container_i::install_home - "
+                       "Found Servant artifact %s\n", svnt_art.in ()));
+        }
+      else
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "CIAO_Container_i::install_home - "
+                       "Error:  No Servant artifact porovided, aborting installation\n"));
+          throw Components::InvalidConfiguration ();
+        }
+      
+
+      if (cm.find (EXEC_ARTIFACT, val) == 0)
+        {
+          val >>= tmp;
+          exec_art = tmp;
+          CIAO_DEBUG ((LM_TRACE, CLINFO 
+                       "CIAO_Container_i::install_home - "
+                       "Found executor artifact:  %s\n", exec_art.in ()));
+        }
+      else
+        {
+          CIAO_ERROR ((LM_ERROR, CLINFO
+                       "CIAO_Container_i::install_home - "
+                       "Error:  No Executor artifact porovided, aborting installation\n"));
+        }
+      
       CIAO_DEBUG ((LM_TRACE, CLINFO
 		  "CIAO_Container_i::install_home - "
 		  "Extraction resulted in map of [%u] values", cm.current_size ()));
@@ -143,10 +200,12 @@ namespace CIAO
       //"Executor entrypoint [%s], servant entrypoint [%s], servant library [%s]\n",
       //entrypt, svnt_entrypt.in (), svnt_library.in ()));
       
-      Components::CCMHome_var home = this->container_->install_home ("","","","", "");
+      Components::CCMHome_var home = this->container_->install_home (exec_art,
+                                                                     entrypt,
+                                                                     svnt_art,
+                                                                     svnt_entry,
+                                                                     id);
 
-      CORBA::Any val;
-      
       if (cm.find (register_naming, val) == 0)
 	{
           const char *str_val;
@@ -165,7 +224,7 @@ namespace CIAO
 			"Warning: Extraction of Naming Service value failed!\n"));
 	}
 
-      return  0;
+      return  home._retn ();
     }
     
     void 

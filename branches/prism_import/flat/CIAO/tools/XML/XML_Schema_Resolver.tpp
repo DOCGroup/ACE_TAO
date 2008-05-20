@@ -31,17 +31,16 @@ namespace CIAO
     /// This function is called by the Xerces infrastructure to
     /// actually resolve the location of a schema.
     template<typename Resolver>
-    DOMInputSource *
+    InputSource *
     XML_Schema_Resolver<Resolver>::resolveEntity (const XMLCh *const publicId,
-                                                   const XMLCh *const systemId,
-                                                   const XMLCh *const baseURI)
+                                                    const XMLCh *const systemId)
     {
-      XStr path = resolver_ (publicId, systemId, baseURI);
+      XStr path = resolver_ (publicId, systemId);
       if (path.begin () == 0)
         return 0;
       
       // Ownership of these objects is given to other people.
-      return new Wrapper4InputSource (new LocalFileInputSource (path));
+      return /*new Wrapper4InputSource*/ (new LocalFileInputSource (path));
     }    
   }
 }

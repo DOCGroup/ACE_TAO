@@ -190,7 +190,7 @@ namespace CIAO
     {
       CIAO_TRACE(CLINFO "CIAO_ServerActivator_i::create_component_server");
       
-      Safe_Server_Info server (new Server_Info (config.length ()));
+      Safe_Server_Info server (new Server_Info (config.length () + 1));
 
       CIAO::Utility::build_config_values_map (*server->cmap_, config);
       
@@ -207,15 +207,15 @@ namespace CIAO
                    "Attempting to spawn ComponentServer with UUID %s\n",
                    server->uuid_.c_str ()));
       // Now we need to get a copy of the one that was inserted...
-      this->spawn_component_server (cmd_options);
+      pid_t pid = this->spawn_component_server (cmd_options);
       
       
       ACE_Time_Value timeout (this->spawn_delay_, 0);
 
       if (this->multithreaded_)
-        this->multi_threaded_wait_for_callback (*server, timeout);
+        this->multi_threaded_wait_for_callback (*server, timeout/*, pid*/);
       else
-        this->single_threaded_wait_for_callback (*server, timeout);
+        this->single_threaded_wait_for_callback (*server, timeout/*, pid*/);
       
       CIAO_DEBUG ((LM_DEBUG, CLINFO
                    "CIAO_ServerActivator_i::create_component_server - "
@@ -305,15 +305,18 @@ namespace CIAO
       CORBA::Object_var obj = this->poa_->servant_to_reference (this);
       CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
       
-      options.command_line ("%s -c %s %s",
+      options.command_line ("%s %s -c %s",
                             this->cs_path_.c_str (),
-                            ior.in (),
-                            cmd_line.c_str ());
+                            cmd_line.c_str (),
+                            ior.in ());
       
       options.avoid_zombies (0);
+      ACE_DEBUG ((LM_DEBUG, "***%s\n",
+                  cmd_line.c_str ()));
       
       CIAO_DEBUG ((LM_TRACE, CLINFO 
-                   "CIAO_ServerActivator_i::spawn_component_server - Spawning process\n"));
+                   "CIAO_ServerActivator_i::spawn_component_server - Spawning process, command line is %s\n",
+                   options.command_line_buf ()));
 
       pid_t pid = this->process_manager_.spawn (options,
                                                 &this->child_handler_);
@@ -326,7 +329,8 @@ namespace CIAO
         }
       
       CIAO_DEBUG ((LM_TRACE, CLINFO 
-                   "CIAO_ServerActivator_i::spawn_component_server - Process successfully spawned.\n"));
+                   "CIAO_ServerActivator_i::spawn_component_server - Process successfully spawned with pid %u\n",
+                   pid));
       return pid;
     }
 

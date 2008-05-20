@@ -5,9 +5,10 @@
 #include "ace/Auto_Ptr.h"
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOMLocator.hpp>
+#include <xercesc/sax/SAXParseException.hpp>
 #include "XercesString.h"
 
-using xercesc::XMLString;
+using xercesc::SAXParseException;
 
 namespace CIAO
 {
@@ -22,43 +23,39 @@ namespace CIAO
     {
     }
 
-
-    bool
-    XML_Error_Handler::handleError (const DOMError& domError)
+    void XML_Error_Handler::warning(const SAXParseException& toCatch)
     {
-      this->errors_ = true;
-
-      if (domError.getSeverity() == DOMError::DOM_SEVERITY_WARNING)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t), Warning "));
-      else if (domError.getSeverity() == DOMError::DOM_SEVERITY_ERROR)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t), Error "));
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t), Fatal Error "));
-      char *msg =
-        XMLString::transcode (domError.getMessage ());
-
-      ACE_Auto_Basic_Array_Ptr<char> cleanup_msg (msg);
-
-      char *file =
-        XMLString::transcode (domError.getLocation ()->getURI ());
-
-      ACE_Auto_Basic_Array_Ptr<char> cleanup_file (file);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "%s at line %d and column %d in file %s\n",
-                  msg,
-                  domError.getLocation ()->getLineNumber (),
-                  domError.getLocation ()->getColumnNumber (),
-                  file));
-
-      return true;
+      XStr file (toCatch.getSystemId ());
+      XStr msg (toCatch.getMessage ());
+      
+      std::cerr << "Warning: " << file << ':' << toCatch.getLineNumber ()
+                << ':' << toCatch.getColumnNumber () << " - "
+                << msg << std::endl;
     }
-
-    void
-    XML_Error_Handler::resetErrors (void)
+    
+    void XML_Error_Handler::error(const SAXParseException& toCatch)
+    {
+      XStr file (toCatch.getSystemId ());
+      XStr msg (toCatch.getMessage ());
+      
+      std::cerr << "Error: " << file << ':' << toCatch.getLineNumber ()
+                << ':' << toCatch.getColumnNumber () << " - "
+                << msg << std::endl;
+      this->errors_ = true;
+    }
+    
+    void XML_Error_Handler::fatalError(const SAXParseException& toCatch)
+    {
+      XStr file (toCatch.getSystemId ());
+      XStr msg (toCatch.getMessage ());
+      
+      std::cerr << "Fatal Error: " << file << ':' << toCatch.getLineNumber ()
+                << ':' << toCatch.getColumnNumber () << " - "
+                << msg << std::endl;
+      this->errors_ = true;      
+    }
+    
+    void XML_Error_Handler::resetErrors()
     {
       this->errors_ = false;
     }

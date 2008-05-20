@@ -18,14 +18,11 @@
 #include "XML/CIAO_XML_Utils_Export.h"
 #include "XML/XercesString.h"
 
-#include <xercesc/dom/DOMEntityResolver.hpp>
-#include <xercesc/dom/DOMInputSource.hpp>
-
+#include <xercesc/sax/EntityResolver.hpp>
 #include <vector>
 #include <string>
 
-using xercesc::DOMEntityResolver;
-using xercesc::DOMInputSource;
+using namespace xercesc;
 
 namespace CIAO
 {
@@ -43,7 +40,7 @@ namespace CIAO
      */
     template <typename Resolver = NoOp_Resolver>
     class XML_Schema_Resolver
-      : public virtual DOMEntityResolver
+      : public virtual EntityResolver
     {
     public:
       XML_Schema_Resolver (void);
@@ -52,9 +49,8 @@ namespace CIAO
 
       /// This function is called by the Xerces infrastructure to
       /// actually resolve the location of a schema.
-      virtual DOMInputSource * resolveEntity (const XMLCh *const publicId,
-                                              const XMLCh *const systemId,
-                                              const XMLCh *const baseURI);
+      virtual InputSource * resolveEntity (const XMLCh *const publicId,
+                                           const XMLCh *const systemId);
 
     private:
       XML_Schema_Resolver (XML_Schema_Resolver<Resolver> &);
@@ -69,8 +65,7 @@ namespace CIAO
     struct NoOp_Resolver
     {
       const XMLCh* operator() (const XMLCh *const,
-                               const XMLCh *const systemId,
-                               const XMLCh *const)
+                               const XMLCh *const systemId) const
       { return systemId; };
     };
 
@@ -83,8 +78,7 @@ namespace CIAO
       Basic_Resolver (const ACE_TCHAR *path);
       
       XMLCh* operator() (const XMLCh *const publicId,
-                               const XMLCh *const systemId,
-                               const XMLCh *const baseURI) const;
+                         const XMLCh *const systemId) const;
       XStr path_;
     };
     
@@ -101,8 +95,7 @@ namespace CIAO
                      const ACE_TCHAR *path);
       
       XMLCh* operator() (const XMLCh *const publicId,
-                         const XMLCh *const systemId,
-                         const XMLCh *const baseURI) const;
+                         const XMLCh *const systemId) const;
       
       std::vector<XStr> paths_;
     };

@@ -4,6 +4,7 @@
 #include "ace/Log_Msg.h"
 #include "xercesc/util/XMLUniDefs.hpp"
 #include "xercesc/dom/DOM.hpp"
+#include "xercesc/parsers/XercesDOMParser.hpp"
 #include "XML_Error_Handler.h"
 #include "XML_Schema_Resolver.h"
 #include "xercesc/framework/LocalFileFormatTarget.hpp"
@@ -17,12 +18,13 @@ namespace CIAO
     using xercesc::XMLString;
     using xercesc::DOMImplementation;
     using xercesc::DOMImplementationRegistry;
-    using xercesc::DOMBuilder;
+//    using xercesc::DOMBuilder;
     using xercesc::DOMImplementationLS;
     using xercesc::XMLUni;
     using xercesc::DOMDocument;
     using xercesc::DOMException;
     using xercesc::DOMDocumentType;
+    using xercesc::XercesDOMParser;
 /*
     template <typename Resolver, typename Error>
     XML_Helper<Resolver, Error>::XML_Helper (void)
@@ -133,55 +135,53 @@ namespace CIAO
 
       try
         {
-          // Create a DOMBuilder
-          DOMBuilder* parser =
-            impl_->createDOMBuilder (DOMImplementationLS::MODE_SYNCHRONOUS,
-                                     0);
-
+          auto_ptr<XercesDOMParser> parser 
+            (new xercesc::XercesDOMParser ());
+          
+          // Perform Namespace processing.
+          parser->setDoNamespaces (true);
+          
           // Discard comment nodes in the document
-          parser->setFeature (XMLUni::fgDOMComments, false);
+          parser->setCreateCommentNodes (true);
 
           // Disable datatype normalization. The XML 1.0 attribute value
           // normalization always occurs though.
-          parser->setFeature (XMLUni::fgDOMDatatypeNormalization, true);
+          // parser->setFeature (XMLUni::fgDOMDatatypeNormalization, true);
 
           // Do not create EntityReference nodes in the DOM tree. No
           // EntityReference nodes will be created, only the nodes
           // corresponding to their fully expanded sustitution text will be
           // created.
-          parser->setFeature (XMLUni::fgDOMEntities, false);
-
-          // Perform Namespace processing.
-          parser->setFeature (XMLUni::fgDOMNamespaces, true);
-
+          parser->setCreateEntityReferenceNodes (false);
+          
           // Perform Validation
-          parser->setFeature (XMLUni::fgDOMValidation, true);
+          parser->setValidationScheme (xercesc::AbstractDOMParser::Val_Always);
 
           // Do not include ignorable whitespace in the DOM tree.
-          parser->setFeature (XMLUni::fgDOMWhitespaceInElementContent, false);
+          parser->setIncludeIgnorableWhitespace (false);
 
           // Enable the parser's schema support.
-          parser->setFeature (XMLUni::fgXercesSchema, true);
+          parser->setDoSchema (true);
 
           // Enable full schema constraint checking, including checking which
           // may be time-consuming or memory intensive. Currently, particle
           // unique attribution constraint checking and particle derivation
           // restriction checking are controlled by this option.
-          parser->setFeature (XMLUni::fgXercesSchemaFullChecking, true);
+          parser->setValidationSchemaFullChecking (true);
 
           // The parser will treat validation error as fatal and will exit.
-          parser->setFeature (XMLUni::fgXercesValidationErrorAsFatal, true);
+          parser->setValidationConstraintFatal (true);
 
           parser->setErrorHandler (&e_handler_);
 
           parser->setEntityResolver (&resolver_);
 
-          DOMDocument* doc = parser->parseURI (url);
-
+          parser->parse (url);
+          
           if (e_handler_.getErrors ())
             return 0;
-
-          return doc;
+          
+          return parser->getDocument ();
         }
       catch (const DOMException& e)
         {

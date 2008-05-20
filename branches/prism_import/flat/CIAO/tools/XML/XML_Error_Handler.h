@@ -20,10 +20,9 @@
 
 #include "XML/CIAO_XML_Utils_Export.h"
 
-#include <xercesc/dom/DOMErrorHandler.hpp>
+#include <xercesc/sax/ErrorHandler.hpp>
 
-using xercesc::DOMErrorHandler;
-using xercesc::DOMError;
+using xercesc::SAXParseException;
 
 namespace CIAO
 {
@@ -36,7 +35,7 @@ namespace CIAO
      *
      */
     class CIAO_XML_Utils_Export XML_Error_Handler
-      : public DOMErrorHandler
+      : public xercesc::ErrorHandler
     {
     public:
 
@@ -44,12 +43,11 @@ namespace CIAO
 
       ~XML_Error_Handler (void);
 
-      bool handleError (const DOMError& domError);
-
-      void resetErrors (void);
-
-      bool getErrors(void) const;
-
+      void warning(const SAXParseException& toCatch);
+      void error(const SAXParseException& toCatch);
+      void fatalError(const SAXParseException& toCatch);
+      void resetErrors();
+      bool getErrors (void) const;
     private :
       // Disallow copying
       XML_Error_Handler (const XML_Error_Handler&);

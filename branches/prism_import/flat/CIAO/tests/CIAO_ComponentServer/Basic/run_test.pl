@@ -36,8 +36,8 @@ if (PerlACE::is_vxworks_test()) {
     $SV2 = new PerlACE::ProcessVX ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $iorbase2 -o $iorbase2");
 }
 else {
-    $SV1 = $target->CreateProcess ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $iorbase1 -o $iorbase1 --log-level 1");
-    $SV2 = $target->CreateProcess ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $iorbase2 -o $iorbase2 --log-level 1");
+    $SV1 = $target->CreateProcess ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $iorbase1 -o $iorbase1");
+    $SV2 = $target->CreateProcess ("$ciao_root/bin/ciao_componentserver", "-ORBDebuglevel $debug_level -u $iorbase2 -o $iorbase2");
 }
 $CL = $host->CreateProcess ("client", "-k file://$iorbase1 -j file://$iorbase2");
     

@@ -11,9 +11,11 @@
 
 #ifndef DANCE_COMMON_H
 #define DANCE_COMMON_H
-#include /**/ "ace/pre.h"
+#include /**/ <ace/pre.h>
 
-#include "ace/config-all.h"
+#include <ace/config-all.h>
+#include <ace/Hash_Map_Manager_T.h>
+#include <tao/AnyTypeCode/Any.h>
 
 #if !defined ACE_LACKS_PRAGMA_ONCE
 #pragma once
@@ -23,6 +25,12 @@
 
 namespace DAnCE 
 {
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                  CORBA::Any,
+                                  ACE_Hash<ACE_CString>,
+                                  ACE_Equal_To<ACE_CString>,
+                                  ACE_Null_Mutex> PROPERTY_MAP;
+
   /// A struct which captures the compnent  binding information, which
   /// is useful for inter-assembly connection setup
   typedef struct _component_binding

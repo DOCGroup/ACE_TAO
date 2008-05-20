@@ -11,6 +11,7 @@
 #include <ace/Condition_T.h>
 #include <ace/OS_NS_sys_wait.h>
 #include <ace/Refcounted_Auto_Ptr.h>
+#include <ace/Unbounded_Set_Ex.h>
 #include <tao/PortableServer/PortableServer.h>
 #include <ciao/Client_init.h>
 #include <ciao/ComponentServer/CIAO_CS_ClientS.h>

@@ -1,3 +1,66 @@
+Tue May 20 18:43:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        
+          Fixed spelling error. 
+        
+        * DAnCE/Deployment/Deployment_common.h:
+
+          Added PROPERTY_MAP typedef, a hash map translating names to property values. 
+        
+        * MPC/config/ciao_servant.mpb:
+        * MPC/config/cidlc.mpb:
+        * MPC/config/dance_component_server_svnt.mpb:
+        * MPC/config/dance_node_application.mpb:
+        * ciao/CIAO.mpc:
+        * ciao/Client_init.cpp:
+        * ciao/Contexts/Context.mpc:
+        * ciaosvcs/Events/CIAO_Events.mpc:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc:
+        * ofccm/NodeApplication/NodeApplication.mpc:
+        * tests/CIAO_ComponentServer/Activator/Activator.mpc:
+
+          Compile/link fixes. 
+        
+        * ciao/ComponentServer/CIAO_ComponentServer.h:
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Logger/Logger_Service.h:
+        * ciao/Logger/Logger_Service.cpp:
+
+          Compile fixes/bugfixes for bugs exposed by SimpleComponent unit test. 
+        
+        * tests/CIAO_ComponentServer/Basic/run_test.pl:
+
+          slight bugfix. 
+        
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.cidl:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.idl:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.h:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.cpp:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec_export.h:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_stub_export.h:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_svnt_export.h:
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp:
+        
+          Simple unit test which manually deploys a simple component into the 
+          CIAO_ComponentServer. 
+        
+        * tools/Config_Handlers/XSCRT/XML.hpp:
+        * tools/XML/XML_Error_Handler.h:
+        * tools/XML/XML_Error_Handler.cpp:
+        * tools/XML/XML_Helper.tpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+        
+          Updates for Xerces 2.0
+
 Thu Apr 10 23:44:01 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_cs_client.mpb:
@@ -6,8 +69,8 @@ Thu Apr 10 23:44:01 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
         * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
 
-          Bugfixes necessary to make the ServerActivator test work. 
-        
+          Bugfixes necessary to make the ServerActivator test work.
+
         * tests/CIAO_ComponentServer/Activator:
         * tests/CIAO_ComponentServer/Activator/Activator.mpc:
         * tests/CIAO_ComponentServer/Activator/client.cpp:
@@ -15,8 +78,8 @@ Thu Apr 10 23:44:01 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           A simple exceercise of the CIAO ServerActivator, that
           spawns component servers then uses them to create
-          containers. 
-        
+          containers.
+
 Wed Apr  9 20:08:07 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_exe.mpb:
