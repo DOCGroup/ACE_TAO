@@ -1,3 +1,12 @@
+Tue May 20 19:33:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp:
+        
+          Added the stringified process id to the construction of
+          the message queue size monitor's name, since some tests
+          were showing that message queues were being created with
+          the same hex address in different processes.
+
 Tue May 20 17:55:39 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Svc_Handler.h:
