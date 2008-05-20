@@ -11,6 +11,8 @@ Tue May 20 17:55:39 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
           Use the new enum during the call to close() on the service handler
           to indicate the circumstances behind the closure.
 
+          This is part of a set of commits for Bug 2935.
+
 Tue May 20 09:45:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Ping_Socket.{h,cpp}:
