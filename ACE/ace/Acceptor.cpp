@@ -301,7 +301,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
       ACE_Errno_Guard error(errno);
 
       // Close down handler to avoid memory leaks.
-      svc_handler->close (0);
+      svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
 
       return -1;
     }
@@ -341,7 +341,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
     result = -1;
 
   if (result == -1)
-    svc_handler->close (0);
+    svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
 
   return result;
 }
@@ -1053,7 +1053,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_accept
       // Check whether we just timed out or whether we failed...
       if (!(errno == EWOULDBLOCK || errno == ETIME))
         // Close down handler to avoid memory leaks.
-        svc_handler->close (0);
+        svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
       return -1;
     }
   // Activate the <svc_handler> using the designated concurrency
