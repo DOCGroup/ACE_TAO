@@ -1,3 +1,8 @@
+Tue May 20 09:45:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Ping_Socket.{h,cpp}:
+          Use bool
+
 Mon May 19 19:26:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Log_Msg_Test.cpp:
