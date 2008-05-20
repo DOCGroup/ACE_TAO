@@ -58,7 +58,10 @@ namespace TAO
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
       ACE_CString name_str ("Active_Object_Map_");
+      name_str += poa->orb_core ().orbid ();
+      name_str += '_';
       name_str += poa->the_name ();
+      
       active_object_map->monitor_->name (name_str.c_str ());
       active_object_map->monitor_->add_to_registry ();
 #endif /* TAO_HAS_MONITOR_POINTS */
