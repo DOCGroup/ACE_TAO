@@ -1,3 +1,9 @@
+Tue May 20 13:43:14 UTC 2008  Simon McQueen  <sm@prismtech.com>
+
+        * docs/releasenotes/index.html:
+
+          Add to known issues for CSD.
+
 Tue May 20 12:13:16 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/TransportCurrent/IIOP_Current_Impl.cpp:
