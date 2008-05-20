@@ -440,7 +440,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::configuration_copmlete ()" << endl
+         << t.name () << "_exec_i::configuration_complete ()" << endl
          << "{"
          << STRS[YCH]
          << "}";

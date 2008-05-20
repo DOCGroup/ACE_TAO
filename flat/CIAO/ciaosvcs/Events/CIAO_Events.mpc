@@ -2,7 +2,7 @@
 // $Id$
 
 project (CIAO_Events) : orbsvcslib, orbsvcs_output, ciao_rtevent_dnc {
-
+  requires += dummy_label
   sharedname  = CIAO_Events
   idlflags  += -Wb,export_include=CIAO_Events_Export.h \
                -Wb,export_macro=CIAO_EVENTS_Export

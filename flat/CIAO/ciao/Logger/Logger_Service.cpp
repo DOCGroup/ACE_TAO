@@ -1,37 +1,139 @@
 
 #include "Logger_Service.h"
-#include "ace/Get_Opt.h"
-#include "ace/CORBA_macros.h"
-#include "tao/SystemException.h"
+#include "Log_Macros.h"
+#include <ace/Get_Opt.h>
+#include <ace/CORBA_macros.h>
+#include <ace/Env_Value_T.h> 
+#include <tao/SystemException.h>
 
 namespace CIAO
 {
-
+  Logger_Service::Logger_Service (void)
+    : filename_ (""),
+      trace_ (false),
+      log_level_ (10)
+  {
+  }
+  
   int
   Logger_Service::init (int argc, ACE_TCHAR * argv[])
   {
-    //CIAO_DEBUG((LM_DEBUG, "[%M] Changing the logging backend.\n"));
-    ACE_Get_Opt get_opts (argc, argv, "f:", 1, 0, ACE_Get_Opt::RETURN_IN_ORDER);
-    get_opts.long_option ("log-file", 'f', ACE_Get_Opt::ARG_REQUIRED);
-    int c;
-    ACE_CString filename;
-    while ( (c = get_opts ()) != -1)
-      {
-        switch (c)
-          {
-          case 'f':
-            this->filename_ = get_opts.opt_arg ();
-            break;
-          }
-      }
-    if (0 == this->filename_.length())
-      {
-        this->filename_ = "ciao.log";
-      }
+    // Get prospective values from the environment first, those given on
+    // command line can override
+    ACE_Env_Value<int> log ("CIAO_LOG_LEVEL", this->log_level_);
+    this->log_level_ = log;
+    
+    ACE_Env_Value<int> trace ("CIAO_TRACE_ENABLE", this->trace_);
+    this->trace_ = trace;
+    
+    ACE_Env_Value<const char *> filename ("CIAO_LOG_FILE", this->filename_.c_str ());
+    this->filename_ = filename;
 
+    this->parse_args (argc, argv);
+    this->set_levels ();
+    
     return 0;
   }
-
+  
+  void
+  Logger_Service::parse_args (int argc, char **argv)
+  {
+    const ACE_TCHAR *shortl = "-l";
+    const ACE_TCHAR *longl = "--log-level";
+    const ACE_TCHAR *tracel = "--trace";
+    const ACE_TCHAR *traces = "-t";
+    const ACE_TCHAR *lfl = "--log-file";
+    const ACE_TCHAR *lfs = "-f";    
+      
+    // We need to actually FIND the -l option, as the get_opt won't ignore
+    // the ORB options and such. 
+    for (int i = 0; i < argc; ++i)
+      {
+        if (ACE_OS::strncmp (argv[i], traces, 2) == 0 ||
+            ACE_OS::strncmp (argv[i], tracel, 7) == 0)
+          {
+            this->trace_ = true;
+            continue;
+          }
+        
+        if (ACE_OS::strncmp (argv[i], shortl, 2) == 0 ||
+            ACE_OS::strncmp (argv[i], longl,11 ) == 0)
+          {
+            if ((i + 1) < argc && *argv[i + 1] != '-')
+              {
+                int level = ACE_OS::atoi (argv[i + 1]);
+                
+                if (level != 0)
+                  this->log_level_ = level;
+              }
+          }
+        
+        if (ACE_OS::strncmp (argv[i], lfs, 2) == 0 ||
+            ACE_OS::strncmp (argv[i], lfl, 10 ) == 0)
+          {
+            if ((i + 1) < argc && *argv[i + 1] != '-')
+              {
+                this->filename_ = argv[i+1];
+              }
+          }
+      }    
+  }
+  
+  void
+  Logger_Service::set_levels (void)
+  {
+    if (this->trace_)
+      {
+        CIAO_ENABLE_TRACE ();
+        this->log_level_ = 1;
+      }
+    else
+      {
+        CIAO_DISABLE_TRACE ();
+      }
+    
+    u_long new_mask = 0;
+    
+    if (this->log_level_ <= 1)
+      {
+        new_mask |= LM_TRACE;
+      }
+    if (this->log_level_ <= 2)
+      {
+        new_mask |= LM_DEBUG;
+      }
+    if (this->log_level_ <= 3)
+      {
+        new_mask |= LM_INFO;
+      }
+    if (this->log_level_ <= 4)
+      {
+        new_mask |= LM_NOTICE;
+      }
+    if (this->log_level_ <= 5)
+      {
+        new_mask |= LM_WARNING;
+      }
+    if (this->log_level_ <= 6)
+      {
+        new_mask |= LM_ERROR;
+      }
+    if (this->log_level_ <= 7)
+      {
+        new_mask |= LM_CRITICAL;
+      }
+    if (this->log_level_ <= 8)
+      {
+        new_mask |= LM_ALERT;
+      }
+    if (this->log_level_ <= 9)
+      {
+        new_mask |= LM_EMERGENCY;
+      }
+    ACE_Log_Msg::instance()->priority_mask(new_mask, ACE_Log_Msg::PROCESS);
+    CIAO_DEBUG ( (LM_TRACE, CLINFO "Logging level is set to %i\n", this->log_level_));
+  }
+  
   ACE_Log_Msg_Backend *
   Logger_Service::get_logger_backend (CORBA::ORB_ptr)
   {

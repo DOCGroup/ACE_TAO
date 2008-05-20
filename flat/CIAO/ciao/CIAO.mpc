@@ -20,7 +20,7 @@ project(CIAO_Client) : ccm_stub, ciao_lib, ccm_cookie, ccm_configvalue {
   }
 }
 
-project(CIAO_Server) : ccm_stub, naming, ciao_client, ciao_lib {
+project(CIAO_Server) : ccm_stub, naming, ciao_client, ciao_lib, ccm_cookie {
   dynamicflags = CIAO_SERVER_BUILD_DLL
    
   Source_Files { 

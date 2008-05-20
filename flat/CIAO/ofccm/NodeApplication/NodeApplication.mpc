@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeApplication): dance_lib, dynamicinterface, naming, dance_component_server_svnt, dance_deployment_stub, dance_deployment_svnt, dance_redirection_service, dance_cdmw_idl, dance_logger, iortable, naming_serv {
+project(OFCCM_NodeApplication): dance_lib, dynamicinterface, naming, dance_component_server_svnt, dance_deployment_stub, dance_deployment_svnt, dance_redirection_service, dance_cdmw_idl, dance_logger, iortable, naming_serv {
   sharedname   = DAnCE_NodeApplication
   dynamicflags = NODEAPPLICATION_BUILD_DLL
     

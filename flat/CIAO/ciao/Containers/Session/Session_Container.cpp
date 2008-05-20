@@ -353,7 +353,7 @@ namespace CIAO
             || static_entrypts_maps_->home_creator_funcptr_map_ == 0
             || static_entrypts_maps_->home_servant_creator_funcptr_map_ == 0)
           {
-            CIAO_DEBUG ((LM_ERROR, CLINFO,
+            CIAO_DEBUG ((LM_ERROR, CLINFO
                         "Session_Container::install_home - ERROR: Static entrypoint "
                         "maps are null or imcomplete.\n"));            
             throw Components::Deployment::ImplEntryPointNotFound ();
@@ -392,7 +392,7 @@ namespace CIAO
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
     
-    CIAO_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO
                 "Session_Container::install_home - Loading home executor\n"));
     Components::HomeExecutorBase_var home_executor = hcreator ();
 
@@ -403,7 +403,7 @@ namespace CIAO
         throw Components::Deployment::InstallationFailure ();
       }
 
-    CIAO_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO
                 "Session_Container::install_home - Loading home servant\n"));
     PortableServer::Servant home_servant = screator (home_executor.in (),
                                                      this,
@@ -418,7 +418,7 @@ namespace CIAO
 
     PortableServer::ServantBase_var safe (home_servant);
 
-    CIAO_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO
                 "Session_Container::install_home - Installing home servant\n"));
     
     PortableServer::ObjectId_var oid;
@@ -429,7 +429,7 @@ namespace CIAO
     Components::CCMHome_var homeref =
       Components::CCMHome::_narrow (objref.in ());
 
-    CIAO_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO
                 "Session_Container::install_home - Home successfully created with name\n"));
     
     return homeref._retn ();
@@ -574,7 +574,7 @@ namespace CIAO
             || static_entrypts_maps_->component_creator_funcptr_map_ == 0
             || static_entrypts_maps_->component_servant_creator_funcptr_map_ == 0)
           {
-            CIAO_DEBUG ((LM_ERROR, CLINFO,
+            CIAO_DEBUG ((LM_ERROR, CLINFO
                         "Session_Container::install_component - ERROR: Static entrypoint "
                         "maps are null or imcomplete.\n"));            
             throw Components::Deployment::ImplEntryPointNotFound ();
@@ -613,7 +613,7 @@ namespace CIAO
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
     
-    CIAO_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO
                 "Session_Container::install_component - Loading component executor\n"));
     Components::EnterpriseComponent_var component_executor = ccreator ();
 
@@ -624,7 +624,7 @@ namespace CIAO
         throw Components::Deployment::InstallationFailure ();
       }
 
-    CIAO_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO
                 "Session_Container::install_component - Loading component servant\n"));
     PortableServer::Servant component_servant = screator (component_executor.in (),
                                                           name,
@@ -639,7 +639,7 @@ namespace CIAO
 
     PortableServer::ServantBase_var safe (component_servant);
 
-    CIAO_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO
                 "Session_Container::install_component - Installing component servant\n"));
     
     PortableServer::ObjectId_var oid;
@@ -650,7 +650,7 @@ namespace CIAO
     Components::CCMObject_var componentref =
       Components::CCMObject::_narrow (objref.in ());
 
-    CIAO_DEBUG ((LM_TRACE, CLINFO,
+    CIAO_DEBUG ((LM_TRACE, CLINFO
                 "Session_Container::install_component - Component successfully created\n"));
     
     return componentref._retn ();

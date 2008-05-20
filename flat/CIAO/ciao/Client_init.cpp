@@ -38,7 +38,7 @@ namespace CIAO
 {
   namespace Utility
   {
-        void build_config_values_map (CONFIGVALUE_MAP &map, 
+    void build_config_values_map (CONFIGVALUE_MAP &map, 
 				  const ::Components::ConfigValues &config)
   {
     CIAO_TRACE("CIAO::build_config_values_map");

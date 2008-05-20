@@ -20,8 +20,7 @@ namespace CIAO
     
     XMLCh *
     Basic_Resolver::operator() (const XMLCh *const,
-                                const XMLCh *const systemId,
-                                const XMLCh *const) const
+                                const XMLCh *const systemId) const
     {
       XStr path (path_);
       path.append (systemId);
@@ -54,8 +53,7 @@ namespace CIAO
 
     XMLCh *
     Environment_Resolver::operator() (const XMLCh *const,
-                                      const XMLCh *const systemId,
-                                      const XMLCh *const) const
+                                      const XMLCh *const systemId) const
     {
       for (std::vector<XStr>::const_iterator i = this->paths_.begin ();
            i != this->paths_.end ();
@@ -64,7 +62,7 @@ namespace CIAO
           XStr path (*i);
           path.append(systemId);
           
-          FileHandle file (XMLPlatformUtils::openFile (path));
+          xercesc::FileHandle file (XMLPlatformUtils::openFile (path));
           
           if (file != 0)
             {
