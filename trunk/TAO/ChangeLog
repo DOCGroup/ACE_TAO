@@ -1,3 +1,14 @@
+Tue May 20 19:37:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        
+          Added the ORB's string name to the name of the connection
+          cache size monitor, connection cache purge monitor, and
+          the Active Object Map size monitor, since some tests were
+          creating multiple ORBs, causing name clashes in the monitor
+          registry.
+
 Tue May 20 18:05:08 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
