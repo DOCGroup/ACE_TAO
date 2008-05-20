@@ -104,7 +104,7 @@ ACE_Ping_Socket::ACE_Ping_Socket (ACE_Addr const & local,
                                   int protocol,
                                   int reuse_addr)
   : sequence_number_ (0),
-    connected_socket_ (0)
+    connected_socket_ (false)
 {
   ACE_TRACE ("ACE_Ping_Socket::ACE_Ping_Socket");
 
@@ -290,7 +290,7 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
 
 int
 ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
-                                  int to_connect)
+                                  bool to_connect)
 {
   if (this->get_handle () == ACE_INVALID_HANDLE)
     {
@@ -319,12 +319,12 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
           if (errno != EINTR)
             return -1;
        }
-      this->connected_socket_ = 1;
+      this->connected_socket_ = true;
     }
 
   ACE_OS::memset (this->icmp_send_buff_, 0, sizeof this->icmp_send_buff_);
   int datalen = ICMP_DATA_LENGTH;
-  struct icmp *_icmp;
+  struct icmp *_icmp = 0;
 
   _icmp = (struct icmp *) this->icmp_send_buff_;
   _icmp->icmp_type = ICMP_ECHO;
@@ -355,7 +355,7 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
 
 int
 ACE_Ping_Socket::make_echo_check (ACE_INET_Addr & remote_addr,
-                                  int to_connect,
+                                  bool to_connect,
                                   ACE_Time_Value const * timeout)
 {
   int rval_send = -1;
