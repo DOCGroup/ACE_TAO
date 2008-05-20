@@ -1,3 +1,10 @@
+Tue May 20 12:13:16 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/TransportCurrent/IIOP_Current_Impl.cpp:
+
+          When retrieving the connection handler, check the result of the
+          dynamic_cast and throw a NoContext exception if it is zero.
+
 Mon May 19 18:34:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp:
@@ -41,7 +48,7 @@ Mon May 19 12:49:09 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon May 19 02:53:21 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.6.5 released.
+        * TAO version 1.6.5 released.
 
 Sun May 18 22:50:47 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -60,23 +67,23 @@ Sun May 18 21:48:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
           decision from MPC to configure.
 
         * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
-	* orbsvcs/tests/Event/Basic/Makefile.am:
-	* orbsvcs/tests/Event/Performance/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
-	* orbsvcs/tests/CosEvent/Basic/Makefile.am:
-	* orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile.am:
-	* docs/tutorials/Quoter/Naming_Service/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/Makefile.am:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+        * orbsvcs/tests/Event/Basic/Makefile.am:
+        * orbsvcs/tests/Event/Performance/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+        * orbsvcs/tests/CosEvent/Basic/Makefile.am:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile.am:
+        * docs/tutorials/Quoter/Naming_Service/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
           Hand tweak generated makefiles to avoid make warnings.  We'll
           update the MPC configuration so this isn't needed in a future
           release.

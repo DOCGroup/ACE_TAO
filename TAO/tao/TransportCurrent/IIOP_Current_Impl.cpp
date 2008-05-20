@@ -36,7 +36,14 @@ namespace TAO
       if (ch == 0)
         throw NoContext ();
 
-      return dynamic_cast <TAO_IIOP_Connection_Handler*> (ch);
+      // Make sure that this connection handler is for IIOP.  This
+      // implementation is not intended to operate under SSLIOP.
+      TAO_IIOP_Connection_Handler* iiop_ch =
+        dynamic_cast <TAO_IIOP_Connection_Handler*> (ch);
+      if (iiop_ch == 0)
+        throw NoContext ();
+
+      return iiop_ch;
 #else
       throw ::CORBA::NO_IMPLEMENT ();
 #endif
