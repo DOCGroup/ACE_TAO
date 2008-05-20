@@ -18,7 +18,7 @@ foreach $i (@ARGV) {
         $client_conf = PerlACE::LocalFile ("muxed$PerlACE::svcconf_ext");
     }
     elsif ($i eq '-debug') {
-        $debug_level = '7';
+        $debug_level = '1';
     }
     elsif ($i eq '-exclusive') {
         $client_conf = PerlACE::LocalFile ("exclusive$PerlACE::svcconf_ext");

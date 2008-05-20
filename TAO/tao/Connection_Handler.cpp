@@ -10,6 +10,7 @@
 #include "ace/SOCK.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/sys/os_socket.h"
+#include "ace/Svc_Handler.h"
 
 //@@ CONNECTION_HANDLER_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
 
@@ -427,17 +428,25 @@ TAO_Connection_Handler::pos_io_hook (int &)
 }
 
 int
-TAO_Connection_Handler::close_handler (void)
+TAO_Connection_Handler::close_handler (u_long flags)
 {
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
                        this->orb_core_->leader_follower ());
-  this->transport ()->purge_entry();
-  this->transport ()->remove_reference ();
 
-  // @@ I think that if the connection_pending state is true
-  // when close_handler is calld, we should probably release
-  // another reference so that the connector doesn't have to
-  // worry about it.
+  // Save these for later.  It's possible that purge_entry() called on
+  // the transport could cause our own death.
+  bool pending = this->connection_pending_;
+  TAO_Transport* transport = this->transport ();
+
+  // After calling this, it is unsafe to assume that this object has
+  // *NOT* been deleted!  Only if pending is true are we still around.
+  transport->purge_entry();
+
+  // We only need to remove the reference from the transport if there
+  // were connections pending at the time that the handler is closed or
+  // the handler is being closed during a new connection.
+  if (pending || ACE_BIT_DISABLED(flags, CLOSE_DURING_NEW_CONNECTION))
+    transport->remove_reference ();
 
   return 0;
 }

@@ -111,7 +111,7 @@ public:
 
   /// A close() hook, called by the Transport Connector when they want to close
   /// this handler
-  virtual int close_handler (void);
+  virtual int close_handler (u_long flags = 0);
 
   /// When waiting for an asynchronous connection to complete an
   /// additional reference must be maintained, related to bugzilla
