@@ -183,21 +183,44 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         1);
       }
 
-      if (tcm.find_transport (&desc, transport) != 0) {
-        ACE_ERROR_RETURN ((LM_ERROR,
-         "The cache should have returned the just created transport.\n"),
-        1);
+      size_t busy_count = 0;
+      TAO::Transport_Cache_Manager::Find_Result find_result =
+        tcm.find_transport (&desc, transport, busy_count);
+
+      switch (find_result){
+        case TAO::Transport_Cache_Manager::CACHE_FOUND_NONE:
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+              ACE_TEXT("Expected to find a transport in the cache.\n")
+              ),1);
+          }
+        case TAO::Transport_Cache_Manager::CACHE_FOUND_CONNECTING:
+          {
+            ACE_DEBUG (( LM_DEBUG,
+              ACE_TEXT ("Transport Cache contains connecting entry as expected.\n")
+              ));
+            break; // that's what we expected
+          }
+        case TAO::Transport_Cache_Manager::CACHE_FOUND_BUSY:
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+              ACE_TEXT("Cached Transport is busy.  Should not happen because there's no server.\n")
+              ),1);
+          }
+        case TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE:
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+              ACE_TEXT("Cached Transport is available.  Should not happen because there's no server.\n")
+              ),1);
+          }
+        default:
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+              ACE_TEXT("Transport_Cache::find returned unknown status.\n")
+              ),1);
+          }
       }
 
-      if (transport->is_connected()) {
-        ACE_ERROR_RETURN ((LM_ERROR,
-         "This cannot happen. No server to connect to."),
-        1);
-      }
-
-      if (transport != 0) {
-        ACE_DEBUG ((LM_DEBUG, "Transport is %s\n", (transport->is_connected()?"connected":"not connected")));
-      }
 
       orb->destroy ();
     }

@@ -22,7 +22,6 @@ else {
 }
 $CL = new PerlACE::Process ("client", "-k file://$iorfile");
 
-# print $SV->CommandLine ()."\n";
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
@@ -31,7 +30,6 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     exit 1;
 }
 
-# print $CL->CommandLine ()."\n";
 $client = $CL->SpawnWaitKill (20);
 
 if ($client != 0) {

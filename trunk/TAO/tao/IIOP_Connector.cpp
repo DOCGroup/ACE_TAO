@@ -382,6 +382,35 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   return result;
 }
 
+namespace
+{
+  /// RAII holder for a TAO_Transport list
+  class TList_Holder
+  {
+  public:
+    TList_Holder (size_t count)
+      : tlist_ (0)
+    {
+      // Resources are acquired during initialization (RAII)
+      ACE_NEW (tlist_, TAO_Transport*[count]);
+    }
+
+    ~TList_Holder (void)
+    {
+      // Resources are unacquired during uninitialization
+      delete [] tlist_;
+    }
+
+    operator TAO_Transport** (void)
+    {
+      return tlist_;
+    }
+
+  private:
+    TAO_Transport** tlist_;
+  };
+}
+
 TAO_Transport *
 TAO_IIOP_Connector::complete_connection (int result,
                                          TAO_Transport_Descriptor_Interface &desc,
@@ -395,9 +424,9 @@ TAO_IIOP_Connector::complete_connection (int result,
   // Make sure that we always do a remove_reference for every member
   // of the list
   TAO_IIOP_Connection_Handler_Array_Guard svc_handler_auto_ptr (sh_list,count);
+  TList_Holder tlist(count);
+
   TAO_Transport *transport  = 0;
-  TAO_Transport **tlist = 0;
-  ACE_NEW_RETURN (tlist,TAO_Transport*[count],0);
 
   //  populate the transport list
   for (unsigned i = 0; i < count; i++)
@@ -415,7 +444,9 @@ TAO_IIOP_Connector::complete_connection (int result,
       if (count == 1)
         {
           transport = tlist[0];
+          desc.reset_endpoint(ep_list[0]);
           if (!this->wait_for_connection_completion (r,
+                                                     desc,
                                                      transport,
                                                      timeout))
             {
@@ -461,8 +492,6 @@ TAO_IIOP_Connector::complete_connection (int result,
   ACE_OS::nanosleep (&ts);
 #endif // INDUCE_BUG_2654_A
 
-  int retval = -1;
-
   // At this point, the connection has been successfully created
   // connected or not connected, but we have a connection.
   TAO_IIOP_Connection_Handler *svc_handler = 0;
@@ -470,33 +499,19 @@ TAO_IIOP_Connector::complete_connection (int result,
 
   if (transport != 0)
     {
-      if (count == 1)
+      for (unsigned i = 0; i < count; i++)
         {
-          svc_handler = sh_list[0];
-          iiop_endpoint = ep_list[0];
-        }
-      else
-        {
-          for (unsigned i = 0; i < count; i++)
+          if (transport == tlist[i])
             {
-              if (transport == tlist[i])
-                {
-                  svc_handler = sh_list[i];
-                  iiop_endpoint = ep_list[i];
-                  break;
-                }
+              svc_handler = sh_list[i];
+              iiop_endpoint = ep_list[i];
+              break;
             }
         }
     }
-
-
-  // Done with the transport list. It was a temporary that did not
-  // affect the reference count.
-  delete [] tlist;
-
-  // In case of errors transport is zero
-  if (transport == 0)
+  else
     {
+      // In case of errors transport is zero
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
         {
@@ -559,9 +574,9 @@ TAO_IIOP_Connector::complete_connection (int result,
   struct timespec ts = udelay;
   ACE_OS::nanosleep (&ts);
 #endif // INDUCE_BUG_2654_C
+  int retval = 0;
 
-
-  // Add the handler to Cache
+  // Update the cache to show this in idle state
   if (count == 1 || desc.reset_endpoint(iiop_endpoint))
     {
       retval = this->orb_core ()->
@@ -610,25 +625,10 @@ TAO_IIOP_Connector::complete_connection (int result,
   ACE_OS::nanosleep (&ts);
 #endif // INDUCE_BUG_2654_D
 
-  if (transport->is_connected () &&
-      transport->wait_strategy ()->register_handler () != 0)
+  // Have the transport register itself with the wait strategy and
+  // deal with the transport cache if there is a failure.
+  if (!transport->register_if_necessary ())
     {
-      // Registration failures.
-
-      // Purge from the connection cache, if we are not in the cache, this
-      // just does nothing.
-      (void) transport->purge_entry ();
-
-      // Close the handler.
-      (void) transport->close_connection ();
-
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) IIOP_Connector [%d]::make_connection, ")
-                    ACE_TEXT ("could not register the transport ")
-                    ACE_TEXT ("in the reactor.\n"),
-                    transport->id ()));
-
       return 0;
     }
 

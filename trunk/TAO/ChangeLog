@@ -1,3 +1,63 @@
+Tue May 20 18:05:08 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+        * tests/AMI/run_test.pl:
+        * tests/BiDirectional/run_test.pl:
+        * tests/Bug_1361_Regression/Echo.cpp:
+        * tests/Bug_1361_Regression/client.cpp:
+        * tests/Bug_1476_Test/client.cpp:
+
+          Reinstated Dale Wilson's changes from Wed Aug  1 15:54:01 UTC 2007.
+
+          Briefly: the change involves adding the transport to the
+          cache at the time the connection is initiated rather than
+          waiting until the connection is complete.   This avoids the
+          situation where *way* too many connections are started in a   
+          nested upcall and/or multithreading situation because none 
+          of the connection attempts know the others are already in
+          progress.
+          At the same time it eliminates the wait-for-condition code
+          technique for honoring the -MaxMuxedConnections. The old
+          technique is unsafe and ineffective.                    
+
+          These changes were reverted on Fri Aug 17 15:50:19 UTC 2007.
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/COIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+
+          Pass the flags provided to the close() method on to the call of
+          close_handler().
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.cpp:
+
+          Changed close_handler() to accept flags (from the service handler
+          close() call).  These flags help determine when the reference
+          count of the transport should be removed.
+
+          The above changes are part of Bug 2935.
+
 Tue May 20 13:43:14 UTC 2008  Simon McQueen  <sm@prismtech.com>
 
         * docs/releasenotes/index.html:
