@@ -18,6 +18,7 @@
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Monitor_Size.h"
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
@@ -942,13 +943,20 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
   ACE_NEW (this->monitor_,
            ACE::Monitor_Control::Size_Monitor);
 
-  /// Make a unique name using our hex address.
-  const int nibbles = 2 * sizeof (ptrdiff_t);
-  char buf[nibbles + 1];
-  ACE_OS::sprintf (buf, "%p", this);
-  buf[nibbles] = '\0';
+  /// Make a unique name using our process id and hex address.
+  char pid_buf[sizeof (int) + 1];
+  ACE_OS::sprintf (pid_buf, "%d", ACE_OS::getpid ());
+  pid_buf[sizeof (int)] = '\0';
+  
+  const int addr_nibbles = 2 * sizeof (ptrdiff_t);
+  char addr_buf[addr_nibbles + 1];
+  ACE_OS::sprintf (addr_buf, "%p", this);
+  addr_buf[addr_nibbles] = '\0';
+  
   ACE_CString name_str ("Message_Queue_");
-  name_str += buf;
+  name_str += pid_buf;
+  name_str += '_';
+  name_str += addr_buf;
   this->monitor_->name (name_str.c_str ());
   this->monitor_->add_to_registry ();
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
