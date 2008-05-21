@@ -1,3 +1,10 @@
+Wed May 21 14:06:13 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Base.h:
+        * ace/Monitor_Base.cpp:
+        
+          Made the update() method non pure virtual.
+
 Tue May 20 19:33:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp:
