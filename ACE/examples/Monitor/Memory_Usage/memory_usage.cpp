@@ -2,7 +2,7 @@
 
 #include "ace/OS_NS_unistd.h"
 
-#include "ace/MonitorControl/MonitorControl.h"
+#include "ace/Monitor_Control/Monitor_Control.h"
 
 #include "examples/Monitor/MC_Test_Utilities.h"
 
@@ -11,7 +11,7 @@
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
-class MonitorChecker : public ACE_Task_Base
+class Monitor_Checker : public ACE_Task_Base
 {
 public:
   int svc (void)
@@ -60,7 +60,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   START_PERIODIC_MONITORS;
 
   /// Run the monitor checker in a separate thread.
-  MonitorChecker monitor_checker;
+  Monitor_Checker monitor_checker;
   monitor_checker.activate ();
 
   char * str_array[5] = {0};

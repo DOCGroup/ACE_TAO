@@ -1,3 +1,32 @@
+Wed May 21 19:01:10 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/MonitorControl/*:
+
+          Changed directory name to Monitor_Control and renamed all
+          contained files, classes, libs, MPC projects, ifdef guards,
+          and macros similarly, to better conform to the ACE style.
+
+        * ace/Monitor_Point_Registry.cpp:
+        * ace/Monitor_Admin.h:
+        * ace/Monitor_Admin.cpp:
+        * bin/MakeProjectCreator/config/ace_mc.mpb:
+        * examples/Monitor/Bytes_Sent/bytes_sent.cpp:
+        * examples/Monitor/Bytes_Sent/Makefile.am:
+        * examples/Monitor/Message_Queue_Size/message_queue_size.cpp:
+        * examples/Monitor/Message_Queue_Size/Makefile.am:
+        * examples/Monitor/Constraint/constraint.cpp:
+        * examples/Monitor/Constraint/Makefile.am:
+        * examples/Monitor/CPU_Load/cpu_load.cpp:
+        * examples/Monitor/CPU_Load/Makefile.am:
+        * examples/Monitor/Num_Threads/Makefile.am:
+        * examples/Monitor/Num_Threads/num_threads.cpp:
+        * examples/Monitor/Group/Makefile.am:
+        * examples/Monitor/Group/group.cpp:
+        * examples/Monitor/Memory_Usage/Makefile.am:
+        * examples/Monitor/Memory_Usage/memory_usage.cpp:
+
+          Changes corresponding to the renaming above.
+
 Wed May 21 14:06:13 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Base.h:
