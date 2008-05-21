@@ -889,11 +889,13 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
   // We want the empty file not only with -GX
   // but also when -GA appears with -Sa or -St.
-  bool gen_empty_file = be_global->gen_empty_anyop_header ()
-                        || be_global->gen_anyop_files ()
-                           && !be_global->any_support ();
+  // (JP) Not so - what if we are just passing along an *A.h
+  // from a safe_include?
+//  bool gen_empty_file = be_global->gen_empty_anyop_header ()
+//                        || be_global->gen_anyop_files ()
+//                           && !be_global->tc_support ();
 
-  if (gen_empty_file)
+  if (be_global->gen_empty_anyop_header ())
     {
       *this->anyop_header_ << be_nl
                            << "// Generated empty file" << be_nl
@@ -968,7 +970,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
   // If we have not suppressed Any operator generation and also
   // are not generating the operators in a separate file, we
   // need to include the *A.h file from all .pidl files here.
-  if (be_global->any_support ())
+  if (be_global->gen_anyop_files ())
     {
       for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
         {
@@ -1039,7 +1041,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 int
 TAO_CodeGen::start_anyop_source (const char *fname)
 {
-  if (!be_global->gen_anyop_files () || !be_global->any_support ())
+  if (!be_global->gen_anyop_files ())
     {
       return 0;
     }

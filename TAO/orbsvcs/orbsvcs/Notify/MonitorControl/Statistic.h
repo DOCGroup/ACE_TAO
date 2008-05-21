@@ -1,30 +1,38 @@
 // $Id$
+
 #ifndef STATISTIC_H
 #define STATISTIC_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Notify/MonitorControl/notify_mc_export.h"
-#include "orbsvcs/Notify/MonitorControl/Generic.h"
 
-#include "ace/Synch.h"
-#include "ace/SString.h"
+#include "ace/Monitor_Base.h"
 #include "ace/Array_Base.h"
-#include "ace/Vector_T.h"
+
 #include "tao/Versioned_Namespace.h"
 #include "tao/orbconf.h"
 
+#include "orbsvcs/Notify/MonitorControl/notify_mc_export.h"
+
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Notify_MC_Export TAO_Statistic: public TAO_NS_Generic
+class TAO_Notify_MC_Export TAO_Statistic : public Monitor_Base
 {
 public:
   /// A statistic can hold various types of data and acts differently
   /// depending upon the type of information stored.
-  enum Information_Type { TS_COUNTER, TS_NUMBER,
-                          TS_TIME, TS_INTERVAL, TS_LIST };
+  enum Information_Type
+  {
+    TS_COUNTER,
+    TS_NUMBER,
+    TS_TIME,
+    TS_INTERVAL,
+    TS_LIST
+  };
 
   /// A simple string list.
-  typedef ACE_Vector<ACE_CString> List;
+  typedef Monitor_Control_Types::NameList List;
 
   /// This exception is thrown if a method is called that doesn't apply
   /// to the type of information being stored.
@@ -40,10 +48,8 @@ public:
   /// Perform calculations if the statistic is dynamic.
   virtual void calculate (void);
 
-  /// Take the data and store it for later calculations.
-  /// It is assumed that the type of data corresponds to
-  /// the type specified during construction.
-  void receive (double data = 0);
+  /// Override of the base class method.
+  virtual void receive (double data);
 
   /// Take the data and store it.
   /// It is assumed that the type of data corresponds to
@@ -82,7 +88,7 @@ public:
 private:
   Information_Type type_;
 
-  mutable TAO_SYNCH_RW_MUTEX mutex_;
+//  mutable TAO_SYNCH_RW_MUTEX mutex_;
   size_t index_;
   bool minimum_set_;
   double minimum_;
@@ -100,4 +106,5 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* STATISTIC_H */

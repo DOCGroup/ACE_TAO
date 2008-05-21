@@ -1,18 +1,32 @@
 // $Id$
+
 #ifndef NOTIFICATIONSERVICEMONITOR_I_H
 #define NOTIFICATIONSERVICEMONITOR_I_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Notify/MonitorControl/notify_mc_export.h"
 
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMCS.h"
-#include "orbsvcs/Notify/MonitorControl/Statistic_Registry.h"
+
 #include "tao/ORB.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE
+{
+  namespace Monitor_Control
+  {
+    class Monitor_Point_Registry;
+  }
+}
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Notify_MC_Export NotificationServiceMonitor_i:
-    public virtual POA_CosNotification::NotificationServiceMonitorControl
+class TAO_Notify_MC_Export NotificationServiceMonitor_i
+  : public virtual POA_CosNotification::NotificationServiceMonitorControl
 {
 public:
   /// Construct a monitor service.  If the orb parameter is provided,
@@ -20,25 +34,23 @@ public:
   NotificationServiceMonitor_i (CORBA::ORB_ptr orb = 0);
 
   /// Get a list of statistic names
-  virtual CosNotification::NotificationServiceMonitorControl::NameList*
-    get_statistic_names (void);
+  virtual Monitor::NameList* get_statistic_names (void);
 
   /// Get the data from a single statistic
   virtual CosNotification::NotificationServiceMonitorControl::Data*
-    get_statistic (const char* name);
+  get_statistic (const char* name);
 
   /// Get the data from multiple statistic instances
   virtual CosNotification::NotificationServiceMonitorControl::DataList*
-    get_statistics (const CosNotification::NotificationServiceMonitorControl::NameList& names);
+  get_statistics (const Monitor::NameList& names);
 
   /// Get the data from multiple statistic instances and clear them
   /// directly afterward
   virtual CosNotification::NotificationServiceMonitorControl::DataList*
-    get_and_clear_statistics (const CosNotification::NotificationServiceMonitorControl::NameList& names);
+  get_and_clear_statistics (const Monitor::NameList& names);
 
   /// Clear the data from multiple statistic instances
-  virtual void
-    clear_statistics (const CosNotification::NotificationServiceMonitorControl::NameList& names);
+  virtual void clear_statistics (const Monitor::NameList& names);
 
   /// Shut down an event channel by name
   virtual void shutdown_event_channel (const char* name);
@@ -62,13 +74,13 @@ private:
   void send_control_command (const char* name,
                              const char* cmd);
 
-  void get_data (TAO_Statistic_Registry* registry,
+  void get_data (Monitor_Point_Registry* registry,
                  const char* name,
                  CosNotification::NotificationServiceMonitorControl::Data& data);
 
-  void get_invalid_names (TAO_Statistic_Registry* registry,
-                          const CosNotification::NotificationServiceMonitorControl::NameList& names,
-                          CosNotification::NotificationServiceMonitorControl::NameList& invalid);
+  void get_invalid_names (Monitor_Point_Registry* registry,
+                          const Monitor::NameList& names,
+                          Monitor::NameList& invalid);
 
   CORBA::ORB_var orb_;
 };
@@ -76,4 +88,5 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
+
 #endif /* NOTIFICATIONSERVICEMONITOR_I_H */
