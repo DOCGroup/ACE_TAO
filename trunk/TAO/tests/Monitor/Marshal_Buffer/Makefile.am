@@ -67,7 +67,7 @@ client_SOURCES = \
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Monitor.la \
-  $(ACE_BUILDDIR)/ace/MonitorControl/libACE_MonitorControl.la \
+  $(ACE_BUILDDIR)/ace/Monitor_Control/libACE_Monitor_Control.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \

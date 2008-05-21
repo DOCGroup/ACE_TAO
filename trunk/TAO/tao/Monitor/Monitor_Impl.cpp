@@ -7,7 +7,7 @@
 
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Control_Action.h"
-#include "ace/MonitorControl/MonitorControl.h"
+#include "ace/Monitor_Control/Monitor_Control.h"
 
 ACE_RCSID (Monitor,
            Monitor_Impl,
