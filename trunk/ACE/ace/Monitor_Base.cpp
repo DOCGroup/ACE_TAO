@@ -35,6 +35,29 @@ namespace ACE
     Monitor_Base::~Monitor_Base (void)
     {
     }
+    
+    void
+    Monitor_Base::update (void)
+    {
+      /// Overridden in derived classes.
+    }
+
+    void
+    Monitor_Base::receive (double data)
+    {
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+      this->data_.timestamp_ = ACE_OS::gettimeofday ();
+      this->data_.value_ = data;
+    }
+
+    void
+    Monitor_Base::receive (size_t value)
+    {
+      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+
+      this->data_.timestamp_ = ACE_OS::gettimeofday ();
+      this->data_.value_ = static_cast<double> (value);
+    }
 
     long
     Monitor_Base::add_constraint (const char* expression,
@@ -97,37 +120,12 @@ namespace ACE
     }
 
     void
-    Monitor_Base::receive (size_t value)
-    {
-      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-
-      this->data_.timestamp_ = ACE_OS::gettimeofday ();
-      this->data_.value_ = static_cast<double> (value);
-    }
-
-    void
-    Monitor_Base::receive (double data)
-    {
-      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-      this->data_.timestamp_ = ACE_OS::gettimeofday ();
-      this->data_.value_ = data;
-    }
-
-    void
     Monitor_Base::clear (void)
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
 
       this->clear_i ();
     }
-
-    void
-    Monitor_Base::clear_i (void)
-    {
-      this->data_.value_ = 0.0;
-      this->data_.timestamp_ = ACE_Time_Value::zero;
-    }
-
 
     void
     Monitor_Base::retrieve_and_clear (Monitor_Control_Types::Data& data)
@@ -178,6 +176,13 @@ namespace ACE
         {
           delete this;
         }
+    }
+  
+    void
+    Monitor_Base::clear_i (void)
+    {
+      this->data_.value_ = 0.0;
+      this->data_.timestamp_ = ACE_Time_Value::zero;
     }
   }
 }
