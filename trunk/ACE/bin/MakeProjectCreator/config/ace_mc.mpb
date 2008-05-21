@@ -2,7 +2,7 @@
 // $Id$
 
 project : ace_etcl_parser {
-  after += MonitorControl
-  libs += ACE_MonitorControl
+  after += Monitor_Control
+  libs += ACE_Monitor_Control
   avoids += wince
 }

@@ -3,7 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Monitor_Control_Action.h"
 
-#include "ace/MonitorControl/MonitorControl.h"
+#include "ace/Monitor_Control/Monitor_Control.h"
 
 #include "examples/Monitor/MC_Test_Utilities.h"
 
@@ -33,7 +33,7 @@ class Trigger16k : public Control_Action
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
-class MonitorChecker : public ACE_Task_Base
+class Monitor_Checker : public ACE_Task_Base
 {
 public:
   int svc (void)
@@ -90,8 +90,8 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   ACE_DEBUG ((LM_DEBUG, "trigger16k id = %d\n", id16));
 
   /// Create a query and register it to be called periodically.
-  MonitorQuery query ("OS/Network/BytesReceived");
-  MonitorPointAutoQuery *auto_query = new MonitorPointAutoQuery;
+  Monitor_Query query ("OS/Network/BytesReceived");
+  Monitor_Point_Auto_Query *auto_query = new Monitor_Point_Auto_Query;
   auto_query->reference_counting_policy ().value (
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
   ACE_Event_Handler_var safety (auto_query);
@@ -104,7 +104,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   /// Run the monitor checker in a separate thread. This class will
   /// fetch the monitor's value directly, and its output will be
   /// separate from the output from triggered actions.
-  MonitorChecker monitor_checker;
+  Monitor_Checker monitor_checker;
   monitor_checker.activate ();
 
   ACE_OS::sleep (20);

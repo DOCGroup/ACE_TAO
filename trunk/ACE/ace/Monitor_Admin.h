@@ -31,7 +31,7 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    class MonitorQuery;
+    class Monitor_Query;
 
     /**
      * @class Monitor_Point_Auto_Updater
@@ -84,7 +84,7 @@ namespace ACE
       /// handler arg's handle_timeout() method with the reactor,
       /// instead of our auto_updater_'s handle_timeout().
       void auto_query (ACE_Event_Handler* handler,
-                       MonitorQuery* query,
+                       Monitor_Query* query,
                        const ACE_Time_Value& time);
 
       /// This mutator allows the application to create its own reactor

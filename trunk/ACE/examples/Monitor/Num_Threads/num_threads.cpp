@@ -2,7 +2,8 @@
 
 #include "ace/OS_NS_unistd.h"
 
-#include "ace/MonitorControl/MonitorControl.h"
+#include "ace/Monitor_Control/Monitor_Control.h"
+
 #include "examples/Monitor/MC_Test_Utilities.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
@@ -20,7 +21,7 @@ public:
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
-class MonitorChecker : public ACE_Task_Base
+class Monitor_Checker : public ACE_Task_Base
 {
 public:
   int svc (void)
@@ -52,12 +53,14 @@ public:
     return 0;
   }
 };
+
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 int
 ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
   /// Set the timer for # of threads check at 2 sec.
   Monitor_Base *num_threads_monitor =
     create_os_monitor<NUM_THREADS_MONITOR> (0, ACE_Time_Value (2));
@@ -67,7 +70,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   START_PERIODIC_MONITORS;
 
   /// Run the monitor checker in a separate thread.
-  MonitorChecker monitor_checker;
+  Monitor_Checker monitor_checker;
   monitor_checker.activate ();
 
   /// Spawn 100 threads, sleep until they finish.
@@ -80,6 +83,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   STOP_PERIODIC_MONITORS;
 
   num_threads_monitor->remove_ref ();
+  
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;
