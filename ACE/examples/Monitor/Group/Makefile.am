@@ -27,7 +27,7 @@ group_SOURCES = \
 
 group_LDADD = \
   $(top_builddir)/examples/Monitor/libMC_Test_Utilities.la \
-  $(ACE_BUILDDIR)/ace/MonitorControl/libACE_MonitorControl.la \
+  $(ACE_BUILDDIR)/ace/Monitor_Control/libACE_Monitor_Control.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(ACE_BUILDDIR)/ace/libACE.la

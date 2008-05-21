@@ -83,7 +83,7 @@ namespace ACE
 
     void
     Monitor_Admin::auto_query (ACE_Event_Handler* handler,
-                               MonitorQuery* query,
+                               Monitor_Query* query,
                                const ACE_Time_Value& time)
     {
       this->reactor_->schedule_timer (handler,
