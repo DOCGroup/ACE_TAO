@@ -325,13 +325,13 @@ int be_visitor_root::visit_root (be_root *node)
             {
               be_visitor_root_any_op visitor (&ctx);
               status = node->accept (&visitor);
+            }
 
-              // Conditional switch to the *A.h stream is done
-              // in the visitor constructor.
-              if (be_global->gen_anyop_files ())
-                {
-                  (void) tao_cg->end_anyop_header ();
-                }
+          // Conditional switch to the *A.h stream is done
+          // in the visitor constructor.
+          if (be_global->gen_anyop_files ())
+            {
+              (void) tao_cg->end_anyop_header ();
             }
 
           break;
@@ -344,14 +344,15 @@ int be_visitor_root::visit_root (be_root *node)
             {
               be_visitor_root_any_op visitor (&ctx);
               status = node->accept (&visitor);
-
-              // Conditional switch to the *A.cpp stream is done
-              // in the visitor constructor.
-              if (be_global->gen_anyop_files ())
-                {
-                  (void) tao_cg->end_anyop_source ();
-                }
             }
+
+          // Conditional switch to the *A.cpp stream is done
+          // in the visitor constructor.
+          if (be_global->gen_anyop_files ())
+            {
+              (void) tao_cg->end_anyop_source ();
+            }
+
 
           break;
         }

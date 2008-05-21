@@ -11,7 +11,8 @@
 #ifndef NOTIFICATIONSERVICEMC_IDL
 #define NOTIFICATIONSERVICEMC_IDL
 
-#include <orb.idl>
+//#include <orb.idl>
+#include "tao/Monitor/Monitor_include.pidl"
 
 #pragma prefix "sandia.gov"
 
@@ -40,31 +41,31 @@ module CosNotification
       double last;
     };
 
-    typedef sequence<string> NameList;
+//    typedef sequence<string> NameList;
 
     exception InvalidName {
-      NameList names;
+      Monitor::NameList names;
     };
 
     enum DataType { DATA_NUMERIC, DATA_TEXT };
     union Data switch (DataType) {
       case DATA_NUMERIC: Numeric num;
-      case DATA_TEXT: NameList list;
+      case DATA_TEXT: Monitor::NameList list;
     };
 
-    NameList get_statistic_names ();
+    Monitor::NameList get_statistic_names ();
 
     Data get_statistic (in string name)
       raises (InvalidName);
 
     typedef sequence<Data> DataList;
-    DataList get_statistics (in NameList names)
+    DataList get_statistics (in Monitor::NameList names)
       raises (InvalidName);
 
-    DataList get_and_clear_statistics (in NameList names)
+    DataList get_and_clear_statistics (in Monitor::NameList names)
       raises (InvalidName);
 
-    void clear_statistics (in NameList names)
+    void clear_statistics (in Monitor::NameList names)
       raises (InvalidName);
 
     // Control commands begin here

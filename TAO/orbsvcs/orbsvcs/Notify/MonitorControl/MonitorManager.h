@@ -1,11 +1,14 @@
 // $Id$
+
 #ifndef MONITORMANAGER_H
 #define MONITORMANAGER_H
 
 #include /**/ "ace/pre.h"
+
 #include "orbsvcs/Notify/MonitorControl/notify_mc_export.h"
 
 #include "tao/ORB.h"
+
 #include "ace/Service_Object.h"
 #include "ace/Task.h"
 #include "ace/ARGV.h"
@@ -14,7 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Notify_MC_Export TAO_MonitorManager: public ACE_Service_Object
+class TAO_Notify_MC_Export TAO_MonitorManager : public ACE_Service_Object
 {
 public:
   /// Perform member initialization
@@ -63,4 +66,5 @@ ACE_STATIC_SVC_DECLARE_EXPORT(TAO_Notify_MC, TAO_MonitorAndControl)
 ACE_FACTORY_DECLARE(TAO_Notify_MC, TAO_MonitorAndControl)
 
 #include /**/ "ace/post.h"
+
 #endif /* MONITORMANAGER_H */

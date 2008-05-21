@@ -2,7 +2,7 @@
 project (TAO_Monitor): portableserver, install, tao_versioning_idl_defaults, ace_mc, tao_output {
   sharedname   = TAO_Monitor
   dynamicflags = TAO_MONITOR_BUILD_DLL
-  idlflags += -Gp -Gd \
+  idlflags += -Gp -Gd -GA \
               -Wb,export_macro=TAO_Monitor_Export \
               -Wb,export_include=tao/Monitor/Monitor_export.h \
               -o Monitor
@@ -32,12 +32,12 @@ project (TAO_Monitor): portableserver, install, tao_versioning_idl_defaults, ace
   }
 
   IDL_Files {
-    idlflags += -Sa -St \
-                -Wb,unique_include=tao/Monitor/Monitor.h
+    idlflags += -Wb,unique_include=tao/Monitor/Monitor.h
     Monitor/Monitor_include.pidl
   }
 
   IDL_Files {
+    idlflags -= -St
     idlflags += -Wb,include_guard=TAO_MONITOR_SAFE_INCLUDE \
                 -Wb,safe_include=tao/Monitor/Monitor.h
     Monitor/Monitor.pidl

@@ -3,16 +3,19 @@
 #define MONITOREVENTCHANNEL_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+
+#include "ace/Vector_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
-#include "orbsvcs/Notify/MonitorControl/Statistic.h"
 #include "orbsvcs/Notify/EventChannel.h"
-#include "ace/Vector_T.h"
+
+#include "orbsvcs/Notify/MonitorControl/Statistic.h"
+
+#include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
+#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -25,40 +28,38 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorEventChannel:
 {
 public:
   /// Construct a named event channel and associate various
-  /// statistic objects with it in the statistic registry
+  /// statistic objects with it in the statistic registry.
   TAO_MonitorEventChannel (const char* name);
 
-  /// Remove the statistics for this event channel
+  /// Remove the statistics for this event channel.
   ~TAO_MonitorEventChannel (void);
 
-  /// Return the name of this event channel
+  /// Return the name of this event channel.
   const ACE_CString& name (void) const;
 
-  /// Register a single statistic with the EC and statistic registry
+  /// Register a single statistic with the EC and statistic registry.
   bool register_statistic (const ACE_CString& name,
-                           TAO_Statistic* stat,
-                           TAO_Statistic_Registry* instance = 0);
+                           TAO_Statistic* stat);
 
-  /// Unregister a single statistic from the EC and statistic registry
-  bool unregister_statistic (const ACE_CString& name,
-                             TAO_Statistic_Registry* instance = 0);
+  /// Unregister a single statistic from the EC and statistic registry.
+  bool unregister_statistic (const ACE_CString& name);
 
-  /// Keep track of the supplier name associated with the proxy id
+  /// Keep track of the supplier name associated with the proxy id.
   void map_supplier_proxy (CosNotifyChannelAdmin::ProxyID id,
                            const ACE_CString& name);
 
-  /// Keep track of the consumer name associated with the proxy id
+  /// Keep track of the consumer name associated with the proxy id.
   void map_consumer_proxy (CosNotifyChannelAdmin::ProxyID id,
                            const ACE_CString& name);
 
-  /// Remove the supplier/consumer proxy id/name mapping
+  /// Remove the supplier/consumer proxy id/name mapping.
   virtual void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
                               bool is_supplier);
 
-  /// Remove the consumer admin id/name mapping
+  /// Remove the consumer admin id/name mapping.
   virtual void remove_consumeradmin (CosNotifyChannelAdmin::AdminID id);
 
-  /// Remove the supplier admin id/name mapping
+  /// Remove the supplier admin id/name mapping.
   virtual void remove_supplieradmin (CosNotifyChannelAdmin::AdminID id);
 
   /// Add the statistics for this event channel.  If the ec was
@@ -142,4 +143,5 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
+
 #endif /* MONITOREVENTCHANNEL_H */
