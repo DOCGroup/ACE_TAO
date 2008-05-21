@@ -1,41 +1,65 @@
 // $Id$
-#include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
-#include "orbsvcs/Notify/MonitorControl/Statistic_Registry.h"
-#include "orbsvcs/Notify/MonitorControl/Control_Registry.h"
+
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
+
 #include "ace/Auto_Ptr.h"
+#include "ace/Monitor_Point_Registry.h"
+
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.h"
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h"
+
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 NotificationServiceMonitor_i::NotificationServiceMonitor_i (CORBA::ORB_ptr orb)
- : orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-CosNotification::NotificationServiceMonitorControl::NameList*
+Monitor::NameList*
 NotificationServiceMonitor_i::get_statistic_names (void)
 {
-  CosNotification::NotificationServiceMonitorControl::NameList* names = 0;
-  ACE_NEW_RETURN (names,
-                  CosNotification::NotificationServiceMonitorControl::NameList (
-                    TAO_Statistic_Registry::instance ()->names ()),
+  Monitor_Control_Types::NameList name_list =
+    Monitor_Point_Registry::instance ()->names ();
+  CORBA::ULong the_length = name_list.size ();
+    
+  Monitor::NameList* the_names = 0;
+  ACE_NEW_RETURN (the_names,
+                  Monitor::NameList (the_length),
                   0);
-  return names;
+  Monitor::NameList_var safe_names = the_names;
+  the_names->length (the_length);
+  CORBA::ULong i = 0;
+  
+  for (Monitor_Control_Types::NameList::Iterator iter (name_list);
+       !iter.done ();
+       iter.advance (), ++i)
+    {
+      ACE_CString* tmp = 0;
+      iter.next (tmp);
+      safe_names[i] = tmp->c_str ();
+    }
+  
+  return safe_names._retn ();
 }
 
 CosNotification::NotificationServiceMonitorControl::Data*
 NotificationServiceMonitor_i::get_statistic (const char* name)
 {
-  TAO_Statistic_Registry* registry = TAO_Statistic_Registry::instance ();
+  Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
 
-  CosNotification::NotificationServiceMonitorControl::NameList invalid;
-  CosNotification::NotificationServiceMonitorControl::NameList names (1);
+  Monitor::NameList invalid;
+  Monitor::NameList names (1);
   names.length (1);
   names[0] = name;
   this->get_invalid_names (registry, names, invalid);
 
   if (invalid.length () > 0)
-    throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
-
+    {
+      throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
+    }
+    
   CosNotification::NotificationServiceMonitorControl::Data* data = 0;
   ACE_NEW_THROW_EX (data,
                     CosNotification::NotificationServiceMonitorControl::Data,
@@ -45,16 +69,19 @@ NotificationServiceMonitor_i::get_statistic (const char* name)
 }
 
 CosNotification::NotificationServiceMonitorControl::DataList*
-NotificationServiceMonitor_i::get_statistics (const CosNotification::NotificationServiceMonitorControl::NameList& names)
+NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
 {
-  TAO_Statistic_Registry* registry = TAO_Statistic_Registry::instance ();
+  Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
 
-  CosNotification::NotificationServiceMonitorControl::NameList invalid;
+  Monitor::NameList invalid;
   this->get_invalid_names (registry, names, invalid);
+  
   if (invalid.length () > 0)
-    throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
-
-  CORBA::ULong length = names.length();
+    {
+      throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
+    }
+    
+  CORBA::ULong length = names.length ();
   CosNotification::NotificationServiceMonitorControl::DataList* data = 0;
   ACE_NEW_RETURN (data,
                   CosNotification::NotificationServiceMonitorControl::DataList (
@@ -64,15 +91,18 @@ NotificationServiceMonitor_i::get_statistics (const CosNotification::Notificatio
     safe_data (data);
 
   data->length (length);
-  for(CORBA::ULong i = 0; i < length; i++)
+  
+  for (CORBA::ULong i = 0; i < length; ++i)
     {
       this->get_data (registry, names[i], (*data)[i]);
     }
+    
   return safe_data.release ();
 }
 
 CosNotification::NotificationServiceMonitorControl::DataList*
-NotificationServiceMonitor_i::get_and_clear_statistics (const CosNotification::NotificationServiceMonitorControl::NameList& names)
+NotificationServiceMonitor_i::get_and_clear_statistics (
+  const Monitor::NameList& names)
 {
   CosNotification::NotificationServiceMonitorControl::DataList* data =
     this->get_statistics (names);
@@ -82,33 +112,45 @@ NotificationServiceMonitor_i::get_and_clear_statistics (const CosNotification::N
   // to change at this point.  So, I'm bypassing the call to
   // clear_statistics() to avoid a possible exception.
   CORBA::ULong length = names.length();
-  TAO_Statistic_Registry* registry = TAO_Statistic_Registry::instance ();
-  for(CORBA::ULong i = 0; i < length; i++)
+  Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
+  
+  for (CORBA::ULong i = 0; i < length; ++i)
     {
-      TAO_Statistic* statistic = registry->get (names[i].in ());
+      Monitor_Base* statistic = registry->get (names[i].in ());
+      
       if (statistic != 0)
-        statistic->clear();
+        {
+          statistic->clear ();
+        }
     }
 
   return data;
 }
 
 void
-NotificationServiceMonitor_i::clear_statistics (const CosNotification::NotificationServiceMonitorControl::NameList& names)
+NotificationServiceMonitor_i::clear_statistics (
+  const Monitor::NameList& names)
 {
-  TAO_Statistic_Registry* registry = TAO_Statistic_Registry::instance ();
+  Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
 
-  CosNotification::NotificationServiceMonitorControl::NameList invalid;
+  Monitor::NameList invalid;
   this->get_invalid_names (registry, names, invalid);
+  
   if (invalid.length () > 0)
-    throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
-
-  CORBA::ULong length = names.length();
-  for(CORBA::ULong i = 0; i < length; i++)
     {
-      TAO_Statistic* statistic = registry->get (names[i].in ());
+      throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
+    }
+    
+  CORBA::ULong length = names.length ();
+  
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      Monitor_Base* statistic = registry->get (names[i].in ());
+      
       if (statistic != 0)
-        statistic->clear();
+        {
+          statistic->clear ();
+        }
     }
 }
 
@@ -156,7 +198,7 @@ NotificationServiceMonitor_i::send_control_command (const char* name,
   // control object.
   if (control == 0 || !control->execute (cmd))
     {
-      CosNotification::NotificationServiceMonitorControl::NameList invalid (1);
+      Monitor::NameList invalid (1);
       invalid.length (1);
       invalid[0] = name; 
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
@@ -167,17 +209,20 @@ void
 NotificationServiceMonitor_i::shutdown (void)
 {
   if (!CORBA::is_nil (this->orb_.in ()))
-    this->orb_->shutdown ();
+    {
+      this->orb_->shutdown ();
+    }
 }
 
 void
 NotificationServiceMonitor_i::get_data (
-                     TAO_Statistic_Registry* registry,
-                     const char* name,
-                     CosNotification::NotificationServiceMonitorControl::Data& data)
+   Monitor_Point_Registry* registry,
+   const char* name,
+   CosNotification::NotificationServiceMonitorControl::Data& data)
 {
-  // Get the statistic by name
-  TAO_Statistic* statistic = registry->get (name);
+  // Get the statistic by name.
+  TAO_Statistic* statistic =
+    dynamic_cast<TAO_Statistic*> (registry->get (name));
 
   if (statistic == 0)
     {
@@ -200,20 +245,23 @@ NotificationServiceMonitor_i::get_data (
       // the most up-to-date information.  A counter will always have
       // the correct value.
       if (statistic->type () != TAO_Statistic::TS_COUNTER)
-        statistic->calculate ();
+        {
+          statistic->calculate ();
+        }
 
       // Populate the data structure based on the type of statistic
       if (statistic->type () == TAO_Statistic::TS_LIST)
         {
           TAO_Statistic::List slist (statistic->get_list ());
           CORBA::ULong size = static_cast<CORBA::ULong> (slist.size ());
-          CosNotification::NotificationServiceMonitorControl::NameList
-            list (size);
+          Monitor::NameList list (size);
           list.length (size);
-          for(CORBA::ULong i = 0; i < size; i++)
+          
+          for (CORBA::ULong i = 0; i < size; ++i)
             {
               list[i] = CORBA::string_dup (slist[i].c_str ());
             }
+            
           data.list (list);
         }
       else
@@ -232,8 +280,9 @@ NotificationServiceMonitor_i::get_data (
           else
             {
               num.average = statistic->average ();
-              num.sum_of_squares = statistic->sum_of_squares();
+              num.sum_of_squares = statistic->sum_of_squares ();
             }
+            
           data.num (num);
         }
     }
@@ -241,15 +290,16 @@ NotificationServiceMonitor_i::get_data (
 
 void
 NotificationServiceMonitor_i::get_invalid_names (
-           TAO_Statistic_Registry* registry,
-           const CosNotification::NotificationServiceMonitorControl::NameList& names,
-           CosNotification::NotificationServiceMonitorControl::NameList& invalid)
+   Monitor_Point_Registry* registry,
+   const Monitor::NameList& names,
+   Monitor::NameList& invalid)
 {
   invalid.length (0);
 
   CORBA::ULong ilength = 0;
   CORBA::ULong length  = names.length ();
-  for(CORBA::ULong i = 0; i < length; i++)
+  
+  for (CORBA::ULong i = 0; i < length; ++i)
     {
       if (registry->get (names[i].in ()) == 0)
         {

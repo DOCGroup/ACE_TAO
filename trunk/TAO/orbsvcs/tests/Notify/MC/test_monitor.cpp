@@ -27,7 +27,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
 {
   ACE_CString str;
   CosNotification::NotificationServiceMonitorControl::Data_var data;
-  CosNotification::NotificationServiceMonitorControl::NameList list;
+  Monitor::NameList list;
   CosNotification::NotificationServiceMonitorControl::Numeric num;
 
   switch(proc)
@@ -112,7 +112,7 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
 {
   ACE_CString str;
   CosNotification::NotificationServiceMonitorControl::Data_var data;
-  CosNotification::NotificationServiceMonitorControl::NameList list;
+  Monitor::NameList list;
   CosNotification::NotificationServiceMonitorControl::Numeric num;
 
   switch(proc)

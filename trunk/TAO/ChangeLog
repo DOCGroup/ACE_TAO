@@ -1,3 +1,66 @@
+Wed May 21 15:52:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic.h:
+
+          Removed these files, using the base registry and monitor 
+          classes in ACE instead.
+
+        * MPC/config/notification_mc.mpb:
+
+          Added tao_monitor base project.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMC.idl:
+
+          Added include of $TAO_ROOT/tao/Monitor.idl and used the 
+          indirectly included StringSeq type for NameList, instead of
+          declaring a new typedef. These changes are the start of
+          the integration of the new ACE and TAO monitor and control
+          framework with the existing one in the Notification Service.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.inl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Dynamic_Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h:
+        * orbsvcs/tests/Notify/MC/test_monitor.cpp:
+
+          Changes falling out from the file removal and IDL changes
+          above, as well as format and style changes.
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+
+          Added tao_monitor as a base project.
+
+        * tao/Monitor.mpc:
+
+          Changes to IDL compiler command line options to generate
+          typecodes needed by dependent types in NotificationServiceMC.idl.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+
+          Fixed a bug in the use case where typecodes must be
+          generated into *A.h and *A.cpp files, and the headers
+          propagated via a 'safe include' through another IDL
+          file with no declarations of its own.
+
 Tue May 20 19:37:31 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Transport_Cache_Manager.cpp:
