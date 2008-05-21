@@ -3,6 +3,16 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) Add ZIOP support
 
+USER VISIBLE CHANGES BETWEEN TAO-1.6.5 and TAO-1.6.6
+====================================================
+
+. Repaired the -ORBMuxedConnectionMax <limit> option on the resource factory.
+  This service configurator option defines an upper limit to the number of
+  connections an orb will open to the same endpoint.
+
+. Repaired a problem that caused the ORB to open too many connections to
+  an endpoint.
+
 USER VISIBLE CHANGES BETWEEN TAO-1.6.4 and TAO-1.6.5
 ====================================================
 
@@ -137,13 +147,6 @@ USER VISIBLE CHANGES BETWEEN TAO-1.5.10 and TAO-1.6
   by the user.  When the monitoring capabilities are enabled, an outside
   user can connect to a service that allows querying statistics gathered by
   the Notification Service.
-
-. Repaired the -ORBMuxedConnectionMax <limit> option on the resource factory.
-  This service configurator option defines an upper limit to the number of
-  connections an orb will open to the same endpoint.
-
-. Repaired a problem that caused the ORB to open too many connections to
-  an endpoint.
 
 . Moved the BufferingConstraintPolicy to the Messaging lib
 
