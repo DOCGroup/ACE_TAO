@@ -5956,7 +5956,7 @@ libTAO_Monitor_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_Monitor_la_LIBADD = \
-  $(ACE_BUILDDIR)/ace/MonitorControl/libACE_MonitorControl.la \
+  $(ACE_BUILDDIR)/ace/Monitor_Control/libACE_Monitor_Control.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   libTAO_PortableServer.la \

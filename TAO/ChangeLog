@@ -1,3 +1,14 @@
+Wed May 21 19:02:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Makefile.am:
+        * tao/Monitor/Monitor_Impl.cpp:
+        * utils/monitor/Makefile.am:
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+        * tests/Monitor/Marshal_Buffer/Makefile.am:
+
+          Changes resulting from the renaming of
+          $ACE_ROOT/ace/MonitorControl and its contents.
+
 Wed May 21 15:52:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic_Registry.cpp:
