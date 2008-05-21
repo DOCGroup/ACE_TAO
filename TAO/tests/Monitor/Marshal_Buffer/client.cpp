@@ -6,7 +6,7 @@
 #include "ace/streams.h"
 #include "ace/CORBA_macros.h"
 
-#include "ace/MonitorControl/MonitorControl.h"
+#include "ace/Monitor_Control/Monitor_Control.h"
 
 #include "tao/Monitor/Monitor.h"
 
