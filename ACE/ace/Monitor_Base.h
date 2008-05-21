@@ -56,7 +56,7 @@ namespace ACE
 
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.
-      virtual void update (void) = 0;
+      virtual void update (void);
 
       /// Updates the monitor's data if it is a numeric floating point.
       virtual void receive (double value);
