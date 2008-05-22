@@ -36,7 +36,7 @@ public:
   int handle_timeout (ACE_Time_Value const & , void const *)
   {
     // kill the application
-    raise (9);
+    raise (SIGABRT);
     this->reactor ()->cancel_timer (this);
     return 0;
   }

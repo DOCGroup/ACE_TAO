@@ -28,7 +28,7 @@ Echo::echo_payload(Test::Payload const &)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload, aborting\n"));
       // Kill the app
-      raise(9);
+      raise(SIGABRT);
     }
 }
 
@@ -45,9 +45,9 @@ Echo::echo_payload_out (
 
   if (this->abort_counter_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload, aborting\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload_out, aborting\n"));
       // Kill the app
-      raise(9);
+      raise(SIGABRT);
     }
 
 }
