@@ -200,6 +200,7 @@ sub Spawn ()
     my $cmdnr = 0;
     my $arguments = "";
     my $prompt = '';
+    my $exesubdir = defined $ENV{"ACE_RUN_VX_EXE_SUBDIR"} ? $ENV{"ACE_RUN_VX_EXE_SUBDIR"} : "";
 
     if ($PerlACE::VxWorks_RTP_Test) {
         @cmds[$cmdnr++] = 'cmd';
@@ -246,7 +247,7 @@ sub Spawn ()
           }
         }
 
-        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
+        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . "/" . $exesubdir . '"';
         @cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
@@ -267,6 +268,7 @@ sub Spawn ()
             ($arguments = $self->{ARGUMENTS})=~ s/\"/\\\"/g;
             $arguments = ",\"" . $arguments . "\"";
         }
+        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'ace_vx_rc = vx_execae(ace_main' . $arguments . ')';
         @cmds[$cmdnr++] = 'unld "'. $program . $PerlACE::ProcessVX::ExeExt . '"';
         push @cmds, @unload_commands;
