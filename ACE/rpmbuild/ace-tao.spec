@@ -2,7 +2,7 @@
 %define ACEVER  5.6.5
 %define TAOVER  1.6.5
 %define CIAOVER 0.6.5
-# Set is_major_ver if the version is X.Y insteasd X.Y.Z
+# Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # Conditional build
 # Default values are --with guilibs    (fltk, tk ,xt and qt support)
@@ -41,7 +41,7 @@ Release: 2%{?OPTTAG}%{?dist}
 Group: Development/Libraries
 URL: http://www.cs.wustl.edu/~schmidt/ACE.html
 License: DOC License
-Source0: http://deuce.doc.wustl.edu/old_distribution/ACE+TAO+CIAO-%{ACEVER}.tar.bz2
+Source0: http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-%{ACEVER}.tar.bz2
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
 ## Patch0: ace-tao-config.patch
