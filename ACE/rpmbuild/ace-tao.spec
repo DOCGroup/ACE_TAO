@@ -51,7 +51,6 @@ Source0: http://deuce.doc.wustl.edu/old_distribution/ACE+TAO+CIAO-%{ACEVER}.tar.
 %if %{?_with_rnq:1}%{!?_with_rnq:0}
 ## Patch2: ace-tao-rnq.patch
 %endif
-## Patch3: ace-tao-codeset.patch
 ## Patch4: ace-tao-gperf-info.patch
 # Don't use Patch8 (ace-tao-sslverify.patch) until verified it is required.
 ## Patch9: ace-tao-hasicmp.patch
@@ -335,20 +334,20 @@ using the ACE_XtReactor.
 %endif
 
 ## FIXME - namespace issues need to be resolved
-## 
+##
 ## # ---------------- MPC ----------------
-## 
+##
 ## %package -n ace-mpc
 ## Summary: Make Project Creator
 ## Version: %{ACEVER}
 ## Group: Development/Libraries
-## 
+##
 ## %description -n ace-mpc
-## 
+##
 ## The Makefile, Project and Workspace Creator.
 ## Designed by Justin Michel (michel_j@ociweb.com) and Chad Elliott.
 ## Implemented by Chad Elliott (elliott_c@ociweb.com).
-## 
+##
 ## A single tool (MPC) can be used to generate tool specific input (i.e.
 ## Makefile, dsp, vcproj, etc). The generator takes platform and building
 ## tool generic files (mpc files) as input which describe basic information
@@ -624,9 +623,6 @@ export CIAO_ROOT=$TAO_ROOT/CIAO
 
 # patch0 and patch1 are applied a bit later
 
-#patch3 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-codeset.patch | patch -p 1
-
 #patch4 -p 1
 cat ${ACE_ROOT}/rpmbuild/ace-tao-gperf-info.patch | patch -p 1
 
@@ -688,7 +684,7 @@ EOF
 # 64 bit machines need additional macro.
 %ifarch x86_64 ia64 ppc64 s390x
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
-buildbits = 64 
+buildbits = 64
 EOF
 %endif
 
@@ -1058,13 +1054,13 @@ tar xzvf -C ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.gz \
 	$RPM_BUILD_ROOT%{_sysconfdir}
 
 ## # FIXME - namespace issues need to be resolved
-## 
+##
 ## # ================================================================
 ## # Makefiles
 ## # ================================================================
-## 
+##
 ## install -d $RPM_BUILD_ROOT%{_includedir}/makeinclude
-## 
+##
 ## for mk_macros in \
 ##     all_in_one.GNU \
 ##     component_check.GNU \
@@ -1082,14 +1078,14 @@ tar xzvf -C ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.gz \
 ##     wrapper_macros.GNU; do (
 ## install ${ACE_ROOT}/include/makeinclude/$mk_macros $RPM_BUILD_ROOT%{_includedir}/makeinclude
 ## ); done
-## 
+##
 ## install ${TAO_ROOT}/rules.tao.GNU $RPM_BUILD_ROOT%{_includedir}/makeinclude
-## 
+##
 ## install -d $RPM_BUILD_ROOT%{_datadir}
 ## install -d $RPM_BUILD_ROOT%{_datadir}/ace
 ## install -d $RPM_BUILD_ROOT%{_datadir}/ace/MPC
 ## cp -a ${ACE_ROOT}/MPC $RPM_BUILD_ROOT%{_datadir}/ace/
-## 
+##
 ## install -d $RPM_BUILD_ROOT%{_datadir}/ace/bin
 ## cp -a ${ACE_ROOT}/bin/DependencyGenerator $RPM_BUILD_ROOT%{_datadir}/ace/bin
 ## cp -a ${ACE_ROOT}/bin/MakeProjectCreator $RPM_BUILD_ROOT%{_datadir}/ace/bin
@@ -1176,50 +1172,50 @@ exit 0
 
 %pre -n tao-cosevent
 
-getent group tao >/dev/null || /usr/sbin/groupadd -r tao      
+getent group tao >/dev/null || /usr/sbin/groupadd -r tao
 getent passwd tao >/dev/null || \
 /usr/sbin/useradd -r -g tao -d %{_sysconfdir}/tao -s /sbin/nologin \
-    -c "TAO Services" tao     
+    -c "TAO Services" tao
 exit 0
 
 # ---------------- tao-cosnotification ----------------
 
 %pre -n tao-cosnotification
 
-getent group tao >/dev/null || /usr/sbin/groupadd -r tao      
+getent group tao >/dev/null || /usr/sbin/groupadd -r tao
 getent passwd tao >/dev/null || \
 /usr/sbin/useradd -r -g tao -d %{_sysconfdir}/tao -s /sbin/nologin \
-    -c "TAO Services" tao     
+    -c "TAO Services" tao
 exit 0
 
 # ---------------- tao-costrading ----------------
 
 %pre -n tao-costrading
 
-getent group tao >/dev/null || /usr/sbin/groupadd -r tao      
+getent group tao >/dev/null || /usr/sbin/groupadd -r tao
 getent passwd tao >/dev/null || \
 /usr/sbin/useradd -r -g tao -d %{_sysconfdir}/tao -s /sbin/nologin \
-    -c "TAO Services" tao     
+    -c "TAO Services" tao
 exit 0
 
 # ---------------- tao-rtevent ----------------
 
 %pre -n tao-rtevent
 
-getent group tao >/dev/null || /usr/sbin/groupadd -r tao      
+getent group tao >/dev/null || /usr/sbin/groupadd -r tao
 getent passwd tao >/dev/null || \
 /usr/sbin/useradd -r -g tao -d %{_sysconfdir}/tao -s /sbin/nologin \
-    -c "TAO Services" tao     
+    -c "TAO Services" tao
 exit 0
 
 # ---------------- tao-cosconcurrency ----------------
 
 %pre -n tao-cosconcurrency
 
-getent group tao >/dev/null || /usr/sbin/groupadd -r tao      
+getent group tao >/dev/null || /usr/sbin/groupadd -r tao
 getent passwd tao >/dev/null || \
 /usr/sbin/useradd -r -g tao -d %{_sysconfdir}/tao -s /sbin/nologin \
-    -c "TAO Services" tao     
+    -c "TAO Services" tao
 exit 0
 
 # ================================================================
@@ -2156,6 +2152,9 @@ fi
 # ================================================================
 
 %changelog
+* Thu May 22 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.5-3
+- Removed codeset patch, merged into the distribution
+
 * Wed May 21 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-2
 - Fixed without opt processing.
 

@@ -425,8 +425,6 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
     }
 }
 
-
-
 /// Return the "global" configuration instance, for the current
 /// thread. This may be the same as instance(), but on some occasions,
 /// it may be a different one. For example, ACE_Service_Config_Guard
@@ -452,8 +450,6 @@ ACE_Service_Config::current (void)
   }
 
   return static_cast<ACE_Service_Gestalt*> (temp);
-
-
 }
 
 /// A mutator to set the "current" (TSS) gestalt instance.
