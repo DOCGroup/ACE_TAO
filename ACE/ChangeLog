@@ -1,7 +1,16 @@
+Thu May 22 23:04:38 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Rename MonitorControl subdirectory to Monitor_Control, to
+          adapt to this change:
+
+          Wed May 21 19:01:10 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Thu May 22 19:29:35 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Base.h (clear):
-        
+
           Made the method virtual, since it's overridden in the
           TAO Notification Service monitors and we are now using
           the ACE monitor registry which stores everyhing as the
