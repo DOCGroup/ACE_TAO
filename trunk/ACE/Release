@@ -76,6 +76,7 @@ CONTROLLED_FILES = \
         m4 \
         netsvcs \
         performance-tests \
+        rpmbuild \
         tests \
 	Kokyu \
 	protocols \
