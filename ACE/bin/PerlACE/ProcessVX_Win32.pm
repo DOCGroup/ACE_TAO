@@ -194,6 +194,7 @@ sub Spawn ()
     my $cmdnr = 0;
     my $arguments = "";
     my $prompt = '';
+    my $exesubdir = defined $ENV{"ACE_RUN_VX_EXE_SUBDIR"} ? $ENV{"ACE_RUN_VX_EXE_SUBDIR"} : "";
 
     if ($PerlACE::VxWorks_RTP_Test) {
         @cmds[$cmdnr++] = 'cmd';
@@ -240,7 +241,7 @@ sub Spawn ()
           }
         }
 
-        @cmds[$cmdnr++] = 'cd "' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '"';
+        @cmds[$cmdnr++] = 'cd "' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . "/" . $exesubdir . '"';
         @cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
@@ -262,6 +263,7 @@ sub Spawn ()
             ($arguments = $self->{ARGUMENTS})=~ s/\'/\\\'/g;
             $arguments = ",\"" . $arguments . "\"";
         }
+        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
         @cmds[$cmdnr++] = 'ace_vx_rc = vx_execae(ace_main' . $arguments . ')';
         @cmds[$cmdnr++] = 'unld "'. $program . $PerlACE::ProcessVX::ExeExt . '"';
         push @cmds, @unload_commands;
@@ -279,9 +281,6 @@ sub Spawn ()
     print $oh "my \$cmdnr = $cmdnr;\n\n";
 
     print $oh <<'__END__';
-if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-  print "$cmdline\n";
-}
 
 my $ok;
 my $telnet_port = $ENV{'ACE_RUN_VX_TGT_TELNET_PORT'};
@@ -323,7 +322,7 @@ if ($ok) {
   }
 }
 else {
-  die "ERROR: exec failed for <" . $cmdline . ">";
+  die "ERROR: No prompt appeared\n";
 }
 $t->close();
 sleep(2);

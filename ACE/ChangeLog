@@ -1,3 +1,10 @@
+Thu May 22 14:56:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added support for ACE_RUN_VX_EXE_SUBDIR which can be used when
+          the vxworks executables are build in a subdirectory
+
 Thu May 22 09:47:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-codeset.patch:
