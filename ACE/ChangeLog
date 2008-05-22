@@ -1,3 +1,12 @@
+Thu May 22 19:29:35 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Base.h (clear):
+        
+          Made the method virtual, since it's overridden in the
+          TAO Notification Service monitors and we are now using
+          the ACE monitor registry which stores everyhing as the
+          ACE base class monitor.
+
 Thu May 22 14:56:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:

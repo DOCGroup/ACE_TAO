@@ -76,7 +76,7 @@ namespace ACE
       CONSTRAINTS& constraints (void);
 
       /// Reset function.
-      void clear (void);
+      virtual void clear (void);
 
       /// Data accessors.
       void retrieve (Monitor_Control_Types::Data& data) const;
