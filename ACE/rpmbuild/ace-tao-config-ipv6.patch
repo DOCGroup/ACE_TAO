@@ -1,0 +1,12 @@
+--- ACE_wrappers/ace/config.h~	2006-08-22 08:37:47.000000000 -0700
++++ ACE_wrappers/ace/config.h	2006-10-10 11:59:29.000000000 -0700
+@@ -62,6 +62,9 @@
+ // far back this goes.
+ #define ACE_HAS_GETIFADDRS
+ 
++#define ACE_HAS_IPV6 // Ken Sedgwick 2006-06-14
++#define ACE_USES_IPV4_IPV6_MIGRATION // Ken Sedgwick 2006-06-14
++
+ #include /**/ "ace/post.h"
+ 
+ #endif /* ACE_CONFIG_LINUX_H */

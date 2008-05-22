@@ -1,3 +1,12 @@
+Thu May 22 09:37:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/*
+          New directory with files needed to create rpm's for ACE/TAO.
+          These files will be improved and we will check whether the
+          rpm patches can be integrated into the real config files.
+          Thanks to Ken Sedgwick <ksedgwick at bonsai dot com> for
+          delivering these files.
+
 Wed May 21 19:01:10 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/MonitorControl/*:
@@ -31,13 +40,13 @@ Wed May 21 14:06:13 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Base.h:
         * ace/Monitor_Base.cpp:
-        
+
           Made the update() method non pure virtual.
 
 Tue May 20 19:33:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp:
-        
+
           Added the stringified process id to the construction of
           the message queue size monitor's name, since some tests
           were showing that message queues were being created with
