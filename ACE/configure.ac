@@ -8003,7 +8003,7 @@ AC_CONFIG_FILES([
   Makefile
   ace/Makefile
   ace/ETCL/Makefile
-  ace/MonitorControl/Makefile
+  ace/Monitor_Control/Makefile
   ace/QoS/Makefile
   ace/SSL/Makefile
   apps/Makefile
