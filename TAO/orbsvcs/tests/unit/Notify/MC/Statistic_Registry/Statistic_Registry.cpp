@@ -1,13 +1,18 @@
 // $Id$
-#include "orbsvcs/Notify/MonitorControl/Statistic_Registry.h"
-#include "orbsvcs/Notify/MonitorControl/Statistic.h"
+
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h"
+
 #include "tao/TAO_Singleton_Manager.h"
 
+#include "ace/Monitor_Point_Registry.h"
+
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
+
 void
-error(const char* msg)
+error (const char* msg)
 {
   ACE_ERROR ((LM_ERROR, "%s\n", msg));
-  ACE_OS::exit(1);
+  ACE_OS::exit (1);
 }
 
 int
@@ -17,65 +22,75 @@ ACE_TMAIN (int, ACE_TCHAR*[])
     {
       TAO_Singleton_Manager::instance ()->init ();
 
-      // Test registry acquisition
-      TAO_Statistic_Registry* reg = TAO_Statistic_Registry::instance();
+      // Test registry acquisition.
+      Monitor_Point_Registry* reg = Monitor_Point_Registry::instance ();
+      
       if (reg == 0)
-        error("TAO_Statistic_Registry::instance() failed");
+        {
+          error ("Monitor_Point_Registry::instance() failed");
+        }
 
-      // Test registry addition
+      // Test registry addition.
       TAO_Statistic* s = 0;
       ACE_NEW_RETURN (s,
                       TAO_Statistic ("test1",
                                      TAO_Statistic::TS_COUNTER),
                       2);
 
-      if (reg->add(s) == false)
-        error("clean TAO_Statistic_Registry::add() failed");
-
-      if (reg->add(s) == true)
-        error("duplicate TAO_Statistic_Registry::add() failed");
-
-      try
+      if (reg->add (s) == false)
         {
-          reg->add(0);
-          error("exception TAO_Statistic_Registry::add() failed");
-        }
-      catch (const TAO_Statistic_Registry::Map_Error& ex)
-        {
-          if (ex.why_ != TAO_Statistic_Registry::Map_Error::MAP_ERROR_INVALID_VALUE)
-            {
-              error("TAO_Statistic_Registry::add() threw exception "
-                    "with an incorrect reason");
-            }
+          error ("clean Monitor_Point_Registry::add() failed");
         }
 
-      // Test registry removal
-      if (reg->remove("fake name") == true)
-        error("non-existent TAO_Statistic_Registry::remove() failed");
+      if (reg->add (s) == true)
+        {
+          error ("duplicate Monitor_Point_Registry::add() failed");
+        }
 
-      if (reg->remove("test1") == false)
-        error("existent TAO_Statistic_Registry::remove() failed");
+      // Test registry addition of null value - should get ACE_ERROR
+      // message and return value of 'false'.
+      if (reg->add (0) == true)
+        {
+          error ("Monitor_Point_Registry::add() of null succeeded");
+        }
 
-      // Test destruction with registered statistics
+      // Test registry removal.
+      if (reg->remove ("fake name") == true)
+        {
+          error ("non-existent Monitor_Point_Registry::remove() failed");
+        }
+
+      if (reg->remove ("test1") == false)
+        {
+          error ("existent Monitor_Point_Registry::remove() failed");
+        }
+
+      // Test destruction with registered statistics.
       ACE_NEW_RETURN (s,
                       TAO_Statistic ("test1",
                                      TAO_Statistic::TS_COUNTER),
                       2);
-      if (reg->add(s) == false)
-        error("re-addition TAO_Statistic_Registry::add() failed");
+                      
+      if (reg->add (s) == false)
+        {
+          error ("re-addition Monitor_Point_Registry::add() failed");
+        }
 
       ACE_NEW_RETURN (s,
                       TAO_Statistic ("test2",
                                      TAO_Statistic::TS_NUMBER),
                       2);
-      if (reg->add(s) == false)
-        error("second TAO_Statistic_Registry::add() failed");
+                      
+      if (reg->add (s) == false)
+        {
+          error ("second Monitor_Point_Registry::add() failed");
+        }
 
       TAO_Singleton_Manager::instance ()->fini ();
     }
-  catch(...)
+  catch (...)
     {
-      error("Caught an unexpected exception type");
+      error ("Caught an unexpected exception type");
     }
 
   return 0;
