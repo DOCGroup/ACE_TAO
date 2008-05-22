@@ -56,8 +56,8 @@ public:
   /// the type specified during construction.
   void receive (const TAO_Statistic::List& data);
 
-  /// Clear all stored data
-  void clear (void);
+  /// Clear all stored data. Overridden from Monitor_Base.
+  virtual void clear (void);
 
   /// Calculate the average of the accumulated samples.
   double average (void) const;
