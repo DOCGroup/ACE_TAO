@@ -1030,9 +1030,55 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (ACE_RB_Tree_Node<
 
   if (y != z)
     {
-      // Copy the elements of y into z.
-      z->key () = y->key ();
-      z->item () = y->item ();
+      // Replace node z with node y, since y's pointer may well be
+      // held externally, and be linked with y's key and item.
+      // We will end up deleting the old unlinked, node z.
+
+      ACE_RB_Tree_Node<EXT_ID, INT_ID> *zParent = z->parent ();
+      ACE_RB_Tree_Node<EXT_ID, INT_ID> *zLeftChild = z->left ();
+      ACE_RB_Tree_Node<EXT_ID, INT_ID> *zRightChild = z->right ();
+
+      if (zParent)
+        {
+          if (z == zParent->left ())
+            {
+              zParent->left (y);
+            }
+          else
+            {
+              zParent->right (y);
+            }
+        }
+      else
+        {
+          this->root_ = y;
+        }
+      y->parent (zParent);
+
+      if (zLeftChild)
+        {
+          zLeftChild->parent (y);
+        }
+      y->left (zLeftChild);
+
+      if (zRightChild)
+        {
+          zRightChild->parent (y);
+        }
+      y->right (zRightChild);
+
+      if (parent == z)
+        {
+          parent = y;
+        }
+
+      ACE_RB_Tree_Node_Base::RB_Tree_Node_Color yColor = y->color ();
+      y->color (z->color ());
+      z->color (yColor);
+
+      //Reassign the y pointer to z because the node that y points to will be 
+      //deleted
+      y = z;
     }
 
   // CLR pp. 263 says that nil nodes are implicitly colored BLACK
