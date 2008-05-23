@@ -1,3 +1,10 @@
+Fri May 23 14:20:48 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/platform.m4:
+
+          Added *mingw64* case in ACE_SET_PLATFORM_MACROS and 
+	  ACE_CHECK_FORMAT_SPECIFIERS feature test macros.
+
 Fri May 23 12:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/RB_Tree.cpp:
@@ -8,7 +15,7 @@ Fri May 23 12:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 Fri May 23 12:14:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Control/Auto_Update_Starter.h:
-        
+
           Updated filename (which was recently changed) in a comment.
           Thanks to Simon Massey <simon.massey@prismtech.com> for
           reporting the fuzz warning.
