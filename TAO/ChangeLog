@@ -1,3 +1,9 @@
+Mon May 19 16:06:54 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/configurations.html: Fixed several typos.  Thanks to
+          Stephen Mouring <stephen dot mouring at lmco dot com> for
+          reporting this.
+  
 Fri May 23 15:24:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
@@ -206,6 +212,7 @@ Tue May 20 12:13:16 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
           When retrieving the connection handler, check the result of the
           dynamic_cast and throw a NoContext exception if it is zero.
 
+>>>>>>> .r81754
 Mon May 19 18:34:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp:
@@ -353,6 +360,7 @@ Tue May 13 07:37:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/TransportCurrent/lib/Server_Request_Interceptor.h:
           Layout change
 
+>>>>>>> .r81736
 Mon May 12 15:51:28 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * tao/Stub.cpp:

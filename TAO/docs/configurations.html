@@ -157,7 +157,7 @@ Roadmap</h3>
       href="Options.html#orb_concurrency">Server_Strategy_Factory</a></code>
       entry of the <code>svc.conf</code> file. This
       specifies the concurrency strategy an ORB uses.  This strategy
-      is orthogonal the the number of ORBs or threads that are
+      is orthogonal to the number of ORBs or threads that are
       configured in a server process.  </li><P>
 
       <ul>
@@ -774,7 +774,7 @@ Configuration for Homogenous Systems<a NAME="homogenous"></a></h3>
       and shutdown simultaneously, in those circumstances there is no need to
       check the timestamps in the POA, another macro (<tt>POA_NO_TIMESTAMP</tt>)
       can be used for this purpose.
-      <p>Users running in embebbed systems may also need to modify the default
+      <p>Users running in embedded systems may also need to modify the default
       options for TAO, the macros <tt>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</tt>, <tt>TAO_ADVANCED_RESOURCE_FACTORY_ARGS</tt>,
       <tt>TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS</tt> and <tt>TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS</tt>
       can be used for those purposes. If the footprint size is an issue users
@@ -815,7 +815,7 @@ choice of your configuration options.
 <ul>
 
   <LI><b>ORB-per-thread</b> -- The main motivation behind this options is to
-      minimize priority invertion, since threads share no ORB resources no locking
+      minimize priority inversion, since threads share no ORB resources no locking
       is required and thus, priority is preserved in most cases (assuming proper
       support from the OS). If you are not too concerned about priority inversion
       try to use a single ORB, using ORB-per-thread has some tradeoffs (like
@@ -835,8 +835,8 @@ choice of your configuration options.
       known priority the application can be configured with the
       ORB-per-thread option, and the object is activated only in the thread
       (ORB) corresponding to the desired priority.  But using a global table
-      would subert the priority assignment (because calls would run at the
-      priority of the client).</li><P>
+      would subvert the priority assignment (because calls would run
+      at the priority of the client).</li><P>
 
   <li> <b>Single-threaded vs. Multi-threaded Connection Handlers</b>
       -- The
