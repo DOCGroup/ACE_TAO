@@ -1,3 +1,12 @@
+Fri May 23 11:30:15 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.inl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
+        
+          Changed occurrences of ACE_SYNCH_MUTEX to TAO_SYNCH_MUTEX to
+          eliminate some fuzz errors. Thanks to Simon Massey
+          <simon.massey@prismtech.com> for reporting the problem.
+
 Thu May 22 19:38:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h (clear):
