@@ -26,7 +26,7 @@ TAO_Statistic::TAO_Statistic (const char* name,
 
 TAO_Statistic::~TAO_Statistic (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->type_ == TS_LIST)
     {
@@ -50,7 +50,7 @@ TAO_Statistic::receive (double data)
       throw Invalid_Operation ();
     }
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   if (this->type_ != TS_COUNTER)
     {
@@ -93,7 +93,7 @@ TAO_Statistic::receive (const TAO_Statistic::List& data)
       throw Invalid_Operation ();
     }
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   for (size_t i = 0UL; i < this->index_; ++i)
     {
@@ -112,7 +112,7 @@ TAO_Statistic::receive (const TAO_Statistic::List& data)
 void
 TAO_Statistic::clear (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
   
   // If the type is a string list, we need to delete the data
   // before we change the index.
@@ -141,7 +141,7 @@ TAO_Statistic::average (void) const
       throw Invalid_Operation ();
     }
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->mutex_, 0);
   
   return (this->index_== 0UL ? 0.0 : this->sum_ / this->index_);
 }
@@ -154,7 +154,7 @@ TAO_Statistic::sum_of_squares (void) const
       throw Invalid_Operation ();
     }
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->mutex_, 0);
   
   return this->sum_of_squares_;
 }
@@ -169,7 +169,7 @@ TAO_Statistic::get_list (void) const
 
   List list;
   
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, list);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->mutex_, list);
   
   for (size_t i = 0UL; i < this->index_; ++i)
     {
