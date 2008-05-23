@@ -17,7 +17,7 @@ ACE_ROOT = $(top_srcdir)
 SUBDIRS = \
         . \
         ETCL \
-        MonitorControl \
+        Monitor_Control \
         SSL
 
 CLEANFILES =
