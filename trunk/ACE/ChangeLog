@@ -1,3 +1,11 @@
+Fri May 23 12:14:54 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Control/Auto_Update_Starter.h:
+        
+          Updated filename (which was recently changed) in a comment.
+          Thanks to Simon Massey <simon.massey@prismtech.com> for
+          reporting the fuzz warning.
+
 Fri May 23 08:14:38 UTC 2008  Olli Savia  <ops@iki.fi>
 
         * tests/run_test.lst:
