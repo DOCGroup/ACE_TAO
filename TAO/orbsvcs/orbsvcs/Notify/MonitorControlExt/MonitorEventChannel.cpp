@@ -504,9 +504,6 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
   if (this->name_.length () != 0)
     {
-      Monitor_Point_Registry* instance =
-        Monitor_Point_Registry::instance ();
-
       ACE_CString dir_name (this->name_ + "/");
       ACE_CString stat_name = dir_name +
                               NotifyMonitoringExt::EventChannelCreationTime;
@@ -573,10 +570,10 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       EventChannelConsumersSuppliers* suppliers = 0;
       ACE_NEW_THROW_EX (suppliers,
                         EventChannelConsumersSuppliers (
-                                               this,
-                                               stat_name.c_str (),
-                                               TAO_Statistic::TS_NUMBER,
-                                               true),
+                          this,
+                          stat_name.c_str (),
+                          TAO_Statistic::TS_NUMBER,
+                          true),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, suppliers))
@@ -594,10 +591,10 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       suppliers = 0;
       ACE_NEW_THROW_EX (suppliers,
                         EventChannelConsumersSuppliers (
-                                               this,
-                                               stat_name.c_str (),
-                                               TAO_Statistic::TS_LIST,
-                                               true),
+                          this,
+                          stat_name.c_str (),
+                          TAO_Statistic::TS_LIST,
+                          true),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, suppliers))
@@ -615,9 +612,9 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       EventChannelConsumerSupplierAdmins* conadmins = 0;
       ACE_NEW_THROW_EX (conadmins,
                         EventChannelConsumerSupplierAdmins (
-                                               this,
-                                               stat_name.c_str (),
-                                               TAO_Statistic::TS_NUMBER),
+                          this,
+                          stat_name.c_str (),
+                          TAO_Statistic::TS_NUMBER),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, conadmins))
@@ -635,9 +632,9 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       conadmins = 0;
       ACE_NEW_THROW_EX (conadmins,
                         EventChannelConsumerSupplierAdmins (
-                                               this,
-                                               stat_name.c_str (),
-                                               TAO_Statistic::TS_LIST),
+                          this,
+                          stat_name.c_str (),
+                          TAO_Statistic::TS_LIST),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, conadmins))
@@ -655,10 +652,10 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       EventChannelConsumerSupplierAdmins* supadmins = 0;
       ACE_NEW_THROW_EX (supadmins,
                         EventChannelConsumerSupplierAdmins (
-                                               this,
-                                               stat_name.c_str (),
-                                               TAO_Statistic::TS_NUMBER,
-                                               true),
+                          this,
+                          stat_name.c_str (),
+                          TAO_Statistic::TS_NUMBER,
+                          true),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, supadmins))
@@ -676,10 +673,10 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       supadmins = 0;
       ACE_NEW_THROW_EX (supadmins,
                         EventChannelConsumerSupplierAdmins (
-                                               this,
-                                               stat_name.c_str (),
-                                               TAO_Statistic::TS_LIST,
-                                               true),
+                          this,
+                          stat_name.c_str (),
+                          TAO_Statistic::TS_LIST,
+                          true),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, supadmins))
@@ -772,7 +769,8 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       else
         {
           delete sd;
-          ACE_ERROR ((LM_ERROR, "Unable to add control: %s\n",
+          ACE_ERROR ((LM_ERROR,
+                      "Unable to add control: %s\n",
                       this->name_.c_str ()));
         }
     }
