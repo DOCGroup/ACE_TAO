@@ -1,6 +1,7 @@
 // $Id$
 
-#include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_ctype.h"
 
@@ -176,8 +177,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
             {
               try
                 {
-                  CosNotification::NotificationServiceMonitorControl::NameList_var names =
-                    nsm->get_statistic_names ();
+                  Monitor::NameList_var names = nsm->get_statistic_names ();
                   CORBA::ULong length = names->length ();
                   ACE_DEBUG ((LM_DEBUG, "Statistic names\n"));
 
@@ -186,15 +186,22 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                   ACE_NEW_THROW_EX (narray,
                                     const char* [length],
                                     CORBA::NO_MEMORY ());
-                  for(CORBA::ULong i = 0; i < length; i++)
-                    narray[i] = names[i].in ();
-                  ACE_OS::qsort (narray, length,
-                                 sizeof (const char*), sorter);
+                                    
+                  for (CORBA::ULong i = 0; i < length; ++i)
+                    {
+                      narray[i] = names[i].in ();
+                    }
+                    
+                  ACE_OS::qsort (narray,
+                                 length,
+                                 sizeof (const char*),
+                                 sorter);
 
-                  for(CORBA::ULong i = 0; i < length; i++)
+                  for (CORBA::ULong i = 0; i < length; ++i)
                     {
                       ACE_DEBUG ((LM_DEBUG, "  %s\n", narray[i]));
                     }
+                    
                   delete [] narray;
                 }
               catch (const CORBA::Exception& ex)
@@ -205,37 +212,51 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           else
             {
               if (process_command (nsm.in (), rl, shutdown_cmd))
-                continue;
+                {
+                  continue;
+                }
               else if (process_command (nsm.in (), rl, rm_consumer))
-                continue;
+                {
+                  continue;
+                }
               else if (process_command (nsm.in (), rl, rm_supplier))
-                continue;
+                {
+                  continue;
+                }
               else if (process_command (nsm.in (), rl, rm_consumeradmin))
-                continue;
+                {
+                  continue;
+                }
               else if (process_command (nsm.in (), rl, rm_supplieradmin))
-                continue;
+                {
+                  continue;
+                }
 
               try
                 {
                   CosNotification::NotificationServiceMonitorControl::Data_var data =
                     nsm->get_statistic (rl);
                   ACE_DEBUG ((LM_DEBUG, "%s => ", rl));
+                  
                   if (data->_d () == CosNotification::NotificationServiceMonitorControl::DATA_NUMERIC)
                     {
-                      CosNotification::NotificationServiceMonitorControl::Numeric_var
-                        num = data->num ();
-                      ACE_DEBUG ((LM_DEBUG, "Last: %g Average: %g\n",
-                                  num->last, num->average));
+                      CosNotification::NotificationServiceMonitorControl::Numeric_var num =
+                        data->num ();
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "Last: %g Average: %g\n",
+                                  num->last,
+                                  num->average));
                     }
                   else
                     {
-                      CosNotification::NotificationServiceMonitorControl::NameList
-                        list = data->list ();
+                      Monitor::NameList list = data->list ();
                       CORBA::ULong length = list.length ();
-                      for(CORBA::ULong i = 0; i < length; i++)
+                      
+                      for (CORBA::ULong i = 0; i < length; ++i)
                         {
                           ACE_DEBUG ((LM_DEBUG, "%s ", list[i].in ()));
                         }
+                        
                       ACE_DEBUG ((LM_DEBUG, "\n"));
                     }
                 }
@@ -261,8 +282,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, "Notification Service Monitor: "
-                            "unexpected exception type\n"));
+      ACE_ERROR ((LM_ERROR,
+                  "Notification Service Monitor: "
+                  "unexpected exception type\n"));
       status++;
     }
 
