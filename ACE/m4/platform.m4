@@ -281,9 +281,11 @@ dnl Check for _POSIX_C_SOURCE macro
   *cygwin32*)
     AC_DEFINE([CYGWIN32])
     ;;
+  *mingw32*)
+    AC_DEFINE([ACE_WIN32])
+    ;;
   *win32*)
     AC_DEFINE([ACE_WIN32])
-    AC_DEFINE([ACE_UINT64_FORMAT_SPECIFIER], ["%I64u"])
 dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
     if test "$ace_u_long_long_typedef_set" != yes; then
       ACE_UINT64="unsigned __int64"
@@ -352,11 +354,17 @@ linux*)
     alpha|ia64|x86_64)
       AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
       AC_DEFINE([ACE_SSIZE_T_FORMAT_SPECIFIER], ["%ld"])
+      AC_DEFINE([ACE_INT64_FORMAT_SPECIFIER], ["%ld"])
       AC_DEFINE([ACE_UINT64_FORMAT_SPECIFIER], ["%lu"])
       ;;
     *)
       ;;
   esac
+  ;;
+
+mingw32*)
+  AC_DEFINE([ACE_INT64_FORMAT_SPECIFIER], ["%I64d"])
+  AC_DEFINE([ACE_UINT64_FORMAT_SPECIFIER], ["%I64u"])
   ;;
 
 netbsd*)
@@ -368,6 +376,11 @@ netbsd*)
     *)
       ;;
   esac
+  ;;
+
+win32*)
+  AC_DEFINE([ACE_INT64_FORMAT_SPECIFIER], ["%I64d"])
+  AC_DEFINE([ACE_UINT64_FORMAT_SPECIFIER], ["%I64u"])
   ;;
 
 *)
