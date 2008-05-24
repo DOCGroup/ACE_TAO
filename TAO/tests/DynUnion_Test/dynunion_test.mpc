@@ -15,4 +15,6 @@ project(dynuniontest): dynamicany, typecodefactory {
     DynUnionTest.cpp
     dynanyC.cpp
   }
+  IDL_Files {
+  }
 }

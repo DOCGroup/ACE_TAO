@@ -1,20 +1,31 @@
+Sat May 24 19:45:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Bug_2925_Regression/Bug_2925_Regression.mpc:
+
+          Add IDL custom-only project to compile *.idl files.  Changed
+          Server and Client projects to depend on it.
+
+        * tests/DynUnion_Test/dynunion_test.mpc:
+
+          Add empty IDL_Files section in dynuniontest project.
+
 Mon May 19 16:06:54 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs/configurations.html: Fixed several typos.  Thanks to
           Stephen Mouring <stephen dot mouring at lmco dot com> for
           reporting this.
-  
+
 Fri May 23 15:24:40 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
-        
+
           Changed the type name of the NameList variable occurrences
           to reflect the recent change to NotificationServiceMC.idl.
 
 Fri May 23 11:42:38 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp (add_stats):
-        
+
           Removed an unused local variable, thanks again to Simon Massey
           <simon.massey@prismtech.com> for reporting the problem.
 
@@ -22,7 +33,7 @@ Fri May 23 11:30:15 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.inl:
         * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
-        
+
           Changed occurrences of ACE_SYNCH_MUTEX to TAO_SYNCH_MUTEX to
           eliminate some fuzz errors. Thanks to Simon Massey
           <simon.massey@prismtech.com> for reporting the problem.
