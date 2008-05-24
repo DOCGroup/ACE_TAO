@@ -1,8 +1,15 @@
+Sat May 24 19:50:46 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Adjust libpaths now that ACE_MonitorControl library has been
+          renamed to just ACE_Monitor_Control.
+
 Fri May 23 14:20:48 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/platform.m4:
 
-          Added *mingw64* case in ACE_SET_PLATFORM_MACROS and 
+          Added *mingw64* case in ACE_SET_PLATFORM_MACROS and
 	  ACE_CHECK_FORMAT_SPECIFIERS feature test macros.
 
 Fri May 23 12:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>

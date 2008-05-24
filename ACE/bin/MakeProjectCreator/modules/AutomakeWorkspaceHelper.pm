@@ -57,7 +57,7 @@ my(%libdirs) = ('libACE_SSL.la'       => 'ace/SSL',
                 'libACE_HTBP.la'      => 'protocols/ace/HTBP',
 		'libACE_ETCL.la'      => 'ace/ETCL',
                 'libACE_ETCL_Parser.la' => 'ace/ETCL',
-                'libACE_MonitorControl.la' => 'ace/MonitorControl',
+                'libACE_Monitor_Control.la' => 'ace/Monitor_Control',
                 'libKokyu.la'         => 'Kokyu',
                );
 
