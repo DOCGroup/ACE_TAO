@@ -1,11 +1,12 @@
 // $Id$
 
+#include "NodeManager_Impl.h"
+
 #include "ace/Log_Msg.h"
 #include "ace/streams.h"
 
 #include "DAnCE/Logger/Log_Macros.h"
 
-#include "NodeManager_Impl.h"
 #include <ace/OS_Memory.h>
 
 namespace DAnCE
@@ -13,15 +14,18 @@ namespace DAnCE
   NodeManager_Impl::NodeManager_Impl(CORBA::ORB_ptr orb, 
                                      PortableServer::POA_ptr poa, 
                                      const char* name, 
-                                     RedirectionService& redirection)
+                                     RedirectionService& redirection,
+                                     PROPERTY_MAP &properties)
     : orb_ (CORBA::ORB::_duplicate (orb)), 
       poa_ (PortableServer::POA::_duplicate (poa)), 
       name_ (name), 
-      redirection_ (redirection)
+      redirection_ (redirection),
+      properties_ (properties)
   {
     DANCE_TRACE (DLINFO "NodeManager_Impl::NodeManager_Impl");
     redirection.add_node (name);
     DANCE_DEBUG ((LM_INFO, DLINFO "NodeManager_impl::NodeManager_impl has been created\n"));
+    
   }
 
   NodeManager_Impl::~NodeManager_Impl()
@@ -31,13 +35,25 @@ namespace DAnCE
          iter != this->managers_.end();
          ++iter)
       {
-        PortableServer::ObjectId_var id = this->poa_->servant_to_id ( (*iter).int_id_);
-        this->poa_->deactivate_object (id.in());
-        DANCE_DEBUG ((LM_TRACE, DLINFO
-                      "NodeManager_impl::~NodeManager_impl - deleting NodeApplicationManager\n"));
-        delete (*iter).int_id_;
-        DANCE_DEBUG ((LM_DEBUG, DLINFO
-                      "NodeManager_impl::~NodeManager_impl - NodeApplicationManager deleted\n"));
+        try
+          {
+            PortableServer::ObjectId_var id = this->poa_->servant_to_id ( (*iter).int_id_);
+            DANCE_DEBUG ((LM_TRACE, DLINFO
+                          "NodeManager_impl::~NodeManager_impl - Deactivating NodeApplicationManager %s\n",
+                          (*iter).ext_id_.c_str ()));
+            this->poa_->deactivate_object (id.in());
+            DANCE_DEBUG ((LM_TRACE, DLINFO
+                          "NodeManager_impl::~NodeManager_impl - deleting NodeApplicationManager\n"));
+            delete (*iter).int_id_;
+            DANCE_DEBUG ((LM_DEBUG, DLINFO
+                          "NodeManager_impl::~NodeManager_impl - NodeApplicationManager deleted\n"));
+          }
+        catch (...)
+          {
+            DANCE_ERROR ((LM_WARNING, DLINFO
+                          "NodeManager_impl::~NodeManager_impl - Caught exception while removing "
+                          "NodeApplicationManager %s\n", (*iter).ext_id_.c_str ()));
+          }        
       }
   }
 
@@ -89,7 +105,8 @@ namespace DAnCE
                                                    this->poa_.in(),
                                                    plan,
                                                    this->redirection_,
-                                                   this->name_),
+                                                   this->name_,
+                                                   this->properties_),
                       CORBA::NO_MEMORY());
     DANCE_DEBUG ((LM_TRACE, DLINFO "NodeManager_impl::preparePlan - activating NodeApplicationManager...\n"));
     PortableServer::ObjectId_var id = this->poa_->activate_object (manager);

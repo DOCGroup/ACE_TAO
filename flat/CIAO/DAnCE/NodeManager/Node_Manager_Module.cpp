@@ -12,6 +12,7 @@
 #include "ciao/CIAO_common.h"
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "DAnCE/Logger/Log_Macros.h"
+#include <DAnCE/Deployment/Deployment_common.h>
 
 #include "Node_Manager_Module.h"
 #include "NodeManager_Impl.h"
@@ -412,11 +413,13 @@ DAnCE_NodeManager_Module::create_object (CORBA::ORB_ptr orb,
       DAnCE::NodeManager_Impl * nm = 0;
       if (this->nm_map_.find (node_name, nm) == -1)
         {
+          DAnCE::PROPERTY_MAP properties;
           ACE_NEW_RETURN (nm,
                           DAnCE::NodeManager_Impl (orb,
                                                    poa.in (),
                                                    node_name.c_str(),
-                                                   *this->redirection_),
+                                                   *this->redirection_,
+                                                   properties),
                           CORBA::Object::_nil ());
 
           this->nm_map_.bind (node_name, nm);

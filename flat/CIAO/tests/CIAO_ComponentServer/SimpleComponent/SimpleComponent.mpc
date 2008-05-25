@@ -116,7 +116,7 @@ project(SimpleComponent_svnt) : ciao_servant, ccm_svnt {
   }
 }
 
-project (Activator_CIAOComponentServer_Test) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client {
+project (SimpleComponent_CIAOComponentServer_Test) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client {
    after += SimpleComponent_stub
    libs += SimpleComponent_stub CIAO_Logger
    IDL_Files {
