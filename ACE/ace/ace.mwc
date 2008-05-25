@@ -11,7 +11,7 @@ workspace {
   ace_tkreactor.mpc
   ace_xtreactor.mpc
   ETCL
-  MonitorControl
+  Monitor_Control
   QoS
   SSL
 }
