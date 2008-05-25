@@ -17,84 +17,25 @@
 #ifndef NODEAPPLICATION_IMPL_H_
 #define NODEAPPLICATION_IMPL_H_
 
-#include "ace/Map_Manager.h"
+#include "NodeApplication_Export.h"
 
+#include "ace/Map_Manager.h"
+#include "ace/Containers_T.h"
+#include "tao/ORB.h"
+#include "tao/Object.h"
 #include "ccm/CCM_KeylessCCMHomeC.h"
 #include "ccm/ComponentsC.h"
-#include "Cdmw/CDMW_IDLC.h"
+#include "RedirectionService/RedirectionService.h"
+#include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
+//#include "Cdmw/CDMW_IDLC.h"
+
 #include "ComponentServer/ComponentServerC.h"
 #include "Deployment/Deployment_NodeApplicationS.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "Deployment/DeploymentC.h"
+#include "Deployment/Deployment_common.h"
 
-#include "NodeApplication_Export.h"
-#include "ComponentInstallation_Impl.h"
-#include "ServerActivator_Impl.h"
-#include "RedirectionService/RedirectionService.h"
-/*
- *     // required variables list:
- // PROCESS_DESTINATION
- // This destination is specified in .cad file in a <processcollocation><destination> tag.
- const char* DESTINATION_NAME = "Process_1@CCMApplication";
- // COMPONENT_KIND
- // The component kind is specified in .ccd file, in <componentkind> tag.
- const CdmwDeployment::ComponentKindValue kind = CdmwDeployment::SESSION;
- // UUID
- // The uuid parameter corresponds to the implementation id specified
- // in .csd file, in <implementation id=” ”> tag.
- const char* uuid = "DCE:700dc518-0110-11ce-ac8f-0800090b5d3e";
- // ENTRYPOINT
- // The entrypoint parameter correspond to the operation to be called for Home creation.
- // It is specified in .csd file, in <implementation><code><entrypoint> tag.
- const char* entrypoint = "create_HelloProviderHome";
- // SERVANT_LIFETIME
- // The servant lifetime is specified in .ccd file, in <componentkind>…<servant lifetime=” “> tag.
- CdmwDeployment::ServantLifetimeValue lifetime = CdmwDeployment::COMPONENT_LIFETIME;
- // THREADING_POLICY
- // The threading policy is specified in .ccd file, in <threading policy=” “> tag.
- const CdmwDeployment::ThreadingPolicyValue threading = CdmwDeployment::MULTITHREAD;
- // HOME_REPOSITORY_ID
- // The home’s RepositoryId is specified in .ccd file, in <homerepid repid=” “> tag.
- const char* repositoryID = "IDL:acme.com/Example/HelloProviderHome:1.0";
- // HOME_SERVANT_CLASSNAME
- // The home’s servant classname is specified in .ccd file,
- // in <homefeatures><extension class=”HOME_SERVANT_CLASSNAME“ origin=”Cdmw”> tag.
- const char* servantHomeClassName = "Cdmw.CCM.CIF.CdmwExample.SessionHelloProviderHome_impl";
- // VALUETYPE_FACTORY_DEPENDENCIES
- // The valuetype factories are specified in .csd file,
- // in <implementation><dependency><valuetypefactory> tag.
- CdmwDeployment::ValuetypeFactoryDescriptionSeq dependenciesValueFactory(1L);
- CdmwDeployment::ValuetypeFactoryDescription desc;
- desc.repid = "IDL:acme.com/Example/SaySomethingElse:1.0";
- desc.factory_entrypoint = "createSaySomethingElseFactory";
- dependenciesValueFactory[0]=desc;
- // FAULT_TOLERANCE_REPLICATION_STYLE
- // The FaultTolerance replication style is always set to WARM_PASSIVE at this time.
- const CdmwDeployment::FTReplicationStyleValue styleFaultTolerance = CdmwDeployment::WARM_PASSIVE;
- // COMPONENT_NAME
- // The component’s name is specified in .cad file, as id in <componentinstantiation id=” “> tag.
- const char* componentName = "HelloProvider";
- // USES_PORT_TIMEOUTS
- // The uses port timeouts are specified in .cad file,
- // in <componentinstantiation><extension class=”USES_PORT_TIMEOUT“ origin=”Cdmw”> tags.
- CdmwCcmCif::UsesPortTimeouts timeouts(1L);
- CdmwCcmCif::UsesPortTimeout timeout;
- timeout.uses_name = "";
- timeout.timeout = 0;
- // RECORDING
- // If incoming requests to a component are to be recorded, it is specified in .cad file,
- // in <componentinstantiation><extension class=”RECORDING“ origin=”Cdmw”>true</extension> tags.
- const bool recording = true;
- // FAULT_TOLERANCE_GROUP_REF
- // The object group reference is retrieved according to the fault tolerant group’s destination,
- // specified in .cad file, in <ftcomponentgroup><destination> tag.
- //FT::ObjectGroup_var = FT::ObjectGroup::_nil();//"HelloProviderGroupName";
- // FACET_NAME
- // If component provides some facets they specified
- // in .ccd file, in <ports><provides providesname="hello_facet"> tag
- const char* facet = "hello_facet";
-*/
-
+//#include "ComponentInstallation_Impl.h"
 namespace DAnCE
 {
 
@@ -107,12 +48,10 @@ namespace DAnCE
                           PortableServer::POA_ptr poa,
                           const Deployment::DeploymentPlan& plan,
                           RedirectionService & redirection,
-                          const ACE_CString& node_name);
+                          const ACE_CString& node_name,
+                          PROPERTY_MAP &properties);
 
     virtual ~NodeApplication_Impl();
-
-    //TODO Add throw specification
-    void init();
 
     virtual void finishLaunch (const Deployment::Connections & providedReference,
                                ::CORBA::Boolean start);
@@ -125,6 +64,9 @@ namespace DAnCE
     void init_components();
 
   private:
+    //TODO Add throw specification
+    void init();
+
     enum ERequestType
     {
       eCreateComponentServer,
@@ -136,9 +78,39 @@ namespace DAnCE
     enum EInstanceType
     {
       eHome,
-      eComponent
+      eComponent,
+      eInvalid
     };
-
+    
+    struct Instance
+    {
+      bool configured;
+      EInstanceType type;
+      CORBA::ULong idd_idx;
+      CORBA::ULong mdd_idx;
+    };
+    
+    typedef ACE_Array<Instance> INSTANCES;
+    
+    struct Container
+    {
+      INSTANCES homes;
+      INSTANCES components;
+      Deployment::Properties properties;
+    };
+    
+    typedef ACE_Array<Container> CONTAINERS;
+    
+    struct ComponentServer
+    {
+      CONTAINERS containers;
+      Deployment::Properties properties;
+    };
+    
+    typedef ACE_Array<ComponentServer> COMPONENTSERVERS;
+    
+    COMPONENTSERVERS servers_;
+    
     EInstanceType get_instance_type (const Deployment::Properties& prop) const;
 
     void create_config_values (const Deployment::Properties& prop,
@@ -178,8 +150,8 @@ namespace DAnCE
     PortableServer::POA_var poa_;
     const Deployment::DeploymentPlan& plan_;
 
-    ComponentInstallation_Impl* installation_;
-    ServerActivator_Impl* activator_;
+    //ComponentInstallation_Impl* installation_;
+    CIAO::Deployment::CIAO_ServerActivator_i* activator_;
 
     typedef ACE_Map_Manager<ACE_CString, ::Components::Deployment::Container_var, ACE_Null_Mutex> TContainers;
     TContainers containers_;
@@ -193,6 +165,8 @@ namespace DAnCE
     RedirectionService & redirection_;
 
     ACE_CString node_name_;
+    
+    PROPERTY_MAP &properties_;
   };
 };
 #endif /*NODEAPPLICATION_IMPL_H_*/

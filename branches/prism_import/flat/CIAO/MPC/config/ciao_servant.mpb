@@ -1,3 +1,5 @@
 //$Id$
-project : ccm_svnt, ciaocidldefaults, taoidldefaults {
+project : ccm_svnt, ciaocidldefaults, taoidldefaults, ciao_container_base, portableserver {
+   after += CIAO_Servant_Impl CIAO_Context_Impl
+   libs += CIAO_Servant_Impl CIAO_Context_Impl
 }

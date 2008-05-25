@@ -1,6 +1,6 @@
 // $Id$
 
-project: boost_filesystem, boost_regex, exceptions, crosscompile {
+project: boost_filesystem, boost_regex, exceptions, crosscompile, boost_system {
   requires += cidl
   includes += $(CIAO_ROOT) $(CIAO_ROOT)/CCF $(ACE_ROOT)/contrib/utility
   libpaths += $(CIAO_ROOT)/CCF/CCF $(ACE_ROOT)/lib

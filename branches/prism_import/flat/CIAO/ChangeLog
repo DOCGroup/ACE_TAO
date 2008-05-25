@@ -1,13 +1,37 @@
+Sun May 25 22:53:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Stripped much of the functionality to prepare for CIAO-specific implementation. 
+        
+        * DAnCE/Deployment/Deployment_common.h:
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/RedirectionService/CCMObjectLocator.h:
+        * MPC/config/ciao_servant.mpb:
+        * MPC/config/cidlc.mpb:
+        * MPC/config/dance_component_server_svnt.mpb:
+        * MPC/config/dance_node_application.mpb:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc:
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent.mpc:
+
+           compile/link errors. 
+        
 Tue May 20 18:43:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/ExecImplSourceGenerator.cpp:
-        
-          Fixed spelling error. 
-        
+
+          Fixed spelling error.
+
         * DAnCE/Deployment/Deployment_common.h:
 
-          Added PROPERTY_MAP typedef, a hash map translating names to property values. 
-        
+          Added PROPERTY_MAP typedef, a hash map translating names to property values.
+
         * MPC/config/ciao_servant.mpb:
         * MPC/config/cidlc.mpb:
         * MPC/config/dance_component_server_svnt.mpb:
@@ -20,8 +44,8 @@ Tue May 20 18:43:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ofccm/NodeApplication/NodeApplication.mpc:
         * tests/CIAO_ComponentServer/Activator/Activator.mpc:
 
-          Compile/link fixes. 
-        
+          Compile/link fixes.
+
         * ciao/ComponentServer/CIAO_ComponentServer.h:
         * ciao/ComponentServer/CIAO_ComponentServer.cpp:
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
@@ -32,12 +56,12 @@ Tue May 20 18:43:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Logger/Logger_Service.h:
         * ciao/Logger/Logger_Service.cpp:
 
-          Compile fixes/bugfixes for bugs exposed by SimpleComponent unit test. 
-        
+          Compile fixes/bugfixes for bugs exposed by SimpleComponent unit test.
+
         * tests/CIAO_ComponentServer/Basic/run_test.pl:
 
-          slight bugfix. 
-        
+          slight bugfix.
+
         * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.cidl:
         * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.idl:
         * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc:
@@ -47,10 +71,10 @@ Tue May 20 18:43:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_stub_export.h:
         * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_svnt_export.h:
         * tests/CIAO_ComponentServer/SimpleComponent/client.cpp:
-        
-          Simple unit test which manually deploys a simple component into the 
-          CIAO_ComponentServer. 
-        
+
+          Simple unit test which manually deploys a simple component into the
+          CIAO_ComponentServer.
+
         * tools/Config_Handlers/XSCRT/XML.hpp:
         * tools/XML/XML_Error_Handler.h:
         * tools/XML/XML_Error_Handler.cpp:
@@ -58,7 +82,7 @@ Tue May 20 18:43:42 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/XML/XML_Schema_Resolver.h:
         * tools/XML/XML_Schema_Resolver.tpp:
         * tools/XML/XML_Schema_Resolver.cpp:
-        
+
           Updates for Xerces 2.0
 
 Thu Apr 10 23:44:01 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>

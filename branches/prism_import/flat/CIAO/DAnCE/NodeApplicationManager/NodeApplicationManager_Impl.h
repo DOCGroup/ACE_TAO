@@ -30,11 +30,12 @@ namespace DAnCE
   class NodeApplicationManager_Export NodeApplicationManager_Impl : public virtual POA_Deployment::NodeApplicationManager
     {
     public:
-      NodeApplicationManager_Impl (CORBA::ORB_ptr orb
-                                   , PortableServer::POA_ptr poa
-                                   , const Deployment::DeploymentPlan& plan
-                                   , RedirectionService & redirection
-                                   , const ACE_CString& name);
+      NodeApplicationManager_Impl (CORBA::ORB_ptr orb, 
+                                   PortableServer::POA_ptr poa,
+                                   const Deployment::DeploymentPlan& plan, 
+                                   RedirectionService & redirection, 
+                                   const ACE_CString& name,
+                                   PROPERTY_MAP &properties);
 
       virtual ~NodeApplicationManager_Impl();
 
@@ -52,6 +53,7 @@ namespace DAnCE
       NodeApplication_Impl* application_;
       RedirectionService & redirection_;
       ACE_CString node_name_;
+      PROPERTY_MAP &properties_;
     };
 };
 #endif /*NODEAPPLICATIONMANAGER_IMPL_H_*/
