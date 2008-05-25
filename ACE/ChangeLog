@@ -1,3 +1,17 @@
+Sun May 25 04:11:37 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
+
+	* rpmbuild/ace-tao.spec:
+	* rpmbuild/ace-tao-rnq.patch:
+	* rpmbuild/ace-tao-config-tmplvis.patch:
+	* rpmbuild/ace-tao-hasicmp.patch:
+	* rpmbuild/ace-tao-obstack.patch:
+	* rpmbuild/ace-tao-config-ipv6.patch:
+          Removed ace-tao-obstack.patch, no longer needed.
+          Converted ace-tao-config-ipv6.patch into conditional rpm script.
+          Converted ace-tao-rnq.patch into conditional rpm script.
+          Converted ace-tao-config-tmplvis.patch and ace-tao-hasicmp.patch
+          into rpm script.
+
 Sat May 24 19:50:46 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
