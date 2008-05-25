@@ -36,13 +36,6 @@ craft_CPPFLAGS = \
 craft_SOURCES = \
   SpaceCraft.cpp
 
-../Gate/.:
-	mkdir -p ../Gate/.
-
-
-craft_DEPENDENCIES = \
- ../Gate/.
-
 craft_LDFLAGS = \
   -L../Gate/.
 

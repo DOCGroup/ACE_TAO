@@ -35,13 +35,6 @@ server_SOURCES = \
   Stock_Factory_i.h \
   Stock_i.h
 
-../../idl:
-	mkdir -p ../../idl
-
-
-server_DEPENDENCIES = \
- ../../idl
-
 server_LDFLAGS = \
   -L../../idl
 
