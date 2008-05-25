@@ -1,11 +1,17 @@
+Sun May 25 17:18:20 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/ace.mwc:
+
+          s/MonitorControl/Monitor_Control/
+
 Sun May 25 04:11:37 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
-	* rpmbuild/ace-tao.spec:
-	* rpmbuild/ace-tao-rnq.patch:
-	* rpmbuild/ace-tao-config-tmplvis.patch:
-	* rpmbuild/ace-tao-hasicmp.patch:
-	* rpmbuild/ace-tao-obstack.patch:
-	* rpmbuild/ace-tao-config-ipv6.patch:
+        * rpmbuild/ace-tao.spec:
+        * rpmbuild/ace-tao-rnq.patch:
+        * rpmbuild/ace-tao-config-tmplvis.patch:
+        * rpmbuild/ace-tao-hasicmp.patch:
+        * rpmbuild/ace-tao-obstack.patch:
+        * rpmbuild/ace-tao-config-ipv6.patch:
           Removed ace-tao-obstack.patch, no longer needed.
           Converted ace-tao-config-ipv6.patch into conditional rpm script.
           Converted ace-tao-rnq.patch into conditional rpm script.
@@ -24,7 +30,7 @@ Fri May 23 14:20:48 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
         * m4/platform.m4:
 
           Added *mingw64* case in ACE_SET_PLATFORM_MACROS and
-	  ACE_CHECK_FORMAT_SPECIFIERS feature test macros.
+          ACE_CHECK_FORMAT_SPECIFIERS feature test macros.
 
 Fri May 23 12:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
