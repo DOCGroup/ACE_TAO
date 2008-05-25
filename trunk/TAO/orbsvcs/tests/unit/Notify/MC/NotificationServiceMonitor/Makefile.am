@@ -17,6 +17,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.NotificationServiceMonitor.am
 
 if BUILD_EXCEPTIONS
+if !BUILD_WINCE
 
 noinst_PROGRAMS = NotificationServiceMonitor
 
@@ -33,6 +34,11 @@ NotificationServiceMonitor_SOURCES = \
 
 NotificationServiceMonitor_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_MC.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Monitor.la \
+  $(ACE_BUILDDIR)/ace/Monitor_Control/libACE_Monitor_Control.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -40,6 +46,7 @@ NotificationServiceMonitor_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_WINCE
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

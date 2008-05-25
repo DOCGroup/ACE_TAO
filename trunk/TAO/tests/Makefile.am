@@ -53,6 +53,7 @@ SUBDIRS = \
         Bug_1869_Regression \
         Bug_1904_Regression \
         Bug_2084_Regression \
+        Bug_2085_Regression \
         Bug_2119_Regression \
         Bug_2122_Regression \
         Bug_2124_Regression \
@@ -66,6 +67,7 @@ SUBDIRS = \
         Bug_2201_Regression \
         Bug_2222_Regression \
         Bug_2234_Regression \
+        Bug_2243_Regression \
         Bug_2289_Regression \
         Bug_2319_Regression \
         Bug_2328_Regression \

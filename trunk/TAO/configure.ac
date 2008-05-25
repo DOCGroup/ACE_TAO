@@ -651,6 +651,7 @@ if test $tao_build_tests = yes; then
     tests/Bug_1869_Regression/Makefile
     tests/Bug_1904_Regression/Makefile
     tests/Bug_2084_Regression/Makefile
+    tests/Bug_2085_Regression/Makefile
     tests/Bug_2119_Regression/Makefile
     tests/Bug_2122_Regression/Makefile
     tests/Bug_2124_Regression/Makefile
@@ -664,6 +665,7 @@ if test $tao_build_tests = yes; then
     tests/Bug_2201_Regression/Makefile
     tests/Bug_2222_Regression/Makefile
     tests/Bug_2234_Regression/Makefile
+    tests/Bug_2243_Regression/Makefile
     tests/Bug_2289_Regression/Makefile
     tests/Bug_2319_Regression/Makefile
     tests/Bug_2328_Regression/Makefile

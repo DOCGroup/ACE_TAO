@@ -31,13 +31,6 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp
 
-../../idl:
-	mkdir -p ../../idl
-
-
-client_DEPENDENCIES = \
- ../../idl
-
 client_LDFLAGS = \
   -L../../idl
 

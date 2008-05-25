@@ -40,13 +40,6 @@ Basic_SOURCES = \
   Consumer.h \
   Supplier.h
 
-../../lib:
-	mkdir -p ../../lib
-
-
-Basic_DEPENDENCIES = \
- ../../lib
-
 Basic_LDFLAGS = \
   -L../../lib
 

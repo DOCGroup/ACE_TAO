@@ -14,30 +14,22 @@ TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
 
-## Makefile.Reference_Counted_Servant_Server.am
+## Makefile.Bug_2243_Regression.am
 
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS = server
+noinst_PROGRAMS = ORB_object_to_string
 
-server_CPPFLAGS = \
+ORB_object_to_string_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(srcdir)/../Generic_Servant \
-  -I../Generic_Servant
+  -I$(TAO_BUILDDIR)
 
-server_SOURCES = \
-  server.cpp
+ORB_object_to_string_SOURCES = \
+  ORB_object_to_string.cpp
 
-server_LDFLAGS = \
-  -L../Generic_Servant
-
-server_LDADD = \
-  $(top_builddir)/tests/POA/Generic_Servant/libGeneric_Servant.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+ORB_object_to_string_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 

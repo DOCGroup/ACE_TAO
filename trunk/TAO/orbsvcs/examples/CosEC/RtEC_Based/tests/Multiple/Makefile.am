@@ -39,13 +39,6 @@ Consumer_SOURCES = \
   Consumer.h \
   Multiple.h
 
-../../lib:
-	mkdir -p ../../lib
-
-
-Consumer_DEPENDENCIES = \
- ../../lib
-
 Consumer_LDFLAGS = \
   -L../../lib
 
@@ -94,13 +87,6 @@ Supplier_SOURCES = \
   Supplier.cpp \
   Multiple.h \
   Supplier.h
-
-../../lib:
-	mkdir -p ../../lib
-
-
-Supplier_DEPENDENCIES = \
- ../../lib
 
 Supplier_LDFLAGS = \
   -L../../lib

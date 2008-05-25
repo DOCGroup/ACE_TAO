@@ -104,6 +104,7 @@ endif BUILD_CORBA_MESSAGING
 ## Makefile.MonitorControl_Monitor.am
 
 if BUILD_EXCEPTIONS
+if !BUILD_WINCE
 
 noinst_PROGRAMS += test_monitor
 
@@ -125,6 +126,8 @@ test_monitor_SOURCES = \
 test_monitor_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_MC_Ext.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_MC.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Monitor.la \
+  $(ACE_BUILDDIR)/ace/Monitor_Control/libACE_Monitor_Control.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
@@ -143,6 +146,7 @@ test_monitor_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_WINCE
 endif BUILD_EXCEPTIONS
 
 ## Makefile.MonitorControl_Supplier.am

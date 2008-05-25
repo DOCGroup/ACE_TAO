@@ -35,13 +35,6 @@ server_SOURCES = \
   Servant_Activator.h \
   Servant_Locator.h
 
-../Generic_Servant:
-	mkdir -p ../Generic_Servant
-
-
-server_DEPENDENCIES = \
- ../Generic_Servant
-
 server_LDFLAGS = \
   -L../Generic_Servant
 

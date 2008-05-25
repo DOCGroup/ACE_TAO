@@ -36,13 +36,6 @@ agent_CPPFLAGS = \
 agent_SOURCES = \
   Agent.cpp
 
-../Gate/.:
-	mkdir -p ../Gate/.
-
-
-agent_DEPENDENCIES = \
- ../Gate/.
-
 agent_LDFLAGS = \
   -L../Gate/.
 

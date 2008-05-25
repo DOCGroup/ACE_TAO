@@ -1,3 +1,39 @@
+Sun May 25 00:37:12 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* docs/tutorials/Quoter/Simple/Client/Makefile.am:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Makefile.am:
+	* docs/tutorials/Quoter/Simple/Server/Makefile.am:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile.am:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile.am:
+	* orbsvcs/examples/Notify/Federation/Agent/Makefile.am:
+	* orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile.am:
+	* orbsvcs/examples/Notify/MC/monitor/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+	* orbsvcs/tests/Notify/MC/Makefile.am:
+	* orbsvcs/tests/unit/Notify/MC/Control/Makefile.am:
+	* orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile.am:
+	* orbsvcs/tests/unit/Notify/MC/MonitorManager/Makefile.am:
+	* orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/Makefile.am:
+	* orbsvcs/tests/unit/Notify/MC/Statistic/Makefile.am:
+	* orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Makefile.am:
+	* tao/Makefile.am:
+	* tests/Makefile.am:
+	* tests/POA/Adapter_Activator/Makefile.am:
+	* tests/POA/Explicit_Activation/Makefile.am:
+	* tests/POA/On_Demand_Activation/Makefile.am:
+	* tests/POA/Reference_Counted_Servant/Makefile.am:
+
+          Regenerated.
+
+	* configure.ac:
+
+          Update for new directories.
+
+        * tests/Bug_2085_Regression/Makefile.am:
+        * tests/Bug_2243_Regression/Makefile.am:
+
+          New Makefile.am's.
+
 Sat May 24 19:45:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/tests/Bug_2925_Regression/Bug_2925_Regression.mpc:
