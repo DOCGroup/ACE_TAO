@@ -31,13 +31,6 @@ server_CPPFLAGS = \
 server_SOURCES = \
   server.cpp
 
-../Generic_Servant:
-	mkdir -p ../Generic_Servant
-
-
-server_DEPENDENCIES = \
- ../Generic_Servant
-
 server_LDFLAGS = \
   -L../Generic_Servant
 

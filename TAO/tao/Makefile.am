@@ -5890,6 +5890,8 @@ if BUILD_EXCEPTIONS
 if !BUILD_WINCE
 
 BUILT_SOURCES += \
+  Monitor/Monitor_includeA.cpp \
+  Monitor/Monitor_includeA.h \
   Monitor/Monitor_includeC.cpp \
   Monitor/Monitor_includeC.h \
   Monitor/Monitor_includeC.inl \
@@ -5899,6 +5901,8 @@ BUILT_SOURCES += \
 
 CLEANFILES += \
   Monitor/Monitor_include-stamp \
+  Monitor/Monitor_includeA.cpp \
+  Monitor/Monitor_includeA.h \
   Monitor/Monitor_includeC.cpp \
   Monitor/Monitor_includeC.h \
   Monitor/Monitor_includeC.inl \
@@ -5906,13 +5910,15 @@ CLEANFILES += \
   Monitor/Monitor_includeS.h \
   Monitor/Monitor_includeS.inl
 
-Monitor/Monitor_includeC.cpp Monitor/Monitor_includeC.h Monitor/Monitor_includeC.inl Monitor/Monitor_includeS.cpp Monitor/Monitor_includeS.h Monitor/Monitor_includeS.inl: Monitor/Monitor_include-stamp
+Monitor/Monitor_includeA.cpp Monitor/Monitor_includeA.h Monitor/Monitor_includeC.cpp Monitor/Monitor_includeC.h Monitor/Monitor_includeC.inl Monitor/Monitor_includeS.cpp Monitor/Monitor_includeS.h Monitor/Monitor_includeS.inl: Monitor/Monitor_include-stamp
 
 Monitor/Monitor_include-stamp: $(srcdir)/Monitor/Monitor_include.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -Sa -St -Wb,unique_include=tao/Monitor/Monitor.h $(srcdir)/Monitor/Monitor_include.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -GA -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -Wb,unique_include=tao/Monitor/Monitor.h $(srcdir)/Monitor/Monitor_include.pidl
 	@touch $@
 
 BUILT_SOURCES += \
+  Monitor/MonitorA.cpp \
+  Monitor/MonitorA.h \
   Monitor/MonitorC.cpp \
   Monitor/MonitorC.h \
   Monitor/MonitorC.inl \
@@ -5922,6 +5928,8 @@ BUILT_SOURCES += \
 
 CLEANFILES += \
   Monitor/Monitor-stamp \
+  Monitor/MonitorA.cpp \
+  Monitor/MonitorA.h \
   Monitor/MonitorC.cpp \
   Monitor/MonitorC.h \
   Monitor/MonitorC.inl \
@@ -5929,10 +5937,10 @@ CLEANFILES += \
   Monitor/MonitorS.h \
   Monitor/MonitorS.inl
 
-Monitor/MonitorC.cpp Monitor/MonitorC.h Monitor/MonitorC.inl Monitor/MonitorS.cpp Monitor/MonitorS.h Monitor/MonitorS.inl: Monitor/Monitor-stamp
+Monitor/MonitorA.cpp Monitor/MonitorA.h Monitor/MonitorC.cpp Monitor/MonitorC.h Monitor/MonitorC.inl Monitor/MonitorS.cpp Monitor/MonitorS.h Monitor/MonitorS.inl: Monitor/Monitor-stamp
 
 Monitor/Monitor-stamp: $(srcdir)/Monitor/Monitor.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -Wb,include_guard=TAO_MONITOR_SAFE_INCLUDE -Wb,safe_include=tao/Monitor/Monitor.h $(srcdir)/Monitor/Monitor.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -GA -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -Wb,include_guard=TAO_MONITOR_SAFE_INCLUDE -Wb,safe_include=tao/Monitor/Monitor.h $(srcdir)/Monitor/Monitor.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_Monitor.la
@@ -5946,9 +5954,11 @@ libTAO_Monitor_la_CPPFLAGS = \
 
 libTAO_Monitor_la_SOURCES = \
   Monitor/Monitor.cpp \
+  Monitor/MonitorA.cpp \
   Monitor/MonitorC.cpp \
   Monitor/MonitorS.cpp \
   Monitor/Monitor_Impl.cpp \
+  Monitor/Monitor_includeA.cpp \
   Monitor/Monitor_includeC.cpp \
   Monitor/Monitor_includeS.cpp
 
@@ -5968,6 +5978,7 @@ nobase_include_HEADERS += \
   Monitor/Monitor.h \
   Monitor/Monitor.pidl \
   Monitor/Monitor.pidl \
+  Monitor/MonitorA.h \
   Monitor/MonitorC.h \
   Monitor/MonitorC.inl \
   Monitor/MonitorS.h \
@@ -5976,6 +5987,7 @@ nobase_include_HEADERS += \
   Monitor/Monitor_export.h \
   Monitor/Monitor_include.pidl \
   Monitor/Monitor_include.pidl \
+  Monitor/Monitor_includeA.h \
   Monitor/Monitor_includeC.h \
   Monitor/Monitor_includeC.inl \
   Monitor/Monitor_includeS.h \

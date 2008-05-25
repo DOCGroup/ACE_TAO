@@ -1966,6 +1966,7 @@ EXTRA_DIST += \
 ## Makefile.CosNotification_MC.am
 
 if BUILD_EXCEPTIONS
+if !BUILD_WINCE
 
 BUILT_SOURCES += \
   Notify/MonitorControl/NotificationServiceMCC.cpp \
@@ -2005,20 +2006,22 @@ libTAO_CosNotification_MC_la_CPPFLAGS = \
 libTAO_CosNotification_MC_la_SOURCES = \
   Notify/MonitorControl/Control.cpp \
   Notify/MonitorControl/Control_Registry.cpp \
-  Notify/MonitorControl/Generic.cpp \
-  Notify/MonitorControl/Generic_Registry.cpp \
   Notify/MonitorControl/MonitorManager.cpp \
   Notify/MonitorControl/NotificationServiceMCC.cpp \
   Notify/MonitorControl/NotificationServiceMCS.cpp \
   Notify/MonitorControl/NotificationServiceMonitor_i.cpp \
-  Notify/MonitorControl/Statistic.cpp \
-  Notify/MonitorControl/Statistic_Registry.cpp
+  Notify/MonitorControl/Statistic.cpp
 
 libTAO_CosNotification_MC_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_CosNotification_MC_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Monitor.la \
+  $(ACE_BUILDDIR)/ace/Monitor_Control/libACE_Monitor_Control.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
+  $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
+  $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -2029,8 +2032,6 @@ nobase_include_HEADERS += \
   Notify/MonitorControl/Control.h \
   Notify/MonitorControl/Control_Registry.h \
   Notify/MonitorControl/Dynamic_Statistic.h \
-  Notify/MonitorControl/Generic.h \
-  Notify/MonitorControl/Generic_Registry.h \
   Notify/MonitorControl/MonitorManager.h \
   Notify/MonitorControl/NotificationServiceMC.idl \
   Notify/MonitorControl/NotificationServiceMCC.h \
@@ -2040,9 +2041,9 @@ nobase_include_HEADERS += \
   Notify/MonitorControl/NotificationServiceMonitor_i.h \
   Notify/MonitorControl/Statistic.h \
   Notify/MonitorControl/Statistic.inl \
-  Notify/MonitorControl/Statistic_Registry.h \
   Notify/MonitorControl/notify_mc_export.h
 
+endif !BUILD_WINCE
 endif BUILD_EXCEPTIONS
 
 ## Makefile.CosNotification_Skel.am
@@ -2359,6 +2360,7 @@ EXTRA_DIST += \
 ## Makefile.CosNotification_MC_Ext.am
 
 if BUILD_EXCEPTIONS
+if !BUILD_WINCE
 
 BUILT_SOURCES += \
   Notify/MonitorControlExt/NotifyMonitoringExtC.cpp \
@@ -2411,6 +2413,8 @@ libTAO_CosNotification_MC_Ext_la_LDFLAGS = \
 
 libTAO_CosNotification_MC_Ext_la_LIBADD = \
   libTAO_CosNotification_MC.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Monitor.la \
+  $(ACE_BUILDDIR)/ace/Monitor_Control/libACE_Monitor_Control.la \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   libTAO_CosNotification_Serv.la \
@@ -2443,6 +2447,7 @@ nobase_include_HEADERS += \
   Notify/MonitorControlExt/NotifyMonitoringExtS.inl \
   Notify/MonitorControlExt/notify_mc_ext_export.h
 
+endif !BUILD_WINCE
 endif BUILD_EXCEPTIONS
 
 ## Makefile.CosNotification_Persist.am

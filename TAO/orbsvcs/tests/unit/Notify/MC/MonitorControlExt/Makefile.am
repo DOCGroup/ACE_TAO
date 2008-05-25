@@ -17,6 +17,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.MonitorControlExt.am
 
 if BUILD_EXCEPTIONS
+if !BUILD_WINCE
 
 noinst_PROGRAMS = MonitorControlExt
 
@@ -35,6 +36,8 @@ MonitorControlExt_SOURCES = \
 MonitorControlExt_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_MC_Ext.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_MC.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Monitor.la \
+  $(ACE_BUILDDIR)/ace/Monitor_Control/libACE_Monitor_Control.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
@@ -53,6 +56,7 @@ MonitorControlExt_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_WINCE
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
