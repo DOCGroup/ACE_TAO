@@ -37,7 +37,7 @@
 Summary: The ADAPTIVE Communication Environment (ACE) and The ACE ORB (TAO)
 Name: ace-tao
 Version: %{ACEVER}
-Release: 2%{?OPTTAG}%{?dist}
+Release: 3%{?OPTTAG}%{?dist}
 Group: Development/Libraries
 URL: http://www.cs.wustl.edu/~schmidt/ACE.html
 License: DOC License
@@ -45,17 +45,7 @@ Source0: http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-%{ACE
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
 ## Patch0: ace-tao-config.patch
-%if %{?_with_ipv6:1}%{!?_with_ipv6:0}
-## Patch1: ace-tao-config-ipv6.patch
-%endif
-%if %{?_with_rnq:1}%{!?_with_rnq:0}
-## Patch2: ace-tao-rnq.patch
-%endif
 ## Patch4: ace-tao-gperf-info.patch
-# Don't use Patch8 (ace-tao-sslverify.patch) until verified it is required.
-## Patch9: ace-tao-hasicmp.patch
-## Patch10: ace-tao-obstack.patch
-## Patch12: ace-tao-config-tmplvis.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires(post): /sbin/install-info, /sbin/install-info
@@ -637,24 +627,51 @@ cp config-linux.h config.h
 #patch0 -p 1
 cat ${ACE_ROOT}/rpmbuild/ace-tao-config.patch | patch -p 1
 
+# If ipv6 support is indicated insert some lines into the confi.h
+# file, right before the ace/post.h include.
+#
 %if %{?_with_ipv6:1}%{!?_with_ipv6:0}
-#patch1 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-config-ipv6.patch | patch -p 1
+rm -f $ACE_ROOT/ace/config.h.tmp
+awk 'BEGIN { FLG = 1 }; /ace\/post/ { FLG = 0 }; { if (FLG==1) print }' \
+$ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
+cat >> $ACE_ROOT/ace/config.h.tmp <<"EOF"
+#define ACE_HAS_IPV6 // Ken Sedgwick 2006-06-14
+#define ACE_USES_IPV4_IPV6_MIGRATION // Ken Sedgwick 2006-06-14
+EOF
+awk 'BEGIN { FLG = 0 }; /ace\/post/ { FLG = 1 }; { if (FLG==1) print }' \
+$ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
+mv $ACE_ROOT/ace/config.h.tmp $ACE_ROOT/ace/config.h
 %endif
 
+# If rnq support is indicated insert some lines into the confi.h
+# file, right before the ace/post.h include.
+#
 %if %{?_with_rnq:1}%{!?_with_rnq:0}
-#patch2 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-rnq.patch | patch -p 1
+# Insert into the confi.h file, right before the ace/post.h include.
+rm -f $ACE_ROOT/ace/config.h.tmp
+awk 'BEGIN { FLG = 1 }; /ace\/post/ { FLG = 0 }; { if (FLG==1) print }' \
+$ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
+cat >> $ACE_ROOT/ace/config.h.tmp <<"EOF"
+#define ACE_HAS_REACTOR_NOTIFICATION_QUEUE  // Ken Sedgwick 2006-04-19
+EOF
+awk 'BEGIN { FLG = 0 }; /ace\/post/ { FLG = 1 }; { if (FLG==1) print }' \
+$ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
+mv $ACE_ROOT/ace/config.h.tmp $ACE_ROOT/ace/config.h
 %endif
 
-#patch9 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-hasicmp.patch | patch -p 1
-
-#patch10 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-obstack.patch | patch -p 1
-
-#patch12 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-config-tmplvis.patch | patch -p 1
+# For template instantiation visibility and icmp support insert some
+# lines into the confi.h file, right before the ace/post.h include.
+#
+rm -f $ACE_ROOT/ace/config.h.tmp
+awk 'BEGIN { FLG = 1 }; /ace\/post/ { FLG = 0 }; { if (FLG==1) print }' \
+$ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
+cat >> $ACE_ROOT/ace/config.h.tmp <<"EOF"
+#define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1  // Ken Sedgwick 2007-05-05
+#define ACE_HAS_ICMP_SUPPORT 1 // Ken Sedgwick 2006-09-05
+EOF
+awk 'BEGIN { FLG = 0 }; /ace\/post/ { FLG = 1 }; { if (FLG==1) print }' \
+$ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
+mv $ACE_ROOT/ace/config.h.tmp $ACE_ROOT/ace/config.h
 
 # platform_macros.GNU
 cat > $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
@@ -2152,6 +2169,13 @@ fi
 # ================================================================
 
 %changelog
+* Sat May 24 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-3
+- Removed obstack patch, no longer needed.
+- Converted ace-tao-config-ipv6.patch into conditional rpm script.
+- Converted ace-tao-rnq.patch into conditional rpm script.
+- Converted ace-tao-config-tmplvis.patch and ace-tao-hasicmp.patch
+  into rpm script.
+
 * Thu May 22 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.5-3
 - Removed codeset patch, merged into the distribution
 
