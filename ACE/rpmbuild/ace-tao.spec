@@ -1067,8 +1067,8 @@ install ${ACE_ROOT}/bin/nslist $RPM_BUILD_ROOT%{_bindir}/tao_nslist
 # ================================================================
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}
-tar xzvf -C ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.gz \
-	$RPM_BUILD_ROOT%{_sysconfdir}
+tar -xzvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.gz \
+	-C $RPM_BUILD_ROOT%{_sysconfdir}
 
 ## # FIXME - namespace issues need to be resolved
 ##
