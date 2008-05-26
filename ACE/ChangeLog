@@ -1,11 +1,16 @@
+Mon May 26 13:54:38 UTC 2008  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Defined ACE_LACKS_POLL_H.
+
 Mon May 26 07:28:23 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
-	* rpmbuild/ace-tao.spec:
+        * rpmbuild/ace-tao.spec:
           Clarified the tao-cosevent and tao-rtevent "Summary" tags.
 
 Mon May 26 00:31:51 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
-	* rpmbuild/ace-tao.spec:
+        * rpmbuild/ace-tao.spec:
           Fixed rpm build error: bad tar extraction command.
 
 Sun May 25 17:18:20 UTC 2008  Adam Mitz  <mitza@ociweb.com>
