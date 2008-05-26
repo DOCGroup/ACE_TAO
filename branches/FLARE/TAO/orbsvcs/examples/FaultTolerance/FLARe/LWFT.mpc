@@ -1,0 +1,131 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    LWFT.idl
+    monitor.idl
+  }
+  IDL_Files {
+    idlflags += -SS
+    ObjectReferenceFactory.idl
+  }
+  custom_only = 1
+}
+
+project(*server2): rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, objreftemplate, pi_server, interceptors, naming, pi, iorinterceptor {
+  after += *idl
+  exename = server-2
+  Source_Files {
+    server-2.cpp
+    Hello.cpp
+    ObjectReferenceFactory.cpp
+    ServerORBInitializer.cpp
+    IOR_Interceptor.cpp
+    AppSideMonitor_Thread.cpp
+    AppSideMonitor_Handler.cpp
+    AppSideReg.cpp
+    AppOptions.cpp
+    ArgPair.cpp
+    LWFTC.cpp
+    LWFTS.cpp
+  }
+  Source_Files {
+    LWFTC.cpp
+    LWFTS.cpp
+    ObjectReferenceFactoryC.cpp
+    monitorC.cpp
+    monitorS.cpp
+  }
+}
+
+project(*server1): rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, objreftemplate, pi_server, interceptors, naming, pi, iorinterceptor {
+  after += *idl
+  exename = server-1
+  Source_Files {
+    server-1.cpp
+    Hello.cpp
+    ObjectReferenceFactory.cpp
+    ServerORBInitializer.cpp
+    IOR_Interceptor.cpp
+    AppSideMonitor_Thread.cpp
+    AppSideMonitor_Handler.cpp
+    AppSideReg.cpp
+    AppOptions.cpp
+    ArgPair.cpp
+    LWFTC.cpp
+    LWFTS.cpp
+  }
+  Source_Files {
+    LWFTC.cpp
+    LWFTS.cpp
+    ObjectReferenceFactoryC.cpp
+    monitorC.cpp
+    monitorS.cpp
+  }
+}
+
+project(*client): rt_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, pi, pi_server, interceptors, naming   {
+  after  += *idl
+  exename = client
+  Source_Files {
+    LWFTC.cpp
+    LWFTS.cpp
+    Client_ORBInitializer.cpp
+    Client_Request_Interceptor.cpp
+    Agent.cpp
+    client.cpp
+  }
+  Source_Files {
+    LWFTC.cpp
+    LWFTS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+
+project(*HostMonitor): taoserver, portableserver, naming {
+  after += *idl
+  exename = host_monitor
+  Source_Files {
+    host_monitor.cpp
+    HostMonitorImpl.cpp
+    LinuxCPULoadCalculator.cpp
+    Failure_Handler.cpp
+    Monitor_Thread.cpp
+    RM_Proxy.cpp
+    Utilization_Monitor.cpp
+    Timer.cpp
+    HMOptions.cpp
+    ArgPair.cpp
+    LWFTC.cpp
+    LWFTS.cpp
+ }
+  Source_Files {
+    LWFTC.cpp
+    LWFTS.cpp
+    monitorC.cpp
+    monitorS.cpp
+  }
+}
+
+project(*ReplicationManager): taoclient, taoserver, naming {
+  after += *idl
+  exename = ReplicationManager
+  Source_Files {
+    ReplicationManager.cpp
+    Timer.cpp
+    ReplicationManager_process.cpp
+    RMOptions.cpp
+    ArgPair.cpp
+  }
+  Source_Files {
+    LWFTC.cpp
+    LWFTS.cpp
+    RMOptions.h
+    ArgPair.h
+  }
+  IDL_Files {
+  }
+}
