@@ -104,6 +104,9 @@
 #define ACE_POSIX_SIG_PROACTOR
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
 
+// LynxOS has poll.h but it is unusable since implementation is not provided
+#define ACE_LACKS_POLL_H
+
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
 # define ACE_HAS_PTHREADS
