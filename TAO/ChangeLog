@@ -1,3 +1,10 @@
+Mon May 26 17:51:15 UTC 2008 Jaiganesh Balasubramanian  <jai@shiva.dre.vanderbilt.edu>
+
+	* orbsvcs/examples/FaultTolerance/FLARe:
+
+	  Added the directory and the all the set of files
+	  for a prototype implementation of LwFT for RT systems.
+
 Wed Apr  9 18:01:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Default_Thread_Lane_Resources_Manager.cpp:
