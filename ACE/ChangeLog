@@ -1,3 +1,8 @@
+Mon May 26 07:28:23 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
+
+	* rpmbuild/ace-tao.spec:
+          Clarified the tao-cosevent and tao-rtevent "Summary" tags.
+
 Mon May 26 00:31:51 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
 	* rpmbuild/ace-tao.spec:
