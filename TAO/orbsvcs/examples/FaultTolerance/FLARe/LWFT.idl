@@ -1,0 +1,89 @@
+//
+// $Id$
+//
+
+interface Hello
+{
+  /// Return a simple string
+  string get_string ();
+
+  /// A method to shutdown the ORB
+  /**
+  * This method is used to simplify the test shutdown process
+  */
+  oneway void shutdown ();
+};
+
+interface test
+{
+    void method (in unsigned long test_start,
+                 in unsigned long test_end,
+                 in unsigned long work,
+                 in unsigned long prime_number, 
+                 in unsigned long end);
+    
+   void shutdown ();
+   void dump ();
+};
+
+typedef sequence<Object> ObjectList;
+
+struct Replica {
+  string object_id;
+  Object next_member;
+};
+
+typedef sequence<Replica> ReplicaList;
+
+struct Replicas {
+  string object_id;
+  Object next_members;
+};
+
+typedef sequence<Replicas> ReplicasList;
+
+typedef sequence<string> PrimaryList;
+typedef sequence<string> FailoverList;
+typedef sequence<string> SecondaryList;
+typedef sequence<string> HostList;
+
+struct UtilMap {
+  string host_id;
+  float load;
+};
+
+typedef sequence<UtilMap> UtilMapList;
+
+struct Rank
+{
+  string object_id;
+  boolean now;
+  ObjectList ior_list;
+};
+
+typedef sequence<Rank> RankList;
+
+interface Agent
+{
+  // string next_member (in string m);
+  Object next_member (in string m);
+  //void update_reference (in string m);
+  //void update_failover (in string m, in Object next_object);
+  //void update_secondary (in string m, in Object next_object);
+  //void initialize_agent (in ReplicaList replica_list,
+  //                       in ReplicasList replicas_list);
+  //void update_failover_list (in FailoverList failover_list);
+  void update_rank_list (in RankList rank_list);
+};
+
+interface ReplicationManager
+{
+  RankList register_agent (in Object agent_reference);
+  void register_application (in string object_id, in double load,
+                             in string host_id, in string process_id, 
+                             in short role, in Object server_reference);
+  void util_update (in string host_id, in double utilization);
+  void proc_failure (in string process_id);
+  Object get_next (in string object_id);
+};
+
