@@ -453,14 +453,14 @@ The Trading_Service is a COS compilant Trading Service.
 # ---------------- tao-rtevent ----------------
 
 %package -n tao-rtevent
-Summary: The TAO CORBA Event Service
+Summary: The TAO Real-time Event Service
 Version: %{TAOVER}
 Group: Development/Libraries
 Requires: tao = %{TAOVER}
 
 %description -n tao-rtevent
 
-The CORBA Event Service.
+The TAO Real-time Event Service.
 
 # ---------------- tao-cosconcurrency ----------------
 
