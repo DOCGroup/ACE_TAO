@@ -1,6 +1,9 @@
 // cvs-id    : $Id$
 
 #include "ReplicationManager.h"
+
+#include <string>
+
 #include "LWFTC.h"
 
 template <class T>
@@ -90,13 +93,12 @@ operator = (APP_INFO const & app_info)
 }
 
 bool 
-APP_INFO::
-operator == (APP_INFO const & app_info)
+operator == (APP_INFO const & lhs, APP_INFO const & rhs)
 {
-  return ((object_id == app_info.object_id) &&
-          (host_name == app_info.host_name) &&
-          (process_id == app_info.process_id) &&
-          (role == app_info.role)); 
+  return ((lhs.object_id == rhs.object_id) &&
+          (lhs.host_name == rhs.host_name) &&
+          (lhs.process_id == rhs.process_id) &&
+          (lhs.role == rhs.role)); 
 }
 
 class Algorithm : public ACE_Task_Base
@@ -194,6 +196,7 @@ update_appset_map (const char * key_str,
 {
   APP_SET app_set;
   ACE_CString key (key_str);
+  
   if (map.find (key, app_set) != 0) // if not present
     {
       app_set.insert_tail (app_info);
@@ -678,29 +681,33 @@ send_rank_list()
     {
        agent->update_rank_list(this->rank_list_);
     }
-    catch (CORBA::SystemException & e)
+    catch (CORBA::SystemException &)
     {
-      ACE_DEBUG((LM_DEBUG,"An agent died.\n"));
+      ACE_DEBUG ((LM_DEBUG,"An agent died.\n"));
     }
   }
 }
 
-void ReplicationManager_i::
-update_ior_map (ACE_CString const & oid,
-                std::priority_queue<UtilRank> const & rl)
+void ReplicationManager_i::update_ior_map (
+  ACE_CString const & oid,
+  std::priority_queue<UtilRank> const & rl)
 {
   std::priority_queue <UtilRank> rank_list (rl);
   APP_SET app_set;
   ACE_Guard <ACE_Recursive_Thread_Mutex> guard (this->appset_lock_);
-  if (objectid_appset_map_.find(oid, app_set) == 0) // if present
+  
+  if (objectid_appset_map_.find (oid, app_set) == 0) // if present
   {
     RANKED_IOR_LIST ranked_ior_list;
-    while (!rank_list.empty())
+    
+    while (!rank_list.empty ())
     {
-      UtilRank ur = rank_list.top();
-      rank_list.pop();
+      UtilRank ur = rank_list.top ();
+      rank_list.pop ();
+      
       for (APP_SET::iterator as_iter = app_set.begin();
-           as_iter != app_set.end(); ++as_iter)
+           as_iter != app_set.end();
+           ++as_iter)
       {
         if (ur.host_id == (*as_iter).host_name.c_str()) 
         {
@@ -713,6 +720,7 @@ update_ior_map (ACE_CString const & oid,
       }
     }  
     RANKED_IOR_LIST temp_ior_list;
+    
     if (objectid_rankedior_map_.find (oid, temp_ior_list) != 0) // if not present
         objectid_rankedior_map_.bind (oid, ranked_ior_list);
     else 
@@ -720,7 +728,7 @@ update_ior_map (ACE_CString const & oid,
   }
   else
   {
-    ACE_DEBUG((LM_ERROR, "Objectid=%s not present in APP_SET\n",oid.c_str()));
+    ACE_DEBUG ((LM_ERROR, "Objectid=%s not present in APP_SET\n",oid.c_str()));
   }
 }
 

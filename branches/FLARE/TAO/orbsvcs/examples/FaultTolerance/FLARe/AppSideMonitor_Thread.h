@@ -32,7 +32,7 @@ public:
   virtual int svc (void);
 
 private:
-  size_t port_;
+  u_short port_;
   ACE_SOCK_Acceptor::PEER_ADDR serv_addr_;
   ACE_Reactor reactor_;
   ACE_Acceptor <AppSideMonitor_Handler, ACE_SOCK_Acceptor> acceptor_;

@@ -27,8 +27,8 @@ public:
 
   double hertz (void);
   void hertz (double h);
-  void start ();
-  void stop ();
+  void start (void);
+  void stop (void);
 
   /// Helper function to be called back after a timeout
   virtual int pulse (void);
@@ -58,9 +58,6 @@ protected:
 
   /// The timer id we are waiting.
   long tid_;
-
 };
-
-
 
 #endif /* TIMER_H */

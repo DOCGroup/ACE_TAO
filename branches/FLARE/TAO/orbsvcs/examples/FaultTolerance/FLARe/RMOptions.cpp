@@ -1,10 +1,9 @@
-#include <unistd.h>
-#include <stdlib.h>
-#include <iostream>
-#include <sstream>
-#include <algorithm>
 #include "RMOptions.h"
+
+#include <sstream>
+
 #include "ArgPair.h"
+
 #include "ace/Global_Macros.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
@@ -12,13 +11,12 @@
 
 /// Initialize the static data member.
 RMOptions * volatile RMOptions::instance_ = 0;
-std::auto_ptr <RMOptions> RMOptions::deleter_;
+ACE_Auto_Ptr<RMOptions> RMOptions::deleter_;
 ACE_Thread_Mutex RMOptions::lock_;
 
-
 RMOptions::RMOptions (void)
-  : hertz_(0.2),
-    proactive_(true),
+  : hertz_ (0.2),
+    proactive_ (true),
     arg_pair_ (0,0)
 {
 }
@@ -28,12 +26,14 @@ RMOptions *RMOptions::instance (void)
   if (! instance_)
   {
     ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
+    
     if (! instance_)
     {
       instance_ = new RMOptions ();
       deleter_.reset (instance_);
     }
   }
+  
   return instance_;
 }
 

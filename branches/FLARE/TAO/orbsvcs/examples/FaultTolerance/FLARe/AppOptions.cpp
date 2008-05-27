@@ -1,9 +1,7 @@
-#include <unistd.h>
-#include <stdlib.h>
-#include <iostream>
+#include "AppOptions.h"
+
 #include <sstream>
 
-#include "AppOptions.h"
 #include "ace/Global_Macros.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
@@ -11,7 +9,7 @@
 
 /// Initialize the static data member.
 AppOptions * volatile AppOptions::instance_ = 0;
-std::auto_ptr <AppOptions> AppOptions::deleter_;
+ACE_Auto_Ptr<AppOptions> AppOptions::deleter_;
 ACE_Thread_Mutex AppOptions::lock_;
 
 AppOptions::AppOptions (void)
@@ -30,12 +28,14 @@ AppOptions *AppOptions::instance (void)
   if (! instance_)
   {
     ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
+    
     if (! instance_)
     {
       instance_ = new AppOptions ();
       deleter_.reset (instance_);
     }
   }
+  
   return instance_;
 }
 
@@ -106,7 +106,7 @@ std::string AppOptions::host_monitor_ior () const
   return host_monitor_ior_;
 }
 
-size_t AppOptions::get_port () const
+u_short AppOptions::get_port () const
 {
   return port_;
 }

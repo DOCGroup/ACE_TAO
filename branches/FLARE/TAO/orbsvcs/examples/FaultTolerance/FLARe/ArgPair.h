@@ -4,7 +4,7 @@
 struct  ArgPair
 {
   ArgPair (int argc, char **argv);
-  ~ArgPair ();
+  ~ArgPair (void);
   ArgPair (const ArgPair &);
   ArgPair & operator = (const ArgPair &);
   void swap (ArgPair &);
