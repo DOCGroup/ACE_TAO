@@ -1,9 +1,25 @@
+Tue May 27 20:22:47 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/FLARe/LWFT.mpc:
+        * orbsvcs/examples/FaultTolerance/FLARe/ArgPair.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/ArgPair.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/AppOptions.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/AppOptions.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/HMOptions.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/HMOptions.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/RMOptions.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/RMOptions.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/ReplicationManager.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/ReplicationManager.h:
+        
+          Minor changes to eliminate MSVC build errors.
+
 Mon May 26 17:51:15 UTC 2008 Jaiganesh Balasubramanian  <jai@shiva.dre.vanderbilt.edu>
 
-	* orbsvcs/examples/FaultTolerance/FLARe:
+	      * orbsvcs/examples/FaultTolerance/FLARe:
 
-	  Added the directory and the all the set of files
-	  for a prototype implementation of LwFT for RT systems.
+	        Added the directory and the all the set of files
+	        for a prototype implementation of LwFT for RT systems.
 
 Wed Apr  9 18:01:34 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
