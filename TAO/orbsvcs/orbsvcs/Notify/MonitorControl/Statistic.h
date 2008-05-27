@@ -51,6 +51,9 @@ public:
   /// Override of the base class method.
   virtual void receive (double data);
 
+  /// Override of the base class method.
+  virtual void receive (size_t data);
+
   /// Take the data and store it.
   /// It is assumed that the type of data corresponds to
   /// the type specified during construction.

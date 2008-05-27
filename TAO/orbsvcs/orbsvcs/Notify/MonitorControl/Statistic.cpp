@@ -86,6 +86,13 @@ TAO_Statistic::receive (double data)
 }
 
 void
+TAO_Statistic::receive (size_t data)
+{
+  double converted = static_cast<double> (data);
+  this->receive (converted);
+}
+
+void
 TAO_Statistic::receive (const TAO_Statistic::List& data)
 {
   if (this->type_ != TS_LIST)
