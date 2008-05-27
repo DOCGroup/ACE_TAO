@@ -1105,6 +1105,9 @@ nobase_include_HEADERS += \
   Unbounded_Set.cpp \
   Unbounded_Set.h \
   Unbounded_Set.inl \
+  Unbounded_Set_Ex.cpp \
+  Unbounded_Set_Ex.h \
+  Unbounded_Set._Ex.inl \
   Value_Ptr.h \
   Vector_T.cpp \
   Vector_T.h \
