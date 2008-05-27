@@ -1,3 +1,9 @@
+Tue May 27 23:10:33 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+
+          Adding missing template and header files.
+
 Tue May 27 12:11:07 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:
