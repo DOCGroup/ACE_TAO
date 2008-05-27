@@ -818,7 +818,8 @@ Paced_Worker::svc (void)
           ACE_hrtime_t time_after_call =
             ACE_OS::gethrtime ();
           this->history_.sample (time_after_call - time_before_call);
-          sample_vector[count++] = ((time_after_call - time_before_call) / gsf);
+          sample_vector[count++] = 
+            static_cast<int> ((time_after_call - time_before_call) / gsf);
 
           if (time_after_call > deadline_for_current_call)
             {

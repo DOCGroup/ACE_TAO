@@ -4,7 +4,6 @@
 #include "RM_Proxy.h"
 #include "HMOptions.h"
 #include "LinuxCPULoadCalculator.h"
-#include "FCS_Monitor_Adapter.h"
 #include "Utilization_Monitor.h"
 
 #include "ace/Connector.h"

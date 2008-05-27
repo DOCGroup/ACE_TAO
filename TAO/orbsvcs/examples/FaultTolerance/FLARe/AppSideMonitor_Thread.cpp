@@ -20,7 +20,7 @@ AppSideMonitor_Thread::AppSideMonitor_Thread (ACE_Barrier *thread_barrier)
 
 int AppSideMonitor_Thread::svc (void)
 {
-  if (serv_addr_.set (this->port_, INADDR_ANY) == -1)
+  if (serv_addr_.set (this->port_) == -1)
     {
       ACE_DEBUG ((LM_ERROR, "Can't set port.\n"));
       return EXIT_FAILURE;

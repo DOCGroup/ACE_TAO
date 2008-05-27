@@ -1,5 +1,6 @@
 
 #include "Timer.h"
+
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 
@@ -18,7 +19,7 @@ Timer::Timer (void)
 }
 
 // destructor
-Timer::~Timer ()
+Timer::~Timer (void)
 {
   delete this->reactor ();
   this->reactor (0);
@@ -26,7 +27,7 @@ Timer::~Timer ()
 
 // get our attribute
 double
-Timer::hertz ()
+Timer::hertz (void)
 {
   return this->hertz_;
 }
@@ -40,7 +41,7 @@ Timer::hertz (double h)
 
 // start the timer
 void
-Timer::start ()
+Timer::start (void)
 {
   // we are using this step in case we want to restart the timer capabilities
   // again
@@ -68,7 +69,7 @@ Timer::start ()
   // we are now active
   this->active_ = 1;
 
-  long int interval = 1000000 / hertz_;
+  long interval = static_cast<long> (1000000 / this->hertz_);
 
   // start a periodic timer
   this->tid_ = this->reactor ()->schedule_timer (this,
@@ -89,7 +90,7 @@ Timer::start ()
 
 // stopping the timer
 void
-Timer::stop ()
+Timer::stop (void)
 {
   if (this->active_ == 0) {      // Not valid.
     ACE_ERROR ((LM_ERROR,

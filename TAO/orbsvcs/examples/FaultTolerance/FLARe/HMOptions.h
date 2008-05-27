@@ -8,10 +8,10 @@
 #ifndef _HMOPTIONS_H
 #define _HMOPTIONS_H
 
-#include <iostream>
 #include <string>
-#include "ace/Thread_Mutex.h"
 
+#include "ace/Thread_Mutex.h"
+#include "ace/Auto_Ptr.h"
 
 /**
  *  @class   HMOptions
@@ -33,13 +33,13 @@ public:
   /// Parse command-line arguments and set the appropriate values as
   /// follows:
   bool parse_args (int argc, char **argv);
-  std::string RM_ior () const;
-  std::string HM_ior_file () const;
-  std::string host_id () const;
-  int RM_update_freq () const;
-  int load_monitor_freq () const;
-  std::string util_file () const;
-  ArgPair arg_pair (); 
+  std::string RM_ior (void) const;
+  std::string HM_ior_file (void) const;
+  std::string host_id (void) const;
+  int RM_update_freq (void) const;
+  int load_monitor_freq (void) const;
+  std::string util_file (void) const;
+  ArgPair arg_pair (void); 
   std::pair <char, std::string> ior_access () const;
 
 
@@ -59,9 +59,9 @@ protected:
 
   /// Singleton instance.
   static HMOptions * volatile instance_;
-  static std::auto_ptr<HMOptions> deleter_;
+  static ACE_Auto_Ptr<HMOptions> deleter_;
   static ACE_Thread_Mutex lock_;
 };
 
 
-#endif /* _APPOPTIONS_H */
+#endif /* _HMOPTIONS_H */

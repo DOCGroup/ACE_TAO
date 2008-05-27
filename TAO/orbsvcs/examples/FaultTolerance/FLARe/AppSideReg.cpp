@@ -72,32 +72,39 @@ int AppSideReg::svc(void)
 
       //ACE_DEBUG ((LM_DEBUG, "Monitor activated\n"));
 
-      internal_thread_barrier.wait (); 
+      internal_thread_barrier.wait ();
+      
       /// Waiting for the AppSideMonitor_Thread to finish its socket stuff.
-      try {
+      try
+      {
         hmvar_->dump ();
-      } catch (CORBA::Exception & ex) {
-        ACE_DEBUG((LM_DEBUG,"exception from dump.\n"));
+      }
+      catch (CORBA::Exception &)
+      {
+        ACE_DEBUG ((LM_DEBUG,"exception from dump.\n"));
         throw;
       }
 
-
       //ACE_DEBUG ((LM_DEBUG, "Registering process\n"));
-      try {
-          if (hmvar_->register_process (
-                     AppOptions::instance()->process_id().c_str(),
-                     AppOptions::instance()->host_id().c_str(),
-                     AppOptions::instance()->get_port()))
+      try
+      {
+        if (hmvar_->register_process (
+              AppOptions::instance ()->process_id ().c_str (),
+              AppOptions::instance ()->host_id ().c_str (),
+              AppOptions::instance ()->get_port ()))
           {
-            ACE_DEBUG((LM_DEBUG, "Registered successfully %s with host monitor.\n", 
-                       AppOptions::instance()->process_id().c_str()));
+            ACE_DEBUG ((LM_DEBUG,
+                        "Registered successfully %s with host monitor.\n", 
+                        AppOptions::instance()->process_id().c_str()));
           }
-          else
+        else
           {
-            ACE_DEBUG((LM_ERROR, "Registeration with the monitor failed.\n"));
+            ACE_DEBUG ((LM_ERROR, "Registeration with the monitor failed.\n"));
           }
-      } catch (CORBA::Exception & ex) {
-        ACE_DEBUG((LM_DEBUG,"exception from register_process.\n"));
+      }
+      catch (CORBA::Exception &)
+      {
+        ACE_DEBUG ((LM_DEBUG,"exception from register_process.\n"));
         throw;
       }
 

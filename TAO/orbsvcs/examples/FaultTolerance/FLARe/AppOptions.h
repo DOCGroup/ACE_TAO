@@ -8,9 +8,11 @@
 #ifndef _APPOPTIONS_H
 #define _APPOPTIONS_H
 
-#include <iostream>
 #include <string>
+
 #include "ace/Thread_Mutex.h"
+#include "ace/Auto_Ptr.h"
+
 #include "ArgPair.h"
 
 /**
@@ -31,13 +33,13 @@ public:
   /// Parse command-line arguments and set the appropriate values as
   /// follows:
   bool parse_args (int argc, char **argv);
-  std::string host_id () const;
-  std::string host_monitor_ior () const;
-  size_t get_port () const;
-  std::string ior_output_file () const;
-  std::string object_info_file () const;
-  std::string process_id () const;
-  ArgPair arg_pair () const;
+  std::string host_id (void) const;
+  std::string host_monitor_ior (void) const;
+  u_short get_port (void) const;
+  std::string ior_output_file (void) const;
+  std::string object_info_file (void) const;
+  std::string process_id (void) const;
+  ArgPair arg_pair (void) const;
 
 
 protected:
@@ -47,7 +49,7 @@ protected:
 
   std::string host_monitor_ior_;
   std::string host_id_;
-  size_t port_;
+  u_short port_;
   std::string ior_output_file_;
   std::string object_info_file_;
   std::string process_id_;
@@ -55,7 +57,7 @@ protected:
 
   /// Singleton instance.
   static AppOptions * volatile instance_;
-  static std::auto_ptr<AppOptions> deleter_;
+  static ACE_Auto_Ptr<AppOptions> deleter_;
   static ACE_Thread_Mutex lock_;
 };
 

@@ -1,19 +1,19 @@
-#include <algorithm>
-
 #include "ArgPair.h"
+
+#include <algorithm>
 
 ArgPair::ArgPair (int c, char **v)
   : argc (c),
     argv (new char *[c])
 {
-  std::copy (v, v + c, this->argv);
+  (void) std::copy (v, v + c, this->argv);
 }
 
 ArgPair::ArgPair (const ArgPair &ap)
   : argc (ap.argc),
     argv (new char *[ap.argc])
 {
-  std::copy (ap.argv, ap.argv + ap.argc, this->argv);
+  (void) std::copy (ap.argv, ap.argv + ap.argc, this->argv);
 }
   
 ArgPair & ArgPair::operator = (const ArgPair &ap)

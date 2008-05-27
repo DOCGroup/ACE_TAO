@@ -1,10 +1,9 @@
-#include <unistd.h>
-#include <stdlib.h>
-#include <iostream>
-#include <sstream>
-#include <algorithm>
 #include "HMOptions.h"
+
+#include <sstream>
+
 #include "ArgPair.h"
+
 #include "ace/Global_Macros.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
@@ -12,9 +11,8 @@
 
 /// Initialize the static data member.
 HMOptions * volatile HMOptions::instance_ = 0;
-std::auto_ptr <HMOptions> HMOptions::deleter_;
+ACE_Auto_Ptr<HMOptions> HMOptions::deleter_;
 ACE_Thread_Mutex HMOptions::lock_;
-
 
 HMOptions::HMOptions (void)
   : RM_ior_ ("file://rm.ior"),

@@ -5,13 +5,13 @@
  *
  */
 
-#ifndef _HMOPTIONS_H
-#define _HMOPTIONS_H
+#ifndef _RMOPTIONS_H
+#define _RMOPTIONS_H
 
-#include <iostream>
 #include <string>
-#include "ace/Thread_Mutex.h"
 
+#include "ace/Thread_Mutex.h"
+#include "ace/Auto_Ptr.h"
 
 /**
  *  @class   RMOptions
@@ -33,8 +33,8 @@ public:
   /// Parse command-line arguments and set the appropriate values as
   /// follows:
   bool parse_args (int argc, char **argv);
-  bool proactive () const;
-  double hertz() const;
+  bool proactive (void) const;
+  double hertz (void) const;
 
 protected:
 
@@ -47,9 +47,9 @@ protected:
 
   /// Singleton instance.
   static RMOptions * volatile instance_;
-  static std::auto_ptr<RMOptions> deleter_;
+  static ACE_Auto_Ptr<RMOptions> deleter_;
   static ACE_Thread_Mutex lock_;
 };
 
 
-#endif /* _APPOPTIONS_H */
+#endif /* _RMOPTIONS_H */

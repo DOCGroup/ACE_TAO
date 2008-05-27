@@ -29,9 +29,7 @@ struct APP_INFO
   Role role;
   CORBA::Object_var ior;
 
-public:
-
-  APP_INFO();
+  APP_INFO (void);
   APP_INFO (APP_INFO const & app_info);
   APP_INFO (const char *oid, double l, const char *hname,
             const char *pid, Role r, CORBA::Object_ptr ref);
@@ -39,8 +37,9 @@ public:
             const char *pid, Role r);
   void swap (APP_INFO & app_info);
   APP_INFO & operator = (APP_INFO const & app_info);
-  bool operator == (APP_INFO const & app_info);
 };
+
+bool operator == (APP_INFO const & lhs, APP_INFO const & rhs);
 
 struct RANKED_IOR_LIST
 {
@@ -48,7 +47,7 @@ struct RANKED_IOR_LIST
   std::list<CORBA::Object_var> ior_list;
   std::list<ACE_CString> host_list;
 
-  RANKED_IOR_LIST();
+  RANKED_IOR_LIST (void);
 };
 
 struct UtilRank 
