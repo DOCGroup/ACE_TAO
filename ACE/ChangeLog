@@ -1,3 +1,9 @@
+Tue May 27 12:11:07 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+
+          Added missing template and header files.
+
 Mon May 26 13:54:38 UTC 2008  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
