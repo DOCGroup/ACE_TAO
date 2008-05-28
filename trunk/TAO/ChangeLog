@@ -17,32 +17,32 @@ Tue May 27 13:34:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun May 25 00:37:12 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	      * docs/tutorials/Quoter/Simple/Client/Makefile.am:
-	      * docs/tutorials/Quoter/Simple/ImprovedServer/Makefile.am:
-	      * docs/tutorials/Quoter/Simple/Server/Makefile.am:
-	      * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile.am:
-	      * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile.am:
-	      * orbsvcs/examples/Notify/Federation/Agent/Makefile.am:
-	      * orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile.am:
-	      * orbsvcs/examples/Notify/MC/monitor/Makefile.am:
-	      * orbsvcs/orbsvcs/Makefile.am:
-	      * orbsvcs/tests/Notify/MC/Makefile.am:
-	      * orbsvcs/tests/unit/Notify/MC/Control/Makefile.am:
-	      * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile.am:
-	      * orbsvcs/tests/unit/Notify/MC/MonitorManager/Makefile.am:
-	      * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/Makefile.am:
-	      * orbsvcs/tests/unit/Notify/MC/Statistic/Makefile.am:
-	      * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Makefile.am:
-	      * tao/Makefile.am:
-	      * tests/Makefile.am:
-	      * tests/POA/Adapter_Activator/Makefile.am:
-	      * tests/POA/Explicit_Activation/Makefile.am:
-	      * tests/POA/On_Demand_Activation/Makefile.am:
-	      * tests/POA/Reference_Counted_Servant/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Client/Makefile.am:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Server/Makefile.am:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile.am:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile.am:
+        * orbsvcs/examples/Notify/Federation/Agent/Makefile.am:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile.am:
+        * orbsvcs/examples/Notify/MC/monitor/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/tests/Notify/MC/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Control/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Makefile.am:
+        * tao/Makefile.am:
+        * tests/Makefile.am:
+        * tests/POA/Adapter_Activator/Makefile.am:
+        * tests/POA/Explicit_Activation/Makefile.am:
+        * tests/POA/On_Demand_Activation/Makefile.am:
+        * tests/POA/Reference_Counted_Servant/Makefile.am:
 
           Regenerated.
 
-	      * configure.ac:
+        * configure.ac:
 
           Update for new directories.
 
