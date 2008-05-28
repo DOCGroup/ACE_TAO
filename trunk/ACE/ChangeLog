@@ -1,3 +1,13 @@
+Wed May 28 08:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_3332_Regression_Test.cpp:
+        * tests/Bug_3332_Regression_Test.txt:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Regression test for the change of:
+          Fri May 23 12:45:00 UTC 2008 * ace/RB_Tree.cpp.
+
 Tue May 27 23:10:33 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
