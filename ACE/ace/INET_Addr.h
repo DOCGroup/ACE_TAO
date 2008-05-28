@@ -22,11 +22,6 @@
 
 #include "ace/Addr.h"
 
-#if defined(ACE_VXWORKS)
-   // Needed to get INET_ADDR_LEN
-#  include /**/ "inetLib.h"
-#endif /* ACE_VXWORKS */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -383,10 +378,6 @@ private:
     sockaddr_in6 in6_;
 #endif /* ACE_HAS_IPV6 */
   } inet_addr_;
-
-#if defined (ACE_VXWORKS)
-  char buf_[INET_ADDR_LEN];
-#endif
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
