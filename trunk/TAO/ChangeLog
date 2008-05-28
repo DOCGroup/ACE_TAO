@@ -1,3 +1,10 @@
+Wed May 28 14:00:00 UTC 2008  Simon Massey <sma@prismtech.com>
+
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
+        
+          Corrected for unsigned integer (size_t) ambiguity errors.
+
 Tue May 27 13:34:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:

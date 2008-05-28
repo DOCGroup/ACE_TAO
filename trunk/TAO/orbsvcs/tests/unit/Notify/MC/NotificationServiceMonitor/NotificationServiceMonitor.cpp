@@ -58,7 +58,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
           error ("second Monitor_Point_Registry::add() failed");
         }
         
-      for (int i = 0; i < 10; ++i)
+      for (size_t i = 0; i < 10; ++i)
         {
           s->receive  (i);
         }
