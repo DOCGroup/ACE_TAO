@@ -873,6 +873,13 @@ project(RB Tree Test) : acetest {
   }
 }
 
+project(Bug_3332_Regression_Test) : acetest {
+  exename = Bug_3332_Regression_Test
+  Source_Files {
+    Bug_3332_Regression_Test.cpp
+  }
+}
+
 project(Reactors Test) : acetest {
   exename = Reactors_Test
   Source_Files {
