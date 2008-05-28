@@ -234,7 +234,7 @@ union ACE_max_align_info
 #endif /* ACE_MALLOC_ALIGN */
 
 #if !defined ACE_MALLOC_ROUNDUP
-#  define ACE_MALLOC_ROUNDUP(X, Y) ((X) + ((Y) - 1) & ~((Y) - 1))
+#  define ACE_MALLOC_ROUNDUP(X, Y) (((X) + ((Y) - 1)) & ~((Y) - 1))
 #endif
 
 // ACE_MALLOC_HEADER_SIZE is the normalized malloc header size.
