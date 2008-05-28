@@ -1,7 +1,9 @@
 #ifndef _ARGPAIR_H
 #define _ARGPAIR_H
 
-struct  ArgPair
+#include "lwft_export.h"
+
+struct TAO_LWFT_Export ArgPair
 {
   ArgPair (int argc, char **argv);
   ~ArgPair (void);

@@ -23,12 +23,11 @@
 #include <fstream>
 #include <sstream>
 
-ACE_RCSID(Thread_Pools, server, "$Id$")
+ACE_RCSID (FLARe, server, "$Id$")
 
 static int stop = 0;
 
-class test_i :
-  public POA_test
+class test_i : public POA_test
 {
 public:
   test_i (CORBA::ORB_ptr orb,
@@ -434,9 +433,7 @@ Task::svc (void)
 
       CORBA::Object_var tmp = this->orb_->string_to_object (rm_ior_file);
       ReplicationManager_var rm =
-        ReplicationManager::_narrow (tmp.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ReplicationManager::_narrow (tmp.in ());
 
       // ***************************************************
       // first servant activated

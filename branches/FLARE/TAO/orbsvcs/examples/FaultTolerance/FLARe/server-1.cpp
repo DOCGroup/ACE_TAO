@@ -439,9 +439,7 @@ Task::svc (void)
 
       CORBA::Object_var tmp = this->orb_->string_to_object (rm_ior_file);
       ReplicationManager_var rm =
-        ReplicationManager::_narrow (tmp.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ReplicationManager::_narrow (tmp.in ());
 
       // ***************************************************
       // first servant activated

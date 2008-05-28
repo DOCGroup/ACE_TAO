@@ -1,3 +1,29 @@
+Wed May 28 17:27:57 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/FLARe/lwft_export.h:
+
+          New file, export header file for new library of common
+          FLARe files.
+
+        * orbsvcs/examples/FaultTolerance/FLARe/Agent.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/server-1.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/server-2.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/ReplicationManager.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/AppSideReg.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/LWFT.idl
+        * orbsvcs/examples/FaultTolerance/FLARe/Agent.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/LWFT.mpc:
+        * orbsvcs/examples/FaultTolerance/FLARe/client.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/ServerORBInitializer.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/Timer.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/ArgPair.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/AppOptions.h:
+        * orbsvcs/examples/FaultTolerance/FLARe/ReplicationManager_process.cpp:
+        * orbsvcs/examples/FaultTolerance/FLARe/ReplicationManager.cpp:
+
+          Combined generated code and other files used by multiple
+          builds into a new library called FLARE_Common.
+
 Tue May 27 20:22:47 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/examples/FaultTolerance/FLARe/LWFT.mpc:

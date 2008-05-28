@@ -12,11 +12,13 @@
 
 #include "ace/Task.h"
 
+#include "lwft_export.h"
+
 /**
   * @class Timer
   *
   */
-class Timer : public ACE_Task_Base
+class TAO_LWFT_Export Timer : public ACE_Task_Base
 {
 public:
   /// Default constructor.

@@ -21,7 +21,7 @@
  *  @brief Declares AppOptions singleton to hold the command line options.
  */
 
-class AppOptions
+class TAO_LWFT_Export AppOptions
 /// TITLE
 ///   Singleton class for the program options.
 {
