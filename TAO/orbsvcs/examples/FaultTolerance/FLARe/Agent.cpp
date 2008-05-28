@@ -21,9 +21,7 @@ void Agent_i::proactive(bool v)
 }
 
 CORBA::Object_ptr
-Agent_i::next_member (const char *ior_string
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
+Agent_i::next_member (const char *ior_string)
 {
   ACE_DEBUG ((LM_DEBUG, "NEXT MEMBER CALLED for ior_string = %s.\n",ior_string));
   //sleep (3); 
@@ -85,9 +83,7 @@ Agent_i::next_member (const char *ior_string
 }
 
 void Agent_i::
-update_rank_list (const RankList & rank_list
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException))
+update_rank_list (const RankList & rank_list)
 {
 /*  if (update_count_ > 80)
   {
@@ -129,7 +125,7 @@ initialize (CORBA::Object_ptr rm_ior)
 
 /*
   CORBA::String_var ior_string =
-    this->orb_->object_to_string (temp.in () ACE_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (temp.in ());
 
   FILE *output_file= ACE_OS::fopen (ior_file, "w");
   if (output_file == 0)
@@ -149,17 +145,13 @@ initialize (CORBA::Object_ptr rm_ior)
 
 /*
 void
-Agent_i::update_reference (const char *ior_string
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException))
+Agent_i::update_reference (const char *ior_string)
 {
   this->forward_str_ = CORBA::string_dup (ior_string);
 }
 
 void
-Agent_i::update_failover_list (const FailoverList &failover_list
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
+Agent_i::update_failover_list (const FailoverList &failover_list)
 {
   ACE_DEBUG ((LM_DEBUG, "failure map updates\n"));
   CORBA::ULong failover_list_length = failover_list.length ();
@@ -173,9 +165,7 @@ Agent_i::update_failover_list (const FailoverList &failover_list
 
 void
 Agent_i::update_failover (const char * object_id, 
-                          CORBA::Object_ptr next_member
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
+                          CORBA::Object_ptr next_member)
 {
   ACE_DEBUG ((LM_DEBUG, "calling update next member\n"));
   this->failover_map_.rebind (object_id, 
@@ -184,9 +174,7 @@ Agent_i::update_failover (const char * object_id,
 
 void
 Agent_i::update_secondary (const char * object_id,
-                           CORBA::Object_ptr next_member
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
+                           CORBA::Object_ptr next_member)
 {
   ACE_DEBUG ((LM_DEBUG, "calling update next members\n"));
   this->secondary_map_.rebind (object_id, 
@@ -195,9 +183,7 @@ Agent_i::update_secondary (const char * object_id,
 
 void
 Agent_i::initialize_agent (const ReplicaList & replica_list,
-                           const ReplicasList & replicas_list
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
+                           const ReplicasList & replicas_list)
 {
   ACE_DEBUG ((LM_DEBUG, "calling initialize agent\n"));
 

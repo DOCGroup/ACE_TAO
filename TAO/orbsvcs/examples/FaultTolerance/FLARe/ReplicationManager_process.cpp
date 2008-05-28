@@ -24,27 +24,20 @@ main (int argc, char *argv[])
       }
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Client ORB"
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            "Client ORB");
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       /*
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -52,17 +45,13 @@ main (int argc, char *argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       ReplicationManager_i rm_i (orb.in ());
       // rm_i.hertz (5);
       // rm_i.start ();
 
-      ReplicationManager_var rm = rm_i._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ReplicationManager_var rm = rm_i._this ();
       */
 
       ReplicationManager_i *rm_i = 0;
@@ -85,18 +74,19 @@ main (int argc, char *argv[])
       name[0].kind = CORBA::string_dup ("");
 
       // Register with the name server
-      naming_context->bind (name, rm.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      naming_context->bind (name, rm.in ());
 
       */
 
       CORBA::String_var ior =
-        orb->object_to_string (rm.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (rm.in ());
+      
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      
       if (ior_output_file != 0)
         {
           FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+          
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
@@ -106,16 +96,13 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) RM - event loop finished\n"));
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa->destroy (1, 1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

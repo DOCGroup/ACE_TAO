@@ -2,6 +2,8 @@
 // $Id$
 
 project(*idl): taoidldefaults {
+  idlflags    += -Wb,export_macro=TAO_LWFT_Export -Wb,export_include=lwft_export.h
+
   IDL_Files {
     LWFT.idl
     monitor.idl
@@ -15,9 +17,10 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*server2): rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, pi_server, interceptors, naming, iorinterceptor {
+project(*Common) : rtportableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, pi_server, interceptors, iorinterceptor {
   after += *idl
-  exename = server-2
+  sharedname = LWFT_Common
+  dynamicflags = TAO_LWFT_BUILD_DLL
   
   IDL_Files {
   }
@@ -36,39 +39,46 @@ project(*server2): rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoi
     monitorS.cpp
     ObjectReferenceFactory.cpp
     ObjectReferenceFactoryC.cpp
-    server-2.cpp
     ServerORBInitializer.cpp
+    Timer.cpp
   }
 }
 
-project(*server1): rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, pi_server, interceptors, naming, iorinterceptor {
-  after += *idl
+project(*server2): rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, pi_server, interceptors, iorinterceptor {
+  after += *Common
+  libs += LWFT_Common
+  exename = server-2  
+  
+  IDL_Files {
+  }
+  
+  Source_Files {
+    server-2.cpp
+  }
+  
+  Header_Files {
+  }
+}
+
+project(*server1): rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, pi_server, interceptors, iorinterceptor {
+  after += *Common
+  libs += LWFT_Common
   exename = server-1
   
   IDL_Files {
   }
   
   Source_Files {
-    AppOptions.cpp
-    ArgPair.cpp
-    AppSideMonitor_Thread.cpp
-    AppSideMonitor_Handler.cpp
-    AppSideReg.cpp
-    Hello.cpp
-    IOR_Interceptor.cpp
-    LWFTC.cpp
-    LWFTS.cpp
-    monitorC.cpp
-    monitorS.cpp
-    ObjectReferenceFactory.cpp
-    ObjectReferenceFactoryC.cpp
     server-1.cpp
-    ServerORBInitializer.cpp
+  }
+  
+  Header_Files {
   }
 }
 
-project(*client): rt_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, pi_server, interceptors, naming {
-  after  += *idl
+project(*client): rt_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, pi_server, interceptors {
+  after += *Common
+  libs += LWFT_Common
   exename = client
   
   IDL_Files {
@@ -79,51 +89,41 @@ project(*client): rt_client, avoids_minimum_corba, avoids_corba_e_compact, avoid
     client.cpp
     Client_ORBInitializer.cpp
     Client_Request_Interceptor.cpp
-    LWFTC.cpp
-    LWFTS.cpp
   }
 }
 
 
 project(*HostMonitor): taoserver, naming {
-  after += *idl
+  after += *Common
+  libs += LWFT_Common
   exename = host_monitor
   
   IDL_Files {
   }
   
   Source_Files {
-    ArgPair.cpp
     Failure_Handler.cpp
     HMOptions.cpp
     host_monitor.cpp
     HostMonitorImpl.cpp
     LinuxCPULoadCalculator.cpp
-    LWFTC.cpp
-    LWFTS.cpp
     Monitor_Thread.cpp
-    monitorC.cpp
-    monitorS.cpp
     RM_Proxy.cpp
-    Timer.cpp
     Utilization_Monitor.cpp
   }
 }
 
 project(*ReplicationManager): taoserver, naming {
-  after += *idl
+  after += *Common
+  libs += LWFT_Common
   exename = ReplicationManager
   
   IDL_Files {
   }
   
   Source_Files {
-    ArgPair.cpp
-    LWFTC.cpp
-    LWFTS.cpp
     ReplicationManager.cpp
     ReplicationManager_process.cpp
     RMOptions.cpp
-    Timer.cpp
   }
 }

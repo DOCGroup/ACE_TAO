@@ -2,6 +2,8 @@
 // $Id$
 //
 
+#include "tao/StringSeq.pidl"
+
 interface Hello
 {
   /// Return a simple string
@@ -42,10 +44,10 @@ struct Replicas {
 
 typedef sequence<Replicas> ReplicasList;
 
-typedef sequence<string> PrimaryList;
-typedef sequence<string> FailoverList;
-typedef sequence<string> SecondaryList;
-typedef sequence<string> HostList;
+typedef CORBA::StringSeq PrimaryList;
+typedef CORBA::StringSeq FailoverList;
+typedef CORBA::StringSeq SecondaryList;
+typedef CORBA::StringSeq HostList;
 
 struct UtilMap {
   string host_id;

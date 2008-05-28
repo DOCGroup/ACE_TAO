@@ -88,9 +88,7 @@ Agent_Thread::svc (void)
   try
     {
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references (
-            "RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -98,23 +96,18 @@ Agent_Thread::svc (void)
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 /*
       Agent_var temp =
-        this->agent_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->agent_->_this ();
 
       CORBA::String_var ior =
-        this->orb_->object_to_string (temp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->object_to_string (temp.in ());
 */
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 /*
       FILE *output_file= ACE_OS::fopen (agent_ior_file, "w");
       if (output_file == 0)
@@ -131,9 +124,7 @@ Agent_Thread::svc (void)
 */
      /* 
       CORBA::Object_var naming_obj =
-      this->orb_->resolve_initial_references ("NameService"
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -141,27 +132,22 @@ Agent_Thread::svc (void)
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("ReplicationManager");
 
       CORBA::Object_var rm_obj =
-        naming_context->resolve (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        naming_context->resolve (name);
 
       */
 
       CORBA::Object_var tmp = this->orb_->string_to_object(rm_ior);
       ReplicationManager_var rm =
-        ReplicationManager::_narrow (tmp.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ReplicationManager::_narrow (tmp.in ());
 
-      agent_->initialize(rm.in());
+      agent_->initialize (rm.in ());
 
       //ACE_DEBUG ((LM_DEBUG, "calling register agent\n"));
 
@@ -174,6 +160,7 @@ Agent_Thread::svc (void)
       ex._tao_print_exception ("Exception caught:");
       return 1;
     }
+    
   return 0;
 }
 

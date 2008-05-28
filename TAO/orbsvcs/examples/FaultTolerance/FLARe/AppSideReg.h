@@ -23,7 +23,7 @@
 
 class ACE_Barrier;
 
-class AppSideReg : public ACE_Task_Base
+class TAO_LWFT_Export AppSideReg : public ACE_Task_Base
 {
 public:
     AppSideReg(ACE_Barrier *ext_b, CORBA::ORB_ptr);

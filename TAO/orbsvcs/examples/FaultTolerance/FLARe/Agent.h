@@ -23,42 +23,28 @@ public:
 
   ~Agent_i (void);
 
-  virtual CORBA::Object_ptr next_member (const char * m
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+  virtual CORBA::Object_ptr next_member (const char * m);
   
-  virtual void update_rank_list (const RankList & rank_list
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+  virtual void update_rank_list (const RankList & rank_list);
   
   void initialize (CORBA::Object_ptr);
-  void proactive(bool v);
+  void proactive (bool v);
 
 /*
-  virtual void update_reference (const char * m
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+  virtual void update_reference (const char * m);
 
   virtual void update_failover (const char * object_id,
-                                   CORBA::Object_ptr next_object
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+                                CORBA::Object_ptr next_object);
 
   virtual void update_secondary (const char * object_id,
-                                    CORBA::Object_ptr next_member
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+                                 CORBA::Object_ptr next_member);
 
 
   virtual void initialize_agent (const ReplicaList & replica_list,
-                                 const ReplicasList & replicas_list
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+                                 const ReplicasList & replicas_list));
 
   
-  virtual void update_failover_list (const FailoverList &failover_list
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+  virtual void update_failover_list (const FailoverList &failover_list);
 
   typedef ACE_Hash_Map_Manager_Ex<
     ACE_CString,

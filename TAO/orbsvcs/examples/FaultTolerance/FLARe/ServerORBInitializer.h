@@ -12,14 +12,16 @@
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
+#include "lwft_export.h"
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class ServerORBInitializer :
-  public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+class TAO_LWFT_Export ServerORBInitializer
+  : public virtual PortableInterceptor::ORBInitializer,
+    public virtual TAO_Local_RefCounted_Object
 {
 public:
 
