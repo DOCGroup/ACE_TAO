@@ -1,21 +1,8 @@
-Wed May 28 18:13:15 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+Thu May 29 10:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
-        * ace/INET_Addr.cpp:
-        * ace/INET_Addr.h:
+        * tests/Bug_3332_Regression_Test.cpp:
 
-          Changed ACE_INET_Addr::get_host_addr(char *, int) to be thread
-          safe by calling ACE_OS::inet_ntop() instead of
-          ACE_OS::inet_ntoa().
-
-          Changed ACE_INET_Addr::get_host_addr(void) to call
-          INET_Addr::get_host_addr(char *, size) with a static buffer.
-
-          Removed the special cases for VxWorks in both of the above
-          methods which called inet_ntoa_b() which, according to comments,
-          was for efficency and thread safety.  These are are now as
-          efficent and thread safe (or not, in the case of ACE_INET_Addr::
-          get_host_addr(void)) as any other target platform, but no longer
-          need a string buffer member in every ACE_INET_Addr instance.
+          Remove signed/unsigned comparison warnings.
 
 Wed May 28 13:46:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 

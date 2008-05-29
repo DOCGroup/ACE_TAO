@@ -58,7 +58,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_RB_Tree<char, int, ACE_Less_Than<char>, ACE_Null_Mutex> tree;
 
   ACE_DEBUG ((LM_DEBUG, "Creating Tree\n"));
-  {for (int i= 0; i < sizeof(nodes)/sizeof(Nodes); ++i)
+  {for (size_t i= 0u; i < sizeof(nodes)/sizeof(Nodes); ++i)
   {
     if (0 != tree.bind (nodes[i].key, nodes[i].value, nodes[i].node))
     {
@@ -70,7 +70,7 @@ run_main (int, ACE_TCHAR *[])
   if (!result)
   {
     ACE_DEBUG ((LM_DEBUG, "Validating Tree\n"));
-    {for (int i= 0; i < sizeof(nodes)/sizeof(Nodes); ++i)
+    {for (size_t i= 0u; i < sizeof(nodes)/sizeof(Nodes); ++i)
     {
       ACE_RB_Tree_Node<char, int> *node;
 
@@ -84,7 +84,7 @@ run_main (int, ACE_TCHAR *[])
         ACE_DEBUG ((LM_ERROR, ": entry %c=%d has ALREADY moved from %@ to %@\n", nodes[i].key, nodes[i].value, nodes[i].node, node));
         result = 3;
       }
-      else for (int j= i+1; j < sizeof(nodes)/sizeof(Nodes); ++j)
+      else for (size_t j= i+1u; j < sizeof(nodes)/sizeof(Nodes); ++j)
       {
         if (nodes[i].node == nodes[j].node)
         {
@@ -96,7 +96,7 @@ run_main (int, ACE_TCHAR *[])
 
     if (!result)
     {
-      {for (int i= 0; i < sizeof(nodes)/sizeof(Nodes); ++i)
+      {for (size_t i= 0u; i < sizeof(nodes)/sizeof(Nodes); ++i)
       {
         ACE_DEBUG ((LM_DEBUG, "Deleting node %c=%d @ %@\n", nodes[i].key, nodes[i].value, nodes[i].node));
         if (tree.unbind (nodes[i].key))
@@ -113,7 +113,7 @@ run_main (int, ACE_TCHAR *[])
             ACE_DEBUG ((LM_ERROR, ": Found %c=%d @ %@ in tree\n", node->key(), node->item(), node));
             result = 6;
           }
-          else {for (int j= i+1; j < sizeof(nodes)/sizeof(Nodes); ++j)
+          else {for (size_t j= i+1u; j < sizeof(nodes)/sizeof(Nodes); ++j)
           {
             if (tree.find (nodes[j].key, node))
             {
