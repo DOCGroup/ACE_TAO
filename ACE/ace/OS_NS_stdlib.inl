@@ -6,7 +6,6 @@
 #include "ace/Object_Manager_Base.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Global_Macros.h"
-#include "ace/Basic_Types.h"  /* intptr_t */
 #include "ace/os_include/os_errno.h"
 #include "ace/os_include/os_search.h"
 
@@ -459,6 +458,30 @@ ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
   return ACE_WCHAR_STD_NAMESPACE::wcstoul (s, ptr, base);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOUL */
+
+ACE_INLINE ACE_UINT64
+ACE_OS::strtoull (const char *s, char **ptr, int base)
+{
+#if defined (ACE_LACKS_STRTOULL)
+  return ACE_OS::strtoull_emulation (s, ptr, base);
+#elif defined (ACE_WIN32)
+  return ::_strtoui64 (s, ptr, base);
+#else
+  return ::strtoull (s, ptr, base);
+#endif /* ACE_LACKS_STRTOULL */
+}
+
+#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOULL)
+ACE_INLINE ACE_UINT64
+ACE_OS::strtoull (const wchar_t *s, wchar_t **ptr, int base)
+{
+#if defined (ACE_WIN32)
+  return ::_wcstoui64 (s, ptr, base);
+#else
+  return ACE_WCHAR_STD_NAMESPACE::wcstoull (s, ptr, base);
+#endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOULL */
 
 ACE_INLINE int
 ACE_OS::system (const ACE_TCHAR *s)

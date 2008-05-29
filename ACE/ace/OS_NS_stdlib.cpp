@@ -15,6 +15,7 @@ ACE_RCSID (ace,
 #include "ace/OS_Memory.h"
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_ctype.h"
 
 #if defined (ACE_LACKS_MKTEMP) \
     || defined (ACE_LACKS_MKSTEMP) \
@@ -532,7 +533,7 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
    */
   do {
     c = *s++;
-  } while (isspace(c));
+  } while (ACE_OS::ace_isspace(c));
   if (c == '-') {
     neg = 1;
     c = *s++;
@@ -568,10 +569,10 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
   cutlim = cutoff % (unsigned long)base;
   cutoff /= (unsigned long)base;
   for (acc = 0, any = 0;; c = *s++) {
-    if (isdigit(c))
+    if (ACE_OS::ace_isdigit(c))
       c -= '0';
-    else if (isalpha(c))
-      c -= isupper(c) ? 'A' - 10 : 'a' - 10;
+    else if (ACE_OS::ace_isalpha(c))
+      c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
     else
       break;
     if (c >= base)
@@ -612,7 +613,7 @@ ACE_OS::strtoul_emulation (const char *nptr,
    */
   do
     c = *s++;
-  while (isspace(c));
+  while (ACE_OS::ace_isspace(c));
   if (c == '-')
     {
       neg = 1;
@@ -634,10 +635,10 @@ ACE_OS::strtoul_emulation (const char *nptr,
 
   for (acc = 0, any = 0;; c = *s++)
     {
-      if (isdigit(c))
+      if (ACE_OS::ace_isdigit(c))
         c -= '0';
-      else if (isalpha(c))
-        c -= isupper(c) ? 'A' - 10 : 'a' - 10;
+      else if (ACE_OS::ace_isalpha(c))
+        c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
       else
         break;
       if (c >= base)
@@ -655,7 +656,8 @@ ACE_OS::strtoul_emulation (const char *nptr,
     {
       acc = ULONG_MAX;
       errno = ERANGE;
-    } else if (neg)
+    }
+  else if (neg)
     acc = -acc;
   if (endptr != 0)
     *endptr = any ? (char *) s - 1 : (char *) nptr;
@@ -663,6 +665,75 @@ ACE_OS::strtoul_emulation (const char *nptr,
 }
 #endif /* ACE_LACKS_STRTOUL */
 
+#if defined (ACE_LACKS_STRTOULL)
+ACE_UINT64
+ACE_OS::strtoull_emulation (const char *nptr,
+                            char **endptr,
+                            register int base)
+{
+  register const char *s = nptr;
+  register ACE_UINT64 acc;
+  register int c;
+  register ACE_UINT64 cutoff;
+  register int neg = 0, any, cutlim;
+
+  /*
+   * See strtol for comments as to the logic used.
+   */
+  do
+    c = *s++;
+  while (ACE_OS::ace_isspace(c));
+  if (c == '-')
+    {
+      neg = 1;
+      c = *s++;
+    }
+  else if (c == '+')
+    c = *s++;
+  if ((base == 0 || base == 16) &&
+      c == '0' && (*s == 'x' || *s == 'X'))
+    {
+      c = s[1];
+      s += 2;
+      base = 16;
+    }
+  if (base == 0)
+    base = c == '0' ? 8 : 10;
+
+  cutoff = (ACE_UINT64) ACE_UINT64_MAX / (ACE_UINT64) base;
+  cutlim = (ACE_UINT64) ACE_UINT64_MAX % (ACE_UINT64) base;
+
+  for (acc = 0, any = 0;; c = *s++)
+    {
+      if (ACE_OS::ace_isdigit(c))
+        c -= '0';
+      else if (ACE_OS::ace_isalpha(c))
+        c -= ACE_OS::ace_isupper(c) ? 'A' - 10 : 'a' - 10;
+      else
+        break;
+      if (c >= base)
+        break;
+      if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+        any = -1;
+      else
+        {
+          any = 1;
+          acc *= base;
+          acc += c;
+        }
+    }
+  if (any < 0)
+    {
+      acc = ACE_UINT64_MAX;
+      errno = ERANGE;
+    }
+  else if (neg)
+    acc = -acc;
+  if (endptr != 0)
+    *endptr = any ? (char *) s - 1 : (char *) nptr;
+  return (acc);
+}
+#endif /* ACE_LACKS_STRTOULL */
 
 #if defined (ACE_LACKS_MKSTEMP)
 ACE_HANDLE
@@ -788,7 +859,7 @@ ACE_OS::getprogname_emulation ()
 
 #if !defined (ACE_HAS_SETPROGNAME)
 void
-ACE_OS::setprogname_emulation (const char* progname) 
+ACE_OS::setprogname_emulation (const char* progname)
 {
   const char *p = ACE_OS::strrchr (progname, '/');
   if (p != 0)

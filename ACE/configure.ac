@@ -2499,8 +2499,8 @@ dnl FIXME: This test may be broken.
 dnl
 dnl FIXME: This test contains vestigial bits of tests for explicit
 dnl template instantiation feature macros, even though support for
-dnl the same has been removed. 
-dnl 
+dnl the same has been removed.
+dnl
 dnl A rewrite to test only whether ACE_TEMPLATES_REQUIRE_SOURCE or
 dnl ACE_TEMPLATES_REQUIRE_PRAGMA is clearly needed.
 dnl
@@ -3782,6 +3782,8 @@ ACE_CHECK_LACKS_FUNCS(strtol)
 
 ACE_CHECK_LACKS_FUNCS(strtoul)
 
+ACE_CHECK_LACKS_FUNCS(strtoull)
+
 # swab() comes in a number of forms:
 #   swab (const void*, void*, size_t) is POSIX, XPG4, SUS, SUSv2 standard.
 #   swab (const char*, char*, size_t) is SVID third edition.
@@ -4116,7 +4118,7 @@ ACE_CHECK_HAS_FUNCS(vasprintf vaswprintf vfwprintf vswprintf)
 
 ACE_CHECK_HAS_FUNCS(wcsnlen)
 
-ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
+ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul wcstoull)
 
 if test "$ac_cv_func_wcstok" = yes; then
 dnl The wcstok() function varies with standards. Check which one we have.
@@ -4672,7 +4674,7 @@ dnl Check for Unix98 pthreads extensions
   ACE_CHECK_HAS_FUNCS(pthread_getconcurrency pthread_setconcurrency)
   ACE_CHECK_HAS_FUNCS(pthread_attr_setcreatesuspend_np)
 
-dnl Don't test for pthread_getaffinity_np() or pthread_setaffinity_np() 
+dnl Don't test for pthread_getaffinity_np() or pthread_setaffinity_np()
 dnl if the system doesn't also have cpu_set_t. The functions are almost
 dnl certainly incompatible with our wrapper facade, as we use a "dummy"
 dnl cpu_set_t defined in ace/os_include/os_sched.h.
