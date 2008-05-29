@@ -1,3 +1,9 @@
+Thu May 29 15:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/INET_Addr.cpp:
+
+          Remove tabs to avoid fuzz warning.
+
 Thu May 29 10:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_3332_Regression_Test.cpp:
