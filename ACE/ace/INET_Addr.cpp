@@ -1110,9 +1110,9 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
 #endif /* ACE_HAS_IPV6 */
 
   return ACE_OS::inet_ntop (AF_INET,
-			    &this->inet_addr_.in4_.sin_addr,
-			    dst,
-			    size);
+          &this->inet_addr_.in4_.sin_addr,
+          dst,
+          size);
 }
 
 // Return the dotted Internet address.
