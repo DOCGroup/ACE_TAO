@@ -1,3 +1,16 @@
+Thu May 29 16:08:01 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_stdlib.h:
+
+          Added strtoull() function to ACE_OS.
+
+        * configure.ac:
+
+          Added a check for presence of strtoull() and wcstoull()
+          in the build environment.
+
 Thu May 29 15:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/INET_Addr.cpp:
