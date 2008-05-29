@@ -28,6 +28,8 @@
 #include "ace/os_include/os_stdlib.h"
 #include /**/ "ace/ACE_export.h"
 
+#include "ace/Basic_Types.h"  /* ACE_UINT64 and intptr_t in inl file */
+
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
 #endif
@@ -271,6 +273,23 @@ namespace ACE_OS {
                                    char **endptr,
                                    int base);
 #endif /* ACE_LACKS_STRTOUL */
+
+  /// Converts a string to a 64 bit int value (char version).
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_UINT64 strtoull (const char *s, char **ptr, int base);
+
+#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOULL)
+  /// Converts a string to a 64 bit int value (wchar_t version).
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_UINT64 strtoull (const wchar_t *s, wchar_t **ptr, int base);
+#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOUL */
+
+#if defined (ACE_LACKS_STRTOULL)
+  extern ACE_Export
+  ACE_UINT64 strtoull_emulation (const char *nptr,
+                                 char **endptr,
+                                 int base);
+#endif /* ACE_LACKS_STRTOULL */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int system (const ACE_TCHAR *s);
