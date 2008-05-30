@@ -1,15 +1,24 @@
+Fri May 30 23:32:47 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/LogNotification.cpp:
+
+          Convert current time to TimeBase::TimeT with new
+          ORBSVCS_Time::to_Absolute_TimeT() method.  This fixes a
+          bug where we were returning the time as a relative time,
+          and simplifies the code by removing temporaries.
+
 Fri May 30 15:04:17 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Time_Utilities.h:
         * orbsvcs/orbsvcs/Time_Utilities.cpp:
 
-          Add new methods ORBSVCS_Time::to_Absolute_Time_Value() and
-          ORBSVCS_Time::to_Time_Value() which take an ACE_Time_Value
-          parameter and return a TimeBase::TimeT. These are wrappers
-          of the existing ORBSVCS_Time::Absolute_Time_Value_to_TimeT
-          and ORBSVCS_Time::Time_Value_to_TimeT methods, but allow
-          use in contexts that would otherwise need the introduction
-          of a temporary.
+          Add new methods ORBSVCS_Time::to_Absolute_TimeT() and
+          ORBSVCS_Time::to_TimeT() which take an ACE_Time_Value parameter
+          and return a TimeBase::TimeT. These are wrappers around the
+          existing ORBSVCS_Time::Absolute_Time_Value_to_TimeT() and
+          ORBSVCS_Time::Time_Value_to_TimeT() methods, but allow use in
+          contexts that would otherwise require the introduction of a
+          temporary.
 
 Fri May 30 13:21:20 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
