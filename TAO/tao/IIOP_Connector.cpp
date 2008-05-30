@@ -446,7 +446,6 @@ TAO_IIOP_Connector::complete_connection (int result,
           transport = tlist[0];
           desc.reset_endpoint(ep_list[0]);
           if (!this->wait_for_connection_completion (r,
-                                                     desc,
                                                      transport,
                                                      timeout))
             {

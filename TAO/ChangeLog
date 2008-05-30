@@ -1,21 +1,46 @@
+Fri May 30 13:21:20 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+
+          Modified the connect() method to wait for the connection
+          completion if a transport is found but not connected.  Also, fixed
+          a memory leak if a connection was found in the cache but had
+          previously experienced an error.
+
+          This version of connect() is a hybrid of Dale's version and the
+          previous version.
+
+          Also, the wait_for_connection_completion() method was changed to
+          not require the descriptor interface.
+
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+
+          It is no longer necessary to pass in the descriptor interface to
+          wait_for_connection_completion().
+
 Fri May 30 13:04:00 UTC 2008  Simon Massey <sma@prismtech.com>
 
         * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
-        
+
           And again! Corrected for unsigned integer (size_t) ambiguity errors.
 
 Wed May 28 14:00:00 UTC 2008  Simon Massey <sma@prismtech.com>
 
         * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
         * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
-        
+
           Corrected for unsigned integer (size_t) ambiguity errors.
 
 Tue May 27 13:34:12 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
         * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
-        
+
           Added implementation for the overload of receive() taking
           a size_t argument. Even though there is an implementation
           in the base class, we were getting warnings from some of
