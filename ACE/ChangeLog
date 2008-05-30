@@ -1,3 +1,8 @@
+Fri May 30 13:17:55 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * test/INET_Addr_Test_IPV6.cpp:
+          Resolve Conflict #define INTERFACE with MFC under VC8.
+
 Fri May 30 10:07:55 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * ace/config-win32-borland.h:

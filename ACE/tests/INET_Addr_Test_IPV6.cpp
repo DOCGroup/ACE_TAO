@@ -20,7 +20,7 @@
 #include "ace/OS_NS_arpa_inet.h"
 
 #define LINK_LOCAL_ADDR ACE_TEXT ("fe80::")
-#define INTERFACE ("eth0")
+#define THE_INTERFACE ("eth0")
 
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
@@ -149,7 +149,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
           status = 1;
         }
 
-      if (-1 == link_local_addr.set_interface (INTERFACE))
+      if (-1 == link_local_addr.set_interface (THE_INTERFACE))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
