@@ -192,6 +192,7 @@
 #define ACE_LACKS_WCSDUP
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_STRTOULL
 
 #define ACE_HAS_CHARPTR_SOCKOPT
 #define ACE_LACKS_SYMLINKS
@@ -336,4 +337,3 @@
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_4_H */
-
