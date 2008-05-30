@@ -1,3 +1,15 @@
+Fri May 30 10:07:55 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * ace/config-win32-borland.h:
+          Borland compilers doesn't provide strtoull() and wcstoull().
+
+        * ace/config-sunos5.5.h:
+        * ace/config-sunos5.10.h:
+          wcstoull() didn't exist on Solaris until version 10.
+
+        * ace/config-hpux-11.00.h:
+          HP-UX doesn't provide strtoull() and wcstoull().
+
 Thu May 29 16:08:01 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * ace/OS_NS_stdlib.cpp:
