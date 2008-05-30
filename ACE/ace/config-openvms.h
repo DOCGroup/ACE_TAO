@@ -128,6 +128,7 @@
 #define ACE_LACKS_RLIMIT_PROTOTYPE 1
 #define ACE_LACKS_SETSCHED
 #define ACE_LACKS_SYSCALL 1
+#define ACE_LACKS_WCSTOULL 1
 
 /* (missing) standard data types */
 #define ACE_LACKS_CONST_TIMESPEC_PTR 1
