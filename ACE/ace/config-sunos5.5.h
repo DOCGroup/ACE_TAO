@@ -343,7 +343,7 @@
           _POSIX_PTHREAD_SEMANTICS */
 #endif /* !ACE_MT_SAFE || ACE_MT_SAFE == 1 */
 
-# define ACE_HAS_PRIOCNTL
+#define ACE_HAS_PRIOCNTL
 
 // Platform supports ACE_TLI timod STREAMS module.
 #define ACE_HAS_TIMOD_H
@@ -398,6 +398,9 @@
 // library just for that function.  Just use the emulation in ACE that
 // has been used for years.
 #define ACE_LACKS_INET_ATON
+
+// Solaris doesn't have wcstoull
+#define ACE_LACKS_WCSTOULL
 
 #if defined (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)
 #undef ACE_HAS_PROC_FS

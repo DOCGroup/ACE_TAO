@@ -339,6 +339,10 @@
 #define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_SYS_SYSCTL_H
 
+// lacks strtoull and wcstoull
+#define ACE_LACKS_STRTOULL
+#define ACE_LACKS_WCSTOULL
+
 // Shared library name/path components
 #if defined (__ia64)
 #  define ACE_DLL_SUFFIX  ACE_TEXT (".so")

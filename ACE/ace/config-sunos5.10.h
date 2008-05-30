@@ -43,4 +43,9 @@
 #  define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%zu")
 #endif /* ACE_SIZE_T_FORMAT_SPECIFIER */
 
+// Solaris 10 offers wcstoull()
+#if defined (ACE_LACKS_WCSTOULL)
+#  undef ACE_LACKS_WCSTOULL
+#endif /* ACE_LACKS_WCSTOULL */
+
 #endif /* ACE_CONFIG_H */

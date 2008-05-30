@@ -83,6 +83,8 @@
 
 #define ACE_LACKS_STRRECVFD
 #define ACE_USES_EXPLICIT_STD_NAMESPACE
+#define ACE_LACKS_STRTOULL
+#define ACE_LACKS_WCSTOULL
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // must have _MT defined to include multithreading
