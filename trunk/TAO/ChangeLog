@@ -1,3 +1,16 @@
+Fri May 30 15:04:17 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+        * orbsvcs/orbsvcs/Time_Utilities.cpp:
+
+          Add new methods ORBSVCS_Time::to_Absolute_Time_Value() and
+          ORBSVCS_Time::to_Time_Value() which take an ACE_Time_Value
+          parameter and return a TimeBase::TimeT. These are wrappers
+          of the existing ORBSVCS_Time::Absolute_Time_Value_to_TimeT
+          and ORBSVCS_Time::Time_Value_to_TimeT methods, but allow
+          use in contexts that would otherwise need the introduction
+          of a temporary.
+
 Fri May 30 13:21:20 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Transport_Connector.h:

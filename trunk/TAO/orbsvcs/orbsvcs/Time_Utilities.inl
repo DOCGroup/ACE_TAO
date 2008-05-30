@@ -67,6 +67,14 @@ ORBSVCS_Time::to_Time_Value (const TimeBase::TimeT& t)
   return r;
 }
 
+ACE_INLINE TimeBase::TimeT
+ORBSVCS_Time::to_TimeT (const ACE_Time_Value& t)
+{
+   TimeBase::TimeT r;
+   ORBSVCS_Time::Time_Value_to_TimeT (r, t);
+   return r;
+}
+
 ACE_INLINE void
 ORBSVCS_Time::Absolute_Time_Value_to_TimeT (TimeBase::TimeT& lhs,
 					    const ACE_Time_Value& rhs)
@@ -97,6 +105,14 @@ ORBSVCS_Time::to_Absolute_Time_Value (const TimeBase::TimeT& t)
 {
   ACE_Time_Value r;
   ORBSVCS_Time::Absolute_TimeT_to_Time_Value (r, t);
+  return r;
+}
+
+ACE_INLINE TimeBase::TimeT
+ORBSVCS_Time::to_Absolute_TimeT (const ACE_Time_Value& t)
+{
+  TimeBase::TimeT r;
+  ORBSVCS_Time::Absolute_Time_Value_to_TimeT (r, t);
   return r;
 }
 
