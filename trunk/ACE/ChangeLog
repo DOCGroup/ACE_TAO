@@ -1,3 +1,8 @@
+Fri May 30 13:48:48 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * ace/config-openvms.h:
+          OpenVMS doesn't provide wcstoull() function.
+
 Fri May 30 13:37:13 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * ace/OS_NS_stdlib.inl:
