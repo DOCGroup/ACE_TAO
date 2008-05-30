@@ -28,11 +28,8 @@ TAO_LogNotification::object_creation (DsLogAdmin::LogId id)
   // The log id.
   event.id = id;
 
-  TimeBase::TimeT current_time;
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ORBSVCS_Time::Time_Value_to_TimeT(current_time, now);
-
-  event.time = current_time;
+  // Time object created.
+  event.time = ORBSVCS_Time::to_Absolute_TimeT (ACE_OS::gettimeofday ());
 
   any <<= event;
 
@@ -45,14 +42,11 @@ TAO_LogNotification::object_deletion (DsLogAdmin::LogId id)
   CORBA::Any any;
   DsLogNotification::ObjectDeletion event;
 
+  // The log id.
   event.id = id;
 
-  TimeBase::TimeT current_time;
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ORBSVCS_Time::Time_Value_to_TimeT(current_time, now);
-
   // Time object deleted.
-  event.time = current_time;
+  event.time = ORBSVCS_Time::to_Absolute_TimeT (ACE_OS::gettimeofday ());
 
   any <<= event;
 
@@ -86,12 +80,7 @@ TAO_LogNotification::attribute_value_change (DsLogAdmin::Log_ptr log,
 
   event.logref = DsLogAdmin::Log::_duplicate (log);
   event.id = id;
-
-  TimeBase::TimeT current_time;
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ORBSVCS_Time::Time_Value_to_TimeT (current_time, now);
-
-  event.time = current_time;
+  event.time = ORBSVCS_Time::to_Absolute_TimeT (ACE_OS::gettimeofday ());
 
   // The attribute type e.g. logFullAction, maxLogSize etc.
   event.type = type;
@@ -252,11 +241,7 @@ TAO_LogNotification::state_change (DsLogAdmin::Log_ptr log,
 
   event.logref = DsLogAdmin::Log::_duplicate (log);
   event.id = id;
-
-  TimeBase::TimeT current_time;
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ORBSVCS_Time::Time_Value_to_TimeT (current_time, now);
-  event.time = current_time;
+  event.time = ORBSVCS_Time::to_Absolute_TimeT (ACE_OS::gettimeofday ());
 
   // Administrative, Operational or Forwarding state.
   event.type = type;
@@ -325,11 +310,7 @@ TAO_LogNotification::threshold_alarm (
 
   event.logref = DsLogAdmin::Log::_duplicate (log);
   event.id = id;
-
-  TimeBase::TimeT current_time;
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ORBSVCS_Time::Time_Value_to_TimeT(current_time, now);
-  event.time = current_time;
+  event.time = ORBSVCS_Time::to_Absolute_TimeT (ACE_OS::gettimeofday ());
 
   event.crossed_value = crossedValue;
   event.observed_value = observedValue;
