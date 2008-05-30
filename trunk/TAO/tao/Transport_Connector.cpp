@@ -27,6 +27,45 @@ ACE_RCSID (tao,
            Connector,
            "$Id$")
 
+namespace
+{
+  class TransportCleanupGuard
+  {
+  public:
+    // Constructor.  Initially assume that we're going to clean up the
+    // transport upon destruction.
+    TransportCleanupGuard (TAO_Transport *tp)
+      : tp_ (tp),
+        awake_ (true)
+    {
+    }
+
+    ~TransportCleanupGuard ()
+    {
+      if (this->awake_ && this->tp_)
+        {
+          // Purge from the connection cache.  If we are not in the
+          // cache, this does nothing.
+          this->tp_->purge_entry ();
+
+          // Close the handler and remove the reference.
+          this->tp_->close_connection ();
+          this->tp_->remove_reference ();
+        }
+    }
+
+    /// Turn off the guard.
+    void clear ()
+    {
+      this->awake_ = false;
+    }
+
+  private:
+    TAO_Transport * const tp_;
+    bool awake_;
+  };
+}
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Connector
@@ -438,6 +477,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
   TAO::Transport_Cache_Manager &tcm =
     this->orb_core ()->lane_resources ().transport_cache ();
+
   // Stay in this loop until we find:
   // a usable connection, or a timeout happens
   while (true)
@@ -464,7 +504,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                 }
               (void) base_transport->close_connection ();
               (void) base_transport->purge_entry ();
-              base_transport = 0;
+              base_transport->remove_reference ();
             }
           else
             {
@@ -482,49 +522,51 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                               cr == TAO::TAO_CLIENT_ROLE ? "TAO_CLIENT_ROLE" :
                               "TAO_UNSPECIFIED_ROLE" ));
                 }
-              return base_transport;
-            }
-        }
-      else if (found == TAO::Transport_Cache_Manager::CACHE_FOUND_CONNECTING)
-        {
-          if (r->blocked_connect ())
-            {
-              if (TAO_debug_level > 4)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT("TAO (%P|%t) - Transport_Connector::waiting")
-                              ACE_TEXT(" for connection on transport [%d]\n"),
-                              base_transport->id ()));
-                }
 
-              // If wait_for_transport returns no errors, the base_transport
-              // points to the connection we wait for.
-              if (this->wait_for_transport (r, base_transport, timeout, false))
+              // If connected return.
+              if (base_transport->is_connected ())
+                return base_transport;
+
+              // Is it possible to get a transport from the cache that is not
+              // connected? If not, then the following code is bogus. We cannot
+              // wait for a connection to complete on a transport in the cache.
+              //
+              // (mesnier_p@ociweb.com) It is indeed possible to reach this point.
+              // The AMI_Buffering test does. When using non-blocking connects and
+              // the first request(s) are asynch and may be queued, the connection
+              // establishment may not be completed by the time the invocation is
+              // done with it. In that case it is up to a subsequent invocation to
+              // handle the connection completion.
+
+              TransportCleanupGuard tg(base_transport);
+              if (!this->wait_for_connection_completion (r, base_transport, timeout))
                 {
-                  // be sure this transport is registered with the reactor
-                  // before using it.
-                  if (!base_transport->register_if_necessary ())
+                  if (TAO_debug_level > 2)
                     {
-                        base_transport->remove_reference ();
-                        return 0;
+                      ACE_ERROR ((LM_ERROR,
+                                  "TAO (%P|%t) - Transport_Connector::connect, "
+                                  "wait for completion failed [%d]\n",
+                                  base_transport->id ()));
                     }
+                  return 0;
                 }
 
-              // In either success or failure cases of wait_for_transport, the
-              // ref counter in corresponding to the ref counter added by
-              // find_transport is decremented.
-              base_transport->remove_reference ();
-            }
-          else
-            {
-              if (TAO_debug_level > 4)
+              if (base_transport->is_connected () &&
+                  base_transport->wait_strategy ()->register_handler () == -1)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) - Transport_Connector::non-blocking: returning unconnected transport [%d]\n"),
-                    base_transport->id ()));
+                  // Registration failures.
+                  if (TAO_debug_level > 0)
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  "TAO (%P|%t) - Transport_Connector::connect, "
+                                  "could not register the transport [%d]"
+                                  "in the reactor.\n",
+                                  base_transport->id ()));
+                    }
+                  return 0;
                 }
 
-              // return the transport in it's current, unconnected state
+              tg.clear ();
               return base_transport;
             }
         }
@@ -540,7 +582,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
           if (make_new_connection)
             {
-              // we aren't going to use the transport returned from the cache (if any)
+              // we aren't going to use the transport returned from the cache
+              // (if any)
               if (base_transport != 0)
                 {
                   base_transport->remove_reference ();
@@ -575,17 +618,16 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                   base_transport->id ()));
                     }
                   (void) base_transport->purge_entry ();
+
+                  base_transport->remove_reference ();
                 }
-              // The new transport is in the cache.  We'll pick it up from there
-              // next time thru this loop (using it from here causes more problems
-              // than it fixes due to the changes that allow a new connection to be
-              // re-used by a nested upcall before we get back here.)
-              base_transport->remove_reference ();
+              else
+                return base_transport;
             }
           else // not making new connection
             {
-               (void) this->wait_for_transport (r, base_transport, timeout, true);
-                base_transport->remove_reference ();
+              (void) this->wait_for_transport (r, base_transport, timeout, true);
+              base_transport->remove_reference ();
             }
         }
     }
@@ -594,7 +636,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 bool
 TAO_Connector::wait_for_connection_completion (
     TAO::Profile_Transport_Resolver *r,
-    TAO_Transport_Descriptor_Interface& desc,
     TAO_Transport *&transport,
     ACE_Time_Value *timeout)
 {
@@ -647,18 +688,6 @@ TAO_Connector::wait_for_connection_completion (
     }
   else
     {
-      if (TAO_debug_level > 4)
-        {
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Transport_Connector::"
-                        "caching connection before wait_for_connection_completion "
-                        "%d = [%d]\n",
-                        desc.hash(),
-                        transport->id ()));
-        }
-      TAO::Transport_Cache_Manager &tcm =
-        this->orb_core ()->lane_resources ().transport_cache ();
-      tcm.cache_transport (&desc, transport, TAO::ENTRY_CONNECTING);
       if (TAO_debug_level > 2)
         {
             ACE_DEBUG ((LM_DEBUG,

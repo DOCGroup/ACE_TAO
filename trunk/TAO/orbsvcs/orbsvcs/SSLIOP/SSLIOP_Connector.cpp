@@ -519,7 +519,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
       if (!transport->is_connected())
         {
           if (!this->wait_for_connection_completion (resolver,
-                                                     *desc,
                                                      transport,
                                                      max_wait_time))
             {
@@ -663,7 +662,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
               // get a connected transport or not. In case of non block we get
               // a connected or not connected transport
               if (!this->wait_for_connection_completion (resolver,
-                                                         *desc,
                                                          transport,
                                                          max_wait_time))
                 {
