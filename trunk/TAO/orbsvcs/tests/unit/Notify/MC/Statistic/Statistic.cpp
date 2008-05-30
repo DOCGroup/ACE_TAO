@@ -27,9 +27,9 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         }
 
       TAO_Statistic number ("number", TAO_Statistic::TS_NUMBER);
-      number.receive (8u);
-      number.receive (10u);
-      number.receive (42u);
+      number.receive (static_cast<size_t> (8));
+      number.receive (static_cast<size_t> (10));
+      number.receive (static_cast<size_t> (42));
       
       if (number.average() != 20)
         {
