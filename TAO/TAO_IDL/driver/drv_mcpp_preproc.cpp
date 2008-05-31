@@ -936,56 +936,6 @@ DRV_check_file_for_includes (const char *filename)
 void
 DRV_pre_proc (const char *myfile)
 {
-  const char* tmpdir = idl_global->temp_dir ();
-  static const char temp_file_extension[] = ".cpp";
-
-  static char const tao_idlf_template[] = "tao-idlf_XXXXXX";
-
-  size_t const tlen =
-    ACE_OS::strlen (tmpdir) + sizeof (temp_file_extension);
-  
-  // Prevent a buffer overrun.
-  if (tlen + sizeof (tao_idlf_template) > sizeof (tmp_file))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "%s: temporary path/filename length is greater than "
-                  "length allowed by platform\n",
-                  idl_global->prog_name ()));
-
-
-      throw Bailout ();
-    }
-
-  ACE_OS::strcpy (tmp_file,  tmpdir);
-
-// Append temporary filename template to temporary directory.
-  ACE_OS::strcat (tmp_file,  tao_idlf_template);
-
-  ACE_HANDLE const tf_fd = ACE_OS::mkstemp (tmp_file);
-
-  if (tf_fd == ACE_INVALID_HANDLE)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to create temporary file: %m\n",
-                  idl_global->prog_name ()));
-
-
-      throw Bailout ();
-    }
-
-  char tmp_cpp_file [MAXPATHLEN + 1] = { 0 };
-
-  // Append C++ source file extension.  Temporary files will be renamed
-  // to these filenames.
-  ACE_OS::strcpy (tmp_cpp_file,  tmp_file);
-  ACE_OS::strcat (tmp_cpp_file,  temp_file_extension);
-
-  char * const t_file  = tmp_cpp_file;
-
-  ACE_OS::close (tf_fd);
-
-  // 
-
   DRV_check_file_for_includes (myfile);
 
 #if defined (ACE_OPENVMS)
@@ -1009,55 +959,7 @@ DRV_pre_proc (const char *myfile)
 
   idl_global->set_real_filename (idl_global->utl_string_factory (myfile)); //t_ifile));
 
-  DRV_cpp_expand_output_arg (t_file);
   DRV_cpp_putarg (myfile);
-
-  // Rename temporary files so that they have extensions accepted
-  // by the preprocessor.  Renaming is (supposed to be) an atomic
-  // operation so we shouldn't be susceptible to attack.
-if (ACE_OS::rename (tmp_file, t_file) != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to rename temporary file: %m\n",
-                  idl_global->prog_name ()));
-
-
-      throw Bailout ();
-    }
-
-  // Remove any existing output file.
-(void) ACE_OS::unlink (t_file);
-
-  ACE_HANDLE fd = ACE_INVALID_HANDLE;
-
-  if (output_arg_format == 0)
-    {
-      // If the following open() fails, then we're either being hit with a
-      // symbolic link attack, or another process opened the file before
-      // us.
-#if defined (ACE_OPENVMS)
-      //FUZZ: disable check_for_lack_ACE_OS
-      fd = ::open (t_file, O_WRONLY | O_CREAT | O_EXCL,
-                   ACE_DEFAULT_FILE_PERMS,
-                   "shr=get,put,upd", "ctx=rec", "fop=dfw");
-      //FUZZ: enable check_for_lack_ACE_OS
-#else
-      fd = ACE_OS::open (t_file,
-                         O_WRONLY | O_CREAT | O_EXCL,
-                         ACE_DEFAULT_FILE_PERMS);
-#endif
-
-      if (fd == ACE_INVALID_HANDLE)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "%s: cannot open temp file \"%s\" for writing\n",
-                      idl_global->prog_name (),
-                      t_file));
-
-
-          throw Bailout ();
-        }
-    }
   
   char * tmp_arglist [DRV_MAX_ARGCOUNT] = { 0 };
   
@@ -1066,13 +968,17 @@ if (ACE_OS::rename (tmp_file, t_file) != 0)
       tmp_arglist[i] = ACE::strnew (DRV_arglist[i]);
     }
   
- if (mcpp_lib_main (DRV_argcount, tmp_arglist) != 0)
-   {
-     ACE_ERROR ((LM_ERROR,
-                 "%s: mcpp preprocessor execution failed\n",
-                 idl_global->prog_name ()));
-     throw Bailout ();
-   }
+  // tell mcpp to use memory buffers, instead of an output file.
+  mcpp_use_mem_buffers(1);
+
+  if (mcpp_lib_main (DRV_argcount, tmp_arglist) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%s: mcpp preprocessor execution failed:\n%s",
+                  idl_global->prog_name (),
+                  mcpp_get_mem_buffer(ERR)));
+      throw Bailout ();
+    }
 
   for (size_t i = 0; i < DRV_argcount; ++i)
     delete tmp_arglist[i];
@@ -1084,35 +990,26 @@ if (ACE_OS::rename (tmp_file, t_file) != 0)
 
   DRV_argcount -= 2;
 
-  FILE * const yyin = ACE_OS::fopen (t_file, "r");
+  char * yyin = mcpp_get_mem_buffer(OUT);
+  
 
   if (yyin == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not open cpp output file: %p\n",
+                  "%s: Could not retrieve preprocessed buffer\n%s",
                   idl_global->prog_name (),
-                  t_file));
+                  mcpp_get_mem_buffer(ERR)));
 
       throw Bailout ();
     }
 
   FE_set_yyin (yyin);
 
+  /** @@TODO worry about this later.
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
-      FILE *preproc = ACE_OS::fopen (t_file, "r");
       char buffer[ACE_MAXLOGMSGLEN];
       size_t bytes;
-
-      if (preproc == 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "%s: Could not open cpp output file: %p\n",
-                      idl_global->prog_name (),
-                      t_file));
-
-          throw Bailout ();
-        }
 
       // ACE_DEBUG sends to stderr - we want stdout for this dump
       // of the preprocessor output. So we modify the singleton that
@@ -1137,15 +1034,7 @@ if (ACE_OS::rename (tmp_file, t_file) != 0)
         }
 
       ACE_OS::fclose (preproc);
-    }
-  
-  if (ACE_OS::unlink (t_file) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "%s: Could not remove cpp output file: %p\n",
-                  idl_global->prog_name (),
-                  t_file));
-
-      throw Bailout ();
-    }
+      }
+      // need to free buffers?
+  */
 }
