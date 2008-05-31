@@ -210,8 +210,8 @@
 
 #if     COMPILER == INDEPENDENT
 /* specifications of compiler-independent build  */
-#define LINE_PREFIX         "#line "
-#define STD_LINE_PREFIX     TRUE    /* Output #line by C source format      */
+#define LINE_PREFIX         "# "
+#define STD_LINE_PREFIX     FALSE    /* Output #line by C source format      */
 #define HAVE_DIGRAPHS       TRUE    /* Output digraphs as it is     */
 #define SEARCH_INIT         SOURCE  /* Include directory relative to source */
 #define SJIS_IS_ESCAPE_FREE         TRUE    /* Do not treat SJIS specially  */
@@ -262,8 +262,8 @@
 #endif
 
 #ifndef LINE_PREFIX
-#define LINE_PREFIX         "#line "
-#define STD_LINE_PREFIX     TRUE    /* C source format              */
+#define LINE_PREFIX         "# "
+#define STD_LINE_PREFIX     FALSE    /* C source format              */
 #else
 #ifndef STD_LINE_PREFIX
 #define STD_LINE_PREFIX     FALSE   /* Compiler-dependent format    */

@@ -1921,7 +1921,6 @@ static char *   norm_path(
     static size_t   mingw_dir_len;
 #endif
 #endif
-
     ACE_OS::strcpy( slbuf1, dir);                   /* Include directory    */
     len = ACE_OS::strlen( slbuf1);
     if (len && slbuf1[ len - 1] != PATH_DELIM) {
@@ -2538,7 +2537,10 @@ int     do_include(
     int     token_type;
     char *  fname;
     int     delim;                          /* " or <, >            */
-
+    
+    // WO: sharp here to capture line info from includer
+    sharp ();
+    
     if ((delim = skip_ws()) == '\n') {      /* No argument          */
         cerror( no_name, 0, 0L, 0);
         return  FALSE;
