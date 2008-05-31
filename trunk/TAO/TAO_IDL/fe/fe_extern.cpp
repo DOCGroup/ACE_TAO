@@ -81,7 +81,13 @@ ACE_RCSID (fe,
            "$Id$")
 
 extern int tao_yyparse (void);
+
+#ifdef USE_MCPP_BUFFER_LEXING
+char *tao_preproc_buffer = 0;
+size_t tao_preproc_buffer_length = 0;
+#else
 extern FILE *tao_yyin;
+#endif /* USE_MCPP_BUFFER_LEXING */
 
 int
 FE_yyparse (void)
@@ -93,15 +99,30 @@ FE_yyparse (void)
       idl_global->root ()->call_add ();
     }
     
+#ifdef USE_MCPP_BUFFER_LEXING
+  ACE_OS::free (tao_preproc_buffer);
+  tao_preproc_buffer_length = 0;
+#else
   ACE_OS::fclose (tao_yyin);
+#endif /* USE_MCPP_BUFFER_LEXING */
+  
   return result;
 }
 
+#ifdef USE_MCPP_BUFFER_LEXING
+void
+FE_set_yyin (char * f)
+{
+  tao_preproc_buffer = f;
+  tao_preproc_buffer_length = ACE_OS::strlen (f);
+}
+#else
 void
 FE_set_yyin (FILE * f)
 {
   tao_yyin = f;
 }
+#endif /* USE_MCPP_BUFFER_LEXING */
 
 // Constructor interfaces.
 

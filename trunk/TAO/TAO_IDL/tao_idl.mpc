@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, preproc {
+project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, tao_idl_mcpp {
   exename      = tao_idl
   libs        += TAO_IDL_BE TAO_IDL_FE
   install      = $(ACE_ROOT)/bin
@@ -75,7 +75,7 @@ project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile, tao_vc8warning
 }
 
 
-project(TAO_IDL_FE) : acelib, conv_lib, tao_output, crosscompile {
+project(TAO_IDL_FE) : acelib, conv_lib, tao_output, crosscompile, fe_mcpp {
   sharedname   = TAO_IDL_FE
   dynamicflags = TAO_IDL_FE_BUILD_DLL
 
@@ -182,3 +182,4 @@ project(TAO_IDL_FE) : acelib, conv_lib, tao_output, crosscompile {
     "endif"
   }
 }
+

@@ -1,3 +1,27 @@
+Sat May 31 16:11:30 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/fe/fe_extern.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/mcpp_tao_yyinput.h:
+        * TAO_IDL/include/fe_extern.h:
+        * TAO_IDL/tao_idl.mpc:
+        * TAO_IDL/tao_idl_mcpp.mpb:
+        * TAO_IDL/fe_mcpp.mpb:
+        
+        Changes to enable in-memory preprocessing AND lexing of IDL files
+        with the MCPP preprocessor.  This eliminates the need to use multiple
+        temporary files for this process.  This capability is triggered by enabling
+        the mcpp feature when generating project files, which causes the in-memory
+        preprocessing and lexing to replace the external preprocessor/temporary file 
+        preprocessing and lexing which is still used by default. 
+        
+        * TAO_IDL/preproc.mpb:
+
+        Renamed to tao_idl_mcpp.mbp.
+
 Sat May 31 01:10:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/configed.H:
@@ -5,11 +29,11 @@ Sat May 31 01:10:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * TAO_IDL/contrib/mcpp/system.cpp:
 
           Changes to make generated output more similar to that of GCC.
-        
+
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
 
-          Fixed a bug which resulted in includes not being properly generated. 
-        
+          Fixed a bug which resulted in includes not being properly generated.
+
 Fri May 30 23:32:47 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/LogNotification.cpp:
