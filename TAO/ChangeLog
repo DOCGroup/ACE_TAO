@@ -1,3 +1,15 @@
+Sat May 31 01:10:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/contrib/mcpp/configed.H:
+        * TAO_IDL/contrib/mcpp/noconfig.H:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Changes to make generated output more similar to that of GCC.
+        
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+
+          Fixed a bug which resulted in includes not being properly generated. 
+        
 Fri May 30 23:32:47 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/LogNotification.cpp:

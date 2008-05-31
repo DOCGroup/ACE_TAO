@@ -904,6 +904,34 @@ DRV_stripped_name (char *fn)
     return n;
 }
 
+static void
+DRV_check_file_for_includes (const char *filename)
+{
+  FILE * const fin = ACE_OS::fopen (filename, "r");
+  if (fin == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%s%s",
+                  idl_global->prog_name (),
+                  ": cannot open input file\n"));
+
+      throw Bailout ();
+    }
+
+  while (DRV_get_line (fin))
+    {
+      DRV_convert_includes (drv_line);
+
+      // We really need to know whether this line is a "#include
+      // ...". If so, we would like to separate the "file name" and
+      // keep that in the idl_global. We need them to produce
+      // "#include's in the stubs and skeletons.
+      DRV_check_for_include (drv_line);
+    }
+  
+  ACE_OS::fclose(fin);
+}
+
 // Pass input through preprocessor.
 void
 DRV_pre_proc (const char *myfile)
@@ -956,6 +984,9 @@ DRV_pre_proc (const char *myfile)
 
   ACE_OS::close (tf_fd);
 
+  // 
+
+  DRV_check_file_for_includes (myfile);
 
 #if defined (ACE_OPENVMS)
   {
