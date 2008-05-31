@@ -101,6 +101,10 @@ static AST_Decl *       idl_find_node (char *);
 
 #define ace_yytext yytext
 
+#ifdef USE_MCPP_BUFFER_LEXING
+#include "mcpp_yyinput.h"
+#endif /*USE_MCPP_BUFFER_LEXING*/
+
 %}
 
 /* SO we don't choke on files that use \r\n */

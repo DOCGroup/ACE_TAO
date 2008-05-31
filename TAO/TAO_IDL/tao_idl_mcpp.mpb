@@ -1,5 +1,6 @@
 // $Id$
 feature(mcpp) {
+  macros += USE_MCPP_BUFFER_LEXING
   Source_Files {
     driver/drv_mcpp_preproc.cpp
   }

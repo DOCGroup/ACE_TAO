@@ -82,7 +82,11 @@ TAO_IDL_FE_Export int
 FE_yyparse (void);
 
 TAO_IDL_FE_Export void
+#ifdef USE_MCPP_BUFFER_LEXING
+FE_set_yyin (char *);    // Set yyin
+#else
 FE_set_yyin (FILE *);    // Set yyin
+#endif /* USE_MCPP_BUFFER_LEXING */
 
 // Interface to constructors for objects need by the driver
 
