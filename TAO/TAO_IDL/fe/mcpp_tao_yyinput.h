@@ -10,9 +10,9 @@
 #define MCPP_YYINPUT_H
 
 extern char *tao_preproc_buffer;
-extern size_t tao_preproc_buffer_length;
+extern int tao_preproc_buffer_length;
 
-size_t tao_preproc_buffer_pos = 0;
+int tao_preproc_buffer_pos = 0;
 
 #define TAO_YY_INPUT(buf,result,max_size)                           \
   {                                                                 \
