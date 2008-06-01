@@ -1,3 +1,9 @@
+Sun Jun  1 23:11:34 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/fe/mcpp_tao_yyinput.h:
+
+          Fixed signed/unsigned mismatch. 
+        
 Sun Jun  1 22:58:39 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/directive.cpp:
@@ -7,8 +13,8 @@ Sun Jun  1 22:58:39 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * TAO_IDL/contrib/mcpp/system.cpp:
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
 
-          Fixed warnings exposed on Debian Core build. 
-        
+          Fixed warnings exposed on Debian Core build.
+
 Sat May 31 22:06:27 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/tao_idl_mcpp.mpb:
