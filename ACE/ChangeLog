@@ -1,3 +1,12 @@
+Sun Jun  1 02:01:38 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
+
+	* rpmbuild/ace-tao.spec:
+	* rpmbuild/ace-tao-etc.tar.gz:
+	* rpmbuild/ace-tao-orbsvcs-daemon.patch:
+          Added ace-tao-orbsvcs-daemon.patch to workaround
+          daemonization problems in rpm installed services.
+          Fixed tao-cosconcurrency command line arguments.
+
 Fri May 30 13:57:06 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * ace/config-vxworks6.2.h:
