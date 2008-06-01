@@ -1430,6 +1430,7 @@ static void def_a_macro(
     DEFBUF *    defp;
     char *      definition;                 /* Argument of -D option*/
     char *      cp;
+    const char *cp_end;
     int         i;
 
     /* Convert trigraphs for the environment which need trigraphs   */
@@ -1441,11 +1442,11 @@ static void def_a_macro(
     ACE_OS::strcpy( definition, def);
     if ((cp = ACE_OS::strchr( definition, '=')) != 0) {
         *cp = ' ';                          /* Remove the '='       */
-        cp = "\n";                          /* Append <newline>     */
+        cp_end = "\n";                          /* Append <newline>     */
     } else {
-        cp = " 1\n";                        /* With definition "1"  */
+      cp_end = " 1\n";                        /* With definition "1"  */
     }
-    ACE_OS::strcat( definition, cp);
+    ACE_OS::strcat( definition, cp_end);
     cp = definition;
     while ((char_type[ *cp & UCHARMAX] & SPA) == 0)
         cp++;
@@ -1680,7 +1681,7 @@ static void set_pragma_op( void)
  * macro.
  */
 {
-    char *  name = "_Pragma";
+    const char *  name = "_Pragma";
     char    tmp[ 16];
 
     ACE_OS::sprintf( tmp, "%c%s ( %c%c )", DEF_MAGIC, name, MAC_PARM, 1);
