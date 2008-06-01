@@ -1,9 +1,16 @@
+Sun Jun  1 23:14:35 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/tao_idl_mcpp.mpb:
+
+          Fully qualified paths to driver source files for non-tao_idl
+          projects using this base. 
+        
 Sun Jun  1 23:11:34 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/fe/mcpp_tao_yyinput.h:
 
-          Fixed signed/unsigned mismatch. 
-        
+          Fixed signed/unsigned mismatch.
+
 Sun Jun  1 22:58:39 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/directive.cpp:

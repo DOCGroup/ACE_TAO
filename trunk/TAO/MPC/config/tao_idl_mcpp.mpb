@@ -2,12 +2,12 @@
 feature(mcpp) : mcpp {
   macros += USE_MCPP_BUFFER_LEXING
   Source_Files {
-    driver/drv_mcpp_preproc.cpp
+    $(TAO_ROOT)/TAO_IDL/driver/drv_mcpp_preproc.cpp
   }
 }
 
 feature(!mcpp) {
   Source_Files {
-    driver/drv_preproc.cpp
+    $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp
   }
 }
