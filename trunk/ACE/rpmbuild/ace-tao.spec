@@ -37,7 +37,7 @@
 Summary: The ADAPTIVE Communication Environment (ACE) and The ACE ORB (TAO)
 Name: ace-tao
 Version: %{ACEVER}
-Release: 3%{?OPTTAG}%{?dist}
+Release: 4%{?OPTTAG}%{?dist}
 Group: Development/Libraries
 URL: http://www.cs.wustl.edu/~schmidt/ACE.html
 License: DOC License
@@ -46,6 +46,7 @@ Source0: http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-%{ACE
 ## Source2: ace-tao-macros.patch
 ## Patch0: ace-tao-config.patch
 ## Patch4: ace-tao-gperf-info.patch
+## Patch5: ace-tao-orbsvcs-daemon.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires(post): /sbin/install-info, /sbin/install-info
@@ -615,6 +616,8 @@ export CIAO_ROOT=$TAO_ROOT/CIAO
 
 #patch4 -p 1
 cat ${ACE_ROOT}/rpmbuild/ace-tao-gperf-info.patch | patch -p 1
+#patch5 -p 1
+cat ${ACE_ROOT}/rpmbuild/ace-tao-orbsvcs-daemon.patch | patch -p 1
 
 # don't use patch8 until we verify wether needed
 
@@ -2169,6 +2172,10 @@ fi
 # ================================================================
 
 %changelog
+* Wed May 28 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-4
+- Added ace-tao-orbsvcs-daemon.patch.
+- Fixed tao-cosconcurrency command line arguments.
+
 * Sat May 24 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-3
 - Removed obstack patch, no longer needed.
 - Converted ace-tao-config-ipv6.patch into conditional rpm script.
