@@ -400,7 +400,7 @@ extern DEFBUF * is_macro( char ** cp);
 /* mbchar.c     */
 extern size_t   (* mb_read)( int c1, char ** in_pp, char ** out_pp);
                 /* Read mbchar sequence         */
-extern const char *     set_encoding( char * name, char * env, int pragma);
+extern const char *     set_encoding( const char * name, const char * env, int pragma);
                 /* Multi-byte char encoding     */
 extern void     mb_init( void);
                 /* Initialize mbchar variables  */

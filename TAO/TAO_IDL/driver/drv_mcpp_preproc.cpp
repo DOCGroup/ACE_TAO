@@ -105,9 +105,6 @@ static long output_arg_index = 0;
 char const DIR_DOT[] = ".";
 char const DIR_DOT_DOT[] = "..";
 
-// File names.
-static char tmp_file [MAXPATHLEN + 1] = { 0 };
-
 // Lines can be 1024 chars long intially - it will expand as required.
 #define LINEBUF_SIZE 1024
 char* drv_line = 0;

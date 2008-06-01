@@ -109,7 +109,7 @@ void    directive( void)
     int     token_type;
     int     hash;
     int     c;
-    char *  tp;
+    const char *  tp;
 
     in_directive = TRUE;
     if (keep_comments) {

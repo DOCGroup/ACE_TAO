@@ -213,7 +213,7 @@ typedef struct sizes {
 
 typedef struct types {
     int         type;               /* This is the bits for types   */
-    char *      token_name;         /* this is the token word       */
+    const char *      token_name;         /* this is the token word       */
     int         excluded;           /* but these aren't legal here. */
 } TYPES;
 
