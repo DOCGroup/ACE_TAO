@@ -1,5 +1,22 @@
 --- lex.yy.cpp.orig	2008-05-31 10:22:13.000000000 -0500
 +++ lex.yy.cpp	2008-05-31 10:27:05.000000000 -0500
+@@ -35,6 +35,7 @@
+ #ifndef __STDC_LIMIT_MACROS
+ #define __STDC_LIMIT_MACROS 1
+ #endif
++#include <inttypes.h>
+ 
+ typedef int8_t flex_int8_t;
+ typedef uint8_t flex_uint8_t;
+@@ -1079,7 +1079,7 @@
+         if ( TAO_YY_CURRENT_BUFFER_LVALUE->tao_yy_is_interactive ) \
+                 { \
+                 int c = '*'; \
+-                size_t n; \
++                int n;                    \
+                 for ( n = 0; n < max_size && \
+                              (c = getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
+                         buf[n] = (char) c; \
 @@ -1698,7 +1698,7 @@
                    idl_global->set_lineno(idl_global->lineno() + 1);
                    idl_store_pragma(ace_tao_yytext);
