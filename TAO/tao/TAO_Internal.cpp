@@ -186,106 +186,112 @@ public:
   }
 
 
-  private:
-    /// The mutex, associated with the condition. Do not use the ACE
-    /// global mutex, because it causes deadlocks with other threads that
-    /// may be in DLL_Manager::open()
-    ACE_Recursive_Thread_Mutex mutex_;
-  };
-  #endif // ACE_HAS_THREADS
+private:
+  /// The mutex, associated with the condition. Do not use the ACE
+  /// global mutex, because it causes deadlocks with other threads that
+  /// may be in DLL_Manager::open()
+  ACE_Recursive_Thread_Mutex mutex_;
+};
+#endif // ACE_HAS_THREADS
 
 
 
 
-  // ****************************************************************
-  /// Note that the argument vector will be corrupted upon return
-  int
-  TAO::ORB::open_global_services (int argc,
-                                  ACE_TCHAR **argv)
+// ****************************************************************
+/// Note that the argument vector will be corrupted upon return
+int
+TAO::ORB::open_global_services (int argc,
+				ACE_TCHAR **argv)
+{
   {
+    // Count of the number of (times we did this for all) ORBs.
+    static int orb_init_count = 0;
+
+    // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
+    // from being called within a static object CTOR.
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+			      guard,
+			      *ACE_Static_Object_Lock::instance (),
+			      -1));
+
+    // Make sure TAO's singleton manager is initialized.
+    // We need to initialize before TAO_default_environment() is called
+    // since that call instantiates a TAO_TSS_Singleton.
+    if (TAO_Singleton_Manager::instance ()->init () == -1)
+      return -1;
+
+    // Prevent multiple initializations.
+    if (++orb_init_count > 1)
+      return 0;
+
+  }
+
+  // Prevent any other thread from going through ORB initialization before the
+  // uber-gestalt is initialized.
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+			    guard,
+			    TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
+			    -1));
+
+  if (TAO_debug_level > 2)
     {
-      // Count of the number of (times we did this for all) ORBs.
-      static int orb_init_count = 0;
-
-      // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
-      // from being called within a static object CTOR.
-      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                                guard,
-                                *ACE_Static_Object_Lock::instance (),
-                                -1));
-
-      // Make sure TAO's singleton manager is initialized.
-      // We need to initialize before TAO_default_environment() is called
-      // since that call instantiates a TAO_TSS_Singleton.
-      if (TAO_Singleton_Manager::instance ()->init () == -1)
-        return -1;
-
-      // Prevent multiple initializations.
-      if (++orb_init_count > 1)
-        return 0;
-
+      ACE_DEBUG ((LM_DEBUG,
+		  ACE_TEXT ("TAO (%P|%t) Initializing the ")
+		  ACE_TEXT ("process-wide service context\n")));
     }
 
-    // Prevent any other thread from going through ORB initialization before the
-    // uber-gestalt is initialized.
-    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                              guard,
-                              TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
-                              -1));
+  ACE_Service_Gestalt* theone = ACE_Service_Config::global ();
+  ACE_Service_Config_Guard auto_config_guard (theone);
 
-    if (TAO_debug_level > 2)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) Initializing the ")
-                    ACE_TEXT ("process-wide service context\n")));
-      }
+  // Construct an argument vector specific to the process-wide
+  // (global) Service Configurator instance.
+  // Be certain to copy the program name so that service configurator
+  // has something to skip!
+  ACE_ARGV global_svc_config_argv (true); // only this ctor allows 
+  // subsequent use of add()!
+  global_svc_config_argv.add ((argc <= 0 || argv == 0) ? 
+			      ACE_TEXT ("") : argv[0]);
 
-    ACE_Service_Gestalt* theone = ACE_Service_Config::global ();
-    ACE_Service_Config_Guard auto_config_guard (theone);
+  // Will expand the environment variables, if any were used.
+  // Is this a good thing? I guess it provides greater flexibility 
+  // for deployment,so let's leave it. Will also quote arguments.
 
-    register_global_services_i (theone);
+  ACE_ARGV copyargv (argc, argv, true, true);
 
+  // Adjust to proper type
+  int tmpargc = argc;
+  ACE_Argv_Type_Converter cvtargv (tmpargc, copyargv.argv());
 
-    // Construct an argument vector specific to the process-wide
-    // (global) Service Configurator instance.
-    // Be certain to copy the program name so that service configurator
-    // has something to skip!
-    ACE_ARGV global_svc_config_argv (true); // only this ctor allows subsequent use of add()!
-    global_svc_config_argv.add ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0]);
+  tmpargc = cvtargv.get_argc ();
+  ACE_TCHAR **tmpargv = cvtargv.get_TCHAR_argv ();
 
-    // Will expand the environment variables, if any were used. Is this a good thing?
-    // I guess it provides greater flexibility for deployment, so let's leave it. Will
-    // also quote arguments.
-    ACE_ARGV copyargv (argc, argv, true, true);
-
-    // Adjust to proper type
-    int tmpargc = argc;
-    ACE_Argv_Type_Converter cvtargv (tmpargc, copyargv.argv());
-
-    tmpargc = cvtargv.get_argc ();
-    ACE_TCHAR **tmpargv = cvtargv.get_TCHAR_argv ();
-
-    // Collect global SC parameters. True means "immediately
-    // apply global setting" like debug flag, etc.
-    if (parse_global_args_i (tmpargc,
-                             tmpargv,
-                             global_svc_config_argv,
-                             true) == -1)
-      return -1;
-
-    bool skip_service_config_open = false; // by default we shouldn't
-
-    if (parse_svcconf_args_i (tmpargc,
-                              tmpargv,
-                              global_svc_config_argv) == -1)
-      return -1;
-
-  if (parse_private_args_i (tmpargc,
-                            tmpargv,
-                            global_svc_config_argv,
-                            skip_service_config_open) == -1)
+  // Collect global SC parameters. True means "immediately
+  // apply global setting" like debug flag, etc.
+  if (parse_global_args_i (tmpargc,
+			   tmpargv,
+			   global_svc_config_argv,
+			   true) == -1)
     return -1;
 
+  bool skip_service_config_open = false; // by default we shouldn't
+
+  if (parse_svcconf_args_i (tmpargc,
+			    tmpargv,
+			    global_svc_config_argv) == -1)
+    return -1;
+
+  if (parse_private_args_i (tmpargc,
+			    tmpargv,
+			    global_svc_config_argv,
+			    skip_service_config_open) == -1)
+    return -1;
+
+  // register_global_services_i depends on the parsing of at least the
+  // -ORBNegotiateCodesets option, and must be invoked after all the 
+  // parsing methods, but still must preceed the opening of other services.
+
+  register_global_services_i (theone);
+    
   // Perform the open magic (unless SC::open() has been called already)
   int global_svc_config_argc = global_svc_config_argv.argc ();
   int status = open_private_services_i (theone,
@@ -332,8 +338,6 @@ public:
   return 0;
 }
 
-
-
 int
 TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                          int &argc,
@@ -356,7 +360,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                       ACE_TEXT ("initialization\n")));
 
         ACE_MT (while (!is_ubergestalt_ready)
-                TAO_Ubergestalt_Ready_Condition::instance ()->wait ());
+		  TAO_Ubergestalt_Ready_Condition::instance ()->wait ());
 
         if (TAO_debug_level > 4)
           ACE_DEBUG ((LM_DEBUG,
@@ -377,11 +381,11 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
     ++service_open_count;
   }
 
-  // Construct an argument vector specific to the Service
-  // Configurator.
+  // Construct an argument vector specific to the Service Configurator.
   // Be certain to copy the program name so that service configurator
   // has something to skip!
-  ACE_ARGV svc_config_argv (true);  // only this ctor allows subsequent use of add()!
+  ACE_ARGV svc_config_argv (true);  // only this ctor allows subsequent
+                                    // use of add()!
   svc_config_argv.add ((argc <= 0 || argv == 0) ? ACE_TEXT ("") : argv[0]);
 
   // Should we skip the ACE_Service_Config::open() method?,
@@ -403,24 +407,25 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   // Parse any globally applicable arguments, but do not make them effective.
   // We are effectively purging the command line from them without affecting
-  // the global state - after all, it may be a private (local) configuration context.
+  // the global state - after all, it may be a private (local) configuration 
+  // context.
   int status = parse_global_args_i(argc, argv, global_svc_config_argv, false);
 
   if (status == -1 && TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) Skipping the process-wide ")
-                    ACE_TEXT ("service configuration, service_open_count ")
-                    ACE_TEXT ("= %d, status = %d\n"),
-                    service_open_count,
-                    status));
+    ACE_DEBUG ((LM_DEBUG,
+		ACE_TEXT ("TAO (%P|%t) Skipping the process-wide ")
+		ACE_TEXT ("service configuration, service_open_count ")
+		ACE_TEXT ("= %d, status = %d\n"),
+		service_open_count,
+		status));
 
   if (TAO_debug_level > 2)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Initializing the ")
-                  ACE_TEXT ("orb-specific services\n")));
+    ACE_DEBUG ((LM_DEBUG,
+		ACE_TEXT ("TAO (%P|%t) Initializing the ")
+		ACE_TEXT ("orb-specific services\n")));
 
   if (parse_svcconf_args_i (argc, argv, svc_config_argv) == -1)
-      return -1;
+    return -1;
   // Not a big deal to call open_private_services_i() again (if it was the global one). The SG::open() would not run if it has already been executed.
   // only open the private context if it is not also the global context
   if (pcfg != ACE_Service_Config::global())

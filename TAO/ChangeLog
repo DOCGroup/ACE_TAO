@@ -1,11 +1,20 @@
+Mon Jun  2 21:51:36 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+        
+          Reordered the parsing of parameters and the registration of global 
+          services within TAO::ORB::open_global_services(), as the global
+          services registration needs to have the result of parsing out 
+          -ORBNegotiateCodesets before it tries to load the codeset library.
+
 Mon Jun  2 14:58:26 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/fe_mcpp.mpb:
         * TAO_IDL/contrib/mcpp/mbchar.cpp:
         * TAO_IDL/fe/mcpp_tao_yyinput.h:
 
-          Fuzz errors. 
-        
+          Fuzz errors.
+
 Mon Jun  2 14:21:40 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
