@@ -240,7 +240,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       time_t const now = this->secs_;
       ACE_TCHAR ctp[26]; // 26 is a magic number...
 
-      if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
+      if (ACE_OS::ctime_r (&now, ctp, sizeof ctp / sizeof (ACE_TCHAR)) == 0)
         return -1;
 
       /* 01234567890123456789012345 */
