@@ -1,3 +1,9 @@
+Mon Jun  2 15:26:57 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Record.cpp (format_msg): Make sure to divide sizeof ctp
+          by sizeof (ACE_TCHAR) to avoid buffer overflow.  Thanks to June
+          Fang <june dot fang at gmail dot com> for reporting this.
+
 Sun Jun  1 02:01:38 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
 	* rpmbuild/ace-tao.spec:

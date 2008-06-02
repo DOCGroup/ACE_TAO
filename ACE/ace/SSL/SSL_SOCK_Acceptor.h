@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SSL_SOCK_ACCEPTOR_H
 #define ACE_SSL_SOCK_ACCEPTOR_H
 

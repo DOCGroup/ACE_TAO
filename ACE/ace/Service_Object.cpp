@@ -114,8 +114,8 @@ ACE_Service_Type::fini (void)
   // Ensure that closing the DLL is done after type_->fini() as it may
   // require access to the code for the service object destructor,
   // which resides in the DLL
-  return (ret | this->dll_.close());
 
+  return (ret | this->dll_.close ());
 }
 
 int
