@@ -1,5 +1,5 @@
 /** $Id$
- * @file mcpp_yyinput.h
+ * @file mcpp_tao_yyinput.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * 
  * Provides a YY_INPUT macro which enables lexing from an in-memory buffer
