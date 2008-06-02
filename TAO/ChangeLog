@@ -1,10 +1,23 @@
+Mon Jun  2 14:21:40 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        
+          Fixes a compile error on QNX.  Thanks to Adam Mitz for providing
+          the patch. 
+        
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+
+          Added this and change from previous commit to be automatically
+          applied when lex.yy.cpp is generated; Not sure why these are suddenly
+          necessary, may be an anomaly in my version of flex. 
+        
 Mon Jun  2 14:02:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
 
-          Manually fixed an issue in flex generated code that was causing a 
-          signed/unsigned mismatch. 
-        
+          Manually fixed an issue in flex generated code that was causing a
+          signed/unsigned mismatch.
+
 Sun Jun  1 23:14:35 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/tao_idl_mcpp.mpb:
