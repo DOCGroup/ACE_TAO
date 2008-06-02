@@ -374,8 +374,8 @@ ACE_Stream_Type::fini (void) const
       m->fini ();
       m = t;
     }
-
   str->close ();
+
   return ACE_Service_Type_Impl::fini ();
 }
 

@@ -63,8 +63,8 @@ endif
 # for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
 CPPFLAGS += -D_GNU_SOURCE
 
-DCFLAGS  += -g
-DCCFLAGS += -g
+DCFLAGS  += -ggdb
+DCCFLAGS += -ggdb
 DLD      = $(CXX)
 LD       = $(CXX)
 LIBS     += -ldl
