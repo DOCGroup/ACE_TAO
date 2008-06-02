@@ -1078,7 +1078,7 @@ static int input (void );
         if ( TAO_YY_CURRENT_BUFFER_LVALUE->tao_yy_is_interactive ) \
                 { \
                 int c = '*'; \
-                size_t n; \
+                int n; \
                 for ( n = 0; n < max_size && \
                              (c = getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
                         buf[n] = (char) c; \
