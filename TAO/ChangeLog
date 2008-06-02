@@ -1,16 +1,24 @@
+Mon Jun  2 14:58:26 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/fe_mcpp.mpb:
+        * TAO_IDL/contrib/mcpp/mbchar.cpp:
+        * TAO_IDL/fe/mcpp_tao_yyinput.h:
+
+          Fuzz errors. 
+        
 Mon Jun  2 14:21:40 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
-        
+
           Fixes a compile error on QNX.  Thanks to Adam Mitz for providing
-          the patch. 
-        
+          the patch.
+
         * TAO_IDL/fe/lex.yy.cpp.diff:
 
           Added this and change from previous commit to be automatically
           applied when lex.yy.cpp is generated; Not sure why these are suddenly
-          necessary, may be an anomaly in my version of flex. 
-        
+          necessary, may be an anomaly in my version of flex.
+
 Mon Jun  2 14:02:02 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
