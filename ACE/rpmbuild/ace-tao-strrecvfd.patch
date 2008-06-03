@@ -1,0 +1,10 @@
+--- ACE_wrappers/ace/config-linux-common.h~	2008-05-15 05:53:03.000000000 -0700
++++ ACE_wrappers/ace/config-linux-common.h	2008-06-02 01:36:45.000000000 -0700
+@@ -368,6 +368,7 @@
+ // this define is set
+ #if defined _XOPEN_STREAMS && _XOPEN_STREAMS == -1
+ # define ACE_LACKS_STROPTS_H
++# define ACE_LACKS_STRRECVFD
+ #endif
+ 
+ #if !defined (ACE_LACKS_STROPTS_H)

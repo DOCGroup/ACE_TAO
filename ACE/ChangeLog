@@ -1,3 +1,14 @@
+Tue Jun  3 16:14:39 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
+
+	* rpmbuild/ace-tao.spec:
+	* rpmbuild/ace-tao-unusedarg.patch:
+	* rpmbuild/ace-tao-strrecvfd.patch:
+          Added ace-tao-strrecvfd.patch (related to bug #3291).
+          Changed make loop construct to abort when subcomponent fails.
+          Removed PSS from TAO build list.
+          Added ace-tao-unusedarg.patch (related to bug #3270).
+          Made qt3 BuildRequires conditional on Fedora version.
+
 Mon Jun  2 15:26:57 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Log_Record.cpp (format_msg): Make sure to divide sizeof ctp
