@@ -1,3 +1,13 @@
+Tue Jun  3 15:15:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+
+          Changed the wait_for_transport() method to always use a timeout
+          when waiting through the active connect strategy.  Not doing so
+          can cause a deadlock if another thread is already in the reactor
+          (through CORBA::ORB::run()).
+
 Tue Jun 03 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tao/TAO_Internal.cpp:
@@ -7,10 +17,10 @@ Tue Jun 03 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 Mon Jun  2 21:51:36 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
-        
-          Reordered the parsing of parameters and the registration of global 
+
+          Reordered the parsing of parameters and the registration of global
           services within TAO::ORB::open_global_services(), as the global
-          services registration needs to have the result of parsing out 
+          services registration needs to have the result of parsing out
           -ORBNegotiateCodesets before it tries to load the codeset library.
 
 Mon Jun  2 14:58:26 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
