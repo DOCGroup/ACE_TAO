@@ -32,7 +32,7 @@ information on things to notice and common pitfalls.</p>
       declaration of the implementation class is something like this:
 <pre>
 
-        class FOOBAR_i : public POA_FOOBAR
+        class FOOBAR_i : public virtual POA_FOOBAR
         {
           .  .  .
         };
@@ -42,15 +42,33 @@ information on things to notice and common pitfalls.</p>
       the implementation class is defined as:
 <pre>
 
-        class FOOBAR_i : public FOOBAR,
-                         public CORBA::LocalObject
+        class FOOBAR_i : public virtual FOOBAR,
+                         public virtual CORBA::LocalObject
         {
           .  .  .
         };
 
 </pre></p>
 
-  <li><p><b>Reference Counting and Object Reference Lifecycle</b> -
+  <li><p><b>Reference Counting and Object Reference Lifecycle 
+      (TAO 1.6.5 and above, which followed the IDL->C++ mapping version 1.2)</b> -
+      TAO 1.6.5 and above has been updated to the 1.2 IDL to C++ mapping.
+      LocalObject is now refcounted by default. Regular CORBA object
+      references use reference counting to manage lifecycle of object
+      references. Local object references also use reference counting
+      for lifecycle management. In that respect, Local Objects behave
+      exactly as Regular CORBA objects do, and the memory management
+      rules that apply to Regular CORBA objects apply to Local Objects
+      </p>
+
+      <p>If, for some reason, you would like to preserve the originial 
+      behavior (i.e., disabling reference counting) then override 
+      <code>_add_ref ()</code> and <code>_remove_ref
+      ()</code> and implement them as no-op operations.</p>
+
+
+  <li><p><b>Reference Counting and Object Reference Lifecycle (Prior to 
+            TAO 1.6.5, which followed the IDL->C++ mapping version 1.1)</b> -
       Regular CORBA object references use reference counting to manage
       lifecycle of object references.  Local object references
       <b>may</b> also use reference counting for lifecycle
@@ -82,8 +100,8 @@ information on things to notice and common pitfalls.</p>
       <code>TAO_Local_Ref_Counted_Object ()</code> as:
 
       <pre>
-       class FOOBAR_i : public FOOBAR,
-                        public TAO_Local_Ref_Counted_Object
+       class FOOBAR_i : public virtual FOOBAR,
+                        public virtual TAO_Local_Ref_Counted_Object
        {
           .  .  .
        };
@@ -92,13 +110,12 @@ information on things to notice and common pitfalls.</p>
       if you wish to use reference counting.  However,
       this is not portable and should be used with care by the applications.</p>
 
-
 </ul>
 
 
 <hr>
 <address></address>
 <!-- hhmts start -->
-Last modified: Wed Apr 26 02:21:35 Central Daylight Time 2000
+Last modified: Tue Jun  3 15:19:18 UTC 2008
 <!-- hhmts end -->
 </body> </html>

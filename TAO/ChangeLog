@@ -1,3 +1,10 @@
+Tue Jun  3 15:19:18 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/LocalObject.html:
+          TAO to the 1.2 IDL to C++ mapping. LocalObject is now
+          refcounted by default. Updated the documentation to reflect
+          the changes.
+          
 Tue Jun  3 15:15:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Transport_Connector.h:
@@ -449,7 +456,6 @@ Tue May 20 12:13:16 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
           When retrieving the connection handler, check the result of the
           dynamic_cast and throw a NoContext exception if it is zero.
 
->>>>>>> .r81754
 Mon May 19 18:34:21 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp:
@@ -597,7 +603,6 @@ Tue May 13 07:37:10 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/TransportCurrent/lib/Server_Request_Interceptor.h:
           Layout change
 
->>>>>>> .r81736
 Mon May 12 15:51:28 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * tao/Stub.cpp:
@@ -1540,7 +1545,7 @@ Mon Apr 28 14:24:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/TransportCurrent/lib/Server_ORBInitializer.h
         * tests/TransportCurrent/lib/Server_Request_Interceptor.h
           Don't use TAO_Local_RefCounted_Object but ::CORBA::LocalObject now
-          LocalObject is also refcounted. Users can still sue TAO_Local_RefCounted_Object,
+          LocalObject is also refcounted. Users can still use TAO_Local_RefCounted_Object,
           it just does nothing, actions have been takin in LocalObject.h
           to prevent the usage of TAO_Local_RefCounted_Object in the
           TAO distribution itself
