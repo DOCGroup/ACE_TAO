@@ -37,7 +37,7 @@
 Summary: The ADAPTIVE Communication Environment (ACE) and The ACE ORB (TAO)
 Name: ace-tao
 Version: %{ACEVER}
-Release: 4%{?OPTTAG}%{?dist}
+Release: 5%{?OPTTAG}%{?dist}
 Group: Development/Libraries
 URL: http://www.cs.wustl.edu/~schmidt/ACE.html
 License: DOC License
@@ -47,6 +47,8 @@ Source0: http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-%{ACE
 ## Patch0: ace-tao-config.patch
 ## Patch4: ace-tao-gperf-info.patch
 ## Patch5: ace-tao-orbsvcs-daemon.patch
+## Patch6: ace-tao-strrecvfd.patch
+## Patch7: ace-tao-unusedarg.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires(post): /sbin/install-info, /sbin/install-info
@@ -54,16 +56,22 @@ Requires(preun):  /sbin/install-info
 Requires(postun): /sbin/ldconfig
 
 BuildRequires: openssl-devel
-BuildRequires: gcc-c++
 
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 BuildRequires: perl
 BuildRequires: fltk-devel
-BuildRequires: qt-devel
 BuildRequires: tcl-devel
 BuildRequires: tk-devel
 BuildRequires: tk
+
+# qt3 has a name change in F9
+%if 0%{?fedora} > 8
+BuildRequires: qt3-devel
+%else
+BuildRequires: qt-devel
+%endif
+
 # The xorg package naming scheme changed, use specific files for now.
 # old -> BuildRequires: xorg-x11-devel
 # new -> BuildRequires: libX11-devel
@@ -618,6 +626,10 @@ export CIAO_ROOT=$TAO_ROOT/CIAO
 cat ${ACE_ROOT}/rpmbuild/ace-tao-gperf-info.patch | patch -p 1
 #patch5 -p 1
 cat ${ACE_ROOT}/rpmbuild/ace-tao-orbsvcs-daemon.patch | patch -p 1
+#%patch6 -p 1
+cat ${ACE_ROOT}/rpmbuild/ace-tao-strrecvfd.patch | patch -p 1
+#%patch7 -p 1
+cat ${ACE_ROOT}/rpmbuild/ace-tao-unusedarg.patch | patch -p 1
 
 # don't use patch8 until we verify wether needed
 
@@ -783,6 +795,7 @@ export LD_LIBRARY_PATH=$ACE_ROOT/lib
 %if %skip_make
 cd .. && rm -rf ACE_wrappers && ln -s ACE_wrappers-BUILT ACE_wrappers
 %else
+
 MAKECMD="make %{?_smp_mflags}"
 
 # build ACE components
@@ -792,9 +805,10 @@ for ace_comp in \
     ACEXML \
     apps/gperf \
     protocols \
-    websvcs; do (
-$MAKECMD -C $ACE_ROOT/$ace_comp
-); done
+    websvcs;
+do
+    $MAKECMD -C $ACE_ROOT/$ace_comp;
+done
 
 # build TAO components
 $MAKECMD -C $TAO_ROOT/TAO_IDL
@@ -804,7 +818,6 @@ $MAKECMD -C $TAO_ROOT/tao
 # $ACE_ROOT/orbsvcs/GNUmakefile less the performance-tests, tests and
 # examples.
 for orbsvcs_comp in \
-    PSS \
     TAO_Service \
     orbsvcs \
     Trading_Service \
@@ -824,9 +837,10 @@ for orbsvcs_comp in \
     Event_Service \
     Dump_Schedule \
     CosEvent_Service \
-    Concurrency_Service; do (
-$MAKECMD -C $TAO_ROOT/orbsvcs/$orbsvcs_comp
-); done
+    Concurrency_Service;
+do
+    $MAKECMD -C $TAO_ROOT/orbsvcs/$orbsvcs_comp;
+done
 
 $MAKECMD -C $TAO_ROOT/utils
 
@@ -2172,6 +2186,13 @@ fi
 # ================================================================
 
 %changelog
+* Mon Jun  2 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-5
+- Added ace-tao-strrecvfd.patch (related to bug #3291).
+- Changed make loop construct to abort when subcomponent fails.
+- Removed PSS from TAO build list.
+- Added ace-tao-unusedarg.patch (related to bug #3270).
+- Made qt3 BuildRequires conditional on Fedora version.
+
 * Wed May 28 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-4
 - Added ace-tao-orbsvcs-daemon.patch.
 - Fixed tao-cosconcurrency command line arguments.
