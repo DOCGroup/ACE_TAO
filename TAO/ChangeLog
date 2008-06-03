@@ -1,9 +1,9 @@
 Tue Jun  3 15:19:18 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/LocalObject.html:
-          TAO to the 1.2 IDL to C++ mapping. LocalObject is now
-          refcounted by default. Updated the documentation to reflect
-          the changes.
+          TAO has been updated conform to the 1.2 IDL to C++ mapping. 
+          LocalObject is now refcounted by default. Updated the 
+          documentation to reflect the changes.
           
 Tue Jun  3 15:15:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
