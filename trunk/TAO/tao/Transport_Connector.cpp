@@ -347,10 +347,9 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
 }
 
 bool
-TAO_Connector::wait_for_transport(TAO::Profile_Transport_Resolver *r,
-                                  TAO_Transport *transport,
-                                  ACE_Time_Value *timeout,
-                                  bool force_wait)
+TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
+                                   TAO_Transport *transport,
+                                   ACE_Time_Value *timeout)
 {
   if (transport->connection_handler ()->is_timeout ())
     {
@@ -394,7 +393,7 @@ TAO_Connector::wait_for_transport(TAO::Profile_Transport_Resolver *r,
 
       return true;
     }
-  else if (force_wait || r->blocked_connect ())
+  else
     {
       if (TAO_debug_level > 2)
         {
@@ -403,7 +402,21 @@ TAO_Connector::wait_for_transport(TAO::Profile_Transport_Resolver *r,
             ACE_TEXT(" waiting on transport [%d]\n"),
             transport->id () ));
         }
-      int result = this->active_connect_strategy_->wait (transport, timeout);
+
+      // We must ensure that there is a timeout if there was none
+      // supplied and the connection isn't a blocking connection.  If
+      // another thread has called ORB::run() prior to this attempted
+      // connection, the wait() call will block forever (or until the ORB
+      // thread leaves the reactor, which may not happen).
+      int result = 0;
+      if (timeout == 0 && !r->blocked_connect ())
+        {
+          ACE_Time_Value tv (0, 500);
+          result = this->active_connect_strategy_->wait (transport, &tv);
+        }
+      else
+        result = this->active_connect_strategy_->wait (transport, timeout);
+
       if (result == -1 && errno == ETIME)
         {
           if (TAO_debug_level > 2)
@@ -447,20 +460,6 @@ TAO_Connector::wait_for_transport(TAO::Profile_Transport_Resolver *r,
             }
           return true;
         }
-    }
-  else
-    {
-      if (TAO_debug_level > 2)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT(" Connection not complete [%d]\n"),
-            transport->id () ));
-        }
-      transport->connection_handler ()->reset_state (
-        TAO_LF_Event::LFS_CONNECTION_WAIT);
-
-      return true;
     }
 
   return false;
@@ -626,7 +625,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
             }
           else // not making new connection
             {
-              (void) this->wait_for_transport (r, base_transport, timeout, true);
+              (void) this->wait_for_transport (r, base_transport, timeout);
               base_transport->remove_reference ();
             }
         }
