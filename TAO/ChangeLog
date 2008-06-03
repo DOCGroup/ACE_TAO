@@ -1,3 +1,9 @@
+Tue Jun 03 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tao/TAO_Internal.cpp:
+
+          Remove tabs to fix fuzz errors.
+
 Mon Jun  2 21:51:36 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
