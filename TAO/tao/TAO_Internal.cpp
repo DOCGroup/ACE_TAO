@@ -201,7 +201,7 @@ private:
 /// Note that the argument vector will be corrupted upon return
 int
 TAO::ORB::open_global_services (int argc,
-				ACE_TCHAR **argv)
+        ACE_TCHAR **argv)
 {
   {
     // Count of the number of (times we did this for all) ORBs.
@@ -210,9 +210,9 @@ TAO::ORB::open_global_services (int argc,
     // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
     // from being called within a static object CTOR.
     ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-			      guard,
-			      *ACE_Static_Object_Lock::instance (),
-			      -1));
+            guard,
+            *ACE_Static_Object_Lock::instance (),
+            -1));
 
     // Make sure TAO's singleton manager is initialized.
     // We need to initialize before TAO_default_environment() is called
@@ -229,15 +229,15 @@ TAO::ORB::open_global_services (int argc,
   // Prevent any other thread from going through ORB initialization before the
   // uber-gestalt is initialized.
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-			    guard,
-			    TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
-			    -1));
+          guard,
+          TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
+          -1));
 
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  ACE_TEXT ("TAO (%P|%t) Initializing the ")
-		  ACE_TEXT ("process-wide service context\n")));
+      ACE_TEXT ("TAO (%P|%t) Initializing the ")
+      ACE_TEXT ("process-wide service context\n")));
     }
 
   ACE_Service_Gestalt* theone = ACE_Service_Config::global ();
@@ -250,7 +250,7 @@ TAO::ORB::open_global_services (int argc,
   ACE_ARGV global_svc_config_argv (true); // only this ctor allows 
   // subsequent use of add()!
   global_svc_config_argv.add ((argc <= 0 || argv == 0) ? 
-			      ACE_TEXT ("") : argv[0]);
+            ACE_TEXT ("") : argv[0]);
 
   // Will expand the environment variables, if any were used.
   // Is this a good thing? I guess it provides greater flexibility 
@@ -268,22 +268,22 @@ TAO::ORB::open_global_services (int argc,
   // Collect global SC parameters. True means "immediately
   // apply global setting" like debug flag, etc.
   if (parse_global_args_i (tmpargc,
-			   tmpargv,
-			   global_svc_config_argv,
-			   true) == -1)
+         tmpargv,
+         global_svc_config_argv,
+         true) == -1)
     return -1;
 
   bool skip_service_config_open = false; // by default we shouldn't
 
   if (parse_svcconf_args_i (tmpargc,
-			    tmpargv,
-			    global_svc_config_argv) == -1)
+          tmpargv,
+          global_svc_config_argv) == -1)
     return -1;
 
   if (parse_private_args_i (tmpargc,
-			    tmpargv,
-			    global_svc_config_argv,
-			    skip_service_config_open) == -1)
+          tmpargv,
+          global_svc_config_argv,
+          skip_service_config_open) == -1)
     return -1;
 
   // register_global_services_i depends on the parsing of at least the
@@ -360,7 +360,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                       ACE_TEXT ("initialization\n")));
 
         ACE_MT (while (!is_ubergestalt_ready)
-		  TAO_Ubergestalt_Ready_Condition::instance ()->wait ());
+      TAO_Ubergestalt_Ready_Condition::instance ()->wait ());
 
         if (TAO_debug_level > 4)
           ACE_DEBUG ((LM_DEBUG,
@@ -413,16 +413,16 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   if (status == -1 && TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		ACE_TEXT ("TAO (%P|%t) Skipping the process-wide ")
-		ACE_TEXT ("service configuration, service_open_count ")
-		ACE_TEXT ("= %d, status = %d\n"),
-		service_open_count,
-		status));
+    ACE_TEXT ("TAO (%P|%t) Skipping the process-wide ")
+    ACE_TEXT ("service configuration, service_open_count ")
+    ACE_TEXT ("= %d, status = %d\n"),
+    service_open_count,
+    status));
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-		ACE_TEXT ("TAO (%P|%t) Initializing the ")
-		ACE_TEXT ("orb-specific services\n")));
+    ACE_TEXT ("TAO (%P|%t) Initializing the ")
+    ACE_TEXT ("orb-specific services\n")));
 
   if (parse_svcconf_args_i (argc, argv, svc_config_argv) == -1)
     return -1;
