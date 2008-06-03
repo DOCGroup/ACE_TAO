@@ -193,10 +193,9 @@ protected:
   /// Note: no longer changes transport reference count
   /// @ returns true if wait was uneventful
   /// @         false if error occurred during wait
-  bool wait_for_transport(TAO::Profile_Transport_Resolver *r,
-                          TAO_Transport *base_transport,
-                          ACE_Time_Value * timeout,
-                          bool force_wait);
+  bool wait_for_transport (TAO::Profile_Transport_Resolver *r,
+                           TAO_Transport *base_transport,
+                           ACE_Time_Value * timeout);
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);
