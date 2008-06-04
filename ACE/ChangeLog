@@ -1,3 +1,13 @@
+Wed Jun  4 22:45:20  2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-pharlap.h: Added ACE_LACKS_FILELLOCKS. My changes from
+          Mon Apr 28 21:53:23 UTC 2008  Steve Huston  <shuston@riverace.com>
+          exposed a call to LockFileEx, which is not present on Pharlap
+          (and, therefore, not present in LabVIEW RT). The alternate API,
+          LockFile, is present on Pharlap but documented as unsupported.
+          Since the OS doesn't do multiple processes, there are more effective
+          ways to synchronize that file locks anyway.
+
 Wed Jun  4 20:59:16 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * ace/SSL/SSL_Context.cpp:

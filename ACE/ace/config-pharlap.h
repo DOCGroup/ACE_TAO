@@ -69,6 +69,10 @@
 #undef ACE_HAS_INTERLOCKED_EXCHANGEADD
 #undef ACE_HAS_WCHAR
 
+// PharLap's exports apparantly define LockFile, but it's documented as
+// unsupported. LockFileEx is not present.
+#define ACE_LACKS_FILELOCKS
+
 #include /**/ <embkern.h>
 #if defined (ACE_HAS_PHARLAP_RT)
 # include /**/ <embtcpip.h>
