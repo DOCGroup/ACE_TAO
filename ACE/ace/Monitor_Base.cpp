@@ -155,9 +155,15 @@ namespace ACE
     {
       if (!Monitor_Point_Registry::instance ()->remove (this->name ()))
         {
-          ACE_ERROR ((LM_ERROR,
-                      "monitor point %s unregistration failed\n",
-                      this->name ()));
+// (JP) There is a problem with this failing on a single ACE_Message_Queue
+//      monitor per process. I think it is the message queue associated
+//      with the default reactor, maybe because at that low level, ACE
+//      is using malloc with placement, then free, which may bypass the
+//      normal destructors. In any case, it happens only at shutdown
+//      and there seems to be no memory leak.
+//          ACE_ERROR ((LM_ERROR,
+//                      "monitor point %s unregistration failed\n",
+//                      this->name ()));
         }
     }
 

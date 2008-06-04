@@ -1,8 +1,27 @@
+Wed Jun  4 14:36:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Point_Registry.cpp:
+        * ace/Monitor_Base.cpp:
+        
+          Disabled warning messages reporting an unsuccessful unbind
+          of a monitor from the monitor point registry. In some
+          cases, it appears that the default process reactor singleton
+          is destroyed before the monitor point registry. The reactor
+          has an associated ACE_Message_Queue, which in turn has an
+          associated monitor. Somehow in the destruction of the
+          singleton, the normal chain of destructor calls, which
+          would remove the monitor from the registry, is bypassed,
+          leaving the removal to happen when the registry's
+          destructor is called and the entry in question is no longer
+          valid. In any case, this happens only at process shutdown,
+          and there is no memory leak. Ways to make this happen in
+          a more friendly fashion are being looked into.
+
 Tue Jun  3 16:14:39 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
-	* rpmbuild/ace-tao.spec:
-	* rpmbuild/ace-tao-unusedarg.patch:
-	* rpmbuild/ace-tao-strrecvfd.patch:
+	      * rpmbuild/ace-tao.spec:
+	      * rpmbuild/ace-tao-unusedarg.patch:
+	      * rpmbuild/ace-tao-strrecvfd.patch:
           Added ace-tao-strrecvfd.patch (related to bug #3291).
           Changed make loop construct to abort when subcomponent fails.
           Removed PSS from TAO build list.
@@ -17,9 +36,9 @@ Mon Jun  2 15:26:57 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
 Sun Jun  1 02:01:38 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
-	* rpmbuild/ace-tao.spec:
-	* rpmbuild/ace-tao-etc.tar.gz:
-	* rpmbuild/ace-tao-orbsvcs-daemon.patch:
+	      * rpmbuild/ace-tao.spec:
+	      * rpmbuild/ace-tao-etc.tar.gz:
+	      * rpmbuild/ace-tao-orbsvcs-daemon.patch:
           Added ace-tao-orbsvcs-daemon.patch to workaround
           daemonization problems in rpm installed services.
           Fixed tao-cosconcurrency command line arguments.
