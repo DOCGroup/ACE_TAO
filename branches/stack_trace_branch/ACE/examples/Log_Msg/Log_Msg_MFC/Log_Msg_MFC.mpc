@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project : aceexe, ace_mfc {
+  avoids += wince
+  avoids += uses_wchar
+  exename = Log_Msg_MFC
+  Source_Files { 
+    Log_Msg_MFC.cpp
+    Log_Msg_MFCDlg.cpp
+    MFC_Log.cpp
+    StdAfx.cpp
+  }
+}

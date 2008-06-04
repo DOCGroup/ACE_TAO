@@ -1,0 +1,45 @@
+body {
+  font-family      : sans-serif;
+
+  color            : black;
+  background       : white;
+
+  max-width        : 40em;
+  padding          : 2em 2em 2em 3em;
+  margin           : 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family      : sans-serif;
+  font-weight      : 500; 
+}
+
+h1 { font-size     : 170%; }
+h2 { font-size     : 145%; }
+h3 { font-size     : 125%; }
+h4 { font-size     : 110%; }
+h5 { font-size     : 106%; }
+h6 { font-size     : 100%; }
+
+p.indent {
+  margin-left      : 1.5em;
+}
+
+/* list of links */
+
+ul.menu {
+  list-style-type  : none;
+}
+
+ul.menu li {
+  padding-top      : 0.3em;
+  padding-bottom   : 0.3em;
+}
+
+/* */
+
+ul.multiline li {
+  padding-top      : 0.4em;
+  padding-bottom   : 0.4em;
+}
+/* $Id$ */

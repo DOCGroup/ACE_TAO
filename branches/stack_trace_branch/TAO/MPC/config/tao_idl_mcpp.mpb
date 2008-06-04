@@ -1,0 +1,13 @@
+// $Id$
+feature(mcpp) : mcpp {
+  macros += USE_MCPP_BUFFER_LEXING
+  Source_Files {
+    $(TAO_ROOT)/TAO_IDL/driver/drv_mcpp_preproc.cpp
+  }
+}
+
+feature(!mcpp) {
+  Source_Files {
+    $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp
+  }
+}

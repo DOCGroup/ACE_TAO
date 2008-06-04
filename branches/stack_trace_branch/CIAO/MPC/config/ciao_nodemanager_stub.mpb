@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : ciao_deployment_stub {
+  includes += $(CIAO_ROOT)/DAnCE/Interfaces
+  includes += $(CIAO_ROOT)/DAnCE/NodeManager
+  libs     += NodeManager_stub
+  after    += NodeManager_stub
+}
