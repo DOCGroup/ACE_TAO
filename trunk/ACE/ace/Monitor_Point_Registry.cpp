@@ -82,10 +82,16 @@ namespace ACE
 
       if (status == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "registry remove: unbind failed for %s\n",
-                             name),
-                            false);
+// (JP) There is a problem with this failing on a single ACE_Message_Queue
+//      monitor per process. I think it is the message queue associated
+//      with the default reactor, maybe because at that low level, ACE
+//      is using malloc with placement, then free, which may bypass the
+//      normal destructors. In any case, it happens only at shutdown
+//      and there seems to be no memory leak.
+//          ACE_ERROR_RETURN ((LM_ERROR,
+//                             "registry remove: unbind failed for %s\n",
+//                             name),
+//                            false);
         }
       else
         {
