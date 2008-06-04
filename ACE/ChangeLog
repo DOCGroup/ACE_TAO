@@ -1,3 +1,9 @@
+Wed Jun  4 20:59:16 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * ace/SSL/SSL_Context.cpp:
+          Fix for Bug 3337. ::SSL_add_dir_cert_subjects_to_stack() isn't
+          ready for Windows.
+
 Wed Jun  4 17:12:10 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/ACE.cpp (timestamp):
