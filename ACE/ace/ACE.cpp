@@ -2444,7 +2444,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
 
   ACE_OS::ctime_r (&secs,
                    timebuf,
-                   sizeof timebuf);
+                   sizeof timebuf / sizeof (ACE_TCHAR));
   // date_and_timelen > sizeof timebuf!
   ACE_OS::strsncpy (date_and_time,
                     timebuf,

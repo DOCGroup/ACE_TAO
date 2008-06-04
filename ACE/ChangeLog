@@ -1,3 +1,13 @@
+Wed Jun  4 17:12:10 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/ACE.cpp (timestamp):
+
+          Make sure to divide sizeof timebuf by sizeof (ACE_TCHAR) to
+          avoid buffer overflow. This is another instance of the same
+          problem fixed in:
+
+          Mon Jun  2 15:26:57 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
 Wed Jun  4 16:05:54 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Time_Value_Test.cpp: Added a test case for Bugzilla #3336
@@ -7,7 +17,7 @@ Wed Jun  4 14:36:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Point_Registry.cpp:
         * ace/Monitor_Base.cpp:
-        
+
           Disabled warning messages reporting an unsuccessful unbind
           of a monitor from the monitor point registry. In some
           cases, it appears that the default process reactor singleton
