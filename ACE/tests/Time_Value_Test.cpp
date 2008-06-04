@@ -118,6 +118,16 @@ run_main (int, ACE_TCHAR *[])
   tv1 *= -10.0;
   ACE_ASSERT (tv1 == tv2);
 
+  // Test correct msec() convert; also checks for compile error reported in
+  // Bugzilla 3336.
+  ACE_Time_Value msec_test (42, 555);
+  ACE_UINT64 ms = 0;
+  msec_test.msec (ms);
+  if (ms != 42555)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("msec test failed: %Q should be 42555\n"),
+                ms));
+
   ACE_END_TEST;
 
   return ret;

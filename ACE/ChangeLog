@@ -1,3 +1,8 @@
+Wed Jun  4 16:05:54 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Time_Value_Test.cpp: Added a test case for Bugzilla #3336
+          as reported by Aaron Scamehorn.
+
 Wed Jun  4 14:36:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Point_Registry.cpp:
