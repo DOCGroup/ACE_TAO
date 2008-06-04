@@ -378,6 +378,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // this comparison if so.
 #if defined (OPENSSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x0090801fL)
 #  if !defined (OPENSSL_SYS_VMS) && !defined (OPENSSL_SYS_MACINTOSH_CLASSIC)
+#    if !defined (OPENSSL_SYS_WIN32) || (OPENSSL_VERSION_NUMBER > 0x0090807fL)
 
       if (ca_dir != 0)
         {
@@ -398,6 +399,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
               return -1;
             }
         }
+#    endif /* !OPENSSL_SYS_WIN32 || OPENSSL_VERSION_NUMBER >= 0x0090807fL */
 #  endif /* !OPENSSL_SYS_VMS && !OPENSSL_SYS_MACINTOSH_CLASSIC */
 #endif /* OPENSSL_VERSION_NUMBER >= 0.9.8a release */
 
