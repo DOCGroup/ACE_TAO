@@ -1,3 +1,17 @@
+Thu Jun 05 15:22:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Correct the wide character output messages and strings.
+
+        * examples/MFC/server.mpc:
+        * utils/NamingViewer/NamingViewer.mpc:
+
+          Originally was going to provide specific *Unicode.mpc
+          but the non-unicode ones se can actually dual up (so
+          reverse the previous original change).
+
 Thu Jun  5 11:56:09 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Queued_Message.h:
@@ -1740,18 +1754,8 @@ Fri Apr 25 13:24:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 25 09:25:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
 
-        * examples/MFC/server.cpp:
-        * examples/MFC/server_unicode.mpc:
-        * utils/NamingViewer/NamingViewUnicode.mpc:
-        * utils/NamingViewer/NamingViewer.cpp:
-        * utils/NamingViewer/SelectNSDialog.cpp:
-
-          Split out the unicode versions of these.
-
-Fri Apr 25 09:25:00 UTC 2008  Simon Massey  <sma at pristmech dot com>
-
         * examples/MFC/server.mpc:
-        * utils/NamingViewer/NamingView.mpc:
+        * utils/NamingViewer/NamingViewer.mpc:
 
           Feature name "uses_wchar" already used within ACE/TAO. Replaces
           the "unicode" feature name. Template / project name within MPC
