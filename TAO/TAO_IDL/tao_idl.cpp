@@ -96,11 +96,9 @@ DRV_version (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n"
-              "%s %s (%s %s)\n",
-              idl_global->prog_name (),
-              ACE_TEXT ("TAO_IDL_FE, version"),
+              "TAO_IDL_FE, version %s (Based on Sun IDL FE, version %s)\n",
+              ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
               ACE_TEXT (TAO_VERSION),
-              ACE_TEXT ("Based on Sun IDL FE, version"),
               ACE_TEXT (SUN_IDL_FE_VERSION)));
 
   BE_version ();
@@ -197,10 +195,9 @@ DRV_drive (const char *s)
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s%s %s\n",
-                  idl_global->prog_name (),
-                  ACE_TEXT (": preprocessing"),
-                  s));
+                  "%s: preprocessing %s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (s)));
     }
 
   DRV_pre_proc (s);
@@ -216,10 +213,9 @@ DRV_drive (const char *s)
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s%s %s\n",
-                  idl_global->prog_name (),
-                  ACE_TEXT (": parsing"),
-                  s));
+                  "%s: parsing %s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (s)));
     }
 
   // Return value not used - error count stored in idl_global
@@ -229,7 +225,7 @@ DRV_drive (const char *s)
   // Filename set by FE_yyparse(), so we output it immediately after.
   ACE_DEBUG ((LM_DEBUG,
               "processing %s\n",
-              idl_global->filename ()->get_string ()));
+              ACE_TEXT_CHAR_TO_TCHAR (idl_global->filename ()->get_string ())));
 
   // We must do this as late as possible to make sure any
   // forward declared structs or unions contained in a
@@ -240,16 +236,13 @@ DRV_drive (const char *s)
   if (idl_global->err_count () > 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s %s%s %d %s%s\n",
-                  idl_global->prog_name (),
-                  ACE_TEXT (":"),
-                  s,
-                  ACE_TEXT (": found"),
+                  "%s: %s: found %d error%s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (s),
                   idl_global->err_count (),
-                  ACE_TEXT ("error"),
-                  ACE_TEXT ((idl_global->err_count () > 1
+                  (idl_global->err_count () > 1
                     ? ACE_TEXT ("s")
-                    : ACE_TEXT ("")))));
+                    : ACE_TEXT ("")) ));
 
       // Backend will be cleaned up after the exception is caught.
       throw Bailout ();
@@ -260,10 +253,9 @@ DRV_drive (const char *s)
       && (idl_global->compile_flags () & IDL_CF_DUMP_AST))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s%s %s\n",
-                  idl_global->prog_name (),
-                  ACE_TEXT (": dump"),
-                  s));
+                  "%s: dump %s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (s)));
     }
 
   if (idl_global->compile_flags () & IDL_CF_DUMP_AST)
@@ -278,10 +270,9 @@ DRV_drive (const char *s)
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s%s %s\n",
-                  idl_global->prog_name (),
-                  ACE_TEXT (": BE processing on"),
-                  s));
+                  "%s: BE processing on %s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (s)));
     }
 
   // Make sure all forward declared structs and unions are defined
