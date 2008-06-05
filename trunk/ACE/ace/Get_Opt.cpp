@@ -91,6 +91,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Get_Opt)
 
+#ifdef ACE_USES_WCHAR
+void ACE_Get_Opt::ACE_Get_Opt_Init (const ACE_TCHAR *optstring)
+#else
 ACE_Get_Opt::ACE_Get_Opt (int argc,
                           ACE_TCHAR **argv,
                           const ACE_TCHAR *optstring,
@@ -113,6 +116,7 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
     nonopt_start_ (optind),
     nonopt_end_ (optind),
     long_option_ (0)
+#endif
 {
   ACE_TRACE ("ACE_Get_Opt::ACE_Get_Opt");
 

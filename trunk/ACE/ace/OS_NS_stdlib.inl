@@ -183,8 +183,20 @@ ACE_OS::mkstemp (char *s)
 {
 #if !defined (ACE_LACKS_MKSTEMP)
   return ::mkstemp (s);
+#elif defined (ACE_USES_WCHAR)
+  // For wide-char filesystems, we must convert the narrow-char input to
+  // a wide-char string for mkstemp_emulation(), then convert the name
+  // back to narrow-char for the caller.
+  ACE_Ascii_To_Wide wide_s (s);
+  const ACE_HANDLE fh = ACE_OS::mkstemp_emulation (wide_s.wchar_rep ());
+  if (fh != ACE_INVALID_HANDLE)
+    {
+      ACE_Wide_To_Ascii narrow_s (wide_s.wchar_rep ());
+      ACE_OS::strcpy (s, narrow_s.char_rep ());
+    }
+  return fh;
 #else
-  return ACE_OS::mkstemp_emulation (ACE_TEXT_CHAR_TO_TCHAR (s));
+  return ACE_OS::mkstemp_emulation (s);
 #endif  /* !ACE_LACKS_MKSTEMP */
 }
 
@@ -193,9 +205,31 @@ ACE_INLINE ACE_HANDLE
 ACE_OS::mkstemp (wchar_t *s)
 {
 #  if !defined (ACE_LACKS_MKSTEMP)
-  return ::mkstemp (ACE_TEXT_WCHAR_TO_TCHAR (ACE_TEXT_ALWAYS_CHAR (s)));
+  // For wide-char filesystems, we must convert the wide-char input to
+  // a narrow-char string for mkstemp(), then convert the name
+  // back to wide-char for the caller.
+  ACE_Wide_To_Ascii narrow_s (s);
+  const ACE_HANDLE fh = ::mkstemp (narrow_s.char_rep ());
+  if (fh != ACE_INVALID_HANDLE)
+    {
+      ACE_Ascii_To_Wide wide_s (narrow_s.char_rep ());
+      ACE_OS::strcpy (s, wide_s.wchar_rep ());
+    }
+  return fh;
+#  elif defined (ACE_USES_WCHAR)
+  return ACE_OS::mkstemp_emulation (s);
 #  else
-  return ACE_OS::mkstemp_emulation (ACE_TEXT_WCHAR_TO_TCHAR (s));
+  // For wide-char filesystems, we must convert the wide-char input to
+  // a narrow-char string for mkstemp_emulation(), then convert the name
+  // back to wide-char for the caller.
+  ACE_Wide_To_Ascii narrow_s (s);
+  const ACE_HANDLE fh = ACE_OS::mkstemp_emulation (narrow_s.char_rep ());
+  if (fh != ACE_INVALID_HANDLE)
+    {
+      ACE_Ascii_To_Wide wide_s (narrow_s.char_rep ());
+      ACE_OS::strcpy (s, wide_s.wchar_rep ());
+    }
+  return fh;
 #  endif  /* !ACE_LACKS_MKSTEMP */
 }
 #endif /* ACE_HAS_WCHAR */

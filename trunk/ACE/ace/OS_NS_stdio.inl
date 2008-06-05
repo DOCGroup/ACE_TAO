@@ -594,26 +594,53 @@ ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
 #if !(defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *
-ACE_OS::fopen (const char *filename, const ACE_TCHAR *mode)
+ACE_OS::fopen (const char *filename, const char *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
   ACE_OSCALL_RETURN
-    (::fopen (filename, ACE_TEXT_ALWAYS_CHAR (mode)), FILE *, 0);
+    (::fopen (filename, mode), FILE *, 0);
 }
 
 #if defined (ACE_HAS_WCHAR)
+// Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *
-ACE_OS::fopen (const wchar_t *filename, const ACE_TCHAR *mode)
+ACE_OS::fopen (const char *filename, const wchar_t *mode)
+{
+  ACE_OS_TRACE ("ACE_OS::fopen");
+  ACE_Wide_To_Ascii n_mode (mode);
+  ACE_OSCALL_RETURN
+    (::fopen (filename, n_mode.char_rep ()), FILE *, 0);
+}
+// Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
+ACE_INLINE FILE *
+ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
 #if defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN
-    (::_wfopen (filename, ACE_TEXT_ALWAYS_WCHAR (mode)), FILE *, 0);
+    (::_wfopen (filename, mode), FILE *, 0);
+#else
+  // Non-Windows doesn't use wchar_t file systems.
+  ACE_Wide_To_Ascii n_filename (filename);
+  ACE_Wide_To_Ascii n_mode (mode);
+  ACE_OSCALL_RETURN
+    (::fopen (n_filename.char_rep (), n_mode.char_rep ()), FILE*, 0);
+#endif /* ACE_HAS_WINCE */
+}
+// Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
+ACE_INLINE FILE *
+ACE_OS::fopen (const wchar_t *filename, const char *mode)
+{
+  ACE_OS_TRACE ("ACE_OS::fopen");
+#if defined (ACE_HAS_WINCE)
+  ACE_Ascii_To_Wide n_mode (mode);
+  ACE_OSCALL_RETURN
+    (::_wfopen (filename, n_mode.wchar_rep ()), FILE *, 0);
 #else
   // Non-Windows doesn't use wchar_t file systems.
   ACE_Wide_To_Ascii n_filename (filename);
   ACE_OSCALL_RETURN
-    (::fopen (n_filename.char_rep (), ACE_TEXT_ALWAYS_CHAR (mode)), FILE*, 0);
+    (::fopen (n_filename.char_rep (), mode), FILE*, 0);
 #endif /* ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_WCHAR */

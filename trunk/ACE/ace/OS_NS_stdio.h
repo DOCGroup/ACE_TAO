@@ -303,7 +303,7 @@ namespace ACE_OS {
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_WIN32 */
-  FILE *fopen (const char *filename, const ACE_TCHAR *mode);
+  FILE *fopen (const char *filename, const char *mode);
 
 #if defined (ACE_HAS_WCHAR)
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
@@ -311,7 +311,19 @@ namespace ACE_OS {
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_WIN32 */
-  FILE *fopen (const wchar_t *filename, const ACE_TCHAR *mode);
+  FILE *fopen (const char *filename, const wchar_t *mode);
+#  if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  extern ACE_Export
+#  else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#  endif /* ACE_WIN32 */
+  FILE *fopen (const wchar_t *filename, const wchar_t *mode);
+#  if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  extern ACE_Export
+#  else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#  endif /* ACE_WIN32 */
+  FILE *fopen (const wchar_t *filename, const char *mode);
 #endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_WIN32)
