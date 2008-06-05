@@ -188,7 +188,7 @@ IDL_GlobalData::IDL_GlobalData (void)
                      + ACE_OS::strlen (ace_gperf)
                      + 1]);
       ACE_OS::sprintf (this->gperf_path_,
-                       "%s" ACE_DIRECTORY_SEPARATOR_STR "bin" ACE_DIRECTORY_SEPARATOR_STR "%s",
+                       "%s" ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A "%s",
                        ace_root,
                        ace_gperf);
 #else /* Not ACE_GPERF */
@@ -198,7 +198,7 @@ IDL_GlobalData::IDL_GlobalData (void)
                      + ACE_OS::strlen ("/bin/gperf")
                      + 1]);
       ACE_OS::sprintf (this->gperf_path_,
-                       "%s" ACE_DIRECTORY_SEPARATOR_STR "bin" ACE_DIRECTORY_SEPARATOR_STR "gperf",
+                       "%s" ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A "gperf",
                        ace_root);
 #endif /* ACE_GPERF */
     }
@@ -782,7 +782,7 @@ IDL_GlobalData::validate_included_idl_files (void)
                     pre_partial.substr (1, pre_partial.length () - 2);
                 }
 
-              pre_partial += ACE_DIRECTORY_SEPARATOR_STR;
+              pre_partial += ACE_DIRECTORY_SEPARATOR_STR_A;
               pre_partial += pre_preproc_includes[j];
               full_path =
                 ACE_OS::realpath (pre_partial.c_str (), pre_abspath);
@@ -919,18 +919,29 @@ IDL_GlobalData::temp_dir (const char *s)
 {
   // Delete the old pointer.
   delete [] this->temp_dir_;
+  this->temp_dir_ = 0; // In case the ACE_NEW fails below.
+
+  const size_t lengthSep = sizeof (ACE_DIRECTORY_SEPARATOR_STR_A) - 1u;
+  const size_t lengthPath = ACE_OS::strlen (s);
 
   // Allocate memory, 1 for the end of string.
-  ACE_NEW (this->temp_dir_,
-           char [ACE_OS::strlen (s) +
-                ACE_OS::strlen (ACE_DIRECTORY_SEPARATOR_STR) +
-                1]);
+  ACE_NEW (this->temp_dir_, char [lengthPath + lengthSep + 1u]);
 
   // Copy the strings.
-  ACE_OS::sprintf (this->temp_dir_,
-                   "%s%s",
-                   s,
-                   ACE_DIRECTORY_SEPARATOR_STR);
+  if (lengthSep < lengthPath &&
+      0 == ACE_OS::strcmp (s + lengthPath - lengthSep, ACE_DIRECTORY_SEPARATOR_STR_A))
+    {
+      // Already has a directory seporator on end of temp root, don't add another.
+      ACE_OS::strcpy (this->temp_dir_, s);
+    }
+  else
+    {
+      // Need to add a directory seporator to temp root.
+      ACE_OS::sprintf (this->temp_dir_,
+                       "%s%s",
+                       s,
+                       ACE_DIRECTORY_SEPARATOR_STR_A);
+    }
 }
 
 const char *
@@ -1800,7 +1811,7 @@ IDL_GlobalData::add_dcps_data_key (const char* id, const char* key)
   if (this->dcps_type_info_map_.find (id, newinfo) == 0)
     {
        // Add the new key field to the type.
-       newinfo->key_list_.enqueue_tail (key);
+       newinfo->key_list_.enqueue_tail (ACE_TEXT_CHAR_TO_TCHAR (key));
        return true;
     }
   else
@@ -1880,7 +1891,7 @@ is_include_file_found (ACE_CString & inc_file,
         inc_file.substr (1, inc_file.length () - 2);
     }
 
-  inc_file += ACE_DIRECTORY_SEPARATOR_STR;
+  inc_file += ACE_DIRECTORY_SEPARATOR_STR_A;
   inc_file += idl_file_name->get_string ();
   full_path =
     ACE_OS::realpath (inc_file.c_str (), abspath);
@@ -1917,7 +1928,7 @@ IDL_GlobalData::validate_orb_include (UTL_String * idl_file_name)
   // will change in fe/fe_init.cpp:FE_store_env_include_paths ()
   // then the below do/while loop has to be changed accordingly.
   unsigned int env_includes = 0;
-  ACE_Env_Value<char*> incl_paths ("INCLUDE",
+  ACE_Env_Value<char*> incl_paths (ACE_TEXT ("INCLUDE"),
                                    (char *) 0);
   const char *aggr_str = incl_paths;
   if (aggr_str != 0)
