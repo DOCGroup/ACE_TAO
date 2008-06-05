@@ -1,10 +1,47 @@
+Thu Jun  5 11:56:09 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Queued_Message.h:
+
+          Added a new template method to enable copying of the underlying
+          message block chain on demand.
+
+        * tao/Asynch_Queued_Message.h:
+        * tao/Asynch_Queued_Message.cpp:
+
+          This is never necessary for asynch messages and is implemented as
+          such.
+
+        * tao/Synch_Queued_Message.h:
+        * tao/Synch_Queued_Message.cpp:
+
+          Copy the underlying message block chain when it is part of the
+          target chain (passed in).
+
+        * tao/Transport.cpp:
+
+          Call the new copy_if_necessary() method on the queued message if
+          we have sent out only a portion of the message.  Without this
+          change, the Bug_2494_Regression was core dumping every time.
+
+        * tests/Bug_2494_Regression/client.cpp:
+
+          Fixed memory leaks.
+
+        * tests/Bug_2494_Regression/server.cpp:
+
+          Fixed a bug in the default ior output file name.
+
+        * tests/Bug_2654_Regression/client.cpp:
+
+          Documented a couple of the magic numbers.
+
 Tue Jun  3 15:19:18 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/LocalObject.html:
-          TAO has been updated conform to the 1.2 IDL to C++ mapping. 
-          LocalObject is now refcounted by default. Updated the 
+          TAO has been updated conform to the 1.2 IDL to C++ mapping.
+          LocalObject is now refcounted by default. Updated the
           documentation to reflect the changes.
-          
+
 Tue Jun  3 15:15:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Transport_Connector.h:

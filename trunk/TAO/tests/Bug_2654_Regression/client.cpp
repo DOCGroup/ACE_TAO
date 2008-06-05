@@ -217,7 +217,14 @@ parse_args (int argc, char *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  Worker worker (5);
+  static const int orb_threads = 5;
+  static const int total_threads = 15;
+
+  // It must be ensured that there are more total threads that there are
+  // that are dedicated to running the ORB.
+  ACE_ASSERT (total_threads > orb_threads);
+
+  Worker worker (orb_threads);
   try
     {
       worker.orb_ =
@@ -286,7 +293,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  worker.activate (THR_NEW_LWP | THR_JOINABLE,15);
+  worker.activate (THR_NEW_LWP | THR_JOINABLE, total_threads);
   worker.wait();
 
   return 0;

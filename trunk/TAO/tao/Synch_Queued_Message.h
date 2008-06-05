@@ -73,6 +73,7 @@ public:
   virtual void bytes_transferred (size_t &byte_count);
   virtual TAO_Queued_Message *clone (ACE_Allocator *alloc);
   virtual void destroy (void);
+  virtual void copy_if_necessary (const ACE_Message_Block* chain);
   //@}
 
 private:
@@ -90,6 +91,14 @@ private:
    * point keeps track of the next message to send out.
    */
   ACE_Message_Block *current_block_;
+
+  /// Do we own the contents_ message block?
+  /**
+   * This flag differs from the is_heap_allocated_ flag in that it only
+   * applies to the contents_ message block and not the
+   * TAO_Synch_Queued_Message object itself.
+   */
+  bool own_contents_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
