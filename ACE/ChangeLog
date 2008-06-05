@@ -1,3 +1,40 @@
+Thu Jun 05 13:45:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * ace/Get_Opt.cpp:
+        * ace/Get_Opt.h:
+        * ace/Get_Opt.inl:
+
+          As a conveniance in wide character builds allow the
+          options string to be specified as a standard narrow
+          string (that is converted internally). This type of
+          use is littered throughout the TAO code.
+
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+
+          As a conveniance in wide character builds allow the
+          fopen() call to have parameters of mixed wide/narrow
+          type. This type of use is littered throughout the TAO
+          code.
+
+        * ace/OS_NS_stdlib.inl:
+
+          Correct the mkstemp facades, they were not returning
+          the modified template string under wide character builds,
+          this caused the tao_idl compiler to be unable to find
+          the pre-processed files to rename that it had just created.
+          
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.mpc:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_Unicode_MFC.mpc:
+
+          Deleted the Unicode specific version, normal one suffices
+          after all.
+
+        * bin/tao_orb_tests.lst:
+
+          Disabled problematic LynxOS test.
+
 Wed Jun  4 22:45:20  2008  Steve Huston  <shuston@riverace.com>
 
         * ace/config-pharlap.h: Added ACE_LACKS_FILELLOCKS. My changes from
@@ -50,9 +87,10 @@ Wed Jun  4 14:36:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Jun  3 16:14:39 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
-	      * rpmbuild/ace-tao.spec:
-	      * rpmbuild/ace-tao-unusedarg.patch:
-	      * rpmbuild/ace-tao-strrecvfd.patch:
+        * rpmbuild/ace-tao.spec:
+        * rpmbuild/ace-tao-unusedarg.patch:
+        * rpmbuild/ace-tao-strrecvfd.patch:
+
           Added ace-tao-strrecvfd.patch (related to bug #3291).
           Changed make loop construct to abort when subcomponent fails.
           Removed PSS from TAO build list.
@@ -67,9 +105,10 @@ Mon Jun  2 15:26:57 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
 Sun Jun  1 02:01:38 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
-	      * rpmbuild/ace-tao.spec:
-	      * rpmbuild/ace-tao-etc.tar.gz:
-	      * rpmbuild/ace-tao-orbsvcs-daemon.patch:
+        * rpmbuild/ace-tao.spec:
+        * rpmbuild/ace-tao-etc.tar.gz:
+        * rpmbuild/ace-tao-orbsvcs-daemon.patch:
+
           Added ace-tao-orbsvcs-daemon.patch to workaround
           daemonization problems in rpm installed services.
           Fixed tao-cosconcurrency command line arguments.
