@@ -1,3 +1,13 @@
+Thu Jun  5 14:52:43 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Time_Value.{h inl}: Added a non-const variant of
+          void msec(ACE_UINT64&) - this allows the msec(ACE_UINT64&) accessor
+          to be called on both const and non-const objects without error.
+          Fixes Bugzilla #3336. Thanks to Simon Massey for this idea.
+        
+        * tests/Time_Value_Test.cpp: Added a const-checking msec() call and
+          corrected the test case.
+
 Thu Jun 05 13:45:00 UTC 2008  Simon Massey  <sma@prismtech.com>
 
         * ace/Get_Opt.cpp:
