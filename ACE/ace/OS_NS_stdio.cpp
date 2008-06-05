@@ -212,6 +212,20 @@ ACE_OS::fopen (const char *filename,
 
 #if defined (ACE_HAS_WCHAR)
 FILE *
+ACE_OS::fopen (const char *filename,
+               const ACE_ANTI_TCHAR *mode)
+{
+  return ACE_OS::fopen (filename, ACE_TEXT_ANTI_TO_TCHAR (mode));
+}
+
+FILE *
+ACE_OS::fopen (const wchar_t *filename,
+               const ACE_ANTI_TCHAR *mode)
+{
+  return ACE_OS::fopen (filename, ACE_TEXT_ANTI_TO_TCHAR (mode));
+}
+
+FILE *
 ACE_OS::fopen (const wchar_t *filename,
                const ACE_TCHAR *mode)
 {

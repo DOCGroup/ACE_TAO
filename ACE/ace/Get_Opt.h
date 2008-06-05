@@ -169,6 +169,7 @@ public:
    * xxx" will only find "xxx" as the argument for @e c if @a optstring is
    * specified as @c "abc:" not @c "abc::".
    */
+#ifndef ACE_USES_WCHAR
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
                const ACE_TCHAR *optstring = ACE_TEXT (""),
@@ -177,6 +178,25 @@ public:
                int ordering = PERMUTE_ARGS,
                int long_only = 0);
 
+#else
+private:
+  void ACE_Get_Opt_Init (const ACE_TCHAR *optstring);
+public:
+  ACE_INLINE ACE_Get_Opt (int argc,
+               ACE_TCHAR **argv,
+               const ACE_TCHAR *optstring = ACE_TEXT (""),
+               int skip_args = 1,
+               int report_errors = 0,
+               int ordering = PERMUTE_ARGS,
+               int long_only = 0);
+  ACE_INLINE ACE_Get_Opt (int argc,
+               ACE_TCHAR **argv,
+               const char *optstring,
+               int skip_args = 1,
+               int report_errors = 0,
+               int ordering = PERMUTE_ARGS,
+               int long_only = 0);
+#endif
   /// Default dtor.
   ~ACE_Get_Opt (void);
 
