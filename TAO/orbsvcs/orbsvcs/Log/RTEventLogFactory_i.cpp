@@ -158,7 +158,7 @@ TAO_RTEventLogFactory_i::create_with_id (
 CORBA::RepositoryId
 TAO_RTEventLogFactory_i::create_repositoryid ()
 {
-  return CORBA::string_dup("IDL:omg.org/RTEventLogAdmin:EventLog:1.0");
+  return CORBA::string_dup (RTEventLogAdmin::_tc_EventLog->id ());
 }
 
 PortableServer::ServantBase*
