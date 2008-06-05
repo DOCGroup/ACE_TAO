@@ -148,7 +148,7 @@ TAO_NotifyLogFactory_i::create_with_id (
 CORBA::RepositoryId
 TAO_NotifyLogFactory_i::create_repositoryid ()
 {
-  return CORBA::string_dup("IDL:omg.org/DsNotifyLogAdmin:NotifyLog:1.0");
+  return CORBA::string_dup (DsNotifyLogAdmin::_tc_NotifyLog->id ());
 }
 
 PortableServer::ServantBase*
