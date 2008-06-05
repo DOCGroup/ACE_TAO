@@ -166,8 +166,10 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #       define wmain \
 ace_wmain_i (int, ACE_TCHAR *[]); \
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
 ACE_Export int ace_os_wmain_i (ACE_Main_Base&, int, ACE_TCHAR *[]); \
 class ACE_Main : public ACE_Main_Base {int run_i (int, ACE_TCHAR *[]);}; \
+ACE_END_VERSIONED_NAMESPACE_DECL \
 inline int ACE_Main::run_i (int argc, ACE_TCHAR *argv[])  \
 { \
   return ace_wmain_i (argc, argv); \
