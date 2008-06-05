@@ -1,3 +1,10 @@
+Thu Jun  5 18:02:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+
+          Reverted a portion of my change from Fri May 30 13:21:20 UTC 2008.
+
 Thu Jun 05 15:22:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/tao_idl.cpp:
