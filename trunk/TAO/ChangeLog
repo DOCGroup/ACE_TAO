@@ -1,3 +1,17 @@
+Thu Jun  5 23:05:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+
+          Changed create_repositoryid() method to obtain the repository id
+          by using the appropriate typecode's id() method instead of using
+          a hardcoded string.  This avoids problems like the one reported
+          in issue #3320, where the repository id for BasicLog had a typo.
+          Thanks to Bogdan Jeram < bjeram at eso dot org > for reporting
+          this.
+
 Thu Jun  5 18:02:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Transport_Connector.h:
