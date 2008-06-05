@@ -1,3 +1,13 @@
+Tue Jun  3 13:09:27 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_main.h (wmain): Added
+        
+          ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+          ACE_END_VERSIONED_NAMESPACE_DECL
+          
+          to the ace_wmain_i macro.  Thanks to June Fang <june dot fang at
+          gmail dot com> for reporting this.
+
 Thu Jun  5 14:52:43 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Time_Value.{h inl}: Added a non-const variant of
