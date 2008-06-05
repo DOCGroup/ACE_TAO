@@ -119,7 +119,7 @@ public:
   void set (const FILETIME &ft);
 # endif /* ACE_WIN32 */
 
-  /// Converts from ACE_Time_Value format into milli-seconds format.
+  /// Converts from ACE_Time_Value format into milliseconds format.
   /**
    * @return Sum of second field (in milliseconds) and microsecond field
    *         (in milliseconds).  Note that this method can overflow if
@@ -132,6 +132,7 @@ public:
    */
   unsigned long msec (void) const;
 
+  /// Converts from ACE_Time_Value format into milliseconds format.
   /**
    * @return Sum of second field (in milliseconds) and microsecond field
    *         (in milliseconds) and return them via the @param ms parameter.
@@ -141,6 +142,17 @@ public:
    *       component in an ACE_Time_Value.
    */
   void msec (ACE_UINT64 &ms) const;
+
+  /// Converts from ACE_Time_Value format into milliseconds format.
+  /**
+   * @return Sum of second field (in milliseconds) and microsecond field
+   *         (in milliseconds) and return them via the @param ms parameter.
+   *
+   * @note The semantics of this method differs from the sec() and
+   *       usec() methods.  There is no analogous "millisecond"
+   *       component in an ACE_Time_Value.
+   */
+  void msec (ACE_UINT64 &ms) /* const */;
 
   /// Converts from milli-seconds format into ACE_Time_Value format.
   /**

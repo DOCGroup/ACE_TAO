@@ -160,6 +160,14 @@ ACE_Time_Value::msec (ACE_UINT64 &ms) const
   ms += (this->tv_.tv_usec / 1000);
 }
 
+ACE_INLINE void
+ACE_Time_Value::msec (ACE_UINT64 &ms) /*const*/
+{
+  // ACE_OS_TRACE ("ACE_Time_Value::msec");
+  const ACE_Time_Value *tv = this;
+  tv->msec (ms);
+}
+
 // Converts from milli-seconds format into Time_Value format.
 
 ACE_INLINE void
