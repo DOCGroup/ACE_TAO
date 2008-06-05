@@ -349,7 +349,8 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
 bool
 TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
                                    TAO_Transport *transport,
-                                   ACE_Time_Value *timeout)
+                                   ACE_Time_Value *timeout,
+                                   bool force_wait)
 {
   if (transport->connection_handler ()->is_timeout ())
     {
@@ -393,7 +394,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
 
       return true;
     }
-  else
+  else if (force_wait || r->blocked_connect ())
     {
       if (TAO_debug_level > 2)
         {
@@ -460,6 +461,20 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
             }
           return true;
         }
+    }
+  else
+    {
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+            ACE_TEXT(" Connection not complete [%d]\n"),
+            transport->id () ));
+        }
+      transport->connection_handler ()->reset_state (
+        TAO_LF_Event::LFS_CONNECTION_WAIT);
+
+      return true;
     }
 
   return false;
@@ -569,6 +584,49 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               return base_transport;
             }
         }
+      else if (found == TAO::Transport_Cache_Manager::CACHE_FOUND_CONNECTING)
+        {
+          if (r->blocked_connect ())
+            {
+              if (TAO_debug_level > 4)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT("TAO (%P|%t) - Transport_Connector::waiting")
+                              ACE_TEXT(" for connection on transport [%d]\n"),
+                              base_transport->id ()));
+                }
+
+              // If wait_for_transport returns no errors, the base_transport
+              // points to the connection we wait for.
+              if (this->wait_for_transport (r, base_transport, timeout, false))
+                {
+                  // be sure this transport is registered with the reactor
+                  // before using it.
+                  if (!base_transport->register_if_necessary ())
+                    {
+                        base_transport->remove_reference ();
+                        return 0;
+                    }
+                }
+
+              // In either success or failure cases of wait_for_transport, the
+              // ref counter in corresponding to the ref counter added by
+              // find_transport is decremented.
+              base_transport->remove_reference ();
+            }
+          else
+            {
+              if (TAO_debug_level > 4)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("TAO (%P|%t) - Transport_Connector::non-blocking: returning unconnected transport [%d]\n"),
+                    base_transport->id ()));
+                }
+
+              // return the transport in it's current, unconnected state
+              return base_transport;
+            }
+        }
       else
         {
           // @todo: This is not the right place for this! (bugzilla 3023)
@@ -617,15 +675,16 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                   base_transport->id ()));
                     }
                   (void) base_transport->purge_entry ();
-
-                  base_transport->remove_reference ();
                 }
-              else
-                return base_transport;
+              // The new transport is in the cache.  We'll pick it up from th
+              // next time thru this loop (using it from here causes more pro
+              // than it fixes due to the changes that allow a new connection
+              // re-used by a nested upcall before we get back here.)
+              base_transport->remove_reference ();
             }
           else // not making new connection
             {
-              (void) this->wait_for_transport (r, base_transport, timeout);
+              (void) this->wait_for_transport (r, base_transport, timeout, true);
               base_transport->remove_reference ();
             }
         }
