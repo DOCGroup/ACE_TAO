@@ -239,6 +239,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     SPIPE_Connector.cpp
     SPIPE_Stream.cpp
     SString.cpp
+    Stack_Trace.cpp
     Stats.cpp
     String_Base_Const.cpp
     SUN_Proactor.cpp
