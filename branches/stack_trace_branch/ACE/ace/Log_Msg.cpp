@@ -38,6 +38,7 @@
 #include "ace/Log_Msg_UNIX_Syslog.h"
 #include "ace/Log_Record.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Stack_Trace.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Log_Msg.inl"
@@ -1989,6 +1990,22 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         (bp, format, va_arg (argp, void*));
                     ACE_UPDATE_COUNT (bspace, this_len);
                     break;
+
+    case '?':
+      // Stack trace up to this point
+                  {
+                    ACE_Stack_Trace t(2); // skip the frame that we're currently in
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                    if (can_check)
+                      this_len = ACE_OS::snprintf
+                        (bp, bspace, format, t.c_str ());
+                    else
+                      this_len = ACE_OS::sprintf
+                        (bp, format, t.c_str ());
+                    ACE_UPDATE_COUNT (bspace, this_len);
+                    break;
+                  }
+
 
                 default:
                   // So, it's not a legit format specifier after all...
