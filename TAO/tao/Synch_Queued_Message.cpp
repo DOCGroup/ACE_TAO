@@ -21,6 +21,7 @@ TAO_Synch_Queued_Message::TAO_Synch_Queued_Message (
   : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , contents_ (const_cast<ACE_Message_Block*> (contents))
   , current_block_ (contents_)
+  , own_contents_ (is_heap_allocated)
 {
 }
 
@@ -146,11 +147,15 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
 void
 TAO_Synch_Queued_Message::destroy (void)
 {
-  if (this->is_heap_created_)
+  if (this->own_contents_)
     {
       ACE_Message_Block::release (this->contents_);
       this->current_block_ = 0;
+      this->contents_ = 0;
+    }
 
+  if (this->is_heap_created_)
+    {
       // If we have an allocator release the memory to the allocator
       // pool.
       if (this->allocator_)
@@ -163,6 +168,31 @@ TAO_Synch_Queued_Message::destroy (void)
       else // global release..
         {
           delete this;
+        }
+    }
+}
+
+void
+TAO_Synch_Queued_Message::copy_if_necessary (const ACE_Message_Block* chain)
+{
+  if (!this->own_contents_)
+    {
+      // Go through the message block chain looking for the message block
+      // that matches our "current" message block.
+      for (const ACE_Message_Block* mb = chain; mb != 0; mb = mb->cont ())
+        {
+          if (mb == this->current_block_)
+            {
+              // Once we have found the message block, we need to
+              // clone the current block so that if another thread comes
+              // in and calls reset() on the output stream (via another
+              // invocation on the transport), it doesn't cause the rest
+              // of our message to be released.
+              this->own_contents_ = true;
+              this->contents_ = this->current_block_->clone ();
+              this->current_block_ = this->contents_;
+              break;
+            }
         }
     }
 }

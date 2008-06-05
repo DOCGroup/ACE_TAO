@@ -204,4 +204,10 @@ TAO_Asynch_Queued_Message::is_expired (const ACE_Time_Value &now) const
   return false;
 }
 
+void
+TAO_Asynch_Queued_Message::copy_if_necessary (const ACE_Message_Block*)
+{
+  // It's never necessary for asynchronously queued messages
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

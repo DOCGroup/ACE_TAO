@@ -205,6 +205,13 @@ public:
    * @return true if the relative roundtrip timeout has expired.
    */
   virtual bool is_expired (const ACE_Time_Value &now) const;
+
+  /// Provide a hook for copying the underlying data
+  /**
+   * @param chain For use in determining origin of underlying data.
+   * This parameter must not be modified (through const_cast).
+   */
+  virtual void copy_if_necessary (const ACE_Message_Block* chain) = 0;
   //@}
 
 protected:

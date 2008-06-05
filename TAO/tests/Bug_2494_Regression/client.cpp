@@ -68,20 +68,20 @@ struct Worker : ACE_Task_Base
 
   int svc ()
   {
-    char* str = CORBA::string_alloc (200*2000 + 1);
-    if (!str) return 1;
+    CORBA::String_var str = CORBA::string_alloc (200*2000 + 1);
+    if (str.in () == 0) return 1;
     str[0] = CORBA::Char('\0');
     for (int i=0; i < 2000; ++i)
       {
-        ACE_OS::strcat(str, twohundredbytes);
+        ACE_OS::strcat(str.inout (), twohundredbytes);
       }
 
     while (1)
       {
         try
           {
-            const char *ret = srv_->test_method (str);
-            if (0 != ACE_OS::strcmp (str, ret)) return 1;
+            CORBA::String_var ret = srv_->test_method (str);
+            if (0 != ACE_OS::strcmp (str, ret.in ())) return 1;
           }
         catch (CORBA::Exception& ex)
           {
