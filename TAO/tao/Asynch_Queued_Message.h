@@ -76,6 +76,7 @@ public:
   virtual TAO_Queued_Message *clone (ACE_Allocator *alloc);
   virtual void destroy (void);
   virtual bool is_expired (const ACE_Time_Value &now) const;
+  virtual void copy_if_necessary (const ACE_Message_Block* chain);
   //@}
 
 protected:

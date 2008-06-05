@@ -935,12 +935,6 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max
                 byte_count, "drain_queue_helper");
     }
 
-  // ... now we need to update the queue, removing elements
-  // that have been sent, and updating the last element if it
-  // was only partially sent ...
-  this->cleanup_queue (byte_count);
-  iovcnt = 0;
-
   if (retval == 0)
     {
       if (TAO_debug_level > 4)
@@ -969,6 +963,12 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max
 
       return -1;
     }
+
+  // ... now we need to update the queue, removing elements
+  // that have been sent, and updating the last element if it
+  // was only partially sent ...
+  this->cleanup_queue (byte_count);
+  iovcnt = 0;
 
   // ... start over, how do we guarantee progress?  Because if
   // no bytes are sent send() can only return 0 or -1
@@ -1175,6 +1175,16 @@ TAO_Transport::cleanup_queue (size_t byte_count)
         {
           i->remove_from_list (this->head_, this->tail_);
           i->destroy ();
+        }
+      else if (byte_count == 0)
+        {
+          // If we have sent out a full message block, but we are not
+          // finished with this message, we need to do something with the
+          // message block chain held by our output stream.  If we don't,
+          // another thread can attempt to service this transport and end
+          // up resetting the output stream which will release the
+          // message that we haven't finished sending.
+          i->copy_if_necessary (this->out_stream ().begin ());
         }
     }
 }
