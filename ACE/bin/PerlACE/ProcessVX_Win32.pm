@@ -9,7 +9,7 @@ use File::Spec;
 use FileHandle;
 use Cwd;
 
-require Net::Telnet;
+eval { require Net::Telnet; };
 
 ###############################################################################
 

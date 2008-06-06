@@ -1,3 +1,34 @@
+Fri Jun  6 19:05:14 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+
+          Put an eval around the require of Net::Telnet so that these
+          modules can always be "used", but not necessarily employed.
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Use PerlACE::TargetProcess and PerlACE::HostProcess so that all
+          test scripts may use them.
+
+        * bin/PerlACE/TargetProcess.pm:
+        * bin/PerlACE/HostProcess.pm:
+
+          Added modules to simplify the writing of test scripts so that
+          VxWorks testing can be transparent to the script itself.  Having
+          two packages allows for role reversal (using the -reverse_roles
+          option to run_test.pl).  For example, if you have a test that
+          consists of a server and a client, the script will look like this:
+
+            $SV = new PerlACE::TargetProcess("server", "-o $iorfile");
+            $CL = new PerlACE::HostProcess("client", "-k file://$iorfile");
+
+          If testing for VxWorks, the server process will be run on the
+          target and the client process will be run on the host.  If the
+          -reverse_roles option is provided to run_test.pl, the server
+          process will run on the host and the client process will run on
+          the target.
+
 Fri Jun 06 13:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/ACE.cpp:
