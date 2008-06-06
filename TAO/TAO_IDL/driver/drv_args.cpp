@@ -122,11 +122,9 @@ void
 DRV_usage (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%s%s%s%s"),
-              idl_global->prog_name (),
-              ACE_TEXT (": usage: "),
-              idl_global->prog_name (),
-              ACE_TEXT (" [flag | file]*\n")));
+              ACE_TEXT ("%s: usage: %s [flag | file]*\n"),
+              ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+              ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ())));
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Legal flags:\n")));
@@ -274,7 +272,7 @@ DRV_parse_args (long ac, char **av)
                       LM_ERROR,
                       ACE_TEXT ("IDL: I don't understand")
                       ACE_TEXT (" the '%s' option\n"),
-                      av[i]
+                      ACE_TEXT_CHAR_TO_TCHAR (av[i])
                     ));
                     
                   idl_global->set_compile_flags (
@@ -311,7 +309,7 @@ DRV_parse_args (long ac, char **av)
                           LM_ERROR,
                           ACE_TEXT ("IDL: I don't understand")
                           ACE_TEXT (" the '%s' option\n"),
-                          av[i]
+                          ACE_TEXT_CHAR_TO_TCHAR (av[i])
                         ));
                         
                       idl_global->set_compile_flags (
@@ -359,7 +357,7 @@ DRV_parse_args (long ac, char **av)
                           LM_ERROR,
                           ACE_TEXT ("IDL: I don't understand")
                           ACE_TEXT (" the '%s' option\n"),
-                          av[i]
+                          ACE_TEXT_CHAR_TO_TCHAR (av[i])
                         ));
                         
                       idl_global->set_compile_flags (
@@ -418,7 +416,7 @@ DRV_parse_args (long ac, char **av)
                           LM_ERROR,
                           ACE_TEXT ("IDL: I don't understand")
                           ACE_TEXT (" the '%s' option\n"),
-                          av[i]
+                          ACE_TEXT_CHAR_TO_TCHAR (av[i])
                         ));
                         
                       idl_global->set_compile_flags (
@@ -461,7 +459,7 @@ DRV_parse_args (long ac, char **av)
                         LM_ERROR,
                         ACE_TEXT ("IDL: I dont' understand the use of")
                         ACE_TEXT (" %s with the '-Y' option\n"),
-                        s
+                        ACE_TEXT_CHAR_TO_TCHAR (s)
                       ));
                     
                     idl_global->set_compile_flags (
@@ -504,7 +502,7 @@ DRV_parse_args (long ac, char **av)
                   ACE_ERROR ((
                       LM_ERROR,
                       ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-                      av[i]
+                      ACE_TEXT_CHAR_TO_TCHAR (av[i])
                     ));
 
                   idl_global->set_compile_flags (
@@ -530,7 +528,7 @@ DRV_parse_args (long ac, char **av)
   // Make sure the output directory is valid.
   if (idl_global->temp_dir () == 0)
     {
-      char tmpdir[MAXPATHLEN + 1];
+      ACE_TCHAR tmpdir[MAXPATHLEN + 1];
 
       if (ACE::get_temp_dir (tmpdir, MAXPATHLEN) == -1)
         {
@@ -538,7 +536,7 @@ DRV_parse_args (long ac, char **av)
                       ACE_TEXT ("Temporary path too long, ")
                       ACE_TEXT ("defaulting to current directory\n")));
 
-          ACE_OS::strcpy (tmpdir, ".");
+          ACE_OS::strcpy (tmpdir, ACE_TEXT ("."));
         }
 
 #if defined(ACE_MVS)
@@ -551,13 +549,12 @@ DRV_parse_args (long ac, char **av)
         {
           ACE_ERROR ((
               LM_ERROR,
-              ACE_TEXT ("%s%s%s\n"),
-              ACE_TEXT ("Can't access temporary directory ("),
-              tmpdir,
-              ACE_TEXT ("), using current directory for temp files.")
+              ACE_TEXT ("Can't access temporary directory (%s),")
+              ACE_TEXT (" using current directory for temp files.\n"),
+              tmpdir
             ));
 
-          ACE_OS::strcpy (tmpdir, ".");
+          ACE_OS::strcpy (tmpdir, ACE_TEXT ("."));
 #if defined(ACE_MVS)
           if (ACE_OS::access (tmpdir, F_OK) == -1
               || ACE_OS::access (tmpdir, R_OK) == -1
@@ -567,16 +564,14 @@ DRV_parse_args (long ac, char **av)
 #endif /* ACE_MVS */
             {
               ACE_ERROR ((LM_ERROR,
-                          "%s%s\n",
-                          ACE_TEXT ("Error: Can't access ")
-                          ACE_TEXT ("temporary directory "),
+                          "Error: Can't access temporary directory %s\n",
                           tmpdir));
 
               throw Bailout ();
             }
         }
 
-      idl_global->temp_dir (tmpdir);
+      idl_global->temp_dir (ACE::strnew (ACE_TEXT_ALWAYS_CHAR (tmpdir)));
     }
 
   DRV_cpp_post_init ();

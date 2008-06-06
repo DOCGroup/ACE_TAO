@@ -1,4 +1,17 @@
-Fri Jun  6 08:46:11 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+Fri Jun 06 14:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/fe/fe_init.cpp
+        * TAO_IDL/be/be_global.cpp
+        * TAO_IDL/be/be_interface.cpp
+        * TAO_IDL/be/be_sunsoft.cpp
+        * TAO_IDL/be/be_visitor_structure/serializer_op_ch.cpp
+        * TAO_IDL/driver/drv_args.cpp
+        * TAO_IDL/driver/drv_preproc.cpp
+
+          Wide character build fixes mainly to allow correct error
+          message display.
+
+Fri Jun  6 13:35:50 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
 
