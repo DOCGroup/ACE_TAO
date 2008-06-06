@@ -1,0 +1,38 @@
+Fri Jun  6 00:11:05 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * ace/Log_Msg.h:
+        * ace/Stack_Trace.h:
+        
+          Updated comments.
+          
+        * ace/config-macosx-leopard.h:
+
+          Added ACE_HAS_EXECINFO_H define.
+
+Thu Jun  5 20:32:00 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * ace/Stack_Trace.h:
+        * ace/Stack_Trace.cpp:
+        * tests/Stack_Trace_Test.cpp:
+
+          Added new class that, on supported platforms, will take a
+          snapshot of the current stack when instantiated.
+
+        * ace/Log_Msg.cpp (log):
+
+          Added new conversion character, the question mark, which gets
+          replaced by a stack trace on supported platforms.
+
+        * ace/ace.mpc:
+
+          Added Stack_Trace in as source.
+
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+
+          Added Stack_Trace_Test in.
+
+        * NEWS:
+
+          Add an entry for stack trace support.
+

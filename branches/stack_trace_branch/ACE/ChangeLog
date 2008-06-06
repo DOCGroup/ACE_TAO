@@ -1,30 +1,3 @@
-Thu Jun  5 20:32:00 UTC 2008  Yan Dai  <dai_y@ociweb.com>
-
-        * ace/Stack_Trace.h:
-        * ace/Stack_Trace.cpp:
-        * tests/Stack_Trace_Test.cpp:
-
-          Added new class that, on supported platforms, will take a
-          snapshot of the current stack when instantiated.
-
-        * ace/Log_Msg.cpp (log):
-
-          Added new conversion character, the question mark, which gets
-          replaced by a stack trace on supported platforms.
-
-        * ace/ace.mpc:
-
-          Added Stack_Trace in as source.
-
-        * tests/tests.mpc:
-        * tests/run_test.lst:
-
-          Added Stack_Trace_Test in.
-          
-        * NEWS:
-
-          Add an entry for stack trace support.
-
 Wed Jun  4 22:45:20  2008  Steve Huston  <shuston@riverace.com>
 
         * ace/config-pharlap.h: Added ACE_LACKS_FILELLOCKS. My changes from
