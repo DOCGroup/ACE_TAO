@@ -1,3 +1,10 @@
+Fri Jun 06 11:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/ACE.cpp:
+
+          Added #include ace/OS_NS_fcntl.h to previous commit of
+          Thu Jun  5 23:46:14 UTC 2008  J.T. Conklin.
+
 Fri Jun  6 08:31:06 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * ace/config-hpux-11.00.h:
