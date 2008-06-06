@@ -1,10 +1,26 @@
+Fri Jun  6 16:50:48 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * ACE/ace/Stack_Trace.h:
+        
+          Updated comments.
+          
+        * ACE/configure.ac:
+        
+          Added checks for execinfo.h header.
+
+Fri Jun  6 16:20:31 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * ACE/configure.ac:
+
+          Added checks for execinfo.h header.
+
 Fri Jun  6 00:11:05 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * ace/Log_Msg.h:
         * ace/Stack_Trace.h:
-        
+
           Updated comments.
-          
+
         * ace/config-macosx-leopard.h:
 
           Added ACE_HAS_EXECINFO_H define.
