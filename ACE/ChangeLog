@@ -1,3 +1,19 @@
+Fri Jun  6 08:31:06 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * ace/config-hpux-11.00.h:
+          According to Steve Huston HP-UX does provide strtoull and
+          wcstoull but they can be used not as straight forward as
+          in other compilers. I have no access to HP-UX so I added
+          corresponding TODO comment about ACE_LACKS_STRTOULL and
+          ACE_LACKS_WCSTOULL that I added previously.
+
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.4.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.3.h:
+          VxWorks doesn't provide wcstoull as well.
+          Added ACE_LACKS_WCSTOULL.
+
 Thu Jun  5 23:46:14 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/ACE.cpp:

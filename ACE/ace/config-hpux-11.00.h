@@ -339,7 +339,8 @@
 #define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_SYS_SYSCTL_H
 
-// lacks strtoull and wcstoull
+// @@ TODO: It looks like HP-UX provides strtoull and wcstoull
+//          but some more work is needed to plug them in correctly.
 #define ACE_LACKS_STRTOULL
 #define ACE_LACKS_WCSTOULL
 
