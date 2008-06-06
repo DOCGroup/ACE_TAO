@@ -70,10 +70,10 @@ struct Worker : ACE_Task_Base
   {
     CORBA::String_var str = CORBA::string_alloc (200*2000 + 1);
     if (str.in () == 0) return 1;
-    str[0] = CORBA::Char('\0');
+    str.inout ()[0] = CORBA::Char ('\0');
     for (int i=0; i < 2000; ++i)
       {
-        ACE_OS::strcat(str.inout (), twohundredbytes);
+        ACE_OS::strcat (str.inout (), twohundredbytes);
       }
 
     while (1)
