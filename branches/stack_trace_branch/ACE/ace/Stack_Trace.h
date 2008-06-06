@@ -48,7 +48,7 @@
  *
  *  These usage examples were shown in $ACE_ROOT/tests/Stack_Trace_Test.cpp.
  *
- *  @note The stack trace functionality was currently support on platforms:
+ *  @note The stack trace functionality was currently supported on platforms:
  *        - Any platform using glibc as its runtime library, or where ACE_HAS_EXECINFO_H is defined 
  *          (this covers Linux and Mac)
  *        - VxWorks, both kernel and RTP
@@ -58,7 +58,8 @@
  *  @note Since stack trace buffer size has limitation(@c ACE_STACK_TRACE_SYMBUFSIZ), you will not 
  *        get a complete stack trace if @c ACE_STACK_TRACE_SYMBUFSIZ value is less than actual stack 
  *        trace data length. To get a complete stack trace, you need set @c ACE_STACK_TRACE_SYMBUFSIZ 
- *        with a larger value in your @c config.h file and rebuild ACE.
+ *        with a larger value that is enough for the stack trace data in your @c config.h file 
+ *        and rebuild ACE.
  *
  *  @note Using ACE logging mechanism (%?) to log the stack trace also has ACE_MAXLOGMSGLEN size limitation. 
  *        To get a complete stack trace, you could use different output method. Following is an example.
