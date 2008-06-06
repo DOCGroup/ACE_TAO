@@ -87,7 +87,7 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
 
           IDL_GlobalData::DCPS_Data_Type_Info_Iter begin = iter;
 
-          for (ACE_CString *kp = 0;
+          for (ACE_TString *kp = 0;
                iter.next (kp) != 0;
                )
             {

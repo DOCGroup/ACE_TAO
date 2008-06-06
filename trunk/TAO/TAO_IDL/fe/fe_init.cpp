@@ -694,7 +694,7 @@ FE_store_env_include_paths (void)
 {
   // If this method have to change then don't forget to update
   // util/utl_global.cpp:IDL_GlobalData::validate_orb_include (...).
-  ACE_Env_Value<char*> incl_paths ("INCLUDE",
+  ACE_Env_Value<char*> incl_paths (ACE_TEXT ("INCLUDE"),
                                    (char *) 0);
   const char *aggr_str = incl_paths;
 
@@ -724,7 +724,7 @@ FE_get_cpp_loc_from_env (void)
   const char *cpp_loc = 0;
 
   // See if TAO_IDL_PREPROCESSOR is defined.
-  ACE_Env_Value<char*> preprocessor ("TAO_IDL_PREPROCESSOR",
+  ACE_Env_Value<char*> preprocessor (ACE_TEXT ("TAO_IDL_PREPROCESSOR"),
                                      (char *) 0);
 
   // Set cpp_loc to the built in location, unless it has been overriden by
@@ -736,7 +736,7 @@ FE_get_cpp_loc_from_env (void)
   else
     {
       // Check for the deprecated CPP_LOCATION environment variable
-      ACE_Env_Value<char*> cpp_path ("CPP_LOCATION",
+      ACE_Env_Value<char*> cpp_path (ACE_TEXT ("CPP_LOCATION"),
                                      (char *) 0);
 
       if (cpp_path != 0)
@@ -764,7 +764,7 @@ FE_get_cpp_args_from_env (void)
   const char *cpp_args = 0;
 
   // Added some customizable preprocessor options
-  ACE_Env_Value<char*> args1 ("TAO_IDL_PREPROCESSOR_ARGS",
+  ACE_Env_Value<char*> args1 (ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS"),
                               (char *) 0);
 
   if (args1 != 0)
