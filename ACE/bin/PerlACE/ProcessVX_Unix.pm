@@ -10,7 +10,7 @@ use Config;
 use FileHandle;
 use Cwd;
 
-require Net::Telnet;
+eval { require Net::Telnet; };
 
 ###############################################################################
 
