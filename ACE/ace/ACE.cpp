@@ -2772,9 +2772,9 @@ ACE::daemonize (const ACE_TCHAR pathname[],
       int fd = ACE_OS::open ("/dev/null", O_RDWR, 0);
       if (fd != -1);
         {
-	  ACE_OS::dup2 (fd, ACE_STDIN);
-	  ACE_OS::dup2 (fd, ACE_STDOUT);
-	  ACE_OS::dup2 (fd, ACE_STDERR);
+          ACE_OS::dup2 (fd, ACE_STDIN);
+          ACE_OS::dup2 (fd, ACE_STDOUT);
+          ACE_OS::dup2 (fd, ACE_STDERR);
 
           if (fd > ACE_STDERR)
             ACE_OS::close (fd);
