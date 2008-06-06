@@ -312,11 +312,9 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   // Get the group_id.
   ACE_CString str_group_id (string, pos - string);
 
-  // Convert the domain_id into numerical form.
-  // @@ group_id is actually 64 bits, but strtoul only can parse 32 bits.
-  // @@ Need a 64 bit strtoul...
+  // Convert the group_id into numerical form.
   PortableGroup::ObjectGroupId group_id =
-    ACE_OS::strtoul (str_group_id.c_str (), 0, 10);
+    ACE_OS::strtoull (str_group_id.c_str (), 0, 10);
 
   this->has_ref_version_ = false;
   PortableGroup::ObjectGroupRefVersion ref_version = 0;
