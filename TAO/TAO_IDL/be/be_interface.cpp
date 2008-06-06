@@ -1722,7 +1722,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                              "fop=dfw");
   //FUZZ: enable check_for_lack_ACE_OS
 #else
-  ACE_HANDLE input = ACE::open_temp_file (tao_cg->gperf_input_filename (),
+  ACE_HANDLE input = ACE::open_temp_file (ACE_TEXT_CHAR_TO_TCHAR (tao_cg->gperf_input_filename ()),
                                           O_RDONLY);
 #endif
 
