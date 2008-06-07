@@ -1996,7 +1996,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     // skip the frame that we're currently in
                     ACE_Stack_Trace t(2); 
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, t.c_str ());
