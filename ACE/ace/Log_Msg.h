@@ -524,6 +524,7 @@ public:
    *  - 'Z': print an ACE_OS::WChar character string
    *  - ':': print a time_t value as an integral number
    *  - '%': print out a single percent sign, '%'
+   *  - '?': print out stack trace (see Stack_Trace.h header comments)
    */
   ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
 

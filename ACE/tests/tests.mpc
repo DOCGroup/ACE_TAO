@@ -128,6 +128,13 @@ project(Arg Shifter Test) : acetest {
   }
 }
 
+project(Stack Trace Test) : acetest {
+  exename = Stack_Trace_Test
+  Source_Files {
+    Stack_Trace_Test.cpp
+  }
+}
+
 project(Array Map Test) : acetest {
   exename = Array_Map_Test
   Source_Files {
