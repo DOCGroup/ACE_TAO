@@ -151,6 +151,7 @@ SOCK_Send_Recv_Test: !NO_NETWORK
 SOCK_Test: !NO_NETWORK
 SPIPE_Test: !nsk !ACE_FOR_TAO
 SString_Test: !ACE_FOR_TAO
+Stack_Trace_Test: 
 SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
 Semaphore_Test: !ACE_FOR_TAO
 Service_Config_Test: !STATIC
