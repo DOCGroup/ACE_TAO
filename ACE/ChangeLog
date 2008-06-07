@@ -1,3 +1,51 @@
+Sat Jun  7 03:28:01 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        Merged in stack_trace_branch that added stack trace support.
+        
+        * NEWS:
+
+          Add an entry for stack trace support.
+
+        * ace/Log_Msg.h:
+        
+          Added comments for "%?".
+        
+        * ace/Log_Msg.cpp:
+        
+          Added new conversion character, the question mark, which gets
+          replaced by a stack trace on supported platforms.
+
+        * ace/Stack_Trace.h:
+        * ace/Stack_Trace.cpp:
+        
+          Added new class that, on supported platforms, will take a
+          snapshot of the current stack when instantiated.
+  
+        * ace/ace.mpc:
+        
+          Added Stack_Trace in as source.
+
+        * ace/config-macosx-leopard.h:
+
+          Added ACE_HAS_EXECINFO_H define.
+
+        * ace/Makefile.am:
+
+          Added Stack_Trace.h and Stack_Trace.cpp.
+          
+        * configure.ac:
+        
+          Added checks for execinfo.h header.
+
+        * tests/Stack_Trace_Test.cpp:
+        
+          New test.
+          
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Added Stack_Trace_Test in.
+
 Fri Jun  6 19:05:14 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/PerlACE/ProcessVX_Unix.pm:

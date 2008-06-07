@@ -270,6 +270,7 @@ libACE_la_SOURCES = \
   SPIPE_Connector.cpp \
   SPIPE_Stream.cpp \
   SString.cpp \
+  Stack_Trace.cpp \
   SUN_Proactor.cpp \
   SV_Message.cpp \
   SV_Message_Queue.cpp \
@@ -928,6 +929,7 @@ nobase_include_HEADERS += \
   SString.h \
   SString.inl \
   SStringfwd.h \
+  Stack_Trace.h \
   SUN_Proactor.h \
   SV_Message.h \
   SV_Message.inl \

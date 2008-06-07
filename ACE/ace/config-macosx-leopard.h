@@ -51,6 +51,9 @@
 
 #define ACE_LACKS_STROPTS_H
 
+// Platform provides <execinfo.h> header.
+#define ACE_HAS_EXECINFO_H               
+
 // Wcharness....
 #define ACE_HAS_WCHAR
 #define ACE_SIZEOF_WCHAR 4
