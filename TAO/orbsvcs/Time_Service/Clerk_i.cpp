@@ -363,11 +363,11 @@ Clerk_i::register_clerk (void)
       try
         {
           CosNaming::NamingContext_var clerk_context =
-	    this->naming_client_->bind_new_context(clerk_context_name);
-	}
+            this->naming_client_->bind_new_context(clerk_context_name);
+        }
       catch (const CosNaming::NamingContext::AlreadyBound& )
         {
-	  // OK, naming context already exists.
+          // OK, naming context already exists.
         }
 
       char host_name[MAXHOSTNAMELEN];

@@ -128,12 +128,12 @@ Event_Logging_Service::init (int argc, char *argv[])
     {
       FILE* iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
       if (iorf == 0)
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "Cannot open output file for writing IOR: %s",
-			     this->ior_file_name_),
-			    -1);
-	}
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             this->ior_file_name_),
+                            -1);
+        }
       ACE_OS::fprintf (iorf, "%s\n", ior.in ());
       ACE_OS::fclose (iorf);
     }
