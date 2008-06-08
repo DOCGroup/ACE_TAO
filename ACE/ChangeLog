@@ -1,3 +1,12 @@
+Sun Jun  8 18:09:22 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/platform.m4:
+
+          Add ACE_CHECK_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE feature
+          check, which sets the ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
+          feature test macro on Linux and OpenBSD systems (as is done in
+          the canned config-*.h files).  Fixes Bugzilla #3141.
+
 Sat Jun  7 13:56:56 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Log_Msg.cpp:
