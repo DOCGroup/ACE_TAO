@@ -152,12 +152,12 @@ Server_i::register_server (void)
       try
         {
           CosNaming::NamingContext_var server_context =
-	    this->naming_client_->bind_new_context(server_context_name);
+            this->naming_client_->bind_new_context(server_context_name);
         }
       catch (const CosNaming::NamingContext::AlreadyBound& )
         {
-	  // OK, naming context already exists.
-	}
+          // OK, naming context already exists.
+        }
 
       char host_name[MAXHOSTNAMELEN];
       char server_mc_name[MAXHOSTNAMELEN];

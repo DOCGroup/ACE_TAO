@@ -23,7 +23,7 @@ public:
 
   // = The skeleton methods
   virtual Test::Timestamp test_method (Test::Timestamp send_time,
-		                       Test::number cl_number);
+                                       Test::number cl_number);
 
   virtual void shutdown (void);
 
