@@ -1,3 +1,20 @@
+Sun Jun  8 21:09:07 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp:
+        * orbsvcs/examples/RtEC/Simple/Service.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.inl:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/Roundtrip.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Roundtrip.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
+          
+          Untabify.
+
 Fri Jun 06 14:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/fe/fe_init.cpp

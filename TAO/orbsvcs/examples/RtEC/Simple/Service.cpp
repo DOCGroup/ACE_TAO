@@ -25,7 +25,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-	  CORBA::Object_var object =
+      CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in ());
@@ -33,7 +33,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         poa->the_POAManager ();
       poa_manager->activate ();
 
-	  // Obtain the naming service
+      // Obtain the naming service
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
 
@@ -45,7 +45,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-	  TAO_EC_Event_Channel_Attributes attributes (poa.in (),
+      TAO_EC_Event_Channel_Attributes attributes (poa.in (),
                                                   poa.in ());
 
       TAO_EC_Event_Channel ec_impl (attributes);

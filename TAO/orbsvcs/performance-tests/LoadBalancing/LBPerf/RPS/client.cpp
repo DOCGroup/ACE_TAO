@@ -135,13 +135,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-	  /*
+          /*
           if (rate)
-          {
-            //(void) ACE_OS::nanosleep (&ts, 0);
-	    //prime_number = ACE::is_prime (699999, 2, 349999);
-	  }
-	  */
+            {
+              //(void) ACE_OS::nanosleep (&ts, 0);
+              //prime_number = ACE::is_prime (699999, 2, 349999);
+            }
+          */
 
           (void) roundtrip->test_method (start, number);
 

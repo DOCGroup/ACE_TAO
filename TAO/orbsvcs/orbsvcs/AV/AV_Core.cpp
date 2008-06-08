@@ -261,16 +261,16 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                         // For IN flows on the A side we should remove the handlers from the reactor.
                         ACE_Event_Handler *event_handler = entry->handler ()->event_handler ();
 
-			if (event_handler->reactor () != 0)
-			  {
-			    result = event_handler->reactor ()->remove_handler (event_handler,
-										ACE_Event_Handler::READ_MASK);
+                        if (event_handler->reactor () != 0)
+                          {
+                            result = event_handler->reactor ()->remove_handler (event_handler,
+                                                                                ACE_Event_Handler::READ_MASK);
 
-			    if (result < 0)
-			      if (TAO_debug_level > 0)
-				ACE_DEBUG ((LM_DEBUG,
-					    "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
-			  }
+                          if (result < 0)
+                          if (TAO_debug_level > 0)
+                            ACE_DEBUG ((LM_DEBUG,
+                                        "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
+                          }
 #endif //ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS
                       }
                   }
@@ -311,27 +311,29 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                   {
                   case TAO_FlowSpec_Entry::TAO_AV_DIR_OUT:
                     {
-		      if (entry->handler () != 0)
-			{
-			  // @@Naga: This wont be called in the case of Full Profile.
-			  // For IN flows on the A side we should remove the handlers from the reactor.
-			  ACE_Event_Handler *event_handler = entry->handler ()->event_handler ();
-			  result = event_handler->reactor ()->remove_handler (event_handler,
-									      ACE_Event_Handler::READ_MASK);
-			  if (result < 0)
-			    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
-			}
+                      if (entry->handler () != 0)
+                        {
+                          // @@Naga: This wont be called in the case of Full Profile.
+                          // For IN flows on the A side we should remove the handlers from the reactor.
+                          ACE_Event_Handler *event_handler = entry->handler ()->event_handler ();
+                          result = event_handler->reactor ()->remove_handler (event_handler,
+                                                                              ACE_Event_Handler::READ_MASK);
+                          if (result < 0)
+                          if (TAO_debug_level > 0)
+                            ACE_DEBUG ((LM_DEBUG,
+                                        "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
+                        }
                     }
                   default:
                     break;
                   }
-		// Now if the address_set has been changed due to the addition of a control entry we should
-		// add that to the flow_spec_set also.
-		if (flow_spec_set.find (entry) < 0)
-		  {
-		    // entry doesn't exist so add it.
-		    flow_spec_set.insert (entry);
-		  }
+                // Now if the address_set has been changed due to the addition of a control entry we should
+                // add that to the flow_spec_set also.
+                if (flow_spec_set.find (entry) < 0)
+                {
+                  // entry doesn't exist so add it.
+                  flow_spec_set.insert (entry);
+                }
               }
           }
         if (flow_set.size () > 0)
@@ -340,16 +342,16 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
             // we need to set it as the forwarding address.  According to
             // Yamuna Krishnamurthy, this "happens when no address is
             // specified for the A endpoint."
-	    TAO_AV_FlowSpecSetItor end = flow_set.end ();
-	    TAO_AV_FlowSpecSetItor start = flow_set.begin ();
+            TAO_AV_FlowSpecSetItor end = flow_set.end ();
+            TAO_AV_FlowSpecSetItor start = flow_set.begin ();
             for (; start != end; ++start)
               {
-		TAO_FlowSpec_Entry *entry = *start;
-		if (entry->get_peer_addr () != 0)
-		  {
-		    entry->address (entry->get_peer_addr (), false);
-		  }
-	      }
+                TAO_FlowSpec_Entry *entry = *start;
+                if (entry->get_peer_addr () != 0)
+                  {
+                    entry->address (entry->get_peer_addr (), false);
+                  }
+              }
 
             result = this->acceptor_registry_->open (endpoint,
                                                      this,
@@ -357,7 +359,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
             if (result == -1)
               ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Core::init_Forward_flows: Acceptor_registry open failed\n"),-1);
             end = address_flow_set.end ();
-	    start = address_flow_set.begin ();
+            start = address_flow_set.begin ();
             for (; start != end; ++start)
               {
                 TAO_FlowSpec_Entry *entry = (*start);
@@ -365,26 +367,28 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                   {
                   case TAO_FlowSpec_Entry::TAO_AV_DIR_OUT:
                     {
-		      if (entry->handler () != 0)
-			{
-			  // For IN flows on the A side we should remove the handlers from the reactor.
-			  ACE_Event_Handler *event_handler = entry->handler ()->event_handler ();
-			  result = event_handler->reactor ()->remove_handler (event_handler,
-									      ACE_Event_Handler::READ_MASK);
-			  if (result < 0)
-			    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
-			}
+                      if (entry->handler () != 0)
+                        {
+                          // For IN flows on the A side we should remove the handlers from the reactor.
+                          ACE_Event_Handler *event_handler = entry->handler ()->event_handler ();
+                          result = event_handler->reactor ()->remove_handler (event_handler,
+                                                                              ACE_Event_Handler::READ_MASK);
+                          if (result < 0)
+                          if (TAO_debug_level > 0)
+                            ACE_DEBUG ((LM_DEBUG,
+                                        "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
+                        }
                     }
                   default:
                     break;
                   }
-		// Now if the address_set has been changed due to the addition of a control entry we should
-		// add that to the flow_spec_set also.
-		if (flow_spec_set.find (entry) < 0)
-		  {
-		    // entry doesn't exist so add it.
-		    flow_spec_set.insert (entry);
-		  }
+                // Now if the address_set has been changed due to the addition of a control entry we should
+                // add that to the flow_spec_set also.
+                if (flow_spec_set.find (entry) < 0)
+                {
+                  // entry doesn't exist so add it.
+                  flow_spec_set.insert (entry);
+                }
               }
           }
 
@@ -407,13 +411,13 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                                                   (*connect)->carrier_protocol_str (),
                                                   local_addr,
                                                   local_control_addr);
-		/*
-		  ACE_Addr *addr;
-		  if ((addr = (*connect)->get_peer_addr ()) != 0)
-		  {
-		  entry.set_peer_addr (addr);
-		  };
-		*/
+                /*
+                ACE_Addr *addr;
+                if ((addr = (*connect)->get_peer_addr ()) != 0)
+                  {
+                    entry.set_peer_addr (addr);
+                  };
+                */
                 int len = new_flowspec.length ();
                 if (i == len)
                   new_flowspec.length (len+1);
@@ -791,8 +795,8 @@ TAO_AV_Core::load_default_transport_factories (void)
                     "SCTP SEQ Factory"));
 
       ACE_NEW_RETURN (sctp_seq_factory,
-		      TAO_AV_SCTP_SEQ_Factory,
-		      -1);
+                      TAO_AV_SCTP_SEQ_Factory,
+                      -1);
     }
   else sctp_seq_factory->ref_count = 1;
 

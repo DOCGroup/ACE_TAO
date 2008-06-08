@@ -62,14 +62,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
          orb->object_to_string (typed_consumer.in ());
 
       const char* ior_file_name = "Consumer.ior";
-      FILE *output_file=
-	ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name),
-           ACE_TEXT("w"));
+      FILE *output_file= ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name),
+                                        ACE_TEXT("w"));
       if (output_file == 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Cannot open output file for writing IOR: %s",
-			   ior_file_name),
-			  1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_file_name),
+                          1);
+
       ACE_OS::fprintf (output_file, "%s", str.in ());
       ACE_OS::fclose (output_file);
 
@@ -92,4 +92,3 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   return 0;
 }
-

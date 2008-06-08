@@ -23,7 +23,8 @@ TAO_AV_QoS::set (AVStreams::streamQoS &stream_qos)
       int result = this->qos_map_.bind (qos_key,this->stream_qos_[j]);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-			   "(%N,%l) TAO_AV_QoS::set qos_map::bind failed\n"),-1);
+                           "(%N,%l) TAO_AV_QoS::set qos_map::bind failed\n"),
+                          -1);
     }
   return 0;
 }
@@ -32,10 +33,9 @@ TAO_AV_QoS::set (AVStreams::streamQoS &stream_qos)
 ACE_INLINE
 int
 TAO_AV_QoS::get_flow_qos (const char *flowname,
-			  AVStreams::QoS &flow_qos)
+                          AVStreams::QoS &flow_qos)
 {
-  int result = this->qos_map_.find (flowname, 
-				    flow_qos);
+  int result = this->qos_map_.find (flowname, flow_qos);
 
   if (result < 0)
     {
@@ -48,9 +48,9 @@ TAO_AV_QoS::get_flow_qos (const char *flowname,
         while( iter != qos_map_.end() )
         {
           ACE_DEBUG((LM_DEBUG, "  %s\n", (*iter).ext_id_.c_str() ));
-          ++iter; 
+          ++iter;
         }
-      
+
         ACE_DEBUG ((LM_DEBUG,
                     "(%N,%l) TAO_AV_QOS::get_flow_qos qos_map::find failed for %s\n", flowname));
       }

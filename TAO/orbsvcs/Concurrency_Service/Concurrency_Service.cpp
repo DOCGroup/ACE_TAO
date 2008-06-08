@@ -118,10 +118,10 @@ Concurrency_Service::init (int argc,
       FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
       if (iorf == 0)
         {
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "Cannot open output file for writing IOR: %s",
-			     ior_file_name_),
-			    -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_file_name_),
+                            -1);
         }
 
       ACE_OS::fprintf (iorf, "%s\n", str.in ());
@@ -133,11 +133,11 @@ Concurrency_Service::init (int argc,
       FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_TEXT("w"));
       if (pidf != 0)
         {
-	  ACE_OS::fprintf (pidf,
+          ACE_OS::fprintf (pidf,
                            "%ld\n",
                            static_cast<long> (ACE_OS::getpid ()));
           ACE_OS::fclose (pidf);
-	}
+        }
     }
 
   if (this->use_naming_service_)
