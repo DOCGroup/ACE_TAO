@@ -318,6 +318,7 @@ ACE_FUNC_IOCTL_ARGTYPES
 ACE_CHECK_HAS_NONCONST_FD_ISSET
 ACE_CHECK_FORMAT_SPECIFIERS
 ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING
+ACE_CHECK_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
 
 dnl End ACE_SET_PLATFORM_MACROS
 ])
@@ -465,7 +466,7 @@ fi
 ])
 
 
-# ACE_HAS_NONCONST_FD_ISSET
+# ACE_CHECK_HAS_NONCONST_FD_ISSET
 #
 # Checks if system has a nonconst FD_ISSET macro.
 #
@@ -483,4 +484,27 @@ AC_DEFUN([ACE_CHECK_HAS_NONCONST_FD_ISSET],
         ],[],[AC_DEFINE([ACE_HAS_NONCONST_FD_ISSET], 1,
                 [Define to 1 if system has nonconst FD_ISSET() macro.])]
     )
+])
+
+# ACE_CHECK_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
+#
+# Checks whether the dlsym() call segfaults when passed an invalid handle.
+#
+# FIXME: Is it possible to write a portable feature test, or is checking
+#        the the target OS the best we can do?
+#
+AC_DEFUN([ACE_CHECK_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE],
+[AC_CACHE_CHECK([whether dlsym() segfaults when passed an invalid handle],
+  [ace_cv_has_dlsym_segfault_on_invalid_handle],
+  [case "$host_os" in
+  linux* | openbsd*)
+    ace_cv_has_dlsym_segfault_on_invalid_handle=yes ;;
+  *)
+    ace_cv_has_dlsym_segfault_on_invalid_handle=no;;
+  esac])
+
+if test $ace_cv_has_dlsym_segfault_on_invalid_handle = yes; then
+  AC_DEFINE([ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE], 1,
+[Define to 1 if the dlsym() call segfaults when passed an invalid handle.])
+fi
 ])
