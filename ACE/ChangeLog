@@ -1,3 +1,11 @@
+Mon Jun  9 21:38:04 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * ace/Stack_Trace.cpp:
+
+          Passed string literals instead of ACE_TEXT string to GetProcAddress as it
+          accepts LPCSTR which is defined as char*. This should fix wchar (Win32) 
+          build errors.
+
 Mon Jun  9 20:52:52  2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_IO.h: Doxygen improvements.
