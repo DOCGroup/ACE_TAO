@@ -160,7 +160,7 @@ class TAO_Export TAO_ORB_Core
 {
   friend class TAO_ORB_Core_Auto_Ptr;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
-                                         char *argv[],
+                                         ACE_TCHAR *argv[],
                                          const char *);
 public:
 

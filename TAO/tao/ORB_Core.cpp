@@ -3404,7 +3404,9 @@ TAO_ORB_Core_instance (void)
           try
             {
               int argc = 0;
-              CORBA::ORB_var orb = CORBA::ORB_init (argc, 0);
+              ACE_TCHAR **const argv= 0;
+              CORBA::ORB_var orb =
+                CORBA::ORB_init (argc, argv);
             }
           catch (const ::CORBA::Exception&)
             {
