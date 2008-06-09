@@ -1,3 +1,14 @@
+Mon Jun 09 11:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Oneway_Send_Timeouts\test_i.cpp:
+        * tests/Timed_Buffered_Oneways\test_i.cpp:
+
+          unambiguated call to time_value msec(long)
+          caused by new uint64 non-const setter provided by:
+          (ACE) Thu Jun  5 14:52:43 UTC 2008  Steve Huston
+          (Not sure why HPUX is saying CORBA::Long is ambiguous
+          between long and unsigned long long &.)
+
 Sun Jun  8 21:09:07 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
