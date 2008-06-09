@@ -481,13 +481,13 @@ static bool load_dbghelp_library_if_needed (dbghelp_functions *pDbg)
   //@TODO: See codeproject's StackWalker.cpp for the list of locations to
   //search so we get the "enhanced" dbghelp if the user has it but it is not
   //first on the path.
-  if (!(pDbg->hMod = LoadLibrary (TEXT ("Dbghelp"))))
+  if (!(pDbg->hMod = LoadLibrary (ACE_TEXT ("Dbghelp"))))
     return false;
 
   //@TODO: Cache this so we don't have to re-link every time.  When to unload?
 
 #  define LINK(TYPE, NAME) (pDbg->NAME = \
-    (TYPE) GetProcAddress (pDbg->hMod, TEXT (#NAME)))
+    (TYPE) GetProcAddress (pDbg->hMod, ACE_TEXT (#NAME)))
 #  define LINK_T(NAME) LINK (dbghelp_functions::NAME##_t, NAME)
   return LINK (PGET_MODULE_BASE_ROUTINE64, SymGetModuleBase64)
     && LINK (PFUNCTION_TABLE_ACCESS_ROUTINE64, SymFunctionTableAccess64)
@@ -609,9 +609,9 @@ cs_operate(int (*func)(struct frame_state const *, void *), void *usrarg,
 
   fs.pSym = (PSYMBOL_INFO) GlobalAlloc (GMEM_FIXED,
                                         sizeof (SYMBOL_INFO) +
-                                        sizeof (TCHAR) * (SYMSIZE - 1));
+                                        sizeof (ACE_TCHAR) * (SYMSIZE - 1));
   fs.pSym->SizeOfStruct = sizeof (SYMBOL_INFO);
-  fs.pSym->MaxNameLen = SYMSIZE * sizeof (TCHAR);
+  fs.pSym->MaxNameLen = SYMSIZE * sizeof (ACE_TCHAR);
   dbg.SymSetOptions (SYMOPT_DEFERRED_LOADS | SYMOPT_LOAD_LINES
                      | SYMOPT_FAIL_CRITICAL_ERRORS | dbg.SymGetOptions ());
   dbg.SymInitialize (GetCurrentProcess (), 0, true);

@@ -102,6 +102,6 @@ private:
   void generate_trace (ssize_t starting_frame_offset, size_t num_frames);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_STACK_TRACE_H */
 
