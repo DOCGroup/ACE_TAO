@@ -61,7 +61,7 @@ BOOL CNamingViewerApp::InitInstance()
 #endif
 */
   // Parse command line arguments so we can initialize ORB with them
-  ACE_ARGV Argv(ACE_TEXT_CHAR_TO_TCHAR(m_lpCmdLine));
+  ACE_ARGV Argv (m_lpCmdLine);
 
   ACE::init();
   {

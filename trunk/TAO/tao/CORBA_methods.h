@@ -55,6 +55,15 @@ namespace CORBA
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       char * argv[],
                                       const char * orb_name = 0);
+#if defined (ACE_USES_WCHAR)
+  extern TAO_Export ORB_ptr ORB_init (int & argc,
+                                      wchar_t * argv[],
+                                      const char * orb_name = 0);
+
+  extern TAO_Export ORB_ptr ORB_init (int & argc,
+                                      wchar_t * argv[],
+                                      const wchar_t * orb_name);
+#endif
 
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);
