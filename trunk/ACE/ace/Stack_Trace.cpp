@@ -487,7 +487,7 @@ static bool load_dbghelp_library_if_needed (dbghelp_functions *pDbg)
   //@TODO: Cache this so we don't have to re-link every time.  When to unload?
 
 #  define LINK(TYPE, NAME) (pDbg->NAME = \
-    (TYPE) GetProcAddress (pDbg->hMod, ACE_TEXT (#NAME)))
+    (TYPE) GetProcAddress (pDbg->hMod, #NAME))
 #  define LINK_T(NAME) LINK (dbghelp_functions::NAME##_t, NAME)
   return LINK (PGET_MODULE_BASE_ROUTINE64, SymGetModuleBase64)
     && LINK (PFUNCTION_TABLE_ACCESS_ROUTINE64, SymFunctionTableAccess64)
