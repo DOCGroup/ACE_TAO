@@ -9,19 +9,13 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorfile = "test.ior";
 
 unlink $iorfile;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
-    $T = new PerlACE::ProcessVX ("OctetSeq", "-n 32 -l 8192 -h 8192 -s 1 -q");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");
-    $T = new PerlACE::Process ("OctetSeq", "-n 32 -l 8192 -h 8192 -s 1 -q");
-}
-$CL = new PerlACE::Process ("client", "-i 5000 -k file://$iorfile");
+$SV = new PerlACE::TargetProcess ("server", "-o $iorfile");
+$T = new PerlACE::TargetProcess ("OctetSeq", "-n 32 -l 8192 -h 8192 -s 1 -q");
+$CL = new PerlACE::HostProcess ("client", "-i 5000 -k file://$iorfile");
 
 print STDERR "\n\n==== Octet sequence passing test\n";
 
