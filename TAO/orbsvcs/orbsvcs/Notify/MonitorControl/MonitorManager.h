@@ -5,15 +5,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/MonitorControl/notify_mc_export.h"
-
-#include "tao/ORB.h"
-
 #include "ace/Service_Object.h"
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 #include "ace/Task.h"
 #include "ace/ARGV.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Barrier.h"
+
+#include "tao/ORB.h"
+
+#include "orbsvcs/Notify/MonitorControl/notify_mc_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -64,6 +67,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT(TAO_Notify_MC, TAO_MonitorAndControl)
 ACE_FACTORY_DECLARE(TAO_Notify_MC, TAO_MonitorAndControl)
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 #include /**/ "ace/post.h"
 

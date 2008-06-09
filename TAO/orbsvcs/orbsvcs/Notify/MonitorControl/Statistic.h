@@ -8,6 +8,8 @@
 #include "ace/Monitor_Base.h"
 #include "ace/Array_Base.h"
 
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 #include "tao/Versioned_Namespace.h"
 #include "tao/orbconf.h"
 
@@ -107,6 +109,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #  include "Statistic.inl"
 #endif /* __ACE_INLINE__ */
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 #include /**/ "ace/post.h"
 
