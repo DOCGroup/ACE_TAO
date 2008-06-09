@@ -169,6 +169,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     SPIPE_Addr.cpp
     SPIPE_Stream.cpp
     SString.cpp
+    Stack_Trace.cpp      // Required by Log_Msg.cpp
     Stats.cpp            // Required by orbsvcs/tests/Notify
     String_Base_Const.cpp
     Synch_Options.cpp
