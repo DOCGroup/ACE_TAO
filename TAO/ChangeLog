@@ -1,5 +1,24 @@
 Mon Jun 09 11:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
+        * utils/NamingViewer/NamingViewer.cpp:
+        * utils/NamingViewer/SelectNSDialog.cpp:
+
+          Correct Wide character build miss-converstions.
+
+        * tao/CORBA_methods.h:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+
+          Provide wide "helper" ORB_Init() only in wide char builds.
+          (Too many tests try and send wide versions of argv
+          into ORB_init() and whilst that function was written
+          with converters in mind, it was only defined in terms
+          of the narrow OMG standard interface, having extra helper
+          "auto-converting" interfaces helps.)
+
+Mon Jun 09 11:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
         * tests/Oneway_Send_Timeouts\test_i.cpp:
         * tests/Timed_Buffered_Oneways\test_i.cpp:
 

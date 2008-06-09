@@ -73,10 +73,10 @@ void CSelectNSDialog::OnAdd()
     return;
   }
   ACE_Configuration_Section_Key Section = m_pConfig->root_section();
-  ACE_CString Value = Dialog.m_IOR;
+  ACE_TString Value = Dialog.m_IOR;
   m_pConfig->set_string_value(Section, Dialog.m_Name, Value);
   int pos = m_Servers.AddString(Dialog.m_Name);
-  char* pIOR = new char[Value.length() + 1];
+  ACE_TCHAR* pIOR = new ACE_TCHAR[Value.length() + 1];
   ACE_OS::strcpy(pIOR, Value.c_str());
   m_Servers.SetItemData(pos, (DWORD)pIOR);
 
@@ -115,7 +115,7 @@ BOOL CSelectNSDialog::OnInitDialog()
     if(m_pConfig->get_string_value(Section, name.c_str(), value) == 0)
     {
       int pos = m_Servers.AddString(name.c_str());
-      char* pIOR = new char[value.length() + 1];
+      ACE_TCHAR* pIOR = new ACE_TCHAR[value.length() + 1];
       ACE_OS::strcpy(pIOR, value.c_str());
       m_Servers.SetItemData(pos, (DWORD)pIOR);
     }
