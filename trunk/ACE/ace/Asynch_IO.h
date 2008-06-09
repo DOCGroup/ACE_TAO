@@ -302,12 +302,12 @@ public:
    * Initializes the factory with information which will be used with
    * each asynchronous call.
    *
-   * @arg handler The ACE_Handler that will be called to handle completions
-   *              for operations initiated using this factory.
-   * @arg handle  The handle that future read operations will use.
-   *              If handle == @c ACE_INVALID_HANDLE,
-   *              ACE_Handler::handle() will be called on @ handler
-   *              to get the correct handle.
+   * @param handler The ACE_Handler that will be called to handle completions
+   *                for operations initiated using this factory.
+   * @param handle  The handle that future read operations will use.
+   *                If handle == @c ACE_INVALID_HANDLE,
+   *                ACE_Handler::handle() will be called on @ handler
+   *                to get the correct handle.
    *
    * @retval 0    for success.
    * @retval -1   for failure; consult @c errno for further information.
@@ -320,26 +320,26 @@ public:
   /**
    * Initiate an asynchronous read operation.
    *
-   * @arg message_block      The ACE_Message_Block to receive the data.
-   *                         Received bytes will be placed in the block
-   *                         beginning at its current write pointer.
-   *                         If data is read, the message block's write
-   *                         pointer will be advanced by the number of
-   *                         bytes read.
-   * @arg num_bytes_to_read  The maximum number of bytes to read.
-   * @arg act                Asynchronous Completion Token; passed through to
-   *                         the Result object corresponding to this operation.
-   * @arg priority           Priority of the operation. On POSIX4-Unix,
-   *                         this is supported. Works like @c nice in Unix.
-   *                         Negative values are not allowed. 0 means
-   *                         priority of the operation same as the process
-   *                         priority. 1 means priority of the operation is
-   *                         one less than process priority, etc.
-   *                         @param is ignored on Windows.
-   * @arg signal_number      The POSIX4 real-time signal number to be used
-   *                         to signal completion of the operation. Values
-   *                         range from ACE_SIGRTMIN to ACE_SIGRTMAX.
-   *                         This argument is ignored on non-POSIX4 systems.
+   * @param message_block      The ACE_Message_Block to receive the data.
+   *                           Received bytes will be placed in the block
+   *                           beginning at its current write pointer.
+   *                           If data is read, the message block's write
+   *                           pointer will be advanced by the number of
+   *                           bytes read.
+   * @param num_bytes_to_read  The maximum number of bytes to read.
+   * @param act                Asynchronous Completion Token; passed through to
+   *                           the completion handler in the Result object.
+   * @param priority           Priority of the operation. On POSIX4-Unix,
+   *                           this is supported. Works like @c nice in Unix.
+   *                           Negative values are not allowed. 0 means
+   *                           priority of the operation same as the process
+   *                           priority. 1 means priority of the operation is
+   *                           one less than process priority, etc.
+   *                           Ignored on Windows.
+   * @param signal_number      The POSIX4 real-time signal number to be used
+   *                           to signal completion of the operation. Values
+   *                           range from ACE_SIGRTMIN to ACE_SIGRTMAX.
+   *                           This argument is ignored on non-POSIX4 systems.
    */
   int read (ACE_Message_Block &message_block,
             size_t num_bytes_to_read,
@@ -372,11 +372,11 @@ public:
  * @class Result
  *
  * @brief This is the class which will be passed back to the
- * {handler} when the asynchronous read completes. This class
- * forwards all the methods to the implementation classes.
+ * ACE_Handler::handle_read_stream when the asynchronous read completes.
+ * This class forwards all the methods to the implementation classes.
  *
  * This class has all the information necessary for the
- * {handler} to uniquiely identify the completion of the
+ * handler to uniquiely identify the completion of the
  * asynchronous read.
  */
   class ACE_Export Result : public ACE_Asynch_Result
@@ -420,15 +420,14 @@ class ACE_Asynch_Write_Stream_Result_Impl;
 /**
  * @class ACE_Asynch_Write_Stream
  *
- * @brief This class is a factory for starting off asynchronous writes
- * on a stream. This class forwards all methods to its
+ * @brief This class is a factory for initiating asynchronous writes
+ * on a connected TCP/IP stream. This class forwards all methods to its
  * implementation class.
  *
- * Once {open} is called, multiple asynchronous {writes}s can
+ * Once open() is called, multiple asynchronous writes can be
  * started using this class.  An ACE_Asynch_Write_Stream::Result
- * will be passed back to the {handler} when the asynchronous
- * write completes through the
- * {ACE_Handler::handle_write_stream} callback.
+ * will be passed to the ACE_Handler::handle_write_stream() method on the
+ * opened ACE_Handler object when the asynchronous write completes.
  */
 class ACE_Export ACE_Asynch_Write_Stream : public ACE_Asynch_Operation
 {
@@ -442,9 +441,23 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
-   * {ACE_Handler::handle} will be called on the {handler} to get the
-   * correct handle.
+   * each asynchronous operation.
+   *
+   * @param handler        ACE_Handler to be notified when operations initiated
+   *                       via this factory complete. The handle_write_stream()
+   *                       method will be called on this object.
+   * @param handle         The socket handle to initiate write operations on.
+   *                       If handle is @c ACE_INVALID_HANDLE,
+   *                       ACE_Handler::handle() will be called on handler to
+   *                       get the handle value.
+   * @param completion_key A token that is passed to the completion handler.
+   * @param proactor       The ACE_Proactor object which will control operation
+   *                       completion and dispatching the results to handler.
+   *                       If this is 0, the process's singleton ACE_Proactor
+   *                       will be used.
+   *
+   * @retval 0    for success.
+   * @retval -1   for failure; consult @c errno for further information.
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
@@ -452,18 +465,34 @@ public:
             ACE_Proactor *proactor = 0);
 
   /**
-   * This starts off an asynchronous write.  Upto {bytes_to_write}
-   * will be written from the {message_block}. Upon successful completion
-   * of the write operation, {message_block}'s {rd_ptr} is updated to
-   * reflect the data that was written. Priority of the
-   * operation is specified by {priority}. On POSIX4-Unix, this is
-   * supported. Works like {nice} in Unix. Negative values are not
-   * allowed. 0 means priority of the operation same as the process
-   * priority. 1 means priority of the operation is one less than
-   * process. And so forth. On Win32, this argument is a no-op.
-   * {signal_number} is the POSIX4 real-time signal number to be used
-   * for the operation. {signal_number} ranges from ACE_SIGRTMIN to
-   * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
+   * Initiates an asynchronous write on a socket. If the operation completes
+   * the ACE_Handler object registered in open() will receive a completion
+   * callback via its handle_write_stream() method.
+   *
+   * @param bytes_to_write   The number of bytes to write.
+   * @param message_block    The ACE_Message_Block containing data to write.
+   *                         Data is written to the socket beginning at the
+   *                         block's rd_ptr. Upon successful completion
+   *                         of the write operation, the message_block rd_ptr
+   *                         is updated to reflect the data that was written.
+   * @param act              Token that is passed through to the completion
+   *                         handler.
+   * @param priority         Priority of the operation. This argument only has
+   *                         an affect on POSIX4-Unix. Works like @c nice in
+   *                         Unix; negative values are not allowed. 0 means
+   *                         priority of the operation same as the process
+   *                         priority. 1 means priority of the operation is one
+   *                         less than the process, and so forth.
+   * @param signal_number    The POSIX4 real-time signal number to be used
+   *                         for the operation. signal_number ranges from
+   *                         ACE_SIGRTMIN to ACE_SIGRTMAX. This argument is
+   *                         not used on other platforms.
+   *
+   * @retval 0    for success, and the handle_write_stream associated
+   *              with the opened ACE_Handler will be called. An
+   *              instance of ACE_Asynch_Write_Stream::Result will be
+   *              passed to the completion handler.
+   * @retval -1   for failure; consult @c errno for further information.
    */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
@@ -496,11 +525,11 @@ public:
  * @class Result
  *
  * @brief This is that class which will be passed back to the
- * {handler} when the asynchronous write completes. This class
+ * ACE_Handler when the asynchronous write completes. This class
  * forwards all the methods to the implementation class.
  *
  * This class has all the information necessary for the
- * {handler} to uniquiely identify the completion of the
+ * handler to uniquiely identify the completion of the
  * asynchronous write.
  */
   class ACE_Export Result : public ACE_Asynch_Result
@@ -548,11 +577,11 @@ class ACE_Asynch_Read_File_Result_Impl;
  * on a file. This class forwards all methods to its
  * implementation class.
  *
- * Once {open} is called, multiple asynchronous {read}s can
+ * Once open() is called, multiple asynchronous reads can
  * started using this class. An ACE_Asynch_Read_File::Result
- * will be passed back to the {handler} when the asynchronous
- * reads completes through the {ACE_Handler::handle_read_file}
- * callback.
+ * will be passed back to the completion handler's
+ * ACE_Handler::handle_read_file() method when each asynchronous
+ * read completes.
  * This class differs slightly from ACE_Asynch_Read_Stream as it
  * allows the user to specify an offset for the read.
  */
@@ -568,9 +597,24 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
-   * {ACE_Handler::handle} will be called on the {handler} to get the
-   * correct handle.
+   * each asynchronous operation.
+   *
+   * @param handler        ACE_Handler to be notified when operations initiated
+   *                       via this factory complete. The
+   *                       ACE_Handler::handle_read_file() method will be
+   *                       called on this object.
+   * @param handle         The file handle to initiate read operations on.
+   *                       If handle is @c ACE_INVALID_HANDLE,
+   *                       ACE_Handler::handle() will be called on handler to
+   *                       get the handle value.
+   * @param completion_key A token that is passed to the completion handler.
+   * @param proactor       The ACE_Proactor object which will control operation
+   *                       completion and dispatching the results to handler.
+   *                       If this is 0, the process's singleton ACE_Proactor
+   *                       will be used.
+   *
+   * @retval 0    for success.
+   * @retval -1   for failure; consult @c errno for further information.
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
