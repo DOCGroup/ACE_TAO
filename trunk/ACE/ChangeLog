@@ -1,3 +1,11 @@
+Mon Jun 09 10:42:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/NT_Service.cpp:
+
+          unambiguated call to time_value msec(long) at line 437
+          caused by new uint64 non-const setter provided by:
+          Thu Jun  5 14:52:43 UTC 2008  Steve Huston
+
 Sun Jun  8 18:09:22 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/platform.m4:

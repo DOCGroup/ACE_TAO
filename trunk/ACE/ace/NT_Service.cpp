@@ -434,7 +434,7 @@ ACE_NT_Service::state (DWORD *pstate,
     return -1;
 
   if (wait_hint != 0)
-    wait_hint->msec (this->svc_status_.dwWaitHint);
+    wait_hint->msec (static_cast<long> (this->svc_status_.dwWaitHint));
 
   *pstate = this->svc_status_.dwCurrentState;
   this->svc_status_.dwControlsAccepted = controls_accepted;
