@@ -1,3 +1,20 @@
+Mon Jun  9 12:14:12 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
+
+          These files require that ACE_HAS_MONITOR_FRAMEWORK be defined to 1
+          in order to compile.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.inl:
+
+          Removed trailing whitespace.
+
 Mon Jun 09 11:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * utils/NamingViewer/NamingViewer.cpp:
@@ -42,7 +59,7 @@ Sun Jun  8 21:09:07 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp:
         * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Roundtrip.h:
         * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
-          
+
           Untabify.
 
 Fri Jun 06 14:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
