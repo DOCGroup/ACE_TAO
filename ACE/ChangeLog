@@ -1,3 +1,9 @@
+Mon Jun  9 11:26:36 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace_for_tao.mpc:
+
+          Added Stack_Trace.cpp since Log_Msg.cpp needs it.
+
 Mon Jun 09 10:42:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/NT_Service.cpp:
