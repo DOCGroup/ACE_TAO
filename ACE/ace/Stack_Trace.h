@@ -53,7 +53,7 @@
  *          (this covers Linux and Mac)
  *        - VxWorks, both kernel and RTP
  *        - Solaris (not Sparc 64bits)
- *        - Windows 32 and 64 bit (not WinCE/mobile)  
+ *        - Windows 32 and 64 bit (not WinCE/mobile, not MinGW, not Borland)  
  *
  *  @note Since stack trace buffer size has limitation(@c ACE_STACK_TRACE_SYMBUFSIZ), you will not 
  *        get a complete stack trace if @c ACE_STACK_TRACE_SYMBUFSIZ value is less than actual stack 
