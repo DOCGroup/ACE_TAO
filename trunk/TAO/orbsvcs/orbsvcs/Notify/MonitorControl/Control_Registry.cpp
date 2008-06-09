@@ -12,10 +12,10 @@ TAO_Control_Registry::instance (void)
 TAO_Control_Registry::~TAO_Control_Registry (void)
 {
   ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
-  
+
   Map::iterator itr (this->map_);
   Map::value_type* entry = 0;
-  
+
   while (itr.next (entry))
     {
       delete entry->item ();
@@ -27,14 +27,14 @@ bool
 TAO_Control_Registry::add (TAO_NS_Control* type)
 {
   ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, false);
-  
+
   if (type == 0)
     {
       throw Map_Error (Map_Error::MAP_ERROR_INVALID_VALUE);
     }
 
   int status = this->map_.bind(type->name(), type);
-  
+
   if (status == -1)
     {
       throw Map_Error (Map_Error::MAP_ERROR_BIND_FAILURE);
@@ -44,7 +44,7 @@ TAO_Control_Registry::add (TAO_NS_Control* type)
       // Invalidate the name list cache.
       this->name_cache_.length (0);
     }
-    
+
   return (status == 0);
 }
 
@@ -52,10 +52,10 @@ bool
 TAO_Control_Registry::remove (const ACE_CString& name)
 {
   ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, false);
-  
+
   Map::data_type type = 0;
   int status = this->map_.unbind(name, type);
-  
+
   if (status != 0)
     {
       return false;
@@ -82,7 +82,7 @@ TAO_Control_Registry::names (void)
           CORBA::ULong length = 0;
           Map::iterator itr (this->map_);
           Map::value_type* entry = 0;
-          
+
           while (itr.next (entry))
             {
               this->name_cache_.length (length + 1);
@@ -100,7 +100,7 @@ TAO_NS_Control*
 TAO_Control_Registry::get (const ACE_CString& name) const
 {
   ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
-  
+
   Map::data_type type = 0;
   this->map_.find (name, type);
   return type;

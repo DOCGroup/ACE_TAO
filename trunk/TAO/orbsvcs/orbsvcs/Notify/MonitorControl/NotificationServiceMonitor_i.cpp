@@ -2,6 +2,8 @@
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 #include "ace/Auto_Ptr.h"
 #include "ace/Monitor_Point_Registry.h"
 
@@ -23,7 +25,7 @@ NotificationServiceMonitor_i::get_statistic_names (void)
   Monitor_Control_Types::NameList name_list =
     Monitor_Point_Registry::instance ()->names ();
   CORBA::ULong the_length = name_list.size ();
-    
+
   Monitor::NameList* the_names = 0;
   ACE_NEW_RETURN (the_names,
                   Monitor::NameList (the_length),
@@ -31,7 +33,7 @@ NotificationServiceMonitor_i::get_statistic_names (void)
   Monitor::NameList_var safe_names = the_names;
   the_names->length (the_length);
   CORBA::ULong i = 0;
-  
+
   for (Monitor_Control_Types::NameList::Iterator iter (name_list);
        !iter.done ();
        iter.advance (), ++i)
@@ -40,7 +42,7 @@ NotificationServiceMonitor_i::get_statistic_names (void)
       iter.next (tmp);
       safe_names[i] = tmp->c_str ();
     }
-  
+
   return safe_names._retn ();
 }
 
@@ -59,7 +61,7 @@ NotificationServiceMonitor_i::get_statistic (const char* name)
     {
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
     }
-    
+
   CosNotification::NotificationServiceMonitorControl::Data* data = 0;
   ACE_NEW_THROW_EX (data,
                     CosNotification::NotificationServiceMonitorControl::Data,
@@ -75,12 +77,12 @@ NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
 
   Monitor::NameList invalid;
   this->get_invalid_names (registry, names, invalid);
-  
+
   if (invalid.length () > 0)
     {
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
     }
-    
+
   CORBA::ULong length = names.length ();
   CosNotification::NotificationServiceMonitorControl::DataList* data = 0;
   ACE_NEW_RETURN (data,
@@ -91,12 +93,12 @@ NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
     safe_data (data);
 
   data->length (length);
-  
+
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       this->get_data (registry, names[i], (*data)[i]);
     }
-    
+
   return safe_data.release ();
 }
 
@@ -113,11 +115,11 @@ NotificationServiceMonitor_i::get_and_clear_statistics (
   // clear_statistics() to avoid a possible exception.
   CORBA::ULong length = names.length();
   Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
-  
+
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       Monitor_Base* statistic = registry->get (names[i].in ());
-      
+
       if (statistic != 0)
         {
           statistic->clear ();
@@ -135,18 +137,18 @@ NotificationServiceMonitor_i::clear_statistics (
 
   Monitor::NameList invalid;
   this->get_invalid_names (registry, names, invalid);
-  
+
   if (invalid.length () > 0)
     {
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
     }
-    
+
   CORBA::ULong length = names.length ();
-  
+
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       Monitor_Base* statistic = registry->get (names[i].in ());
-      
+
       if (statistic != 0)
         {
           statistic->clear ();
@@ -200,7 +202,7 @@ NotificationServiceMonitor_i::send_control_command (const char* name,
     {
       Monitor::NameList invalid (1);
       invalid.length (1);
-      invalid[0] = name; 
+      invalid[0] = name;
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
     }
 }
@@ -256,12 +258,12 @@ NotificationServiceMonitor_i::get_data (
           CORBA::ULong size = static_cast<CORBA::ULong> (slist.size ());
           Monitor::NameList list (size);
           list.length (size);
-          
+
           for (CORBA::ULong i = 0; i < size; ++i)
             {
               list[i] = CORBA::string_dup (slist[i].c_str ());
             }
-            
+
           data.list (list);
         }
       else
@@ -282,7 +284,7 @@ NotificationServiceMonitor_i::get_data (
               num.average = statistic->average ();
               num.sum_of_squares = statistic->sum_of_squares ();
             }
-            
+
           data.num (num);
         }
     }
@@ -298,7 +300,7 @@ NotificationServiceMonitor_i::get_invalid_names (
 
   CORBA::ULong ilength = 0;
   CORBA::ULong length  = names.length ();
-  
+
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       if (registry->get (names[i].in ()) == 0)
@@ -310,3 +312,5 @@ NotificationServiceMonitor_i::get_invalid_names (
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */

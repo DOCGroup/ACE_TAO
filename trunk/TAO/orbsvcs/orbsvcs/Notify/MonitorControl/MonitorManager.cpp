@@ -1,6 +1,9 @@
 // $Id$
 
 #include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
+
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
 #include "orbsvcs/Naming/Naming_Client.h"
@@ -22,7 +25,7 @@ int
 TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
-  
+
   this->task_.argv_.add ("fake_process_name");
 
   ACE_Get_Opt opts (argc,
@@ -32,7 +35,7 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
                     0,
                     ACE_Get_Opt::PERMUTE_ARGS,
                     1);
-                    
+
   static const ACE_TCHAR* orbarg = ACE_TEXT ("ORBArg");
   static const ACE_TCHAR* nonamesvc = ACE_TEXT ("NoNameSvc");
   opts.long_option (orbarg, ACE_Get_Opt::ARG_REQUIRED);
@@ -73,13 +76,13 @@ TAO_MonitorManager::fini (void)
   if (!CORBA::is_nil (this->task_.orb_.in ()))
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
-      
+
       if (!CORBA::is_nil (this->task_.orb_.in ()))
         {
           this->task_.orb_->shutdown (true);
         }
     }
-    
+
   this->task_.wait ();
   return 0;
 }
@@ -108,11 +111,11 @@ TAO_MonitorManager::run (void)
   }
 
   int status = 0;
-  
+
   if (activate)
     {
       status = this->task_.activate ();
-      
+
       if (status == 0)
         {
           // cj: Wait till the child thread has initialized completely
@@ -138,7 +141,7 @@ TAO_MonitorManager::shutdown (void)
   TAO_MonitorManager* monitor =
     ACE_Dynamic_Service<TAO_MonitorManager>::instance (
       TAO_NOTIFY_MONITOR_CONTROL_MANAGER);
-      
+
   if (monitor != 0)
     {
       monitor->fini ();
@@ -166,7 +169,7 @@ TAO_MonitorManager::ORBTask::svc (void)
         }
 
       PortableServer::POA_var poa;
-      
+
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
 
@@ -174,7 +177,7 @@ TAO_MonitorManager::ORBTask::svc (void)
           this->orb_->resolve_initial_references ("RootPOA");
 
         poa = PortableServer::POA::_narrow (obj.in ());
-        
+
         if (CORBA::is_nil (poa.in ()))
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -200,7 +203,7 @@ TAO_MonitorManager::ORBTask::svc (void)
         CORBA::String_var ior = this->orb_->object_to_string (monitor.in ());
         obj = this->orb_->resolve_initial_references ("IORTable");
         IORTable::Table_var iortable = IORTable::Table::_narrow (obj.in ());
-        
+
         if (CORBA::is_nil (iortable.in ()))
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -208,7 +211,7 @@ TAO_MonitorManager::ORBTask::svc (void)
                                "resolve the IORTable\n"),
                               1);
           }
-          
+
         iortable->bind(mc_orb_name_.c_str(), ior.in ());
 
         if (this->use_name_svc_)
@@ -224,7 +227,7 @@ TAO_MonitorManager::ORBTask::svc (void)
         if (this->ior_output_.length () > 0)
           {
             FILE* fp = ACE_OS::fopen (this->ior_output_.c_str (), "w");
-            
+
             if (fp == 0)
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -255,7 +258,7 @@ TAO_MonitorManager::ORBTask::svc (void)
         {
           poa->destroy (true, true);
         }
-        
+
       this->orb_->destroy ();
 
       // Set to nil to avoid double shutdown in TAO_MonitorManager::fini()
@@ -272,10 +275,10 @@ TAO_MonitorManager::ORBTask::svc (void)
           catch (...)
             {
             }
-            
+
           this->orb_ = CORBA::ORB::_nil ();
         }
-        
+
       ex._tao_print_exception ("Caught in "
                                "TAO_MonitorManager::ORBTask::svc");
     }
@@ -292,7 +295,7 @@ TAO_MonitorManager::ORBTask::svc (void)
             }
           this->orb_ = CORBA::ORB::_nil ();
         }
-        
+
       ACE_ERROR ((LM_ERROR,
                   "Unexpected exception type caught "
                   "in TAO_MonitorManager::ORBTask::svc"));
@@ -311,3 +314,5 @@ ACE_STATIC_SVC_DEFINE (TAO_MonitorAndControl,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_Notify_MC, TAO_MonitorAndControl)
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */

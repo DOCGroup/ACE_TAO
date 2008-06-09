@@ -2,6 +2,8 @@
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h"
 
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 #include "tao/String_Alloc.h"
 
 #if !defined (__ACE_INLINE__)
@@ -27,7 +29,7 @@ TAO_Statistic::TAO_Statistic (const char* name,
 TAO_Statistic::~TAO_Statistic (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->type_ == TS_LIST)
     {
       for (size_t i = 0UL; i < this->index_; ++i)
@@ -51,7 +53,7 @@ TAO_Statistic::receive (double data)
     }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->type_ != TS_COUNTER)
     {
       this->sum_ += data;
@@ -67,7 +69,7 @@ TAO_Statistic::receive (double data)
   else
     {
       this->last_ = data;
-      
+
       if (!this->minimum_set_)
         {
           this->minimum_set_ = true;
@@ -77,7 +79,7 @@ TAO_Statistic::receive (double data)
         {
           this->minimum_ = data;
         }
-        
+
       if (this->maximum_ < data)
         {
           this->maximum_ = data;
@@ -101,7 +103,7 @@ TAO_Statistic::receive (const TAO_Statistic::List& data)
     }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   for (size_t i = 0UL; i < this->index_; ++i)
     {
       delete [] this->data_[i];
@@ -109,7 +111,7 @@ TAO_Statistic::receive (const TAO_Statistic::List& data)
 
   this->index_ = data.size ();
   this->data_.max_size (this->index_);
-  
+
   for (size_t i = 0UL; i < this->index_; ++i)
     {
       this->data_[i] = CORBA::string_dup (data[i].c_str ());
@@ -120,7 +122,7 @@ void
 TAO_Statistic::clear (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   // If the type is a string list, we need to delete the data
   // before we change the index.
   if (this->type_ == TS_LIST)
@@ -149,7 +151,7 @@ TAO_Statistic::average (void) const
     }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->mutex_, 0);
-  
+
   return (this->index_== 0UL ? 0.0 : this->sum_ / this->index_);
 }
 
@@ -162,7 +164,7 @@ TAO_Statistic::sum_of_squares (void) const
     }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->mutex_, 0);
-  
+
   return this->sum_of_squares_;
 }
 
@@ -175,15 +177,17 @@ TAO_Statistic::get_list (void) const
     }
 
   List list;
-  
+
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->mutex_, list);
-  
+
   for (size_t i = 0UL; i < this->index_; ++i)
     {
       list.push_back (this->data_[i]);
     }
-    
+
   return list;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
