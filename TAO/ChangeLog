@@ -1,3 +1,10 @@
+Tue Jun 10 15:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/be/be_visitor_structure/serializer_op_ch.cpp:
+
+          Another wide character conversion required to get
+          the tao_idl working on wide character builds.
+
 Tue Jun 10 14:53:00 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:

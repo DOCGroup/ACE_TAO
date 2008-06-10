@@ -97,11 +97,11 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
                prev.next (p) != 0 && p != kp;
                )
               {
-                *os << "v1." << p->c_str () << " == " << "v2." << p->c_str () << " && ";
+                *os << "v1." << ACE_TEXT_ALWAYS_CHAR (p->c_str ()) << " == " << "v2." << ACE_TEXT_ALWAYS_CHAR (p->c_str ()) << " && ";
                 prev.advance ();
               }
 
-              *os << "v1." << kp->c_str () << " < " << "v2." << kp->c_str ();
+              *os << "v1." << ACE_TEXT_ALWAYS_CHAR (kp->c_str ()) << " < " << "v2." << ACE_TEXT_ALWAYS_CHAR (kp->c_str ());
               *os << ")";
 
               iter.advance ();
