@@ -1,3 +1,17 @@
+Tue Jun 10 21:28:23 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/platform.m4:
+
+          Add ACE_CHECK_GETNAME_RETURNS_RANDOM_SIN_ZERO feature check,
+          which sets the ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO feature test
+          macro on Linux systems running kernels older than 2.5.47.  This
+          is a compile time check, like was done in config-linux-common.h,
+          based on the value of LINUX_VERSION_CODE from <linux/version.h>.
+          This means ACE compiled on a newer Linux system but deployed on
+          an older one could result in run-time failures.
+
+          Fixes Bugzilla #3132.
+
 Tue Jun 10 21:33:25 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/CDR_Stream.h:
@@ -11,15 +25,15 @@ Tue Jun 10 21:33:25 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Jun 10 18:46:24 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * ace/Stack_Trace.h:
-        
+
           Updated comments to not exclude Borland from supported platforms.
-          
+
         * ace/Stack_Trace.cpp:
 
           - Moved the label "x" from inside of asm to be outside. Some compiler
             does not like it.
           - Enabled LynOS support and excluded support for gcc old versions before 3.3.
-          
+
 Tue Jun 10 13:56:17 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Stack_Trace.cpp:
