@@ -272,10 +272,6 @@ AH_TEMPLATE([ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS],
 AH_TEMPLATE([ACE_HAS_BROKEN_MAP_FAILED],
 [Platform doesn't cast MAP_FAILED to a (void *).])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_NAMESPACES],
-[Compiler/platform doesn't support namespaces (or the support is not
-fully implemented.)])
-
 AH_TEMPLATE([ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS],
 [Compiler can't handle const char * as rvalue in conditional operator.])
 

@@ -1,3 +1,12 @@
+Tue Jun 10 23:41:11 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Remove feature test and autoheader template for
+          ACE_HAS_BROKEN_NAMESPACES.  This feature test macro is no longer
+          used in ACE.
+
 Tue Jun 10 23:39:09 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
