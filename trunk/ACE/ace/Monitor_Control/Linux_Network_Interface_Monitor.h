@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef LINUX_NETWORK_INTERFACE_MONITOR_H
-#define LINUX_NETWORK_INTERFACE_MONITOR_H
+#ifndef LINUXNETWORKINTERFACEMONITOR_H
+#define LINUXNETWORKINTERFACEMONITOR_H
 
 #include /**/ "ace/pre.h"
 
@@ -65,4 +65,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif // LINUX_NETWORK_INTERFACE_MONITOR_H
+#endif // LINUXNETWORKINTERFACEMONITOR_H
