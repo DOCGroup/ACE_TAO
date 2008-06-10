@@ -63,7 +63,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  virtual void handle_write_stream (const ACE_SSL_Asynch_Write_Stream_Result &result);
+  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
 private:
   size_t                  msgs_sent_;
@@ -85,7 +85,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  virtual void handle_read_stream (const ACE_SSL_Asynch_Read_Stream_Result &result);
+  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
 
 private:
   size_t                  msgs_rcvd_;
@@ -218,7 +218,7 @@ Client_Handler::open (ACE_HANDLE handle)
 
 void
 Client_Handler::handle_write_stream
-  (const ACE_SSL_Asynch_Write_Stream_Result &result)
+  (const ACE_Asynch_Write_Stream::Result &result)
 {
   if (!result.success ())
     {
@@ -302,7 +302,7 @@ Server_Handler::open (ACE_HANDLE handle)
 
 void
 Server_Handler::handle_read_stream
-  (const ACE_SSL_Asynch_Read_Stream_Result &result)
+  (const ACE_Asynch_Read_Stream::Result &result)
 {
   if (!result.success ())
     {
