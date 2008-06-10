@@ -1,3 +1,9 @@
+Tue Jun 10 13:32:57 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+
+          Avoid pointer-to-function and pointer-to-object warnings from g++.
+
 Tue Jun 10 12:53:05 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/SSL/SSL_Asynch_Stream_Test.cpp:
