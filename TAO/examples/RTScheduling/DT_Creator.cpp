@@ -463,7 +463,8 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
       ACE_hthread_t curr_thr;
       ACE_Thread::self (curr_thr);
 
-      if (dt_list_ [i]->start_time () != 0 && (elapsed_time.sec () < dt_list_[i]->start_time ()))
+      if (dt_list_ [i]->start_time () != 0 &&
+          (elapsed_time.sec () < static_cast<time_t> (dt_list_[i]->start_time ())))
   {
     int suspension_time = dt_list_[i]->start_time () - elapsed_time.sec ();
     ACE_OS::sprintf (buf,"suspension_tome = %d\n",
