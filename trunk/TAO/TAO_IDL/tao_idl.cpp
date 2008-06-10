@@ -74,6 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "drv_extern.h"
 #include "tao/Version.h"
+#include "ace/Argv_Type_Converter.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
@@ -300,17 +301,18 @@ DRV_drive (const char *s)
 */
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter atc (argc, argv);
   try
     {
-      if (0 != DRV_init (argc, argv))
+      if (0 != DRV_init (atc.get_argc (), atc.get_ASCII_argv ()))
         {
           throw Bailout ();
         }
 
       // Parse arguments.
-      DRV_parse_args (argc, argv);
+      DRV_parse_args (atc.get_argc (), atc.get_ASCII_argv ());
 
       // If a version message is requested, print it and exit cleanly.
       if (idl_global->compile_flags () & IDL_CF_VERSION)
