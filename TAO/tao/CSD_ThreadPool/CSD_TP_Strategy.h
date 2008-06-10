@@ -133,7 +133,7 @@ namespace TAO
       /// This will activate the worker thread(s).
       /// Returns true if the worker threads were activated successfully.
       /// Otherwise, returns false.
-      virtual bool poa_activated_event_i();
+      virtual bool poa_activated_event_i(TAO_ORB_Core& orb_core);
 
       /// Event - The POA has been deactivated.
       /// This will shutdown the worker thread(s).

@@ -8,6 +8,7 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h"
 #include "ace/Trace.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID (CSD_ThreadPool,
            TP_Strategy,
@@ -60,8 +61,9 @@ TAO::CSD::TP_Strategy::custom_asynch_request(TP_Custom_Request_Operation* op)
 
 
 bool
-TAO::CSD::TP_Strategy::poa_activated_event_i()
+TAO::CSD::TP_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 {
+  this->task_.thr_mgr(orb_core.thr_mgr());
   // Activates the worker threads, and waits until all have been started.
   return (this->task_.open(&(this->num_threads_)) == 0);
 }

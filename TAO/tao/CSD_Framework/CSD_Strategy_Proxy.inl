@@ -37,12 +37,12 @@ TAO::CSD::Strategy_Proxy::dispatch_request
 
 ACE_INLINE
 bool
-TAO::CSD::Strategy_Proxy::poa_activated_event()
+TAO::CSD::Strategy_Proxy::poa_activated_event(TAO_ORB_Core& orb_core)
 {
   // Delegate to the custom strategy object (or return true if this proxy
   // is not holding a custom strategy).
   return (this->strategy_impl_ == 0) ? true
-    : this->strategy_impl_->poa_activated_event();
+    : this->strategy_impl_->poa_activated_event(orb_core);
 }
 
 

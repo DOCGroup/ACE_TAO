@@ -8,6 +8,7 @@
 
 #include "tao/debug.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "tao/PI/DLL_Resident_ORB_Initializer.h"
 
 #include "ace/SSL/sslconf.h"
 #include "ace/SSL/SSL_Context.h"
@@ -541,10 +542,26 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
 
       PortableInterceptor::ORBInitializer_var initializer = tmp;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ());
+  PortableInterceptor::ORBInitializer_ptr temp_dll_initializer =
+        PortableInterceptor::ORBInitializer::_nil ();
+
+  ACE_NEW_THROW_EX (temp_dll_initializer,
+        PortableInterceptor::DLL_Resident_ORB_Initializer(
+  initializer.in (),
+  ACE_LIB_TEXT ("TAO_Security")),
+  CORBA::NO_MEMORY (
+  CORBA::SystemException::_tao_minor_code (
+  TAO::VMCID,
+  ENOMEM),
+  CORBA::COMPLETED_NO));
+
+  PortableInterceptor::ORBInitializer_var dll_initializer
+  = temp_dll_initializer;
+
+  PortableInterceptor::register_orb_initializer (dll_initializer.in ());
+
 
       // Register the SSLIOP ORB initializer.
-      // PortableInterceptor::ORBInitializer_ptr tmp;
       ACE_NEW_THROW_EX (tmp,
                         TAO::SSLIOP::ORBInitializer (this->qop_,
                                                      csiv2_target_supports,
@@ -555,10 +572,24 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
                             ENOMEM),
                           CORBA::COMPLETED_NO));
 
-      //PortableInterceptor::ORBInitializer_var initializer = tmp;
       initializer = tmp;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ());
+  temp_dll_initializer = PortableInterceptor::ORBInitializer::_nil ();
+
+  ACE_NEW_THROW_EX (temp_dll_initializer,
+        PortableInterceptor::DLL_Resident_ORB_Initializer(
+  initializer.in (),
+  ACE_LIB_TEXT ("TAO_SSLIOP")),
+  CORBA::NO_MEMORY (
+  CORBA::SystemException::_tao_minor_code (
+  TAO::VMCID,
+  ENOMEM),
+  CORBA::COMPLETED_NO));
+
+  dll_initializer = temp_dll_initializer;
+
+  PortableInterceptor::register_orb_initializer (dll_initializer.in ());
+
     }
   catch (const CORBA::Exception& ex)
     {

@@ -84,10 +84,10 @@ TAO::CSD::Strategy_Base::dispatch_request
 
 ACE_INLINE
 bool
-TAO::CSD::Strategy_Base::poa_activated_event()
+TAO::CSD::Strategy_Base::poa_activated_event(TAO_ORB_Core& orb_core)
 {
   // Notify the subclass of the event, saving the result.
-  this->poa_activated_ = this->poa_activated_event_i();
+  this->poa_activated_ = this->poa_activated_event_i(orb_core);
 
   // Return the result
   return this->poa_activated_;

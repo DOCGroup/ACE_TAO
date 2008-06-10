@@ -80,8 +80,15 @@ TAO::ORBInitializer_Registry::fini (void)
 
   // Release all initializers in the array
   size_t const initializer_count (this->initializers_.size ());
-  for (size_t i = 0; i < initializer_count; ++i)
+  for (size_t i = initializer_count; i > 0;)
     {
+      --i;
+      if (TAO_debug_level > 8)
+        {
+          ACE_DEBUG((LM_DEBUG, ACE_TEXT("TAO(%P|%t)OrbInitializer::fini clearing %d @%@\n"),
+            i, this->initializers_[i].operator->()
+            ));
+        }
       this->initializers_[i] = PortableInterceptor::ORBInitializer::_nil();
     }
 
@@ -105,6 +112,13 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
         throw ::CORBA::INTERNAL ();
 
       // Add the given ORBInitializer to the sequence.
+      if (TAO_debug_level > 8)
+        {
+          ACE_DEBUG((LM_DEBUG, ACE_TEXT("TAO(%P|%t)OrbInitializer::register_orb_initializer %d @%@\n"),
+            cur_len, init
+            ));
+        }
+
       this->initializers_[cur_len] =
         PortableInterceptor::ORBInitializer::_duplicate (init);
     }
