@@ -4,6 +4,10 @@ Tue Jun 10 13:21:29 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
           Fixed redefinition warnings from aCC.
 
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+
+          Fixed no return warning from aCC.
+
 Tue Jun 10 11:46:44 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_3315_Regression/main.cpp:
