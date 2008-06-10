@@ -298,9 +298,6 @@ AH_TEMPLATE([ACE_HAS_BROKEN_RANDR],
 [OS/compiler's header files are inconsistent with libC definition of
 rand_r().])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_SAP_ANY],
-[Compiler can't handle the static ACE_Addr::sap_any construct.])
-
 AH_TEMPLATE([ACE_HAS_BROKEN_T_ERROR],
 [Compiler/platform has the wrong prototype for t_error(), i.e.,
 t_error(char *) rather than t_error(const char *).])

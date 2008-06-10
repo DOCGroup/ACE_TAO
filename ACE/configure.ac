@@ -7783,51 +7783,6 @@ ACE_CACHE_CHECK([for ACE_IOStream support],
      ])
   ], , [AC_DEFINE([ACE_LACKS_ACE_IOSTREAM])])
 
-dnl @@ I don't think that this test is correct.  The only way I could
-dnl    get ACE_Addr::sap_any to work was to explicitly cast it to the
-dnl    a constant reference of the derived type.
-dnl       -Ossama
-dnl Check if compiler can't handle the static ACE_Addr::sap_any construct
-ACE_CACHE_CHECK([for ACE_addr::sap_any support],
-  [ace_cv_lib_sap_any_support],
-  [
-   dnl We want an empty ace/config.h to prevent multiple defines
-   dnl with Autoconf's confdefs.h
-   ACE_USE_TEMP_FILE([ace/config.h],
-     [
-      dnl Now run the compilation test
-      ACE_TRY_COMPILE([-I. -I${srcdir}],
-        [
-#include "ace/FILE_Addr.h"
-        ],
-        [
-  ACE_FILE_Addr ace_file ((const ACE_FILE_Addr &) ACE_Addr::sap_any);
-        ],
-        [
-         ace_cv_lib_sap_any_support=yes
-        ],
-        [
-         dnl Now check if ACE_HAS_BROKEN_SAP_ANY makes
-         dnl compilation work!
-         ACE_TRY_COMPILE([-I. -I${srcdir}],
-           [
-#define ACE_HAS_BROKEN_SAP_ANY
-#include "ace/FILE_Addr.h"
-           ],
-           [
-  ACE_FILE_Addr ace_file ((const ACE_FILE_Addr &) ACE_Addr::sap_any);
-           ],
-           [
-            ace_cv_lib_sap_any_support=no
-           ],
-           [
-            dnl If we get here, then we have no idea what is wrong!
-            ace_cv_lib_sap_any_support=yes
-          ])
-        ])
-     ])
-  ],, [AC_DEFINE([ACE_HAS_BROKEN_SAP_ANY])])
-
 dnl Check if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector
 ACE_CACHE_CHECK([if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector],
   [ace_cv_lib_need_dev_io_conv],
