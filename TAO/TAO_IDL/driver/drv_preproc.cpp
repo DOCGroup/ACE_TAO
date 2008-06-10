@@ -152,8 +152,8 @@ DRV_cpp_expand_output_arg (const char *filename)
                      + 1]);
 
       ACE_OS::sprintf (const_cast<ACE_TCHAR *> (DRV_arglist[output_arg_index]),
-                       output_arg_format,
-                       filename);
+                       ACE_TEXT_CHAR_TO_TCHAR (output_arg_format),
+                       ACE_TEXT_CHAR_TO_TCHAR (filename));
     }
 }
 
@@ -1046,7 +1046,7 @@ DRV_pre_proc (const char *myfile)
 
   FILE * const file = ACE_OS::fopen (myfile, "r");
   DRV_copy_input (file,
-                  ACE_OS::fdopen (ti_fd, "w"),
+                  ACE_OS::fdopen (ti_fd, ACE_TEXT("w")),
                   tmp_ifile,
                   myfile);
   ACE_OS::fclose (file);

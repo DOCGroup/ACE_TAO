@@ -1,3 +1,12 @@
+Tue Jun 10 14:16:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          A few more wide character conversions required to get
+          the tao_idl working on wide character builds.
+
 Tue Jun 10 13:21:29 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/fe/lex.yy.cpp:
