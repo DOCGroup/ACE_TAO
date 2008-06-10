@@ -1,3 +1,14 @@
+Tue Jun 10 16:32:32 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Removed trailing white space.
+
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+
+          Updated the diff file based on my change from Tue Jun 10 13:21:29
+          UTC 2008.
+
 Tue Jun 10 15:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/be/be_visitor_structure/serializer_op_ch.cpp:
