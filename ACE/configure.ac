@@ -2160,34 +2160,6 @@ class Derived
   ],[AC_DEFINE([ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR])],)
 fi
 
-dnl Check for working C++ conversions
-ACE_CACHE_CHECK([for working C++ conversions],
-  [ace_cv_feature_cxx_working_conversions],
-  [
-   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-                   template <class T>
-                   class Foo
-                   {
-                    public:
-                      Foo (void) { ace_ptr = 0; }
-                      operator T * (void) { return ace_ptr; }
-
-                    private:
-                      T * ace_ptr;
-                   };
-                  ]],[[
-                   Foo<char> Bar;
-
-                   Foo<char> * Bar_ptr = &Bar;
-
-                   char * p = Bar_ptr->operator char * ();
-                  ]])],[
-                   ace_cv_feature_cxx_working_conversions=yes
-                  ],[
-                   ace_cv_feature_cxx_working_conversions=no
-                  ])
-  ],,[AC_DEFINE([ACE_HAS_BROKEN_CONVERSIONS])])
-
 dnl Check for C++ "std" namespace
 ACE_CACHE_CHECK([for C++ "std" namespace],
   [ace_cv_feature_posix_uses_std_namespace],[
