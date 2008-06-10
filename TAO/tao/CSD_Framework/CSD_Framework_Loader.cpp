@@ -4,6 +4,7 @@
 #include "tao/CSD_Framework/CSD_Object_Adapter_Factory.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "tao/CSD_Framework/CSD_ORBInitializer.h"
+#include "tao/PI/DLL_Resident_ORB_Initializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
 ACE_RCSID (CSD_Framework,
@@ -56,7 +57,7 @@ TAO_CSD_Framework_Loader::init (int, ACE_TCHAR* [])
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
-      /// Register the RTCORBA ORBInitializer.
+      /// Register the CSD ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_CSD_ORBInitializer,
                         CORBA::NO_MEMORY (
@@ -68,7 +69,23 @@ TAO_CSD_Framework_Loader::init (int, ACE_TCHAR* [])
       PortableInterceptor::ORBInitializer_var orb_initializer;
       orb_initializer = temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
+      PortableInterceptor::ORBInitializer_ptr temp_dll_initializer =
+        PortableInterceptor::ORBInitializer::_nil ();
+
+      ACE_NEW_THROW_EX (temp_dll_initializer,
+        PortableInterceptor::DLL_Resident_ORB_Initializer(
+          orb_initializer.in (),
+          ACE_LIB_TEXT ("TAO_CSD_ThreadPool")),
+          CORBA::NO_MEMORY (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              ENOMEM),
+            CORBA::COMPLETED_NO));
+
+      PortableInterceptor::ORBInitializer_var dll_initializer;
+      dll_initializer = temp_dll_initializer;
+
+      PortableInterceptor::register_orb_initializer (dll_initializer.in ());
     }
   catch (const ::CORBA::Exception& ex)
     {

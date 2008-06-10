@@ -100,7 +100,7 @@ namespace TAO
                           PortableServer::Servant         servant) = 0;
 
       /// Event - The POA has been activated.
-      virtual bool poa_activated_event_i() = 0;
+      virtual bool poa_activated_event_i(TAO_ORB_Core& orb_core) = 0;
 
       /// Event - The POA has been deactivated.
       virtual void poa_deactivated_event_i() = 0;
@@ -130,7 +130,7 @@ namespace TAO
 
       /// Event - The POA has been activated. This happens when the POA_Manager
       ///         is activated.
-      bool poa_activated_event();
+      bool poa_activated_event(TAO_ORB_Core& orb_core);
 
       /// Event - The POA has been deactivated.  This happens when the
       ///         POAManager is deactivated, or when the POA is destroyed.
