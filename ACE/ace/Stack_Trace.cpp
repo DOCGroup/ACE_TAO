@@ -46,8 +46,7 @@ determine_starting_frame (ssize_t initial_frame, ssize_t offset)
   return ACE_MAX( initial_frame + offset, static_cast<ssize_t>(0));
 }
 
-
-#if (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H)) && !defined (ACE_LYNXOS_MAJOR)
+#if (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H)) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
 // This is the code for glibc
 #  include <execinfo.h>
 
@@ -425,7 +424,7 @@ ACE_Stack_Trace::generate_trace (ssize_t, size_t)
     "ACE is built with _WIN32_WINNT set to 0x501 or above>");
 }
 
-#elif defined(ACE_WIN32) && !defined(ACE_HAS_WINCE) && !defined (__BORLANDC__) && !defined (__MINGW32__)
+#elif defined(ACE_WIN32) && !defined(ACE_HAS_WINCE) && !defined (__MINGW32__)
 #  include <windows.h>
 #  include <Dbghelp.h>
 
@@ -572,9 +571,13 @@ cs_operate(int (*func)(struct frame_state const *, void *), void *usrarg,
 
 #  if defined (_M_IX86)
   DWORD machine = IMAGE_FILE_MACHINE_I386;
-    __asm {
+  // no C++ code can be inserted in between the two __asm blocks
+  __asm {
     call x
-    x: pop eax
+    }
+
+  x: __asm {
+    pop eax
     mov c.Eip, eax
     mov c.Ebp, ebp
     mov c.Esp, esp
