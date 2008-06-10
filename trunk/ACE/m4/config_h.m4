@@ -640,9 +640,6 @@ AH_TEMPLATE([ACE_HAS_SVR4_SIGNAL_T],
 AH_TEMPLATE([ACE_HAS_SVR4_TLI],
 [Compiler/platform supports SVR4 TLI (in particular, T_GETNAME stuff).])
 
-AH_TEMPLATE([ACE_HAS_SYSCALL_GETRUSAGE],
-[HP/UX has an undefined syscall for GETRUSAGE.])
-
 AH_TEMPLATE([ACE_HAS_SYSINFO],
 [Platform supports system configuration information.])
 
