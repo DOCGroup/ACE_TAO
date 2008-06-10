@@ -1,5 +1,14 @@
---- lex.yy.cpp.orig	2008-05-31 10:22:13.000000000 -0500
-+++ lex.yy.cpp	2008-05-31 10:27:05.000000000 -0500
+--- lex.yy.cpp.orig	2008-06-10 11:30:01.000000000 -0500
++++ lex.yy.cpp	2008-06-10 11:30:37.000000000 -0500
+@@ -27,7 +27,7 @@
+ 
+ /* C99 systems have <inttypes.h>. Non-C99 systems may or may not. */
+ 
+-#if __STDC_VERSION__ >= 199901L
++#if (__STDC_VERSION__ >= 199901L) || defined (__HP_aCC)
+ 
+ /* C99 says to define __STDC_LIMIT_MACROS before including stdint.h,
+  * if you want the limit (max/min) macros for int types.
 @@ -35,6 +35,7 @@
  #ifndef __STDC_LIMIT_MACROS
  #define __STDC_LIMIT_MACROS 1
@@ -8,16 +17,16 @@
  
  typedef int8_t flex_int8_t;
  typedef uint8_t flex_uint8_t;
-@@ -1079,7 +1079,7 @@
+@@ -1078,7 +1079,7 @@
          if ( TAO_YY_CURRENT_BUFFER_LVALUE->tao_yy_is_interactive ) \
                  { \
                  int c = '*'; \
 -                size_t n; \
-+                int n;                    \
++                int n; \
                  for ( n = 0; n < max_size && \
                               (c = getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
                          buf[n] = (char) c; \
-@@ -1698,7 +1698,7 @@
+@@ -1698,7 +1699,7 @@
                    idl_global->set_lineno(idl_global->lineno() + 1);
                    idl_store_pragma(ace_tao_yytext);
                  }
@@ -26,7 +35,7 @@
  case 87:
  /* rule 87 can match eol */
  case 88:
-@@ -1707,7 +1707,7 @@
+@@ -1707,7 +1708,7 @@
  {/* ignore file */
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
@@ -35,7 +44,7 @@
  case 89:
  /* rule 89 can match eol */
  case 90:
-@@ -1716,7 +1716,7 @@
+@@ -1716,7 +1717,7 @@
  {
                    idl_parse_line_and_file(ace_tao_yytext);
                  }
@@ -44,7 +53,7 @@
  case 91:
  /* rule 91 can match eol */
  case 92:
-@@ -1725,7 +1725,7 @@
+@@ -1725,7 +1726,7 @@
  {
                    idl_parse_line_and_file(ace_tao_yytext);
                  }
@@ -53,7 +62,7 @@
  case 93:
  /* rule 93 can match eol */
  case 94:
-@@ -1734,7 +1734,7 @@
+@@ -1734,7 +1735,7 @@
  {
                    idl_parse_line_and_file(ace_tao_yytext);
                  }
@@ -62,7 +71,7 @@
  case 95:
  /* rule 95 can match eol */
  case 96:
-@@ -1743,7 +1743,7 @@
+@@ -1743,7 +1744,7 @@
  {
                    idl_parse_line_and_file(ace_tao_yytext);
                  }
@@ -71,7 +80,7 @@
  case 97:
  /* rule 97 can match eol */
  case 98:
-@@ -1753,7 +1753,7 @@
+@@ -1753,7 +1754,7 @@
                    /* ignore cpp ident */
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
@@ -80,7 +89,7 @@
  case 99:
  /* rule 99 can match eol */
  TAO_YY_RULE_SETUP
-@@ -1761,7 +1761,7 @@
+@@ -1761,7 +1762,7 @@
                    /* ignore comments */
                    idl_global->set_lineno(idl_global->lineno() + 1);
                  }
@@ -89,7 +98,7 @@
  case 100:
  TAO_YY_RULE_SETUP
  {
-@@ -1783,14 +1783,14 @@
+@@ -1783,14 +1784,14 @@
  case 101:
  TAO_YY_RULE_SETUP
  ;
@@ -106,7 +115,7 @@
  case 103:
  TAO_YY_RULE_SETUP
  return ace_tao_yytext [0];
-@@ -1798,7 +1798,7 @@
+@@ -1798,7 +1799,7 @@
  case 104:
  TAO_YY_RULE_SETUP
  TAO_YY_ECHO;
