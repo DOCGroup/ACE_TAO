@@ -1557,24 +1557,6 @@ semun us;
 
 dnl SECTION 8: checks for variables
 
-dnl Check for broken struct timespec members
-ACE_CACHE_CHECK([for broken struct timespec members],
-  [ace_cv_lib_broken_timespec],
-  [
-    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <time.h>
-        ]],[[
-         timespec sr;
-         sr.ts_sec  = 0;
-        sr.ts_nsec = 0;
-        ]])],[
-         ace_cv_lib_broken_timespec=yes
-        ],[
-         ace_cv_lib_broken_timespec=no
-        ])
-  ],[AC_DEFINE([ACE_HAS_BROKEN_TIMESPEC_MEMBERS])],)
-
-
 dnl Check for more than two fields in struct rusage
 ACE_CACHE_CHECK([for limited struct rusage],
     [ace_cv_lib_limited_rusage],[
