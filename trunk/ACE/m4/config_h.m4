@@ -275,9 +275,6 @@ AH_TEMPLATE([ACE_HAS_BROKEN_MAP_FAILED],
 AH_TEMPLATE([ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS],
 [Compiler can't handle const char * as rvalue in conditional operator.])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_CONVERSIONS],
-[Compiler can't handle calls like foo->operator T *()])
-
 AH_TEMPLATE([ACE_HAS_BROKEN_CTIME],
 [Compiler/platform uses macro for ctime (e.g., MVS)])
 
