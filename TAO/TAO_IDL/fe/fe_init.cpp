@@ -775,7 +775,7 @@ FE_get_cpp_args_from_env (void)
     {
       // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment
       // variable.
-      ACE_Env_Value<char*> args2 ("TAO_IDL_DEFAULT_CPP_FLAGS",
+      ACE_Env_Value<char*> args2 (ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS"),
                                   (char *) 0);
 
       if (args2 != 0)
