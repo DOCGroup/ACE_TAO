@@ -1,3 +1,9 @@
+Tue Jun 10 12:53:05 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp:
+
+          Modified to avoid virtual method hiding.
+
 Tue Jun 10 11:37:09 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Time_Value_Test.cpp:
