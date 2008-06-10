@@ -2415,22 +2415,6 @@ foo *f = new (x) foo;
   ],,[AC_DEFINE([ACE_LACKS_PLACEMENT_OPERATOR_DELETE])])
 
 
-dnl Check if const char * can be rvalue in conditional operator
-ACE_CACHE_CHECK([if const char * can be rvalue in conditional operator],
-  [ace_cv_feature_conditional_str_cast],
-  [
-   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]],[[
-                   const char * foo = 0;
-                   const char * bar = 0;
-
-                   const char * ace = ((1 < 2) ? foo : bar);
-                  ]])],[
-                   ace_cv_feature_conditional_str_cast=yes
-                  ],[
-                   ace_cv_feature_conditional_str_cast=no
-                  ])
-  ],,[AC_DEFINE([ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS])])
-
 dnl Check if templates require source on platform
 dnl
 dnl FIXME: This test may be broken.

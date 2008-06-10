@@ -272,9 +272,6 @@ AH_TEMPLATE([ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS],
 AH_TEMPLATE([ACE_HAS_BROKEN_MAP_FAILED],
 [Platform doesn't cast MAP_FAILED to a (void *).])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS],
-[Compiler can't handle const char * as rvalue in conditional operator.])
-
 AH_TEMPLATE([ACE_HAS_BROKEN_CTIME],
 [Compiler/platform uses macro for ctime (e.g., MVS)])
 
