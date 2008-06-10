@@ -1,3 +1,9 @@
+Tue Jun 10 13:21:29 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Fixed redefinition warnings from aCC.
+
 Tue Jun 10 11:46:44 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_3315_Regression/main.cpp:
@@ -58,8 +64,8 @@ Mon Jun 09 11:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
 Mon Jun 09 11:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
-        * tests/Oneway_Send_Timeouts\test_i.cpp:
-        * tests/Timed_Buffered_Oneways\test_i.cpp:
+        * tests/Oneway_Send_Timeouts/Test_i.cpp:
+        * tests/Timed_Buffered_Oneways/Test_i.cpp:
 
           unambiguated call to time_value msec(long)
           caused by new uint64 non-const setter provided by:
