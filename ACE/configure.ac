@@ -2188,24 +2188,6 @@ ACE_CACHE_CHECK([for working C++ conversions],
                   ])
   ],,[AC_DEFINE([ACE_HAS_BROKEN_CONVERSIONS])])
 
-dnl Check for C++ namespace support
-ACE_CACHE_CHECK([for C++ namespace support],
-  [ace_cv_feature_cxx_namespaces],
-  [
-   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-                   namespace ACE
-                   {
-                     int x;
-                   }
-                  ]],[[
-                   ACE::x = 0;
-                  ]])],[
-                   ace_cv_feature_cxx_namespaces=yes
-                  ],[
-                   ace_cv_feature_cxx_namespaces=no
-                  ])
-  ],,[AC_DEFINE([ACE_HAS_BROKEN_NAMESPACES])])
-
 dnl Check for C++ "std" namespace
 ACE_CACHE_CHECK([for C++ "std" namespace],
   [ace_cv_feature_posix_uses_std_namespace],[
