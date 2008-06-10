@@ -285,10 +285,6 @@ AH_TEMPLATE([ACE_HAS_BROKEN_MSG_H],
 AH_TEMPLATE([ACE_HAS_BROKEN_MMAP_H],
 [HP/UX does not wrap the mmap(2) header files with extern "C".])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_NESTED_TEMPLATES],
-[MSVC has trouble with defining STL containers for nested structs and
-classes.])
-
 AH_TEMPLATE([ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS],
 [Platform has a bug with non-blocking connects (e.g., WinNT 4.0)])
 
