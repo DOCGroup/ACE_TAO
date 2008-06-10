@@ -1426,7 +1426,7 @@ ACE::send_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK || errno == ENOBUFS)
+              (errno == EWOULDBLOCK || errno == ENOBUFS))
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
@@ -1662,7 +1662,7 @@ ACE::send_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK || errno == ENOBUFS)
+              (errno == EWOULDBLOCK || errno == ENOBUFS))
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
@@ -1850,7 +1850,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK || errno == ENOBUFS)
+              (errno == EWOULDBLOCK || errno == ENOBUFS))
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
@@ -2770,7 +2770,7 @@ ACE::daemonize (const ACE_TCHAR pathname[],
         ACE_OS::close (i);
 
       int fd = ACE_OS::open ("/dev/null", O_RDWR, 0);
-      if (fd != -1);
+      if (fd != -1)
         {
           ACE_OS::dup2 (fd, ACE_STDIN);
           ACE_OS::dup2 (fd, ACE_STDOUT);
@@ -3386,7 +3386,7 @@ ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
         {
           star = true;
           pat = p;
-          while (*++pat == '*');
+          while (*++pat == '*') {}
 
           if (*pat == '\0')
             return true;
@@ -3411,7 +3411,7 @@ ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
         }
     }
   if (*p == '*')
-    while (*++p == '*');
+    while (*++p == '*') {}
 
   return *p == '\0';
 }
