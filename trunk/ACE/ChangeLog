@@ -1,3 +1,15 @@
+Tue Jun 10 18:46:24 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * ace/Stack_Trace.h:
+        
+          Updated comments to not exclude Borland from supported platforms.
+          
+        * ace/Stack_Trace.cpp:
+
+          - Moved the label "x" from inside of asm to be outside. Some compiler
+            does not like it.
+          - Enabled LynOS support and excluded support for gcc old versions before 3.3.
+          
 Tue Jun 10 13:56:17 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Stack_Trace.cpp:
