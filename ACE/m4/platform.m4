@@ -315,6 +315,7 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
 esac
 
 ACE_FUNC_IOCTL_ARGTYPES
+ACE_CHECK_GETNAME_RETURNS_RANDOM_SIN_ZERO
 ACE_CHECK_HAS_NONCONST_FD_ISSET
 ACE_CHECK_FORMAT_SPECIFIERS
 ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING
@@ -462,6 +463,44 @@ AC_DEFUN([ACE_VAR_TIMEZONE],
 if test "$ace_cv_var_timezone" = yes; then
   AC_DEFINE([ACE_HAS_TIMEZONE], 1,
 	    [Define to 1 if platform has global timezone variable])
+fi
+])
+
+
+# ACE_CHECK_GETNAME_RETURNS_RANDOM_SIN_ZERO
+#
+# Checks whether getsockname() and getpeername() return random values
+# in the sockaddr_in.sin_zero field.
+#
+# FIXME: Is it possible to write a portable feature test, or is checking
+#        the the target OS the best we can do?
+#
+AC_DEFUN([ACE_CHECK_GETNAME_RETURNS_RANDOM_SIN_ZERO],
+[AC_CACHE_CHECK([whether getsockname() and getpeername() return random values in sockaddr_in.sin_zero], 
+  [ace_cv_getname_returns_random_sin_zero],
+  [case "$host_os" in
+  linux*)
+    AC_COMPILE_IFELSE(
+      [AC_LANG_PROGRAM([#include <linux/version.h>],
+		[
+		#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,47))
+		int ok;
+		#else
+		choke me
+		#endif
+		])
+      ],
+      [ace_cv_getname_returns_random_sin_zero=no],
+      [ace_cv_getname_returns_random_sin_zero=yes])
+    ;;			
+  *)
+    ace_cv_getname_returns_random_sin_zero=no 
+    ;;
+  esac])
+
+if test $ace_cv_getname_returns_random_sin_zero = yes; then
+  AC_DEFINE([ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO], 1,
+[Define to 1 if the getsockname() and getpeername() return random values in the sockaddr_in.sin_zero field.])
 fi
 ])
 
