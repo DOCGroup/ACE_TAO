@@ -614,9 +614,6 @@ AH_TEMPLATE([ACE_HAS_STRINGS],
 AH_TEMPLATE([ACE_HAS_STRUCT_NETDB_DATA],
 [Compiler/platform has strange hostent API for socket *_r() calls])
 
-AH_TEMPLATE([ACE_HAS_SUNOS4_SIGNAL_T],
-[Compiler has horrible SunOS 4.x signal handlers...])
-
 AH_TEMPLATE([ACE_HAS_SVR4_DYNAMIC_LINKING],
 [Compiler/platform supports SVR4 dynamic linking semantics])
 
