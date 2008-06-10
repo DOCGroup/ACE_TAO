@@ -481,7 +481,7 @@ static bool load_dbghelp_library_if_needed (dbghelp_functions *pDbg)
   //@TODO: See codeproject's StackWalker.cpp for the list of locations to
   //search so we get the "enhanced" dbghelp if the user has it but it is not
   //first on the path.
-  if (!(pDbg->hMod = LoadLibrary (ACE_TEXT ("Dbghelp"))))
+  if (!(pDbg->hMod = ACE_TEXT_LoadLibrary (ACE_TEXT ("Dbghelp"))))
     return false;
 
   //@TODO: Cache this so we don't have to re-link every time.  When to unload?
