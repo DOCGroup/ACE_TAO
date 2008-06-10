@@ -1,3 +1,23 @@
+Tue Jun 10 10:57:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/ACE.cpp:
+
+          Correct presidence bug highlighted by FC9_GCC_430 build:
+          ACE.cpp:1429: warning: suggest parentheses around && within ||
+          ACE.cpp:1665: warning: suggest parentheses around && within ||
+          ACE.cpp:1853: warning: suggest parentheses around && within ||
+          The default precidence is && before ||, but the way the ||
+          statements were grouped, it was clear that was not the intended
+          resolution.
+
+          Correct empty if statement bug highlighted by FC9_GCC_430 build:
+          ACE.cpp:2773: warning: suggest braces around empty body in an 'if' statement
+
+          Also removed warnings by using empty braces:
+          ACE.cpp:3389: warning: suggest a space before ';' or explicit braces around empty body in 'while' statement
+          ACE.cpp:3414: warning: suggest a space before ';' or explicit braces around empty body in 'while' statement
+
+
 Mon Jun  9 21:38:04 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * ace/Stack_Trace.cpp:
