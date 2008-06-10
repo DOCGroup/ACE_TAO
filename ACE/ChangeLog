@@ -1,3 +1,13 @@
+Tue Jun 10 21:33:25 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+        
+          Replaced a Monitor class forward declaration with the full file
+          include, moved from the source file to the header file. This
+          move enables ACE monitor points to compile when inlining is
+          turned on.
+
 Tue Jun 10 18:46:24 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * ace/Stack_Trace.h:

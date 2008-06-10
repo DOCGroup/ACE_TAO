@@ -34,8 +34,7 @@ namespace ACE
       if (fp == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("bytes sent - opening ")
-                      ACE_TEXT ("/proc/net/dev failed\n")));
+                      ACE_TEXT ("opening /proc/net/dev failed\n")));
           return;
         }
 
