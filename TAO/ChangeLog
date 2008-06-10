@@ -1,3 +1,11 @@
+Tue Jun 10 11:46:44 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_3315_Regression/main.cpp:
+        * tests/Bug_3321_Regression/main.cpp:
+
+          For SunCC only, added an extern "C" to the declaration of
+          main_orb() to avoid warnings.
+
 Tue Jun 10 11:38:15 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/RTScheduling/DT_Creator.cpp:
