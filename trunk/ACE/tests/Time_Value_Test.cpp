@@ -91,7 +91,7 @@ run_main (int, ACE_TCHAR *[])
   tv1 *= 10.0;
   ACE_ASSERT ( tv1 == tv2);
   tv1.set (1, 999999);
-  tv2.set (-19, -999990);
+  tv2.set (static_cast<time_t> (-19), -999990);
   tv1 *= -10.0;
   ACE_ASSERT (tv1 == tv2);
 

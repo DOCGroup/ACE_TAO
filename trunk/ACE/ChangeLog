@@ -1,3 +1,9 @@
+Tue Jun 10 11:37:09 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Time_Value_Test.cpp:
+
+          Added a static cast to avoid warnings on QNX.
+
 Tue Jun 10 10:57:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/ACE.cpp:
@@ -23,7 +29,7 @@ Mon Jun  9 21:38:04 UTC 2008  Yan Dai  <dai_y@ociweb.com>
         * ace/Stack_Trace.cpp:
 
           Passed string literals instead of ACE_TEXT string to GetProcAddress as it
-          accepts LPCSTR which is defined as char*. This should fix wchar (Win32) 
+          accepts LPCSTR which is defined as char*. This should fix wchar (Win32)
           build errors.
 
 Mon Jun  9 20:52:52  2008  Steve Huston  <shuston@riverace.com>
@@ -35,7 +41,7 @@ Mon Jun  9 19:40:56 UTC 2008  Yan Dai  <dai_y@ociweb.com>
         * ace/Stack_Trace.h:
         * ace/Stack_Trace.cpp:
 
-          Excluded LynxOS, MinGW and Borland builds from stack trace supported 
+          Excluded LynxOS, MinGW and Borland builds from stack trace supported
           platforms.
 
 Mon Jun 09 14:46:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
