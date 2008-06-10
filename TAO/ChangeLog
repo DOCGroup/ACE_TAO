@@ -1,3 +1,9 @@
+Tue Jun 10 11:38:15 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/RTScheduling/DT_Creator.cpp:
+
+          Added a static cast to avoid warnings on QNX.
+
 Mon Jun  9 12:28:24 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/OctetSeq/run_test.pl:
