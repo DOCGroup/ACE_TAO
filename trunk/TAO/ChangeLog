@@ -1,3 +1,38 @@
+Tue Jun 10 14:53:00 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+          Tie Security and SSLIOP library lifetimes to that of their
+          registered ORBInitializers. This prevents the library getting
+          unloaded before the ORBInitializer destructions.
+
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+        * tao/CSD_Framework/CSD_POA.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Base.h:
+        * tao/CSD_Framework/CSD_Strategy_Base.inl:
+        * tao/CSD_Framework/CSD_Strategy_Base.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.h:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.h:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.cpp:
+        * tao/ORB_Core.cpp:
+          CSD threads borrow the ORB's thread-manager to spawn CSD
+          threads. Doing this forces the ORB to wait for CSD cleanup at
+          destruction time. This prevents a race between CSD cleanup and
+          ORB destruction.
+
+        * tao/PI/DLL_Resident_ORB_Initializer.h:
+        * tao/PI/DLL_Resident_ORB_Initializer.cpp:
+          Define and use DLL_Resident_ORB_Initializer to act as
+          a decorator/intermediary for an ORB_Initializer that is
+          defined in a DLL.  Without this there are timing issues
+          when the DLL is unloaded before the ORB_Initializer is
+          released.
+
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+          Release ORB Initializers in the reverse order
+          of their creation.
+          Add diagnostic messages.
+
 Tue Jun 10 14:16:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/tao_idl.cpp:

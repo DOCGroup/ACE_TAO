@@ -94,7 +94,7 @@ TAO_CSD_POA::new_POA (const String &name,
 
 void TAO_CSD_POA::poa_activated_hook ()
 {
-  this->sds_proxy_->poa_activated_event ();
+  this->sds_proxy_->poa_activated_event (this->orb_core_);
 }
 
 void TAO_CSD_POA::poa_deactivated_hook ()

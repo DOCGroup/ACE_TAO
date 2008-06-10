@@ -76,7 +76,7 @@ namespace TAO
 
 
       /// Event - The POA has been (or is being) activated.
-      bool poa_activated_event();
+      bool poa_activated_event(TAO_ORB_Core& orb_core);
 
       /// Event - The POA has been deactivated.
       void poa_deactivated_event();

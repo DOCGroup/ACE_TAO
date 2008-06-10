@@ -67,7 +67,7 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
       // The POA is already "active" (since its POAManager is active).
       // We need to "raise" the poa_activated_event() now.  Otherwise,
       // the event will be raised when the POAManager does become active.
-      if (!this->poa_activated_event())
+      if (!this->poa_activated_event( poa_impl->orb_core() ))
         {
           // An error has been already been reported to the log with
           // the detailed reason for the failure to handle the event.
