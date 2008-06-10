@@ -319,11 +319,6 @@ AH_TEMPLATE([ACE_HAS_BROKEN_T_ERROR],
 [Compiler/platform has the wrong prototype for t_error(), i.e.,
 t_error(char *) rather than t_error(const char *).])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_TIMESPEC_MEMBERS],
-[Platform defines struct timespec members as ts_sec and ts_nsec
-instead of tv_sec and tv_nsec.  This is highly non-portable.
-Currently only FreeBSD 2.1.x uses it.])
-
 AH_TEMPLATE([ACE_HAS_BSTRING],
 [Platform has <bstring.h> (which contains bzero() prototype)])
 
