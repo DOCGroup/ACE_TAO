@@ -64,21 +64,24 @@ void* loadDll(void*)
     assert(dllHandle != 0);
   }
 
-  capi_init = (voidfunction) dlsym(dllHandle, "capi_init");
+  void* temp = dlsym (dllHandle, "capi_init");
+  memcpy (&capi_init, &temp, sizeof (temp));
   if (capi_init == 0)
   {
     PRINTF ("unable to resolve symbol capi_init: %s\n", dlerror());
     assert(capi_init != 0);
   }
 
-  capi_fini = (voidfunction) dlsym(dllHandle, "capi_fini");
-  if (capi_init == 0)
+  temp = dlsym (dllHandle, "capi_fini");
+  memcpy (&capi_fini, &temp, sizeof (temp));
+  if (capi_fini == 0)
   {
     PRINTF ("unable to resolve symbol capi_fini: %s\n", dlerror());
-    assert(capi_init != 0);
+    assert(capi_fini != 0);
   }
 
-  capi_dosomething = (voidfunction) dlsym(dllHandle, "capi_dosomething");
+  temp = dlsym (dllHandle, "capi_dosomething");
+  memcpy (&capi_dosomething, &temp, sizeof (temp));
   if (capi_dosomething == 0)
   {
     PRINTF ("unable to resolve symbol capi_dosomething: %s\n", dlerror());
