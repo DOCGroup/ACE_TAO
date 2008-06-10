@@ -27,6 +27,8 @@
 #include "ace/Monitor_Control/Windows_Multi_Instance_Monitor.h"
 #elif defined (linux)
 #include "ace/Monitor_Control/Linux_Network_Interface_Monitor.h"
+#elif defined (ACE_HAS_KSTAT)
+#include "ace/Monitor_Control/Solaris_Network_Interface_Monitor.h"
 #endif
 
 #include "ace/Monitor_Control/Monitor_Control_export.h"
@@ -48,6 +50,8 @@ namespace ACE
         , public Windows_Multi_Instance_Monitor
 #elif defined (linux)
         , public Linux_Network_Interface_Monitor
+#elif defined (ACE_HAS_KSTAT)
+        , public Solaris_Network_Interface_Monitor
 #endif
     {
     public:

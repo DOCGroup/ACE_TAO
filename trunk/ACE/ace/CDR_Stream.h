@@ -55,6 +55,10 @@
 #include "ace/streams.h"
 #endif /* GEN_OSTREAM_OPS */
 
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+#include "Monitor_Size.h"
+#endif /* ACE_HAS_MONITOR_POINTS==1 */
+
 // Stuff used by the ACE CDR classes.
 #if defined ACE_LITTLE_ENDIAN
 #  define ACE_CDR_BYTE_ORDER 1
@@ -71,16 +75,6 @@ class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
 
 class ACE_InputCDR;
-
-#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-namespace ACE
-{
-  namespace Monitor_Control
-  {
-    class Size_Monitor;
-  }
-}
-#endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 /**
  * @class ACE_OutputCDR

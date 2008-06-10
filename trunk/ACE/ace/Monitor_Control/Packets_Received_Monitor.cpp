@@ -22,6 +22,8 @@ namespace ACE
         , Linux_Network_Interface_Monitor (
             " %*[^:]: %*u %lu %*u %*u %*u %*u %*u %*u %*u %*u")
             /// Scan format for /proc/net/dev
+#elif defined (ACE_HAS_KSTAT)
+        , Solaris_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
 #endif
     {}
 
@@ -35,6 +37,11 @@ namespace ACE
       this->receive (this->value_.doubleValue);
 #elif defined (linux)
       this->lin_update ();
+
+      /// Stores value and timestamp with thread-safety.
+      this->receive (static_cast<double> (this->value_));
+#elif defined (ACE_HAS_KSTAT)
+      this->sun_update ();
 
       /// Stores value and timestamp with thread-safety.
       this->receive (static_cast<double> (this->value_));

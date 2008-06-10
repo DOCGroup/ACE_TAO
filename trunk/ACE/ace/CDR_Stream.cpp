@@ -2,10 +2,6 @@
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"
 
-#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-#include "Monitor_Size.h"
-#endif /* ACE_HAS_MONITOR_POINTS==1 */
-
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Stream.inl"
 #endif /* ! __ACE_INLINE__ */
