@@ -1,3 +1,15 @@
+Wed Jun 11 16:07:34 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB.cpp:
+
+          Fix the test used to determine that the parameter passed to
+          the -ORBGestalt option is another ORBid. This feature was 
+          originally added to resolve bug 3049. 
+        
+        * tests/ORB_Local_Config/Bug_3049:
+
+          Added a test case to verify the fix for Bug 3049.
+
 Wed Jun 11 15:54:42 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2494_Regression/client.cpp:
