@@ -75,7 +75,7 @@ TAO_CSD_Framework_Loader::init (int, ACE_TCHAR* [])
       ACE_NEW_THROW_EX (temp_dll_initializer,
         PortableInterceptor::DLL_Resident_ORB_Initializer(
           orb_initializer.in (),
-          ACE_LIB_TEXT ("TAO_CSD_ThreadPool")),
+          ACE_TEXT ("TAO_CSD_ThreadPool")),
           CORBA::NO_MEMORY (
             CORBA::SystemException::_tao_minor_code (
               TAO::VMCID,
