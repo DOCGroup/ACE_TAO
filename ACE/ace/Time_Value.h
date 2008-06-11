@@ -162,6 +162,14 @@ public:
    */
   void msec (long);
 
+  /// Converts from milli-seconds format into ACE_Time_Value format.
+  /**
+   * @note The semantics of this method differs from the sec() and
+   *       usec() methods.  There is no analogous "millisecond"
+   *       component in an ACE_Time_Value.
+   */
+  void msec (int);  // converted to long then calls above.
+
   /// Returns the value of the object as a timespec_t.
   operator timespec_t () const;
 

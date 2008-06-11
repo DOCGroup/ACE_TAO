@@ -181,6 +181,14 @@ ACE_Time_Value::msec (long milliseconds)
   this->tv_.tv_usec = (milliseconds - (secs * 1000)) * 1000;
 }
 
+// Converts from milli-seconds format into Time_Value format.
+
+ACE_INLINE void
+ACE_Time_Value::msec (int milliseconds)
+{
+  ACE_Time_Value::msec (static_cast<long> (milliseconds));
+}
+
 // Returns number of micro-seconds.
 
 ACE_INLINE suseconds_t
