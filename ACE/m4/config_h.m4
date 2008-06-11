@@ -750,9 +750,6 @@ AH_TEMPLATE([ACE_LACKS_EXEC],
 
 AH_TEMPLATE([ACE_LACKS_FILELOCKS],[Platform lacks file locking mechanism])
 
-AH_TEMPLATE([ACE_LACKS_FLOATING_POINT],
-[Platform does not support floating point operations])
-
 AH_TEMPLATE([ACE_LACKS_GETSERVBYNAME],
 [Platforms lacks getservbyname() (e.g., VxWorks and Chorus).])
 
