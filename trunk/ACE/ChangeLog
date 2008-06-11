@@ -1,3 +1,13 @@
+Wed Jun 11 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Time_Value.inl:
+        * ace/Time_Value.h:
+
+          Add extra inline void msec(int) that calls void msec(long)
+          to avoid amiguity between void msec(long) and void msec(_int64 &)
+          when natual sized integers are given (which seems to be
+          quite often).
+
 Wed Jun 11 13:02:22 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/PerlACE/Run_Test.pm:
