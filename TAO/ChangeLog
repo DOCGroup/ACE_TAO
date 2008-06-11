@@ -1,3 +1,10 @@
+Wed Jun 11 11:17:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tao/PI/DLL_Resident_ORB_Initializer.cpp:
+
+          Replace ACE_LIB_TEXT with ACE_TEXT from previous commit of:
+          Tue Jun 10 14:53:00 UTC 2008  Ciju John
+
 Wed Jun 11 11:07:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tao/PI/DLL_Resident_ORB_Initializer.cpp:
