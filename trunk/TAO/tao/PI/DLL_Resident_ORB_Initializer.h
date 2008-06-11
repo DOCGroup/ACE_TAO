@@ -54,16 +54,10 @@ namespace PortableInterceptor
 
       virtual void pre_init (
         ::PortableInterceptor::ORBInitInfo_ptr info
-      )
-      throw (
-        ::CORBA::SystemException
       );
 
     virtual void post_init (
         ::PortableInterceptor::ORBInitInfo_ptr info
-      )
-      throw (
-        ::CORBA::SystemException
       );
 
   private:
