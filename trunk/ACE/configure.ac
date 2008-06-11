@@ -1791,15 +1791,11 @@ if test "$cross_compiling" != yes; then
   if test $ac_cv_sizeof_float != 0; then
     AC_DEFINE_UNQUOTED([ACE_SIZEOF_FLOAT],[$ac_cv_sizeof_float],
 		       [Size of the native "float" type])
-  else
-    AC_DEFINE([ACE_LACKS_FLOATING_POINT])
   fi
   AC_CHECK_SIZEOF([double])
   if test $ac_cv_sizeof_double != 0; then
     AC_DEFINE_UNQUOTED([ACE_SIZEOF_DOUBLE],[$ac_cv_sizeof_double],
 		       [Size of the native "double" type])
-  else
-    AC_DEFINE([ACE_LACKS_FLOATING_POINT])
   fi
   AC_CHECK_SIZEOF([long double])
   if test $ac_cv_sizeof_long_double != 0; then
