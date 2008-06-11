@@ -26,7 +26,7 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::DLL_Resident_ORB_Initializer 
   if (TAO_debug_level > 8)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_LIB_TEXT ("construct DLL_Resident_ORB_Initializer for @%@\n"),
+        ACE_TEXT ("construct DLL_Resident_ORB_Initializer for @%@\n"),
         initializer_.operator->()
         ));
     }
@@ -37,7 +37,7 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::~DLL_Resident_ORB_Initializer
   if (TAO_debug_level > 8)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_LIB_TEXT ("Destruct DLL_Resident_ORB_Initializer for @%@\n"),
+        ACE_TEXT ("Destruct DLL_Resident_ORB_Initializer for @%@\n"),
         initializer_.operator->()
         ));
     }
@@ -71,5 +71,3 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::post_init (
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-
