@@ -1,3 +1,10 @@
+Wed Jun 11 20:50:15 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_3049/a.conf:
+ 
+          Committing this for Phil Mesnier, who was having problems with
+          subversion and this file for some reason.
+
 Wed Jun 11 19:07:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Profile_Transport_Resolver.cpp:
