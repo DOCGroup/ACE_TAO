@@ -1,3 +1,10 @@
+Wed Jun 11 14:03:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+          Replace ACE_LIB_TEXT with ACE_TEXT from previous commit of:
+          Tue Jun 10 14:53:00 UTC 2008  Ciju John
+
 Wed Jun 11 12:27:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tao/PI/DLL_Resident_ORB_Initializer.cpp:

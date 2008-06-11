@@ -548,7 +548,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
   ACE_NEW_THROW_EX (temp_dll_initializer,
         PortableInterceptor::DLL_Resident_ORB_Initializer(
   initializer.in (),
-  ACE_LIB_TEXT ("TAO_Security")),
+  ACE_TEXT ("TAO_Security")),
   CORBA::NO_MEMORY (
   CORBA::SystemException::_tao_minor_code (
   TAO::VMCID,
@@ -579,7 +579,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
   ACE_NEW_THROW_EX (temp_dll_initializer,
         PortableInterceptor::DLL_Resident_ORB_Initializer(
   initializer.in (),
-  ACE_LIB_TEXT ("TAO_SSLIOP")),
+  ACE_TEXT ("TAO_SSLIOP")),
   CORBA::NO_MEMORY (
   CORBA::SystemException::_tao_minor_code (
   TAO::VMCID,
