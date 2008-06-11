@@ -191,6 +191,22 @@ namespace TAO
       {
         return false;
       }
+    else
+      {
+        // Determine the sync scope (if any)
+        Messaging::SyncScope sync_scope;
+        bool has_synchronization = false;
+        this->stub_->orb_core ()->call_sync_scope_hook (this->stub_,
+                                                        has_synchronization,
+                                                        sync_scope);
+
+        // If this stub has synchronization that's not "none", we need to
+        // have the transport schedule output at the appropriate time.
+        if (has_synchronization && sync_scope != Messaging::SYNC_NONE)
+          {
+            this->transport_->set_flush_in_post_open ();
+          }
+      }
 
     return true;
   }

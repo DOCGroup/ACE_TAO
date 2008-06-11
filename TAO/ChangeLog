@@ -1,11 +1,32 @@
+Wed Jun 11 19:07:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Profile_Transport_Resolver.cpp:
+
+          After connecting a transport, determine if flushing needs to take
+          place and indicate it to the transport via a flag.
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+
+          Added a flag and mutator to determine if flushing needs to occur
+          after opening a transport.
+
+        * tao/Transport.cpp:
+
+          Schedule flushing if indicated by the transport resolver.
+
+        * tests/Oneway_Timeouts/run_test.pl:
+
+          Adjust the delay sync time for the above change.
+
 Wed Jun 11 16:07:34 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/ORB.cpp:
 
           Fix the test used to determine that the parameter passed to
-          the -ORBGestalt option is another ORBid. This feature was 
-          originally added to resolve bug 3049. 
-        
+          the -ORBGestalt option is another ORBid. This feature was
+          originally added to resolve bug 3049.
+
         * tests/ORB_Local_Config/Bug_3049:
 
           Added a test case to verify the fix for Bug 3049.
