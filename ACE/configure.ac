@@ -7430,10 +7430,6 @@ elif test "$ace_cv_lib_signal_vi1_2" != yes &&
    test "$ace_cv_lib_struct_sigaction_va1_handler" = yes; then
   AC_DEFINE([ACE_HAS_LYNXOS_SIGNALS])
   AC_DEFINE([ACE_HAS_TANDEM_SIGNALS])
-elif test "$ace_cv_lib_signal_vi1a2_2" = yes &&
-   test "$ace_cv_lib_signal_vi1a2_ret" = yes &&
-   test "$ace_cv_lib_struct_sigaction_vi1a2_handler" = yes; then
-  AC_DEFINE([ACE_HAS_SPARCWORKS_401_SIGNALS])
 elif test "$ace_cv_lib_signal_vi1_2" = yes &&
    test "$ace_cv_lib_signal_vi1_ret" = yes &&
    test "$ace_cv_lib_struct_sigaction_vi1_handler" != yes; then

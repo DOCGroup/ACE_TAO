@@ -1,3 +1,12 @@
+Wed Jun 11 03:31:02 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Remove feature test and autoheader for
+          ACE_HAS_SPARCWORKS_401_SIGNALS.  This feature test macro is no
+          longer used.
+
 Wed Jun 11 02:57:12 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
