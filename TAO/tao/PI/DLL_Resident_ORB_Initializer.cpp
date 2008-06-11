@@ -1,7 +1,7 @@
 // -*- C++ -*-
 //=============================================================================
 /**
- *  @file DLL_Resident_ORBInitializer.cpp
+ *  @file DLL_Resident_ORB_Initializer.cpp
  *
  *  $Id$
  *
@@ -51,9 +51,9 @@ void
 PortableInterceptor::DLL_Resident_ORB_Initializer::pre_init (
     ::PortableInterceptor::ORBInitInfo_ptr info
   )
-  ACE_THROW_SPEC ((
+  throw (
     ::CORBA::SystemException
-  ))
+  )
 {
   initializer_->pre_init (info);
 }
@@ -62,9 +62,9 @@ void
 PortableInterceptor::DLL_Resident_ORB_Initializer::post_init (
     ::PortableInterceptor::ORBInitInfo_ptr info
   )
-  ACE_THROW_SPEC ((
+  throw (
     ::CORBA::SystemException
-  ))
+  )
 {
   initializer_->post_init (info);
 }
