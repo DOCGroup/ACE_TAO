@@ -1,3 +1,12 @@
+Wed Jun 11 03:39:48 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Remove feature test and autoheader template for
+          ACE_LACKS_FLOATING_POINT.  This feature test macro is no longer
+          used.
+
 Wed Jun 11 03:33:31 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
