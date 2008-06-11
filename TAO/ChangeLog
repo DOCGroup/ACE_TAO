@@ -1,3 +1,12 @@
+Wed Jun 11 12:27:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tao/PI/DLL_Resident_ORB_Initializer.cpp:
+        * tao/PI/DLL_Resident_ORB_Initializer.h:
+
+          Remove exception specifications altogether to correct FUZZ
+          errors from my correction to the previous commit of:
+          Tue Jun 10 14:53:00 UTC 2008  Ciju John
+
 Wed Jun 11 12:17:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/tao_idl.cpp:
