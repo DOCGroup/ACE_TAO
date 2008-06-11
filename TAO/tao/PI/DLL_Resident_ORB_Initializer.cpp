@@ -51,9 +51,6 @@ void
 PortableInterceptor::DLL_Resident_ORB_Initializer::pre_init (
     ::PortableInterceptor::ORBInitInfo_ptr info
   )
-  throw (
-    ::CORBA::SystemException
-  )
 {
   initializer_->pre_init (info);
 }
@@ -61,9 +58,6 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::pre_init (
 void
 PortableInterceptor::DLL_Resident_ORB_Initializer::post_init (
     ::PortableInterceptor::ORBInitInfo_ptr info
-  )
-  throw (
-    ::CORBA::SystemException
   )
 {
   initializer_->post_init (info);
