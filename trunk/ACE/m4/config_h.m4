@@ -576,9 +576,6 @@ AH_TEMPLATE([ACE_HAS_SOCKADDR_MSG_NAME],
 [Platform requires (struct sockaddr *) for msg_name field of
    struct msghdr.])
 
-AH_TEMPLATE([ACE_HAS_SPARCWORKS_401_SIGNALS],
-[Compiler has brain-damaged SPARCwork SunOS 4.x signal prototype...])
-
 AH_TEMPLATE([ACE_HAS_THR_YIELD],[Platform has thr_yield()])
 
 AH_TEMPLATE([ACE_HAS_STANDARD_CPP_LIBRARY],
