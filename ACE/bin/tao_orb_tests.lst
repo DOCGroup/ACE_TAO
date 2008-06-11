@@ -18,6 +18,7 @@ TAO/tests/Bug_2702_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/ORB_Local_Config/Bunch/run_test.pl: !LabVIEW_RT
 TAO/tests/ORB_Local_Config/Bug_1459/run_test.pl: SSL !STATIC !ACE_FOR_TAO !LabVIEW_RT
 TAO/tests/ORB_Local_Config/Bug_2612/run_test.pl: !ST !STATIC !ACE_FOR_TAO !LabVIEW_RT
+TAO/tests/ORB_Local_Config/Bug_3049/run_test.pl: !ST !STATIC !ACE_FOR_TAO !LabVIEW_RT
 TAO/tests/ORB_Local_Config/Separation/run_test.pl: !LabVIEW_RT
 TAO/tests/ORB_Local_Config/Service_Dependency/run_test.pl: !ST !STATIC !LabVIEW_RT
 TAO/tests/ORB_Local_Config/Shared/run_test.pl: !LabVIEW_RT
