@@ -247,11 +247,6 @@ AH_TEMPLATE([ACE_HAS_4_4BSD_SENDMSG_RECVMSG],
 AH_TEMPLATE([ACE_HAS_P_READ_WRITE],
 [Platform has pread() and pwrite() support.])
 
-AH_TEMPLATE([ACE_HAS_AIX_BROKEN_SOCKET_HEADER],
-[Platform, such as AIX4, needs to wrap #include of sys/socket.h with
-#undef/#define of __cplusplus.
-])
-
 AH_TEMPLATE([ACE_HAS_AIX_HI_RES_TIMER],
 [Platform has AIX4 ::read_real_time()])
 
