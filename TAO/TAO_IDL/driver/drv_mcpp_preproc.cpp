@@ -97,13 +97,13 @@ ACE_RCSID (driver,
 // Storage for preprocessor args.
 unsigned long const DRV_MAX_ARGCOUNT = 128;
 unsigned long DRV_argcount = 0;
-char const * DRV_arglist[DRV_MAX_ARGCOUNT] = { 0 };
+char ACE_TCHAR * DRV_arglist[DRV_MAX_ARGCOUNT] = { 0 };
 
 static char const * output_arg_format = 0;
 static long output_arg_index = 0;
 
-char const DIR_DOT[] = ".";
-char const DIR_DOT_DOT[] = "..";
+ACE_TCHAR const DIR_DOT[] = ACE_TEXT (".");
+ACE_TCHAR const DIR_DOT_DOT[] = ACE_TEXT ("..");
 
 // Lines can be 1024 chars long intially - it will expand as required.
 #define LINEBUF_SIZE 1024
@@ -114,8 +114,8 @@ static size_t drv_line_size = LINEBUF_SIZE + 1;
 void
 DRV_cpp_new_location (char const * new_loc)
 {
-  ACE::strdelete (const_cast<char *> (DRV_arglist[0]));
-  DRV_arglist[0] = ACE::strnew (new_loc);
+  ACE::strdelete (const_cast<ACE_TCHAR *> (DRV_arglist[0]));
+  DRV_arglist[0] = ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (new_loc));
 }
 
 // Push an argument into the DRV_arglist.
@@ -125,16 +125,14 @@ DRV_cpp_putarg (const char *str)
   if (DRV_argcount >= DRV_MAX_ARGCOUNT)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s %d %s\n",
-                  idl_global->prog_name (),
-                  ": More than",
-                  DRV_MAX_ARGCOUNT,
-                  "arguments to preprocessor"));
+                  "%s: More than %d arguments to preprocessor\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  DRV_MAX_ARGCOUNT));
 
       throw Bailout ();
     }
 
-  DRV_arglist[DRV_argcount++] = ACE::strnew (str);
+  DRV_arglist[DRV_argcount++] = ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
 }
 
 // Expand the output argument with the given filename.
@@ -143,20 +141,17 @@ DRV_cpp_expand_output_arg (const char *filename)
 {
   if (output_arg_format != 0)
     {
-      ACE::strdelete (const_cast<char *> (DRV_arglist[output_arg_index]));
+      ACE::strdelete (const_cast<ACE_TCHAR *> (DRV_arglist[output_arg_index]));
       DRV_arglist[output_arg_index] = 0;
 
-      char *output_arg = 0;
-      ACE_NEW (output_arg,
-               char [ACE_OS::strlen (output_arg_format)
+      ACE_NEW (DRV_arglist[output_arg_index],
+               ACE_TCHAR [ACE_OS::strlen (output_arg_format)
                      + ACE_OS::strlen (filename)
                      + 1]);
 
-      ACE_OS::sprintf (output_arg,
-                       output_arg_format,
-                       filename);
-
-      DRV_arglist[output_arg_index] = output_arg;
+      ACE_OS::sprintf (const_cast<ACE_TCHAR *> (DRV_arglist[output_arg_index]),
+                       ACE_TEXT_CHAR_TO_TCHAR (output_arg_format),
+                       ACE_TEXT_CHAR_TO_TCHAR (filename));
     }
 }
 
@@ -300,21 +295,21 @@ DRV_cpp_init (void)
     }
 
   // Add any flags in platform_cpp_args to cpp's DRV_arglist.
-  ACE_ARGV platform_arglist (platform_cpp_args);
+  ACE_ARGV platform_arglist (ACE_TEXT_CHAR_TO_TCHAR (platform_cpp_args));
 
   for (int i = 0; i < platform_arglist.argc (); ++i)
     {
       // Check for an argument that specifies the preprocessor's output file.
-      if (ACE_OS::strstr (platform_arglist[i], "%s") != 0
+      if (ACE_OS::strstr (platform_arglist[i], ACE_TEXT("%s")) != 0
           && output_arg_format == 0)
         {
-          output_arg_format = ACE::strnew (platform_arglist[i]);
+          output_arg_format = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (platform_arglist[i]));
           output_arg_index = DRV_argcount;
           DRV_cpp_putarg (0);
         }
       else
         {
-          DRV_cpp_putarg (platform_arglist[i]);
+          DRV_cpp_putarg (ACE_TEXT_ALWAYS_CHAR (platform_arglist[i]));
         }
     }
 }
@@ -334,7 +329,7 @@ DRV_sweep_dirs (const char *rel_path,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DRV_sweep_dirs: chdir %s failed\n",
-                         rel_path),
+                         ACE_TEXT_CHAR_TO_TCHAR (rel_path)),
                         -1);
     }
 
@@ -355,14 +350,14 @@ DRV_sweep_dirs (const char *rel_path,
           continue;
         }
 
-      ACE_CString lname (dir_entry->d_name);
+      ACE_CString lname (ACE_TEXT_ALWAYS_CHAR (dir_entry->d_name));
       ACE_stat stat_buf;
 
       if (ACE_OS::lstat (lname.c_str (), &stat_buf) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "DRV_sweep_dirs: ACE_OS::lstat (%s) failed\n",
-                             lname.c_str ()),
+                             ACE_TEXT_CHAR_TO_TCHAR (lname.c_str ())),
                             -1);
         }
 
@@ -412,7 +407,7 @@ DRV_sweep_dirs (const char *rel_path,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DRV_sweep_dirs: chdir .. (from %s) failed\n",
-                         rel_path),
+                         ACE_TEXT_CHAR_TO_TCHAR (rel_path)),
                         -1);
     }
 
@@ -560,7 +555,7 @@ DRV_cpp_post_init (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "DRV_cpp_post_init: DRV_sweep_dirs (%s) failed\n",
-                  idl_global->recursion_start ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->recursion_start ())));
 
       throw Bailout ();
     }
@@ -571,7 +566,7 @@ DRV_cpp_post_init (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "DRV_cpp_post_init: ACE_OS::chdir (%s) failed\n",
-                  cwd_path));
+                  ACE_TEXT_CHAR_TO_TCHAR (cwd_path)));
 
       throw Bailout ();
     }
@@ -846,7 +841,7 @@ DRV_get_orb_idl_includes (void)
         {
           ACE_ERROR ((LM_ERROR,
                       "TAO_IDL: cannot open or find file: %s\n",
-                      orb_idl_path.c_str ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (orb_idl_path.c_str ())));
 
           throw Bailout ();
         }
@@ -908,9 +903,8 @@ DRV_check_file_for_includes (const char *filename)
   if (fin == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s",
-                  idl_global->prog_name (),
-                  ": cannot open input file\n"));
+                  "%s: cannot open input file\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()));
 
       throw Bailout ();
     }
@@ -962,7 +956,7 @@ DRV_pre_proc (const char *myfile)
   
   for (size_t i = 0; i < DRV_argcount; ++i)
     {
-      tmp_arglist[i] = ACE::strnew (DRV_arglist[i]);
+      tmp_arglist[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (DRV_arglist[i]));
     }
   
   // tell mcpp to use memory buffers, instead of an output file.
@@ -972,20 +966,19 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s: mcpp preprocessor execution failed:\n%s",
-                  idl_global->prog_name (),
-                  mcpp_get_mem_buffer(ERR)));
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (mcpp_get_mem_buffer(ERR))));
       throw Bailout ();
     }
 
   for (size_t i = 0; i < DRV_argcount; ++i)
     delete tmp_arglist[i];
 
-
   // Remove the null termination and the input file from the DRV_arglist,
   // the next file will the previous args.
-  ACE::strdelete (const_cast<char *> (DRV_arglist[DRV_argcount - 2]));
-
   DRV_argcount -= 2;
+  ACE::strdelete (const_cast<ACE_TCHAR *> (DRV_arglist[DRV_argcount]));
+  DRV_arglist[DRV_argcount] = 0;
 
   char * yyin = mcpp_get_mem_buffer(OUT);
   
@@ -994,8 +987,8 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s: Could not retrieve preprocessed buffer\n%s",
-                  idl_global->prog_name (),
-                  mcpp_get_mem_buffer(ERR)));
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (mcpp_get_mem_buffer(ERR))));
 
       throw Bailout ();
     }
