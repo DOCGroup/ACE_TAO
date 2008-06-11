@@ -1,3 +1,12 @@
+Wed Jun 11 11:07:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tao/PI/DLL_Resident_ORB_Initializer.cpp:
+        * tao/PI/DLL_Resident_ORB_Initializer.h:
+
+          Remove prepricated ACE_THROW_SPEC macro and correct filename
+          header to correct FUZZ errors from previous commit of:
+          Tue Jun 10 14:53:00 UTC 2008  Ciju John
+
 Tue Jun 10 16:32:32 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/fe/lex.yy.cpp:
