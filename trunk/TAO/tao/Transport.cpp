@@ -163,6 +163,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   , stats_ (0)
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
+  , flush_in_post_open_ (0)
 {
   ACE_NEW (this->messaging_object_,
             TAO_GIOP_Message_Base (orb_core,
@@ -2675,16 +2676,17 @@ TAO_Transport::post_open (size_t id)
       // #REFCOUNT# becomes two.
       if (this->wait_strategy ()->register_handler () == 0)
         {
-          TAO_Flushing_Strategy *flushing_strategy =
-            this->orb_core ()->flushing_strategy ();
+          if (this->flush_in_post_open_)
+            {
+              TAO_Flushing_Strategy *flushing_strategy =
+                this->orb_core ()->flushing_strategy ();
 
-          if (flushing_strategy == 0)
-            throw CORBA::INTERNAL ();
+              if (flushing_strategy == 0)
+                throw CORBA::INTERNAL ();
 
-          // TBD: Determine exactly when this portion of the code should
-          // be performed.  Enabling it for all situations causes the
-          // current implementation of the Oneway_Timeouts test to fail.
-          //(void) flushing_strategy->schedule_output (this);
+              this->flush_in_post_open_ = false;
+              (void) flushing_strategy->schedule_output (this);
+            }
         }
       else
         {
