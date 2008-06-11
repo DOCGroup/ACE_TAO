@@ -1,3 +1,9 @@
+Wed Jun 11 15:51:43 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/PI/DLL_Resident_ORB_Initializer.h:
+
+          Moved #include to avoid the #pragma once is obsolete warning.
+
 Wed Jun 11 15:45:22 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Timed_Buffered_Oneways/test_i.cpp:

@@ -15,11 +15,12 @@
 #define PI_DLL_RESIDENT_ORB_INITIALIZER_H
 
 #include /**/ "ace/pre.h"
+#include "ace/DLL.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/DLL.h"
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 //#include "tao/PI/ORBInitializerC.h"
