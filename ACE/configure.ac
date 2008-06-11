@@ -1045,30 +1045,6 @@ ACE_CACHE_CHECK([regexpr.h for regular expression support],
      ])
    ],[AC_DEFINE([ACE_NEEDS_REGEXPR_H])],)
 
-dnl Check if sprintf() returns char*
-ACE_CONVERT_WARNINGS_TO_ERRORS([
-ACE_CACHE_CHECK([if sprintf() returns char*],
-  [ace_cv_lib_charptr_sprintf],
-  [
-   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <stdlib.h>
-#include <stdio.h>
-    ]],[[
-     char *str = 0;
-     const char *fmt = "%d";
-     int num = 0;
-
-     char *s = 0;
-
-     s = sprintf(str, fmt, num);
-    ]])],[
-     ace_cv_lib_charptr_sprintf=yes
-    ],[
-     ace_cv_lib_charptr_sprintf=no
-    ])
-  ],[AC_DEFINE([ACE_HAS_CHARPTR_SPRINTF])],)
-]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
-
 dnl Check for old malloc() prototype.
 ACE_CONVERT_WARNINGS_TO_ERRORS([
 ACE_CACHE_CHECK([for old malloc() prototype],
