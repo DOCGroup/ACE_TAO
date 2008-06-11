@@ -1145,9 +1145,10 @@ namespace TAO
 
       // Someone else's context?
       const ACE_TCHAR *shared = ACE_TEXT("ORB:");
-      if (ACE_OS::strncmp (arg, shared, sizeof (shared) - 1) == 0)
+      size_t shared_len = ACE_OS::strlen(shared);
+      if (ACE_OS::strncmp (arg, shared, shared_len) == 0)
         {
-          ACE_CString orbid (orbconfig_string.substr (sizeof (shared)));
+          ACE_CString orbid (orbconfig_string.substr (shared_len));
 
           // Get ORB Core
           TAO_ORB_Core_Auto_Ptr oc (TAO::ORB_Table::instance ()->find (orbid.c_str ()));
