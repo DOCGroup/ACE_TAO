@@ -288,9 +288,11 @@ sub test_buffer_timeout
     print "test_buffer_timeout 1 passed...\n";
     print "test_buffer_timeout 2 testing...\n";
     # delayed buffering should behave as above, because it will start out buffering
-    # due to the connection not being established.
+    # due to the connection not being established.  However, the when the
+    # actual connection is made, it will flush the queued messages which
+    # may take up to 550ms.
     unlink $srv_ior;
-    $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_max 50 -first_min 1000");
+    $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_max 550 -first_min 1000");
     if ($SRV->Spawn() != 0) {
         return 1;
     }

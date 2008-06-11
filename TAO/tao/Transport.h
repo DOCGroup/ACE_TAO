@@ -553,6 +553,9 @@ public:
   /// Accessor for the output CDR stream
   TAO_OutputCDR &out_stream (void);
 
+  /// Set the flush in post open flag
+  void set_flush_in_post_open (void);
+
   /*
    * Specialization hook to add public methods from
    * concrete transport implementations to TAO's transport
@@ -1076,6 +1079,9 @@ private:
   /// Statistics
   TAO::Transport::Stats* stats_;
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
+
+  /// Indicate that flushing needs to be done in post_open()
+  bool flush_in_post_open_;
 
   /*
    * specialization hook to add class members from concrete
