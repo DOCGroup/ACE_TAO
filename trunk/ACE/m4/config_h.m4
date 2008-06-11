@@ -305,9 +305,6 @@ AH_TEMPLATE([ACE_HAS_CHARPTR_DL],
 AH_TEMPLATE([ACE_HAS_CHARPTR_SOCKOPT],
 [OS/platform uses char * for sockopt, rather than const char *])
 
-AH_TEMPLATE([ACE_HAS_CHARPTR_SPRINTF],
-[sprintf() returns char * rather than int (e.g., SunOS 4.x)])
-
 AH_TEMPLATE([ACE_HAS_CONFLICTING_XTI_MACROS],
 [OS header files have some problems with XTI (HP/UX 11).])
 
