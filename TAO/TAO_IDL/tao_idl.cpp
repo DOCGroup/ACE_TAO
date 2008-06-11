@@ -85,7 +85,7 @@ ACE_RCSID (TAO_IDL,
            tao_idl,
            "$Id$")
 
-extern const char *DRV_arglist[];
+extern const ACE_TCHAR *DRV_arglist[];
 extern unsigned long DRV_argcount;
 
 char *DRV_files[NFILES];
@@ -166,7 +166,7 @@ DRV_cleanup (void)
 
   for (unsigned long i = 0; i < DRV_argcount; ++i)
     {
-      ACE::strdelete (const_cast<char *> (DRV_arglist[i]));
+      ACE::strdelete (const_cast<ACE_TCHAR *> (DRV_arglist[i]));
     }
 }
 
