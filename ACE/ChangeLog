@@ -1,3 +1,9 @@
+Wed Jun 11 04:17:42 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/platform.m4:
+
+          Remove ACE_HAS_AIX_BROKEN_SOCKET_HEADER definitions.
+
 Wed Jun 11 03:51:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

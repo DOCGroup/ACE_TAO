@@ -46,14 +46,12 @@ case "$host" in
     dnl pre-AIX 4.3 requires _BSD_INCLUDES
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_BSD_INCLUDES"
     AC_DEFINE([ACE_DEFAULT_BASE_ADDR], [((char *) 0x80000000)])
-    AC_DEFINE([ACE_HAS_AIX_BROKEN_SOCKET_HEADER])
     ;;
   *aix4.2*)
     AC_DEFINE([AIX])
     dnl pre-AIX 4.3 requires _BSD_INCLUDES
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_BSD_INCLUDES"
     AC_DEFINE([ACE_DEFAULT_BASE_ADDR], [((char *) 0x80000000)])
-dnl    AC_DEFINE([ACE_HAS_AIX_BROKEN_SOCKET_HEADER])
     AC_DEFINE([ACE_TLI_TCP_DEVICE], ["/dev/xti/tcp"])
     ;;
   *aix*)
