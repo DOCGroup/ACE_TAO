@@ -961,9 +961,6 @@ AH_TEMPLATE([ACE_PAGE_SIZE],
 AH_TEMPLATE([ACE_REDEFINES_XTI_FUNCTIONS],
 [Platform redefines the t_... names (UnixWare)])
 
-AH_TEMPLATE([ACE_SELECT_USES_INT],
-[Platform uses int for select() rather than fd_set])
-
 AH_TEMPLATE([ACE_TEMPLATES_REQUIRE_PRAGMA],
 [Compiler's template mechanism must use a pragma.  This is used for
    AIX's C++ compiler.])
