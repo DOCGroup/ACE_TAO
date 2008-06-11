@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file DLL_Resident_ORBInitializer.h
+ *  @file DLL_Resident_ORB_Initializer.h
  *
  *  $Id$
  *
@@ -55,16 +55,16 @@ namespace PortableInterceptor
       virtual void pre_init (
         ::PortableInterceptor::ORBInitInfo_ptr info
       )
-      ACE_THROW_SPEC ((
+      throw (
         ::CORBA::SystemException
-      ));
+      );
 
     virtual void post_init (
         ::PortableInterceptor::ORBInitInfo_ptr info
       )
-      ACE_THROW_SPEC ((
+      throw (
         ::CORBA::SystemException
-      ));
+      );
 
   private:
     PortableInterceptor::ORBInitializer_var initializer_;
