@@ -3,6 +3,7 @@
 # This module contains a few miscellanous functions and some
 # startup ARGV processing that is used by all tests.
 
+use PerlACE::Process;
 use PerlACE::TargetProcess;
 use PerlACE::HostProcess;
 use PerlACE::ConfigList;
