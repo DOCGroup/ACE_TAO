@@ -1,3 +1,10 @@
+Wed Jun 11 02:48:07 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+
+          Remove autoheader template for HAVE_RESTARTABLE_SYSCALLS.
+          This feature test macro is no longer used in ACE.
+
 Wed Jun 11 00:17:01 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
