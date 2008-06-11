@@ -2321,46 +2321,6 @@ if test "$ace_cv_lib_auto_ptr_class" = yes; then
     ],,[AC_DEFINE([ACE_AUTO_PTR_LACKS_RESET])])
 fi  dnl test $ace_cv_lib_auto_ptr_class=yes
 
-dnl Check if platform supports typename keyword
-ACE_CACHE_CHECK([for C++ typename keyword],
-  [ace_cv_feature_posix_typename_keyword],[
-    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-                     class Bar
-                     {
-                     public:
-                       typedef int Y;
-                       Bar(int bar) : bar_(bar) {}
-                     private:
-                       int bar_;
-                     };
-
-                     template <class T>
-                     class Foo
-                     {
-                     public:
-                       typedef typename T::Y Y;
-                       Foo(T* foo) : foo_(foo) {}
-                       void bilbo(typename T::Y y)
-                         { typename T::Y x(10); }
-                     private:
-                       T* foo_;
-                     };
-                   ]],[[
-                     Bar bar(15);
-                     Foo<Bar> foo(&bar);
-                     foo.bilbo(10);
-                   ]])],[
-                    ace_cv_feature_posix_typename_keyword=yes
-                   ],[
-                    ace_cv_feature_posix_typename_keyword=no
-                   ])
-  ],
-  [AC_DEFINE([ACE_HAS_TYPENAME_KEYWORD])],
-  [
-   AC_MSG_WARN([$CXX does not support the C++ "typename" keyword.
-ACE will require it in the near future.])
-  ])
-
 dnl Check if platform supports placement new operator
 ACE_CACHE_CHECK([for C++ placement new operator],
   [ace_cv_feature_placement_new],[
@@ -2923,11 +2883,6 @@ dnl Check if platform supports template typedefs
 ACE_CACHE_CHECK([for template typedefs],
   [ace_cv_feature_posix_template_typedefs],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#if defined (ACE_HAS_TYPENAME_KEYWORD)
-#define TYPENAME typename
-#else
-#define TYPENAME
-#endif
 
 class Bar
 {
@@ -2943,7 +2898,7 @@ template <class T>
 class Foo
 {
 public:
-  typedef TYPENAME T::Y Y;
+  typedef typename T::Y Y;
   Foo(T* foo) : foo_(foo) {}
   void print(Y);
 private:
@@ -2951,7 +2906,7 @@ private:
 };
 
 template <class T>
-void Foo<T>::print(TYPENAME T::Y)
+void Foo<T>::print(typename T::Y)
 {
 }
                    ]],[[
