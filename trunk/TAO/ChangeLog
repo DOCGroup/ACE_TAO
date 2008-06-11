@@ -1,3 +1,12 @@
+Wed Jun 11 12:17:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          A few more wide character conversions required to get
+          the tao_idl working on wide character builds.
+
 Wed Jun 11 11:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tao/PI/CSD_Framework/CSD_Framework_Loader.cpp:

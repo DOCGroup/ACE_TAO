@@ -331,7 +331,7 @@ DRV_sweep_dirs (const char *rel_path,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DRV_sweep_dirs: chdir %s failed\n",
-                         rel_path),
+                         ACE_TEXT_CHAR_TO_TCHAR (rel_path)),
                         -1);
     }
 
@@ -359,7 +359,7 @@ DRV_sweep_dirs (const char *rel_path,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "DRV_sweep_dirs: ACE_OS::lstat (%s) failed\n",
-                             lname.c_str ()),
+                             ACE_TEXT_CHAR_TO_TCHAR (lname.c_str ())),
                             -1);
         }
 
@@ -409,7 +409,7 @@ DRV_sweep_dirs (const char *rel_path,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DRV_sweep_dirs: chdir .. (from %s) failed\n",
-                         rel_path),
+                         ACE_TEXT_CHAR_TO_TCHAR (rel_path)),
                         -1);
     }
 
