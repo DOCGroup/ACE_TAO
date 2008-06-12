@@ -17,28 +17,23 @@ namespace ACE
       : Monitor_Base (name)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Multi_Instance_Monitor (
-          ACE_TEXT("\\Network Interface(*)\\Packets Sent/sec"))
+          ACE_TEXT ("\\Network Interface(*)\\Packets Sent/sec"))
 #elif defined (linux)
         , Linux_Network_Interface_Monitor (
             " %*[^:]: %*u %*u %*u %*u %*u %*u %*u %*u %*u %lu")
             /// Scan format for /proc/net/dev
+#elif defined (ACE_HAS_KSTAT)
+        , Solaris_Network_Interface_Monitor ("opackets")
 #endif
     {}
 
     void
     Packets_Sent_Monitor::update (void)
     {
-#if defined (ACE_HAS_WIN32_PDH)
-      this->win_update ();
-
-      /// Stores value and timestamp with thread-safety.
-      this->receive (this->value_.doubleValue);
-#elif defined (linux)
-      this->lin_update ();
-
-      /// Stores value and timestamp with thread-safety.
+      this->update_i ();
+      
+      /// On some platforms, value_ is an ACE_UINT64.
       this->receive (static_cast<double> (this->value_));
-#endif
     }
 
     const char*

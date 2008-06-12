@@ -16,12 +16,11 @@ namespace ACE
   {
     Windows_Multi_Instance_Monitor::Windows_Multi_Instance_Monitor (
       const ACE_TCHAR *wildcard_path)
-      : instances_ (0),
-        n_instances_ (0),
-        status_ (ERROR_SUCCESS)
+      : value_ (0.0)
+      , instances_ (0)
+      , n_instances_ (0)
+      , status_ (ERROR_SUCCESS)
     {
-      this->value_.doubleValue = 0.0;
-
       /// Create a string which is a concatentation of the path
       /// name of each 'instance' we need to monitor.
 
@@ -76,7 +75,7 @@ namespace ACE
     }
 
     void
-    Windows_Multi_Instance_Monitor::win_update (void)
+    Windows_Multi_Instance_Monitor::update_i (void)
     {
       Windows_Monitor **current_instance = 0;
 
@@ -85,10 +84,9 @@ namespace ACE
         {
           i.next (current_instance);
 
-          (*current_instance)->win_update ();
+          (*current_instance)->update_i ();
 
-          this->value_.doubleValue +=
-            (*current_instance)->value_.doubleValue;
+          this->value_ += (*current_instance)->value_;
         }
     }
   }

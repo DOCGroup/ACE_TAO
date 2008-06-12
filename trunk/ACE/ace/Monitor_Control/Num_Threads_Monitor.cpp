@@ -4,10 +4,6 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#if defined (ACE_HAS_KSTAT)
-#include <sys/sysinfo.h>
-#endif
-
 #if defined (linux)
 #include "ace/OS_NS_stdio.h"
 #endif
@@ -28,6 +24,7 @@ namespace ACE
 #elif defined (linux)
       , file_ptr_ (0)
       , nthreads_ (0UL)
+#elif defined (ACE_HAS_KSTAT)
 #endif
     {
     }
@@ -36,10 +33,8 @@ namespace ACE
     Num_Threads_Monitor::update (void)
     {
 #if defined (ACE_HAS_WIN32_PDH)
-      this->win_update ();
-
-      /// Stores value and timestamp with thread-safety.
-      this->receive (this->value_.doubleValue);
+      this->update_i ();
+      this->receive (this->value_);
 #elif defined (linux)
       this->file_ptr_ = ACE_OS::fopen (ACE_TEXT ("/proc/self/status"),
                                        ACE_TEXT ("r"));

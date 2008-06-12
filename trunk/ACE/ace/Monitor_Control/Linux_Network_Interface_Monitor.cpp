@@ -59,7 +59,7 @@ namespace ACE
     }
 
     void
-    Linux_Network_Interface_Monitor::lin_update (void)
+    Linux_Network_Interface_Monitor::update_i (void)
     {
       char buf[1024];
       FILE* fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
