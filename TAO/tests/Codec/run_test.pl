@@ -9,7 +9,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+my $target = PerlACE::TestTarget::create_target ("server");
 
 print STDERR "\n\n==== Running Codec test\n";
 
@@ -20,7 +20,7 @@ else {
     $T = $target->CreateProcess ("client");
 }
 
-$test = $T->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+$test = $T->SpawnWaitKill ($target->ProcessStartWaitInterval());
 
 $target->GetStderrLog();
 

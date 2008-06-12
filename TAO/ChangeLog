@@ -1,3 +1,14 @@
+Thu Jun 12 16:27:53 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/AMH_Exceptions/run_test.pl:
+        * tests/Param_Test/run_test.pl:
+        * tests/Hello/run_test.pl:
+        * tests/CallbackTest/run_test.pl:
+        * tests/Codec/run_test.pl:
+        * tests/Collocation/run_test.pl: Adjusted to work with new scheme to
+          run pieces of tests on other machines/platforms. See ACE ChangeLog
+          Thu Jun 12 16:04:33 UTC 2008  Steve Huston  <shuston@riverace.com>
+
 Thu Jun 12 15:17:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
