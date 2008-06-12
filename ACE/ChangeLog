@@ -1,9 +1,15 @@
+Thu Jun 12 12:17:52 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Stack_Trace.cpp:
+
+          Corrected Win32 assembler compilation error.
+
 Wed Jun 11 16:24:00 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
 
           Added new test case.
-        
+
 Wed Jun 11 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/Time_Value.inl:
