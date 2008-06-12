@@ -45,7 +45,8 @@ namespace ACE
       /// value we want to monitor, we just vary the scan format string.
       Linux_Network_Interface_Monitor (const char *scan_format);
 
-      void lin_update (void);
+      /// Platform-specific implementation.
+      void update_i (void);
 
     protected:
       ACE_UINT64 value_;
