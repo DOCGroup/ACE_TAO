@@ -60,7 +60,6 @@
 
 #define ACE_HAS_TEMPLATE_TYPEDEFS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
 
 // Platform provides ACE_TLI function prototypes.
 // For Win32, this is not really true, but saves a lot of hassle!

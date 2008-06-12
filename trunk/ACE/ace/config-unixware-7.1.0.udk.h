@@ -303,9 +303,6 @@
 /* Platform provides <sys/xti.h> header */
 #define ACE_HAS_SYS_XTI_H 1
 
-/* Compiler implements template specialization */
-#define ACE_HAS_TEMPLATE_SPECIALIZATION 1
-
 /* Compiler implements templates that support typedefs inside of classes used
    as formal arguments to a template class. */
 #define ACE_HAS_TEMPLATE_TYPEDEFS 1
