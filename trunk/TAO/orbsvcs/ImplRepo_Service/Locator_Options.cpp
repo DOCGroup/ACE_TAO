@@ -376,7 +376,7 @@ Options::load_registry_options ()
   if (err == ERROR_SUCCESS)
     {
       ACE_ASSERT (type == REG_DWORD);
-      ping_interval_.msec (tmp);
+      ping_interval_.msec (static_cast<long> (tmp));
     }
 
   tmp = 0;

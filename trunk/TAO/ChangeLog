@@ -1,3 +1,9 @@
+Thu Jun 12 13:04:43 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Added another cast to disambiguate the msec() call.
+
 Thu Jun 12 12:31:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
@@ -8,7 +14,7 @@ Thu Jun 12 12:31:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 Wed Jun 11 20:50:15 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_3049/a.conf:
- 
+
           Committing this for Phil Mesnier, who was having problems with
           subversion and this file for some reason.
 
