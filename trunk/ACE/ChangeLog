@@ -1,5 +1,7 @@
 Thu Jun 12 16:04:33 UTC 2008  Steve Huston  <shuston@riverace.com>
 
+        * bin/tao_orb_tests.lst: Disabled newly added tests on LabVIEW_RT.
+ 
         * bin/PerlACE/README: Describes how the ACE+TAO test procedures work.
           Includes a description of how to drive the generalized ability to
           redirect execution of tests off of the build host.
