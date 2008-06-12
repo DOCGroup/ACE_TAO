@@ -2371,6 +2371,7 @@ libTAO_PI_la_SOURCES = \
   PI/ClientRequestInterceptorC.cpp \
   PI/ClientRequestInterceptor_Adapter_Impl.cpp \
   PI/ClientRequestInterceptor_Factory_Impl.cpp \
+  PI/DLL_Resident_ORB_Initializer.cpp \
   PI/InterceptorA.cpp \
   PI/InterceptorC.cpp \
   PI/InvalidSlotA.cpp \
@@ -2428,6 +2429,7 @@ nobase_include_HEADERS += \
   PI/ClientRequestInterceptor_Adapter_Impl.h \
   PI/ClientRequestInterceptor_Adapter_Impl.inl \
   PI/ClientRequestInterceptor_Factory_Impl.h \
+  PI/DLL_Resident_ORB_Initializer.h \
   PI/Interceptor.pidl \
   PI/Interceptor.pidl \
   PI/InterceptorA.h \
