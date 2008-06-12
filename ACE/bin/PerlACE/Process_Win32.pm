@@ -72,14 +72,6 @@ sub DESTROY
     }
 }
 
-# Set the process's target. If there's none, behavior falls back to pre-target
-# behavior.
-sub Target($)
-{
-    my $self = shift;
-    $self->{TARGET} = shift;
-}
-
 
 ###############################################################################
 
