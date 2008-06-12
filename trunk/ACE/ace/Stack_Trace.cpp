@@ -270,7 +270,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
     }
 }
 
-#elif defined(sun) && !defined(__sparcv9)
+#elif defined(sun)
 /*
  * walks up call stack, printing library:routine+offset for each routine
  */
@@ -280,11 +280,16 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 #  include <sys/types.h>
 #  include <sys/reg.h>
 #  include <sys/frame.h>
+#  define ACE_STACK_TRACE_BIAS 0
 
 #  if defined(sparc) || defined(__sparc)
 #    define ACE_STACK_TRACE_FLUSHWIN() asm("ta 3");
 #    define ACE_STACK_TRACE_FRAME_PTR_INDEX 1
 #    define ACE_STACK_TRACE_SKIP_FRAMES 0
+#    if defined(__sparcv9)
+#      undef  ACE_STACK_TRACE_BIAS
+#      define ACE_STACK_TRACE_BIAS 2047
+#    endif
 #  endif
 
 #  if defined(i386) || defined(__i386)
@@ -305,6 +310,14 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 #    define ACE_STACK_TRACE_SKIP_FRAMES 2
 #  endif
 
+static frame*
+cs_frame_adjust(frame* sp)
+{
+  unsigned char* sp_byte = (unsigned char*)sp;
+  sp_byte += ACE_STACK_TRACE_BIAS;
+  return (frame*) sp_byte;
+}
+
 /*
   this function walks up call stack, calling user-supplied
   function once for each stack frame, passing the pc and the user-supplied
@@ -319,7 +332,7 @@ cs_operate(int (*func)(void *, void *), void * usrarg,
 
   jmp_buf env;
   setjmp(env);
-  frame* sp = (frame*)env[ACE_STACK_TRACE_FRAME_PTR_INDEX];
+  frame* sp = cs_frame_adjust((frame*) env[ACE_STACK_TRACE_FRAME_PTR_INDEX]);
 
   // make a copy of num_frames_arg to eliminate the following warning on some
   // solaris platforms:
@@ -345,7 +358,7 @@ cs_operate(int (*func)(void *, void *), void * usrarg,
   size_t i;
   for (i = 0; i < skip_frames && sp; ++i)
     {
-      sp = (frame*)sp->fr_savfp;
+      sp = cs_frame_adjust(sp->fr_savfp);
     }
 
   i = 0;
@@ -356,7 +369,7 @@ cs_operate(int (*func)(void *, void *), void * usrarg,
           && --num_frames
           && (*func)((void*)sp->fr_savpc, usrarg))
     {
-      sp = (frame*)sp->fr_savfp;
+      sp = cs_frame_adjust(sp->fr_savfp);
     }
 
   return(i);
@@ -424,7 +437,8 @@ ACE_Stack_Trace::generate_trace (ssize_t, size_t)
     "ACE is built with _WIN32_WINNT set to 0x501 or above>");
 }
 
-#elif defined(ACE_WIN32) && !defined(ACE_HAS_WINCE) && !defined (__MINGW32__)
+#elif defined(ACE_WIN32) && !defined(ACE_HAS_WINCE) && !defined (__MINGW32__) \
+      && !defined(__BORLANDC__)
 #  include <windows.h>
 #  include <Dbghelp.h>
 
@@ -571,18 +585,12 @@ cs_operate(int (*func)(struct frame_state const *, void *), void *usrarg,
 
 #  if defined (_M_IX86)
   DWORD machine = IMAGE_FILE_MACHINE_I386;
-  // no C++ code can be inserted in between the two __asm blocks
   __asm {
-    jmp start
-    x:
-    pop eax
+    call x
+    x: pop eax
     mov c.Eip, eax
     mov c.Ebp, ebp
     mov c.Esp, esp
-    jmp resume
-    start:
-    call x
-    resume:
   }
   fs.sf.AddrPC.Offset = c.Eip;
   fs.sf.AddrStack.Offset = c.Esp;
