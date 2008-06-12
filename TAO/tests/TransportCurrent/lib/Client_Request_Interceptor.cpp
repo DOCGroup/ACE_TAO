@@ -44,6 +44,7 @@ namespace Test
     ++this->request_count_;
 
     int tmp = 0;
+    ACE_TCHAR **argv = 0;
     CORBA::ORB_var orb = CORBA::ORB_init (tmp,
                                           0,
                                           orb_id_.in ());

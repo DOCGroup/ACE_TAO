@@ -23,10 +23,10 @@
 
 ACE_RCSID(Explicit_Activation, server, "$Id$")
 
-const char *ior_output_file = "ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "f:");
   int c;
@@ -61,9 +61,9 @@ write_iors_to_file (const char *first_ior,
   char ior_output_file_2[BUFSIZ];
   char ior_output_file_3[BUFSIZ];
 
-  ACE_OS::sprintf (ior_output_file_1, "%s_1", ior_output_file);
-  ACE_OS::sprintf (ior_output_file_2, "%s_2", ior_output_file);
-  ACE_OS::sprintf (ior_output_file_3, "%s_3", ior_output_file);
+  ACE_OS::sprintf (ior_output_file_1, "%s_1", ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+  ACE_OS::sprintf (ior_output_file_2, "%s_2", ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+  ACE_OS::sprintf (ior_output_file_3, "%s_3", ACE_TEXT_ALWAYS_CHAR (ior_output_file));
 
   FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
   FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, "w");
@@ -73,9 +73,9 @@ write_iors_to_file (const char *first_ior,
       output_file_2 == 0 ||
       output_file_3 == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s %s\n",
-                       ior_output_file_1,
-                       ior_output_file_2,
-                       ior_output_file_3),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_1),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_2),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_3)),
                       -1);
 
   u_int result = 0;
@@ -86,8 +86,8 @@ write_iors_to_file (const char *first_ior,
   if (result != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
-                       first_ior,
-                       ior_output_file_1),
+                       ACE_TEXT_CHAR_TO_TCHAR (first_ior),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_1)),
                       -1);
 
   result = ACE_OS::fprintf (output_file_2,
@@ -96,8 +96,8 @@ write_iors_to_file (const char *first_ior,
   if (result != ACE_OS::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
-                       second_ior,
-                       ior_output_file_2),
+                       ACE_TEXT_CHAR_TO_TCHAR (second_ior),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_2)),
                       -1);
 
   result = ACE_OS::fprintf (output_file_3,
@@ -106,8 +106,8 @@ write_iors_to_file (const char *first_ior,
   if (result != ACE_OS::strlen (third_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
-                       third_ior,
-                       ior_output_file_3),
+                       ACE_TEXT_CHAR_TO_TCHAR (third_ior),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_3)),
                       -1);
 
   ACE_OS::fclose (output_file_1);
@@ -118,16 +118,13 @@ write_iors_to_file (const char *first_ior,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -255,9 +252,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n%s\n%s\n",
-                  first_ior.in (),
-                  second_ior.in (),
-                  third_ior.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (first_ior.in ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (second_ior.in ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (third_ior.in ())));
 
       int write_result =
         write_iors_to_file (first_ior.in (),
