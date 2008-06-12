@@ -52,6 +52,14 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 
 $PerlACE::Process::WAIT_DELAY_FACTOR = $ENV{"ACE_RUNTEST_DELAY"};
 
+# Set the process's target. If there's none, behavior falls back to pre-target
+# behavior.
+sub Target($)
+{
+    my $self = shift;
+    $self->{TARGET} = shift;
+}
+
 if ($OSNAME eq "MSWin32") {
 	require PerlACE::Process_Win32;
 }
