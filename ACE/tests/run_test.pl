@@ -107,8 +107,9 @@ sub check_resources
 
 ################################################################################
 
-sub run_program ($)
+sub run_program ($@)
 {
+    my $target = shift;
     my $path = shift;
     my $arguments = shift;
     if ($path =~ /^(\S*)\s*(.*)/ ) {
@@ -130,20 +131,12 @@ sub run_program ($)
     unlink <log/$program*.log>;
     unlink "core";
 
-    my $P;
+    my $P = $target->CreateProcess($program,$arguments);
 
     if ($config_list->check_config ('Valgrind')) {
-      $P = new PerlACE::Process ($program,$arguments);
       $P->IgnoreExeSubDir(1);
     }
     else {
-      if ($config_list->check_config ('LabVIEW_RT')) {
-        $P = new PerlACE::ProcessLVRT ($program,$arguments);
-      }
-      else {
-        $P = new PerlACE::Process ($program,$arguments);
-      }
-
       ### Try to run the program
 
       if (! -e $P->Executable ()) {
@@ -545,7 +538,7 @@ if (defined $opt_v && defined $opt_o) {
 }
 else {
 
-  my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+  my $target = PerlACE::TestTarget::create_target ("ace");
 
   foreach $test (@tests) {
     if (defined $opt_d) {
@@ -558,7 +551,7 @@ else {
       run_vxworks_command ($test);
     }
     else {
-      run_program ($test);
+      run_program ($target, $test);
     }
     $target->GetStderrLog();
   }
