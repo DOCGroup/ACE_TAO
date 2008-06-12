@@ -9,13 +9,14 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
-my $host = new PerlACE::TestTarget;
+my $target = PerlACE::TestTarget::create_target ("server");
+my $host = PerlACE::TestTarget::create_target ("client");
 
 $iorbase = "server.ior";
-$iorfile = $target->LocalFile ("server.ior");
-$target->DeleteFile ($iorfile);
-$host->DeleteFile ($iorbase);
+$server_iorfile = $target->LocalFile ("server.ior");
+$client_iorfile = $host->LocalFile ("server.ior");
+$target->DeleteFile ($server_iorfile);
+$host->DeleteFile ($client_iorfile);
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
@@ -24,19 +25,24 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $SV = $target->CreateProcess ("server", "-o $iorfile");
 }
-$CL = $host->CreateProcess ("client", "-k file://$iorbase -ORBDottedDecimalAddresses 1");
+$CL = $host->CreateProcess ("client", "-k file://$client_iorfile -ORBDottedDecimalAddresses 1");
 
 $SV->Spawn ();
 
-if ($target->WaitForFileTimed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+if ($target->WaitForFileTimed ($server_iorfile,
+                               $target->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-if ($target->GetFile ($iorfile, $iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$iorfile>\n";
+if ($target->GetFile ($server_iorfile, $iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+} 
+if ($client->PutFile ($iorbase, $client_iorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 } 
@@ -58,7 +64,7 @@ if ($server != 0) {
 }
 
 $target->GetStderrLog();
-$target->DeleteFile ($iorfile);
-$host->DeleteFile($iorbase);
+$target->DeleteFile ($server_iorfile);
+$host->DeleteFile($client_iorfile);
 
 exit $status;
