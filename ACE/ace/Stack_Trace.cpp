@@ -573,14 +573,16 @@ cs_operate(int (*func)(struct frame_state const *, void *), void *usrarg,
   DWORD machine = IMAGE_FILE_MACHINE_I386;
   // no C++ code can be inserted in between the two __asm blocks
   __asm {
-    call x
-    }
-
-  x: __asm {
+    jmp start
+    x:
     pop eax
     mov c.Eip, eax
     mov c.Ebp, ebp
     mov c.Esp, esp
+    jmp resume
+    start:
+    call x
+    resume:
   }
   fs.sf.AddrPC.Offset = c.Eip;
   fs.sf.AddrStack.Offset = c.Esp;
