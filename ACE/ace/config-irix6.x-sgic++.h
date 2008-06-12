@@ -14,11 +14,9 @@
 // the SGI C++ compiler (7.1 or higher).
 
 // The following three should be enabled/disabled together.
-#if _COMPILER_VERSION >= 720
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-#else
+#if _COMPILER_VERSION < 720
 #define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
-#endif /* _COMPILER_VERSION >= 720 */
+#endif /* _COMPILER_VERSION < 720 */
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_NEEDS_FUNC_DEFINITIONS
 

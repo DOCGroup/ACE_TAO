@@ -622,9 +622,6 @@ AH_TEMPLATE([ACE_HAS_SYS_SIGLIST],
 
 AH_TEMPLATE([ACE_HAS_SYS_XTI_H],[Platform provides <sys/xti.h> header])
 
-AH_TEMPLATE([ACE_HAS_TEMPLATE_SPECIALIZATION],
-[Compiler implements template specialization])
-
 AH_TEMPLATE([ACE_HAS_TEMPLATE_TYPEDEFS],
 [Compiler implements templates that support typedefs inside of
    classes used as formal arguments to a template class.])
