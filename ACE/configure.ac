@@ -2822,35 +2822,6 @@ dnl END OUTER REQUIRE PRAGMA #########################################
   ])
 
 
-dnl Check if platform supports template specialization
-ACE_CACHE_CHECK([for template specialization],
-  [ace_cv_feature_cxx_template_specialization],[
-     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-        template <class T>
-        class Foo
-        {
-         public:
-           Foo(T bar) : bar_(bar) {};
-         private:
-           T bar_;
-        };
-
-        class Foo<int>
-        {
-         public:
-           Foo(int bar) : bar_(bar + 1) {};
-         private:
-           int bar_;
-        };
-       ]],[[
-         Foo<int> foo(11);
-       ]])],[
-        ace_cv_feature_cxx_template_specialization=yes
-       ],[
-        ace_cv_feature_cxx_template_specialization=no
-       ])
-  ],[AC_DEFINE([ACE_HAS_TEMPLATE_SPECIALIZATION])],)
-
 dnl Check if platform supports template typedefs
 ACE_CACHE_CHECK([for template typedefs],
   [ace_cv_feature_posix_template_typedefs],[

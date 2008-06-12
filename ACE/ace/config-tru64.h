@@ -52,7 +52,6 @@
 
     // Exceptions are enabled by platform_osf1_4.0_rcc.GNU.
 # define ACE_HAS_STDCPP_STL_INCLUDES
-# define ACE_HAS_TEMPLATE_SPECIALIZATION
 #else
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #   error unsupported compiler on Digital Unix

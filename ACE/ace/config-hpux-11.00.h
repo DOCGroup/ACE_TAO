@@ -81,9 +81,6 @@
 // Compiler's template mechanism must see source code (i.e., .C files).
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
 
-// Compiler supports template specialization.
-#    define ACE_HAS_TEMPLATE_SPECIALIZATION
-
 // Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
 #  define ACE_LACKS_SIGNED_CHAR
 

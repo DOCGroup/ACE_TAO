@@ -397,9 +397,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // .cpp files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
-// Compiler implements template specialization
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-
 // Compiler implements templates that support typedefs inside
 // of classes used as formal arguments to a template class.
 #define ACE_HAS_TEMPLATE_TYPEDEFS
