@@ -57,7 +57,7 @@ namespace Test
     /// Destructor.
     virtual ~Server_Request_Interceptor (void);
 
-    virtual void test_transport_current (const char* amethod);
+    virtual void test_transport_current (const ACE_TCHAR* amethod);
 
     /// Coherency test
     virtual bool self_test (void);

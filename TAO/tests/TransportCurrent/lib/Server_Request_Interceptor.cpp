@@ -40,8 +40,9 @@ namespace Test
                    name.in ()));
 
     int tmpargc = 0;
+    ACE_TCHAR **argv = 0;
     CORBA::ORB_var orb = CORBA::ORB_init (tmpargc,
-                                          0,
+                                          argv,
                                           this->orb_id_.in ());
     if (TAO_debug_level >=1)
       ACE_DEBUG ((LM_DEBUG,
