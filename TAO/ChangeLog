@@ -1,3 +1,10 @@
+Thu Jun 12 12:31:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+
+          Mangled yesterdays conversion, missing a ) and changed const
+          instead of char to ACE_TCHAR. Corrected these mistakes.
+
 Wed Jun 11 20:50:15 UTC 2008  Chris Cleeland  <cleeland@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_3049/a.conf:

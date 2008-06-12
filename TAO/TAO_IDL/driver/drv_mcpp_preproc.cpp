@@ -97,7 +97,7 @@ ACE_RCSID (driver,
 // Storage for preprocessor args.
 unsigned long const DRV_MAX_ARGCOUNT = 128;
 unsigned long DRV_argcount = 0;
-char ACE_TCHAR * DRV_arglist[DRV_MAX_ARGCOUNT] = { 0 };
+ACE_TCHAR const * DRV_arglist[DRV_MAX_ARGCOUNT] = { 0 };
 
 static char const * output_arg_format = 0;
 static long output_arg_index = 0;
@@ -904,7 +904,7 @@ DRV_check_file_for_includes (const char *filename)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s: cannot open input file\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ())));
 
       throw Bailout ();
     }
