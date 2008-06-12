@@ -71,6 +71,10 @@ sub DESTROY
                      "> still running upon object destruction\n";
         $self->Kill ();
     }
+    if (defined $self->{TELNET}) {
+        $self->{TELNET}->close();
+        $self->{TELNET} = undef;
+    }
 }
 
 ###############################################################################
@@ -212,7 +216,7 @@ sub WaitKill ($)
     # trying to get the log file until after rebooting and resetting FTP.
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
-        $self->{TARGET}->RebootReset;;
+        $self->Kill();
     }
 
     # Now get the log file from the test, and delete the test from
@@ -273,6 +277,11 @@ sub Kill ()
     }
 
     $self->{RUNNING} = 0;
+    # Trying to kill a LabVIEW RT thread and recover is probably futile. Just
+    # reboot and reset the FTP connection.
+    $self->{TELNET}->close();
+    $self->{TELNET} = undef;
+    $self->{TARGET}->RebootReset;;
 }
 
 # Wait until a process exits.
