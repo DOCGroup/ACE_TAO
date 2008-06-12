@@ -44,11 +44,11 @@ namespace ACE
       Windows_Multi_Instance_Monitor (const ACE_TCHAR *wildcard_path);
       virtual ~Windows_Multi_Instance_Monitor (void);
 
-      /// Implementation of the pure virtual method.
-      void win_update (void);
+      /// Platform-specific implementation.
+      void update_i (void);
 
     protected:
-      PDH_FMT_COUNTERVALUE value_;
+      double value_;
 
     private:
       typedef ACE_Unbounded_Queue<Windows_Monitor *>

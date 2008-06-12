@@ -23,7 +23,7 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#if defined (ACE_HAS_WIN32_PDH)
+#if defined (ACE_HAS_PDH_H) && !defined (ACE_LACKS_PDH_H)
 #include "ace/Monitor_Control/Windows_Monitor.h"
 #elif defined (ACE_HAS_LINUX_SYSINFO)
 #include "ace/os_include/sys/os_sysinfo.h"

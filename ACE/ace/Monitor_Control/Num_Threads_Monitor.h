@@ -23,8 +23,16 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#if defined (ACE_HAS_WIN32_PDH)
+#if defined (ACE_HAS_PDH_H) && !defined (ACE_LACKS_PDH_H)
 #include "ace/Monitor_Control/Windows_Monitor.h"
+#elif defined (ACE_HAS_KSTAT)
+/// There is apparently no way to query the number of threads on the
+/// Solaris platform. The only benchmark I've seen had to put hooks
+/// in the thread creation functions to keep track of the highest
+/// thread ID, then check all the IDs less than that to see if the
+/// threads still exist. Since we don't have that option in this
+/// framework, which is to be used by existing applications, this
+/// particular OS monitor is left unimplemented on Solaris.
 #endif
 
 #include "ace/Monitor_Control/Monitor_Control_export.h"
@@ -62,6 +70,7 @@ namespace ACE
       FILE *file_ptr_;
       char buf_[1024];
       unsigned long nthreads_;
+#elif defined (ACE_HAS_KSTAT)
 #endif
     };
   }

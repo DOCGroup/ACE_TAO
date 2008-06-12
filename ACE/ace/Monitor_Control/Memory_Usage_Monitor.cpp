@@ -30,10 +30,8 @@ namespace ACE
     Memory_Usage_Monitor::update (void)
     {
 #if defined (ACE_HAS_WIN32_PDH)
-      this->win_update ();
-
-      /// Stores value and timestamp with thread-safety.
-      this->receive (this->value_.doubleValue);
+      this->update_i ();
+      this->receive (this->value_);
 #elif defined (ACE_HAS_LINUX_SYSINFO)
       if (::sysinfo (&this->sysinfo_) != 0)
         {

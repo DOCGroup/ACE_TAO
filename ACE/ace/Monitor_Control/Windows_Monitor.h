@@ -43,10 +43,12 @@ namespace ACE
     protected:
       Windows_Monitor (const ACE_TCHAR *path);
 
-      void win_update (void);
+      /// Platform-specific implementation.
+      void update_i (void);
 
     protected:
-      PDH_FMT_COUNTERVALUE value_;
+      PDH_FMT_COUNTERVALUE pdh_value_;
+      double value_;
 
     /// Make these persistent as members so they don't have to be
     /// created & destroyed with each update.
