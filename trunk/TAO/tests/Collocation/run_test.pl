@@ -11,7 +11,7 @@ use PerlACE::TestTarget;
 
 PerlACE::add_lib_path ('.');
 
-my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+my $target = PerlACE::TestTarget::create_target ("server");
 
 $status = 0;
 
@@ -24,7 +24,7 @@ else {
     $SV = $target->CreateProcess ("Collocation");
 }
 
-$server = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+$server = $SV->SpawnWaitKill ($target->ProcessStartWaitInterval());
 
 if ($server != 0) {
     print STDERR "ERROR: Collocation returned $server\n";
