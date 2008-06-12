@@ -1,3 +1,9 @@
+Thu Jun 12 16:58:20 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Makefile.am:
+
+          Added new files from Tue Jun 10 14:53:00 UTC 2008.
+
 Thu Jun 12 16:27:53 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/AMH_Exceptions/run_test.pl:
