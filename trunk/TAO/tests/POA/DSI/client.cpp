@@ -25,11 +25,11 @@
 ACE_RCSID(DSI, client, "$Id$")
 
 static char *IOR = 0;
-static const char *IOR_file = 0;
+static const ACE_TCHAR *IOR_file = 0;
 static int shutdown_server = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "xk:f:");
   int c;
@@ -38,7 +38,7 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        IOR = ACE_OS::strdup (get_opts.opt_arg ());
+        IOR = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         break;
 
       case 'f':
@@ -100,7 +100,7 @@ read_IOR_from_file (void)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   char str [255];
@@ -109,10 +109,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ACE_OS::strcpy (str,
                       "CORBA::ORB_init");
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Parse the command-line arguments to get the location of the
       // IOR

@@ -1,3 +1,17 @@
+Thu Jun 12 15:17:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.cpp:
+        * tests/Default_Servant2/File_i.cpp:
+        * tests/POA/Bug_2511_Regression/server.cpp:
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.cpp:
+        * tests/POA/Etherealization/Etherealization.cpp:
+        * tests/POA/Explicit_Activation/server.cpp:
+        * tests/POA/DSI/client.cpp:
+        * tests/POA/Adapter_Activator/server.cpp:
+
+          Wide character build disambiguate ORB_init () calls.
+
 Thu Jun 12 13:04:43 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
