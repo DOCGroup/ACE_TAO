@@ -5,11 +5,22 @@
 # We can FTP files to and from the LabVIEW target, but there's no NFS or
 # SMB shares.
 # Most information about the target itself is specified via environment
-# variables. The current environment variables are:
-#   ACE_RUN_LVRT_TGTHOST - the host name/IP of the target.
-#   ACE_RUN_LVRT_FSROOT  - the root of the filesystem on the target where
+# variables. Environment variables with settings are named using the target's
+# config name with a specific suffix. The current environment variables are:
+#   <config-name>_IPNAME - the host name/IP of the target.
+#   <config-name>_CTLPORT- the TCP port number to connect to for the test
+#                          controller. If this is not set, port 8888 is used.
+#   <config-name>_FSROOT - the root of the filesystem on the target where
 #                          ACE files will be created from (cwd, if you will).
-#                          If not specified, "\ni-rt" is used as the root.
+#                          If this is not set, "\ni-rt" is used as the root.
+#
+# Each of these settings are stored in a member variable of the same name in
+# each object. The process objects can access them using, e.g.,
+# $self->{TARGET}->{IPNAME}.
+#
+# This class also makes an FTP object available to process objects that are
+# created. FTP is set up before creating a process object and can be used to
+# transfer files to and from the LVRT target.
 
 package PerlACE::TestTarget_LVRT;
 our @ISA = "PerlACE::TestTarget";
@@ -19,38 +30,68 @@ our @ISA = "PerlACE::TestTarget";
 sub new
 {
     my $proto = shift;
+    my $config_name = shift;
     my $class = ref ($proto) || $proto;
     my $self = {};
+    bless ($self, $class);
+    $self->GetConfigSettings($config_name);
     my $targethost;
-    if (defined $ENV{'ACE_RUN_LVRT_TGTHOST'}) {
-        $targethost = $ENV{'ACE_RUN_LVRT_TGTHOST'};
+    my $env_name = $config_name.'_IPNAME';
+    if (exists $ENV{$env_name}) {
+        $targethost = $ENV{$env_name};
     }
     else {
-        print STDERR "You must define target hostname/IP with ",
-                     "ACE_RUN_LVRT_TGTHOST\n";
-        return -1;
+        print STDERR "You must define target hostname/IP with $env_name\n";
+        undef $self;
+        return undef;
     }
 
-    my $fsroot = $ENV{'ACE_RUN_LVRT_FSROOT'};
-    if (!defined $fsroot) {
-        $fsroot = '\\ni-rt';
+    $env_name = $config_name.'_CTLPORT';
+    if (exists $ENV{$env_name}) {
+        $self->{CTLPORT} = $ENV{$env_name};
+    }
+    else {
+        print STDERR "Warning: no $env_name variable; falling back to ",
+                     "port 8888\n";
+        $self->{CTLPORT} = 8888;
+    }
+
+    $env_name = $config_name.'_FSROOT';
+    my $fsroot = '\\ni-rt\\system';
+    if (exists $ENV{$env_name}) {
+        $fsroot = $ENV{$env_name};
+    }
+    else {
+        print STDERR "Warning: no $env_name variable; falling back ",
+                     "to $fsroot\n";
     }
     $self->{FSROOT} = $fsroot;
 
-    $self->{FTP} = new Net::FTP ($targethost);
-    $self->{TGTHOST} = $targethost;
-    if (!defined $self->{FTP}) {
-        print STDERR "$@\n";
-        return -1;
+    $self->{REBOOT_CMD} = $ENV{"ACE_REBOOT_LVRT_CMD"};
+    if (!defined $self->{REBOOT_CMD}) {
+        $self->{REBOOT_CMD} = 'I_Need_A_Reboot_Command';
     }
-    $self->{FTP}->login("","");
-    $self->{TARGET} = undef;
-    $self->{REBOOT_TIME} = $ENV{"ACE_RUN_LVRT_REBOOT_TIME"};
+    $self->{REBOOT_TIME} = $ENV{"ACE_LVRT_REBOOT_TIME"};
     if (!defined $self->{REBOOT_TIME}) {
         $self->{REBOOT_TIME} = 200;
     }
 
-    bless ($self, $class);
+    $self->{REBOOT_TIME} = $ENV{"ACE_RUN_LVRT_REBOOT_TIME"};
+    if (!defined $self->{REBOOT_TIME}) {
+        $self->{REBOOT_TIME} = 200;
+    }
+    $self->{REBOOT_NEEDED} = undef;
+
+    $self->{FTP} = new Net::FTP ($targethost);
+    $self->{IPNAME} = $targethost;
+    if (!defined $self->{FTP}) {
+        print STDERR "Error opening FTP to $targethost: $@\n";
+        $self->{REBOOT_NEEDED} = 1;
+        undef $self;
+        return undef;
+    }
+    $self->{FTP}->login("","");
+
     return $self;
 }
 
@@ -58,11 +99,20 @@ sub DESTROY
 {
     my $self = shift;
 
-    # See if there's a log; hopefully any reboots have already been done.
+    # Reboot if needed; set up clean for the next test.
+    if (defined $self->{REBOOT_NEEDED} && $self->{REBOOT_CMD}) {
+        $self->RebootNow;
+    }
+
+    # See if there's a log; should be able to retrieve it from rebooted target.
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "LVRT target checking for remaining log...\n";
     }
     $self->GetStderrLog();
+    if (defined $self->{FTP}) {
+        $self->{FTP}->close;
+        $self->{FTP} = undef;
+    }
 }
 
 ##################################################################
@@ -102,10 +152,10 @@ sub WaitForFileTimed ($)
     my $self = shift;
     my $file = shift;
     my $timeout = shift;
-    my $targetport = 8888;
+    my $targetport = $self->{CTLPORT};
     my $target = new Net::Telnet(Errmode => 'return');
-    if (!$target->open(Host => $self->{TGTHOST}, Port => $targetport)) {
-        print STDERR "ERROR: target $self->{TGTHOST}:$targetport: ",
+    if (!$target->open(Host => $self->{IPNAME}, Port => $targetport)) {
+        print STDERR "ERROR: target $self->{IPNAME}:$targetport: ",
                       $target->errmsg(), "\n";
         return -1;
     }
@@ -131,7 +181,7 @@ sub WaitForFileTimed ($)
 sub CreateProcess ($)
 {
     my $self = shift;
-    my $process = new PerlACE::ProcessLVRT (@_);
+    my $process = new PerlACE::ProcessLVRT ($self, @_);
     return $process;
 }
 
@@ -140,10 +190,10 @@ sub GetStderrLog ($)
     my $self = shift;
     # Tell the target to snapshot the stderr log; if there is one, copy
     # it up here and put it out to our stderr.
-    my $targetport = 8888;
+    my $targetport = $self->{CTLPORT};
     my $target = new Net::Telnet(Errmode => 'return');
-    if (!$target->open(Host => $self->{TGTHOST}, Port => $targetport)) {
-        print STDERR "ERROR: target $self->{TGTHOST}:$targetport: ",
+    if (!$target->open(Host => $self->{IPNAME}, Port => $targetport)) {
+        print STDERR "ERROR: target $self->{IPNAME}:$targetport: ",
                       $target->errmsg(), "\n";
         return;
     }
@@ -162,6 +212,14 @@ sub GetStderrLog ($)
         return;
     }
     chomp $reply;
+    if (undef $self->{FTP}) {
+        $self->{FTP} = new Net::FTP ($self->{IPNAME});
+        if (!defined $self->{FTP}) {
+            print STDERR "$@\n";
+            return -1;
+        }
+        $self->{FTP}->login("","");
+    }
     $self->{FTP}->ascii();
     if ($self->{FTP}->get($reply, "stderr.txt")) {
         $self->{FTP}->delete($reply);
@@ -181,6 +239,42 @@ sub GetStderrLog ($)
 sub NeedFile ($)
 {
     my $self = shift;
+}
+
+# Need a reboot when this target is destroyed.
+sub NeedReboot ($)
+{
+    my $self = shift;
+    $self->{REBOOT_NEEDED} = 1;
+}
+
+# Reboot target
+sub RebootNow ($)
+{
+    my $self = shift;
+    $self->{REBOOT_NEEDED} = undef;
+    print STDERR "Attempting to reboot target...\n";
+    if (defined $self->{FTP}) {
+        $self->{FTP}->close;
+        $self->{FTP} = undef;
+    }
+    system ($self->{REBOOT_CMD});
+    sleep ($self->{REBOOT_TIME});
+}
+
+# Reboot now then try to restore the FTP connection.
+sub RebootReset ($)
+{
+    my $self = shift;
+    $self->RebootNow;
+    my $targethost = $self->{IPNAME};
+    $self->{FTP} = new Net::FTP ($targethost);
+    if (!defined $self->{FTP}) {
+        print STDERR "Error reestablishing FTP to $targethost: $@\n";
+    }
+    else {
+        $self->{FTP}->login("","");
+    }
 }
 
 1;

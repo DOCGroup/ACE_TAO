@@ -1,3 +1,32 @@
+Thu Jun 12 16:04:33 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * bin/PerlACE/README: Describes how the ACE+TAO test procedures work.
+          Includes a description of how to drive the generalized ability to
+          redirect execution of tests off of the build host.
+
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_LVRT.pm:
+        * bin/PerlACE/ProcessLVRT.pm:
+        * bin/PerlACE/Process_Win32.pm: Add the ability to configure various
+          aspects of ACE+TAO (+CIAO I guess, but haven't tried that) to run
+          on machines other than the build host and with alternate roots
+          (ACE_ROOT, TAO_ROOT). This is an effort to generalize the ability
+          to run off of the build host without adding more switches and options
+          and convoluted settings and platform-specific code in the main
+          scripts. The README file explains how to set up modules to extend
+          testing to other platforms. LabVIEW_RT is the only one there now;
+          VxWorks is an obvious addition and would allow a bunch of special-case
+          code to be removed from the main scripts. The test-driving script
+          does require some change to take advantage of this capability. ACE
+          tests in ACE_wrappers/tests have the change. A few TAO tests do
+          (see TAO ChangeLog). Without the changes to the test-driving script
+          everything behaves as it always did.
+
+        * tests/run_test.pl: Uses the new TestTarget capability, naming the
+          test target "ace". Thus, to redirect these tests to another machine,
+          set the DOC_TEST_ACE environment variable with a configuration name
+          and set configuration variables accordingly.
+
 Thu Jun 12 14:38:19 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Stack_Trace.h:

@@ -52,20 +52,11 @@ sub new
     my $class = ref ($proto) || $proto;
     my $self = {};
 
+    $self->{TARGET} = shift;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 1;
-    $self->{FTP} = undef;
-    $self->{TARGET} = undef;
-    $self->{REBOOT_CMD} = $ENV{"ACE_REBOOT_LVRT_CMD"};
-    if (!defined $self->{REBOOT_CMD}) {
-        $self->{REBOOT_CMD} = 'I_Need_A_Reboot_Command';
-    }
-    $self->{REBOOT_TIME} = $ENV{"ACE_LVRT_REBOOT_TIME"};
-    if (!defined $self->{REBOOT_TIME}) {
-        $self->{REBOOT_TIME} = 200;
-    }
 
     bless ($self, $class);
     return $self;
@@ -79,20 +70,6 @@ sub DESTROY
         print STDERR "ERROR: <", $self->{EXECUTABLE},
                      "> still running upon object destruction\n";
         $self->Kill ();
-    }
-
-    if (defined $self->{FTP}) {
-        $self->{FTP}->close;
-    }
-    if (defined $self->{TARGET}) {
-        $self->{TARGET}->close;
-    }
-
-    # Reboot if needed; set up clean for the next test.
-    if ($self->{NEED_REBOOT} == 1 && $self->{REBOOT_CMD}) {
-        print STDERR "Attempting to reboot target...\n";
-        system ($self->{REBOOT_CMD});
-        sleep ($self->{REBOOT_TIME});
     }
 }
 
@@ -112,8 +89,11 @@ sub Executable
 
     my $basename = basename ($executable);
     my $dirname = dirname ($executable). '/';
-
-    $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename.".DLL";
+    my $subdir = $PerlACE::ProcessLVRT::ExeSubDir;
+    if (defined $self->{TARGET}) {
+        $subdir = $self->{TARGET}->ExeSubDir();
+    }
+    $executable = $dirname.$subdir.$basename.".DLL";
     $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
     
     return $executable;
@@ -169,60 +149,40 @@ sub Spawn ()
         }
     }
 
-    my $targethost;
-    if (defined $ENV{'ACE_RUN_LVRT_TGTHOST'}) {
-        $targethost = $ENV{'ACE_RUN_LVRT_TGTHOST'};
-    }
-    else {
-        print STDERR "You must define target hostname/IP with ",
-                     "ACE_RUN_LVRT_TGTHOST\n";
-        return -1;
-    }
-    my $targetport;
-    if (defined $ENV{'ACE_RUN_LVRT_TGTPORT'}) {
-        $targetport = $ENV{'ACE_RUN_LVRT_TGTPORT'};
-    }
-    else {
-        $targetport = 8888;
-    }
-
     my $status = 0;
 
     my $program = $self->Executable ();
     my $cwdrel = dirname ($program);
+    my $target_ace_root = $self->{TARGET}->ACE_ROOT();
     if (length ($cwdrel) > 0) {
-        $cwdrel = File::Spec->abs2rel( cwd(), $ENV{"ACE_ROOT"} );
+        $cwdrel = File::Spec->abs2rel(cwd(), $target_ace_root);
     }
     else {
-        $cwdrel = File::Spec->abs2rel( $cwdrel, $ENV{"ACE_ROOT"} );
+        $cwdrel = File::Spec->abs2rel($cwdrel, $target_ace_root);
     }
 
-    $self->{FTP} = new Net::FTP ($targethost);
-    if (!defined $self->{FTP}) {
-        print STDERR "$@\n";
-        $self->{NEED_REBOOT} = 1;
-        return -1;
-    }
-    $self->{FTP}->login("","");
-    $self->{FTP}->cwd("/ni-rt");
-    $self->{FTP}->binary();
-    $self->{FTP}->put($program);
+    $self->{TARGET}->{FTP}->cwd($self->{TARGET}->{FSROOT});
+    $self->{TARGET}->{FTP}->binary();
+    $self->{TARGET}->{FTP}->put($program);
 
-    $self->{TARGET} = new Net::Telnet(Errmode => 'return');
-    if (!$self->{TARGET}->open(Host => $targethost, Port => $targetport)) {
+    my $targethost = $self->{TARGET}->{IPNAME};
+    my $targetport = $self->{TARGET}->{CTLPORT};
+    $self->{TELNET} = new Net::Telnet(Errmode => 'return');
+    if (!$self->{TELNET}->open(Host => $targethost, Port => $targetport)) {
         print STDERR "ERROR: target $targethost:$targetport: ",
-                      $self->{TARGET}->errmsg(), "\n";
-        $self->{NEED_REBOOT} = 1;
-        $self->{FTP}->delete($program);
+                      $self->{TELNET}->errmsg(), "\n";
+        $self->{TELNET} = undef;
+        $self->{TARGET}->NeedReboot;
+        $self->{TARGET}->{FTP}->delete($program);
         return -1;
     }
     my $cmdline = $self->CommandLine();
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print "-> $cmdline\n";
     }
-    $self->{TARGET}->print("$cmdline");
+    $self->{TELNET}->print("$cmdline");
     my $reply;
-    $reply = $self->{TARGET}->getline();
+    $reply = $self->{TELNET}->getline();
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print "<- $reply\n";
     }
@@ -231,8 +191,8 @@ sub Spawn ()
         return 0;
     }
     print STDERR "ERROR: can't $cmdline: " . $reply . "\n";
-    $self->{FTP}->delete($program);
-    $self->{NEED_REBOOT} = 1;
+    $self->{TARGET}->{FTP}->delete($program);
+    $self->{TARGET}->NeedReboot;
     return -1;
 }
 
@@ -249,23 +209,22 @@ sub WaitKill ($)
     $self->{RUNNING} = 0;
 
     # If the test timed out, the target is probably toast. Don't bother
-    # trying to get the log file - just reboot and get back to work.
+    # trying to get the log file until after rebooting and resetting FTP.
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
-        $self->{NEED_REBOOT} = 1;
-        $self->Kill ();
+        $self->{TARGET}->RebootReset;;
     }
-    else {
-        # Now get the log file from the test, and delete the test from
-        # the target. The FTP session should still be open.
-        my $program = $self->Executable ();
-        my $logname = basename($program,".dll") . ".log";
-        $program = basename($program);
-        $self->{FTP}->delete($program);
-        $self->{FTP}->cwd("\\ni-rt\\system\\log");
-        $self->{FTP}->get($logname,"log\\$logname");
-        $self->{FTP}->delete($logname);
-    }
+
+    # Now get the log file from the test, and delete the test from
+    # the target. The FTP session should still be open.
+    my $program = $self->Executable ();
+    my $logname = basename($program,".dll") . ".log";
+    my $target_log_path = $self->{TARGET}->{FSROOT} . "\\log\\" . $logname;
+    $program = basename($program);
+    $self->{TARGET}->{FTP}->delete($program);
+    $self->{TARGET}->{FTP}->get($target_log_path,"log\\$logname");
+    $self->{TARGET}->{FTP}->delete($target_log_path);
+
     return $status;
 }
 
@@ -276,12 +235,12 @@ sub SpawnWaitKill ($)
 {
     my $self = shift;
     my $timeout = shift;
-
-    if ($self->Spawn () == -1) {
-        return -1;
+    my $status = $self->Spawn ();
+    if ($status == 0) {
+        $status = $self->WaitKill ($timeout);
     }
 
-    return $self->WaitKill ($timeout);
+    return $status;
 }
 
 sub TerminateWaitKill ($)
@@ -305,9 +264,9 @@ sub Kill ()
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print "-> kill\n";
         }
-        $self->{TARGET}->print("kill");
+        $self->{TELNET}->print("kill");
         # Just wait for any reply; don't care what it is.
-        my $reply = $self->{TARGET}->getline();
+        my $reply = $self->{TELNET}->getline();
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print "<- $reply\n";
         }
@@ -326,8 +285,8 @@ sub Wait ($)
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print "-> wait\n";
         }
-        $self->{TARGET}->print("wait");
-        my $reply = $self->{TARGET}->getline(Timeout => 300);
+        $self->{TELNET}->print("wait");
+        my $reply = $self->{TELNET}->getline(Timeout => 300);
         $self->{RUNNING} = 0;
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
           print "<- $reply\n";
@@ -350,11 +309,11 @@ sub TimedWait ($)
 
 CHECK:
     while ($timeout > 0) {
-        $self->{TARGET}->print ("status");
+        $self->{TELNET}->print ("status");
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
           print "-> status\n";
         }
-        $reply = $self->{TARGET}->getline(Timeout => $timeout);
+        $reply = $self->{TELNET}->getline(Timeout => $timeout);
         if (!defined $reply) {
             last CHECK;
         }

@@ -38,12 +38,13 @@ sub new
     my $class = ref ($proto) || $proto;
     my $self = {};
 
+    $self->{EXECUTABLE} = shift;
+    $self->{ARGUMENTS} = shift;
+    $self->{TARGET} = undef;
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 0;
     $self->{IGNOREHOSTROOT} = 0;
     $self->{PROCESS} = undef;
-    $self->{EXECUTABLE} = shift;
-    $self->{ARGUMENTS} = shift;
     $self->{PURIFY_CMD} = $ENV{"ACE_RUN_PURIFY_CMD"};
     $self->{PURIFY_OPT} = $ENV{"ACE_RUN_PURIFY_OPT"};
     if (!defined $PerlACE::Process::WAIT_DELAY_FACTOR) {
@@ -71,18 +72,33 @@ sub DESTROY
     }
 }
 
+# Set the process's target. If there's none, behavior falls back to pre-target
+# behavior.
+sub Target($)
+{
+    my $self = shift;
+    $self->{TARGET} = shift;
+}
+
+
 ###############################################################################
 
 ### Some Accessors
 
-sub Normalize_Executable_Name
+sub Normalize_Executable_Name($)
 {
+    my $self = shift;
     my $executable = shift;
-
     my $basename = basename ($executable);
     my $dirname = dirname ($executable). '/';
-
-    $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename.".EXE";
+    my $subdir;
+    if (defined $self->{TARGET}) {
+        $subdir = $self->{TARGET}->ExeSubDir();
+    }
+    else {
+        $subdir = $PerlACE::Process::ExeSubDir;
+    }
+    $executable = $dirname.$subdir.$basename.".EXE";
 
     ## Installed executables do not conform to the ExeSubDir
     if (! -x $executable && -x $dirname.$basename.'.EXE') {
@@ -104,23 +120,24 @@ sub Executable
     }
 
     my $executable = $self->{EXECUTABLE};
+    # If the target's config has a different ACE_ROOT, rebase the executable
+    # from $ACE_ROOT to the target's root.
+    if (defined $self->{TARGET} &&
+        $self->{TARGET}->ACE_ROOT() ne $ENV{"ACE_ROOT"}) {
+        $executable = File::Spec->rel2abs($executable);
+        $executable = File::Spec->abs2rel($executable, $ENV{"ACE_ROOT"});
+        $executable = $self->{TARGET}->ACE_ROOT() . "/$executable";
+    }
 
+    # After VxWorks adopts the TARGET scheme, can do away with this block.
     if ($self->{IGNOREHOSTROOT} == 0) {
       if (PerlACE::is_vxworks_test()) {
           $executable = PerlACE::VX_HostFile ($executable);
       }
-      # LabVIEW RT host-run test pieces are fetched the same as VxWorks -
-      # using the relative path from TAO_ROOT appended to HOST_ROOT. Also,
-      # the -ExeSubDir option is ignored - that's telling where to find the
-      # target files.
-      if (PerlACE::is_labview_rt_test()) {
-          $executable = PerlACE::VX_HostFile ($executable);
-          $self->{IGNOREEXESUBDIR} = 1;
-      }
     }
 
     if ($self->{IGNOREEXESUBDIR} == 0) {
-        $executable = PerlACE::Process::Normalize_Executable_Name ($executable);
+        $executable = $self->Normalize_Executable_Name ($executable);
     }
     else {
         if ($executable !~ m/.EXE$/i) {
