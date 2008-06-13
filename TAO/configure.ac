@@ -982,7 +982,7 @@ if test $tao_build_tests = yes; then
     tests/objref_comparison_test/Makefile
   ])
   AC_CONFIG_COMMANDS([bug_2399], [
-      mkdir tests/Bug_2399_Regression/mytmp
+      mkdir -p tests/Bug_2399_Regression/mytmp
    ],[])
 fi
 
