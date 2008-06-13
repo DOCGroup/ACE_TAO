@@ -1,3 +1,11 @@
+Fri Jun 13 14:00:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/config-sunos5.5.h:
+        
+          Added #define of ACE_HAS_KSTAT, used by the OS monitors in
+          ace/Monitor_Control on Solaris platforms to guard the
+          visibility of Solaris-specific code and base classes.
+
 Fri Jun 13 13:40:39 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Monitor_Control/Makefile.am:
