@@ -73,7 +73,7 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "$debug -o server.ior");
 }
 else {
-    $SV = $server->CreateProcess ("server", "$debug -o $iorfile");
+    $SV = $server->CreateProcess ("server", "$debug -o $server_iorfile");
 }
 $CL = $client->CreateProcess ("client");
 

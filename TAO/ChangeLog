@@ -1,3 +1,10 @@
+Fri Jun 13 18:16:33 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Param_Test/run_test.pl:
+
+          Use the correct ior file variable in the server command line
+          options.
+
 Fri Jun 13 10:37:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
