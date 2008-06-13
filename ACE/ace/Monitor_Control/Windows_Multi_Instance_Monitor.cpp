@@ -50,7 +50,6 @@ namespace ACE
         }
 
       ACE_LPSTR path = paths;
-      int index = 0;
 
       /// Create a regular Windows monitor for each path name.
       while (*path != 0)
