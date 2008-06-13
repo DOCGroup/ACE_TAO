@@ -102,6 +102,7 @@ project(TAO_IDL_FE) : acelib, conv_lib, tao_output, crosscompile, fe_mcpp {
 
   Header_Files {
     include
+    fe
   }
 
   verbatim(gnuace, local) {
