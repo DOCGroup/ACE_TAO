@@ -1,3 +1,9 @@
+Fri Jun 13 10:37:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
+
+          Didn't provide the full change!
+
 Fri Jun 13 03:53:52 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

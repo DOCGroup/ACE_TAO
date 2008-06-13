@@ -46,7 +46,7 @@ namespace Test
     int tmp = 0;
     ACE_TCHAR **argv = 0;
     CORBA::ORB_var orb = CORBA::ORB_init (tmp,
-                                          0,
+                                          argv,
                                           orb_id_.in ());
 
     // Call the test function, which will throw an exception on
