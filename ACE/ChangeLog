@@ -1,7 +1,13 @@
+Fri Jun 13 14:31:35 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Stack_Trace.cpp (Solaris section):
+
+          Yesterday's addition of support for 64-bit SPARC broke on x86.
+
 Fri Jun 13 14:00:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/config-sunos5.5.h:
-        
+
           Added #define of ACE_HAS_KSTAT, used by the OS monitors in
           ace/Monitor_Control on Solaris platforms to guard the
           visibility of Solaris-specific code and base classes.
@@ -43,7 +49,7 @@ Fri Jun 13 13:24:11 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * ace/Monitor_Control/Packets_Received_Monitor.h:
         * ace/Monitor_Control/Bytes_Sent_Monitor.cpp:
         * ace/Monitor_Control/Packets_Sent_Monitor.cpp:
-        
+
           Added '|| defined (AIX)' to every occurrence of
           '#if defined (linux)' to eliminate build errors on the
           latter platform.
@@ -55,28 +61,28 @@ Thu Jun 12 21:57:33 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Remove feature test for ACE_HAS_TEMPLATE_SPECIALIZATION.
 
-	      * ace/config-borland-common.h:
-	      * ace/config-cray.h:
-	      * ace/config-cxx-common.h:
-	      * ace/config-g++-common.h:
-	      * ace/config-hpux-11.00.h:
-	      * ace/config-icc-common.h:
-	      * ace/config-integritySCA.h:
-	      * ace/config-irix6.x-sgic++.h:
-	      * ace/config-mvs.h:
-	      * ace/config-openvms.h:
-	      * ace/config-suncc-common.h:
-	      * ace/config-sunos5.4-sunc++-4.x.h:
-	      * ace/config-sunos5.5.h:
-	      * ace/config-sunos5.6.h:
-	      * ace/config-tandem-nsk-mips-v2.h:
-	      * ace/config-tandem-nsk-mips-v3.h:
-	      * ace/config-tru64.h:
-	      * ace/config-unixware-7.1.0.udk.h:
-	      * ace/config-win32-dmc.h:
-	      * ace/config-win32-ghs.h:
-	      * ace/config-win32-msvc-8.h:
-	      * ace/config-win32-msvc-9.h:
+              * ace/config-borland-common.h:
+              * ace/config-cray.h:
+              * ace/config-cxx-common.h:
+              * ace/config-g++-common.h:
+              * ace/config-hpux-11.00.h:
+              * ace/config-icc-common.h:
+              * ace/config-integritySCA.h:
+              * ace/config-irix6.x-sgic++.h:
+              * ace/config-mvs.h:
+              * ace/config-openvms.h:
+              * ace/config-suncc-common.h:
+              * ace/config-sunos5.4-sunc++-4.x.h:
+              * ace/config-sunos5.5.h:
+              * ace/config-sunos5.6.h:
+              * ace/config-tandem-nsk-mips-v2.h:
+              * ace/config-tandem-nsk-mips-v3.h:
+              * ace/config-tru64.h:
+              * ace/config-unixware-7.1.0.udk.h:
+              * ace/config-win32-dmc.h:
+              * ace/config-win32-ghs.h:
+              * ace/config-win32-msvc-8.h:
+              * ace/config-win32-msvc-9.h:
         * ace/config-win32-msvc-7.h:
 
           Remove unused #define of ACE_HAS_TEMPLATE_SPECIALIZATION.  This

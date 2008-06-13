@@ -358,7 +358,7 @@ cs_operate(int (*func)(void *, void *), void * usrarg,
   size_t i;
   for (i = 0; i < skip_frames && sp; ++i)
     {
-      sp = cs_frame_adjust(sp->fr_savfp);
+      sp = cs_frame_adjust((frame*) sp->fr_savfp);
     }
 
   i = 0;
@@ -369,7 +369,7 @@ cs_operate(int (*func)(void *, void *), void * usrarg,
           && --num_frames
           && (*func)((void*)sp->fr_savpc, usrarg))
     {
-      sp = cs_frame_adjust(sp->fr_savfp);
+      sp = cs_frame_adjust((frame*) sp->fr_savfp);
     }
 
   return(i);
