@@ -27,6 +27,7 @@ libACE_Monitor_Control_la_CPPFLAGS = \
 
 libACE_Monitor_Control_la_SOURCES = \
   Auto_Update_Starter.cpp \
+  BSD_Network_Interface_Monitor.cpp \
   Bytes_Received_Monitor.cpp \
   Bytes_Sent_Monitor.cpp \
   CPU_Load_Monitor.cpp \
@@ -39,6 +40,7 @@ libACE_Monitor_Control_la_SOURCES = \
   Num_Threads_Monitor.cpp \
   Packets_Received_Monitor.cpp \
   Packets_Sent_Monitor.cpp \
+  Solaris_Network_Interface_Monitor.cpp \
   Windows_Monitor.cpp \
   Windows_Multi_Instance_Monitor.cpp
 
@@ -52,6 +54,7 @@ libACE_Monitor_Control_la_LIBADD = \
 
 nobase_include_HEADERS = \
   Auto_Update_Starter.h \
+  BSD_Network_Interface_Monitor.h \
   Bytes_Received_Monitor.h \
   Bytes_Sent_Monitor.h \
   CPU_Load_Monitor.h \
@@ -67,6 +70,7 @@ nobase_include_HEADERS = \
   Num_Threads_Monitor.h \
   Packets_Received_Monitor.h \
   Packets_Sent_Monitor.h \
+  Solaris_Network_Interface_Monitor.h \
   Windows_Monitor.h \
   Windows_Multi_Instance_Monitor.h
 
