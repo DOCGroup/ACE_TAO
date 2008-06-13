@@ -1,3 +1,9 @@
+Fri Jun 13 14:45:28 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Control/Windows_Multi_Instance_Monitor.cpp:
+        
+          Removed unused local variable.
+
 Fri Jun 13 14:31:35 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Stack_Trace.cpp (Solaris section):
