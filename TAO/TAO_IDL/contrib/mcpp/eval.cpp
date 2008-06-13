@@ -1522,7 +1522,7 @@ static expr_t   eval_unsigned(
     case OP_EOE:
     case OP_PLU:    v1 = v1u;           break;
     case OP_NEG:
-        v1 = -v1u;
+        v1 = static_cast<uexpr_t> (- (static_cast<expr_t> (v1u)));
         if (v1u)
             overflow( op_name, valpp, TRUE);
         break;
