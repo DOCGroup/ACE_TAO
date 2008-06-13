@@ -1,3 +1,11 @@
+Fri Jun 13 03:53:52 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add -p argument to mkdir for tests/Bug_2399_Regression/mytmp
+          directory.  Avoids warning/error when configure is run more
+          than once in a given directory.
+
 Thu Jun 12 16:58:20 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Makefile.am:
