@@ -175,14 +175,14 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   /// Set single record attributes.
   virtual void
     set_record_attribute (DsLogAdmin::RecordId id,
-			  const DsLogAdmin::NVList & attr_list);
+                          const DsLogAdmin::NVList & attr_list);
 
   /// Set the attributes of all records that matches the
   /// constraints with same attr_list.
   virtual CORBA::ULong
     set_records_attribute (const char * grammar,
-			   const char * c,
-			   const DsLogAdmin::NVList & attr_list);
+                           const char * c,
+                           const DsLogAdmin::NVList & attr_list);
 
   /// Get the attributes of the record with id <id>. Raises
   /// DsLogAdmin::InvalidRecordId
@@ -228,17 +228,17 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   /// Defines types to represent the container that maps RecordIds to
   /// LogRecords.
   typedef ACE_RB_Tree <DsLogAdmin::RecordId,
-		       DsLogAdmin::LogRecord,
-		       ACE_Less_Than<DsLogAdmin::RecordId>,
-		       ACE_Null_Mutex>		LOG_RECORD_STORE;
-  typedef LOG_RECORD_STORE::ITERATOR		LOG_RECORD_STORE_ITER;
-  typedef LOG_RECORD_STORE::ENTRY		LOG_RECORD_STORE_ENTRY;
+                       DsLogAdmin::LogRecord,
+                       ACE_Less_Than<DsLogAdmin::RecordId>,
+                       ACE_Null_Mutex> LOG_RECORD_STORE;
+  typedef LOG_RECORD_STORE::ITERATOR LOG_RECORD_STORE_ITER;
+  typedef LOG_RECORD_STORE::ENTRY LOG_RECORD_STORE_ENTRY;
 
 protected:
   /// Set rec to the pointer to the LogRecord with the given
   /// id. Returns 0 on success, -1 on failure.
   int retrieve_i (DsLogAdmin::RecordId id,
-		  DsLogAdmin::LogRecord &rec);
+                  DsLogAdmin::LogRecord &rec);
 
   /// Update into storage. Returns 0 on success -1 on failure.
   int update_i (DsLogAdmin::LogRecord &rec);

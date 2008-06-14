@@ -59,7 +59,7 @@ public:
 
   /// Constructor.
   TAO_NotifyLog_i (CORBA::ORB_ptr orb,
-		   PortableServer::POA_ptr poa,
+                   PortableServer::POA_ptr poa,
                    TAO_LogMgr_i &logmgr_i,
                    DsLogAdmin::LogMgr_ptr factory,
                    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,

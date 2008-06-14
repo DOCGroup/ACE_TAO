@@ -59,8 +59,7 @@ public:
 
   /// Gets a list of LogRecords.
   virtual DsLogAdmin::RecordList* get (CORBA::ULong position,
-				       CORBA::ULong how_many)
-    = 0;
+                                       CORBA::ULong how_many) = 0;
 
   /// This destroys the iterator.
   virtual void destroy (void);
