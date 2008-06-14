@@ -490,14 +490,13 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 
   if (TAO_debug_level > 0)
     {
-        char buf [BUFSIZ];
-	ACE_INET_Addr *remote_addr = dynamic_cast<ACE_INET_Addr*> (address);
-	remote_addr->addr_to_string (buf,
-				     BUFSIZ);
+      char buf [BUFSIZ];
+      ACE_INET_Addr *remote_addr = dynamic_cast<ACE_INET_Addr*> (address);
+      remote_addr->addr_to_string (buf, BUFSIZ);
 
-	ACE_DEBUG ((LM_DEBUG,
-		    "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::set_remote_address %s\n",
-		    buf));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::set_remote_address %s\n",
+                  buf));
     }
 
 
@@ -527,9 +526,9 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 
       ACE_INET_Addr* src_addr;
       ACE_NEW_RETURN (src_addr,
-		      ACE_INET_Addr (local_addr.get_port_number (),
-				     local_addr.get_host_name ()),
-		      -1);
+                      ACE_INET_Addr (local_addr.get_port_number (),
+                      local_addr.get_host_name ()),
+                      -1);
 
       this->qos_session_->source_addr (src_addr);
 
@@ -1173,8 +1172,8 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
     }
   else
     ACE_NEW_RETURN (local_addr,
-		    ACE_INET_Addr ("0"),
-		    -1);
+                    ACE_INET_Addr ("0"),
+                    -1);
 
   TAO_AV_Flow_Handler *flow_handler = 0;
 
@@ -1267,9 +1266,9 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
       //this->qos_session_->source_port (local_addr->get_port_number ());
       ACE_INET_Addr* src_addr;
       ACE_NEW_RETURN (src_addr,
-		      ACE_INET_Addr (local_addr->get_port_number (),
-				     local_addr->get_host_name ()),
-		      -1);
+                      ACE_INET_Addr (local_addr->get_port_number (),
+                      local_addr->get_host_name ()),
+                      -1);
 
       this->qos_session_->source_addr (src_addr);
 

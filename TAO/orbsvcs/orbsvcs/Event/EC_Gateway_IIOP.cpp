@@ -73,20 +73,20 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec
                              RtecEventChannelAdmin::EventChannel_ptr consumer_ec)
 {
   if (CORBA::is_nil (this->supplier_ec_.in ()) && CORBA::is_nil (this->consumer_ec_.in ()))
-  {
-    this->supplier_ec_ =
-      RtecEventChannelAdmin::EventChannel::_duplicate (supplier_ec);
-    this->consumer_ec_ =
-      RtecEventChannelAdmin::EventChannel::_duplicate (consumer_ec);
+    {
+      this->supplier_ec_ =
+        RtecEventChannelAdmin::EventChannel::_duplicate (supplier_ec);
+      this->consumer_ec_ =
+        RtecEventChannelAdmin::EventChannel::_duplicate (consumer_ec);
 
-	if (ec_control_ == 0)
-     {
-        ec_control_ = factory_->create_consumerec_control(this);
-        ec_control_->activate();
-     }
+      if (ec_control_ == 0)
+        {
+          ec_control_ = factory_->create_consumerec_control(this);
+          ec_control_->activate();
+        }
 
-    return 0;
-  }
+      return 0;
+    }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO_EC_Gateway_IIOP - init_i "

@@ -1,3 +1,25 @@
+Sat Jun 14 14:37:01 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.h:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/default_resource.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.inl:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtAbstractInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.inl:
+
+          Untabify.
+
 Fri Jun 13 18:16:33 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Param_Test/run_test.pl:

@@ -25,9 +25,9 @@ TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (void)
 {
   if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): refcount=%u,consumer=%@\n",
-				this,
-				this->refcount_,
-				this->consumer_.in()));
+                this,
+                this->refcount_,
+                this->consumer_.in()));
 
   if (this->is_connected_i ())
     {

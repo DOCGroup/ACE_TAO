@@ -141,7 +141,7 @@ TAO_EC_Servant_Var(TAO_EC_Servant_Var<T> const & rhs)
         }
       catch (...)
         {
-	  throw;
+          throw;
         }
     }
 }

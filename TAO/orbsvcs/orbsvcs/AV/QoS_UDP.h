@@ -133,9 +133,9 @@ public:
   virtual void qos_session (ACE_QoS_Session *qos_session);
 
   int translate (ACE_Flow_Spec *ace_flow_spec,
-		 CosPropertyService::Properties &qos_params);
+                 CosPropertyService::Properties &qos_params);
   int translate (CosPropertyService::Properties &qos_params,
-		 ACE_Flow_Spec *ace_flow_spec);
+                 ACE_Flow_Spec *ace_flow_spec);
 
   void negotiator (AVStreams::Negotiator_ptr);
 
@@ -212,7 +212,7 @@ public:
   virtual int close (void);
 
   int translate (CosPropertyService::Properties &qos_params,
-		 ACE_Flow_Spec *ace_flow_spec);
+                 ACE_Flow_Spec *ace_flow_spec);
 
 protected:
   TAO_Base_StreamEndPoint *endpoint_;
@@ -275,15 +275,15 @@ public:
 
   /// Open a QoS Session with the specified address
   ACE_QoS_Session* open_qos_session (TAO_AV_UDP_QoS_Flow_Handler *handler,
-				     ACE_INET_Addr &addr);
+                                     ACE_INET_Addr &addr);
 
   /// Activate the QoS handler to receive QoS events
   int activate_qos_handler (ACE_QoS_Session *qos_session,
-			    TAO_AV_UDP_QoS_Flow_Handler *handler);
+                            TAO_AV_UDP_QoS_Flow_Handler *handler);
 
   /// Set the required QoS for the session
   int set_qos (ACE_Flow_Spec& ace_flow_spec,
-	       TAO_AV_UDP_QoS_Flow_Handler *handler);
+               TAO_AV_UDP_QoS_Flow_Handler *handler);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
