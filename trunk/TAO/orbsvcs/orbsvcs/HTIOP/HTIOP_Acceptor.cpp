@@ -331,10 +331,9 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                                    1) != 0)
         return -1;
       else
-	{
-	  return this->open_i (addr,
-			       reactor);
-	}
+        {
+          return this->open_i (addr, reactor);
+        }
     }
   else if (port_separator_loc == 0)
     {
