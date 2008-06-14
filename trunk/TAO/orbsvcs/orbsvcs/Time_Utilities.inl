@@ -77,19 +77,19 @@ ORBSVCS_Time::to_TimeT (const ACE_Time_Value& t)
 
 ACE_INLINE void
 ORBSVCS_Time::Absolute_Time_Value_to_TimeT (TimeBase::TimeT& lhs,
-					    const ACE_Time_Value& rhs)
+	                const ACE_Time_Value& rhs)
 {
   ACE_hrtime_t t =
     static_cast<ACE_hrtime_t> (rhs.sec ()) * ACE_U_ONE_SECOND_IN_NSECS +
     static_cast<ACE_hrtime_t> (rhs.usec ()) * 1000u;
-  
+
   t += Time_Base_Offset;
   ORBSVCS_Time::hrtime_to_TimeT (lhs, t);
 }
 
 ACE_INLINE void
 ORBSVCS_Time::Absolute_TimeT_to_Time_Value (ACE_Time_Value& lhs,
-					    const TimeBase::TimeT& rhs)
+	                const TimeBase::TimeT& rhs)
 {
   ACE_hrtime_t t;
 
@@ -97,7 +97,7 @@ ORBSVCS_Time::Absolute_TimeT_to_Time_Value (ACE_Time_Value& lhs,
   t -= Time_Base_Offset;
 
   lhs.set(static_cast<ACE_UINT32> (t / ACE_U_ONE_SECOND_IN_NSECS),
-	  static_cast<ACE_UINT32> ((t % ACE_U_ONE_SECOND_IN_NSECS) / 1000));
+    static_cast<ACE_UINT32> ((t % ACE_U_ONE_SECOND_IN_NSECS) / 1000));
 }
 
 ACE_INLINE ACE_Time_Value

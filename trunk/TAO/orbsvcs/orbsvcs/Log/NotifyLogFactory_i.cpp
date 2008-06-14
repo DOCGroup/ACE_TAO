@@ -86,9 +86,9 @@ TAO_NotifyLogFactory_i::create (
   ACE_UNUSED_ARG (initial_admin);
 
   this->create_i (full_action,
-		  max_size,
-		  & thresholds,
-		  id_out);
+                  max_size,
+                  & thresholds,
+                  id_out);
   DsLogAdmin::LogId id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -123,9 +123,9 @@ TAO_NotifyLogFactory_i::create_with_id (
   ACE_UNUSED_ARG (initial_admin);
 
   this->create_with_id_i (id,
-			  full_action,
-			  max_size,
-			  & thresholds);
+                          full_action,
+                          max_size,
+                          & thresholds);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
@@ -158,7 +158,7 @@ TAO_NotifyLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 
   ACE_NEW_THROW_EX (notify_log_i,
                     TAO_NotifyLog_i (this->orb_.in (),
-				     this->log_poa_.in (),
+                                     this->log_poa_.in (),
                                      *this,
                                      this->log_mgr_.in (),
                                      this->notify_factory_.in (),

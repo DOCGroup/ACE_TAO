@@ -1,3 +1,37 @@
+Sat Jun 14 15:41:37 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLog_i.h:
+        * orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogActivator.h:
+        * orbsvcs/orbsvcs/Log/LogActivator.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.h:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogStore.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.cpp:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.h:
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+        * orbsvcs/orbsvcs/Time_Utilities.inl:
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+
+          Untabify.
+
 Sat Jun 14 14:37:01 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/orbsvcs/AV/QoS_UDP.h:

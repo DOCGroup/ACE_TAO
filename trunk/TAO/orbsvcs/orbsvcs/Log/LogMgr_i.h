@@ -108,7 +108,7 @@ public:
   /// @return repository id
   ///
   virtual CORBA::RepositoryId
-    create_repositoryid  ()					= 0;
+    create_repositoryid  () = 0;
 
   /// @brief Create log servant
   ///
@@ -118,7 +118,7 @@ public:
   ///
   /// @return pointer to servant
   virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id)			= 0;
+    create_log_servant (DsLogAdmin::LogId id) = 0;
 
   /// @brief Get log record store
   ///
@@ -147,34 +147,34 @@ protected:
   /// @param poa Parent POA
   ///
   void init (CORBA::ORB_ptr orb,
-	     PortableServer::POA_ptr poa);
+    PortableServer::POA_ptr poa);
 
   /// @brief Create log
   void create_i (DsLogAdmin::LogFullActionType full_action,
-		 CORBA::ULongLong max_size,
-		 const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-		 DsLogAdmin::LogId_out id_out);
+                 CORBA::ULongLong max_size,
+                 const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
+                 DsLogAdmin::LogId_out id_out);
 
   /// @brief Create log
   void create_with_id_i (DsLogAdmin::LogId id,
-			 DsLogAdmin::LogFullActionType full_action,
-			 CORBA::ULongLong max_size,
-			 const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
+                         DsLogAdmin::LogFullActionType full_action,
+                         CORBA::ULongLong max_size,
+                         const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
 
   /// ORB.
-  CORBA::ORB_var                orb_;
+  CORBA::ORB_var orb_;
 
   /// POA.
-  PortableServer::POA_var	poa_;
+  PortableServer::POA_var poa_;
 
   /// Factory POA.
-  PortableServer::POA_var	factory_poa_;
+  PortableServer::POA_var factory_poa_;
 
   /// Log POA.
-  PortableServer::POA_var	log_poa_;
+  PortableServer::POA_var log_poa_;
 
 private:
-  TAO_LogStore*			logstore_;
+  TAO_LogStore* logstore_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

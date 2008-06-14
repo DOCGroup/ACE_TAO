@@ -49,16 +49,16 @@ public:
   virtual ~TAO_LogActivator();
 
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId& oid,
-					     PortableServer::POA_ptr poa);
+                                             PortableServer::POA_ptr poa);
 
   virtual void etherealize (const PortableServer::ObjectId& oid,
-			    PortableServer::POA_ptr poa,
-			    PortableServer::Servant servant,
-			    CORBA::Boolean cleanup_in_progress,
-			    CORBA::Boolean remaining_activations);
+                            PortableServer::POA_ptr poa,
+                            PortableServer::Servant servant,
+                            CORBA::Boolean cleanup_in_progress,
+                            CORBA::Boolean remaining_activations);
 
 private:
-  TAO_LogMgr_i&			logmgr_i_;
+  TAO_LogMgr_i& logmgr_i_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -3,8 +3,8 @@
 #include "orbsvcs/Notify/Timer_Reactor.h"
 
 ACE_RCSID (Notify,
-	   Timer_Reactor,
-	   "$Id$")
+           Timer_Reactor,
+           "$Id$")
 
 #include "orbsvcs/Notify/Properties.h"
 #include "tao/ORB_Core.h"

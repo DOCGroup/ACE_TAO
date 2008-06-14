@@ -43,9 +43,9 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
                                DsLogAdmin::LogId_out id_out)
 {
   this->create_i (full_action,
-		  max_size,
-		  0,
-		  id_out);
+                  max_size,
+                  0,
+                  id_out);
   DsLogAdmin::LogId id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -69,9 +69,9 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
                                        CORBA::ULongLong max_size)
 {
   this->create_with_id_i (id,
-			  full_action,
-			  max_size,
-			  0);
+                          full_action,
+                          max_size,
+                          0);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =

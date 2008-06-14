@@ -92,10 +92,10 @@ public:
                               const char* preference);
 
   /**
-	* Parse the preference string, determining first if it's
-	* valid. Throw an IllegalPreference exception if the preference
-	* doesn't conform to the BNF grammar for preferences.
-	*/
+    * Parse the preference string, determining first if it's
+    * valid. Throw an IllegalPreference exception if the preference
+    * doesn't conform to the BNF grammar for preferences.
+    */
   TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
                               const char* preference);
 

@@ -37,40 +37,37 @@ public:
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
-    list_logs (void)
-    = 0;
+    list_logs (void) = 0;
 
   /// Lists all log ids.
   virtual DsLogAdmin::LogIdList *
-    list_logs_by_id (void)
-    = 0;
+    list_logs_by_id (void) = 0;
 
   /// Returns a reference to the log with the supplied id.
   virtual DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id)
-    = 0;
+    find_log (DsLogAdmin::LogId id) = 0;
 
   /// Returns true if log exists, otherwise false
   virtual bool
-    exists (DsLogAdmin::LogId id)				= 0;
+    exists (DsLogAdmin::LogId id) = 0;
 
   /// Remove the given entry from the hash table.
   virtual int
-    remove (DsLogAdmin::LogId id)				= 0;
+    remove (DsLogAdmin::LogId id) = 0;
 
   /// @brief Create log
   virtual void
     create (DsLogAdmin::LogFullActionType full_action,
-	    CORBA::ULongLong max_size,
-	    const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-	    DsLogAdmin::LogId_out id_out)				= 0;
+            CORBA::ULongLong max_size,
+            const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
+            DsLogAdmin::LogId_out id_out) = 0;
 
   /// @brief Create log
   virtual void
     create_with_id (DsLogAdmin::LogId id,
-		    DsLogAdmin::LogFullActionType full_action,
-		    CORBA::ULongLong max_size,
-		    const DsLogAdmin::CapacityAlarmThresholdList* thresholds)			= 0;
+                    DsLogAdmin::LogFullActionType full_action,
+                    CORBA::ULongLong max_size,
+                    const DsLogAdmin::CapacityAlarmThresholdList* thresholds) = 0;
 
   /// @brief Get log record store
   ///
@@ -79,7 +76,7 @@ public:
   /// @param id log id
   ///
   virtual TAO_LogRecordStore*
-    get_log_record_store (DsLogAdmin::LogId id)		= 0;
+    get_log_record_store (DsLogAdmin::LogId id) = 0;
 
 protected:
   // Constructor

@@ -24,13 +24,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ORBSVCS_Time
- * 
+ *
  * @brief Time conversion utilities.
  *
  * This class defines several static methods to convert between
  * several ACE time structures and the CORBA TimeT structure.
  *
- * Recall that TimeBase::TimeT stores time in a 64-bit long long 
+ * Recall that TimeBase::TimeT stores time in a 64-bit long long
  * (or structure when that is not available) and uses hundreds of
  * nanoseconds as time units (i.e. 1 second is 10^7 TimeT units).
  *
@@ -87,11 +87,11 @@ public:
 
   /// @brief Convert absolute <ACE_Time_Value> to a <TimeBase::TimeT>
   static void Absolute_Time_Value_to_TimeT (TimeBase::TimeT& lhs,
-					    const ACE_Time_Value& rhs);
+	                const ACE_Time_Value& rhs);
 
   /// @brief Convert absolute <TimeBase::TimeT> to a <ACE_Time_Value>
   static void Absolute_TimeT_to_Time_Value (ACE_Time_Value& lrs,
-					    const TimeBase::TimeT& rhs);
+	                const TimeBase::TimeT& rhs);
 
   /// @brief Convert absolute <ACE_Time_Value> to a <TimeBase::TimeT>
   static TimeBase::TimeT to_Absolute_TimeT (const ACE_Time_Value& rhs);

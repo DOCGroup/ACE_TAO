@@ -63,7 +63,7 @@ public:
   /// This method is called periodically by the Reactor to update the
   /// clerk's time.
   int handle_timeout (const ACE_Time_Value &time,
-		      const void *arg);
+                      const void *arg);
 
 protected:
   /// Clerk's instance that this class helps to update time.
