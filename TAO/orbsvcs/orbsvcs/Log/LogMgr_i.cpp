@@ -27,7 +27,7 @@ TAO_LogMgr_i::~TAO_LogMgr_i ()
 
 void
 TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
-		    PortableServer::POA_ptr poa)
+                    PortableServer::POA_ptr poa)
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->poa_ = PortableServer::POA::_duplicate (poa);
@@ -44,8 +44,8 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
       this->poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
     this->factory_poa_ = this->poa_->create_POA ("factory_POA",
-						 poa_manager.in (),
-						 policies);
+                                                 poa_manager.in (),
+                                                 policies);
   }
 
 
@@ -70,16 +70,16 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 #endif
 
     this->log_poa_ = this->factory_poa_->create_POA ("log_POA",
-						     poa_manager.in (),
-						     policies);
+                                                     poa_manager.in (),
+                                                     policies);
   }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
   PortableServer::ServantActivator* servant_activator = 0;
 
   ACE_NEW_THROW_EX (servant_activator,
-		    TAO_LogActivator (*this),
-		    CORBA::NO_MEMORY ());
+                    TAO_LogActivator (*this),
+                    CORBA::NO_MEMORY ());
 
   this->log_poa_->set_servant_manager(servant_activator);
 #endif
@@ -145,7 +145,7 @@ TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id)
 
   // Register with the poa
   this->log_poa_->activate_object_with_id (oid.in (),
-					   servant);
+                                           servant);
 
   return create_log_reference (id);
 }
@@ -193,9 +193,9 @@ TAO_LogMgr_i::remove (DsLogAdmin::LogId id)
 
 void
 TAO_LogMgr_i::create_i (DsLogAdmin::LogFullActionType full_action,
-			CORBA::ULongLong max_size,
-			const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-			DsLogAdmin::LogId_out id_out)
+                        CORBA::ULongLong max_size,
+                        const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
+                        DsLogAdmin::LogId_out id_out)
 {
   // Validate log_full_action before creating log
   if (full_action != DsLogAdmin::wrap && full_action != DsLogAdmin::halt)
@@ -207,16 +207,16 @@ TAO_LogMgr_i::create_i (DsLogAdmin::LogFullActionType full_action,
     }
 
   this->logstore_->create (full_action,
-			   max_size,
-			   thresholds,
-			   id_out);
+                           max_size,
+                           thresholds,
+                           id_out);
 }
 
 void
 TAO_LogMgr_i::create_with_id_i (DsLogAdmin::LogId id,
-				DsLogAdmin::LogFullActionType full_action,
-				CORBA::ULongLong max_size,
-				const DsLogAdmin::CapacityAlarmThresholdList* thresholds)
+                                DsLogAdmin::LogFullActionType full_action,
+                                CORBA::ULongLong max_size,
+                                const DsLogAdmin::CapacityAlarmThresholdList* thresholds)
 {
   // Validate log_full_action before creating log
   if (full_action != DsLogAdmin::wrap && full_action != DsLogAdmin::halt)
@@ -228,9 +228,9 @@ TAO_LogMgr_i::create_with_id_i (DsLogAdmin::LogId id,
     }
 
   this->logstore_->create_with_id (id,
-				   full_action,
-				   max_size,
-				   thresholds);
+                                   full_action,
+                                   max_size,
+                                   thresholds);
 }
 
 CORBA::ORB_ptr

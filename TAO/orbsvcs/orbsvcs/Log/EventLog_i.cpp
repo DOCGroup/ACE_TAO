@@ -10,8 +10,8 @@ ACE_RCSID (Log,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
-				PortableServer::POA_ptr poa,
-				PortableServer::POA_ptr log_poa,
+                                PortableServer::POA_ptr poa,
+                                PortableServer::POA_ptr log_poa,
                                 TAO_LogMgr_i &logmgr_i,
                                 DsLogAdmin::LogMgr_ptr factory,
                                 TAO_LogNotification *log_notifier,
@@ -23,7 +23,7 @@ TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
 
   // Create an instance of the event channel.
   TAO_CEC_EventChannel_Attributes attr (this->poa_.in(),
-					this->poa_.in());
+                                        this->poa_.in());
 
   ACE_NEW_THROW_EX (this->event_channel_,
                     TAO_CEC_EventChannel(attr),

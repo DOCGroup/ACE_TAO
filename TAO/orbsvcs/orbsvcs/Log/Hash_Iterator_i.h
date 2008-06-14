@@ -48,8 +48,8 @@ public:
 
   /// Constructor.
   TAO_Hash_Iterator_i (PortableServer::POA_ptr poa,
-		       ACE_Reactor* reactor,
-		       TAO_Hash_LogRecordStore* recordstore,
+                       ACE_Reactor* reactor,
+                       TAO_Hash_LogRecordStore* recordstore,
                        TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
                        TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
                        CORBA::ULong start,

@@ -12,7 +12,7 @@ ACE_Time_Value
 TAO_Iterator_i::timeout_(60 * 60);
 
 TAO_Iterator_i::TAO_Iterator_i (PortableServer::POA_ptr poa,
-				ACE_Reactor* reactor)
+                                ACE_Reactor* reactor)
   : poa_ (PortableServer::POA::_duplicate (poa)),
     reactor_ (reactor)
 {

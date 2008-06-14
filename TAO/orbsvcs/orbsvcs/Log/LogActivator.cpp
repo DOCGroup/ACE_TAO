@@ -20,7 +20,7 @@ TAO_LogActivator::~TAO_LogActivator ()
 
 PortableServer::Servant
 TAO_LogActivator::incarnate (const PortableServer::ObjectId& oid,
-			     PortableServer::POA_ptr)
+                             PortableServer::POA_ptr)
 {
   CORBA::String_var poa_id = PortableServer::ObjectId_to_string (oid);
 
@@ -35,10 +35,10 @@ TAO_LogActivator::incarnate (const PortableServer::ObjectId& oid,
 
 void
 TAO_LogActivator::etherealize (const PortableServer::ObjectId&,
-			       PortableServer::POA_ptr,
-			       PortableServer::Servant servant,
-			       CORBA::Boolean,
-			       CORBA::Boolean remaining_activations)
+                               PortableServer::POA_ptr,
+                               PortableServer::Servant servant,
+                               CORBA::Boolean,
+                               CORBA::Boolean remaining_activations)
 {
   if (!remaining_activations)
    {

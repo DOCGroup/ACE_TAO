@@ -20,13 +20,12 @@ ACE_RCSID (Log,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTEventLog_i::TAO_RTEventLog_i (CORBA::ORB_ptr orb,
-				    PortableServer::POA_ptr poa,
-				    PortableServer::POA_ptr log_poa,
+                                    PortableServer::POA_ptr poa,
+                                    PortableServer::POA_ptr log_poa,
                                     TAO_LogMgr_i &logmgr_i,
                                     DsLogAdmin::LogMgr_ptr factory,
                                     TAO_LogNotification *log_notifier,
-                                    DsLogAdmin::LogId id
-				    )
+                                    DsLogAdmin::LogId id)
   : TAO_Log_i (orb, logmgr_i, factory, id, log_notifier),
     poa_ (PortableServer::POA::_duplicate (poa)),
     log_poa_ (PortableServer::POA::_duplicate (log_poa))

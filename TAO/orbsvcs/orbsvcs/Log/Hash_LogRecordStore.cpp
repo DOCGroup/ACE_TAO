@@ -53,7 +53,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
   this->log_qos_[0] = DsLogAdmin::QoSNone;
 
   PortableServer::POA_ptr log_poa =
-	logmgr_i_->log_poa();
+    logmgr_i_->log_poa();
 
   // Create POA for iterators
   TAO::Utils::PolicyList_Destroyer policies (2);
@@ -71,7 +71,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
     log_poa->the_POAManager ();
 
   this->iterator_poa_ =
-	log_poa->create_POA(buf, poa_manager.in(), policies);
+    log_poa->create_POA(buf, poa_manager.in(), policies);
 }
 
 TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore (void)
@@ -162,7 +162,7 @@ TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec)
 
 int
 TAO_Hash_LogRecordStore::retrieve_i (DsLogAdmin::RecordId id,
-				     DsLogAdmin::LogRecord &rec)
+                                     DsLogAdmin::LogRecord &rec)
 {
   int retval = rec_map_.find (id, rec);
   return retval;
@@ -235,8 +235,8 @@ TAO_Hash_LogRecordStore::purge_old_records (void)
       LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
 
       for (CORBA::ULongLong i = 0;
-	   iter != iter_end && i < num_records_to_purge;
-	   ++i)
+           iter != iter_end && i < num_records_to_purge;
+           ++i)
         {
           this->remove_i (iter++);
           ++count;
@@ -412,8 +412,8 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
       TAO_Hash_Iterator_i *iter_query = 0;
       ACE_NEW_THROW_EX (iter_query,
                         TAO_Hash_Iterator_i (this->iterator_poa_.in (),
-					     this->reactor_,
-					     this,
+                                             this->reactor_,
+                                             this,
                                              iter,
                                              iter_end,
                                              count,
@@ -483,7 +483,7 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
 
 CORBA::ULong
 TAO_Hash_LogRecordStore::match (const char* grammar,
-				const char *constraint)
+                                const char *constraint)
 {
   this->check_grammar (grammar);
 
@@ -513,7 +513,7 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
 
 CORBA::ULong
 TAO_Hash_LogRecordStore::delete_records (const char *grammar,
-					 const char *constraint)
+                                         const char *constraint)
 {
   this->check_grammar (grammar);
 

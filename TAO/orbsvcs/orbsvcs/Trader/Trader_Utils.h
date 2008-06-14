@@ -62,14 +62,14 @@ public:
   int is_dynamic_property(int index);
 
   /**
-	* Returns value of the property whose index is <index>. If the
-	* property at that index is dynamic and the trader supports dynamic
-	* properties, then the property_value method will obtain the value
-	* of the dynamic property using the evalDP method on the
-	* CosTradingDynamic::DynamicPropEval interface, passing on a
-	* CosTradingDynamic::DPEvalFailure exception on failure. If the
-	* property index is undefined, the method returns a null pointer.
-	*/
+    * Returns value of the property whose index is <index>. If the
+    * property at that index is dynamic and the trader supports dynamic
+    * properties, then the property_value method will obtain the value
+    * of the dynamic property using the evalDP method on the
+    * CosTradingDynamic::DynamicPropEval interface, passing on a
+    * CosTradingDynamic::DPEvalFailure exception on failure. If the
+    * property index is undefined, the method returns a null pointer.
+    */
   CORBA::Any* property_value(int index);
 
 
@@ -146,10 +146,10 @@ public:
   int is_dynamic_property(const char* property_name);
 
   /**
-	* This method is identical to its counterpart in
-	* TAO_Property_Evaluator, except property_value first discovers the
-	* index through a string matching lookup.
-	*/
+    * This method is identical to its counterpart in
+    * TAO_Property_Evaluator, except property_value first discovers the
+    * index through a string matching lookup.
+    */
   CORBA::Any* property_value(const char* property_name);
 
   /**
@@ -226,11 +226,11 @@ public:
 #define TAO_NUM_POLICIES  11
 
   /**
-	* This enum represents the relative order that properties are
-	* passed from one trader to another. Hence, as recommended by the
-	* spec, the starting_trader policies will be the first element in
-	* the polcy sequence if it's set for a query.
-	*/
+    * This enum represents the relative order that properties are
+    * passed from one trader to another. Hence, as recommended by the
+    * spec, the starting_trader policies will be the first element in
+    * the polcy sequence if it's set for a query.
+    */
   enum POLICY_TYPE
   {
     STARTING_TRADER,
