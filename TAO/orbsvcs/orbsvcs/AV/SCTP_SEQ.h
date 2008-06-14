@@ -147,9 +147,9 @@ class TAO_AV_SCTP_SEQ_Base_Acceptor  :public ACE_Acceptor <TAO_AV_SCTP_SEQ_Flow_
 {
  public:
   virtual int acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor,
-			     ACE_Reactor *reactor,
-			     const ACE_INET_Addr &local_addr,
-			     TAO_FlowSpec_Entry *entry);
+                             ACE_Reactor *reactor,
+                             const ACE_INET_Addr &local_addr,
+                             TAO_FlowSpec_Entry *entry);
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *& handler);
  protected:
   TAO_AV_SCTP_SEQ_Acceptor *acceptor_;
@@ -172,14 +172,14 @@ public:
                     TAO_FlowSpec_Entry *entry,
                     TAO_AV_Flow_Protocol_Factory *factory,
                     TAO_AV_Core::Flow_Component flow_comp =
-		    TAO_AV_Core::TAO_AV_DATA);
+                    TAO_AV_Core::TAO_AV_DATA);
 
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
                             TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry,
                             TAO_AV_Flow_Protocol_Factory *factory,
                             TAO_AV_Core::Flow_Component flow_comp =
-			    TAO_AV_Core::TAO_AV_DATA);
+                            TAO_AV_Core::TAO_AV_DATA);
 
   virtual int close (void);
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler);
@@ -205,7 +205,7 @@ public:
                       ACE_Reactor *reactor);
   int connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler *&handler,
                          const ACE_Multihomed_INET_Addr &remote_addr,
-			 const ACE_Multihomed_INET_Addr &local_addr);
+                         const ACE_Multihomed_INET_Addr &local_addr);
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *& handler);
 protected:
   TAO_AV_SCTP_SEQ_Connector *connector_;
@@ -229,7 +229,7 @@ public:
   virtual int connect (TAO_FlowSpec_Entry *entry,
                        TAO_AV_Transport *&transport,
                        TAO_AV_Core::Flow_Component flow_comp =
-		       TAO_AV_Core::TAO_AV_DATA);
+                       TAO_AV_Core::TAO_AV_DATA);
   virtual int close (void);
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler);
 protected:

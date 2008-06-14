@@ -68,7 +68,7 @@ public:
    */
   TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
                     const ACE_TCHAR *net_if = 0,
-		    CORBA::ULong buf_sz = 0);
+                    CORBA::ULong buf_sz = 0);
 
   /// Destructor.
   virtual ~TAO_ECG_Mcast_EH (void);

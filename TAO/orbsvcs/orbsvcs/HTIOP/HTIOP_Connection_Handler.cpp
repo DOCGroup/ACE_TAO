@@ -139,7 +139,7 @@ TAO::HTIOP::Connection_Handler::open (void*)
     return -1;
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
-		       this->orb_core ()->leader_follower ());
+                       this->orb_core ()->leader_follower ());
 
   return 0;
 }
@@ -206,7 +206,7 @@ int
 TAO::HTIOP::Connection_Handler::close (u_long)
 {
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
-		       this->orb_core ()->leader_follower ());
+                       this->orb_core ()->leader_follower ());
   this->transport ()->remove_reference ();
   return 0;
 }

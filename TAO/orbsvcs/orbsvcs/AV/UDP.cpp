@@ -378,13 +378,12 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   if (inet_addr != 0)
     {
       char buf[BUFSIZ];
-      inet_addr->addr_to_string (buf,
-				 BUFSIZ);
+      inet_addr->addr_to_string (buf, BUFSIZ);
 
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "TAO_AV_UDP_Acceptor::open: %s\n",
-		    buf));
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_AV_UDP_Acceptor::open: %s\n",
+                    buf));
     }
 
   int result = this->open_i (inet_addr, 0);
@@ -461,7 +460,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                                                        this->entry_->is_multicast (),
                                                        TAO_AV_UDP_Connection_Setup::ACCEPTOR);
 
-	  if (result < 0)
+        if (result < 0)
           {
              ACE_DEBUG((LM_DEBUG,"(%N,%l) Error during connection setup: %d\n", result));
           }
@@ -647,13 +646,13 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
           // assume the ports will be OK
           get_new_port = 0;
 
-	  ACE_Addr *addr;
-	  if ((addr = entry->get_peer_addr ()) != 0)
-	    {
-	      local_addr = dynamic_cast<ACE_INET_Addr*> (addr);
-	      char buf [BUFSIZ];
-	      local_addr->addr_to_string (buf, BUFSIZ);
-	    }
+          ACE_Addr *addr;
+          if ((addr = entry->get_peer_addr ()) != 0)
+            {
+              local_addr = dynamic_cast<ACE_INET_Addr*> (addr);
+              char buf [BUFSIZ];
+              local_addr->addr_to_string (buf, BUFSIZ);
+            }
 
           TAO_AV_UDP_Connection_Setup::setup (flow_handler,
                                               inet_addr,
@@ -897,7 +896,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       result = handler->get_socket ()->get_local_addr (*local_addr);
 
       local_addr->set (local_addr->get_port_number (),
-		       local_addr->get_host_name ());
+                       local_addr->get_host_name ());
 
       char buf [BUFSIZ];
       local_addr->addr_to_string (buf, BUFSIZ);

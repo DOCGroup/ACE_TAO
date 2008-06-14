@@ -35,30 +35,30 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE
 POA_CORBA::IRObject_tie<T>::IRObject_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::IRObject_tie<T>::IRObject_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::IRObject_tie<T>::IRObject_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::IRObject_tie<T>::IRObject_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -127,22 +127,18 @@ POA_CORBA::IRObject_tie<T>::_default_POA (void)
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_CORBA::IRObject_tie<T>::def_kind  (
-  )
+::CORBA::DefinitionKind POA_CORBA::IRObject_tie<T>::def_kind  ()
 {
-  return this->ptr_->def_kind (
-  );
+  return this->ptr_->def_kind ();
 }
 
 // TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-void POA_CORBA::IRObject_tie<T>::destroy  (
-  )
+void POA_CORBA::IRObject_tie<T>::destroy  ()
 {
-  this->ptr_->destroy (
-  );
+  this->ptr_->destroy ();
 }
 
 // TAO_IDL - Generated from
@@ -150,30 +146,30 @@ void POA_CORBA::IRObject_tie<T>::destroy  (
 
 template <class T> ACE_INLINE
 POA_CORBA::Contained_tie<T>::Contained_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::Contained_tie<T>::Contained_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::Contained_tie<T>::Contained_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::Contained_tie<T>::Contained_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -242,33 +238,27 @@ POA_CORBA::Contained_tie<T>::_default_POA (void)
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_CORBA::Contained_tie<T>::def_kind  (
-  )
+::CORBA::DefinitionKind POA_CORBA::Contained_tie<T>::def_kind  ()
 {
-  return this->ptr_->def_kind (
-  );
+  return this->ptr_->def_kind ();
 }
 
 // TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-void POA_CORBA::Contained_tie<T>::destroy  (
-  )
+void POA_CORBA::Contained_tie<T>::destroy  ()
 {
-  this->ptr_->destroy (
-  );
+  this->ptr_->destroy ();
 }
 
 // TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-char * POA_CORBA::Contained_tie<T>::id  (
-  )
+char * POA_CORBA::Contained_tie<T>::id  ()
 {
-  return this->ptr_->id (
-  );
+  return this->ptr_->id ();
 }
 
 // TAO_IDL - Generated from
@@ -288,11 +278,9 @@ void POA_CORBA::Contained_tie<T>::id  (
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-char * POA_CORBA::Contained_tie<T>::name  (
-  )
+char * POA_CORBA::Contained_tie<T>::name  ()
 {
-  return this->ptr_->name (
-  );
+  return this->ptr_->name ();
 }
 
 // TAO_IDL - Generated from
@@ -312,11 +300,9 @@ void POA_CORBA::Contained_tie<T>::name  (
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-char * POA_CORBA::Contained_tie<T>::version  (
-  )
+char * POA_CORBA::Contained_tie<T>::version  ()
 {
-  return this->ptr_->version (
-  );
+  return this->ptr_->version ();
 }
 
 // TAO_IDL - Generated from
@@ -336,44 +322,36 @@ void POA_CORBA::Contained_tie<T>::version  (
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_CORBA::Contained_tie<T>::defined_in  (
-  )
+::CORBA::Container_ptr POA_CORBA::Contained_tie<T>::defined_in  ()
 {
-  return this->ptr_->defined_in (
-  );
+  return this->ptr_->defined_in ();
 }
 
 // TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-char * POA_CORBA::Contained_tie<T>::absolute_name  (
-  )
+char * POA_CORBA::Contained_tie<T>::absolute_name  ()
 {
-  return this->ptr_->absolute_name (
-  );
+  return this->ptr_->absolute_name ();
 }
 
 // TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_CORBA::Contained_tie<T>::containing_repository  (
-  )
+::CORBA::Repository_ptr POA_CORBA::Contained_tie<T>::containing_repository  ()
 {
-  return this->ptr_->containing_repository (
-  );
+  return this->ptr_->containing_repository ();
 }
 
 // TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:101
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_CORBA::Contained_tie<T>::describe  (
-  )
+::CORBA::Contained::Description * POA_CORBA::Contained_tie<T>::describe  ()
 {
-  return this->ptr_->describe (
-  );
+  return this->ptr_->describe ();
 }
 
 // TAO_IDL - Generated from
@@ -398,30 +376,30 @@ void POA_CORBA::Contained_tie<T>::move  (
 
 template <class T> ACE_INLINE
 POA_CORBA::Container_tie<T>::Container_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::Container_tie<T>::Container_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::Container_tie<T>::Container_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::Container_tie<T>::Container_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -867,30 +845,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::IDLType_tie<T>::IDLType_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::IDLType_tie<T>::IDLType_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::IDLType_tie<T>::IDLType_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::IDLType_tie<T>::IDLType_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -993,30 +971,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::TypedefDef_tie<T>::TypedefDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::TypedefDef_tie<T>::TypedefDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::TypedefDef_tie<T>::TypedefDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::TypedefDef_tie<T>::TypedefDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE

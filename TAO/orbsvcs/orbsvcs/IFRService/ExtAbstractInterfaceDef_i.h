@@ -36,7 +36,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export TAO_ExtAbstractInterfaceDef_i
-	: public virtual TAO_AbstractInterfaceDef_i,
+  : public virtual TAO_AbstractInterfaceDef_i,
     public virtual TAO_InterfaceAttrExtension_i
 {
   // = TITLE

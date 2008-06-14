@@ -831,7 +831,7 @@ RTCP_SDES_Packet::build_packet(void)
   index = 0;
   this->packet_data_[index] = static_cast<char> ((chd_.ver_ << 6) |
                                                  (chd_.pad_ << 5) |
-			                         chd_.count_);
+                                                  chd_.count_);
   index++;
   this->packet_data_[index] = chd_.pt_;
   index++;
@@ -1128,8 +1128,8 @@ void RTCP_SR_Packet::build_packet(void)
            char[this->packet_size()]);
 
   this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
-                                                 (this->chd_.pad_ << 5) | 
-			                          this->chd_.count_);
+                                                 (this->chd_.pad_ << 5) |
+                                                  this->chd_.count_);
   index++;
   this->packet_data_[index] = this->chd_.pt_;
   index++;
