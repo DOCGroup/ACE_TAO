@@ -2,6 +2,8 @@
 /* A Bison parser, made from PSDL.yy
    by GNU bison 1.35.  */
 
+//FUZZ: disable check_for_tab
+
 #define YYBISON 1  /* Identify Bison output.  */
 
 #define yyparse TAO_PSDL_yyparse
