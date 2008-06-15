@@ -6,9 +6,8 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (CPU,
-	   client,
-	   "$Id$")
-
+           client,
+           "$Id$")
 
 const char * location = "MyLocation";
 

@@ -32,21 +32,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
       ACE_NEW_RETURN (basic_servant1,
-		      Basic (lb_server.get_basic_object_group (),
-			     lb_server.load_manager (),
-			     lb_server.orb (),
+                      Basic (lb_server.get_basic_object_group (),
+                             lb_server.load_manager (),
+                             lb_server.orb (),
                              1,
-			     location1),
-		      1);
+                             location1),
+                      1);
       PortableServer::ServantBase_var basic_owner_transfer1(basic_servant1);
 
       ACE_NEW_RETURN (simple_servant1,
-		      Simple (lb_server.get_simple_object_group (),
-			      lb_server.load_manager (),
-			      lb_server.orb (),
+                      Simple (lb_server.get_simple_object_group (),
+                              lb_server.load_manager (),
+                              lb_server.orb (),
                               1,
-			      location1),
-		      1);
+                              location1),
+                      1);
       PortableServer::ServantBase_var simple_owner_transfer1(simple_servant1);
 
       if (lb_server.register_basic_servant (basic_servant1, location1) == -1)
@@ -72,21 +72,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       ACE_NEW_RETURN (basic_servant2,
-		      Basic (lb_server.get_basic_object_group (),
-			     lb_server.load_manager (),
-			     lb_server.orb (),
+                      Basic (lb_server.get_basic_object_group (),
+                             lb_server.load_manager (),
+                             lb_server.orb (),
                              2,
-			     location1),
-		      1);
+                             location1),
+                      1);
       PortableServer::ServantBase_var basic_owner_transfer2(basic_servant2);
 
       ACE_NEW_RETURN (simple_servant2,
-		      Simple (lb_server.get_simple_object_group (),
-			      lb_server.load_manager (),
-			      lb_server.orb (),
+                      Simple (lb_server.get_simple_object_group (),
+                              lb_server.load_manager (),
+                              lb_server.orb (),
                               2,
-			      location1),
-		      1);
+                              location1),
+                      1);
       PortableServer::ServantBase_var simple_owner_transfer2(simple_servant2);
 
       if (lb_server.register_basic_servant (basic_servant2, location1) == -1)

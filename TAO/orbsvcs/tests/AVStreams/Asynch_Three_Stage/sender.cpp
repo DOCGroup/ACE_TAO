@@ -64,9 +64,9 @@ Sender::parse_args (int argc,
     {
       switch (c)
         {
-	case 'a':
-	  this->addr_file_ = opts.opt_arg ();
-	  break;
+        case 'a':
+          this->addr_file_ = opts.opt_arg ();
+          break;
         case 'f':
           this->filename_ = opts.opt_arg ();
           break;

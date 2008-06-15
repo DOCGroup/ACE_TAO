@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              "Nil Test::Basic reference <%s>\n",
                              ior),
                             1);
-	}
+        }
 
       for (int i = 0; i < 5; i++)
         {
@@ -65,7 +65,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client request handled by object at <%s>\n",
                       the_string.in ()));
-	}
+        }
 
       basic->remove_member ();
 

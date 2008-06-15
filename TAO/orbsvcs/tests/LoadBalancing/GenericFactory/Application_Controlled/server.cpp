@@ -33,51 +33,51 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Basic *basic_servant6;
 
       ACE_NEW_RETURN (basic_servant1,
-		      Basic (lb_server.object_group (),
-			     lb_server.load_manager (),
-			     lb_server.orb (),
-			     location1),
-		      1);
+                      Basic (lb_server.object_group (),
+                             lb_server.load_manager (),
+                             lb_server.orb (),
+                             location1),
+                      1);
       PortableServer::ServantBase_var owner_transfer1(basic_servant1);
 
       ACE_NEW_RETURN (basic_servant2,
-		      Basic (lb_server.object_group (),
-			     lb_server.load_manager (),
-			     lb_server.orb (),
-			     location2),
-		      1);
+                      Basic (lb_server.object_group (),
+                             lb_server.load_manager (),
+                             lb_server.orb (),
+                             location2),
+                      1);
       PortableServer::ServantBase_var owner_transfer2(basic_servant2);
 
       ACE_NEW_RETURN (basic_servant3,
-		      Basic (lb_server.object_group (),
-			     lb_server.load_manager (),
-			     lb_server.orb (),
-			     location3),
-		      1);
+                      Basic (lb_server.object_group (),
+                             lb_server.load_manager (),
+                             lb_server.orb (),
+                             location3),
+                      1);
       PortableServer::ServantBase_var owner_transfer3(basic_servant3);
 
       ACE_NEW_RETURN (basic_servant4,
-		      Basic (lb_server.object_group (),
-			     lb_server.load_manager (),
-			     lb_server.orb (),
-			     location4),
-		      1);
+                      Basic (lb_server.object_group (),
+                             lb_server.load_manager (),
+                             lb_server.orb (),
+                             location4),
+                      1);
       PortableServer::ServantBase_var owner_transfer4(basic_servant4);
 
       ACE_NEW_RETURN (basic_servant5,
-		      Basic (lb_server.object_group (),
-			     lb_server.load_manager (),
-			     lb_server.orb (),
-			     location5),
-		      1);
+                      Basic (lb_server.object_group (),
+                             lb_server.load_manager (),
+                             lb_server.orb (),
+                             location5),
+                      1);
       PortableServer::ServantBase_var owner_transfer5(basic_servant5);
 
       ACE_NEW_RETURN (basic_servant6,
-		      Basic (lb_server.object_group (),
-			     lb_server.load_manager (),
-			     lb_server.orb (),
-			     location6),
-		      1);
+                      Basic (lb_server.object_group (),
+                             lb_server.load_manager (),
+                             lb_server.orb (),
+                             location6),
+                      1);
       PortableServer::ServantBase_var owner_transfer6(basic_servant6);
 
       if (lb_server.register_servant (basic_servant1, location1) == -1

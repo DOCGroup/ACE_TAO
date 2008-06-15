@@ -191,9 +191,9 @@ main (int argc,
       while ( !done )
       {
         if ( orb->work_pending( ) )
-	{
+        {
           orb->perform_work ();
-	}
+        }
       }
 
       orb->shutdown( 1 );

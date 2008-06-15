@@ -46,7 +46,7 @@ Simple_Server_i::shutdown (const char* key)
 
   char buf[256];
   ACE_OS::sprintf (buf, "shutdown() completed by %s, still_alive=%d",
-		   _key.in(), still_alive);
+                   _key.in(), still_alive);
   ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> returning '%s'\n", _key.in(), buf));
   return CORBA::string_dup (buf);
 }
@@ -67,7 +67,7 @@ Simple_Server_i::abort (const char* key)
 
   char buf[256];
   ACE_OS::sprintf (buf, "abort() completed by %s, still_alive=%d",
-		   _key.in(), still_alive);
+                   _key.in(), still_alive);
   ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> returning '%s'\n", _key.in(), buf));
   return CORBA::string_dup (buf);
 }

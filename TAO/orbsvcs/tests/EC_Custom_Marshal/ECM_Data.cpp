@@ -15,13 +15,13 @@ operator<< (TAO_OutputCDR& cdr, ECM_Data& x)
       && cdr << count )
     {
       for (ECM_Data::Inventory::ITERATOR i = x.inventory.begin ();
-	   i != x.inventory.end () && cdr.good_bit ();
-	   ++i)
-	{
-	  const ECM_Data::Inventory::ENTRY& v = *i;
-	  cdr << v.ext_id_;
-	  cdr << v.int_id_;
-	}
+           i != x.inventory.end () && cdr.good_bit ();
+           ++i)
+        {
+          const ECM_Data::Inventory::ENTRY& v = *i;
+          cdr << v.ext_id_;
+          cdr << v.int_id_;
+        }
     }
   return cdr.good_bit ();
 }
@@ -38,16 +38,16 @@ operator>> (TAO_InputCDR& cdr, ECM_Data& x)
       // ACE_DEBUG ((LM_DEBUG, "Decoding <%d> elements\n", count));
 
       for (CORBA::ULong i = 0; i < count && cdr.good_bit (); ++i)
-	{
-	  CORBA::ULong ext_id;
-	  CORBA::Double int_id;
-	  cdr >> ext_id;
-	  cdr >> int_id;
-	  if (cdr.good_bit ())
-	    x.inventory.bind (ext_id, int_id);
+        {
+          CORBA::ULong ext_id;
+          CORBA::Double int_id;
+          cdr >> ext_id;
+          cdr >> int_id;
+          if (cdr.good_bit ())
+            x.inventory.bind (ext_id, int_id);
 
-	  // ACE_DEBUG ((LM_DEBUG, "Boung <%d,%f>\n", ext_id, int_id));
-	}
+          // ACE_DEBUG ((LM_DEBUG, "Boung <%d,%f>\n", ext_id, int_id));
+        }
     }
   return cdr.good_bit ();
 }

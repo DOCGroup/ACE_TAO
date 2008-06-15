@@ -28,7 +28,7 @@ LB_server::run (void)
     {
       ACE_Time_Value period (0, 10);
       while (1)
-	{
+        {
           this->orb_->perform_work (&period);
         }
     }

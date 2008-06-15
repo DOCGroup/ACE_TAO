@@ -42,8 +42,8 @@ private:
 
   /// Sets the properties for the profiles
   int set_properties (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
-		      CORBA::Object_ptr merged_set,
-		      CORBA::Object_ptr primary, CORBA::ULong version);
+                      CORBA::Object_ptr merged_set,
+                      CORBA::Object_ptr primary, CORBA::ULong version);
 
   /// Our ORB
   CORBA::ORB_var orb_;

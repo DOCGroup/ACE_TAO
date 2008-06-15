@@ -118,11 +118,11 @@ Client::parse_args (int argc,
           break;
         case 'l':
           this->address_ = ACE_OS::strdup (opts.opt_arg ());
-		  l_addr = 1;
+          l_addr = 1;
           break;
         case 'a':
           this->peer_addr_ = ACE_OS::strdup (opts.opt_arg ());
-		  p_addr =1;
+          p_addr =1;
           break;
         case 'p':
           this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
@@ -139,7 +139,7 @@ Client::parse_args (int argc,
     {
       char buf [BUFSIZ];
       ACE_OS::hostname (buf,
-			BUFSIZ);
+                        BUFSIZ);
       address_ = buf;
       address_ += ":5000";
     }
@@ -148,7 +148,7 @@ Client::parse_args (int argc,
     {
       char buf [BUFSIZ];
       ACE_OS::hostname (buf,
-			BUFSIZ);
+                        BUFSIZ);
       peer_addr_ = buf;
       peer_addr_ += ":5050";
     }
@@ -226,8 +226,8 @@ Client::init (int argc,char **argv)
 
       this->parse_args (this->argc_, this->argv_);
 
-      ACE_NEW_RETURN ( this->streamendpoint_a_,
-		      TAO_StreamEndPoint_A, -1 );
+      ACE_NEW_RETURN (this->streamendpoint_a_,
+                      TAO_StreamEndPoint_A, -1 );
 
       ACE_NEW_RETURN (this->fep_a_, FTP_Client_Producer, -1 );
       this->flowname_ = "Data";
@@ -298,10 +298,9 @@ Client::run (void)
 
       CORBA::Boolean result =
         this->streamctrl_.bind (sep_a_.in(),
-				sep_b.in(),
-				the_qos.inout(),
-				flow_spec
- );
+                                sep_b.in(),
+                                the_qos.inout(),
+                                flow_spec);
 
       timer.stop ();
       timer.elapsed_time (elapsed);
