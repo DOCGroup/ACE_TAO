@@ -35,30 +35,30 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE
 POA_CORBA::FixedDef_tie<T>::FixedDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::FixedDef_tie<T>::FixedDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::FixedDef_tie<T>::FixedDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::FixedDef_tie<T>::FixedDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -209,30 +209,30 @@ void POA_CORBA::FixedDef_tie<T>::scale  (
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueMemberDef_tie<T>::ValueMemberDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueMemberDef_tie<T>::ValueMemberDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueMemberDef_tie<T>::ValueMemberDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueMemberDef_tie<T>::ValueMemberDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -516,30 +516,30 @@ void POA_CORBA::ValueMemberDef_tie<T>::access  (
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueDef_tie<T>::ValueDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueDef_tie<T>::ValueDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueDef_tie<T>::ValueDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueDef_tie<T>::ValueDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -1390,30 +1390,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ExtValueDef_tie<T>::ExtValueDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ExtValueDef_tie<T>::ExtValueDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ExtValueDef_tie<T>::ExtValueDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ExtValueDef_tie<T>::ExtValueDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -2324,30 +2324,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueBoxDef_tie<T>::ValueBoxDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueBoxDef_tie<T>::ValueBoxDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueBoxDef_tie<T>::ValueBoxDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ValueBoxDef_tie<T>::ValueBoxDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -2604,4 +2604,3 @@ void POA_CORBA::ValueBoxDef_tie<T>::original_type_def  (
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
