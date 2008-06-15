@@ -129,8 +129,8 @@ int TAO_FT_ReplicationManagerController::parse_args (int & argc, char * argv[])
       }
 
       default:
-		ACE_OS::fprintf (stderr, "%s: Unknown argument - %c\n",
-        			             argv[0], c);
+        ACE_OS::fprintf (stderr, "%s: Unknown argument - %c\n",
+                         argv[0], c);
         this->usage(stderr);
         result = -1;
         break;
@@ -147,8 +147,8 @@ int TAO_FT_ReplicationManagerController::parse_args (int & argc, char * argv[])
 void TAO_FT_ReplicationManagerController::usage (FILE* out) const
 {
   ACE_OS::fprintf (out, "usage"
-      					" -k <replication manager ior file>"
-      					" -x (shutdown the Replication Manager)\n");
+                        " -k <replication manager ior file>"
+                        " -x (shutdown the Replication Manager)\n");
 }
 
 int TAO_FT_ReplicationManagerController::run ()

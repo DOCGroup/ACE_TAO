@@ -102,7 +102,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Instantiate the LCD_Display implementation class
       Simple_Server_i display_impl (orb.in (), key);
       PortableServer::ObjectId_var id =
-	      PortableServer::string_to_ObjectId ("IOGR_OID");
+        PortableServer::string_to_ObjectId ("IOGR_OID");
 
       poa->activate_object_with_id (id.in(), &display_impl);
 

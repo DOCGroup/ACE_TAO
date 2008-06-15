@@ -147,9 +147,9 @@ Receiver::parse_args (int argc,
     {
       switch (c)
         {
-	case 'a':
-	  this->addr_file_ = opts.opt_arg ();
-	  break;
+        case 'a':
+          this->addr_file_ = opts.opt_arg ();
+          break;
         case 'f':
           this->output_file_name_ = opts.opt_arg ();
           break;

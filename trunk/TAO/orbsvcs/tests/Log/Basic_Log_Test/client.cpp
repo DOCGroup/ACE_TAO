@@ -16,7 +16,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (log_test.init(argc, argv) == -1)
     {
       ACE_ERROR_RETURN((LM_ERROR,
-			    "xx - Failed initializing BasicLog_Test.\n"),-1);
+                        "xx - Failed initializing BasicLog_Test.\n"),-1);
     }
 
   // We may want to replace this with a run on the BasicLog_Test.
@@ -35,7 +35,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // go easy until this works
   //@@ use ACE_U64_TO_U32 to convert ULongLong to ULong
   //in call to test_retrieval
- /* if (log_test.test_retrieval(10) == -1)
+/*  if (log_test.test_retrieval(10) == -1)
     {
       ACE_DEBUG((LM_ERROR,"The test of retrieval failed.\n"));
     }
@@ -68,7 +68,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_DEBUG((LM_ERROR,"** - The capacity alarm threshold test succeeded.\n\n"));
     }
-  
+
   if (log_test.test_LogAction() == -1)
     {
       ACE_DEBUG((LM_ERROR,"xx - The log action test failed.\n\n"));

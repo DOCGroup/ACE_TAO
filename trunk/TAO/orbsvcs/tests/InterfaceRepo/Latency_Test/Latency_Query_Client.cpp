@@ -135,7 +135,7 @@ Latency_Query_Client::run (void)
           stats.dump_results ("Total", gsf);
 
           ACE_Throughput_Stats::dump_throughput ("Total",
-											                           gsf,
+                                                 gsf,
                                                  test_end - test_start,
                                                  stats.samples_count ());
         }

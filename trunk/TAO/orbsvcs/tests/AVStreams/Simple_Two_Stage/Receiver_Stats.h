@@ -54,9 +54,9 @@ public:
    * presented in microseconds.
    */
   void dump_results (const ACE_TCHAR *msg,
-		     FILE *file,
+                     FILE *file,
                      ACE_UINT32 scale_factor) const;
- 
+
 private:
   /// The number of samples
   ACE_UINT32 samples_count_;

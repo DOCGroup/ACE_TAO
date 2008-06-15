@@ -320,12 +320,12 @@ int ReplicationManagerFaultConsumerAdapter::init (
     // Signal that we are ready to go.
     if (result == 0 && this->readyFile_ != 0)
     {
-	  FILE* ready = ACE_OS::fopen (this->readyFile_, "w");
-	  if (ready)
-	  {
-		ACE_OS::fprintf (ready, "ready\n");
-		ACE_OS::fclose (ready);
-	  }
+      FILE* ready = ACE_OS::fopen (this->readyFile_, "w");
+      if (ready)
+      {
+        ACE_OS::fprintf (ready, "ready\n");
+        ACE_OS::fclose (ready);
+      }
     }
   }
 

@@ -8,9 +8,9 @@
 ACE_RCSID(Muxing, Client_Task, "$Id$")
 
 Client_Task::Client_Task (
-			  CORBA::ORB_ptr corb,
+        CORBA::ORB_ptr corb,
         Messenger_ptr messenger,
-			  ACE_Thread_Manager *thr_mgr)
+        ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
     , result_ (0)
     , corb_ (CORBA::ORB::_duplicate (corb))

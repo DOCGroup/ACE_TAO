@@ -21,8 +21,8 @@ Factory::create_object (
   Simple *servant;
 
   ACE_NEW_THROW_EX (servant,
-		    Simple,
-		    CORBA::NO_MEMORY ());
+                    Simple,
+                    CORBA::NO_MEMORY ());
 
 
   PortableServer::ServantBase_var safe_servant = servant;
@@ -42,8 +42,8 @@ Factory::create_object (
   PortableGroup::GenericFactory::FactoryCreationId *my_fcid = 0;
 
   ACE_NEW_THROW_EX (my_fcid,
-		    PortableGroup::GenericFactory::FactoryCreationId,
-		    CORBA::NO_MEMORY ());
+                    PortableGroup::GenericFactory::FactoryCreationId,
+                    CORBA::NO_MEMORY ());
 
   fcid = my_fcid;
 
@@ -71,9 +71,9 @@ Factory::delete_object (
       Factory_Map::ENTRY *entry = 0;
       if (this->factory_map_.find (my_fcid, entry) == 0)
         {
-	  if (this->factory_map_.unbind (my_fcid) != 0)
-	    throw CORBA::INTERNAL ();
-	}
+          if (this->factory_map_.unbind (my_fcid) != 0)
+            throw CORBA::INTERNAL ();
+        }
     }
   else
     throw PortableGroup::ObjectNotFound ();

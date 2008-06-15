@@ -40,8 +40,8 @@ Receiver_Stats::accumulate (const Receiver_Stats &rhs)
 
 void
 Receiver_Stats::dump_results (const ACE_TCHAR *msg,
-			      FILE *file,
-			      ACE_UINT32 sf) const
+                              FILE *file,
+                              ACE_UINT32 sf) const
 {
   if (this->samples_count () == 0u)
     {
@@ -74,8 +74,8 @@ Receiver_Stats::dump_results (const ACE_TCHAR *msg,
 
   ACE_OS::fprintf (file,
        ACE_TEXT ("Inter Frame Arrival Time Statistics in msecs  : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
-		   l_min, this->min_at_,
-		   l_avg,
-		   l_max, this->max_at_,
-		   l_dev);
+        l_min, this->min_at_,
+        l_avg,
+        l_max, this->max_at_,
+        l_dev);
 }
