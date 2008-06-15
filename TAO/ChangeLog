@@ -1,3 +1,10 @@
+Sun Jun 15 15:49:22 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+        * orbsvcs/orbsvcs/Time_Utilities.inl:
+
+          Untabify.
+
 Sun Jun 15 15:32:10 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
