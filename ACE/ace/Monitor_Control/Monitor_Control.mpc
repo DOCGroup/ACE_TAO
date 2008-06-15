@@ -8,6 +8,7 @@ project(Monitor_Control) : acelib, ace_etcl_parser, ace_output, install {
 
   Source_Files {
     Auto_Update_Starter.cpp
+    BSD_Network_Interface_Monitor.cpp
     Bytes_Received_Monitor.cpp
     Bytes_Sent_Monitor.cpp
     Constraint_Interpreter.cpp
