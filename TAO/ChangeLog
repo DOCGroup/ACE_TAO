@@ -1,3 +1,14 @@
+Sun Jun 15 13:35:36 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.inl:
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+        * orbsvcs/orbsvcs/Time_Utilities.inl:
+
+          Untabify.
+
 Sun Jun 15 12:36:37 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/PSS/PSDL_Node.cpp:
