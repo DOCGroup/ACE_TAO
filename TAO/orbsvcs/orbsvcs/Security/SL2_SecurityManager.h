@@ -63,8 +63,7 @@ namespace TAO
         const ::SecurityLevel2::CredentialsList & cred_list,
         ::CORBA::Object_ptr target,
         const char * operation_name,
-        const char * target_interface_name
-					       );
+        const char * target_interface_name);
 
       virtual ::CORBA::Boolean access_allowed_ex (
           const char * orb_id,
@@ -107,17 +106,17 @@ namespace TAO
       // will this.
       struct ReferenceKeyType
       {
-	PortableServer::ObjectId_var oid_;
-	CORBA::OctetSeq_var adapter_id_;
-	CORBA::String_var orbid_;
+        PortableServer::ObjectId_var oid_;
+        CORBA::OctetSeq_var adapter_id_;
+        CORBA::String_var orbid_;
 
-	// operations/methods necessary for functors in HashMap; might
-	// need to add operator< if we decide to use an RB_Tree
-	bool operator== (const ReferenceKeyType& other) const;
-	CORBA::ULong hash() const;
+        // operations/methods necessary for functors in HashMap; might
+        // need to add operator< if we decide to use an RB_Tree
+        bool operator== (const ReferenceKeyType& other) const;
+        CORBA::ULong hash() const;
 
-	// operator kind of like a "toString()" for debug statements
-	operator const char * () const;
+        // operator kind of like a "toString()" for debug statements
+        operator const char * () const;
       };
       typedef ReferenceKeyType OBJECT_KEY;
       // This is typedef'd because we might try to do something fancier
@@ -128,10 +127,10 @@ namespace TAO
       // rather than computing it each time.  For now, though, I want to
       // make this easy to get things working.
       typedef ACE_Hash_Map_Manager_Ex<OBJECT_KEY,
-				      CORBA::Boolean, // access_allowed?
-				      ACE_Hash<OBJECT_KEY>,
-				      ACE_Equal_To<OBJECT_KEY>,
-				      ACE_Null_Mutex> // not sure this is right
+                                      CORBA::Boolean, // access_allowed?
+                                      ACE_Hash<OBJECT_KEY>,
+                                      ACE_Equal_To<OBJECT_KEY>,
+                                      ACE_Null_Mutex> // not sure this is right
       ACCESS_MAP_TYPE;
 
       ACCESS_MAP_TYPE access_map_;

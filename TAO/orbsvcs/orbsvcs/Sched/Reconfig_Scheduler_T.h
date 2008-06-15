@@ -47,7 +47,7 @@ public:
 
   /// Type of map used for O(1) lookup of RT_Infos by their handles.
   typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
-	                          TAO_RT_Info_Ex *,
+                                  TAO_RT_Info_Ex *,
                                   ACE_Hash<RtecScheduler::handle_t>,
                                   ACE_Equal_To<RtecScheduler::handle_t>,
                                   ACE_LOCK> RT_INFO_MAP;

@@ -92,9 +92,9 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
             {
               // Skip over disabled dependencies
               if ((*dependency_set) [i].enabled == RtecBase::DEPENDENCY_DISABLED)
-		{
+                {
                   continue;
-		}
+                }
 
               // Take the handle from the dependency and use it
               // to obtain an RT_Info pointer from the map.
@@ -519,10 +519,10 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       // Since we're visiting in topological order (called nodes before
       // calling nodes), the successor's aggregate time is up to date.
       if (successor.enabled_state () != RtecScheduler::RT_INFO_DISABLED)
-	{
+        {
           entry.aggregate_exec_time (entry.aggregate_exec_time ()
                                      + successor.aggregate_exec_time ());
-	}
+        }
     }
 
 
@@ -946,11 +946,11 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
       if (this->critical_utilization_ + this->noncritical_utilization_
           +delta_utilization
           < this->critical_utilization_threshold_)
-	{
+        {
           this->critical_utilization_ += delta_utilization;
           entry->current_admitted_tuple (&t);
           entry->actual_rt_info ()->period = t.period;
-	}
+        }
     }
   else
     {
@@ -958,11 +958,11 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
       if (this->critical_utilization_ + this->noncritical_utilization_
           +delta_utilization
           < this->noncritical_utilization_threshold_)
-	{
+        {
           this->noncritical_utilization_ += delta_utilization;
           entry->current_admitted_tuple (&t);
           entry->actual_rt_info ()->period = t.period;
-	}
+        }
     }
   return 0;
 }
