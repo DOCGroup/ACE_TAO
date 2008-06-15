@@ -1,3 +1,39 @@
+Sun Jun 15 15:32:10 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.h:
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/server.cpp:
+
+          Untabify.
+
+Sun Jun 15 15:32:01 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.h:
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/server.cpp:
+
 Sun Jun 15 13:35:36 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:

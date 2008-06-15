@@ -152,7 +152,7 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
 {
   // LOCK THE MAP!
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->map_lock_,
-		    this->default_allowance_decision_);
+                    this->default_allowance_decision_);
 
   ACE_Hash<OBJECT_KEY> hash;
 
@@ -165,18 +165,18 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
       access_decision = this->default_allowance_decision_;
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
-          "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
-          " NOT FOUND using default %d\n",
-          hash.operator()(key),
-          operation_name, access_decision));
+                    "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
+                    " NOT FOUND using default %d\n",
+                    hash.operator()(key),
+                    operation_name, access_decision));
     }
   else if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-        "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
-        " found with decision %d\n",
-        hash.operator()(key),
-        operation_name, access_decision));
+                  "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
+                  " found with decision %d\n",
+                  hash.operator()(key),
+                  operation_name, access_decision));
     }
 
   // For now we just return the default.
@@ -237,32 +237,32 @@ TAO::Security::AccessDecision::add_object
   // Since we want to replace any existing entry in the map, we just
   // use rebind.
   errno = 0; // Not sure if this gets set if rebind fails...it only
-	     // appears to fail when an allocation thru the allocator's
-	     // malloc() fails.  Depending on the malloc() implementation,
-	     // errno could get set OR an exception thrown.
+             // appears to fail when an allocation thru the allocator's
+             // malloc() fails.  Depending on the malloc() implementation,
+             // errno could get set OR an exception thrown.
   int ret = this->access_map_.rebind (key, allow_insecure_access);
   if (ret == -1)
     {
       // rebind shouldn't fail under normal circumstances
       if (TAO_debug_level > 1)
         ACE_DEBUG ((LM_DEBUG,
-          "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) "
-          "unexpectedly failed (errno=%d)\n",
-          hash.operator()(key),
-          allow_insecure_access,
-          errno));
+                    "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) "
+                    "unexpectedly failed (errno=%d)\n",
+                    hash.operator()(key),
+                    allow_insecure_access,
+                    errno));
       throw
         CORBA::NO_MEMORY(CORBA::SystemException::_tao_minor_code (TAO::VMCID,
-								  errno),
-         CORBA::COMPLETED_NO);
+                                                                  errno),
+                                                                  CORBA::COMPLETED_NO);
     }
   else
     {
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
-		    "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) okay\n",
-		    hash.operator()(key),
-		    allow_insecure_access));
+                    "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) okay\n",
+                    hash.operator()(key),
+                    allow_insecure_access));
     }
 }
 
@@ -288,27 +288,27 @@ TAO::Security::AccessDecision::remove_object
   if (ret == -1)
     {
       if (errno == ENOENT)
-	{
-	  // ignore b/c we don't care...maybe log a debug message for info
-	  if (TAO_debug_level >= 3)
-	    ACE_DEBUG ((LM_DEBUG,
-			"TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
-			"object not found in access map\n",
-			hash.operator()(key)));
-	}
+        {
+          // ignore b/c we don't care...maybe log a debug message for info
+          if (TAO_debug_level >= 3)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
+                        "object not found in access map\n",
+                        hash.operator()(key)));
+        }
       else
-	{
-	  if (TAO_debug_level > 0)
-	    ACE_DEBUG ((LM_DEBUG,
-			"TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
-			" unexpected error during unbind from map (errno=%d\n)",
-			hash.operator()(key),
-			errno));
-	  throw
-	    CORBA::UNKNOWN (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
-								     errno),
-			    CORBA::COMPLETED_NO);
-	}
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
+                        " unexpected error during unbind from map (errno=%d\n)",
+                        hash.operator()(key),
+                        errno));
+
+          throw CORBA::UNKNOWN (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
+                                                                         errno),
+                                                                         CORBA::COMPLETED_NO);
+        }
     }
 }
 

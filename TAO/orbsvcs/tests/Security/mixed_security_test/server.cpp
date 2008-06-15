@@ -63,12 +63,12 @@ rir(CORBA::ORB_ptr orb, const char* token)
 
 void
 init_and_setup (int& argc,
-		char* argv[],
-		CORBA::ORB_var& orb,
-		PortableServer::POA_var& rootpoa,
-		PortableServer::POAManager_var& poamgr,
-		SecurityLevel3::SecurityCurrent_var& sl3current,
-		TAO::SL2::AccessDecision_var& sl2ad)
+                char* argv[],
+                CORBA::ORB_var& orb,
+                PortableServer::POA_var& rootpoa,
+                PortableServer::POAManager_var& poamgr,
+                SecurityLevel3::SecurityCurrent_var& sl3current,
+                TAO::SL2::AccessDecision_var& sl2ad)
 {
   orb = CORBA::ORB_init (argc, argv);
   rootpoa = rir<PortableServer::POA> (orb, "RootPOA");
@@ -79,7 +79,7 @@ init_and_setup (int& argc,
 
   SecurityLevel2::SecurityManager_var sl2sm =
     rir<SecurityLevel2::SecurityManager> (orb,
-					  "SecurityLevel2:SecurityManager");
+                                          "SecurityLevel2:SecurityManager");
   SecurityLevel2::AccessDecision_var ad = sl2sm->access_decision ();
 
   sl2ad = TAO::SL2::AccessDecision::_narrow (ad.in ());
@@ -112,10 +112,10 @@ publish_ior (CORBA::ORB_ptr orb, CORBA::Object_ptr o, const char* filename)
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  "Cannot open output file %s for writing IOR\n",
-		  filename));
+                  "Cannot open output file %s for writing IOR\n",
+                  filename));
       throw IORPublicationException (IORPublicationException::IO_FAILURE,
-				     errno);
+                                     errno);
     }
 
   ACE_OS::fprintf (output_file, "%s", ior.in() );
@@ -147,20 +147,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // throws exception if it can't work
       init_and_setup (argc, argv, orb, rootpoa, poamgr, sl3current, sl2ad);
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
-		  "init and setup complete\n"));
+                  "init and setup complete\n"));
 
       // 2. Create servant #1 of Foo_i, and its associated Object
       ACE_NEW_RETURN (server1, Foo_i (orb.in(), sl3current.in()), 1);
       Foo::Bar_var server1_obj = server1->_this ();
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
-		  "created servant/object #1\n"));
+                  "created servant/object #1\n"));
 
       // 3. Create servant #2 of Foo_i, and its associated Object
       ACE_NEW_RETURN (server2, Foo_i (orb.in(), sl3current.in()), 1);
 
       Foo::Bar_var server2_obj = server2->_this();
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
-		  "created servant/object #2\n"));
+                  "created servant/object #2\n"));
 
       // 4. add servant #2's Object reference to the "permitted" list.
       PortableServer::ObjectId_var oid = rootpoa->servant_to_id (server2);
@@ -168,40 +168,40 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var orbid = orb->id();
       sl2ad->add_object (orbid.in(), poaid.in(), oid.in(), true);
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
-		  "added object #2 as a permitted reference for "
-		  "non-secure invocations\n"));
+                  "added object #2 as a permitted reference for "
+                  "non-secure invocations\n"));
 
       // 5. publish references to #1 and #2 to distinct files
       publish_ior (orb, server1_obj,
-		   TAO_Mixed_Security_Test::restricted_ior_file);
+                   TAO_Mixed_Security_Test::restricted_ior_file);
       publish_ior (orb, server2_obj,
-		   TAO_Mixed_Security_Test::permitted_ior_file);
+                   TAO_Mixed_Security_Test::permitted_ior_file);
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
-		  "published IORs for objects\n"));
+                  "published IORs for objects\n"));
 
       // 6. activate the POA manager
       poamgr->activate ();
 
       // 7. run the orb.
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
-		  "running the orb\n"));
+                  "running the orb\n"));
       orb->run ();
     }
   catch (const RirFailedException& e)
     {
       ACE_ERROR ((LM_ERROR,
-		  "mixed_security/server: resolve_initial_references"
-		  " failed for %s\n",
-		  e.token_));
+                  "mixed_security/server: resolve_initial_references"
+                  " failed for %s\n",
+                  e.token_));
       return 1;
     }
   catch (const IORPublicationException& e)
     {
       ACE_ERROR ((LM_ERROR,
-		  "mixed_security/server: failed to publish IOR (%s)\n",
-		  (e.why_ == IORPublicationException::BAD_PARAM) ? "BAD_PARAM" :
-		  (e.why_ == IORPublicationException::IO_FAILURE) ? "IO_FAILURE":
-		  "<unknown>"));
+                  "mixed_security/server: failed to publish IOR (%s)\n",
+                  (e.why_ == IORPublicationException::BAD_PARAM) ? "BAD_PARAM" :
+                  (e.why_ == IORPublicationException::IO_FAILURE) ? "IO_FAILURE":
+                  "<unknown>"));
     }
   catch (CORBA::Exception& ex)
     {

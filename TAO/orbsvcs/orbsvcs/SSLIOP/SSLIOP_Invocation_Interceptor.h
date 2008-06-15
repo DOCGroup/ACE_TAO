@@ -59,15 +59,15 @@ namespace TAO
     public:
 
       /*!
-	\brief Constructor.
+        \brief Constructor.
         \param info reference to the ORBInitInfo object so that
                     the interceptor can get access to initial references, etc.
         \param default_qop the default Quality of Protection
-	\param tss_slot the TSS slot used by the various security features.
+        \param tss_slot the TSS slot used by the various security features.
       */
       Server_Invocation_Interceptor (PortableInterceptor::ORBInitInfo_ptr info,
-				     ::Security::QOP default_qop,
-				     size_t tss_slot);
+                                     ::Security::QOP default_qop,
+                                     size_t tss_slot);
 
       /**
        * @name PortableInterceptor::ServerRequestInterceptor Methods

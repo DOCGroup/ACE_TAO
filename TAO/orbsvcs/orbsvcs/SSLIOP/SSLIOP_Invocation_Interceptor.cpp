@@ -135,12 +135,13 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
         // a real sec2_current with the conversion from sec3->sec2
         // happening at a lower level.
 
-	cred_list.length(1);
-	cred_list[0] = rcvd_creds.in ();
-	/*
-	  So, in looking for how we can do this, I find that the
-	  SL3_SecurityCurrent::client_credentials() delegates to SL3_SecurityCurrent_Impl::client_credentials(), which is pure virtual.
-	*/
+        cred_list.length(1);
+        cred_list[0] = rcvd_creds.in ();
+        /*
+          So, in looking for how we can do this, I find that the
+          SL3_SecurityCurrent::client_credentials() delegates to SL3_SecurityCurrent_Impl::client_credentials(),
+          which is pure virtual.
+        */
       }
       catch (...) {
       }
@@ -154,10 +155,10 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
 
       CORBA::Boolean it_should_happen = false;
       it_should_happen = ad->access_allowed_ex (orb_id.in (),
-						adapter_id.in (),
-						object_id.in (),
-						cred_list,
-						operation_name.in());
+                                                adapter_id.in (),
+                                                object_id.in (),
+                                                cred_list,
+                                                operation_name.in());
       if (TAO_debug_level >= 3)
         {
           ACE_DEBUG ((LM_DEBUG,
