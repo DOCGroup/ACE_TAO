@@ -35,30 +35,30 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EventDef_tie<T>::EventDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EventDef_tie<T>::EventDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EventDef_tie<T>::EventDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EventDef_tie<T>::EventDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -969,30 +969,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::Container_tie<T>::Container_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::Container_tie<T>::Container_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::Container_tie<T>::Container_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::Container_tie<T>::Container_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -1515,30 +1515,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ModuleDef_tie<T>::ModuleDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ModuleDef_tie<T>::ModuleDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ModuleDef_tie<T>::ModuleDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ModuleDef_tie<T>::ModuleDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -2194,30 +2194,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::Repository_tie<T>::Repository_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::Repository_tie<T>::Repository_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::Repository_tie<T>::Repository_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::Repository_tie<T>::Repository_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -2850,30 +2850,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ProvidesDef_tie<T>::ProvidesDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ProvidesDef_tie<T>::ProvidesDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ProvidesDef_tie<T>::ProvidesDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ProvidesDef_tie<T>::ProvidesDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -3122,30 +3122,30 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::interface_type  (
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::UsesDef_tie<T>::UsesDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::UsesDef_tie<T>::UsesDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::UsesDef_tie<T>::UsesDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::UsesDef_tie<T>::UsesDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -3418,30 +3418,30 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::is_multiple  (
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EventPortDef_tie<T>::EventPortDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EventPortDef_tie<T>::EventPortDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EventPortDef_tie<T>::EventPortDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EventPortDef_tie<T>::EventPortDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -3703,30 +3703,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EmitsDef_tie<T>::EmitsDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EmitsDef_tie<T>::EmitsDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EmitsDef_tie<T>::EmitsDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::EmitsDef_tie<T>::EmitsDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -3988,30 +3988,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::PublishesDef_tie<T>::PublishesDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::PublishesDef_tie<T>::PublishesDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::PublishesDef_tie<T>::PublishesDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::PublishesDef_tie<T>::PublishesDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -4273,30 +4273,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ConsumesDef_tie<T>::ConsumesDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ConsumesDef_tie<T>::ConsumesDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ConsumesDef_tie<T>::ConsumesDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ConsumesDef_tie<T>::ConsumesDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -4558,30 +4558,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ComponentDef_tie<T>::ComponentDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ComponentDef_tie<T>::ComponentDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ComponentDef_tie<T>::ComponentDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::ComponentDef_tie<T>::ComponentDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -5448,30 +5448,30 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::FactoryDef_tie<T>::FactoryDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::FactoryDef_tie<T>::FactoryDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::FactoryDef_tie<T>::FactoryDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::FactoryDef_tie<T>::FactoryDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -5827,30 +5827,30 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::exceptions  (
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::FinderDef_tie<T>::FinderDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::FinderDef_tie<T>::FinderDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::FinderDef_tie<T>::FinderDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::FinderDef_tie<T>::FinderDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -6206,30 +6206,30 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::exceptions  (
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::HomeDef_tie<T>::HomeDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::HomeDef_tie<T>::HomeDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::HomeDef_tie<T>::HomeDef_tie (T *tp, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ComponentIR::HomeDef_tie<T>::HomeDef_tie (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
