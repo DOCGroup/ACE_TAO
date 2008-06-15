@@ -386,7 +386,7 @@ sub check_for_tab ()
                 if (/FUZZ\: enable check_for_tab/) {
                     $disable = 0;
                 }
-                if ($disable == 0 and /\t/) {
+                if ($disable == 0 and /.*\t.*/) {
                     # The following directories are infested
                     # with tabs. When don't check these
                     # directories for now to enable detection
@@ -395,7 +395,6 @@ sub check_for_tab ()
                     if (($file =~ /(ACE)*.*examples/i)          ||
                         ($file =~ /(ACE)*.*apps/i)              ||
                         ($file =~ /(TAO)*.*tests/i)             ||
-                        ($file =~ /(TAO)*.*orbsvcs/i)           ||
                         ($file =~ /(TAO)*.*tools/i)             ||
                         ($file =~ /(TAO)*.*performance-tests/i) ||
                         ($file =~ /(TAO)*.*examples/i)) {
