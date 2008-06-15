@@ -3372,7 +3372,7 @@ TAO_PSDL_Mult_Expr::accept (TAO_PSDL_Node_Visitor *visitor)
 /// ****************************************************************
 
 TAO_PSDL_Unary_Expr::TAO_PSDL_Unary_Expr (TAO_PSDL_Node *unary_operator,
-					   TAO_PSDL_Node *primary_expr)
+                                          TAO_PSDL_Node *primary_expr)
   : unary_operator_ (unary_operator),
     primary_expr_ (primary_expr)
 {
@@ -3482,11 +3482,11 @@ TAO_PSDL_Except_Dcl::accept (TAO_PSDL_Node_Visitor *visitor)
 /// ****************************************************************
 
 TAO_PSDL_Op_Dcl::TAO_PSDL_Op_Dcl (TAO_PSDL_Node *op_attribute,
-                                   TAO_PSDL_Node *op_type_spec,
-                                   TAO_PSDL_Node *identifier,
-                                   TAO_PSDL_Node * parameter_dcls,
-                                   TAO_PSDL_Node * raises_expr,
-                                   TAO_PSDL_Node * context_expr)
+                                  TAO_PSDL_Node *op_type_spec,
+                                  TAO_PSDL_Node *identifier,
+                                  TAO_PSDL_Node * parameter_dcls,
+                                  TAO_PSDL_Node * raises_expr,
+                                  TAO_PSDL_Node * context_expr)
   : op_attribute_ (op_attribute),
     op_type_spec_ (op_type_spec),
     identifier_ (identifier),
@@ -3497,10 +3497,10 @@ TAO_PSDL_Op_Dcl::TAO_PSDL_Op_Dcl (TAO_PSDL_Node *op_attribute,
 }
 
 TAO_PSDL_Op_Dcl::TAO_PSDL_Op_Dcl (TAO_PSDL_Node *op_type_spec,
-				  TAO_PSDL_Node *identifier,
-				  TAO_PSDL_Node * parameter_dcls,
-				  TAO_PSDL_Node * raises_expr,
-				  TAO_PSDL_Node * context_expr)
+                                  TAO_PSDL_Node *identifier,
+                                  TAO_PSDL_Node * parameter_dcls,
+                                  TAO_PSDL_Node * raises_expr,
+                                  TAO_PSDL_Node * context_expr)
   : op_attribute_ (0),
     op_type_spec_ (op_type_spec),
     identifier_ (identifier),
@@ -3511,9 +3511,9 @@ TAO_PSDL_Op_Dcl::TAO_PSDL_Op_Dcl (TAO_PSDL_Node *op_type_spec,
 }
 
 TAO_PSDL_Op_Dcl::TAO_PSDL_Op_Dcl (TAO_PSDL_Node *op_type_spec,
-				  TAO_PSDL_Node *identifier,
-				  TAO_PSDL_Node * parameter_dcls,
-				  TAO_PSDL_Node * raises_expr)
+                                  TAO_PSDL_Node *identifier,
+                                  TAO_PSDL_Node * parameter_dcls,
+                                  TAO_PSDL_Node * raises_expr)
   : op_attribute_ (0),
     op_type_spec_ (op_type_spec),
     identifier_ (identifier),
@@ -3669,8 +3669,8 @@ TAO_PSDL_Parameter_Dcls::accept (TAO_PSDL_Node_Visitor *visitor)
 /// ****************************************************************
 
 TAO_PSDL_Param_Dcl::TAO_PSDL_Param_Dcl (TAO_PSDL_Node *param_attribute,
-					TAO_PSDL_Node *param_type_spec,
-					TAO_PSDL_Node *simple_declarator)
+                                        TAO_PSDL_Node *param_type_spec,
+                                        TAO_PSDL_Node *simple_declarator)
   : param_attribute_ (param_attribute),
     param_type_spec_ (param_type_spec),
     simple_declarator_ (simple_declarator),
@@ -3679,8 +3679,8 @@ TAO_PSDL_Param_Dcl::TAO_PSDL_Param_Dcl (TAO_PSDL_Node *param_attribute,
 }
 
 TAO_PSDL_Param_Dcl::TAO_PSDL_Param_Dcl (TAO_PSDL_Node *param_attribute,
-					TAO_PSDL_Node *param_type_spec,
-					TAO_PSDL_Node *simple_declarator,
+                                        TAO_PSDL_Node *param_type_spec,
+                                        TAO_PSDL_Node *simple_declarator,
                                         TAO_PSDL_Node *param_dcl)
   : param_attribute_ (param_attribute),
     param_type_spec_ (param_type_spec),
