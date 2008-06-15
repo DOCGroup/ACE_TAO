@@ -1,4 +1,7 @@
 // $Id$
+
+//FUZZ: disable check_for_tab
+
 # define	TAO_PSDL_SEMI	257
 # define	TAO_PSDL_MODULE	258
 # define	TAO_PSDL_COLON	259

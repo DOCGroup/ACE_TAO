@@ -1,3 +1,12 @@
+Sun Jun 15 15:59:40 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/PSS/PSDL_l.cpp:
+        * orbsvcs/PSS/PSDL_y.h:
+        * orbsvcs/PSS/PSDL_y.cpp:
+
+          Disable Fuzz check for tabs in the files above. There are way too
+          many tabs to fix.
+
 Sun Jun 15 15:49:22 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/orbsvcs/Time_Utilities.h:
