@@ -12,7 +12,7 @@
 class FTClientMain
 {
   typedef ACE_Vector<ACE_CString> StringVec;
- public:
+public:
   ///////////////////////////
   // construction/destruction
   FTClientMain ();
@@ -90,7 +90,7 @@ FTClientMain::~FTClientMain ()
   if (this->inFile_)
   {
     ACE_OS::fclose (this->inFile_);
-	this->inFile_ = 0;
+    this->inFile_ = 0;
   }
 }
 
@@ -146,20 +146,20 @@ void FTClientMain::commandUsage(FILE* out)
     "   q    quit (end the client, not the replica(s).)\n"
     "   q1   quit (end the client, and shutdown the currently active replica.)\n"
     "   ?    help (this message)\n",
-	FT_TEST::TestReplica::NOT_YET,
-	FT_TEST::TestReplica::RIGHT_NOW,
-	FT_TEST::TestReplica::WHILE_IDLE,
-	FT_TEST::TestReplica::BEFORE_STATE_CHANGE,
-	FT_TEST::TestReplica::BEFORE_REPLICATION,
-	FT_TEST::TestReplica::BEFORE_REPLY,
-	FT_TEST::TestReplica::DURING_IS_ALIVE,
-	FT_TEST::TestReplica::DENY_IS_ALIVE,
-	FT_TEST::TestReplica::DURING_GET_UPDATE,
-	FT_TEST::TestReplica::BEFORE_SET_UPDATE,
-	FT_TEST::TestReplica::AFTER_SET_UPDATE,
-	FT_TEST::TestReplica::DURING_GET_STATE,
-	FT_TEST::TestReplica::BEFORE_SET_STATE,
-	FT_TEST::TestReplica::AFTER_SET_STATE);
+    FT_TEST::TestReplica::NOT_YET,
+    FT_TEST::TestReplica::RIGHT_NOW,
+    FT_TEST::TestReplica::WHILE_IDLE,
+    FT_TEST::TestReplica::BEFORE_STATE_CHANGE,
+    FT_TEST::TestReplica::BEFORE_REPLICATION,
+    FT_TEST::TestReplica::BEFORE_REPLY,
+    FT_TEST::TestReplica::DURING_IS_ALIVE,
+    FT_TEST::TestReplica::DENY_IS_ALIVE,
+    FT_TEST::TestReplica::DURING_GET_UPDATE,
+    FT_TEST::TestReplica::BEFORE_SET_UPDATE,
+    FT_TEST::TestReplica::AFTER_SET_UPDATE,
+    FT_TEST::TestReplica::DURING_GET_STATE,
+    FT_TEST::TestReplica::BEFORE_SET_STATE,
+    FT_TEST::TestReplica::AFTER_SET_STATE);
 }
 
 int
@@ -212,8 +212,8 @@ FTClientMain::parse_args (int argc, char *argv[])
 void FTClientMain::usage(FILE* out)const
 {
   ACE_OS::fprintf (out, "usage"
-      				    " -c <command file>"
-      				    " [-f <ior file>]...\n");
+                   " -c <command file>"
+                   " [-f <ior file>]...\n");
 }
 
 int FTClientMain::pass (
@@ -235,12 +235,12 @@ int FTClientMain::pass (
     {
       char buffer[1000];
       char *str_ = ACE_OS::fgets (buffer, sizeof(buffer)-1, this->commandIn_);
-	  if ( str_ )
-	  {
-		str_ = ACE_OS::strrchr (str_, '\n');
-		if ( str_ )
-			*str_ = '\0';
-	  }
+      if ( str_ )
+      {
+        str_ = ACE_OS::strrchr (str_, '\n');
+        if ( str_ )
+          *str_ = '\0';
+      }
       command = buffer;
     }
     retry = 0;

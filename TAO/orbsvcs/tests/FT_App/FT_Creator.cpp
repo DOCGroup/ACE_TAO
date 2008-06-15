@@ -121,14 +121,13 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 void FTAPP::FT_Creator::usage(FILE* out)const
 {
   ACE_OS::fprintf (out, "usage\n"
-      				" -r <role for objects to be created>\n"
-      				" -f <factory registry ior file> (if not specified, ReplicationManager is used.)\n"
-      				" -u <role to be unregistered (for testing factory registry)>\n"
-      				" -i (toggle write ior for each object (default false))\n"
-      				" -p <prefix for registration & file names>\n"
-      				" -g (toggle write iogr to file (default false))\n"
-      				" -n (toggle register iogr with name service (default true))\n")
-      			   ;
+                        " -r <role for objects to be created>\n"
+                        " -f <factory registry ior file> (if not specified, ReplicationManager is used.)\n"
+                        " -u <role to be unregistered (for testing factory registry)>\n"
+                        " -i (toggle write ior for each object (default false))\n"
+                        " -p <prefix for registration & file names>\n"
+                        " -g (toggle write iogr to file (default false))\n"
+                        " -n (toggle register iogr with name service (default true))\n");
 }
 
 

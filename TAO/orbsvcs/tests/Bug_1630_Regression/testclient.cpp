@@ -125,7 +125,7 @@ int main (int argc, char* argv[])
 
       ACE_DEBUG((LM_DEBUG, "About to call create_operation_list\n"));
       orb->create_operation_list(operation.in (),
-		                 opList.out()) ;
+                                 opList.out()) ;
 
       ACE_DEBUG((LM_DEBUG, "Call to create_operation_list succeeded\n"));
       CORBA::ULong count = opList->count() ;

@@ -29,20 +29,20 @@ Foo_i::baz (void)
   try
     {
       SecurityLevel3::ClientCredentials_var credentials =
-	this->current_->client_credentials ();
+        this->current_->client_credentials ();
 
       CORBA::String_var id = credentials->creds_id ();
 
       ACE_DEBUG ((LM_DEBUG,
-		  "FOO (%P|%t) ClientCredentials ID: %s\n", id.in ()));
+                  "FOO (%P|%t) ClientCredentials ID: %s\n", id.in ()));
       return;
     }
   catch (const CORBA::BAD_INV_ORDER &ex)
     {
       ACE_DEBUG ((LM_INFO,
-		  "FOO (%P|%t) Caught BAD_INV_ORDER exception trying to obtain "
-		  "client credentials.  This is okay if the invocation was via "
-		  "non-secured means.\n"));
+                  "FOO (%P|%t) Caught BAD_INV_ORDER exception trying to obtain "
+                  "client credentials.  This is okay if the invocation was via "
+                  "non-secured means.\n"));
       ex._tao_print_exception ("obtaining client credentials");
       // should we re-throw? No, because what we're testing is whether
       // we go into this method, not whether the method itself operates

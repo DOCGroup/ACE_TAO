@@ -43,8 +43,8 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   // the sender.
   //
   ACE_DEBUG ((LM_DEBUG,
-	      "Receiver_Callback::receive_frame for frame %d\n",
-	      this->frame_count_++));
+              "Receiver_Callback::receive_frame for frame %d\n",
+              this->frame_count_++));
 
   if (start)
     {
@@ -77,8 +77,6 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
       frame = frame->cont ();
     }
 
-
-
   return 0;
 }
 
@@ -86,14 +84,14 @@ void
 Receiver_Callback::dump_samples (const char* file)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "Dumping Stats.....\n"));
+              "Dumping Stats.....\n"));
 
   FILE* stats_file = ACE_OS::fopen (file, "w");
 
   if (stats_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  "Stats.dat cannot be opened \n"));
+                  "Stats.dat cannot be opened \n"));
     }
 
   int i;
@@ -103,8 +101,8 @@ Receiver_Callback::dump_samples (const char* file)
     }
 
   stats_.dump_results ("Inter Frame Arrival Time Statistics ",
-		       stats_file,
-		       1);
+                       stats_file,
+                       1);
   //  ACE_High_Res_Timer::global_scale_factor ());
 
   for (i = 0; i < stats_index; i++)
@@ -115,7 +113,7 @@ Receiver_Callback::dump_samples (const char* file)
   ACE_OS::fclose (stats_file);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Done\n"));
+              "Done\n"));
 }
 
 int
@@ -211,9 +209,9 @@ parse_args (int argc,
         case 'f':
           output_file_name = opts.opt_arg ();
           break;
-	case 's':
-	  stats_file_name = opts.opt_arg ();
-	  break;
+        case 's':
+          stats_file_name = opts.opt_arg ();
+          break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Usage: receiver -f filename"),
