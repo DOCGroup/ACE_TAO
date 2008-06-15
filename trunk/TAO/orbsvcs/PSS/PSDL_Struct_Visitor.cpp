@@ -621,8 +621,8 @@ TAO_PSDL_Struct_Visitor::gen_code_for_sinline (void)
 
   if (ps_sin == 0)
   {
-	  ACE_DEBUG ((LM_DEBUG,
-				  "Null pointer to the psdl inline file\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "Null pointer to the psdl inline file\n"));
   }
   ps_sin->reset ();
 
