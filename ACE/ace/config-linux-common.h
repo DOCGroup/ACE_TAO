@@ -368,6 +368,7 @@
 // this define is set
 #if defined _XOPEN_STREAMS && _XOPEN_STREAMS == -1
 # define ACE_LACKS_STROPTS_H
+# define ACE_LACKS_STRRECVFD
 #endif
 
 #if !defined (ACE_LACKS_STROPTS_H)

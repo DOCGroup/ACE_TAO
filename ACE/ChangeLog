@@ -1,3 +1,17 @@
+Sun Jun 15 13:23:13 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Added ACE_LACKS_STRRECVFD when no streams are available (like fc9)
+
+        * rpmbuild/ace-tao-strrecvfd.patch:
+          Deleted
+
+        * rpmbuild/ace-tao.spec:
+          Patch 6 is not needed anymore
+
+        * ace/Strategies_T.h:
+          Doxygen change
+
 Sun Jun 15 03:08:53 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Monitor_Control/Monitor_Control.mpc:
