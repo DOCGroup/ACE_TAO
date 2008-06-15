@@ -88,15 +88,13 @@ TAO::SSLIOP::ORBInitializer::post_init (
   PortableInterceptor::ServerRequestInterceptor_ptr si =
     PortableInterceptor::ServerRequestInterceptor::_nil ();
   ACE_NEW_THROW_EX (si,
-                    TAO::SSLIOP::Server_Invocation_Interceptor
-		      (info,
-		       this->qop_,
-		       this->get_tss_slot_id (info)),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
+                    TAO::SSLIOP::Server_Invocation_Interceptor(
+                      info,
+                      this->qop_,
+                      this->get_tss_slot_id (info)),
+                      CORBA::NO_MEMORY (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
+                                                                                 ENOMEM),
+                                                                                 CORBA::COMPLETED_NO));
 
   PortableInterceptor::ServerRequestInterceptor_var si_interceptor =
     si;

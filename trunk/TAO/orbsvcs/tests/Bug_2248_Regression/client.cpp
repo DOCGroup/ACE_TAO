@@ -39,14 +39,14 @@ parse_args (int argc, char* argv[])
         first_ior = get_opts.opt_arg ();
         break;
       case 'k':
-	first_key = get_opts.opt_arg ();
-	break;
+        first_key = get_opts.opt_arg ();
+        break;
       case 'b':
         second_ior = get_opts.opt_arg ();
         break;
       case 'l':
-	second_key = get_opts.opt_arg ();
-	break;
+        second_key = get_opts.opt_arg ();
+        break;
       case 'g':
         first_iogr_file = get_opts.opt_arg ();
         break;
@@ -92,7 +92,7 @@ main (int argc,
 
       // Write IOR to file
       if (manager.write_to_files ())
-	      return -1;
+        return -1;
 
       // Client, who is going to use the merged IOR
       // Construct that with the managers ORB
@@ -141,22 +141,21 @@ Manager::make_merged_iors (void)
 {
   // Get an object reference for the ORBs IORManipultion object!
   CORBA::Object_var IORM =
-	  this->orb_->resolve_initial_references (
-		  TAO_OBJID_IORMANIPULATION, 0);
+    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
 
   if (CORBA::is_nil (IORM.in()))
-	  return -1;
+    return -1;
 
   TAO_IOP::TAO_IOR_Manipulation_var iorm =
-	  TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
 
   if (CORBA::is_nil (iorm.in()))
-	  return -1;
+    return -1;
 
   CORBA::Object_var first = orb_->string_to_object (first_ior);
 
   if (CORBA::is_nil (first.in()))
-	  return -1;
+    return -1;
 
   // Create the list
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (1);
@@ -171,7 +170,7 @@ Manager::make_merged_iors (void)
     }
 
   int result = set_properties (iorm.in(), merged_set_10_.in(),
-			    first.in(), 10);
+                               first.in(), 10);
 
   if (-1 == result)
     {
@@ -205,7 +204,7 @@ Manager::make_merged_iors (void)
     }
 
   result = set_properties (iorm.in(), merged_set_11_.in(),
-			    first.in(), 11);
+                           first.in(), 11);
 
   if (-1 == result)
     {
@@ -217,9 +216,9 @@ Manager::make_merged_iors (void)
 
 int
 Manager::set_properties (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
-			 CORBA::Object_ptr merged_set,
-			 CORBA::Object_ptr primary,
-			 CORBA::ULong version)
+                         CORBA::Object_ptr merged_set,
+                         CORBA::Object_ptr primary,
+                         CORBA::ULong version)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
 
@@ -245,7 +244,7 @@ Manager::set_properties (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   // Set the property
   CORBA::Boolean retval = iorm->set_primary (&iogr_prop,
                                              primary,
-					     merged_set);
+                                             merged_set);
 
   // Set the primary
   // See we are setting the second ior as the primary
@@ -323,7 +322,7 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key)
   if (execute_key)
     {
       ACE_OS::sprintf (expected,
-		      "remote_call() completed by %s", execute_key);
+                       "remote_call() completed by %s", execute_key);
     }
   else
     {
@@ -338,11 +337,11 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key)
 
       if (!s.in())
         {
-	  ACE_OS::strcpy (received, "(null)");
+          ACE_OS::strcpy (received, "(null)");
         }
       else
         {
-	  ACE_OS::strcpy (received, s.in());
+          ACE_OS::strcpy (received, s.in());
         }
     }
   catch (const CORBA::TRANSIENT&)
@@ -355,14 +354,14 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT("CLIENT> REMOTE   expected: '%s'"),
-		       expected));
+              ACE_TEXT("CLIENT> REMOTE   expected: '%s'"),
+              expected));
   if (ACE_OS::strcmp (expected, received))
     {
       ACE_DEBUG ((LM_DEBUG,
-		  ACE_TEXT ("... FAIL\n"
-			    "CLIENT>          received: '%s'\n"),
-		  received));
+                  ACE_TEXT ("... FAIL\n"
+                  "CLIENT>          received: '%s'\n"),
+                  received));
       return -1;
     }
 
@@ -371,14 +370,15 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key)
 }
 
 int run_abort_test (Simple_Server_ptr server,
-		    const char* request_key, const char* execute_key)
+                    const char* request_key,
+                    const char* execute_key)
 {
   char expected[1024], received[1024];
   if (execute_key)
     {
       ACE_OS::sprintf (expected,
-		       "abort() completed by %s, still_alive=1",
-		        execute_key);
+                       "abort() completed by %s, still_alive=1",
+                       execute_key);
     }
   else
     {
@@ -391,11 +391,11 @@ int run_abort_test (Simple_Server_ptr server,
 
       if (!s.in())
         {
-	  ACE_OS::strcpy (received, "(null)");
+          ACE_OS::strcpy (received, "(null)");
         }
       else
         {
-	  ACE_OS::strcpy (received, s.in());
+          ACE_OS::strcpy (received, s.in());
         }
     }
   catch (const CORBA::TRANSIENT&)
@@ -408,15 +408,15 @@ int run_abort_test (Simple_Server_ptr server,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT("CLIENT> ABORT    expected: '%s'"),
-		       expected));
+              ACE_TEXT("CLIENT> ABORT    expected: '%s'"),
+              expected));
 
   if (ACE_OS::strcmp (expected, received))
   {
     ACE_DEBUG ((LM_DEBUG,
-	        ACE_TEXT ("... FAIL\n"
-			  "CLIENT>          received: '%s'\n"),
-	        received));
+                ACE_TEXT ("... FAIL\n"
+                "CLIENT>          received: '%s'\n"),
+                received));
     return -1;
   }
 
@@ -454,22 +454,22 @@ Client_i::init (void)
   int argc = 0;
   char **argv = 0;
   this->orb_ = CORBA::ORB_init (argc,
-			        argv,
-			        0);
+                                argv,
+                                0);
 
   CORBA::Object_var object =
-	  this->orb_->string_to_object (iogrstr);
+    this->orb_->string_to_object (iogrstr);
 
 
   // Combined IOR stuff
   Simple_Server_var server =
-	  Simple_Server::_narrow (object.in ());
+    Simple_Server::_narrow (object.in ());
 
   if (CORBA::is_nil (server.in ()))
   {
-	  ACE_ERROR ((LM_ERROR,
-		      "Object reference <%s> is nil\n",
-		      iogrstr));
+    ACE_ERROR ((LM_ERROR,
+                "Object reference <%s> is nil\n",
+                iogrstr));
   }
 
   // run tests

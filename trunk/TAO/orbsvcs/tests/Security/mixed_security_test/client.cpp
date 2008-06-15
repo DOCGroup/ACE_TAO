@@ -67,7 +67,7 @@ ClientTest::run (const ClientTest::Results& expected)
   actual.secure = this->secure_invocation ();
 
   actual.successful = (expected.secure == actual.secure
-		       && expected.non_secure == actual.non_secure);
+                       && expected.non_secure == actual.non_secure);
 
   return actual;
 }
@@ -86,7 +86,7 @@ ClientTest::non_secure_invocation ()
   // Create the Security::QOPPolicy.
   CORBA::Policy_var policy =
     this->orb_->create_policy (Security::SecQOPPolicy,
-			       no_protection);
+                               no_protection);
 
   CORBA::PolicyList policy_list (1);
   policy_list.length (1);
@@ -96,7 +96,7 @@ ClientTest::non_secure_invocation ()
   // protection).
   CORBA::Object_var object =
     this->obj_->_set_policy_overrides (policy_list,
-				       CORBA::SET_OVERRIDE);
+                                       CORBA::SET_OVERRIDE);
 
   Foo::Bar_var server =
     Foo::Bar::_narrow (object.in ());
@@ -105,7 +105,7 @@ ClientTest::non_secure_invocation ()
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ERROR: Failed to narrow override reference to "
-		  "Foo::Bar type.\n"));
+                  "Foo::Bar type.\n"));
 
       throw CORBA::INTERNAL ();
     }
@@ -121,7 +121,7 @@ ClientTest::non_secure_invocation ()
   catch (const CORBA::NO_PERMISSION& )
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "ClientTest::non_secure_invocation: got NO_PERMISSION\n"));
+                  "ClientTest::non_secure_invocation: got NO_PERMISSION\n"));
       invocation_succeeded = false;
     }
 
@@ -144,7 +144,7 @@ ClientTest::secure_invocation ()
   catch (const CORBA::NO_PERMISSION&)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "ClientTest::secure_invocation: got NO_PERMISSION\n"));
+                  "ClientTest::secure_invocation: got NO_PERMISSION\n"));
       invocation_succeeded = false;
     }
 
@@ -165,40 +165,40 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 
       ClientTest restricted (orb.in (),
-			     TAO_Mixed_Security_Test::restricted_ior);
+                             TAO_Mixed_Security_Test::restricted_ior);
 
       // Run the restricted test
       ClientTest::Results restricted_results =
-	restricted.run (ClientTest::Results(true, false));
+        restricted.run (ClientTest::Results(true, false));
       ACE_DEBUG ((LM_DEBUG,
-		  "===> Restricted test %s: secure=%d, non-secure=%d\n",
-		  restricted_results.successful ? "PASSED" : "FAILED",
-		  restricted_results.secure,
-		  restricted_results.non_secure));
+                  "===> Restricted test %s: secure=%d, non-secure=%d\n",
+                  restricted_results.successful ? "PASSED" : "FAILED",
+                  restricted_results.secure,
+                  restricted_results.non_secure));
 
       ACE_DEBUG ((LM_DEBUG, "mixed_security/client: set up permitted test\n"));
       // Run the permitted test
       ClientTest permitted (orb.in (),
-			    TAO_Mixed_Security_Test::permitted_ior);
+                            TAO_Mixed_Security_Test::permitted_ior);
 
       ACE_DEBUG ((LM_DEBUG, "mixed_security/client: running permitted test\n"));
       ClientTest::Results permitted_results =
-	permitted.run (ClientTest::Results(true, true));
+        permitted.run (ClientTest::Results(true, true));
       ACE_DEBUG ((LM_DEBUG,
-		  "===> Permitted test %s: secure=%d, non-secure=%d\n",
-		  permitted_results.successful ? "PASSED" : "FAILED",
-		  permitted_results.secure,
-		  permitted_results.non_secure));
+                  "===> Permitted test %s: secure=%d, non-secure=%d\n",
+                  permitted_results.successful ? "PASSED" : "FAILED",
+                  permitted_results.secure,
+                  permitted_results.non_secure));
 
       // The server ORB *is* shutdown by this test, if explicitly requested
       // @@ at this point there's no way to specify this...but I should
       if (shutdown_server)
-	{
-	  CORBA::Object_var o =
-	    orb->string_to_object (TAO_Mixed_Security_Test::permitted_ior);
-	  Foo::Bar_var foo = Foo::Bar::_narrow (o.in());
-	  foo->shutdown ();
-	}
+        {
+          CORBA::Object_var o =
+          orb->string_to_object (TAO_Mixed_Security_Test::permitted_ior);
+          Foo::Bar_var foo = Foo::Bar::_narrow (o.in());
+          foo->shutdown ();
+        }
 
       orb->destroy ();
     }

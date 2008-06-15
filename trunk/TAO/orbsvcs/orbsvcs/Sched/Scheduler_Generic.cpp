@@ -123,7 +123,7 @@ Scheduler_Generic::lookup_rt_info (handle_t handle,
 
 Scheduler::status_t
 Scheduler_Generic::lookup_config_info (Preemption_Priority priority,
-				       Config_Info* &config_info)
+                                       Config_Info* &config_info)
 {
   if (priority == config_info_.preemption_priority)
   {

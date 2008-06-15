@@ -1534,9 +1534,8 @@ get_config_infos (RtecScheduler::Config_Info_Set_out configs)
   if (configs.ptr () == 0)
     {
       ACE_NEW_THROW_EX (configs,
-			RtecScheduler::Config_Info_Set(this->
-						       config_info_count_),
-			CORBA::NO_MEMORY ());
+                        RtecScheduler::Config_Info_Set(this->config_info_count_),
+                        CORBA::NO_MEMORY ());
     }
   configs->length (this->config_info_count_);
   RtecScheduler::Config_Info* config_info = 0;
