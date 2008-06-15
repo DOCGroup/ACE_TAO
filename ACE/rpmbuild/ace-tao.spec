@@ -47,7 +47,6 @@ Source0: http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-%{ACE
 ## Patch0: ace-tao-config.patch
 ## Patch4: ace-tao-gperf-info.patch
 ## Patch5: ace-tao-orbsvcs-daemon.patch
-## Patch6: ace-tao-strrecvfd.patch
 ## Patch7: ace-tao-unusedarg.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -626,8 +625,6 @@ export CIAO_ROOT=$TAO_ROOT/CIAO
 cat ${ACE_ROOT}/rpmbuild/ace-tao-gperf-info.patch | patch -p 1
 #patch5 -p 1
 cat ${ACE_ROOT}/rpmbuild/ace-tao-orbsvcs-daemon.patch | patch -p 1
-#%patch6 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-strrecvfd.patch | patch -p 1
 #%patch7 -p 1
 cat ${ACE_ROOT}/rpmbuild/ace-tao-unusedarg.patch | patch -p 1
 
