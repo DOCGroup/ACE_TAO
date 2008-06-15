@@ -383,7 +383,7 @@ public:
 
   // = Factory method.
   /**
-   * Activate the <svc_handler> with an appropriate concurrency
+   * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  This method activates the SVC_HANDLER by first calling
    * its <open> method and then calling its <activate> method to turn
    * it into an active object.
