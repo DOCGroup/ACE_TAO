@@ -47,14 +47,14 @@ static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
 #endif /* ACE_WIN32 */
 
 static ACE_TCHAR *fname = 0;   // File you want to view.
-static int use_named_pipe = 0;	// Do we want to use named pipe?
+static int use_named_pipe = 0; // Do we want to use named pipe?
 
 static void
 usage (void)
 {
   ACE_ERROR ((LM_ERROR, "Usage: imore [-n|-u] <filename>\n"
-    "\t-n Use named pipe.\n"
-    "\t-u Use unnamed pipe.\n"));
+              "\t-n Use named pipe.\n"
+              "\t-u Use unnamed pipe.\n"));
 }
 
 static int
@@ -67,23 +67,23 @@ parse_args (int argc, ACE_TCHAR **argv)
     {
     switch (c)
       {
-      case 'n':			// We want to use named pipe.
+      case 'n': // We want to use named pipe.
 #if !defined (ACE_WIN32)
-    use_named_pipe = 1;
+        use_named_pipe = 1;
 #else
-    ACE_ERROR_RETURN ((LM_ERROR, "Named pipes not supported on Win32\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "Named pipes not supported on Win32\n"), -1);
 #endif /* !ACE_WIN32 */
-    break;
-      case 'u':			// Use unnamed pipe.
-    use_named_pipe = 0;
-    break;
-      default:			// What are you talking about?
-    usage ();
-    return -1;
+        break;
+      case 'u':  // Use unnamed pipe.
+        use_named_pipe = 0;
+        break;
+      default:  // What are you talking about?
+        usage ();
+        return -1;
       }
     }
 
-  if (get_opt.opt_ind () >= argc)	// Do you forget to give me a filename to "more?"
+  if (get_opt.opt_ind () >= argc) // Do you forget to give me a filename to "more?"
     {
       usage ();
       return -1;
