@@ -198,7 +198,9 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_ha
     result = -1;
 
   if (result == -1)
-    svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
+    // The connection was already made; so this close is a "normal" close
+    // operation.
+    svc_handler->close (NORMAL_CLOSE_OPERATION);
 
   return result;
 }
@@ -253,7 +255,9 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
     return this->inherited::activate_svc_handler (svc_handler, arg);
 
   if (result == -1)
-    svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
+    // The connection was already made; so this close is a "normal" close
+    // operation.
+    svc_handler->close (NORMAL_CLOSE_OPERATION);
 
   return result;
 }
