@@ -82,7 +82,8 @@ public:
   /// the acceptor's tag is consistent, as the interfaces do not yet
   /// exist for examining the eventual TAO_Endpoint values the
   /// acceptor would produce.
-  CORBA::Boolean validate_acceptor (TAO_Acceptor *) const;
+  CORBA::Boolean validate_acceptor (TAO_Acceptor *,
+				    bool is_multi_prot) const;
 
   /// Host attribute get/set operators.
   char * host (void);

@@ -1,3 +1,26 @@
+Mon Jun 16 14:01:58 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/EndpointPolicy/EndpointPolicy_Factory.cpp:
+        * tao/EndpointPolicy/Endpoint_Value_Impl.h:
+        * tao/EndpointPolicy/IIOPEndpointValue_i.h:
+        * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
+        
+          Add support for limiting the use of defaulted hostnames in IIOP
+          endpoints to only be allowed when using multiple protocols on
+          the ORB. The motivation for this limit is described in bugzilla
+          3256.
+
+        * tests/POA/EndpointPolicy/README:
+        * tests/POA/EndpointPolicy/multi_prot.conf:
+        * tests/POA/EndpointPolicy/run_test_dh.pl:
+        * tests/POA/EndpointPolicy/run_test_lh.pl:
+        * tests/POA/EndpointPolicy/server.cpp:
+        
+          Extend the test to accomodate the new capability of the 
+          EndpointPolicy with IIOP endpoints. The lh variant of the
+          test uses localhost endpoints which are not ordinarily tested.
+          This case is not described specifically in bug 3256.
+
 Mon Jun 16 13:40:13 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_3049/Test.cpp:
