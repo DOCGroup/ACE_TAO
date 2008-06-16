@@ -17,46 +17,46 @@
 class Roundtrip
   : public virtual POA_Test::AMH_Roundtrip
 {
- public:
-    /// Constructor
-    Roundtrip (CORBA::ORB_ptr orb);
+public:
+  /// Constructor
+  Roundtrip (CORBA::ORB_ptr orb);
 
-    // = The skeleton methods
-    void test_octet_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-		                    const Test::octet_load& ol,
-                            Test::Timestamp send_time);
-
-
-    void test_long_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-		                    const Test::long_load& ol,
-                            Test::Timestamp send_time);
-
-    void test_short_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-		                    const Test::short_load& ol,
-                            Test::Timestamp send_time);
+  // = The skeleton methods
+  void test_octet_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
+                          const Test::octet_load& ol,
+                          Test::Timestamp send_time);
 
 
-    void test_char_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-		                    const Test::char_load& ol,
-                            Test::Timestamp send_time);
+  void test_long_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
+                         const Test::long_load& ol,
+                         Test::Timestamp send_time);
 
-    void test_longlong_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-		                    const Test::longlong_load& ol,
-                            Test::Timestamp send_time);
-
-
-    void test_double_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-		                    const Test::double_load& ol,
-                            Test::Timestamp send_time);
+  void test_short_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
+                          const Test::short_load& ol,
+                          Test::Timestamp send_time);
 
 
+  void test_char_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
+                         const Test::char_load& ol,
+                         Test::Timestamp send_time);
 
-    void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
+  void test_longlong_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
+                             const Test::longlong_load& ol,
+                             Test::Timestamp send_time);
 
- private:
-    /// Use an ORB reference to conver strings to objects and shutdown
-    /// the application.
-    CORBA::ORB_var orb_;
+
+  void test_double_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
+                           const Test::double_load& ol,
+                           Test::Timestamp send_time);
+
+
+
+  void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
+
+private:
+  /// Use an ORB reference to conver strings to objects and shutdown
+  /// the application.
+  CORBA::ORB_var orb_;
 };
 
 #if defined(_MSC_VER)

@@ -64,10 +64,10 @@ public:
   ~test_i (void);
 
   void start_test (CORBA::Long session_id,
-		   const char *protocol,
-		   CORBA::ULong invocation_rate,
-		   CORBA::ULong message_size,
-		   CORBA::ULong iterations);
+                   const char *protocol,
+                   CORBA::ULong invocation_rate,
+                   CORBA::ULong message_size,
+                   CORBA::ULong iterations);
 
   void end_test (void);
 
@@ -76,12 +76,12 @@ public:
   void twoway_sync (void);
 
   void oneway_method (CORBA::Long session_id,
-		      CORBA::ULong iteration,
-		      const ::test::octets &payload);
+                      CORBA::ULong iteration,
+                      const ::test::octets &payload);
 
   void twoway_method (CORBA::Long &session_id,
-		      CORBA::ULong &iteration,
-		      ::test::octets &payload);
+                      CORBA::ULong &iteration,
+                      ::test::octets &payload);
 
   //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void);
@@ -120,25 +120,24 @@ test_i::~test_i (void)
 
 void
 test_i::start_test (CORBA::Long session_id,
-		    const char *protocol,
-		    CORBA::ULong invocation_rate,
-		    CORBA::ULong message_size,
-		    CORBA::ULong iterations)
+                    const char *protocol,
+                    CORBA::ULong invocation_rate,
+                    CORBA::ULong message_size,
+                    CORBA::ULong iterations)
 {
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "Session id starts %d\n",
-		  session_id));
-
+                  "Session id starts %d\n",
+                  session_id));
     }
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Protocol = %5s Invocation Rate = %3d Message Size = %5d Expected Latency = %4d ",
-	      protocol,
-	      invocation_rate,
-	      message_size,
-	      1000 / invocation_rate));
+              "Protocol = %5s Invocation Rate = %3d Message Size = %5d Expected Latency = %4d ",
+              protocol,
+              invocation_rate,
+              message_size,
+              1000 / invocation_rate));
 
   // Remember test parameters.
   this->session_id_ = session_id;
@@ -180,15 +179,15 @@ test_i::end_test (void)
   this->inter_arrival_times_->collect_basic_stats (stats);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Max Latency = %6d ",
-	      stats.max_ / gsf / 1000));
+              "Max Latency = %6d ",
+              stats.max_ / gsf / 1000));
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Invocations expected / received / missed / missed %% = %6d / %6d / %6d / %5.2f\n",
-	      this->iterations_,
-	      this->number_of_invocations_received_,
-	      this->iterations_ - this->number_of_invocations_received_,
-  	      (this->iterations_ - this->number_of_invocations_received_) / (double) this->iterations_ * 100));
+              "Invocations expected / received / missed / missed %% = %6d / %6d / %6d / %5.2f\n",
+              this->iterations_,
+              this->number_of_invocations_received_,
+              this->iterations_ - this->number_of_invocations_received_,
+              (this->iterations_ - this->number_of_invocations_received_) / (double) this->iterations_ * 100));
 
   if (print_missed_invocations)
     {
@@ -212,14 +211,15 @@ test_i::end_test (void)
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "Session id ends %d\n",
-		  this->session_id_));
+                  "Session id ends %d\n",
+                  this->session_id_));
 
       stats.dump_results ("Inter-arrival times", gsf);
 
-      ACE_Throughput_Stats::dump_throughput ("Inter-arrival times", gsf,
-					     this->test_end_ - this->test_start_,
-					     stats.samples_count ());
+      ACE_Throughput_Stats::dump_throughput ("Inter-arrival times",
+                                             gsf,
+                                             this->test_end_ - this->test_start_,
+                                             stats.samples_count ());
     }
 
   this->session_id_ = -1;
@@ -239,14 +239,14 @@ test_i::twoway_sync (void)
 
 void
 test_i::oneway_method (CORBA::Long session_id,
-		       CORBA::ULong iteration,
-		       const ::test::octets &payload)
+                       CORBA::ULong iteration,
+                       const ::test::octets &payload)
 {
   if (this->session_id_ != session_id)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "Late message with iteration id = %d: will not count message\n",
-		  iteration));
+                  "Late message with iteration id = %d: will not count message\n",
+                  iteration));
       return;
     }
 
@@ -254,7 +254,7 @@ test_i::oneway_method (CORBA::Long session_id,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "test_i::oneway_method -> session id = %d iteration = %d payload size = %d\n",
-		  session_id,
+                  session_id,
                   iteration,
                   payload.length ()));
     }
@@ -275,14 +275,14 @@ test_i::oneway_method (CORBA::Long session_id,
 
 void
 test_i::twoway_method (CORBA::Long &session_id,
-		       CORBA::ULong &iteration,
-		       ::test::octets &payload)
+                       CORBA::ULong &iteration,
+                       ::test::octets &payload)
 {
   if (this->session_id_ != session_id)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "Late message with iteration id = %d: will not count message\n",
-		  iteration));
+                  "Late message with iteration id = %d: will not count message\n",
+                  iteration));
       return;
     }
 
@@ -290,7 +290,7 @@ test_i::twoway_method (CORBA::Long &session_id,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "test_i::twoway_method -> session id = %d iteration = %d payload size = %d\n",
-		  session_id,
+                  session_id,
                   iteration,
                   payload.length ()));
     }
@@ -352,7 +352,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       test_i *servant =
         new test_i (orb.in (),
-		    root_poa.in ());
+        root_poa.in ());
 
       PortableServer::ServantBase_var safe_servant (servant);
       ACE_UNUSED_ARG (safe_servant);

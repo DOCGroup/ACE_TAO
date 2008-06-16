@@ -1,3 +1,16 @@
+Mon Jun 16 11:25:06 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * performance-tests/Protocols/receiver.cpp:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/Roundtrip.h:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/client.cpp:
+        * performance-tests/Sequence_Latency/DII/client.cpp:
+        * performance-tests/Sequence_Latency/DSI/Roundtrip.cpp:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/client.cpp:
+
+          Untabify.
+
 Mon Jun 16 10:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orbsvcs/SecurityLevel1.idl:
@@ -10,7 +23,7 @@ Mon Jun 16 10:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
         * orbsvcs/PSS/PSDL_y.h:
         * orbsvcs/PSS/PSDL_y.cpp:
 
-          Re-enamble Fuzz check for tabs in the files above and untabified them.
+          Re-enable Fuzz check for tabs in the files above and untabified them.
 
         * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
         * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
