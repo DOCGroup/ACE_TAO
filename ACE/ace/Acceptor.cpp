@@ -341,7 +341,9 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
     result = -1;
 
   if (result == -1)
-    svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
+    // The connection was already made; so this close is a "normal" close
+    // operation.
+    svc_handler->close (NORMAL_CLOSE_OPERATION);
 
   return result;
 }

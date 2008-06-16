@@ -233,7 +233,9 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::activate_svc_handler (SVC_HAND
     {
       // Make sure to close down the <svc_handler> to avoid descriptor
       // leaks.
-      svc_handler->close (CLOSE_DURING_NEW_CONNECTION);
+      // The connection was already made; so this close is a "normal"
+      // close operation.
+      svc_handler->close (NORMAL_CLOSE_OPERATION);
       return -1;
     }
   else
