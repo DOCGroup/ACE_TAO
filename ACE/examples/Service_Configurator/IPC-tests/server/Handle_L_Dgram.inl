@@ -88,8 +88,8 @@ ACE_INLINE int
 Handle_L_Dgram::handle_input (int)
 {
   ACE_UNIX_Addr sa;
-  char	    buf[8 * 1024]; /* 8 k buffer */
-  int	    n;
+  char buf[8 * 1024]; /* 8 k buffer */
+  int n;
 
   if ((n = this->recv (buf, sizeof buf, sa)) == -1)
     return -1;

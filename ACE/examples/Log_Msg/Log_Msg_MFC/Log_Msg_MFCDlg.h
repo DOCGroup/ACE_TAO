@@ -21,7 +21,7 @@ class CLog_Msg_MFCDlg : public CDialog
 {
 public:
   // Construction
-  CLog_Msg_MFCDlg(CWnd* pParent = 0);	// standard constructor
+  CLog_Msg_MFCDlg(CWnd* pParent = 0); // standard constructor
 
   // Dialog Data
   //{{AFX_DATA(CLog_Msg_MFCDlg)
@@ -32,7 +32,7 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CLog_Msg_MFCDlg)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
   // Implementation
