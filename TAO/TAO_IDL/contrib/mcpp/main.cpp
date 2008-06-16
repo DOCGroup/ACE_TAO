@@ -222,10 +222,10 @@
     int     has_pragma = FALSE;
 
 /* File pointers for input and output.  */
-    FILE *  fp_in;                  /* Input stream to preprocess   */
-    FILE *  fp_out;                 /* Output stream preprocessed   */
-    FILE *  fp_err;                 /* Diagnostics stream           */
-    FILE *  fp_debug;               /* Debugging information stream */
+    FILE *  fp_in = 0;                  /* Input stream to preprocess   */
+    FILE *  fp_out = 0;                 /* Output stream preprocessed   */
+    FILE *  fp_err = 0;                 /* Diagnostics stream           */
+    FILE *  fp_debug = 0;               /* Debugging information stream */
 
 /* Variables on multi-byte character encodings. */
     int     mbchar = MBCHAR;        /* Encoding of multi-byte char  */
@@ -334,7 +334,7 @@ int     main
     char *  in_file = 0;
     char *  out_file = 0;
 
-    if (setjmp( error_exit) == -1)
+    if (setjmp( error_exit) != 0)
       {
         ACE_DEBUG ((LM_DEBUG, "setjmp failed\n"));
         goto  fatal_error_exit;
@@ -433,7 +433,10 @@ fatal_error_exit:
         return  IO_ERROR;
     }
     
-    ACE_OS::fclose (fp_out);
+    if (fp_out != 0)
+      {
+	ACE_OS::fclose (fp_out);
+      }
     return  IO_SUCCESS;             /* No errors or -E option set   */
 }
 

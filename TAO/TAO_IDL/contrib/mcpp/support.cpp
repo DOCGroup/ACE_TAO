@@ -712,7 +712,9 @@ char *  scan_quote(
     const char * const      unterm_char
                         = "Unterminated character constant %s%.0ld%s";
     const char *    skip;
+#if MBCHAR
     size_t      len;
+#endif
     int         c;
     char *      out_p = out;
 
@@ -802,7 +804,9 @@ escape:
             "Illegal control character %.0s0lx%02x in quotation"    /* _W1_ */
                     , 0, (long) c, 0);
         *out_p++ = c;
+#if MBCHAR
 chk_limit:
+#endif
         if (out_end < out_p) {
             *out_end = EOS;
             cfatal( "Too long quotation", 0, 0L, 0);  /* _F_  */

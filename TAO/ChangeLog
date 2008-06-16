@@ -1,3 +1,13 @@
+Mon Jun 16 18:50:55 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/tao_idl_mcpp.mpb:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/noconfig.H:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Fixes for mcpp on Windows. 
+        
 Mon Jun 16 18:13:21 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/mfc/Resource.h:
