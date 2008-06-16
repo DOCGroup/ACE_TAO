@@ -66,7 +66,7 @@ PMC_Usr::decode (char *packet, int &packet_length)
       for (cp = (char *) ACE::strend (cp);
            *(cp = this->handle_protocol_entries (cp, login_name)) != '\t';
            )
-	continue;
+        continue;
     }
 
   return 1;
@@ -86,28 +86,28 @@ PMC_Usr::process (void)
       // First try to get a login session that is active...
 
       for (; np != 0; np = np->next_)
-	if (np->active_count_ > 0)
-	  {
-	    ACE_DEBUG ((LM_DEBUG,
+        if (np->active_count_ > 0)
+          {
+            ACE_DEBUG ((LM_DEBUG,
                         "%s ",
                         np->get_host_name ()));
 
-	    if (Options::get_opt (Options::USE_VERBOSE_FORMAT) == 0)
-	      return;
-	  }
+            if (Options::get_opt (Options::USE_VERBOSE_FORMAT) == 0)
+              return;
+          }
 
       for (np = prp->get_drwho_list ();
            np != 0;
            np = np->next_)
-	if (np->active_count_ == 0)
-	  {
-	    ACE_DEBUG ((LM_DEBUG,
+        if (np->active_count_ == 0)
+          {
+            ACE_DEBUG ((LM_DEBUG,
                         "%s ",
                         np->get_host_name ()));
 
-	    if (Options::get_opt (Options::USE_VERBOSE_FORMAT) == 0)
-	      return;
-	  }
+            if (Options::get_opt (Options::USE_VERBOSE_FORMAT) == 0)
+              return;
+          }
     }
 }
 

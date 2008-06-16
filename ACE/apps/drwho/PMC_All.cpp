@@ -68,9 +68,9 @@ PMC_All::decode (char *packet, int &packet_length)
       char *real_name = cp = (char *) ACE::strend (cp);
 
       for (cp = (char *) ACE::strend (cp);
-	   *(cp = this->handle_protocol_entries (cp, login_name, real_name)) != '\t';
+           *(cp = this->handle_protocol_entries (cp, login_name, real_name)) != '\t';
            )
-	continue;
+        continue;
     }
 
   return 1;

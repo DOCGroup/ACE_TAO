@@ -1,3 +1,43 @@
+Mon Jun 16 20:24:45 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/Gateway/Gateway/Connection_Handler.cpp:
+        * apps/Gateway/Gateway/Event_Forwarding_Discriminator.cpp:
+        * apps/Gateway/Peer/Options.cpp:
+        * apps/JAWS/clients/Blobby/Options.cpp:
+        * apps/JAWS/clients/Blobby/blobby.cpp:
+        * apps/JAWS/clients/Caching/ID_Generator.cpp:
+        * apps/JAWS/clients/Caching/Local_Locator.cpp:
+        * apps/JAWS/clients/Caching/Locator_Request_Reply.cpp:
+        * apps/JAWS/clients/Caching/URL_Properties.inl:
+        * apps/JAWS/clients/WebSTONE/src/bench.c:
+        * apps/JAWS/clients/WebSTONE/src/cgi-send.c:
+        * apps/JAWS/clients/WebSTONE/src/get.c:
+        * apps/JAWS/clients/WebSTONE/src/getopt.c:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-send.c:
+        * apps/JAWS/server/HTTP_Config.cpp:
+        * apps/JAWS/server/HTTP_Handler.cpp:
+        * apps/JAWS/server/HTTP_Helpers.cpp:
+        * apps/JAWS/server/HTTP_Response.cpp:
+        * apps/JAWS/server/HTTP_Server.h:
+        * apps/JAWS/server/HTTP_Server.cpp:
+        * apps/JAWS/stress_testing/benchd.cpp:
+        * apps/JAWS/stress_testing/connection.cpp:
+        * apps/JAWS/stress_testing/http_tester.cpp:
+        * apps/JAWS2/JAWS/Cache_Hash_T.h:
+        * apps/JAWS2/JAWS/Hash_Bucket_T.h:
+        * apps/drwho/File_Manager.cpp:
+        * apps/drwho/Hash_Table.cpp:
+        * apps/drwho/PMC_All.cpp:
+        * apps/drwho/PMC_Flo.cpp:
+        * apps/drwho/PMC_Ruser.cpp:
+        * apps/drwho/PMC_Usr.cpp:
+        * apps/drwho/PMS_Ruser.cpp:
+        * apps/drwho/PM_Client.cpp:
+        * apps/drwho/Rwho_DB_Manager.cpp:
+        * apps/gperf/src/Gen_Perf.cpp:
+
+          Untabify.
+
 Mon Jun 16 19:06:38 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/config-borland-common.h:
@@ -7,8 +47,8 @@ Mon Jun 16 19:06:38 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ace/config-win32-ghs.h:
         * ace/config-win32-msvc.h:
 
-          Fixes for MCPP preprocessing on Windows. 
-        
+          Fixes for MCPP preprocessing on Windows.
+
 Mon Jun 16 19:06:44 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Acceptor.cpp:

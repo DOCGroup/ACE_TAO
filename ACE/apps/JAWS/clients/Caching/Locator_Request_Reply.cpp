@@ -18,8 +18,8 @@ ACE_RCSID(Caching, Locator_Request_Reply, "$Id$")
 
 int
 ACE_URL_Locator_Request::url_query (const int how,
-				    const ACE_URL_Property_Seq &pseq,
-				    const int how_many)
+                                    const ACE_URL_Property_Seq &pseq,
+                                    const int how_many)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::url_query");
 
@@ -29,19 +29,19 @@ ACE_URL_Locator_Request::url_query (const int how,
   this->how_ = how;
   this->how_many_ = how_many;
   this->code_ = ACE_URL_Locator::QUERY;
-  return 0;    
+  return 0;
 }
 
 int
 ACE_URL_Locator_Request::export_offer (const ACE_URL_Offer &offer)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::export_offer");
-  
+
   ACE_NEW_RETURN (this->offer_, ACE_URL_Offer (offer), -1);
   this->code_ = ACE_URL_Locator::EXPORT;
   return 0;
 }
-  
+
 int
 ACE_URL_Locator_Request::withdraw_offer (const ACE_WString &offer_id)
 {
@@ -56,7 +56,7 @@ int
 ACE_URL_Locator_Request::describe_offer (const ACE_WString &offer_id)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::describe_offer");
-  
+
   this->id_ = offer_id;
   this->code_ = ACE_URL_Locator::DESCRIBE;
   return 0;
@@ -64,9 +64,9 @@ ACE_URL_Locator_Request::describe_offer (const ACE_WString &offer_id)
 
 int
 ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
-				       const ACE_WString *url,
-				       const ACE_URL_Property_Seq &del,
-				       const ACE_URL_Property_Seq &modify)
+                                       const ACE_WString *url,
+                                       const ACE_URL_Property_Seq &del,
+                                       const ACE_URL_Property_Seq &modify)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::modify_offer");
 
@@ -107,7 +107,7 @@ ACE_URL_Locator_Request::encode (void)
 
   ENCODE_UINT32 (this->buffer_, total_length, this->how_);
   // Encode selection criteria.
-  
+
   ENCODE_UINT32 (this->buffer_, total_length, this->how_many_);
   // Encode number of offers interested.
 
@@ -128,9 +128,9 @@ ACE_URL_Locator_Request::encode (void)
     total_length += this->offer_->encode (this->buffer_ + total_length);
 
   total_length += ACE_WString_Helper::encode (this->buffer_ + total_length,
-					      this->id_);
+                                              this->id_);
   total_length += ACE_WString_Helper::encode (this->buffer_ + total_length,
-					      this->url_);
+                                              this->url_);
 
   ACE_ASSERT (total_length == buf_size);
   return total_length;
@@ -149,16 +149,16 @@ ACE_URL_Locator_Request::decode (void *buffer)
 
   size_t buf_size;
   size_t total_length = 0;
-  
+
   DECODE_UINT32 (cbuffer, total_length, buf_size);
   // Decode length of buffer size first.
 
   DECODE_UINT32 (cbuffer, total_length, this->code_);
   // Get the operation code.
-  
+
   DECODE_UINT32 (cbuffer, total_length, this->how_);
   // Decode selection criteria.
-  
+
   DECODE_UINT32 (cbuffer, total_length, this->how_many_);
   // Decode number of offers interested.
 
@@ -184,7 +184,7 @@ ACE_URL_Locator_Request::decode (void *buffer)
       ACE_NEW_RETURN (this->offer_, ACE_URL_Offer, 0);
       total_length += this->offer_->decode (cbuffer + total_length);
     }
-  
+
   this->id_ = ACE_WString ((ACE_USHORT16 *) (cbuffer + total_length));
   total_length += ACE_WString_Helper::decode (cbuffer + total_length);
   this->url_ = ACE_WString ((ACE_USHORT16 *) (cbuffer + total_length));
@@ -223,7 +223,7 @@ ACE_URL_Locator_Request::size (void)
       this->valid_ptr_ |= VALID_OFFER;
       total_length += this->offer_->size ();
     }
-  
+
   total_length += ACE_WString_Helper::size (this->id_);
   total_length += ACE_WString_Helper::size (this->url_);
 
@@ -269,16 +269,16 @@ ACE_URL_Locator_Request::dump (void) const
 
   if (this->id_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "Offer ID: %s\n",
-		ACE_Auto_Basic_Array_Ptr<char> (this->id_.char_rep ()).get ()));
+                ACE_Auto_Basic_Array_Ptr<char> (this->id_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "Offer ID: \"\"\n"));
 
   if (this->url_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "URL: %s\n",
-		ACE_Auto_Basic_Array_Ptr<char> (this->url_.char_rep ()).get ()));
+                ACE_Auto_Basic_Array_Ptr<char> (this->url_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "URL: \"\"\n"));
-  
+
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -294,10 +294,10 @@ ACE_URL_Locator_Reply::status_reply (u_int op, int result)
 
 int
 ACE_URL_Locator_Reply::query_reply (int result, size_t num,
-	     const ACE_URL_Offer_Seq &offers)
+                                    const ACE_URL_Offer_Seq &offers)
 {
   ACE_TRACE ("ACE_URL_Locator_Reply::query_reply");
-  
+
   this->code_ = ACE_URL_Locator::QUERY;
   this->status_ = result;
   ACE_NEW_RETURN (this->offers_, ACE_URL_Offer_Seq (offers), -1);
@@ -306,7 +306,7 @@ ACE_URL_Locator_Reply::query_reply (int result, size_t num,
 
 int
 ACE_URL_Locator_Reply::describe_reply (int result,
-		const ACE_URL_Offer &offer)
+                                       const ACE_URL_Offer &offer)
 {
   ACE_TRACE ("ACE_URL_Locator_Reply::describe_reply");
 
@@ -353,7 +353,7 @@ ACE_URL_Locator_Reply::encode (void)
   ACE_ASSERT (total_length == buf_size);
   return 0;
 }
- 
+
 size_t
 ACE_URL_Locator_Reply::decode (void *buffer)
 {
@@ -396,11 +396,11 @@ ACE_URL_Locator_Reply::decode (void *buffer)
       ACE_NEW_RETURN (this->offers_, ACE_URL_Offer_Seq (n), 0);
       total_length += ace_array_decode (cbuffer + total_length, *this->offers_);
     }
-  
+
   ACE_ASSERT (total_length ==buf_size);
   return 0;
 }
- 
+
 size_t
 ACE_URL_Locator_Reply::size (void)
 {

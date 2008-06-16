@@ -1,15 +1,15 @@
 /* $Id$ */
 /**************************************************************************
- *									  *
- * 		 Copyright (C) 1995 Silicon Graphics, Inc.		  *
- *									  *
- *  These coded instructions, statements, and computer programs were	  *
- *  developed by SGI for public use.  If any changes are made to this code*
- *  please try to get the changes back to the author.  Feel free to make  *
- *  modifications and changes to the code and release it.		  *
- *									  *
+ *
+ *  Copyright (C) 1995 Silicon Graphics, Inc.
+ *
+ *  These coded instructions, statements, and computer programs were
+ *  developed by SGI for public use.  If any changes are made to this code
+ *  please try to get the changes back to the author.  Feel free to make
+ *  modifications and changes to the code and release it.
+ *
  **************************************************************************/
- 
+
 /* THIS IS WHERE WE GO OUT AND FETCH A URL */
 
 #include <stdio.h>
@@ -51,13 +51,13 @@
 
 /* compare two strings with max length, ignoring case */
 int mystrincmp(const char *str1, const char *str2, int len) {
-register int diff;
+    register int diff;
 
     while (*str1 && *str2 && len--) {
-	if (diff = UPPER(*str1) - UPPER(*str2))
-	    return diff < 0 ? -1 : 1;
-	str1++;
-	str2++;
+        if (diff = UPPER(*str1) - UPPER(*str2))
+            return diff < 0 ? -1 : 1;
+        str1++;
+        str2++;
     }
     return 0;
 }
@@ -85,52 +85,51 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
 #ifdef ABORTIVE_CLOSE
 #error don't enable this option
     struct linger {
-	int l_onoff;
-	int l_linger;
+        int l_onoff;
+        int l_linger;
     } linger_opt;
 #endif /* ABORTIVE_CLOSE */
 
     /* can you really get an error from gettimeofday?? */
     if(GETTIMEOFDAY(&timer->entertime, &timer->entertimezone) != 0)
     {
-	returnerr("Error retrieving entertime\n");
-	goto error;
+        returnerr("Error retrieving entertime\n");
+        goto error;
     }
     timer->valid = 1;
 
     if(GETTIMEOFDAY(&timer->beforeconnect, &timer->beforeconnectzone) != 0)
     {
-	returnerr("Error retrieving beforeconnect\n");
-	goto error;
+        returnerr("Error retrieving beforeconnect\n");
+        goto error;
     }
 
     sock = connectsock(loc, port, "tcp");
     if (BADSOCKET(sock))
     {
-	D_PRINTF( "Call to connectsock returned %d (%s)\n", sock, neterrstr() );
-	returnerr("Couldn't connect to WWW server: %s\n", neterrstr());
-	goto error;
+        D_PRINTF( "Call to connectsock returned %d (%s)\n", sock, neterrstr() );
+        returnerr("Couldn't connect to WWW server: %s\n", neterrstr());
+        goto error;
     }
 
-#ifdef ABORTIVE_CLOSE    
+#ifdef ABORTIVE_CLOSE
 #error don't enable this option
     /* set up for abortive close */
     linger_opt.l_onoff = 1;
     linger_opt.l_linger = 0;
-    if (setsockopt(sock, SOL_SOCKET, SO_LINGER,
-	    (char *) &linger_opt, sizeof(linger_opt)) < 0) {
-	fprintf(stderr, "Can't set sockopt SO_LINGER");
-	returnerr("Couldn't set SO_LINGER = 0\n");
-	goto error;
+    if (setsockopt(sock, SOL_SOCKET, SO_LINGER, (char *) &linger_opt, sizeof(linger_opt)) < 0) {
+        fprintf(stderr, "Can't set sockopt SO_LINGER");
+        returnerr("Couldn't set SO_LINGER = 0\n");
+        goto error;
     }
 #endif /* ABORTIVE_CLOSE */
 
     if(GETTIMEOFDAY(&timer->afterconnect, &timer->afterconnectzone) != 0)
     {
-	NETCLOSE(sock);
-	GETTIMEOFDAY(&timer->exittime, &timer->exittimezone);
-	returnerr("Error retrieving afterconnect\n");	
-	goto error;
+        NETCLOSE(sock);
+        GETTIMEOFDAY(&timer->exittime, &timer->exittimezone);
+        returnerr("Error retrieving afterconnect\n");
+        goto error;
     }
 
     /*
@@ -143,19 +142,19 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
     status = NETWRITE(sock, getcommand, writelen);
     if(status != writelen)
     {
-	returnerr("Error sending command line to server: %s\n",
-		neterrstr());
-	goto error;
+        returnerr("Error sending command line to server: %s\n",
+                  neterrstr());
+        goto error;
     }
-    /* 
-     * WE HAVE NOW SENT THE REQUEST SUCCESSFULLY.  
-     * WAIT FOR THE REPLY AND FIND THE HEADER 
+    /*
+     * WE HAVE NOW SENT THE REQUEST SUCCESSFULLY.
+     * WAIT FOR THE REPLY AND FIND THE HEADER
      */
-    
+
     if(GETTIMEOFDAY(&timer->beforeheader, &timer->beforeheaderzone) != 0)
     {
-	returnerr("Error retrieving beforeheader\n");
-	goto error;
+        returnerr("Error retrieving beforeheader\n");
+        goto error;
     }
 
     /* read the header and part of the file */
@@ -166,57 +165,57 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
         bytesread = NETREAD(sock, headerbuffer+totalbytesread, HEADERBUFSIZ-totalbytesread);
         if (BADSOCKET(bytesread))
         {
-	    D_PRINTF( "Did not receive full header\n" );
-	    D_PRINTF( "NETREAD returned %d\n", bytesread );
-	    returnerr("Did not receive full header: %s\n",
-		neterrstr());
-	    goto error;
+            D_PRINTF( "Did not receive full header\n" );
+            D_PRINTF( "NETREAD returned %d\n", bytesread );
+            returnerr("Did not receive full header: %s\n",
+                      neterrstr());
+            goto error;
         }
         totalbytesread += bytesread;
 
-	/* search for end of header */
-	headerbuffer[totalbytesread] = 0;
-	if (offset = strstr(headerbuffer, "\n\n")) {
-	    headerlen = offset - headerbuffer + 2;
-	    break;
-	} else if (offset = strstr(headerbuffer, "\n\r\n")) {
-	    headerlen = offset - headerbuffer + 3;
-	    break;
-	}
+        /* search for end of header */
+        headerbuffer[totalbytesread] = 0;
+        if (offset = strstr(headerbuffer, "\n\n")) {
+            headerlen = offset - headerbuffer + 2;
+            break;
+        } else if (offset = strstr(headerbuffer, "\n\r\n")) {
+            headerlen = offset - headerbuffer + 3;
+            break;
+        }
     }
 
     if (headerlen == 0) {
-	returnerr("Can't find the end of the header in \"%s\"\n", headerbuffer);
-	goto error;
+        returnerr("Can't find the end of the header in \"%s\"\n", headerbuffer);
+        goto error;
     }
 
     /* get and check status code from the first line of the header */
     count = sscanf(headerbuffer, "HTTP/%s %d", version, &status);
     if (count != 2) {
-	returnerr("Bad status line in get(): %s\n", headerbuffer);
-	goto error;
+        returnerr("Bad status line in get(): %s\n", headerbuffer);
+        goto error;
     }
     if (status < 200 || status > 300) {
-	returnerr("Bad status (%d) in get() for url %s\n", status, url);
-	goto error;
+        returnerr("Bad status (%d) in get() for url %s\n", status, url);
+        goto error;
     }
 
     /* get the content length line from the header */
     offset = headerbuffer;
     while (offset < headerbuffer+headerlen && *offset) {
-	if (*offset++ != '\n')
-	    continue;
+        if (*offset++ != '\n')
+            continue;
 
-	if (mystrincmp(offset, CONTENT_LENGTH_STRING, strlen(CONTENT_LENGTH_STRING)) == 0) {
-	    sscanf(offset+strlen(CONTENT_LENGTH_STRING), "%d", &contentlength);
-	    D_PRINTF( "Content-Length: %d\n", contentlength );
-	}
+        if (mystrincmp(offset, CONTENT_LENGTH_STRING, strlen( CONTENT_LENGTH_STRING)) == 0) {
+            sscanf(offset+strlen(CONTENT_LENGTH_STRING), "%d", &contentlength);
+            D_PRINTF( "Content-Length: %d\n", contentlength );
+        }
     }
 
     if(GETTIMEOFDAY(&timer->afterheader, &timer->afterheaderzone) != 0)
     {
-	returnerr("Error retrieving afterheader\n");
-	goto error;
+        returnerr("Error retrieving afterheader\n");
+        goto error;
     }
 
     if(savefile)
@@ -224,57 +223,56 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
         sprintf(outputfilename,"/tmp/webstone.data.%d", (int)getpid());
         if((outputfile = open(outputfilename,(O_WRONLY|O_CREAT),0777)) < 0)
         {
-            D_PRINTF( "outputfile %d %d\n", outputfile, errno ); 
-	    returnerr("Error saving file: %s\n", strerror(errno)); 
-	    goto error;
+            D_PRINTF( "outputfile %d %d\n", outputfile, errno );
+            returnerr("Error saving file: %s\n", strerror(errno));
+            goto error;
         }
-	lseek(outputfile,1,SEEK_END);	/* this is odd... JEF */
+        lseek(outputfile,1,SEEK_END);	/* this is odd... JEF */
 
-	/* if we have part of the file already, save that part */
-	if(totalbytesread > headerlen)
-	{
-	    write(outputfile, headerbuffer+headerlen, totalbytesread-headerlen);
-	}
+        /* if we have part of the file already, save that part */
+        if(totalbytesread > headerlen)
+        {
+            write(outputfile, headerbuffer+headerlen, totalbytesread-headerlen);
+        }
     }
 
     /* read the body of the file */
     do
     {
-	bytesread = NETREAD(sock, headerbuffer, HEADERBUFSIZ);
-	D_PRINTF( "Read %d bytes from socket %d\n", bytesread, sock );
+        bytesread = NETREAD(sock, headerbuffer, HEADERBUFSIZ);
+        D_PRINTF( "Read %d bytes from socket %d\n", bytesread, sock );
 
-	if (BADSOCKET(bytesread))
-	{
-	    D_PRINTF( "Read returns %d, error: %s\n", bytesread,
-		  neterrstr() );
+        if (BADSOCKET(bytesread))
+        {
+            D_PRINTF("Read returns %d, error: %s\n", bytesread,
+                     neterrstr() );
             returnerr("Error during read of page body. Read "
-			     "returns %d on socket %d, error: %s\n",
-			     bytesread, sock, neterrstr());
-	    goto error;
-	}
+                      "returns %d on socket %d, error: %s\n",
+                      bytesread, sock, neterrstr());
+            goto error;
+        }
 
-	totalbytesread += bytesread;
+        totalbytesread += bytesread;
 
-	if (outputfile != -1 && bytesread)
-	{
-	    write(outputfile, headerbuffer, bytesread);
-	}
-
+        if (outputfile != -1 && bytesread)
+        {
+            write(outputfile, headerbuffer, bytesread);
+        }
     } while (bytesread);
-    
+
     /* done reading body */
     if ( contentlength && (totalbytesread - headerlen) != contentlength)
     {
-	D_PRINTF( "Warning: file length (%d) doesn't match Content-length (%d)\n",
-	    totalbytesread - headerlen, contentlength);
+        D_PRINTF( "Warning: file length (%d) doesn't match Content-length (%d)\n",
+        totalbytesread - headerlen, contentlength);
     }
-    
+
     bodylength = totalbytesread - headerlen;
 
     if(GETTIMEOFDAY(&timer->afterbody, &timer->afterbodyzone) != 0)
     {
-	returnerr("Error retrieving afterbody\n");
-	goto error;
+        returnerr("Error retrieving afterbody\n");
+        goto error;
     }
 
     NETCLOSE(sock);
@@ -283,28 +281,28 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
         close(outputfile);
     }
 
-    D_PRINTF( "Read %d bytes, %d of that being body\n",
-	  totalbytesread, bodylength );
+    D_PRINTF("Read %d bytes, %d of that being body\n",
+             totalbytesread, bodylength );
 
     if(GETTIMEOFDAY(&timer->exittime, &timer->exittimezone) != 0)
     {
-	D_PRINTF( "Error retrieving exit time: %s\n", strerror(errno) );
-	returnerr("Error retrieving exit time\n");
-	goto error;
+        D_PRINTF( "Error retrieving exit time: %s\n", strerror(errno) );
+        returnerr("Error retrieving exit time\n");
+        goto error;
     }
     timer->valid = 2;
     timer->totalbytes = totalbytesread;
     timer->bodybytes = bodylength;
 
-    D_PRINTF( "get returning totalbytes %d body %d valid %d\n", 
-	timer->totalbytes, timer->bodybytes, timer->valid );
+    D_PRINTF("get returning totalbytes %d body %d valid %d\n",
+             timer->totalbytes, timer->bodybytes, timer->valid );
 
-    D_PRINTF( "get returning start %d, end %d\n", 
-	timer->entertime.tv_sec, timer->exittime.tv_sec	); 
+    D_PRINTF("get returning start %d, end %d\n",
+             timer->entertime.tv_sec, timer->exittime.tv_sec	);
 
-    D_PRINTF( "get returning connect %d, request %d, header %d, body %d\n",
-	timer->afterconnect.tv_sec, timer->beforeheader.tv_sec, 
-	timer->afterheader.tv_sec, timer->afterbody.tv_sec );
+    D_PRINTF("get returning connect %d, request %d, header %d, body %d\n",
+             timer->afterconnect.tv_sec, timer->beforeheader.tv_sec,
+             timer->afterheader.tv_sec, timer->afterbody.tv_sec );
 
     return 0;
 
@@ -312,7 +310,7 @@ error:
     if (!BADSOCKET(sock))
         NETCLOSE(sock);
     if (outputfile != -1)
-	close(outputfile);
+        close(outputfile);
     GETTIMEOFDAY(&timer->exittime, &timer->exittimezone);   /* needed? */
     return -1;
-}  
+}

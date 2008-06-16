@@ -99,7 +99,7 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
                                                     : ACE::strnew (pwent->pw_gecos)),
                                  ',');
       if (cp != 0)
-	*cp = '\0';
+        *cp = '\0';
     }
 
   if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)

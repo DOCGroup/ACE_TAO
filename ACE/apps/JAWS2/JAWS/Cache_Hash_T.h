@@ -30,7 +30,7 @@ public:
   int bind (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
   int trybind (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
   int rebind (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id,
-	      EXT_ID &old_ext_id, JAWS_Cache_Object *&old_int_id);
+              EXT_ID &old_ext_id, JAWS_Cache_Object *&old_int_id);
 
   int unbind (const EXT_ID &ext_id);
   int unbind (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id);

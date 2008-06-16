@@ -15,34 +15,34 @@
 int
 main()
 {
-        int filesize;
-        char *str_filesize;
-        char *buffer;
-        int index;
+  int filesize;
+  char *str_filesize;
+  char *buffer;
+  int index;
 
-        printf("Content-type: text/plain\r\n\r\n");
+  printf("Content-type: text/plain\r\n\r\n");
 
-        if ( !(str_filesize = getenv("QUERY_STRING")) )
-                filesize = FILE_SIZE;
-        else {
-                if ( !strncmp(str_filesize, "size=", 5) )
-                        filesize = atoi(&(str_filesize[5]));
-                else
-                        filesize = FILE_SIZE;
-        }
+  if ( !(str_filesize = getenv("QUERY_STRING")) )
+    filesize = FILE_SIZE;
+  else {
+    if ( !strncmp(str_filesize, "size=", 5) )
+      filesize = atoi(&(str_filesize[5]));
+    else
+      filesize = FILE_SIZE;
+  }
 
-        if ( !(buffer = (char *)malloc(filesize)) ) {
-                fwrite(MALLOC_FAILURE, strlen(MALLOC_FAILURE), 1, stdout);
-                return -1;
-        }
+  if ( !(buffer = (char *)malloc(filesize)) ) {
+    fwrite(MALLOC_FAILURE, strlen(MALLOC_FAILURE), 1, stdout);
+    return -1;
+  }
 
-        for (index=0; index< filesize; index++)
-                /* generate random characters from A-Z */
-                buffer[index] = rand() %26 + 63;
+  for (index=0; index< filesize; index++)
+    /* generate random characters from A-Z */
+    buffer[index] = rand() %26 + 63;
 
-        fwrite(buffer, filesize, 1, stdout);
+  fwrite(buffer, filesize, 1, stdout);
 
-	free(buffer);
+  free(buffer);
 
-        return 0;
+  return 0;
 }

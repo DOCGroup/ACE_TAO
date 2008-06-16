@@ -14,7 +14,7 @@
 ACE_RCSID(server, HTTP_Handler, "$Id$")
 
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
-			    HTTP_Handler_Factory &factory)
+                            HTTP_Handler_Factory &factory)
   : factory_ (factory),
     request_data_ (0),
     handle_ (ACE_INVALID_HANDLE),
@@ -32,7 +32,7 @@ HTTP_Handler::~HTTP_Handler (void)
 
 void
 HTTP_Handler::open (ACE_HANDLE handle,
-		    ACE_Message_Block &initial_data)
+                    ACE_Message_Block &initial_data)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) New connection \n"));
 
@@ -171,7 +171,7 @@ void
 HTTP_Handler::transmit_file_error (int result)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      " (%t) %s error in transmitting file\n",
+              " (%t) %s error in transmitting file\n",
               request_.uri ()));
 
   int status_code;
@@ -276,7 +276,7 @@ No_Cache_Synch_HTTP_Handler_Factory::create_http_handler (void)
 
 void
 No_Cache_Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
-														   JAWS_IO &io)
+                                                           JAWS_IO &io)
 {
   delete &io;
   delete &handler;
@@ -288,7 +288,7 @@ No_Cache_Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 void
 Asynch_HTTP_Handler_Factory::open (ACE_HANDLE handle,
-				   ACE_Message_Block &mb)
+                                   ACE_Message_Block &mb)
 {
   JAWS_Asynch_IO *io;
   ACE_NEW (io, JAWS_Asynch_IO);
@@ -299,7 +299,7 @@ Asynch_HTTP_Handler_Factory::open (ACE_HANDLE handle,
 
 void
 Asynch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
-						   JAWS_IO &io)
+                                                   JAWS_IO &io)
 {
   delete &handler;
   delete &io;
