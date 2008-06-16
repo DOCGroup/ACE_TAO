@@ -31,6 +31,8 @@
 #include "ace/Monitor_Control/Solaris_Network_Interface_Monitor.h"
 #elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) 
 #include "ace/Monitor_Control/BSD_Network_Interface_Monitor.h"
+#else
+#include "ace/Monitor_Control/Null_Network_Interface_Monitor.h"
 #endif
 
 #include "ace/Monitor_Control/Monitor_Control_export.h"
@@ -49,13 +51,15 @@ namespace ACE
     class MONITOR_CONTROL_Export Bytes_Sent_Monitor
       : public Monitor_Base
 #if defined (ACE_HAS_WIN32_PDH)
-        , public Windows_Multi_Instance_Monitor
+      , public Windows_Multi_Instance_Monitor
 #elif defined (linux) || defined (AIX)
-        , public Linux_Network_Interface_Monitor
+      , public Linux_Network_Interface_Monitor
 #elif defined (ACE_HAS_KSTAT)
-        , public Solaris_Network_Interface_Monitor
+      , public Solaris_Network_Interface_Monitor
 #elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__)
-        , public BSD_Network_Interface_Monitor
+      , public BSD_Network_Interface_Monitor
+#else
+      , public Null_Network_Interface_Monitor
 #endif
     {
     public:
