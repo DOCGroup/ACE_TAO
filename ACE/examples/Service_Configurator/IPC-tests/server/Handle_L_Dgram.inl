@@ -18,11 +18,11 @@ Handle_L_Dgram::open (const ACE_UNIX_Addr &suad, int async)
     return -1;
   else if (async && this->ACE_LSOCK_Dgram::enable (ACE_SIGIO) == -1)
     return -1;
-  else 
+  else
     return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_L_Dgram::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TCHAR      buf[BUFSIZ];
@@ -49,22 +49,22 @@ Handle_L_Dgram::init (int argc, ACE_TCHAR *argv[])
   const ACE_TCHAR *r = Handle_L_Dgram::DEFAULT_RENDEZVOUS;
 
   for (int c; (c = get_opt ()) != -1; )
-     switch (c)
-       {
-       case 'r': 
-	 r = get_opt.opt_arg ();
-	 break;
-       default:
-	 break;
-       }
-  
+    switch (c)
+      {
+      case 'r':
+        r = get_opt.opt_arg ();
+        break;
+      default:
+        break;
+      }
+
   ACE_OS::strncpy (this->rendezvous, r, MAXPATHLEN);
   ACE_OS::unlink (this->rendezvous);
   sudg.set (this->rendezvous);
   if (this->open (sudg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
   else if (ACE_Reactor::instance ()->register_handler (this,
-						      ACE_Event_Handler::ACCEPT_MASK) == -1)
+                                                       ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("registering service with ACE_Reactor")),
@@ -72,19 +72,19 @@ Handle_L_Dgram::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-ACE_INLINE int 
-Handle_L_Dgram::fini (void) 
+ACE_INLINE int
+Handle_L_Dgram::fini (void)
 {
   return ACE_Reactor::instance ()->remove_handler (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_L_Dgram::get_handle (void) const
-{ 
+{
   return this->ACE_LSOCK_Dgram::get_handle ();
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_L_Dgram::handle_input (int)
 {
   ACE_UNIX_Addr sa;

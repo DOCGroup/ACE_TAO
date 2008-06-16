@@ -45,9 +45,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   for (i = 0; i < iterations; i++)
     if (cli_stream.send ((ACE_Str_Buf *) 0,
-			 &buffer,
-			 1,
-			 MSG_BAND) == -1)
+                         &buffer,
+                         1,
+                         MSG_BAND) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 1);
 
   if (cli_stream.close () == -1)

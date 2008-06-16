@@ -26,10 +26,10 @@ public:
   Logrec_Module (const ACE_TCHAR *name)
   {
     this->open (name,
-	              &task_, // Initialize writer-side task.
-	              0,      // Ignore reader-side task.
-	              0,
-	              ACE_Module<ACE_SYNCH>::M_DELETE_READER);
+                &task_, // Initialize writer-side task.
+                0,      // Ignore reader-side task.
+                0,
+                ACE_Module<ACE_SYNCH>::M_DELETE_READER);
   }
 private:
   TASK task_;

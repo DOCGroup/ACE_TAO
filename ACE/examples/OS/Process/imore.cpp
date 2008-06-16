@@ -53,8 +53,8 @@ static void
 usage (void)
 {
   ACE_ERROR ((LM_ERROR, "Usage: imore [-n|-u] <filename>\n"
-	      "\t-n Use named pipe.\n"
-	      "\t-u Use unnamed pipe.\n"));
+    "\t-n Use named pipe.\n"
+    "\t-u Use unnamed pipe.\n"));
 }
 
 static int
@@ -69,17 +69,17 @@ parse_args (int argc, ACE_TCHAR **argv)
       {
       case 'n':			// We want to use named pipe.
 #if !defined (ACE_WIN32)
-	use_named_pipe = 1;
+    use_named_pipe = 1;
 #else
-	ACE_ERROR_RETURN ((LM_ERROR, "Named pipes not supported on Win32\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "Named pipes not supported on Win32\n"), -1);
 #endif /* !ACE_WIN32 */
-	break;
+    break;
       case 'u':			// Use unnamed pipe.
-	use_named_pipe = 0;
-	break;
+    use_named_pipe = 0;
+    break;
       default:			// What are you talking about?
-	usage ();
-	return -1;
+    usage ();
+    return -1;
       }
     }
 
@@ -179,15 +179,15 @@ print_file (ACE_HANDLE infd)
   while ((len = ACE_OS::read (infd, buffer, BUFSIZ)) > 0)
     {
       if ((ACE_OS::write (ACE_STDOUT, buffer, len) != len))
-	if (errno == EPIPE)
-	  {
-	    // I tried to "produce" EPIPE warning to test
-	    // the program but never seen one.  (odd.)
-	    // ACE_ERROR ((LM_ERROR, "\n\nEPIPE\n"));
-	    break;
-	  }
-	else
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write"), -1);
+    if (errno == EPIPE)
+    {
+    // I tried to "produce" EPIPE warning to test
+    // the program but never seen one.  (odd.)
+    // ACE_ERROR ((LM_ERROR, "\n\nEPIPE\n"));
+    break;
+    }
+    else
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write"), -1);
     }
   return 0;
 }

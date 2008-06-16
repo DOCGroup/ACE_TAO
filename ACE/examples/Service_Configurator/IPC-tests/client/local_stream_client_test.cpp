@@ -41,14 +41,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'f':
-	file_name = get_opt.opt_arg ();
-	break;
+        file_name = get_opt.opt_arg ();
+        break;
       case 'r':
-	rendezvous = get_opt.opt_arg ();
-	break;
+        rendezvous = get_opt.opt_arg ();
+        break;
       default:
-	print_usage_and_die ();
-	break;
+        print_usage_and_die ();
+        break;
       }
 }
 

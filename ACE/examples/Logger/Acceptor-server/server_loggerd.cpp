@@ -122,9 +122,9 @@ Logging_Handler::handle_input (ACE_HANDLE)
   ACE_CDR::Boolean byte_order;
   ACE_CDR::ULong length;
 
-  ssize_t count = ACE::recv_n (this->peer ().get_handle (), 
-			       header->wr_ptr (),
-			       8);
+  ssize_t count = ACE::recv_n (this->peer ().get_handle (),
+                               header->wr_ptr (),
+                               8);
   switch (count)
     {
       // Handle shutdown and error cases.
@@ -157,7 +157,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
 
   // Extract the length
   header_cdr >> length;
-  
+
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);

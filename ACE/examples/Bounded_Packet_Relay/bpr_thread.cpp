@@ -41,10 +41,10 @@ ACE_RCSID (Bounded_Packet_Relay,
            "$Id$")
 
 typedef Bounded_Packet_Relay_Driver<Thread_Timer_Queue>
-	THREAD_BOUNDED_PACKET_RELAY_DRIVER;
+  THREAD_BOUNDED_PACKET_RELAY_DRIVER;
 
 typedef ACE_Command_Callback<Bounded_Packet_Relay,Bounded_Packet_Relay::ACTION>
-	INPUT_CALLBACK;
+  INPUT_CALLBACK;
 
 // A snippet from Andrew Marvell (Oliver Cromwell's poet laureate)
 static const char input_text [] =

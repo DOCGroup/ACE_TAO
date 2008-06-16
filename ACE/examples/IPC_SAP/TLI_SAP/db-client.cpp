@@ -16,7 +16,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Usage: %s employee_id [server-host port-number]\n"),
-		       argv[0]),
+                       argv[0]),
                       -1);
 
   const ACE_TCHAR *emp_num = argv[1];

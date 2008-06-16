@@ -38,7 +38,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int num_leaves = argc / 2 - 2;
 
   ACE_OS::printf( "ATM_Client: Connecting to ...\n" );
-  for ( int i = 0; i < num_leaves; i++ ) {
+  for ( int i = 0; i < num_leaves; i++ )
+  {
     hosts[ i ].set( argv[ i*2 + 4 ],
                     ( argv[ i*2 + 5 ] != 0 )
                       ? ACE_OS::atoi( argv[ i*2 + 5 ]) : ACE_ATM_Addr::DEFAULT_SELECTOR );
@@ -84,7 +85,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                rate,
                ACE_ATM_QoS::OPT_FLAGS_CPID);
 
-  if ( num_leaves == 1 ) {
+  if ( num_leaves == 1 )
+  {
     // Point-to-point connection
     // Not sure why but reuse_addr set to true/1 causes problems for
     // FORE/XTI/ATM - this is now handled in ACE_ATM_Connector::connect()
@@ -97,12 +99,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                      (ACE_Time_Value *) &ACE_Time_Value::zero,
                      local_addr,
                      0,
-                     0 ) == -1) {
+                     0 ) == -1)
+    {
       if (errno != EWOULDBLOCK)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-                          "%p\n",
-                          "ATM_Client: connection failed"),
-                          1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            "%p\n",
+                            "ATM_Client: connection failed"),
+                            1);
 
       ACE_DEBUG ((LM_DEBUG,
                     "ATM_Client: starting timed connection\n"));
@@ -115,14 +118,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (con.complete (atm_stream,
                         &hosts[ 0 ],
                         &tv) == -1)
-		    ACE_ERROR_RETURN ((LM_ERROR,
-                          "%p\n",
-                          "ATM_Client: connection failed"),
-                          1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "ATM_Client: connection failed"),
+                           1);
       else
-		    ACE_DEBUG ((LM_DEBUG,
-                   "ATM_Client: connected to %s\n",
-		               hosts[ 0 ].addr_to_string()));
+        ACE_DEBUG ((LM_DEBUG,
+                    "ATM_Client: connected to %s\n",
+                    hosts[ 0 ].addr_to_string()));
     }
   } else {
     // Point-to-multipoint connection
@@ -196,7 +199,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "your platform isn't configured to support ATM\n"),
+                     "your platform isn't configured to support ATM\n"),
                     1);
 }
 #endif /* ACE_HAS_ATM */

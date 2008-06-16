@@ -23,7 +23,7 @@ public:
         ACE_Log_Record::priority_name (prio);
       cerr << "\tType:        "
            << ACE_TEXT_ALWAYS_CHAR (prio_name)
-	   << endl;
+           << endl;
 
       cerr << "\tLength:      " << log_record.length () << endl;
 

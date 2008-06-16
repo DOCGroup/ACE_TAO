@@ -10,7 +10,7 @@ ACE_RCSID(Event_Server, Supplier_Router, "$Id$")
 
 // Handle outgoing messages in a separate thread.
 
-int 
+int
 Supplier_Router::svc (void)
 {
   assert (this->is_writer ());
@@ -21,8 +21,8 @@ Supplier_Router::svc (void)
        this->getq (mb) >= 0;
        )
     {
-      ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) warning: Supplier_Router is "
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) warning: Supplier_Router is "
                   "forwarding a message via send_peers\n"));
 
       // Broadcast the message to the Suppliers, even though this is
@@ -30,9 +30,9 @@ Supplier_Router::svc (void)
       // to Consumers)!
 
       if (this->context ()->send_peers (mb) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "(%t) send_peers failed in Supplier_Router\n"),
-			   -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%t) send_peers failed in Supplier_Router\n"),
+                      -1);
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -64,7 +64,7 @@ Supplier_Router::open (void *)
   else // if (this->is_writer ()
     {
       // Increment the reference count.
-      this->context ()->duplicate ();      
+      this->context ()->duplicate ();
 
       // Make this an active object to handle the error cases in a
       // separate thread.
@@ -72,14 +72,14 @@ Supplier_Router::open (void *)
     }
 }
 
-// Close down the router. 
+// Close down the router.
 
 int
 Supplier_Router::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%t) closing Supplier_Router %s\n",
-  	      this->is_reader () ? "reader" : "writer"));
+              this->is_reader () ? "reader" : "writer"));
 
   if (this->is_writer ())
     // Inform the thread to shut down.
@@ -93,9 +93,9 @@ Supplier_Router::close (u_long)
 
 // Send an <ACE_Message_Block> to the supplier(s).
 
-int 
-Supplier_Router::put (ACE_Message_Block *mb, 
-		      ACE_Time_Value *)
+int
+Supplier_Router::put (ACE_Message_Block *mb,
+                      ACE_Time_Value *)
 {
   // Perform the necessary control operations before passing
   // the message up the stream.
@@ -138,7 +138,7 @@ Supplier_Router::put (ACE_Message_Block *mb,
 #  define FMTSTR  ACE_TEXT ("%ls\t %d/%ls %ls (%ls)\n")
 #endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
-int 
+int
 Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TCHAR buf[BUFSIZ];
@@ -147,13 +147,13 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
 
   if (this->context ()->acceptor ().get_local_addr (addr) == -1)
     return -1;
-  
+
   ACE_OS::sprintf (buf,
                    FMTSTR,
-		   mod_name,
+                   mod_name,
                    addr.get_port_number (),
                    ACE_TEXT ("tcp"),
-		   ACE_TEXT ("# supplier router"),
+                   ACE_TEXT ("# supplier router"),
                    this->is_reader () ?
                      ACE_TEXT ("reader") : ACE_TEXT ("writer"));
   if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)

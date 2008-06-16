@@ -65,19 +65,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   double real_time;
   double actual_rate;
 
-  for (;;) {
+  for (;;)
+  {
     // Create a new ACE_ATM_Stream endpoint (note automatic restart
     // if errno == EINTR).
     ACE_OS::printf( "ATM_Server: expecting clients\n" );
 
     if (peer_acceptor.accept (new_stream,
                               &addr,
-                              &timeout) == -1) {
-	    ACE_ERROR ((LM_ERROR,
+                              &timeout) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "accept"));
-	    continue;
-	  }
+      continue;
+    }
 
     ACE_OS::printf( "ATM_Server: got a connection\n" );
 
@@ -102,13 +104,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     int recvd = 0;
 
-    for ( ;; ) {
+    for ( ;; )
+    {
       total = 0;
       timer.start_incr();
 
       for (int r_bytes;
-				  (r_bytes = new_stream.recv (buf, sizeof buf, 0)) > 0; ) {
-//            ACE_OS::printf( "ATM_Server: received %dB\n", r_bytes );
+           (r_bytes = new_stream.recv (buf, sizeof buf, 0)) > 0; )
+        {
+//        ACE_OS::printf( "ATM_Server: received %dB\n", r_bytes );
 
 //        if (ACE_OS::write (ACE_STDOUT,
 //                           buf,
@@ -120,8 +124,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           if ( total > 10000000 )
             break;
-
-      }
+        }
 
       timer.stop_incr();
       timer.elapsed_time_incr( tv );
@@ -136,9 +139,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                  actual_rate < 0 ? 0 : actual_rate ));
     }
 
-	  // Close new endpoint (listening endpoint stays open).
+    // Close new endpoint (listening endpoint stays open).
     if (new_stream.close () == -1)
-			ACE_ERROR ((LM_ERROR,
+      ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "close"));
   }

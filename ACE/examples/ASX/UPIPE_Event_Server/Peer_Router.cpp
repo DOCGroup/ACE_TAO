@@ -15,7 +15,7 @@ ACE_RCSID(UPIPE_Event_Server, Peer_Router, "$Id$")
 #if defined (ACE_HAS_THREADS)
 
 // Define some short-hand macros to deal with long templates
-// names... 
+// names...
 
 #define PH  PEER_HANDLER
 #define PA  PEER_ACCEPTOR
@@ -30,35 +30,35 @@ Acceptor_Factory<PH, PK>::init (int argc, ACE_TCHAR *argv[])
   ACE_UPIPE_Addr addr;
 
   for (int c; (c = get_opt ()) != -1; )
-     switch (c)
-       {
-       case 'f': 
-	 addr.set (get_opt.opt_arg ());
-	 break;
-       case 'd':
-	 break;
-       default:
-	 break;
-       }
-  
+    switch (c)
+      {
+      case 'f':
+        addr.set (get_opt.opt_arg ());
+        break;
+      case 'd':
+        break;
+      default:
+        break;
+      }
+
   if (this->open (addr, ACE_Reactor::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
   return 0;
 }
 
-template <class PH, class PK> 
+template <class PH, class PK>
 Acceptor_Factory<PH, PK>::Acceptor_Factory (Peer_Router<PH, PK> *pr)
-  : pr_ (pr) 
+  : pr_ (pr)
 {
 }
 
 template <class PH, class PK> Peer_Router<PH, PK> *
 Acceptor_Factory<PH, PK>::router (void)
-{ 
-  return this->pr_; 
+{
+  return this->pr_;
 }
 
-template <class ROUTER, class KEY> 
+template <class ROUTER, class KEY>
 Peer_Handler<ROUTER, KEY>::Peer_Handler (ACE_Thread_Manager *tm)
   : ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_MT_SYNCH> (tm)
 {
@@ -75,33 +75,32 @@ Peer_Handler<ROUTER, KEY>::svc (void)
     {
       db = new ACE_Message_Block (BUFSIZ);
       hb = new ACE_Message_Block (sizeof (KEY), ACE_Message_Block::MB_PROTO, db);
-  
-      if ((n = this->peer ().recv (db->rd_ptr (), db->size ())) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("recv failed")), -1);    
-      else if (n == 0) // Client has closed down the connection.
-	{
 
-	  if (this->router_task_->unbind_peer (this->get_handle ()) == -1)
-	    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+      if ((n = this->peer ().recv (db->rd_ptr (), db->size ())) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("recv failed")), -1);
+      else if (n == 0) // Client has closed down the connection.
+        {
+          if (this->router_task_->unbind_peer (this->get_handle ()) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                                ACE_TEXT ("unbind failed")), -1);
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) shutting down \n")));
-	  return -1; // We do not need to be deregistered by reactor
-	  // as we were not registered at all
-	}
+          return -1; // We do not need to be deregistered by reactor
+          // as we were not registered at all
+        }
       else // Transform incoming buffer into a Message and pass downstream.
-	{
-	  db->wr_ptr (n);
-	  *(ACE_HANDLE *) hb->rd_ptr () = this->get_handle (); // structure assignment.
-	  hb->wr_ptr (sizeof (long));
-	  if (this->router_task_->reply (hb) == -1)
-	    {
+        {
+          db->wr_ptr (n);
+          *(ACE_HANDLE *) hb->rd_ptr () = this->get_handle (); // structure assignment.
+          hb->wr_ptr (sizeof (long));
+          if (this->router_task_->reply (hb) == -1)
+            {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Peer_Handler.svc : router_task->reply failed\n")));
-	      return -1;
-	    }
-       
+              return -1;
+            }
+
           // return this->router_task_->reply (hb) == -1 ? -1 : 0;
-	}
+        }
     }
   ACE_NOTREACHED(return 0);
 }
@@ -159,11 +158,11 @@ Peer_Handler<ROUTER, KEY>::handle_input (ACE_HANDLE h)
   int           n;
 
   if ((n = this->peer ().recv (db->rd_ptr (), db->size ())) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("recv failed")), -1);    
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("recv failed")), -1);
   else if (n == 0) // Client has closed down the connection.
     {
       if (this->router_task_->unbind_peer (this->get_handle ()) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("unbind failed")), -1);
       ACE_DEBUG ((LM_DEBUG, "(%t) shutting down %d\n", h));
       return -1; // Instruct the ACE_Reactor to deregister us by returning -1.
@@ -175,7 +174,7 @@ Peer_Handler<ROUTER, KEY>::handle_input (ACE_HANDLE h)
       hb->wr_ptr (sizeof (long));
       return this->router_task_->reply (hb) == -1 ? -1 : 0;
     }
-#endif 
+#endif
 }
 
 template <class PH, class PK>
@@ -196,7 +195,7 @@ Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
        map_iter.advance ())
     {
       if (options.debug ())
-	ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) sending to peer via sd %d\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) sending to peer via sd %d\n"),
                     ss->ext_id_));
 
       iterations++;
@@ -250,7 +249,7 @@ Peer_Router<PH, PK>::bind_peer (PK key, Peer_Handler<Peer_Router<PH, PK>, PK> *p
   return this->peer_map_.bind (key, peer_handler);
 }
 
-template <class PH, class PK> int 
+template <class PH, class PK> int
 Peer_Router<PH, PK>::init (int argc, ACE_TCHAR *argv[])
 {
   this->acceptor_ = new Acceptor_Factory <PH, PK> (this);
@@ -262,13 +261,13 @@ Peer_Router<PH, PK>::init (int argc, ACE_TCHAR *argv[])
     {
       ACE_UPIPE_Addr addr;
       ACE_UPIPE_Acceptor &pa = this->acceptor_->acceptor ();
-      
+
       if (pa.get_local_addr (addr) != -1)
-	ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) initializing %s, file = %s, fd = %d, this = %@\n"), 
-		   this->name (), addr.get_path_name (), pa.get_handle (), this));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%t) initializing %s, file = %s, fd = %d, this = %@\n"),
+                    this->name (), addr.get_path_name (), pa.get_handle (), this));
       else
-	ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("get_local_addr")), -1);
     }
   return 0;
