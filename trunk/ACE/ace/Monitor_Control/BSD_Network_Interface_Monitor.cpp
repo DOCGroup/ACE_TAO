@@ -43,8 +43,8 @@ namespace ACE
           return;     
         }
 
-      char *p = NULL;
-      for (ifa = ifap; ifa != NULL; ifa = ifa->ifa_next) 
+      char *p = 0;
+      for (ifa = ifap; ifa != 0; ifa = ifa->ifa_next) 
         {
           if (p && strcmp (p, ifa->ifa_name) == 0)
             continue;
