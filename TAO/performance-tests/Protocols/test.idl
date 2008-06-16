@@ -3,10 +3,10 @@
 interface test
 {
   void start_test (in long session_id,
-		   in string protocol,
-		   in unsigned long invocation_rate,
-		   in unsigned long message_size,
-		   in unsigned long iterations);
+       in string protocol,
+       in unsigned long invocation_rate,
+       in unsigned long message_size,
+       in unsigned long iterations);
 
   void end_test ();
 
@@ -19,10 +19,10 @@ interface test
   typedef sequence<octet> octets;
 
   oneway void oneway_method (in long session_id,
-			     in unsigned long iteration,
-			     in octets payload);
+           in unsigned long iteration,
+           in octets payload);
   
   void twoway_method (inout long session_id,
-		      inout unsigned long iteration,
-		      inout octets payload);  
+          inout unsigned long iteration,
+          inout octets payload);  
 };
