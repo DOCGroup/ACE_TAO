@@ -21,7 +21,7 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev)
   ACE_UNUSED_ARG (ev);
 
 //   ACE_DEBUG ((LM_DEBUG,
-// 	      ACE_TEXT ("NAVDISPLAY: Received Refresh Event\n")));
+//               ACE_TEXT ("NAVDISPLAY: Received Refresh Event\n")));
 
   // Refresh position
   HUDisplay::position_var loc =
