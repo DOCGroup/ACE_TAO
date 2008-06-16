@@ -1,13 +1,13 @@
 /* $Id$ */
 /**************************************************************************
- *									  *
- * 		 Copyright (C) 1995 Silicon Graphics, Inc.		  *
- *									  *
- *  These coded instructions, statements, and computer programs were	  *
- *  developed by SGI for public use.  If any changes are made to this code*
- *  please try to get the changes back to the author.  Feel free to make  *
- *  modifications and changes to the code and release it.		  *
- *									  *
+ *
+ *  Copyright (C) 1995 Silicon Graphics, Inc.
+ *
+ *  These coded instructions, statements, and computer programs were
+ *  developed by SGI for public use.  If any changes are made to this code
+ *  please try to get the changes back to the author.  Feel free to make
+ *  modifications and changes to the code and release it.
+ *
  **************************************************************************/
 
 /* FUZZ: disable check_for_math_include */
@@ -35,7 +35,7 @@ timevaldouble(struct timeval *tin)
 void
 doubletimeval(const double tin, struct timeval *tout)
 {
-    tout->tv_sec = (long)floor(tin);	
+    tout->tv_sec = (long)floor(tin);
     tout->tv_usec = (long)((tin - tout->tv_sec) * USECINSEC );
 }
 
@@ -114,7 +114,7 @@ maxtime(struct timeval *CurrMaxTime, struct timeval *CheckMaxTime)
 void
 avgtime(struct timeval *TotalTime, int NumTimes, struct timeval *AvgTime)
 {
-    double	meantime;
+    double meantime;
 
     meantime = mean(timevaldouble(TotalTime), NumTimes);
 
@@ -125,7 +125,7 @@ avgtime(struct timeval *TotalTime, int NumTimes, struct timeval *AvgTime)
 void
 sqtime(struct timeval *Time, struct timeval *SqTime)
 {
-    double 	sec;
+    double sec;
 
     sec = timevaldouble(Time);
     sec *= sec;	 /* square */
@@ -137,7 +137,7 @@ sqtime(struct timeval *Time, struct timeval *SqTime)
 void
 variancetime(struct timeval *SumTime, double SumSquareTime, int NumTimes, struct timeval *VarianceTime)
 {
-    double	result;
+    double result;
 
     result = variance(timevaldouble(SumTime), SumSquareTime, NumTimes);
 
@@ -147,9 +147,9 @@ variancetime(struct timeval *SumTime, double SumSquareTime, int NumTimes, struct
 
 void
 stddevtime(struct timeval *SumTime, double SumSquareTime,
-	   int NumTimes, struct timeval *StdDevTime)
+    int NumTimes, struct timeval *StdDevTime)
 {
-    double	result;
+    double result;
 
     result = stddev(timevaldouble(SumTime), SumSquareTime, NumTimes);
 
@@ -160,12 +160,12 @@ double
 thruputpersec(const double n, struct timeval *t)
 {
     double tv;
-    
+
     tv = timevaldouble(t);
     if (tv != 0)
-	return n / timevaldouble(t);
+        return n / timevaldouble(t);
     else
-	return 0;
+        return 0;
 }
 
 

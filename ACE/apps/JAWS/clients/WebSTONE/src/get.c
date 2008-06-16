@@ -43,9 +43,9 @@
 #include "bench.h"
 
 #define ACCEPT_COMMAND "Accept: */* HTTP/1.0\r\n\r\n"
-#define ACCEPT_COMMAND_LEN 	((int)strlen(ACCEPT_COMMAND))
-#define MAXCOMMANDLEN	256
-#define HEADERBUFSIZ	(8*1024)
+#define ACCEPT_COMMAND_LEN ((int)strlen(ACCEPT_COMMAND))
+#define MAXCOMMANDLEN 256
+#define HEADERBUFSIZ (8*1024)
 
 #define UPPER(c) (((c) >= 'a' && (c) <= 'z') ? (c) + 'A' - 'a' : (c))
 
@@ -65,21 +65,21 @@ int mystrincmp(const char *str1, const char *str2, int len) {
 int
 get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
 {
-    SOCKET	sock = BADSOCKET_VALUE;
-    int		writelen;
-    int		bytesread;
-    int		totalbytesread;
-    int		headerlen;
-    int		bodylength;
-    int		contentlength = 0;
-    int 	outputfile = -1;
-    int		status;
-    char	getcommand[MAXCOMMANDLEN];
-    char	headerbuffer[HEADERBUFSIZ+1];
-    char	*offset;
-    char	outputfilename[MAXPATHLEN];
-    char	version[100];
-    int		count;
+    SOCKET sock = BADSOCKET_VALUE;
+    int writelen;
+    int bytesread;
+    int totalbytesread;
+    int headerlen;
+    int bodylength;
+    int contentlength = 0;
+    int outputfile = -1;
+    int status;
+    char getcommand[MAXCOMMANDLEN];
+    char headerbuffer[HEADERBUFSIZ+1];
+    char *offset;
+    char outputfilename[MAXPATHLEN];
+    char version[100];
+    int count;
 
 /*#define ABORTIVE_CLOSE 1*/
 #ifdef ABORTIVE_CLOSE
@@ -227,7 +227,7 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
             returnerr("Error saving file: %s\n", strerror(errno));
             goto error;
         }
-        lseek(outputfile,1,SEEK_END);	/* this is odd... JEF */
+        lseek(outputfile,1,SEEK_END); /* this is odd... JEF */
 
         /* if we have part of the file already, save that part */
         if(totalbytesread > headerlen)
@@ -298,7 +298,7 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
              timer->totalbytes, timer->bodybytes, timer->valid );
 
     D_PRINTF("get returning start %d, end %d\n",
-             timer->entertime.tv_sec, timer->exittime.tv_sec	);
+             timer->entertime.tv_sec, timer->exittime.tv_sec );
 
     D_PRINTF("get returning connect %d, request %d, header %d, body %d\n",
              timer->afterconnect.tv_sec, timer->beforeheader.tv_sec,

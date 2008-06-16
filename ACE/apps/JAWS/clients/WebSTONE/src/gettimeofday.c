@@ -16,8 +16,8 @@
 
 #include <windows.h>
 #include <errno.h>
-#include <winsock.h>		/* For definition of "timeval" structure */
-#include <sys/timeb.h>		/* For prototype of "_ftime()" */
+#include <winsock.h> /* For definition of "timeval" structure */
+#include <sys/timeb.h> /* For prototype of "_ftime()" */
 
 
 /*
