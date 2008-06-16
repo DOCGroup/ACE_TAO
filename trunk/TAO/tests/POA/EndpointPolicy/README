@@ -26,12 +26,25 @@
 
 $ ./run_test.pl
 
-  or start the client and the server manually:
+  Beyond the basic test run using run_test.pl, there are two variants,
+  a localhost based test and a "defaulted host" test. The localhost test
+  uses "localhost" as the hostname rather than allowing the server to 
+  get the systems hostname. The Localhost test is not when autorunning
+  on the vxworks platform.
 
-$ server -p $port -ORBEndpoint iiop://localhost:$port
-$ client -k file://$iorfile [-b]
+  To run the localhost test:
 
-  $iorfile is either "good.ior" or "bad.ior" and -b makes the client expect
-  to fail using the supplied IOR.
+$ ./run_test_lh.pl
+
+  In the defaulted host test, the hostname argument supplied to the 
+  endpoint policy is "". As discussed in Bug #3256, the behavior of
+  using defaulted hosts is changed so that unless more than one
+  protocol are involved, a defaulted hostname is not allowed in the
+  Endpoint Policy value list.
+
+  The defaulted host test only runs the server program, not the client.
+  It is run this way:
+
+$ ./run_test_dh.pl
 
 */

@@ -45,6 +45,24 @@ TAO_EndpointPolicy_Factory::create_policy (
       TAO_Acceptor ** const acceptors_end = registry.end ();
       CORBA::ULong const num_eps = endpoint_list->length ();
 
+      // need to count the protocol types offered by the acceptors
+      // partially defaulted endpoint values are only acceptable if 
+      // there are more than one protocol available to the ORB. 
+      
+      CORBA::ULong last_known_prot = 0xFFFFFFFF; // tag = 0 is IIOP
+      int prot_count = 0;
+      for (TAO_Acceptor** acceptor = acceptors_begin;
+	   acceptor != acceptors_end;
+	   ++acceptor)
+	{
+	  if ((*acceptor)->tag () != last_known_prot)
+	    {
+	      last_known_prot = (*acceptor)->tag ();
+	      ++prot_count;
+            }
+	}
+
+
       // The endpoint list in the value is validated to ensure that
       // at least one endpoint in the list matches an endpoint the
       // ORB is listening on.
@@ -66,7 +84,7 @@ TAO_EndpointPolicy_Factory::create_policy (
                ++acceptor)
             {
               if ((*acceptor)->tag () == prot_tag)
-                found_one = evi->validate_acceptor (*acceptor);
+                found_one = evi->validate_acceptor (*acceptor, prot_count > 1);
             }
         }
 

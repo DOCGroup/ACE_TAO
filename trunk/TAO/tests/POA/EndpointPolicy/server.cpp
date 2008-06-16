@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Hello.h"
+#include "tao/PolicyC.h"
 #include "tao/EndpointPolicy/EndpointPolicy.h"
 #include "tao/EndpointPolicy/IIOPEndpointValue_i.h"
 #include "tao/PI_Server/PI_Server.h"
@@ -19,6 +20,18 @@ const char *root_ior_file = "root.ior";
 
 CORBA::Short endpoint_port = 12345;
 int verbose = 0;
+
+enum HostNameForm
+  {
+    from_hostname,
+    use_localhost,
+    use_defaulted,
+    multi_protocol
+  };
+
+const char * form_arg;
+
+HostNameForm host_form = from_hostname;
 
 int
 parse_args (int argc, char *argv[])
@@ -40,6 +53,23 @@ parse_args (int argc, char *argv[])
       {
         verbose = 1;
       }
+    else if (ACE_OS::strcasecmp(argv[c],"-h") == 0)
+      {
+	++c;
+	if (c == argc)
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "host form option requires an argument\n"),-1);
+	form_arg = argv[c];
+	if (ACE_OS::strcasecmp(form_arg,"local") == 0)
+	  host_form = use_localhost;
+	else if (ACE_OS::strcasecmp(form_arg,"default") == 0)
+	  host_form = use_defaulted;
+	else if (ACE_OS::strcasecmp(form_arg,"multi") == 0)
+	  host_form = multi_protocol;
+	else 
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "invalid host form arg, '%s'\n", form_arg), -1);
+      }
     else if (ACE_OS::strstr(argv[c],"-ORB") == argv[c])
       {
         c++;
@@ -60,13 +90,44 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
+
+int
+make_ior (CORBA::ORB_ptr orb,
+	  PortableServer::POA_ptr poa,
+	  Hello * servant,
+	  const char *ior_file)
+{
+  CORBA::String_var poa_name = poa->the_name();
+  ACE_DEBUG ((LM_DEBUG, "Creating IOR from %s\n", poa_name.in()));
+  
+  PortableServer::ObjectId_var oid = poa->activate_object (servant);
+  CORBA::Object_var o = poa->id_to_reference (oid.in ());
+
+
+  if (host_form == from_hostname || host_form == use_localhost)
+    {
+
+      CORBA::String_var ior =
+	orb->object_to_string (o.in ());
+
+
+
+      FILE *output_file= ACE_OS::fopen (ior_file, "w");
+      if (output_file == 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "Cannot open output file for writing IOR: %s",
+			   ior_file),
+			  1);
+      ACE_OS::fprintf (output_file, "%s", ior.in ());
+      ACE_OS::fclose (output_file);
+    }
+  return 0;
+}
+
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  char hostname[256];
-
-  ACE_OS::hostname(hostname,256);
-
   CORBA::ORB_var orb;
   CORBA::Object_var obj;
   PortableServer::POA_var root_poa;
@@ -74,32 +135,65 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (parse_args (argc, argv) != 0)
     return 1;
-  char *extra[4];
-  extra[0] = CORBA::string_dup("-ORBEndpoint");
-  extra[1] = CORBA::string_alloc(100);
-  ACE_OS::sprintf (extra[1],
-                   "iiop://%s:%d",
-                   hostname, endpoint_port);
-  extra[2] = CORBA::string_dup("-ORBEndpoint");
-  extra[3] = CORBA::string_alloc(100);
-  ACE_OS::sprintf (extra[3],
-                   "iiop://%s:%d/hostname_in_ior=unreachable",
-                   hostname, endpoint_port+1);
 
-  char **largv = new char *[argc+4];
+  const char* e1_format= "iiop://%s:%d";
+  const char* e2_format= "iiop://%s:%d/hostname_in_ior=unreachable";
+  char hostname[256];
+  int num_extra = 4;
+
+  switch (host_form) 
+    {
+    case from_hostname:
+      ACE_OS::hostname(hostname,sizeof(hostname));
+      break;
+
+    case use_localhost:
+      ACE_OS::strcpy (hostname,"localhost");
+      break;
+
+    case use_defaulted:
+      hostname[0] = '\0';
+      break;
+
+    case multi_protocol:
+      hostname[0] = '\0';
+      e2_format="shmiop://";
+      num_extra = 6;
+      break;
+    }
+
+  size_t hostname_len = ACE_OS::strlen(hostname);
+  size_t e1_len = ACE_OS::strlen(e1_format) + 5; // 5 for the port#
+  size_t e2_len = ACE_OS::strlen(e2_format) + 5;
+  char ** extra;
+  ACE_NEW_RETURN(extra, char*[num_extra], -1);
+
+  extra[0] = CORBA::string_dup("-ORBEndpoint");
+  extra[1] = CORBA::string_alloc(e1_len + hostname_len);
+  ACE_OS::sprintf (extra[1],e1_format, hostname, endpoint_port);
+  extra[2] = CORBA::string_dup("-ORBEndpoint");
+  extra[3] = CORBA::string_alloc(e2_len + hostname_len);
+  ACE_OS::sprintf (extra[3],e2_format, hostname, endpoint_port+1);
+  if (host_form == multi_protocol)
+    {
+      extra[4] = CORBA::string_dup("-ORBSvcConf");
+      extra[5] = CORBA::string_dup("multi_prot.conf");
+    }
+
+  char **largv = new char *[argc+num_extra];
   int i = 0;
   for (i = 0; i < argc; i++)
     largv[i] = argv[i];
 
   ACE_DEBUG ((LM_DEBUG,"server adding args: "));
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < num_extra; i++)
     {
       ACE_DEBUG ((LM_DEBUG,"%s ", extra[i]));
       largv[argc+i] = extra[i];
     }
   ACE_DEBUG ((LM_DEBUG,"\n"));
 
-  argc += 4;
+  argc += num_extra;
 
   try
     {
@@ -126,8 +220,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  for (i = 0; i < 4; i++)
-    delete[] extra[i];
+  for (i = 0; i < num_extra; i++)
+    CORBA::string_free(extra[i]);
+  delete [] extra;
 
   delete [] largv;
 
@@ -154,12 +249,33 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                         policy_value);
       good_pm = poa_manager_factory->create_POAManager ("goodPOAManager",
                                                         policies);
+
+      if (host_form == use_defaulted)
+	{
+	  ACE_ERROR_RETURN ((LM_DEBUG,
+			     "ERROR: Expected to catch policy error with "
+			     "defaulted hostname, but didn't.\n"),1);
+	}
+
+    }
+  catch (CORBA::PolicyError &)
+    {
+      if (host_form == use_defaulted)
+	{
+	  ACE_ERROR_RETURN ((LM_DEBUG, 
+			     "Caught expected PolicyError "
+			     "exception with defaulted hostname\n"), 0);
+	}
+      ACE_ERROR_RETURN ((LM_DEBUG,
+			 "ERROR: Unexpectedly caught PolicyError "
+			 "exception host_form = %s\n", form_arg), 1);
     }
   catch (CORBA::Exception &ex)
     {
       ex._tao_print_exception ("Failed to create reachable POA manager");
       return 1;
     }
+
 
   list[0] = new IIOPEndpointValue_i("unreachable", endpoint_port+1);
   try
@@ -179,9 +295,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      PortableServer::ObjectId_var oid;
-      CORBA::Object_var o = CORBA::Object::_nil();
-      FILE *output_file= 0;
+
+      Hello *hello_impl;
+      ACE_NEW_RETURN (hello_impl,
+                      Hello (orb.in ()),
+                      1);
+      PortableServer::ServantBase_var owner_transfer(hello_impl);
+
       // Create poas assiciated with the each the good poa manager and the
       // bad poa manager.
       policies.length(0);
@@ -190,73 +310,37 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               good_pm.in (),
                               policies);
 
-      PortableServer::POA_var bad_poa =
-        root_poa->create_POA ("badPOA",
-                              bad_pm.in (),
-                              policies);
+      int result = 0;
+      result = make_ior (orb.in(), root_poa.in(), hello_impl, root_ior_file);
+      if (result != 0)
+	return result;
 
-      Hello *hello_impl;
-      ACE_NEW_RETURN (hello_impl,
-                      Hello (orb.in ()),
-                      1);
-      PortableServer::ServantBase_var owner_transfer(hello_impl);
-
-      ACE_DEBUG ((LM_DEBUG, "Creating IOR from root poa\n"));
-
-      oid = root_poa->activate_object (hello_impl);
-      o = root_poa->id_to_reference (oid.in ());
-
-      CORBA::String_var root_ior =
-        orb->object_to_string (o.in ());
-
-      output_file= ACE_OS::fopen (root_ior_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           root_ior_file),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", root_ior.in ());
-      ACE_OS::fclose (output_file);
-
-      ACE_DEBUG ((LM_DEBUG, "Creating IOR from bad poa\n"));
-
-      oid = bad_poa->activate_object (hello_impl);
-      o = bad_poa->id_to_reference (oid.in());
-
-      CORBA::String_var bad_ior =
-        orb->object_to_string (o.in ());
-
-      ACE_DEBUG ((LM_DEBUG, "Creating IOR from good poa\n"));
-
-      oid = good_poa->activate_object (hello_impl);
-      o = good_poa->id_to_reference (oid.in ());
-
-      CORBA::String_var good_ior =
-        orb->object_to_string (o.in ());
-
-      output_file= ACE_OS::fopen (good_ior_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           good_ior_file),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", good_ior.in ());
-      ACE_OS::fclose (output_file);
-
-      output_file= ACE_OS::fopen (bad_ior_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           bad_ior_file),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", bad_ior.in ());
-      ACE_OS::fclose (output_file);
+      result = make_ior (orb.in(), good_poa.in(), hello_impl, good_ior_file);
+      if (result != 0)
+	return result;
 
       good_pm->activate ();
-      bad_pm->activate ();
 
-      orb->run ();
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+      PortableServer::POA_var bad_poa;
+
+      if (host_form != multi_protocol)
+	{
+	  bad_poa =
+	    root_poa->create_POA ("badPOA",
+				  bad_pm.in (),
+				  policies);
+	  result = make_ior (orb.in(), bad_poa.in(), hello_impl, bad_ior_file);
+	  if (result != 0)
+	    return result;
+
+	  bad_pm->activate ();
+	}
+
+      if (host_form == from_hostname || host_form == use_localhost)
+	{
+	  orb->run ();
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+	}
     }
   catch (CORBA::Exception &ex)
     {
@@ -268,3 +352,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
+

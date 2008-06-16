@@ -51,7 +51,8 @@ public:
   /// This method is used by the framework to validate that an
   /// acceptor is available to produce an endpoint required by at
   /// least one of the endpoint policies values.
-  virtual CORBA::Boolean validate_acceptor (TAO_Acceptor *) const = 0;
+  virtual CORBA::Boolean validate_acceptor (TAO_Acceptor *,
+					    bool is_multi_prot) const = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
