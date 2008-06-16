@@ -1,3 +1,14 @@
+Mon Jun 16 19:06:38 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-borland-common.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-mvs.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-msvc.h:
+
+          Fixes for MCPP preprocessing on Windows. 
+        
 Mon Jun 16 19:06:44 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Acceptor.cpp:

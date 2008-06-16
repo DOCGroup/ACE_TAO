@@ -22,7 +22,9 @@
 #define ACE_MVS
 
 // Preprocesor requires an extra argument
-#define ACE_CC_PREPROCESSOR_ARGS "-+ -E"
+#ifndef ACE_USING_MCPP_PREPROCESSOR
+# define ACE_CC_PREPROCESSOR_ARGS "-+ -E"
+#endif
 
 // See the README file in this directory
 // for a description of the following ACE_ macros
