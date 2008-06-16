@@ -385,7 +385,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // run the server.
   result = server.run ();
   ACE_DEBUG ((LM_DEBUG,
-			  "%s:%d\n", __FILE__, __LINE__));
+              "%s:%d\n", __FILE__, __LINE__));
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error while running the servants\n"),

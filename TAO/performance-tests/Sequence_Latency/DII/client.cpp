@@ -49,7 +49,7 @@ parse_args (int argc, char *argv[])
           return -1;
         break;
 
-	  case 's':
+      case 's':
         sz = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
@@ -74,8 +74,8 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-t <datatype> "
-						   "-s <size> "
-						   "-k <ior> "
+                           "-s <size> "
+                           "-k <ior> "
                            "-i <niterations> "
                            "-x (disable shutdown) "
                            "\n",
@@ -421,7 +421,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-	  Test::octet_load oc;
+      Test::octet_load oc;
 
       for (int j = 0; j < 100; ++j)
         {
@@ -436,9 +436,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           request->invoke ();
         }
 
-	  // Test various sequence types
+      // Test various sequence types
 
-	  if (ACE_OS::strcmp (data_type, "octet") == 0 )
+      if (ACE_OS::strcmp (data_type, "octet") == 0 )
         {
           test_octet_seq (object);
         }
@@ -463,14 +463,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           test_longlong_seq (object);
         }
 
-
       if (do_shutdown)
         {
           CORBA::Request_var request =
             object->_request ("shutdown");
 
           request->invoke ();
-
         }
     }
   catch (const CORBA::Exception& ex)

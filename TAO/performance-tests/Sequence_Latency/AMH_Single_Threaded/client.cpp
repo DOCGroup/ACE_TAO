@@ -42,7 +42,7 @@ parse_args (int argc, char *argv[])
           return -1;
         break;
 
-	  case 's':
+      case 's':
         sz = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
@@ -66,8 +66,8 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-						   "-t <datatype> "
-						   "-s <size> "
+                           "-t <datatype> "
+                           "-s <size> "
                            "-k <ior> "
                            "-i <niterations> "
                            "-x (disable shutdown) "
@@ -379,7 +379,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-	  Test::octet_load oc;
+      Test::octet_load oc;
 
       for (int j = 0; j < 100; ++j)
         {
