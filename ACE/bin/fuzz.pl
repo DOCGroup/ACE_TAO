@@ -394,7 +394,6 @@ sub check_for_tab ()
                     # of ACE/TAO/CIAO
                     if (($file =~ /(ACE)*.*examples/i)          ||
                         ($file =~ /(ACE)*.*apps/i)              ||
-                        ($file =~ /(TAO)*.*tests/i)             ||
                         ($file =~ /(TAO)*.*tools/i)             ||
                         ($file =~ /(TAO)*.*performance-tests/i) ||
                         ($file =~ /(TAO)*.*examples/i)) {
