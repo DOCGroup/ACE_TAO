@@ -194,21 +194,26 @@ void getapp::result(Snmp *, int rc)
     Vb vb;
     if (rc < 0)
     {
-	const char *ptr = snmp_.error_string();
-	cout << "ASNMP:ERROR: get command failed reason: " << ptr << endl;
-    } else {
-	// check to see if there are any errors
-	if (pdu_.get_error_status()) {
-	    cout << "ERROR: agent replied as follows\n";
-	    cout << pdu_.agent_error_reason() << endl;
-	}
-	else {
-	    VbIter iter(pdu_);
-	    while (iter.next(vb)) {
-		cout << "\tOid = " << vb.to_string_oid() << "\n";
-		cout << "\tValue = " << vb.to_string_value() << "\n";
-	    }
-	}
+      const char *ptr = snmp_.error_string();
+      cout << "ASNMP:ERROR: get command failed reason: " << ptr << endl;
+    }
+    else
+    {
+      // check to see if there are any errors
+      if (pdu_.get_error_status())
+      {
+        cout << "ERROR: agent replied as follows\n";
+        cout << pdu_.agent_error_reason() << endl;
+      }
+      else
+      {
+        VbIter iter(pdu_);
+        while (iter.next(vb))
+        {
+          cout << "\tOid = " << vb.to_string_oid() << "\n";
+          cout << "\tValue = " << vb.to_string_value() << "\n";
+        }
+      }
     }
     cout << "\nASNMP:INFO: command completed normally.\n"<< endl;
     ACE_Reactor::instance()->end_reactor_event_loop();

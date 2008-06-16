@@ -260,8 +260,8 @@ int set::run()
       else {
         VbIter iter(pdu_);
         while (iter.next(vb)) {
- 	  cout << "\tOid = " << vb.to_string_oid() << "\n";
- 	  cout << "\tValue = " << vb.to_string_value() << "\n";
+          cout << "\tOid = " << vb.to_string_oid() << "\n";
+          cout << "\tValue = " << vb.to_string_value() << "\n";
        }
      }
    }

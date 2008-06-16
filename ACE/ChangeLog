@@ -1,3 +1,12 @@
+Mon Jun 16 18:00:26 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ASNMP/examples/get/get.cpp:
+        * ASNMP/examples/get/get_async.cpp:
+        * ASNMP/examples/next/next.cpp:
+        * ASNMP/examples/set/set.cpp:
+
+          Untabify.
+
 Mon Jun 16 17:53:00 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/IPC_SAP/SPIPE_SAP/consumer_msg.cpp:
