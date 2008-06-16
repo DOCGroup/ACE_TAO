@@ -4,7 +4,6 @@ module ORT
 {
   interface sum_server
   {
-    long add_variables (in long a, 
-			in long b);
+    long add_variables (in long a, in long b);
   };
 };
