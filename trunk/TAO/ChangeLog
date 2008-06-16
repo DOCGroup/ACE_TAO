@@ -1,3 +1,12 @@
+Mon Jun 16 18:13:21 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/mfc/Resource.h:
+        * orbsvcs/examples/ORT/Gateway.idl:
+        * orbsvcs/examples/ORT/sum_server.idl:
+        * tests/POA/EndpointPolicy/server.cpp:
+
+          Untabify.
+
 Mon Jun 16 17:51:31 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tao/EndpointPolicy/EndpointPolicy_Factory.cpp:

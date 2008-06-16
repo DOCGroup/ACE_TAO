@@ -55,20 +55,20 @@ parse_args (int argc, char *argv[])
       }
     else if (ACE_OS::strcasecmp(argv[c],"-h") == 0)
       {
-	++c;
-	if (c == argc)
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "host form option requires an argument\n"),-1);
-	form_arg = argv[c];
-	if (ACE_OS::strcasecmp(form_arg,"local") == 0)
-	  host_form = use_localhost;
-	else if (ACE_OS::strcasecmp(form_arg,"default") == 0)
-	  host_form = use_defaulted;
-	else if (ACE_OS::strcasecmp(form_arg,"multi") == 0)
-	  host_form = multi_protocol;
-	else 
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "invalid host form arg, '%s'\n", form_arg), -1);
+        ++c;
+        if (c == argc)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "host form option requires an argument\n"),-1);
+        form_arg = argv[c];
+        if (ACE_OS::strcasecmp(form_arg,"local") == 0)
+          host_form = use_localhost;
+        else if (ACE_OS::strcasecmp(form_arg,"default") == 0)
+          host_form = use_defaulted;
+        else if (ACE_OS::strcasecmp(form_arg,"multi") == 0)
+          host_form = multi_protocol;
+        else
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "invalid host form arg, '%s'\n", form_arg), -1);
       }
     else if (ACE_OS::strstr(argv[c],"-ORB") == argv[c])
       {
@@ -93,13 +93,13 @@ parse_args (int argc, char *argv[])
 
 int
 make_ior (CORBA::ORB_ptr orb,
-	  PortableServer::POA_ptr poa,
-	  Hello * servant,
-	  const char *ior_file)
+          PortableServer::POA_ptr poa,
+          Hello * servant,
+          const char *ior_file)
 {
   CORBA::String_var poa_name = poa->the_name();
   ACE_DEBUG ((LM_DEBUG, "Creating IOR from %s\n", poa_name.in()));
-  
+
   PortableServer::ObjectId_var oid = poa->activate_object (servant);
   CORBA::Object_var o = poa->id_to_reference (oid.in ());
 
@@ -108,16 +108,16 @@ make_ior (CORBA::ORB_ptr orb,
     {
 
       CORBA::String_var ior =
-	orb->object_to_string (o.in ());
+        orb->object_to_string (o.in ());
 
 
 
       FILE *output_file= ACE_OS::fopen (ior_file, "w");
       if (output_file == 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Cannot open output file for writing IOR: %s",
-			   ior_file),
-			  1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_file),
+                          1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
     }
@@ -141,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   char hostname[256];
   int num_extra = 4;
 
-  switch (host_form) 
+  switch (host_form)
     {
     case from_hostname:
       ACE_OS::hostname(hostname,sizeof(hostname));
@@ -251,24 +251,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                                         policies);
 
       if (host_form == use_defaulted)
-	{
-	  ACE_ERROR_RETURN ((LM_DEBUG,
-			     "ERROR: Expected to catch policy error with "
-			     "defaulted hostname, but didn't.\n"),1);
-	}
-
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "ERROR: Expected to catch policy error with "
+                             "defaulted hostname, but didn't.\n"),1);
+        }
     }
   catch (CORBA::PolicyError &)
     {
       if (host_form == use_defaulted)
-	{
-	  ACE_ERROR_RETURN ((LM_DEBUG, 
-			     "Caught expected PolicyError "
-			     "exception with defaulted hostname\n"), 0);
-	}
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Caught expected PolicyError "
+                             "exception with defaulted hostname\n"), 0);
+        }
       ACE_ERROR_RETURN ((LM_DEBUG,
-			 "ERROR: Unexpectedly caught PolicyError "
-			 "exception host_form = %s\n", form_arg), 1);
+                         "ERROR: Unexpectedly caught PolicyError "
+                         "exception host_form = %s\n", form_arg), 1);
     }
   catch (CORBA::Exception &ex)
     {
@@ -313,34 +312,34 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int result = 0;
       result = make_ior (orb.in(), root_poa.in(), hello_impl, root_ior_file);
       if (result != 0)
-	return result;
+        return result;
 
       result = make_ior (orb.in(), good_poa.in(), hello_impl, good_ior_file);
       if (result != 0)
-	return result;
+        return result;
 
       good_pm->activate ();
 
       PortableServer::POA_var bad_poa;
 
       if (host_form != multi_protocol)
-	{
-	  bad_poa =
-	    root_poa->create_POA ("badPOA",
-				  bad_pm.in (),
-				  policies);
-	  result = make_ior (orb.in(), bad_poa.in(), hello_impl, bad_ior_file);
-	  if (result != 0)
-	    return result;
+        {
+          bad_poa =
+          root_poa->create_POA ("badPOA",
+                                bad_pm.in (),
+                                policies);
+          result = make_ior (orb.in(), bad_poa.in(), hello_impl, bad_ior_file);
+          if (result != 0)
+            return result;
 
-	  bad_pm->activate ();
-	}
+          bad_pm->activate ();
+        }
 
       if (host_form == from_hostname || host_form == use_localhost)
-	{
-	  orb->run ();
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
-	}
+        {
+          orb->run ();
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+        }
     }
   catch (CORBA::Exception &ex)
     {
