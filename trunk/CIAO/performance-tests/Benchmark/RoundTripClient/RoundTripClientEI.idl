@@ -24,8 +24,8 @@ module Benchmark
    * define the component executor interface explicitly here.
    */
   local interface RoundTripClient_Exec : CCM_RoundTripClient,
-					 Components::SessionComponent,
-					 CCM_Controller //Monolithic
+           Components::SessionComponent,
+           CCM_Controller //Monolithic
   {
   };
 
