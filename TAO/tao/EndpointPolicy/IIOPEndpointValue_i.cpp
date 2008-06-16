@@ -47,12 +47,16 @@ CORBA::Boolean
 IIOPEndpointValue_i::is_equivalent_i (CORBA::UShort port,
                                       const char *host) const
 {
-  return
-    this->port_ == port && ACE_OS::strcasecmp(host, this->host_.in()) == 0;
+  bool is_eq = this->port_ == port;
+  if (is_eq)
+    is_eq = (this->host_.in()[0] == '\0' ||
+	     ACE_OS::strcasecmp(host, this->host_.in()) == 0);
+  return is_eq;
 }
 
 CORBA::Boolean
-IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor) const
+IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor,
+				       bool is_multi_prot) const
 {
   TAO_IIOP_Acceptor *iacc = dynamic_cast<TAO_IIOP_Acceptor *>(acceptor);
   if (iacc == 0)
@@ -79,7 +83,12 @@ IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor) const
     }
   return false;
 #else
-  return true;
+  // @@@ mesnier_p@ociweb.com @@@
+  // Rather than blindly returning true, we need to reject defaulted
+  // endpoint hosts except when the ORB has more than one protocol
+  // acceptor defined;
+  
+  return is_multi_prot || this->host_.in()[0] != '\0';
 #endif /* 0 */
 }
 
