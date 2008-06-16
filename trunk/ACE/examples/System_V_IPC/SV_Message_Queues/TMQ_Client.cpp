@@ -24,9 +24,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                          "did you get this?");
 
   ACE_Typed_SV_Message<Message_Data> send_msg (msg_data,
-					       SRV_ID,
-					       msg_data.length ()),
-					       recv_msg (pid);
+                                               SRV_ID,
+                                               msg_data.length ()),
+                                               recv_msg (pid);
 
   if (msgque.send (send_msg) < 0)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),

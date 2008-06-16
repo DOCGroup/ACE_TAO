@@ -4,8 +4,8 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
-  ACE_LOG_MSG->open (argv[0], 
-		     ACE_Log_Msg::LOGGER, 
+  ACE_LOG_MSG->open (argv[0],
+                     ACE_Log_Msg::LOGGER,
                      ACE_DEFAULT_LOGGER_KEY);
 
   ACE_TRACE ("main");

@@ -15,7 +15,7 @@ HA_CommandHandler::svc (void)
     {
       ACE_Message_Block *mb;
       if (this->getq (mb) == -1)
-	break;
+        break;
       if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
         {
           mb->release ();

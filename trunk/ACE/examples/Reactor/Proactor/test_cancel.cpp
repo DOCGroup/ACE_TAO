@@ -80,7 +80,7 @@ Receiver::~Receiver (void)
 
 void
 Receiver::open (ACE_HANDLE handle,
-		ACE_Message_Block &)
+                ACE_Message_Block &)
 {
   // New connection, initiate stuff
 
@@ -192,16 +192,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'p':
         port = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
+        break;
       case 's':
-	read_size = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
+        read_size = ACE_OS::atoi (get_opt.opt_arg ());
+        break;
       default:
-	ACE_ERROR ((LM_ERROR, "%p.\n",
-		    "usage :\n"
-		    "-p <port>\n"
-		    "-s <read_size>\n"));
-	return -1;
+        ACE_ERROR ((LM_ERROR, "%p.\n",
+                    "usage :\n"
+                    "-p <port>\n"
+                    "-s <read_size>\n"));
+        return -1;
       }
 
   return 0;

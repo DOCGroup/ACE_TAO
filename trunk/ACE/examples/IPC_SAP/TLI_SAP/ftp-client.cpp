@@ -15,10 +15,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       ACE_TEXT ("Usage: %s filename ")
-		       ACE_TEXT ("[server-host port-number]\n"),
-		       argv[0]),
-		      1);
+                       ACE_TEXT ("Usage: %s filename ")
+                       ACE_TEXT ("[server-host port-number]\n"),
+                       argv[0]),
+                      1);
 
   const ACE_TCHAR *filename  = argv[1];
   const ACE_TCHAR *host_name = argc < 3 ? ACE_DEFAULT_SERVER_HOST : argv[2];

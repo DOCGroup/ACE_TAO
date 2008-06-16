@@ -29,7 +29,7 @@ print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("usage: %s [-r rendezvous] [-f file]\n"),
-	      program_name));
+              program_name));
   ACE_OS::exit (1);
 }
 
@@ -86,21 +86,21 @@ do_client_processing (ACE_LSOCK_Stream &sc)
       if (ACE_OS::write (fd_write[1],
                          buf,
                          n) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("write")),
                           -1);
       if ((n = ACE_OS::read (fd_read[0],
                              buf,
                              sizeof buf)) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("read")),
                           -1);
       if (ACE_OS::write (ACE_STDOUT,
                          buf,
                          n) == -1)
-	return -1;
+        return -1;
     }
 
   if (ACE_OS::close (fd_read[0]) == -1

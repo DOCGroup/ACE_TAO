@@ -36,7 +36,7 @@ void
 My_Task::sleep_hook (void *)
 {
   ACE_DEBUG ((LM_ERROR, "(%u) blocking, My_Task::sleep_hook () called\n",
-	      ACE_Thread::self())) ;
+              ACE_Thread::self())) ;
 }
 
 // Test out the behavior of the ACE_Token class.
@@ -50,14 +50,14 @@ My_Task::svc (void)
       ACE_Time_Value timeout (ACE_OS::time (0), 1000);
 
       if (this->token_.acquire (&My_Task::sleep_hook, 0, &timeout) == 1)
-	{
-	  this->token_.acquire ();
-	  this->token_.renew ();
-	  this->token_.release ();
-	  this->token_.release ();
-	}
+        {
+          this->token_.acquire ();
+          this->token_.renew ();
+          this->token_.release ();
+          this->token_.release ();
+        }
       else
-	ACE_Thread::yield ();
+        ACE_Thread::yield ();
     }
   return 0;
 }

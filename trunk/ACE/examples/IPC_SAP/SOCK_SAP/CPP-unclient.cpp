@@ -66,6 +66,6 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "this platform does not support UNIX-domain sockets\n"), -1);
+                     "this platform does not support UNIX-domain sockets\n"), -1);
 }
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

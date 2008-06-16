@@ -60,12 +60,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           1);
 
       if (bytes_written != 1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("send")),
                           1);
       if (writeto == 'q')
-	break;
+        break;
     }
 
   if (write_dev.close () == -1)

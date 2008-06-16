@@ -136,9 +136,9 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("--------------------\n")
-		  ACE_TEXT ("starting %C for %d iterations(s):\n"),
-		  test_vector[i]->name (),
-		  iterations));
+                  ACE_TEXT ("starting %C for %d iterations(s):\n"),
+                  test_vector[i]->name (),
+                  iterations));
 
       test_vector[i]->run_test (iterations,
                                 input_fp,
@@ -149,9 +149,9 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("wallclock time = %f, user time = %f, system time = %f\n"),
-		  et.real_time,
-		  et.user_time,
-		  et.system_time));
+                  et.real_time,
+                  et.user_time,
+                  et.system_time));
 
       delete test_vector[i];
     }

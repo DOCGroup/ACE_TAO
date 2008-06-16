@@ -22,19 +22,19 @@ public:
 
 protected:
   virtual int handle_close (ACE_HANDLE,
-			    ACE_Reactor_Mask);
+                            ACE_Reactor_Mask);
   // Signal the Active Object to stop when called.
 
   virtual int handle_input (ACE_HANDLE);
   // Handle input from the client.
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg);
+                              const void *arg);
   // Handle timeouts.
 
   virtual int handle_signal (int signum,
-			     siginfo_t *,
-			     ucontext_t *);
+                             siginfo_t *,
+                             ucontext_t *);
   // Handle timeouts.
 
   sig_atomic_t finished_;

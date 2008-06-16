@@ -71,9 +71,9 @@ Handle_L_SPIPE::init (int argc, ACE_TCHAR *argv[])
   else if (ACE_Reactor::instance ()->register_handler
            (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       ACE_TEXT ("%p\n"),
-		       ACE_TEXT ("registering service with ACE_Reactor")),
-		      -1);
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("registering service with ACE_Reactor")),
+                      -1);
   return 0;
 }
 
@@ -108,8 +108,8 @@ Handle_L_SPIPE::handle_input (int)
       new_spipe.get_remote_addr (sa);
 
       ACE_DEBUG ((LM_INFO,
-		  ACE_TEXT ("accepted request from %s (gid = %d, uid = %d)\n"),
-		  sa.get_path_name (), sa.group_id (), sa.user_id ()));
+                  ACE_TEXT ("accepted request from %s (gid = %d, uid = %d)\n"),
+                  sa.get_path_name (), sa.group_id (), sa.user_id ()));
     }
 
   while (new_spipe.recv ((ACE_Str_Buf *) 0, &msg, &flags) >= 0)
