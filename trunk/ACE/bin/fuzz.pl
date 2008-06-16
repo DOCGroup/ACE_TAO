@@ -392,8 +392,7 @@ sub check_for_tab ()
                     # directories for now to enable detection
                     # of new tabs introduced in the core
                     # of ACE/TAO/CIAO
-                    if (($file =~ /(ACE)*.*apps/i)              ||
-                        ($file =~ /(TAO)*.*tools/i)) {
+                    if (($file =~ /(ACE)*.*apps/i)) {
                       next ITERATION;
                     }
 
