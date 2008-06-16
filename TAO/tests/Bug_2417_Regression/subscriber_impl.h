@@ -7,20 +7,19 @@
 
 class Subscriber_impl : public POA_Subscriber
 {
-	public:
-		Subscriber_impl(CORBA::ORB_ptr orb);
-		~Subscriber_impl();
+public:
+  Subscriber_impl(CORBA::ORB_ptr orb);
+  ~Subscriber_impl();
 
-    virtual void onData (
-        ::CORBA::Double value
-      );
-    virtual ::CORBA::Boolean isAlive (
-      );
+  virtual void onData (::CORBA::Double value);
 
-		void shutdown();
-	private:
-		CORBA::ORB_var orb_;
-		unsigned int count;
+  virtual ::CORBA::Boolean isAlive ();
+
+  void shutdown();
+
+private:
+  CORBA::ORB_var orb_;
+  unsigned int count;
 };
 
 #endif

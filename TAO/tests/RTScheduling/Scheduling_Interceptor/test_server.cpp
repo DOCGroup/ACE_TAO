@@ -13,7 +13,7 @@ class test_impl : public POA_test
 public:
 
   test_impl (CORBA::ORB_ptr orb,
-	     RTScheduling::Current_ptr current)
+             RTScheduling::Current_ptr current)
     : orb_ (orb),
     current_ (RTScheduling::Current::_duplicate (current))
   {
@@ -22,15 +22,15 @@ public:
   virtual void one_way (const char * message)
   {
     ACE_DEBUG ((LM_DEBUG,
-		"One-Way Message = %s\n",
-		message));
+                "One-Way Message = %s\n",
+                message));
   }
 
   virtual char * two_way (const char * message)
   {
     ACE_DEBUG ((LM_DEBUG,
-		"Two-Way Message = %s\n",
-		message));
+                "Two-Way Message = %s\n",
+                message));
 
     RTScheduling::DistributableThread_var DT =
       this->current_->lookup (*(this->current_->id ()));
@@ -54,7 +54,7 @@ private:
 
 int
 parse_args (int argc,
-	    ACE_TCHAR* argv [])
+            ACE_TCHAR* argv [])
 {
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "f:");
@@ -64,13 +64,13 @@ parse_args (int argc,
     {
       switch (c)
         {
-	case 'f':
-	  filename = opts.opt_arg ();
-	  break;
+        case 'f':
+          filename = opts.opt_arg ();
+          break;
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));
           return -1;
-	}
+    }
     }
   return 0;
 }
@@ -81,20 +81,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb =
-	CORBA::ORB_init (argc,
-			 argv,
-			 "");
+        CORBA::ORB_init (argc,
+                         argv,
+                         "");
 
       parse_args (argc, argv);
 
       CORBA::Object_var object =
-	orb->resolve_initial_references ("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-	PortableServer::POA::_narrow (object.in ());
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-  root_poa->the_POAManager ();
+        root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
@@ -104,32 +104,32 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       test_impl* test_i;
       ACE_NEW_RETURN (test_i,
-		      test_impl (orb.in (),
-				 current.in ()),
-		      -1);
+                      test_impl (orb.in (),
+                      current.in ()),
+                      -1);
 
       PortableServer::ObjectId_var id;
 
       id = root_poa->activate_object (test_i);
 
       CORBA::Object_var server =
-	root_poa->id_to_reference (id.in ());
+        root_poa->id_to_reference (id.in ());
 
       CORBA::String_var ior;
       if (!CORBA::is_nil (server.in ()))
-	{
-	  ior = orb->object_to_string (server.in ());
-	}
+        {
+          ior = orb->object_to_string (server.in ());
+        }
       else
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "Failed to activate test object\n"),
-			    -1);
-	}
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Failed to activate test object\n"),
+                             -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
-		  "IOR = %s\n",
-		  ior.in ()));
+                  "IOR = %s\n",
+                  ior.in ()));
 
       CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager");
 
@@ -140,16 +140,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Print ior to the file.
       if (filename != 0)
-	{
-	  FILE* output_file = ACE_OS::fopen (filename, "w");
-	  if (output_file == 0)
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "Cannot open output file for writing IOR: %s",
-			       filename),
-			      -1);
-	  ACE_OS::fprintf (output_file, "%s", ior.in ());
-	  ACE_OS::fclose (output_file);
-	}
+        {
+          FILE* output_file = ACE_OS::fopen (filename, "w");
+          if (output_file == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s",
+                               filename),
+                              -1);
+          ACE_OS::fprintf (output_file, "%s", ior.in ());
+          ACE_OS::fclose (output_file);
+        }
 
       orb->run ();
     }
@@ -161,19 +161,3 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

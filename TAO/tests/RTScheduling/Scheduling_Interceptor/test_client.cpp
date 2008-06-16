@@ -58,8 +58,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_Scheduler* scheduler;
       ACE_NEW_RETURN (scheduler,
-		      TAO_Scheduler (orb.in ()),
-		      -1);
+                      TAO_Scheduler (orb.in ()),
+                      -1);
       safe_scheduler = scheduler;
 
       manager->rtscheduler (scheduler);
@@ -104,7 +104,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (const CORBA::THREAD_CANCELLED& )
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "Distributable Thread Cancelled - Expected Exception\n"));
+        "Distributable Thread Cancelled - Expected Exception\n"));
       server->shutdown ();
     }
   catch (const CORBA::Exception& ex)

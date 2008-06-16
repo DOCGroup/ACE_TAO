@@ -115,12 +115,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (temp)
         {
           ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
-	}
+        }
       else
         {
-	  ACE_DEBUG ((LM_ERROR, "Test failed\n"));
-	  result = 1;
-	}
+          ACE_DEBUG ((LM_ERROR, "Test failed\n"));
+          result = 1;
+        }
 
       //hello->shutdown ();
 

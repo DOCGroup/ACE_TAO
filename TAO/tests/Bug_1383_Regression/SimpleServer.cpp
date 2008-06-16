@@ -7,18 +7,21 @@
 void advertise(CORBA::ORB_ptr orb, CORBA::Object_ptr obj)
 {
   // advertise our object in the IORTable so that it can be
-	// accessed by a client using the "cobaloc" syntax
+  // accessed by a client using the "cobaloc" syntax
   CORBA::String_var str = orb->object_to_string(obj);
   CORBA::Object_var tmp = orb->resolve_initial_references("IORTable");
   IORTable::Table_var iorTable = IORTable::Table::_narrow(tmp.in ());
-  if (CORBA::is_nil(iorTable.in ())) {
-    ACE_ERROR ((LM_ERROR, "could not get the IORTable, will not register\n"));
-	} else {
-		iorTable->rebind("Simple", str.in());
-    ACE_DEBUG ((LM_DEBUG, "regisered\n"));
-	}
-	// we could also advertise the object reference to a naming and/or
-	// trading service
+  if (CORBA::is_nil(iorTable.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, "could not get the IORTable, will not register\n"));
+    }
+  else
+    {
+      iorTable->rebind("Simple", str.in());
+      ACE_DEBUG ((LM_DEBUG, "regisered\n"));
+    }
+  // we could also advertise the object reference to a naming and/or
+  // trading service
 }
 
 int main(int argc, char * argv[])

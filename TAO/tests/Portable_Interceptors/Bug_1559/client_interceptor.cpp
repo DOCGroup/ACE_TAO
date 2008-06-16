@@ -89,7 +89,7 @@ Echo_Client_Request_Interceptor::send_request (
     {
       if (exception_count != 1)
         {
-	  ACE_ERROR ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
                       "ERROR: Expected exception_count is <1>\n"));
         }
       ACE_ASSERT (exception_count == 1);

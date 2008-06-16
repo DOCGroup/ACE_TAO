@@ -71,25 +71,25 @@ main (int argc, char *argv[])
 
       CORBA::String_var ior = orb->object_to_string (monitor.in ());
 
-	    FILE *output_file = ACE_OS::fopen (monitor_output_file, "w");
+      FILE *output_file = ACE_OS::fopen (monitor_output_file, "w");
 
-	    if (output_file == 0)
+      if (output_file == 0)
         {
-	        ACE_ERROR_RETURN ((LM_ERROR,
-			                        "Can't open output file for writing IOR: %s",
-			                        monitor_output_file),
-			                      1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Can't open output file for writing IOR: %s",
+                             monitor_output_file),
+                            1);
         }
 
-	    ACE_OS::fprintf (output_file,
-                        "%s",
-                        ior.in ());
-	    ACE_OS::fclose (output_file);
+      ACE_OS::fprintf (output_file,
+                       "%s",
+                       ior.in ());
+      ACE_OS::fclose (output_file);
 
-	    /// Call orb->run() in a separate thread so the MC interface can
-	    /// get remote calls.
-	    ORB_Runner orb_runner (orb.in ());
-	    orb_runner.activate ();
+      /// Call orb->run() in a separate thread so the MC interface can
+      /// get remote calls.
+      ORB_Runner orb_runner (orb.in ());
+      orb_runner.activate ();
 
       obj = orb->string_to_object (ior_input_file);
 

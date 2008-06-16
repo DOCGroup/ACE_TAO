@@ -5,8 +5,8 @@
 #include "Client_Task.h"
 
 Client_Task::Client_Task (const char *ior,
-			  CORBA::ORB_ptr corb,
-			  ACE_Thread_Manager *thr_mgr)
+                          CORBA::ORB_ptr corb,
+                          ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
     , input_ (ior)
     , corb_ (CORBA::ORB::_duplicate (corb))

@@ -17,8 +17,8 @@ Hello::get_helloworld (void)
 {
   HelloWorld *hello_world;
   ACE_NEW_THROW_EX (hello_world,
-          HelloWorld,
-		    CORBA::NO_MEMORY ());
+                    HelloWorld,
+                    CORBA::NO_MEMORY ());
 
   PortableServer::ObjectId_var id =
     this->poa_->activate_object (hello_world);

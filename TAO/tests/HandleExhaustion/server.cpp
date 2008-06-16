@@ -17,13 +17,16 @@ class Test_i: public virtual POA_Test
 {
 public:
   Test_i (CORBA::ORB_ptr orb)
-   : orb_ (CORBA::ORB::_duplicate (orb)) {
+   : orb_ (CORBA::ORB::_duplicate (orb))
+  {
   }
 
-  void simple (void) {
+  void simple (void)
+  {
   }
 
-  void shutdown (void) {
+  void shutdown (void)
+  {
     this->orb_->shutdown ();
   }
 
@@ -37,31 +40,37 @@ public:
   Descriptors (void)
    : slast_ (ACE_INVALID_HANDLE),
      last_ (ACE_INVALID_HANDLE),
-     ok_ (false) {
+     ok_ (false)
+  {
   }
 
-  int allow_accepts (void) {
+  int allow_accepts (void)
+  {
     ACE_OS::close(this->slast_);
     ACE_OS::close(this->last_);
     this->ok_ = true;
     return 0;
   }
 
-  void leak (const char* file) {
-    for (size_t i = 0; i < 0xffff; i++) {
-      ACE_HANDLE h = ACE_OS::open (file, O_RDONLY);
-      if (h == ACE_INVALID_HANDLE) {
-        break;
-      }
+  void leak (const char* file)
+  {
+    for (size_t i = 0; i < 0xffff; i++)
+      {
+        ACE_HANDLE h = ACE_OS::open (file, O_RDONLY);
+        if (h == ACE_INVALID_HANDLE)
+          {
+            break;
+          }
 
-      // Save the last two file handles so that they can be closed later
-      // on.  We need two for this test to work with SHMIOP.
-      this->slast_ = this->last_;
-      this->last_ = h;
-    }
+        // Save the last two file handles so that they can be closed later
+        // on.  We need two for this test to work with SHMIOP.
+        this->slast_ = this->last_;
+        this->last_ = h;
+      }
   }
 
-  bool ok (void) const {
+  bool ok (void) const
+  {
     return this->ok_ && this->last_ != ACE_INVALID_HANDLE;
   }
 
@@ -107,7 +116,7 @@ main (int argc, char *argv[])
     // the size allowed (in the fd set) by the reactor.  If it does, this
     // test will fail (in a different way than expected) which is a
     // completely different bug than this test is designed to address
-    // (see Bug #3326).  
+    // (see Bug #3326).
     //
     // We must also make sure that this happens before creating the first
     // ORB.  Otherwise, the reactor will be created with a maximum size of
@@ -116,10 +125,8 @@ main (int argc, char *argv[])
     rlimit rlim;
     if (ACE_OS::getrlimit(RLIMIT_NOFILE, &rlim) == 0)
       {
-        if (rlim.rlim_cur <
-            static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE) &&
-	    rlim.rlim_max >
-	    static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE))
+        if (rlim.rlim_cur < static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE) &&
+            rlim.rlim_max > static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE))
           {
             rlim.rlim_cur = ACE_DEFAULT_SELECT_REACTOR_SIZE;
             rlim.rlim_max = ACE_DEFAULT_SELECT_REACTOR_SIZE;

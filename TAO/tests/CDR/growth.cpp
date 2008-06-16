@@ -78,9 +78,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       switch (opt)
         {
-	case 'd':
-	  TAO_debug_level++;
-	  break;
+        case 'd':
+          TAO_debug_level++;
+          break;
         case 'n':
           n = ACE_OS::atoi (get_opt.opt_arg ());
           break;
@@ -100,7 +100,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
-		      "-d debug"
+                      "-d debug"
                       "-l low "
                       "-h high "
                       "-s step "
@@ -121,7 +121,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_High_Res_Timer writing;
       ACE_High_Res_Timer reading;
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG, "\nx= %d\n", x));
+        ACE_DEBUG ((LM_DEBUG, "\nx= %d\n", x));
 
       for (int i = 0; i < n; ++i)
         {

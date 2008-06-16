@@ -26,55 +26,59 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
-		{
+    {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-			// --------------------------------------------------------
-			// Create an object (but don't narrow() it) so we can test
-			// that we can stringify it later
-			// --------------------------------------------------------
+      // --------------------------------------------------------
+      // Create an object (but don't narrow() it) so we can test
+      // that we can stringify it later
+      // --------------------------------------------------------
 
       CORBA::Object_var object = orb->string_to_object (IOR);
       CORBA::String_var object_ref_str = orb->object_to_string (object.in());
       if (0 == object_ref_str.in())
-      {
-				ACE_DEBUG ((LM_ERROR,
-					    "\n"
-					    "ORB_object_to_string test failed with TAO test IOR.\n"));
-				return 1;
-			} else {
-				ACE_DEBUG ((LM_INFO,
-					    "\n"
-					    "ORB_object_to_string test passed with TAO test IOR."));
-			}
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "\n"
+                      "ORB_object_to_string test failed with TAO test IOR.\n"));
+          return 1;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_INFO,
+                      "\n"
+                      "ORB_object_to_string test passed with TAO test IOR."));
+        }
 
       object = orb->string_to_object (ORBIT2_IOR);
       object_ref_str = orb->object_to_string (object.in());
-      if (0 == object_ref_str.in()) {
-				ACE_DEBUG ((LM_ERROR,
-					    "\n"
-					    "ORB_object_to_string test failed with ORBit2 test IOR.\n"));
-				return 1;
-			} else {
-				ACE_DEBUG ((LM_INFO,
-                   "\n"
-                   "ORB_object_to_string test passed with ORBit2 test IOR."));
-			}
-
-		}
+      if (0 == object_ref_str.in())
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "\n"
+                      "ORB_object_to_string test failed with ORBit2 test IOR.\n"));
+          return 1;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_INFO,
+                      "\n"
+                      "ORB_object_to_string test passed with ORBit2 test IOR."));
+        }
+    }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       ACE_DEBUG ((LM_ERROR,
-            "\n"
-            "ORB_object_to_string test failed.\n"));
+                  "\n"
+                  "ORB_object_to_string test failed.\n"));
       return 1;
     }
 
-	ACE_DEBUG ((LM_INFO,
-		    "\n"
-		    "ORB_object_to_string test completed successfully.\n"));
+  ACE_DEBUG ((LM_INFO,
+              "\n"
+              "ORB_object_to_string test completed successfully.\n"));
 
-	return 0;
+  return 0;
 }

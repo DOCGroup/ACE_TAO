@@ -8,22 +8,19 @@
 
 class Publisher_impl : public POA_Publisher
 {
-	public:
-		Publisher_impl(CORBA::ORB_ptr orb);
-		~Publisher_impl();
+public:
+  Publisher_impl(CORBA::ORB_ptr orb);
+  ~Publisher_impl();
 
-    virtual void subscribe (
-      ::Subscriber_ptr subscriber
-    );
+  virtual void subscribe (::Subscriber_ptr subscriber);
 
-  virtual void shutdown (
-    );
+  virtual void shutdown ();
 
-	private:
-		CORBA::ORB_var orb_;
-		class Worker;
-		friend class Worker;
-		Worker * worker;
+private:
+  CORBA::ORB_var orb_;
+  class Worker;
+  friend class Worker;
+  Worker * worker;
 };
 
 #endif

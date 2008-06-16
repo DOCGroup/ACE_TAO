@@ -19,62 +19,58 @@ Hello::get_string (void)
 #endif
 
 ::Test::StringList *
-Hello::get_stringList (
-	//
-	)
+Hello::get_stringList ()
 {
-	Test::StringList * seq;
-    ACE_NEW_RETURN (seq,
-		Test::StringList(10),
-                    0);
-    seq->length(10);
-	for (CORBA::ULong i = 0; i<seq->length(); i++)
-	{
-		char tmp[255] = {0};
-    ACE_OS::sprintf(tmp, "Hello World %d", i);
-		(*seq)[i] = CORBA::string_dup(tmp);
-	}
+  Test::StringList * seq;
+  ACE_NEW_RETURN (seq,
+                  Test::StringList(10),
+                  0);
+  seq->length(10);
+  for (CORBA::ULong i = 0; i<seq->length(); i++)
+    {
+      char tmp[255] = {0};
+      ACE_OS::sprintf(tmp, "Hello World %d", i);
+      (*seq)[i] = CORBA::string_dup(tmp);
+    }
 
-	return seq;
+  return seq;
 }
 
 void
-Hello::get_stringList2 (
-        ::CORBA::Boolean initialize,
-        ::Test::StringList_out osl
-      )
+Hello::get_stringList2 (::CORBA::Boolean initialize,
+                        ::Test::StringList_out osl)
 {
-    // CORBA::String_var the_string = osl->length();
-    // ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Entering get_stringList2(%.4d)\n", osl));
+  // CORBA::String_var the_string = osl->length();
+  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Entering get_stringList2(%.4d)\n", osl));
 
-    if (initialize) {
-        ACE_NEW (osl,
-		    Test::StringList(10));
+  if (initialize)
+    {
+      ACE_NEW (osl,
+               Test::StringList(10));
 
-        osl->length(5);
-        for (CORBA::ULong i = 0; i<osl->length(); i++)
-	    {
-		    char tmp[255] = {0};
-        ACE_OS::sprintf(tmp, "Hello Again %d", i);
-		    (*osl)[i] = CORBA::string_dup(tmp);
-	    }
+      osl->length(5);
+      for (CORBA::ULong i = 0; i<osl->length(); i++)
+        {
+          char tmp[255] = {0};
+          ACE_OS::sprintf(tmp, "Hello Again %d", i);
+          (*osl)[i] = CORBA::string_dup(tmp);
+        }
     }
 }
 
 void
-Hello::mod_stringList (
-        ::Test::StringList & iosl
-      )
+Hello::mod_stringList (::Test::StringList & iosl)
 {
-    // osl->length(10);
-    for (CORBA::ULong i = 0; i<iosl.length(); i++)
-	{
-		char tmp[255] = {0};
-    ACE_OS::sprintf(tmp, "Hello Client %d", i);
-        if (i%2) {
-		    iosl[i] = CORBA::string_dup(tmp);
+  // osl->length(10);
+  for (CORBA::ULong i = 0; i<iosl.length(); i++)
+    {
+      char tmp[255] = {0};
+      ACE_OS::sprintf(tmp, "Hello Client %d", i);
+      if (i%2)
+        {
+          iosl[i] = CORBA::string_dup(tmp);
         }
-	}
+    }
 }
 
 void

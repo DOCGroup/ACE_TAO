@@ -45,10 +45,10 @@ void
 vt_graph_impl::print (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "Printing graph data... \n"));
+              "Printing graph data... \n"));
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Number of nodes: [%d] \n", nodes_ ().length ()));
+              "Number of nodes: [%d] \n", nodes_ ().length ()));
 
   for (size_t i = 0; i < nodes_ ().length (); i++)
     nodes_ ()[i]->print ();
