@@ -47,12 +47,12 @@ ACE_RCSID(Proactor, test_proactor, "test_proactor.cpp,v 1.27 2000/03/07 17:15:56
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
-#	include "ace/WIN32_Proactor.h"
+#include "ace/WIN32_Proactor.h"
 
 #elif defined (ACE_HAS_AIO_CALLS)
 
-#	include "ace/POSIX_Proactor.h"
-#	include "ace/SUN_Proactor.h"
+#include "ace/POSIX_Proactor.h"
+#include "ace/SUN_Proactor.h"
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
@@ -125,18 +125,22 @@ MyTask::create_proactor (void)
 
       switch (proactor_type)
         {
-        case 1:	proactor = new ACE_POSIX_AIOCB_Proactor (max_aio_operations);
+        case 1:
+          proactor = new ACE_POSIX_AIOCB_Proactor (max_aio_operations);
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=AIOCB\n"));
           break;
-        case 2:	proactor = new ACE_POSIX_SIG_Proactor;
+        case 2:
+          proactor = new ACE_POSIX_SIG_Proactor;
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG\n"));
           break;
 #  if defined (sun)
-        case 3:	proactor = new ACE_SUN_Proactor (max_aio_operations);
+        case 3:
+          proactor = new ACE_SUN_Proactor (max_aio_operations);
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SUN\n"));
           break;
 #  endif /* sun */
-        default:proactor = new ACE_POSIX_SIG_Proactor;
+        default:
+          proactor = new ACE_POSIX_SIG_Proactor;
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG\n"));
           break;
         }
@@ -687,27 +691,27 @@ parse_args (int argc, ACE_TCHAR *argv[])
   while ((c = get_opt ()) != EOF)
     switch (c)
       {
-      case 'd':		// duplex
+      case 'd': // duplex
         duplex = ACE_OS::atoi (get_opt.opt_arg ());
         break;
-      case 'h':		// host for sender
+      case 'h': // host for sender
         host = get_opt.opt_arg ();
         break;
-      case 'p':		// port number
+      case 'p': // port number
         port = ACE_OS::atoi (get_opt.opt_arg ());
         break;
-      case 'n':		// thread pool size
+      case 'n': // thread pool size
         threads = ACE_OS::atoi (get_opt.opt_arg ());
         break;
-      case 's':     // number of senders
+      case 's': // number of senders
         senders = ACE_OS::atoi (get_opt.opt_arg ());
         if (senders > MaxSenders)
           senders = MaxSenders;
         break;
-      case 'o':     // max number of aio for proactor
+      case 'o': // max number of aio for proactor
         max_aio_operations = ACE_OS::atoi (get_opt.opt_arg ());
         break;
-      case 't':    //  Proactor Type
+      case 't': //  Proactor Type
         if (set_proactor_type (get_opt.opt_arg ()))
           break;
       case 'u':
@@ -801,9 +805,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   tm->wait_task (&task1);
 
-  cout 	<< "\nNumber of Receivers objects="
-        << Receiver::get_number_sessions ()
-        << flush;
+  cout << "\nNumber of Receivers objects="
+       << Receiver::get_number_sessions ()
+       << flush;
 
   for (i = 0; i < senders; ++i)
     {
