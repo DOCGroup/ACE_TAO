@@ -163,7 +163,7 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
         target = item;
     }
 
-  if (target != 0)		// Aha, we found a target to work on
+  if (target != 0)  // Aha, we found a target to work on
     {
       if (del != 0 && modify != 0)
         {

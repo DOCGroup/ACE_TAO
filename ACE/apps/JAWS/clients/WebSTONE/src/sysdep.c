@@ -1,13 +1,13 @@
 /* $Id$ */
 /**************************************************************************
- *									  *
- * 		 Copyright (C) 1995 Silicon Graphics, Inc.		  *
- *									  *
- *  These coded instructions, statements, and computer programs were	  *
- *  developed by SGI for public use.  If any changes are made to this code*
- *  please try to get the changes back to the author.  Feel free to make  *
- *  modifications and changes to the code and release it.		  *
- *									  *
+ *
+ *  Copyright (C) 1995 Silicon Graphics, Inc.
+ *
+ *  These coded instructions, statements, and computer programs were
+ *  developed by SGI for public use.  If any changes are made to this code
+ *  please try to get the changes back to the author.  Feel free to make
+ *  modifications and changes to the code and release it.
+ *
  **************************************************************************/
 
 #include "sysdep.h"
@@ -19,11 +19,11 @@ extern char *sys_errlist[];
 extern int errno;
 
 char *strerror(int errnum)
-{ 
+{
 
     if (errnum<sys_nerr)
     {
-	return(sys_errlist[errnum]);
+        return(sys_errlist[errnum]);
     }
 
     return(0);
@@ -32,7 +32,7 @@ char *strerror(int errnum)
 #endif /* strerror() */
 
 
-/* stub routines for NT */ 
+/* stub routines for NT */
 
 #ifdef WIN32
 #include <winsock.h>

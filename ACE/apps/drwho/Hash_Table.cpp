@@ -44,7 +44,7 @@ Hash_Table::get_next_entry (void)
   else
     {
       Protocol_Record *prp = this->current_ptr;
-      this->current_ptr	 = this->current_ptr->next_;
+      this->current_ptr = this->current_ptr->next_;
       return prp;
     }
 }
