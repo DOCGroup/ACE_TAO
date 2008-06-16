@@ -109,9 +109,9 @@ private:
   /// in the log.
   TAO_Event_LogConsumer *my_log_consumer_;
 
-  PortableServer::POA_var	poa_;
+  PortableServer::POA_var poa_;
 
-  PortableServer::POA_var	log_poa_;
+  PortableServer::POA_var log_poa_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

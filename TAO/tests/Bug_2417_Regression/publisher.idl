@@ -4,7 +4,7 @@
 
 interface Publisher
 {
-	void subscribe(in Subscriber _subscriber);
+  void subscribe(in Subscriber _subscriber);
 
-	oneway void shutdown ();
+  oneway void shutdown ();
 };

@@ -51,14 +51,14 @@ module gleep
 #    pragma version     gleep::floop::schmendrick    524.23
     local interface schmendrick {};
 
-	  module verklempt
-	  {
-	    local interface schlemazel {};
+    module verklempt
+    {
+      local interface schlemazel {};
 
     // This will override the prefix directive for module floop at the end
     // of the file.
-	    typeprefix floop::verklempt "verklempt_prefix";
-	  };
+      typeprefix floop::verklempt "verklempt_prefix";
+    };
   };
 
   local interface schmegegging {};

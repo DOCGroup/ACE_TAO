@@ -261,7 +261,7 @@ protected:
   /// The size of a LogRecord
   size_t log_record_size(const DsLogAdmin::LogRecord &rec);
 
-  TAO_LogMgr_i*		logmgr_i_;
+  TAO_LogMgr_i*   logmgr_i_;
 
   /// Assigned to a new RecordId and then incremented
   /// @@ Should I have a list of reclaimed id's for when records are
@@ -288,7 +288,7 @@ protected:
   CORBA::ULong max_rec_list_len_;
 
   /// The map of RecordId's to LogRecord's
-  LOG_RECORD_STORE			rec_map_;
+  LOG_RECORD_STORE      rec_map_;
 
 
   /// The administrative state of the log
@@ -307,20 +307,20 @@ protected:
   DsLogAdmin::LogFullActionType         log_full_action_;
 
   /// The list of the QoS properties supported by the log.
-  DsLogAdmin::QoSList			log_qos_;
+  DsLogAdmin::QoSList     log_qos_;
 
   /// The maximum record lifetime
   CORBA::ULong                          max_record_life_;
 
   /// The days of the week that the log should be operational
-  DsLogAdmin::WeekMask			weekmask_;
+  DsLogAdmin::WeekMask      weekmask_;
 
 
   ACE_Reactor*                          reactor_;
 
-  PortableServer::POA_var		iterator_poa_;
+  PortableServer::POA_var   iterator_poa_;
 
-  mutable ACE_SYNCH_RW_MUTEX		lock_;
+  mutable ACE_SYNCH_RW_MUTEX    lock_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

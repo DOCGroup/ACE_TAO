@@ -27,29 +27,29 @@
 module DsEventLogAdmin
 {
   interface EventLog : DsLogAdmin::Log,
-			CosEventChannelAdmin::EventChannel{};
+      CosEventChannelAdmin::EventChannel{};
 
   interface EventLogFactory : DsLogAdmin::LogMgr,
-			CosEventChannelAdmin::ConsumerAdmin
+      CosEventChannelAdmin::ConsumerAdmin
   {
-	EventLog create (
-		in DsLogAdmin::LogFullActionType	full_action,
-		in unsigned long long			max_size,
-		in DsLogAdmin::CapacityAlarmThresholdList	thresholds,
-		out DsLogAdmin::LogId id
-	) raises (DsLogAdmin::InvalidLogFullAction,
+  EventLog create (
+    in DsLogAdmin::LogFullActionType  full_action,
+    in unsigned long long     max_size,
+    in DsLogAdmin::CapacityAlarmThresholdList thresholds,
+    out DsLogAdmin::LogId id
+  ) raises (DsLogAdmin::InvalidLogFullAction,
                     DsLogAdmin::InvalidThreshold);
 
-	EventLog create_with_id (
-		in DsLogAdmin::LogId id,
-		in DsLogAdmin::LogFullActionType full_action,
-		in unsigned long long max_size,
-		in DsLogAdmin::CapacityAlarmThresholdList thresholds
-	) raises (DsLogAdmin::LogIdAlreadyExists,
+  EventLog create_with_id (
+    in DsLogAdmin::LogId id,
+    in DsLogAdmin::LogFullActionType full_action,
+    in unsigned long long max_size,
+    in DsLogAdmin::CapacityAlarmThresholdList thresholds
+  ) raises (DsLogAdmin::LogIdAlreadyExists,
                     DsLogAdmin::InvalidLogFullAction,
-			  DsLogAdmin::InvalidThreshold);
+        DsLogAdmin::InvalidThreshold);
 
-	};
+  };
   
 };
 

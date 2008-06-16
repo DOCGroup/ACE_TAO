@@ -63,7 +63,7 @@ module CosNaming
 
     /// Indicates whether the binding_name identifies a context, and, therefore, can
     /// participate in name resolution.
-    BindingType	binding_type;
+    BindingType binding_type;
   };
 
   typedef sequence <Binding> BindingList;
@@ -78,27 +78,27 @@ module CosNaming
 
       enum NotFoundReason
       {
-	      missing_node,
-	      not_context,
-	      not_object
+        missing_node,
+        not_context,
+        not_object
       };
 
       /// Indicates that the name does not identify a binding.
       exception NotFound
-	    {
+      {
 
-	      NotFoundReason why;
-	      Name rest_of_name;
-	    };
+        NotFoundReason why;
+        Name rest_of_name;
+      };
 
       /// Implementation may throw this exception if some reason it cannot
       /// complete the operation.  This is currently not used in TAO.
       exception CannotProceed
-	    {
+      {
 
-	      NamingContext cxt;
-	      Name rest_of_name;
-	    };
+        NamingContext cxt;
+        Name rest_of_name;
+      };
 
       /// A name of length 0 is invalid.  Implementations may place
       /// further restrictions.
@@ -130,26 +130,26 @@ module CosNaming
       /// and <rebind_context> in order to participate in name
       /// resolution later.
       void bind (in Name n, in Object obj)
-	      raises (NotFound, CannotProceed, InvalidName, AlreadyBound);
+        raises (NotFound, CannotProceed, InvalidName, AlreadyBound);
 
       /// This is similar to <bind> operation above, except for when
       /// the binding for the specified name already exists in the
       /// specified context.  In that case, the existing binding is
       /// replaced with the new one.
       void rebind (in Name n, in Object obj)
-	      raises (NotFound, CannotProceed, InvalidName);
+        raises (NotFound, CannotProceed, InvalidName);
 
       /// This is the version of <bind> specifically for binding naming
       /// contexts, so that they will participate in name resolution
       /// when compound names are passed to be resolved.
       void bind_context (in Name n, in NamingContext nc)
-	      raises(NotFound, CannotProceed, InvalidName, AlreadyBound);
+        raises(NotFound, CannotProceed, InvalidName, AlreadyBound);
 
       /// This is a version of <rebind> specifically for naming
       /// contexts, so that they can participate in name resolution
       /// when compound names are passed.
       void rebind_context (in Name n, in NamingContext nc)
-	      raises (NotFound, CannotProceed, InvalidName);
+        raises (NotFound, CannotProceed, InvalidName);
 
       // = Resolving names.
 
@@ -160,7 +160,7 @@ module CosNaming
       /// Clients are responsible for "narrowing" the object to the
       /// appropriate type.
       Object resolve (in Name n)
-	      raises (NotFound, CannotProceed, InvalidName);
+        raises (NotFound, CannotProceed, InvalidName);
 
       // = Unbinding names.
 
@@ -169,7 +169,7 @@ module CosNaming
       /// (<c1; c2; cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind
       /// (<cn>)
       void unbind (in Name n)
-	      raises (NotFound, CannotProceed, InvalidName);
+        raises (NotFound, CannotProceed, InvalidName);
 
       // = Creating Naming Contexts.
 
@@ -183,7 +183,7 @@ module CosNaming
       /// implemented by the same server as the context in which it was
       /// bound (the name argument excluding the last component).
       NamingContext bind_new_context (in Name n)
-	      raises (NotFound, AlreadyBound, CannotProceed, InvalidName);
+        raises (NotFound, AlreadyBound, CannotProceed, InvalidName);
 
       // = Deleting contexts.
 
@@ -191,7 +191,7 @@ module CosNaming
       /// any bindings in which the given context is bound to some
       /// names before invoking <destroy> operation on it.
       void destroy ()
-	      raises (NotEmpty);
+        raises (NotEmpty);
 
 
       // = Listing the naming context.
@@ -217,7 +217,7 @@ module CosNaming
       /// This operation returns at most the requested number of
       /// bindings.
       boolean next_n (in unsigned long how_many,
-		                  out BindingList bl);
+                      out BindingList bl);
 
       /// This operation destroys the iterator.
       void destroy ();

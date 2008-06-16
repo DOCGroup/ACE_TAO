@@ -18,7 +18,7 @@
 
 
 #ifndef TIMER_HELPER_H
-#define	TIMER_HELPER_H
+#define TIMER_HELPER_H
 
 #include /**/ "ace/pre.h"
 

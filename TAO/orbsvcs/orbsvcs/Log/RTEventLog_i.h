@@ -104,9 +104,9 @@ public:
   /// The observer strategy
   TAO_EC_ObserverStrategy *observer_strategy_;
 
-  PortableServer::POA_var	poa_;
+  PortableServer::POA_var poa_;
 
-  PortableServer::POA_var	log_poa_;
+  PortableServer::POA_var log_poa_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

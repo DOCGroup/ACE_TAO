@@ -49,7 +49,7 @@ interface tdef
 
   struct bytes_or_longs
     {
-      Bytes the_bytes;	          // typedef'd
+      Bytes the_bytes;            // typedef'd
       long Longs[byteslen];       // anonymous
     };
 };
@@ -164,5 +164,3 @@ module bug_2126
     case FALSE: long wibble;
   };
 };
-
-

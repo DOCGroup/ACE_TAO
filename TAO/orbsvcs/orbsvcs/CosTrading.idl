@@ -342,39 +342,39 @@ module CosTrading
                    RegisterNotSupported);
        };
 
-	interface Link : TraderComponents, SupportAttributes, LinkAttributes
+  interface Link : TraderComponents, SupportAttributes, LinkAttributes
           {
-		struct LinkInfo
+    struct LinkInfo
                 {
                   Lookup target;
                   Register target_reg;
                   FollowOption def_pass_on_follow_rule;
                   FollowOption limiting_follow_rule;
-		};
+    };
 
-		exception IllegalLinkName {
+    exception IllegalLinkName {
                   LinkName name;
-		};
+    };
                 
-		exception UnknownLinkName {
+    exception UnknownLinkName {
                   LinkName name;
-		};
+    };
                 
-		exception DuplicateLinkName {
+    exception DuplicateLinkName {
                   LinkName name;
-		};
+    };
                 
-		exception DefaultFollowTooPermissive {
+    exception DefaultFollowTooPermissive {
                   FollowOption def_pass_on_follow_rule;
                   FollowOption limiting_follow_rule;
-		};
+    };
                 
-		exception LimitingFollowTooPermissive {
+    exception LimitingFollowTooPermissive {
                   FollowOption limiting_follow_rule;
                   FollowOption max_link_follow_policy;
-		};
+    };
                 
-		void add_link (in LinkName name,
+    void add_link (in LinkName name,
                                in Lookup target,
                                in FollowOption def_pass_on_follow_rule,
                                in FollowOption limiting_follow_rule)
@@ -384,26 +384,26 @@ module CosTrading
                           DefaultFollowTooPermissive,
                           LimitingFollowTooPermissive);
 
-		void remove_link (in LinkName name)
+    void remove_link (in LinkName name)
                   raises (IllegalLinkName,
                           UnknownLinkName);
 
-		LinkInfo describe_link (in LinkName name)
+    LinkInfo describe_link (in LinkName name)
                   raises (IllegalLinkName,
                           UnknownLinkName);
 
-		LinkNameSeq list_links ( );
+    LinkNameSeq list_links ( );
 
-		void modify_link (in LinkName name,
+    void modify_link (in LinkName name,
                                   in FollowOption def_pass_on_follow_rule,
                                   in FollowOption limiting_follow_rule)
                   raises (IllegalLinkName,
                           UnknownLinkName,
                           DefaultFollowTooPermissive,
                           LimitingFollowTooPermissive);
-	};
+  };
 
-	interface Proxy : TraderComponents, SupportAttributes
+  interface Proxy : TraderComponents, SupportAttributes
           {
             typedef Istring ConstraintRecipe;
             
@@ -495,20 +495,20 @@ module CosTrading
                                  out OfferIdSeq ids,
                                  out OfferIdIterator id_itr)
                 raises (NotImplemented);
-	};
+  };
 
-	interface OfferIterator
+  interface OfferIterator
           {
-		unsigned long max_left ()
+    unsigned long max_left ()
                   raises (UnknownMaxLeft);
 
-		boolean next_n (in unsigned long n,
+    boolean next_n (in unsigned long n,
                                 out OfferSeq offers);
 
-		void destroy ();
-	};
+    void destroy ();
+  };
 
-	interface OfferIdIterator
+  interface OfferIdIterator
           {
             unsigned long max_left ()
               raises (UnknownMaxLeft);

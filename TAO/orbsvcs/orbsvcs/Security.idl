@@ -119,7 +119,7 @@ module Security {
 
     struct Right {
         ExtensibleFamily        rights_family;
-	string                  the_right;
+  string                  the_right;
     };
 
     typedef sequence <Right> RightsList;

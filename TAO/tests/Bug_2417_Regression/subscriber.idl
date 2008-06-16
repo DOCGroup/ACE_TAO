@@ -2,6 +2,6 @@
 
 interface Subscriber
 {
-	oneway void onData(in double value);
-	boolean isAlive();
+  oneway void onData(in double value);
+  boolean isAlive();
 };

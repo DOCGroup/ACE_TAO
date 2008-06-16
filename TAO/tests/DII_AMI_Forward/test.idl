@@ -1,7 +1,7 @@
 /* -*- Mode: IDL; tab-width: 2; indent-tabs-mode: f; c-basic-offset: 2 -*- */
 
 /*
- * $Id:$
+ * $Id$
  */
 
 #include "tao/PortableServer/ForwardRequest.pidl"
@@ -9,9 +9,9 @@
 module Forward
 {
   interface Test
-	{
-		string do_forward (in string text);
+  {
+    string do_forward (in string text);
 
-		oneway void shutdown ();
-	};
+    oneway void shutdown ();
+  };
 };

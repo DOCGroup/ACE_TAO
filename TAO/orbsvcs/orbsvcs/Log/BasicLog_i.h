@@ -82,7 +82,7 @@ protected:
 private:
 
   /// POA.
-  PortableServer::POA_var	poa_;
+  PortableServer::POA_var poa_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
