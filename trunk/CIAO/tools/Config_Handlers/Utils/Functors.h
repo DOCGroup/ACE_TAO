@@ -53,7 +53,7 @@ namespace CIAO
      * X: First argument to the function
      * Y: Second argument to the function
      */
-#define SEQ_HAND_GCC_BUG_WORKAROUND(W, X, Y)	\
+#define SEQ_HAND_GCC_BUG_WORKAROUND(W, X, Y) \
     while(0) { \
       W (*X, Y[0]);  \
     }

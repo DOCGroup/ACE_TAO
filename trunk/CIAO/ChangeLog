@@ -1,3 +1,9 @@
+Mon Jun 16 19:04:42 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tools/Config_Handlers/Utils/Functors.h:
+
+          Untabify.
+
 Mon Jun 16 18:37:32 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Display/GPS/GPS_exec.cpp:
