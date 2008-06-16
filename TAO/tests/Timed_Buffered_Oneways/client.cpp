@@ -217,12 +217,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "client:\t%d took\t%dms\n",
                           i, (end - start).msec ()));
 
-	      // Interval between successive calls.
-	      ACE_Time_Value sleep_interval (0, interval * 1000);
+              // Interval between successive calls.
+              ACE_Time_Value sleep_interval (0, interval * 1000);
 
-	      // If we don't run the orb, then no data will be sent, and no
-	      // connection will be made initially.
-	      orb->run (sleep_interval);
+              // If we don't run the orb, then no data will be sent, and no
+              // connection will be made initially.
+              orb->run (sleep_interval);
             }
           catch (const CORBA::TIMEOUT& )
             {
@@ -262,7 +262,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Client side exception caught:");
       return -1;
     }
-
 
   return 0;
 }

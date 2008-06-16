@@ -33,22 +33,22 @@ main (int argc, char *argv[])
       test_var server = svnt._this ();
 
       CORBA::String_var ior =
-	      orb->object_to_string (server.in ());
+        orb->object_to_string (server.in ());
 
-	    FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
 
-	    if (output_file == 0)
+      if (output_file == 0)
         {
-	        ACE_ERROR_RETURN ((LM_ERROR,
-			                        "Can't open output file for writing IOR: %s",
-			                        ior_output_file),
-			                      1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Can't open output file for writing IOR: %s",
+                             ior_output_file),
+                            1);
         }
 
-	    ACE_OS::fprintf (output_file,
+      ACE_OS::fprintf (output_file,
                         "%s",
                         ior.in ());
-	    ACE_OS::fclose (output_file);
+      ACE_OS::fclose (output_file);
 
       poa_manager->activate ();
       orb->run ();

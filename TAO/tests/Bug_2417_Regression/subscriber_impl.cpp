@@ -14,24 +14,20 @@ Subscriber_impl::~Subscriber_impl()
 }
 
 void
-Subscriber_impl::onData (
-      ::CORBA::Double
-    )
+Subscriber_impl::onData (::CORBA::Double)
 {
-	++count;
-	if (count > 100)
-		this->shutdown();
+  ++count;
+  if (count > 100)
+    this->shutdown();
 }
 
 ::CORBA::Boolean
-Subscriber_impl::isAlive (
-    )
+Subscriber_impl::isAlive ()
 {
-	return true;
+  return true;
 }
 
 void Subscriber_impl::shutdown()
 {
-	this->orb_->shutdown (0);
+  this->orb_->shutdown (0);
 }
-

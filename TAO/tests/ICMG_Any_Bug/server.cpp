@@ -63,8 +63,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Hello *hello_impl;
       ACE_NEW_RETURN (hello_impl,
-		      Hello (orb.in (), root_poa.in ()),
-		      1);
+                      Hello (orb.in (), root_poa.in ()),
+                      1);
       PortableServer::ServantBase_var owner_transfer (hello_impl);
 
       PortableServer::ObjectId_var id =
@@ -84,7 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
-                              1);
+                          1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 

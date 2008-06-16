@@ -76,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PingObject_i *server_impl = 0;
       ACE_NEW_RETURN (server_impl,
-		      PingObject_i (orb.in (),
+                      PingObject_i (orb.in (),
                                     persistent_poa.in ()),
                       -1);
 

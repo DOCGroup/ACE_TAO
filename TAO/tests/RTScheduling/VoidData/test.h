@@ -9,8 +9,8 @@ class test_impl :public test
 
   {
     ACE_DEBUG ((LM_DEBUG,
-		"Void Data Passed to method %d\n",
-		*(int*)something));
+                "Void Data Passed to method %d\n",
+                *(int*)something));
   }
 };
 

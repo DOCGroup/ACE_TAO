@@ -118,7 +118,7 @@ void run_test (Simple_Server_ptr server)
           CORBA::Long ret =
             server->remote_call ();
 
-	  ACE_UNUSED_ARG (ret);
+          ACE_UNUSED_ARG (ret);
 
           ACE_OS::sleep (25);
         }

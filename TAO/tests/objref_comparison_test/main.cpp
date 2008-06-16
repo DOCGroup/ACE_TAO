@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var o = s_orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var rootpoa = PortableServer::POA::_narrow (o.in());
       if (CORBA::is_nil (rootpoa.in()))
-	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t): failed to get root poa\n"), 1);
+        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t): failed to get root poa\n"), 1);
 
       PortableServer::POAManager_var poamgr = rootpoa->the_POAManager();
 
@@ -102,29 +102,28 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       server.activate(1); // activate one thread running the task
 
       foo_var f = foo::_narrow (o.in());  // ignore the possibility that
-					  // it's not a 'foo' since we
-					  // created it above
+                                          // it's not a 'foo' since we
+                                          // created it above
 
       int const iterations = 10;
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: next %d iterations should match\n",
-		  iterations));
+                  iterations));
       for (int i = 0; i < iterations; ++i)
-	{
-	  CORBA::Boolean b = f->match_references ();
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: iteration %d, match = %d\n",
-		      i, b));
-	}
+        {
+          CORBA::Boolean b = f->match_references ();
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: iteration %d, match = %d\n",
+                      i, b));
+        }
 
       ACE_DEBUG ((LM_DEBUG,
-		  "(%P|%t) client: next %d iterations should NOT match\n",
-		  iterations));
+                  "(%P|%t) client: next %d iterations should NOT match\n",
+                  iterations));
       for (int i = 0; i < iterations; ++i)
-	{
-	  CORBA::Boolean b = f2->match_references ();
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: iteration %d, match = %d\n",
-		      i, b));
-	}
-
+        {
+          CORBA::Boolean b = f2->match_references ();
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: iteration %d, match = %d\n",
+                      i, b));
+        }
     }
   catch (...)
     {
