@@ -27,19 +27,19 @@ worker (intptr_t iterations)
   for (intptr_t i = 0; i < iterations; i++)
     {
       if ((i % 1000) == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%t) checking cancellation before iteration %d!\n",
-		      i));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) checking cancellation before iteration %d!\n",
+                      i));
 
-	  if (ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
-			  "(%t) has been cancelled before iteration %d!\n",
-			  i));
-	      break;
-	    }
-	}
+          if (ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%t) has been cancelled before iteration %d!\n",
+                          i));
+              break;
+            }
+        }
     }
 
   // Destructor removes thread from Thread_Manager.
@@ -66,9 +66,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-  int grp_id = thr_mgr->spawn_n (n_threads, ACE_THR_FUNC (worker),
-				 reinterpret_cast<void *> (n_iterations),
-				 THR_NEW_LWP | THR_DETACHED);
+  int grp_id = thr_mgr->spawn_n (n_threads,
+                                 ACE_THR_FUNC (worker),
+                                 reinterpret_cast<void *> (n_iterations),
+                                 THR_NEW_LWP | THR_DETACHED);
 
   // Wait for 1 second and then suspend every thread in the group.
   ACE_OS::sleep (1);

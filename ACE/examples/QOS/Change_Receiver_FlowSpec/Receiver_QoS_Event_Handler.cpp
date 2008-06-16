@@ -133,84 +133,77 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
               ace_get_qos.receiving_flowspec ()->minimum_policed_size (),
               ace_get_qos.sending_flowspec ()->minimum_policed_size ()));
 
-  
+
   //
   // create a dynamic flow spec on each callback to test QoS retransmits
   //
   ACE_CString flow_id ("flow_id");
-  
+
   Fill_ACE_QoS flow_spec_list;
   ACE_DEBUG ((LM_DEBUG,
-	      "\nA new flow spec! in QoS handler."));
-  
+              "\nA new flow spec! in QoS handler."));
+
   static int token_rate = 9400;
   ++token_rate;
   static int peak_bw = 18500;
   ++peak_bw;
   switch (flow_spec_list.map ().bind (flow_id,
-				      new ACE_Flow_Spec (token_rate,
-							 708,
-							 peak_bw,
-							 0,
-							 0,
-							 ACE_SERVICETYPE_CONTROLLEDLOAD,
-							 368,
-							 368,
-							 25,
-							 1)))
+                new ACE_Flow_Spec (token_rate,
+                                   708,
+                                   peak_bw,
+                                   0,
+                                   0,
+                                   ACE_SERVICETYPE_CONTROLLEDLOAD,
+                                   368,
+                                   368,
+                                   25,
+                                   1)))
     {
-    case 1 : 
+    case 1 :
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "Unable to bind the new flow spec\n"
-			 "The Flow Spec name already exists\n"),
-			-1);
+                         "Unable to bind the new flow spec\n"
+                         "The Flow Spec name already exists\n"),
+                        -1);
       break;
     case -1 :
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "Unable to bind the new flow spec\n"),
-			-1);
+                        "Unable to bind the new flow spec\n"),
+                        -1);
       break;
     }
-  
+
   //
   // set up the new qos
   //
   ACE_QoS another_qos_receiver;
   if (flow_spec_list.fill_simplex_receiver_qos (another_qos_receiver,
-						flow_id) !=0)
+                                                flow_id) !=0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to fill handler-simplex receiver qos\n"),
-		      -1);
+                       "Unable to fill handler-simplex receiver qos\n"),
+                      -1);
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Successfully built a new flowspec in handle_qos!\n"));
-  
+
   //
   // change the qos for the current session
   //
   ACE_QoS_Manager qos_manager = this->dgram_mcast_qos_.qos_manager ();
-  
+
   ACE_DEBUG ((LM_DEBUG,
-	      "QoS Manager was built in handle_qos!\n"));
-  
+              "QoS Manager was built in handle_qos!\n"));
+
   // Set the QoS for the session. Replaces the ioctl () call that
   // was being made previously.
   if (this->qos_session_->qos (&this->dgram_mcast_qos_,
-			       &qos_manager,
-			       another_qos_receiver) == -1)
+                               &qos_manager,
+                               another_qos_receiver) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to set QoS\n"),
-		      -1);
+                       "Unable to set QoS\n"),
+                      -1);
   else
     ACE_DEBUG ((LM_DEBUG,
-		"Setting QOS succeeds.\n"));
-  
-return 0;
+                "Setting QOS succeeds.\n"));
 
+  return 0;
 }
-
-
-
-
-
-

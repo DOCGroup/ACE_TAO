@@ -17,7 +17,7 @@ class Event_Handler : public ACE_Event_Handler
 public:
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE,
-			    ACE_Reactor_Mask);
+                            ACE_Reactor_Mask);
 };
 
 int
@@ -57,8 +57,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Sig_Adapter shutdown_handler ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
   if (ACE_Event_Handler::register_stdin_handler (&handler,
-						 ACE_Reactor::instance (),
-						 ACE_Thread_Manager::instance ()) == -1)
+                                                 ACE_Reactor::instance (),
+                                                 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("register_stdin_handler")));

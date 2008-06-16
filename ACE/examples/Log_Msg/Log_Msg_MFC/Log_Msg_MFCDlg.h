@@ -19,36 +19,35 @@
 
 class CLog_Msg_MFCDlg : public CDialog
 {
-// Construction
 public:
-	CLog_Msg_MFCDlg(CWnd* pParent = 0);	// standard constructor
+  // Construction
+  CLog_Msg_MFCDlg(CWnd* pParent = 0);	// standard constructor
 
-// Dialog Data
-	//{{AFX_DATA(CLog_Msg_MFCDlg)
-	enum { IDD = IDD_LOG_MSG_MFC_DIALOG };
-		// NOTE: the ClassWizard will add data members here
-	//}}AFX_DATA
+  // Dialog Data
+  //{{AFX_DATA(CLog_Msg_MFCDlg)
+  enum { IDD = IDD_LOG_MSG_MFC_DIALOG };
+  // NOTE: the ClassWizard will add data members here
+  //}}AFX_DATA
 
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CLog_Msg_MFCDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CLog_Msg_MFCDlg)
+  protected:
+  virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
+  //}}AFX_VIRTUAL
 
-// Implementation
+  // Implementation
 protected:
-	HICON m_hIcon;
+  HICON m_hIcon;
 
-	// Generated message map functions
-	//{{AFX_MSG(CLog_Msg_MFCDlg)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
-	afx_msg void OnPaint();
-	afx_msg HCURSOR OnQueryDragIcon();
-	afx_msg void OnDebugButtonClicked();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-
+  // Generated message map functions
+  //{{AFX_MSG(CLog_Msg_MFCDlg)
+  virtual BOOL OnInitDialog();
+  afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+  afx_msg void OnPaint();
+  afx_msg HCURSOR OnQueryDragIcon();
+  afx_msg void OnDebugButtonClicked();
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}

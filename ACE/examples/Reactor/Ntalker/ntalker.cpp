@@ -29,9 +29,9 @@ class Handler : public ACE_Event_Handler
 public:
   // = Initialization and termination methods.
   Handler (u_short udp_port,
-	   const char *ip_addr,
-      const ACE_TCHAR *a_interface,
-	   ACE_Reactor & );
+           const char *ip_addr,
+           const ACE_TCHAR *a_interface,
+           ACE_Reactor & );
   // Constructor.
 
   ~Handler (void);
@@ -67,14 +67,14 @@ Handler::handle_input (ACE_HANDLE h)
       ssize_t result = ACE_OS::read (h, buf, BUFSIZ);
 
       if (result > 0)
-	{
-	  if (this->mcast_.send (buf, result) != result)
+        {
+          if (this->mcast_.send (buf, result) != result)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p\n",
                                "send error"),
                               -1);
-	  return 0;
-	}
+          return 0;
+        }
       else if (result == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p\n",
@@ -96,17 +96,17 @@ Handler::handle_input (ACE_HANDLE h)
                                           remote_addr);
 
       if (result != -1)
-	{
+        {
           ACE_DEBUG ((LM_DEBUG,
                       "received datagram from host %s on port %d bytes = %d\n",
                       remote_addr.get_host_name (),
                       remote_addr.get_port_number (),
                       result));
-	  ACE_OS::write (ACE_STDERR, buf, result);
+          ACE_OS::write (ACE_STDERR, buf, result);
           ACE_DEBUG ((LM_DEBUG,
                       "\n"));
-	  return 0;
-	}
+          return 0;
+        }
 
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
@@ -144,9 +144,9 @@ Handler::~Handler (void)
 }
 
 Handler::Handler (u_short udp_port,
-		  const char *ip_addr,
+                  const char *ip_addr,
                   const ACE_TCHAR *a_interface,
-		  ACE_Reactor &reactor)
+                  ACE_Reactor &reactor)
 {
   // Create multicast address to listen on.
 
@@ -190,15 +190,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-	INTERFACE = get_opt.opt_arg ();
-	break;
+        INTERFACE = get_opt.opt_arg ();
+        break;
       case 'u':
-	// Usage fallthrough.
+        // Usage fallthrough.
       default:
         ACE_DEBUG ((LM_DEBUG,
                     "%s -i interface\n",
                     argv[0]));
-	ACE_OS::exit (1);
+        ACE_OS::exit (1);
       }
 }
 

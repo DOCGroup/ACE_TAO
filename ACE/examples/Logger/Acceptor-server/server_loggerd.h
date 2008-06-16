@@ -44,7 +44,7 @@ protected:
   // = Demultiplexing hooks.
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg);
+                              const void *arg);
 
 private:
   char peer_name_[MAXHOSTNAMELEN + 1];

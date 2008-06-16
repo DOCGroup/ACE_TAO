@@ -706,7 +706,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'o':     // max number of aio for proactor
         max_aio_operations = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
+        break;
       case 't':    //  Proactor Type
         if (set_proactor_type (get_opt.opt_arg ()))
           break;
@@ -728,7 +728,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                     "\n-u show this message"
                     "\n"));
 
-	return -1;
+        return -1;
       }
 
   return 0;

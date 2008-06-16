@@ -21,8 +21,8 @@ public:
   long getID (void);
 
   // Handle the timeout.
-  virtual int handle_timeout(const ACE_Time_Value &tv, 
-			     const void *arg = 0);
+  virtual int handle_timeout(const ACE_Time_Value &tv,
+                             const void *arg = 0);
 
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);

@@ -37,9 +37,9 @@ Peer_Router_Context::send_peers (ACE_Message_Block *mb)
        map_iter.advance ())
     {
       if (Options::instance ()->debug ())
-	ACE_DEBUG ((LM_DEBUG,
-		    ACE_TEXT ("(%t) sending to peer via handle %d\n"),
-		    ss->ext_id_));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%t) sending to peer via handle %d\n"),
+                    ss->ext_id_));
 
       iterations++;
 
@@ -64,7 +64,7 @@ Peer_Router_Context::unbind_peer (ROUTING_KEY key)
 
 int
 Peer_Router_Context::bind_peer (ROUTING_KEY key,
-				Peer_Handler *peer_handler)
+                                Peer_Handler *peer_handler)
 {
   return this->peer_map_.bind (key, peer_handler);
 }
@@ -105,16 +105,16 @@ Peer_Router_Context::Peer_Router_Context (u_short port)
       ACE_INET_Addr addr;
 
       if (this->acceptor ().get_local_addr (addr) != -1)
-	ACE_DEBUG ((LM_DEBUG,
-		    ACE_TEXT ("(%t) initializing %C on port = %d, handle = %d, this = %u\n"),
-		    addr.get_port_number () == Options::instance ()->supplier_port ()
-                    ? "Supplier_Handler" : "Consumer_Handler",
-		    addr.get_port_number (),
-		    this->acceptor().get_handle (),
-		    this));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%t) initializing %C on port = %d, handle = %d, this = %u\n"),
+                    addr.get_port_number () == Options::instance ()->supplier_port ()
+                      ? "Supplier_Handler" : "Consumer_Handler",
+                    addr.get_port_number (),
+                    this->acceptor().get_handle (),
+                    this));
       else
-	ACE_ERROR ((LM_ERROR,
-		    ACE_TEXT ("%p\n"),
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
                     ACE_TEXT ("get_local_addr")));
     }
 }
@@ -123,7 +123,7 @@ Peer_Router_Context::~Peer_Router_Context (void)
 {
   // Free up the handle and close down the listening socket.
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("(%t) closing down Peer_Router_Context\n")));
+              ACE_TEXT ("(%t) closing down Peer_Router_Context\n")));
 
   // Close down the Acceptor and take ourselves out of the Reactor.
   this->handle_close ();
@@ -138,14 +138,13 @@ Peer_Router_Context::~Peer_Router_Context (void)
        map_iter.advance ())
     {
       if (Options::instance ()->debug ())
-	ACE_DEBUG ((LM_DEBUG,
-		    ACE_TEXT ("(%t) closing down peer on handle %d\n"),
-		    ss->ext_id_));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%t) closing down peer on handle %d\n"),
+                    ss->ext_id_));
 
-      if (ACE_Reactor::instance ()->remove_handler
-	  (ss->ext_id_,
-           ACE_Event_Handler::READ_MASK) == -1)
-	ACE_ERROR ((LM_ERROR,
+      if (ACE_Reactor::instance ()->remove_handler(ss->ext_id_,
+                                                   ACE_Event_Handler::READ_MASK) == -1)
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%t) p\n"),
                     ACE_TEXT ("remove_handle")));
     }
@@ -235,7 +234,7 @@ Peer_Handler::open (void *)
                         ACE_TEXT ("activation of thread failed")),
                        -1);
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("(%t) Peer_Handler::open registering with Reactor for handle_input\n")));
+              ACE_TEXT ("(%t) Peer_Handler::open registering with Reactor for handle_input\n")));
 #else
 
   // Register with the Reactor to receive messages from our Peer.
@@ -272,7 +271,7 @@ Peer_Handler::handle_input (ACE_HANDLE h)
   ACE_NEW_RETURN (db, ACE_Message_Block (BUFSIZ), -1);
 
   ACE_Message_Block *hb = new ACE_Message_Block (sizeof (ROUTING_KEY),
-						 ACE_Message_Block::MB_PROTO, db);
+                                                 ACE_Message_Block::MB_PROTO, db);
   // Check for memory failures.
   if (hb == 0)
     {
@@ -292,7 +291,7 @@ Peer_Handler::handle_input (ACE_HANDLE h)
   else if (n == 0) // Client has closed down the connection.
     {
       if (this->peer_router_context_->unbind_peer (this->get_handle ()) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p"),
                            ACE_TEXT ("unbind failed")),
                           -1);
@@ -395,38 +394,38 @@ Peer_Handler::svc (void)
       ssize_t n = this->peer_.recv (db->rd_ptr (), db->size ());
 
       if (n == -1)
-	LM_ERROR_RETURN ((LOG_ERROR,
+        LM_ERROR_RETURN ((LOG_ERROR,
                           ACE_TEXT ("%p"),
                           ACE_TEXT ("recv failed")),
                          -1);
       else if (n == 0) // Client has closed down the connection.
-	{
-	  if (this->peer_router_context_->peer_router ()->unbind_peer (this->get_handle ()) == -1)
-	    LM_ERROR_RETURN ((LOG_ERROR,
+        {
+          if (this->peer_router_context_->peer_router ()->unbind_peer (this->get_handle ()) == -1)
+            LM_ERROR_RETURN ((LOG_ERROR,
                               ACE_TEXT ("%p"),
                               ACE_TEXT ("unbind failed")),
                              -1);
-	  LM_DEBUG ((LOG_DEBUG,
+            LM_DEBUG ((LOG_DEBUG,
                      ACE_TEXT ("(%t) shutting down \n")));
 
           // We do not need to be deregistered by reactor
-	  // as we were not registered at all.
-	  return -1;
-	}
+          // as we were not registered at all.
+          return -1;
+        }
       else
-	{
+        {
           // Transform incoming buffer into a Message.
-	  db->wr_ptr (n);
-	  *(long *) hb->rd_ptr () = this->get_handle (); // Structure assignment.
-	  hb->wr_ptr (sizeof (long));
+          db->wr_ptr (n);
+          *(long *) hb->rd_ptr () = this->get_handle (); // Structure assignment.
+          hb->wr_ptr (sizeof (long));
 
           // Pass the message to the stream.
-	  if (this->peer_router_context_->peer_router ()->reply (hb) == -1)
+          if (this->peer_router_context_->peer_router ()->reply (hb) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("(%t) %p\n"),
                                ACE_TEXT ("Peer_Handler.svc : peer_router->reply failed")),
                               -1);
-	}
+        }
     }
   return 0;
 }

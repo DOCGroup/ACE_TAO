@@ -34,10 +34,10 @@ int PCB::handleEvent (const void *arg)
       // New interval is 10 ms.
       ACE_Time_Value interval (0L, 1000L);
       if (PTimer::instance ()->reset_interval (timerID_, interval) != -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   ACE_TEXT ("%p\n"),
-			   ACE_TEXT ("reset_interval")),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("reset_interval")),
+                          -1);
     }
 
   if (count_++ == 10)

@@ -41,19 +41,18 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
             ACE_ERROR ((LM_ERROR,
                         "(%t) %p\n",
                         "put_next"));
-      	  break;
+          break;
         }
-
       // Send the message to the other thread.
       else
-	{
-	  mb->msg_priority (n);
-	  mb->wr_ptr (n);
-	  if (msg_queue->enqueue_tail (mb) == -1)
-	    ACE_ERROR ((LM_ERROR,
+        {
+          mb->msg_priority (n);
+          mb->wr_ptr (n);
+          if (msg_queue->enqueue_tail (mb) == -1)
+            ACE_ERROR ((LM_ERROR,
                         "(%t) %p\n",
                         "put_next"));
-	}
+        }
     }
 
   return 0;
@@ -80,17 +79,17 @@ static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
       result = msg_queue->dequeue_head (mb, &timeout);
 
       if (result == -1)
-	break;
+        break;
 
       int length = mb->length ();
 
       if (length > 0)
-	ACE_OS::write (ACE_STDOUT, mb->rd_ptr (), length);
+        ACE_OS::write (ACE_STDOUT, mb->rd_ptr (), length);
 
       mb->release ();
 
       if (length == 0)
-	break;
+        break;
     }
 
   if (result == -1 && errno == EWOULDBLOCK)

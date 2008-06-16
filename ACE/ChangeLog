@@ -1,3 +1,89 @@
+Mon Jun 16 16:54:25 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/APG/Logging/Callback-2.h:
+        * examples/APG/Logging/Callback-3.h:
+        * examples/APG/Logging/Use_Logger.cpp:
+        * examples/APG/Threads/Message_Queue.cpp:
+        * examples/APG/Timers/CB.h:
+        * examples/APG/Timers/PCB.cpp:
+        * examples/ASX/CCM_App/SC_Server.cpp:
+        * examples/ASX/Event_Server/Event_Server/Consumer_Router.cpp:
+        * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
+        * examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
+        * examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp:
+        * examples/ASX/Message_Queue/bounded_buffer.cpp:
+        * examples/ASX/Message_Queue/priority_buffer.cpp:
+        * examples/ASX/UPIPE_Event_Server/Peer_Router.cpp:
+        * examples/Bounded_Packet_Relay/BPR_Drivers.cpp:
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
+        * examples/Bounded_Packet_Relay/bpr_thread.cpp:
+        * examples/C++NPv2/display_logfile.cpp:
+        * examples/Connection/misc/Connection_Handler.h:
+        * examples/IPC_SAP/ATM_SAP/CPP-client.cpp:
+        * examples/IPC_SAP/ATM_SAP/CPP-server.cpp:
+        * examples/IPC_SAP/DEV_SAP/writer/writer.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-client.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+        * examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.h:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.cpp:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFCDlg.h:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFCDlg.cpp:
+        * examples/Logger/Acceptor-server/server_loggerd.h:
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
+        * examples/Logger/simple-server/Logging_Handler.cpp:
+        * examples/Logger/simple-server/server_loggerd.cpp:
+        * examples/Mem_Map/IO-tests/test_io.cpp:
+        * examples/Misc/test_get_opt.cpp:
+        * examples/Misc/test_profile_timer.cpp:
+        * examples/OS/Process/imore.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.cpp:
+        * examples/Reactor/FIFO/client.cpp:
+        * examples/Reactor/FIFO/server.cpp:
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Misc/test_signals_1.cpp:
+        * examples/Reactor/Misc/test_signals_2.cpp:
+        * examples/Reactor/Ntalker/ntalker.cpp:
+        * examples/Reactor/Proactor/test_cancel.h:
+        * examples/Reactor/Proactor/test_cancel.cpp:
+        * examples/Reactor/Proactor/test_multiple_loops.cpp:
+        * examples/Reactor/Proactor/test_proactor3.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp:
+        * examples/Reactor/Proactor/test_timeout_st.cpp:
+        * examples/Registry/test_registry_update.cpp:
+        * examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+        * examples/Service_Configurator/Misc/Timer_Service.cpp:
+        * examples/Shared_Memory/test_SV.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+        * examples/Threads/recursive_mutex.cpp:
+        * examples/Threads/task_one.cpp:
+        * examples/Threads/thread_manager.cpp:
+        * examples/Threads/token.cpp:
+
+          Untabify.
+
 Mon Jun 16 16:04:40  2008  Steve Huston  <shuston@riverace.com>
 
         * bin/PerlACE/TestTarget.pm: When getting the exe subdir for a
@@ -8,21 +94,21 @@ Mon Jun 16 15:45:45 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Control/Null_Network_Interface_Monitor.cpp:
         * ace/Monitor_Control/Null_Network_Interface_Monitor.h:
-        
+
           New files, defining a base class for tne network interface OS
           monitors when the monitor framework itself is enabled but no
           platform-specific OS monitor flags are defined, whether because
           the platform itself does not support native system-level
           monitoring, or because the Linux, Windows or Solaris OS
           monitor flags has been turned off for some reason.
-          
+
         * ace/Monitor_Control/Monitor_Control.mpc:
         * ace/Monitor_Control/Bytes_Sent_Monitor.h:
         * ace/Monitor_Control/Packets_Sent_Monitor.h:
         * ace/Monitor_Control/Linux_Network_Interface_Monitor.h:
         * ace/Monitor_Control/Bytes_Received_Monitor.h:
         * ace/Monitor_Control/Packets_Received_Monitor.h:
-        
+
           Incorporated the new no-op network interface monitor base class
           into the existing network interface monitor classes. If this
           new base class is used, the monitor's value will always be 0,
@@ -31,11 +117,11 @@ Mon Jun 16 15:45:45 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Jun 16 12:12:16 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/config-sunos5.5.h:
-        
+
           Reverted addition of ACE_HAS_KSTAT flag in
-          
+
           Fri Jun 13 14:00:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
-          
+
           Thanks to Johnny Willemsen <jwillemsen@remedy.nl>, we now
           know that the correct way to do this is to set kstat=1
           in platform_macros.GNU.

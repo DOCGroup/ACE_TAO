@@ -24,7 +24,7 @@ public:
   ~Receiver (void);
 
   virtual void open (ACE_HANDLE handle,
-		     ACE_Message_Block &message_block);
+                     ACE_Message_Block &message_block);
   // This is called after the new connection has been accepted.
 
 protected:

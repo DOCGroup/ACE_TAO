@@ -20,8 +20,8 @@ class Barrier_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Barrier_Task (ACE_Thread_Manager *thr_mgr,
-		int n_threads,
-		int n_iterations);
+                int n_threads,
+                int n_iterations);
 
   virtual int svc (void);
   // Iterate <n_iterations> time printing off a message and "waiting"
@@ -37,8 +37,8 @@ private:
 };
 
 Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
-			    int n_threads,
-			    int n_iterations)
+                            int n_threads,
+                            int n_iterations)
   : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
     barrier_ (n_threads),
     n_iterations_ (n_iterations)
@@ -83,8 +83,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
   Barrier_Task barrier_task (ACE_Thread_Manager::instance (),
-			     n_threads,
-			     n_iterations);
+                             n_threads,
+                             n_iterations);
 
   // Wait for all the threads to reach their exit point.
   ACE_Thread_Manager::instance ()->wait ();

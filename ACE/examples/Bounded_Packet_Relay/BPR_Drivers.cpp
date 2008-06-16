@@ -35,7 +35,7 @@ Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_
     send_input_msg_cmd_ (0),
     input_period_ (ACE_ONE_SECOND_IN_USECS),
     is_active_ (0),
-	send_count_ (0)
+    send_count_ (0)
 {
 }
 

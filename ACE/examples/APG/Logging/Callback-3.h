@@ -23,43 +23,41 @@ public:
       ACE_INET_Addr addr (LOGGER_PORT, ACE_DEFAULT_SERVER_HOST);
 
       if (connector.connect (*(this->logger_), addr) == -1)
-	{
-	  delete this->logger_;
-	  this->logger_ = 0;
-	}
+        {
+          delete this->logger_;
+          this->logger_ = 0;
+        }
     }
 
   virtual ~Callback ()
     {
       if (this->logger_)
-	{
-	  this->logger_->close ();
-	}
+        {
+          this->logger_->close ();
+        }
       delete this->logger_;
     }
 
   void log (ACE_Log_Record &log_record)
     {
       if (!this->logger_)
-	{
+        {
 #  if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-	  log_record.print
-            (ACE_TEXT (""), ACE_Log_Msg::VERBOSE, stderr);
+          log_record.print (ACE_TEXT (""), ACE_Log_Msg::VERBOSE, stderr);
 #  else
-	  log_record.print
-            (ACE_TEXT (""), ACE_Log_Msg::VERBOSE, cerr);
+          log_record.print(ACE_TEXT (""), ACE_Log_Msg::VERBOSE, cerr);
 #  endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-	  return;
-	}
+          return;
+        }
 
       size_t len = log_record.length();
       log_record.encode ();
 
       if (this->logger_->send_n ((char *) &log_record, len) == -1)
-	{
-	  delete this->logger_;
-	  this->logger_ = 0;
-	}
+        {
+          delete this->logger_;
+          this->logger_ = 0;
+        }
     }
 
 private:

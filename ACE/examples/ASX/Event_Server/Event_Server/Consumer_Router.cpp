@@ -14,7 +14,7 @@ Consumer_Router::Consumer_Router (Peer_Router_Context *prc)
   this->context ()->duplicate ();
 }
 
-// Initialize the Router. 
+// Initialize the Router.
 
 int
 Consumer_Router::open (void *)
@@ -38,14 +38,14 @@ Consumer_Router::open (void *)
 
     // Nothing to do since this side is primarily used to transmit to
     // Consumers, rather than receive.
-    return 0; 
+    return 0;
 }
 
 int
 Consumer_Router::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) closing Consumer_Router %s\n"),
-	      this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer")));
+              this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer")));
 
   if (this->is_writer ())
     // Inform the thread to shut down.
@@ -59,41 +59,41 @@ Consumer_Router::close (u_long)
 
 // Handle incoming messages in a separate thread.
 
-int 
+int
 Consumer_Router::svc (void)
 {
   assert (this->is_writer ());
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      ACE_TEXT ("(%t) starting svc in Consumer_Router\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) starting svc in Consumer_Router\n")));
 
   for (ACE_Message_Block *mb = 0;
        this->getq (mb) >= 0;
        )
     {
-      ACE_DEBUG ((LM_DEBUG, 
-		  ACE_TEXT ("(%t) warning: Consumer_Router is ")
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) warning: Consumer_Router is ")
                   ACE_TEXT ("forwarding a message to Supplier_Router\n")));
 
       // Pass this message down to the next Module's writer Task.
       if (this->put_next (mb) == -1)
-	ACE_ERROR_RETURN
-          ((LM_ERROR, 
+        ACE_ERROR_RETURN
+          ((LM_ERROR,
             ACE_TEXT ("(%t) send_peers failed in Consumer_Router\n")),
            -1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      ACE_TEXT ("(%t) stopping svc in Consumer_Router\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) stopping svc in Consumer_Router\n")));
   return 0;
   // Note the implicit ACE_OS::thr_exit() via destructor.
 }
 
-// Send a <Message_Block> to the supplier(s). 
+// Send a <Message_Block> to the supplier(s).
 
-int 
-Consumer_Router::put (ACE_Message_Block *mb, 
-		      ACE_Time_Value *)
+int
+Consumer_Router::put (ACE_Message_Block *mb,
+                      ACE_Time_Value *)
 {
   // Perform the necessary control operations before passing the
   // message down the stream.
@@ -110,15 +110,14 @@ Consumer_Router::put (ACE_Message_Block *mb,
   else if (this->is_reader ())
     {
       if (this->context ()->send_peers (mb) == -1)
-	ACE_ERROR_RETURN
+        ACE_ERROR_RETURN
           ((LM_ERROR,
             ACE_TEXT ("(%t) send_peers failed in Consumer_Router\n")),
            -1);
-      else 
-	return 0;
+      else
+        return 0;
     }
   else // if (this->is_writer ())
-
     // Queue up the message to processed by <Consumer_Router::svc>
     // Since we don't expect to be getting many of these messages, we
     // queue them up and run them in a separate thread to avoid taxing
@@ -139,16 +138,16 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
   ACE_TCHAR buf[BUFSIZ];
   ACE_INET_Addr  addr;
   const ACE_TCHAR *mod_name = this->name ();
-  
+
   if (this->context ()->acceptor ().get_local_addr (addr) == -1)
     return -1;
-  
+
   ACE_OS::sprintf (buf,
                    FMTSTR,
-		   mod_name,
+                   mod_name,
                    addr.get_port_number (),
                    ACE_TEXT ("tcp"),
-		   ACE_TEXT ("# consumer router"),
+                   ACE_TEXT ("# consumer router"),
                    this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer"));
   if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)
     return -1;

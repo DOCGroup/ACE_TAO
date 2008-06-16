@@ -32,7 +32,7 @@ static ACE_Registry::Name counter_name;
 
 // Protypes
 static int update_counter (HKEY predefined,
-			   u_long &current_counter);
+                           u_long &current_counter);
 static void setup_names ();
 
 int
@@ -46,16 +46,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Update counter per user
   result = ::update_counter (HKEY_CURRENT_USER,
-			     current_counter);
+                             current_counter);
   if (result == 0)
     {
       cout << "User counter: " << current_counter << endl;
 
       // Update counter per machine
       result = ::update_counter (HKEY_LOCAL_MACHINE,
-				 current_counter);
+                                 current_counter);
       if (result == 0)
-	cout << "Machine counter: " << current_counter << endl;
+        cout << "Machine counter: " << current_counter << endl;
     }
 
   if (result != 0)
@@ -68,7 +68,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
 static int
 update_counter (HKEY predefined,
-		u_long &current_counter)
+                u_long &current_counter)
 {
   int result;
   ACE_Registry::Naming_Context parent_context;
@@ -76,18 +76,18 @@ update_counter (HKEY predefined,
 
   // Connect to predefined entry
   result = ACE_Predefined_Naming_Contexts::connect (parent_context,
-						    predefined);
+                                                    predefined);
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Predefined_Naming_Contexts::connect failed"), -1);
 
   // Find application context name
   result = parent_context.resolve_context (application_context_name,
-					   application_context);
+                                           application_context);
 
   if (result != 0)
     // Failed to find: create a new context
     result = parent_context.bind_new_context (application_context_name,
-					      application_context);
+                                              application_context);
 
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Contexts::bind/resolve_context failed"), -1);
@@ -96,18 +96,18 @@ update_counter (HKEY predefined,
   u_long counter = 0;
   // Represent counter as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) &counter,
-			       sizeof counter,
-			       REG_DWORD);
+                               sizeof counter,
+                               REG_DWORD);
   // Find counter
   result = application_context.resolve (counter_name,
-					object);
+                                        object);
 
   if (result != 0)
     // Failed to find: create new binding for object
     {
       counter = 1;
       result = application_context.bind (counter_name,
-					 object);
+                                         object);
     }
   else
     // Counter was found
@@ -116,7 +116,7 @@ update_counter (HKEY predefined,
       counter++;
       // Update
       result = application_context.rebind (counter_name,
-					   object);
+                                           object);
     }
 
   if (result != 0)

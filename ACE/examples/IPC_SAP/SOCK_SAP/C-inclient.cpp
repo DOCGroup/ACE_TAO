@@ -60,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Establish connection with remote server.
   if (ACE_OS::connect (s_handle,
-		       reinterpret_cast<sockaddr *> (&saddr),
+                       reinterpret_cast<sockaddr *> (&saddr),
                        sizeof saddr) == -1)
     ACE_OS::perror (ACE_TEXT("connect")), ACE_OS::exit (1);
 
