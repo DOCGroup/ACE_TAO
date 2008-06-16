@@ -1,3 +1,12 @@
+Mon Jun 16 19:06:44 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Acceptor.cpp:
+        * ace/Connector.cpp:
+        * ace/Strategies_T.cpp:
+
+          Use the NORMAL_CLOSE_OPERATION enum value when closing the service
+          handler during activation.
+
 Mon Jun 16 18:33:34 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/ASX/UPIPE_Event_Server/Peer_Router.cpp:
