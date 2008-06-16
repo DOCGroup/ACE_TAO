@@ -1,3 +1,12 @@
+Mon Jun 16 13:40:13 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_3049/Test.cpp:
+        * tests/ORB_Local_Config/Bug_3049/a.conf:
+
+          Replace UIOP with something else so that the test can run on
+          windows. Also update the test to make explicit the verification
+          that an otherwise local configuration is shared between two ORBs.
+
 Mon Jun 16 12:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * performance-tests/Protocols/test.idl:

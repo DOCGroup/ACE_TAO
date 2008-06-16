@@ -1,17 +1,15 @@
 
-// @author Jeff Mirwaisi <jeff_mirwaisi@yahoo.com>
-// @author Iliyan Jeliazkov <iliyan2ociweb.com>
+// @author Phil Mesnier <mesnier_p@ociweb.com>
 
-// the following is a simplification of the above problems (see
-// bugzilla 1459) and the different scenarios minus the creation of
-// the servant the service manager or threads even without the servant
-// to demonstrate that the server is capable of responding (which in
-// some cases it isnt) problems can allready be seen in the multiple
-// orb scenarios AB b isnt prompted for a new certificate password, MA
-// ssliop isnt loaded at all etc
-
+// This test scenario is documented in bugzilla bug 3049. This test
+// creates 3 ORBs. ORB-A becomes the default ORB, which shares the
+// global config context, ORB-B initializes a local configuration
+// context which loads a service. ORB-C finally shares the configuration
+// from ORB-B. The demonstration is to show that a service is avialable
+// to ORB-C from the configuration initalized by ORB-B.
 
 #include "tao/corba.h"
+#include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"
 
@@ -20,8 +18,9 @@ ACE_RCSID (tests, server, "$Id$")
 
 #include "Service_Configuration_Per_ORB.h"
 
-const char argA[] = "AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf";
-const char argB[] = "BBB -ORBGestalt ORB:ORB-A -ORBId ORB-B";
+const char argA[] = "AAA -ORBGestalt LOCAL -ORBId ORB-A";
+const char argB[] = "BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf a.conf";
+const char argC[] = "BBB -ORBGestalt ORB:ORB-B -ORBId ORB-C";
 
 int
 testBug3049 (int , ACE_TCHAR *[])
@@ -39,40 +38,39 @@ testBug3049 (int , ACE_TCHAR *[])
     n = arg1.argc();
     CORBA::ORB_var ORBB = CORBA::ORB_init(n,arg1.argv());
 
-    if (ORBB.in () == 0)
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to get a second ORB\n")), -1);
+    ACE_ARGV arg2(argC);
+    n = arg2.argc();
+    CORBA::ORB_var ORBC = CORBA::ORB_init(n,arg2.argv());
 
-    if (ORBA.in () == ORBB.in ())
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexpected to find the two ORBs the same\n")), -1);
-
-    // Look ma!! No ... services?!
+    // Confirm that ORBC has SHMIOP, which it inherits from ORBB, and
+    // that SHMIOP is not available in the global context
 
     ACE_Service_Object *so = 0;
     int error = 0;
-    so = ACE_Dynamic_Service<ACE_Service_Object>::instance ("SSLIOP_Factory");
+    so = ACE_Dynamic_Service<ACE_Service_Object>::instance ("SHMIOP_Factory");
     if (so != 0)
       {
         error++;
         ACE_ERROR ((LM_DEBUG,
-                    ACE_TEXT("Unexpected to find SSLIOP_Factory globally\n")));
+                    ACE_TEXT("Unexpected to find SHMIOP_Factory globally\n")));
       }
 
-    so = ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIPMC_Factory");
-    if (so != 0)
+
+    so = ACE_Dynamic_Service<ACE_Service_Object>::instance
+      (ORBC->orb_core()->configuration(), "SHMIOP_Factory");
+    if (so == 0)
       {
         error++;
         ACE_ERROR ((LM_DEBUG,
-                    ACE_TEXT("Unexpected to find ")
-                    ACE_TEXT("UIPMC_Factory globally\n")));
+                    ACE_TEXT("Failed to find ")
+                    ACE_TEXT("SHMIOP_Factory in ORBC\n")));
       }
-
-    // Since each svc conf file causes the ORB to load the services in
-    // its own service space no services are reachable through the
-    // global service repo
 
     ORBA->destroy();
 
     ORBB->destroy();
+
+    ORBC->destroy();
 
     if (error > 0)
       return -1;
