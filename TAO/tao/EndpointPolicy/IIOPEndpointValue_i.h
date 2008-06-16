@@ -83,7 +83,7 @@ public:
   /// exist for examining the eventual TAO_Endpoint values the
   /// acceptor would produce.
   CORBA::Boolean validate_acceptor (TAO_Acceptor *,
-				    bool is_multi_prot) const;
+                                    bool is_multi_prot) const;
 
   /// Host attribute get/set operators.
   char * host (void);
