@@ -387,23 +387,6 @@ sub check_for_tab ()
                     $disable = 0;
                 }
                 if ($disable == 0 and /.*\t.*/) {
-                    # The following directories are infested
-                    # with tabs. When don't check these
-                    # directories for now to enable detection
-                    # of new tabs introduced in the core
-                    # of ACE/TAO/CIAO
-                    if (($file =~ /(ACE)*.*apps/i)) {
-                      next ITERATION;
-                    }
-
-                    # for now, we don't want to indicate
-                    # each occurance of tab in a file,
-                    # we just want to indicate once that
-                    # tabs exist in a file.
-                    # print_error ("$file:$.: tab found");
-                    #print_error ("$file: tab found");
-                    #next ITERATION;
-
                     print_error ("$file:$.: found tab");
                 }
             }
