@@ -24,7 +24,7 @@ module Benchmark
    * define the component executor interface explicitly here.
    */
   local interface RoundTrip_Exec : CCM_RoundTrip, CCM_LatencyTest,
-				 Components::SessionComponent
+         Components::SessionComponent
   {
   };
 
