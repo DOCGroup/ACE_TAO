@@ -13,9 +13,14 @@
  *  'Target' means the O.S. and the compiler to which cpp is implemented.
  *  'Host' means the O.S. and the compiler with which cpp is compiled.
  */
+#include "ace/config.h"
 
 /* Define target operating-system.  */
-#define SYSTEM              SYS_FREEBSD
+#ifdef ACE_WIN32
+#define SYSTEM SYS_WIN
+#else
+#define SYSTEM SYS_UNIX
+#endif
 
 /* Define target compiler.          */
 #ifndef COMPILER
