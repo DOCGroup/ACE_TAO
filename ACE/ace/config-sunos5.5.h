@@ -413,8 +413,5 @@
 // Sum of the iov_len values can't be larger then SSIZE_MAX
 #define ACE_HAS_SOCK_BUF_SIZE_MAX
 
-// Used by the OS monitor classes in ace/Monitor_Control
-#define ACE_HAS_KSTAT
-
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

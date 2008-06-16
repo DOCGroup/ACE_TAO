@@ -1,3 +1,15 @@
+Mon Jun 16 12:12:16 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/config-sunos5.5.h:
+        
+          Reverted addition of ACE_HAS_KSTAT flag in
+          
+          Fri Jun 13 14:00:00 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+          
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl>, we now
+          know that the correct way to do this is to set kstat=1
+          in platform_macros.GNU.
+
 Mon Jun 16 11:28:11 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
