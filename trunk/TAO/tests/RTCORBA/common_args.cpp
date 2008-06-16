@@ -162,10 +162,10 @@ get_values (const char *test_type,
       values[i] = ACE_OS::strtoul (working_string, &endptr, 10);
 
       if (endptr != working_string && endptr != 0 && *endptr != '\0')
-	{
-	  result = 0;
+        {
+          result = 0;
           break;
-	}
+        }
 
       working_string += ACE_OS::strlen (working_string);
       working_string += 1;

@@ -24,21 +24,17 @@ const char *ior_file = "test.ior";
 /*** Servant Declaration ***/
 /***************************/
 
-class ST_AMH_Servant
-  	: public virtual POA_Test::AMH_Roundtrip
-    {
-    public:
+class ST_AMH_Servant : public virtual POA_Test::AMH_Roundtrip
+{
+public:
+  ST_AMH_Servant (CORBA::ORB_ptr orb);
 
-      	ST_AMH_Servant (CORBA::ORB_ptr orb);
+  void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
+                    Test::Timestamp send_time);
 
-     	void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                        Test::Timestamp send_time);
-
-    protected:
-      	CORBA::ORB_ptr orb_;
-    };
-
-
+protected:
+  CORBA::ORB_ptr orb_;
+};
 
 /****************************/
 /**** Server Declaration ****/
@@ -49,48 +45,44 @@ class ST_AMH_Servant
  all the AMH servers and 'hides' all the common ORB functions.
  */
 class ST_AMH_Server
-    {
-    public:
-      ST_AMH_Server (int *argc, char **argv);
-      virtual ~ST_AMH_Server ();
+{
+public:
+  ST_AMH_Server (int *argc, char **argv);
+  virtual ~ST_AMH_Server ();
 
-      /// ORB inititalisation stuff
-      int start_orb_and_poa (const CORBA::ORB_var &_orb);
+  /// ORB inititalisation stuff
+  int start_orb_and_poa (const CORBA::ORB_var &_orb);
 
-      /// register the servant with the poa
-      virtual void register_servant (ST_AMH_Servant *servant);
+  /// register the servant with the poa
+  virtual void register_servant (ST_AMH_Servant *servant);
 
-      /// orb-perform_work () abstraction
-      virtual void run_event_loop ();
+  /// orb-perform_work () abstraction
+  virtual void run_event_loop ();
 
-    public:
+public:
 
-    protected:
-      int *argc_;
-      char **argv_;
-      char *ior_output_file_;
-      CORBA::ORB_ptr orb_;
-      PortableServer::POA_var root_poa_;
+protected:
+  int *argc_;
+  char **argv_;
+  char *ior_output_file_;
+  CORBA::ORB_ptr orb_;
+  PortableServer::POA_var root_poa_;
 
-    private:
-      /// Write servant IOR to file specified with the '-o' option
-      int write_ior_to_file (CORBA::String_var ior);
-    };
-
-
+private:
+  /// Write servant IOR to file specified with the '-o' option
+  int write_ior_to_file (CORBA::String_var ior);
+};
 
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
-
-
 
 // ------------------------------------------------------------------------
 //
 int parse_args (int argc, char *argv[])
 {
-ACE_Get_Opt get_opts (argc, argv, "n:");
-int c;
+  ACE_Get_Opt get_opts (argc, argv, "n:");
+  int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -103,9 +95,6 @@ int c;
       }
   return 0;
 }
-
-
-
 
 /***************************/
 /*** Servant Definition ***/
@@ -124,20 +113,16 @@ void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              Test::Timestamp send_time)
 {
-    ACE_OS::printf("Recieved Timestamp # %d \n", calls_received);
-  	ACE_OS::sleep(1);
-  	calls_received++;
+  ACE_OS::printf("Recieved Timestamp # %d \n", calls_received);
+  ACE_OS::sleep(1);
+  calls_received++;
 
-  	ACE_UNUSED_ARG (send_time);
-  	ACE_UNUSED_ARG (_tao_rh);
+  ACE_UNUSED_ARG (send_time);
+  ACE_UNUSED_ARG (_tao_rh);
 
   // When _tao_rh destructor is called, it shouldn't send anything to
   // the client as well
 }
-
-
-
-
 
 /*** Server Declaration ***/
 
@@ -153,15 +138,14 @@ ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
 //
 ST_AMH_Server::~ST_AMH_Server ()
 {
-  	try
-    	{
-      	this->root_poa_->destroy (1, 1);
-    	}
-  	catch (const CORBA::Exception& ex)
-    	{
-      	ex._tao_print_exception ("Exception caught:");
-    	}
-
+  try
+    {
+      this->root_poa_->destroy (1, 1);
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Exception caught:");
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -233,7 +217,7 @@ void ST_AMH_Server::run_event_loop ()
     {
       ACE_Time_Value period (1, 0);
       while (1)
-            {
+        {
           this->orb_->perform_work (&period);
 
           // when all calls from client have been recieved, exit
@@ -242,7 +226,8 @@ void ST_AMH_Server::run_event_loop ()
         }
     }
   catch (const CORBA::Exception&)
-    {}
+    {
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -270,29 +255,29 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var iorstr)
 //
 static ACE_THR_FUNC_RETURN start_server(void* _arg)
 {
-ST_AMH_Server *amh_server = static_cast<ST_AMH_Server*>(_arg);
-	amh_server->run_event_loop();
-	return 0;
+  ST_AMH_Server *amh_server = static_cast<ST_AMH_Server*>(_arg);
+  amh_server->run_event_loop();
+  return 0;
 }
 
 // ------------------------------------------------------------------------
 //
 static ACE_THR_FUNC_RETURN start_client(void* _arg)
 {
-Test::Roundtrip_var roundtrip(static_cast<Test::Roundtrip_ptr>(_arg));
+  Test::Roundtrip_var roundtrip(static_cast<Test::Roundtrip_ptr>(_arg));
 
-      // Do a couple of calls on the server. If the sever is trying to
-      // do something stupid like sending an exception to us, then it
-      // won't be able to handle more than 1 request from us.
-Test::Timestamp time = 10;
+  // Do a couple of calls on the server. If the sever is trying to
+  // do something stupid like sending an exception to us, then it
+  // won't be able to handle more than 1 request from us.
+  Test::Timestamp time = 10;
 
-    for (int i = 0; i < num_calls; i++)
-        {
-        roundtrip->test_method(time);
-        ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i));
-        }
+  for (int i = 0; i < num_calls; i++)
+    {
+      roundtrip->test_method(time);
+      ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i));
+    }
 
-	return 0;
+  return 0;
 }
 
 
@@ -300,52 +285,50 @@ Test::Timestamp time = 10;
 //
 int main (int argc, char *argv[])
 {
-  	if (parse_args (argc, argv) != 0)
-    	return 1;
+  if (parse_args (argc, argv) != 0)
+    return 1;
 
-ST_AMH_Server amh_server (&argc, argv);
-CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
+  ST_AMH_Server amh_server (&argc, argv);
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
 
 
-  	amh_server.start_orb_and_poa(orb);
+  amh_server.start_orb_and_poa(orb);
 
-ST_AMH_Servant servant(orb.in());
+  ST_AMH_Servant servant(orb.in());
 
-  	amh_server.register_servant(&servant);
+  amh_server.register_servant(&servant);
 
-    CORBA::Object_var object =  orb->string_to_object(ior);
+  CORBA::Object_var object =  orb->string_to_object(ior);
 
-    Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow(object.in ());
+  Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow(object.in ());
 
-    if (CORBA::is_nil(roundtrip.in()))
-      	{
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nil Test::Roundtrip reference <%s>\n",
-                           ior),
-                          1);
-      	}
+  if (CORBA::is_nil(roundtrip.in()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Nil Test::Roundtrip reference <%s>\n",
+                         ior),
+                        1);
+    }
 
-    ACE_thread_t serverThr;
-    ACE_thread_t clientThr;
+  ACE_thread_t serverThr;
+  ACE_thread_t clientThr;
 
-    ACE_Thread_Manager::instance()->spawn(start_server,
-                                          (void*)&amh_server,
-                                          THR_NEW_LWP | THR_JOINABLE,
-                                          &serverThr
-                                          );
+  ACE_Thread_Manager::instance()->spawn(start_server,
+                                        (void*)&amh_server,
+                                        THR_NEW_LWP | THR_JOINABLE,
+                                        &serverThr);
 
-    ACE_Thread_Manager::instance()->spawn(start_client,
-                                          (void*)roundtrip.in (),
-                                          THR_NEW_LWP | THR_JOINABLE,
-                                          &clientThr
-                                          );
+  ACE_Thread_Manager::instance()->spawn(start_client,
+                                        (void*)roundtrip.in (),
+                                        THR_NEW_LWP | THR_JOINABLE,
+                                        &clientThr);
 
-    ACE_Thread_Manager::instance()->join(clientThr);
-    ACE_OS::printf("End client\n");
-    ACE_Thread_Manager::instance()->join(serverThr);
-    ACE_OS::printf("End server\n");
+  ACE_Thread_Manager::instance()->join(clientThr);
+  ACE_OS::printf("End client\n");
+  ACE_Thread_Manager::instance()->join(serverThr);
+  ACE_OS::printf("End server\n");
 
-   	orb->destroy();
+  orb->destroy();
 
-    return 0;
+  return 0;
 }

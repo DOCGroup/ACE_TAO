@@ -65,22 +65,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::StringList_var seq =
         hello->get_stringList ();
 
-      for (CORBA::ULong i = 0; i<seq->length(); i++) {
-        CORBA::String_var the_string = CORBA::string_dup ((*seq)[i]);
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
-                  the_string.in ()));
-      }
+      for (CORBA::ULong i = 0; i<seq->length(); i++)
+        {
+          CORBA::String_var the_string = CORBA::string_dup ((*seq)[i]);
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+                      the_string.in ()));
+        }
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - get_stringList2 with initialization\n"));
 
       Test::StringList_var seq2;
       hello->get_stringList2(true, seq2.out());
 
-      for (CORBA::ULong i = 0; i<seq2->length(); i++) {
-        CORBA::String_var the_string = seq2.in()[i].in();
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
-                  the_string.in ()));
-      }
+      for (CORBA::ULong i = 0; i<seq2->length(); i++)
+        {
+          CORBA::String_var the_string = seq2.in()[i].in();
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+                      the_string.in ()));
+        }
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - get_stringList2 without initialization\n"));
 
@@ -90,11 +92,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       hello->mod_stringList(seq.inout());
 
-      for (CORBA::ULong i = 0; i<seq->length(); i++) {
-        CORBA::String_var the_string = CORBA::string_dup ((*seq)[i]);
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
-                  the_string.in ()));
-	  }
+      for (CORBA::ULong i = 0; i<seq->length(); i++)
+        {
+          CORBA::String_var the_string = CORBA::string_dup ((*seq)[i]);
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+                      the_string.in ()));
+        }
 
       hello->shutdown ();
 
@@ -118,11 +121,12 @@ void get_stringList2(Test::Hello_var hello)
       // Shutdown the ORB and block until the shutdown is complete.
       hello->get_stringList2(false, seq2.out());
 
-      for (CORBA::ULong i = 0; i<seq2->length(); i++) {
-        CORBA::String_var the_string = seq2.in()[i].in ();
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
-                  the_string.in ()));
-	  }
+      for (CORBA::ULong i = 0; i<seq2->length(); i++)
+        {
+          CORBA::String_var the_string = seq2.in()[i].in ();
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+                      the_string.in ()));
+        }
     }
   catch (const CORBA::BAD_PARAM& )
     {

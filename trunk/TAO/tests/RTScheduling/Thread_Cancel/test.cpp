@@ -12,9 +12,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb =
-	CORBA::ORB_init (argc,
-			 argv,
-			 "");
+      CORBA::ORB_init (argc,
+                       argv,
+                       "");
 
       CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager");
 
@@ -29,14 +29,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       task.activate_task (orb.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Waiting for Threads to Activate...\n"));
+                  "Waiting for Threads to Activate...\n"));
       ACE_OS::sleep (5);
       ACE_DEBUG ((LM_DEBUG,
-		  "Threads Activated\n"));
-
+                  "Threads Activated\n"));
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Cancelling Threads.....\n"));
+                  "Cancelling Threads.....\n"));
 
       CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current");
 
@@ -61,4 +60,3 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

@@ -42,7 +42,7 @@ make_wstring (const char *str)
       char *t = const_cast<char *> (str);
       wstr[i] = static_cast<wchar_t> (*(t + i));
       ACE_DEBUG ((LM_DEBUG,
-	              "wstr[%d] = %d\n", i, (short)wstr[i]));
+                  "wstr[%d] = %d\n", i, (short)wstr[i]));
     }
   return wstr;
 }
@@ -63,7 +63,7 @@ int main (int argc, char *argv[])
       // Get IOR from command line (or file)
       if (argc != 2)
         {
-		  ACE_OS::strcpy (buf, "file://server.ior");
+          ACE_OS::strcpy (buf, "file://server.ior");
         }
       else
         {

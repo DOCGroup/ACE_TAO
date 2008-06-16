@@ -23,7 +23,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Obtain a reference to the CodecFactory.
     CORBA::Object_var obj2 =
-    	orb->resolve_initial_references ("CodecFactory");
+      orb->resolve_initial_references ("CodecFactory");
 
     IOP::CodecFactory_var codec_factory =
       IOP::CodecFactory::_narrow (obj2.in ());

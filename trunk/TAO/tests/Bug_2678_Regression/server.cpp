@@ -48,8 +48,9 @@ AnySeq *Test_impl::RunTest(const AnySeq &params)
         ACE_DEBUG ((LM_DEBUG, "%d %d %d %d %d\n", inner->value1, inner->value2, inner->value3, inner->value4, inner->value5));
     }
   }
-	AnySeq *result = new AnySeq(params);
-	return result;
+
+  AnySeq *result = new AnySeq(params);
+  return result;
 }
 
 int main (int argc, char *argv[])

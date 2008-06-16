@@ -10,9 +10,9 @@
 ACE_RCSID(Collocation_Oneway_Tests, Client_Task, "$Id$")
 
 Client_Task::Client_Task (const char *ior,
-			  CORBA::ORB_ptr corb,
+                          CORBA::ORB_ptr corb,
                           Client_Task::ClientSyncModeEnum syncMode,
-			  ACE_Thread_Manager *thr_mgr)
+                          ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
     , input_ (ior)
     , corb_ (CORBA::ORB::_duplicate (corb))
@@ -86,7 +86,7 @@ Client_Task::svc (void)
         hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
-		  the_string.in ()));
+                  the_string.in ()));
 
       hello->onewayTest();
 
