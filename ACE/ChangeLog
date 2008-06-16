@@ -1,3 +1,16 @@
+Mon Jun 16 17:53:00 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/IPC_SAP/SPIPE_SAP/consumer_msg.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_read.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-client.cpp:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.h:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFCDlg.h:
+        * examples/Log_Msg/Log_Msg_MFC/StdAfx.h:
+        * examples/Log_Msg/Log_Msg_MFC/StdAfx.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.inl:
+
+          Untabify.
+
 Mon Jun 16 17:27:36 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/PerlACE/TargetProcess.pm:

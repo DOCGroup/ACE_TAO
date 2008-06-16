@@ -16,7 +16,7 @@
     #error include 'stdafx.h' before including this file for PCH
 #endif
 
-#include "resource.h"		// main symbols
+#include "resource.h" // main symbols
 
 // Add some includes here for our Logger
 #include "MFC_Log.h"
