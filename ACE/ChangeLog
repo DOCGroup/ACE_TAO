@@ -1,3 +1,11 @@
+Mon Jun 16 17:27:36 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/TargetProcess.pm:
+
+          Remove the "use" of PerlACE::ProcessVX.  It is already used in
+          PerlACE::Process and using it in this module causes things to be
+          evaluated incorrectly with respect to @ARGV.
+
 Mon Jun 16 17:01:19 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:

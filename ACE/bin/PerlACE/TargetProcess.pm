@@ -13,7 +13,6 @@ package PerlACE::TargetProcess;
 
 use strict;
 
-use PerlACE::ProcessVX;
 use PerlACE::Process;
 
 # ******************************************************************
