@@ -1,3 +1,20 @@
+Mon Jun 16 21:22:03 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/JAWS/clients/Caching/Local_Locator.cpp:
+        * apps/JAWS/clients/WebSTONE/src/bench.c:
+        * apps/JAWS/clients/WebSTONE/src/errexit.c:
+        * apps/JAWS/clients/WebSTONE/src/genrand.c:
+        * apps/JAWS/clients/WebSTONE/src/get.c:
+        * apps/JAWS/clients/WebSTONE/src/gettimeofday.c:
+        * apps/JAWS/clients/WebSTONE/src/parse_file_list.c:
+        * apps/JAWS/clients/WebSTONE/src/rexec.c:
+        * apps/JAWS/clients/WebSTONE/src/statistics.c:
+        * apps/JAWS/clients/WebSTONE/src/sysdep.c:
+        * apps/JAWS/clients/WebSTONE/src/timefunc.c:
+        * apps/drwho/Hash_Table.cpp:
+
+          Untabify.
+
 Mon Jun 16 20:24:45 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * apps/Gateway/Gateway/Connection_Handler.cpp:

@@ -12,7 +12,7 @@
  *    documentation and/or other materials provided with the distribution.
  * 3. All advertising materials mentioning features or use of this software
  *    must display the following acknowledgement:
- *	 This product includes software developed by Ataman Software, Inc.
+ *    This product includes software developed by Ataman Software, Inc.
  * 4. The name of Ataman Software, Inc. may not may be used to endorse or
  *    promote products derived from this software without specific prior
  *    written permission.
@@ -32,7 +32,7 @@
 
 
 static char copyright[] =
-	"Copyright (c) 1994-1995 Ataman Software, Inc.  All rights reserved.";
+    "Copyright (c) 1994-1995 Ataman Software, Inc.  All rights reserved.";
 
 
 #pragma warning(disable: 4699)
@@ -100,274 +100,282 @@ IDENT idIn = 0;
 IDENT idOut, idErr;
 
 SOCKET rexec(const char **hostname, NETPORT port, char *username, char *password,
-		char *command, SOCKET *sockerr)
+             char *command, SOCKET *sockerr)
 {
 
-	MyOpenService(*hostname);
+    MyOpenService(*hostname);
 
-	SendZString(username);
-	SendZString(password);
-	SendZString(command);
+    SendZString(username);
+    SendZString(password);
+    SendZString(command);
 
-	if (!GetErrString(command, sizeof command)) {
-		errexit("Rexec: Remote aborted connection without initiating protocol: %s.\n",
-			neterrstr());
-	}
+    if (!GetErrString(command, sizeof command)) {
+        errexit("Rexec: Remote aborted connection without initiating protocol: %s.\n",
+                neterrstr());
+    }
 
-	if (*command != '\0') {
-		char *p = command;
-		if (*p == '\001') {
-			p++;
-		}
-		errexit("Rexec: Remote aborted connection: %s\n", p);
-	}
+    if (*command != '\0') {
+        char *p = command;
+        if (*p == '\001') {
+            p++;
+        }
+        errexit("Rexec: Remote aborted connection: %s\n", p);
+    }
 
-	hStdIn = GetStdHandle(STD_INPUT_HANDLE);
-	hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	hStdErr = GetStdHandle(STD_ERROR_HANDLE);
+    hStdIn = GetStdHandle(STD_INPUT_HANDLE);
+    hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    hStdErr = GetStdHandle(STD_ERROR_HANDLE);
 
-	*sockerr = sErr;
-	return sIO;
+    *sockerr = sErr;
+    return sIO;
 }
 
 
 static void MyOpenService(const char *remote_host)
 {
-	struct sockaddr_in server_addr, my_err_addr, junk_addr;
-	struct servent *sv;
-	static char portbuf[30];
-	SOCKET sTmp;
-	int addr_len;
+    struct sockaddr_in server_addr, my_err_addr, junk_addr;
+    struct servent *sv;
+    static char portbuf[30];
+    SOCKET sTmp;
+    int addr_len;
 
-  if (remote_host[0] >= '0' && remote_host[0] <= '9') {
-     unsigned long addr;
+    if (remote_host[0] >= '0' && remote_host[0] <= '9') {
+        unsigned long addr;
 
-  	 addr = inet_addr(remote_host);
-	 if (addr == INADDR_NONE) {
-	 	returnerr("Invalid IP address %s\n", remote_host);
-	 	return;
-	 }
-		server_addr.sin_addr.S_un.S_addr = addr;
-  } else {
-	struct hostent *hent;
+        addr = inet_addr(remote_host);
+        if (addr == INADDR_NONE) {
+            returnerr("Invalid IP address %s\n", remote_host);
+            return;
+        }
+        
+        server_addr.sin_addr.S_un.S_addr = addr;
+    } 
+    else {
+        struct hostent *hent;
 
-    hent = gethostbyname(remote_host);
-	if (hent == 0)
-	  {
-	    D_PRINTF( "Can't get %s host entry\n", remote_host );
-	    D_PRINTF( "Gethostbyname failed: %d", WSAGetLastError() );
-	    errexit("Rexec: gethostbyname(%s) failed: %s\n",
-		    remote_host, neterrstr());
-	  }
-	memcpy((char *)&server_addr.sin_addr, hent->h_addr, hent->h_length);
+        hent = gethostbyname(remote_host);
+        if (hent == 0)
+        {
+            D_PRINTF( "Can't get %s host entry\n", remote_host );
+            D_PRINTF( "Gethostbyname failed: %d", WSAGetLastError() );
+            errexit("Rexec: gethostbyname(%s) failed: %s\n",
+                    remote_host, neterrstr());
+        }
+    memcpy((char *)&server_addr.sin_addr, hent->h_addr, hent->h_length);
 }
 
 #ifdef OMIT
-	hent = gethostbyname(remote_host);
-	if(!hent) {
-		errexit("Rexec: Lookup of server hostname failed: %s.\n",
-			neterrstr());
-	}
+    hent = gethostbyname(remote_host);
+    if(!hent) {
+        errexit("Rexec: Lookup of server hostname failed: %s.\n",
+                neterrstr());
+    }
 #endif /* OMIT */
 
-	sv=getservbyname("exec", "tcp");
-	if (!sv) {
-		errexit("Rexec: Lookup of port number for rexec service failed: %s.\n",
-			neterrstr());
-	}
+    sv=getservbyname("exec", "tcp");
+    if (!sv) {
+        errexit("Rexec: Lookup of port number for rexec service failed: %s.\n",
+                neterrstr());
+    }
 
-	server_addr.sin_family = PF_INET;
-	server_addr.sin_port = htons(sv->s_port);
+    server_addr.sin_family = PF_INET;
+    server_addr.sin_port = htons(sv->s_port);
 
-	if((sIO=socket(PF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
-		errexit("Rexec: I/O socket creation failed: %s.\n",
-			neterrstr());
-	}
+    if((sIO=socket(PF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
+        errexit("Rexec: I/O socket creation failed: %s.\n",
+                neterrstr());
+    }
 
-	if(connect(sIO, (struct sockaddr *)&server_addr, sizeof server_addr) == SOCKET_ERROR) {
-		errexit("Rexec: I/O socket connection failed: %s.\n",
-			neterrstr());
-	}
+    if(connect(sIO,
+               (struct sockaddr *)&server_addr, sizeof server_addr) == SOCKET_ERROR) {
+        errexit("Rexec: I/O socket connection failed: %s.\n",
+                neterrstr());
+    }
 
-	memset(&my_err_addr, '\0', sizeof my_err_addr);
-	my_err_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	my_err_addr.sin_family = AF_INET;
-	my_err_addr.sin_port = 0;
+    memset(&my_err_addr, '\0', sizeof my_err_addr);
+    my_err_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    my_err_addr.sin_family = AF_INET;
+    my_err_addr.sin_port = 0;
 
-	if ((sTmp=socket(PF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
-		errexit("Rexec: Error socket creation failed: error=%s.\n",
-			neterrstr());
-	}
+    if ((sTmp=socket(PF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
+        errexit("Rexec: Error socket creation failed: error=%s.\n",
+                neterrstr());
+    }
 
-	if (bind(sTmp, (struct sockaddr *)&my_err_addr, sizeof my_err_addr) == SOCKET_ERROR) {
-		errexit("Rexec: Error socket bind failed: %s.\n",
-			neterrstr());
-		(void) closesocket(sTmp);
-	}
+    if (bind(sTmp,
+             (struct sockaddr *)&my_err_addr, sizeof my_err_addr) == SOCKET_ERROR) {
+        errexit("Rexec: Error socket bind failed: %s.\n",
+                neterrstr());
+        (void) closesocket(sTmp);
+    }
 
-	if (listen(sTmp, 1) == SOCKET_ERROR) {
-		errexit("Rexec: Error socket listen failed: %s.\n",
-			neterrstr());
-		(void) closesocket(sTmp);
-	}	
+    if (listen(sTmp, 1) == SOCKET_ERROR) {
+        errexit("Rexec: Error socket listen failed: %s.\n",
+                neterrstr());
+        (void) closesocket(sTmp);
+    }
 
-	addr_len = sizeof my_err_addr;
-	if (getsockname(sTmp, (struct sockaddr *)&my_err_addr, &addr_len) == SOCKET_ERROR) {
-		errexit("Rexec: Error socket bind failed: %s.\n",
-			neterrstr());
-		(void) closesocket(sTmp);
-	}
+    addr_len = sizeof my_err_addr;
+    if (getsockname(sTmp,
+                    (struct sockaddr *)&my_err_addr, &addr_len) == SOCKET_ERROR) {
+        errexit("Rexec: Error socket bind failed: %s.\n",
+                neterrstr());
+        (void) closesocket(sTmp);
+    }
 
-	sprintf(portbuf, "%hu", ntohs(my_err_addr.sin_port));
-	SendZString(portbuf);
+    sprintf(portbuf, "%hu", ntohs(my_err_addr.sin_port));
+    SendZString(portbuf);
 
-	addr_len = sizeof junk_addr;
-	if ((sErr = accept(sTmp, (struct sockaddr *)&junk_addr, &addr_len))
-		== INVALID_SOCKET) {
-		errexit("Rexec: Error socket accept failed: %s.\n",
-			neterrstr());
-		(void) closesocket(sTmp);
-	}
+    addr_len = sizeof junk_addr;
+    if ((sErr = accept(sTmp, (struct sockaddr *)&junk_addr, &addr_len)) == INVALID_SOCKET) {
+        errexit("Rexec: Error socket accept failed: %s.\n",
+                neterrstr());
+        (void) closesocket(sTmp);
+    }
 
-	(void) closesocket(sTmp);
+    (void) closesocket(sTmp);
 }
 
-
-	
 static BOOL Send(SOCKET s, const char *buf, size_t nbuf)
 {
-	int cnt;
-	size_t sent = 0;
+    int cnt;
+    size_t sent = 0;
 
-	while (sent < nbuf) {
-		cnt = send(s, &buf[sent], nbuf-sent, 0);
-		if (cnt == -1) {
-			return FALSE;
-		}
-		sent += cnt;
-	}
-	return TRUE;
+    while (sent < nbuf) {
+        cnt = send(s, &buf[sent], nbuf-sent, 0);
+        if (cnt == -1) {
+            return FALSE;
+        }
+        sent += cnt;
+    }
+    return TRUE;
 }
 
 
 static BOOL SendZString(const char *str)
 {
-	return Send(sIO, str, strlen(str)+1);
+    return Send(sIO, str, strlen(str)+1);
 }
 
 
 static BOOL GetErrString(char *str, size_t len)
 {
-	size_t pos = 0;
+    size_t pos = 0;
 
-	while (pos < len) {
-		char ch;
-		if (recv(sIO, &ch, 1, 0) != 1) {
-			return FALSE;
-		}
-		str[pos++] = ch;
-		if (ch == '\0') {
-			return TRUE;
-		}
-		if (ch == '\n') {
-			return TRUE;
-		}
-	}
-	return FALSE;
+    while (pos < len) {
+        char ch;
+        if (recv(sIO, &ch, 1, 0) != 1) {
+            return FALSE;
+        }
+        str[pos++] = ch;
+        if (ch == '\0') {
+            return TRUE;
+        }
+        if (ch == '\n') {
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
 
 static IDENT PassOutput()
 {
-	IDENT id;
-	id = (IDENT)_beginthread(PassOutputThread, 4096, (void *)sIO);
-	if ((long)id == -1) {
-		errexit("Rexec: Could not start output passing thread: error = %lu\n", GetLastError());
-	}
-	return id;
+    IDENT id;
+    id = (IDENT)_beginthread(PassOutputThread, 4096, (void *)sIO);
+    if ((long)id == -1) {
+        errexit("Rexec: Could not start output passing thread: error = %lu\n",
+                GetLastError());
+    }
+    return id;
 }
 
 static void PassOutputThread(SOCKET sIO)
 {
-	RETVAL retval = 0;
-	int count;
-	char buf[4096];
+    RETVAL retval = 0;
+    int count;
+    char buf[4096];
 
-	while ((count=recv(sIO, buf, sizeof buf, 0)) > 0) {
-		if (!Write(STDOUTPUT, buf, count)) {
-			fprintf(stderr, "Error writing to standard output: error = %lu.\n", GetLastError());
-			retval = 1;
-			break;
-		}
-	}
+    while ((count=recv(sIO, buf, sizeof buf, 0)) > 0) {
+        if (!Write(STDOUTPUT, buf, count)) {
+            fprintf(stderr,
+                    "Error writing to standard output: error = %lu.\n",
+                    GetLastError());
+            retval = 1;
+            break;
+        }
+    }
 
-	_endthread();
+    _endthread();
 }
 
 
 static IDENT PassError()
 {
-	IDENT id;
-	id = (IDENT)_beginthread(PassErrorThread, 4096, (void *)sErr);
-	if ((long)id == -1) {
-		errexit("Rexec: Could not start error passing thread: error = %lu\n", GetLastError());
-	}
-	return id;
+    IDENT id;
+    id = (IDENT)_beginthread(PassErrorThread, 4096, (void *)sErr);
+    if ((long)id == -1) {
+        errexit("Rexec: Could not start error passing thread: error = %lu\n",
+                GetLastError());
+    }
+    return id;
 }
 
 static void PassErrorThread(SOCKET sErr)
 {
-	RETVAL retval = 0;
-	int count;
-	char buf[4096];
+    RETVAL retval = 0;
+    int count;
+    char buf[4096];
 
-	while ((count=recv(sErr, buf, sizeof buf, 0)) > 0) {
-		if (!Write(STDERROR, buf, count)) {
-			fprintf(stderr, "Error writing to standard error: error = %lu.\n", GetLastError());
-			retval = 1;
-			break;
-		}
-	}
-	_endthread();
+    while ((count=recv(sErr, buf, sizeof buf, 0)) > 0) {
+        if (!Write(STDERROR, buf, count)) {
+            fprintf(stderr,
+                    "Error writing to standard error: error = %lu.\n",
+            GetLastError());
+            retval = 1;
+            break;
+        }
+    }
+    _endthread();
 }
 
 static BOOL Close(FILECOOKIE fc)
 {
-	return CloseHandle(fc);
+    return CloseHandle(fc);
 }
 
 static int Read(FILECOOKIE fc, char *buf, size_t nbuf)
 {
-	DWORD cbRead;
-	if (!ReadFile(fc, buf, nbuf, &cbRead, 0)) {
-		return -1;
-	}
-	return (int)cbRead;
+    DWORD cbRead;
+    if (!ReadFile(fc, buf, nbuf, &cbRead, 0)) {
+        return -1;
+    }
+    return (int)cbRead;
 }
 
 
 static BOOL Write(FILECOOKIE fc, const char *buf, size_t nbuf)
 {
-	DWORD cbWritten;
+    DWORD cbWritten;
 
-	if (!WriteFile(fc, buf, nbuf, &cbWritten, 0)) {
-		return FALSE;
-	}
-	if (cbWritten != nbuf) {
-		return FALSE;
-	}
-	return TRUE;
+    if (!WriteFile(fc, buf, nbuf, &cbWritten, 0)) {
+        return FALSE;
+    }
+    if (cbWritten != nbuf) {
+        return FALSE;
+    }
+    return TRUE;
 }
 
 
 static void
 Wait(IDENT id, RETVAL *prv)
 {
-	if (!WaitForSingleObject(id, INFINITE)) {
-		*prv = 2;
-	} else {
-		if (!GetExitCodeThread(id, prv)) {
-			*prv = 4;
-		}
-	}
+    if (!WaitForSingleObject(id, INFINITE)) {
+        *prv = 2;
+    } else {
+        if (!GetExitCodeThread(id, prv)) {
+            *prv = 4;
+        }
+    }
 }
