@@ -1,8 +1,14 @@
+Mon Jun 16 01:01:27 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Enable check_for_tab check for TAO/tests
+
 Sun Jun 15 16:03:29 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
 
-          Enable check_for_tab check for TAO\orbsvcs
+          Enable check_for_tab check for TAO/orbsvcs
 
 Sun Jun 15 13:23:13 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
