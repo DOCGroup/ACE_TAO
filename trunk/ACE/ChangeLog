@@ -1,3 +1,9 @@
+Mon Jun 16 11:28:11 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Enable check_for_tab check for TAO/tests/examples and TAO/performance-tests
+
 Mon Jun 16 10:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Max_Default_Port_Test.cpp:
