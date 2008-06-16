@@ -1,3 +1,10 @@
+Mon Jun 16 18:37:32 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Display/GPS/GPS_exec.cpp:
+        * examples/Display/NavDisplay/NavDisplay_exec.cpp:
+
+          Untabify.
+
 Mon Jun 16 12:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * CIAO/performance-tests/Benchmark/RoundTripClient/RoundTripClientEI.idl:
@@ -9,8 +16,8 @@ Sat May 31 23:31:20 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
 
-          Modified to take advantage of MCPP preprocessing. 
-        
+          Modified to take advantage of MCPP preprocessing.
+
 Mon May 19 02:53:21 CDT 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 0.6.5 released.
