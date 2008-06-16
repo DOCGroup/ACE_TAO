@@ -22,7 +22,6 @@ sub create_target
     my $target = undef;
     my $envname = "DOC_TEST_\U$component";
     if (!exists $ENV{$envname}) {
-        print "$component has no config name\n";
         $target = new PerlACE::TestTarget("default");
         return $target;
     }
@@ -107,7 +106,7 @@ sub GetConfigSettings ($)
         # If no ExeSubDir given via env variable, and this is an unnamed
         # config, allow use of the subdir specified on the command line.
         # This preserves historical behavior.
-        if (defined $config_name) {
+        if (defined $config_name && $config_name ne 'default') {
             $self->{EXE_SUBDIR} = './';
         }
         else {
