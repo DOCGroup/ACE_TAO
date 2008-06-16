@@ -275,22 +275,22 @@ module TAO {
     local interface AccessDecision : SecurityLevel2::AccessDecision
     {
       /* TAO-specific access_allowed that works around deficiencies in
-	 the SecurityLevel2::AccessDecision::access_allowed() operation. */
+   the SecurityLevel2::AccessDecision::access_allowed() operation. */
       // Parameter object_id should be PortableInterceptor::ObjectId, but
       // using that type would require including the PI_Forward.pidl file.
       // By using the real type, we can avoid that dependency.
       boolean access_allowed_ex (in ::CORBA::ORBid orb_id,
-				 in ::CORBA::OctetSeq adapter_id,
-				 in ::CORBA::OctetSeq object_id,
-				 in ::SecurityLevel2::CredentialsList cred_list,
-				 in ::CORBA::Identifier operation_name);
+         in ::CORBA::OctetSeq adapter_id,
+         in ::CORBA::OctetSeq object_id,
+         in ::SecurityLevel2::CredentialsList cred_list,
+         in ::CORBA::Identifier operation_name);
 
       /*! Default value returned when a reference is not in the list. */
       // Can't come up with a good name for this.
       attribute boolean default_decision;
 
       /*! Establish whether a particular object can be accessed via insecure
-	means. */
+  means. */
       void add_object (in ::CORBA::ORBid orb_id,
                        in ::CORBA::OctetSeq adapter_id,
                        in ::CORBA::OctetSeq object_id,

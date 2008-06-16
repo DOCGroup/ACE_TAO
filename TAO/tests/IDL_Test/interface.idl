@@ -40,7 +40,7 @@ module foo_mod
 {
   struct date
     {
-	    short month;
+      short month;
     };
 };
 
@@ -211,4 +211,3 @@ module i2
       string getstr3();
     };
 };
-

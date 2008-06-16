@@ -93,7 +93,7 @@ public:
     get_log_record_store (DsLogAdmin::LogId id);
 
 private:
-  ACE_SYNCH_RW_MUTEX	lock_;
+  ACE_SYNCH_RW_MUTEX  lock_;
 
   /// Define the HASHMAP.
   typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,

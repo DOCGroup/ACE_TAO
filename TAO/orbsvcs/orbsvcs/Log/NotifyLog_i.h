@@ -158,7 +158,7 @@ private:
   /// The ConsumerAdmin that the log uses.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
 
-  PortableServer::POA_var	poa_;
+  PortableServer::POA_var poa_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

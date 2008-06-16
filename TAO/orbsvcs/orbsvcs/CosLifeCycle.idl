@@ -116,7 +116,7 @@ module CosLifeCycle
 /*
 typedef struct NVP 
 {
-  CosNaming::Istring name;	
+  CosNaming::Istring name;  
   any value;
 } NameValuePair;
 

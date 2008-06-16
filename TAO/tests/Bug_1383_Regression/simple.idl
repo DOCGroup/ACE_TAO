@@ -6,7 +6,7 @@
 #include "callee.idl"
 
 interface Simple {
-	void registerCallee(in Callee value);
+  void registerCallee(in Callee value);
 };
 
 #endif
