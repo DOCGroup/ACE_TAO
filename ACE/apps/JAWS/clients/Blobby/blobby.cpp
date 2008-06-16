@@ -39,14 +39,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Explain what is going to happen
   if (options->debug_)
     ACE_DEBUG ((LM_DEBUG,
-		ACE_TEXT ("hostname = %C, port = %d, filename = %s, ")
+                ACE_TEXT ("hostname = %C, port = %d, filename = %s, ")
                 ACE_TEXT ("length = %d, offset = %d, operation = %c\n"),
-		options->hostname_,
-		options->port_,
-		options->filename_,
-		options->length_,
-		options->offset_,
-		options->operation_));
+                options->hostname_,
+                options->port_,
+                options->filename_,
+                options->length_,
+                options->offset_,
+                options->operation_));
 
   // Create a blob
   ACE_Blob blob;

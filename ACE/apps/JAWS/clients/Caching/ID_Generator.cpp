@@ -22,7 +22,7 @@ ACE_ID_Generator::get_new_id (char *id)
 
   ACE_ID_Generator::get_serial_id (t, sn);
   ACE_NEW_RETURN (id, char [ACE_OFFER_ID_LENGTH], 0);
-  
+
   ACE_OS::sprintf (id, "%014d%06d", t, sn);
   return id;
 }
@@ -52,7 +52,7 @@ ACE_ID_Generator::get_lock (void)
 
       // Double-checked Locking Optimization.
       if (ACE_ID_Generator::lock_ == 0)
-	ACE_NEW_RETURN (ACE_ID_Generator::lock_, ACE_SYNCH_MUTEX, 0);
+        ACE_NEW_RETURN (ACE_ID_Generator::lock_, ACE_SYNCH_MUTEX, 0);
     }
 #endif /* ACE_HAS_THREADS */
   return ACE_ID_Generator::lock_;

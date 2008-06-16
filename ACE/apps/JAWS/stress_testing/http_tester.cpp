@@ -160,11 +160,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
   while(!feof(fp)) {
-	fscanf(fp,"%s %d %f %s %f %s %f %s %f %d %d\n", id, &total_num, &rate, url1, &p1, url2, &p2, url3, &p3, &tcp, &sock);
-        if (id[0] == '#') continue;
-  ACE_OS::fprintf(stderr,"----\n");
-  ACE_OS::fprintf(stderr,"\tNow performing experiment:%s\n\tSending %d requests at %f requests/second\n", id, total_num, rate);
-  driver(id, total_num, rate, url1, p1, url2, p2, url3, p3, tcp, sock);
+    fscanf(fp,"%s %d %f %s %f %s %f %s %f %d %d\n", id, &total_num, &rate, url1, &p1, url2, &p2, url3, &p3, &tcp, &sock);
+    if (id[0] == '#') continue;
+    ACE_OS::fprintf(stderr,"----\n");
+    ACE_OS::fprintf(stderr,"\tNow performing experiment:%s\n\tSending %d requests at %f requests/second\n", id, total_num, rate);
+    driver(id, total_num, rate, url1, p1, url2, p2, url3, p3, tcp, sock);
   }
   ACE_OS::fclose(fp);
   ACE_OS::close(fd);

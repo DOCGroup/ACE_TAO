@@ -69,7 +69,7 @@ PMC_Ruser::decode (char *packet, int &packet_length)
 
       for (cp = (char *) ACE::strend (cp);
            *(cp = this->handle_protocol_entries (cp, host_name)) != '\t'; )
-	continue;
+        continue;
     }
 
   return 1;
@@ -138,36 +138,36 @@ PMC_Ruser::process (void)
                   prp->get_host ()));
 
       for (Drwho_Node *np = prp->get_drwho_list (); ;)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_DEBUG ((LM_DEBUG,
                       "%s",
                       (np->*get_name) ()));
 
-	  if (np->get_inactive_count () != 0)
-	    {
-	      if (np->get_active_count () != 0)
-		ACE_DEBUG ((LM_DEBUG,
+          if (np->get_inactive_count () != 0)
+            {
+              if (np->get_active_count () != 0)
+                ACE_DEBUG ((LM_DEBUG,
                             "*(%d)",
                             np->get_active_count ()));
-	    }
-	  else if (np->get_active_count () > 1)
-	    ACE_DEBUG ((LM_DEBUG,
+            }
+          else if (np->get_active_count () > 1)
+            ACE_DEBUG ((LM_DEBUG,
                         "*(%d)",
                         np->get_active_count ()));
-	  else if (np->get_active_count () == 1)
+          else if (np->get_active_count () == 1)
             ACE_DEBUG ((LM_DEBUG,
                         "*"));
 
           np = np->next_;
-	  if (np == 0)
-	    break;
-	  else if (Options::get_opt (Options::PRINT_LOGIN_NAME))
+          if (np == 0)
+            break;
+          else if (Options::get_opt (Options::PRINT_LOGIN_NAME))
             ACE_DEBUG ((LM_DEBUG,
                         " "));
-	  else
+          else
             ACE_DEBUG ((LM_DEBUG,
                         ", "));
-	}
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n"));

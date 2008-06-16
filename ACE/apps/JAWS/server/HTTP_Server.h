@@ -98,7 +98,7 @@ public:
   Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
                           ACE_Thread_Manager &tm,
                           int threads,
-						  HTTP_Handler_Factory &factory);
+                          HTTP_Handler_Factory &factory);
   virtual int svc (void);
 
 private:
@@ -121,7 +121,7 @@ public:
   Thread_Per_Request_Task (ACE_HANDLE handle,
                            ACE_Thread_Manager &tm,
                            int &grp_id,
-						   HTTP_Handler_Factory &factory);
+                           HTTP_Handler_Factory &factory);
   virtual int open (void *args = 0);
   virtual int close (u_long);
   virtual int svc (void);

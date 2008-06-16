@@ -8,22 +8,22 @@ ACE_RCSID(stress_testing, connection, "$Id$")
 
 int connection::connect(char *hostname_opt_port, int tcp_nodelay, int sockbufsiz) {
   if(!hostname_opt_port) return 1;
-  
+
   char *hostname_with_port;
   // Check to see if portnumber is specified in the hostnameport
   // If not, append :80
   if(!ACE_OS::strchr(hostname_opt_port,':')) {
-	  hostname_with_port = new char[ACE_OS::strlen(hostname_opt_port) + 3];
-	  ACE_OS::sprintf(hostname_with_port, "%s:%d", hostname_opt_port, 80);
+    hostname_with_port = new char[ACE_OS::strlen(hostname_opt_port) + 3];
+    ACE_OS::sprintf(hostname_with_port, "%s:%d", hostname_opt_port, 80);
   }
   else {
     hostname_with_port = hostname_opt_port;
   }
-	
+
   // Beyond this point, hostname_with_port is of the form hostname:port
 
   ACE_INET_Addr server_addr(hostname_with_port);
-  
+
   // Connect to server
 
   ACE_SOCK_Connector con;
@@ -33,34 +33,34 @@ int connection::connect(char *hostname_opt_port, int tcp_nodelay, int sockbufsiz
     return 1;
   }
 
-  
+
   // tcp_nodelay processing.
 
   // turn off weird ack things
   if(tcp_nodelay) {
-	  struct protoent *p = ACE_OS::getprotobyname ("tcp");
+    struct protoent *p = ACE_OS::getprotobyname ("tcp");
     int one = 1;
-    
+
     if (p && stream_.set_option (p->p_proto,
-				 TCP_NODELAY,
-				 (char *)& one, 
-				 sizeof (one))) 
+                                 TCP_NODELAY,
+                                 (char *)& one,
+                                 sizeof (one)))
     {
       ACE_OS::perror("tcp_nodelay");
       return 1;
     }
   }
-  
-  if(sockbufsiz) 
+
+  if(sockbufsiz)
     if (stream_.set_option (SOL_SOCKET,
-			    SO_RCVBUF,
-			    (char *) &sockbufsiz,
-			    sizeof sockbufsiz) == -1) 
+                            SO_RCVBUF,
+                            (char *) &sockbufsiz,
+                            sizeof sockbufsiz) == -1)
     {
       ACE_OS::perror("socket_queue_size");
       return 1;
     }
-  
+
   return 0;
 }
 
@@ -94,7 +94,7 @@ int connection::close(void) {
   stream_.close();
   return 0;
 }
-  
+
 connection::~connection(void) {
   this->close();
 }

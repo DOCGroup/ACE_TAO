@@ -36,9 +36,9 @@ class Handle_Events : public ACE_Event_Handler
 {
 public:
   Handle_Events (u_short udp_port,
-		 const char *ip_addr,
-		 const char *interface_,
-		 ACE_Reactor &reactor);
+                 const char *ip_addr,
+                 const char *interface_,
+                 ACE_Reactor &reactor);
   ~Handle_Events (void);
 
   virtual int handle_input (ACE_HANDLE);
@@ -59,16 +59,16 @@ Handle_Events::handle_input (ACE_HANDLE h)
     {
       int readresult = ACE_OS::read (h, buf, BUFSIZ);
       if (readresult > 0)
-	{
-	  if (this->mcast_.send (buf, readresult) != readresult)
-	    {
-	      ACE_OS::perror ("send error");
-	      return -1;
-	    }
-	  return 0;
-	}
+        {
+          if (this->mcast_.send (buf, readresult) != readresult)
+            {
+              ACE_OS::perror ("send error");
+              return -1;
+            }
+          return 0;
+        }
       else if (readresult == -1)
-	ACE_OS::perror ("can't read from STDIN");
+        ACE_OS::perror ("can't read from STDIN");
 
       return -1;
     }
@@ -80,15 +80,15 @@ Handle_Events::handle_input (ACE_HANDLE h)
       int retcode = this->mcast_.recv (buf, sizeof buf, remote_addr);
 
       if (retcode != -1)
-	{
+        {
           /*
             cout << "received datagram from host " << remote_addr.get_host_name ()
             << " on port " << remote_addr.get_port_number ()
             << " bytes = " << retcode << endl;
             */
           serve (buf);
-	  return 0;
-	}
+          return 0;
+        }
 
       ACE_OS::perror ("Something amiss.");
       return -1;
@@ -114,9 +114,9 @@ Handle_Events::~Handle_Events (void)
 }
 
 Handle_Events::Handle_Events (u_short udp_port,
-			      const char *ip_addr,
-			      const char *interface_,
-			      ACE_Reactor &reactor)
+                              const char *ip_addr,
+                              const char *interface_,
+                              ACE_Reactor &reactor)
 {
   // Create multicast address to listen on.
 
@@ -138,8 +138,8 @@ Handle_Events::Handle_Events (u_short udp_port,
 
   // Register callbacks with the ACE_Reactor.
   if (reactor.register_handler (this->handle_set_,
-				this,
-				ACE_Event_Handler::READ_MASK) == -1)
+                                this,
+                                ACE_Event_Handler::READ_MASK) == -1)
     ACE_OS::perror ("can't register events"), ACE_OS::exit (1);
 }
 
@@ -185,13 +185,13 @@ parse_args (int argc, char *argv[])
       case 'q':
         QUIET = 1;
       case 'i':
-	INTERFACE = get_opt.opt_arg ();
-	break;
+        INTERFACE = get_opt.opt_arg ();
+        break;
       case 'u':
-	// Usage fallthrough.
+        // Usage fallthrough.
       default:
         ACE_DEBUG ((LM_DEBUG, "%s -i interface\n", argv[0]));
-	ACE_OS::exit (1);
+        ACE_OS::exit (1);
       }
 }
 
@@ -235,7 +235,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_ERROR ((LM_ERROR, "error: %s must be run on a platform that support IP multicast\n",
-	    argv[0]));
+              argv[0]));
   return 0;
 }
 #endif /* ACE_HAS_IP_MULTICAST */
