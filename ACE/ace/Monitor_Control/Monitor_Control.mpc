@@ -18,6 +18,7 @@ project(Monitor_Control) : acelib, ace_etcl_parser, ace_output, install {
     Memory_Usage_Monitor.cpp
     Monitor_Group.cpp
     Monitor_Query.cpp
+    Null_Network_Interface_Monitor.cpp
     Num_Threads_Monitor.cpp
     Packets_Received_Monitor.cpp
     Packets_Sent_Monitor.cpp
