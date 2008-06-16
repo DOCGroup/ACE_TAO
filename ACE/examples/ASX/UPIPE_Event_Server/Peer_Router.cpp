@@ -187,9 +187,9 @@ template <class PH, class PK> int
 Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
 {
   ACE_Map_Iterator<PK, PH *, ACE_RW_Mutex> map_iter = this->peer_map_;
-  int		 bytes       = 0;
-  int		 iterations  = 0;
-  ACE_Message_Block	 *data_block = mb->cont ();
+  int bytes      = 0;
+  int iterations = 0;
+  ACE_Message_Block *data_block = mb->cont ();
   for (ACE_Map_Entry<PK, PH *> *ss = 0;
        map_iter.next (ss) != 0;
        map_iter.advance ())
