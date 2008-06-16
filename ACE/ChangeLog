@@ -1,3 +1,9 @@
+Mon Jun 16 21:26:05 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Enable check_for_tab for all files in the repository. 
+
 Mon Jun 16 21:22:03 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * apps/JAWS/clients/Caching/Local_Locator.cpp:
