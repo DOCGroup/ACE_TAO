@@ -85,16 +85,16 @@ File_Manager::open_passwd_file (void)
        (pwent = ACE_OS::getpwent ()) != 0; )
     if (*pwent->pw_gecos != '\0')
       {
-	char *cp = ACE_OS::strchr (pwent->pw_gecos, ',');
+        char *cp = ACE_OS::strchr (pwent->pw_gecos, ',');
 
-	if (cp != 0)
-	  *cp = '\0';
+        if (cp != 0)
+          *cp = '\0';
 
-	ACE_OS::fprintf (fp,
+        ACE_OS::fprintf (fp,
                          "%-8.8s %s\n",
                          pwent->pw_name,
                          pwent->pw_gecos);
-	this->number_of_friends++;
+        this->number_of_friends++;
       }
 
   ACE_OS::endpwent ();

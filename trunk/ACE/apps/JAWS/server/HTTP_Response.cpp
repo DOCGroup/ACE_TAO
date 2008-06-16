@@ -204,7 +204,7 @@ HTTP_Response::normal_response (void)
             = HTTP_Helper::HTTP_decode_base64 (ACE_OS::strcpy (buf, hvv));
 
           if (mmapfile.map (ACE_TEXT ("jaws.auth")) != -1
-	      && auth != 0
+              && auth != 0
               && ACE_OS::strstr((const char *) mmapfile.addr (), auth) != 0)
             this->io_.receive_file (this->request_.path (),
                                     this->request_.data (),
@@ -231,8 +231,8 @@ HTTP_Response::cgi_response (void)
 
   if (this->request_.cgi_args ())
     cgi_options.command_line ("%s %s",
-			      this->request_.path (),
-			      this->request_.cgi_args ());
+                              this->request_.path (),
+                              this->request_.cgi_args ());
   else
     cgi_options.command_line ("%s", this->request_.path ());
 
@@ -252,27 +252,27 @@ HTTP_Response::cgi_response (void)
   if (this->request_.path_info ())
     {
       cgi_options.setenv ("PATH_INFO", "%s",
-			  this->request_.path_info ());
+                          this->request_.path_info ());
       cgi_options.setenv ("PATH_TRANSLATED",
-			  "%s/%s",
+                          "%s/%s",
                           HTTP_Config::instance ()->document_root (),
                           this->request_.path_info ());
     }
 
   cgi_options.setenv ("SCRIPT_NAME",
-		      "%s",
-		      this->request_.uri ());
+                      "%s",
+                      this->request_.uri ());
 
   if (this->request_.query_string ())
     cgi_options.setenv ("QUERY_STRING",
-			"%s",
-			this->request_.query_string ());
+                        "%s",
+                        this->request_.query_string ());
 
   if (this->request_.cgi_env ())
     for (size_t i = 0; this->request_.cgi_env ()[i]; i += 2)
       cgi_options.setenv (this->request_.cgi_env ()[i],
-			  "%s",
-			  this->request_.cgi_env ()[i+1]);
+                          "%s",
+                          this->request_.cgi_env ()[i+1]);
 
   char buf[BUFSIZ];
   char *p, *q;
@@ -345,12 +345,12 @@ HTTP_Response::build_headers (void)
 
       if (HTTP_Helper::HTTP_date (date_ptr) != 0)
         HTTP_HEADER_LENGTH +=
-	        ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
+          ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
                            "Date: %s\r\n", date_ptr);
 
       if (! this->request_.cgi ()) {
-	      HTTP_HEADER_LENGTH +=
-	         ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
+        HTTP_HEADER_LENGTH +=
+          ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
                            "Content-type: %s\r\n",
                            "text/html");
 
@@ -362,9 +362,9 @@ HTTP_Response::build_headers (void)
         if ((this->request_.type () == HTTP_Request::GET) &&
             (ACE_OS::stat (this->request_.path (), &file_stat) == 0))
         {
-  	      HTTP_HEADER_LENGTH +=
-	         ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
-                            "Content-length: %u\r\n", file_stat.st_size);
+          HTTP_HEADER_LENGTH +=
+            ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
+                             "Content-length: %u\r\n", file_stat.st_size);
         }
 
         // Complete header with empty line and adjust header length.

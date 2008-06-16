@@ -354,8 +354,8 @@ Gen_Perf::compute_perfect_hash (void)
       this->hash (curr);
 
       for (List_Node *ptr = this->key_list.head;
-	   ptr != curr;
-	   ptr = ptr->next)
+           ptr != curr;
+           ptr = ptr->next)
         if (ptr->hash_value == curr->hash_value)
           {
             if (this->change (ptr, curr) == -1)
@@ -415,12 +415,12 @@ Gen_Perf::run (void)
   else if (option[LINEARSEARCH])
     {
       if (this->compute_linear_search () == -1)
-	return 1;
+        return 1;
     }
   else
     {
       if (this->compute_perfect_hash () == -1)
-	return 1;
+        return 1;
 
       // Sorts the key word list by hash value, and then outputs the
       // list.  The generated hash table code is only output if the

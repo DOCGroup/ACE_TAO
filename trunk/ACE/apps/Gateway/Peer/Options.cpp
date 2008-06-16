@@ -36,7 +36,7 @@ Options::Options (void)
 {
   char *timeout = ACE_OS::getenv ("TIMEOUT");
 
-  if (timeout == 0) 
+  if (timeout == 0)
     this->timeout_ = Options::DEFAULT_TIMEOUT;
   else
     this->timeout_ = ACE_OS::atoi (timeout);
@@ -113,7 +113,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
-	{
+        {
         case 'a':
           {
             // Become an Acceptor.
@@ -172,30 +172,30 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           this->connection_id_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
           /* NOTREACHED */
-	case 'h':
+        case 'h':
           // connector host
-	  this->connector_host_ = get_opt.opt_arg ();
-	  break;
+          this->connector_host_ = get_opt.opt_arg ();
+          break;
           /* NOTREACHED */
-	case 'm':
+        case 'm':
           // max queue size.
-	  this->max_queue_size_ = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
+          this->max_queue_size_ = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
           /* NOTREACHED */
-	case 't':
+        case 't':
           // Timeout
-	  this->timeout_ = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
+          this->timeout_ = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
           /* NOTREACHED */
-	case 'v':
+        case 'v':
           // Verbose mode.
-	  ACE_SET_BITS (this->options_, Options::VERBOSE);
-	  break;
+          ACE_SET_BITS (this->options_, Options::VERBOSE);
+          break;
           /* NOTREACHED */
-	default:
+        default:
           this->print_usage_and_die ();
           /* NOTREACHED */
-	}
+        }
     }
 }
 

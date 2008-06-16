@@ -69,35 +69,35 @@ PM_Client::process (void)
                   (prp->*get_name) ()));
 
       for (Drwho_Node *np = prp->get_drwho_list (); ;)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_DEBUG ((LM_DEBUG,
                       np->get_host_name (),
                       stdout));
 
-	  active_friends += np->get_active_count ();
+          active_friends += np->get_active_count ();
 
-	  if (np->get_inactive_count () != 0)
-	    {
-	      if (np->get_active_count () != 0)
-		ACE_DEBUG ((LM_DEBUG,
+          if (np->get_inactive_count () != 0)
+            {
+              if (np->get_active_count () != 0)
+                ACE_DEBUG ((LM_DEBUG,
                             "*(%d)",
                             np->get_active_count ()));
-	    }
-	  else if (np->get_active_count () > 1)
-	    ACE_DEBUG ((LM_DEBUG,
+            }
+          else if (np->get_active_count () > 1)
+            ACE_DEBUG ((LM_DEBUG,
                         "*(%d)",
                         np->get_active_count ()));
-	  else if (np->get_active_count () == 1)
-	    ACE_DEBUG ((LM_DEBUG,
+          else if (np->get_active_count () == 1)
+            ACE_DEBUG ((LM_DEBUG,
                         "*"));
 
           np = np->next_;
-	  if (np == 0)
-	    break;
-	  else
+          if (np == 0)
+            break;
+          else
             ACE_DEBUG ((LM_DEBUG,
                         " "));
-	}
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "]\n"));
