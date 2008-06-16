@@ -2,8 +2,6 @@
 /* A Bison parser, made from PSDL.yy
    by GNU bison 1.35.  */
 
-//FUZZ: disable check_for_tab
-
 #define YYBISON 1  /* Identify Bison output.  */
 
 #define yyparse TAO_PSDL_yyparse
@@ -13,98 +11,98 @@
 #define yychar TAO_PSDL_yychar
 #define yydebug TAO_PSDL_yydebug
 #define yynerrs TAO_PSDL_yynerrs
-# define	TAO_PSDL_SEMI	257
-# define	TAO_PSDL_MODULE	258
-# define	TAO_PSDL_COLON	259
-# define	TAO_PSDL_OPEN_CURLY_BRACE	260
-# define	TAO_PSDL_CLOSE_CURLY_BRACE	261
-# define	TAO_PSDL_OPEN_BRACE	262
-# define	TAO_PSDL_CLOSE_BRACE	263
-# define	TAO_PSDL_ABSTRACT	264
-# define	TAO_PSDL_STORAGETYPE	265
-# define	TAO_PSDL_STORAGEHOME	266
-# define	TAO_PSDL_CATALOG	267
-# define	TAO_PSDL_PROVIDES	268
-# define	TAO_PSDL_IMPLEMENTS	269
-# define	TAO_PSDL_SCOPE	270
-# define	TAO_PSDL_STORES	271
-# define	TAO_PSDL_STATE	272
-# define	TAO_PSDL_AS	273
-# define	TAO_PSDL_PRIMARY	274
-# define	TAO_PSDL_STRONG	275
-# define	TAO_PSDL_REF	276
-# define	TAO_PSDL_OF	277
-# define	TAO_PSDL_OPEN_ANGULAR_BRACE	278
-# define	TAO_PSDL_CLOSE_ANGULAR_BRACE	279
-# define	TAO_PSDL_COMMA	280
-# define	TAO_PSDL_KEY	281
-# define	TAO_PSDL_READONLY	282
-# define	TAO_PSDL_UNION	283
-# define	TAO_PSDL_SWITCH	284
-# define	TAO_PSDL_CASE	285
-# define	TAO_PSDL_WCHAR	286
-# define	TAO_PSDL_BOOLEAN	287
-# define	TAO_PSDL_OCTET	288
-# define	TAO_PSDL_ANY	289
-# define	TAO_PSDL_OBJECT	290
-# define	TAO_PSDL_STRUCT	291
-# define	TAO_PSDL_DEFAULT	292
-# define	TAO_PSDL_FLOAT	293
-# define	TAO_PSDL_DOUBLE	294
-# define	TAO_PSDL_LONG	295
-# define	TAO_PSDL_SHORT	296
-# define	TAO_PSDL_UNSIGNED	297
-# define	TAO_PSDL_CHAR	298
-# define	TAO_PSDL_IDENT	299
-# define	TAO_PSDL_TYPEDEF	300
-# define	TAO_PSDL_NATIVE	301
-# define	TAO_PSDL_PLUS	302
-# define	TAO_PSDL_MINUS	303
-# define	TAO_PSDL_XOR	304
-# define	TAO_PSDL_AND	305
-# define	TAO_PSDL_MULT	306
-# define	TAO_PSDL_RIGHT_SHIFT	307
-# define	TAO_PSDL_LEFT_SHIFT	308
-# define	TAO_PSDL_DIV	309
-# define	TAO_PSDL_PERCENT	310
-# define	TAO_PSDL_TILDA	311
-# define	TAO_PSDL_ONEWAY	312
-# define	TAO_PSDL_CONST	313
-# define	TAO_PSDL_EQUAL	314
-# define	TAO_PSDL_OR	315
-# define	TAO_PSDL_VOID	316
-# define	TAO_PSDL_IN	317
-# define	TAO_PSDL_OUT	318
-# define	TAO_PSDL_INOUT	319
-# define	TAO_PSDL_RAISES	320
-# define	TAO_PSDL_CONTEXT	321
-# define	TAO_PSDL_FIXED	322
-# define	TAO_PSDL_VALUEBASE	323
-# define	TAO_PSDL_EXCEPTION	324
-# define	TAO_PSDL_INTERFACE	325
-# define	TAO_PSDL_LOCAL	326
-# define	TAO_PSDL_DOUBLE_COLON	327
-# define	TAO_PSDL_VALUETYPE	328
-# define	TAO_PSDL_CUSTOM	329
-# define	TAO_PSDL_TRUNCATABLE	330
-# define	TAO_PSDL_SUPPORTS	331
-# define	TAO_PSDL_STRING	332
-# define	TAO_PSDL_WSTRING	333
-# define	TAO_PSDL_ATTRIBUTE	334
-# define	TAO_PSDL_OPEN_SQUARE_BRACE	335
-# define	TAO_PSDL_CLOSE_SQUARE_BRACE	336
-# define	TAO_PSDL_ENUM	337
-# define	TAO_PSDL_SEQUENCE	338
-# define	TAO_PSDL_TRUE	339
-# define	TAO_PSDL_FALSE	340
-# define	TAO_PSDL_INTEGER	341
-# define	TAO_PSDL_FLOATING	342
-# define	TAO_PSDL_PRIVATE	343
-# define	TAO_PSDL_PUBLIC	344
-# define	TAO_PSDL_FACTORY	345
-# define	TAO_PSDL_FLOATING_PT	346
-# define	TAO_PSDL_CHAR_LITERAL	347
-# define	TAO_PSDL_FIXED_PT	348
+# define  TAO_PSDL_SEMI 257
+# define  TAO_PSDL_MODULE 258
+# define  TAO_PSDL_COLON  259
+# define  TAO_PSDL_OPEN_CURLY_BRACE 260
+# define  TAO_PSDL_CLOSE_CURLY_BRACE  261
+# define  TAO_PSDL_OPEN_BRACE 262
+# define  TAO_PSDL_CLOSE_BRACE  263
+# define  TAO_PSDL_ABSTRACT 264
+# define  TAO_PSDL_STORAGETYPE  265
+# define  TAO_PSDL_STORAGEHOME  266
+# define  TAO_PSDL_CATALOG  267
+# define  TAO_PSDL_PROVIDES 268
+# define  TAO_PSDL_IMPLEMENTS 269
+# define  TAO_PSDL_SCOPE  270
+# define  TAO_PSDL_STORES 271
+# define  TAO_PSDL_STATE  272
+# define  TAO_PSDL_AS 273
+# define  TAO_PSDL_PRIMARY  274
+# define  TAO_PSDL_STRONG 275
+# define  TAO_PSDL_REF  276
+# define  TAO_PSDL_OF 277
+# define  TAO_PSDL_OPEN_ANGULAR_BRACE 278
+# define  TAO_PSDL_CLOSE_ANGULAR_BRACE  279
+# define  TAO_PSDL_COMMA  280
+# define  TAO_PSDL_KEY  281
+# define  TAO_PSDL_READONLY 282
+# define  TAO_PSDL_UNION  283
+# define  TAO_PSDL_SWITCH 284
+# define  TAO_PSDL_CASE 285
+# define  TAO_PSDL_WCHAR  286
+# define  TAO_PSDL_BOOLEAN  287
+# define  TAO_PSDL_OCTET  288
+# define  TAO_PSDL_ANY  289
+# define  TAO_PSDL_OBJECT 290
+# define  TAO_PSDL_STRUCT 291
+# define  TAO_PSDL_DEFAULT  292
+# define  TAO_PSDL_FLOAT  293
+# define  TAO_PSDL_DOUBLE 294
+# define  TAO_PSDL_LONG 295
+# define  TAO_PSDL_SHORT  296
+# define  TAO_PSDL_UNSIGNED 297
+# define  TAO_PSDL_CHAR 298
+# define  TAO_PSDL_IDENT  299
+# define  TAO_PSDL_TYPEDEF  300
+# define  TAO_PSDL_NATIVE 301
+# define  TAO_PSDL_PLUS 302
+# define  TAO_PSDL_MINUS  303
+# define  TAO_PSDL_XOR  304
+# define  TAO_PSDL_AND  305
+# define  TAO_PSDL_MULT 306
+# define  TAO_PSDL_RIGHT_SHIFT  307
+# define  TAO_PSDL_LEFT_SHIFT 308
+# define  TAO_PSDL_DIV  309
+# define  TAO_PSDL_PERCENT  310
+# define  TAO_PSDL_TILDA  311
+# define  TAO_PSDL_ONEWAY 312
+# define  TAO_PSDL_CONST  313
+# define  TAO_PSDL_EQUAL  314
+# define  TAO_PSDL_OR 315
+# define  TAO_PSDL_VOID 316
+# define  TAO_PSDL_IN 317
+# define  TAO_PSDL_OUT  318
+# define  TAO_PSDL_INOUT  319
+# define  TAO_PSDL_RAISES 320
+# define  TAO_PSDL_CONTEXT  321
+# define  TAO_PSDL_FIXED  322
+# define  TAO_PSDL_VALUEBASE  323
+# define  TAO_PSDL_EXCEPTION  324
+# define  TAO_PSDL_INTERFACE  325
+# define  TAO_PSDL_LOCAL  326
+# define  TAO_PSDL_DOUBLE_COLON 327
+# define  TAO_PSDL_VALUETYPE  328
+# define  TAO_PSDL_CUSTOM 329
+# define  TAO_PSDL_TRUNCATABLE  330
+# define  TAO_PSDL_SUPPORTS 331
+# define  TAO_PSDL_STRING 332
+# define  TAO_PSDL_WSTRING  333
+# define  TAO_PSDL_ATTRIBUTE  334
+# define  TAO_PSDL_OPEN_SQUARE_BRACE  335
+# define  TAO_PSDL_CLOSE_SQUARE_BRACE 336
+# define  TAO_PSDL_ENUM 337
+# define  TAO_PSDL_SEQUENCE 338
+# define  TAO_PSDL_TRUE 339
+# define  TAO_PSDL_FALSE  340
+# define  TAO_PSDL_INTEGER  341
+# define  TAO_PSDL_FLOATING 342
+# define  TAO_PSDL_PRIVATE  343
+# define  TAO_PSDL_PUBLIC 344
+# define  TAO_PSDL_FACTORY  345
+# define  TAO_PSDL_FLOATING_PT  346
+# define  TAO_PSDL_CHAR_LITERAL 347
+# define  TAO_PSDL_FIXED_PT 348
 
 #line 1 "PSDL.yy"
 
@@ -149,9 +147,9 @@ static void yyerror (const char *error)
 
 
 
-#define	YYFINAL		593
-#define	YYFLAG		-32768
-#define	YYNTBASE	95
+#define YYFINAL   593
+#define YYFLAG    -32768
+#define YYNTBASE  95
 
 /* YYTRANSLATE(YYLEX) -- Bison token number corresponding to YYLEX. */
 #define YYTRANSLATE(x) ((unsigned)(x) <= 348 ? yytranslate[x] : 262)
@@ -740,7 +738,7 @@ static const short yypgoto[] =
 };
 
 
-#define	YYLAST		1288
+#define YYLAST    1288
 
 
 static const short yytable[] =
@@ -1084,7 +1082,7 @@ static const short yycheck[] =
 
 #if (! defined (yyoverflow) \
      && (! defined (__cplusplus) \
-	 || (YYLTYPE_IS_TRIVIAL && YYSTYPE_IS_TRIVIAL)))
+   || (YYLTYPE_IS_TRIVIAL && YYSTYPE_IS_TRIVIAL)))
 
 /* A type that is properly aligned for any stack member.  */
 union yyalloc
@@ -1103,11 +1101,11 @@ union yyalloc
    N elements.  */
 # if YYLSP_NEEDED
 #  define YYSTACK_BYTES(N) \
-     ((N) * (sizeof (short) + sizeof (YYSTYPE) + sizeof (YYLTYPE))	\
+     ((N) * (sizeof (short) + sizeof (YYSTYPE) + sizeof (YYLTYPE))  \
       + 2 * YYSTACK_GAP_MAX)
 # else
 #  define YYSTACK_BYTES(N) \
-     ((N) * (sizeof (short) + sizeof (YYSTYPE))				\
+     ((N) * (sizeof (short) + sizeof (YYSTYPE))       \
       + YYSTACK_GAP_MAX)
 # endif
 
@@ -1118,13 +1116,13 @@ union yyalloc
 #   define YYCOPY(To, From, Count) \
       __builtin_memcpy (To, From, (Count) * sizeof (*(From)))
 #  else
-#   define YYCOPY(To, From, Count)		\
-      do					\
-	{					\
-	  register YYSIZE_T yyi;		\
-	  for (yyi = 0; yyi < (Count); yyi++)	\
-	    (To)[yyi] = (From)[yyi];		\
-	}					\
+#   define YYCOPY(To, From, Count)    \
+      do          \
+  {         \
+    register YYSIZE_T yyi;    \
+    for (yyi = 0; yyi < (Count); yyi++) \
+      (To)[yyi] = (From)[yyi];    \
+  }         \
       while (0)
 #  endif
 # endif
@@ -1134,15 +1132,15 @@ union yyalloc
    elements in the stack, and YYPTR gives the new location of the
    stack.  Advance YYPTR to a properly aligned location for the next
    stack.  */
-# define YYSTACK_RELOCATE(Stack)					\
-    do									\
-      {									\
-	YYSIZE_T yynewbytes;						\
-	YYCOPY (&yyptr->Stack, Stack, yysize);				\
-	Stack = &yyptr->Stack;						\
-	yynewbytes = yystacksize * sizeof (*Stack) + YYSTACK_GAP_MAX;	\
-	yyptr += yynewbytes / sizeof (*yyptr);				\
-      }									\
+# define YYSTACK_RELOCATE(Stack)          \
+    do                  \
+      {                 \
+  YYSIZE_T yynewbytes;            \
+  YYCOPY (&yyptr->Stack, Stack, yysize);        \
+  Stack = &yyptr->Stack;            \
+  yynewbytes = yystacksize * sizeof (*Stack) + YYSTACK_GAP_MAX; \
+  yyptr += yynewbytes / sizeof (*yyptr);        \
+      }                 \
     while (0)
 
 #endif
@@ -1164,37 +1162,37 @@ union yyalloc
 # define YYSIZE_T unsigned int
 #endif
 
-#define yyerrok		(yyerrstatus = 0)
-#define yyclearin	(yychar = YYEMPTY)
-#define YYEMPTY		-2
-#define YYEOF		0
-#define YYACCEPT	goto yyacceptlab
-#define YYABORT 	goto yyabortlab
-#define YYERROR		goto yyerrlab1
+#define yyerrok   (yyerrstatus = 0)
+#define yyclearin (yychar = YYEMPTY)
+#define YYEMPTY   -2
+#define YYEOF   0
+#define YYACCEPT  goto yyacceptlab
+#define YYABORT   goto yyabortlab
+#define YYERROR   goto yyerrlab1
 /* Like YYERROR except do call yyerror.  This remains here temporarily
    to ease the transition to the new meaning of YYERROR, for GCC.
    Once GCC version 2 has supplanted version 1, this can go.  */
-#define YYFAIL		goto yyerrlab
+#define YYFAIL    goto yyerrlab
 #define YYRECOVERING()  (!!yyerrstatus)
-#define YYBACKUP(Token, Value)					\
-do								\
-  if (yychar == YYEMPTY && yylen == 1)				\
-    {								\
-      yychar = (Token);						\
-      yylval = (Value);						\
-      yychar1 = YYTRANSLATE (yychar);				\
-      YYPOPSTACK;						\
-      goto yybackup;						\
-    }								\
-  else								\
-    { 								\
-      yyerror ("syntax error: cannot back up");			\
-      YYERROR;							\
-    }								\
+#define YYBACKUP(Token, Value)          \
+do                \
+  if (yychar == YYEMPTY && yylen == 1)        \
+    {               \
+      yychar = (Token);           \
+      yylval = (Value);           \
+      yychar1 = YYTRANSLATE (yychar);       \
+      YYPOPSTACK;           \
+      goto yybackup;            \
+    }               \
+  else                \
+    {                 \
+      yyerror ("syntax error: cannot back up");     \
+      YYERROR;              \
+    }               \
 while (0)
 
-#define YYTERROR	1
-#define YYERRCODE	256
+#define YYTERROR  1
+#define YYERRCODE 256
 
 
 /* YYLLOC_DEFAULT -- Compute the default location (before the actions
@@ -1205,8 +1203,8 @@ while (0)
    its range to the last symbol.  */
 
 #ifndef YYLLOC_DEFAULT
-# define YYLLOC_DEFAULT(Current, Rhs, N)       	\
-   Current.last_line   = Rhs[N].last_line;	\
+# define YYLLOC_DEFAULT(Current, Rhs, N)        \
+   Current.last_line   = Rhs[N].last_line;  \
    Current.last_column = Rhs[N].last_column;
 #endif
 
@@ -1216,19 +1214,19 @@ while (0)
 #if YYPURE
 # if YYLSP_NEEDED
 #  ifdef YYLEX_PARAM
-#   define YYLEX		yylex (&yylval, &yylloc, YYLEX_PARAM)
+#   define YYLEX    yylex (&yylval, &yylloc, YYLEX_PARAM)
 #  else
-#   define YYLEX		yylex (&yylval, &yylloc)
+#   define YYLEX    yylex (&yylval, &yylloc)
 #  endif
 # else /* !YYLSP_NEEDED */
 #  ifdef YYLEX_PARAM
-#   define YYLEX		yylex (&yylval, YYLEX_PARAM)
+#   define YYLEX    yylex (&yylval, YYLEX_PARAM)
 #  else
-#   define YYLEX		yylex (&yylval)
+#   define YYLEX    yylex (&yylval)
 #  endif
 # endif /* !YYLSP_NEEDED */
 #else /* !YYPURE */
-# define YYLEX			yylex ()
+# define YYLEX      yylex ()
 #endif /* !YYPURE */
 
 
@@ -1240,10 +1238,10 @@ while (0)
 #  define YYFPRINTF fprintf
 # endif
 
-# define YYDPRINTF(Args)			\
-do {						\
-  if (yydebug)					\
-    YYFPRINTF Args;				\
+# define YYDPRINTF(Args)      \
+do {            \
+  if (yydebug)          \
+    YYFPRINTF Args;       \
 } while (0)
 /* Nonzero means print parse trace.  It is left uninitialized so that
    multiple parsers can coexist.  */
@@ -1253,7 +1251,7 @@ int yydebug;
 #endif /* !YYDEBUG */
 
 /* YYINITDEPTH -- initial size of the parser's stacks.  */
-#ifndef	YYINITDEPTH
+#ifndef YYINITDEPTH
 # define YYINITDEPTH 200
 #endif
 
@@ -1358,12 +1356,12 @@ int yyparse (void);
 /* YY_DECL_VARIABLES -- depending whether we use a pure parser,
    variables are global, or local to YYPARSE.  */
 
-#define YY_DECL_NON_LSP_VARIABLES			\
-/* The lookahead symbol.  */				\
-int yychar;						\
-							\
-/* The semantic value of the lookahead symbol. */	\
-YYSTYPE yylval;						\
+#define YY_DECL_NON_LSP_VARIABLES     \
+/* The lookahead symbol.  */        \
+int yychar;           \
+              \
+/* The semantic value of the lookahead symbol. */ \
+YYSTYPE yylval;           \
 
 /* The variables used to return semantic value and location from the
    action routines.  */
@@ -1371,18 +1369,18 @@ YYSTYPE yylval;						\
 #if YYLSP_NEEDED
   YYLTYPE yyloc;
 #endif
-						\
-/* Number of parse errors so far.  */			\
+            \
+/* Number of parse errors so far.  */     \
 int yynerrs;
 
 #if YYLSP_NEEDED
-# define YY_DECL_VARIABLES			\
-YY_DECL_NON_LSP_VARIABLES			\
-						\
-/* Location data for the lookahead symbol.  */	\
+# define YY_DECL_VARIABLES      \
+YY_DECL_NON_LSP_VARIABLES     \
+            \
+/* Location data for the lookahead symbol.  */  \
 YYLTYPE yylloc;
 #else
-# define YY_DECL_VARIABLES			\
+# define YY_DECL_VARIABLES      \
 YY_DECL_NON_LSP_VARIABLES
 #endif
 
@@ -1419,7 +1417,7 @@ yyparse (YYPARSE_PARAM_ARG)
      to reallocate them elsewhere.  */
 
   /* The state stack. */
-  short	yyssa[YYINITDEPTH];
+  short yyssa[YYINITDEPTH];
   short *yyss = yyssa;
   register short *yyssp;
 
@@ -1453,7 +1451,7 @@ yyparse (YYPARSE_PARAM_ARG)
   yystate = 0;
   yyerrstatus = 0;
   yynerrs = 0;
-  yychar = YYEMPTY;		/* Cause a token to be read.  */
+  yychar = YYEMPTY;   /* Cause a token to be read.  */
 
   /* Initialize stack pointers.
      Waste one element of value and location stack
@@ -1486,32 +1484,32 @@ yyparse (YYPARSE_PARAM_ARG)
 
 #ifdef yyoverflow
       {
-	/* Give user a chance to reallocate the stack. Use copies of
-	   these so that the &'s don't force the real ones into
-	   memory.  */
-	YYSTYPE *yyvs1 = yyvs;
-	short *yyss1 = yyss;
+  /* Give user a chance to reallocate the stack. Use copies of
+     these so that the &'s don't force the real ones into
+     memory.  */
+  YYSTYPE *yyvs1 = yyvs;
+  short *yyss1 = yyss;
 
-	/* Each stack pointer address is followed by the size of the
-	   data in use in that stack, in bytes.  */
+  /* Each stack pointer address is followed by the size of the
+     data in use in that stack, in bytes.  */
 # if YYLSP_NEEDED
-	YYLTYPE *yyls1 = yyls;
-	/* This used to be a conditional around just the two extra args,
-	   but that might be undefined if yyoverflow is a macro.  */
-	yyoverflow ("parser stack overflow",
-		    &yyss1, yysize * sizeof (*yyssp),
-		    &yyvs1, yysize * sizeof (*yyvsp),
-		    &yyls1, yysize * sizeof (*yylsp),
-		    &yystacksize);
-	yyls = yyls1;
+  YYLTYPE *yyls1 = yyls;
+  /* This used to be a conditional around just the two extra args,
+     but that might be undefined if yyoverflow is a macro.  */
+  yyoverflow ("parser stack overflow",
+        &yyss1, yysize * sizeof (*yyssp),
+        &yyvs1, yysize * sizeof (*yyvsp),
+        &yyls1, yysize * sizeof (*yylsp),
+        &yystacksize);
+  yyls = yyls1;
 # else
-	yyoverflow ("parser stack overflow",
-		    &yyss1, yysize * sizeof (*yyssp),
-		    &yyvs1, yysize * sizeof (*yyvsp),
-		    &yystacksize);
+  yyoverflow ("parser stack overflow",
+        &yyss1, yysize * sizeof (*yyssp),
+        &yyvs1, yysize * sizeof (*yyvsp),
+        &yystacksize);
 # endif
-	yyss = yyss1;
-	yyvs = yyvs1;
+  yyss = yyss1;
+  yyvs = yyvs1;
       }
 #else /* no yyoverflow */
 # ifndef YYSTACK_RELOCATE
@@ -1519,25 +1517,25 @@ yyparse (YYPARSE_PARAM_ARG)
 # else
       /* Extend the stack our own way.  */
       if (yystacksize >= YYMAXDEPTH)
-	goto yyoverflowlab;
+  goto yyoverflowlab;
       yystacksize *= 2;
       if (yystacksize > YYMAXDEPTH)
-	yystacksize = YYMAXDEPTH;
+  yystacksize = YYMAXDEPTH;
 
       {
-	short *yyss1 = yyss;
-	union yyalloc *yyptr =
-	  (union yyalloc *) YYSTACK_ALLOC (YYSTACK_BYTES (yystacksize));
-	if (! yyptr)
-	  goto yyoverflowlab;
-	YYSTACK_RELOCATE (yyss);
-	YYSTACK_RELOCATE (yyvs);
+  short *yyss1 = yyss;
+  union yyalloc *yyptr =
+    (union yyalloc *) YYSTACK_ALLOC (YYSTACK_BYTES (yystacksize));
+  if (! yyptr)
+    goto yyoverflowlab;
+  YYSTACK_RELOCATE (yyss);
+  YYSTACK_RELOCATE (yyvs);
 # if YYLSP_NEEDED
-	YYSTACK_RELOCATE (yyls);
+  YYSTACK_RELOCATE (yyls);
 # endif
 # undef YYSTACK_RELOCATE
-	if (yyss1 != yyssa)
-	  YYSTACK_FREE (yyss1);
+  if (yyss1 != yyssa)
+    YYSTACK_FREE (yyss1);
       }
 # endif
 #endif /* no yyoverflow */
@@ -1549,10 +1547,10 @@ yyparse (YYPARSE_PARAM_ARG)
 #endif
 
       YYDPRINTF ((stderr, "Stack size increased to %lu\n",
-		  (unsigned long int) yystacksize));
+      (unsigned long int) yystacksize));
 
       if (yyssp >= yyss + yystacksize - 1)
-	YYABORT;
+  YYABORT;
     }
 
   YYDPRINTF ((stderr, "Entering state %d\n", yystate));
@@ -1588,10 +1586,10 @@ yybackup:
 
   /* Convert token to internal form (in yychar1) for indexing tables with */
 
-  if (yychar <= 0)		/* This means end of input. */
+  if (yychar <= 0)    /* This means end of input. */
     {
       yychar1 = 0;
-      yychar = YYEOF;		/* Don't call YYLEX any more */
+      yychar = YYEOF;   /* Don't call YYLEX any more */
 
       YYDPRINTF ((stderr, "Now at end of input.\n"));
     }
@@ -1601,18 +1599,18 @@ yybackup:
 
 #if YYDEBUG
      /* We have to keep this `#if YYDEBUG', since we use variables
-	which are defined only if `YYDEBUG' is set.  */
+  which are defined only if `YYDEBUG' is set.  */
       if (yydebug)
-	{
-	  YYFPRINTF (stderr, "Next token is %d (%s",
-		     yychar, yytname[yychar1]);
-	  /* Give the individual parser a way to print the precise
-	     meaning of a token, for further debugging info.  */
+  {
+    YYFPRINTF (stderr, "Next token is %d (%s",
+         yychar, yytname[yychar1]);
+    /* Give the individual parser a way to print the precise
+       meaning of a token, for further debugging info.  */
 # ifdef YYPRINT
-	  YYPRINT (stderr, yychar, yylval);
+    YYPRINT (stderr, yychar, yylval);
 # endif
-	  YYFPRINTF (stderr, ")\n");
-	}
+    YYFPRINTF (stderr, ")\n");
+  }
 #endif
     }
 
@@ -1632,7 +1630,7 @@ yybackup:
   if (yyn < 0)
     {
       if (yyn == YYFLAG)
-	goto yyerrlab;
+  goto yyerrlab;
       yyn = -yyn;
       goto yyreduce;
     }
@@ -1644,7 +1642,7 @@ yybackup:
 
   /* Shift the lookahead token.  */
   YYDPRINTF ((stderr, "Shifting token %d (%s), ",
-	      yychar, yytname[yychar1]));
+        yychar, yytname[yychar1]));
 
   /* Discard the token being shifted unless it is eof.  */
   if (yychar != YYEOF)
@@ -1706,11 +1704,11 @@ yyreduce:
       int yyi;
 
       YYFPRINTF (stderr, "Reducing via rule %d (line %d), ",
-		 yyn, yyrline[yyn]);
+     yyn, yyrline[yyn]);
 
       /* Print the symbols being reduced, and their result.  */
       for (yyi = yyprhs[yyn]; yyrhs[yyi] > 0; yyi++)
-	YYFPRINTF (stderr, "%s ", yytname[yyrhs[yyi]]);
+  YYFPRINTF (stderr, "%s ", yytname[yyrhs[yyi]]);
       YYFPRINTF (stderr, " -> %s\n", yytname[yyr1[yyn]]);
     }
 #endif
@@ -1780,13 +1778,13 @@ case 14:
 case 15:
 #line 126 "PSDL.yy"
 {
-		  TAO_PSDL_Scope::instance ()->set_module_scope ();
-		  yyval = new TAO_PSDL_Module (TAO_PSDL_MODULE, yyvsp[-4], yyvsp[-1]); ;
+      TAO_PSDL_Scope::instance ()->set_module_scope ();
+      yyval = new TAO_PSDL_Module (TAO_PSDL_MODULE, yyvsp[-4], yyvsp[-1]); ;
     break;}
 case 16:
 #line 132 "PSDL.yy"
 { TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Abstract_Storagetype (yyvsp[0]); ;
+      yyval = new TAO_PSDL_Abstract_Storagetype (yyvsp[0]); ;
     break;}
 case 17:
 #line 136 "PSDL.yy"
@@ -1807,12 +1805,12 @@ case 20:
 case 21:
 #line 151 "PSDL.yy"
 {
-		  int good_storagetype_name = TAO_PSDL_Scope::instance ()->pop_top_scope ()->add_interface (TAO_PSDL_Scope::instance ()->get_identifier ());
-		  if (good_storagetype_name == -1)
-		      YYABORT;
+      int good_storagetype_name = TAO_PSDL_Scope::instance ()->pop_top_scope ()->add_interface (TAO_PSDL_Scope::instance ()->get_identifier ());
+      if (good_storagetype_name == -1)
+          YYABORT;
 
-		  yyval = yyvsp[0];
-		;
+      yyval = yyvsp[0];
+    ;
     break;}
 case 22:
 #line 162 "PSDL.yy"
@@ -1949,12 +1947,12 @@ case 54:
 case 55:
 #line 289 "PSDL.yy"
 { TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Op_Dcl (yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
+      yyval = new TAO_PSDL_Op_Dcl (yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
     break;}
 case 56:
 #line 293 "PSDL.yy"
 { TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Op_Dcl (yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
+      yyval = new TAO_PSDL_Op_Dcl (yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
     break;}
 case 57:
 #line 298 "PSDL.yy"
@@ -2407,17 +2405,17 @@ case 168:
 case 169:
 #line 693 "PSDL.yy"
 {
-		  int good_struct_name = TAO_PSDL_Scope::instance ()->pop_top_scope ()->add_struct (TAO_PSDL_Scope::instance ()->get_identifier ());
+      int good_struct_name = TAO_PSDL_Scope::instance ()->pop_top_scope ()->add_struct (TAO_PSDL_Scope::instance ()->get_identifier ());
 
-		  if (good_struct_name == -1)
-			YYABORT;
-		;
+      if (good_struct_name == -1)
+      YYABORT;
+    ;
     break;}
 case 170:
 #line 700 "PSDL.yy"
 {
-  		  TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Predefined_Type (TAO_PSDL_STRUCT, yyvsp[-4], yyvsp[-1]); ;
+        TAO_PSDL_Scope::instance ()->set_scope ();
+      yyval = new TAO_PSDL_Predefined_Type (TAO_PSDL_STRUCT, yyvsp[-4], yyvsp[-1]); ;
     break;}
 case 171:
 #line 706 "PSDL.yy"
@@ -2634,56 +2632,56 @@ case 223:
 case 224:
 #line 885 "PSDL.yy"
 {
-		  int good_except_name = TAO_PSDL_Scope::instance ()->pop_top_scope ()->add_exception (TAO_PSDL_Scope::instance ()->get_identifier ());
-	          if (good_except_name == -1)
-		    YYABORT;
-	    	  yyval = yyvsp[0];
-		;
+      int good_except_name = TAO_PSDL_Scope::instance ()->pop_top_scope ()->add_exception (TAO_PSDL_Scope::instance ()->get_identifier ());
+            if (good_except_name == -1)
+        YYABORT;
+          yyval = yyvsp[0];
+    ;
     break;}
 case 225:
 #line 894 "PSDL.yy"
 {
-		  TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Except_Dcl (yyvsp[-3], yyvsp[-1]);
-		;
+      TAO_PSDL_Scope::instance ()->set_scope ();
+      yyval = new TAO_PSDL_Except_Dcl (yyvsp[-3], yyvsp[-1]);
+    ;
     break;}
 case 226:
 #line 900 "PSDL.yy"
 {
-		  TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Except_Dcl (yyvsp[-2]);
-		;
+      TAO_PSDL_Scope::instance ()->set_scope ();
+      yyval = new TAO_PSDL_Except_Dcl (yyvsp[-2]);
+    ;
     break;}
 case 227:
 #line 907 "PSDL.yy"
 {
-		  int good_op_dcl_name = TAO_PSDL_Scope::instance ()->pop_top_scope ()->add_op_dcl (TAO_PSDL_Scope::instance ()->get_identifier ());
+      int good_op_dcl_name = TAO_PSDL_Scope::instance ()->pop_top_scope ()->add_op_dcl (TAO_PSDL_Scope::instance ()->get_identifier ());
 
-	          if (good_op_dcl_name == -1)
-		    YYABORT;
+            if (good_op_dcl_name == -1)
+        YYABORT;
 
-		  yyval = yyvsp[0];
-		;
+      yyval = yyvsp[0];
+    ;
     break;}
 case 228:
 #line 918 "PSDL.yy"
 { TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Op_Dcl (yyvsp[-5], yyvsp[-4], yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
+      yyval = new TAO_PSDL_Op_Dcl (yyvsp[-5], yyvsp[-4], yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
     break;}
 case 229:
 #line 922 "PSDL.yy"
 { TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Op_Dcl (yyvsp[-4], yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
+      yyval = new TAO_PSDL_Op_Dcl (yyvsp[-4], yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
     break;}
 case 230:
 #line 926 "PSDL.yy"
 { TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Op_Dcl (yyvsp[-4], yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
+      yyval = new TAO_PSDL_Op_Dcl (yyvsp[-4], yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
     break;}
 case 231:
 #line 930 "PSDL.yy"
 { TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Op_Dcl (yyvsp[-4], yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
+      yyval = new TAO_PSDL_Op_Dcl (yyvsp[-4], yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
     break;}
 case 232:
 #line 934 "PSDL.yy"
@@ -2693,7 +2691,7 @@ case 232:
 case 233:
 #line 938 "PSDL.yy"
 { TAO_PSDL_Scope::instance ()->set_scope ();
-		  yyval = new TAO_PSDL_Op_Dcl (yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
+      yyval = new TAO_PSDL_Op_Dcl (yyvsp[-3], yyvsp[-2], yyvsp[-1], yyvsp[0]); ;
     break;}
 case 234:
 #line 942 "PSDL.yy"
@@ -2799,16 +2797,16 @@ case 258:
 case 259:
 #line 1032 "PSDL.yy"
 {
-		  TAO_PSDL_Scope::instance ()->set_interface_scope ();
-		  yyval = new TAO_PSDL_Interface_Dcl (yyvsp[-3], yyvsp[-1]);
-		;
+      TAO_PSDL_Scope::instance ()->set_interface_scope ();
+      yyval = new TAO_PSDL_Interface_Dcl (yyvsp[-3], yyvsp[-1]);
+    ;
     break;}
 case 260:
 #line 1038 "PSDL.yy"
 {
-		  TAO_PSDL_Scope::instance ()->set_interface_scope ();
-		  yyval = new TAO_PSDL_Interface_Dcl (yyvsp[-2]);
-		;
+      TAO_PSDL_Scope::instance ()->set_interface_scope ();
+      yyval = new TAO_PSDL_Interface_Dcl (yyvsp[-2]);
+    ;
     break;}
 case 261:
 #line 1045 "PSDL.yy"
@@ -2825,12 +2823,12 @@ case 263:
 case 264:
 #line 1055 "PSDL.yy"
 {
-		  int good_interface_name = TAO_PSDL_Scope::instance ()->pop_top_scope ()->add_interface (TAO_PSDL_Scope::instance ()->get_identifier ());
-		  if (good_interface_name == -1)
-		      YYABORT;
+      int good_interface_name = TAO_PSDL_Scope::instance ()->pop_top_scope ()->add_interface (TAO_PSDL_Scope::instance ()->get_identifier ());
+      if (good_interface_name == -1)
+          YYABORT;
 
-		  yyval = yyvsp[0];
-		;
+      yyval = yyvsp[0];
+    ;
     break;}
 case 265:
 #line 1065 "PSDL.yy"
@@ -3193,7 +3191,7 @@ case 350:
       short *yyssp1 = yyss - 1;
       YYFPRINTF (stderr, "state stack now");
       while (yyssp1 != yyssp)
-	YYFPRINTF (stderr, " %d", *++yyssp1);
+  YYFPRINTF (stderr, " %d", *++yyssp1);
       YYFPRINTF (stderr, "\n");
     }
 #endif
@@ -3231,49 +3229,49 @@ yyerrlab:
       yyn = yypact[yystate];
 
       if (yyn > YYFLAG && yyn < YYLAST)
-	{
-	  YYSIZE_T yysize = 0;
-	  char *yymsg;
-	  int yyx, yycount;
+  {
+    YYSIZE_T yysize = 0;
+    char *yymsg;
+    int yyx, yycount;
 
-	  yycount = 0;
-	  /* Start YYX at -YYN if negative to avoid negative indexes in
-	     YYCHECK.  */
-	  for (yyx = yyn < 0 ? -yyn : 0;
-	       yyx < (int) (sizeof (yytname) / sizeof (char *)); yyx++)
-	    if (yycheck[yyx + yyn] == yyx)
-	      yysize += yystrlen (yytname[yyx]) + 15, yycount++;
-	  yysize += yystrlen ("parse error, unexpected ") + 1;
-	  yysize += yystrlen (yytname[YYTRANSLATE (yychar)]);
-	  yymsg = (char *) YYSTACK_ALLOC (yysize);
-	  if (yymsg != 0)
-	    {
-	      char *yyp = yystpcpy (yymsg, "parse error, unexpected ");
-	      yyp = yystpcpy (yyp, yytname[YYTRANSLATE (yychar)]);
+    yycount = 0;
+    /* Start YYX at -YYN if negative to avoid negative indexes in
+       YYCHECK.  */
+    for (yyx = yyn < 0 ? -yyn : 0;
+         yyx < (int) (sizeof (yytname) / sizeof (char *)); yyx++)
+      if (yycheck[yyx + yyn] == yyx)
+        yysize += yystrlen (yytname[yyx]) + 15, yycount++;
+    yysize += yystrlen ("parse error, unexpected ") + 1;
+    yysize += yystrlen (yytname[YYTRANSLATE (yychar)]);
+    yymsg = (char *) YYSTACK_ALLOC (yysize);
+    if (yymsg != 0)
+      {
+        char *yyp = yystpcpy (yymsg, "parse error, unexpected ");
+        yyp = yystpcpy (yyp, yytname[YYTRANSLATE (yychar)]);
 
-	      if (yycount < 5)
-		{
-		  yycount = 0;
-		  for (yyx = yyn < 0 ? -yyn : 0;
-		       yyx < (int) (sizeof (yytname) / sizeof (char *));
-		       yyx++)
-		    if (yycheck[yyx + yyn] == yyx)
-		      {
-			const char *yyq = ! yycount ? ", expecting " : " or ";
-			yyp = yystpcpy (yyp, yyq);
-			yyp = yystpcpy (yyp, yytname[yyx]);
-			yycount++;
-		      }
-		}
-	      yyerror (yymsg);
-	      YYSTACK_FREE (yymsg);
-	    }
-	  else
-	    yyerror ("parse error; also virtual memory exhausted");
-	}
+        if (yycount < 5)
+    {
+      yycount = 0;
+      for (yyx = yyn < 0 ? -yyn : 0;
+           yyx < (int) (sizeof (yytname) / sizeof (char *));
+           yyx++)
+        if (yycheck[yyx + yyn] == yyx)
+          {
+      const char *yyq = ! yycount ? ", expecting " : " or ";
+      yyp = yystpcpy (yyp, yyq);
+      yyp = yystpcpy (yyp, yytname[yyx]);
+      yycount++;
+          }
+    }
+        yyerror (yymsg);
+        YYSTACK_FREE (yymsg);
+      }
+    else
+      yyerror ("parse error; also virtual memory exhausted");
+  }
       else
 #endif /* defined (YYERROR_VERBOSE) */
-	yyerror ("parse error");
+  yyerror ("parse error");
     }
   goto yyerrlab1;
 
@@ -3285,20 +3283,20 @@ yyerrlab1:
   if (yyerrstatus == 3)
     {
       /* If just tried and failed to reuse lookahead token after an
-	 error, discard it.  */
+   error, discard it.  */
 
       /* return failure if at end of input */
       if (yychar == YYEOF)
-	YYABORT;
+  YYABORT;
       YYDPRINTF ((stderr, "Discarding token %d (%s).\n",
-		  yychar, yytname[yychar1]));
+      yychar, yytname[yychar1]));
       yychar = YYEMPTY;
     }
 
   /* Else will try to reuse lookahead token after shifting the error
      token.  */
 
-  yyerrstatus = 3;		/* Each real token shifted decrements this */
+  yyerrstatus = 3;    /* Each real token shifted decrements this */
 
   goto yyerrhandle;
 
@@ -3338,7 +3336,7 @@ yyerrpop:
       short *yyssp1 = yyss - 1;
       YYFPRINTF (stderr, "Error: state stack now");
       while (yyssp1 != yyssp)
-	YYFPRINTF (stderr, " %d", *++yyssp1);
+  YYFPRINTF (stderr, " %d", *++yyssp1);
       YYFPRINTF (stderr, "\n");
     }
 #endif
@@ -3359,7 +3357,7 @@ yyerrhandle:
   if (yyn < 0)
     {
       if (yyn == YYFLAG)
-	goto yyerrpop;
+  goto yyerrpop;
       yyn = -yyn;
       goto yyreduce;
     }

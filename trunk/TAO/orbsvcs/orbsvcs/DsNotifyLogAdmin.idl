@@ -26,40 +26,40 @@
 module DsNotifyLogAdmin
 {
   interface NotifyLog : DsEventLogAdmin::EventLog,
-			CosNotifyChannelAdmin::EventChannel
+      CosNotifyChannelAdmin::EventChannel
   {
-	CosNotifyFilter::Filter get_filter();
-	void set_filter(in CosNotifyFilter::Filter filter);
+  CosNotifyFilter::Filter get_filter();
+  void set_filter(in CosNotifyFilter::Filter filter);
   };
 
   interface NotifyLogFactory : DsLogAdmin::LogMgr,
-			CosNotifyChannelAdmin::ConsumerAdmin
+      CosNotifyChannelAdmin::ConsumerAdmin
   {
-	NotifyLog create (
-		in DsLogAdmin::LogFullActionType	full_action,
-		in unsigned long long			max_size,
-		in DsLogAdmin::CapacityAlarmThresholdList	thresholds,
-		in CosNotification::QoSProperties initial_qos,
-		in CosNotification::AdminProperties initial_admin,
-		out DsLogAdmin::LogId id
-	) raises (DsLogAdmin::InvalidLogFullAction,
-		    DsLogAdmin::InvalidThreshold,
-		    CosNotification::UnsupportedQoS,
-		    CosNotification::UnsupportedAdmin);
+  NotifyLog create (
+    in DsLogAdmin::LogFullActionType  full_action,
+    in unsigned long long     max_size,
+    in DsLogAdmin::CapacityAlarmThresholdList thresholds,
+    in CosNotification::QoSProperties initial_qos,
+    in CosNotification::AdminProperties initial_admin,
+    out DsLogAdmin::LogId id
+  ) raises (DsLogAdmin::InvalidLogFullAction,
+        DsLogAdmin::InvalidThreshold,
+        CosNotification::UnsupportedQoS,
+        CosNotification::UnsupportedAdmin);
 
-	NotifyLog create_with_id (
-		in DsLogAdmin::LogId id,
-		in DsLogAdmin::LogFullActionType full_action,
-		in unsigned long long max_size,
-		in DsLogAdmin::CapacityAlarmThresholdList thresholds,
-		in CosNotification::QoSProperties initial_qos,
-		in CosNotification::AdminProperties initial_admin
-	) raises (DsLogAdmin::LogIdAlreadyExists,
-		    DsLogAdmin::InvalidLogFullAction,
-		    DsLogAdmin::InvalidThreshold,
-		    CosNotification::UnsupportedQoS,
-		    CosNotification::UnsupportedAdmin);
-	};
+  NotifyLog create_with_id (
+    in DsLogAdmin::LogId id,
+    in DsLogAdmin::LogFullActionType full_action,
+    in unsigned long long max_size,
+    in DsLogAdmin::CapacityAlarmThresholdList thresholds,
+    in CosNotification::QoSProperties initial_qos,
+    in CosNotification::AdminProperties initial_admin
+  ) raises (DsLogAdmin::LogIdAlreadyExists,
+        DsLogAdmin::InvalidLogFullAction,
+        DsLogAdmin::InvalidThreshold,
+        CosNotification::UnsupportedQoS,
+        CosNotification::UnsupportedAdmin);
+  };
   
 };
 

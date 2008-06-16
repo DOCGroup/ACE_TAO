@@ -77,7 +77,7 @@ delete_records (CORBA::ULongLong numberOfRecords);
 
   int test_logCompaction(CORBA::ULong record_life = 1);
   // 1. get number of records in log. Should have records from prior test.
-  //	If not write some.
+  //  If not write some.
   // 2. get maximum record life.
   // 3. set maximum record life. Wait record_life seconds.
   // 4. get maximum record life.

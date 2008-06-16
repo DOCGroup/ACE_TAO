@@ -1,3 +1,50 @@
+Mon Jun 16 10:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/PSS/PSDL_l.cpp:
+        * orbsvcs/PSS/PSDL_y.h:
+        * orbsvcs/PSS/PSDL_y.cpp:
+
+          Re-enamble Fuzz check for tabs in the files above and untabified them.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.tab.h:
+        * orbsvcs/orbsvcs/Log/Log_Persistence_Strategy.h:
+        * orbsvcs/orbsvcs/Log/EventLog_i.h:
+        * orbsvcs/orbsvcs/Log/Hash_logStore.h:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.h:
+        * orbsvcs/tests/Log/Basic_log_Test/Basic_Log_Test.h:
+        * orbsvcs/orbsvcs/SecurityLevel2.idl:
+        * orbsvcs/orbsvcs/Security.idl:
+        * orbsvcs/orbsvcs/CosLifeCycle.idl:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.idl:
+        * orbsvcs/orbsvcs/CosNaming.idl:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.idl:
+        * orbsvcs/orbsvcs/CosTrading.idl:
+        * orbsvcs/orbsvcs/DsLogNotification.idl:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.idl:
+        * orbsvcs/tests/Bug_2248_Regression/test.idl:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/test/idl:
+        * tests/Bug_2188_Regression/broken.idl:
+        * tests/OBV/Supports/Supports_Test.idl:
+        * tests/Bug_2417_Regression/publisher.idl:
+        * tests/Bug_2417_Regression/subscriber.idl:
+        * tests/DII_AMI_Forward/test.idl:
+        * tests/IDL_Test/constants.idl:
+        * tests/IDL_Test/repo_id_mod.idl:
+        * tests/IDL_Test/array.idl:
+        * tests/IDL_Test/interface.idl:
+        * tests/Bug_1383_Regression/callee.idl:
+        * tests/Bug_1383_Regression/simple.idl:
+
+          Un-tabify.
+
 Mon Jun 16 00:51:02 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/AMI/ami_test_i.h:

@@ -127,13 +127,8 @@ module CoercionBug
   typedef unsigned short UInt16;
   typedef UInt16 CellFlags;
 
-  const CellFlags EXPLICIT_VALUE_LOCK	= 0x0400;
-  const CellFlags EDIT_VALUE_LOCK	= 0x1000;
+  const CellFlags EXPLICIT_VALUE_LOCK = 0x0400;
+  const CellFlags EDIT_VALUE_LOCK = 0x1000;
 
   const CellFlags VALUE_LOCK = (EXPLICIT_VALUE_LOCK | EDIT_VALUE_LOCK);
 };
-
-
-
-
-
