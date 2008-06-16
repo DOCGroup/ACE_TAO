@@ -45,8 +45,8 @@ Util_Thread::svc (void)
   this->ts_->timer_.stop ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) (((((((( " 
-	      "utilization test ENDED at %D\n"));
+              "(%t) (((((((( "
+              "utilization test ENDED at %D\n"));
   return 0;
 }
 
@@ -84,12 +84,12 @@ Util_Thread::run_computations (void)
     {
       // Bound the number of computations, since we can potentially
       // block the machine if this thread never leaves the loop.
-      if (this->number_of_computations_ > (ts_->loop_count_ * UTIL_BOUND_CONSTANT)) 
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "\t(%t) utilization test breaking loop so machine won't block.\n"));
-	  break;
-	}
+      if (this->number_of_computations_ > (ts_->loop_count_ * UTIL_BOUND_CONSTANT))
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "\t(%t) utilization test breaking loop so machine won't block.\n"));
+          break;
+        }
 
       this->computation ();
       this->number_of_computations_++;

@@ -40,7 +40,7 @@ parse_args (int argc, char *argv[])
           return -1;
         break;
 
-	  case 's':
+      case 's':
         sz = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
@@ -61,8 +61,8 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-t <datatype> "
-						   "-s <size> "
-						   "-k <ior> "
+                           "-s <size> "
+                           "-k <ior> "
                            "-i <niterations> "
                            "-x (disable shutdown) "
                            "\n",
@@ -119,41 +119,42 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-	  /// Begin the test
+      /// Begin the test
 
-	  ACE_DEBUG ((LM_DEBUG, "Starting threads\n"));
+      ACE_DEBUG ((LM_DEBUG, "Starting threads\n"));
 
-	  Client_Task task0(data_type, sz, roundtrip.in (), niterations);
-	  Client_Task task1(data_type, sz, roundtrip.in (), niterations);
-	  Client_Task task2(data_type, sz, roundtrip.in (), niterations);
-	  Client_Task task3(data_type, sz, roundtrip.in (), niterations);
+      Client_Task task0(data_type, sz, roundtrip.in (), niterations);
+      Client_Task task1(data_type, sz, roundtrip.in (), niterations);
+      Client_Task task2(data_type, sz, roundtrip.in (), niterations);
+      Client_Task task3(data_type, sz, roundtrip.in (), niterations);
 
-	  ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-	  task0.activate(THR_NEW_LWP | THR_JOINABLE);
-	  task1.activate(THR_NEW_LWP | THR_JOINABLE);
-	  task2.activate(THR_NEW_LWP | THR_JOINABLE);
-	  task3.activate(THR_NEW_LWP | THR_JOINABLE);
+      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+      task0.activate(THR_NEW_LWP | THR_JOINABLE);
+      task1.activate(THR_NEW_LWP | THR_JOINABLE);
+      task2.activate(THR_NEW_LWP | THR_JOINABLE);
+      task3.activate(THR_NEW_LWP | THR_JOINABLE);
 
-	  task0.thr_mgr()->wait ();
-	  ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+      task0.thr_mgr()->wait ();
+      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
-	  ACE_DEBUG ((LM_DEBUG, "Threads finished\n"));
+      ACE_DEBUG ((LM_DEBUG, "Threads finished\n"));
 
-	  ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
-	  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-	  ACE_DEBUG ((LM_DEBUG, "done\n"));
+      ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
+      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_DEBUG ((LM_DEBUG, "done\n"));
 
-	  ACE_Basic_Stats totals;
-	  task0.accumulate_and_dump (totals, "Task[0]", gsf);
-	  task1.accumulate_and_dump (totals, "Task[1]", gsf);
-	  task2.accumulate_and_dump (totals, "Task[2]", gsf);
-	  task3.accumulate_and_dump (totals, "Task[3]", gsf);
+      ACE_Basic_Stats totals;
+      task0.accumulate_and_dump (totals, "Task[0]", gsf);
+      task1.accumulate_and_dump (totals, "Task[1]", gsf);
+      task2.accumulate_and_dump (totals, "Task[2]", gsf);
+      task3.accumulate_and_dump (totals, "Task[3]", gsf);
 
-	  totals.dump_results ("Total", gsf);
+      totals.dump_results ("Total", gsf);
 
-	  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
-											 test_end - test_start,
-											 totals.samples_count ());
+      ACE_Throughput_Stats::dump_throughput ("Total",
+                                             gsf,
+                                             test_end - test_start,
+                                             totals.samples_count ());
 
       if (do_shutdown)
         {
