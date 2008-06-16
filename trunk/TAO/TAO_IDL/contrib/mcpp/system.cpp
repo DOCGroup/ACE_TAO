@@ -19,7 +19,7 @@
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE
  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+v * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
@@ -49,6 +49,7 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdlib.h"
+#include "ace/Log_Msg.h"
 
 #undef OUT
 
@@ -87,6 +88,7 @@ extern char *   optarg;
 #define OBJEXT     "obj"
 #elif   1
 /* Add here appropriate definitions for other systems.  */
+#error "Bad SYS_FAMILY"
 #endif
 #endif
 
@@ -612,6 +614,7 @@ plus:
         case 'F':
             if (str_eq( optarg, "l")) {             /* -Fl          */
                 if (preinc_end >= &preinclude[ NPREINCLUDE]) {
+		  ACE_ERROR ((LM_ERROR, "Too many -Fl options\n"));
                     mcpp_fputs( "Too many -Fl options.\n", ERR);
                     longjmp( error_exit, -1);
                 }
@@ -627,11 +630,13 @@ plus:
             if (str_eq( optarg, "nclude")) {        /* -include     */
                 if (preinc_end >= &preinclude[ NPREINCLUDE]) {
                     mcpp_fputs( "Too many -include options.\n", ERR);
+		    ACE_ERROR((LM_ERROR, "Too many -include options\n"));
                     longjmp( error_exit, -1);
                 }
                 *preinc_end++ = argv[ optind++];
             } else if (str_eq( optarg, "system")) { /* -isystem     */
                 if (sysdir_end >= &sysdir[ NSYSDIR]) {
+		  ACE_ERROR  ((LM_ERROR, "Too many -isystem options\n"));
                     mcpp_fputs( "Too many -isystem options.\n", ERR);
                     longjmp( error_exit, -1);
                 }
@@ -1338,7 +1343,11 @@ static void usage(
     mes[ 1] = argv0;
 #endif
     while (*mpp)
+      {
+	ACE_ERROR ((LM_ERROR, "%s\n", *mpp));
         mcpp_fputs( *mpp++, ERR);
+      }
+
     longjmp( error_exit, -1);
 }
 
