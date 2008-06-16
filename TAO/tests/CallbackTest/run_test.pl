@@ -23,7 +23,7 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
 }
 else {
-    $SV = $target->CreateProcess ("server", "-o $iorfile");
+    $SV = $target->CreateProcess ("server", "-o $server_iorfile");
 }
 $CL = $host->CreateProcess ("client", "-k file://$client_iorfile -ORBDottedDecimalAddresses 1");
 
@@ -41,7 +41,7 @@ if ($target->GetFile ($server_iorfile, $iorbase) == -1) {
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 } 
-if ($client->PutFile ($iorbase, $client_iorfile) == -1) {
+if ($host->PutFile ($iorbase, $client_iorfile) == -1) {
     print STDERR "ERROR: cannot set file <$client_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
