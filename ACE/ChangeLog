@@ -1,3 +1,10 @@
+Tue Jun 17 15:36:49 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * ace/Stack_Trace.cpp:
+
+          Disabled warning C4706 in load_dbghelp_library_if_needed()
+          and enabled afterwards on windows.
+          
 Tue Jun 17 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/fuzz.pl:
