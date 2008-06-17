@@ -8,6 +8,7 @@
 #include "ace/OS_NS_stdio.h"
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/sockio.h>
 #include <ifaddrs.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
