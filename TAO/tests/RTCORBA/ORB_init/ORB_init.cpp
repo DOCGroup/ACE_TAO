@@ -8,7 +8,7 @@
 int
 test_multiple_orbs (const char *test_name,
                     int argc,
-                    char *argv[],
+                    ACE_TCHAR *argv[],
                     int iterations,
                     int rt_orb,
                     int destroy)
@@ -68,7 +68,7 @@ test_multiple_orbs (const char *test_name,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int iterations = 5;
   int rt_orb = 0;

@@ -23,7 +23,7 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
       ior_file_name_ = OpenDialog->FileName;
 
       // Retrieve the ORB.
-      orb_ = CORBA::ORB_init (_argc, _argv, 0);
+      orb_ = CORBA::ORB_init (_argc, _argv);
 
       // Get reference to the Root POA
       CORBA::Object_var obj =

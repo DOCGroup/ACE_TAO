@@ -1,3 +1,28 @@
+Tue Jun 17 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO/examples/Borland/ChatClientWnd.cpp:
+        * TAO/orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+        * TAO/orbsvcs/Naming_Service/Naming_Service.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp:
+        * TAO/orbsvcs/tests/CosEvent/Timeout/TimeoutTestMain.cpp:
+        * TAO/tests/Bug_3315_Regression/main.cpp:
+        * TAO/tests/Bug_3321_Regression/main.cpp:
+        * TAO/tests/CSD_Collocation/Collocation_Tester.cpp:
+        * TAO/tests/File_IO/File_i.cpp:
+        * TAO/tests/Object_Loader/driver.cpp:
+        * TAO/tests/POA/Forwarding/server.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_1559/client_interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/Service_Context_Manipulation/client_interceptor.cpp:
+        * TAO/tests/Reliable_Oneways/client.cpp:
+        * TAO/tests/RTCORBA/ORB_init/ORB_init.cpp:
+        * TAO/tests/RTCORBA/Client_Propagated/interceptors.cpp:
+        * TAO/tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
+
+          Wide character build fixes.
+
 Tue Jun 17 13:37:09 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs/configurations.html: Zapped the discussion of GIOPlite

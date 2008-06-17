@@ -1380,7 +1380,8 @@ CORBA::Policy_ptr TAO_CEC_Default_Factory::create_roundtrip_timeout_policy
 {
   //get the existing orb
   int fake_argc = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (fake_argc, 0, this->orbid_);
+  ACE_TCHAR **fake_argv = 0;
+  CORBA::ORB_var orb = CORBA::ORB_init (fake_argc, fake_argv, this->orbid_);
 
   CORBA::Any value;
   TimeBase::TimeT timet;

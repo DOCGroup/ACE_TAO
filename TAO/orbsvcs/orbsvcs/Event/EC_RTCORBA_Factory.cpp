@@ -44,8 +44,9 @@ TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
     {
       // @@ The ORBId could be important!!!
       int argc = 0;
+      ACE_TCHAR **argv = 0;
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, 0, "");
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("PriorityMappingManager");
