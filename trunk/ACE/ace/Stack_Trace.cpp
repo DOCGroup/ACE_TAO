@@ -491,6 +491,9 @@ typedef struct _dbghelp_functions
 
 static bool load_dbghelp_library_if_needed (dbghelp_functions *pDbg)
 {
+#  pragma warning (push)
+#  pragma warning (disable:4706)  
+
   //@TODO: See codeproject's StackWalker.cpp for the list of locations to
   //search so we get the "enhanced" dbghelp if the user has it but it is not
   //first on the path.
@@ -509,6 +512,7 @@ static bool load_dbghelp_library_if_needed (dbghelp_functions *pDbg)
     && LINK_T (SymInitialize) && LINK_T (StackWalk64) && LINK_T (SymCleanup);
 #  undef LINK
 #  undef LINK_T
+#  pragma warning (pop)
 }
 
 struct frame_state {
