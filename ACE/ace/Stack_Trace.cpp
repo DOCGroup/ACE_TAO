@@ -675,6 +675,12 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 void
 ACE_Stack_Trace::generate_trace (ssize_t, size_t)
 {
+// Call determine_starting_frame() on HP aCC build to resolve declared 
+// method never referenced warning.
+#if defined (__HP_aCC)
+  size_t starting_frame = determine_starting_frame (0, 0);
+#endif
+
   ACE_OS::strcpy (&this->buf_[0], UNSUPPORTED);
 }
 #endif
