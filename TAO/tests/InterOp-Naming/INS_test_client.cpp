@@ -9,16 +9,14 @@
 #include "ace/OS_NS_string.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int i = 0;
 
   try
     {
       // Retrieve a reference to the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (argc < 2)
         {
@@ -49,7 +47,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       ACE_DEBUG ((LM_DEBUG,
                                   "  Reference %u: %s\n",
                                   n,
-                                  static_cast<char const*>(list[n])));
+                                  ACE_TEXT_CHAR_TO_TCHAR (static_cast<char const*>(list[n]))));
                     }
                 }
               else
@@ -80,14 +78,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               ACE_DEBUG ((LM_DEBUG,
                           "Resolved IOR for %s : %s\n",
                           argv[i],
-                          iorstr.in()));
+                          ACE_TEXT_CHAR_TO_TCHAR (iorstr.in())));
 
               CORBA::String_var test_ins_result =
                 server->test_ins ();
 
               ACE_DEBUG ((LM_DEBUG,
                           "\nResult of Remote Call : %s\n",
-                          test_ins_result.in ()));
+                          ACE_TEXT_CHAR_TO_TCHAR (test_ins_result.in ())));
             }
         }
     }

@@ -1,3 +1,11 @@
+Tue Jun 17 15:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/InterOP-Naming/INS_test_client.cpp:
+        * tests/Portable_Interceptors/Bug_3079/Client_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_Test.cpp:
+
+          Wide character build fixes.
+
 Tue Jun 17 14:54:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Leader_Followers/client.cpp:
