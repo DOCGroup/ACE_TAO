@@ -1,3 +1,10 @@
+Tue Jun 17 09:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+
+          Fuzz errors, Untabify.
+
 Mon Jun 16 18:50:55 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/tao_idl_mcpp.mpb:

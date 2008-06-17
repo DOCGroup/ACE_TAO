@@ -435,7 +435,7 @@ fatal_error_exit:
     
     if (fp_out != 0)
       {
-	ACE_OS::fclose (fp_out);
+  ACE_OS::fclose (fp_out);
       }
     return  IO_SUCCESS;             /* No errors or -E option set   */
 }
@@ -1128,4 +1128,3 @@ static char *   esc_mbchar(
     return  str_end;
 }
 #endif  /* ! MBCHAR_IS_ESCAPE_FREE  */
-
