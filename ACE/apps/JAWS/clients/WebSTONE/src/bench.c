@@ -1,7 +1,7 @@
 /* $Id$ */
 /**************************************************************************
  *
- * 		 Copyright (C) 1995 Silicon Graphics, Inc.
+ *     Copyright (C) 1995 Silicon Graphics, Inc.
  *
  *  These coded instructions, statements, and computer programs were
  *  developed by SGI for public use.  If any changes are made to this code

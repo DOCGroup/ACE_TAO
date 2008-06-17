@@ -1,3 +1,14 @@
+Tue Jun 17 09:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * apps/JAWS/clients/WebSTONE/src/bench.c:
+        * apps/JAWS/clients/WebSTONE/src/errexit.c:
+        * apps/JAWS/clients/WebSTONE/src/genrand.c:
+        * apps/JAWS/clients/WebSTONE/src/timefunc.c:
+        * apps/JAWS/clients/WebSTONE/src/webclient.c:
+        * apps/JAWS/clients/WebSTONE/src/webmaster.c:
+
+          Fuzz errors, Untabify.
+
 Tue Jun 17 08:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * include/make_include/platform_sunos5_common.GNU:
