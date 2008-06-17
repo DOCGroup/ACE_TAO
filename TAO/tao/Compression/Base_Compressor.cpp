@@ -11,10 +11,10 @@ namespace TAO
   BaseCompressor::BaseCompressor (::Compression::CompressionLevel
                                   compression_level,
                                   ::Compression::CompressorFactory_ptr
-                                  compressor_factory) :
-    compression_level_ (compression_level),
-    compressor_factory_ (::Compression::CompressorFactory::_duplicate (
-                         compressor_factory))
+                                  compressor_factory)
+    : compression_level_ (compression_level),
+      compressor_factory_ (::Compression::CompressorFactory::_duplicate (
+                           compressor_factory))
   {
   }
 
