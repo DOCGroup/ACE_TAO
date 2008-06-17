@@ -38,8 +38,9 @@ namespace Test {
     CORBA::String_var name (this->name ());
 
     int tmpargc = 0;
+    ACE_TCHAR **tmpargv = 0;
     CORBA::ORB_var orb = CORBA::ORB_init (tmpargc,
-                                          0,
+                                          tmpargv,
                                           orbid);
 
     CORBA::Object_var tcobject =

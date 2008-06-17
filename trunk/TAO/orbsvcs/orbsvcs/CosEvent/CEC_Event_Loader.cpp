@@ -56,15 +56,12 @@ TAO_CEC_Event_Loader::init (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      // Copy command line parameter.
-      ACE_Argv_Type_Converter command_line(argc, argv);
-
       // ORB initialization boiler plate...
       this->orb_=
-        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0);
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj =
-        this->create_object (this->orb_.in (), command_line.get_argc(), command_line.get_TCHAR_argv());
+        this->create_object (this->orb_.in (), argc, argv);
 
       if (CORBA::is_nil (obj.in() ))
         return -1;

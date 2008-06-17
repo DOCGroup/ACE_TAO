@@ -24,7 +24,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       // Intialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0);
+        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv());
 
       // Call TAO_CEC_Event_Loader::init (argc, argv) from here.
       TAO_CEC_Event_Loader event_service;
