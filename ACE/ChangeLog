@@ -1,3 +1,9 @@
+Tue Jun 17 08:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * include/make_include/platform_sunos5_common.GNU:
+
+          Changed default "kstat ?= 1" at Johnny Willemsens request.
+
 Tue Jun 17 06:42:51 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * ace/Stack_Trace.cpp:

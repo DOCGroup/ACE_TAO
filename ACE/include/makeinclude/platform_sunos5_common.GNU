@@ -16,7 +16,7 @@ ifeq ($(shell /bin/uname -r),5.11)
   # Solaris 11 puts sendfile() in a separate library.
   LIBS          += -lsendfile
 endif
-kstat ?= 0
+kstat ?= 1
 ifeq ($(kstat),1)
   # Unguard the raw monitor code and link the system lib.
   CFLAGS        += -DACE_HAS_KSTAT
