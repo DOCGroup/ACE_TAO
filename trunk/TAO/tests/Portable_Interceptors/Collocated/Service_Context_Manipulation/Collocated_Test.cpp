@@ -11,13 +11,13 @@
 #include "interceptors.h"
 #include "Collocated_ORBInitializer.h"
 
-const char *output = "test.ior";
-const char *input = "file://test.ior";
+const ACE_TCHAR *output = ACE_TEXT ("test.ior");
+const ACE_TCHAR *input = ACE_TEXT ("file://test.ior");
 ACE_CString server_orb;
 ACE_CString client_orb;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:o");
   int c;
@@ -41,10 +41,9 @@ parse_args (int argc, char *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc,
-                  argv) == -1)
+  if (parse_args (argc, argv) == -1)
     return -1;
 
   server_orb.set ("server_orb");
@@ -62,16 +61,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableInterceptor::register_orb_initializer (initializer.in ());
 
-      ACE_Argv_Type_Converter satc (argc, argv);
-
       CORBA::ORB_var sorb =
-        CORBA::ORB_init (satc.get_argc (),
-                         satc.get_TCHAR_argv (),
-                         server_orb.c_str ());
+        CORBA::ORB_init (argc, argv, server_orb.c_str ());
 
       ACE_Manual_Event me;
 
-      Server_Task server_task (output,
+      Server_Task server_task (ACE_TEXT_ALWAYS_CHAR (output),
                                sorb.in (),
                                me,
                                ACE_Thread_Manager::instance ());
@@ -86,13 +81,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Wait for the server thread to do some processing
       me.wait ();
 
-      ACE_Argv_Type_Converter catc (argc, argv);
       CORBA::ORB_var corb =
-        CORBA::ORB_init (catc.get_argc (),
-                         catc.get_TCHAR_argv (),
-                         client_orb.c_str ());
+        CORBA::ORB_init (argc, argv, client_orb.c_str ());
 
-      Client_Task client_task (input,
+      Client_Task client_task (ACE_TEXT_ALWAYS_CHAR (input),
                                corb.in (),
                                ACE_Thread_Manager::instance ());
 
