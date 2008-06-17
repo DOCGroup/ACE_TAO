@@ -1,25 +1,41 @@
+Tue Jun 17 14:54:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Leader_Followers/client.cpp:
+        * tests/Nested_Event_Loop/client.cpp:
+        * tests/Param_Test/anyop.cpp:
+        * tests/POA/Generic_Servant/client.cpp:
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp:
+        * tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.cpp:
+        * tests/POA/NewPOA/NewPOA.cpp:
+        * tests/POA/POA_BiDir/POA_BiDir.cpp:
+        * tests/POA/Persistent_ID/client.cpp:
+        * tests/POA/Reference_Counted_Servant/server.cpp:
+        * tests/OctetSeq/OctetSeq.cpp:
+
+          Wide character build fixes.
+
 Tue Jun 17 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
-        * TAO/examples/Borland/ChatClientWnd.cpp:
-        * TAO/orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
-        * TAO/orbsvcs/Naming_Service/Naming_Service.cpp:
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
-        * TAO/orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp:
-        * TAO/orbsvcs/tests/CosEvent/Timeout/TimeoutTestMain.cpp:
-        * TAO/tests/Bug_3315_Regression/main.cpp:
-        * TAO/tests/Bug_3321_Regression/main.cpp:
-        * TAO/tests/CSD_Collocation/Collocation_Tester.cpp:
-        * TAO/tests/File_IO/File_i.cpp:
-        * TAO/tests/Object_Loader/driver.cpp:
-        * TAO/tests/POA/Forwarding/server.cpp:
-        * TAO/tests/Portable_Interceptors/Bug_1559/client_interceptor.cpp:
-        * TAO/tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptor.cpp:
-        * TAO/tests/Portable_Interceptors/Service_Context_Manipulation/client_interceptor.cpp:
-        * TAO/tests/Reliable_Oneways/client.cpp:
-        * TAO/tests/RTCORBA/ORB_init/ORB_init.cpp:
-        * TAO/tests/RTCORBA/Client_Propagated/interceptors.cpp:
-        * TAO/tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
+        * examples/Borland/ChatClientWnd.cpp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp:
+        * orbsvcs/tests/CosEvent/Timeout/TimeoutTestMain.cpp:
+        * tests/Bug_3315_Regression/main.cpp:
+        * tests/Bug_3321_Regression/main.cpp:
+        * tests/CSD_Collocation/Collocation_Tester.cpp:
+        * tests/File_IO/File_i.cpp:
+        * tests/Object_Loader/driver.cpp:
+        * tests/POA/Forwarding/server.cpp:
+        * tests/Portable_Interceptors/Bug_1559/client_interceptor.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptor.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client_interceptor.cpp:
+        * tests/Reliable_Oneways/client.cpp:
+        * tests/RTCORBA/ORB_init/ORB_init.cpp:
+        * tests/RTCORBA/Client_Propagated/interceptors.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
 
           Wide character build fixes.
 
