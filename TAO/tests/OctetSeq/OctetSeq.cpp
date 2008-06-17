@@ -95,7 +95,7 @@ int
 run (char* buf, size_t bufsize,
      size_t n, size_t lo, size_t s,
      int quiet,
-     const char* name,
+     const ACE_TCHAR* name,
      Writer writer, Reader reader)
 {
   size_t count = 0;
@@ -161,13 +161,11 @@ run (char* buf, size_t bufsize,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       int n = 64;
       int lo = 128;
@@ -235,12 +233,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (run (buf, hi,
                n, lo, s, quiet,
-               "OCTET", test_write_octet, test_read_octet) != 0)
+               ACE_TEXT ("OCTET"), test_write_octet, test_read_octet) != 0)
         return 1;
 
       if (run (buf, hi,
                n, lo, s, quiet,
-               "CHAR", test_write_char, test_read_char) != 0)
+               ACE_TEXT ("CHAR"), test_write_char, test_read_char) != 0)
         return 1;
       delete[] buf;
     }

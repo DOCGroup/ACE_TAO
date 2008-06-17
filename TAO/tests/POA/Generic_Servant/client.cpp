@@ -1,13 +1,14 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Read_Buffer.h"
 #include "testC.h"
 
 ACE_RCSID(Generic_Servant, client, "$Id$")
 
-static char *IOR = 0;
+static ACE_TCHAR *IOR = 0;
 static int iterations = 1;
 static int oneway = 0;
 static int shutdown_server = 0;
@@ -15,7 +16,7 @@ static CORBA::ULong timeout = 5;
 static int timed_method = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "f:k:i:T:otx");
   int c;
@@ -104,16 +105,14 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
       int parse_args_result =
@@ -123,7 +122,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       // Try to narrow the object reference to a test reference.
       test_var test = test::_narrow (object.in ());
@@ -133,7 +132,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "\nConnecting to: %s\n\n",
-                  ior.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
 
       ACE_Profile_Timer timer;
       ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;

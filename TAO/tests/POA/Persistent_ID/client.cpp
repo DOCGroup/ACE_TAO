@@ -20,11 +20,11 @@
 
 ACE_RCSID(Generic_Servant, client, "$Id$")
 
-static const char *IOR = "file://ior";
+static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 static int shutdown_server = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "k:x");
   int c;
@@ -59,15 +59,13 @@ parse_args (int argc, char **argv)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -75,7 +73,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return parse_args_result;
 
       CORBA::Object_var object =
-        orb->string_to_object (IOR);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       test_var test1 =
         test::_narrow (object.in ());

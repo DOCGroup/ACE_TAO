@@ -32,15 +32,13 @@ ACE_RCSID (Param_Test,
            "$Id$")
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN int argc, ACE_TCHAR *argv[])
 {
   int n = 1024;
 
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       ACE_Get_Opt get_opt (argc, argv, "dn:");
       int opt;
@@ -176,8 +174,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                 char buffero[32];
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for CORBA::ULongLong (%s,%s)\n",
-                            i.as_string (bufferi),
-                            o.as_string (buffero)));
+                            ACE_TEXT_CHAR_TO_TCHAR (i.as_string (bufferi)),
+                            ACE_TEXT_CHAR_TO_TCHAR (o.as_string (buffero))));
 #else
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for CORBA::ULongLong (%Q,%Q)\n",
@@ -247,7 +245,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for char* (%s,%s)\n",
-                            i, o));
+                            ACE_TEXT_CHAR_TO_TCHAR (i),
+                            ACE_TEXT_CHAR_TO_TCHAR (o)));
               }
           }
 

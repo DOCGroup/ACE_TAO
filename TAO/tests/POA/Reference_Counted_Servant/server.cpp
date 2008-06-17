@@ -48,10 +48,10 @@ reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,
 {
 }
 
-static const char *ior_output_file = "ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "f:");
   int c;
@@ -83,7 +83,7 @@ write_iors_to_file (const char *ior)
   FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
 
   if (output_file == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s %s\n",
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s\n",
                        ior_output_file),
                       -1);
 
@@ -95,7 +95,7 @@ write_iors_to_file (const char *ior)
   if (result != ACE_OS::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
-                       ior,
+                       ACE_TEXT_CHAR_TO_TCHAR (ior),
                        ior_output_file),
                       -1);
 
@@ -105,15 +105,13 @@ write_iors_to_file (const char *ior)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -150,7 +148,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
-                  ior.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
 
       int write_result = write_iors_to_file (ior.in ());
       if (write_result != 0)

@@ -9,7 +9,7 @@
 ACE_RCSID(Nested_Event_Loop, client, "$Id$")
 
 // Name of file contains ior.
-static const char *IOR = "file://ior";
+static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 
 // Default event_loop_depth.
 static CORBA::ULong event_loop_depth = 6;
@@ -22,7 +22,7 @@ static CORBA::ULong event_loop_iterations = 6;
 static int shutdown_server = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "k:d:i:x");
   int c;
@@ -68,16 +68,14 @@ parse_args (int argc, char **argv)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -96,7 +94,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Get an object reference from the argument string.
-      object = orb->string_to_object (IOR);
+      object = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       // Try to narrow the object reference to a <server> reference.
       server_var server_object = server::_narrow (object.in ());
