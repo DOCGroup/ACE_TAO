@@ -7,6 +7,12 @@
 <rule name="align-global">
 <presetreference>Global_Align Global Variables_false</presetreference>
 </rule>
+<rule name="align-global-func">
+<presetreference>Global_Align Global Function Declarations_false</presetreference>
+</rule>
+<rule name="align-global-together">
+<presetreference>Global_Align Globals Together_false</presetreference>
+</rule>
 <rule name="brace-space">
 <presetreference>Global_Space Before Brace_True</presetreference>
 </rule>
@@ -37,11 +43,17 @@
 <rule name="class-member-align">
 <presetreference>Classes and Structs_Member Alignment_False</presetreference>
 </rule>
+<rule name="class-member-function-align">
+<presetreference>Classes and Structs_Member Function Alignment_False</presetreference>
+</rule>
+<rule name="class-member-function-align-together">
+<presetreference>Classes and Structs_Member Alignment Together_False</presetreference>
+</rule>
 <rule name="constructor-initialiser-packing">
 <presetreference>Constructor_Member Initializers_One Per Line</presetreference>
 </rule>
 <rule name="constructor-initialiser-style">
-<presetreference>Constructor_Initializer Alignment_True</presetreference>
+<presetreference>Constructor_Initializer Alignment_False</presetreference>
 </rule>
 <rule name="declaration-newline">
 <presetreference>Declarations_Start On New Line_True</presetreference>
@@ -151,6 +163,9 @@
 <rule name="function-type-style">
 <presetreference>Functions_Return Type_OwnLine</presetreference>
 </rule>
+<rule name="function-wrapping">
+<presetreference>Functions_Don't Wrap Function Declarations_False</presetreference>
+</rule>
 <rule name="global-alignment-space">
 <presetreference>Global_Alignment ensures at least one space_False</presetreference>
 </rule>
@@ -232,6 +247,15 @@
 <rule name="member-initialiser-position">
 <presetreference>Constructor_Member Initializer Position_Below Indented</presetreference>
 </rule>
+<rule name="min-member-align">
+<presetreference>Classes and Structs_Minimum Member Alignment_None</presetreference>
+</rule>
+<rule name="multiple-inheritance">
+<presetreference>Classes and Structs_Multiple Inheritance_OnePerLine</presetreference>
+</rule>
+<rule name="multiple-inheritance" override="true">
+<presetreference>Classes and Structs_Multiple Inheritance_Disabled</presetreference>
+</rule>
 <rule name="namespace-bracing-style">
 <presetreference>Namespaces_Brace Position_Aligned</presetreference>
 </rule>
@@ -258,6 +282,9 @@
 </rule>
 <rule name="strict-whitespace">
 <presetreference>Global_Trim Excess Newlines_False</presetreference>
+</rule>
+<rule name="switch-align-braces">
+<presetreference>Switch_Align Braces With Case_False</presetreference>
 </rule>
 <rule name="switch-bracing-style">
 <presetreference>Switch_Brace Position_Indented</presetreference>
