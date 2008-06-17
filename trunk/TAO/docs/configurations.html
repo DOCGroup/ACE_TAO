@@ -783,17 +783,13 @@ Configuration for Homogenous Systems<a NAME="homogenous"></a></h3>
 
       <p>
   <LI><b>Run-time options</b><a NAME="homogenous_runtime"></a>
-      <p>If the only ORB running is TAO and there is no need to be
-      IIOP interoperable the option <tt>-ORBGIOPlite</tt> can be used
-      to reduce the message size and the processing time.
       <P>Unix systems that support local IPC (formerly known as Unix domain
       sockets) can take advantage of TAO's UIOP pluggable transport protocol
       to improve performance considerably.  To use TAO's UIOP pluggable
       protocol, simply specify a UIOP endpoint on the command line using
       the <tt>-ORBEndpoint</tt> option described in the
-      <A HREF="Options.html">options</A> documentation.  Further performance
-      improvement can be achieved by using the UIOP protocol in combination
-      with the <tt>-ORBGIOPlite</tt> option.  Additional information about
+      <A HREF="Options.html">options</A> documentation.  Additional
+      information about
       TAO's UIOP pluggable protocol can be found in the
       <A HREF="releasenotes/index.html#pp">release notes</A>.
       <p>

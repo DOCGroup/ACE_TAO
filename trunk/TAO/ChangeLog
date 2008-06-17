@@ -1,3 +1,9 @@
+Tue Jun 17 13:37:09 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/configurations.html: Zapped the discussion of GIOPlite
+          since it's no longer supported.  Thanks to Abdul Sowayan for
+          reporting this.
+
 Tue Jun 17 09:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/contrib/mcpp/main.cpp:
