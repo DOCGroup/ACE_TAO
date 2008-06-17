@@ -614,7 +614,7 @@ plus:
         case 'F':
             if (str_eq( optarg, "l")) {             /* -Fl          */
                 if (preinc_end >= &preinclude[ NPREINCLUDE]) {
-		  ACE_ERROR ((LM_ERROR, "Too many -Fl options\n"));
+      ACE_ERROR ((LM_ERROR, "Too many -Fl options\n"));
                     mcpp_fputs( "Too many -Fl options.\n", ERR);
                     longjmp( error_exit, -1);
                 }
@@ -630,13 +630,13 @@ plus:
             if (str_eq( optarg, "nclude")) {        /* -include     */
                 if (preinc_end >= &preinclude[ NPREINCLUDE]) {
                     mcpp_fputs( "Too many -include options.\n", ERR);
-		    ACE_ERROR((LM_ERROR, "Too many -include options\n"));
+        ACE_ERROR((LM_ERROR, "Too many -include options\n"));
                     longjmp( error_exit, -1);
                 }
                 *preinc_end++ = argv[ optind++];
             } else if (str_eq( optarg, "system")) { /* -isystem     */
                 if (sysdir_end >= &sysdir[ NSYSDIR]) {
-		  ACE_ERROR  ((LM_ERROR, "Too many -isystem options\n"));
+      ACE_ERROR  ((LM_ERROR, "Too many -isystem options\n"));
                     mcpp_fputs( "Too many -isystem options.\n", ERR);
                     longjmp( error_exit, -1);
                 }
@@ -1344,7 +1344,7 @@ static void usage(
 #endif
     while (*mpp)
       {
-	ACE_ERROR ((LM_ERROR, "%s\n", *mpp));
+  ACE_ERROR ((LM_ERROR, "%s\n", *mpp));
         mcpp_fputs( *mpp++, ERR);
       }
 
@@ -3803,4 +3803,3 @@ void    clear_filelist( void)
         ACE_OS::free( (void *) *namep);
 }
 #endif
-
