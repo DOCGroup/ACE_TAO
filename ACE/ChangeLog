@@ -1,3 +1,12 @@
+Tue Jun 17 22:43:20  2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h: Clarify that calling remove_handler() for a signal
+          handler does not invoke the handler's handle_close() callback. Also
+          note that this behavior is under debate in Bugzilla #2368. Thanks to
+          Bill Kendall <wkendall at sgi dot com> for calling this to attention.
+
+        * THANKS: Added Bill Kendall.
+
 Tue Jun 17 15:36:49 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * ace/Stack_Trace.cpp:
