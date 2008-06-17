@@ -41,7 +41,7 @@ print_poa (PortableServer::POA_ptr poa)
 
   ACE_DEBUG ((LM_DEBUG,
               "POA name = %s\n",
-              poa_name.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR (poa_name.in ())));
 
   ACE_DEBUG ((LM_DEBUG,
               "POA id = "));
@@ -70,15 +70,13 @@ print_poa (PortableServer::POA_ptr poa)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       // The first step Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -165,10 +163,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n%s\n%s\n%s\n",
-                  root_poa_name.in (),
-                  first_poa_name.in (),
-                  second_poa_name.in (),
-                  third_poa_name.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (root_poa_name.in ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (first_poa_name.in ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (second_poa_name.in ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (third_poa_name.in ())));
 
       print_poa (root_poa.in ());
 
