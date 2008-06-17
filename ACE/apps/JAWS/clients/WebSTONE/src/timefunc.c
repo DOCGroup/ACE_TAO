@@ -128,7 +128,7 @@ sqtime(struct timeval *Time, struct timeval *SqTime)
     double sec;
 
     sec = timevaldouble(Time);
-    sec *= sec;	 /* square */
+    sec *= sec;  /* square */
 
     doubletimeval(sec, SqTime);
 }
@@ -167,5 +167,3 @@ thruputpersec(const double n, struct timeval *t)
     else
         return 0;
 }
-
-
