@@ -1,3 +1,9 @@
+Tue Jun 17 12:40:03 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Monitor_Control/BSD_Network_Interface_Monitor.cpp:
+
+          Explicitly #include <sys/sockio.h> for non-inline builds.
+
 Tue Jun 17 09:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * apps/JAWS/clients/WebSTONE/src/bench.c:
@@ -19,9 +25,9 @@ Tue Jun 17 06:42:51 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * ace/Stack_Trace.cpp:
 
-          Fixed declared method (determine_starting_frame) never referenced 
+          Fixed declared method (determine_starting_frame) never referenced
           warning on HP aCC build.
-          
+
 Mon Jun 16 21:26:05 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
