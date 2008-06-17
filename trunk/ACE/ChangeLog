@@ -1,8 +1,15 @@
+Tue Jun 17 06:42:51 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * ace/Stack_Trace.cpp:
+
+          Fixed declared method (determine_starting_frame) never referenced 
+          warning on HP aCC build.
+          
 Mon Jun 16 21:26:05 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
 
-          Enable check_for_tab for all files in the repository. 
+          Enable check_for_tab for all files in the repository.
 
 Mon Jun 16 21:22:03 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
