@@ -24,8 +24,9 @@ ACE_TMAIN(int, ACE_TCHAR *[])
               ACE_OS::sprintf (buf, "ORB_%4.4d", j);
 
               int argc = 0;
+              ACE_TCHAR **argv = 0;
               CORBA::ORB_var orb =
-                CORBA::ORB_init (argc, 0, buf);
+                CORBA::ORB_init (argc, argv, buf);
 
               CORBA::Object_var object =
                 orb->string_to_object ("DLL:Test_Object");
@@ -60,8 +61,9 @@ ACE_TMAIN(int, ACE_TCHAR *[])
           ACE_OS::sprintf (buf, "ORB_%4.4d", j);
 
           int argc = 0;
+          ACE_TCHAR **argv = 0;
           CORBA::ORB_var orb =
-            CORBA::ORB_init (argc, 0, buf);
+            CORBA::ORB_init (argc, argv, buf);
 
           CORBA::Object_var obj =
             orb->resolve_initial_references ("RootPOA");

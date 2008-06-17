@@ -15,7 +15,8 @@ ACE_THR_FUNC_RETURN main_orb(void*)
   try
   {
     int argc = 0;
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, 0);
+    ACE_TCHAR **argv = 0;
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     orb->destroy ();
   }

@@ -30,22 +30,19 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 
   try
     {
-      // Copy command line parameter.
-      ACE_Argv_Type_Converter command_line(argc, argv);
-
       // Initialize the ORB
       this->orb_ =
-        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0);
+        CORBA::ORB_init (argc, argv);
 
       // Parse the args for '-t' option. If '-t' option is passed, do
       // the needful and then remove the option from the list of
       // arguments.
-      this->parse_args (command_line.get_argc(), command_line.get_TCHAR_argv());
+      this->parse_args (argc, argv);
 
       // This function call initializes the naming service and returns
       // '-1' in case of an exception.
-      result = this->my_naming_server_.init_with_orb (command_line.get_argc(),
-                                                      command_line.get_TCHAR_argv(),
+      result = this->my_naming_server_.init_with_orb (argc,
+                                                      argv,
                                                       this->orb_.in ());
 
       if (result == -1)

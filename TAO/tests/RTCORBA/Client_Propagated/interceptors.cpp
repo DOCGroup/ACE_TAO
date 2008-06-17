@@ -81,7 +81,8 @@ Client_Request_Interceptor::receive_exception (
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
-      this->orb_ = CORBA::ORB_init (argc, 0,
+      ACE_TCHAR **argv = 0;
+      this->orb_ = CORBA::ORB_init (argc, argv,
                                     this->orb_id_.in ());
     }
 
