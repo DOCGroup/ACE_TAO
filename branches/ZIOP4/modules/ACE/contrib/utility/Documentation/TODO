@@ -1,0 +1,53 @@
+
+New features/changes
+---------------------------------------------------------------------------
+
+@@ DefaultImpl<> looks ugly. Is there a way to just write DefaultImpl 
+   (or, perhaps some other name)? Maybe also rename Interface to Object
+   (will be consistent with Introspection::Object).
+
+@@ Abort facility
+
+@@ Maybe rename converter to convert
+
+@@ Maybe make reference counting object implement Introspection. However it
+   will introduce inter-library dependency. Nop, this is a bad idea.
+
+@@ Maybe move <library>.hpp one level up to Utility/.
+
+@@ Go thru C++Templates chapter on RefCounting and SmartPointers and see if 
+   anything can be applied?
+
+@@ Examples for many features are missing
+
+@@ Introspection::TypeInfo should use set instead of vector for bases.
+
+
+Documentation
+---------------------------------------------------------------------------
+
+@@ code in <pre> does not look nice in lynx (see Hetero/index.html for example)
+
+
+Building environment
+---------------------------------------------------------------------------
+
+@@ Should probably make lib rules to build library when target is test (try to
+   run 'make clean && make test' from Utility root).
+
+@@ Makefile variable names inconsistency (e.g. cxx_translation_units and CXX_PREPROCESS_FLAGS)
+
+%% Rename Config to Build or rather BuildRules?
+
+@@ Compiler-specific stuff is left after make clean. Potentially dangerous 
+   idea would be to remove everything except known files
+
+@@ Multi-compiler configuration
+
+@@ Building library with sources in sub-directories.
+
+
+Pre-release fixes
+---------------------------------------------------------------------------
+
+$Id$
