@@ -1,3 +1,9 @@
+Tue Jun 17 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/fuzz.pl:
+
+          Add check for wide character incompatabilty ORB_init() miss-use.
+
 Tue Jun 17 12:40:03 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Monitor_Control/BSD_Network_Interface_Monitor.cpp:
