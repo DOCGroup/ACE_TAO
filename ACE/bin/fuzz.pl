@@ -1716,6 +1716,39 @@ sub check_for_refcountservantbase ()
     }
 }
 
+# This test checks for the correct use of ORB_init() so as
+# to be compatiable with wide character builds.
+sub check_for_ORB_init ()
+{
+    print "Running the ORB_init wide character incompatability check\n";
+    foreach $file (@files_cpp, @files_inl) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_ORB_init/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_ORB_init/) {
+                    $disable = 0;
+                }
+                if ($disable == 0) {
+                    if (/\s*ORB_init\s\([^,]*,\s*0/) {
+                        print_error ("$file:$.: ORB_init() argv of 0 requires static_cast<ACE_TCHAR **>(0)");
+                    }
+                    if (/\s*ORB_init\s\([^,]*,[^,]*,\s*0\s*\)/) {
+                        print_error ("$file:$.: ORB_init() orbID should not be 0 (don't use 3rd parameter or give as string)");
+                    }
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 ##############################################################################
 
 use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_m $opt_v/;
@@ -1765,7 +1798,8 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_include
            check_for_non_bool_operators
            check_for_long_file_names
-           check_for_refcountservantbase\n";
+           check_for_refcountservantbase
+           check_for_ORB_init\n";
     exit (1);
 }
 
@@ -1830,7 +1864,7 @@ check_for_ptr_arith_t () if ($opt_l >= 4);
 check_for_include () if ($opt_l >= 5);
 check_for_non_bool_operators () if ($opt_l > 2);
 check_for_long_file_names () if ($opt_l > 1 );
-
+check_for_ORB_init ();
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
