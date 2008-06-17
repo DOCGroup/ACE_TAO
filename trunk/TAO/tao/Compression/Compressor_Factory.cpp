@@ -9,8 +9,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   CompressorFactory::CompressorFactory (::Compression::CompressorId
-                                        compressor_id) :
-    compressor_id_ (compressor_id),
+                                        compressor_id)
+    : compressor_id_ (compressor_id),
     compressed_bytes_ (0),
     uncompressed_bytes_ (0)
   {
