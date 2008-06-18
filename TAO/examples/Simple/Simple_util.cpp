@@ -48,7 +48,7 @@ Server<Servant>::parse_args (void)
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())), -1);
         break;
 
       case 'n': //Use naming service
@@ -67,7 +67,7 @@ Server<Servant>::parse_args (void)
                            " [-i] <InterOperable Naming Service simple object key>"
                            " [-h (help)]"
                            "\n",
-                           argv_ [0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (this->argv_ [0])),
                           -1);
       }
 
@@ -87,8 +87,8 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Adding (KEY:IOR) %s:%s\n",
-                this->ins_,
-                ior.in ()));
+                ACE_TEXT_CHAR_TO_TCHAR (this->ins_),
+                ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
 
 
   try
@@ -168,7 +168,7 @@ Server<Servant>::init (const char *servant_name,
 
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
 
       if (this->ins_)
         if (this->test_for_ins (str) != 0)
@@ -248,7 +248,7 @@ Server<Servant>::register_name (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind %s \n",
-                         name),
+                         ACE_TEXT_CHAR_TO_TCHAR (name)),
                         -1);
     }
 
@@ -276,7 +276,7 @@ Client<INTERFACE_OBJECT, Var>::read_ior (char *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for writing: %p\n",
-                       filename),
+                       ACE_TEXT_CHAR_TO_TCHAR (filename)),
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
@@ -321,7 +321,7 @@ Client<INTERFACE_OBJECT, Var>::parse_args (void)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg ()),
+                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())),
                             -1);
         break;
       case 'x': // read the flag for shutting down
@@ -337,7 +337,7 @@ Client<INTERFACE_OBJECT, Var>::parse_args (void)
                            " [-x (shutdown server)]"
                            " [-h (help)]"
                            "\n",
-                           argv_ [0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (this->argv_ [0])),
                           -1);
       }
 
@@ -361,14 +361,10 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
   this->argc_ = argc;
   this->argv_ = argv;
 
-
-
   try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
-                                    0);
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -383,7 +379,7 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid ior <%s>\n",
-                               this->ior_),
+                               ACE_TEXT_CHAR_TO_TCHAR (this->ior_)),
                               -1);
           this->server_ = INTERFACE_OBJECT::_narrow (server_object.in ());
         }

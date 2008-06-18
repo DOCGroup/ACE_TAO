@@ -36,12 +36,10 @@ Consumer_Handler::init (int argc,
   try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    0);
+      this->orb_ = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object  =
-        this->orb_->resolve_initial_references("RootPOA");
+        this->orb_->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (poa_object.in ());

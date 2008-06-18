@@ -1,3 +1,17 @@
+Wed Jun 18 13:50:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * examples/Buffered_AMI/client.cpp:
+        * examples/Buffered_Oneways/client.cpp:
+        * examples/Callback_Quoter/Consumer_Handler.cpp:
+        * examples/Callback_Quoter/Supplier_i.cpp:
+        * examples/Event_Comm/Consumer_Handler.cpp:
+        * examples/Event_Comm/Notifier_Handler.cpp:
+        * examples/Persistent_Grid/Simple_util.cpp:
+        * examples/Simple/Simple_util.cpp:
+
+          Correct Fuzz errors concerning Wide character build compatabily
+          with ORB_init().
+
 Wed Jun 18 13:22:00 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Hello/run_test.pl:
