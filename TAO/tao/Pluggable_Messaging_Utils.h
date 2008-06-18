@@ -91,7 +91,6 @@ private:
 
   /// The locate reply status
   GIOP::LocateStatusType locate_reply_status_;
-
 };
 
 /**

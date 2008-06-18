@@ -789,7 +789,6 @@ TAO_Transport::queue_is_empty_i (void)
   return (this->head_ == 0);
 }
 
-
 int
 TAO_Transport::schedule_output_i (void)
 {

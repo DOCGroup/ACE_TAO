@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x591)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x593)
 #include /**/ "tao/TAO_Export.h"
 #endif
 
@@ -67,7 +67,7 @@ public:
   int top (TAO_Queued_Data* &data) const;
 
 private:
-  /// top element of stack
+  /// Top element of stack
   TAO_Queued_Data *top_;
 
 private:
