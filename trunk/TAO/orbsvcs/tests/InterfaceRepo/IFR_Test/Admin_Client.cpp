@@ -60,12 +60,9 @@ Admin_Client::init (int argc,
 {
   try
     {
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    0);
+      this->orb_ = CORBA::ORB_init (argc, argv);
 
-      int retval = this->parse_args (argc,
-                                     argv);
+      int retval = this->parse_args (argc, argv);
 
       if (retval != 0)
         return retval;
@@ -181,7 +178,7 @@ Admin_Client::parse_args (int argc,
                            " [-i iterations]"
                            " [-t test name]"
                            "\n",
-                           argv [0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
                           -1);
       }
 
@@ -350,7 +347,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::id: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "IDL:my_enum:1.0") == 0);
@@ -361,7 +358,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "my_enum") == 0);
@@ -372,7 +369,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::absolute_name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "::my_enum") == 0);
@@ -383,7 +380,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::version: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "1.0") == 0);
@@ -421,7 +418,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::describe::value::name: %s\n"),
-                  td->name.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (td->name.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (td->name, "my_enum") == 0);
@@ -430,7 +427,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::describe::value::id: %s\n"),
-                  td->id.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (td->id.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (td->id, "IDL:my_enum:1.0") == 0);
@@ -439,7 +436,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::describe::value::defined_in: %s\n"),
-                  td->defined_in.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (td->defined_in.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (td->defined_in, "") == 0);
@@ -448,7 +445,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::describe::value::version: %s\n"),
-                  td->version.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (td->version.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (td->version, "1.0") == 0);
@@ -470,7 +467,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::describe::value::type::id: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "IDL:my_enum:1.0") == 0);
@@ -481,7 +478,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::describe::value::type::name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "my_enum") == 0);
@@ -512,7 +509,7 @@ Admin_Client::enum_test (void)
                       ACE_TEXT ("EnumDef::describe::value::type::")
                       ACE_TEXT ("member_name[%d]: %s\n"),
                       i,
-                      str.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i]) == 0);
@@ -549,7 +546,7 @@ Admin_Client::enum_test (void)
                       ACE_TEXT ("EnumDef::")
                       ACE_TEXT ("members[%d]: %s\n"),
                       i,
-                      tmp));
+                      ACE_TEXT_CHAR_TO_TCHAR (tmp)));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (fellows[i], members[i]) == 0);
@@ -568,7 +565,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "another_enum") == 0);
@@ -579,7 +576,7 @@ Admin_Client::enum_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("EnumDef::absolute_name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "::another_enum") == 0);
@@ -619,7 +616,7 @@ Admin_Client::alias_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("AliasDef::id: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "IDL:my_alias:1.0") == 0);
@@ -630,7 +627,7 @@ Admin_Client::alias_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("AliasDef::name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "my_alias") == 0);
@@ -641,7 +638,7 @@ Admin_Client::alias_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("AliasDef::absolute_name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "::my_alias") == 0);
@@ -652,7 +649,7 @@ Admin_Client::alias_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("AliasDef::version: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "1.0") == 0);
@@ -671,7 +668,7 @@ Admin_Client::alias_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("AliasDef::version: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "1.1") == 0);
@@ -684,7 +681,7 @@ Admin_Client::alias_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nAliasDef::type::name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "my_alias") == 0);
@@ -762,7 +759,7 @@ Admin_Client::alias_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nAliasDef::describe::value::name: %s\n"),
-                  td->name.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (td->name.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (td->name, "my_alias") == 0);
@@ -771,7 +768,7 @@ Admin_Client::alias_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("AliasDef::describe::value::version: %s\n"),
-                  td->version.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (td->version.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (td->version, "1.1") == 0);
@@ -793,7 +790,7 @@ Admin_Client::alias_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("AliasDef::describe::value::type::id: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "IDL:my_alias:1.0") == 0);
@@ -804,7 +801,7 @@ Admin_Client::alias_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("AliasDef::describe::value::type::name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "my_alias") == 0);
@@ -851,7 +848,7 @@ Admin_Client::native_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("NativeDef::id: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "IDL:my_native:1.0") == 0);
@@ -862,7 +859,7 @@ Admin_Client::native_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("NativeDef::name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "my_native") == 0);
@@ -873,7 +870,7 @@ Admin_Client::native_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("NativeDef::version: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "1.0") == 0);
@@ -884,7 +881,7 @@ Admin_Client::native_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("NativeDef::absolute_name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "::my_native") == 0);
@@ -974,7 +971,7 @@ Admin_Client::struct_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("StructDef::type::member_name[%d]: %s\n"),
                       i,
-                      str.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i].name) == 0);
@@ -990,7 +987,7 @@ Admin_Client::struct_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nStructDef::describe::value::name: %s\n"),
-                  td->name.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (td->name.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (td->name, "my_struct") == 0);
@@ -999,7 +996,7 @@ Admin_Client::struct_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("StructDef::describe::value::id: %s\n"),
-                  td->id.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (td->id.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (td->id, "IDL:my_struct:1.0") == 0);
@@ -1008,7 +1005,7 @@ Admin_Client::struct_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("StructDef::describe::value::version: %s\n"),
-                  td->version.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (td->version.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (td->version, "1.0") == 0);
@@ -1056,7 +1053,7 @@ Admin_Client::struct_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("StructDef::members[%d]::name: %s\n"),
                       i,
-                      out_members[i].name.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (out_members[i].name.in ())));
         }
 
       if (i == length - 1)
@@ -1081,7 +1078,7 @@ Admin_Client::struct_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Repository::lookup::absolute_name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "::my_struct::my_enum") == 0);
@@ -1094,7 +1091,7 @@ Admin_Client::struct_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("StructDef::lookup::absolute_name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "::my_struct::my_enum") == 0);
@@ -1110,7 +1107,7 @@ Admin_Client::struct_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("StructDef::lookup::defined_in::")
                   ACE_TEXT ("absolute_name: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "::my_struct") == 0);
@@ -1154,7 +1151,7 @@ Admin_Client::struct_test (void)
               LM_DEBUG,
               ACE_TEXT ("StructDef::contents[%d]::absolute_name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
@@ -1194,7 +1191,7 @@ Admin_Client::struct_test (void)
               LM_DEBUG,
               ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
@@ -1231,7 +1228,7 @@ Admin_Client::struct_test (void)
               LM_DEBUG,
               ACE_TEXT ("Repository::describe_contents[%d]::id: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
@@ -1279,7 +1276,7 @@ Admin_Client::struct_test (void)
               LM_DEBUG,
               ACE_TEXT ("StructDef::contents[%d]::absolute_name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
@@ -1452,7 +1449,7 @@ Admin_Client::union_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("UnionDef::type::member_name[%d]: %s\n"),
                       i,
-                      str.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
         }
 
       // Multiple labels for first member shifts index by 1.
@@ -1481,7 +1478,7 @@ Admin_Client::union_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("UnionDef::type::member_label[%d]: %s\n"),
                       i,
-                      i == (CORBA::ULong) slot ? "default" : tmp));
+                      ACE_TEXT_CHAR_TO_TCHAR (i == (CORBA::ULong) slot ? "default" : tmp)));
         }
 
       // Labels are not in order.
@@ -1575,7 +1572,7 @@ Admin_Client::exception_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ExceptionDef::type::member_name[%d]: %s\n"),
                       i,
-                      str.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i].name) == 0);
@@ -1591,7 +1588,7 @@ Admin_Client::exception_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nExceptionDef::describe::value::name: %s\n"),
-                  ed->name.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (ed->name.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (ed->name, "my_exception") == 0);
@@ -1600,7 +1597,7 @@ Admin_Client::exception_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ExceptionDef::describe::value::id: %s\n"),
-                  ed->id.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (ed->id.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (ed->id, "IDL:my_exception:1.0") == 0);
@@ -1609,7 +1606,7 @@ Admin_Client::exception_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ExceptionDef::describe::value::defined_in: %s\n"),
-                  ed->defined_in.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (ed->defined_in.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (ed->defined_in, "") == 0);
@@ -1618,7 +1615,7 @@ Admin_Client::exception_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ExceptionDef::describe::value::version: %s\n"),
-                  ed->version.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (ed->version.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (ed->version, "1.0") == 0);
@@ -1668,7 +1665,7 @@ Admin_Client::exception_test (void)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ExceptionDef::members[%d]::name: %s\n"),
                     i,
-                    out_members[i].name.in ()));
+                    ACE_TEXT_CHAR_TO_TCHAR (out_members[i].name.in ())));
 
       if (i == 2)
         {
@@ -1702,7 +1699,7 @@ Admin_Client::exception_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ExceptionDef::members[%d]::name: %s\n"),
                       i,
-                      out_members[i].name.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (out_members[i].name.in ())));
         }
 
       if (i == 1)
@@ -1784,7 +1781,7 @@ Admin_Client::exception_test (void)
               LM_DEBUG,
               ACE_TEXT ("ExceptionDef::contents[%d]::absolute_name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
@@ -1818,7 +1815,7 @@ Admin_Client::exception_test (void)
               LM_DEBUG,
               ACE_TEXT ("Repository::lookup_name%d]::absolute_name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
@@ -1871,7 +1868,7 @@ Admin_Client::exception_test (void)
                           ACE_TEXT ("Repository::describe_contents[%d]")
                           ACE_TEXT ("::value::name: %s\n"),
                           i,
-                          ed->name.in ()));
+                          ACE_TEXT_CHAR_TO_TCHAR (ed->name.in ())));
             }
 
           ACE_ASSERT (ACE_OS::strcmp (ed->name, "my_exception") == 0);
@@ -1900,7 +1897,7 @@ Admin_Client::exception_test (void)
                           ACE_TEXT ("Repository::describe_contents[%d]")
                           ACE_TEXT ("::value::name: %s\n"),
                           i,
-                          td->name.in ()));
+                          ACE_TEXT_CHAR_TO_TCHAR (td->name.in ())));
             }
 
           ACE_ASSERT (ACE_OS::strcmp (td->name, "my_enum") == 0);
@@ -1931,7 +1928,7 @@ Admin_Client::exception_test (void)
               LM_DEBUG,
               ACE_TEXT ("ExceptionDef::contents[%d]::absolute_name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
@@ -2008,7 +2005,7 @@ Admin_Client::constant_test (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ConstantDef::value (string): %s\n"),
-                  out_s));
+                  ACE_TEXT_CHAR_TO_TCHAR (out_s)));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (out_s, s) == 0);
@@ -2122,7 +2119,7 @@ Admin_Client::constant_test (void)
       char buffer[32];
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ConstantDef::value (ulonglong): %s\n"),
-                  out_ull_val.as_string (buffer)));
+                  ACE_TEXT_CHAR_TO_TCHAR (out_ull_val.as_string (buffer))));
 #else
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ConstantDef::value (ulonglong): %Q\n"),
@@ -2284,7 +2281,7 @@ Admin_Client::interface_test (void)
                       ACE_TEXT ("OperationDef::describe::parameters[%d]::")
                       ACE_TEXT ("name: %s\n"),
                       i,
-                      tmp));
+                      ACE_TEXT_CHAR_TO_TCHAR (tmp)));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (tmp, names[i]) == 0);
@@ -2344,7 +2341,7 @@ Admin_Client::interface_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nInterfaceDef::describe_interface::")
                   ACE_TEXT ("type::id: %s\n"),
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (str.in (), "IDL:p_iface:1.0") == 0);
@@ -2383,7 +2380,7 @@ Admin_Client::interface_test (void)
                       ACE_TEXT ("InterfaceDef::describe_interface::")
                       ACE_TEXT ("operations[0]::contexts[%d]: %s\n"),
                       i,
-                      tmp));
+                      ACE_TEXT_CHAR_TO_TCHAR (tmp)));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (tmp, contexts[i]) == 0);
@@ -2411,7 +2408,7 @@ Admin_Client::interface_test (void)
                       ACE_TEXT ("InterfaceDef::describe::operations[3]::")
                       ACE_TEXT ("contexts[%d]: %s\n"),
                       i,
-                      tmp));
+                      ACE_TEXT_CHAR_TO_TCHAR (tmp)));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (tmp, "if_exception") == 0);
@@ -2424,7 +2421,7 @@ Admin_Client::interface_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nInterfaceDef::describe_interface::")
                   ACE_TEXT ("attributes::defined_in: %s\n"),
-                  tmp));
+                  ACE_TEXT_CHAR_TO_TCHAR (tmp)));
     }
 
   ACE_ASSERT (ACE_OS::strcmp (tmp, "IDL:gp_iface:1.0") == 0);
@@ -2466,7 +2463,7 @@ Admin_Client::interface_test (void)
                       ACE_TEXT ("InterfaceDef::describe::")
                       ACE_TEXT ("base_interfaces[%d]: %s\n"),
                       i,
-                      base_iface_id));
+                      ACE_TEXT_CHAR_TO_TCHAR (base_iface_id)));
         }
     }
 
@@ -2494,7 +2491,7 @@ Admin_Client::interface_test (void)
               LM_DEBUG,
               ACE_TEXT ("InterfaceDef::base_interfaces[%d]::name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
     }
@@ -2522,7 +2519,7 @@ Admin_Client::interface_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("InterfaceDef::contents[%d]::name: %s\n"),
                       i,
-                      str.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
         }
 
       CORBA::Container_var cr =
@@ -2539,7 +2536,7 @@ Admin_Client::interface_test (void)
                       ACE_TEXT ("InterfaceDef::contents[%d]::")
                       ACE_TEXT ("defined_in::name: %s\n"),
                       i,
-                      str.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (str.in (), "p_iface") == 0
@@ -2662,7 +2659,7 @@ Admin_Client::move_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("UnionDef::members[%d]::name: %s\n"),
                       i,
-                      tmp));
+                      ACE_TEXT_CHAR_TO_TCHAR (tmp)));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (tmp, u_members[i].name) == 0);
@@ -2715,7 +2712,7 @@ Admin_Client::move_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("UnionDef::members[%d]::name: %s\n"),
                       i,
-                      tmp));
+                      ACE_TEXT_CHAR_TO_TCHAR (tmp)));
         }
 
       if (i == 0)
@@ -2754,7 +2751,7 @@ Admin_Client::move_test (void)
               LM_DEBUG,
               ACE_TEXT ("UnionDef::contents[%d]::absolute_name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
@@ -2815,7 +2812,7 @@ Admin_Client::move_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("UnionDef::members[%d]::name: %s\n"),
                       i,
-                      tmp));
+                      ACE_TEXT_CHAR_TO_TCHAR (tmp)));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (tmp, u_names[i]) == 0);
@@ -2848,7 +2845,7 @@ Admin_Client::move_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("UnionDef::contents[%d]::absolute_name: %s\n"),
                       i,
-                      str.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
         }
 
       cmp_result =
@@ -2887,7 +2884,7 @@ Admin_Client::move_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("StructDef::contents[%d]::absolute_name: %s\n"),
                       i,
-                      str.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
         }
 
       cmp_result =
@@ -2924,7 +2921,7 @@ Admin_Client::move_test (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("StructDef::members[%d]::name: %s\n"),
                       i,
-                      tmp));
+                      ACE_TEXT_CHAR_TO_TCHAR (tmp)));
         }
 
       ACE_ASSERT (ACE_OS::strcmp (tmp, s_names[i]) == 0);
@@ -3046,7 +3043,7 @@ Admin_Client::module_test (void)
       ACE_DEBUG ((
           LM_DEBUG,
           ACE_TEXT ("ModuleDef::lookup (absolute)::absolute_name: %s\n"),
-          str.in ()
+          ACE_TEXT_CHAR_TO_TCHAR (str.in ())
         ));
     }
 
@@ -3064,7 +3061,7 @@ Admin_Client::module_test (void)
       ACE_DEBUG ((
           LM_DEBUG,
           ACE_TEXT ("ModuleDef::lookup (relative)::absolute_name: %s\n"),
-          str.in ()
+          ACE_TEXT_CHAR_TO_TCHAR (str.in ())
         ));
     }
 
@@ -3100,7 +3097,7 @@ Admin_Client::module_test (void)
               LM_DEBUG,
               ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
@@ -3136,7 +3133,7 @@ Admin_Client::module_test (void)
               LM_DEBUG,
               ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
@@ -3179,7 +3176,7 @@ Admin_Client::module_test (void)
               LM_DEBUG,
               ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %s\n"),
               i,
-              str.in ()
+              ACE_TEXT_CHAR_TO_TCHAR (str.in ())
             ));
         }
 
