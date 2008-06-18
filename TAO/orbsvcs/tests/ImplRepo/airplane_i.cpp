@@ -14,7 +14,7 @@ ACE_RCSID (ImplRepo,
   Airplane_i::Airplane_i ()
 {
   // Seed the random number generator
-  ACE_OS::srand (ACE_OS::time (0L));
+  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0L)));
 }
 
 

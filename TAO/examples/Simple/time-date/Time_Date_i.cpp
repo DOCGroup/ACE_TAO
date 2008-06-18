@@ -9,7 +9,7 @@
 void
 Time_Date_i::bin_date (CORBA::Long_out time_date)
 {
-  time_date = ACE_OS::time (0);
+  time_date = static_cast<CORBA::Long> (ACE_OS::time (0));
 }
 
 // Obtain the time and date in string format.

@@ -11,7 +11,7 @@ Event_impl::Event_impl ()
 {
   // Put a timestamp on event's birth.
   ACE_Time_Value now (ACE_OS::gettimeofday ());
-  this->time_ (now.sec ());
+  this->time_ (static_cast<CORBA::Long> (now.sec ()));
 }
 
 Event_impl::~Event_impl ()
