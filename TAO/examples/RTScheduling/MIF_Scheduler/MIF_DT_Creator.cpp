@@ -11,7 +11,7 @@ MIF_DT_Creator::MIF_DT_Creator (void)
 
 Thread_Task*
 MIF_DT_Creator::create_thr_task (int importance,
-                                 int start_time,
+                                 time_t start_time,
                                  int load,
                                  int iter,
                                  int dist,
@@ -37,7 +37,7 @@ MIF_DT_Creator::sched_param (int importance)
 }
 
 void
-MIF_DT_Creator::yield (int suspend_time,
+MIF_DT_Creator::yield (time_t suspend_time,
                        Thread_Task*)
 {
   try

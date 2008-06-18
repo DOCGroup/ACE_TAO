@@ -39,15 +39,15 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   void activate_job_list (void);
   void activate_schedule (void);
 
-  virtual void yield (int suspend_time,
-          Thread_Task* task) = 0;
+  virtual void yield (time_t suspend_time,
+                      Thread_Task* task) = 0;
 
   virtual void wait (void) = 0;
 
   virtual CORBA::Policy_ptr sched_param (int importance) = 0;
 
   virtual Thread_Task* create_thr_task (int importance,
-          int start_time,
+          time_t start_time,
           int load,
           int iter,
           int dist,
