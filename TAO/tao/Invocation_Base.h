@@ -233,7 +233,7 @@ namespace TAO
 
     /// Flag used to distinguish a remote invocation versus a collocated
     /// (thru-poa) invocation.
-    bool is_remote_request_;
+    bool const is_remote_request_;
 #endif /*TAO_HAS_INTERCEPTORS*/
     //@}
   };

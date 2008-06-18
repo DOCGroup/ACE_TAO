@@ -1,3 +1,26 @@
+Wed Jun 18 11:58:00 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+        * tao/Transport.cpp:
+        * tao/Compression/zlib/ZlibCompressor.cpp:
+          Layout change
+
+        * tao/TAO_Server_Request.h:
+          Doxygen changes
+
+        * tao/Service_Context.cpp:
+        * tao/Service_Context.inl:
+          Moved set_context to inline file
+
+        * tao/Invocation_Base.h:
+          Made is_remote_request_ a const member
+
+        * tao/GIOP_Message_Generator_Parser_12.h:
+          Layout and doxygen change
+
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+          Layout and use ! instead of compare with false
+
 Wed Jun 18 10:07:00 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/TAO_Internal.cpp:
