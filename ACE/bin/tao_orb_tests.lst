@@ -218,6 +218,8 @@ TAO/tests/POA/Current/run_test.pl: !LabVIEW_RT
 TAO/tests/POA/wait_for_completion/run_test.pl: !LabVIEW_RT
 TAO/tests/POA/POAManagerFactory/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/POA/EndpointPolicy/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
+TAO/tests/POA/EndpointPolicy/run_test_dh.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
+TAO/tests/POA/EndpointPolicy/run_test_lh.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT !VxWorks
 TAO/tests/POA/Adapter_Activator/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !SUNCC5_1 !ACE_FOR_TAO !LabVIEW_RT
 TAO/tests/POA/POA_BiDir/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_BIDIR !LabVIEW_RT
 TAO/tests/POA/DSI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
