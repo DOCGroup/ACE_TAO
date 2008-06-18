@@ -1,3 +1,15 @@
+Wed Jun 18 10:07:00 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/TAO_Internal.cpp:
+          Add docu to endif
+
+        * tao/Tagged_Profile.h:
+        * tao/Tagged_Components.h:
+        * tao/Object_T.h:
+        * tao/Strategies/UIOP_Profile.h:
+        * tao/Incoming_Message_Stack.h:
+          Doxygen changes
+
 Wed Jun 18 09:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Param_Test/anyop.cpp:
@@ -74,8 +86,8 @@ Mon Jun 16 18:50:55 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * TAO_IDL/contrib/mcpp/support.cpp:
         * TAO_IDL/contrib/mcpp/system.cpp:
 
-          Fixes for mcpp on Windows. 
-        
+          Fixes for mcpp on Windows.
+
 Mon Jun 16 18:13:21 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/mfc/Resource.h:
