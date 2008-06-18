@@ -50,4 +50,10 @@ TAO_Service_Context::is_service_id (IOP::ServiceId id)
   return false;
 }
 
+ACE_INLINE void
+TAO_Service_Context::set_context (IOP::ServiceContext &context)
+{
+  this->add_context_i (context);
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

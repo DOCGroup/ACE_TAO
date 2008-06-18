@@ -2176,7 +2176,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       // This prevents seeking rd_ptr behind the wr_ptr
 
       if (qd.missing_data () != 0 ||
-          qd.more_fragments ()   ||
+          qd.more_fragments () ||
           qd.msg_type () == GIOP::Fragment)
         {
           if (qd.missing_data () == 0)
