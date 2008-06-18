@@ -81,7 +81,7 @@ struct Worker : ACE_Task_Base
         try
           {
             CORBA::String_var ret = srv_->test_method (str.in ());
-            if (0 != ACE_OS::strcmp (str, ret.in ())) return 1;
+            if (0 != ACE_OS::strcmp (str.in (), ret.in ())) return 1;
           }
         catch (CORBA::Exception& ex)
           {
