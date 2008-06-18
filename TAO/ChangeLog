@@ -1,3 +1,18 @@
+Wed Jun 18 15:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Bug_1334_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2247_Regression/Manager.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+        * orbsvcs/tests/ImplRepo/scale/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/admin_client.cpp:
+
+          Correct Fuzz errors concerning Wide character build compatabily
+          with ORB_init().
+
 Wed Jun 18 14:48:56 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/RTScheduling/DT_Creator.h:
