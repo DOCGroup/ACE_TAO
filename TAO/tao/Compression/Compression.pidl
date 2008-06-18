@@ -48,6 +48,11 @@ module Compression
     const CompressorId COMPRESSORID_ZLIB = 4;
 
     /**
+     * CompressorId list
+     */
+    typedef sequence <CompressorId> CompressorIdList;
+
+    /**
      * CompressionLevel type.
      */
     typedef unsigned long CompressionLevel;

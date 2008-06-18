@@ -65,9 +65,9 @@ public:
   GIOP::MsgType message_type (void) const;
 
   /// Return the more fragments
-  CORBA::Octet more_fragments (void) const;
+  CORBA::Boolean more_fragments (void) const;
 
-  void more_fragments (CORBA::Octet fragment);
+  void more_fragments (CORBA::Boolean fragment);
 
   /// Get the GIOP version
   TAO_GIOP_Message_Version const &giop_version (void) const;
@@ -75,9 +75,6 @@ public:
 private:
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
-
-  /// Get the message type.
-  GIOP::MsgType message_type (CORBA::Octet type) const;
 
   /// Checks for the magic word 'GIOP' in the start of the incoing
   /// stream
@@ -101,7 +98,7 @@ private:
   CORBA::ULong read_ulong (const char *buf) const;
 
 private:
-  // GIOP version information..
+  /// GIOP version information..
   TAO_GIOP_Message_Version giop_version_;
 
   /// 0 = big, 1 = little
@@ -117,7 +114,7 @@ private:
   /// A value of zero indicates that this message does not have any
   /// fragments.  A value of non-zero indicates that it does have
   /// fragments.
-  CORBA::Octet more_fragments_;
+  CORBA::Boolean more_fragments_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
