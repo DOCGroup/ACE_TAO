@@ -53,7 +53,7 @@
 <presetreference>Constructor_Member Initializers_One Per Line</presetreference>
 </rule>
 <rule name="constructor-initialiser-style">
-<presetreference>Constructor_Initializer Alignment_False</presetreference>
+<presetreference>Constructor_Initializer Alignment_True</presetreference>
 </rule>
 <rule name="declaration-newline">
 <presetreference>Declarations_Start On New Line_True</presetreference>
