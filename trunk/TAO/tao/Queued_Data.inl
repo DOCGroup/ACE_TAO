@@ -86,7 +86,7 @@ TAO_Queued_Data::byte_order (void) const
   return this->state_.byte_order ();
 }
 
-ACE_INLINE CORBA::Octet
+ACE_INLINE CORBA::Boolean
 TAO_Queued_Data::more_fragments (void) const
 {
   return this->state_.more_fragments ();

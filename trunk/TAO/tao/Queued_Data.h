@@ -86,7 +86,7 @@ public:
   CORBA::Octet byte_order (void) const;
 
   /// Get more fragments
-  CORBA::Octet more_fragments (void) const;
+  CORBA::Boolean more_fragments (void) const;
 
   /// Get message type
   GIOP::MsgType msg_type (void) const;
@@ -106,6 +106,7 @@ public:
   /// Set the state
   void state (const TAO_GIOP_Message_State& state);
 
+  /// Get the state
   const TAO_GIOP_Message_State& state (void) const;
 
 private:
