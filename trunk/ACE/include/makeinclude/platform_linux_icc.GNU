@@ -78,11 +78,7 @@ OCFLAGS += -O3
 # min/max float values in the TAO_IDL compiler tests
 # If these options are not passed we can get overflows
 # when testing min/max
-ifeq ($(SYSARCH),ia64)
-  CPPFLAGS += -mp
-else
-  CPPFLAGS += -fp-model double
-endif
+CPPFLAGS += -fp-model double
 
 ifeq ($(optimize),0)
   # Disable all optimizing in code
