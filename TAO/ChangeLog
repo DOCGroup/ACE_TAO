@@ -1,3 +1,20 @@
+Wed Jun 18 14:48:56 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/RTScheduling/DT_Creator.h:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Task.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
+        * examples/RTScheduling/Thread_Task.h:
+        * examples/RTScheduling/Thread_Task.cpp:
+
+          Use time_t where time is concerned to avoid so many casts to int.
+
 Wed Jun 18 14:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:

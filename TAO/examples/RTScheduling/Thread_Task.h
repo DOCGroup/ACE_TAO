@@ -15,11 +15,6 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
 
-/*    Thread_Task (int importance, */
-/*           int start_time, */
-/*           int load, */
-/*           DT_Creator *dt_creator); */
-
   Thread_Task (void);
 
   virtual int activate_task (RTScheduling::Current_ptr current,
@@ -31,7 +26,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
 
   int importance (void);
 
-  int start_time (void);
+  time_t start_time (void);
 
   /// = Job get/set
   /// Returns the name of the Job exec'ed by this Task.
@@ -49,7 +44,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
   virtual int svc (void);
   RTScheduling::Current_var current_;
   CORBA::Policy_var sched_param_;
-  int start_time_;
+  time_t start_time_;
   int load_;
   int iter_;
   size_t count_;
