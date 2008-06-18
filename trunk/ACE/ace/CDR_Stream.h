@@ -84,10 +84,10 @@ class ACE_InputCDR;
  * This class is based on the the CORBA spec for Java (98-02-29),
  * java class omg.org.CORBA.portable.OutputStream.  It diverts in
  * a few ways:
- * + Operations taking arrays don't have offsets, because in C++
- *   it is easier to describe an array starting from x+offset.
- * + Operations return an error status, because exceptions are
- *   not widely available in C++ (yet).
+ * \li Operations taking arrays don't have offsets, because in C++
+ *     it is easier to describe an array starting from x+offset.
+ * \li Operations return an error status, because exceptions are
+ *     not widely available in C++ (yet).
  */
 class ACE_Export ACE_OutputCDR
 {
@@ -101,8 +101,20 @@ public:
   friend class ACE_WChar_Codeset_Translator;
   friend class ACE_InputCDR;
 
-  /// Default constructor, allocates @a size bytes in the internal
-  /// buffer, if @a size == 0 it allocates the default size.
+  /**
+   * Default constructor; allows one to set byte ordering, allocators, and
+   * tuning information.
+   *
+   * @param size        Causes constructor to preallocate @a size bytes; if
+   *                    @a size is 0 it allocates the default size.
+   *
+   * @param byte_order  The byte order that data will have within this
+   *                    object. Unless otherwise specified, the byte order
+   *                    will be the order native to the hardware this is
+   *                    executed on. To force the marshalled data to have
+   *                    network byte order (big endian) specify the value 0;
+   *                    to force little endian specify the value 1.
+   */
   ACE_OutputCDR (size_t size = 0,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
