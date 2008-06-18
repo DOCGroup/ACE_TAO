@@ -17,7 +17,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 {
-  const CORBA::ULong sz = this->size_;
+  CORBA::ULong const sz = this->size_;
 
   // Delete all the nodes left behind
   for (CORBA::ULong i = 0;
@@ -57,8 +57,7 @@ TAO_Incoming_Message_Queue::dequeue_tail (void)
     return 0;
 
   // Get the node on the head of the queue...
-  TAO_Queued_Data *head =
-    this->last_added_->next ();
+  TAO_Queued_Data *head = this->last_added_->next ();
 
   while (head->next () != this->last_added_)
     {
