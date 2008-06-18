@@ -13,21 +13,26 @@ my $target = PerlACE::TestTarget::create_target ("server");
 my $host = PerlACE::TestTarget::create_target ("client");
 
 $iorbase = "server.ior";
-$server_iorfile = $target->LocalFile ("server.ior");
-$client_iorfile = $host->LocalFile ("server.ior");
+$server_iorfile = $target->LocalFile ("$iorbase");
+$client_iorfile = $host->LocalFile ("$iorbase");
 $target->DeleteFile ($server_iorfile);
 $host->DeleteFile ($client_iorfile);
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorbase");
 }
 else {
     $SV = $target->CreateProcess ("server", "-o $server_iorfile");
 }
-$CL = $host->CreateProcess ("client", "-k file://$client_iorfile -ORBDottedDecimalAddresses 1");
+$CL = $host->CreateProcess ("client", "-k file://$client_iorfile");
 
-$SV->Spawn ();
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
 
 if ($target->WaitForFileTimed ($server_iorfile,
                                $target->ProcessStartWaitInterval()) == -1) {
