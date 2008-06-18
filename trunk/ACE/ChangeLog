@@ -1,3 +1,9 @@
+Wed Jun 18 09:50:20  UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * README:
+        * ACE-INSTALL.html:
+          Updated
+
 Tue Jun 17 22:43:20  2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Reactor.h: Clarify that calling remove_handler() for a signal
@@ -13,7 +19,7 @@ Tue Jun 17 15:36:49 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
           Disabled warning C4706 in load_dbghelp_library_if_needed()
           and enabled afterwards on windows.
-          
+
 Tue Jun 17 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/fuzz.pl:

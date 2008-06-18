@@ -17,13 +17,11 @@ The ADAPTIVE Communication Environment (ACE) is an object-oriented
 (OO) toolkit that implements fundamental design patterns for
 communication software.  ACE provides a rich set of reusable C++
 wrappers and frameworks that perform common communication software
-tasks across a range of OS platforms, including Win32 (i.e., WinNT
-3.5.x/4.x, Win95, and WinCE), most versions of UNIX (e.g., SunOS 4.x
-and 5.x, SGI IRIX 5.x and 6.x, HP-UX 9.x, 10.x, and 11.x, DEC UNIX
-4.x, AIX 4.x, Linux, SCO, UnixWare, NetBSD, and FreeBSD), real-time
-operating systems (e.g., VxWorks, Chorus, LynxOS, and pSoS), and MVS
-OpenEdition.  A single source tree is used for all these platforms and
-porting ACE to other platforms is relatively easy.
+tasks across a range of OS platforms, including Win32/Win64, most
+versions of UNIX (e.g., SunOS, HP-UX , AIX, Linux, NetBSD, and FreeBSD),
+real-time operating systems (e.g., VxWorks, Chorus, LynxOS, and QNV),
+OpenVMS, and MVS OpenEdition.  A single source tree is used for all
+these platforms and porting ACE to other platforms is relatively easy.
 
 The communication software components provided by ACE include event
 demultiplexing and event handler dispatching, service initialization,
@@ -44,7 +42,8 @@ services in one or more processes or threads.
 ACE is currently used in commercial projects and products by dozens of
 companies including Ericsson, Bellcore, Siemens, Motorola, Kodak,
 Boeing, Lucent, DEC, Lockheed Martin, and SAIC.  Commercial support
-for ACE is available at http://www.riverace.com.
+for ACE is available from several companies as listed at
+http://www.cs.wustl.edu/~schmidt/commercial-support.html
 
 ----------------------------------------
 
@@ -186,13 +185,13 @@ http://www.cs.wustl.edu/~schmidt/ACE.html
 
 ACE MAILING LIST AND NEWSGROUP
 
-A mailing list, ace-users@cs.wustl.edu, is available for discussing
+A mailing list, ace-users@list.isis.vanderbilt.edu, is available for discussing
 bug fixes, enhancements, and porting issues regarding ACE.  Please
-send mail to me at the ace-users-request@cs.wustl.edu if you'd like to
-join the mailing list.  There is also a USENET newsgroup called
-comp.soft-sys.ace. Please see
+send mail to me at the ace-users-request@list.isis.vanderbilt.edu
+if you'd like to join the mailing list.  There is also a USENET newsgroup
+called comp.soft-sys.ace. Please see
 http://www.cs.wustl.edu/~schmidt/ACE-mail.html for details on how to
-subscribe to the mailing list. 
+subscribe to the mailing list.
 
 ----------------------------------------
 
@@ -210,7 +209,8 @@ Please use the same form to submit questions, comments, etc.
 To ensure that you see responses, please do one of the following:
 
     1) Subscribe to the ace-users mail list, by sending email with
-       contents "subscribe ace-users" to majordomo@cs.wustl.edu.
+       contents "subscribe ace-users" to
+       ace-users-request@list.isis.vanderbilt.edu.
 
     2) Or, monitor the comp.soft-sys.ace newsgroup for responses.
 
