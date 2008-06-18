@@ -11,7 +11,6 @@
 
 // Constructor.
 
-
 template <class Servant>
 Server<Servant>::Server (void)
   : ior_output_file_ (0),
@@ -46,7 +45,7 @@ Server<Servant>::parse_args (void)
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())), -1);
         break;
 
       case 'm':
@@ -59,7 +58,7 @@ Server<Servant>::parse_args (void)
                            " [-d]"
                            " [-o] <ior_output_file>"
                            "\n",
-                           argv_ [0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (this->argv_ [0])),
                           -1);
       }
 
@@ -113,7 +112,7 @@ Server<Servant>::init (const char *servant_name,
 
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
-                  str.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (str.in ())));
 
       if (this->ior_output_file_)
         {
@@ -172,7 +171,7 @@ Client<InterfaceObj, Var>::read_ior (char *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for writing: %p\n",
-                       filename),
+                       ACE_TEXT_CHAR_TO_TCHAR (filename)),
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
@@ -214,7 +213,7 @@ Client<InterfaceObj, Var>::parse_args (void)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg ()),
+                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())),
                             -1);
         break;
       case 'x': // read the flag for shutting down
@@ -240,13 +239,10 @@ Client<InterfaceObj, Var>::init (const char * /*name*/,
   this->argc_ = argc;
   this->argv_ = argv;
 
-
   try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
-                                    0);
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -261,7 +257,7 @@ Client<InterfaceObj, Var>::init (const char * /*name*/,
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid ior <%s>\n",
-                               this->ior_),
+                               ACE_TEXT_CHAR_TO_TCHAR (this->ior_)),
                               -1);
           this->server_ = InterfaceObj::_narrow (server_object.in ());
         }

@@ -25,7 +25,7 @@ ACE_RCSID (Buffered_AMI,
            "$Id$")
 
 // Name of file contains ior.
-static const char *IOR = "file://ior";
+static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 
 // Default iterations.
 static CORBA::ULong iterations = 20;
@@ -95,7 +95,7 @@ public:
 };
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "a:b:k:m:i:t:x");
   int c;
@@ -234,16 +234,14 @@ setup_buffering_constraints (CORBA::ORB_ptr orb)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -257,7 +255,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (base.in ());
 
       // Get an object reference from the argument string.
-      base = orb->string_to_object (IOR);
+      base = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();

@@ -70,7 +70,7 @@ Consumer_Handler::read_ior (char *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for reading: %p\n",
-                       filename),
+                       ACE_TEXT_CHAR_TO_TCHAR (filename)),
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
@@ -114,7 +114,7 @@ Consumer_Handler::parse_args (void)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg ()),
+                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())),
                             -1);
         break;
 
@@ -148,7 +148,7 @@ Consumer_Handler::parse_args (void)
                            " [-a stock_name]"
                            " [-t threshold]"
                            "\n",
-                           this->argv_ [0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (this->argv_ [0])),
                           -1);
       }
 
@@ -208,10 +208,7 @@ Consumer_Handler::init (int argc, char **argv)
   try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
-                                    0);
-
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -267,7 +264,7 @@ Consumer_Handler::init (int argc, char **argv)
           if (this->ior_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: no ior specified\n",
-                               this->argv_[0]),
+                               ACE_TEXT_CHAR_TO_TCHAR (this->argv_[0])),
                               -1);
 
           CORBA::Object_var server_object =
@@ -276,7 +273,7 @@ Consumer_Handler::init (int argc, char **argv)
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid ior <%s>\n",
-                               this->ior_),
+                               ACE_TEXT_CHAR_TO_TCHAR (this->ior_)),
                               -1);
           // The downcasting from CORBA::Object_var to Notifier_var is
           // done using the <_narrow> method.
