@@ -879,7 +879,7 @@ Random_Object_Group::Random_Object_Group (const char *id,
   : Object_Group_i (id, poa)
 {
   // Seed the random number generator.
-  ACE_OS::srand (ACE_OS::time ());
+  ACE_OS::srand (static_cast<u_int> (ACE_OS::time ()));
 }
 
 char *

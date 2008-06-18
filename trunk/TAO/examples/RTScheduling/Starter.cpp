@@ -29,7 +29,7 @@ Starter::fire (void)
        iterator != this->synchs_.end ();
        ++iterator)
     {
-      (*iterator).int_id_.in ()->go (base_time.sec ());
+      (*iterator).int_id_.in ()->go (static_cast<CORBA::Long> (base_time.sec ()));
     }
 }
 
@@ -109,7 +109,7 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list)
         Synch::_narrow (obj.in ());
 
 
-      synch_obj->go (base_time.sec ());
+      synch_obj->go (static_cast<CORBA::Long> (base_time.sec ()));
 
 //        // Add this receiver to the receiver map.
 //        this->synchs_.bind (synch_name,

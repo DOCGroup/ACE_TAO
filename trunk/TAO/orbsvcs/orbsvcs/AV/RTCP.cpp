@@ -43,6 +43,7 @@
 #include "orbsvcs/AV/RTCP_Packet.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Truncate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -277,7 +278,7 @@ TAO_AV_RTCP::rtcp_interval (int members,
   if (initial)
     {
       // initialize the random number generator
-      ACE_OS::srand(ACE_OS::time(0L));
+      ACE_OS::srand(ACE_Utils::truncate_cast<u_int> (ACE_OS::time(0L)));
 
       rtcp_min_time /= 2;
       *avg_rtcp_size = 128;
@@ -591,8 +592,9 @@ TAO_AV_RTCP_Callback::send_report (int bye)
       // get the NTP timestamp
       ACE_Time_Value unix_now = ACE_OS::gettimeofday ();
       TAO_AV_RTCP::ntp64 ntp_now = ntp64time (unix_now);
-      ACE_UINT32 rtp_ts = unix_now.sec () * 8000 + unix_now.usec () / 125 +
-                      this->timestamp_offset_;
+      ACE_UINT32 rtp_ts = ACE_Utils::truncate_cast<ACE_UINT32> (
+                            unix_now.sec () * 8000 + unix_now.usec () / 125 +
+                            this->timestamp_offset_);
       ACE_NEW_RETURN(cp,
                      RTCP_SR_Packet (my_ssrc,
                                      ntp_now.upper,
