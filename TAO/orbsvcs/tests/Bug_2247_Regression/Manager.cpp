@@ -68,7 +68,7 @@ parse_args (int argc, char *argv[])
                            "-b <iorfile2> -l <key2> "
                            "-c <output ior file>"
                            "\n",
-                           argv [0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
                           -1);
       }
   // Indicates sucessful parsing of the command line
@@ -131,9 +131,7 @@ void
 Manager::init (int argc,
                char *argv[])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                0);
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =
@@ -262,7 +260,7 @@ Manager::write_to_file (void)
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
+                           ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)),
                           1);
       ACE_OS::fprintf (output_file, "%s", iorref.in ());
       ACE_OS::fclose (output_file);
@@ -325,14 +323,14 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key)
 
   ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT("CLIENT> REMOTE   expected: '%s'"),
-               expected));
+               ACE_TEXT_CHAR_TO_TCHAR (expected)));
 
   if (ACE_OS::strcmp (expected, received))
   {
       ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("... FAIL\n"
                     "CLIENT>          received: '%s'\n"),
-              received));
+              ACE_TEXT_CHAR_TO_TCHAR (received)));
       return -1;
   }
 
@@ -383,13 +381,13 @@ int run_abort_test (Simple_Server_ptr server,
 
   ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT("CLIENT> ABORT    expected: '%s'"),
-               expected));
+               ACE_TEXT_CHAR_TO_TCHAR (expected)));
   if (ACE_OS::strcmp (expected, received))
     {
       ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("... FAIL\n"
                     "CLIENT>          received: '%s'\n"),
-              received));
+              ACE_TEXT_CHAR_TO_TCHAR (received)));
       return -1;
     }
 
@@ -432,13 +430,13 @@ int run_shutdown_test (Simple_Server_ptr server,
 
   ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT("CLIENT> SHUTDOWN expected: '%s'"),
-               expected));
+               ACE_TEXT_CHAR_TO_TCHAR (expected)));
   if (ACE_OS::strcmp (expected, received))
     {
       ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("... FAIL\n"
                     "CLIENT>          received: '%s'\n"),
-              received));
+              ACE_TEXT_CHAR_TO_TCHAR (received)));
       return -1;
     }
 
@@ -526,7 +524,7 @@ Client_i::init (void)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR,
                 "Unable to open %s for writing: %p\n",
-                ior_output_file));
+                ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)));
 
   ACE_Read_Buffer ior_buffer (f_handle);
 
@@ -539,9 +537,7 @@ Client_i::init (void)
 
   int argc = 0;
   char **argv = 0;
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                0);
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var object =
     this->orb_->string_to_object (data);
@@ -554,7 +550,7 @@ Client_i::init (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "Object reference <%s> is nil\n",
-                  data));
+                  ACE_TEXT_CHAR_TO_TCHAR (data)));
     }
 
   int rv;

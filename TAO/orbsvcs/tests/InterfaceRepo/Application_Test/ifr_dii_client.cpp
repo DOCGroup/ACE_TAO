@@ -25,9 +25,7 @@ int
 IFR_DII_Client::init (int argc,
                       char *argv[])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                0);
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   // In a reall application, we would get the scoped or
   // local name from the Interface Repository and use that
@@ -110,7 +108,7 @@ IFR_DII_Client::parse_args (int argc,
                             "usage: %s"
                             " [-n]"
                             "\n",
-                            argv [0]),
+                            ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
                             -1);
       }
 
@@ -350,11 +348,11 @@ IFR_DII_Client::invoke_and_display (void)
                       ACE_TEXT ("%s:\t%s\n")
                       ACE_TEXT ("%s:\t%s\n")
                       ACE_TEXT ("%s:\t$%2.2f\n"),
-                      args->item (0)->name (),
-                      artist,
-                      args->item (1)->name (),
-                      title,
-                      args->item (2)->name (),
+                      ACE_TEXT_CHAR_TO_TCHAR (args->item (0)->name ()),
+                      ACE_TEXT_CHAR_TO_TCHAR (artist),
+                      ACE_TEXT_CHAR_TO_TCHAR (args->item (1)->name ()),
+                      ACE_TEXT_CHAR_TO_TCHAR (title),
+                      ACE_TEXT_CHAR_TO_TCHAR (args->item (2)->name ()),
                       price));
         }
 

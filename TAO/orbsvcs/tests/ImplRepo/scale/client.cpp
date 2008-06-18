@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
   try
   {
 
-    ORB_var orb = ORB_init(argc, argv, 0);
+    ORB_var orb = ORB_init(argc, argv);
 
     Object_var obj = orb->resolve_initial_references("Test");
     test_var test = test::_narrow(obj.in());

@@ -13,28 +13,28 @@ int main( int argc, char *argv[] )
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, 0 ) ;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       try
         {
            CORBA::Object_var naming =
-              orb->resolve_initial_references( "NameService") ;
-           if( CORBA::is_nil( naming.in() ) )
+              orb->resolve_initial_references ("NameService");
+           if (CORBA::is_nil (naming.in ()))
              {
-                return 1 ;
+                return 1;
              }
         }
       catch (const CORBA::Exception& ex)
         {
           ACE_UNUSED_ARG (ex);
-          return 1 ;
+          return 1;
         }
     }
   catch (const CORBA::Exception& ex)
     {
        ACE_UNUSED_ARG (ex);
-       return 2 ;
+       return 2;
     }
 
-  return 0 ;
+  return 0;
 }
