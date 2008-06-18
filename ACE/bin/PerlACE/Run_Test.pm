@@ -52,6 +52,10 @@ $wait_interval_for_process_creation = (($PerlACE::VxWorks_Test or $PerlACE::VxWo
 if ($^O eq 'VMS') {
   $wait_interval_for_process_creation *= 3;
 }
+elsif ($^O eq 'nto') {
+  ## QNX can be slow to start processes
+  $wait_interval_for_process_creation += 5;
+}
 
 $wait_interval_for_process_shutdown = (($PerlACE::VxWorks_Test or $PerlACE::VxWorks_RTP_Test) ? 30 : 10);
 

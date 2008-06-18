@@ -1,3 +1,9 @@
+Wed Jun 18 12:16:48 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Increase the process start wait time for QNX.
+
 Wed Jun 18 10:43:20  UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
