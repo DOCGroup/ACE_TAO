@@ -63,7 +63,7 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
 
       ACE_DEBUG ((LM_DEBUG,
                   "Handle Conection Requested flowname %s \n",
-                  entry.flowname ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (entry.flowname ())));
 
       ACE_CString flowname (entry.flowname ());
 
@@ -284,9 +284,7 @@ main (int argc,
     {
       /// Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
@@ -318,7 +316,7 @@ main (int argc,
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
-                           receiver.output_file_name ().c_str ()),
+                           ACE_TEXT_CHAR_TO_TCHAR (receiver.output_file_name ().c_str ())),
                           -1);
 
       else

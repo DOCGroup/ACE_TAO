@@ -210,7 +210,7 @@ Receiver::init (int argc,
   if (this->input_file_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %s\n",
-                       this->filename_.c_str ()),
+                       ACE_TEXT_CHAR_TO_TCHAR (this->filename_.c_str ())),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -268,9 +268,7 @@ main (int argc,
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
@@ -293,7 +291,7 @@ main (int argc,
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
-                           output_file_name),
+                           ACE_TEXT_CHAR_TO_TCHAR (output_file_name)),
                           -1);
 
       else
