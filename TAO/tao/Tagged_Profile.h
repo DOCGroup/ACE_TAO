@@ -40,7 +40,6 @@ namespace TAO
  *
  * @brief This class is used to manipulate and access the target
  *        address field of a GIOP 1.2 request.
- *
  */
 class TAO_Export TAO_Tagged_Profile
 {
@@ -54,7 +53,7 @@ public:
   /// Ctor
   TAO_Tagged_Profile (TAO_ORB_Core *orb_core);
 
-  /// Unmarshall the GIOP 1.2 target address field.
+  /// Unmarshal the GIOP 1.2 target address field.
   CORBA::Boolean unmarshall_target_address (TAO_InputCDR &cdr);
 
   /// Unmarshals the received object key for GIOP 1.0/1.1
@@ -69,7 +68,7 @@ public:
   /// Return a const object key
   const TAO::ObjectKey &object_key (void) const;
 
-  /// get the tagged_profile
+  /// Get the tagged_profile
   const IOP::TaggedProfile &tagged_profile (void) const;
 
   /// Get the profile index, that needs to be used in the

@@ -541,7 +541,7 @@ namespace
               ACE_Dynamic_Service<
                   TAO_Codeset_Manager_Factory_Base
                 >::instance ("TAO_Codeset");
-#endif
+#endif /* !TAO_AS_STATIC_LIBS && !(ACE_VXWORKS && !__RTP__) */
           }
 
         if (factory == 0)

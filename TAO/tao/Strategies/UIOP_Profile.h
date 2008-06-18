@@ -81,9 +81,9 @@ public:
   virtual CORBA::ULong endpoint_count (void) const;
   virtual CORBA::ULong hash (CORBA::ULong max);
   /**
-   * Add <endp> to this profile's list of endpoints (it is inserted
+   * Add @a endp to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
-   * <endp>.
+   * @a endp.
    */
   void add_endpoint (TAO_UIOP_Endpoint *endp);
 

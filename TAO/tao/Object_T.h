@@ -50,7 +50,7 @@ namespace TAO
                          const char *repo_id,
                          Proxy_Broker_Factory);
 
-    // Version used the operators.
+    /// Version used the operators.
     static T_ptr unchecked_narrow (CORBA::Object_ptr, Proxy_Broker_Factory);
 
     static T_ptr unchecked_narrow (CORBA::Object_ptr,
