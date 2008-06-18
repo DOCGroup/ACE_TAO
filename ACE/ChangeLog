@@ -1,3 +1,10 @@
+Wed Jun 18 17:36:34 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * ace/Stack_Trace.cpp:
+
+          Moved pragma disable warning directives from inside of function to
+          outside to take effect.
+          
 Wed Jun 18 17:27:51  2008  Steve Huston  <shuston@riverace.com>
 
         * ace/CDR_Stream.h: Some doxygen improvements.
@@ -5,7 +12,7 @@ Wed Jun 18 17:27:51  2008  Steve Huston  <shuston@riverace.com>
 Wed Jun 18 15:36:11 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
-        
+
           Added new run_test scripts for the special variants of the TAO
           POA EndpointPolicy test.
 
