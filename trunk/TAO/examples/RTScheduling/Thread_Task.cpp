@@ -74,7 +74,7 @@ Thread_Task::importance (void)
   return this->importance_;
 }
 
-int
+time_t
 Thread_Task::start_time (void)
 {
   return this->start_time_;

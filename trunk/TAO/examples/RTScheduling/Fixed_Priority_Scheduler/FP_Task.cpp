@@ -8,7 +8,7 @@
 #include "ace/Countdown_Time.h"
 
 FP_Task::FP_Task (int importance,
-                  int start_time,
+                  time_t start_time,
                   int load,
                   int iter,
                   int dist,

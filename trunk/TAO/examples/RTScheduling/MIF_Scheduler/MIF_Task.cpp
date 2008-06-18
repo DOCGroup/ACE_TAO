@@ -7,12 +7,12 @@
 #include "ace/Countdown_Time.h"
 
 MIF_Task::MIF_Task (int importance,
-        int start_time,
-        int load,
-        int iter,
-        int dist,
-        char *job_name,
-        DT_Creator *dt_creator)
+                    time_t start_time,
+                    int load,
+                    int iter,
+                    int dist,
+                    char *job_name,
+                    DT_Creator *dt_creator)
 {
   this->load_ = load;
   this->iter_ = iter;
