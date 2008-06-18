@@ -1,3 +1,10 @@
+Wed Jun 18 15:36:11 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+        
+          Added new run_test scripts for the special variants of the TAO
+          POA EndpointPolicy test.
+
 Wed Jun 18 13:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/fuzz.pl:
