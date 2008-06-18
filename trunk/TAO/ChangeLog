@@ -1,3 +1,10 @@
+Wed Jun 18 13:22:32 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Oneway_Timeouts/run_test.pl:
+
+          Corrected the first minimum time for the new behavior of delayed
+          buffering.
+
 Wed Jun 18 13:04:00 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/CallbackTest/run_test.pl:
