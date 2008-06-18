@@ -1,3 +1,26 @@
+Wed Jun 18 12:40:00 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/Compression.mpc:
+          Add new Compression_include.pidl
+
+        * tao/Compression/Compression.pidl:
+          Add CompressionIdList typedef
+
+        * tao/Compression/Compression_include.pidl:
+          New file for people that want to include Compression.pidl
+
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.inl:
+          Changed more_fragents to a bool. Use static_cast for the message
+          type instead of using a helper for just the cast, removed that
+          helper method. Doxygen changes
+
+        * tao/Queued_Data.h:
+        * tao/Queued_Data.cpp:
+        * tao/Queued_Data.inl:
+          Changed more_fragments to bool and doxygen changes
+
 Wed Jun 18 11:58:00 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Unbounded_Octet_Sequence_T.h:

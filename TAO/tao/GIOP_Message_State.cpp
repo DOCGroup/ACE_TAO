@@ -45,10 +45,13 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
   if (this->parse_magic_bytes (buf) == -1        // Parse magic bytes first
       || this->get_version_info (buf) == -1      // Get version information
       || this->get_byte_order_info (buf) == -1)  // Get byte order information
-    return -1;
+    {
+      return -1;
+    }
 
   // Get the message type
-  this->message_type_ = this->message_type (buf[TAO_GIOP_MESSAGE_TYPE_OFFSET]);
+  this->message_type_ =
+    static_cast <GIOP::MsgType> (buf[TAO_GIOP_MESSAGE_TYPE_OFFSET]);
 
   // Get the size of the message..
   this->get_payload_size (buf);
@@ -178,7 +181,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 
       // Read the fragment bit
       this->more_fragments_ =
-        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
+        (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
 
       if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
         {
