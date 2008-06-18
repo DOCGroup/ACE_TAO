@@ -292,7 +292,7 @@ sub test_buffer_timeout
     # actual connection is made, it will flush the queued messages which
     # may take up to 550ms.
     unlink $srv_ior;
-    $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_max 550 -first_min 1000");
+    $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_max 550 -first_min 990");
     if ($SRV->Spawn() != 0) {
         return 1;
     }
