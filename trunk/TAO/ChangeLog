@@ -1,3 +1,9 @@
+Wed Jun 18 09:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Param_Test/anyop.cpp:
+
+          typo miss-edit lost a bracket.
+
 Tue Jun 17 15:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/InterOP-Naming/INS_test_client.cpp:
