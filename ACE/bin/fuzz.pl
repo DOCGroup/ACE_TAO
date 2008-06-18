@@ -1724,21 +1724,76 @@ sub check_for_ORB_init ()
     foreach $file (@files_cpp, @files_inl) {
         if (open (FILE, $file)) {
             my $disable = 0;
+            my $multi_line;
+            my $not_found= 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                if (/FUZZ\: disable check_for_ORB_init/) {
-                    $disable = 1;
-                }
-                if (/FUZZ\: enable check_for_ORB_init/) {
-                    $disable = 0;
-                }
-                if ($disable == 0) {
-                    if (/\s*ORB_init\s\([^,]*,\s*0/) {
-                        print_error ("$file:$.: ORB_init() argv of 0 requires static_cast<ACE_TCHAR **>(0)");
+                if (!defined $multi_line) {
+                    if (/FUZZ\: disable check_for_ORB_init/) {
+                        $disable = 1;
+                        next;
                     }
-                    if (/\s*ORB_init\s\([^,]*,[^,]*,\s*0\s*\)/) {
-                        print_error ("$file:$.: ORB_init() orbID should not be 0 (don't use 3rd parameter or give as string)");
+                    elsif (/FUZZ\: enable check_for_ORB_init/) {
+                        $disable = 0;
+                        next;
                     }
+                    elsif ($disable == 0) {
+                        s/^\s+//;           ## Remove leading space
+                        s/\s*(\/\/.*)?$//;  ## Remove trailling space and line comments
+                        if (s/^([^=]*=)?\s*(CORBA\s*::\s*)?ORB_init\s*//) {
+                            $multi_line = $_;
+                        }
+                        else {
+                           next;
+                        }
+                    }
+                }
+                else
+                {
+                  $_ =~ s/^\s+//;           ## Remove leading space
+                  $_ =~ s/\s*(\/\/.*)?$//;  ## Remove trailling space and line comments
+                  if ($multi_line eq "")
+                  {
+                      $multi_line = $_;  ## Append this line to existing statement.
+                  }
+                  else
+                  {
+                      $multi_line .= ' ' . $_;  ## Append this line to existing statement.
+                  }
+                }
+                my $testing = $multi_line;
+                if ($testing =~ s/^\(([^\"\)]*(\"([^\"\\]*(\\.)*)\")?)*\)//)
+                {
+                   # $testing has thrown away what we actually want, i.e.
+                   # we want to ignore what's left in $testing.
+
+                   $multi_line = substr ($multi_line, 0, -length ($testing));
+                   $multi_line =~ s/^\(\s*//; ## Trim leading ( and space
+                   $multi_line =~ s/\s*\)$//; ## Trim trailing space and )
+
+                   if ($multi_line =~ s/^[^,]*,\s*//) # If this fails there is only 1 parameter (which we will ignore)
+                   {
+                       # 1st parameter has been removed by the above, split up remaining 2 & 3
+                       $multi_line =~ s/^([^,]*),?\s*//;
+                       my $param2 = $1;
+                       $param2 =~ s/\s+$//; # Trim trailing spaces
+
+                       print_error ("$file:$.: ORB_init() 2nd parameter requires static_cast<ACE_TCHAR **>(0)") if ($param2 eq '0');
+                       print_error ("$file:$.: ORB_init() 3rd parameter is redundant (default orbID or give as string)") if ($multi_line eq '0');
+                     # print_error ("$file:$.: ORB_init() 3rd parameter is redundant (default orbID already \"\")") if ($multi_line eq '""');
+                   }
+
+                   undef $multi_line;
+                   $not_found = 0;
+                }
+                elsif ($not_found < 10) # Limit the search for ( ... ) following ORB_init to ten lines
+                {
+                  ++$not_found;
+                }
+                else
+                {
+                   undef $multi_line;
+                   $not_found = 0;
                 }
             }
             close (FILE);
