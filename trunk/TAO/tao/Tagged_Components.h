@@ -104,8 +104,10 @@ public:
 
   // = Marshaling and demarshaling
 
-  /// Marshal and demarshal the list.
+  /// Marshal the list.
   int encode (TAO_OutputCDR& cdr) const;
+
+  /// Demarshal the list.
   int decode (TAO_InputCDR& cdr);
 
   /**
@@ -136,10 +138,10 @@ private:
   int get_known_component_i (IOP::TaggedComponent& component) const;
   int get_component_i (IOP::TaggedComponent& component) const;
 
-  /// Is <tag> a well-known component?
+  /// Is @a tag a well-known component?
   int known_tag (IOP::ComponentId tag) const;
 
-  /// Does <tag> show up only once?
+  /// Does @a tag show up only once?
   int unique_tag (IOP::ComponentId tag) const;
 
 private:
@@ -153,7 +155,7 @@ private:
   /// bunch of them.
   IOP::MultipleComponentProfile components_;
 
-  // A flag for each component...
+  /// A flag for each component...
   CORBA::Octet orb_type_set_;
   CORBA::Octet code_sets_set_;
 };
