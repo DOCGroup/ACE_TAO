@@ -123,7 +123,7 @@ Sender::init (int argc,
   if (this->input_file_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %s\n",
-                       this->filename_.c_str ()),
+                       ACE_TEXT_CHAR_TO_TCHAR (this->filename_.c_str ())),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -192,7 +192,7 @@ Sender::pace_data (void)
             {
               // At end of file break the loop and end the sender.
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
+                ACE_DEBUG ((LM_DEBUG, "Handle_Start:End of file\n"));
               break;
             }
 
@@ -285,9 +285,7 @@ main (int argc,
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");

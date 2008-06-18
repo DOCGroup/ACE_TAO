@@ -24,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /// Constructor
   RTCosScheduling_ClientScheduler_i::RTCosScheduling_ClientScheduler_i (
       CORBA::ORB_var orb,
@@ -37,15 +36,15 @@ namespace TAO
         /// and put them into the activity_map_
         if ( !ACE_OS::strcmp(file,"") || file == 0)
           {
-            ACE_DEBUG((LM_DEBUG,
+            ACE_DEBUG ((LM_DEBUG,
                        "No config supplied to the ServerScheduler, "
                        "Server will not scheudle object execution "
                        "(ServerScheduler interceptor not installed)"));
           }
         else if (!tasks(node_name, file, &activity_map_))
           {
-            ACE_DEBUG((LM_DEBUG,"Invalid Filename given, aborting!\n"));
-            ACE_OS::exit(1);
+            ACE_DEBUG ((LM_DEBUG,"Invalid Filename given, aborting!\n"));
+            ACE_OS::exit (1);
           }
         // The tasks were successfully read in, create the client interceptor
         else
@@ -53,9 +52,9 @@ namespace TAO
 #if (TAO_HAS_INTERCEPTORS == 1)
             ACE_NEW_THROW_EX (this->client_interceptor_,
                               RTCosScheduling_ClientScheduler_Interceptor(orb),
-                              CORBA::NO_MEMORY());
+                              CORBA::NO_MEMORY ());
 
-          TAO_ORB_Core *orb_core = orb->orb_core();
+          TAO_ORB_Core *orb_core = orb->orb_core ();
 
           // @@ (OO) Why isn't an ORBInitializer being used to
           //         register the interceptor?  In fact, all of the
@@ -67,19 +66,19 @@ namespace TAO
 
           /// First, get a list of all interceptors currently registered
           TAO::ClientRequestInterceptor_List::TYPE &interceptors =
-            orb_core->client_request_interceptors();
+            orb_core->client_request_interceptors ();
 
 
           /// Now check to see if the ServerScheduler Interceptor has already
           /// been registered
           u_int i;
           u_int unregistered = 1;
-          for (i = 0; i < interceptors.size() && unregistered; ++i)
+          for (i = 0; i < interceptors.size () && unregistered; ++i)
            {
              if (ACE_OS::strncmp(interceptors[i]->_interface_repository_id (),
-                 this->client_interceptor_->_interface_repository_id(),
-                 ACE_OS::strlen(
-                   this->client_interceptor_->_interface_repository_id()-2))
+                 this->client_interceptor_->_interface_repository_id (),
+                 ACE_OS::strlen (
+                   this->client_interceptor_->_interface_repository_id ()-2))
                == 0)
                {
                  /// The interceptor is already registered,
@@ -92,13 +91,13 @@ namespace TAO
          /// another POA then register it now
          if (unregistered)
            {
-             orb_core->add_interceptor(this->client_interceptor_);
+             orb_core->add_interceptor (this->client_interceptor_);
            }
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
          /// Now resolve a reference to the Real Time ORB
          CORBA::Object_var rt_obj =
-           orb->resolve_initial_references("RTORB");
+           orb->resolve_initial_references ("RTORB");
 
          // Get a reference to the real time orb
          RTCORBA::RTORB_var rt_orb =
@@ -113,24 +112,24 @@ namespace TAO
 
          /// Resolve a reference to the Linear Priority Mapping Manager
          rt_obj =
-           orb->resolve_initial_references("PriorityMappingManager");
+           orb->resolve_initial_references ("PriorityMappingManager");
          RTCORBA::PriorityMappingManager_var mapping_manager =
-           RTCORBA::PriorityMappingManager::_narrow(rt_obj.in());
+           RTCORBA::PriorityMappingManager::_narrow (rt_obj.in ());
 
          /// Create the Linear Priority Mapping Manager
-         ACE_NEW_THROW_EX(this->pm_,
-                          TAO_Linear_Priority_Mapping(
+         ACE_NEW_THROW_EX (this->pm_,
+                          TAO_Linear_Priority_Mapping (
                             ACE_SCHED_FIFO),
-                          CORBA::NO_MEMORY());
+                          CORBA::NO_MEMORY ());
          // WHERE the parameter is one of SCHED_OTHER, SCHED_FIFO, or SCHED_RR
 
-         mapping_manager->mapping(this->pm_);
+         mapping_manager->mapping (this->pm_);
        }
     }
   catch (const CORBA::Exception& ex)
     {
-        ACE_ERROR((LM_ERROR, "Could not configure the orb"));
-        ACE_OS::exit(1);
+        ACE_ERROR ((LM_ERROR, "Could not configure the orb"));
+        ACE_OS::exit (1);
     }
 }
 
@@ -151,25 +150,24 @@ void  RTCosScheduling_ClientScheduler_i::schedule_activity (
   /// Look up the priority using the activity name in the activity map
   COS_SCHEDULER_ACTIVITY_VALUE priority = 0;
   CORBA::Short result =
-  this->activity_map_.find(activity_name,
-                           priority);
+  this->activity_map_.find (activity_name, priority);
 
   /// If the activity/priority was found, set the current to the
   /// appropriate priority.
   if (result != -1)
     {
-      this->current_->the_priority(priority);
+      this->current_->the_priority (priority);
     }
   /// If the activity was not found, throw an UnknownName exception.
   else
     {
-      throw RTCosScheduling::UnknownName();
+      throw RTCosScheduling::UnknownName ();
     }
 }
 
 
 int
-RTCosScheduling_ClientScheduler_i::tasks(
+RTCosScheduling_ClientScheduler_i::tasks (
   const char  *node_name,
   const char  *file_name,
   CosSchedulerActivityMap *activity_map)
@@ -177,65 +175,65 @@ RTCosScheduling_ClientScheduler_i::tasks(
   /// get the activity list just for the particular node
   const unsigned int BUF_MAX = 256;
 
-  FILE *fp = ACE_OS::fopen(file_name, "r");
+  FILE *fp = ACE_OS::fopen (file_name, "r");
   /// Make sure we can open the file
   if (fp == 0)
     {
       /// Error return of we cannot open the file.
-      ACE_ERROR_RETURN((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_ERROR,
                         "Could not find the config file %s, aborting\n",
-                        file_name),
+                        ACE_TEXT_CHAR_TO_TCHAR (file_name)),
                         0);
     }
 
 
   char line[BUF_MAX], key[64];
-  ACE_OS::strsncpy(key, "Node ", sizeof(key));
-  ACE_OS::strcat(key, node_name);
+  ACE_OS::strsncpy (key, "Node ", sizeof (key));
+  ACE_OS::strcat (key, node_name);
 
   /// Skip to the appropriate node
 #ifndef ACE_LACKS_CLEARERR
-  ACE_OS::clearerr(fp);
+  ACE_OS::clearerr (fp);
 #else
 # warning ACE_OS::clearerr() is unimplemented on this platform.
 # warning This code may not function properly.
 #endif  /* !ACE_LACKS_CLEARERR */
   do
     {
-      ACE_OS::fgets(line, BUF_MAX, fp);
+      ACE_OS::fgets (line, BUF_MAX, fp);
   /// Make sure we did not hit the end of file
-  if (ACE_OS::last_error() == EOF)
+  if (ACE_OS::last_error () == EOF)
     {
-      ACE_ERROR_RETURN((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_ERROR,
                         "Node %s not found in config file\n",
-                        node_name),
+                        ACE_TEXT_CHAR_TO_TCHAR (node_name)),
                         0);
           break;
         }
     }
-  while (ACE_OS::strncmp(line, key, ACE_OS::strlen(key)) != 0);
+  while (ACE_OS::strncmp (line, key, ACE_OS::strlen (key)) != 0);
 
   /// Skip to the appropriate task section of the node
 #ifndef ACE_LACKS_CLEARERR
-  ACE_OS::clearerr(fp);
+  ACE_OS::clearerr (fp);
 #else
 # warning ACE_OS::clearerr() is unimplemented on this platform.
 # warning This code may not function properly.
 #endif  /* !ACE_LACKS_CLEARERR */
   do
     {
-      ACE_OS::fgets(line, BUF_MAX, fp);
+      ACE_OS::fgets (line, BUF_MAX, fp);
   /// Make sure we did not hit the end of file
-      if (ACE_OS::last_error() == EOF)
+      if (ACE_OS::last_error () == EOF)
         {
           ACE_ERROR_RETURN((LM_ERROR,
                             "Task list not found for node %s\n",
-                            node_name),
+                            ACE_TEXT_CHAR_TO_TCHAR (node_name)),
                             0);
               break;
         }
     }
-  while (ACE_OS::strncmp(line, "Tasks:", ACE_OS::strlen("Tasks:")) != 0);
+  while (ACE_OS::strncmp (line, "Tasks:", ACE_OS::strlen ("Tasks:")) != 0);
 
   CORBA::Short done = 0;
   COS_SCHEDULER_ACTIVITY_KEY name;
@@ -246,37 +244,37 @@ RTCosScheduling_ClientScheduler_i::tasks(
   while (!done)
     {
       /// get the activity name
-      ACE_OS::fgets(line, BUF_MAX, fp);
+      ACE_OS::fgets (line, BUF_MAX, fp);
 
       /// Make sure we did not hit the end of file
-      if (ACE_OS::last_error() == EOF)
+      if (ACE_OS::last_error () == EOF)
         {
           ACE_ERROR_RETURN((LM_ERROR,
                             "Task list not found for node %s\n",
-                            node_name),
+                            ACE_TEXT_CHAR_TO_TCHAR (node_name)),
                             0);
           break;
         }
 
       /// check to make sure we have not reached the end of the list.
-      if (ACE_OS::strncmp(line, "END", ACE_OS::strlen("END")) != 0)
+      if (ACE_OS::strncmp (line, "END", ACE_OS::strlen ("END")) != 0)
         {
-          name      = ACE_CString(line);
-          delimiter = name.find('\t');
-          char *p = ACE_OS::strchr(line, '\t');
+          name      = ACE_CString (line);
+          delimiter = name.find ('\t');
+          char *p = ACE_OS::strchr (line, '\t');
           if (p)
-            priority  = ACE_OS::atoi(p);
+            priority  = ACE_OS::atoi (p);
           if (priority == 0)
               priority = RTCORBA::minPriority;
-          if (delimiter < name.length() && delimiter > 0)
+          if (delimiter < name.length () && delimiter > 0)
             {
-              activity_map->bind(name.substr(0, delimiter), priority);
+              activity_map->bind (name.substr (0, delimiter), priority);
             }
           else
             {
-              ACE_ERROR_RETURN((LM_ERROR,
+              ACE_ERROR_RETURN ((LM_ERROR,
                                 "Error in reading activities from %s",
-                                file_name),
+                                ACE_TEXT_CHAR_TO_TCHAR (file_name)),
                                 0);
             }
         }
@@ -292,20 +290,19 @@ RTCosScheduling_ClientScheduler_i::tasks(
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Interceptor() : name_("RTCosScheduling_Client_Interceptor")
+RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Interceptor () : name_ ("RTCosScheduling_Client_Interceptor")
 {
   try
     {
       /// resolve a reference to RT Current
       int argc = 0;
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            0,
-                                            0);
+      ACE_TCHAR **argv= 0;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RTCurrent");
-      if (CORBA::is_nil(obj.in()))
+      if (CORBA::is_nil (obj.in ()))
         {
-          ACE_OS::exit(1);
+          ACE_OS::exit (1);
         }
       else
         {
@@ -314,18 +311,18 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
         }
 
       obj =
-        orb->resolve_initial_references("CodecFactory");
+        orb->resolve_initial_references ("CodecFactory");
 
       IOP::CodecFactory_var codec_factory;
-      if (CORBA::is_nil(obj.in()))
+      if (CORBA::is_nil (obj.in ()))
         {
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      "Could not initialize client interceptor, aborting!\n"));
-          ACE_OS::exit(1);
+          ACE_OS::exit (1);
         }
       else
         {
-          codec_factory = IOP::CodecFactory::_narrow(obj.in());
+          codec_factory = IOP::CodecFactory::_narrow (obj.in ());
         }
 
 
@@ -334,7 +331,7 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
       encoding.major_version = 1;
       encoding.minor_version = 2;
 
-      this->codec_ = codec_factory->create_codec(encoding);
+      this->codec_ = codec_factory->create_codec (encoding);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -345,17 +342,17 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
 }
 
 
-RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Interceptor(
-  const CORBA::ORB_var orb)  : name_("RTCosScheduling_Client_Interceptor")
+RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Interceptor (
+  const CORBA::ORB_var orb)  : name_ ("RTCosScheduling_Client_Interceptor")
 {
   try
     {
       /// resolve a reference to RT Current
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RTCurrent");
-      if (CORBA::is_nil(obj.in()))
+      if (CORBA::is_nil (obj.in ()))
         {
-          ACE_OS::exit(1);
+          ACE_OS::exit (1);
         }
       else
         {
@@ -364,16 +361,16 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
         }
 
       obj =
-        orb->resolve_initial_references("CodecFactory");
+        orb->resolve_initial_references ("CodecFactory");
 
       // set up the codec factory to create the codec necessary to
       // encode the octet stream for the service context
       IOP::CodecFactory_var codec_factory;
-      if (CORBA::is_nil(obj.in()))
+      if (CORBA::is_nil (obj.in ()))
         {
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      "Could not initialize client interceptor, aborting!\n"));
-          ACE_OS::exit(1);
+          ACE_OS::exit (1);
         }
       else
         {
@@ -387,7 +384,7 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
       encoding.minor_version = 2;
 
       // Create the codec
-      this->codec_ = codec_factory->create_codec(encoding);
+      this->codec_ = codec_factory->create_codec (encoding);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -398,7 +395,7 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
 char *
 RTCosScheduling_ClientScheduler_Interceptor::name ()
 {
-return CORBA::string_dup(this->name_);
+return CORBA::string_dup (this->name_);
 }
 
 void
@@ -416,7 +413,7 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
       // Get the Corba priority that the activity is currently running at
       CORBA::Any the_priority_as_any;
       the_priority_as_any <<=
-        this->current_->the_priority();
+        this->current_->the_priority ();
 
       // Set up a service context to hold the priority
       IOP::ServiceContext sc;
@@ -428,7 +425,7 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
         reinterpret_cast<CORBA::OctetSeq &> (*this->codec_->encode (the_priority_as_any));
 
       // add the service context
-      ri->add_request_service_context(sc, 0);
+      ri->add_request_service_context (sc, 0);
 
     }
   catch (const CORBA::Exception& ex)

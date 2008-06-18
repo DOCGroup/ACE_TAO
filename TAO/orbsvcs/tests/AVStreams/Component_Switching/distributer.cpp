@@ -110,7 +110,7 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
       //if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "Handle Conection Requested flowname %s \n",
-                    entry.flowname ()));
+                    ACE_TEXT_CHAR_TO_TCHAR (entry.flowname ())));
 
       ACE_CString flowname (entry.flowname ());
 
@@ -419,9 +419,7 @@ main (int argc,
     {
       /// Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");

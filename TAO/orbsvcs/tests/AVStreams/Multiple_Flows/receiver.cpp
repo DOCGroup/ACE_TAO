@@ -61,12 +61,12 @@ Receiver_Callback::flowname (const char* flow_name)
   if (this->output_file_ == 0)
     ACE_ERROR ((LM_DEBUG,
                 "Cannot open output file %s\n",
-                this->flowname_.c_str ()));
+                ACE_TEXT_CHAR_TO_TCHAR (this->flowname_.c_str ())));
 
   else
     ACE_DEBUG ((LM_DEBUG,
                 "%s File Opened Successfully\n",
-                this->flowname_.c_str ()));
+                ACE_TEXT_CHAR_TO_TCHAR (this->flowname_.c_str ())));
 
 
 }
@@ -83,7 +83,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::receive_frame for frame %d for flow %s\n",
               this->frame_count_++,
-              this->flowname_.c_str ()));
+              ACE_TEXT_CHAR_TO_TCHAR (this->flowname_.c_str ())));
 
   while (frame != 0)
     {
@@ -232,9 +232,7 @@ main (int argc,
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
