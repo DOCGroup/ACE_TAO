@@ -62,7 +62,7 @@ Supplier::read_ior (char *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for reading\n",
-                        filename),
+                        ACE_TEXT_CHAR_TO_TCHAR (filename)),
                         -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
@@ -107,8 +107,7 @@ Supplier::parse_args (void)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read stock information from %s : %p\n",
-                             get_opts.opt_arg (),
-                             "get_args"),
+                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())),
                             -1);
         break;
 
@@ -121,8 +120,7 @@ Supplier::parse_args (void)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg (),
-                             "get_args"),
+                             ACE_TEXT_CHAR_TO_TCHAR (get_opts.opt_arg ())),
                             -1);
         break;
 
@@ -142,7 +140,7 @@ Supplier::parse_args (void)
                            " [-x]"
                            " [-s]"
                            "\n",
-                           this->argv_ [0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (this->argv_ [0])),
                           -1);
       }
 
@@ -257,13 +255,10 @@ Supplier::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-
   try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
-                                    0);
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -282,7 +277,7 @@ Supplier::init (int argc, char **argv)
       if (this->ior_ == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%s: no ior specified\n",
-                           this->argv_[0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (this->argv_[0])),
                           -1);
       CORBA::Object_var notifier_object =
         this->orb_->string_to_object (this->ior_);
@@ -290,7 +285,7 @@ Supplier::init (int argc, char **argv)
       if (CORBA::is_nil (notifier_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid ior <%s>\n",
-                           this->ior_),
+                           ACE_TEXT_CHAR_TO_TCHAR (this->ior_)),
                           -1);
       // The downcasting from CORBA::Object_var to Notifier_var is
       // done using the <_narrow> method.
@@ -324,13 +319,14 @@ Supplier::read_file (char *filename)
   f_ptr_ = ACE_OS::fopen (filename, "r");
 
   ACE_DEBUG ((LM_DEBUG,
-              "filename = %s\n",filename));
+              "filename = %s\n",
+              ACE_TEXT_CHAR_TO_TCHAR (filename)));
 
   // the stock values are to be read from a file.
   if (f_ptr_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for writing: %p\n",
-                       filename),
+                       ACE_TEXT_CHAR_TO_TCHAR (filename)),
                       -1);
   return 0;
 }

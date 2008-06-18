@@ -23,7 +23,7 @@
 ACE_RCSID(Buffered_Oneways, client, "$Id$")
 
 // Name of file contains ior.
-static const char *IOR = "file://ior";
+static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 
 // Default iterations.
 static CORBA::ULong iterations = 20;
@@ -48,7 +48,7 @@ static long interval = 1000;
 static int shutdown_server = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "k:f:c:b:i:z:t:x");
   int c;
@@ -114,16 +114,14 @@ parse_args (int argc, char **argv)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -132,7 +130,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Get an object reference from the argument string.
       CORBA::Object_var base =
-        orb->string_to_object (IOR);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       // Try to narrow the object reference to a <test> reference.
       test_var test_object = test::_narrow (base.in ());
