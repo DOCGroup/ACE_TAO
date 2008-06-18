@@ -87,12 +87,6 @@ TAO_Service_Context::set_context (const IOP::ServiceContext &context,
 }
 
 void
-TAO_Service_Context::set_context (IOP::ServiceContext &context)
-{
-  this->add_context_i (context);
-}
-
-void
 TAO_Service_Context::set_context_i (const IOP::ServiceContext& context)
 {
   // @@ TODO Some contexts can show up multiple times, others

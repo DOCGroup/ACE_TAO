@@ -230,13 +230,13 @@ public:
 
   void tao_send_reply_exception (const CORBA::Exception& ex);
 
-  /// Set the boolean member to 1.
+  /// Set the boolean member to true.
   void is_dsi (void);
 
   /// Set the member.
   void dsi_nvlist_align (ptrdiff_t alignment);
 
-  // Get the operation details for the current request.
+  /// Get the operation details for the current request.
   TAO_Operation_Details const * operation_details (void) const;
 
   /// Set the argument_flag
@@ -347,7 +347,7 @@ private:
 
   /**
    * An argument flag to indicate whether there is any data that is
-   * going to get marshaled along as a reply. The default will be 1
+   * going to get marshaled along as a reply. The default will be true
    * which indicates that we have some data that needs to be sent back
    * to the client.
    */
