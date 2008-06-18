@@ -1,0 +1,48 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, messaging {
+  after += *idl
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+    Server_Thread_Pool.cpp
+    Echo_Caller.cpp
+    ORB_Task.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, messaging {
+  after += *idl
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+    Echo.cpp
+    ORB_Task.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Shutdown): taoclient, messaging {
+  exename = shutdown
+  after += *idl
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+    shutdown.cpp
+  }
+  IDL_Files {
+  }
+}

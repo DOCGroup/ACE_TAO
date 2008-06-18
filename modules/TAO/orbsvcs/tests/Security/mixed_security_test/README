@@ -1,0 +1,76 @@
+#
+# $Id$
+#
+
+-----------------------------
+cases:
+
+1. ior has secure profile, client is secured, object in permitted list
+2. ior has secure profile, client unsecured, object NOT in permitted list
+3. ior has unsecure profile, client is secured, object
+-----------------------------
+
+
+This test verifies that the ORB's secure invocation mechanism is
+functioning properly.  It expands on what the Secure_Invocation does
+by activating an object with two separate ORBs and POAs. One of the POAs 
+has a SecQoPNoProtection policy assigned and thus should permit also
+invocations over non-secure transport.
+
+The test verifies that a secure client can make invocations, using both
+the "secure" and the "non-secure" IOR from the server. Note that for 
+the server to support the non-secure invocations it must have -SSLNoProtection 
+in its sevice configuration file.
+
+The test verifies that a non-secure client can only make invocations through
+the "non-secure" IOR from the server. An invocation through the "secure" IOR
+results in CORBA::NO_PERMISSION exception.
+
+The expected test output is the following (actual "certificate issuer"
+contents may differ):
+
+
+==== Running Secure_Invocation_Two_Orb test
+==== Spawning a server with two ORBs ...
+
+==== Secure Client - Secure Server IOR: expected to pass
+==== Running: client -ORBSvcConf client.conf -k file://server-ssliop.ior -x
+FOO (10429|3086433200) ClientCredentials ID: X509: 06
+
+Secure_Invocation_Two_Orb test passed.
+
+==== Secure Client - Non Secure Server IOR: expected to pass
+==== Running: client -ORBSvcConf client.conf -k file://server-iiop.ior -x
+FOO (10429|3075943344) ClientCredentials ID: X509: 06
+(10429|3086436832) event loop finished
+
+Secure_Invocation_Two_Orb test passed.
+
+==== Spawning a server with two ORBs ...
+
+==== Non Secure Client - Non Secure Server IOR: expected to pass
+==== Running: client  -k file://server-iiop.ior -x
+FOO (10434|3075759024) Caught exception, trying to obtain ClientCredentials(10434|3075759024) EXCEPTION, Exception
+system exception, ID 'IDL:omg.org/CORBA/BAD_INV_ORDER:1.0'
+Unknown vendor minor code id (0), minor code = 0, completed = NO
+
+
+Secure_Invocation_Two_Orb test passed.
+
+==== Non Secure Client - Secure Server IOR: expected to fail
+==== Running: client  -k file://server-ssliop.ior -x
+SSLIOP (10434|3086248880) No SSL and a higher QoP (0x3) is required (than 0x0)
+(10438|3086280384) EXCEPTION, Caught exception:
+system exception, ID 'IDL:omg.org/CORBA/NO_PERMISSION:1.0'
+Unknown vendor minor code id (0), minor code = 0, completed = NO
+
+ERROR: client returned 1
+
+==== Secure Client - Secure Server IOR: expected to pass
+        (and cause destruction to the secure server ORB)
+==== Running: client -ORBSvcConf client.conf -k file://server-ssliop.ior -x
+FOO (10434|3086248880) ClientCredentials ID: X509: 06
+(10434|3086252512) event loop finished
+
+Secure_Invocation_Two_Orb test passed.
+
