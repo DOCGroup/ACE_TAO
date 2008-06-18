@@ -167,7 +167,7 @@ int TestClient::svc()
 
   ACE_TString currentIOR;
 
-  ACE_OS::srand(ACE_OS::time());
+  ACE_OS::srand(static_cast<u_int> (ACE_OS::time()));
 
   try
   {

@@ -1,3 +1,30 @@
+Wed Jun 18 14:15:04 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Load_Balancing/Load_Balancer_i.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+        * examples/Logging/Logging_Test_i.cpp:
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp:
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_i.cpp:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/Starter.cpp:
+        * examples/Simple/time-date/Time_Date_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+
+          Added static_cast's to avoid warnings from vc8.
+
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+
+          Use the correct type to avoid warnings from vc8.
+
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/media_timer.cpp:
+
+          Added truncate_cast's to avoid warnings from vc8.
+
 Wed Jun 18 13:50:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * examples/Buffered_AMI/client.cpp:

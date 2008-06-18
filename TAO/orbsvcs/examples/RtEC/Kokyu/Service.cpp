@@ -32,7 +32,7 @@ namespace
 inline RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
 {
   //100s of nanoseconds
-  return (tv.sec () * 1000000 + tv.usec ())*10;
+  return static_cast<RtecScheduler::Period_t> (tv.sec () * 1000000 + tv.usec ())*10;
 }
 
 int parse_args (int argc, char *argv[]);

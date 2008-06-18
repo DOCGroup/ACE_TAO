@@ -306,7 +306,7 @@ Options::save_registry_options ()
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  tmp = this->startup_timeout_.sec();
+  tmp = static_cast<DWORD> (this->startup_timeout_.sec());
   err = ACE_TEXT_RegSetValueEx (key, "Timeout", 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);

@@ -311,7 +311,7 @@ Logger_Client::init_record (Logger::Log_Record &newrec,
   ACE_Time_Value time (ACE_OS::gettimeofday ());
   //FUZZ: enable check_for_lack_ACE_OS
 
-  newrec.time = time.sec ();
+  newrec.time = static_cast<CORBA::Long> (time.sec ());
 
   // Get and store the PID of the calling process.
   pid_t pid = ACE_OS::getpid ();

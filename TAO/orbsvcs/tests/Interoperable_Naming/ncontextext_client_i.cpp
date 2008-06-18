@@ -80,7 +80,7 @@ NContextExt_Client_i::get_name ()
 {
 
   // USe time (NULL) to produce the seed:
-  ACE_OS::srand (ACE_OS::time (0));
+  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0)));
 
   const int len = 10;
   char *name_component = CORBA::string_alloc (len);

@@ -48,7 +48,7 @@ EC_Master::run (int argc, char* argv[])
       // test.
       ACE_High_Res_Timer::calibrate ();
 
-      this->seed_ = ACE_OS::time (0);
+      this->seed_ = static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0));
 
       this->initialize_orb_and_poa (argc, argv);
 
