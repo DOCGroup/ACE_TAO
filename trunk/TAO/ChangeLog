@@ -1,3 +1,8 @@
+Wed Jun 18 13:22:00 UTC 2008  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/Hello/run_test.pl:
+          Use ProcessStopWaitInterval
+
 Wed Jun 18 13:22:32 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Oneway_Timeouts/run_test.pl:
