@@ -1,3 +1,32 @@
+Wed Jun 18 14:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable_Flows_Protocol/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable_Flows_Protocol/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+
+          Correct Fuzz errors concerning Wide character build compatabily
+          with ORB_init().
+
 Wed Jun 18 14:39:38 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2494_Regression/client.cpp:

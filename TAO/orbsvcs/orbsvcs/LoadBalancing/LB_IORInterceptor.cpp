@@ -54,8 +54,9 @@ TAO_LB_IORInterceptor::components_established (
     PortableInterceptor::IORInfo_ptr info)
 {
   int argc = 0;
+  ACE_TCHAR **argv= 0;
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        0,
+                                        argv,
                                         this->orb_id_.in ());
 
   // Save a copy of the current ObjectReferenceFactory.
