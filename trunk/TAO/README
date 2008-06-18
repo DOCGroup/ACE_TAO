@@ -10,15 +10,16 @@ We welcome suggestions for improvement, bug fixes, portability
 enhancements, etc. and will strive to integrate correct bug fixes
 quickly!  The current release has been tested extensively, but if you
 find any bugs, please report them to the TAO mailing list
-tao-users@cs.wustl.edu using the $TAO_ROOT/PROBLEM-REPORT-FORM. Please
-see http://www.cs.wustl.edu/~schmidt/TAO-mail.html for details on how
+tao-users@list.isis.vanderbilt.edu using the $TAO_ROOT/PROBLEM-REPORT-FORM.
+Please see http://www.cs.wustl.edu/~schmidt/TAO-mail.html for details on how
 to subscribe to the mailing list.
 
 Please use the same form to submit questions, comments, etc.
 To ensure that you see responses, please do one of the following:
 
     1) Subscribe to the tao-users mail list, by sending email with
-       contents "subscribe tao-users" to majordomo@cs.wustl.edu.
+       contents "subscribe tao-users" to
+       tao-users-request@list.isis.vanderbilt.edu.
 
     2) Or, monitor the comp.soft-sys.ace newsgroup for responses.
 
