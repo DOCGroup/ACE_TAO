@@ -19,7 +19,7 @@ communication software.  ACE provides a rich set of reusable C++
 wrappers and frameworks that perform common communication software
 tasks across a range of OS platforms, including Win32/Win64, most
 versions of UNIX (e.g., SunOS, HP-UX , AIX, Linux, NetBSD, and FreeBSD),
-real-time operating systems (e.g., VxWorks, Chorus, LynxOS, and QNV),
+real-time operating systems (e.g., VxWorks, Chorus, LynxOS, and QNX),
 OpenVMS, and MVS OpenEdition.  A single source tree is used for all
 these platforms and porting ACE to other platforms is relatively easy.
 
