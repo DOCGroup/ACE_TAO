@@ -1,3 +1,7 @@
+Wed Jun 18 17:27:51  2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/CDR_Stream.h: Some doxygen improvements.
+
 Wed Jun 18 15:36:11 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
