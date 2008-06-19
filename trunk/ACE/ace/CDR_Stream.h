@@ -59,15 +59,6 @@
 #include "Monitor_Size.h"
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
-// Stuff used by the ACE CDR classes.
-#if defined ACE_LITTLE_ENDIAN
-#  define ACE_CDR_BYTE_ORDER 1
-// little endian encapsulation byte order has value = 1
-#else  /* ! ACE_LITTLE_ENDIAN */
-#  define ACE_CDR_BYTE_ORDER 0
-// big endian encapsulation byte order has value = 0
-#endif /* ! ACE_LITTLE_ENDIAN */
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -79,14 +70,15 @@ class ACE_InputCDR;
 /**
  * @class ACE_OutputCDR
  *
- * @brief A CDR stream for writing, i.e. for marshalling.
+ * @brief A CDR stream for marshalling data, most often for transmission to
+ * another system which may or may not have the same byte order.
  *
  * This class is based on the the CORBA spec for Java (98-02-29),
  * java class omg.org.CORBA.portable.OutputStream.  It diverts in
  * a few ways:
- * \li Operations taking arrays don't have offsets, because in C++
+ * @li Operations taking arrays don't have offsets, because in C++
  *     it is easier to describe an array starting from x+offset.
- * \li Operations return an error status, because exceptions are
+ * @li Operations return an error status, because exceptions are
  *     not widely available in C++ (yet).
  */
 class ACE_Export ACE_OutputCDR
@@ -112,11 +104,11 @@ public:
    *                    object. Unless otherwise specified, the byte order
    *                    will be the order native to the hardware this is
    *                    executed on. To force the marshalled data to have
-   *                    network byte order (big endian) specify the value 0;
-   *                    to force little endian specify the value 1.
+   *                    a specific order, specify one of the values defined
+   *                    in ACE_CDR::Byte_Order.
    */
   ACE_OutputCDR (size_t size = 0,
-                 int byte_order = ACE_CDR_BYTE_ORDER,
+                 int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
@@ -137,7 +129,7 @@ public:
    */
   ACE_OutputCDR (char *data,
                  size_t size,
-                 int byte_order = ACE_CDR_BYTE_ORDER,
+                 int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
@@ -157,7 +149,7 @@ public:
    * pointer and use ACE_CDR::MAX_ALIGNMENT for the correct alignment.
    */
   ACE_OutputCDR (ACE_Data_Block *data_block,
-                 int byte_order = ACE_CDR_BYTE_ORDER,
+                 int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                  ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                  ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
@@ -166,7 +158,7 @@ public:
   /// Build a CDR stream with an initial Message_Block chain, it will
   /// *not* remove @a data, since it did not allocate it.
   ACE_OutputCDR (ACE_Message_Block *data,
-                 int byte_order = ACE_CDR_BYTE_ORDER,
+                 int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                  size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                  ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                  ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
@@ -460,12 +452,14 @@ public:
               size_t align,
               char *&buf);
 
-  /// If non-zero then this stream is writing in non-native byte order,
-  /// this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
+  /// Returns true if this stream is writing in non-native byte order
+  /// and false otherwise. For example, it would be true if either
+  /// ACE_ENABLE_SWAP_ON_WRITE is defined or a specific byte order was
+  /// specified for this stream.
   bool do_byte_swap (void) const;
 
-  /// If <do_byte_swap> returns 0, this returns ACE_CDR_BYTE_ORDER else
-  /// it returns !ACE_CDR_BYTE_ORDER.
+  /// Returns the byte order this stream is marshaling data in. Will be one
+  /// of the values in ACE_CDR::Byte_Order.
   int byte_order (void) const;
 
   /// For use by a gateway, which creates the output stream for the
@@ -609,23 +603,23 @@ protected:
 /**
  * @class ACE_InputCDR
  *
- * @brief A CDR stream for reading, i.e. for demarshalling.
+ * @brief A CDR stream for demarshalling CDR-encoded data.
  *
  * This class is based on the the CORBA spec for Java (98-02-29),
  * java class omg.org.CORBA.portable.InputStream.  It diverts in a
  * few ways:
- * + Operations to retrieve basic types take parameters by
- * reference.
- * + Operations taking arrays don't have offsets, because in C++
- * it is easier to describe an array starting from x+offset.
- * + Operations return an error status, because exceptions are
- * not widely available in C++ (yet).
+ * @li Operations to retrieve basic types take parameters by
+ *     reference.
+ * @li Operations taking arrays don't have offsets, because in C++
+ *     it is easier to describe an array starting from x+offset.
+ * @li Operations return an error status, because exceptions are
+ *     not widely available in C++ (yet).
  */
 class ACE_Export ACE_InputCDR
 {
 public:
-  /// The translator need privileged access to efficiently demarshal
-  /// arrays and the such
+  // The translators need privileged access to efficiently demarshal
+  // arrays and such.
   friend class ACE_Char_Codeset_Translator;
   friend class ACE_WChar_Codeset_Translator;
 
@@ -638,27 +632,27 @@ public:
    */
   ACE_InputCDR (const char *buf,
                 size_t bufsiz,
-                int byte_order = ACE_CDR_BYTE_ORDER,
+                int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                 ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                 ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Create an empty input stream. The caller is responsible for
   /// putting the right data and providing the right alignment.
   ACE_InputCDR (size_t bufsiz,
-                int byte_order = ACE_CDR_BYTE_ORDER,
+                int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                 ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                 ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Create an input stream from an ACE_Message_Block
   /**
-   * The alignment of the @arg data block is carried into the new
+   * The alignment of the @a data block is carried into the new
    * ACE_InputCDR object. This constructor either increments the
-   * @arg data reference count, or copies the data (if it's a compound
+   * @a data reference count, or copies the data (if it's a compound
    * message block) so the caller can release the block immediately
    * upon return.
    */
   ACE_InputCDR (const ACE_Message_Block *data,
-                int byte_order = ACE_CDR_BYTE_ORDER,
+                int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                 ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                 ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION,
                 ACE_Lock* lock = 0);
@@ -668,7 +662,7 @@ public:
   /// or not
   ACE_InputCDR (ACE_Data_Block *data,
                 ACE_Message_Block::Message_Flags flag = 0,
-                int byte_order = ACE_CDR_BYTE_ORDER,
+                int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                 ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                 ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
@@ -680,7 +674,7 @@ public:
                 ACE_Message_Block::Message_Flags flag,
                 size_t read_pointer_position,
                 size_t write_pointer_position,
-                int byte_order = ACE_CDR_BYTE_ORDER,
+                int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                 ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                 ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
