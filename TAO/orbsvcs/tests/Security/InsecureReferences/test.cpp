@@ -77,7 +77,7 @@ gen_objref (int argc, char *argv[])
   try
     {
       orb =
-        CORBA::ORB_init (argc, largv, "");
+        CORBA::ORB_init (argc, largv);
 
       obj =
         orb->resolve_initial_references("RootPOA");
@@ -127,7 +127,7 @@ parse_objref (int argc, char *argv[])
   try
     {
       orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       obj = orb->string_to_object (iorstr);
     }

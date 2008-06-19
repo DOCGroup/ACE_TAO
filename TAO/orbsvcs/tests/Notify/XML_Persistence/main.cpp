@@ -51,7 +51,7 @@ class TestConsumer
   }
 };
 
-int main(int ac, char **av)
+int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 {
   int retval = 1;
 
@@ -62,7 +62,7 @@ int main(int ac, char **av)
     CORBA::ORB_var orb;
     PortableServer::POA_var poa;
 
-    orb = CORBA::ORB_init(ac, av, "");
+    orb = CORBA::ORB_init (ac, av);
     ACE_ASSERT(! CORBA::is_nil (orb.in ()));
 
     if (ac > 2 && ACE_OS::strcmp (av[1], "-pass") == 0)

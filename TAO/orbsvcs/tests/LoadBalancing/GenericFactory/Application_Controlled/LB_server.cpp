@@ -77,9 +77,7 @@ LB_server::start_orb_and_poa (void)
   try
     {
       // Initialise the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
-                                    "");
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA");
