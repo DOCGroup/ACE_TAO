@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  $(ACE_ROOT)/ace
+  $(ACE_ROOT)/apps/gperf/src
+  tao
+  TAO_IDL
+  utils
+  tests/ZIOP
+}
+
