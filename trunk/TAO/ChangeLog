@@ -1,3 +1,9 @@
+Thu Jun 19 17:38:09 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Reliable_Oneways/client.cpp:
+
+          Remove redundant "" 3rd parameter (orbID) from ORB_init() calls.
+
 Thu Jun 19 16:49:23 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * performance-tests/CSD_Strategy/TestApps/ClientApp.cpp:
