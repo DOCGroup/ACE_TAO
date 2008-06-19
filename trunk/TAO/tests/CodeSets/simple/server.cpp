@@ -85,8 +85,7 @@ int main(int argc, char *argv[])
     {
       // Init the orb
       CORBA::ORB_var orb= CORBA::ORB_init (argc,
-                                           argv,
-                                           "");
+                                           argv);
 
       // Initialize POA
       CORBA::Object_var poa_object=

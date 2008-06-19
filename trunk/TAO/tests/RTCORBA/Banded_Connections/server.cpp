@@ -323,8 +323,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Initialize ORB.
       orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         "");
+                         argv);
 
       // Parse arguments.
       int result =

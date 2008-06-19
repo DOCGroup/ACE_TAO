@@ -99,8 +99,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "");
+                                            argv);
 
       Test_i servant (orb.in ());
       // Obtain RootPOA.
