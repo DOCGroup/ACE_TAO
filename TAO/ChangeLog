@@ -1,3 +1,9 @@
+Thu Jun 19 11:25:58 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/POA/EndpointPolicy/server.cpp:
+        
+          Reword the report of a successful rejection of defaulted hotnames.
+
 Thu Jun 19 11:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp:
@@ -13,12 +19,12 @@ Thu Jun 19 11:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
           with ORB_init().
 
 Wed Jun 18 17:05:50 UTC 2008  William R. Otte  <wotte@CHELESTRA>
-        
+
                 * TAO_IDL/fe/lex.yy.cpp:
-        
+
                   Replaced a bunch of stuff carelessly discarded when this file
                   was last regenerated.
-        
+
 Wed Jun 18 15:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Bug_1334_Regression/client.cpp:
