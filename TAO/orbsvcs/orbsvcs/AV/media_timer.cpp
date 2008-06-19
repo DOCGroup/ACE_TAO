@@ -41,7 +41,6 @@ static const char rcsid[] =
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/Truncate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -70,12 +69,12 @@ MediaTimer::~MediaTimer()
  */
 ACE_UINT32 MediaTimer::media_ts()
 {
-  //timeval tv;
   ACE_Time_Value tv = ACE_OS::gettimeofday();
   ACE_UINT32 u = tv.usec ();
   u = (u << 3) + u; /* x 9 */
   /* sec * 90Khz + (usec * 90Khz) / 1e6 */
-  u = ACE_Utils::truncate_cast<ACE_UINT32> (tv.sec () * 90000 + (u / 100));
+  // Borland can't handle a truncate_cast here.
+  u = static_cast<ACE_UINT32> (tv.sec () * 90000 + (u / 100));
   return (u + offset_);
 }
 
