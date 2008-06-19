@@ -92,8 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "");
+                                            argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");

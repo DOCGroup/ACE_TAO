@@ -22,7 +22,7 @@ int
 ClientApp::run_i(int argc, char* argv[])
 {
   // Initialize the ORB before parsing our own args.
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
   // Parse the command-line args for this application.
   // * Returns -1 if problems are encountered.

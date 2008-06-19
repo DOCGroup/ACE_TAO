@@ -60,7 +60,7 @@ ClientApp::run_i(int argc, char* argv[])
 int
 ClientApp::init(int argc, char* argv[])
 {
-  this->orb_ = CORBA::ORB_init(argc, argv, "");
+  this->orb_ = CORBA::ORB_init(argc, argv);
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.

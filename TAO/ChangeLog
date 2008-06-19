@@ -1,3 +1,32 @@
+Thu Jun 19 16:43:52 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Bug_2319_Regression/server.cpp:
+        * tests/Bug_2429_Regression/server.cpp:
+        * tests/Bug_2560_Regression/client.cpp:
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_1/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.cpp:
+        * tests/DII_AMI_Forward/server.cpp:
+        * tests/Explicit_Event_Loop/client.cpp:
+        * tests/IDL_Test/main.cpp:
+        * tests/LongDouble/client.cpp:
+        * tests/LongDouble/server.cpp:
+        * tests/ORB_init/Portspan/server.cpp:
+        * tests/Objref_Sequence_Test/client.cpp:
+        * tests/Objref_Sequence_Test/server.cpp:
+        * tests/Permanent_Forward/StubTest.cpp:
+
+          Remove redundant "" 3rd parameter (orbID) from ORB_init() calls.
+
 Thu Jun 19 16:28:43 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
