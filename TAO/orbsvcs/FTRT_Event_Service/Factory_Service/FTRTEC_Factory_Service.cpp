@@ -38,7 +38,7 @@ int parse_args(int argc, char* argv[])
     }
   }
 
-  if (result == -1 || (id.length() == 0 && output.length() == 0))
+  if (result == -1 || (id.length () == 0 && output.length () == 0))
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT("Usage: %s \n")
@@ -52,29 +52,29 @@ int parse_args(int argc, char* argv[])
   return 0;
 }
 
-int main(int argc, ACE_TCHAR* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try{
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-    if (parse_args(argc, argv) == -1)
+    if (parse_args (argc, argv) == -1)
       return -1;
 
     CORBA::Object_var obj =
-      orb->resolve_initial_references("RootPOA");
+      orb->resolve_initial_references ("RootPOA");
 
     PortableServer::POA_var poa =
-      PortableServer::POA::_narrow(obj.in());
+      PortableServer::POA::_narrow (obj.in ());
 
-    PortableServer::POAManager_var mgr = poa->the_POAManager();
+    PortableServer::POAManager_var mgr = poa->the_POAManager ();
 
-    mgr->activate();
+    mgr->activate ();
 
-    EventChannelFactory_i servant("factory.cfg", orb.in());
+    EventChannelFactory_i servant ("factory.cfg", orb.in ());
 
     FT::GenericFactory_var event_channel_factory =
-      servant._this();
+      servant._this ();
 
     // register to the Event Service
 

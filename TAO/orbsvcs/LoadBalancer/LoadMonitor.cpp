@@ -242,9 +242,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // The usual server side boilerplate code.
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Check the non-ORB arguments.
       ::parse_args (argc,
