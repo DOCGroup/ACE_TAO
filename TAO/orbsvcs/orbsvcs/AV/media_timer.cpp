@@ -67,13 +67,12 @@ MediaTimer::~MediaTimer()
  * unix_ts() call the transmitter will make to get the correspondence
  * between the media timestamp & unix time.
  */
-ACE_UINT32 MediaTimer::media_ts()
+time_t MediaTimer::media_ts()
 {
   ACE_Time_Value tv = ACE_OS::gettimeofday();
-  ACE_UINT32 u = tv.usec ();
+  time_t u = tv.usec ();
   u = (u << 3) + u; /* x 9 */
   /* sec * 90Khz + (usec * 90Khz) / 1e6 */
-  // Borland can't handle a truncate_cast here.
   u = tv.sec () * 90000 + (u / 100);
   return (u + offset_);
 }
@@ -87,7 +86,7 @@ ACE_UINT32 MediaTimer::media_ts()
  * correspond to the current clock.  (This information if vital
  * for cross-media synchronization.)
  */
-ACE_UINT32 MediaTimer::ref_ts()
+time_t MediaTimer::ref_ts()
 {
         return (media_ts());
 }

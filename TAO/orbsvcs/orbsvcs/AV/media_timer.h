@@ -54,8 +54,8 @@ class MediaTimer
   MediaTimer();
   virtual ~MediaTimer();
   static inline MediaTimer* instance() { return (instance_); }
-  virtual ACE_UINT32 media_ts();
-  virtual ACE_UINT32 ref_ts();
+  virtual time_t media_ts();
+  virtual time_t ref_ts();
   inline ACE_UINT32 offset() const { return (offset_); }
  private:
   static MediaTimer* instance_;
