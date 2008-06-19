@@ -56,9 +56,9 @@ test_i::_default_POA (void)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-static const char *persistent_ior = "persistent_ior";
-static const char *transient_ior = "transient_ior";
-static const char *tp_persistent_ior = "tp_persistent_ior";
+static const ACE_TCHAR *persistent_ior = ACE_TEXT ("persistent_ior");
+static const ACE_TCHAR *transient_ior = ACE_TEXT ("transient_ior");
+static const ACE_TCHAR *tp_persistent_ior = ACE_TEXT ("tp_persistent_ior");
 static int debug = 0;
 
 static CORBA::ULong stacksize = 0;
@@ -70,7 +70,7 @@ static CORBA::ULong max_buffered_requests = 0;
 static CORBA::ULong max_request_buffer_size = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "a:p:t:d:");
   int c;
@@ -126,8 +126,8 @@ write_iors_to_file (CORBA::Object_ptr object,
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 "%s: %s\n",
-                filename,
-                ior.in ()));
+                ACE_TEXT_CHAR_TO_TCHAR (filename),
+                ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
 
   u_int result = 0;
   result =
@@ -180,7 +180,7 @@ create_poa_and_servant_with_persistent_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      persistent_ior);
+                      ACE_TEXT_ALWAYS_CHAR (persistent_ior));
 }
 
 void
@@ -232,7 +232,7 @@ create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      transient_ior);
+                      ACE_TEXT_ALWAYS_CHAR (transient_ior));
 }
 
 void
@@ -291,18 +291,16 @@ create_poa_with_tp_and_persistent_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      tp_persistent_ior);
+                      ACE_TEXT_ALWAYS_CHAR (tp_persistent_ior));
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       int result =
         parse_args (argc, argv);
