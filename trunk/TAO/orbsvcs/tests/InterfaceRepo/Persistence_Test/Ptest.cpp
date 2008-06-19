@@ -23,12 +23,9 @@ Ptest::init (int argc,
 {
   try
     {
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    0);
+      this->orb_ = CORBA::ORB_init (argc, argv);
 
-      int retval = this->parse_args (argc,
-                                     argv);
+      int retval = this->parse_args (argc, argv);
 
       if (retval != 0)
         return retval;
@@ -111,7 +108,7 @@ Ptest::parse_args (int argc,
                            " [-d]"
                            " [-q]"
                            "\n",
-                           argv [0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
                           -1);
       }
 
@@ -219,7 +216,7 @@ Ptest::query (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("StructDef::members[%d]::name: %s\n"),
                       i,
-                      out_members[i].name.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (out_members[i].name.in ())));
         }
 
       if (i == length - 1)

@@ -1,3 +1,17 @@
+Thu Jun 19 11:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * orbsvcs/tests/Time/Client_i.cpp:
+        * performance-tests/Anyop/anyop.cpp:
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+        * performance-tests/Protocols/distributor.cpp:
+        * performance-tests/Protocols/receiver.cpp:
+        * performance-tests/Protocols/sender.cpp:
+
+          Correct Fuzz errors concerning Wide character build compatabily
+          with ORB_init().
+
 Wed Jun 18 17:05:50 UTC 2008  William R. Otte  <wotte@CHELESTRA>
         
                 * TAO_IDL/fe/lex.yy.cpp:

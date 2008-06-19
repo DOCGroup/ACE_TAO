@@ -78,7 +78,7 @@ static int measure_reverse_map_effectiveness = 0;
 static u_long iterations = 1000;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "i:r");
   int c;
@@ -228,9 +228,8 @@ public:
     this->timer_.elapsed_time (elapsed_time);
 
     // compute average time.
-    ACE_DEBUG ((LM_DEBUG,
-                "\n%s stats...\n",
-                this->test_name_));
+    ACE_DEBUG ((LM_DEBUG, "\n%s stats...\n",
+                ACE_TEXT_CHAR_TO_TCHAR (this->test_name_)));
     print_stats (elapsed_time);
   }
 
@@ -329,15 +328,13 @@ child_poa_testing (PortableServer::POA_ptr root_poa)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       int result = parse_args (argc, argv);
       if (result != 0)

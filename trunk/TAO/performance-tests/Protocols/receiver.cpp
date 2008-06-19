@@ -11,13 +11,13 @@
 #include "tao/debug.h"
 #include "testS.h"
 
-static const char *ior_file = "receiver.ior";
+static const ACE_TCHAR *ior_file = ACE_TEXT ("receiver.ior");
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
 static ACE_UINT32 gsf = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "d:f:m:");
   int c;
@@ -134,7 +134,7 @@ test_i::start_test (CORBA::Long session_id,
 
   ACE_DEBUG ((LM_DEBUG,
               "Protocol = %5s Invocation Rate = %3d Message Size = %5d Expected Latency = %4d ",
-              protocol,
+              ACE_TEXT_CHAR_TO_TCHAR (protocol),
               invocation_rate,
               message_size,
               1000 / invocation_rate));
@@ -325,16 +325,14 @@ test_i::shutdown (void)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   gsf = ACE_High_Res_Timer::global_scale_factor ();
 
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       int parse_args_result =
         parse_args (argc, argv);
