@@ -271,8 +271,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Initialize ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         "");
+                         argv);
 
       // Parse arguments.
       int result =

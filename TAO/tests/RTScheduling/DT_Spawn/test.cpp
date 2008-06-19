@@ -21,8 +21,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       orb = CORBA::ORB_init (argc,
-                             argv,
-                             "");
+                             argv);
 
       CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager");
 

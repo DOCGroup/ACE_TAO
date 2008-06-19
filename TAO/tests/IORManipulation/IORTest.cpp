@@ -37,8 +37,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       // Retrieve the ORB.
       CORBA::ORB_var orb_ = CORBA::ORB_init (argc,
-                                             argv,
-                                             "");
+                                             argv);
 
       // **********************************************************************
 
