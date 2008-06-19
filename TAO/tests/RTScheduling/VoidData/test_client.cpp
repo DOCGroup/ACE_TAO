@@ -10,8 +10,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       orb = CORBA::ORB_init (argc,
-                             argv,
-                             "");
+                             argv);
 
       test_impl foo_i;
       int something = 28;

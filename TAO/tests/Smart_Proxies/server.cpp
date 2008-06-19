@@ -96,8 +96,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "");
+                                            argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;

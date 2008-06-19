@@ -190,8 +190,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         "");
+                         argv);
 
       TAO::Utils::ORB_Destroyer orb_destroyer (orb.in());
 

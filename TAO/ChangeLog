@@ -1,3 +1,49 @@
+Thu Jun 19 16:28:43 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+        * tests/Bug_1535_Regression/bug_1535_regression.cpp:
+        * tests/Bug_2935_Regression/middle.cpp:
+        * tests/Bug_2935_Regression/sink.cpp:
+        * tests/Bug_3276_Regression/client.cpp:
+        * tests/CodeSets/simple/server.cpp:
+        * tests/DiffServ/client.cpp:
+        * tests/DiffServ/server.cpp:
+        * tests/HandleExhaustion/client.cpp:
+        * tests/HandleExhaustion/server.cpp:
+        * tests/IORManipulation/IORTest.cpp:
+        * tests/Leader_Followers/server.cpp:
+        * tests/OBV/TC_Alignment/client.cpp:
+        * tests/OBV/TC_Alignment/server.cpp:
+        * tests/Portable_Interceptors/Bug_2133/client.cpp:
+        * tests/Portable_Interceptors/Bug_2133/server.cpp:
+        * tests/RTCORBA/Banded_Connections/client.cpp:
+        * tests/RTCORBA/Banded_Connections/server.cpp:
+        * tests/RTCORBA/Collocation/Collocation.cpp:
+        * tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
+        * tests/RTCORBA/Dynamic_Thread_Pool/server.cpp:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+        * tests/RTScheduling/Current/test.cpp:
+        * tests/RTScheduling/DT_Spawn/test.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
+        * tests/RTScheduling/Thread_Cancel/test.cpp:
+        * tests/RTScheduling/VoidData/test_client.cpp:
+        * tests/Single_Read/server.cpp:
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+        * tests/Smart_Proxies/Benchmark/server.cpp:
+        * tests/Smart_Proxies/On_Demand/client.cpp:
+        * tests/Smart_Proxies/On_Demand/server.cpp:
+        * tests/Smart_Proxies/Policy/client.cpp:
+        * tests/Smart_Proxies/Policy/server.cpp:
+        * tests/Smart_Proxies/client.cpp:
+        * tests/Smart_Proxies/dtor/client.cpp:
+        * tests/Smart_Proxies/dtor/server.cpp:
+        * tests/Smart_Proxies/server.cpp:
+        * tests/Timed_Buffered_Oneways/server.cpp:
+
+          Remove redundant "" 3rd parameter (orbID) from ORB_init() calls.
+
 Thu Jun 19 15:34:28 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV/media_timer.h:
