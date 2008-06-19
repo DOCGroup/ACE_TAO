@@ -1,3 +1,13 @@
+Thu Jun 19 16:21:07  2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/CDR_Base.h:
+        * ace/CDR_Stream.h: Added a enum to ACE_CDR with the values for
+          byte ordering specifier. Moved the setting of ACE_CDR_BYTE_ORDER
+          from CDR_Stream.h to CDR_Base.h so it can be used in the enum.
+          These make it easier for users to figure out what to do when they
+          want to force a specific byte ordering.
+          Also did a little more doxygen cleanup.
+
 Thu Jun 19 15:11:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/fuzz.pl:
