@@ -17,9 +17,7 @@ DT_Test::DT_Test (void)
 int
 DT_Test::init (int argc, char *argv [])
 {
-  orb_ = CORBA::ORB_init (argc,
-        argv,
-        "");
+  orb_ = CORBA::ORB_init (argc, argv);
 
   dt_creator_->orb (orb_.in ());
 

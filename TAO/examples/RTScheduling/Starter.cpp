@@ -119,13 +119,11 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list)
 
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-              argv,
-              "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       Starter starter (orb.in ());
 
