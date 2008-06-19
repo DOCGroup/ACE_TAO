@@ -94,7 +94,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -110,7 +110,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" );
+        CORBA::ORB_init (argc, argv);
 
 
       CORBA::Object_var poa_object =

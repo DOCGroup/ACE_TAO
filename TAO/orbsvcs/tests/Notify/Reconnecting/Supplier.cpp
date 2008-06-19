@@ -318,9 +318,9 @@ void Supplier_Main::usage(FILE * log)const
 
 int Supplier_Main::init (int argc, char *argv[])
 {
-  this->orb_ = CORBA::ORB_init(argc, argv, "");
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
-  if (0 != this->parse_args(argc, argv))
+  if (0 != this->parse_args (argc, argv))
   {
     return -1;
   }

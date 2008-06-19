@@ -1,3 +1,32 @@
+Thu Jun 19 15:08:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
+        * orbsvcs/tests/Bug_2377_Regression/uipmc_test.cpp:
+        * orbsvcs/tests/Bug_2925_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2925_Regression/server.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/client.cpp:
+        * orbsvcs/tests/Bug_3215_Regression/server.cpp:
+        * orbsvcs/tests/Bug_3216_Regression/server.cpp:
+        * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp:
+        * orbsvcs/tests/FtRtEvent/consumer.cpp:
+        * orbsvcs/tests/FtRtEvent/supplier.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/client.cpp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+        * orbsvcs/tests/Notify/Basic/LifeCycle.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+        * orbsvcs/tests/Notify/XML_Persistence/main.cpp:
+        * orbsvcs/tests/Security/InsecureReferences/test.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp:
+
+          Remove redundant "" 3rd parameter (orbID) from ORB_init() calls.
+
 Thu Jun 19 14:46:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:

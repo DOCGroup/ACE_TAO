@@ -54,12 +54,9 @@ Notify_Test_Client::parse_args (int /*argc*/, char** /*argv*/)
 
 
 int
-Notify_Test_Client::init_ORB (int argc,
-                              char *argv [])
+Notify_Test_Client::init_ORB (int argc, char *argv [])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                "");
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   if (this->parse_args (argc, argv) != 0)
     {

@@ -78,17 +78,17 @@ get_event_channel(int argc, ACE_TCHAR** argv)
       return channel._retn();
 }
 
-int main(int argc, ACE_TCHAR** argv)
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try{
-    orb = CORBA::ORB_init(argc, argv, "");
+    orb = CORBA::ORB_init (argc, argv);
 
     RtecEventChannelAdmin::EventChannel_var channel
-      = get_event_channel(argc, argv);
+      = get_event_channel (argc, argv);
 
 
     if (CORBA::is_nil(channel.in()))
-      ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
 
     PortableServer::POA_var poa =
       resolve_init<PortableServer::POA>(orb.in(), "RootPOA");

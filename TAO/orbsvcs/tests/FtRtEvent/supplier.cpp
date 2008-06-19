@@ -69,43 +69,43 @@ get_event_channel(int argc, ACE_TCHAR** argv)
       CosNaming::NamingContext_var naming_context =
         resolve_init<CosNaming::NamingContext>(orb.in(), "NameService");
 
-      channel  = resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
+      channel  = resolve<FtRtecEventChannelAdmin::EventChannel> (naming_context.in (),
         name);
     }
 
     if (use_gateway)
     {
       // use local gateway to communicate with FTRTEC
-      ACE_AUTO_PTR_RESET (gateway, new TAO_FTRTEC::FTEC_Gateway(orb.in(), channel.in()), TAO_FTRTEC::FTEC_Gateway);
-      return gateway->_this();
+      ACE_AUTO_PTR_RESET (gateway, new TAO_FTRTEC::FTEC_Gateway (orb.in (), channel.in ()), TAO_FTRTEC::FTEC_Gateway);
+      return gateway->_this ();
     }
     else
-      return channel._retn();
+      return channel._retn ();
 }
 
 
-int main(int argc, ACE_TCHAR** argv)
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try{
-    orb = CORBA::ORB_init(argc, argv, "");
+    orb = CORBA::ORB_init (argc, argv);
 
 
     RtecEventChannelAdmin::EventChannel_var channel
-      = get_event_channel(argc, argv);
+      = get_event_channel (argc, argv);
 
 
-    if (CORBA::is_nil(channel.in()))
+    if (CORBA::is_nil (channel.in ()))
        return -1;
 
     PortableServer::POA_var poa =
-      resolve_init<PortableServer::POA>(orb.in(), "RootPOA");
+      resolve_init<PortableServer::POA> (orb.in (), "RootPOA");
 
-    PortableServer::POAManager_var mgr = poa->the_POAManager();
+    PortableServer::POAManager_var mgr = poa->the_POAManager ();
 
-    mgr->activate();
+    mgr->activate ();
 
-    PushSupplier_impl push_supplier(orb.in());
-    if (push_supplier.init(channel.in()) == -1)
+    PushSupplier_impl push_supplier(orb.in ());
+    if (push_supplier.init(channel.in ()) == -1)
       return -1;
 
     RtecEventComm::PushSupplier_var

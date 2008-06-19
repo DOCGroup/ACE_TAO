@@ -10,12 +10,12 @@ ACE_RCSID(Hello, client, "$Id$")
 const char *ior = "file://as.ior";
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       for (int i = 1; i < argc; i++)
         {

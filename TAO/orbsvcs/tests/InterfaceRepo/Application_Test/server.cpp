@@ -39,13 +39,11 @@ write_ior_to_file (const char *ior)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
         try
           {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
