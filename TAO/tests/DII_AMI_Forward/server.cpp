@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableInterceptor::register_orb_initializer (initializer.in ());
 
       // Now initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
 

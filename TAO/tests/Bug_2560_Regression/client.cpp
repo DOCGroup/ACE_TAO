@@ -10,7 +10,7 @@ int main (int argc, char* argv[])
 {
   try {
     // First initialize the ORB, that will remove some arguments...
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" );
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     // There must be at least two arguments, the first is the factory
     // name, the rest are the names of the stock symbols we want to
