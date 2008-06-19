@@ -158,7 +158,7 @@ set_sync_scope_policy (Messaging::SyncScope sync_scope)
 {
   int argc = 0;
   ACE_TCHAR **argv = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("PolicyCurrent");
