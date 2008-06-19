@@ -6,7 +6,7 @@
 
 ACE_RCSID(Simple, client, "$Id$")
 
-static const char *ior = "file://test.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 // Server IOR.
 
 static int shutdown_server = 0;
@@ -65,8 +65,7 @@ Client_Task::svc (void)
 }
 
 static int
-parse_args (int argc,
-            char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "qxn:k:t:");
   int c;
@@ -118,17 +117,13 @@ parse_args (int argc,
 }
 
 int
-main (int argc,
-      char **argv)
+ACT_TMAIN (int argc, ACE_TCHAR **argv)
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc,
-                               argv);
+      int result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
@@ -142,7 +137,7 @@ main (int argc,
 
       poa_manager->activate ();
 
-      object = orb->string_to_object (ior);
+      object = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       server_var server = server::_narrow (object.in ());
 

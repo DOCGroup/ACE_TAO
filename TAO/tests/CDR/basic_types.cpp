@@ -212,13 +212,11 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       ACE_Get_Opt get_opt (argc, argv, "dn:l:");
       int opt;

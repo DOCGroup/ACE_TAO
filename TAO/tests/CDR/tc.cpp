@@ -34,13 +34,11 @@ ACE_RCSID (CDR,
 // verify that CDR offers the services needed for Typecode...
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       static const CORBA::TypeCode_ptr tcs[]=
       {
@@ -136,8 +134,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 " KIND = %d%$"
                                 " LENGTH = %d"
                                 "%}%}\n",
-                                (id?id:"empty ID"),
-                                (name?name:"empty name"),
+                                ACE_TEXT_CHAR_TO_TCHAR ((id?id:"empty ID")),
+                                ACE_TEXT_CHAR_TO_TCHAR ((name?name:"empty name")),
                                 k,
                                 length));
                   }

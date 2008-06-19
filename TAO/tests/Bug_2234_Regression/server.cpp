@@ -597,7 +597,7 @@ public:
         break;
 
       case 2:
-        ACE_DEBUG( (LM_INFO, "String %s", vU->valString()) );
+        ACE_DEBUG( (LM_INFO, "String %s", ACE_TEXT_CHAR_TO_TCHAR (vU->valString())) );
         break;
 
       default:
@@ -765,7 +765,7 @@ int main( int argc, char *argv[] )
       initialiser= initialiser_p;
     PortableInterceptor::register_orb_initializer( initialiser.in() );
 
-    orb= CORBA::ORB_init( argc, argv, 0 );
+    orb= CORBA::ORB_init (argc, argv);
     CORBA::Object_var
       Object = orb->resolve_initial_references( "RootPOA" );
     PortableServer::POA_var rootPOA=

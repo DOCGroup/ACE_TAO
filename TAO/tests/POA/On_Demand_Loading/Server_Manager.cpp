@@ -42,7 +42,7 @@ Server_i::parse_args (int argc,
                            "usage:  %s "
                            "[-f ior_output_file] "
                            "\n",
-                           argv [0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
                           -1);
       }
 
@@ -78,8 +78,8 @@ Server_i::write_iors_to_file (const char *first_ior,
       || output_file_2 == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open output files for writing IORs: %s, %s\n",
-                       ior_output_file_1,
-                       ior_output_file_2),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_1),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_2)),
                       -1);
 
   int result = ACE_OS::fprintf (output_file_1,
@@ -89,8 +89,8 @@ Server_i::write_iors_to_file (const char *first_ior,
       || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
-                       first_ior,
-                       ior_output_file_1),
+                       ACE_TEXT_CHAR_TO_TCHAR (first_ior),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_1)),
                       -1);
 
   result = ACE_OS::fprintf (output_file_2,
@@ -100,8 +100,8 @@ Server_i::write_iors_to_file (const char *first_ior,
       || static_cast<size_t> (result) != ACE_OS::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
-                       second_ior,
-                       ior_output_file_2),
+                       ACE_TEXT_CHAR_TO_TCHAR (second_ior),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior_output_file_2)),
                       -1);
   ACE_OS::fclose (output_file_1);
   ACE_OS::fclose (output_file_2);
@@ -117,9 +117,7 @@ Server_i::init (int argc, char **argv)
   try
     {
       // Initialize the ORB.
-      orb_ = CORBA::ORB_init (argc,
-                              argv,
-                              0);
+      orb_ = CORBA::ORB_init (argc, argv);
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -324,8 +322,8 @@ Server_i::run (void)
       // Print the ior's of first_test and second_test.
 
       ACE_DEBUG ((LM_DEBUG,"%s\n%s\n",
-                  first_test_ior.in (),
-                  second_test_ior.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (first_test_ior.in ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (second_test_ior.in ())));
 
       int write_result =
         this->write_iors_to_file (first_test_ior.in (),
