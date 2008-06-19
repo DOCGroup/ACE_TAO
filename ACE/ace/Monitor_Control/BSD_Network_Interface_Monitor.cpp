@@ -9,6 +9,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/sockio.h>
+#include <sys/ioctl.h>
+#include <net/if.h>
 #include <ifaddrs.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

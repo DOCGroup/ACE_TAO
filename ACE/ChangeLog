@@ -1,10 +1,17 @@
+Thu Jun 19 14:11:04 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Monitor_Control/BSD_Network_Interface_Monitor.cpp:
+
+          Explicitly #include <sys/ioctl.h> and <net/if.h> for non-inline
+          builds.
+
 Wed Jun 18 17:36:34 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * ace/Stack_Trace.cpp:
 
           Moved pragma disable warning directives from inside of function to
           outside to take effect.
-          
+
 Wed Jun 18 17:27:51  2008  Steve Huston  <shuston@riverace.com>
 
         * ace/CDR_Stream.h: Some doxygen improvements.
