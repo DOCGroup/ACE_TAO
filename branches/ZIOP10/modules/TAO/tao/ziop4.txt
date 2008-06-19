@@ -1,0 +1,3380 @@
+Index: modules/TAO/tao/GIOP_Message_Base.cpp
+===================================================================
+--- modules/TAO/tao/GIOP_Message_Base.cpp	(revision 79294)
++++ modules/TAO/tao/GIOP_Message_Base.cpp	(revision 80736)
+@@ -12,6 +12,7 @@
+ #include "tao/Request_Dispatcher.h"
+ #include "tao/Codeset_Manager.h"
+ #include "tao/SystemException.h"
++#include "tao/ZIOP_Adapter.h"
+ #include "ace/Min_Max.h"
+
+ /*
+@@ -61,12 +62,6 @@
+   return this->out_stream_;
+ }
+
+-void
+-TAO_GIOP_Message_Base::reset (void)
+-{
+-  // no-op
+-}
+-
+ int
+ TAO_GIOP_Message_Base::generate_request_header (
+     TAO_Operation_Details &op,
+@@ -74,16 +69,12 @@
+     TAO_OutputCDR &cdr)
+ {
+   // Get a parser for us
+-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
+   TAO_GIOP_Message_Version giop_version;
+
+   cdr.get_version (giop_version);
+
+-  // Get the state information that we need to use
+-  this->set_state (giop_version, generator_parser);
+-
+   // Write the GIOP header first
+-  if (!this->write_protocol_header (TAO_GIOP_REQUEST, cdr))
++  if (!this->write_protocol_header (TAO_GIOP_REQUEST, giop_version, cdr))
+     {
+       if (TAO_debug_level)
+         {
+@@ -94,6 +85,10 @@
+       return -1;
+     }
+
++  // Get the parser we need to use
++  TAO_GIOP_Message_Generator_Parser *generator_parser =
++    this->get_parser (giop_version);
++
+   // Now call the implementation for the rest of the header
+   if (!generator_parser->write_request_header (op, spec, cdr))
+     {
+@@ -113,17 +108,12 @@
+     TAO_Target_Specification &spec,
+     TAO_OutputCDR &cdr)
+ {
+-  // Get a parser for us
+-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
+   TAO_GIOP_Message_Version giop_version;
+
+   cdr.get_version (giop_version);
+
+-  // Get the state information that we need to use
+-  this->set_state (giop_version, generator_parser);
+-
+   // Write the GIOP header first
+-  if (!this->write_protocol_header (TAO_GIOP_LOCATEREQUEST, cdr))
++  if (!this->write_protocol_header (TAO_GIOP_LOCATEREQUEST, giop_version, cdr))
+     {
+       if (TAO_debug_level)
+         ACE_ERROR ((LM_ERROR,
+@@ -132,6 +122,10 @@
+       return -1;
+     }
+
++  // Get the parser we need to use
++  TAO_GIOP_Message_Generator_Parser *generator_parser =
++    this->get_parser (giop_version);
++
+   // Now call the implementation for the rest of the header
+   if (!generator_parser->write_locate_request_header
+       (op.request_id (), spec, cdr))
+@@ -154,16 +148,12 @@
+     TAO_Pluggable_Reply_Params_Base &params)
+ {
+   // Get a parser for us
+-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
+   TAO_GIOP_Message_Version giop_version;
+
+   cdr.get_version (giop_version);
+
+-  // Get the state information that we need to use
+-  this->set_state (giop_version, generator_parser);
+-
+   // Write the GIOP header first
+-  if (!this->write_protocol_header (TAO_GIOP_REPLY, cdr))
++  if (!this->write_protocol_header (TAO_GIOP_REPLY, giop_version, cdr))
+     {
+       if (TAO_debug_level)
+         ACE_ERROR ((LM_ERROR,
+@@ -174,11 +164,12 @@
+
+   try
+     {
++      // Get the parser we need to use
++      TAO_GIOP_Message_Generator_Parser *generator_parser =
++        this->get_parser (giop_version);
++
+       // Now call the implementation for the rest of the header
+-      int const result =
+-        generator_parser->write_reply_header (cdr, params);
+-
+-      if (!result)
++      if (!generator_parser->write_reply_header (cdr, params))
+         {
+           if (TAO_debug_level > 4)
+             ACE_ERROR ((LM_ERROR,
+@@ -204,8 +195,6 @@
+ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
+                                                  CORBA::ULong request_id)
+ {
+-  // Get a parser for us
+-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
+   TAO_GIOP_Message_Version giop_version;
+
+   cdr.get_version (giop_version);
+@@ -216,11 +205,12 @@
+   if (giop_version.major == 1 && giop_version.minor < 2)
+     return -1;
+
+-  // Get the state information that we need to use
+-  this->set_state (giop_version, generator_parser);
++  // Get the parser we need to use
++  TAO_GIOP_Message_Generator_Parser *generator_parser =
++    this->get_parser (giop_version);
+
+   // Write the GIOP header first
+-  if (!this->write_protocol_header (TAO_GIOP_FRAGMENT, cdr)
++  if (!this->write_protocol_header (TAO_GIOP_FRAGMENT, giop_version, cdr)
+       || !generator_parser->write_fragment_header (cdr, request_id))
+     {
+       if (TAO_debug_level)
+@@ -237,7 +227,7 @@
+ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
+ {
+   // Ptr to first buffer.
+-  char * buf = (char *) stream.buffer ();
++  char *buf = const_cast <char*> (stream.buffer ());
+
+   this->set_giop_flags (stream);
+
+@@ -321,7 +311,7 @@
+         }
+
+       /* init out-parameters */
+-      qd.set_state (state);
++      qd.state (state);
+       mesg_length = message_size;
+
+       return 1; /* complete header */
+@@ -384,7 +374,7 @@
+     }
+
+   size_t copying_len = state.message_size ();
+-
++// handle compress
+   qd = this->make_queued_data (copying_len);
+
+   if (qd == 0)
+@@ -411,7 +401,7 @@
+   qd->msg_block ()->copy (incoming.rd_ptr (), copying_len);
+
+   incoming.rd_ptr (copying_len);
+-  qd->set_state (state);
++  qd->state (state);
+
+   return 1;
+ }
+@@ -515,7 +505,7 @@
+       incoming.rd_ptr (copy_len);
+
+       // Get the other details...
+-      qd->set_state (state);
++      qd->state (state);
+     }
+   else
+     {
+@@ -558,12 +548,10 @@
+   // Set the upcall thread
+   this->orb_core_->lf_strategy ().set_upcall_thread (this->orb_core_->leader_follower ());
+
+-  // Get a parser for us
+-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
++  // Get the parser we need to use
++  TAO_GIOP_Message_Generator_Parser *generator_parser =
++    this->get_parser (qd->giop_version ());
+
+-  // Get the state information that we need to use
+-  this->set_state (qd->giop_version (), generator_parser);
+-
+   // A buffer that we will use to initialise the CDR stream.  Since we're
+   // allocating the buffer on the stack, we may as well allocate the data
+   // block on the stack too and avoid an allocation inside the message
+@@ -646,6 +634,7 @@
+                           qd->giop_version ().major_version (),
+                           qd->giop_version ().minor_version (),
+                           this->orb_core_);
++input_cdr.compressed_ = qd->state().compressed ();
+
+   transport->assign_translators(&input_cdr,&output);
+
+@@ -682,12 +671,10 @@
+     TAO_Pluggable_Reply_Params &params,
+     TAO_Queued_Data *qd)
+ {
+-  // Get a parser for us
+-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
++  // Get the parser we need to use
++  TAO_GIOP_Message_Generator_Parser *generator_parser =
++    this->get_parser (qd->giop_version());
+
+-  // Get the state information that we need to use
+-  this->set_state (qd->giop_version (), generator_parser);
+-
+   // Get the read and write positions before we steal data.
+   size_t rd_pos = qd->msg_block ()->rd_ptr () - qd->msg_block ()->base ();
+   size_t const wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
+@@ -789,6 +776,7 @@
+
+ int
+ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
++                                              const TAO_GIOP_Message_Version &version,
+                                               TAO_OutputCDR &msg)
+ {
+   // Reset the message type
+@@ -804,13 +792,9 @@
+       0x50  // 'P'
+     };
+
+-  TAO_GIOP_Message_Version giop_version;
++  header[4] = version.major;
++  header[5] = version.minor;
+
+-  msg.get_version (giop_version);
+-
+-  header[4] = giop_version.major;
+-  header[5] = giop_version.minor;
+-
+   // "flags" octet, i.e. header[6] will be set up later when message
+   // is formatted by the transport.
+
+@@ -867,6 +851,25 @@
+
+       CORBA::Object_var forward_to;
+
++//if (request.original_message_length_ > 0)
++if (cdr.compressed_ == true)
++{
++  this->orb_core_->ziop_adapter ()->decompress (request);
++//+#if !defined (__BORLANDC__)
++//+            Bytef* LargBuffer = new Bytef [request.original_message_length_ * 2];
++//+     uLongf length = request.original_message_length_ * 2;
++//+            int retval = uncompress (LargBuffer,   &length,
++//+       (const Bytef*)cdr.rd_ptr(), cdr.length ());
++//+                          //       reinterpret_cast <const Bytef*>(compression_stream.buffer ()), compression_stream.total_length ());
++//+     char* buf = (char*)LargBuffer;
++
++//+TAO_InputCDR* newstream = new TAO_InputCDR (buf, (size_t)length);
++//+request.incoming_ = newstream;
++//+#endif
++//+
++//+ // do decompression
++}
++
+       /*
+        * Hook to specialize request processing within TAO
+        * This hook will be replaced by specialized request
+@@ -1171,10 +1174,13 @@
+                                                TAO_OutputCDR &output,
+                                                TAO_GIOP_Message_Generator_Parser *parser)
+ {
++  TAO_GIOP_Message_Version giop_version;
++  output.get_version (giop_version);
++
+   // Note here we are making the Locate reply header which is *QUITE*
+   // different from the reply header made by the make_reply () call..
+   // Make the GIOP message header
+-  this->write_protocol_header (TAO_GIOP_LOCATEREPLY, output);
++  this->write_protocol_header (TAO_GIOP_LOCATEREPLY, giop_version, output);
+
+   // This writes the header & body
+   parser->write_locate_reply_mesg (output,
+@@ -1253,10 +1259,9 @@
+   return result;
+ }
+
+-void
+-TAO_GIOP_Message_Base::set_state (
+-    const TAO_GIOP_Message_Version &version,
+-    TAO_GIOP_Message_Generator_Parser *&gen_parser) const
++TAO_GIOP_Message_Generator_Parser*
++TAO_GIOP_Message_Base::get_parser (
++    const TAO_GIOP_Message_Version &version) const
+ {
+   switch (version.major)
+     {
+@@ -1264,25 +1269,27 @@
+       switch (version.minor)
+         {
+         case 0:
+-          gen_parser =
++          return
+             const_cast<TAO_GIOP_Message_Generator_Parser_10 *> (
+                                      &this->tao_giop_impl_.tao_giop_10);
+           break;
+         case 1:
+-          gen_parser =
++          return
+             const_cast<TAO_GIOP_Message_Generator_Parser_11 *> (
+                                      &this->tao_giop_impl_.tao_giop_11);
+           break;
+         case 2:
+-          gen_parser =
++          return
+             const_cast<TAO_GIOP_Message_Generator_Parser_12 *> (
+                                      &this->tao_giop_impl_.tao_giop_12);
+           break;
+         default:
++          throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
+           break;
+         }
+       break;
+     default:
++      throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
+       break;
+     }
+ }
+@@ -1448,6 +1455,9 @@
+       // Byte order.
+       int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
+
++      // Compressed
++      int compressed = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x04;
++
+       // Get the version info
+       CORBA::Octet major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
+       CORBA::Octet minor = ptr[TAO_GIOP_VERSION_MINOR_OFFSET];
+@@ -1489,12 +1499,13 @@
+       ACE_DEBUG ((LM_DEBUG,
+                   "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
+                   "%s GIOP v%c.%c msg, %d data bytes, %s endian, "
+-                  "Type %s[%u]\n",
++                  "%s compressed, Type %s[%u]\n",
+                   ACE_TEXT_CHAR_TO_TCHAR (label),
+                   digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
+                   digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
+                   len - TAO_GIOP_MESSAGE_HEADER_LEN ,
+                   (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
++                  (compressed == 0) ? ACE_TEXT("not") : ACE_TEXT("is"),
+                   ACE_TEXT_CHAR_TO_TCHAR(message_name),
+                   *id));
+
+@@ -1517,20 +1528,19 @@
+ int
+ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg)
+ {
+-  // Get a parser for us
+-  TAO_GIOP_Message_Generator_Parser *parser = 0;
+   TAO_GIOP_Message_Version giop_version;
+
+   msg.get_version (giop_version);
+
+-  // Get the state information that we need to use
+-  this->set_state (giop_version, parser);
++  // Get the parser we need to use
++  TAO_GIOP_Message_Generator_Parser *generator_parser =
++    this->get_parser (giop_version);
+
+   // We dont really know.. So ask the generator and parser objects that
+   // we know.
+   // @@ TODO: Need to make this faster, instead of making virtual
+   // call, try todo the check within this class
+-  return parser->is_ready_for_bidirectional ();
++  return generator_parser->is_ready_for_bidirectional ();
+ }
+
+
+@@ -1543,8 +1553,7 @@
+   // bytes. As we may not know how many bytes will be lost, we will
+   // allocate ACE_CDR::MAX_ALIGNMENT extra.
+   ACE_Data_Block *db =
+-    this->orb_core_->create_input_cdr_data_block (sz +
+-                                                  ACE_CDR::MAX_ALIGNMENT);
++    this->orb_core_->create_input_cdr_data_block (sz + ACE_CDR::MAX_ALIGNMENT);
+
+   TAO_Queued_Data *qd =
+     TAO_Queued_Data::make_queued_data (
+@@ -1577,11 +1586,10 @@
+ TAO_GIOP_Message_Base::fragment_header_length (
+   const TAO_GIOP_Message_Version& giop_version) const
+ {
+-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
++  // Get the parser we need to use
++  TAO_GIOP_Message_Generator_Parser *generator_parser =
++    this->get_parser (giop_version);
+
+-  // Get the state information that we need to use
+-  this->set_state (giop_version, generator_parser);
+-
+   return generator_parser->fragment_header_length ();
+ }
+
+@@ -1589,12 +1597,10 @@
+ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
+                                          CORBA::ULong &request_id) const
+ {
+-  // Get a parser for us
+-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
++  // Get the parser we need to use
++  TAO_GIOP_Message_Generator_Parser *generator_parser =
++    this->get_parser (qd->giop_version ());
+
+-  // Get the state information that we need to use
+-  this->set_state (qd->giop_version (), generator_parser);
+-
+   // Get the read and write positions before we steal data.
+   size_t rd_pos = qd->msg_block ()->rd_ptr () - qd->msg_block ()->base ();
+   size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
+@@ -1616,8 +1622,7 @@
+   // Get the flag in the message block
+   flg = qd->msg_block ()->self_flags ();
+
+-  if (ACE_BIT_ENABLED (flg,
+-                       ACE_Message_Block::DONT_DELETE))
++  if (ACE_BIT_ENABLED (flg, ACE_Message_Block::DONT_DELETE))
+     {
+       // Use the same datablock
+       db = qd->msg_block ()->data_block ();
+@@ -1938,6 +1943,9 @@
+   // Only supported in GIOP 1.1 or better.
+   if (!(major <= 1 && minor == 0))
+     ACE_SET_BITS (flags, msg.more_fragments () << 1);
++
++  if (!(major <= 1 && minor < 2))
++    ACE_SET_BITS (flags, msg.compressed () << 2);
+ }
+
+ TAO_END_VERSIONED_NAMESPACE_DECL
+Index: modules/TAO/tao/operation_details.inl
+===================================================================
+--- modules/TAO/tao/operation_details.inl	(revision 79294)
++++ modules/TAO/tao/operation_details.inl	(revision 80736)
+@@ -20,6 +20,7 @@
+     , num_args_ (num)
+     , ex_data_ (data)
+     , ex_count_ (count)
++//    , compressed_ (false)
+     , use_stub_args_ (args ? true : false)
+ #if TAO_HAS_INTERCEPTORS == 1
+     , ft_expiration_time_ (0)
+@@ -234,5 +235,16 @@
+   this->reply_dispatcher_ = rd;
+ }
+
++/*ACE_INLINE void
++TAO_Operation_Details::compressed (CORBA::Boolean compressed)
++{
++  this->compressed_ = compressed;
++}
+
++ACE_INLINE CORBA::Boolean
++TAO_Operation_Details::compressed (void) const
++{
++  return this->compressed_;
++} */
++
+ TAO_END_VERSIONED_NAMESPACE_DECL
+Index: modules/TAO/tao/CDR.inl
+===================================================================
+--- modules/TAO/tao/CDR.inl	(revision 79294)
++++ modules/TAO/tao/CDR.inl	(revision 80736)
+@@ -21,7 +21,19 @@
+   this->more_fragments_ = more;
+ }
+
++ACE_INLINE bool
++TAO_OutputCDR::compressed (void) const
++{
++  return this->compressed_;
++}
++
+ ACE_INLINE void
++TAO_OutputCDR::compressed (bool compressed)
++{
++  this->compressed_ = compressed;
++}
++
++ACE_INLINE void
+ TAO_OutputCDR::message_attributes (CORBA::ULong request_id,
+                                    TAO_Stub * stub,
+                                    int message_semantics,
+@@ -77,6 +89,7 @@
+                   byte_order,
+                   major_version,
+                   minor_version),
++                  compressed_ (0),
+     orb_core_ (orb_core)
+ {
+ }
+@@ -91,6 +104,7 @@
+                   byte_order,
+                   major_version,
+                   minor_version),
++                  compressed_ (0),
+     orb_core_ (orb_core)
+ {
+ }
+@@ -105,6 +119,7 @@
+                   byte_order,
+                   major_version,
+                   minor_version),
++                  compressed_ (0),
+     orb_core_ (orb_core)
+ {
+ }
+@@ -121,6 +136,7 @@
+                   major_version,
+                   minor_version,
+                   lock),
++                  compressed_ (0),
+     orb_core_ (orb_core)
+ {
+ }
+@@ -137,6 +153,7 @@
+                   byte_order,
+                   major_version,
+                   minor_version),
++                  compressed_ (0),
+     orb_core_ (orb_core)
+ {
+ }
+@@ -158,6 +175,7 @@
+                   byte_order,
+                   major_version,
+                   minor_version),
++                  compressed_ (0),
+     orb_core_ (orb_core)
+ {
+ }
+@@ -170,6 +188,7 @@
+   : ACE_InputCDR (rhs,
+                   size,
+                   offset),
++                  compressed_ (rhs.compressed_),
+     orb_core_ (rhs.orb_core_)
+ {
+ }
+@@ -179,6 +198,7 @@
+                             size_t size)
+   : ACE_InputCDR (rhs,
+                   size),
++                  compressed_ (rhs.compressed_),
+     orb_core_ (rhs.orb_core_)
+ {
+ }
+@@ -186,7 +206,8 @@
+ ACE_INLINE
+ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
+   : ACE_InputCDR (rhs),
+-    orb_core_ (rhs.orb_core_)
++                  compressed_ (rhs.compressed_),
++      orb_core_ (rhs.orb_core_)
+ {
+ }
+
+@@ -194,6 +215,7 @@
+ TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
+                             TAO_ORB_Core* orb_core)
+   : ACE_InputCDR (rhs),
++                 // compressed_ (rhs.compressed_),
+     orb_core_ (orb_core)
+ {
+ }
+Index: modules/TAO/tao/ORB_Core.inl
+===================================================================
+--- modules/TAO/tao/ORB_Core.inl	(revision 79294)
++++ modules/TAO/tao/ORB_Core.inl	(revision 80736)
+@@ -430,6 +430,18 @@
+   return this->codeset_manager_;
+ }
+
++ACE_INLINE TAO_ZIOP_Adapter *
++TAO_ORB_Core::ziop_adapter ()
++{
++  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
++                    0);
++  if (ziop_adapter_ == 0)
++    {
++      return this->ziop_adapter_i ();
++    }
++  return this->ziop_adapter_;
++}
++
+ ACE_INLINE TAO::ORBInitializer_Registry_Adapter *
+ TAO_ORB_Core::orbinitializer_registry ()
+ {
+Index: modules/TAO/tao/ZIOP_Adapter.h
+===================================================================
+--- modules/TAO/tao/ZIOP_Adapter.h	(revision 0)
++++ modules/TAO/tao/ZIOP_Adapter.h	(revision 80736)
+@@ -0,0 +1,55 @@
+Index: modules/TAO/tao/orbconf.h
+===================================================================
+--- modules/TAO/tao/orbconf.h	(revision 79294)
++++ modules/TAO/tao/orbconf.h	(revision 80736)
+@@ -752,6 +752,8 @@
+
+   TAO_CACHED_POLICY_ENDPOINT,
+
++  TAO_CACHED_POLICY_ZIOP,
++
+   /// NOTE: The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last.
+   ///       This value is used as the cached_policies_ array size in TAO_Policy_Set,
+   ///       Any policy type defined after "TAO_CACHED_POLICY_MAX_CACHED" will cause
+Index: modules/TAO/tao/GIOP_Message_Base.h
+===================================================================
+--- modules/TAO/tao/GIOP_Message_Base.h	(revision 79294)
++++ modules/TAO/tao/GIOP_Message_Base.h	(revision 80736)
+@@ -64,9 +64,6 @@
+   virtual void init (CORBA::Octet major,
+                      CORBA::Octet minor);
+
+-  /// Reset the messaging the object
+-  virtual void reset (void);
+-
+   /// Write the RequestHeader in to the @a cdr stream. The underlying
+   /// implementation of the mesaging should do the right thing.
+   virtual int generate_request_header (TAO_Operation_Details &op,
+@@ -177,8 +174,8 @@
+                                       TAO_GIOP_Message_Generator_Parser *);
+
+   /// Set the state
+-  void set_state (const TAO_GIOP_Message_Version &version,
+-                  TAO_GIOP_Message_Generator_Parser *&) const;
++  TAO_GIOP_Message_Generator_Parser *get_parser (
++    const TAO_GIOP_Message_Version &version) const;
+
+   /// Print out a debug messages..
+   void dump_msg (const char *label, const u_char *ptr, size_t len);
+@@ -186,7 +183,9 @@
+   /// Writes the GIOP header in to @a msg
+   /// @note If the GIOP header happens to change in the future, we can
+   /// push this method in to the generator_parser classes.
+-  int write_protocol_header (TAO_GIOP_Message_Type t, TAO_OutputCDR &msg);
++  int write_protocol_header (TAO_GIOP_Message_Type t,
++                             const TAO_GIOP_Message_Version &version,
++                             TAO_OutputCDR &msg);
+
+   /// Make a GIOP_LOCATEREPLY and hand that over to the transport so
+   /// that it can be sent over the connection.
+Index: modules/TAO/tao/Incoming_Message_Queue.h
+===================================================================
+--- modules/TAO/tao/Incoming_Message_Queue.h	(revision 79294)
++++ modules/TAO/tao/Incoming_Message_Queue.h	(revision 80736)
+@@ -73,6 +73,8 @@
+
+   friend class TAO_Transport;
+
++  CORBA::Octet compressed_;
++
+ private:
+   /*!
+     \brief A circular linked list of messages awaiting processing.
+Index: modules/TAO/tao/IOP_IOR.pidl
+===================================================================
+--- modules/TAO/tao/IOP_IOR.pidl	(revision 79294)
++++ modules/TAO/tao/IOP_IOR.pidl	(revision 80736)
+@@ -32,6 +32,12 @@
+
+ module IOP
+ {
++struct CompressedData {
++  long compressorid;
++  long original_length;
++  CORBA::OctetSeq data;
++};
++
+   typedef unsigned long ProfileId;
+   const ProfileId TAG_INTERNET_IOP = 0;
+   const ProfileId TAG_MULTIPLE_COMPONENTS = 1;
+@@ -104,6 +110,8 @@
+
+   const ServiceId REP_NWPRIORITY = 0x54410005;
+
++  const ComponentId TAG_ZIOP_COMPONENT = 0x54410555;
++
+   // The following are defined in 03-01-11
+   const ProfileId TAG_UIPMC = 3;
+   const ComponentId TAG_GROUP = 39;
+Index: modules/TAO/tao/TAO_Internal.cpp
+===================================================================
+--- modules/TAO/tao/TAO_Internal.cpp	(revision 79294)
++++ modules/TAO/tao/TAO_Internal.cpp	(revision 80736)
+@@ -451,7 +451,7 @@
+ #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
+
+     // Copy command line parameter to allow conversion
+-    ACE_Argv_Type_Converter command_line (argc, argv);
++    ACE_Argv_Type_Converter command_line (argc, argv);
+
+     return pcfg->open (command_line.get_argc (),
+                        command_line.get_TCHAR_argv (),
+Index: modules/TAO/tao/TAO_Server_Request.cpp
+===================================================================
+--- modules/TAO/tao/TAO_Server_Request.cpp	(revision 79294)
++++ modules/TAO/tao/TAO_Server_Request.cpp	(revision 80736)
+@@ -354,9 +354,9 @@
+
+   this->outgoing_->more_fragments (false);
+
+-  int result = this->transport_->send_message (*this->outgoing_,
+-                                               0,
+-                                               TAO_Transport::TAO_REPLY);
++  int const result = this->transport_->send_message (*this->outgoing_,
++                                                      0,
++                                                      TAO_Transport::TAO_REPLY);
+   if (result == -1)
+     {
+       if (TAO_debug_level > 0)
+Index: modules/TAO/tao/Transport.cpp
+===================================================================
+--- modules/TAO/tao/Transport.cpp	(revision 79294)
++++ modules/TAO/tao/Transport.cpp	(revision 80736)
+@@ -23,6 +23,7 @@
+ #include "tao/ORB_Core.h"
+ #include "tao/MMAP_Allocator.h"
+ #include "tao/SystemException.h"
++#include "tao/Operation_Details.h"
+
+ #include "ace/OS_NS_sys_time.h"
+ #include "ace/OS_NS_stdio.h"
+@@ -424,7 +425,7 @@
+     TAO_Target_Specification &spec,
+     TAO_OutputCDR &output)
+ {
+-  // codeset service context is only supposed to be sent in the first request
++  // Codeset service context is only supposed to be sent in the first request
+   // on a particular connection.
+   if (this->first_request_)
+     {
+@@ -433,15 +434,31 @@
+         csm->generate_service_context (opdetails,*this);
+     }
+
++  // Check whether we have Compression set
++//  if (opdetails.compressed ())
++//    {
++//      TAO_OutputCDR cdr;
++//
++//      // Add the original message length to the service contenxt
++//      CORBA::ULong length = opdetails.uncompressed_size_;
++//      if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
++//          || (cdr << length) == 0)
++//        return -1;
++//
++//      // Add this info in to the svc_list
++//      opdetails.request_service_context ().set_context (IOP::TAG_ZIOP_COMPONENT,
++//                                                        cdr);
++//    }
++
+   if (this->messaging_object ()->generate_request_header (opdetails,
+                                                           spec,
+                                                           output) == -1)
+     {
+       if (TAO_debug_level > 0)
+         {
+-        ACE_DEBUG ((LM_DEBUG,
+-                   ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
+-                   ACE_TEXT ("error while marshalling the Request header\n"),
++          ACE_ERROR ((LM_ERROR,
++                      ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
++                      ACE_TEXT ("error while marshalling the Request header\n"),
+                       this->id()));
+         }
+
+@@ -460,8 +477,7 @@
+   this->purge_entry ();
+
+   // Then add ourselves to the cache
+-  return this->transport_cache_manager ().cache_transport (desc,
+-                                                           this);
++  return this->transport_cache_manager ().cache_transport (desc, this);
+ }
+
+ int
+@@ -490,9 +506,7 @@
+ }
+
+ /*
+- *
+  *  Methods called and used in the output path of the ORB.
+- *
+  */
+ int
+ TAO_Transport::handle_output (void)
+@@ -1248,8 +1262,6 @@
+ TAO_Transport::send_connection_closed_notifications_i (void)
+ {
+   this->cleanup_queue_i ();
+-
+-  this->messaging_object ()->reset ();
+ }
+
+ int
+@@ -1267,13 +1279,11 @@
+   switch (message_semantics)
+     {
+       case TAO_Transport::TAO_TWOWAY_REQUEST:
+-        ret = this->send_synchronous_message_i (message_block,
+-                                                max_wait_time);
++        ret = this->send_synchronous_message_i (message_block, max_wait_time);
+         break;
+
+       case TAO_Transport::TAO_REPLY:
+-        ret = this->send_reply_message_i (message_block,
+-                                          max_wait_time);
++        ret = this->send_reply_message_i (message_block, max_wait_time);
+         break;
+
+       case TAO_Transport::TAO_ONEWAY_REQUEST:
+@@ -1831,7 +1841,6 @@
+          this->id ()));
+     }
+
+-
+   // The buffer on the stack which will be used to hold the input
+   // messages, ACE_CDR::MAX_ALIGNMENT compensates the
+   // memory-alignment. This improves performance with SUN-Java-ORB-1.4
+@@ -2190,7 +2199,7 @@
+
+                 }
+
+-              const int retval = this->notify_reactor ();
++              int const retval = this->notify_reactor ();
+
+               if (retval == 1)
+                 {
+@@ -2209,8 +2218,7 @@
+             }
+
+           // PRE: incoming_message_queue is empty
+-          if (this->process_parsed_messages (&qd,
+-                                             rh) == -1)
++          if (this->process_parsed_messages (&qd, rh) == -1)
+             {
+               return -1;
+             }
+Index: modules/TAO/tao/GIOP_Message_State.cpp
+===================================================================
+--- modules/TAO/tao/GIOP_Message_State.cpp	(revision 79294)
++++ modules/TAO/tao/GIOP_Message_State.cpp	(revision 80736)
+@@ -45,9 +45,7 @@
+
+   // Parse the magic bytes first
+   if (this->parse_magic_bytes (buf) == -1)
+-    {
+-      return -1;
+-    }
++    return -1;
+
+   // Get the version information
+   if (this->get_version_info (buf) == -1)
+@@ -230,9 +228,13 @@
+
+       // Read the fragment bit
+       this->more_fragments_ =
+-        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
++        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02) == 2);
+
+-      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
++      // Read the compressed bit
++      this->compressed_ =
++        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x04) == 4);
++
++      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x7) != 0)
+         {
+           if (TAO_debug_level > 2)
+             {
+Index: modules/TAO/tao/GIOP_Message_State.h
+===================================================================
+--- modules/TAO/tao/GIOP_Message_State.h	(revision 79294)
++++ modules/TAO/tao/GIOP_Message_State.h	(revision 80736)
+@@ -8,10 +8,10 @@
+  *
+  *   GIOP utility definitions
+  *
++ *
+  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
+  *  @author  Carlos O' Ryan <coryan@uci.edu>
+  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
+- *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
+  */
+ //=============================================================================
+ #ifndef TAO_GIOP_MESSAGE_STATE_H
+@@ -72,6 +72,9 @@
+   /// Get the GIOP version
+   TAO_GIOP_Message_Version const &giop_version (void) const;
+
++  /// Return the compressed information
++  CORBA::Boolean compressed (void) const;
++
+ private:
+   /// Parse the message header.
+   int parse_message_header_i (ACE_Message_Block &incoming);
+@@ -101,7 +104,7 @@
+   CORBA::ULong read_ulong (const char *buf) const;
+
+ private:
+-  // GIOP version information..
++  /// GIOP version information..
+   TAO_GIOP_Message_Version giop_version_;
+
+   /// 0 = big, 1 = little
+@@ -114,10 +117,12 @@
+   CORBA::ULong payload_size_;
+
+   /// (Requests and Replys)
+-  /// A value of zero indicates that this message does not have any
+-  /// fragments.  A value of non-zero indicates that it does have
+-  /// fragments.
+-  CORBA::Octet more_fragments_;
++  /// A false indicates that this message does not have any
++  /// fragments.  A value of true indicates that it does have fragments.
++  CORBA::Boolean more_fragments_;
++
++  /// Compressed
++  CORBA::Boolean compressed_;
+ };
+
+ TAO_END_VERSIONED_NAMESPACE_DECL
+Index: modules/TAO/tao/CDR.h
+===================================================================
+--- modules/TAO/tao/CDR.h	(revision 79294)
++++ modules/TAO/tao/CDR.h	(revision 80736)
+@@ -180,6 +180,12 @@
+   /// Specify whether there are more data fragments to come.
+   void more_fragments (bool more);
+
++  /// Are we containing compressed data?
++  bool compressed (void) const;
++
++  /// Specify whether we have compressed data.
++  void compressed (bool compressed);
++
+   /// Set fragmented message attributes.
+   void message_attributes (CORBA::ULong request_id,
+                            TAO_Stub * stub,
+@@ -235,6 +241,9 @@
+
+   /// Request/reply send timeout.
+   ACE_Time_Value * timeout_;
++
++  /// Do we contain compressed data
++  bool compressed_;
+   //@}
+
+ };
+@@ -262,6 +271,7 @@
+ class TAO_Export TAO_InputCDR : public ACE_InputCDR
+ {
+ public:
++  CORBA::Boolean compressed_;
+   /**
+    * Create an input stream from an arbitrary buffer, care must be
+    * exercised wrt alignment, because this contructor will *not* work
+Index: modules/TAO/tao/GIOP_Message_Generator_Parser_12.h
+===================================================================
+--- modules/TAO/tao/GIOP_Message_Generator_Parser_12.h	(revision 79294)
++++ modules/TAO/tao/GIOP_Message_Generator_Parser_12.h	(revision 80736)
+@@ -33,7 +33,7 @@
+  *
+  */
+
+-class TAO_Export TAO_GIOP_Message_Generator_Parser_12:
++class TAO_Export TAO_GIOP_Message_Generator_Parser_12 :
+   public TAO_GIOP_Message_Generator_Parser
+ {
+ public:
+@@ -42,29 +42,24 @@
+   virtual bool write_request_header (
+       const TAO_Operation_Details &opdetails,
+       TAO_Target_Specification &spec,
+-      TAO_OutputCDR &msg
+-    );
++      TAO_OutputCDR &msg);
+
+   /// Write the LocateRequest header
+   virtual bool write_locate_request_header (
+       CORBA::ULong request_id,
+       TAO_Target_Specification &spec,
+-      TAO_OutputCDR &msg
+-    );
++      TAO_OutputCDR &msg);
+
+   /// Write the reply header in to @a output
+   virtual bool write_reply_header (
+       TAO_OutputCDR &output,
+-      TAO_Pluggable_Reply_Params_Base &reply
++      TAO_Pluggable_Reply_Params_Base &reply);
+
+-    );
+-
+   /// Writes the locate _reply message in to the @a output
+   virtual bool write_locate_reply_mesg (
+       TAO_OutputCDR &output,
+       CORBA::ULong request_id,
+-      TAO_GIOP_Locate_Status_Msg &status
+-    );
++      TAO_GIOP_Locate_Status_Msg &status);
+
+   virtual bool write_fragment_header (TAO_OutputCDR & cdr,
+                                       CORBA::ULong request_id);
+@@ -75,9 +70,7 @@
+
+   /// Parse the LocateRequest Header from the incoming stream. This will do a
+   /// version specific parsing of the incoming Request header
+-  virtual int parse_locate_header (
+-      TAO_GIOP_Locate_Request_Header &
+-    );
++  virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &);
+
+   /// Parse the reply message
+   virtual int parse_reply (TAO_InputCDR &input,
+@@ -101,22 +94,26 @@
+ private:
+
+   /// Marshall the TargetSpecification
+-
+   /// This method may be required for other GIOP versiona coming out
+   /// later than 1.2. We need to share this method
+   bool marshall_target_spec (TAO_Target_Specification &spec,
+                              TAO_OutputCDR &msg);
+
+   /// Check whether we have BiDirContext info available. If available
+-  /// delegate  the responsibility on to the TAO_Transport classes to
++  /// delegate the responsibility on to the TAO_Transport classes to
+   /// initiate action.
+   /// @note At somepoint this may be needed for future versions of
+   /// GIOP and we may have to share this
+   bool check_bidirectional_context (TAO_ServerRequest &request);
+
+   /// Process the BiDirContext info that we have received.
+-  bool process_bidir_context (TAO_Service_Context &,
++  bool process_bidir_context (TAO_Service_Context &service_context,
+                               TAO_Transport *transport);
++
++  bool check_compression_context (TAO_ServerRequest &request);
++
++  bool process_compression_context (TAO_Service_Context &service_context,
++                                    TAO_ServerRequest &request);
+ };
+
+ TAO_END_VERSIONED_NAMESPACE_DECL
+ ACE_INLINE bool
+Index: modules/TAO/tao/ZIOP/ZIOP.cpp
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP.cpp	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP.cpp	(revision 80736)
+@@ -0,0 +1,159 @@
++#include "tao/ZIOP/ZIOP_ORBInitializer.h"
++#include "tao/ZIOP/ZIOP.h"
++#include "tao/ORB_Core.h"
++#include "tao/debug.h"
++#include "tao/ORBInitializer_Registry.h"
++#include "tao/Operation_Details.h"
++
++ACE_RCSID (ZIOP,
++           ZIOP,
++           "$Id$")
++
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
++// Set the flag to zero to start with
++int TAO_ZIOP_Loader::is_activated_ = 0;
++
++TAO_ZIOP_Loader::TAO_ZIOP_Loader (void)
++{
++}
++
++TAO_ZIOP_Loader::~TAO_ZIOP_Loader (void)
++{
++}
++
++int
++TAO_ZIOP_Loader::init (int,
++                            ACE_TCHAR* [])
++{
++  if (TAO_ZIOP_Loader::is_activated_ == 0 && TAO_DEF_GIOP_MINOR >= 2)
++    {
++      PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
++        PortableInterceptor::ORBInitializer::_nil ();
++      PortableInterceptor::ORBInitializer_var ziop_orb_initializer;
++
++      ACE_DECLARE_NEW_CORBA_ENV;
++      ACE_TRY
++        {
++          /// Register the BiDir ORBInitializer.
++          ACE_NEW_THROW_EX (tmp_orb_initializer,
++                            TAO_ZIOP_ORBInitializer,
++                            CORBA::NO_MEMORY (
++                                CORBA::SystemException::_tao_minor_code (
++                                    TAO::VMCID,
++                                    ENOMEM),
++                                CORBA::COMPLETED_NO));
++          ACE_TRY_CHECK;
++
++          ziop_orb_initializer = tmp_orb_initializer;
++
++          PortableInterceptor::register_orb_initializer (
++            ziop_orb_initializer.in ()
++            ACE_ENV_ARG_PARAMETER);
++          ACE_TRY_CHECK;
++
++          TAO_ZIOP_Loader::is_activated_ = 1;
++        }
++      ACE_CATCHANY
++        {
++          if (TAO_debug_level > 0)
++            {
++              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
++                                   "Caught exception:");
++            }
++          return -1;
++        }
++      ACE_ENDTRY;
++    }
++
++  return 0;
++}
++
++void
++TAO_ZIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
++{
++}
++
++int
++TAO_ZIOP_Loader::Initializer (void)
++{
++  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_ZIOP_Loader);
++}
++
++bool
++TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
++{
++  CORBA::Object_var compression_manager =
++    server_request.orb_core()->resolve_compression_manager();
++
++  Compression::CompressionManager_var manager =
++    Compression::CompressionManager::_narrow (compression_manager.in ());
++
++  if (!CORBA::is_nil(manager.in ()))
++    {
++      IOP::CompressedData data;
++      if ((*(server_request.incoming()) >> data) == 0)
++        return false;
++//      server_request.compressed_ = true;
++
++      Compression::Compressor_var compressor = manager->get_compressor (data.compressorid, 6);
++      CORBA::OctetSeq myout;
++      myout.length (data.original_length);
++
++      compressor->decompress (data.data, myout);
++      TAO_InputCDR* newstream = new TAO_InputCDR ((char*)myout.get_buffer(true), (size_t)data.original_length);
++      server_request.incoming()->steal_from (*newstream);
++    }
++  return true;
++}
++
++bool
++TAO_ZIOP_Loader::compress (
++  TAO_ORB_Core& core,
++  TAO_Operation_Details &details,
++  TAO_OutputCDR &out_stream)
++{
++  TAO_OutputCDR compression_stream;
++  if (details.marshal_args (compression_stream) == false)
++    {
++      throw ::CORBA::MARSHAL ();
++    }
++
++  CORBA::Object_var compression_manager =
++    core.resolve_compression_manager();
++
++  Compression::CompressionManager_var manager =
++    Compression::CompressionManager::_narrow (compression_manager.in ());
++
++  if (!CORBA::is_nil(manager.in ()))
++  {
++    Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
++    Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 6);
++
++    CORBA::OctetSeq myout;
++    myout.length ((CORBA::ULong)(compression_stream.length() * 1.1));
++
++    CORBA::OctetSeq input ((CORBA::ULong)(compression_stream.length()), compression_stream.begin ());
++    compressor->compress (input, myout);
++    out_stream.compressed (true);
++    ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)myout.get_buffer(), (size_t)myout.length());
++    newblock->wr_ptr ((size_t)myout.length());
++    IOP::CompressedData data;
++    data.compressorid = compressor_id;
++    data.original_length = compression_stream.total_length();
++    data.data = myout;
++    out_stream << data;
++  }
++  return true;
++}
++
++TAO_END_VERSIONED_NAMESPACE_DECL
++
++ACE_STATIC_SVC_DEFINE (TAO_ZIOP_Loader,
++                       ACE_TEXT ("ZIOP_Loader"),
++                       ACE_SVC_OBJ_T,
++                       &ACE_SVC_NAME (TAO_ZIOP_Loader),
++                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
++                       0)
++
++ACE_FACTORY_DEFINE (TAO_ZIOP, TAO_ZIOP_Loader)
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP.cpp
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP.h
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP.h	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP.h	(revision 80736)
+@@ -0,0 +1,84 @@
++// -*- C++ -*-
++
++//=============================================================================
++/**
++ *  @file ZIOP.h
++ *
++ *  $Id$
++ *
++ *  Dynamic loader object for BiDir GIOP
++ *
++ *
++ *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
++ */
++//=============================================================================
++
++#ifndef TAO_ZIOP_GIOP_H
++#define TAO_ZIOP_GIOP_H
++#include /**/ "ace/pre.h"
++
++#include "tao/ZIOP/ziop_export.h"
++
++#if !defined (ACE_LACKS_PRAGMA_ONCE)
++# pragma once
++#endif /* ACE_LACKS_PRAGMA_ONCE */
++
++#include "tao/PI/PI.h"
++#include "tao/ZIOP_Adapter.h"
++#include "ace/Service_Config.h"
++
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
++/**
++ * @class TAO_ZIOP_Loader
++ *
++ * @brief Class that loads the BiDir library.
++ */
++
++class TAO_ZIOP_Export TAO_ZIOP_Loader : public TAO_ZIOP_Adapter
++{
++public:
++
++  /// Constructor
++  TAO_ZIOP_Loader (void);
++
++  /// Destructor
++  virtual ~TAO_ZIOP_Loader (void);
++
++  virtual bool decompress (TAO_ServerRequest& server_request);
++
++  virtual bool compress (TAO_ORB_Core& core, TAO_Operation_Details &detail, TAO_OutputCDR &out_stream);
++
++  /// Initialize the BiDIR loader hooks.
++  virtual int init (int argc, ACE_TCHAR* []);
++
++  virtual void load_policy_validators (TAO_Policy_Validator &validator
++                                       ACE_ENV_ARG_DECL)
++    ACE_THROW_SPEC ((CORBA::SystemException));
++
++  /// Used to force the initialization of the ORB code.
++  static int Initializer (void);
++
++private:
++
++  /// Flag to indicate whether the ZIOP library has been
++  /// activated.
++  static int is_activated_;
++};
++
++static int
++TAO_Requires_ZIOP_Initializer = TAO_ZIOP_Loader::Initializer ();
++
++TAO_END_VERSIONED_NAMESPACE_DECL
++
++ACE_STATIC_SVC_DECLARE (TAO_ZIOP_Loader)
++ACE_FACTORY_DECLARE (TAO_ZIOP, TAO_ZIOP_Loader)
++
++
++#define TAO_ZIOP_SAFE_INCLUDE
++#include "tao/ZIOP/ZIOPC.h"
++#undef TAO_ZIOP_SAFE_INCLUDE
++
++#include /**/ "ace/post.h"
++#endif /* TAO_ZIOP_GIOP_H */
++
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP.h
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP_Validator.cpp
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP_Validator.cpp	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP_Validator.cpp	(revision 80736)
+@@ -0,0 +1,51 @@
++#include "tao/ZIOP/ZIOP_Validator.h"
++#include "tao/ZIOP/ZIOP_Policy_i.h"
++#include "tao/Policy_Set.h"
++#include "tao/ORB_Core.h"
++
++ACE_RCSID (ZIOP_GIOP,
++           ZIOPPolicy_Validator,
++           "$Id$")
++
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
++TAO_ZIOPPolicy_Validator::TAO_ZIOPPolicy_Validator (TAO_ORB_Core &orb_core)
++  : TAO_Policy_Validator (orb_core)
++{
++}
++
++
++void
++TAO_ZIOPPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
++{
++  CORBA::Policy_var policy =
++    policies.get_cached_policy (TAO_CACHED_POLICY_ZIOP);
++
++  if (policy.in () == 0)
++    return;
++
++  ZIOP::CompressorIdPolicy_var srp =
++    ZIOP::CompressorIdPolicy::_narrow (policy.in ());
++
++  if (srp.in () == 0)
++    return;
++
++//  ZIOPPolicy::ZIOPectionalPolicyValue val = srp->value ();
++
++//  // Set the flag in the ORB_Core
++  //if (val == ZIOPPolicy::BOTH)
++    //orb_core_.ZIOP_giop_policy (true);
++}
++
++void
++TAO_ZIOPPolicy_Validator::merge_policies_impl (TAO_Policy_Set &)
++{
++}
++
++CORBA::Boolean
++TAO_ZIOPPolicy_Validator::legal_policy_impl (CORBA::PolicyType type)
++{
++  return true;//(type == ZIOPPolicy::ZIOPECTIONAL_POLICY_TYPE);
++}
++
++TAO_END_VERSIONED_NAMESPACE_DECL
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP_Validator.cpp
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP.pidl
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP.pidl	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP.pidl	(revision 80736)
+@@ -0,0 +1,60 @@
++#include "tao/Policy.pidl"
++#include "tao/Compression/Compression_include.pidl"
++
++module ZIOP
++{
++    //
++    // IOR Component for ZIOP
++    //
++
++    /**
++     * The ZIOP IOR Component. Has an CompressorId attribute indicating the
++     * compression algorithm supported by the server side.
++     */
++//    local interface CompressionComponent : IT_IOR::Component
++//    {
++//        readonly attribute CompressorId compressor_id;
++//    };
++
++    /**
++     * Factory for ZIOP IOR Components
++     */
++//    local interface CompressionComponentFactory : IT_IOR::ComponentFactory
++//    {
++//        CompressionComponent get_compression_component(
++//            in CompressorId compressor_id
++//        );
++//    };
++
++    //
++    // ORB Policies for ZIOP
++    //
++
++    /**
++     * Tag Id for CompressionEnablingPolicy
++     */
++    const CORBA::PolicyType COMPRESSION_ENABLING_POLICY_ID = 5555;
++
++    /**
++     * Tag Id for CompressorIdPolicy
++     */
++    const CORBA::PolicyType COMPRESSOR_ID_POLICY_ID = 5556;
++
++    /**
++     * The ZIOP CompressionEnablingPolicy. Has an boolean attribute indicating
++     * if compression is enabled or not.
++     */
++    local interface CompressionEnablingPolicy : CORBA::Policy
++    {
++        readonly attribute boolean compression_enabled;
++    };
++
++    /**
++     * The ZIOP CompressorIdPolicy. Has an CompressorId attribute indicating
++     * the compression algorithm to be used.
++     */
++    local interface CompressorIdPolicy : CORBA::Policy
++    {
++        readonly attribute Compression::CompressorId compressor_id;
++    };
++};
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP.pidl
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP_Adapter_Impl.h
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP_Adapter_Impl.h	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP_Adapter_Impl.h	(revision 80736)
+@@ -0,0 +1,51 @@
++
++
++class
++{
++ZlibCompressor::ZlibCompressor (
++  ::ZIOP::CompressionLevel compression_level,
++  ::ZIOP::CompressorFactory_ptr compressor_factory) :
++    BaseCompressor (compression_level, compressor_factory)
++{
++}
++
++
++#if !defined (__BORLANDC__)
++            Bytef* LargBuffer = new Bytef [1000];
++      uLongf length = 100;
++            int retval = compress (LargBuffer,   &length,
++                                 reinterpret_cast <const Bytef*>(compression_stream.buffer ()), compression_stream.total_length ());
++#endif
++            // Compress stream, dependent on bigger or smaller we use
++            // the compressed stream or the non compressed
++            this->details_.compressed (true);
++            cdr.compressed (true);
++
++            /// @todo write length of original data in the service context list
++      this->details_.uncompressed_size_ = compression_stream.total_length();
++            this->write_header (tspec,
++                                cdr
++                                ACE_ENV_ARG_PARAMETER);
++            ACE_TRY_CHECK;
++ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)LargBuffer, (size_t)length);
++newblock->wr_ptr ((size_t)length);
++            cdr.write_octet_array_mb (newblock);
++
++
++
++#if !defined (__BORLANDC__)
++            Bytef* LargBuffer = new Bytef [request.original_message_length_ * 2];
++      uLongf length = request.original_message_length_ * 2;
++            int retval = uncompress (LargBuffer,   &length,
++        (const Bytef*)cdr.rd_ptr(), cdr.length ());
++                          //       reinterpret_cast <const Bytef*>(compression_stream.buffer ()), compression_stream.total_length ());
++      char* buf = (char*)LargBuffer;
++
++TAO_InputCDR* newstream = new TAO_InputCDR (buf, (size_t)length);
++request.incoming_ = newstream;
++
++
++  }
++}
++
++};
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP_Adapter_Impl.h
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP_ORBInitializer.cpp
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP_ORBInitializer.cpp	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP_ORBInitializer.cpp	(revision 80736)
+@@ -0,0 +1,80 @@
++// $Id$
++
++#include "tao/ZIOP/ZIOP_ORBInitializer.h"
++
++#include "tao/ZIOP/ZIOP.h"
++#include "tao/ZIOP/ZIOP_PolicyFactory.h"
++#include "tao/ORB_Core.h"
++#include "tao/PI/ORBInitInfo.h"
++
++ACE_RCSID (ZIOP,
++           ZIOP_ORBInitializer,
++           "$Id$")
++
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
++void
++TAO_ZIOP_ORBInitializer::pre_init (
++    PortableInterceptor::ORBInitInfo_ptr)
++{
++}
++
++void
++TAO_ZIOP_ORBInitializer::post_init (
++    PortableInterceptor::ORBInitInfo_ptr info)
++{
++  this->register_policy_factories (info);
++}
++
++void
++TAO_ZIOP_ORBInitializer::register_policy_factories (
++  PortableInterceptor::ORBInitInfo_ptr info)
++{
++  // Register the ZIOP policy factories.
++  PortableInterceptor::PolicyFactory_ptr policy_factory_ptr;
++  ACE_NEW_THROW_EX (policy_factory_ptr,
++                    TAO_ZIOP_PolicyFactory,
++                    CORBA::NO_MEMORY (
++                      CORBA::SystemException::_tao_minor_code (
++                        TAO::VMCID,
++                        ENOMEM),
++                      CORBA::COMPLETED_NO));
++
++
++  PortableInterceptor::PolicyFactory_var policy_factory =
++    policy_factory_ptr;
++
++  ACE_TRY
++    {
++      info->register_policy_factory (ZIOP::COMPRESSION_ENABLING_POLICY_ID,
++                                     policy_factory.in ()
++                                     ACE_ENV_ARG_PARAMETER);
++      ACE_TRY_CHECK;
++
++      info->register_policy_factory (ZIOP::COMPRESSOR_ID_POLICY_ID,
++                                     policy_factory.in ()
++                                     ACE_ENV_ARG_PARAMETER);
++      ACE_TRY_CHECK;
++    }
++  ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
++    {
++      if (ex.minor () == (CORBA::OMGVMCID | 16))
++        {
++          // The factory is already there, it happens because the
++          // magic initializer in Messaging.cpp registers with the
++          // ORB multiple times.  This is an indication that we
++          // should do no more work in this ORBInitializer.
++          return;
++        }
++      ACE_RE_THROW;
++    }
++  ACE_CATCHANY
++    {
++      // Rethrow any other exceptions...
++      ACE_RE_THROW;
++    }
++  ACE_ENDTRY;
++  ACE_CHECK;
++}
++
++TAO_END_VERSIONED_NAMESPACE_DECL
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP_ORBInitializer.cpp
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ziop_export.h
+===================================================================
+--- modules/TAO/tao/ZIOP/ziop_export.h	(revision 0)
++++ modules/TAO/tao/ZIOP/ziop_export.h	(revision 80736)
+@@ -0,0 +1,39 @@
++// -*- C++ -*-
++// $Id$
++// Definition for Win32 Export directives.
++// This file is generated automatically by generate_export_file.pl
++// ------------------------------
++#ifndef TAO_ZIOP_EXPORT_H
++#define TAO_ZIOP_EXPORT_H
++
++#include "ace/config-all.h"
++
++#if defined (TAO_AS_STATIC_LIBS)
++#  if !defined (TAO_ZIOP_HAS_DLL)
++#    define TAO_ZIOP_HAS_DLL 0
++#  endif /* ! TAO_ZIOP_HAS_DLL */
++#else
++#  if !defined (TAO_ZIOP_HAS_DLL)
++#    define TAO_ZIOP_HAS_DLL 1
++#  endif /* ! TAO_ZIOP_HAS_DLL */
++#endif
++
++#if defined (TAO_ZIOP_HAS_DLL) && (TAO_ZIOP_HAS_DLL == 1)
++#  if defined (TAO_ZIOP_BUILD_DLL)
++#    define TAO_ZIOP_Export ACE_Proper_Export_Flag
++#    define TAO_ZIOP_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
++#    define TAO_ZIOP_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
++#  else /* TAO_ZIOP_BUILD_DLL */
++#    define TAO_ZIOP_Export ACE_Proper_Import_Flag
++#    define TAO_ZIOP_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
++#    define TAO_ZIOP_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
++#  endif /* TAO_ZIOP_BUILD_DLL */
++#else /* TAO_ZIOP_HAS_DLL == 1 */
++#  define TAO_ZIOP_Export
++#  define TAO_ZIOP_SINGLETON_DECLARATION(T)
++#  define TAO_ZIOP_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
++#endif /* TAO_ZIOP_HAS_DLL == 1 */
++
++#endif /* TAO_ZIOP_EXPORT_H */
++
++// End of auto generated file.
+
+Property changes on: modules\TAO\tao\ZIOP\ziop_export.h
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP_PolicyFactory.cpp
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP_PolicyFactory.cpp	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP_PolicyFactory.cpp	(revision 80736)
+@@ -0,0 +1,70 @@
++#include "tao/ZIOP/ZIOP_PolicyFactory.h"
++#include "tao/ZIOP/ZIOP.h"
++#include "tao/ZIOP/ZIOP_Policy_i.h"
++
++#include "tao/ORB_Constants.h"
++#include "tao/AnyTypeCode/Any.h"
++
++ACE_RCSID (ZIOP_GIOP,
++           ZIOP_PolicyFactory,
++           "$Id$")
++
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
++CORBA::Policy_ptr
++TAO_ZIOP_PolicyFactory::create_policy (
++    CORBA::PolicyType type,
++    const CORBA::Any &value)
++{
++  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
++
++  if (type == ZIOP::COMPRESSION_ENABLING_POLICY_ID)
++    {
++      ::CORBA::Boolean val;
++
++      // Extract the value from the any.
++
++      if ((value >>= CORBA::Any::to_boolean (val)) == 0)
++        {
++          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
++                            CORBA::Policy::_nil ());
++        }
++
++      ACE_NEW_THROW_EX (policy,
++                        TAO::CompressionEnablingPolicy (val),
++                        CORBA::NO_MEMORY (
++                          CORBA::SystemException::_tao_minor_code (
++                            TAO::VMCID,
++                            ENOMEM),
++                          CORBA::COMPLETED_NO));
++      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
++
++      return policy;
++    }
++  else if (type == ZIOP::COMPRESSOR_ID_POLICY_ID) {
++      ::Compression::CompressorId val;
++
++      // Extract the value from the any.
++      if ((value >>= val) == 0)
++        {
++          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
++                            CORBA::Policy::_nil ());
++        }
++
++      ACE_NEW_THROW_EX (policy,
++                        TAO::CompressorIdPolicy (val),
++                        CORBA::NO_MEMORY (
++                          CORBA::SystemException::_tao_minor_code (
++                            TAO::VMCID,
++                            ENOMEM),
++                          CORBA::COMPLETED_NO));
++      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
++
++      return policy;
++  }
++
++  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
++                    CORBA::Policy::_nil ());
++}
++
++TAO_END_VERSIONED_NAMESPACE_DECL
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP_PolicyFactory.cpp
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP_Policy_i.cpp
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP_Policy_i.cpp	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP_Policy_i.cpp	(revision 80736)
+@@ -0,0 +1,164 @@
++// $Id$
++
++#include "tao/ZIOP/ZIOP_Policy_i.h"
++
++#include "tao/Stub.h"
++#include "tao/debug.h"
++#include "tao/ORB_Constants.h"
++
++ACE_RCSID (ZIOP,
++           ZIOP_Policy_i,
++           "$Id$")
++
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
++namespace TAO
++{
++CompressorIdPolicy::CompressorIdPolicy (
++    const ::Compression::CompressorId val)
++  : ::CORBA::Object ()
++  , ::CORBA::Policy ()
++  , ::ZIOP::CompressorIdPolicy ()
++  , ::CORBA::LocalObject ()
++  , TAO_Local_RefCounted_Object ()
++  , value_ (val)
++{
++}
++
++CompressorIdPolicy::CompressorIdPolicy (const CompressorIdPolicy &rhs)
++  : ::CORBA::Object ()
++  , ::CORBA::Policy ()
++  , ::ZIOP::CompressorIdPolicy ()
++  , ::CORBA::LocalObject ()
++  , TAO_Local_RefCounted_Object ()
++  , value_ (rhs.value_)
++{
++}
++
++CORBA::PolicyType
++CompressorIdPolicy::policy_type (void)
++{
++  // Future policy implementors: notice how this minimizes the
++  // footprint of the class.
++  return ZIOP::COMPRESSOR_ID_POLICY_ID;
++}
++
++
++CompressorIdPolicy *
++CompressorIdPolicy::clone (void) const
++{
++  CompressorIdPolicy *copy = 0;
++  ACE_NEW_RETURN (copy,
++                  CompressorIdPolicy (*this),
++                  0);
++  return copy;
++}
++
++CORBA::Policy_ptr
++CompressorIdPolicy::copy (void)
++{
++  CompressorIdPolicy* tmp = 0;
++  ACE_NEW_THROW_EX (tmp, CompressorIdPolicy (*this),
++                    CORBA::NO_MEMORY (TAO::VMCID,
++                                      CORBA::COMPLETED_NO));
++  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
++
++  return tmp;
++}
++
++void
++CompressorIdPolicy::destroy (void)
++{
++}
++
++::Compression::CompressorId
++CompressorIdPolicy::compressor_id (void)
++{
++  return this->value_;
++}
++
++
++TAO_Cached_Policy_Type
++CompressorIdPolicy::_tao_cached_type (void) const
++{
++  return TAO_CACHED_POLICY_UNCACHED;
++}
++
++
++
++CompressionEnablingPolicy::CompressionEnablingPolicy (
++    const ::CORBA::Boolean val)
++  : ::CORBA::Object ()
++  , ::CORBA::Policy ()
++  , ::ZIOP::CompressionEnablingPolicy ()
++  , ::CORBA::LocalObject ()
++  , TAO_Local_RefCounted_Object ()
++  , value_ (val)
++{
++}
++
++CompressionEnablingPolicy::CompressionEnablingPolicy (const CompressionEnablingPolicy &rhs)
++  : ::CORBA::Object ()
++  , ::CORBA::Policy ()
++  , ::ZIOP::CompressionEnablingPolicy ()
++ , ::CORBA::LocalObject ()
++  , TAO_Local_RefCounted_Object ()
++  , value_ (rhs.value_)
++{
++}
++
++CORBA::PolicyType
++CompressionEnablingPolicy::policy_type (void)
++{
++  // Future policy implementors: notice how this minimizes the
++  // footprint of the class.
++  return ZIOP::COMPRESSION_ENABLING_POLICY_ID;
++}
++
++
++CompressionEnablingPolicy *
++CompressionEnablingPolicy::clone (void) const
++{
++  CompressionEnablingPolicy *copy = 0;
++  ACE_NEW_RETURN (copy,
++                  CompressionEnablingPolicy (*this),
++                  0);
++  return copy;
++}
++
++CORBA::Policy_ptr
++CompressionEnablingPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
++ ACE_THROW_SPEC ((CORBA::SystemException))
++{
++  // Future policy implementors: notice how the following code is
++ // exception safe!
++
++  CompressionEnablingPolicy* tmp = 0;
++  ACE_NEW_THROW_EX (tmp, CompressionEnablingPolicy (*this),
++                    CORBA::NO_MEMORY (TAO::VMCID,
++                                      CORBA::COMPLETED_NO));
++  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
++
++  return tmp;
++}
++
++void
++CompressionEnablingPolicy::destroy (void)
++{
++}
++
++::CORBA::Boolean
++CompressionEnablingPolicy::compression_enabled (void)
++{
++  return this->value_;
++}
++
++
++TAO_Cached_Policy_Type
++CompressionEnablingPolicy::_tao_cached_type (void) const
++{
++  return TAO_CACHED_POLICY_UNCACHED;
++}
++
++}
++TAO_END_VERSIONED_NAMESPACE_DECL
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP_Policy_i.cpp
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/TAO_ZIOP.pc.in
+===================================================================
+--- modules/TAO/tao/ZIOP/TAO_ZIOP.pc.in	(revision 0)
++++ modules/TAO/tao/ZIOP/TAO_ZIOP.pc.in	(revision 80736)
+@@ -0,0 +1,11 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
++
++Name: TAO_ZIOP
++Description: TAO ZIOP Library
++Requires: TAO_PI, TAO_CodecFactory, TAO_AnyTypeCode, TAO
++Version: @VERSION@
++Libs: -L${libdir} -lTAO_ZIOP
++Cflags: -I${includedir}
+
+Property changes on: modules\TAO\tao\ZIOP\TAO_ZIOP.pc.in
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP_Validator.h
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP_Validator.h	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP_Validator.h	(revision 80736)
+@@ -0,0 +1,55 @@
++// -*- C++ -*-
++
++//=============================================================================
++/**
++ *  @file    ZIOPPolicy_Validator.h
++ *
++ *  $Id$
++ *
++ *  This file contains the declaration for the ZIOP policy validator
++ *  interface.
++ *
++ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
++ *  @author  Frank Hunleth  <fhuntleth@cs.wustl.edu>
++ */
++//=============================================================================
++
++#ifndef TAO_ZIOP_POLICY_VALIDATOR_H_
++#define TAO_ZIOP_POLICY_VALIDATOR_H_
++
++#include /**/ "ace/pre.h"
++#include "tao/ZIOP/ZIOP_export.h"
++
++#if !defined (ACE_LACKS_PRAGMA_ONCE)
++# pragma once
++#endif /* ACE_LACKS_PRAGMA_ONCE */
++#include "tao/Policy_Validator.h"
++
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
++class TAO_Policy_Set;
++class TAO_ORB_Core;
++
++/**
++ * @class TAO_ZIOPPolicy_Validator
++ *
++ * @brief Policy Validator for ZIOP GIOP class
++ *
++ */
++class TAO_ZIOP_Export TAO_ZIOPPolicy_Validator : public TAO_Policy_Validator
++{
++public:
++
++  TAO_ZIOPPolicy_Validator (TAO_ORB_Core &orb_core);
++
++  virtual void validate_impl (TAO_Policy_Set &policies);
++
++  virtual void merge_policies_impl (TAO_Policy_Set &policies);
++
++  virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
++};
++
++TAO_END_VERSIONED_NAMESPACE_DECL
++
++#include /**/ "ace/post.h"
++#endif /* TAO_ZIOP_POLICY_VALIDATOR_H_ */
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP_Validator.h
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP_ORBInitializer.h
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP_ORBInitializer.h	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP_ORBInitializer.h	(revision 80736)
+@@ -0,0 +1,79 @@
++// -*- C++ -*-
++
++//=============================================================================
++/**
++ *  @file ZIOP_ORBInitializer.h
++ *
++ *  $Id$
++ *
++*  @author  Johnny Willemsen
++ */
++//=============================================================================
++
++
++#ifndef TAO_ZIOP_ORB_INITIALIZER_H
++#define TAO_ZIOP_ORB_INITIALIZER_H
++
++#include /**/ "ace/pre.h"
++
++#include "tao/ZIOP/ziop_export.h"
++
++#if !defined (ACE_LACKS_PRAGMA_ONCE)
++# pragma once
++#endif /* ACE_LACKS_PRAGMA_ONCE */
++
++#include "tao/PI/PI.h"
++#include "tao/LocalObject.h"
++
++// This is to remove "inherits via dominance" warnings from MSVC.
++// MSVC is being a little too paranoid.
++#if defined(_MSC_VER)
++#pragma warning(push)
++#pragma warning(disable:4250)
++#endif /* _MSC_VER */
++
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
++/// ZIOP ORB initializer.
++class TAO_ZIOP_ORBInitializer
++  : public virtual PortableInterceptor::ORBInitializer,
++    public virtual TAO_Local_RefCounted_Object
++{
++public:
++
++  /**
++   * @name PortableInterceptor::ORBInitializer Methods
++   *
++   * The following methods are required by the
++   * PortableInterceptor::ORBInitializer interface.
++   */
++  //@{
++
++  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
++                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
++    ACE_THROW_SPEC ((CORBA::SystemException));
++
++  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
++                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
++    ACE_THROW_SPEC ((CORBA::SystemException));
++
++  //@}
++
++private:
++
++  /// Register policy factories.
++  void register_policy_factories (
++    PortableInterceptor::ORBInitInfo_ptr info
++    ACE_ENV_ARG_DECL);
++
++};
++
++TAO_END_VERSIONED_NAMESPACE_DECL
++
++#if defined(_MSC_VER)
++#pragma warning(pop)
++#endif /* _MSC_VER */
++
++#include /**/ "ace/post.h"
++
++#endif /* TAO_ZIOP_ORB_INITIALIZER_H */
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP_ORBInitializer.h
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP_PolicyFactory.h
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP_PolicyFactory.h	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP_PolicyFactory.h	(revision 80736)
+@@ -0,0 +1,60 @@
++// -*- C++ -*-
++//
++// ===================================================================
++/**
++ *  @file ZIOP_PolicyFactory.h
++ *
++ *  $Id$
++ *
++ *  @author Johnny Willemsen <jwillemsen@remedy.nl>
++ */
++// ===================================================================
++#ifndef TAO_ZIOP_POLICY_FACTORY_H
++#define TAO_ZIOP_POLICY_FACTORY_H
++
++#include /**/ "ace/pre.h"
++
++#include "tao/ZIOP/ziop_export.h"
++
++#if !defined (ACE_LACKS_PRAGMA_ONCE)
++# pragma once
++#endif /* ACE_LACKS_PRAGMA_ONCE */
++
++
++#include "tao/PI/PI.h"
++#include "tao/LocalObject.h"
++
++// This is to remove "inherits via dominance" warnings from MSVC.
++// MSVC is being a little too paranoid.
++#if defined(_MSC_VER)
++# pragma warning(push)
++# pragma warning(disable:4250)
++#endif /* _MSC_VER */
++
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
++/// Policy factory for all Messaging related policies.
++class TAO_ZIOP_PolicyFactory
++  : public PortableInterceptor::PolicyFactory
++  , public TAO_Local_RefCounted_Object
++{
++public:
++
++  virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
++                                           const CORBA::Any & value
++                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
++    ACE_THROW_SPEC ((CORBA::SystemException,
++                     CORBA::PolicyError));
++
++};
++
++TAO_END_VERSIONED_NAMESPACE_DECL
++
++#if defined(_MSC_VER)
++# pragma warning(pop)
++#endif /* _MSC_VER */
++
++
++#include /**/ "ace/post.h"
++
++#endif /* TAO_ZIOP_POLICY_FACTORY_H */
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP_PolicyFactory.h
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/ZIOP/ZIOP_Policy_i.h
+===================================================================
+--- modules/TAO/tao/ZIOP/ZIOP_Policy_i.h	(revision 0)
++++ modules/TAO/tao/ZIOP/ZIOP_Policy_i.h	(revision 80736)
+@@ -0,0 +1,126 @@
++// -*- C -*-
++
++// ===================================================================
++/**
++ *  @file ZIOP_Policy_i.h
++ *
++ *  $Id$
++ *
++ *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
++ */
++// ===================================================================
++
++#ifndef TAO_ZIOP_POLICY_I_H
++#define TAO_ZIOP_POLICY_I_H
++#include /**/ "ace/pre.h"
++#include "tao/ZIOP/ziop_export.h"
++
++#if !defined (ACE_LACKS_PRAGMA_ONCE)
++# pragma once
++#endif /* ACE_LACKS_PRAGMA_ONCE */
++
++#include "tao/ZIOP/ZIOP.h"
++#include "tao/LocalObject.h"
++
++#if defined(_MSC_VER)
++# pragma warning(push)
++# pragma warning(disable:4250)
++#endif /* _MSC_VER */
++
++TAO_BEGIN_VERSIONED_NAMESPACE_DECL
++
++namespace TAO
++{
++/**
++ * @class CompressorIdPolicy
++ *
++ * @brief  Implementation of the ZIOP::CompressorIdPolicy
++ */
++class CompressorIdPolicy
++  : public virtual ::ZIOP::CompressorIdPolicy
++  , public virtual TAO_Local_RefCounted_Object
++{
++public:
++
++  /// Constructor.
++  CompressorIdPolicy (const ::Compression::CompressorId val);
++
++  /// Copy constructor.
++  CompressorIdPolicy (const CompressorIdPolicy &rhs);
++
++  /// Returns a copy of <this>.
++  virtual CompressorIdPolicy *clone (void) const;
++
++  /// = The ZIOP::BidirectionalPolicy methods
++  virtual ::Compression::CompressorId compressor_id ();
++
++  virtual CORBA::PolicyType policy_type (void);
++
++  virtual CORBA::Policy_ptr copy (void);
++
++  virtual void destroy (void);
++
++  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
++
++private:
++
++  /// The attribute
++  ::Compression::CompressorId value_;
++
++};
++
++/**
++ * @class CompressionEnablingPolicy
++ *
++ * @brief  Implementation of the ZIOP::CompressionEnablingPolicy
++ */
++class CompressionEnablingPolicy
++  : public virtual ::ZIOP::CompressionEnablingPolicy
++  , public virtual TAO_Local_RefCounted_Object
++{
++public:
++
++  /// Constructor.
++  CompressionEnablingPolicy (const ::CORBA::Boolean val);
++
++  /// Copy constructor.
++  CompressionEnablingPolicy (const CompressionEnablingPolicy &rhs);
++
++  /// Returns a copy of <this>.
++  virtual CompressionEnablingPolicy *clone (void) const;
++
++  /// = The ZIOP::BidirectionalPolicy methods
++  virtual ::CORBA::Boolean compression_enabled (
++        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      ));
++
++  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
++    ACE_THROW_SPEC ((CORBA::SystemException));
++
++  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
++    ACE_THROW_SPEC ((CORBA::SystemException));
++
++  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
++    ACE_THROW_SPEC ((CORBA::SystemException));
++
++  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
++
++private:
++
++  /// The attribute
++  ::CORBA::Boolean value_;
++
++};
++}
++
++TAO_END_VERSIONED_NAMESPACE_DECL
++
++#if defined(_MSC_VER)
++# pragma warning(pop)
++#endif /* _MSC_VER */
++
++#include /**/ "ace/post.h"
++#endif /* TAO_BIDIR_POLICY_I_H */
++
+
+Property changes on: modules\TAO\tao\ZIOP\ZIOP_Policy_i.h
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tao/Pluggable_Messaging_Utils.h
+===================================================================
+--- modules/TAO/tao/Pluggable_Messaging_Utils.h	(revision 79294)
++++ modules/TAO/tao/Pluggable_Messaging_Utils.h	(revision 80736)
+@@ -81,6 +81,9 @@
+   /// marshalled in the reply
+   CORBA::Boolean argument_flag_;
+
++  /// Do we have a compressed reply
++  CORBA::Boolean compressed_;
++
+ protected:
+   /// The service context list that we don't own.
+   IOP::ServiceContextList *service_context_;
+Index: modules/TAO/tao/GIOP_Message_Generator_Parser_Impl.h
+===================================================================
+--- modules/TAO/tao/GIOP_Message_Generator_Parser_Impl.h	(revision 79294)
++++ modules/TAO/tao/GIOP_Message_Generator_Parser_Impl.h	(revision 80736)
+@@ -41,7 +41,6 @@
+ class TAO_Export TAO_GIOP_Message_Generator_Parser_Impl
+ {
+ public:
+-
+   /// Performs a check of the revision numbers
+   static CORBA::Boolean check_revision (CORBA::Octet incoming_major,
+                                         CORBA::Octet incoming_minor);
+Index: modules/TAO/tao/operation_details.h
+===================================================================
+--- modules/TAO/tao/operation_details.h	(revision 79294)
++++ modules/TAO/tao/operation_details.h	(revision 80736)
+@@ -174,6 +174,12 @@
+   TAO_Reply_Dispatcher *reply_dispatcher (void) const;
+   void reply_dispatcher (TAO_Reply_Dispatcher *rd);
+
++//  void compressed (CORBA::Boolean compressed);
++//  CORBA::Boolean compressed (void) const;
++
++  /// Temporarily @todo remove
++//  CORBA::ULong uncompressed_size_;
++
+ private:
+
+   /// Name of the operation being invoked.
+@@ -214,6 +220,9 @@
+   /// Count of the exceptions that operations can throw.
+   CORBA::ULong ex_count_;
+
++  /// Compressed operation or not
++//  CORBA::Boolean compressed_;
++
+   /// Boolean flag to indicate whether in the skeletons the stub arguments
+   /// stored in these operation details should be used or not.
+   CORBA::Boolean use_stub_args_;
+Index: modules/TAO/tao/Pluggable_Messaging_Utils.inl
+===================================================================
+--- modules/TAO/tao/Pluggable_Messaging_Utils.inl	(revision 79294)
++++ modules/TAO/tao/Pluggable_Messaging_Utils.inl	(revision 80736)
+@@ -12,6 +12,7 @@
+     is_dsi_ (0),
+     dsi_nvlist_align_ (0),
+     argument_flag_ (false),
++    compressed_ (false),
+     service_context_ (0)
+ {
+ }
+Index: modules/TAO/tao/Remote_Invocation.cpp
+===================================================================
+--- modules/TAO/tao/Remote_Invocation.cpp	(revision 79294)
++++ modules/TAO/tao/Remote_Invocation.cpp	(revision 80736)
+@@ -78,10 +78,8 @@
+       // index that we need.
+       CORBA::ULong index = 0;
+       IOP::IOR *ior_info = 0;
+-      int const retval =
+-        this->resolver_.stub ()->create_ior_info (ior_info, index);
+
+-      if (retval == -1)
++      if (this->resolver_.stub ()->create_ior_info (ior_info, index) == -1)
+         {
+           if (TAO_debug_level > 0)
+             {
+@@ -109,8 +107,7 @@
+     // Send the request for the header
+     if (this->resolver_.transport ()->generate_request_header (this->details_,
+                                                                spec,
+-                                                               out_stream)
+-        == -1)
++                                                               out_stream) == -1)
+       {
+         throw ::CORBA::MARSHAL ();
+       }
+@@ -121,6 +118,7 @@
+   void
+   Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
+   {
++    // @todo Invoke compression??
+     if (this->details_.marshal_args (out_stream) == false)
+       {
+         throw ::CORBA::MARSHAL ();
+@@ -145,13 +143,13 @@
+     if (nph != 0)
+       {
+         // nph = 0, means DiffServ library is not used
+-        // nph = 0, means DiffServ library is used, and
++        // nph = 0, means DiffServ library is used, and
+         // request DSCP and reply DSCP are set.
+         // Note that the application could still be using
+         // RTCORBA, but still setting DIffServ codepoints
+         // using the DiffServ library takes precedence.
+         //
+-        CORBA::Long dscp = nph->get_dscp_codepoint (this->resolver_.stub (),
++        CORBA::Long const dscp = nph->get_dscp_codepoint (this->resolver_.stub (),
+           this->resolver_.object ());
+         connection_handler->set_dscp_codepoint (dscp);
+       }
+Index: modules/TAO/tao/Pluggable_Messaging.h
+===================================================================
+--- modules/TAO/tao/Pluggable_Messaging.h	(revision 79294)
++++ modules/TAO/tao/Pluggable_Messaging.h	(revision 80736)
+@@ -161,9 +161,6 @@
+   /// request/response?
+   virtual int is_ready_for_bidirectional (TAO_OutputCDR &msg) = 0;
+
+-  /// Reset the messaging the object
+-  virtual void reset (void) = 0;
+-
+   /// Header length
+   virtual size_t header_length (void) const = 0;
+
+Index: modules/TAO/tao/IIOP_Transport.cpp
+===================================================================
+--- modules/TAO/tao/IIOP_Transport.cpp	(revision 79294)
++++ modules/TAO/tao/IIOP_Transport.cpp	(revision 80736)
+@@ -74,9 +74,7 @@
+                           const ACE_Time_Value *max_wait_time)
+ {
+   ssize_t const retval =
+-    this->connection_handler_->peer ().sendv (iov,
+-                                              iovcnt,
+-                                              max_wait_time);
++    this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
+
+   if (retval > 0)
+     bytes_transferred = retval;
+@@ -307,9 +305,9 @@
+   // messaging objects are ready to handle bidirectional connections
+   // and also make sure that we have not recd. or sent any information
+   // regarding this before...
+-  if (this->orb_core ()->bidir_giop_policy () &&
+-      this->messaging_object_->is_ready_for_bidirectional (msg) &&
+-      this->bidirectional_flag () < 0)
++  if (this->bidirectional_flag () < 0 &&
++      this->orb_core ()->bidir_giop_policy () &&
++      this->messaging_object_->is_ready_for_bidirectional (msg))
+     {
+       this->set_bidir_context_info (opdetails);
+
+@@ -324,14 +322,11 @@
+       opdetails.request_id (this->tms ()->request_id ());
+     }
+
+-  return TAO_Transport::generate_request_header (opdetails,
+-                                                 spec,
+-                                                 msg);
++  return TAO_Transport::generate_request_header (opdetails, spec, msg);
+ }
+
+ int
+-TAO_IIOP_Transport::messaging_init (CORBA::Octet major,
+-                                    CORBA::Octet minor)
++TAO_IIOP_Transport::messaging_init (CORBA::Octet major, CORBA::Octet minor)
+ {
+   this->messaging_object_->init (major, minor);
+
+@@ -409,8 +404,7 @@
+     return;
+
+   // Add this info in to the svc_list
+-  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
+-                                                    cdr);
++  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
+
+   return;
+ }
+@@ -427,18 +421,15 @@
+     return -1;
+
+   // Get the array of endpoints serviced by TAO_IIOP_Acceptor
+-  const ACE_INET_Addr *endpoint_addr =
+-    iiop_acceptor->endpoints ();
++  const ACE_INET_Addr *endpoint_addr = iiop_acceptor->endpoints ();
+
+   // Get the endpoint count
+-  size_t const count =
+-    iiop_acceptor->endpoint_count ();
++  size_t const count = iiop_acceptor->endpoint_count ();
+
+   // Get the local address of the connection
+   ACE_INET_Addr local_addr;
+
+-  if (this->connection_handler_->peer ().get_local_addr (local_addr)
+-      == -1)
++  if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
+     {
+       ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
+Index: modules/TAO/tao/GIOP_Message_Generator_Parser_12.cpp
+===================================================================
+--- modules/TAO/tao/GIOP_Message_Generator_Parser_12.cpp	(revision 79294)
++++ modules/TAO/tao/GIOP_Message_Generator_Parser_12.cpp	(revision 80736)
+@@ -89,6 +89,21 @@
+   return true;
+ }
+
++/*
++  // We have the ListenPointList at this point. Create a output CDR
++  // stream at this point
++  TAO_OutputCDR cdr;
++
++  // Marshal the information into the stream
++  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
++      || (cdr << listen_point_list) == 0)
++    return;
++
++  // Add this info in to the svc_list
++  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
++                                                    cdr);
++ */
++
+ bool
+ TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
+     CORBA::ULong request_id,
+@@ -99,8 +114,7 @@
+   msg << request_id;
+
+   // Write the target address
+-  if (this->marshall_target_spec (spec,
+-                                  msg) == false)
++  if (!(this->marshall_target_spec (spec, msg)))
+     return false;
+
+   // I dont think we need to align the pointer to an 8 byte boundary
+@@ -248,9 +262,12 @@
+
+   request.response_expected ((response_flags > 0));
+
++  // ?????
++ //request.compressed_ = (response_flags > 0);
++
+   // The high bit of the octet has been set if the SyncScope policy
+   // value is SYNC_WITH_SERVER.
+-  request.sync_with_server ((response_flags == 1));
++  request.sync_with_server (response_flags == 1);
+
+   // Reserved field
+   input.skip_bytes (3);
+@@ -296,6 +313,8 @@
+       this->check_bidirectional_context (request);
+     }
+
++  this->check_compression_context (request);
++
+   if (input.length () > 0)
+     {
+       // Reset the read_ptr to an 8-byte boundary.
+@@ -313,7 +332,7 @@
+   // Get the stream .
+   TAO_InputCDR &msg = request.incoming_stream ();
+
+-  CORBA::Boolean hdr_status = 1;
++  CORBA::Boolean hdr_status = true;
+
+   // Get the request id.
+   CORBA::ULong req_id = 0;
+@@ -323,8 +342,7 @@
+   request.request_id (req_id);
+
+   // Unmarshal the target address field.
+-  hdr_status =
+-    hdr_status && request.profile ().unmarshall_target_address(msg);
++  hdr_status = hdr_status && request.profile ().unmarshall_target_address(msg);
+
+   // Reset the pointer to an 8-byte bouns]dary
+   msg.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
+@@ -337,17 +355,17 @@
+     TAO_InputCDR &cdr,
+     TAO_Pluggable_Reply_Params &params)
+ {
+-  if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr,
+-                                                      params) == -1)
+-
++  if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr, params) == -1)
+     return -1;
+
+   if ((cdr >> params.svc_ctx_) == 0)
+     {
+-      // if (TAO_debug_level > 0)
+-        ACE_ERROR ((LM_ERROR,
+-                    ACE_TEXT ("TAO (%P|%t) parse_reply, ")
+-                    ACE_TEXT ("extracting context\n")));
++      if (TAO_debug_level)
++        {
++          ACE_ERROR ((LM_ERROR,
++                      ACE_TEXT ("TAO (%P|%t) parse_reply, ")
++                      ACE_TEXT ("extracting context\n")));
++        }
+
+       return -1;
+     }
+@@ -454,7 +472,7 @@
+             if (TAO_debug_level)
+               {
+                 ACE_DEBUG ((LM_DEBUG,
+-                            ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
++                            ACE_TEXT ("(%N |%l) Unable to handle this request\n")));
+               }
+             return false;
+           }
+@@ -467,7 +485,7 @@
+
+         // Get the IOR
+         IOP::IOR *ior = 0;
+-        CORBA::ULong index = spec.iop_ior (ior);
++        CORBA::ULong const index = spec.iop_ior (ior);
+
+         if (ior)
+           {
+@@ -484,7 +502,7 @@
+                 ACE_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+               }
+-            return 0;
++            return false;
+           }
+         break;
+       }
+@@ -492,7 +510,7 @@
+       if (TAO_debug_level)
+         {
+           ACE_DEBUG ((LM_DEBUG,
+-                      ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
++                      ACE_TEXT ("(%N |%l) Unable to handle this request\n")));
+         }
+       return false;
+     }
+@@ -519,6 +537,23 @@
+ }
+
+ bool
++TAO_GIOP_Message_Generator_Parser_12::check_compression_context (
++    TAO_ServerRequest &request)
++{
++  TAO_Service_Context &service_context = request.request_service_context ();
++
++  // Check whether we have the BiDir service context info available in
++  // the ServiceContextList
++  if (service_context.is_service_id (IOP::TAG_ZIOP_COMPONENT))
++    {
++      return this->process_compression_context (service_context, request);
++    }
++
++  return false;
++}
++
++
++bool
+ TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
+     TAO_Service_Context &service_context,
+     TAO_Transport *transport)
+@@ -539,6 +574,49 @@
+   return transport->tear_listen_point_list (cdr);
+ }
+
++bool
++TAO_GIOP_Message_Generator_Parser_12::process_compression_context (
++    TAO_Service_Context &service_context,
++    TAO_ServerRequest &request)
++{
++  // Get the context info
++  IOP::ServiceContext context;
++  context.context_id = IOP::TAG_ZIOP_COMPONENT;
++
++  if (service_context.get_context (context) != 1)
++      ACE_ERROR_RETURN ((LM_ERROR,
++                         ACE_TEXT ("(%P|%t) Context info not found \n")),
++                        false);
++
++  TAO_InputCDR cdr (reinterpret_cast<const char*> (
++                      context.context_data.get_buffer ()),
++                      context.context_data.length ());
++
++  CORBA::Boolean byte_order;
++  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
++    return false;
++
++  cdr.reset_byte_order (static_cast<int> (byte_order));
++
++  CORBA::ULong message_length = 0;
++  if (!(cdr >> message_length))
++    return false;
++
++    // @TODO use real typedef
++  CORBA::UShort compressorid = 0;
++  if (!(cdr >> compressorid))
++    return false;
++
++//   request.original_message_length_ = message_length;
++ACE_DEBUG ((LM_DEBUG, "Received compressor %d\n", compressorid));
++//+  request.compressed_ = true;
++//+  request.original_message_length_ = message_length;
++//+
++
++  return true;
++}
++
++
+ size_t
+ TAO_GIOP_Message_Generator_Parser_12::fragment_header_length (void) const
+ {
+Index: modules/TAO/tao/GIOP_Message_State.inl
+===================================================================
+--- modules/TAO/tao/GIOP_Message_State.inl	(revision 79294)
++++ modules/TAO/tao/GIOP_Message_State.inl	(revision 80736)
+@@ -11,10 +11,12 @@
+     byte_order_ (0),
+     message_type_ (TAO_PLUGGABLE_MESSAGE_REQUEST),
+     payload_size_ (0),
+-    more_fragments_ (0)
++    more_fragments_ (false),
++    compressed_ (false)
+ {
+ }
+
++
+ ACE_INLINE CORBA::ULong
+ TAO_GIOP_Message_State::message_size (void) const
+ {
+@@ -57,4 +59,10 @@
+   return this->giop_version_;
+ }
+
++ACE_INLINE CORBA::Boolean
++TAO_GIOP_Message_State::compressed (void) const
++{
++  return this->compressed_;
++}
++
+ TAO_END_VERSIONED_NAMESPACE_DECL
+Index: modules/TAO/tao/Synch_Invocation.cpp
+===================================================================
+--- modules/TAO/tao/Synch_Invocation.cpp	(revision 79294)
++++ modules/TAO/tao/Synch_Invocation.cpp	(revision 80736)
+@@ -15,6 +15,7 @@
+ #include "tao/ORB_Core.h"
+ #include "tao/Service_Context.h"
+ #include "tao/SystemException.h"
++#include "tao/ZIOP_Adapter.h"
+
+ #if TAO_HAS_INTERCEPTORS == 1
+ # include "tao/PortableInterceptorC.h"
+@@ -84,9 +85,17 @@
+                                 TAO_Transport::TAO_TWOWAY_REQUEST,
+                                 max_wait_time);
+
++        TAO_OutputCDR second;
++        this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, second);
++
+         this->write_header (tspec, cdr);
+
+-        this->marshal_data (cdr);
++//        this->marshal_data (cdr);
++        //ACE_CDR::consolidate (&cdr, &second);
++        cdr.write_octet_array_mb (second.begin ());
++        cdr.compressed (true);
++        //cdr.current ()->next (second.
++        //cdr.
+
+         // Register a reply dispatcher for this invocation. Use the
+         // preallocated reply dispatcher.
+@@ -644,9 +653,11 @@
+                                 TAO_Transport::TAO_ONEWAY_REQUEST,
+                                 max_wait_time);
+
++        this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, cdr);
++
+         this->write_header (tspec, cdr);
+
+-        this->marshal_data (cdr);
++        //this->marshal_data (cdr);
+
+         countdown.update ();
+
+Index: modules/TAO/tests/ZIOP/ZIOP.mpc
+===================================================================
+--- modules/TAO/tests/ZIOP/ZIOP.mpc	(revision 0)
++++ modules/TAO/tests/ZIOP/ZIOP.mpc	(revision 80736)
+@@ -0,0 +1,36 @@
++// -*- MPC -*-
++// $Id$
++
++project(*idl): taoidldefaults {
++  IDL_Files {
++    Test.idl
++  }
++  custom_only = 1
++}
++
++project(*Server): taoserver, compression, ziop, codecfactory, zlibcompressor {
++  after += *idl
++  Source_Files {
++    Hello.cpp
++    server.cpp
++  }
++  Source_Files {
++    TestC.cpp
++    TestS.cpp
++  }
++  IDL_Files {
++  }
++}
++
++project(*Client): taoclient, compression, ziop, codecfactory, zlibcompressor {
++  after += *idl
++  Source_Files {
++    client.cpp
++  }
++  Source_Files {
++    TestC.cpp
++  }
++  IDL_Files {
++  }
++}
++
+
+Property changes on: modules\TAO\tests\ZIOP\ZIOP.mpc
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tests/ZIOP/client.cpp
+===================================================================
+--- modules/TAO/tests/ZIOP/client.cpp	(revision 0)
++++ modules/TAO/tests/ZIOP/client.cpp	(revision 80736)
+@@ -0,0 +1,94 @@
++// $Id$
++
++#include "TestC.h"
++#include "ace/Get_Opt.h"
++#include "tao/ZIOP/ZIOP.h"
++#include "tao/Compression/zlib/ZlibCompressor_Factory.h"
++
++ACE_RCSID(Hello, client, "$Id$")
++
++const char *ior = "file://test.ior";
++
++int
++parse_args (int argc, char *argv[])
++{
++  ACE_Get_Opt get_opts (argc, argv, "k:");
++  int c;
++
++  while ((c = get_opts ()) != -1)
++    switch (c)
++      {
++      case 'k':
++        ior = get_opts.opt_arg ();
++        break;
++
++      case '?':
++      default:
++        ACE_ERROR_RETURN ((LM_ERROR,
++                           "usage:  %s "
++                           "-k <ior> "
++                           "\n",
++                           argv [0]),
++                          -1);
++      }
++  // Indicates sucessful parsing of the command line
++  return 0;
++}
++
++int
++ACE_TMAIN(int argc, ACE_TCHAR *argv[])
++{
++  try
++    {
++      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
++
++      if (parse_args (argc, argv) != 0)
++        return 1;
++
++      CORBA::Object_var compression_manager =
++        orb->resolve_initial_references("CompressionManager");
++
++      Compression::CompressionManager_var manager =
++        Compression::CompressionManager::_narrow (compression_manager.in ());
++
++      if (CORBA::is_nil(manager.in ()))
++        ACE_ERROR_RETURN ((LM_ERROR,
++                           " (%P|%t) Panic: nil compression manager\n"),
++                          1);
++
++      Compression::CompressorFactory_ptr compressor_factory;
++
++      ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
++
++      Compression::CompressorFactory_var compr_fact = compressor_factory;
++      manager->register_factory(compr_fact.in ());
++
++      CORBA::Object_var tmp = orb->string_to_object(ior);
++
++      Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
++
++      if (CORBA::is_nil (hello.in ()))
++        {
++          ACE_ERROR_RETURN ((LM_DEBUG,
++                             "Nil Test::Hello reference <%s>\n",
++                             ior),
++                            1);
++        }
++
++      CORBA::String_var the_string = hello->get_string ("This is a test stringThis is a test stringThis is a test stringThis is a test stringThis is a test stringThis is a test stringThis is a test stringThis is a test stringThis is a test string\n");
++
++      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
++                  the_string.in ()));
++
++      hello->shutdown ();
++
++      orb->destroy ();
++    }
++  catch (const CORBA::Exception& ex)
++    {
++      ex._tao_print_exception ("Exception caught:");
++      return 1;
++    }
++
++  return 0;
++}
+
+Property changes on: modules\TAO\tests\ZIOP\client.cpp
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tests/ZIOP/Hello.cpp
+===================================================================
+--- modules/TAO/tests/ZIOP/Hello.cpp	(revision 0)
++++ modules/TAO/tests/ZIOP/Hello.cpp	(revision 80736)
+@@ -0,0 +1,24 @@
++//
++// $Id$
++//
++#include "Hello.h"
++
++ACE_RCSID(Hello, Hello, "$Id$")
++
++Hello::Hello (CORBA::ORB_ptr orb)
++  : orb_ (CORBA::ORB::_duplicate (orb))
++{
++}
++
++char *
++Hello::get_string (const char * mystring)
++{
++  ACE_DEBUG ((LM_DEBUG, "Received <%s>\n", mystring));
++  return CORBA::string_dup ("Hello there!");
++}
++
++void
++Hello::shutdown (void)
++{
++  this->orb_->shutdown (0);
++}
+
+Property changes on: modules\TAO\tests\ZIOP\Hello.cpp
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tests/ZIOP/Test.idl
+===================================================================
+--- modules/TAO/tests/ZIOP/Test.idl	(revision 0)
++++ modules/TAO/tests/ZIOP/Test.idl	(revision 80736)
+@@ -0,0 +1,20 @@
++//
++// $Id$
++//
++
++/// Put the interfaces in a module, to avoid global namespace pollution
++module Test
++{
++  /// A very simple interface
++  interface Hello
++  {
++    /// Return a simple string
++    string get_string (in string mystring);
++
++    /// A method to shutdown the ORB
++    /**
++     * This method is used to simplify the test shutdown process
++     */
++    oneway void shutdown ();
++  };
++};
+
+Property changes on: modules\TAO\tests\ZIOP\Test.idl
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tests/ZIOP/server.cpp
+===================================================================
+--- modules/TAO/tests/ZIOP/server.cpp	(revision 0)
++++ modules/TAO/tests/ZIOP/server.cpp	(revision 80736)
+@@ -0,0 +1,125 @@
++// $Id$
++
++#include "Hello.h"
++#include "ace/Get_Opt.h"
++#include "ace/OS_NS_stdio.h"
++#include "tao/ZIOP/ZIOP.h"
++#include "tao/Compression/zlib/ZlibCompressor_Factory.h"
++
++ACE_RCSID (Hello,
++           server,
++           "$Id$")
++
++const char *ior_output_file = "test.ior";
++
++int
++parse_args (int argc, char *argv[])
++{
++  ACE_Get_Opt get_opts (argc, argv, "o:");
++  int c;
++
++  while ((c = get_opts ()) != -1)
++    switch (c)
++      {
++      case 'o':
++        ior_output_file = get_opts.opt_arg ();
++        break;
++
++      case '?':
++      default:
++        ACE_ERROR_RETURN ((LM_ERROR,
++                           "usage:  %s "
++                           "-o <iorfile>"
++                           "\n",
++                           argv [0]),
++                          -1);
++      }
++  // Indicates sucessful parsing of the command line
++  return 0;
++}
++
++int
++ACE_TMAIN(int argc, ACE_TCHAR *argv[])
++{
++  try
++    {
++      CORBA::ORB_var orb =
++        CORBA::ORB_init (argc, argv);
++
++      CORBA::Object_var compression_manager =
++        orb->resolve_initial_references("CompressionManager");
++
++      Compression::CompressionManager_var manager =
++        Compression::CompressionManager::_narrow (compression_manager.in ());
++
++      if (CORBA::is_nil(manager.in ()))
++        ACE_ERROR_RETURN ((LM_ERROR,
++                           " (%P|%t) Panic: nil compression manager\n"),
++                          1);
++
++      Compression::CompressorFactory_ptr compressor_factory;
++
++      ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
++
++      Compression::CompressorFactory_var compr_fact = compressor_factory;
++      manager->register_factory(compr_fact.in ());
++
++      CORBA::Object_var poa_object =
++        orb->resolve_initial_references("RootPOA");
++
++      PortableServer::POA_var root_poa =
++        PortableServer::POA::_narrow (poa_object.in ());
++
++      if (CORBA::is_nil (root_poa.in ()))
++        ACE_ERROR_RETURN ((LM_ERROR,
++                           " (%P|%t) Panic: nil RootPOA\n"),
++                          1);
++
++      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
++
++      if (parse_args (argc, argv) != 0)
++        return 1;
++
++      Hello *hello_impl = 0;
++      ACE_NEW_RETURN (hello_impl,
++                      Hello (orb.in ()),
++                      1);
++      PortableServer::ServantBase_var owner_transfer(hello_impl);
++
++      PortableServer::ObjectId_var id =
++        root_poa->activate_object (hello_impl);
++
++      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
++
++      Test::Hello_var hello = Test::Hello::_narrow (object.in ());
++
++      CORBA::String_var ior = orb->object_to_string (hello.in ());
++
++      // Output the IOR to the <ior_output_file>
++      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
++      if (output_file == 0)
++        ACE_ERROR_RETURN ((LM_ERROR,
++                           "Cannot open output file for writing IOR: %s\n",
++                           ior_output_file),
++                           1);
++      ACE_OS::fprintf (output_file, "%s", ior.in ());
++      ACE_OS::fclose (output_file);
++
++      poa_manager->activate ();
++
++      orb->run ();
++
++      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
++
++      root_poa->destroy (1, 1);
++
++      orb->destroy ();
++    }
++  catch (const CORBA::Exception& ex)
++    {
++      ex._tao_print_exception ("Exception caught:");
++      return 1;
++    }
++
++  return 0;
++}
+
+Property changes on: modules\TAO\tests\ZIOP\server.cpp
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tests/ZIOP/Hello.h
+===================================================================
+--- modules/TAO/tests/ZIOP/Hello.h	(revision 0)
++++ modules/TAO/tests/ZIOP/Hello.h	(revision 80736)
+@@ -0,0 +1,31 @@
++//
++// $Id$
++//
++
++#ifndef HELLO_H
++#define HELLO_H
++#include /**/ "ace/pre.h"
++
++#include "TestS.h"
++
++/// Implement the Test::Hello interface
++class Hello
++  : public virtual POA_Test::Hello
++{
++public:
++  /// Constructor
++  Hello (CORBA::ORB_ptr orb);
++
++  // = The skeleton methods
++  virtual char * get_string (const char * mystring);
++
++  virtual void shutdown (void);
++
++private:
++  /// Use an ORB reference to conver strings to objects and shutdown
++  /// the application.
++  CORBA::ORB_var orb_;
++};
++
++#include /**/ "ace/post.h"
++#endif /* HELLO_H */
+
+Property changes on: modules\TAO\tests\ZIOP\Hello.h
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tests/ZIOP/README
+===================================================================
+--- modules/TAO/tests/ZIOP/README	(revision 0)
++++ modules/TAO/tests/ZIOP/README	(revision 80736)
+@@ -0,0 +1,37 @@
++/**
++
++@page Hello Test README File
++
++	The simplest possible test for TAO.  This is a very simple
++test for TAO, it can be argued that it is in fact too simple to do
++anything useful, i.e. chances are that this test will always pass.
++
++	The goals of writing this test are:
++
++- Provide a very simple, very fast 'smoke test' for ORB developers.
++  If Hello does not pass then something is extremely broken and you
++  should go back to the drawing board.
++- Provide a code base to write more complex tests
++- Rule out basic infrastructure problems: if this test does not work
++  for a user then the infrastructure (network, DNS, host
++  configuration) are more likely to be at fault than the ORB.
++- External users are often asked to send us a 'simple test' for their
++  use case, we can now point them to this test to explain what do we
++  mean by "simple".
++- The -GA option has been added to the IDL compiler command line.
++  This option generates type code and Any insertion/extraction
++  operator implementations in a separate file with the extension *A.cpp.
++  This file is not included in the compilation however, to make sure
++  there is no dependency on it if the client and server do not use
++  type codes or Anys.
++
++	Please refrain from "improving", extending or expanding this
++test, if you need to change
++
++	To run the test use the run_test.pl script:
++
++$ ./run_test.pl
++
++	the script returns 0 if the test was successful.
++
++*/
+
+Property changes on: modules\TAO\tests\ZIOP\README
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+
+Index: modules/TAO/tests/ZIOP/run_test.pl
+===================================================================
+--- modules/TAO/tests/ZIOP/run_test.pl	(revision 0)
++++ modules/TAO/tests/ZIOP/run_test.pl	(revision 80736)
+@@ -0,0 +1,61 @@
++eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
++     & eval 'exec perl -S $0 $argv:q'
++     if 0;
++
++# $Id$
++# -*- perl -*-
++
++use lib "$ENV{ACE_ROOT}/bin";
++use PerlACE::Run_Test;
++
++$status = 0;
++$debug_level = '0';
++
++foreach $i (@ARGV) {
++    if ($i eq '-debug') {
++        $debug_level = '10';
++    }
++}
++
++$iorfile = PerlACE::LocalFile ("server.ior");
++unlink $iorfile;
++
++if (PerlACE::is_vxworks_test()) {
++    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o server.ior");
++}
++else {
++    $SV = new PerlACE::Process ("server", "-ORBdebuglevel $debug_level -o $iorfile");
++}
++$CL = new PerlACE::Process ("client", " -k file://$iorfile");
++
++$server = $SV->Spawn ();
++
++if ($server != 0) {
++    print STDERR "ERROR: server returned $server\n";
++    exit 1;
++}
++
++if (PerlACE::waitforfile_timed ($iorfile,
++                        $PerlACE::wait_interval_for_process_creation) == -1) {
++    print STDERR "ERROR: cannot find file <$iorfile>\n";
++    $SV->Kill (); $SV->TimedWait (1);
++    exit 1;
++}
++
++$client = $CL->SpawnWaitKill (300);
++
++if ($client != 0) {
++    print STDERR "ERROR: client returned $client\n";
++    $status = 1;
++}
++
++$server = $SV->WaitKill (10);
++
++if ($server != 0) {
++    print STDERR "ERROR: server returned $server\n";
++    $status = 1;
++}
++
++unlink $iorfile;
++
++exit $status;
+
+Property changes on: modules\TAO\tests\ZIOP\run_test.pl
+___________________________________________________________________
+Name: svn:keywords
+   + Author Date Id Revision
+Name: svn:eol-style
+   + native
+Name: svn:executable
+   + *
+
+Index: modules/TAO/ZIOP.mwc
+===================================================================
+--- modules/TAO/ZIOP.mwc	(revision 0)
++++ modules/TAO/ZIOP.mwc	(revision 80736)
+@@ -0,0 +1,11 @@
++// -*- MPC -*-
++// $Id$
++
++workspace {
++  $(ACE_ROOT)/ace
++  $(ACE_ROOT)/apps/gperf/src
++  tao
++  TAO_IDL
++  utils
++  tests/ZIOP
++}
+

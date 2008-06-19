@@ -82,6 +82,7 @@ class TAO_Message_State_Factory;
 class TAO_Protocols_Hooks;
 class TAO_Network_Priority_Protocols_Hooks;
 class TAO_BiDir_Adapter;
+class TAO_ZIOP_Adapter;
 
 class TAO_Flushing_Strategy;
 
@@ -526,6 +527,8 @@ public:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+  TAO_ZIOP_Adapter* ziop_adapter (void);
+
   typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *,
                                    TAO_Stub *,
                                    bool &,
@@ -655,6 +658,8 @@ public:
 
   /// Resolve the IOR Manipulation reference for this ORB.
   CORBA::Object_ptr resolve_ior_manipulation (void);
+
+  TAO_ZIOP_Adapter* ziop_adapter_i (void);
 
   /// Resolve the IOR Table reference for this ORB.
   CORBA::Object_ptr resolve_ior_table (void);
@@ -1231,6 +1236,9 @@ protected:
 
   /// Bir Dir GIOP policy value
   CORBA::Boolean bidir_giop_policy_;
+
+  /// ZIOP Adapter
+  TAO_ZIOP_Adapter *ziop_adapter_;
 
   /// Hold the flushing strategy
   TAO_Flushing_Strategy *flushing_strategy_;

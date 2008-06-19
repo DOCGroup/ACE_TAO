@@ -15,6 +15,7 @@
 #include "tao/Object_Loader.h"
 #include "tao/ObjectIdListC.h"
 #include "tao/BiDir_Adapter.h"
+#include "tao/ZIOP_Adapter.h"
 #include "tao/Collocation_Resolver.h"
 #include "tao/Flushing_Strategy.h"
 #include "tao/Request_Dispatcher.h"
@@ -259,6 +260,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     parser_registry_ (),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
+    ziop_adapter_ (0),
     flushing_strategy_ (0),
     codeset_manager_ (0),
     config_ (gestalt),
@@ -1583,6 +1585,21 @@ TAO_ORB_Core::policy_factory_registry_i (void)
   return this->policy_factory_registry_;
 }
 
+TAO_ZIOP_Adapter *
+TAO_ORB_Core::ziop_adapter_i (void)
+{
+  // Check if there is a cached reference.
+  if (this->ziop_adapter_ != 0)
+    return this->ziop_adapter_;
+
+  this->ziop_adapter_ =
+    ACE_Dynamic_Service<TAO_ZIOP_Adapter>::instance
+      (this->configuration (),
+       ACE_TEXT ("ZIOP_Loader"));
+
+  return this->ziop_adapter_;
+}
+
 TAO::ORBInitializer_Registry_Adapter *
 TAO_ORB_Core::orbinitializer_registry_i (void)
 {
@@ -1894,6 +1911,12 @@ TAO_ORB_Core::load_policy_validators (TAO_Policy_Validator &validator)
   // Call the BiDir library if it has been loaded
   if (this->bidir_adapter_)
     this->bidir_adapter_->load_policy_validators (validator);
+
+  ZIOP_Adapter *adapter = this->ziop_adapter_i();
+
+  // Call the ZIOP library if it has been loaded
+  if (adapter)
+    adapter->load_policy_validators (validator);
 }
 
 CORBA::Object_ptr
