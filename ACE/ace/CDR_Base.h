@@ -41,6 +41,16 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+// Stuff used by the ACE CDR classes. Watch these values... they're also used
+// in the ACE_CDR Byte_Order enum below.
+#if defined ACE_LITTLE_ENDIAN
+#  define ACE_CDR_BYTE_ORDER 1
+// little endian encapsulation byte order has value = 1
+#else  /* ! ACE_LITTLE_ENDIAN */
+#  define ACE_CDR_BYTE_ORDER 0
+// big endian encapsulation byte order has value = 0
+#endif /* ! ACE_LITTLE_ENDIAN */
+
 class ACE_Message_Block;
 
 /**
@@ -99,6 +109,22 @@ public:
     LINEAR_GROWTH_CHUNK = ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK
   };
 
+  /**
+   * @enum Byte_Order
+   *
+   * Defines values for the byte_order argument to ACE_OutputCDR and
+   * ACE_InputCDR.
+   */
+  enum Byte_Order
+  {
+    /// Use big-endian order (also known as network byte order).
+    BYTE_ORDER_BIG_ENDIAN = 0,
+    /// Use little-endian order.
+    BYTE_ORDER_LITTLE_ENDIAN = 1,
+    /// Use whichever byte order is native to this machine.
+    BYTE_ORDER_NATIVE = ACE_CDR_BYTE_ORDER
+  };
+    
   /**
    * Do byte swapping for each basic IDL type size.  There exist only
    * routines to put byte, halfword (2 bytes), word (4 bytes),
