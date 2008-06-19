@@ -5,22 +5,6 @@
  * $Id$
  *
  * @brief Pre-compiled IDL source for the IOP module.
- *
- * This file is used to generate IOPC.{h,cpp}, using the following
- * command:
- *
- *   tao_idl.exe
- *        -o orig -Gp -Gd -GA -SS -Sci
- *        -Wb,export_macro=TAO_Export
- *        -Wb,export_include=tao/TAO_Export.h
- *        -Wb,pre_include="ace/pre.h"
- *        -Wb,post_include="ace/post.h"
- *        IOP_IOR.pidl
- *
- * and then:
- *
- * cp orig/IOP_IORC.{h,inl,cpp} .
- * cp orig/IOP_IORA.cpp .
  */
 
 #ifndef TAO_IOP_IOR_PIDL
