@@ -29,9 +29,7 @@ Notify_Logging_Service::~Notify_Logging_Service (void)
 int
 Notify_Logging_Service::init_ORB (int& argc, char *argv [])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                "");
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   this->notify_service_ = TAO_Notify_Service::load_default ();
 

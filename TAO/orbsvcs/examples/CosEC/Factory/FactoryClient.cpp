@@ -85,9 +85,7 @@ void
 FactoryClient::init_ORB (int argc,
                        char *argv [])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                "");
+  this->orb_ = CORBA::ORB_init (argc, argv);
 }
 
 void
