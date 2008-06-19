@@ -1780,7 +1780,7 @@ sub check_for_ORB_init ()
 
                        print_error ("$file:$.: ORB_init() 2nd parameter requires static_cast<ACE_TCHAR **>(0)") if ($param2 eq '0');
                        print_error ("$file:$.: ORB_init() 3rd parameter is redundant (default orbID or give as string)") if ($multi_line eq '0');
-                     # print_error ("$file:$.: ORB_init() 3rd parameter is redundant (default orbID already \"\")") if ($multi_line eq '""');
+                       print_error ("$file:$.: ORB_init() 3rd parameter is redundant (default orbID already \"\")") if ($multi_line eq '""');
                    }
 
                    undef $multi_line;
