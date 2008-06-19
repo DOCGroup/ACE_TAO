@@ -6,6 +6,8 @@
 
 #include "ace/Monitor_Point_Registry.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 void
@@ -95,3 +97,6 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
   return 0;
 }
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
