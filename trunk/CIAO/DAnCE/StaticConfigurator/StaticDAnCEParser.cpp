@@ -41,9 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Initialize the ORB so that CORBA::Any will work
   //
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc,
-                     argv,
-                     "");
+    CORBA::ORB_init (argc, argv);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
   int c;
