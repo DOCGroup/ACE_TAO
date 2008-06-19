@@ -107,9 +107,7 @@ Base_Server::start_orb_and_poa (void)
 {
   try
     {
-      this->orb_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
-                                    "");
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA");

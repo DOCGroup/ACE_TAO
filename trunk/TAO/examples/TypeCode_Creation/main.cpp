@@ -6,13 +6,11 @@
 
 ACE_RCSID(TypeCode_Creation, main, "$Id$")
 
-int main(int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::TypeCode_var iface_tc =
         orb->create_interface_tc (CORBA::string_dup ("IDL:iface:1.0"),
