@@ -1,8 +1,14 @@
+Thu Jun 19 12:25:02 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV/media_timer.cpp:
+
+          Reverted the cast altogether at Johnny Willemsen's request.
+
 Thu Jun 19 11:31:59 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Statistic_Registry.cpp:
         * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
-        
+
           Added TAO_HAS_MONITOR_FRAMEWORK==1 guards to these files.
 
 Thu Jun 19 11:31:45 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
@@ -15,7 +21,7 @@ Thu Jun 19 11:31:45 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 Thu Jun 19 11:25:58 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/POA/EndpointPolicy/server.cpp:
-        
+
           Reword the report of a successful rejection of defaulted hotnames.
 
 Thu Jun 19 11:13:00 UTC 2008  Simon Massey  <sma at prismtech dot com>

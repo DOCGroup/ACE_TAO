@@ -74,7 +74,7 @@ ACE_UINT32 MediaTimer::media_ts()
   u = (u << 3) + u; /* x 9 */
   /* sec * 90Khz + (usec * 90Khz) / 1e6 */
   // Borland can't handle a truncate_cast here.
-  u = static_cast<ACE_UINT32> (tv.sec () * 90000 + (u / 100));
+  u = tv.sec () * 90000 + (u / 100);
   return (u + offset_);
 }
 
