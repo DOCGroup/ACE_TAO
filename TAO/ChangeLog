@@ -1,3 +1,23 @@
+Thu Jun 19 13:47:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Redirection/Client_Request_Interceptor.cpp:
+        * tests/RTCORBA/Linear_Priority/client.cpp:
+        * tests/RTCORBA/Linear_Priority/server.cpp:
+        * tests/RTCORBA/Persistent_IOR/client.cpp:
+        * tests/RTCORBA/Persistent_IOR/server.cpp:
+        * tests/RTCORBA/Policies/Policies.cpp:
+        * tests/RTCORBA/Policies_Combinations/client.cpp:
+        * tests/RTCORBA/Policies_Combinations/server.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp:
+        * tests/Server_Connection_Purging/client2.cpp:
+        * tests/Single_Read/client.cpp:
+        * tests/Timed_Buffered_Oneways/client.cpp:
+
+          Correct Fuzz errors concerning Wide character build compatabily
+          with ORB_init().
+
 Thu Jun 19 13:07:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * performance-tests/RTCorba/Multiple_Endpoints/Common/test_i.cpp:

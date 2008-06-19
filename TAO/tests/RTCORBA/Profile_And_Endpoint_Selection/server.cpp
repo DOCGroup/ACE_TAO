@@ -19,9 +19,9 @@ static CORBA::Boolean allow_borrowing = 0;
 
 static int debug = 1;
 static int ior_file_count = 1;
-static const char *ior_file_base = "ior";
-static const char *bands_file = "empty_file";
-static const char *lanes_file = "empty_file";
+static const ACE_TCHAR *ior_file_base = ACE_TEXT ("ior");
+static const ACE_TCHAR *bands_file = ACE_TEXT ("empty_file");
+static const ACE_TCHAR *lanes_file = ACE_TEXT ("empty_file");
 
 class test_i :
   public POA_test
@@ -92,7 +92,7 @@ test_i::_default_POA (void)
 }
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "b:d:l:o:");
   int c;
@@ -141,7 +141,7 @@ write_iors_to_file (CORBA::Object_ptr object,
   char filename[BUFSIZ];
   ACE_OS::sprintf (filename,
                    "%s_%d",
-                   ior_file_base,
+                   ACE_TEXT_ALWAYS_CHAR (ior_file_base),
                    ior_file_count);
   ior_file_count++;
 
@@ -213,7 +213,7 @@ rt_poa (CORBA::ORB_ptr orb,
 
   int result =
     get_priority_bands ("server",
-                        bands_file,
+                        ACE_TEXT_ALWAYS_CHAR (bands_file),
                         rt_orb,
                         policies,
                         debug);
@@ -227,7 +227,7 @@ rt_poa (CORBA::ORB_ptr orb,
 
   result =
     get_priority_lanes ("server",
-                        lanes_file,
+                        ACE_TEXT_ALWAYS_CHAR (lanes_file),
                         rt_orb,
                         stacksize,
                         static_threads,
@@ -352,14 +352,12 @@ Task::svc (void)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       int result =
         parse_args (argc, argv);
@@ -395,7 +393,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                  "Cannot create thread with scheduling policy %s\n"
                                  "because the user does not have the appropriate privileges, terminating program....\n"
                                  "Check svc.conf options and/or run as root\n",
-                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                 ACE_TEXT_CHAR_TO_TCHAR (sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ()))),
                                 2);
             }
           else

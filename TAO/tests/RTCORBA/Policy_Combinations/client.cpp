@@ -7,13 +7,13 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "../check_supported_priorities.cpp"
 
-static const char *ior = 0;
+static const ACE_TCHAR *ior = 0;
 static int iterations = 5;
 static int shutdown_server = 0;
 static RTCORBA::Priority default_thread_priority;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "k:i:x");
   int c;
@@ -88,7 +88,7 @@ Task::svc (void)
         current->the_priority ();
 
       object =
-        this->orb_->string_to_object (ior);
+        this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       test_var test =
         test::_narrow (object.in ());
@@ -123,14 +123,12 @@ Task::svc (void)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       int result =
         parse_args (argc, argv);
@@ -175,7 +173,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                  "Cannot create thread with scheduling policy %s\n"
                                  "because the user does not have the appropriate privileges, terminating program....\n"
                                  "Check svc.conf options and/or run as root\n",
-                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                 ACE_TEXT_CHAR_TO_TCHAR (sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ()))),
                                 2);
             }
           else
