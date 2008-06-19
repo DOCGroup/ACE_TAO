@@ -163,15 +163,13 @@ register_with_ns (const char * name_context,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize orb
       // @@TODO: Add error checking. There is absoluteley none.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CIAO::Server_init (orb.in ());
 

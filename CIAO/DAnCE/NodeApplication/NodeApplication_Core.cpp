@@ -188,9 +188,7 @@ CIAO::NodeApplication_Core::startup (int argc, char *argv[])
 
   // Initialize orb
   this->orb_ =
-    CORBA::ORB_init (argc,
-                     argv,
-                     "");
+    CORBA::ORB_init (argc, argv);
   CIAO::Server_init (this->orb_.in ());
 
   return this->configurator_->post_orb_initialize (this->orb_.in ());

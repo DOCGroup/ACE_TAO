@@ -118,9 +118,9 @@ main
   {
     // Initialize orb
     CORBA::ORB_var orb =
-                        CORBA::ORB_init( argc, argv, "" );
+                        CORBA::ORB_init (argc, argv);
 
-    if( parse_args( argc, argv ) != 0 )
+    if( parse_args (argc, argv) != 0 )
     {
       return -1;
     }
