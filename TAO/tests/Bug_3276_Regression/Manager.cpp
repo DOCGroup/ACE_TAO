@@ -1,17 +1,17 @@
 //$Id$
 
+#include "ace/SString.h"
 #include "Manager.h"
 #include "test_i.h"
 
-#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const char *control_ior = 0;
-const char *proxy_ior = 0;
+const ACE_TCHAR *control_ior = 0;
+const ACE_TCHAR *proxy_ior = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "c:p:");
   int c;
@@ -64,7 +64,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                "Cannot open output file for writing IOR: %s",
                                proxy_ior),
                                1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
+          ACE_OS::fprintf (output_file, "%s", ACE_TEXT_CHAR_TO_TCHAR (ior.in ()));
           ACE_OS::fclose (output_file);
         }
 
@@ -76,7 +76,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ior =
         orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
 
       // If the proxy_ior exists, output the ior to it
       if (control_ior != 0)
@@ -90,7 +90,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                "Cannot open output file for writing IOR: %s",
                                control_ior),
                                1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
+          ACE_OS::fprintf (output_file, "%s", ACE_TEXT_CHAR_TO_TCHAR (ior.in ()));
           ACE_OS::fclose (output_file);
         }
 
@@ -130,11 +130,9 @@ Manager::server (void)
 }
 
 int
-Manager::init (int argc, char *argv[])
+Manager::init (int argc, ACE_TCHAR *argv[])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                0);
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =

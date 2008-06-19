@@ -41,7 +41,7 @@ parse_args (int argc, char *argv[])
                            "-b <iorfile>"
                            "-c <iorfile>"
                            "\n",
-                           argv [0]),
+                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
                           -1);
       }
   // Indicates sucessful parsing of the command line
@@ -91,9 +91,7 @@ int
 Manager::init (int argc,
                char *argv[])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                0);
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =
@@ -243,7 +241,7 @@ Manager::make_iors_register (void)
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
+                           ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)),
                           1);
       ACE_OS::fprintf (output_file, "%s", iorref1.in ());
       ACE_OS::fclose (output_file);

@@ -13,7 +13,7 @@ public:
 
   ~Manager (void);
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the ORB, POA etc.
 
   int activate_servant (void);
