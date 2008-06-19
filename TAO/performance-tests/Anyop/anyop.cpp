@@ -35,7 +35,7 @@ ACE_RCSID (Anyop,
            "$Id$")
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -50,9 +50,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       ACE_Get_Opt get_opt (argc, argv, "dien:");
       int opt;

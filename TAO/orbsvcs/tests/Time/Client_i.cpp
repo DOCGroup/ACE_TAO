@@ -204,7 +204,7 @@ Client_i::read_ior (char *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for writing: %p\n",
-                       filename),
+                       ACE_TEXT_CHAR_TO_TCHAR (filename)),
                       -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
@@ -267,7 +267,7 @@ Client_i::parse_args (void)
                            " [-k ior]"
                             " [-x]"
                            "\n",
-                            this->argv_ [0]),
+                            ACE_TEXT_CHAR_TO_TCHAR (this->argv_ [0])),
                            -1);
        }
 
@@ -335,7 +335,7 @@ Client_i::obtain_initial_references (void)
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s|\n",
-                  name));
+                  ACE_TEXT_CHAR_TO_TCHAR (name)));
 
       CORBA::Object_var temp_object =
         my_name_client_->resolve (clerk_name);
@@ -367,13 +367,10 @@ Client_i::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-
   try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
-                                    0);
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -390,7 +387,7 @@ Client_i::init (int argc, char **argv)
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid ior <%s>\n",
-                               this->ior_),
+                               ACE_TEXT_CHAR_TO_TCHAR (this->ior_)),
                               -1);
           this->clerk_ =
             CosTime::TimeService::_narrow (server_object.in ());
