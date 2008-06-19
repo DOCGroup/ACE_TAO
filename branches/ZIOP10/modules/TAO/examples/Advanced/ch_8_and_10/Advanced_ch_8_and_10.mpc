@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(*client) : taoclient {
+  requires += dummy_label
+  source_files {
+    client.cpp
+  }
+}
+
+project(*server) : taoserver {
+  requires += dummy_label
+  source_files {
+    server.cpp
+    icp.cpp
+  }
+}

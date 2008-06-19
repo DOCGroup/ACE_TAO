@@ -1,0 +1,12 @@
+The service is registered with the naming service with the name
+"BasicLogFactory" .  
+
+To run the Basic Logging Service:
+------------------------
+1. you should have a running Naming Service.
+   if not, start one at $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
+
+2. execute the Basic_Logging_Service
+   at $TAO_ROOT/orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service
+
+The idl spec is $TAO_ROOT/orbsvcs/orbsvcs/DsLogAdmin.idl
