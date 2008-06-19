@@ -121,7 +121,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int argc_ = argc;
       for (int i = 0; i < argc; ++i)
         argv_[i] = argv[i];
-      orb = CORBA::ORB_init (argc_, argv_, "");
+      orb = CORBA::ORB_init (argc_, argv_);
 
       // Parse the arguments.
       if (parse_args (argc_, argv_) != 0)

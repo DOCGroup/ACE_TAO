@@ -1,3 +1,14 @@
+Thu Jun 19 16:49:23 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * performance-tests/CSD_Strategy/TestApps/ClientApp.cpp:
+        * performance-tests/CSD_Strategy/TestApps/ServerApp.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+        * performance-tests/RTCorba/Thread_Pool/server.cpp:
+
+          Remove redundant "" 3rd parameter (orbID) from ORB_init() calls.
+
 Thu Jun 19 16:43:52 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Bug_2319_Regression/server.cpp:

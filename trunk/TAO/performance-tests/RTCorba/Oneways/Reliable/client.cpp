@@ -427,8 +427,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Initialize the ORB, the POA, and get the server reference.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         "");
+                         argv);
 
       // Get the command line options.
       if (parse_args (argc, argv) != 0)
