@@ -36,13 +36,13 @@ parse_args (int argc, char *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::Boolean result = 0;
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" );
+        CORBA::ORB_init (argc, argv);
 
 
       if (parse_args (argc, argv) != 0)

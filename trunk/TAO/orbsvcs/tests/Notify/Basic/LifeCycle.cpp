@@ -61,12 +61,9 @@ LifeCycle::parse_args (int argc,
 }
 
 void
-LifeCycle::init (int argc,
-                     char* argv[])
+LifeCycle::init (int argc, char *argv[])
 {
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        argv,
-                                        "");
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var rootObj =
     orb->resolve_initial_references ("NameService");

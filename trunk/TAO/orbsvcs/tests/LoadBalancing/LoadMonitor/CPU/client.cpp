@@ -60,14 +60,12 @@ check_loads (const CosLoadBalancing::LoadList & loads)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         "");
+        CORBA::ORB_init (argc, argv);
 
       // Obtain a reference to the LoadManager.
       CORBA::Object_var obj =

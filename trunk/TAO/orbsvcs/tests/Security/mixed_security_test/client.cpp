@@ -152,7 +152,7 @@ ClientTest::secure_invocation ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Accomodate deficiencies on Windows that preclude doing this in
   // run_test.pl
@@ -162,7 +162,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       ClientTest restricted (orb.in (),
                              TAO_Mixed_Security_Test::restricted_ior);
