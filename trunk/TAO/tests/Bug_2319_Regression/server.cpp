@@ -289,7 +289,7 @@ int main (int argc, char *argv[])
     return 1;
 
   ST_AMH_Server amh_server (&argc, argv);
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
 
   amh_server.start_orb_and_poa(orb);

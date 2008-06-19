@@ -149,8 +149,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Initialize the broker
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
-                         argv,
-                         "");
+                         argv);
 
       CORBA::Object_var vRootPOABase =
         orb->resolve_initial_references ("RootPOA");

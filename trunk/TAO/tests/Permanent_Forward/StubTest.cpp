@@ -328,8 +328,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       // Retrieve the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "");
+                                            argv);
 
       test_forward (orb.in());
       test_forward_permanent (orb.in());
