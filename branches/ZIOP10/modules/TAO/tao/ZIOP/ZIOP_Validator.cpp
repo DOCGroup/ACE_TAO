@@ -1,4 +1,4 @@
-#include "tao/ZIOP/ZIOP_Validator.h"
+#include "tao/ZIOP/ZIOP_Policy_Validator.h"
 #include "tao/ZIOP/ZIOP_Policy_i.h"
 #include "tao/Policy_Set.h"
 #include "tao/ORB_Core.h"

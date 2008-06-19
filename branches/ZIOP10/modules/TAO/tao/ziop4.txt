@@ -606,24 +606,6 @@ Index: modules/TAO/tao/ORB_Core.inl
  ACE_INLINE TAO::ORBInitializer_Registry_Adapter *
  TAO_ORB_Core::orbinitializer_registry ()
  {
-Index: modules/TAO/tao/ZIOP_Adapter.h
-===================================================================
---- modules/TAO/tao/ZIOP_Adapter.h	(revision 0)
-+++ modules/TAO/tao/ZIOP_Adapter.h	(revision 80736)
-@@ -0,0 +1,55 @@
-Index: modules/TAO/tao/orbconf.h
-===================================================================
---- modules/TAO/tao/orbconf.h	(revision 79294)
-+++ modules/TAO/tao/orbconf.h	(revision 80736)
-@@ -752,6 +752,8 @@
-
-   TAO_CACHED_POLICY_ENDPOINT,
-
-+  TAO_CACHED_POLICY_ZIOP,
-+
-   /// NOTE: The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last.
-   ///       This value is used as the cached_policies_ array size in TAO_Policy_Set,
-   ///       Any policy type defined after "TAO_CACHED_POLICY_MAX_CACHED" will cause
 Index: modules/TAO/tao/GIOP_Message_Base.h
 ===================================================================
 --- modules/TAO/tao/GIOP_Message_Base.h	(revision 79294)
