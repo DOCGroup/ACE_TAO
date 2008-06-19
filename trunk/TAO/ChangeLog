@@ -1,3 +1,26 @@
+Thu Jun 19 14:46:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.cpp:
+        * orbsvcs/examples/Notify/Filter/Filter.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.cpp:
+        * orbsvcs/LoadBalancer/LoadManager.cpp:
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+        * orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp:
+
+          Remove redundant "" 3rd parameter (orbID) from ORB_init() calls.
+
 Thu Jun 19 14:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * examples/AMH/Sink_Server/Base_Server.cpp:

@@ -54,9 +54,7 @@ FactoryDriver::start (int argc, char *argv [])
 {
   try
     {
-      orb_ = CORBA::ORB_init (argc,
-                              argv,
-                              "");
+      orb_ = CORBA::ORB_init (argc, argv);
 
       if (this->parse_args (argc, argv) == -1)
         return -1;

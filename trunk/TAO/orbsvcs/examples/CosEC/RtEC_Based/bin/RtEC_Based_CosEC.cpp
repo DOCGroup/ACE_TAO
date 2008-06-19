@@ -20,9 +20,7 @@ RtEC_Based_CosEC::~RtEC_Based_CosEC (void)
 void
 RtEC_Based_CosEC::init_ORB  (int& argc, char *argv [])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                "");
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var poa_object  =
     this->orb_->resolve_initial_references("RootPOA");

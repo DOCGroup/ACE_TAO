@@ -63,12 +63,9 @@ Subscribe::done (void)
 }
 
 void
-Subscribe::init_ORB (int argc,
-                      char *argv [])
+Subscribe::init_ORB (int argc, char *argv [])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                "");
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_ptr poa_object  =
     this->orb_->resolve_initial_references("RootPOA");

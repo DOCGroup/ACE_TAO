@@ -52,9 +52,7 @@ Basic::init (int argc, char *argv[])
 void
 Basic::init_ORB  (int argc, char *argv [])
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                "");
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var poa_object  =
     this->orb_->resolve_initial_references("RootPOA");

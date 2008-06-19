@@ -193,14 +193,12 @@ TAO_Notify_ThreadPool_Supplier_Client::svc (void)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize an ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Create a holder for the common ORB Objects.
       TAO_Notify_ORB_Objects orb_objects;
