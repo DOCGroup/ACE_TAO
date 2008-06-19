@@ -28,7 +28,7 @@ enum Test_Type
     LATENCY
   };
 
-static const char *ior = "file://distributor.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://distributor.ior");
 static int shutdown_server = 0;
 static CORBA::ULong iterations = 5;
 static CORBA::ULong invocation_rate = 5;
@@ -37,7 +37,7 @@ static ACE_UINT32 gsf = 0;
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
 static CORBA::ULong message_size = 0;
-static const char *test_protocol = "IIOP";
+static const ACE_TCHAR *test_protocol = ACE_TEXT ("IIOP");
 static int print_statistics = 1;
 static int number_of_connection_attempts = 20;
 static int enable_diffserv_code_points = 0;
@@ -45,7 +45,7 @@ static RTCORBA::Priority corba_priority = RTCORBA::minPriority;
 static Test_Type test_type = PACED;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "a:b:c:d:e:i:k:m:p:r:s:t:x:");
   int c;
@@ -107,17 +107,17 @@ parse_args (int argc, char **argv)
 
       default:
         {
-          const char *test = 0;
+          const ACE_TCHAR *test = 0;
           switch (test_type)
             {
             case PACED:
-              test = "PACED";
+              test = ACE_TEXT ("PACED");
               break;
             case THROUGHPUT:
-              test = "THROUGHPUT";
+              test = ACE_TEXT ("THROUGHPUT");
               break;
             case LATENCY:
-              test = "LATENCY";
+              test = ACE_TEXT ("LATENCY");
               break;
             }
 
@@ -269,12 +269,12 @@ Worker::Worker (CORBA::ORB_ptr orb,
   this->base_protocol_policy_[0] =
     this->rtorb_->create_client_protocol_policy (protocols);
 
-  if (ACE_OS::strcmp (test_protocol, "DIOP") == 0)
+  if (ACE_OS::strcmp (test_protocol, ACE_TEXT ("DIOP")) == 0)
     {
       if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
       protocols[0].protocol_type = TAO_TAG_DIOP_PROFILE;
     }
-  else if (ACE_OS::strcmp (test_protocol, "SCIOP") == 0)
+  else if (ACE_OS::strcmp (test_protocol, ACE_TEXT ("SCIOP")) == 0)
     {
       if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is SCIOP\n"));
       protocols[0].protocol_type = TAO_TAG_SCIOP_PROFILE;
@@ -512,7 +512,7 @@ Worker::setup (void)
         {
           // Let the server know what to expect..
           this->test_->start_test (this->session_id_,
-                                   test_protocol,
+                                   ACE_TEXT_ALWAYS_CHAR (test_protocol),
                                    invocation_rate,
                                    message_size,
                                    iterations);
@@ -644,7 +644,7 @@ Worker::run (void)
   // This call is used to ensure that all the THROUGHPUT related data
   // has reached the server.
   if (test_type == THROUGHPUT &&
-      ACE_OS::strcmp (test_protocol, "DIOP") != 0)
+      ACE_OS::strcmp (test_protocol, ACE_TEXT ("DIOP")) != 0)
     {
       this->test_->twoway_sync ();
     }
@@ -661,16 +661,14 @@ Worker::run (void)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   gsf = ACE_High_Res_Timer::global_scale_factor ();
 
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
@@ -711,7 +709,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       mapping_manager->mapping (cnpm);
 
       object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       test_var test =
         test::_narrow (object.in ());

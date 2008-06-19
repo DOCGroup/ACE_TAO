@@ -10,12 +10,12 @@
 #include "tao/debug.h"
 #include "testS.h"
 
-static const char *ior_file = "distributor.ior";
-static const char *ior = "file://receiver.ior";
+static const ACE_TCHAR *ior_file = ACE_TEXT ("distributor.ior");
+static const ACE_TCHAR *ior = ACE_TEXT ("file://receiver.ior");
 static int number_of_connection_attempts = 20;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "f:k:");
   int c;
@@ -306,14 +306,12 @@ test_i::shutdown (void)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
@@ -342,7 +340,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       test_var receiver =
         test::_narrow (object.in ());

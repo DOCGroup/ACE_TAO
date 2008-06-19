@@ -31,12 +31,9 @@ Latency_Query_Client::init (int argc,
 {
   try
     {
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    0);
+      this->orb_ = CORBA::ORB_init (argc, argv);
 
-      int retval = this->parse_args (argc,
-                                     argv);
+      int retval = this->parse_args (argc, argv);
 
       if (retval != 0)
         {
@@ -183,7 +180,7 @@ Latency_Query_Client::parse_args (int argc,
                             " [-d]"
                             " [-i iterations]"
                             "\n",
-                            argv [0]),
+                            ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
                             -1);
         }
     }
@@ -232,4 +229,3 @@ Latency_Query_Client::populate_ifr (void)
 
   return 0;
 }
-
