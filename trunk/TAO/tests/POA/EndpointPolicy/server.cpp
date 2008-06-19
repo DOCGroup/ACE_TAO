@@ -262,8 +262,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (host_form == use_defaulted)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Caught expected PolicyError "
-                             "exception with defaulted hostname\n"), 0);
+                             "Defaulted hostname properly rejected\n"), 0);
         }
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "ERROR: Unexpectedly caught PolicyError "
