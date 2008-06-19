@@ -30,15 +30,15 @@ ServerApp::~ServerApp()
 
 
 int
-ServerApp::run(int argc, char* argv[])
+ServerApp::run (int argc, char* argv[])
 {
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
   // * Returns 1 if the usage statement was explicitly requested.
   // * Returns 0 otherwise.
-  int result = this->parse_args(argc, argv);
+  int result = this->parse_args (argc, argv);
   if (result != 0)
     {
       return result;

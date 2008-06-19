@@ -88,7 +88,7 @@ Client_Task::narrow_servant (void)
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (this->argc_, this->argv_, "");
+        CORBA::ORB_init (this->argc_, this->argv_);
 
       CORBA::Object_var object =
         orb->string_to_object (this->ior_);

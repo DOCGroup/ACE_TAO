@@ -66,9 +66,7 @@ DT_Test::check_supported_priorities (void)
 int
 DT_Test::init (int argc, char *argv [])
 {
-  orb_ = CORBA::ORB_init (argc,
-                          argv,
-                          "");
+  orb_ = CORBA::ORB_init (argc, argv);
 
   this->check_supported_priorities ();
 

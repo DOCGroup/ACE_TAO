@@ -1,3 +1,26 @@
+Thu Jun 19 14:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * examples/AMH/Sink_Server/Base_Server.cpp:
+        * examples/AMH/Sink_Server/Client_Task.cpp:
+        * examples/Buffered_AMI/server.cpp:
+        * examples/Buffered_Oneways/server.cpp:
+        * examples/CSD_Strategy/ThreadPool/ClientApp.cpp:
+        * examples/CSD_Strategy/ThreadPool/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool2/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool3/ClientApp.cpp:
+        * examples/CSD_Strategy/ThreadPool3/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool4/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ClientApp.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool6/ClientApp.cpp:
+        * examples/CSD_Strategy/ThreadPool6/ServerApp.cpp:
+        * examples/RTScheduling/Starter.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+        * examples/TypeCode_Creation/main.cpp:
+
+          Remove redundant "" 3rd parameter (orbID) from ORB_init() calls.
+
 Thu Jun 19 13:47:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp:
