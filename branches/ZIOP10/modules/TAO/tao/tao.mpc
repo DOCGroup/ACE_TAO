@@ -243,6 +243,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     WrongTransactionC.cpp
     WStringSeqC.cpp
     GUIResource_Factory.cpp
+    ZIOP_Adapter.cpp
   }
 
   Header_Files {
@@ -578,6 +579,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     WrongTransactionS.h
     WStringSeqC.h
     WStringSeqS.h
+    ZIOP_Adapter.h
   }
 
   Inline_Files {

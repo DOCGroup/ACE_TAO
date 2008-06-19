@@ -1912,7 +1912,7 @@ TAO_ORB_Core::load_policy_validators (TAO_Policy_Validator &validator)
   if (this->bidir_adapter_)
     this->bidir_adapter_->load_policy_validators (validator);
 
-  ZIOP_Adapter *adapter = this->ziop_adapter_i();
+  TAO_ZIOP_Adapter *adapter = this->ziop_adapter_i();
 
   // Call the ZIOP library if it has been loaded
   if (adapter)
