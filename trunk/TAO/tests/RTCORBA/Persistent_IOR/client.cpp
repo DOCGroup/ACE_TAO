@@ -6,10 +6,10 @@
 static int iterations = 5;
 static int shutdown_server = 0;
 
-static const char *ior = 0;
+static const ACE_TCHAR *ior = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "k:i:x");
   int c;
@@ -50,14 +50,12 @@ parse_args (int argc, char **argv)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       int result =
         parse_args (argc, argv);
@@ -65,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return result;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       test_var test =
         test::_narrow (object.in ());

@@ -31,7 +31,7 @@ ACE_RCSID(Timed_Buffered_Oneways, client, "$Id$")
 static int eager_buffering = 0;
 
 // Name of file contains ior.
-static const char *IOR = "file://ior";
+static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 
 // Default iterations.
 static u_long iterations = 20;
@@ -53,7 +53,7 @@ static u_long interval = 500;
 static int shutdown_server = 0;
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "ek:i:d:t:w:z:x");
   int c;
@@ -171,16 +171,14 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -189,7 +187,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       // Try to narrow the object reference to a <test> reference.
       test_var test_object_no_policy = test::_narrow (object.in ());

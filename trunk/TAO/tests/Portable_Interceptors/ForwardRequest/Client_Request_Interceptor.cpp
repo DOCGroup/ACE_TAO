@@ -50,8 +50,9 @@ Client_Request_Interceptor::send_request (
       if (CORBA::is_nil (this->orb_.in ()))
         {
           int argc = 0;
+          ACE_TCHAR **argv = 0;
           this->orb_ = CORBA::ORB_init (argc,
-                                        0,
+                                        argv,
                                         this->orb_id_.in ());
         }
 

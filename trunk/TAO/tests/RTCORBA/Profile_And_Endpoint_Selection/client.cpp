@@ -29,13 +29,13 @@ ACE_RCSID(Profile_And_Endpoint_Selection, client, "$Id$")
 static int iterations = 1;
 static int debug = 1;
 static int shutdown_server = 0;
-static const char *ior = "file://ior";
-static const char *invocation_priorities_file = "empty_file";
-static const char *protocols_file = "empty_file";
-static const char *bands_file = "empty_file";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://ior");
+static const ACE_TCHAR *invocation_priorities_file = ACE_TEXT ("empty_file");
+static const ACE_TCHAR *protocols_file = ACE_TEXT ("empty_file");
+static const ACE_TCHAR *bands_file = ACE_TEXT ("empty_file");
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "b:d:i:k:p:t:x");
   int c;
@@ -242,7 +242,7 @@ Client::priority_invocations (int debug)
   ULong_Array priorities;
   int result =
     get_values ("client",
-                invocation_priorities_file,
+                ACE_TEXT_ALWAYS_CHAR (invocation_priorities_file),
                 "invocation priorities",
                 priorities,
                 debug);
@@ -309,7 +309,7 @@ Client::set_client_protocols_policies (int debug)
 
   int result =
     get_protocols ("client",
-                   protocols_file,
+                   ACE_TEXT_ALWAYS_CHAR (protocols_file),
                    this->rt_orb_.in (),
                    policies,
                    debug);
@@ -332,7 +332,7 @@ Client::set_priority_bands (int debug)
 
   int result =
     get_priority_bands ("client",
-                        bands_file,
+                        ACE_TEXT_ALWAYS_CHAR (bands_file),
                         this->rt_orb_.in (),
                         policies,
                         debug);
@@ -416,7 +416,7 @@ Task::svc (void)
       current->the_priority (0);
 
       object =
-        this->orb_->string_to_object (ior);
+        this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       test_var test =
         test::_narrow (object.in ());
@@ -482,15 +482,13 @@ Task::svc (void)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -526,7 +524,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                  "Cannot create thread with scheduling policy %s\n"
                                  "because the user does not have the appropriate privileges, terminating program....\n"
                                  "Check svc.conf options and/or run as root\n",
-                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                 ACE_TEXT_CHAR_TO_TCHAR (sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ()))),
                                 2);
             }
           else
