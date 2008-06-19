@@ -1,3 +1,23 @@
+Thu Jun 19 13:07:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/test_i.cpp:
+        * tests/Bug_2234_Regression/client.cpp:
+        * tests/Bug_2234_Regression/server.cpp:
+        * tests/Bug_2935_Regression/source.cpp:
+        * tests/Bug_3276_Regression/Manager.cpp:
+        * tests/Bug_3276_Regression/Manager.h:
+        * tests/CDR/basic_types.cpp:
+        * tests/CDR/tc.cpp:
+        * tests/MProfile_Forward/Manager.cpp:
+        * tests/NestedUpcall/Simple/client.cpp:
+        * tests/NestedUpcall/Simple/server.cpp:
+        * tests/NestedUpcall/Simple/simple-client.cpp:
+        * tests/POA/Loader/Server_Manager.cpp:
+        * tests/POA/On_Demand_Loading/Server_Manager.cpp:
+
+          Correct Fuzz errors concerning Wide character build compatabily
+          with ORB_init().
+
 Thu Jun 19 12:25:02 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV/media_timer.cpp:

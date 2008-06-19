@@ -9,7 +9,7 @@ ACE_RCSID(Simple, server, "$Id$")
 static int quiet = 0;
 // The test is quiet...
 
-static const char *ior_file = "test.ior";
+static const ACE_TCHAR *ior_file = ACE_TEXT ("test.ior");
 // File of file to which the ior is written
 
 static int number_of_threads = 1;
@@ -63,7 +63,7 @@ write_ior_to_file (const char *ior)
       static_cast<size_t> (result) != ACE_OS::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
-                       ior,
+                       ACE_TEXT_CHAR_TO_TCHAR (ior),
                        ior_file),
                       -1);
 
@@ -74,7 +74,7 @@ write_ior_to_file (const char *ior)
 
 static int
 parse_args (int argc,
-            char **argv)
+            ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "q:f:t:");
   int c;
@@ -110,17 +110,13 @@ parse_args (int argc,
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc,
-                               argv);
+      int result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
@@ -163,8 +159,7 @@ main (int argc,
       if (result != 0)
         return result;
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (1, 1);
     }
   catch (const CORBA::Exception& ex)
     {

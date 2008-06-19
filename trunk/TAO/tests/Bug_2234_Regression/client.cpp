@@ -18,7 +18,7 @@ main(
   try
   {
     CORBA::ORB_var
-       orb= CORBA::ORB_init( argc, argv, 0 );
+       orb= CORBA::ORB_init (argc, argv);
     CORBA::Object_var
        object= orb->string_to_object( "file://server.ior" );
     Test::Foo_var
@@ -52,7 +52,7 @@ main(
        rS;
     ACE_DEBUG( (LM_INFO, ". String()          ") );
     rS= foo->TestString( aS.in(), bS.out(), cS.inout());
-    ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", aS.in(), bS.in(), cS.in(), rS.in()) );
+    ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", ACE_TEXT_CHAR_TO_TCHAR (aS.in ()), ACE_TEXT_CHAR_TO_TCHAR (bS.in ()), ACE_TEXT_CHAR_TO_TCHAR (cS.in ()), ACE_TEXT_CHAR_TO_TCHAR (rS.in ())) );
     if ((0 != *aS.in()) && (0 != ACE_OS::strcmp(aS.in(), "1"))) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
     else if ((0 != *aS.in()) && (0 != ACE_OS::strcmp(bS.in(), "2"))) {
@@ -96,7 +96,7 @@ main(
     cVS->val= CORBA::string_dup("3");
     ACE_DEBUG( (LM_INFO, ". MyVarStruct()     ") );
     rVS= foo->TestVarStruct( aVS.in(), bVS.out(), cVS.inout());
-    ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", aVS->val.in(), bVS->val.in(), cVS->val.in(), rVS->val.in()) );
+    ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", ACE_TEXT_CHAR_TO_TCHAR (aVS->val.in()), ACE_TEXT_CHAR_TO_TCHAR (bVS->val.in ()), ACE_TEXT_CHAR_TO_TCHAR (cVS->val.in ()), ACE_TEXT_CHAR_TO_TCHAR (rVS->val.in ())) );
     if ((0 != *aVS->val) && (0 != ACE_OS::strcmp(aVS->val, "1"))) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
     else if ((0 != *bVS->val) && (0 != ACE_OS::strcmp(bVS->val, "2"))) {

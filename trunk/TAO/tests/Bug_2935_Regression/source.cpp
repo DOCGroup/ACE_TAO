@@ -4,11 +4,11 @@
 
 // A ThreeTier client that calls tick and/or tock
 
-const char * ior_input_file = 0;
+const ACE_TCHAR * ior_input_file = 0;
 
 char input_ior[5000];
 
-void eat_args (int & argc, char *argv[], int argp, int how_many)
+void eat_args (int & argc, ACE_TCHAR *argv[], int argp, int how_many)
 {
   for (int marg = argp; marg + how_many < argc; ++marg)
     {
@@ -17,7 +17,7 @@ void eat_args (int & argc, char *argv[], int argp, int how_many)
   argc -= how_many;
 }
 
-bool parse_args (int & argc, char *argv[])
+bool parse_args (int & argc, ACE_TCHAR *argv[])
 {
   int argp = 1;
   while (argp < argc)
@@ -34,7 +34,7 @@ bool parse_args (int & argc, char *argv[])
           // capture input file name
           // then remove it from arguemnt list
           ior_input_file = argv[argp + 1];
-          eat_args(argc, argv, argp, 2);
+          eat_args (argc, argv, argp, 2);
         }
       else
         {
@@ -54,7 +54,7 @@ bool parse_args (int & argc, char *argv[])
 
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   ACE_DEBUG ((LM_DEBUG,
@@ -63,9 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
       if (!parse_args (argc, argv))
@@ -111,5 +109,3 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               "Source (%P|%t) exits\n"));
   return result;
 }
-
-
