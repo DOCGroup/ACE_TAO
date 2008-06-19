@@ -1,3 +1,27 @@
+Thu Jun 19 14:11:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * DAnCE/NodeApplication/NodeApplication_Core.cpp:
+        * DAnCE/NodeManager/Node_Manager.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
+        * docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.cpp:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.cpp:
+        * examples/BasicSP/EC/client.cpp:
+        * examples/BasicSP/EC/controller.cpp:
+        * examples/Display/RateGen/controller.cpp:
+        * examples/Hello/Sender/starter.cpp:
+        * examples/Null_Component/StaticDAnCEApp.cpp:
+        * examples/Swapping/Sender/starter.cpp:
+        * performance-tests/Benchmark/Multi_Threaded/client.cpp:
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+        * performance-tests/Benchmark/RoundTripClient/client.cpp:
+        * performance-tests/Protocols/Receiver/Receiver_exec.cpp:
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/controller.cpp:
+
+          Remove redundant "" 3rd parameter (orbID) from ORB_init() calls.
+
 Mon Jun 16 19:04:42 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tools/Config_Handlers/Utils/Functors.h:
