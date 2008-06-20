@@ -930,7 +930,8 @@ if (cdr.compressed_ == true)
           output.message_attributes (request_id,
                                      0,
                                      TAO_Transport::TAO_REPLY,
-                                     0);
+                                     0,
+                                     false);
 
           // Make the GIOP header and Reply header
           this->generate_reply_header (output, reply_params);
@@ -947,9 +948,9 @@ if (cdr.compressed_ == true)
 
           output.more_fragments (false);
 
-          int result = transport->send_message (output,
-                                                0,
-                                                TAO_Transport::TAO_REPLY);
+          int const result = transport->send_message (output,
+                                                      0,
+                                                      TAO_Transport::TAO_REPLY);
           if (result == -1)
             {
               if (TAO_debug_level > 0)

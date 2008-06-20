@@ -37,12 +37,14 @@ ACE_INLINE void
 TAO_OutputCDR::message_attributes (CORBA::ULong request_id,
                                    TAO_Stub * stub,
                                    TAO_Transport::TAO_Message_Semantics message_semantics,
-                                   ACE_Time_Value * timeout)
+                                   ACE_Time_Value * timeout,
+                                   bool compressed)
 {
   this->request_id_        = request_id;
   this->stub_              = stub;
   this->message_semantics_ = message_semantics;
   this->timeout_           = timeout;
+  this->compressed_        = compressed;
 }
 
 ACE_INLINE CORBA::ULong

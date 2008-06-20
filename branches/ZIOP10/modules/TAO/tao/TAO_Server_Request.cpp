@@ -270,7 +270,8 @@ TAO_ServerRequest::init_reply (void)
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
                                        TAO_Transport::TAO_REPLY,
-                                       0);
+                                       0,
+                                       false);
 
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_, reply_params);
@@ -317,7 +318,8 @@ TAO_ServerRequest::send_no_exception_reply (void)
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
                                        TAO_Transport::TAO_REPLY,
-                                       0);
+                                       0,
+                                       false);
 
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_, reply_params);
@@ -509,7 +511,8 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
                                        TAO_Transport::TAO_REPLY,
-                                       0);
+                                       0,
+                                       false);
 
   // Make the reply message
   if (this->mesg_base_->generate_reply_header (*this->outgoing_,

@@ -190,7 +190,8 @@ public:
   void message_attributes (CORBA::ULong request_id,
                            TAO_Stub * stub,
                            TAO_Transport::TAO_Message_Semantics message_semantics,
-                           ACE_Time_Value * timeout);
+                           ACE_Time_Value * timeout,
+                           bool compressed);
 
   /// Fragmented message request ID.
   CORBA::ULong request_id (void) const;

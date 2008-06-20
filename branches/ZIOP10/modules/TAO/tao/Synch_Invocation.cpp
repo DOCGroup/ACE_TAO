@@ -89,41 +89,13 @@ namespace TAO
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
-                                max_wait_time);
-//        TAO_OutputCDR second;
-//        this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, second);
-// We can only compress on one datablock! Because of this we need to consolidate. The trick is that 
-// we only want todo that when we have the min data size
-     this->write_header (cdr);
-     size_t header_length = cdr.length ();
-     ACE_Message_Block* current = const_cast <ACE_Message_Block*> (cdr.current ());
-     current->rd_ptr (current->wr_ptr());
-     this->marshal_data (cdr);
-     size_t data_length = cdr.length () - header_length;
-     if (1)
-       {        
-         // We can only compress on one message block, so when compression is enabled first do
-         // a consolidate
-         cdr.consolidate ();
-       }
-     // Set the read pointer to the point where the application data starts
+                                max_wait_time,
+                                false);
 
-     if (1)
-       {
-         if (this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), cdr))
-        {
-        // compressed
-        }
-         current->rd_ptr (current->base ());
-        //cdr.write_octet_array_mb (second.begin ());
-//          current->wr_ptr (wr_ptr +  compress_stream.length());
-  //        cdr.compressed (true);
-          }
-        //cdr.current ()->next (second.
-        //cdr.
+        this->write_header (cdr);
 
-//        this->marshal_data (cdr);
-
+        this->marshal_data (cdr);
+        
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (
@@ -686,7 +658,8 @@ namespace TAO
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
                                 TAO_Transport::TAO_ONEWAY_REQUEST,
-                                max_wait_time);
+                                max_wait_time,
+                                false);
 
         this->write_header (cdr);
 
