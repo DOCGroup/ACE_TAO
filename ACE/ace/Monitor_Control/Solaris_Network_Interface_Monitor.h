@@ -46,14 +46,20 @@ namespace ACE
       /// network information about the system. To get the specific
       /// value we want to monitor, we just vary the lookup string.
       Solaris_Network_Interface_Monitor (const ACE_TCHAR *lookup_str);
-
+      
       /// Platform-specific implementation.
       void update_i (void);
+
+      /// Platform-specific reset.
+      void clear_impl (void);
 
     protected:
       ACE_UINT64 value_;
       
     private:
+      /// Common code.
+      
+      void init (void);
       void access_kstats (ACE_UINT64 &which_member);
       int check_ks_module (const unsigned long ks_instance,
                            const unsigned long which_max,

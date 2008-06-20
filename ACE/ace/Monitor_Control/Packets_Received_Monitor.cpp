@@ -14,7 +14,7 @@ namespace ACE
       "OS/Network/PacketsReceived";
 
     Packets_Received_Monitor::Packets_Received_Monitor (const char* name)
-      : Monitor_Base (name)
+      : Monitor_Base (name, Monitor_Base::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
         , Windows_Multi_Instance_Monitor (
             ACE_TEXT ("\\Network Interface(*)\\Packets Received/sec"))
@@ -42,6 +42,12 @@ namespace ACE
     Packets_Received_Monitor::default_name (void)
     {
       return Packets_Received_Monitor::default_name_;
+    }
+    
+    void
+    Packets_Received_Monitor::clear_i (void)
+    {
+      this->clear_impl ();
     }
   }
 }

@@ -35,7 +35,7 @@ namespace ACE
      * @class BSD_Network_Interface_Monitor
      *
      * @brief Mixin class for network interface monitors compiled on
-     *        *BSD machines.
+     *        xxxBSD machines.
      */
     class MONITOR_CONTROL_Export BSD_Network_Interface_Monitor
     {
@@ -44,6 +44,9 @@ namespace ACE
 
       /// Platform-specific implementation.
       void update_i (void);
+
+      /// Platform-specific reset.
+      void clear_impl (void);
 
     protected:
       ACE_UINT64 value_;
