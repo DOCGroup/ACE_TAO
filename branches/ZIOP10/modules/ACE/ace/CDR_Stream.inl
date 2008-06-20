@@ -565,6 +565,17 @@ ACE_OutputCDR::current_alignment (void) const
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
 }
 
+ACE_INLINE void
+ACE_OutputCDR::current_alignment (size_t current_alignment) 
+{
+#if !defined (ACE_LACKS_CDR_ALIGNMENT)
+  this->current_alignment_ = current_alignment;
+#else
+  ACE_UNUSED_ARG (current_alignment);
+  return 0;
+#endif /* ACE_LACKS_CDR_ALIGNMENT */
+}
+
 ACE_INLINE int
 ACE_OutputCDR::align_write_ptr (size_t alignment)
 {
