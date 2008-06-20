@@ -327,7 +327,7 @@ Options::twoway_client_test (void)
   ACE_Time_Value tv;
 
   timer.elapsed_time_incr (tv);
-  double real_time = tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
+  double real_time = static_cast<double> (tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ());
   double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
