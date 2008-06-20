@@ -110,9 +110,14 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
 bool
 TAO_ZIOP_Loader::compress (
   TAO_ORB_Core& core,
-  TAO_Operation_Details &details,
-  TAO_OutputCDR &out_stream)
+  TAO_OutputCDR &stream)
 {
+  if (stream.end ())
+    {
+      // If we have a stream consisted out of multiple message blocks
+      // we can't compress it
+      return false;
+    }
   CORBA::Object_var compression_manager =
     core.resolve_compression_manager();
 
@@ -125,23 +130,24 @@ TAO_ZIOP_Loader::compress (
     Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 6);
 
     CORBA::OctetSeq myout;
-    myout.length ((CORBA::ULong)(out_stream.length()));
+    ACE_Message_Block* current = const_cast <ACE_Message_Block*> (stream.current());
+    CORBA::ULong original_data_length =(CORBA::ULong)(current->wr_ptr() - current->rd_ptr());
+    myout.length (original_data_length);
 
-    CORBA::OctetSeq input ((CORBA::ULong)(out_stream.length()), out_stream.begin ());
+    CORBA::OctetSeq input (original_data_length, current);
     
     // todo catch exceptions
     compressor->compress (input, myout);
-    if (myout.length () < input.length())
+    if (myout.length () < original_data_length)
     {
-    out_stream.compressed (true);
-    ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)myout.get_buffer(), (size_t)myout.length());
-    newblock->wr_ptr ((size_t)myout.length());
+    stream.compressed (true);
+    current->wr_ptr (current->rd_ptr ());
+    stream.current_alignment (current->wr_ptr() - current->base ());
     ZIOP::CompressedData data;
     data.compressorid = compressor_id;
     data.original_length = input.length();
     data.data = myout;
-    out_stream.reset ();
-    out_stream << data;
+    stream << data;
     return true;
     }
   }

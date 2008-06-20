@@ -95,24 +95,29 @@ namespace TAO
 // We can only compress on one datablock! Because of this we need to consolidate. The trick is that 
 // we only want todo that when we have the min data size
      this->write_header (cdr);
-     ACE_Message_Block *current = const_cast <ACE_Message_Block*>(cdr.current());
-     char* wr_ptr = current->wr_ptr();
+     size_t header_length = cdr.length ();
+     ACE_Message_Block* current = const_cast <ACE_Message_Block*> (cdr.current ());
+     current->rd_ptr (current->wr_ptr());
      this->marshal_data (cdr);
-     char* new_wr_ptr = current->wr_ptr();
-     // data between wr_ptr and new_wr_ptr is all app data
-     size_t length = new_wr_ptr - wr_ptr;
-     TAO_OutputCDR compress_stream (wr_ptr, length, cdr.byte_order());
-     char* mydat;
-     compress_stream.adjust (length, mydat);
-             
-     // store position where data starts, change the data in the stream
-//        this->marshal_data (cdr);
-        //ACE_CDR::consolidate (&cdr, &second);
-        if (this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, compress_stream))
+     size_t data_length = cdr.length () - header_length;
+     if (1)
+       {        
+         // We can only compress on one message block, so when compression is enabled first do
+         // a consolidate
+         cdr.consolidate ();
+       }
+     // Set the read pointer to the point where the application data starts
+
+     if (1)
+       {
+         if (this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), cdr))
         {
+        // compressed
+        }
+         current->rd_ptr (current->base ());
         //cdr.write_octet_array_mb (second.begin ());
-          current->wr_ptr (wr_ptr +  compress_stream.length());
-          cdr.compressed (true);
+//          current->wr_ptr (wr_ptr +  compress_stream.length());
+  //        cdr.compressed (true);
           }
         //cdr.current ()->next (second.
         //cdr.

@@ -30,7 +30,7 @@ class TAO_Policy_Validator;
 /**
  * @class TAO_ZIOP_Adapter
  *
- * @brief TAO_ZIOP_Adapter.
+ * @brief TAO_ZIOP_Adapter
  *
  * Class that offers an interface to the ORB to load and manipulate
  * ZIOP library.
@@ -40,7 +40,7 @@ class TAO_Export TAO_ZIOP_Adapter : public ACE_Service_Object
 public:
   virtual bool decompress (TAO_ServerRequest& server_request) = 0;
 
-  virtual bool compress (TAO_ORB_Core& core, TAO_Operation_Details &detail, TAO_OutputCDR &out_stream) = 0;
+  virtual bool compress (TAO_ORB_Core& core, TAO_OutputCDR &stream) = 0;
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
 
