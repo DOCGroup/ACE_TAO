@@ -92,6 +92,8 @@ namespace TAO
                                 max_wait_time);
 //        TAO_OutputCDR second;
 //        this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, second);
+// We can only compress on one datablock! Because of this we need to consolidate. The trick is that 
+// we only want todo that when we have the min data size
      this->write_header (cdr);
      ACE_Message_Block *current = const_cast <ACE_Message_Block*>(cdr.current());
      char* wr_ptr = current->wr_ptr();

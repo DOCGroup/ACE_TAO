@@ -113,12 +113,6 @@ TAO_ZIOP_Loader::compress (
   TAO_Operation_Details &details,
   TAO_OutputCDR &out_stream)
 {
-//  TAO_OutputCDR compression_stream;
-//  if (details.marshal_args (compression_stream) == false)
-    //{
-//      throw ::CORBA::MARSHAL ();
-  //  }
-//TAO_OutputCDR 
   CORBA::Object_var compression_manager =
     core.resolve_compression_manager();
 
