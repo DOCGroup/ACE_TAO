@@ -807,7 +807,7 @@ private:
    *
    * @return true if the queue is empty
    */
-  bool queue_is_empty_i (void);
+  bool queue_is_empty_i (void) const;
 
   /// A helper routine used in drain_queue_i()
   int drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max_wait_time);

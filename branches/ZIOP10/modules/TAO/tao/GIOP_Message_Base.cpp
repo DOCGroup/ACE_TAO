@@ -12,6 +12,7 @@
 #include "tao/Request_Dispatcher.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/SystemException.h"
+#include "tao/ZIOP_Adapter.h"
 #include "ace/Min_Max.h"
 
 /*
@@ -648,6 +649,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           qd->giop_version ().minor_version (),
                           this->orb_core_);
 
+input_cdr.compressed_ = qd->state().compressed ();
   transport->assign_translators(&input_cdr,&output);
 
   // We know we have some request message. Check whether it is a
@@ -863,6 +865,32 @@ TAO_GIOP_Message_Base::process_request (
       response_required = request.response_expected ();
 
       CORBA::Object_var forward_to;
+
+if (cdr.compressed_ == true)
+{
+  TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
+  if (adapter)
+  {
+  adapter->decompress (request);
+  }
+  else
+  {
+  // todo exception
+  }
+//+#if !defined (__BORLANDC__)
+//+            Bytef* LargBuffer = new Bytef [request.original_message_length_ * 2];
+//+     uLongf length = request.original_message_length_ * 2;
+//+            int retval = uncompress (LargBuffer,   &length,
+//+       (const Bytef*)cdr.rd_ptr(), cdr.length ());
+//+                          //       reinterpret_cast <const Bytef*>(compression_stream.buffer ()), compression_stream.total_length ());
+//+     char* buf = (char*)LargBuffer;
+
+//+TAO_InputCDR* newstream = new TAO_InputCDR (buf, (size_t)length);
+//+request.incoming_ = newstream;
+//+#endif
+//+
+//+ // do decompression
+}
 
       /*
        * Hook to specialize request processing within TAO
@@ -1439,6 +1467,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
     // Byte order.
     int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
+    int compressed = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x04;
 
     // Get the version info
     CORBA::Octet major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
@@ -1480,14 +1509,15 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     // Print.
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
-                "%s GIOP v%c.%c msg, %d data bytes, %s endian, "
-                "Type %s[%u]\n",
-                ACE_TEXT_CHAR_TO_TCHAR (label),
+                "%C GIOP v%c.%c msg, %d data bytes, %s endian, "
+                "%s compressed, Type %C[%u]\n",
+                label,
                 digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                 digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                 len - TAO_GIOP_MESSAGE_HEADER_LEN ,
                 (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
-                ACE_TEXT_CHAR_TO_TCHAR(message_name),
+                (compressed == 0) ? ACE_TEXT("not") : ACE_TEXT("is"),
+                message_name,
                 *id));
 
     if (TAO_debug_level >= 10)
@@ -1920,6 +1950,9 @@ TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
   // Only supported in GIOP 1.1 or better.
   if (!(major <= 1 && minor == 0))
     ACE_SET_BITS (flags, msg.more_fragments () << 1);
+
+  if (!(major <= 1 && minor < 2))
+    ACE_SET_BITS (flags, msg.compressed () << 2);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -421,7 +421,7 @@ TAO_Transport::generate_locate_request (
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - Transport[%d]::generate_locate_request, ")
                       ACE_TEXT ("error while marshalling the LocateRequest header\n"),
                       this->id ()));
@@ -454,9 +454,9 @@ TAO_Transport::generate_request_header (
     {
       if (TAO_debug_level > 0)
         {
-        ACE_DEBUG ((LM_DEBUG,
-                   ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
-                   ACE_TEXT ("error while marshalling the Request header\n"),
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
+                      ACE_TEXT ("error while marshalling the Request header\n"),
                       this->id()));
         }
 
@@ -781,12 +781,6 @@ TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_mess
     }
 
   return 0;
-}
-
-bool
-TAO_Transport::queue_is_empty_i (void)
-{
-  return (this->head_ == 0);
 }
 
 int

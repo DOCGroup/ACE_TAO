@@ -4,6 +4,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_INLINE bool
+TAO_Transport::queue_is_empty_i (void) const
+{
+  return (this->head_ == 0);
+}
+
 ACE_INLINE CORBA::ULong
 TAO_Transport::tag (void) const
 {
