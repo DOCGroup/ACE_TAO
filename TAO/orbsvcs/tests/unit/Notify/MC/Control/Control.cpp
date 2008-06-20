@@ -4,6 +4,8 @@
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/Control.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 static ACE_CString command;
 
 class ControlTest : public TAO_NS_Control
@@ -63,3 +65,6 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
   return 0;
 }
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+

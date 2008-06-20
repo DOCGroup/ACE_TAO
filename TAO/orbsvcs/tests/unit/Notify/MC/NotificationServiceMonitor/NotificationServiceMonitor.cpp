@@ -1,11 +1,13 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h"
+#include "ace/Monitor_Base.h"
+#include "ace/Monitor_Point_Registry.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
 #include "tao/TAO_Singleton_Manager.h"
-
-#include "ace/Monitor_Point_Registry.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
@@ -32,10 +34,10 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         }
 
       // Test registry addition.
-      TAO_Statistic* s = 0;
+      Monitor_Base* s = 0;
       ACE_NEW_RETURN (s,
-                      TAO_Statistic ("test1",
-                                     TAO_Statistic::TS_COUNTER),
+                      Monitor_Base ("test1",
+                                    Monitor_Base::MC_COUNTER),
                       2);
 
       if (reg->add (s) == false)
@@ -49,8 +51,8 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         }
 
       ACE_NEW_RETURN (s,
-                      TAO_Statistic ("test2",
-                                     TAO_Statistic::TS_NUMBER),
+                      Monitor_Base ("test2",
+                                    Monitor_Base::MC_NUMBER),
                       2);
                       
       if (reg->add (s) == false)
@@ -64,11 +66,11 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         }
 
       ACE_NEW_RETURN (s,
-                      TAO_Statistic ("test3",
-                                     TAO_Statistic::TS_INTERVAL),
+                      Monitor_Base ("test3",
+                                    Monitor_Base::MC_INTERVAL),
                       2);
                       
-      if (reg->add(s) == false)
+      if (reg->add (s) == false)
         {
           error ("third Monitor_Point_Registry::add() failed");
         }
@@ -101,27 +103,26 @@ ACE_TMAIN (int, ACE_TCHAR*[])
           error ("get_statistic() returned the wrong data");
         }
 
-      CosNotification::NotificationServiceMonitorControl::DataList* data =
+      CosNotification::NotificationServiceMonitorControl::DataList_var data =
         monitor.get_statistics (*names);
         
-      if (data == 0 || data->length () != 4)
+      if (data.ptr () == 0 || data.in ().length () != 4)
         {
           error ("get_statistics() returned the "
                  "incorrect number of data elements");
         }
         
-      num = (*data)[2].num ();
+      CORBA::ULong i = 2UL;  
+      num = data[i].num ();
       
       if (num.average != 4.5)
         {
           error ("get_statistics() return the wrong data");
         }
         
-      delete data;
-
       data = monitor.get_and_clear_statistics (*names);
       
-      if (data == 0 || data->length () != 4)
+      if (data.ptr () == 0 || data.in ().length () != 4)
         {
           error ("get_and_clear_statistics() returned "
                  "the incorrect number of data elements");
@@ -129,9 +130,9 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         
       // Skip the first one, which is an ACE_Message_Queue
       // monitor.  
-      for (CORBA::ULong i = 1; i < data->length (); ++i)
+      for (i = 1UL; i < data.in ().length (); ++i)
         {
-          num = (*data)[i].num ();
+          num = data[i].num ();
           
           if (num.count == 0)
             {
@@ -139,8 +140,6 @@ ACE_TMAIN (int, ACE_TCHAR*[])
             }
         }
         
-      delete data;
-
       // Test the clear_statistics method.
       for (int i = 0; i < 10; ++i)
         {
@@ -163,3 +162,6 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
   return 0;
 }
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+

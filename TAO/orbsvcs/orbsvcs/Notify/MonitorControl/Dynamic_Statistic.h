@@ -5,12 +5,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/MonitorControl/Statistic.h"
+#include "ace/Monitor_Base.h"
+
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename TYPE>
-class TAO_Dynamic_Statistic : public TAO_Statistic
+class TAO_Dynamic_Statistic : public Monitor_Base
 {
 public:
   /// Construct the dynamic statistic.  It is assumed that
@@ -18,16 +20,18 @@ public:
   /// with the life of this object.
   TAO_Dynamic_Statistic (TYPE* interf,
                          const char* name,
-                         TAO_Statistic::Information_Type type)
-    : TAO_Statistic (name, type),
+                         Monitor_Base::Information_Type type)
+    : Monitor_Base (name, type),
       interf_ (interf)
   {
   }
 
-  /// Take the interface, calculate the statistic and
+  /// Take the interface, update the data, calculate the statistic and
   /// store it for later calculations.  The implementation of this
-  /// method is expected to call the receive base class method.
-  virtual void calculate (void) = 0;
+  /// method is expected to call the receive base class method. This
+  /// method isn't pure virtual in Monitor_Base, but we reintroduce
+  /// it here to force all subclasses to implement it.
+  virtual void update (void) = 0;
 
 protected:
   TYPE* interf_;

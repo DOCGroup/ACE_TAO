@@ -5,6 +5,8 @@
 #include "ace/Service_Repository.h"
 #include "ace/Thread_Manager.h"
 
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
 void
 error (const char* msg)
 {
@@ -19,7 +21,7 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
     {
       if (ACE_Service_Config::open (argv[0]) != 0)
         {
-          error("Unable to load the TAO_MonitorAndControl");
+          error ("Unable to load the TAO_MonitorAndControl");
         }
 
       // Run the service.
@@ -45,3 +47,6 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
 
   return 0;
 }
+
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+

@@ -2,6 +2,8 @@
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 void
 error (const char* msg)
 {
@@ -44,3 +46,6 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   return 0;
 }
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+

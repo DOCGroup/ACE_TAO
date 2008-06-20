@@ -1,19 +1,20 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/Notify/Service.h"
-#include "orbsvcs/orbsvcs/Notify/Factory.h"
-
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h"
-
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h"
-#include "orbsvcs/orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtC.h"
-
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
+#include "ace/Monitor_Base.h"
+#include "ace/Monitor_Point_Registry.h"
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 
-#include "ace/Monitor_Point_Registry.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
+
+#include "orbsvcs/orbsvcs/Notify/Service.h"
+#include "orbsvcs/orbsvcs/Notify/Factory.h"
+
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h"
+#include "orbsvcs/orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtC.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
@@ -100,15 +101,14 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         + "/"
         + ACE_CString (NotifyMonitoringExt::InactiveEventChannelCount);
         
-      TAO_Statistic* stat =
-        dynamic_cast<TAO_Statistic*> (instance->get (stat_name));
+      Monitor_Base* stat = instance->get (stat_name);
       
       if (stat == 0)
         {
           error ("Could not find InactiveEventChannelCount statistic");
         }
 
-      stat->calculate ();
+      stat->update ();
       double count = stat->last_sample ();
       
       if (count != 1)
@@ -121,27 +121,27 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         + "/"
         + ACE_CString (NotifyMonitoringExt::ActiveEventChannelCount);
         
-      stat = dynamic_cast<TAO_Statistic*> (instance->get (stat_name));
+      stat = instance->get (stat_name);
       
       if (stat == 0)
         {
           error ("Could not find ActiveEventChannelCount statistic");
         }
 
-      stat->calculate ();
+      stat->update ();
       count = stat->last_sample ();
       
       if (count != 0)
         {
           error ("Invalid active event channel count");
         }
-
+/*
       stat_name =
         ecf_name
         + "/"
         + ACE_CString (NotifyMonitoringExt::InactiveEventChannelNames);
         
-      stat = dynamic_cast<TAO_Statistic*> (instance->get (stat_name));
+      stat = instance->get (stat_name);
       
       if (stat == 0)
         {
@@ -162,7 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         {
           error("Wrong event channel name");
         }
-
+*/
       CosNotifyChannelAdmin::AdminID aid;
       CosNotifyChannelAdmin::SupplierAdmin_var admin =
         mec->named_new_for_suppliers (CosNotifyChannelAdmin::AND_OP,
@@ -227,14 +227,14 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         + "/"
         + ACE_CString (NotifyMonitoringExt::EventChannelSupplierCount);
         
-      stat = dynamic_cast<TAO_Statistic*> (instance->get (stat_name));
+      stat = instance->get (stat_name);
       
       if (stat == 0)
         {
           error ("Could not find the event channel suppliers statistic");
         }
 
-      stat->calculate ();
+      stat->update ();
       count = stat->last_sample ();
       
       if (count != 1)
@@ -326,14 +326,14 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         + "/"
         + ACE_CString (NotifyMonitoringExt::EventChannelConsumerCount);
         
-      stat = dynamic_cast<TAO_Statistic*> (instance->get (stat_name));
+      stat = instance->get (stat_name);
       
       if (stat == 0)
         {
           error ("Could not find the event channel consumers statistic");
         }
 
-      stat->calculate ();
+      stat->update ();
       count = stat->last_sample ();
       
       if (count != 1)
@@ -375,3 +375,6 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   return 0;
 }
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
