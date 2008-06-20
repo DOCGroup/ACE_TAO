@@ -215,7 +215,8 @@ DT_Creator::register_synch_obj (void)
   ACE_Time_Value timestamp = ACE_OS::gettimeofday ();
 
   char buf [BUFSIZ];
-  synch_name += CORBA::string_dup (ACE_OS::itoa (timestamp.sec (), buf, 10));
+  ACE_OS::sprintf(buf, "%lu\n", timestamp.sec ());
+  synch_name += buf;
 
   name [0].id =
     CORBA::string_dup (synch_name.c_str ());
