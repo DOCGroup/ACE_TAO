@@ -48,8 +48,15 @@ namespace ACE
       /// Platform-specific implementation.
       void update_i (void);
 
+      /// Platform-specific reset.
+      void clear_impl (void);
+
     protected:
       ACE_UINT64 value_;
+      
+    private:
+      /// Common code.      
+      void init (void);
 
     private:
       static const unsigned long MAX_INTERFACES = 10UL;

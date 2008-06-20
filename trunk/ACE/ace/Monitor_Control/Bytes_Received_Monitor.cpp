@@ -14,7 +14,7 @@ namespace ACE
       "OS/Network/BytesReceived";
 
     Bytes_Received_Monitor::Bytes_Received_Monitor (const char* name)
-      : Monitor_Base (name)
+      : Monitor_Base (name, Monitor_Base::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
         , Windows_Multi_Instance_Monitor (
             ACE_TEXT ("\\Network Interface(*)\\Bytes Received/sec"))
@@ -42,6 +42,12 @@ namespace ACE
     Bytes_Received_Monitor::default_name (void)
     {
       return Bytes_Received_Monitor::default_name_;
+    }
+    
+    void
+    Bytes_Received_Monitor::clear_i (void)
+    {
+      this->clear_impl ();
     }
   }
 }
