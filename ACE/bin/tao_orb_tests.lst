@@ -10,11 +10,11 @@
 # NOTE: This file contains tests only for TAO's ORB. Please do not
 # include things like performance-tests, and examples here.
 
-TAO/tests/Oneway_Send_Timeouts/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !Win32 !LabVIEW_RT
-TAO/tests/Oneway_Send_Timeouts/run_test.pl -blocking: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !Win32 !LabVIEW_RT
-TAO/tests/Oneway_Send_Timeouts/run_test.pl -reactive:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !Win32 !LabVIEW_RT
-TAO/tests/Abstract_Interface/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT
-TAO/tests/Bug_2702_Regression/run_test.pl: !LabVIEW_RT
+TAO/tests/Oneway_Send_Timeouts/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !Win32
+TAO/tests/Oneway_Send_Timeouts/run_test.pl -blocking: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !Win32
+TAO/tests/Oneway_Send_Timeouts/run_test.pl -reactive:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !Win32
+TAO/tests/Abstract_Interface/run_test.pl: !CORBA_E_MICRO
+TAO/tests/Bug_2702_Regression/run_test.pl
 TAO/tests/ORB_Local_Config/Bunch/run_test.pl: !LabVIEW_RT
 TAO/tests/ORB_Local_Config/Bug_1459/run_test.pl: SSL !STATIC !ACE_FOR_TAO !LabVIEW_RT
 TAO/tests/ORB_Local_Config/Bug_2612/run_test.pl: !ST !STATIC !ACE_FOR_TAO !LabVIEW_RT

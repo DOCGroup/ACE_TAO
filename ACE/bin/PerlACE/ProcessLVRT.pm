@@ -279,9 +279,11 @@ sub Kill ()
     $self->{RUNNING} = 0;
     # Trying to kill a LabVIEW RT thread and recover is probably futile. Just
     # reboot and reset the FTP connection.
-    $self->{TELNET}->close();
-    $self->{TELNET} = undef;
-    $self->{TARGET}->RebootReset;;
+    if (defined $self->{TELNET}) {
+        $self->{TELNET}->close();
+        $self->{TELNET} = undef;
+    }
+    $self->{TARGET}->RebootReset;
 }
 
 # Wait until a process exits.
