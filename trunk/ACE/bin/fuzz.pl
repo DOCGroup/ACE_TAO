@@ -774,11 +774,11 @@ sub check_for_improper_main_declaration ()
                     $not_found_end_line_count = 0;
                 }
                 elsif ($multi_line =~ s/^\(\s*([^\)]*?)\s*\)\s*\{//) {
-                    $multi_line = $1;                              ## What was between the main's ( and )
-                    $multi_line =~ s/\s{2,}/\s/g;                  ## Compress white space
+                    $multi_line = $1;                             ## What was between the main's ( and )
+                    $multi_line =~ s/\s{2,}/ /g;                  ## Compress white space
                     my $was = $multi_line;
-                    $multi_line =~ s/([^\/])\*\s([^\/])/$1\*$2/g;  ## Remove space after * (except around comment)
-                    $multi_line =~ s/([^\/])\s\[/$1\[/g;           ## Remove space before [ (except following comment)
+                    $multi_line =~ s!([^/])\*\s([^/])!$1\*$2!g;   ## Remove space after * (except around comment)
+                    $multi_line =~ s!([^/])\s\[!$1\[!g;           ## Remove space before [ (except following comment)
                     if ($multi_line =~ s/^([^,]*?)\s?,\s?//) { # Fails if only 1 parameter (ignore this main)
                         my $arg1 = $1;
                         if ($multi_line =~ s/^(\w[\w\d]*)\s?//) { # Fails if no type for 2nd parameter (ignore this main)
