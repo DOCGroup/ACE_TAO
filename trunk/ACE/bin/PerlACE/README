@@ -22,12 +22,14 @@ embedded target and the client component on the local build host.
 
 To redirect execution of a test's component, you must do three things:
 
-   1. Name the component in the test script. For example, "server", "client".
-      The name is not case sensitive and will be translated to upper case
-      for step 2.
-   2. Set an environment variable, DOC_TEST_<component-name>. For example,
-      DOC_TEST_SERVER, DOC_TEST_CLIENT. The value of the environment variable
-      is a configuration name.
+   1. Assign a number to the component in the test script. By convention,
+      1 is the component that runs on a target. In TAO, this is generally
+      the server; in the case of ACE tests, it is the only part. Number 2
+      is, by convention, the TAO client, or the piece to run on the build
+      host.
+   2. Set an environment variable, DOC_TEST_<component-number>. For example,
+      DOC_TEST_1, DOC_TEST_2. The value of the environment variable is a
+      configuration name.
    3. Set environment variables for the configuration name. These environment
       variables hold the information used to run the test component on the
       configuration. The environment variables are named
@@ -39,9 +41,9 @@ To redirect execution of a test's component, you must do three things:
                                   the local host but with an alternate set
                                   of settings, such as ACE_ROOT, TAO_ROOT.
          <configuration-name>_IPNAME: The machine's IP hostname or address
-         <configuration-name>_ACE_ROOT: ACE_ROOT for the machine's files
-         <configuration-name>_TAO_ROOT: TAO_ROOT for the machine's files
+         <configuration-name>_ACE_ROOT: ACE_ROOT for the configuration's files
+         <configuration-name>_TAO_ROOT: TAO_ROOT for the configuration's files
 
-If there is no DOC_TEST_<component-name> environment variable when the
+If there is no DOC_TEST_<component-number> environment variable when the
 component runs, that component is executed on the local machine. This is
 the case for most builds.
