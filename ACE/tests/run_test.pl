@@ -538,7 +538,7 @@ if (defined $opt_v && defined $opt_o) {
 }
 else {
 
-  my $target = PerlACE::TestTarget::create_target ("ace");
+  my $target = PerlACE::TestTarget::create_target (1);
 
   foreach $test (@tests) {
     if (defined $opt_d) {
