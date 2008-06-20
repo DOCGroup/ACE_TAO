@@ -1,3 +1,25 @@
+Fri Jun 20 18:40:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Removed references to HostProcess and TargetProcess.
+
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+
+          Added a new test target for VxWorks.  It currently has no reboot
+          related functionality.
+
+        * bin/PerlACE/TestTarget_LVRT.pm:
+
+          Added the ability to accept multiple files for the DeleteFile
+          method as unlink does.
+
+        * bin/PerlACE/HostProcess.pm:
+        * bin/PerlACE/TargetProcess.pm:
+
+          Removed these files.
+
 Fri Jun 20 15:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/fuzz.pl:

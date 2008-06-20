@@ -44,6 +44,11 @@ sub create_target
         $target = new PerlACE::TestTarget_LVRT ($config_name);
         last SWITCH;
       }
+      if ($config_os =~ /VxWorks/i) {
+        require PerlACE::TestTarget_VxWorks;
+        $target = new PerlACE::TestTarget_VxWorks ($config_name);
+        last SWITCH;
+      }
       print STDERR "$config_os is an unknown OS type!\n";
     }
     return $target;
@@ -179,8 +184,7 @@ sub LocalFile ($)
 sub DeleteFile ($)
 {
     my $self = shift;
-    my $file = shift;
-    unlink $file;
+    unlink (@_);
 }
 
 sub GetFile ($)
