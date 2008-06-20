@@ -1,3 +1,10 @@
+Fri Jun 20 14:32:52 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/OctetSeq/run_test.pl:
+
+          Reverted my change from Mon Jun  9 12:28:24 UTC 2008.  The test
+          framework is moving in a different direction.
+
 Fri Jun 20 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
