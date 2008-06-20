@@ -13,7 +13,6 @@
 #include "Notify_StructuredPushSupplier.h"
 #include "Notify_Test_Client.h"
 
-
 // ******************************************************************
 // Data Section
 // ******************************************************************

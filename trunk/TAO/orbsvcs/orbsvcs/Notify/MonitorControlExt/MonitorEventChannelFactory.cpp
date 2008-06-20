@@ -9,8 +9,6 @@
 
 #include "ace/Monitor_Point_Registry.h"
 
-using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ******************************************************************
@@ -23,7 +21,7 @@ class EventChannels
 public:
   EventChannels (TAO_MonitorEventChannelFactory* ecf,
                  const ACE_CString& name,
-                 TAO_Statistic::Information_Type type,
+                 Monitor_Base::Information_Type type,
                  bool active)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannelFactory> (ecf,
                                                              name.c_str (),
@@ -32,19 +30,9 @@ public:
   {
   }
   
-  virtual void calculate (void)
+  virtual void update (void)
   {
-    if (this->type () == TAO_Statistic::TS_LIST)
-      {
-        TAO_Statistic::List names;
-        this->interf_->get_ecs (&names, this->active_);
-        this->receive(names);
-      }
-    else
-      {
-        this->receive (
-          static_cast<double> (this->interf_->get_ecs (0, this->active_)));
-      }
+    this->receive (this->interf_->get_ecs (0, this->active_));
   }
 
 private:
@@ -69,7 +57,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
-                              TAO_Statistic::TS_NUMBER,
+                              Monitor_Base::MC_NUMBER,
                               true));
                               
       event_channels->add_to_registry (); 
@@ -82,45 +70,20 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
-                              TAO_Statistic::TS_NUMBER,
+                              Monitor_Base::MC_NUMBER,
                               false));
                               
       event_channels->add_to_registry ();     
       event_channels->remove_ref ();
           
       this->stat_names_.push_back (stat_name);
-
-      stat_name = dir_name + NotifyMonitoringExt::ActiveEventChannelNames;
-      event_channels = 0;
-      ACE_NEW (event_channels,
-               EventChannels (this,
-                              stat_name,
-                              TAO_Statistic::TS_LIST,
-                              true));
-                              
-      event_channels->add_to_registry ();      
-      event_channels->remove_ref ();
-          
-      this->stat_names_.push_back (stat_name);
-
-      stat_name = dir_name + NotifyMonitoringExt::InactiveEventChannelNames;
-      event_channels = 0;
-      ACE_NEW (event_channels,
-               EventChannels (this,
-                              stat_name,
-                              TAO_Statistic::TS_LIST,
-                              false));
-                              
-      event_channels->add_to_registry ();
-      event_channels->remove_ref ();
-          
+         
       this->stat_names_.push_back (stat_name);
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelCreationTime;
-      TAO_Statistic* timestamp = 0;
+      Monitor_Base* timestamp = 0;
       ACE_NEW (timestamp,
-               TAO_Statistic (stat_name.c_str (),
-                              TAO_Statistic::TS_TIME));
+               Timestamp_Monitor (stat_name.c_str ()));
                               
       ACE_Time_Value tv (ACE_OS::gettimeofday());
       timestamp->receive (tv.sec () + (tv.usec () / 1000000.0));
@@ -129,30 +92,6 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       timestamp->remove_ref ();
           
       this->stat_names_.push_back (stat_name);
-      
-      Monitor_Point_Registry* instance =
-        Monitor_Point_Registry::instance ();
-
-      ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
-      
-      TAO_Statistic* names =
-        dynamic_cast<TAO_Statistic*> (
-          instance->get (NotifyMonitoringExt::EventChannelFactoryNames));
-        
-      if (names == 0)
-        {
-          stat_name = NotifyMonitoringExt::EventChannelFactoryNames;
-          ACE_NEW_THROW_EX (names,
-                            TAO_Statistic (stat_name.c_str (),
-                                           TAO_Statistic::TS_LIST),
-                            CORBA::NO_MEMORY ());
-          names->add_to_registry ();
-        }
-        
-      TAO_Statistic::List list = names->get_list ();
-      list.push_back (this->name_);
-      names->receive (list);
-      names->remove_ref ();
     }
 }
 
@@ -346,8 +285,9 @@ TAO_MonitorEventChannelFactory::get_consumers (
 }
 
 size_t
-TAO_MonitorEventChannelFactory::get_ecs (TAO_Statistic::List* names,
-                                         bool active)
+TAO_MonitorEventChannelFactory::get_ecs (
+  Monitor_Control_Types::NameList* names,
+  bool active)
 {
   size_t count = 0;
   CosNotifyChannelAdmin::ChannelIDSeq_var ids = this->get_all_channels ();

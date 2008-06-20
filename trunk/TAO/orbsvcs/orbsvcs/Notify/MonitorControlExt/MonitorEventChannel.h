@@ -1,4 +1,5 @@
 // $Id$
+
 #ifndef MONITOREVENTCHANNEL_H
 #define MONITOREVENTCHANNEL_H
 
@@ -10,21 +11,33 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Monitor_Control_Types.h"
+
 #include "orbsvcs/Notify/EventChannel.h"
 
-#include "orbsvcs/Notify/MonitorControl/Statistic.h"
-
 #include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
-#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE
+{
+  namespace Monitor_Control
+  {
+    class Monitor_Base;
+  }
+}
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_ThreadPool_Task;
-class TAO_Statistic_Registry;
 
-class TAO_Notify_MC_Ext_Export TAO_MonitorEventChannel:
-                  public virtual TAO_Notify_EventChannel,
-                  public virtual POA_NotifyMonitoringExt::EventChannel
+class TAO_Notify_MC_Ext_Export TAO_MonitorEventChannel
+  :  public virtual TAO_Notify_EventChannel,
+     public virtual POA_NotifyMonitoringExt::EventChannel
 {
 public:
   /// Construct a named event channel and associate various
@@ -39,7 +52,7 @@ public:
 
   /// Register a single statistic with the EC and statistic registry.
   bool register_statistic (const ACE_CString& name,
-                           TAO_Statistic* stat);
+                           Monitor_Base* stat);
 
   /// Unregister a single statistic from the EC and statistic registry.
   bool unregister_statistic (const ACE_CString& name);
@@ -88,15 +101,15 @@ public:
                        const char* name);
 
 private:
-  size_t get_consumers (TAO_Statistic::List* names);
-  size_t get_suppliers (TAO_Statistic::List* names);
-  size_t get_consumeradmins (TAO_Statistic::List* names);
-  size_t get_supplieradmins (TAO_Statistic::List* names);
+  size_t get_consumers (Monitor_Control_Types::NameList* names);
+  size_t get_suppliers (Monitor_Control_Types::NameList* names);
+  size_t get_consumeradmins (Monitor_Control_Types::NameList* names);
+  size_t get_supplieradmins (Monitor_Control_Types::NameList* names);
   TAO_Notify_ThreadPool_Task* get_threadpool_task (
                                 CosNotifyChannelAdmin::AdminID id);
   size_t calculate_queue_size (bool count);
   double get_oldest_event (void);
-  void determine_slowest_consumer (TAO_Statistic::List* names);
+  void determine_slowest_consumer (Monitor_Control_Types::NameList* names);
   bool destroy_consumer (CosNotifyChannelAdmin::ProxyID id);
   bool destroy_supplier (CosNotifyChannelAdmin::ProxyID id);
 
@@ -108,24 +121,24 @@ private:
   friend class QueuedEvents;
   friend class OldestEvent;
 
-  typedef ACE_Vector<ACE_CString> NameList;
   typedef ACE_Hash_Map_Manager<CORBA::Long,
                                ACE_CString,
                                ACE_SYNCH_NULL_MUTEX> Map;
 
   size_t get_admins (Map& map,
                      const CosNotifyChannelAdmin::AdminIDSeq& ids,
-                     TAO_Statistic::List* names);
+                     Monitor_Control_Types::NameList* names);
   bool is_duplicate_name (const Map& map,
                           const ACE_CString& name) const;
 
-  void remove_list_name (NameList& list, const ACE_CString& name);
+  void remove_list_name (Monitor_Control_Types::NameList& list,
+                         const ACE_CString& name);
 
   ACE_CString name_;
 
   mutable TAO_SYNCH_MUTEX names_mutex_;
-  NameList stat_names_;
-  NameList control_names_;
+  Monitor_Control_Types::NameList stat_names_;
+  Monitor_Control_Types::NameList control_names_;
 
   mutable TAO_SYNCH_RW_MUTEX supplier_mutex_;
   Map supplier_map_;

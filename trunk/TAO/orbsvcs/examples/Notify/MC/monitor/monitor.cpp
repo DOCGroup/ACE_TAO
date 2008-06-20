@@ -1,9 +1,9 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_ctype.h"
+
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 
 static const ACE_TCHAR* monitor_ior = 0;
 static const char* shutdown_cmd = "shutdown";
@@ -19,20 +19,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        monitor_ior = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'k':
+          monitor_ior = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage: %s "
+                             "-k <ior> "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
+      
   return 0;
 }
 
@@ -45,14 +48,15 @@ sorter (const void* a, const void* b)
 }
 
 bool
-process_command(CosNotification::NotificationServiceMonitorControl_ptr nsm,
-                char* buf, const char* command)
+process_command (CosNotification::NotificationServiceMonitorControl_ptr nsm,
+                 char* buf, const char* command)
 {
-  if (ACE_OS::strstr(buf, command) == buf)
+  if (ACE_OS::strstr (buf, command) == buf)
     {
       const char* name = buf + ACE_OS::strlen (command);
       bool space = false;
       size_t i = 0;
+      
       while (ACE_OS::ace_isspace (name[i]))
         {
           space = true;

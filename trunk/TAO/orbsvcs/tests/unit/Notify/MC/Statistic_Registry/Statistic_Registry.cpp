@@ -1,10 +1,9 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h"
+#include "ace/Monitor_Base.h"
+#include "ace/Monitor_Point_Registry.h"
 
 #include "tao/TAO_Singleton_Manager.h"
-
-#include "ace/Monitor_Point_Registry.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -33,10 +32,10 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         }
 
       // Test registry addition.
-      TAO_Statistic* s = 0;
+      Monitor_Base* s = 0;
       ACE_NEW_RETURN (s,
-                      TAO_Statistic ("test1",
-                                     TAO_Statistic::TS_COUNTER),
+                      Monitor_Base ("test1",
+                                    Monitor_Base::MC_COUNTER),
                       2);
 
       if (reg->add (s) == false)
@@ -69,8 +68,8 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       // Test destruction with registered statistics.
       ACE_NEW_RETURN (s,
-                      TAO_Statistic ("test1",
-                                     TAO_Statistic::TS_COUNTER),
+                      Monitor_Base ("test1",
+                                    Monitor_Base::MC_COUNTER),
                       2);
                       
       if (reg->add (s) == false)
@@ -79,8 +78,8 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         }
 
       ACE_NEW_RETURN (s,
-                      TAO_Statistic ("test2",
-                                     TAO_Statistic::TS_NUMBER),
+                      Monitor_Base ("test2",
+                                    Monitor_Base::MC_NUMBER),
                       2);
                       
       if (reg->add (s) == false)

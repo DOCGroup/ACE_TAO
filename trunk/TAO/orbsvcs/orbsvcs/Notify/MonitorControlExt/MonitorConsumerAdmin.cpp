@@ -1,9 +1,11 @@
 // $Id$
 
 #include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
+
+#include "ace/Monitor_Size.h"
+
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
 #include "orbsvcs/Notify/MonitorControl/Control_Registry.h"
-#include "orbsvcs/Notify/MonitorControl/Statistic.h"
 #include "orbsvcs/Notify/MonitorControl/Control.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"
 #include "orbsvcs/Notify/ThreadPool_Task.h"
@@ -84,8 +86,7 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
   this->stat_name_ += NotifyMonitoringExt::EventChannelQueueSize;
   
   ACE_NEW_THROW_EX (this->queue_size_,
-                    TAO_Statistic (this->stat_name_.c_str (),
-                                   TAO_Statistic::TS_NUMBER),
+                    Size_Monitor (this->stat_name_.c_str ()),
                     CORBA::NO_MEMORY ());
                     
   if (!mec->register_statistic (this->stat_name_, this->queue_size_))

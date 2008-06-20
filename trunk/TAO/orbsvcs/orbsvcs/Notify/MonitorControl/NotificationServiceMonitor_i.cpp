@@ -2,13 +2,13 @@
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
-#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Monitor_Point_Registry.h"
+#include "ace/Monitor_Base.h"
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.h"
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
@@ -223,10 +223,9 @@ NotificationServiceMonitor_i::get_data (
    CosNotification::NotificationServiceMonitorControl::Data& data)
 {
   // Get the statistic by name.
-  TAO_Statistic* statistic =
-    dynamic_cast<TAO_Statistic*> (registry->get (name));
+  Monitor_Base* monitor = registry->get (name);
 
-  if (statistic == 0)
+  if (monitor == 0)
     {
       // At the time that the list of names were acquired, this
       // statistic was available.  However, we have failed to
@@ -246,47 +245,29 @@ NotificationServiceMonitor_i::get_data (
       // If it's not a counter, we need to make sure that we have
       // the most up-to-date information.  A counter will always have
       // the correct value.
-      if (statistic->type () != TAO_Statistic::TS_COUNTER)
+      if (monitor->type () != Monitor_Base::MC_COUNTER)
         {
-          statistic->calculate ();
+          monitor->update ();
         }
+        
+      CosNotification::NotificationServiceMonitorControl::Numeric num;
+      num.count = static_cast<CORBA::ULong> (monitor->count ());
+      num.minimum = monitor->minimum_sample ();
+      num.maximum = monitor->maximum_sample ();
+      num.last = monitor->last_sample ();
 
-      // Populate the data structure based on the type of statistic
-      if (statistic->type () == TAO_Statistic::TS_LIST)
+      if (monitor->type() == Monitor_Base::MC_COUNTER)
         {
-          TAO_Statistic::List slist (statistic->get_list ());
-          CORBA::ULong size = static_cast<CORBA::ULong> (slist.size ());
-          Monitor::NameList list (size);
-          list.length (size);
-
-          for (CORBA::ULong i = 0; i < size; ++i)
-            {
-              list[i] = CORBA::string_dup (slist[i].c_str ());
-            }
-
-          data.list (list);
+          num.average = 0;
+          num.sum_of_squares = 0;
         }
       else
         {
-          CosNotification::NotificationServiceMonitorControl::Numeric num;
-          num.count = static_cast<CORBA::ULong> (statistic->count ());
-          num.minimum = statistic->minimum_sample ();
-          num.maximum = statistic->maximum_sample ();
-          num.last = statistic->last_sample ();
-
-          if (statistic->type() == TAO_Statistic::TS_COUNTER)
-            {
-              num.average = 0;
-              num.sum_of_squares = 0;
-            }
-          else
-            {
-              num.average = statistic->average ();
-              num.sum_of_squares = statistic->sum_of_squares ();
-            }
-
-          data.num (num);
+          num.average = monitor->average ();
+          num.sum_of_squares = monitor->sum_of_squares ();
         }
+
+      data.num (num);
     }
 }
 
@@ -313,4 +294,4 @@ NotificationServiceMonitor_i::get_invalid_names (
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */

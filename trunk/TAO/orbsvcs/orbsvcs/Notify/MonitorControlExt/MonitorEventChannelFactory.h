@@ -3,23 +3,27 @@
 #define MONITOREVENTCHANNELFACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+
+#include "ace/Hash_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/EventChannelFactory.h"
-#include "orbsvcs/Notify/MonitorControl/Statistic.h"
-#include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
-#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Vector_T.h"
+#include "ace/Monitor_Base.h"
+
+#include "orbsvcs/Notify/EventChannelFactory.h"
+#include "orbsvcs/Notify/MonitorControl/Timestamp_Monitor.h"
+#include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
+
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Notify_MC_Ext_Export TAO_MonitorEventChannelFactory:
-                  public TAO_Notify_EventChannelFactory,
-                  public virtual POA_NotifyMonitoringExt::EventChannelFactory
+class TAO_Notify_MC_Ext_Export TAO_MonitorEventChannelFactory
+  : public TAO_Notify_EventChannelFactory,
+    public virtual POA_NotifyMonitoringExt::EventChannelFactory
 {
 public:
   /// Construct a named event channel factory and associate various
@@ -56,7 +60,7 @@ public:
 private:
   size_t get_consumers (CosNotifyChannelAdmin::ChannelID id);
   size_t get_suppliers (CosNotifyChannelAdmin::ChannelID id);
-  size_t get_ecs (TAO_Statistic::List* names, bool active);
+  size_t get_ecs (Monitor_Control_Types::NameList* names, bool active);
 
   friend class EventChannels;
 
