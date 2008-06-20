@@ -26,7 +26,7 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $SV = new PerlACE::Process ("server", "-ORBdebuglevel $debug_level -o $iorfile");
 }
-$CL = new PerlACE::Process ("client", " -k file://$iorfile");
+$CL = new PerlACE::Process ("client", " -k file://$iorfile -ORBdebuglevel $debug_level");
 
 $server = $SV->Spawn ();
 
