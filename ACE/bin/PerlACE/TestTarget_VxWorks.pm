@@ -1,9 +1,9 @@
-package PerlACE::HostProcess;
+package PerlACE::TestTarget_VxWorks;
 
 # ******************************************************************
-# Description : Creates the host process object
+# Description : Creates a PerlACE::ProcessVX
 # Author      : Chad Elliott
-# Create Date : 6/06/2008
+# Create Date : 6/20/2008
 #          $Id$
 # ******************************************************************
 
@@ -13,21 +13,24 @@ package PerlACE::HostProcess;
 
 use strict;
 
-use PerlACE::TargetProcess;
+use PerlACE::TestTarget;
+use PerlACE::ProcessVX;
+
+our @ISA = qw(PerlACE::TestTarget);
 
 # ******************************************************************
 # Subroutine Section
 # ******************************************************************
 
-sub new {
-  my $class = shift;
+sub LocalFile {
+  my($self, $file) = @_;
+  print STDERR "LocalFile for $file is $file\n";
+  return $file;
+}
 
-  if (PerlACE::is_vxworks_test() &&
-      PerlACE::TargetProcess::roles_reversed()) {
-    return new PerlACE::ProcessVX(@_);
-  }
-
-  return new PerlACE::Process(@_);
+sub CreateProcess {
+  my $self = shift;
+  return new PerlACE::ProcessVX(@_);
 }
 
 1;

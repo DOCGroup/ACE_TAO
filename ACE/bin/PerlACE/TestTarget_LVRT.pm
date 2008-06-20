@@ -129,9 +129,10 @@ sub LocalFile ($)
 sub DeleteFile ($)
 {
     my $self = shift;
-    my $file = shift;
     $self->{FTP}->login("","");
-    $self->{FTP}->delete($file);
+    foreach my $file (@_) {
+      $self->{FTP}->delete($file);
+    }
 }
 
 sub GetFile ($)
