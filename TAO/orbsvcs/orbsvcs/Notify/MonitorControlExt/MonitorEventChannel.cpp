@@ -7,6 +7,7 @@
 #include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h"
 #include "orbsvcs/Notify/MonitorControl/Dynamic_Statistic.h"
+#include "orbsvcs/Notify/MonitorControl/Timestamp_Monitor.h"
 #include "orbsvcs/Notify/MonitorControl/Control_Registry.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
@@ -27,7 +28,7 @@ class EventChannelConsumersSuppliers
 public:
   EventChannelConsumersSuppliers (TAO_MonitorEventChannel* ec,
                                   const ACE_CString& name,
-                                  TAO_Statistic::Information_Type type,
+                                  Monitor_Base::Information_Type type,
                                   bool is_supplier = false)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
@@ -36,35 +37,15 @@ public:
   {
   }
   
-  virtual void calculate (void)
+  virtual void update (void)
   {
-    if (this->type () == TAO_Statistic::TS_LIST)
+    if (this->is_supplier_)
       {
-        TAO_Statistic::List list;
-        
-        if (this->is_supplier_)  
-          {
-            this->interf_->get_suppliers (&list);
-          }
-        else
-          {
-            this->interf_->get_consumers (&list);
-          }
-          
-        this->receive (list);
+        this->receive (this->interf_->get_suppliers (0));
       }
     else
-      { 
-        if (this->is_supplier_)
-          {
-            this->receive (
-              static_cast<double> (this->interf_->get_suppliers (0)));
-          }
-        else
-          {
-            this->receive (
-              static_cast<double> (this->interf_->get_consumers (0)));
-          }
+      {
+        this->receive (this->interf_->get_consumers (0));
       }
   }
    
@@ -78,7 +59,7 @@ class EventChannelConsumerSupplierAdmins
 public:
   EventChannelConsumerSupplierAdmins (TAO_MonitorEventChannel* ec,
                                       const ACE_CString& name,
-                                      TAO_Statistic::Information_Type type,
+                                      Monitor_Base::Information_Type type,
                                       bool is_supplier = false)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
@@ -87,35 +68,15 @@ public:
   {
   }
   
-  virtual void calculate (void)
+  virtual void update (void)
   {
-    if (this->type () == TAO_Statistic::TS_LIST)
+    if (this->is_supplier_)
       {
-        TAO_Statistic::List list;
-        
-        if (this->is_supplier_)
-          {
-            this->interf_->get_supplieradmins (&list);
-          }
-        else
-          {
-            this->interf_->get_consumeradmins (&list);
-          }
-          
-        this->receive (list);
+        this->receive (this->interf_->get_supplieradmins (0));
       }
     else
-      { 
-        if (this->is_supplier_)
-          {
-            this->receive (
-              static_cast<double> (this->interf_->get_supplieradmins (0)));
-          }
-        else
-          {
-            this->receive (
-              static_cast<double> (this->interf_->get_consumeradmins (0)));
-          }
+      {
+        this->receive (this->interf_->get_consumeradmins (0));
       }
   }
 
@@ -129,7 +90,7 @@ class QueuedEvents
 public:
   QueuedEvents (TAO_MonitorEventChannel* ec,
                 const ACE_CString& name,
-                TAO_Statistic::Information_Type type,
+                Monitor_Base::Information_Type type,
                 bool count)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
@@ -138,11 +99,9 @@ public:
   {
   }
 
-  virtual void calculate (void)
+  virtual void update (void)
   {
-    this->receive (
-      static_cast<double> (
-        this->interf_->calculate_queue_size (this->count_)));
+    this->receive (this->interf_->calculate_queue_size (this->count_));
   }
 
 private:
@@ -154,19 +113,19 @@ class OldestEvent
 public:
   OldestEvent (TAO_MonitorEventChannel* ec,
                const ACE_CString& name,
-               TAO_Statistic::Information_Type type)
+               Monitor_Base::Information_Type type)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
                                                       type)
   {
   }
 
-  virtual void calculate (void)
+  virtual void update (void)
   {
     this->receive (this->interf_->get_oldest_event ());
   }
 };
-
+/*
 class SlowestConsumers
   : public TAO_Dynamic_Statistic<TAO_MonitorEventChannel>
 {
@@ -180,14 +139,14 @@ public:
   {
   }
   
-  virtual void calculate (void)
+  virtual void update (void)
   {
     TAO_Statistic::List list;
     this->interf_->determine_slowest_consumer (&list);
     this->receive (list);
   }
 };
-
+*/
 class ShutdownControl : public TAO_NS_Control
 {
 public:
@@ -307,7 +266,7 @@ TAO_MonitorEventChannel::name (void) const
 
 bool
 TAO_MonitorEventChannel::register_statistic (const ACE_CString& name,
-                                             TAO_Statistic* stat)
+                                             Monitor_Base* stat)
 {
   // Add the statistic to the registry and
   // add the name to the statistic names list.
@@ -507,10 +466,9 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       ACE_CString dir_name (this->name_ + "/");
       ACE_CString stat_name = dir_name +
                               NotifyMonitoringExt::EventChannelCreationTime;
-      TAO_Statistic* timestamp = 0;
+      Monitor_Base* timestamp = 0;
       ACE_NEW_THROW_EX (timestamp,
-                        TAO_Statistic (stat_name.c_str (),
-                                       TAO_Statistic::TS_TIME),
+                        Timestamp_Monitor (stat_name.c_str ()),
                         CORBA::NO_MEMORY ());
       ACE_Time_Value tv (ACE_OS::gettimeofday ());
       timestamp->receive (tv.sec () + (tv.usec () / 1000000.0));
@@ -521,7 +479,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                       "Unable to add statistic %s\n",
                       stat_name.c_str ()));
         }
-        
+
       // Registry manages refcount, so we do this regardless.
       timestamp->remove_ref ();
 
@@ -532,7 +490,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumersSuppliers (
                           this,
                           stat_name.c_str (),
-                          TAO_Statistic::TS_NUMBER),
+                          Monitor_Base::MC_NUMBER),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, consumers))
@@ -541,27 +499,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                       "Unable to add statistic %s\n",
                       stat_name.c_str ()));
         }
-        
-      // Registry manages refcount, so we do this regardless.
-      consumers->remove_ref ();
 
-      stat_name = dir_name
-                  + NotifyMonitoringExt::EventChannelConsumerNames;
-      consumers = 0;
-      ACE_NEW_THROW_EX (consumers,
-                        EventChannelConsumersSuppliers (
-                          this,
-                          stat_name.c_str (),
-                          TAO_Statistic::TS_LIST),
-                        CORBA::NO_MEMORY ());
-                        
-      if (!this->register_statistic (stat_name, consumers))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
-                      stat_name.c_str ()));
-        }
-        
       // Registry manages refcount, so we do this regardless.
       consumers->remove_ref ();
 
@@ -572,28 +510,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumersSuppliers (
                           this,
                           stat_name.c_str (),
-                          TAO_Statistic::TS_NUMBER,
-                          true),
-                        CORBA::NO_MEMORY ());
-                        
-      if (!this->register_statistic (stat_name, suppliers))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
-                      stat_name.c_str ()));
-        }
-        
-      // Registry manages refcount, so we do this regardless.
-      suppliers->remove_ref ();
-
-      stat_name = dir_name
-                  + NotifyMonitoringExt::EventChannelSupplierNames;
-      suppliers = 0;
-      ACE_NEW_THROW_EX (suppliers,
-                        EventChannelConsumersSuppliers (
-                          this,
-                          stat_name.c_str (),
-                          TAO_Statistic::TS_LIST,
+                          Monitor_Base::MC_NUMBER,
                           true),
                         CORBA::NO_MEMORY ());
                         
@@ -614,27 +531,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumerSupplierAdmins (
                           this,
                           stat_name.c_str (),
-                          TAO_Statistic::TS_NUMBER),
-                        CORBA::NO_MEMORY ());
-                        
-      if (!this->register_statistic (stat_name, conadmins))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
-                      stat_name.c_str ()));
-        }
-        
-      // Registry manages refcount, so we do this regardless.
-      conadmins->remove_ref ();
-
-      stat_name = dir_name
-                  + NotifyMonitoringExt::EventChannelConsumerAdminNames;
-      conadmins = 0;
-      ACE_NEW_THROW_EX (conadmins,
-                        EventChannelConsumerSupplierAdmins (
-                          this,
-                          stat_name.c_str (),
-                          TAO_Statistic::TS_LIST),
+                          Monitor_Base::MC_NUMBER),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, conadmins))
@@ -654,28 +551,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumerSupplierAdmins (
                           this,
                           stat_name.c_str (),
-                          TAO_Statistic::TS_NUMBER,
-                          true),
-                        CORBA::NO_MEMORY ());
-                        
-      if (!this->register_statistic (stat_name, supadmins))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
-                      stat_name.c_str ()));
-        }
-        
-      // Registry manages refcount, so we do this regardless.
-      supadmins->remove_ref ();
-
-      stat_name = dir_name
-                  + NotifyMonitoringExt::EventChannelSupplierAdminNames;
-      supadmins = 0;
-      ACE_NEW_THROW_EX (supadmins,
-                        EventChannelConsumerSupplierAdmins (
-                          this,
-                          stat_name.c_str (),
-                          TAO_Statistic::TS_LIST,
+                          Monitor_Base::MC_NUMBER,
                           true),
                         CORBA::NO_MEMORY ());
                         
@@ -692,8 +568,9 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       stat_name = dir_name + NotifyMonitoringExt::EventChannelQueueSize;
       QueuedEvents* events = 0;
       ACE_NEW_THROW_EX (events,
-                        QueuedEvents (this, stat_name.c_str (),
-                                      TAO_Statistic::TS_NUMBER, false),
+                        QueuedEvents (this,
+                                      stat_name.c_str (),
+                                      Monitor_Base::MC_NUMBER, false),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, events))
@@ -702,7 +579,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                       "Unable to add statistic %s\n",
                       stat_name.c_str ()));
         }
-        
+       
       // Registry manages refcount, so we do this regardless.
       events->remove_ref ();
 
@@ -710,8 +587,9 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                   + NotifyMonitoringExt::EventChannelQueueElementCount;
       events = 0;
       ACE_NEW_THROW_EX (events,
-                        QueuedEvents (this, stat_name.c_str (),
-                                      TAO_Statistic::TS_NUMBER, true),
+                        QueuedEvents (this,
+                                      stat_name.c_str (),
+                                      Monitor_Base::MC_NUMBER, true),
                         CORBA::NO_MEMORY ());
                         
       events->add_to_registry ();
@@ -721,7 +599,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       OldestEvent* oldest = 0;
       ACE_NEW_THROW_EX (oldest,
                         OldestEvent (this, stat_name.c_str (),
-                                     TAO_Statistic::TS_TIME),
+                                     Monitor_Base::MC_TIME),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, oldest))
@@ -733,24 +611,6 @@ TAO_MonitorEventChannel::add_stats (const char* name)
         
       // Registry manages refcount, so we do this regardless.
       oldest->remove_ref ();
-
-      stat_name = dir_name
-                  + NotifyMonitoringExt::EventChannelSlowestConsumers;
-      SlowestConsumers* slowest = 0;
-      ACE_NEW_THROW_EX (slowest,
-                        SlowestConsumers (this, stat_name.c_str (),
-                                          TAO_Statistic::TS_LIST),
-                        CORBA::NO_MEMORY ());
-                        
-      if (!this->register_statistic (stat_name, slowest))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
-                      stat_name.c_str ()));
-        }
-        
-      // Registry manages refcount, so we do this regardless.
-      slowest->remove_ref ();
 
       TAO_Control_Registry* cinstance =
         TAO_Control_Registry::instance ();
@@ -911,7 +771,8 @@ TAO_MonitorEventChannel::named_new_for_suppliers (
 }
 
 size_t
-TAO_MonitorEventChannel::get_consumers (TAO_Statistic::List* names)
+TAO_MonitorEventChannel::get_consumers (
+  Monitor_Control_Types::NameList* names)
 {
   size_t count = 0;
   CosNotifyChannelAdmin::AdminIDSeq_var conadmin_ids =
@@ -964,7 +825,8 @@ TAO_MonitorEventChannel::get_consumers (TAO_Statistic::List* names)
 }
 
 size_t
-TAO_MonitorEventChannel::get_suppliers (TAO_Statistic::List* names)
+TAO_MonitorEventChannel::get_suppliers (
+  Monitor_Control_Types::NameList* names)
 {
   size_t count = 0;
   CosNotifyChannelAdmin::AdminIDSeq_var supadmin_ids =
@@ -1017,7 +879,8 @@ TAO_MonitorEventChannel::get_suppliers (TAO_Statistic::List* names)
 }
 
 size_t
-TAO_MonitorEventChannel::get_consumeradmins (TAO_Statistic::List* names)
+TAO_MonitorEventChannel::get_consumeradmins (
+  Monitor_Control_Types::NameList* names)
 {
   ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX,
                          guard,
@@ -1033,7 +896,8 @@ TAO_MonitorEventChannel::get_consumeradmins (TAO_Statistic::List* names)
 }
 
 size_t
-TAO_MonitorEventChannel::get_supplieradmins (TAO_Statistic::List* names)
+TAO_MonitorEventChannel::get_supplieradmins (
+  Monitor_Control_Types::NameList* names)
 {
   ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX,
                          guard,
@@ -1052,7 +916,7 @@ size_t
 TAO_MonitorEventChannel::get_admins (
   TAO_MonitorEventChannel::Map& map,
   const CosNotifyChannelAdmin::AdminIDSeq& admin_ids,
-  TAO_Statistic::List* names)
+  Monitor_Control_Types::NameList* names)
 {
   size_t count = 0;
   CORBA::ULong length = admin_ids.length ();
@@ -1144,7 +1008,7 @@ TAO_MonitorEventChannel::calculate_queue_size (bool count)
 
 void
 TAO_MonitorEventChannel::determine_slowest_consumer (
-  TAO_Statistic::List* names)
+  Monitor_Control_Types::NameList* names)
 {
   size_t largest = 0;
   CosNotifyChannelAdmin::AdminID id = 0;
@@ -1270,7 +1134,7 @@ TAO_MonitorEventChannel::is_duplicate_name (
 
 void
 TAO_MonitorEventChannel::remove_list_name (
-  TAO_MonitorEventChannel::NameList& list,
+  Monitor_Control_Types::NameList& list,
   const ACE_CString& name)
 {
   size_t size = list.size ();

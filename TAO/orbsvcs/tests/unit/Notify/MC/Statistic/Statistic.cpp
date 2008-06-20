@@ -1,10 +1,11 @@
 // $Id$
 
-#include "orbsvcs/Notify/MonitorControl/Statistic.h"
-
 #include "ace/Log_Msg.h"
+#include "ace/Monitor_Base.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
+using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 void
 error (const char* msg)
@@ -18,62 +19,65 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 {
   try
     {
-      TAO_Statistic counter ("counter", TAO_Statistic::TS_COUNTER);
+      Monitor_Base counter ("counter", Monitor_Base::MC_COUNTER);
       counter.receive (0.0);
       counter.receive (0.0);
       counter.receive (0.0);
       
       if (counter.last_sample() != 3)
         {
-          error ("Counter TAO_Statistic::receive() failed");
+          error ("Counter Monitor_Control::receive() failed");
         }
 
-      TAO_Statistic number ("number", TAO_Statistic::TS_NUMBER);
-      number.receive (static_cast<size_t> (8));
-      number.receive (static_cast<size_t> (10));
-      number.receive (static_cast<size_t> (42));
+      Monitor_Base number ("number", Monitor_Base::MC_NUMBER);
+      size_t size = 8;
+      number.receive (size);
+      size = 10;
+      number.receive (size);
+      size = 42;
+      number.receive (size);
       
-      if (number.average() != 20)
+      if (number.average () != 20)
         {
-          error ("Number TAO_Statistic::average() failed");
+          error ("Number Monitor_Base::average() failed");
         }
         
-      if (number.minimum_sample() != 8)
+      if (number.minimum_sample () != 8)
         {
-          error ("Number TAO_Statistic::minimum_sample() failed");
+          error ("Number Monitor_Base::minimum_sample() failed");
         }
         
-      if (number.maximum_sample() != 42)
+      if (number.maximum_sample () != 42)
         {
-          error ("Number TAO_Statistic::maximum_sample() failed");
+          error ("Number Monitor_Base::maximum_sample() failed");
         }
         
-      if (number.sum_of_squares() != 1928)
+      if (number.sum_of_squares () != 1928)
         {
-          error ("Number TAO_Statistic::sum_of_squares() failed");
+          error ("Number Monitor_Base::sum_of_squares() failed");
         }
 
-      TAO_Statistic stime ("time", TAO_Statistic::TS_TIME);
+      Monitor_Base stime ("time", Monitor_Base::MC_TIME);
       stime.receive (1183466309.01234);
       stime.receive (1183466377.9922);
       stime.receive (1083466309.88374);
       
-      if (stime.average() != 1150132998.96276)
+      if (stime.average () != 1150132998.96276)
         {
-          error ("Time TAO_Statistic::average() failed");
+          error ("Time Monitor_Base::average() failed");
         }
         
-      if (stime.minimum_sample() != 1083466309.88374)
+      if (stime.minimum_sample () != 1083466309.88374)
         {
           error ("Time TAO_Statistic::minimum_sample() failed");
         }
         
-      if (stime.maximum_sample() != 1183466377.9922)
+      if (stime.maximum_sample () != 1183466377.9922)
         {
-         error ("Time TAO_Statistic::maximum_sample() failed");
+          error ("Time Monitor_Base::maximum_sample() failed");
         }
 
-      TAO_Statistic interval ("interval", TAO_Statistic::TS_INTERVAL);
+      Monitor_Base interval ("interval", Monitor_Base::MC_INTERVAL);
       interval.receive (.8);
       interval.receive (.1);
       interval.receive (.42);
@@ -81,41 +85,25 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       // This multiplication and casting is necessary since the machine
       // representation of the floating point values in the receive()
       // calls are not exactly what is represented by the text of the code.
-      if (static_cast<int> (interval.average() * 100) != 44)
+      if (static_cast<int> (interval.average () * 100) != 44)
         {
-          error ("Interval TAO_Statistic::average() failed");
+          error ("Interval Monitor_Base::average() failed");
         }
         
-      if (interval.minimum_sample() != .1)
+      if (interval.minimum_sample () != .1)
         {
-          error ("Interval TAO_Statistic::minimum_sample() failed");
+          error ("Interval Monitor_Base::minimum_sample() failed");
         }
         
-      if (interval.maximum_sample() != .8)
+      if (interval.maximum_sample () != .8)
         {
-          error ("Interval TAO_Statistic::maximum_sample() failed");
+          error ("Interval Monitor_Base::maximum_sample() failed");
         }
         
-      if (static_cast<int> (interval.sum_of_squares() * 10000) != 8264)
+      if (static_cast<int> (interval.sum_of_squares () * 10000) != 8264)
         {
-         error ("Interval TAO_Statistic::sum_of_squares() failed");
+          error ("Interval Monitor_Base::sum_of_squares() failed");
         }
-
-      TAO_Statistic list ("list", TAO_Statistic::TS_LIST);
-      TAO_Statistic::List l;
-      l.push_back ("one");
-      l.push_back ("two");
-      l.push_back ("three");
-      list.receive (l);
-      
-      if (counter.count () != 3)
-        {
-          error ("List TAO_Statistic::receive() failed");
-        }
-
-      /// Test for memory leaks (with valgrind).
-      list.clear ();
-      list.receive (l);
     }
   catch (...)
     {
