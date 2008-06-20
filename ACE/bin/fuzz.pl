@@ -298,7 +298,6 @@ sub check_for_ACE_SYNCH_MUTEX ()
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_ACE_SYNCH_MUTEX/) {
                     $disable = 1;
                 }
@@ -343,7 +342,6 @@ sub check_for_ACE_Thread_Mutex ()
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_ACE_Thread_Mutex/) {
                     $disable = 1;
                 }
@@ -379,7 +377,6 @@ sub check_for_tab ()
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_tab/) {
                     $disable = 1;
                 }
@@ -473,7 +470,6 @@ sub check_for_lack_ACE_OS ()
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_lack_ACE_OS/) {
                     $disable = 1;
                 }
@@ -670,7 +666,6 @@ sub check_for_exception_spec ()
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_exception_sepc/) {
                     $disable = 1;
                 }
@@ -705,7 +700,6 @@ sub check_for_NULL ()
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_NULL/) {
                     $disable = 1;
                 }
@@ -731,30 +725,86 @@ sub check_for_NULL ()
 # int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 sub check_for_improper_main_declaration ()
 {
-    print "Running Improper main declration check\n";
+    print "Running Improper main() declaration check\n";
 
     foreach $file (@files_cpp) {
         if (open (FILE, $file)) {
             my $disable = 0;
+            my $type_of_main;
+            my $multi_line;
+            my $not_found_end_line_count= 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
-                if (/FUZZ\: disable check_for_improper_main_declaration/) {
-                    $disable = 1;
+                if (!defined $multi_line) {
+                    if (/FUZZ\: disable check_for_improper_main_declaration/) {
+                        $disable = 1;
+                        next;
+                    }
+                    elsif (/FUZZ\: enable check_for_improper_main_declaration/) {
+                        $disable = 0;
+                        next;
+                    }
+                    elsif ($disable == 0) {
+                        s/^\s+//;           ## Remove leading space
+                        s/\s*(\/\/.*)?$//;  ## Remove trailling space and line comments
+                        if (s/^(?:.*\s)?(main|ACE_TMAIN)\s*//) {
+                            $type_of_main = $1; ## main or ACE_TMAIN
+                            $multi_line   = $_; ## Rest of the line
+                        }
+                        else {
+                            next;
+                        }
+                    }
                 }
-                if (/FUZZ\: enable check_for_improper_main_declaration/) {
-                    $disable = 0;
+                else {
+                    $_ =~ s/^\s+//;           ## Remove leading space
+                    $_ =~ s/\s*(\/\/.*)?$//;  ## Remove trailling space and line comments
+                    if ($multi_line eq "") {  ## Append this line to existing statement.
+                        $multi_line = $_;
+                    }
+                    else {
+                        $multi_line .= ' ' . $_;
+                    }
                 }
-                if ($disable == 0) {
-                    if(/^\s*main\s*\(.*\)/) {
-                        print_error ("$file:$.: Use proper form of main declaration (use ACE_TMAIN)");
+                next if ($multi_line eq "");  ## Must have something after main
+                if ($multi_line !~ m/^\(/) {
+                    ## Not a function opening bracket, we will ignore this one
+                    ## it is not a main function.
+                    undef $multi_line;
+                    $not_found_end_line_count = 0;
+                }
+                elsif ($multi_line =~ s/^\(\s*([^\)]*?)\s*\)\s*\{//) {
+                    $multi_line = $1;                              ## What was between the main's ( and )
+                    $multi_line =~ s/\s{2,}/\s/g;                  ## Compress white space
+                    my $was = $multi_line;
+                    $multi_line =~ s/([^\/])\*\s([^\/])/$1\*$2/g;  ## Remove space after * (except around comment)
+                    $multi_line =~ s/([^\/])\s\[/$1\[/g;           ## Remove space before [ (except following comment)
+                    if ($multi_line =~ s/^([^,]*?)\s?,\s?//) { # Fails if only 1 parameter (ignore this main)
+                        my $arg1 = $1;
+                        if ($multi_line =~ s/^(\w[\w\d]*)\s?//) { # Fails if no type for 2nd parameter (ignore this main)
+                            my $arg2_type = $1;
+                            $multi_line =~ s!^(\**)(\w[\w\d]*|\s?/\*.*?\*/\s?)?!!;
+                            # $1 is now arg2's Prefix, i.e. should be *
+                            # $2 is now arg2's variable name
+                            # $multi_line is now arg2's Postfix, i.e. should be []
+                            if ($type_of_main ne 'ACE_TMAIN'       ||
+                                $arg2_type ne 'ACE_TCHAR'          ||
+                                !(($1 eq '*' && $multi_line eq '[]') ||
+                                  ($1 eq '**' && $multi_line eq '' ))  ) {
+                                print_error ("$file:$.:  $type_of_main ($was)  should be  ACE_TMAIN ($arg1, ACE_TCHAR \*$2\[])");
+                           }
+                        }
                     }
-                    if(/^\s*ACE_TMAIN\s*\(.*,\s*char.*\)/) {
-                        print_error ("$file:$.: Use proper form of main declaration (use ACE_TCHAR)");
-                    }
-                    if(/^\s*ACE_TMAIN\s*\(.*,\s*ACE_TCHAR\s*\*\*\)/) {
-                        print_error ("$file:$.: Use proper form of main declaration (second argument should be ACE_TCHAR *argv[])");
-                    }
+
+                    undef $multi_line;
+                    $not_found_end_line_count = 0;
+                }
+                elsif ($not_found_end_line_count < 10) { # Limit the search for ( ... ) following main to ten lines
+                    ++$not_found_end_line_count;
+                }
+                else {
+                    undef $multi_line;
+                    $not_found_end_line_count = 0;
                 }
             }
             close (FILE);
@@ -774,7 +824,6 @@ sub check_for_inline ()
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_inline/) {
                     $disable = 1;
                 }
@@ -1720,12 +1769,12 @@ sub check_for_refcountservantbase ()
 # to be compatiable with wide character builds.
 sub check_for_ORB_init ()
 {
-    print "Running the ORB_init wide character incompatability check\n";
+    print "Running the ORB_init() wide character incompatability check\n";
     foreach $file (@files_cpp, @files_inl) {
         if (open (FILE, $file)) {
             my $disable = 0;
             my $multi_line;
-            my $not_found= 0;
+            my $not_found_end_line_count= 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
                 if (!defined $multi_line) {
@@ -1741,59 +1790,52 @@ sub check_for_ORB_init ()
                         s/^\s+//;           ## Remove leading space
                         s/\s*(\/\/.*)?$//;  ## Remove trailling space and line comments
                         if (s/^([^=]*=)?\s*(CORBA\s*::\s*)?ORB_init\s*//) {
-                            $multi_line = $_;
+                            $multi_line = $_; ## Rest of the line
                         }
                         else {
-                           next;
+                            next;
                         }
                     }
                 }
-                else
-                {
-                  $_ =~ s/^\s+//;           ## Remove leading space
-                  $_ =~ s/\s*(\/\/.*)?$//;  ## Remove trailling space and line comments
-                  if ($multi_line eq "")
-                  {
-                      $multi_line = $_;  ## Append this line to existing statement.
-                  }
-                  else
-                  {
-                      $multi_line .= ' ' . $_;  ## Append this line to existing statement.
-                  }
+                else {
+                    $_ =~ s/^\s+//;           ## Remove leading space
+                    $_ =~ s/\s*(\/\/.*)?$//;  ## Remove trailling space and line comments
+                    if ($multi_line eq "") {  ## Append this line to existing statement.
+                        $multi_line = $_;
+                    }
+                    else {
+                        $multi_line .= ' ' . $_;
+                    }
                 }
                 my $testing = $multi_line;
-                if ($testing =~ s/^\(([^\"\)]*(\"([^\"\\]*(\\.)*)\")?)*\)//)
-                {
-                   # $testing has thrown away what we actually want, i.e.
-                   # we want to ignore what's left in $testing.
+                if ($testing =~ s/^\(([^\"\)]*(\"([^\"\\]*(\\.)*)\")?)*\)//) {
+                    # $testing has thrown away what we actually want, i.e.
+                    # we want to ignore what's left in $testing.
 
-                   $multi_line = substr ($multi_line, 0, -length ($testing));
-                   $multi_line =~ s/^\(\s*//; ## Trim leading ( and space
-                   $multi_line =~ s/\s*\)$//; ## Trim trailing space and )
+                    $multi_line = substr ($multi_line, 0, -length ($testing));
+                    $multi_line =~ s/^\(\s*//; ## Trim leading ( and space
+                    $multi_line =~ s/\s*\)$//; ## Trim trailing space and )
 
-                   if ($multi_line =~ s/^[^,]*,\s*//) # If this fails there is only 1 parameter (which we will ignore)
-                   {
-                       # 1st parameter has been removed by the above, split up remaining 2 & 3
-                       $multi_line =~ s/^([^,]*),?\s*//;
-                       my $param2 = $1;
-                       $param2 =~ s/\s+$//; # Trim trailing spaces
+                    if ($multi_line =~ s/^[^,]*,\s*//) { # If this fails there is only 1 parameter (which we will ignore)
+                        # 1st parameter has been removed by the above, split up remaining 2 & 3
+                        $multi_line =~ s/^([^,]*),?\s*//;
+                        my $param2 = $1;
+                        $param2 =~ s/\s+$//; # Trim trailing spaces
 
-                       print_error ("$file:$.: ORB_init() 2nd parameter requires static_cast<ACE_TCHAR **>(0)") if ($param2 eq '0');
-                       print_error ("$file:$.: ORB_init() 3rd parameter is redundant (default orbID or give as string)") if ($multi_line eq '0');
-                       print_error ("$file:$.: ORB_init() 3rd parameter is redundant (default orbID already \"\")") if ($multi_line eq '""');
-                   }
+                        print_error ("$file:$.: ORB_init() 2nd parameter requires static_cast<ACE_TCHAR **>(0)") if ($param2 eq '0');
+                        print_error ("$file:$.: ORB_init() 3rd parameter is redundant (default orbID or give as string)") if ($multi_line eq '0');
+                        print_error ("$file:$.: ORB_init() 3rd parameter is redundant (default orbID already \"\")") if ($multi_line eq '""');
+                    }
 
-                   undef $multi_line;
-                   $not_found = 0;
+                    undef $multi_line;
+                    $not_found_end_line_count = 0;
                 }
-                elsif ($not_found < 10) # Limit the search for ( ... ) following ORB_init to ten lines
-                {
-                  ++$not_found;
+                elsif ($not_found_end_line_count < 10) { # Limit the search for ( ... ) following ORB_init to ten lines
+                    ++$not_found_end_line_count;
                 }
-                else
-                {
-                   undef $multi_line;
-                   $not_found = 0;
+                else {
+                    undef $multi_line;
+                    $not_found_end_line_count = 0;
                 }
             }
             close (FILE);
@@ -1899,7 +1941,6 @@ check_for_tab () if ($opt_l >= 1);
 check_for_lack_ACE_OS () if ($opt_l >= 10);
 check_for_exception_spec () if ($opt_l >= 1);
 check_for_NULL () if ($opt_l >= 1);
-check_for_improper_main_declaration () if ($opt_l >= 10);
 check_for_inline () if ($opt_l >= 2);
 check_for_math_include () if ($opt_l >= 3);
 check_for_synch_include () if ($opt_l >= 6);
@@ -1919,6 +1960,7 @@ check_for_ptr_arith_t () if ($opt_l >= 4);
 check_for_include () if ($opt_l >= 5);
 check_for_non_bool_operators () if ($opt_l > 2);
 check_for_long_file_names () if ($opt_l > 1 );
+check_for_improper_main_declaration ();
 check_for_ORB_init ();
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";

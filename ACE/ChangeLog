@@ -1,3 +1,10 @@
+Fri Jun 20 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/fuzz.pl:
+
+          Enhance ACE_TMAIN check for multi-line detection and remove
+          detection level for this check.
+
 Fri Jun 20 12:09:53 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
