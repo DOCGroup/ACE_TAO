@@ -9,7 +9,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-$target = PerlACE::TestTarget::create_target($PerlACE::TestConfig) || die "Create target failed\n";
+$target = PerlACE::TestTarget::create_target(1) || die "Create target failed\n";
 
 $status = 0;
 $debug_level = '0';
@@ -47,7 +47,7 @@ if (PerlACE::is_vxworks_test()) {
     $TV = new PerlACE::ProcessVX ("oneway_test", "$test_opts");
 }
 else {
-    $TV = new PerlACE::Process ("oneway_test", "$test_opts");
+    $TV = $server->CreateProcess ("oneway_test", "$test_opts");
 }
 
 $test = $TV->Spawn ();

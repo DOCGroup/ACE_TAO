@@ -7,9 +7,15 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+# Usually the primary component to run on targets (if any) is the server;
+# this time it's the client.
+$client = PerlACE::TestTarget::create_target(1) || die "Create target failed\n";
 
 $iorbase = "server_on_localhost_1192.ior";
 $iorfile = PerlACE::LocalFile ($iorbase);
+$client_iorfile = $client->LocalFile($iorbase);
 $status = 0;
 
 ## Get the perl interpreter that invoked us and remove any
@@ -23,9 +29,9 @@ if (PerlACE::is_vxworks_test()) {
 $CL = new PerlACE::ProcessVX ("client", " -k file://$iorbase -ORBdebuglevel 1 -ORBlogfile client.log");
 }
 else {
-$CL = new PerlACE::Process ("client", " -k file://$iorfile -ORBdebuglevel 1 -ORBlogfile client.log");
+$CL = $client->CreateProcess ("client", " -k file://$client_iorfile -ORBdebuglevel 1 -ORBlogfile client.log");
 }
-unlink "client.log";
+$client->DeleteFile("client.log");
 
 $SV->IgnoreExeSubDir(1);
 $SV->IgnoreHostRoot(1);
@@ -38,8 +44,13 @@ if (PerlACE::waitforfile_timed ($iorfile,
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
+if ($client->PutFile ($iorfile, $client_iorfile) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+} 
 
-$client = $CL->SpawnWaitKill (60);
+$client_status = $CL->SpawnWaitKill (60);
 
 # We expect to have to kill both client and server.
 

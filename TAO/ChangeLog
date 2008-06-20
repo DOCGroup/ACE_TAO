@@ -1,3 +1,20 @@
+Fri Jun 20 20:33:41 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/AMH_Exceptions/run_test.pl:
+        * tests/Param_Test/run_test.pl:
+        * tests/Hello/run_test.pl:
+        * tests/CallbackTest/run_test.pl:
+        * tests/Codec/run_test.pl:
+        * tests/Collocation/run_test.pl: Change test component references from
+          names ("client", "server") to numbers per new convention.
+          See ACE ChangeLog
+          Fri Jun 20 20:25:12 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Bug_2702_Regression/run_test.pl:
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+        * tests/Abstract_Interface/run_test.pl: Converted to use new test
+          framework.
+
 Fri Jun 20 14:32:52 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/OctetSeq/run_test.pl:

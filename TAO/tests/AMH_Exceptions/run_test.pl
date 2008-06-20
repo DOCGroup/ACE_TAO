@@ -11,8 +11,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-my $target = PerlACE::TestTarget::create_target("server") || die "Create target failed\n";
-my $host = PerlACE::TestTarget::create_target("client") || die "Create client failed\n";
+my $target = PerlACE::TestTarget::create_target(1) || die "Create target failed\n";
+my $host = PerlACE::TestTarget::create_target(2) || die "Create client failed\n";
 
 # File used to pass AMH server ior to its clients.
 # This file name is hard-coded in the server.cpp and client.cpp files
