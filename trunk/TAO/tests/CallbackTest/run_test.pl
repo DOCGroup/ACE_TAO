@@ -9,8 +9,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-my $target = PerlACE::TestTarget::create_target ("server");
-my $host = PerlACE::TestTarget::create_target ("client");
+my $target = PerlACE::TestTarget::create_target (1);
+my $host = PerlACE::TestTarget::create_target (2);
 
 $iorbase = "server.ior";
 $server_iorfile = $target->LocalFile ("$iorbase");

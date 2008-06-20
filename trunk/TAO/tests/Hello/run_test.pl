@@ -19,9 +19,9 @@ foreach $i (@ARGV) {
 }
 
 #my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
-my $server = PerlACE::TestTarget::create_target ("server");
+my $server = PerlACE::TestTarget::create_target (1);
 #my $client = new PerlACE::TestTarget;
-my $client = PerlACE::TestTarget::create_target ("client");
+my $client = PerlACE::TestTarget::create_target (2);
 if (!defined $server || !defined $client) {
     exit 1;
 }
