@@ -113,12 +113,12 @@ TAO_ZIOP_Loader::compress (
   TAO_Operation_Details &details,
   TAO_OutputCDR &out_stream)
 {
-  TAO_OutputCDR compression_stream;
-  if (details.marshal_args (compression_stream) == false)
-    {
-      throw ::CORBA::MARSHAL ();
-    }
-
+//  TAO_OutputCDR compression_stream;
+//  if (details.marshal_args (compression_stream) == false)
+    //{
+//      throw ::CORBA::MARSHAL ();
+  //  }
+//TAO_OutputCDR 
   CORBA::Object_var compression_manager =
     core.resolve_compression_manager();
 
@@ -131,20 +131,27 @@ TAO_ZIOP_Loader::compress (
     Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 6);
 
     CORBA::OctetSeq myout;
-    myout.length ((CORBA::ULong)(compression_stream.length() * 1.1));
+    myout.length ((CORBA::ULong)(out_stream.length()));
 
-    CORBA::OctetSeq input ((CORBA::ULong)(compression_stream.length()), compression_stream.begin ());
+    CORBA::OctetSeq input ((CORBA::ULong)(out_stream.length()), out_stream.begin ());
+    
+    // todo catch exceptions
     compressor->compress (input, myout);
+    if (myout.length () < input.length())
+    {
     out_stream.compressed (true);
     ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)myout.get_buffer(), (size_t)myout.length());
     newblock->wr_ptr ((size_t)myout.length());
     ZIOP::CompressedData data;
     data.compressorid = compressor_id;
-    data.original_length = compression_stream.total_length();
+    data.original_length = input.length();
     data.data = myout;
+    out_stream.reset ();
     out_stream << data;
+    return true;
+    }
   }
-  return true;
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

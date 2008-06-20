@@ -90,17 +90,32 @@ namespace TAO
                                 this->resolver_.stub (),
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time);
-        TAO_OutputCDR second;
-        this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, second);
-
+//        TAO_OutputCDR second;
+//        this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, second);
+     this->write_header (cdr);
+     ACE_Message_Block *current = const_cast <ACE_Message_Block*>(cdr.current());
+     char* wr_ptr = current->wr_ptr();
+     this->marshal_data (cdr);
+     char* new_wr_ptr = current->wr_ptr();
+     // data between wr_ptr and new_wr_ptr is all app data
+     size_t length = new_wr_ptr - wr_ptr;
+     TAO_OutputCDR compress_stream (wr_ptr, length, cdr.byte_order());
+     char* mydat;
+     compress_stream.adjust (length, mydat);
+             
+     // store position where data starts, change the data in the stream
 //        this->marshal_data (cdr);
         //ACE_CDR::consolidate (&cdr, &second);
-        cdr.write_octet_array_mb (second.begin ());
-        cdr.compressed (true);
+        if (this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, compress_stream))
+        {
+        //cdr.write_octet_array_mb (second.begin ());
+          current->wr_ptr (wr_ptr +  compress_stream.length());
+          cdr.compressed (true);
+          }
         //cdr.current ()->next (second.
         //cdr.
 
-        this->marshal_data (cdr);
+//        this->marshal_data (cdr);
 
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
