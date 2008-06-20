@@ -49,7 +49,7 @@ private:
     virtual int svc (void);
 
     TAO_SYNCH_MUTEX mutex_;
-    ACE_ARGV_T<char> argv_;
+    ACE_ARGV_T<ACE_TCHAR> argv_;
     CORBA::ORB_var orb_;
     ACE_TString ior_output_;
     bool use_name_svc_;

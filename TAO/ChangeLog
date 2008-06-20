@@ -1,3 +1,9 @@
+Fri Jun 20 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
+
+          Incorrect ACE_ARGV_T base character type corrected.
+
 Fri Jun 20 12:23:19 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/RTScheduling/DT_Creator.cpp:
