@@ -39,7 +39,7 @@ int
 Task_Stats::init (size_t max_samples)
 {
   max_samples_ = max_samples;
-  ACE_NEW_RETURN (this->thr_run_time_, ACE_UINT32[this->max_samples_], -1);
+  ACE_NEW_RETURN (this->thr_run_time_, time_t[this->max_samples_], -1);
   ACE_NEW_RETURN (this->thr_count_, int[this->max_samples_], -1);
   return 0;
 }
