@@ -1,3 +1,9 @@
+Fri Jun 20 08:50:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tools/IDL3_TO_IDL2/IDL3_TO_IDL2.mpc:
+
+          Added missing source dependancy.
+
 Thu Jun 19 14:11:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * DAnCE/NodeApplication/NodeApplication_Core.cpp:
