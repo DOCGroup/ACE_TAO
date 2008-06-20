@@ -15,6 +15,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/SystemException.h"
+#include "tao/ZIOP_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -89,8 +90,15 @@ namespace TAO
                                 this->resolver_.stub (),
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time);
+        TAO_OutputCDR second;
+        this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, second);
 
-        this->write_header (cdr);
+//        this->marshal_data (cdr);
+        //ACE_CDR::consolidate (&cdr, &second);
+        cdr.write_octet_array_mb (second.begin ());
+        cdr.compressed (true);
+        //cdr.current ()->next (second.
+        //cdr.
 
         this->marshal_data (cdr);
 

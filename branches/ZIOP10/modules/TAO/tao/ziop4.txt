@@ -504,28 +504,6 @@ Index: modules/TAO/tao/GIOP_Message_Generator_Parser_12.cpp
 ===================================================================
 --- modules/TAO/tao/GIOP_Message_Generator_Parser_12.cpp	(revision 79294)
 +++ modules/TAO/tao/GIOP_Message_Generator_Parser_12.cpp	(revision 80736)
-@@ -89,6 +89,21 @@
-   return true;
- }
-
-+/*
-+  // We have the ListenPointList at this point. Create a output CDR
-+  // stream at this point
-+  TAO_OutputCDR cdr;
-+
-+  // Marshal the information into the stream
-+  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-+      || (cdr << listen_point_list) == 0)
-+    return;
-+
-+  // Add this info in to the svc_list
-+  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
-+                                                    cdr);
-+ */
-+
- bool
- TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
-     CORBA::ULong request_id,
 @@ -99,8 +114,7 @@
    msg << request_id;
 
