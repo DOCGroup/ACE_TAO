@@ -1,3 +1,20 @@
+Fri Jun 20 20:25:12 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * bin/PerlACE/README: Edited to reflect the change in process for
+          referring to test components. Components are now referred to with
+          numbers instead of names.
+
+        * bin/PerlACE/TestTarget.pm: In create_target(), warn if the component
+          is not a number.
+
+        * bin/PerlACE/ProcessLVRT.pm: Don't try to close an undefined Telnet.
+
+        * bin/tao_orb_tests.lst: Removed the LabVIEW_RT disabling on
+          Bug_2702_Regression, Oneway_Send_Timeouts, and Abstract_Interface.
+
+        * tests/run_test.pl: Changed the target component from "ace" to 1 per
+          new component referring convention.
+
 Fri Jun 20 18:40:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/PerlACE/Run_Test.pm:

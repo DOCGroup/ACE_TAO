@@ -13,12 +13,15 @@ use File::Copy;
 ###############################################################################
 
 # Create the proper kind of TestTarget based on specified test component.
-# Pass the component name as the first argument. If there's no
-# DOC_TEST_<component> environment variable, use the local machine.
+# Pass the component number as the first argument. If there's no
+# DOC_TEST_<component-number> environment variable, use the local machine.
 
 sub create_target
 {
     my $component = shift;
+    if ($component == 0) {
+        print STDERR "Warning: components should be numbers, not names\n";
+    }
     my $target = undef;
     my $envname = "DOC_TEST_\U$component";
     if (!exists $ENV{$envname}) {
