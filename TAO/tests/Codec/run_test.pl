@@ -9,7 +9,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-my $target = PerlACE::TestTarget::create_target ("server");
+my $target = PerlACE::TestTarget::create_target (1);
 
 print STDERR "\n\n==== Running Codec test\n";
 

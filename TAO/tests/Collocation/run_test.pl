@@ -11,7 +11,7 @@ use PerlACE::TestTarget;
 
 PerlACE::add_lib_path ('.');
 
-my $target = PerlACE::TestTarget::create_target ("server");
+my $target = PerlACE::TestTarget::create_target (1);
 
 $status = 0;
 
