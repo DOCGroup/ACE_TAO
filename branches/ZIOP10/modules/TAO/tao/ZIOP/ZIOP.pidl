@@ -3,6 +3,12 @@
 
 module ZIOP
 {
+  struct CompressedData {
+    Compression::CompressorId compressorid;
+    unsigned long original_length;
+    CORBA::OctetSeq data;
+   };
+
     //
     // IOR Component for ZIOP
     //

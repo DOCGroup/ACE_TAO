@@ -180,6 +180,12 @@ public:
   /// Specify whether there are more data fragments to come.
   void more_fragments (bool more);
 
+  /// Are we containing compressed data?
+  bool compressed (void) const;
+
+  /// Specify whether we have compressed data.
+  void compressed (bool compressed);
+
   /// Set fragmented message attributes.
   void message_attributes (CORBA::ULong request_id,
                            TAO_Stub * stub,
@@ -235,8 +241,10 @@ private:
 
   /// Request/reply send timeout.
   ACE_Time_Value * timeout_;
-  //@}
 
+  /// Do we contain compressed data
+  bool compressed_;
+  //@}
 };
 
 /**
@@ -370,6 +378,8 @@ public:
 private:
   /// The ORB_Core, required to extract object references.
   TAO_ORB_Core* orb_core_;
+public:
+  CORBA::Boolean compressed_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

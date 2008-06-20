@@ -16,11 +16,6 @@
 
 module IOP
 {
-struct CompressedData {
-  long compressorid;
-  long original_length;
-  CORBA::OctetSeq data;
-};
   typedef unsigned long ProfileId;
   const ProfileId TAG_INTERNET_IOP = 0;
   const ProfileId TAG_MULTIPLE_COMPONENTS = 1;

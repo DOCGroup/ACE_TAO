@@ -21,6 +21,18 @@ TAO_OutputCDR::more_fragments (bool more)
   this->more_fragments_ = more;
 }
 
+ACE_INLINE bool
+TAO_OutputCDR::compressed (void) const
+{
+  return this->compressed_;
+}
+
+ACE_INLINE void
+TAO_OutputCDR::compressed (bool compressed)
+{
+  this->compressed_ = compressed;
+}
+
 ACE_INLINE void
 TAO_OutputCDR::message_attributes (CORBA::ULong request_id,
                                    TAO_Stub * stub,
@@ -77,7 +89,8 @@ TAO_InputCDR::TAO_InputCDR (const char *buf,
                   byte_order,
                   major_version,
                   minor_version),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    compressed_ (false)
 {
 }
 
@@ -91,7 +104,8 @@ TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
                   byte_order,
                   major_version,
                   minor_version),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    compressed_ (false)
 {
 }
 
@@ -105,7 +119,8 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
                   byte_order,
                   major_version,
                   minor_version),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    compressed_ (false)
 {
 }
 
@@ -121,7 +136,8 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
                   major_version,
                   minor_version,
                   lock),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    compressed_ (false)
 {
 }
 
@@ -137,7 +153,8 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                   byte_order,
                   major_version,
                   minor_version),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    compressed_ (false)
 {
 }
 
@@ -158,7 +175,8 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                   byte_order,
                   major_version,
                   minor_version),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    compressed_ (false)
 {
 }
 
@@ -170,7 +188,8 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
   : ACE_InputCDR (rhs,
                   size,
                   offset),
-    orb_core_ (rhs.orb_core_)
+    orb_core_ (rhs.orb_core_),
+    compressed_ (rhs.compressed_)
 {
 }
 
@@ -179,14 +198,16 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
                             size_t size)
   : ACE_InputCDR (rhs,
                   size),
-    orb_core_ (rhs.orb_core_)
+    orb_core_ (rhs.orb_core_),
+    compressed_ (rhs.compressed_)
 {
 }
 
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
   : ACE_InputCDR (rhs),
-    orb_core_ (rhs.orb_core_)
+    orb_core_ (rhs.orb_core_),
+    compressed_ (rhs.compressed_)
 {
 }
 
@@ -194,7 +215,8 @@ ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (rhs),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    compressed_ (false)
 {
 }
 

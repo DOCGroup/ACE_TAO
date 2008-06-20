@@ -11,7 +11,8 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
     byte_order_ (0),
     message_type_ (GIOP::Request),
     payload_size_ (0),
-    more_fragments_ (false)
+    more_fragments_ (false),
+    compressed_ (false)
 {
 }
 
@@ -55,6 +56,12 @@ ACE_INLINE TAO_GIOP_Message_Version const &
 TAO_GIOP_Message_State::giop_version (void) const
 {
   return this->giop_version_;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_GIOP_Message_State::compressed (void) const
+{
+  return this->compressed_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

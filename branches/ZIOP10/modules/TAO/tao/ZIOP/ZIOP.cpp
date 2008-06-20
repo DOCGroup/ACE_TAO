@@ -91,7 +91,7 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
 
   if (!CORBA::is_nil(manager.in ()))
     {
-      IOP::CompressedData data;
+      ZIOP::CompressedData data;
       if ((*(server_request.incoming()) >> data) == 0)
         return false;
 //      server_request.compressed_ = true;
@@ -138,7 +138,7 @@ TAO_ZIOP_Loader::compress (
     out_stream.compressed (true);
     ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)myout.get_buffer(), (size_t)myout.length());
     newblock->wr_ptr ((size_t)myout.length());
-    IOP::CompressedData data;
+    ZIOP::CompressedData data;
     data.compressorid = compressor_id;
     data.original_length = compression_stream.total_length();
     data.data = myout;

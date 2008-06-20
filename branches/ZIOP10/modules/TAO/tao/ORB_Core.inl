@@ -436,6 +436,18 @@ TAO_ORB_Core::codeset_manager()
   return this->codeset_manager_;
 }
 
+ACE_INLINE TAO_ZIOP_Adapter *
+TAO_ORB_Core::ziop_adapter ()
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    0);
+  if (ziop_adapter_ == 0)
+    {
+      return this->ziop_adapter_i ();
+    }
+  return this->ziop_adapter_;
+}
+
 ACE_INLINE TAO::ORBInitializer_Registry_Adapter *
 TAO_ORB_Core::orbinitializer_registry ()
 {

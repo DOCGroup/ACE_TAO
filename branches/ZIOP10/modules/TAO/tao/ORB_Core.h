@@ -202,6 +202,8 @@ public:
   /// yet
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry (void);
 
+  TAO_ZIOP_Adapter *TAO_ORB_Core::ziop_adapter ();
+
   TAO_Service_Context_Registry &service_context_registry (void);
 
   /// Get the protocol factories
@@ -526,8 +528,6 @@ public:
     Messaging::SyncScope &scope);
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-  TAO_ZIOP_Adapter* ziop_adapter (void);
 
   typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *,
                                    TAO_Stub *,

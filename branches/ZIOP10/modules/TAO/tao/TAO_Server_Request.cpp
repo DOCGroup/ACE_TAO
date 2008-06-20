@@ -352,9 +352,9 @@ TAO_ServerRequest::tao_send_reply (void)
 
   this->outgoing_->more_fragments (false);
 
-  int result = this->transport_->send_message (*this->outgoing_,
-                                               0,
-                                               TAO_Transport::TAO_REPLY);
+  int const result = this->transport_->send_message (*this->outgoing_,
+                                                     0,
+                                                     TAO_Transport::TAO_REPLY);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
