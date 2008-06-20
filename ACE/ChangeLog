@@ -1,3 +1,10 @@
+Fri Jun 20 12:09:53 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+
+          Added static_cast's to avoid warnings from vc8.
+
 Thu Jun 19 16:21:07  2008  Steve Huston  <shuston@riverace.com>
 
         * ace/CDR_Base.h:
