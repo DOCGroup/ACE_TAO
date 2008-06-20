@@ -88,6 +88,20 @@ namespace ACE
           this->value_ += (*current_instance)->value_;
         }
     }
+    
+    void
+    Windows_Multi_Instance_Monitor::clear_impl (void)
+    {
+      Windows_Monitor **current_instance = 0;
+
+      /// Sum the values of each single instance monitor.
+      for (INSTANCES_ITERATOR i (this->instances_); !i.done (); i.advance ())
+        {
+          i.next (current_instance);
+
+          (*current_instance)->clear_impl ();
+        }
+    }
   }
 }
 

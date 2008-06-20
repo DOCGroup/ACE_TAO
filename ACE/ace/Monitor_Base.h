@@ -26,6 +26,7 @@
 #include "ace/Refcountable_T.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
+#include "ace/CDR_Base.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,18 +52,32 @@ namespace ACE
       : private ACE_Refcountable_T<ACE_SYNCH_MUTEX>
     {
     public:
+      /// A monitor can hold various types of data and maintains stats
+      /// differently depending upon the type of information stored.
+      enum Information_Type
+      {
+        MC_COUNTER,
+        MC_NUMBER,
+        MC_TIME,
+        MC_INTERVAL,
+        MC_GROUP
+      };
+
       typedef Monitor_Control_Types::ConstraintList CONSTRAINTS;
       typedef CONSTRAINTS::const_iterator CONSTRAINT_ITERATOR;
+
+      Monitor_Base (const char* name, Information_Type type);
+      virtual ~Monitor_Base (void);
 
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.
       virtual void update (void);
 
       /// Updates the monitor's data if it is a numeric floating point.
-      virtual void receive (double value);
+      virtual void receive (double data);
 
       /// Updates the monitor's data if it is an integer size.
-      virtual void receive (size_t value);
+      virtual void receive (size_t data);
 
       /// Add a constraint, returns a unique constraint id.
       long add_constraint (const char* expression,
@@ -93,12 +108,29 @@ namespace ACE
 
       void add_ref (void);
       void remove_ref (void);
+      
+      /// Calculate the average of the accumulated samples.
+      double average (void) const;
+
+      /// Calculate the sum of the squares of the samples.
+      double sum_of_squares (void) const;
+
+      /// Returns the number of samples
+      size_t count (void) const;
+
+      /// Returns the minimum sample value
+      double minimum_sample (void) const;
+
+      /// Returns the maximum sample value
+      double maximum_sample (void) const;
+
+      /// Returns the most recent sample value
+      double last_sample (void) const;
+
+      /// Return the type of this statistic
+      Information_Type type (void) const;
 
     protected:
-      Monitor_Base (void);
-      Monitor_Base (const char* name);
-      virtual ~Monitor_Base (void);
-
       /// Overridden in some monitors (for example the OS monitors) where
       /// clearing requires monitor-specific actions.
       virtual void clear_i (void);
@@ -111,6 +143,15 @@ namespace ACE
 
     private:
       ACE_CString name_;
+      Information_Type type_;
+
+      size_t index_;
+      bool minimum_set_;
+      double minimum_;
+      double maximum_;
+      double sum_;
+      double sum_of_squares_;
+      double last_;
     };
   }
 }

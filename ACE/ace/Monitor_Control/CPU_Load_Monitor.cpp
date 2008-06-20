@@ -22,7 +22,7 @@ namespace ACE
       "OS/Processor/CPULoad";
 
     CPU_Load_Monitor::CPU_Load_Monitor (const char* name)
-      : Monitor_Base (name)
+      : Monitor_Base (name, Monitor_Base::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Monitor (ACE_TEXT("\\Processor(_Total)\\% Processor Time"))
 #endif
@@ -98,6 +98,12 @@ namespace ACE
     CPU_Load_Monitor::default_name (void)
     {
       return CPU_Load_Monitor::default_name_;
+    }
+    
+    void
+    CPU_Load_Monitor::clear_i (void)
+    {
+      this->clear_impl ();
     }
 
 #if defined (linux)

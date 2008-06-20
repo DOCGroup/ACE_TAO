@@ -15,13 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Monitor_Control/Monitor_Control_export.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_pdh.h"
+
+#include "ace/Monitor_Control/Monitor_Control_export.h"
 
 #if defined (ACE_HAS_WIN32_PDH)
 
@@ -46,13 +48,20 @@ namespace ACE
       /// Platform-specific implementation.
       void update_i (void);
 
+      /// Platform-specific reset.
+      void clear_impl (void);
+
     protected:
-      PDH_FMT_COUNTERVALUE pdh_value_;
       double value_;
+      
+    private:
+      /// Code common to constructor and clear_impl().
+      void init (void);
 
     /// Make these persistent as members so they don't have to be
     /// created & destroyed with each update.
     private:
+      ACE_CString path_;
       HQUERY query_;
       HCOUNTER counter_;
       PDH_STATUS status_;

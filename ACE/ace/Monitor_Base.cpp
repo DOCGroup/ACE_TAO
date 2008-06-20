@@ -21,14 +21,17 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Monitor_Base::Monitor_Base (void)
-      : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
-    {
-    }
-
-    Monitor_Base::Monitor_Base (const char* name)
+    Monitor_Base::Monitor_Base (const char* name, Information_Type type)
       : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
       , name_ (name)
+      , type_ (type)
+      , index_ (0UL)
+      , minimum_set_ (false)
+      , minimum_ (0.0)
+      , maximum_ (0.0)
+      , sum_ (0.0)
+      , sum_of_squares_ (0.0)
+      , last_ (0.0)
     {
     }
 
@@ -48,15 +51,44 @@ namespace ACE
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
       this->data_.timestamp_ = ACE_OS::gettimeofday ();
       this->data_.value_ = data;
+
+      if (this->type_ != MC_COUNTER)
+        {
+          this->sum_ += data;
+          this->sum_of_squares_ += (data * data);
+          ++this->index_;
+        }
+
+      if (this->type_ == MC_COUNTER)
+        {
+          ++this->last_;
+          this->maximum_ = this->last_;
+        }
+      else
+        {
+          this->last_ = data;
+
+          if (!this->minimum_set_)
+            {
+              this->minimum_set_ = true;
+              this->minimum_ = data;
+            }
+          else if (this->minimum_ > data)
+            {
+              this->minimum_ = data;
+            }
+
+          if (this->maximum_ < data)
+            {
+              this->maximum_ = data;
+            }
+        }
     }
 
     void
-    Monitor_Base::receive (size_t value)
+    Monitor_Base::receive (size_t data)
     {
-      ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-
-      this->data_.timestamp_ = ACE_OS::gettimeofday ();
-      this->data_.value_ = static_cast<double> (value);
+      this->receive (static_cast<double> (data));
     }
 
     long
@@ -116,6 +148,7 @@ namespace ACE
     Monitor_Base::retrieve (Monitor_Control_Types::Data& data) const
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
+      
       data = this->data_;
     }
 
@@ -133,7 +166,7 @@ namespace ACE
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
 
       data = this->data_;
-      this->clear_i ();
+      this->clear ();
     }
 
     void
@@ -184,11 +217,104 @@ namespace ACE
         }
     }
   
+    double
+    Monitor_Base::average (void) const
+    {
+      if (this->type_ == MC_COUNTER || this->type_ == MC_GROUP)
+        {
+          return 0.0;
+        }
+
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0.0);
+
+      return (this->index_== 0UL ? 0.0 : this->sum_ / this->index_);
+    }
+
+    double
+    Monitor_Base::sum_of_squares (void) const
+    {
+      if (this->type_ == MC_COUNTER || this->type_ == MC_GROUP)
+        {
+          return 0.0;
+        }
+
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0.0);
+
+      return this->sum_of_squares_;
+    }
+
+    size_t
+    Monitor_Base::count (void) const
+    {
+      if (this->type_ == MC_GROUP)
+        {
+          return 0UL;
+        }
+
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0UL);
+
+      return (this->type_ == MC_COUNTER
+              ? static_cast<size_t> (this->last_)
+              : this->index_);
+    }
+
+    double
+    Monitor_Base::minimum_sample (void) const
+    {
+      if (this->type_ == MC_GROUP)
+        {
+          return 0.0;
+        }
+
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0.0);
+
+      return this->minimum_;
+    }
+
+    double
+    Monitor_Base::maximum_sample (void) const
+    {
+      if (this->type_ == MC_GROUP)
+        {
+          return 0.0;
+        }
+
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0.0);
+
+      return this->maximum_;
+    }
+
+    double
+    Monitor_Base::last_sample (void) const
+    {
+      if (this->type_ == MC_GROUP)
+        {
+          return 0.0;
+        }
+
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0.0);
+
+      return this->last_;
+    }
+
+    Monitor_Base::Information_Type
+    Monitor_Base::type (void) const
+    {
+      return this->type_;
+    }
+
     void
     Monitor_Base::clear_i (void)
     {
       this->data_.value_ = 0.0;
       this->data_.timestamp_ = ACE_Time_Value::zero;
+      this->index_ = 0UL;
+      this->minimum_set_ = false;
+      this->minimum_ = 0.0;
+      this->maximum_ = 0.0;
+      this->sum_ = 0.0;
+      this->sum_of_squares_ = 0.0;
+      this->last_ = 0.0;
     }
   }
 }

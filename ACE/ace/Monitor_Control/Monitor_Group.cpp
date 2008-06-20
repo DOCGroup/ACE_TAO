@@ -11,7 +11,7 @@ namespace ACE
   namespace Monitor_Control
   {
     Monitor_Group::Monitor_Group (const char* name)
-      : Monitor_Base (name)
+      : Monitor_Base (name, Monitor_Base::MC_GROUP)
     {}
 
     void
@@ -31,6 +31,18 @@ namespace ACE
         }
     }
 
+    void
+    Monitor_Group::receive (double /* data */)
+    {
+      /// No-op, should always call update().
+    }
+    
+    void
+    Monitor_Group::receive (size_t /* data */)
+    {
+      /// No-op, should always call update().
+    }
+    
     void
     Monitor_Group::clear (void)
     {
