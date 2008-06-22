@@ -1,3 +1,12 @@
+Sun Jun 22 17:23:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Control/CPU_Load_Monitor.cpp:
+        * ace/Monitor_Control/Memory_Usage_Monitor.cpp:
+        * ace/Monitor_Control/Num_Threads_Monitor.cpp:
+        
+          Fix to clear_i() implementation for these monitors that
+          compiled only on Windows.
+
 Fri Jun 20 20:40:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Size.cpp:
