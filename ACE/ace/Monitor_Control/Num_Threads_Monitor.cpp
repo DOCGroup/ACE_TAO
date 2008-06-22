@@ -84,7 +84,11 @@ namespace ACE
     void
     Num_Threads_Monitor::clear_i (void)
     {
+/// (JP) 2008-06-22 - Similar implmentations for the other platforms 
+/// will be coming shortly.
+#if defined (ACE_HAS_WIN32_PDH)
       this->clear_impl ();
+#endif
     }
   }
 }
