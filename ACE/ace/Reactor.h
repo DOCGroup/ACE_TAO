@@ -51,8 +51,7 @@ class ACE_Sig_Set;
 /**
  * @class ACE_Reactor
  *
- * @brief The responsibility of this class is to forward all methods to
- * its delegation/implementation class, e.g.,
+ * @brief This class forwards all methods to its delegation/implementation class, e.g.,
  * ACE_Select_Reactor or ACE_WFMO_Reactor.
  */
 class ACE_Export ACE_Reactor : public ACE_Reactor_Timer_Interface

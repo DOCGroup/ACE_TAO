@@ -1,3 +1,7 @@
+Fri Jun 20 19:53:02 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/components.html: Fixed a minor formatting error.
+  
 Fri Jun 20 20:33:41 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/AMH_Exceptions/run_test.pl:
@@ -44,6 +48,7 @@ Fri Jun 20 12:23:19 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
           Removed static_cast's that are no longer needed.
 
+>>>>>>> .r82113
 Thu Jun 19 17:38:09 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Reliable_Oneways/client.cpp:
