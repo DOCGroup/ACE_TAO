@@ -330,7 +330,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "base," << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id ()"
       << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl << be_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "::CORBA::ValueBase_var owner (base);" << be_nl << be_nl
       << "if (!retval)" << be_idt_nl
       << "return false;" << be_uidt_nl << be_nl
       << "if (base != 0 && ! base->_tao_unmarshal_v (strm))" << be_idt_nl
@@ -339,7 +340,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << be_nl
       << "// Align the pointer to the right subobject." << be_nl
       << "new_object = " << node->local_name () << "::_downcast (base);"
-      << be_nl
+      << be_nl << "owner._retn ();" << be_nl
       << "return true;" << be_uidt_nl
       << "}";
 
