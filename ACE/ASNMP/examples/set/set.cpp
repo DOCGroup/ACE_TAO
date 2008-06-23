@@ -66,9 +66,10 @@ class set {
 
 
 // main entry point
-int main( int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  set get(argc, argv);
+  ACE_Argv_Type_Converter atc (argc, argv);
+  set get (atc.get_argc (), atc.get_ASCII_argv ());
   if (get.valid())
      return get.run();
   else

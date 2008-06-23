@@ -1,3 +1,19 @@
+Mon Jun 23 11:12:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Svc_Conf_y.cpp:
+        * bin/LabVIEW_RT/labview_test_controller/test.cpp:
+        * ASNMP/examples/trap/trap.cpp:
+        * ASNMP/examples/get/get.cpp:
+        * ASNMP/examples/get/get_async.cpp:
+        * ASNMP/examples/set/set.cpp:
+        * ASNMP/examples/next/next.cpp:
+        * ASNMP/examples/walk/walk.cpp:
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+        * performance-tests/RPC/client.cpp:
+        * tests/Bug_2980_Regression_Test.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Sun Jun 22 17:23:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Control/CPU_Load_Monitor.cpp:
