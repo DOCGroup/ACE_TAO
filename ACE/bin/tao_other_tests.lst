@@ -128,6 +128,7 @@ TAO/orbsvcs/tests/Notify/Bug_3252_Regression/run_test.pl: !ST !NO_MESSAGING !MIN
 TAO/orbsvcs/tests/Notify/Discarding/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86 !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Notify/MT_Dispatching/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Notify/Ordering/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86 !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/Notify/Timeout/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !IRIX !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
