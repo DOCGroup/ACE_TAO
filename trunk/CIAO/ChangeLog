@@ -1,3 +1,9 @@
+Mon Jun 23 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tools/IDL3_TO_IDL2/IDL3_TO_IDL2.mpc:
+
+          Backed out change, this is not the reason.
+
 Fri Jun 20 08:50:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tools/IDL3_TO_IDL2/IDL3_TO_IDL2.mpc:
