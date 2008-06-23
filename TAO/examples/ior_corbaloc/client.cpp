@@ -18,17 +18,17 @@
 // ============================================================================
 
 #include "ior_corbaloc_client_i.h"
+#include "ace/Argv_Type_Converter.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-
   try
     {
-
+      ACE_Argv_Type_Converter atc (argc, argv);
       IOR_corbaloc_Client_i client;
 
       int init_result;
-      init_result = client.init (argc, argv);
+      init_result = client.init (atc.get_argc (), atc.get_ASCII_argv ());
 
         if (init_result == 0)
           {
