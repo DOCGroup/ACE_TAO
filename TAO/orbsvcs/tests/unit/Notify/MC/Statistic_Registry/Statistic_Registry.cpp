@@ -16,9 +16,13 @@ error (const char* msg)
   ACE_OS::exit (1);
 }
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
 int
 ACE_TMAIN (int, ACE_TCHAR*[])
 {
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
   try
     {
       TAO_Singleton_Manager::instance ()->init ();
@@ -94,8 +98,8 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       error ("Caught an unexpected exception type");
     }
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
   return 0;
 }
-
-#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
