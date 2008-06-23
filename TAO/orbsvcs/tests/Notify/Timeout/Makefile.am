@@ -11,101 +11,144 @@
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
+TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-bin_PROGRAMS =
+noinst_PROGRAMS =
 
-## Makefile.NT_Notify_Service.am
+## Makefile.Timeout_Idl.am
+
+BUILT_SOURCES = \
+  sigC.cpp \
+  sigC.h \
+  sigC.inl \
+  sigS.cpp \
+  sigS.h \
+  sigS.inl
+
+CLEANFILES = \
+  sig-stamp \
+  sigC.cpp \
+  sigC.h \
+  sigC.inl \
+  sigS.cpp \
+  sigS.h \
+  sigS.inl
+
+sigC.cpp sigC.h sigC.inl sigS.cpp sigS.h sigS.inl: sig-stamp
+
+sig-stamp: $(srcdir)/sig.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/sig.idl
+	@touch "$@"
+
+noinst_HEADERS = \
+  sig.idl
+
+## Makefile.Timeout_Consumer.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if BUILD_WINNT
-if !BUILD_ACE_FOR_TAO
 
-bin_PROGRAMS += NT_Notify_Service
+noinst_PROGRAMS += Structured_Consumer
 
-NT_Notify_Service_CPPFLAGS = \
+Structured_Consumer_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
-NT_Notify_Service_SOURCES = \
-  NT_Notify_Server.cpp \
-  NT_Notify_Service.cpp \
-  Notify_Service.cpp \
-  NT_Notify_Service.h \
-  Notify_Service.h
+Structured_Consumer_SOURCES = \
+  Notify_Structured_Push_Consumer.cpp \
+  Structured_Consumer.cpp \
+  sigC.cpp \
+  Notify_Structured_Push_Consumer.h
 
-NT_Notify_Service_LDADD = \
+Structured_Consumer_LDFLAGS = \
+  -L$(TAO_ROOT)/orbsvcs/tests/Notify/lib
+
+Structured_Consumer_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
-endif BUILD_WINNT
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.Notify_Service.am
+## Makefile.Timeout_Supplier.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-bin_PROGRAMS += Notify_Service
+noinst_PROGRAMS += Structured_Supplier
 
-Notify_Service_CPPFLAGS = \
+Structured_Supplier_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
-Notify_Service_SOURCES = \
-  Notify_Server.cpp \
-  Notify_Service.cpp \
-  Notify_Service.h
+Structured_Supplier_SOURCES = \
+  Structured_Supplier.cpp \
+  sigC.cpp \
+  sigS.cpp \
+  Notify_Structured_Push_Consumer.h
 
-Notify_Service_LDADD = \
+Structured_Supplier_LDFLAGS = \
+  -L$(TAO_ROOT)/orbsvcs/tests/Notify/lib
+
+Structured_Supplier_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL_Parser.la \
   $(TAO_BUILDDIR)/tao/ETCL/libTAO_ETCL.la \
   $(ACE_BUILDDIR)/ace/ETCL/libACE_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

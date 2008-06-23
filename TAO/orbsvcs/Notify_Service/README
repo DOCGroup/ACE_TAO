@@ -54,6 +54,12 @@ Command line arguments:
                               and use a separate ORB dedicated to dispatching of
                               events.
 
+"-Timeout msec" : Applies a relative round-trip timeout of msec microseconds
+                  to the main ORB and, if -UseSeparateDispatchingORB 1 is
+                  specified, to the dispatching ORB.  This requires the
+                  'corba_messaging' MPC feature during building of the
+                  Notify_Service, which is on by default.
+
 !! The -Notify_TPReactor option is deprecated!! use the -ORBRunThreads
 option instead.
 
