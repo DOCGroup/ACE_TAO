@@ -14,9 +14,13 @@ error (const char* msg)
   ACE_OS::exit (1);
 }
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
 int
 ACE_TMAIN (int, ACE_TCHAR* argv[])
 {
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+
   try
     {
       if (ACE_Service_Config::open (argv[0]) != 0)
@@ -45,8 +49,8 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
       error ("Caught an unexpected exception type");
     }
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
   return 0;
 }
-
-#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
