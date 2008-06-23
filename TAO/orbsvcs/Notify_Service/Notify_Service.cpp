@@ -8,6 +8,11 @@
 #include "tao/debug.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+#include "tao/Messaging/Messaging.h"
+#endif /* TAO_HAS_CORBA_MESSAGING != 0 */
+
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
@@ -24,6 +29,7 @@ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 , register_event_channel_ (false)
 , nthreads_ (1)
 , separate_dispatching_orb_ (false)
+, timeout_ (0)
 {
   // No-Op.
 }
@@ -42,6 +48,8 @@ TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv [])
 
   this->orb_ = CORBA::ORB_init (command_line.get_argc(),
                                 command_line.get_ASCII_argv());
+
+  this->apply_timeout (this->orb_);
 
   CORBA::Object_var object =
     this->orb_->resolve_initial_references("RootPOA");
@@ -72,7 +80,40 @@ TAO_Notify_Service_Driver::init_dispatching_ORB (int& argc, ACE_TCHAR *argv [])
                                 command_line.get_ASCII_argv(),
                                 "dispatcher");
 
+  this->apply_timeout (this->dispatching_orb_);
+
   return 0;
+}
+
+void
+TAO_Notify_Service_Driver::apply_timeout (CORBA::ORB_ptr orb)
+{
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+  if (this->timeout_ != 0)
+    {
+      // convert from msec to "TimeT"
+      CORBA::Any timeout;
+      TimeBase::TimeT value = 10000 * this->timeout_;
+      timeout <<= value;
+
+      CORBA::Object_var object =
+        orb->resolve_initial_references ("ORBPolicyManager");
+      CORBA::PolicyManager_var policy_manager =
+        CORBA::PolicyManager::_narrow (object.in ());
+      if (CORBA::is_nil (policy_manager.in ()))
+        throw CORBA::INTERNAL ();
+
+      CORBA::PolicyList policy_list (1);
+      policy_list.length (1);
+      policy_list[0] = orb->create_policy (
+                              Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                              timeout);
+      policy_manager->set_policy_overrides (policy_list, CORBA::SET_OVERRIDE);
+      policy_list[0]->destroy ();
+  }
+#else
+  ACE_UNUSED_ARG (orb);
+#endif /* TAO_HAS_CORBA_MESSAGING != 0 */
 }
 
 int
@@ -401,6 +442,17 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout"))))
+        {
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+          this->timeout_ = ACE_OS::atoi (current_arg);
+          arg_shifter.consume_arg ();
+#else
+          ACE_DEBUG((LM_DEBUG,
+                     "WARNING: CORBA Messaging has been disabled.  The "
+                     "timeout will not be applied.\n"));
+#endif /* TAO_HAS_CORBA_MESSAGING != 0 */
+        }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-?")) == 0)
         {
           ACE_DEBUG((LM_DEBUG,
@@ -408,7 +460,8 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
                      "-Boot -[No]NameSvc "
                      "-IORoutput file_name "
                      "-Channel -ChannelName channel_name "
-                     "-ORBRunThreads threads\n"
+                     "-ORBRunThreads threads "
+                     "-Timeout <msec>\n"
                      "default: %s -Factory NotifyEventChannelFactory "
                      "-NameSvc -Channel NotifyEventChannel -ORBRunThreads 1\n",
                      argv[0], argv[0]));

@@ -1,3 +1,29 @@
+Mon Jun 23 12:32:07 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+        * orbsvcs/Notify_Service/Makefile.am:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Notify_Service/README:
+
+          Added a -Timeout option to allow the user to apply a relative
+          round-trip timeout to the ORB.                               
+
+        * configure.ac:
+        * orbsvcs/tests/Notify/Makefile.am:
+        * orbsvcs/tests/Notify/Timeout:
+        * orbsvcs/tests/Notify/Timeout/Makefile.am:
+        * orbsvcs/tests/Notify/Timeout/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Timeout/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Timeout/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Timeout/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Timeout/Timeout.mpc:
+        * orbsvcs/tests/Notify/Timeout/run_test.pl:
+        * orbsvcs/tests/Notify/Timeout/sig.idl:
+
+          Added a test for this new feature.
+
 Mon Jun 23 11:23:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * examples/ior_corbaloc/server.cpp:

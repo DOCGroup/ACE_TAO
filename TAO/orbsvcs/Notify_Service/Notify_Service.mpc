@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : valuetype, orbsvcsexe, install, notification_serv, naming, iortable {
+project : valuetype, orbsvcsexe, install, notification_serv, naming, iortable, messaging_optional {
   exename  = Notify_Service
   Source_Files {
     Notify_Server.cpp
@@ -12,7 +12,7 @@ project : valuetype, orbsvcsexe, install, notification_serv, naming, iortable {
   }
 }
 
-project(NT_Notify_Service) : valuetype, orbsvcsexe, install, notification_serv, naming, iortable {
+project(NT_Notify_Service) : valuetype, orbsvcsexe, install, notification_serv, naming, iortable, messaging_optional {
   avoids += ace_for_tao
   requires += winnt
   exename  = NT_Notify_Service
