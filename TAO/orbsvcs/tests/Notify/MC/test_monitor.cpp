@@ -333,11 +333,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   int status = 0;
   
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -412,8 +416,11 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       status++;
     }
 
+#else
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
   return status;
 }
-
-#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 

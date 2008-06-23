@@ -11,9 +11,13 @@ error (const char* msg)
   ACE_OS::exit (1);
 }
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -44,8 +48,8 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       error ("Caught an unexpected exception type");
     }
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
   return 0;
 }
-
-#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
