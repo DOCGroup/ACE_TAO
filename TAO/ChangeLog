@@ -1,3 +1,17 @@
+Mon Jun 23 15:02:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Statistic_Registry.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Control/Control.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorManager.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorClient.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+        * orbsvcs/tests/Notify/MC/test_monitor.cpp:
+
+          Rearranged TAO_HAS_MONITOR_FRAMEWORK guards to allow main()
+          to be seen regardless of the evaluation of the guards.
+
 Mon Jun 23 12:39:23 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Oneway_Send_Timeouts/run_test.pl:
