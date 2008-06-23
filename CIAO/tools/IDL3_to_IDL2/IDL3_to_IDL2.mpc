@@ -59,7 +59,6 @@ project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile, tao_i
 
   Source_Files {
     $(TAO_ROOT)/TAO_IDL/driver/drv_args.cpp
-    $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp
     $(TAO_ROOT)/TAO_IDL/tao_idl.cpp
   }
 
