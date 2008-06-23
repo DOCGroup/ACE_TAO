@@ -107,7 +107,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Thread_Manager thread_mgr;
 
@@ -135,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 #else
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "you must have threads to run this test program\n"), -1);
 }

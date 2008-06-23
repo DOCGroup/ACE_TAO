@@ -126,7 +126,7 @@ void * loadunloadDll(void *pp)
   return 0;
 }
 
-int main(int, char **)
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   PRINTF ("main called\n");
 
