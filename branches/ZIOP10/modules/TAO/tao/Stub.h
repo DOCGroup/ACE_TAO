@@ -245,9 +245,7 @@ public:
    * Create the IOP::IOR info. We will create the info at most once.
    * Get the index of the profile we are using to make the invocation.
    */
-  int create_ior_info (IOP::IOR *&ior_info,
-                       CORBA::ULong &index
-                      );
+  int create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index);
 
   /// Deallocate the TAO_Stub object.
   /**
@@ -299,9 +297,7 @@ private:
   TAO_Profile *next_forward_profile (void);
 
   /// THREAD-SAFE Create the IOR info
-  int get_profile_ior_info (TAO_MProfile &profile,
-                            IOP::IOR *&ior_info
-                           );
+  int get_profile_ior_info (TAO_MProfile &profile, IOP::IOR *&ior_info);
 
 private:
 
@@ -357,7 +353,6 @@ protected:
     */
   TAO::Object_Proxy_Broker *object_proxy_broker_;
 
-
   /// Ordered list of profiles for this object.
   TAO_MProfile base_profiles_;
 
@@ -405,7 +400,7 @@ protected:
    * reason for caching this helps our generated code, notably the
    * stubs to be decoubled from ORB_Core. Please do not move it away.
    */
-  const CORBA::Boolean collocation_opt_;
+  CORBA::Boolean const collocation_opt_;
 };
 
 // Define a TAO_Stub auto_ptr class.

@@ -530,9 +530,11 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
     s.length ());
 
   if (!this->outgoing_->good_bit ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
-                ACE_TEXT ("could not marshal reply\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
+                  ACE_TEXT ("could not marshal reply\n")));
+    }
 
   this->outgoing_->more_fragments (false);
 
