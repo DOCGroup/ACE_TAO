@@ -61,7 +61,7 @@ namespace ACE
     /// Make these persistent as members so they don't have to be
     /// created & destroyed with each update.
     private:
-      ACE_CString path_;
+      ACE_TString path_;
       HQUERY query_;
       HCOUNTER counter_;
       PDH_STATUS status_;
