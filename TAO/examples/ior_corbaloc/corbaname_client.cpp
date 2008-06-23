@@ -15,7 +15,7 @@
 #include "corbalocC.h"
 #include "ace/Log_Msg.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
 
   try
@@ -37,7 +37,7 @@ int main (int argc, char *argv [])
 
       // Get an object reference using a corbaname: style URL
       CORBA::Object_var obj =
-        orb->string_to_object (argv[1]);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (argv[1]));
 
       // Narrow
       corbaloc::Status_var factory =
