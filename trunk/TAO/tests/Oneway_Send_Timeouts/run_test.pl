@@ -47,7 +47,7 @@ if (PerlACE::is_vxworks_test()) {
     $TV = new PerlACE::ProcessVX ("oneway_test", "$test_opts");
 }
 else {
-    $TV = $server->CreateProcess ("oneway_test", "$test_opts");
+    $TV = $target->CreateProcess ("oneway_test", "$test_opts");
 }
 
 $test = $TV->Spawn ();

@@ -1,3 +1,10 @@
+Mon Jun 23 12:39:23 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+
+          Fixed a bug in the script where the wrong variable was used as the
+          TestTarget object.
+
 Mon Jun 23 12:32:07 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
@@ -8,7 +15,7 @@ Mon Jun 23 12:32:07 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/Notify_Service/README:
 
           Added a -Timeout option to allow the user to apply a relative
-          round-trip timeout to the ORB.                               
+          round-trip timeout to the ORB.
 
         * configure.ac:
         * orbsvcs/tests/Notify/Makefile.am:
