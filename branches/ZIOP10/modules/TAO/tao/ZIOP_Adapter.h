@@ -22,6 +22,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
 #include "tao/TAO_Server_Request.h"
+#include "tao/Profile_Transport_Resolver.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,7 +41,7 @@ class TAO_Export TAO_ZIOP_Adapter : public ACE_Service_Object
 public:
   virtual bool decompress (TAO_ServerRequest& server_request) = 0;
 
-  virtual bool compress (TAO_ORB_Core& core, TAO_OutputCDR &stream) = 0;
+  virtual bool marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &stream, TAO::Profile_Transport_Resolver &resolver_) = 0;
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
 

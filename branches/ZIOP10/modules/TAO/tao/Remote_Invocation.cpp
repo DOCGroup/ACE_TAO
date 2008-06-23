@@ -41,8 +41,8 @@ namespace TAO
   {
     /**
      * Mega hack for RTCORBA start. I don't think that
-     * PortableInterceptor  would work here esp. for RTCORBA. PI needs
-     * to be improved to  help our cause.
+     * PortableInterceptor would work here esp. for RTCORBA. PI needs
+     * to be improved to help our cause.
      */
     this->resolver_.stub ()->orb_core ()->service_context_list (
       this->resolver_.stub (),
@@ -120,33 +120,20 @@ namespace TAO
   void
   Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
   {
-    ACE_Message_Block* current = const_cast <ACE_Message_Block*> (out_stream.current ());
-    CORBA::Boolean const use_ziop = this->orb_core ()->ziop_enabled ();
+    TAO_ZIOP_Adapter* ziop_adapter = this->orb_core()->ziop_adapter ();
 
-    if (use_ziop)
+    if (ziop_adapter)
       {
-         // Set the read pointer to the point where the application data starts
-         current->rd_ptr (current->wr_ptr());
+         ziop_adapter->marshal_data (this->details_, out_stream, this->resolver_);
       }
-
-    // Marshal application data
-    if (this->details_.marshal_args (out_stream) == false)
+    else
       {
-        throw ::CORBA::MARSHAL ();
+        // Marshal application data
+        if (this->details_.marshal_args (out_stream) == false)
+          {
+            throw ::CORBA::MARSHAL ();
+          }
       }
-
-    if (use_ziop)
-      {
-         // We can only compress one message block, so when compression is enabled first do
-         // a consolidate.
-         out_stream.consolidate ();
-         if (this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), out_stream))
-            {
-               // compressed, do nothing at this moment
-            }
-         // Set the read pointer back to the starting point
-         current->rd_ptr (current->base ());
-       }
   }
 
   Invocation_Status

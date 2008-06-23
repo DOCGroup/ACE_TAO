@@ -48,7 +48,7 @@ public:
   virtual bool decompress (TAO_ServerRequest& server_request);
 
   // Compress the @a stream. Starting point of the compression is rd_ptr()
-  virtual bool compress (TAO_ORB_Core& core, TAO_OutputCDR &stream);
+  virtual bool marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &stream, TAO::Profile_Transport_Resolver &resolver);
 
   /// Initialize the BiDIR loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);

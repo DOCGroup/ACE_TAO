@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/Operation_Details.h"
+#include "tao/Stub.h"
 
 ACE_RCSID (ZIOP,
            ZIOP,
@@ -124,18 +125,53 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
 }
 
 bool
-TAO_ZIOP_Loader::compress (
-  TAO_ORB_Core& core,
-  TAO_OutputCDR &stream)
+TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &stream, TAO::Profile_Transport_Resolver &resolver)
 {
-  if (stream.end ())
+  CORBA::Boolean use_ziop = false;
+  CORBA::Policy_var policy = CORBA::Policy::_nil ();
+
+  if (resolver.stub () == 0)
     {
-      // If we have a stream consisted out of multiple message blocks
-      // we can't compress it
-      return false;
+      policy =
+        resolver.stub()->orb_core()->get_cached_policy_including_current (TAO_CACHED_POLICY_ZIOP);
     }
+  else
+    {
+      policy = resolver.stub ()->get_cached_policy (TAO_CACHED_POLICY_ZIOP);
+    }
+
+  if (!CORBA::is_nil (policy.in ()))
+    {
+      ZIOP::CompressionEnablingPolicy_var srp =
+        ZIOP::CompressionEnablingPolicy::_narrow (policy.in ());
+
+      if (!CORBA::is_nil (srp.in ()))
+        {
+          use_ziop = srp->compression_enabled ();
+        }
+    }
+
+    ACE_Message_Block* current = const_cast <ACE_Message_Block*> (stream.current ());
+
+    if (use_ziop)
+      {
+         // Set the read pointer to the point where the application data starts
+         current->rd_ptr (current->wr_ptr());
+      }
+
+    // Marshal application data
+    if (details.marshal_args (stream) == false)
+      {
+        throw ::CORBA::MARSHAL ();
+      }
+
+    if (use_ziop) {
+         // We can only compress one message block, so when compression is enabled first do
+         // a consolidate.
+         stream.consolidate ();
+
   CORBA::Object_var compression_manager =
-    core.resolve_compression_manager();
+    resolver.stub()->orb_core()->resolve_compression_manager();
 
   Compression::CompressionManager_var manager =
     Compression::CompressionManager::_narrow (compression_manager.in ());
@@ -146,7 +182,7 @@ TAO_ZIOP_Loader::compress (
     Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 6);
 
     CORBA::OctetSeq myout;
-    ACE_Message_Block* current = const_cast <ACE_Message_Block*> (stream.current());
+    current = const_cast <ACE_Message_Block*> (stream.current());
     CORBA::ULong original_data_length =(CORBA::ULong)(current->wr_ptr() - current->rd_ptr());
     myout.length (original_data_length);
 
@@ -164,9 +200,12 @@ TAO_ZIOP_Loader::compress (
     data.original_length = input.length();
     data.data = myout;
     stream << data;
-    return true;
     }
   }
+         // Set the read pointer back to the starting point
+         current->rd_ptr (current->base ());
+    }
+
   return false;
 }
 

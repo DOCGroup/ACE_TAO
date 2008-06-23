@@ -448,6 +448,12 @@ TAO_ORB_Core::ziop_adapter ()
   return this->ziop_adapter_;
 }
 
+ACE_INLINE TAO_ZIOP_Adapter *
+TAO_ORB_Core::ziop_adapter_unlocked ()
+{
+  return this->ziop_adapter_;
+}
+
 ACE_INLINE TAO::ORBInitializer_Registry_Adapter *
 TAO_ORB_Core::orbinitializer_registry ()
 {
@@ -669,7 +675,7 @@ TAO_ORB_Core::set_delayed_transport_queueing_strategy (
 #endif
 
 ACE_INLINE void
-TAO_ORB_Core::ziop_enabled (CORBA::Boolean val) 
+TAO_ORB_Core::ziop_enabled (CORBA::Boolean val)
 {
   this->ziop_enabled_ = val;
 }

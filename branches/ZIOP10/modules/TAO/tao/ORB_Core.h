@@ -204,6 +204,8 @@ public:
 
   TAO_ZIOP_Adapter *TAO_ORB_Core::ziop_adapter ();
 
+  TAO_ZIOP_Adapter *TAO_ORB_Core::ziop_adapter_unlocked ();
+
   TAO_Service_Context_Registry &service_context_registry (void);
 
   /// Get the protocol factories

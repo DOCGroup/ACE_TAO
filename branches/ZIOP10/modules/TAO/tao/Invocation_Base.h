@@ -163,9 +163,9 @@ namespace TAO
 
     /// Cache the ORB_Core
     TAO_ORB_Core *orb_core_;
+    //@}
 
     TAO_Stub *stub_;
-    //@}
 
     /// Operations invoked by the
     /// PortableInterceptor::ClientRequestInfo object to get details
