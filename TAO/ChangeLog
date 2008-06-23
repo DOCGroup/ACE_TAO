@@ -1,7 +1,15 @@
+Mon Jun 23 10:30:36 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Fixed a memory leak described in bug#3344. The fix was in adding
+          a temporary CORBA::ValueBase_var that owns a pointer and deletes
+          it if something goes wrong in the course of _tao_unmarshal.
+
 Fri Jun 20 19:53:02 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs/components.html: Fixed a minor formatting error.
-  
+
 Fri Jun 20 20:33:41 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * tests/AMH_Exceptions/run_test.pl:
