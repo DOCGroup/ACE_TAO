@@ -1,3 +1,10 @@
+Mon Jun 23 12:09:26 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/C++NPv2/display_logfile.cpp: Divided an ACE_TCHAR
+          string by sizeof (ACE_TCHAR) to get the appropriate size.
+          Thanks to J.T. <jtc at acorntoolworks dot com> for reporting
+          this.
+
 Mon Jun 23 11:12:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/Svc_Conf_y.cpp:
