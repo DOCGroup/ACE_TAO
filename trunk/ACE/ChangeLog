@@ -1,3 +1,9 @@
+Mon Jun 23 15:28:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Svc_Conf_y.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use; commit generated 2nd.
+
 Mon Jun 23 15:27:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/Svc_Conf.y:
