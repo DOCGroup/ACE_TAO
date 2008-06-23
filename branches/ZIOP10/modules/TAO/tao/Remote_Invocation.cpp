@@ -120,40 +120,33 @@ namespace TAO
   void
   Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
   {
-     size_t header_length = out_stream.length ();
-     ACE_Message_Block* current = const_cast <ACE_Message_Block*> (out_stream.current ());
-     current->rd_ptr (current->wr_ptr());
+    ACE_Message_Block* current = const_cast <ACE_Message_Block*> (out_stream.current ());
+    CORBA::Boolean const use_ziop = this->orb_core ()->ziop_enabled ();
 
+    if (use_ziop)
+      {
+         // Set the read pointer to the point where the application data starts
+         current->rd_ptr (current->wr_ptr());
+      }
+
+    // Marshal application data
     if (this->details_.marshal_args (out_stream) == false)
       {
         throw ::CORBA::MARSHAL ();
       }
 
-     size_t data_length = out_stream.length () - header_length;
-     if (1)
-       {
-         // We can only compress on one message block, so when compression is enabled first do
-         // a consolidate
+    if (use_ziop)
+      {
+         // We can only compress one message block, so when compression is enabled first do
+         // a consolidate.
          out_stream.consolidate ();
-       }
-     // Set the read pointer to the point where the application data starts
-
-     if (1)
-       {
          if (this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), out_stream))
-        {
-        // compressed
-        }
+            {
+               // compressed, do nothing at this moment
+            }
+         // Set the read pointer back to the starting point
          current->rd_ptr (current->base ());
-        //cdr.write_octet_array_mb (second.begin ());
-//          current->wr_ptr (wr_ptr +  compress_stream.length());
-  //        cdr.compressed (true);
-          }
-        //cdr.current ()->next (second.
-        //cdr.
-
-//        this->marshal_data (cdr);
-
+       }
   }
 
   Invocation_Status

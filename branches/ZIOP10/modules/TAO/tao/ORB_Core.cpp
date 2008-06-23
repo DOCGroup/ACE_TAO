@@ -265,7 +265,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     codeset_manager_ (0),
     config_ (gestalt),
     sync_scope_hook_ (0),
-    timeout_hook_ (0)
+    timeout_hook_ (0),
+    ziop_enabled_ (true)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 

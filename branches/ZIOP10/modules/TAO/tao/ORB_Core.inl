@@ -668,4 +668,16 @@ TAO_ORB_Core::set_delayed_transport_queueing_strategy (
 
 #endif
 
+ACE_INLINE void
+TAO_ORB_Core::ziop_enabled (CORBA::Boolean val) 
+{
+  this->ziop_enabled_ = val;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::ziop_enabled (void) const
+{
+  return this->ziop_enabled_;
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

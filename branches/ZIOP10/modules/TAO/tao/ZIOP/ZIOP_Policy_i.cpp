@@ -156,7 +156,7 @@ CompressionEnablingPolicy::compression_enabled (void)
 TAO_Cached_Policy_Type
 CompressionEnablingPolicy::_tao_cached_type (void) const
 {
-  return TAO_CACHED_POLICY_UNCACHED;
+  return TAO_CACHED_POLICY_ZIOP;
 }
 
 }

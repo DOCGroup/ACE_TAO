@@ -829,6 +829,12 @@ public:
   CORBA::Boolean bidir_giop_policy (void);
   void bidir_giop_policy (CORBA::Boolean);
 
+  /// Get whether ZIOP is enabled or not
+  CORBA::Boolean ziop_enabled (void) const;
+
+  /// Set whether ZIOP is enabled or not
+  void ziop_enabled (CORBA::Boolean);
+
   /// Return the table that maps object key/name to de-stringified
   /// object reference.  It is needed for supporting local objects in
   /// the resolve_initial_references() mechanism.
@@ -1254,6 +1260,8 @@ protected:
 
   /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
   Timeout_Hook timeout_hook_;
+
+  CORBA::Boolean ziop_enabled_;
 };
 
 // ****************************************************************

@@ -24,17 +24,14 @@ TAO_ZIOPPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
   if (policy.in () == 0)
     return;
 
-  ZIOP::CompressorIdPolicy_var srp =
-    ZIOP::CompressorIdPolicy::_narrow (policy.in ());
+  ZIOP::CompressionEnablingPolicy_var srp =
+    ZIOP::CompressionEnablingPolicy::_narrow (policy.in ());
 
   if (srp.in () == 0)
     return;
 
-//  ZIOPPolicy::ZIOPectionalPolicyValue val = srp->value ();
-
-//  // Set the flag in the ORB_Core
-  //if (val == ZIOPPolicy::BOTH)
-    //orb_core_.ZIOP_giop_policy (true);
+  // Set the flag in the ORB_Core
+  orb_core_.ziop_enabled (srp->compression_enabled ());
 }
 
 void
