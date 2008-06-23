@@ -75,10 +75,36 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
-
       if (parse_args (argc, argv) != 0)
         return 1;
+
+CORBA::Boolean compression_enabling = true;
+//Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
+//Compression::CompressorIdList compressor_id_list(1);
+//compression_id_list.length(1);
+//compressor_id_list[0] = compressor_id;
+//CORBA::ULong compression_low_value = 16384;
+//CORBA::ULong min_compression_ratio = 40;
+CORBA::Any compression_enabling_any;//, compressor_id_any, low_value_any;
+//CORBA::Any min_compression_ratio_any;
+compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
+//compressor_id_any <<= compressor_id;
+//low_value_any <<= compression_low_value;
+//min_compression_ratio_any <<= min_compression_ratio;
+PortableServer::POA_var my_compress_poa = NULL;
+CORBA::PolicyList policies(1);
+policies.length(1);
+try {
+policies[0] = orb->create_policy(ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabling_any);
+//policies[1] = orb->create_policy(ZIOP::COMPRESSOR_ID_POLICY_ID,compressor_id_any);
+//policies[2] = orb->create_policy(ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID,compressor_id_any);
+//policies[3] = orb->create_policy(ZIOP::MIN_COMPRESSION_RATIO_POLICY_ID,min_compression_ratio);
+my_compress_poa = root_poa->create_POA("My_Compress_Poa", NULL, policies);
+} catch(const CORBA::PolicyError&) {
+policies.length(0);
+my_compress_poa = root_poa->create_POA("My_Compress_Poa", NULL, policies);
+}
+      PortableServer::POAManager_var poa_manager = my_compress_poa->the_POAManager ();
 
       Hello *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl,
@@ -87,9 +113,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::ServantBase_var owner_transfer(hello_impl);
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (hello_impl);
+        my_compress_poa->activate_object (hello_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var object = my_compress_poa->id_to_reference (id.in ());
 
       Test::Hello_var hello = Test::Hello::_narrow (object.in ());
 
