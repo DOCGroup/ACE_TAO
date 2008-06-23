@@ -12,7 +12,7 @@ ACE_RCSID (ZIOP,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Set the flag to zero to start with
-int TAO_ZIOP_Loader::is_activated_ = 0;
+bool TAO_ZIOP_Loader::is_activated_ = false;
 
 TAO_ZIOP_Loader::TAO_ZIOP_Loader (void)
 {
@@ -32,8 +32,7 @@ TAO_ZIOP_Loader::init (int,
         PortableInterceptor::ORBInitializer::_nil ();
       PortableInterceptor::ORBInitializer_var ziop_orb_initializer;
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
           /// Register the BiDir ORBInitializer.
           ACE_NEW_THROW_EX (tmp_orb_initializer,
@@ -43,18 +42,15 @@ TAO_ZIOP_Loader::init (int,
                                     TAO::VMCID,
                                     ENOMEM),
                                 CORBA::COMPLETED_NO));
-          ACE_TRY_CHECK;
 
           ziop_orb_initializer = tmp_orb_initializer;
 
           PortableInterceptor::register_orb_initializer (
-            ziop_orb_initializer.in ()
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            ziop_orb_initializer.in ());
 
-          TAO_ZIOP_Loader::is_activated_ = 1;
+          TAO_ZIOP_Loader::is_activated_ = true;
         }
-      ACE_CATCHANY
+      catch (...)
         {
           if (TAO_debug_level > 0)
             {
@@ -63,7 +59,6 @@ TAO_ZIOP_Loader::init (int,
             }
           return -1;
         }
-      ACE_ENDTRY;
     }
 
   return 0;
@@ -135,7 +130,7 @@ TAO_ZIOP_Loader::compress (
     myout.length (original_data_length);
 
     CORBA::OctetSeq input (original_data_length, current);
-    
+
     // todo catch exceptions
     compressor->compress (input, myout);
     if (myout.length () < original_data_length)

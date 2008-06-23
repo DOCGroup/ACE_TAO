@@ -64,7 +64,7 @@ private:
 
   /// Flag to indicate whether the ZIOP library has been
   /// activated.
-  static int is_activated_;
+  static bool is_activated_;
 };
 
 static int

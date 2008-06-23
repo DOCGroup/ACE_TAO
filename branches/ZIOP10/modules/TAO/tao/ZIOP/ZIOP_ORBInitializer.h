@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// ZIOP ORB initializer.
 class TAO_ZIOP_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+    public virtual ::CORBA::LocalObject
 {
 public:
 
@@ -49,23 +49,16 @@ public:
    */
   //@{
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   //@}
 
 private:
 
   /// Register policy factories.
-  void register_policy_factories (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL);
-
+  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

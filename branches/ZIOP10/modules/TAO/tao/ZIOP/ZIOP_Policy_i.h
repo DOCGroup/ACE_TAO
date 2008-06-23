@@ -90,20 +90,13 @@ public:
   virtual CompressionEnablingPolicy *clone (void) const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::CORBA::Boolean compression_enabled (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual ::CORBA::Boolean compression_enabled (void);
 
-  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type (void);
 
-  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (void);
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
@@ -111,7 +104,6 @@ private:
 
   /// The attribute
   ::CORBA::Boolean value_;
-
 };
 }
 

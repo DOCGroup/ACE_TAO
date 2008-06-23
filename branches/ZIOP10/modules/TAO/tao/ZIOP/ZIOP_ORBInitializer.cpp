@@ -64,19 +64,15 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
   PortableInterceptor::PolicyFactory_var policy_factory =
     policy_factory_ptr;
 
-  ACE_TRY
+  try
     {
       info->register_policy_factory (ZIOP::COMPRESSION_ENABLING_POLICY_ID,
-                                     policy_factory.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                     policy_factory.in ());
 
       info->register_policy_factory (ZIOP::COMPRESSOR_ID_POLICY_ID,
-                                     policy_factory.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                     policy_factory.in ());
     }
-  ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+  catch (const CORBA::BAD_INV_ORDER& ex)
     {
       if (ex.minor () == (CORBA::OMGVMCID | 16))
         {
@@ -86,15 +82,13 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
           // should do no more work in this ORBInitializer.
           return;
         }
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_CATCHANY
+  catch (...)
     {
       // Rethrow any other exceptions...
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
