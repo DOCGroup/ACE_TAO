@@ -290,6 +290,7 @@ AC_CONFIG_FILES([
   orbsvcs/examples/Notify/MC/monitor/Makefile
   orbsvcs/examples/Notify/Subscribe/Makefile
   orbsvcs/examples/Notify/ThreadPool/Makefile
+  orbsvcs/examples/Notify/Timeout/Makefile
   orbsvcs/examples/ORT/Makefile
   orbsvcs/examples/RtEC/Makefile
   orbsvcs/examples/RtEC/IIOPGateway/Makefile

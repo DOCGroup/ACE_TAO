@@ -91,6 +91,9 @@ protected:
   /// initialize the dispatching ORB.
   int init_dispatching_ORB (int& argc, ACE_TCHAR *argv []);
 
+  /// Apply a relative round-trip timeout to the ORB
+  void apply_timeout (CORBA::ORB_ptr orb);
+
   TAO_Notify_Service* notify_service_;
 
   /// Resolve the naming service.
@@ -143,6 +146,9 @@ protected:
 
   /// indicate that a separate ORB is used for dispatching events.
   bool separate_dispatching_orb_;
+
+  /// The relative round-trip timeout
+  suseconds_t timeout_;
 };
 
 #include /**/ "ace/post.h"
