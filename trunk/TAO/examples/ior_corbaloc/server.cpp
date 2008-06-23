@@ -5,7 +5,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -37,7 +37,7 @@ int main (int argc, char* argv[])
 
       // Create the servant
       corbaloc_Status_i status_i;
-      status_i.set_name (argv[1]);
+      status_i.set_name (ACE_TEXT_ALWAYS_CHAR (argv[1]));
       // Activate it to obtain the reference
       PortableServer::ObjectId_var id =
         poa->activate_object (&status_i);
@@ -58,7 +58,7 @@ int main (int argc, char* argv[])
       // Bind Iterator_Factory to the Naming Context
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (argv[1]);
+      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (argv[1]));
 
       naming_context->rebind (name, status.in ());
 

@@ -1,3 +1,13 @@
+Mon Jun 23 11:23:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * examples/ior_corbaloc/server.cpp:
+        * examples/ior_corbaloc/client.cpp:
+        * examples/ior_corbaloc/corbaname_client.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Mon Jun 23 10:30:36 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
@@ -56,7 +66,6 @@ Fri Jun 20 12:23:19 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
           Removed static_cast's that are no longer needed.
 
->>>>>>> .r82113
 Thu Jun 19 17:38:09 UTC 2008  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Reliable_Oneways/client.cpp:
