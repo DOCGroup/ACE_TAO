@@ -437,21 +437,15 @@ TAO_ORB_Core::codeset_manager()
 }
 
 ACE_INLINE TAO_ZIOP_Adapter *
-TAO_ORB_Core::ziop_adapter ()
+TAO_ORB_Core::ziop_adapter () const
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
-                    0);
-  if (ziop_adapter_ == 0)
-    {
-      return this->ziop_adapter_i ();
-    }
   return this->ziop_adapter_;
 }
 
-ACE_INLINE TAO_ZIOP_Adapter *
-TAO_ORB_Core::ziop_adapter_unlocked ()
+ACE_INLINE void
+TAO_ORB_Core::ziop_adapter (TAO_ZIOP_Adapter *adapter)
 {
-  return this->ziop_adapter_;
+  this->ziop_adapter_ = adapter;
 }
 
 ACE_INLINE TAO::ORBInitializer_Registry_Adapter *
@@ -673,17 +667,5 @@ TAO_ORB_Core::set_delayed_transport_queueing_strategy (
 }
 
 #endif
-
-ACE_INLINE void
-TAO_ORB_Core::ziop_enabled (CORBA::Boolean val)
-{
-  this->ziop_enabled_ = val;
-}
-
-ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::ziop_enabled (void) const
-{
-  return this->ziop_enabled_;
-}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

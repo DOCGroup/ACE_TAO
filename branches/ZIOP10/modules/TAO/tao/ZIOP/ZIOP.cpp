@@ -1,5 +1,4 @@
 #include "tao/ZIOP/ZIOP_ORBInitializer.h"
-#include "tao/ZIOP/ZIOP_Policy_Validator.h"
 #include "tao/ZIOP/ZIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -37,7 +36,7 @@ TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
         {
           /// Register the BiDir ORBInitializer.
           ACE_NEW_THROW_EX (tmp_orb_initializer,
-                            TAO_ZIOP_ORBInitializer,
+                            TAO_ZIOP_ORBInitializer (this),
                             CORBA::NO_MEMORY (
                                 CORBA::SystemException::_tao_minor_code (
                                     TAO::VMCID,
@@ -67,28 +66,6 @@ TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
 void
 TAO_ZIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
 {
-  // Is this true? Does the GIOP protocol version matter here?
-  if (TAO_DEF_GIOP_MINOR < 2)
-    return;
-
-  TAO_ZIOPPolicy_Validator *validator = 0;
-  ACE_NEW_THROW_EX (validator,
-                    TAO_ZIOPPolicy_Validator (val.orb_core ()),
-                    CORBA::NO_MEMORY (
-                        CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            ENOMEM),
-                        CORBA::COMPLETED_NO));
-
-  // We may be adding another TAO_BiDirPolicy_Validator instance for
-  // the same ORB (different POA). In cases where huge numbers of
-  // bi-directional POA instances are created, having a validator
-  // instance per POA may introduce additional delays in policy
-  // validation and hence, the overal policy creation time. Since this
-  // is out of the critical invocation processing path, I plan to keep
-  // the design simple and not try to avoid an ineficiency of such
-  // small proportions.
-  val.add_validator (validator);
 }
 
 int

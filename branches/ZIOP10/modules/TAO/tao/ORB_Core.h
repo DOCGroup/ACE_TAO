@@ -202,9 +202,8 @@ public:
   /// yet
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry (void);
 
-  TAO_ZIOP_Adapter *TAO_ORB_Core::ziop_adapter ();
-
-  TAO_ZIOP_Adapter *TAO_ORB_Core::ziop_adapter_unlocked ();
+  TAO_ZIOP_Adapter *TAO_ORB_Core::ziop_adapter () const;
+  void TAO_ORB_Core::ziop_adapter (TAO_ZIOP_Adapter *adapter);
 
   TAO_Service_Context_Registry &service_context_registry (void);
 
@@ -661,8 +660,6 @@ public:
   /// Resolve the IOR Manipulation reference for this ORB.
   CORBA::Object_ptr resolve_ior_manipulation (void);
 
-  TAO_ZIOP_Adapter* ziop_adapter_i (void);
-
   /// Resolve the IOR Table reference for this ORB.
   CORBA::Object_ptr resolve_ior_table (void);
 
@@ -830,12 +827,6 @@ public:
   ///       is set with the Bi Dir GIOP policy.
   CORBA::Boolean bidir_giop_policy (void);
   void bidir_giop_policy (CORBA::Boolean);
-
-  /// Get whether ZIOP is enabled or not
-  CORBA::Boolean ziop_enabled (void) const;
-
-  /// Set whether ZIOP is enabled or not
-  void ziop_enabled (CORBA::Boolean);
 
   /// Return the table that maps object key/name to de-stringified
   /// object reference.  It is needed for supporting local objects in
@@ -1262,8 +1253,6 @@ protected:
 
   /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
   Timeout_Hook timeout_hook_;
-
-  CORBA::Boolean ziop_enabled_;
 };
 
 // ****************************************************************

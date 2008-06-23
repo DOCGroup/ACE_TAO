@@ -307,7 +307,7 @@ namespace TAO
             try
               {
                 return
-                  this->orb_core ()->service_raise_comm_failure (
+                  this->stub()->orb_core ()->service_raise_comm_failure (
                     this->details_.request_service_context ().service_info (),
                     this->resolver_.profile ());
 
@@ -369,7 +369,7 @@ namespace TAO
             {
               // de-marshalling of permanent object reference was successfull
               CORBA::Boolean const permanent_forward_condition =
-                this->orb_core ()->is_permanent_forward_condition
+                this->stub ()->orb_core ()->is_permanent_forward_condition
                   (this->forwarded_to_.in (),
                    this->request_service_context ());
 
@@ -548,7 +548,7 @@ namespace TAO
            * forcing us into this.
            */
           Invocation_Status const s =
-            this->orb_core ()->service_raise_transient_failure (
+            this->stub ()->orb_core ()->service_raise_transient_failure (
               this->details_.request_service_context ().service_info (),
               this->resolver_.profile ());
 
