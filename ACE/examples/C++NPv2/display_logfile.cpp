@@ -275,13 +275,15 @@ public:
   }
 
   static void format_time (ACE_Message_Block *mblk) {
-    ACE_CDR::Long secs = * (ACE_CDR::Long *)mblk->rd_ptr ();
+    ACE_CDR::Long secs = *(ACE_CDR::Long *) mblk->rd_ptr ();
     mblk->rd_ptr (sizeof (ACE_CDR::Long));
-    ACE_CDR::Long usecs = * (ACE_CDR::Long *)mblk->rd_ptr ();
+    ACE_CDR::Long usecs = *(ACE_CDR::Long *) mblk->rd_ptr ();
     ACE_TCHAR timestamp_t[26];
     char timestamp[26]; // Max size of ctime_r() string.
     time_t time_secs (secs);
-    ACE_OS::ctime_r (&time_secs, timestamp_t, sizeof timestamp_t);
+    ACE_OS::ctime_r (&time_secs, 
+                     timestamp_t, 
+                     sizeof timestamp_t / sizeof (ACE_TCHAR));
     ACE_OS::strcpy (timestamp, ACE_TEXT_ALWAYS_CHAR (timestamp_t));
     mblk->size (26); // Max size of ctime_r() string.
     mblk->reset ();
