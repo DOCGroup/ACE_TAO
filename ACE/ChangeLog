@@ -1,3 +1,9 @@
+Mon Jun 23 15:27:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Svc_Conf.y:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use; commit source 1st.
+
 Mon Jun 23 13:51:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Control/Windows_Monitor.h:
