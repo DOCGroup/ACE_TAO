@@ -1,3 +1,9 @@
+Mon Jun 23 12:34:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added the new Notify Timeout test.
+
 Mon Jun 23 12:09:26 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/C++NPv2/display_logfile.cpp: Divided an ACE_TCHAR
@@ -26,7 +32,7 @@ Sun Jun 22 17:23:08 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * ace/Monitor_Control/CPU_Load_Monitor.cpp:
         * ace/Monitor_Control/Memory_Usage_Monitor.cpp:
         * ace/Monitor_Control/Num_Threads_Monitor.cpp:
-        
+
           Fix to clear_i() implementation for these monitors that
           compiled only on Windows.
 
@@ -36,7 +42,7 @@ Fri Jun 20 20:40:50 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * ace/Monitor_Base.cpp:
         * ace/Monitor_Base.h:
 
-          Moved stats features from the Notification Service monitor 
+          Moved stats features from the Notification Service monitor
           class to the ACE base class.
 
         * ace/Monitor_Control/Windows_Multi_Instance_Monitor.cpp:
