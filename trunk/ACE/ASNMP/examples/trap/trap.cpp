@@ -68,9 +68,10 @@ class trapapp {
 
 
 // main entry point
-int main( int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  trapapp get(argc, argv);
+  ACE_Argv_Type_Converter atc (argc, argv);
+  trapapp get (atc.get_argc (), atc.get_ASCII_argv ());
   if (get.valid())
      return get.run();
   else

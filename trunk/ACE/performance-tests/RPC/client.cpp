@@ -7,7 +7,7 @@
 
 #include "ping.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   const char* host = 0;
   int nsamples = 10000;
@@ -68,7 +68,6 @@ int main (int argc, char* argv[])
   ACE_DEBUG ((LM_DEBUG, " done\n"));
 
   throughput.dump_results ("Client", gsf);
-
 
   return 0;
 }
