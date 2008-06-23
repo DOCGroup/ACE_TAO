@@ -1,3 +1,14 @@
+Mon Jun 23 13:51:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Control/Windows_Monitor.h:
+        
+          Changed class member type from ACE_CString to ACE_TString
+          to accomondate Unicode builds.
+           
+        * ace/Monitor_Control/Windows_Monitor.cpp:
+        
+          Removed incorrect use of ACE_TEXT wrapper on a non-literal.
+
 Mon Jun 23 12:34:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_other_tests.lst:

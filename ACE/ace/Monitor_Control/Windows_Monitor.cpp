@@ -65,7 +65,7 @@ namespace ACE
         {
           ACE_ERROR ((LM_DEBUG,
                       ACE_TEXT ("PdhAddCounter %s failed\n"),
-                      ACE_TEXT (this->path_.c_str ())));
+                      this->path_.c_str ()));
         }
     }
   }
