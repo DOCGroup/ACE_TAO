@@ -55,7 +55,6 @@ module IOP
   const ComponentId TAG_DCE_STRING_BINDING = 100;
   const ComponentId TAG_DCE_BINDING_NAME = 101;
   const ComponentId TAG_DCE_NO_PIPES = 102;
-  const ComponentId TAG_ZIOP_COMPONENT = 0x54410555;
 
   typedef unsigned long ServiceId;
   struct ServiceContext {

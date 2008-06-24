@@ -772,8 +772,11 @@ public:
   /// Return true if the tcs has been set
   CORBA::Boolean is_tcs_set() const;
 
-  /// Set the state of the first_request_ flag to 0
+  /// Set the state of the first_request_ flag to false
   void first_request_sent();
+
+  /// Get the first request flag
+  bool first_request () const;
 
   /// Notify all the components inside a Transport when the underlying
   /// connection is closed.
@@ -1061,7 +1064,7 @@ private:
   /// is necessary since codeset context information is necessary only on the
   /// first request. After that, the translators are fixed for the life of the
   /// connection.
-  CORBA::Boolean first_request_;
+  bool first_request_;
 
   /// Holds the partial GIOP message (if there is one)
   ACE_Message_Block* partial_message_;

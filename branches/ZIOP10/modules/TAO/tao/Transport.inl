@@ -169,7 +169,13 @@ TAO_Transport::is_tcs_set(void) const
 ACE_INLINE void
 TAO_Transport::first_request_sent (void)
 {
-  this->first_request_ = 0;
+  this->first_request_ = false;
+}
+
+ACE_INLINE bool
+TAO_Transport::first_request (void) const
+{
+  return this->first_request_;
 }
 
 ACE_INLINE bool

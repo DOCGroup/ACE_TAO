@@ -23,6 +23,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/MMAP_Allocator.h"
 #include "tao/SystemException.h"
+#include "tao/ZIOP_Adapter.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -148,7 +149,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , char_translator_ (0)
   , wchar_translator_ (0)
   , tcs_set_ (0)
-  , first_request_ (1)
+  , first_request_ (true)
   , partial_message_ (0)
 #if TAO_HAS_SENDFILE == 1
     // The ORB has been configured to use the MMAP allocator, meaning
@@ -445,7 +446,11 @@ TAO_Transport::generate_request_header (
     {
       TAO_Codeset_Manager * const csm = this->orb_core ()->codeset_manager ();
       if (csm)
-        csm->generate_service_context (opdetails,*this);
+        csm->generate_service_context (opdetails, *this);
+        
+      TAO_ZIOP_Adapter* ziop_adapter = this->orb_core ()->ziop_adapter ();
+      if (ziop_adapter)
+        ziop_adapter->generate_service_context (opdetails, *this);  
     }
 
   if (this->messaging_object ()->generate_request_header (opdetails,

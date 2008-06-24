@@ -27,12 +27,8 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
-  CORBA::ULong message_length = 0;
-  if (!(cdr >> message_length))
-    return -1;
-
     // @TODO use real typedef
-  Compression::CompressorId compressorid = 0;
+  Compression::CompressorId compressorid;
   if (!(cdr >> compressorid))
     return -1;
 

@@ -131,9 +131,59 @@ TAO_ZIOP_Loader::compression_low_value (TAO::Profile_Transport_Resolver &resolve
   return result;
 }
 
+void
+TAO_ZIOP_Loader::generate_service_context (TAO_Operation_Details &opd, TAO_Transport &transport)
+{
+  CORBA::Boolean use_ziop = true;
+  CORBA::Policy_var policy = CORBA::Policy::_nil ();
+
+//  if (resolver.stub () == 0)
+    {
+    policy = transport.orb_core()->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
+//      policy =
+        //resolver.stub()->orb_core()->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
+    }
+  //else
+    {
+      //policy = resolver.stub ()->get_cached_policy (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
+    }
+
+  if (!CORBA::is_nil (policy.in ()))
+    {
+      ZIOP::CompressionEnablingPolicy_var srp =
+        ZIOP::CompressionEnablingPolicy::_narrow (policy.in ());
+
+      if (!CORBA::is_nil (srp.in ()))
+        {
+          use_ziop = srp->compression_enabled ();
+        }
+    }
+
+  if (use_ziop)
+  {
+    TAO_Service_Context &service_cntx = opd.request_service_context ();
+
+    TAO_OutputCDR codeset_cdr;
+    codeset_cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
+    codeset_cdr << Compression::COMPRESSORID_ZLIB;
+
+    service_cntx.set_context (ZIOP::TAG_ZIOP_COMPONENT, codeset_cdr);
+  }
+}
+
 bool
 TAO_ZIOP_Loader::check_min_ratio (CORBA::ULong original_data_length, CORBA::ULong compressed_length) const
 {
+/*  CORBA::ULong ratio = 100 - (compressed_length /original_length) * 100;
+  if (resolver.stub () == 0)
+    {
+      policy =
+        resolver.stub()->orb_core()->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
+    }
+  else
+    {
+      policy = resolver.stub ()->get_cached_policy (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
+    }*/
   return true;
 }
 
@@ -219,9 +269,9 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
     }
     }
   }
+    }
          // Set the read pointer back to the starting point
          current->rd_ptr (current->base ());
-    }
 
   return false;
 }

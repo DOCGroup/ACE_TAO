@@ -1,4 +1,5 @@
 #include "tao/Policy.pidl"
+#include "tao/IOP_IOR.pidl"
 #include "tao/Compression/Compression_include.pidl"
 
 module ZIOP
@@ -8,6 +9,8 @@ module ZIOP
     unsigned long original_length;
     CORBA::OctetSeq data;
    };
+
+  const IOP::ComponentId TAG_ZIOP_COMPONENT = 0x54410555;
 
     //
     // IOR Component for ZIOP

@@ -51,6 +51,8 @@ public:
   // Compress the @a stream. Starting point of the compression is rd_ptr()
   virtual bool marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &stream, TAO::Profile_Transport_Resolver &resolver);
 
+  virtual void generate_service_context (TAO_Operation_Details&, TAO_Transport & );
+
   /// Initialize the BiDIR loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
 

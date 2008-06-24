@@ -1716,7 +1716,6 @@ TAO_ORB_Core::service_context_list (
     TAO_Service_Context &service_context,
     CORBA::Boolean restart)
 {
-  // @NOTE: Can use Interceptors instead..
   if (this->protocols_hooks_ != 0)
     {
       this->protocols_hooks_->rt_service_context (stub, service_context, restart);

@@ -315,7 +315,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 
   IIOP::ListenPointList listen_point_list;
 
-  const TAO_AcceptorSetIterator end = ar.end ();
+  TAO_AcceptorSetIterator const end = ar.end ();
 
   for (TAO_AcceptorSetIterator acceptor = ar.begin ();
        acceptor != end;

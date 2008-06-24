@@ -41,7 +41,7 @@ TAO_ZIOP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   TAO_ZIOP_Service_Context_Handler* h = 0;
   ACE_NEW (h,
            TAO_ZIOP_Service_Context_Handler());
-  tao_info->orb_core ()->service_context_registry ().bind (IOP::TAG_ZIOP_COMPONENT, h);
+  tao_info->orb_core ()->service_context_registry ().bind (ZIOP::TAG_ZIOP_COMPONENT, h);
   tao_info->orb_core ()->ziop_adapter (this->loader_);
 }
 

@@ -44,8 +44,7 @@ namespace TAO
     virtual ::CORBA::Double average_compression (void);
 
     virtual ::Compression::Compressor_ptr get_compressor
-      (::Compression::CompressionLevel compression_level)
-      = 0;
+      (::Compression::CompressionLevel compression_level) = 0;
 
     virtual void add_sample (::CORBA::ULongLong compressed_bytes,
                              ::CORBA::ULongLong uncompressed_bytes);
