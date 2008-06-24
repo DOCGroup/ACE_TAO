@@ -65,6 +65,11 @@ private:
   /// Flag to indicate whether the ZIOP library has been
   /// activated.
   static bool is_activated_;
+
+  /// Get the compression low value, returns 0 when it is not set
+  CORBA::ULong compression_low_value (TAO::Profile_Transport_Resolver &resolver) const;
+
+  bool check_min_ratio (CORBA::ULong original_data_length, CORBA::ULong compressed_length) const;
 };
 
 static int

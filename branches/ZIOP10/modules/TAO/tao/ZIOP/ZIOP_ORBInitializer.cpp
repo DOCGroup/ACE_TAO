@@ -74,7 +74,13 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
       info->register_policy_factory (ZIOP::COMPRESSION_ENABLING_POLICY_ID,
                                      policy_factory.in ());
 
-      info->register_policy_factory (ZIOP::COMPRESSOR_ID_POLICY_ID,
+      info->register_policy_factory (ZIOP::COMPRESSION_ID_LIST_POLICY_ID,
+                                     policy_factory.in ());
+
+      info->register_policy_factory (ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID,
+                                     policy_factory.in ());
+
+      info->register_policy_factory (ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID,
                                      policy_factory.in ());
     }
   catch (const CORBA::BAD_INV_ORDER& ex)

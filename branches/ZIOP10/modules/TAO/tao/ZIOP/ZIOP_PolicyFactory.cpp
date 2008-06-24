@@ -37,12 +37,11 @@ TAO_ZIOP_PolicyFactory::create_policy (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return policy;
     }
-  else if (type == ZIOP::COMPRESSOR_ID_POLICY_ID) {
-      ::Compression::CompressorId val;
+  else if (type == ZIOP::COMPRESSION_ID_LIST_POLICY_ID) {
+      ::Compression::CompressorIdList* val;
 
       // Extract the value from the any.
       if ((value >>= val) == 0)
@@ -52,16 +51,59 @@ TAO_ZIOP_PolicyFactory::create_policy (
         }
 
       ACE_NEW_THROW_EX (policy,
-                        TAO::CompressorIdPolicy (val),
+                        TAO::CompressorIdListPolicy (val),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return policy;
-  }
+    }
+  else if (type == ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID)
+    {
+      ::CORBA::ULong val;
+
+      // Extract the value from the any.
+
+      if ((value >>= val) == 0)
+        {
+          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+                            CORBA::Policy::_nil ());
+        }
+
+      ACE_NEW_THROW_EX (policy,
+                        TAO::CompressionLowValuePolicy (val),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO::VMCID,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+
+      return policy;
+    }
+  else if (type == ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID)
+    {
+      ::CORBA::ULong val;
+
+      // Extract the value from the any.
+
+      if ((value >>= val) == 0)
+        {
+          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+                            CORBA::Policy::_nil ());
+        }
+
+      ACE_NEW_THROW_EX (policy,
+                        TAO::CompressionMinRatioPolicy (val),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO::VMCID,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+
+      return policy;
+    }
 
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());

@@ -765,7 +765,9 @@ enum TAO_Cached_Policy_Type
 
   TAO_CACHED_POLICY_ENDPOINT,
 
-  TAO_CACHED_POLICY_ZIOP,
+  TAO_CACHED_COMPRESSION_ENABLING_POLICY,
+
+  TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY,
 
   /// NOTE: The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last.
   ///       This value is used as the cached_policies_ array size in TAO_Policy_Set,

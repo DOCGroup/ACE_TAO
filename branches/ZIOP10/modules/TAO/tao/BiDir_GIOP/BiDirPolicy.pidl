@@ -30,7 +30,7 @@ module BiDirPolicy
   typedef unsigned short BidirectionalPolicyValue;
   const BidirectionalPolicyValue NORMAL = 0;
   const BidirectionalPolicyValue BOTH = 1;
-  const CORBA::PolicyType BIDIRECTIONAL_POLICY_TYPE = 37;
+          const CORBA::PolicyType BIDIRECTIONAL_POLICY_TYPE = 37;
 
   // @@ This has been made local. It was not so in the spec. Any reason
   //    why this shouldn't be a local interface ?

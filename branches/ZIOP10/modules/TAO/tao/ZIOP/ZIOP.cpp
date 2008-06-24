@@ -101,6 +101,42 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
   return true;
 }
 
+CORBA::ULong
+TAO_ZIOP_Loader::compression_low_value (TAO::Profile_Transport_Resolver &resolver) const
+{
+  CORBA::ULong result = 0;
+  CORBA::Policy_var policy = CORBA::Policy::_nil ();
+
+  if (resolver.stub () == 0)
+    {
+      policy =
+        resolver.stub()->orb_core()->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
+    }
+  else
+    {
+      policy = resolver.stub ()->get_cached_policy (TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
+    }
+
+  if (!CORBA::is_nil (policy.in ()))
+    {
+      ZIOP::CompressionLowValuePolicy_var srp =
+        ZIOP::CompressionLowValuePolicy::_narrow (policy.in ());
+
+      if (!CORBA::is_nil (srp.in ()))
+        {
+          result = srp->low_value ();
+        }
+    }
+
+  return result;
+}
+
+bool
+TAO_ZIOP_Loader::check_min_ratio (CORBA::ULong original_data_length, CORBA::ULong compressed_length) const
+{
+  return true;
+}
+
 bool
 TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &stream, TAO::Profile_Transport_Resolver &resolver)
 {
@@ -110,11 +146,11 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
   if (resolver.stub () == 0)
     {
       policy =
-        resolver.stub()->orb_core()->get_cached_policy_including_current (TAO_CACHED_POLICY_ZIOP);
+        resolver.stub()->orb_core()->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
     }
   else
     {
-      policy = resolver.stub ()->get_cached_policy (TAO_CACHED_POLICY_ZIOP);
+      policy = resolver.stub ()->get_cached_policy (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
     }
 
   if (!CORBA::is_nil (policy.in ()))
@@ -156,18 +192,20 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
   if (!CORBA::is_nil(manager.in ()))
   {
     Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
-    Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 6);
+    Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 9);
 
-    CORBA::OctetSeq myout;
     current = const_cast <ACE_Message_Block*> (stream.current());
-    CORBA::ULong original_data_length =(CORBA::ULong)(current->wr_ptr() - current->rd_ptr());
-    myout.length (original_data_length);
+    CORBA::ULong const original_data_length =(CORBA::ULong)(current->wr_ptr() - current->rd_ptr());
+    if (original_data_length > this->compression_low_value (resolver))
+    {
+      CORBA::OctetSeq myout;
+      myout.length (original_data_length);
 
-    CORBA::OctetSeq input (original_data_length, current);
+      CORBA::OctetSeq input (original_data_length, current);
 
     // todo catch exceptions
     compressor->compress (input, myout);
-    if (myout.length () < original_data_length)
+    if ((myout.length () < original_data_length) && (this->check_min_ratio (original_data_length, myout.length())))
     {
     stream.compressed (true);
     current->wr_ptr (current->rd_ptr ());
@@ -177,6 +215,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
     data.original_length = input.length();
     data.data = myout;
     stream << data;
+    }
     }
   }
          // Set the read pointer back to the starting point

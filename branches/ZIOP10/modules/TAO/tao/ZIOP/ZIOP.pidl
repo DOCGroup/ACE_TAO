@@ -42,10 +42,6 @@ module ZIOP
     const CORBA::PolicyType COMPRESSION_ENABLING_POLICY_ID = 5555;
 
     /**
-     * Tag Id for CompressorIdPolicy
-     */
-    const CORBA::PolicyType COMPRESSOR_ID_POLICY_ID = 5556;
-    /**
     * The ZIOP CompressionEnablingPolicy. Has an boolean attribute indicating
      * if compression is enabled or not.
      */
@@ -55,11 +51,30 @@ module ZIOP
     };
 
     /**
-     * The ZIOP CompressorIdPolicy. Has an CompressorId attribute indicating
+     * Tag Id for CompressorIdPolicy
+     */
+    const CORBA::PolicyType COMPRESSION_ID_LIST_POLICY_ID = 5556;
+
+    /**
+     * The ZIOP CompressorIdListPolicy. Has an CompressorId attribute indicating
      * the compression algorithm to be used.
      */
-    local interface CompressorIdPolicy : CORBA::Policy
+    local interface CompressorIdListPolicy : CORBA::Policy
     {
-        readonly attribute Compression::CompressorId compressor_id;
+        readonly attribute Compression::CompressorIdList compressor_ids;
+    };
+
+    const CORBA::PolicyType COMPRESSION_LOW_VALUE_POLICY_ID = 5557;
+
+    local interface CompressionLowValuePolicy : CORBA::Policy
+    {
+        readonly attribute unsigned long low_value;
+    };
+
+    const CORBA::PolicyType COMPRESSION_MIN_RATIO_POLICY_ID = 5558;
+
+    local interface CompressionMinRatioPolicy : CORBA::Policy
+    {
+        readonly attribute unsigned long ratio;
     };
 };

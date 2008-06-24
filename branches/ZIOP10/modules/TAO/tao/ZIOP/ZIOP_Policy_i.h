@@ -36,23 +36,22 @@ namespace TAO
  *
  * @brief  Implementation of the ZIOP::CompressorIdPolicy
  */
-class CompressorIdPolicy
-  : public virtual ::ZIOP::CompressorIdPolicy
-  , public virtual TAO_Local_RefCounted_Object
+class CompressorIdListPolicy
+  : public virtual ::ZIOP::CompressorIdListPolicy
+  , public virtual ::CORBA::LocalObject
 {
 public:
 
   /// Constructor.
-  CompressorIdPolicy (const ::Compression::CompressorId val);
+  CompressorIdListPolicy (::Compression::CompressorIdList* val);
 
   /// Copy constructor.
-  CompressorIdPolicy (const CompressorIdPolicy &rhs);
+  CompressorIdListPolicy (const CompressorIdListPolicy &rhs);
 
   /// Returns a copy of <this>.
-  virtual CompressorIdPolicy *clone (void) const;
+  virtual CompressorIdListPolicy *clone (void) const;
 
-  /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::Compression::CompressorId compressor_id ();
+  virtual ::Compression::CompressorIdList * compressor_ids ();
 
   virtual CORBA::PolicyType policy_type (void);
 
@@ -65,8 +64,7 @@ public:
 private:
 
   /// The attribute
-  ::Compression::CompressorId value_;
-
+  ::Compression::CompressorIdList* value_;
 };
 
 /**
@@ -76,7 +74,7 @@ private:
  */
 class CompressionEnablingPolicy
   : public virtual ::ZIOP::CompressionEnablingPolicy
-  , public virtual TAO_Local_RefCounted_Object
+  , public virtual ::CORBA::LocalObject
 {
 public:
 
@@ -104,6 +102,80 @@ private:
 
   /// The attribute
   ::CORBA::Boolean value_;
+};
+
+/**
+ * @class CompressionLowValuePolicy
+ *
+ * @brief  Implementation of the ZIOP::CompressionLowValuePolicy
+ */
+class CompressionLowValuePolicy
+  : public virtual ::ZIOP::CompressionLowValuePolicy
+  , public virtual ::CORBA::LocalObject
+{
+public:
+
+  /// Constructor.
+  CompressionLowValuePolicy (const ::CORBA::ULong val);
+
+  /// Copy constructor.
+  CompressionLowValuePolicy (const CompressionLowValuePolicy &rhs);
+
+  /// Returns a copy of <this>.
+  virtual CompressionLowValuePolicy *clone (void) const;
+
+  /// = The ZIOP::BidirectionalPolicy methods
+  virtual ::CORBA::ULong low_value (void);
+
+  virtual CORBA::PolicyType policy_type (void);
+
+  virtual CORBA::Policy_ptr copy (void);
+
+  virtual void destroy (void);
+
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+
+private:
+
+  /// The attribute
+  ::CORBA::ULong value_;
+};
+
+/**
+ * @class CompressionLowValuePolicy
+ *
+ * @brief  Implementation of the ZIOP::CompressionLowValuePolicy
+ */
+class CompressionMinRatioPolicy
+  : public virtual ::ZIOP::CompressionMinRatioPolicy
+  , public virtual ::CORBA::LocalObject
+{
+public:
+
+  /// Constructor.
+  CompressionMinRatioPolicy (const ::CORBA::ULong val);
+
+  /// Copy constructor.
+  CompressionMinRatioPolicy (const CompressionMinRatioPolicy &rhs);
+
+  /// Returns a copy of <this>.
+  virtual CompressionMinRatioPolicy *clone (void) const;
+
+  /// = The ZIOP::BidirectionalPolicy methods
+  virtual ::CORBA::ULong ratio (void);
+
+  virtual CORBA::PolicyType policy_type (void);
+
+  virtual CORBA::Policy_ptr copy (void);
+
+  virtual void destroy (void);
+
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+
+private:
+
+  /// The attribute
+  ::CORBA::ULong value_;
 };
 }
 

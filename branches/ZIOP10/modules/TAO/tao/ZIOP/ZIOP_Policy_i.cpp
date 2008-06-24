@@ -14,51 +14,49 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-CompressorIdPolicy::CompressorIdPolicy (
-    const ::Compression::CompressorId val)
+CompressorIdListPolicy::CompressorIdListPolicy (
+    ::Compression::CompressorIdList* val)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
-  , ::ZIOP::CompressorIdPolicy ()
+  , ::ZIOP::CompressorIdListPolicy ()
   , ::CORBA::LocalObject ()
-  , TAO_Local_RefCounted_Object ()
   , value_ (val)
 {
 }
 
-CompressorIdPolicy::CompressorIdPolicy (const CompressorIdPolicy &rhs)
+CompressorIdListPolicy::CompressorIdListPolicy (const CompressorIdListPolicy &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
-  , ::ZIOP::CompressorIdPolicy ()
+  , ::ZIOP::CompressorIdListPolicy ()
   , ::CORBA::LocalObject ()
-  , TAO_Local_RefCounted_Object ()
   , value_ (rhs.value_)
 {
 }
 
 CORBA::PolicyType
-CompressorIdPolicy::policy_type (void)
+CompressorIdListPolicy::policy_type (void)
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
-  return ZIOP::COMPRESSOR_ID_POLICY_ID;
+  return ZIOP::COMPRESSION_ID_LIST_POLICY_ID;
 }
 
 
-CompressorIdPolicy *
-CompressorIdPolicy::clone (void) const
+CompressorIdListPolicy *
+CompressorIdListPolicy::clone (void) const
 {
-  CompressorIdPolicy *copy = 0;
+  CompressorIdListPolicy *copy = 0;
   ACE_NEW_RETURN (copy,
-                  CompressorIdPolicy (*this),
+                  CompressorIdListPolicy (*this),
                   0);
   return copy;
 }
 
 CORBA::Policy_ptr
-CompressorIdPolicy::copy (void)
+CompressorIdListPolicy::copy (void)
 {
-  CompressorIdPolicy* tmp = 0;
-  ACE_NEW_THROW_EX (tmp, CompressorIdPolicy (*this),
+  CompressorIdListPolicy* tmp = 0;
+  ACE_NEW_THROW_EX (tmp, CompressorIdListPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -67,23 +65,22 @@ CompressorIdPolicy::copy (void)
 }
 
 void
-CompressorIdPolicy::destroy (void)
+CompressorIdListPolicy::destroy (void)
 {
 }
 
-::Compression::CompressorId
-CompressorIdPolicy::compressor_id (void)
+::Compression::CompressorIdList *
+CompressorIdListPolicy::compressor_ids (void)
 {
   return this->value_;
 }
 
 
 TAO_Cached_Policy_Type
-CompressorIdPolicy::_tao_cached_type (void) const
+CompressorIdListPolicy::_tao_cached_type (void) const
 {
   return TAO_CACHED_POLICY_UNCACHED;
 }
-
 
 
 CompressionEnablingPolicy::CompressionEnablingPolicy (
@@ -92,7 +89,6 @@ CompressionEnablingPolicy::CompressionEnablingPolicy (
   , ::CORBA::Policy ()
   , ::ZIOP::CompressionEnablingPolicy ()
   , ::CORBA::LocalObject ()
-  , TAO_Local_RefCounted_Object ()
   , value_ (val)
 {
 }
@@ -102,7 +98,6 @@ CompressionEnablingPolicy::CompressionEnablingPolicy (const CompressionEnablingP
   , ::CORBA::Policy ()
   , ::ZIOP::CompressionEnablingPolicy ()
  , ::CORBA::LocalObject ()
-  , TAO_Local_RefCounted_Object ()
   , value_ (rhs.value_)
 {
 }
@@ -156,7 +151,147 @@ CompressionEnablingPolicy::compression_enabled (void)
 TAO_Cached_Policy_Type
 CompressionEnablingPolicy::_tao_cached_type (void) const
 {
-  return TAO_CACHED_POLICY_ZIOP;
+  return TAO_CACHED_COMPRESSION_ENABLING_POLICY;
+}
+
+CompressionLowValuePolicy::CompressionLowValuePolicy (
+    const ::CORBA::ULong val)
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::ZIOP::CompressionLowValuePolicy ()
+  , ::CORBA::LocalObject ()
+  , value_ (val)
+{
+}
+
+CompressionLowValuePolicy::CompressionLowValuePolicy (const CompressionLowValuePolicy &rhs)
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::ZIOP::CompressionLowValuePolicy ()
+ , ::CORBA::LocalObject ()
+  , value_ (rhs.value_)
+{
+}
+
+CORBA::PolicyType
+CompressionLowValuePolicy::policy_type (void)
+{
+  // Future policy implementors: notice how this minimizes the
+  // footprint of the class.
+  return ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID;
+}
+
+
+CompressionLowValuePolicy *
+CompressionLowValuePolicy::clone (void) const
+{
+  CompressionLowValuePolicy *copy = 0;
+  ACE_NEW_RETURN (copy,
+                  CompressionLowValuePolicy (*this),
+                  0);
+  return copy;
+}
+
+CORBA::Policy_ptr
+CompressionLowValuePolicy::copy (void)
+{
+  // Future policy implementors: notice how the following code is
+ // exception safe!
+
+  CompressionLowValuePolicy* tmp = 0;
+  ACE_NEW_THROW_EX (tmp, CompressionLowValuePolicy (*this),
+                    CORBA::NO_MEMORY (TAO::VMCID,
+                                      CORBA::COMPLETED_NO));
+
+  return tmp;
+}
+
+void
+CompressionLowValuePolicy::destroy (void)
+{
+}
+
+::CORBA::ULong
+CompressionLowValuePolicy::low_value (void)
+{
+  return this->value_;
+}
+
+
+TAO_Cached_Policy_Type
+CompressionLowValuePolicy::_tao_cached_type (void) const
+{
+  return TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY;
+}
+
+CompressionMinRatioPolicy::CompressionMinRatioPolicy (
+    const ::CORBA::ULong val)
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::ZIOP::CompressionMinRatioPolicy ()
+  , ::CORBA::LocalObject ()
+  , value_ (val)
+{
+}
+
+CompressionMinRatioPolicy::CompressionMinRatioPolicy (const CompressionMinRatioPolicy &rhs)
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::ZIOP::CompressionMinRatioPolicy ()
+ , ::CORBA::LocalObject ()
+  , value_ (rhs.value_)
+{
+}
+
+CORBA::PolicyType
+CompressionMinRatioPolicy::policy_type (void)
+{
+  // Future policy implementors: notice how this minimizes the
+  // footprint of the class.
+  return ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID;
+}
+
+
+CompressionMinRatioPolicy *
+CompressionMinRatioPolicy::clone (void) const
+{
+  CompressionMinRatioPolicy *copy = 0;
+  ACE_NEW_RETURN (copy,
+                  CompressionMinRatioPolicy (*this),
+                  0);
+  return copy;
+}
+
+CORBA::Policy_ptr
+CompressionMinRatioPolicy::copy (void)
+{
+  // Future policy implementors: notice how the following code is
+ // exception safe!
+
+  CompressionMinRatioPolicy* tmp = 0;
+  ACE_NEW_THROW_EX (tmp, CompressionMinRatioPolicy (*this),
+                    CORBA::NO_MEMORY (TAO::VMCID,
+                                      CORBA::COMPLETED_NO));
+
+  return tmp;
+}
+
+void
+CompressionMinRatioPolicy::destroy (void)
+{
+}
+
+::CORBA::ULong
+CompressionMinRatioPolicy::ratio (void)
+{
+  return this->value_;
+}
+
+
+TAO_Cached_Policy_Type
+CompressionMinRatioPolicy::_tao_cached_type (void) const
+{
+  return TAO_CACHED_POLICY_UNCACHED;
 }
 
 }
