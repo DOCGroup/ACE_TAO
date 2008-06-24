@@ -6,7 +6,7 @@
 #include <orbsvcs/CosNamingC.h>
 #include "ace/streams.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try {
     // First initialize the ORB, that will remove some arguments...
@@ -44,7 +44,7 @@ int main (int argc, char* argv[])
       try {
         // Get the stock object
         Quoter::Stock_var stock =
-          factory->get_stock (argv[i]);
+          factory->get_stock (ACE_TEXT_ALWAYS_CHAR (argv[i]));
 
         // Get its name, put it on a _var so it is automatically
         // released!

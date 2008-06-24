@@ -1,8 +1,34 @@
+Tue Jun 24 12:02:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * docs/tutorials/Quoter/Naming_Service/server.cpp:
+        * docs/tutorials/Quoter/Naming_Service/client.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/server.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+        * docs/tutorials/Quoter/Event_Service/server.cpp:
+        * docs/tutorials/Quoter/Event_Service/client.cpp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+        * docs/tutorials/Quoter/Simple/Server/server.cpp:
+        * docs/tutorials/Quoter/Simple/Client/client.cpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/client.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/client.cpp:
+        * docs/tutorials/Quoter/AMI/server.cpp:
+        * docs/tutorials/Quoter/AMI/client.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/client.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/server.cpp:
+        * performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * performance-tests/POA/Demux/server.cpp:
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * performance-tests/POA/Demux/demux_test_server.h:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Tue Jun 24 09:22:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Notify/Timeout/Timeout.mpc:
           Renamed the idl project name to avoid duplicating "tests/Timeout"
-          to fix commit of Mon Jun 23 12:32:07 UTC 2008  Chad Elliott
+          to fix commit of Mon Jun 23 12:32:07 UTC 2008 Chad Elliott
 
 Mon Jun 23 15:02:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 

@@ -47,7 +47,7 @@ Demux_Test_Server::~Demux_Test_Server (void)
 //
 
 int
-Demux_Test_Server::init (int argc, char *argv [])
+Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
 {
   ACE_OS::printf ("here\n");
 
