@@ -34,12 +34,15 @@ ZlibCompressor::compress (
 
   if (retval != Z_OK)
     {
-      throw ::Compression::CompressionException ();
+      throw ::Compression::CompressionException (retval);
     }
   else
     {
       target.length (static_cast <CORBA::ULong> (max_length));
     }
+   
+  // Update statistics for this compressor
+  this->update_stats (source.length (), target.length ());
 }
 
 void
@@ -55,7 +58,7 @@ ZlibCompressor::decompress (
 
   if (retval != Z_OK)
     {
-      throw ::Compression::CompressionException ();
+      throw ::Compression::CompressionException (retval);
     }
   else
     {

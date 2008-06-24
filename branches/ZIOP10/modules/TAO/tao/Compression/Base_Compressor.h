@@ -49,9 +49,21 @@ namespace TAO
 
     virtual ::Compression::CompressionLevel compression_level (void);
 
+    virtual ::CORBA::ULongLong compressed_bytes (void);
+
+    virtual ::CORBA::ULongLong uncompressed_bytes (void);
+
+    virtual ::CORBA::Double average_compression (void);
+
   protected:
+    void update_stats (::CORBA::ULongLong compressed_bytes,
+                       ::CORBA::ULongLong uncompressed_bytes);
+
+    TAO_SYNCH_MUTEX mutex_;
     ::Compression::CompressionLevel compression_level_;
     ::Compression::CompressorFactory_var compressor_factory_;
+    ::CORBA::ULongLong compressed_bytes_;
+    ::CORBA::ULongLong uncompressed_bytes_;
   };
 }
 

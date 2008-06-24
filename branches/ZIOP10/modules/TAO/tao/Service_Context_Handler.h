@@ -23,7 +23,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_ServerRequest;
+class TAO_Transport;
 
 /**
  * This is the base of handler classes that each can process a certain
@@ -35,7 +35,7 @@ class TAO_Export TAO_Service_Context_Handler
 {
   public:
     TAO_Service_Context_Handler (void);
-    virtual int process_service_context (TAO_ServerRequest& server_request,
+    virtual int process_service_context (TAO_Transport& transport,
                                          const IOP::ServiceContext& context) = 0;
     virtual ~TAO_Service_Context_Handler (void);
 };

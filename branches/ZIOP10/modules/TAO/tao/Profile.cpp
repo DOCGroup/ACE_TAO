@@ -202,8 +202,7 @@ TAO_Profile::decode (TAO_InputCDR& cdr)
   TAO::ObjectKey ok;
 
   // ... and object key.
-  if (TAO::ObjectKey::demarshal_key (ok,
-                                     cdr) == 0)
+  if (TAO::ObjectKey::demarshal_key (ok, cdr) == 0)
     {
       return -1;
     }
@@ -361,7 +360,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
-  const size_t plen = policy_list->length ();
+  size_t const plen = policy_list->length ();
 
   for (CORBA::ULong i = 0; i < plen; ++i)
     {

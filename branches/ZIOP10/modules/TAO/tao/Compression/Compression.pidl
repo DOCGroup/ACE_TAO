@@ -21,6 +21,7 @@ module Compression
      */
     exception CompressionException
     {
+        unsigned long reason;
     };
 
     /**
@@ -85,14 +86,6 @@ module Compression
          * associated with this Compressor.
          */
         readonly attribute CompressionLevel compression_level;
-    };
-
-    local interface CompressorFactory
-    {
-        /**
-         * The CompressorId associated with this CompressorFactory
-         */
-        readonly attribute CompressorId compressor_id;
         /**
          * The total number of compressed bytes read and written by Compressors
          * that were created by this CompressorFactory
@@ -113,14 +106,18 @@ module Compression
          * (i.e. compressed_bytes divided by uncompressed_bytes).
          */
         readonly attribute double average_compression;
+    };
+
+    local interface CompressorFactory
+    {
+        /**
+         * The CompressorId associated with this CompressorFactory
+         */
+        readonly attribute CompressorId compressor_id;
         /**
          * Create a Compressor instance with the given compression level.
          */
         Compressor get_compressor(in CompressionLevel compression_level);
-        /**
-         * Add a sample of compressed and uncompressed bytes.
-         */
-        void add_sample(in unsigned long long compressed_bytes, in unsigned long long uncompressed_bytes);
     };
 
     typedef sequence<CompressorFactory> CompressorFactorySeq;

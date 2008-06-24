@@ -13,19 +13,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Service_Context_Registry::process_service_contexts (
-  TAO_ServerRequest& server_request)
+  IOP::ServiceContextList &sc,
+  TAO_Transport& transport)
 {
-  IOP::ServiceContextList &service_info =
-    server_request.request_service_context ().service_info ();
   for (CORBA::ULong index = 0;
-       index != service_info.length ();
+       index != sc.length ();
        ++index)
   {
-    IOP::ServiceContext const & context = service_info[index];
+    IOP::ServiceContext const & context = sc[index];
     TAO_Service_Context_Handler* const handler = registry_[context.context_id];
     if (handler)
       {
-        return handler->process_service_context (server_request, context);
+        return handler->process_service_context (transport, context);
       }
   }
   return 0;

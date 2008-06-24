@@ -11,6 +11,7 @@
 #include "tao/Transport.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
+#include "tao/ZIOP_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PortableInterceptorC.h"
@@ -273,6 +274,10 @@ TAO_ServerRequest::init_reply (void)
                                        0,
                                        false);
 
+  TAO_ZIOP_Adapter* ziop_adapter = this->orb_core ()->ziop_adapter ();
+  if (ziop_adapter)
+    ziop_adapter->generate_service_context (this->reply_service_context (), *this->transport ());  
+
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_, reply_params);
 
@@ -306,6 +311,10 @@ TAO_ServerRequest::send_no_exception_reply (void)
   // Change this to pass back the same thing we received, as well as
   // leave a comment why this is important!
   reply_params.svc_ctx_.length (0);
+
+  TAO_ZIOP_Adapter* ziop_adapter = this->orb_core ()->ziop_adapter ();
+  if (ziop_adapter)
+    ziop_adapter->generate_service_context (this->reply_service_context (), *this->transport ());  
 
   // Send back the reply service context.
   reply_params.service_context_notowned (&this->reply_service_info ());

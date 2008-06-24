@@ -132,7 +132,7 @@ TAO_ZIOP_Loader::compression_low_value (TAO::Profile_Transport_Resolver &resolve
 }
 
 void
-TAO_ZIOP_Loader::generate_service_context (TAO_Operation_Details &opd, TAO_Transport &transport)
+TAO_ZIOP_Loader::generate_service_context (TAO_Service_Context &service_cntx, TAO_Transport &transport)
 {
   CORBA::Boolean use_ziop = true;
   CORBA::Policy_var policy = CORBA::Policy::_nil ();
@@ -161,8 +161,6 @@ TAO_ZIOP_Loader::generate_service_context (TAO_Operation_Details &opd, TAO_Trans
 
   if (use_ziop)
   {
-    TAO_Service_Context &service_cntx = opd.request_service_context ();
-
     TAO_OutputCDR codeset_cdr;
     codeset_cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
     codeset_cdr << Compression::COMPRESSORID_ZLIB;

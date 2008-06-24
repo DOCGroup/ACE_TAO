@@ -866,31 +866,18 @@ TAO_GIOP_Message_Base::process_request (
 
       CORBA::Object_var forward_to;
 
-if (cdr.compressed_ == true)
-{
-  TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
-  if (adapter)
-  {
-  adapter->decompress (request);
-  }
-  else
-  {
-  // todo exception
-  }
-//+#if !defined (__BORLANDC__)
-//+            Bytef* LargBuffer = new Bytef [request.original_message_length_ * 2];
-//+     uLongf length = request.original_message_length_ * 2;
-//+            int retval = uncompress (LargBuffer,   &length,
-//+       (const Bytef*)cdr.rd_ptr(), cdr.length ());
-//+                          //       reinterpret_cast <const Bytef*>(compression_stream.buffer ()), compression_stream.total_length ());
-//+     char* buf = (char*)LargBuffer;
-
-//+TAO_InputCDR* newstream = new TAO_InputCDR (buf, (size_t)length);
-//+request.incoming_ = newstream;
-//+#endif
-//+
-//+ // do decompression
-}
+      if (cdr.compressed_)
+        {
+          TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
+          if (adapter)
+            {
+              adapter->decompress (request);
+            }
+          else
+        {
+        // todo exception
+        }
+      }
 
       /*
        * Hook to specialize request processing within TAO

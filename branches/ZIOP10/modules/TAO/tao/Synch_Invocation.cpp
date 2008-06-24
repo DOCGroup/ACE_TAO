@@ -15,7 +15,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/SystemException.h"
-#include "tao/ZIOP_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -95,7 +94,7 @@ namespace TAO
         this->write_header (cdr);
 
         this->marshal_data (cdr);
-        
+
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (

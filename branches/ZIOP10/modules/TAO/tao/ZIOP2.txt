@@ -2723,7 +2723,7 @@ Index: tao/ZIOP/ZIOP.cpp
 +
 +  CORBA::Object_var compression_manager =
 +    core.resolve_compression_manager();
-+
+y+
 +  Compression::CompressionManager_var manager =
 +    Compression::CompressionManager::_narrow (compression_manager.in ());
 +
