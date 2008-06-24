@@ -2,7 +2,7 @@
 
 #include "local_childS.h"
 
-int main (int, char*[])
+int ACE_TMAIN (int, ACE_TCHAR*[])
 {
   return 0;
 }

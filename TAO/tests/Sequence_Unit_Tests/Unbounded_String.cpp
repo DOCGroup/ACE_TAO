@@ -13,7 +13,7 @@
 
 typedef TAO::unbounded_basic_string_sequence<char> s_sequence;
 
-int main(int,char*[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   s_sequence a;
   s_sequence b(23);

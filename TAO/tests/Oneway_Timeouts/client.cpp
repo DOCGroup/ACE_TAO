@@ -43,7 +43,7 @@ namespace
   bool retry_transients = false;
   bool retry_timeouts = false;
 
-  void print_usage (const char *argv0)
+  void print_usage (const ACE_TCHAR *argv0)
   {
     ACE_ERROR ((LM_ERROR,
                 "%s [-request_timeout ms=0] "
@@ -66,7 +66,7 @@ namespace
                 argv0));
   }
 
-  bool parse_command_line (int ac, char *av[])
+  bool parse_command_line (int ac, ACE_TCHAR *av[])
   {
     ACE_Arg_Shifter args (ac, av);
     args.consume_arg ();
@@ -287,7 +287,7 @@ namespace
 }
 
 
-int main (int ac, char *av[])
+int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 {
 
   ACE_Time_Value before = ACE_High_Res_Timer::gettimeofday_hr ();

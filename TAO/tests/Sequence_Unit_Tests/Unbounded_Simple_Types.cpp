@@ -15,7 +15,7 @@ struct Foo
   int x;
 };
 
-int main(int,char*[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   typedef TAO::unbounded_value_sequence<int> int_sequence;
 

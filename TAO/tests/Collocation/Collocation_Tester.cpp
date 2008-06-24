@@ -28,7 +28,7 @@ Collocation_Test::shutdown (void)
 }
 
 int
-Collocation_Test::init (int argc, char *argv[])
+Collocation_Test::init (int argc, ACE_TCHAR *argv[])
 {
   // Initialize the ORB.
   this->orb_ = CORBA::ORB_init (argc, argv);
@@ -81,7 +81,7 @@ Collocation_Test::init (int argc, char *argv[])
 
 int
 Collocation_Test::parse_args (int /*argc*/,
-                              char *[] /*argv*/)
+                              ACE_TCHAR *[] /*argv*/)
 {
   return 0;
 }
