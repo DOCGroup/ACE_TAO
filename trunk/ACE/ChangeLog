@@ -1,3 +1,10 @@
+Tue Jun 24 11:02:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Svc_Conf_Token_Table.h:
+
+          commit generated 3rd file.
+          Fix the dependancies for FC6_Compact_NoInline build.
+
 Tue Jun 24 09:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_2980_Regression_Test.cpp:
