@@ -23,9 +23,9 @@ namespace ACE
             " %*[^:]: %*u %lu %*u %*u %*u %*u %*u %*u %*u %*u")
             /// Scan format for /proc/net/dev
 #elif defined (ACE_HAS_KSTAT)
-        , Solaris_Network_Interface_Monitor ("ipackets")
+        , Solaris_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
 #elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) 
-        , BSD_Network_Interface_Monitor ("ipackets")
+        , BSD_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
 #endif
     {}
 
