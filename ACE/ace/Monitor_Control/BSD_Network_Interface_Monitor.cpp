@@ -22,12 +22,34 @@ namespace ACE
     BSD_Network_Interface_Monitor::BSD_Network_Interface_Monitor (
       const ACE_TCHAR *lookup_str)
       : value_ (0UL),
+        start_ (0UL),
         lookup_str_ (lookup_str)
     {
+      this->init();
     }
 
     void
     BSD_Network_Interface_Monitor::update_i (void)
+    {
+      this->fetch(this->value_);
+      this->value_ -= this->start_;
+    }
+
+    void
+    BSD_Network_Interface_Monitor::clear_impl (void)
+    {
+      this->init();
+    }
+
+    void
+    BSD_Network_Interface_Monitor::init (void)
+    {
+      this->fetch(this->start_);
+      this->value_ = 0UL;
+    }
+
+    void
+    BSD_Network_Interface_Monitor::fetch (ACE_UINT64& value) const
     {
       ACE_UINT64 count = 0;
       int fd = socket (AF_INET, SOCK_DGRAM, 0);
@@ -44,7 +66,7 @@ namespace ACE
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("getifaddrs failed\n")));
           close (fd);
-          return;     
+          return;
         }
 
       char *p = 0;
@@ -89,18 +111,8 @@ namespace ACE
 
       freeifaddrs (ifap);
       close (fd);
-      value_ = count;
-    }
-
-    void
-    BSD_Network_Interface_Monitor::clear_impl (void)
-    {
-      /// It looks like update_i() is getting the value since
-      /// the machine was last rebooted. If that's the case,
-      /// we need to get a value in the constructor and subtract
-      /// that from subsequent values obtained by the code in
-      /// udpate_i(). This method would then reset that constructor
-      /// value.
+      
+      value = count;
     }
   }
 }
