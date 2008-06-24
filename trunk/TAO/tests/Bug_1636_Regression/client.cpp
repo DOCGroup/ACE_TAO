@@ -5,13 +5,12 @@
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "testC.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv,
-                       "" /* the ORB name, it can be anything! */);
+      CORBA::ORB_init (argc, argv);
 
     ACE_DEBUG ((LM_DEBUG,"Get reference to the DynAny Factory\n"));
     CORBA::Object_var obj =
