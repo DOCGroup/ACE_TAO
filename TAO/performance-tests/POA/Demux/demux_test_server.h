@@ -42,7 +42,7 @@ public:
   int run (void);
   // Execute client code.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialize the communication endpoint with server.
 
   int calculate_avg_latency (void);
@@ -59,7 +59,7 @@ private:
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   CORBA::ORB_var orb_;

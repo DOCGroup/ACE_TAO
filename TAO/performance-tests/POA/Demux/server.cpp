@@ -22,7 +22,7 @@
 ACE_RCSID(CodeGen, server, "$Id$")
 
 
-int main (int argc, ACE_TCHAR *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   // Set TAO_debug_level to 0 to ensure silent running unless
   // debugging is explicitly invoked

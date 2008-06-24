@@ -7,7 +7,7 @@
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try {
     // First initialize the ORB, that will remove some arguments...
@@ -67,7 +67,7 @@ int main (int argc, char* argv[])
         try {
           // Get the stock object
           Quoter::Stock_var stock =
-            stock_factory->get_stock (argv[i]);
+            stock_factory->get_stock (ACE_TEXT_ALWAYS_CHAR (argv[i]));
 
           CORBA::String_var full_name = stock->full_name ();
 
