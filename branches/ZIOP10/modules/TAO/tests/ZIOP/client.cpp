@@ -64,13 +64,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       manager->register_factory(compr_fact.in ());
 
       CORBA::Boolean comp_enables = true;
+      CORBA::ULong min_value = 0;
       CORBA::Any compression_enabled;
+      CORBA::Any compmin;
       compression_enabled <<= CORBA::Any::from_boolean (comp_enables);
-      CORBA::PolicyList policies (1);
-      policies.length (1);
+      compmin <<= min_value;
+      CORBA::PolicyList policies (2);
+      policies.length (2);
       policies[0] = orb->create_policy (ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabled);
+      policies[1] = orb->create_policy (ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID, compmin);
       CORBA::Object_var tmp = orb->string_to_object(ior);
-      CORBA::Object_var tmp2 = orb->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
+      CORBA::Object_var tmp2 = tmp->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 
       Test::Hello_var hello = Test::Hello::_narrow(tmp2.in ());
 
