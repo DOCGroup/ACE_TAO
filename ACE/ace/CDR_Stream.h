@@ -16,7 +16,7 @@
  * The current implementation assumes that the host has 1-byte,
  * 2-byte and 4-byte integral types, and that it has single
  * precision and double precision IEEE floats.
- * Those assumptions are pretty good these days, with Crays beign
+ * Those assumptions are pretty good these days, with Crays being
  * the only known exception.
  *
  * Optimizations
@@ -106,6 +106,9 @@ public:
    *                    executed on. To force the marshalled data to have
    *                    a specific order, specify one of the values defined
    *                    in ACE_CDR::Byte_Order.
+   *                    @note The @c ACE_ENABLE_SWAP_ON_WRITE config macro
+   *                    must be set for any local byte swapping to occur
+   *                    as data is inserted into an ACE_OutputCDR object.
    */
   ACE_OutputCDR (size_t size = 0,
                  int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
