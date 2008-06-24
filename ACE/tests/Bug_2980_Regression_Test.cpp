@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include "ace/config-lite.h"
+#include "ace/OS_main.h"
 
 // This is a non-ACE driver program which loads an ACE-based DLL.  The
 // usual ACE-related defines will not apply and we must use

@@ -1,3 +1,10 @@
+Tue Jun 24 09:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+        * tests/tests.mpc:
+
+          Manually add the ACE_TMAIN code to this test.
+
 Tue Jun 24 00:03:27 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Monitor_Control/BSD_Network_Interface_Monitor.cpp:
