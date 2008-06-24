@@ -59,7 +59,7 @@ public:
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   /**
-   * Returns the effective policy if <type> is a known client-exposed
+   * Returns the effective policy if @a type is a known client-exposed
    * policy type.  Returns the effective override for all other policy
    * types.
    */
