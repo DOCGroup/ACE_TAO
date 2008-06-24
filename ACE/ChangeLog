@@ -1,3 +1,14 @@
+Tue Jun 24 11:46:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Control/Bytes_Received_Monitor.cpp:
+        * ace/Monitor_Control/Packets_Received_Monitor.cpp:
+        * ace/Monitor_Control/Bytes_Sent_Monitor.cpp:
+        * ace/Monitor_Control/Packets_Sent_Monitor.cpp:
+        
+          For Solaris and *BSD WChar builds, ACE_TEXT-ified the argument
+          in the call to the platform-specific base class
+          constructor.
+
 Tue Jun 24 11:02:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/Svc_Conf_Token_Table.h:
