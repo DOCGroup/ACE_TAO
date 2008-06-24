@@ -2,6 +2,7 @@
 
 #include "tao/ZIOP/ZIOP_Policy_i.h"
 
+#include "tao/CDR.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
@@ -74,13 +75,29 @@ CompressorIdListPolicy::compressor_ids (void)
   return this->value_;
 }
 
-
 TAO_Cached_Policy_Type
 CompressorIdListPolicy::_tao_cached_type (void) const
 {
   return TAO_CACHED_POLICY_UNCACHED;
 }
 
+TAO_Policy_Scope
+CompressorIdListPolicy::_tao_scope (void) const
+{
+  return TAO_POLICY_DEFAULT_SCOPE;
+}
+
+CORBA::Boolean
+CompressorIdListPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
+{
+  return out_cdr << *this->value_;
+}
+
+CORBA::Boolean
+CompressorIdListPolicy::_tao_decode (TAO_InputCDR &in_cdr)
+{
+  return in_cdr >> *this->value_;
+}
 
 CompressionEnablingPolicy::CompressionEnablingPolicy (
     const ::CORBA::Boolean val)
@@ -150,6 +167,24 @@ TAO_Cached_Policy_Type
 CompressionEnablingPolicy::_tao_cached_type (void) const
 {
   return TAO_CACHED_COMPRESSION_ENABLING_POLICY;
+}
+
+TAO_Policy_Scope
+CompressionEnablingPolicy::_tao_scope (void) const
+{
+  return TAO_POLICY_DEFAULT_SCOPE;
+}
+
+CORBA::Boolean
+CompressionEnablingPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
+{
+  return out_cdr << ACE_OutputCDR::from_boolean (this->value_);
+}
+
+CORBA::Boolean
+CompressionEnablingPolicy::_tao_decode (TAO_InputCDR &in_cdr)
+{
+  return in_cdr >> ACE_InputCDR::to_boolean (this->value_);
 }
 
 CompressionLowValuePolicy::CompressionLowValuePolicy (

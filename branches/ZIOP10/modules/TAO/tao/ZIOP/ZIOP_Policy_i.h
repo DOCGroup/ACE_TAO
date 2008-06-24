@@ -61,6 +61,15 @@ public:
 
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
+  // Returns the scope at which this policy can be applied. See orbconf.h.
+  TAO_Policy_Scope _tao_scope (void) const;
+
+  /// This method writes a CDR representation of the current object.
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+
+  /// This method reads the object state from a CDR representation.
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+
 private:
 
   /// The attribute
@@ -97,6 +106,15 @@ public:
   virtual void destroy (void);
 
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+
+  // Returns the scope at which this policy can be applied. See orbconf.h.
+  TAO_Policy_Scope _tao_scope (void) const;
+
+  /// This method writes a CDR representation of the current object.
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+
+  /// This method reads the object state from a CDR representation.
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
 private:
 

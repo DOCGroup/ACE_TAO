@@ -11,6 +11,7 @@
 #define TAO_IOP_IOR_PIDL
 
 #include "tao/OctetSeq.pidl"
+#include "tao/Policy_Forward.pidl"
 
 #pragma prefix "omg.org"
 
@@ -39,6 +40,13 @@ module IOP
   };
   typedef sequence<TaggedComponent> MultipleComponentProfile;
   typedef sequence<TaggedComponent> TaggedComponentSeq;
+
+  struct PolicyValue
+  {
+    CORBA::PolicyType ptype;
+    CORBA::OctetSeq   pvalue;
+  };
+  typedef sequence<PolicyValue> PolicyValueSeq;
 
   // @@ All security related tags are located in the Security Service
   // @@ related IDL files, in accordance with the Security Service 1.8

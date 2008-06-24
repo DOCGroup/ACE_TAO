@@ -365,8 +365,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   for (CORBA::ULong i = 0; i < plen; ++i)
     {
       TAO_OutputCDR out_CDR;
-      policy_value_seq[i].ptype =
-        (*policy_list)[i]->policy_type ();
+      policy_value_seq[i].ptype = (*policy_list)[i]->policy_type ();
 
       out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
       (*policy_list)[i]->_tao_encode (out_CDR);
@@ -450,7 +449,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
           // Extract the Byte Order
           CORBA::Boolean byte_order;
 
-          if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+          if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
             {
               return ;
             }
@@ -831,7 +830,7 @@ TAO_Unknown_Profile::to_string (void)
 int
 TAO_Unknown_Profile::decode (TAO_InputCDR& cdr)
 {
-  if ((cdr >> this->body_) == 0)
+  if (!(cdr >> this->body_))
     {
       return -1;
     }
@@ -889,8 +888,7 @@ TAO_Unknown_Profile::is_equivalent_hook (const TAO_Profile * /* other */)
 }
 
 CORBA::ULong
-TAO_Unknown_Profile::hash (CORBA::ULong max
-                           )
+TAO_Unknown_Profile::hash (CORBA::ULong max)
 {
   return (ACE::hash_pjw (reinterpret_cast <const char*>
                                           (this->body_.get_buffer ()),

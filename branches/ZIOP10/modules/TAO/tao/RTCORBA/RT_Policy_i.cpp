@@ -374,13 +374,13 @@ TAO_PriorityBandedConnectionPolicy::destroy (void)
 CORBA::Boolean
 TAO_PriorityBandedConnectionPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
-  return out_cdr << priority_bands_;
+  return out_cdr << this->priority_bands_;
 }
 
 CORBA::Boolean
 TAO_PriorityBandedConnectionPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 {
-  return in_cdr >> priority_bands_;
+  return in_cdr >> this->priority_bands_;
 }
 
 TAO_Cached_Policy_Type
@@ -399,7 +399,7 @@ TAO_PriorityBandedConnectionPolicy::_tao_scope (void) const
 RTCORBA::PriorityBands &
 TAO_PriorityBandedConnectionPolicy::priority_bands_rep (void)
 {
-  return priority_bands_;
+  return this->priority_bands_;
 }
 
 // ****************************************************************
