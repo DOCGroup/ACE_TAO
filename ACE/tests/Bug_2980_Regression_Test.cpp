@@ -5,7 +5,6 @@
 #include <stdio.h>
 
 #include "ace/config-lite.h"
-#include "ace/OS_main.h"
 
 // This is a non-ACE driver program which loads an ACE-based DLL.  The
 // usual ACE-related defines will not apply and we must use
@@ -126,8 +125,8 @@ void * loadunloadDll(void *pp)
 
   return 0;
 }
-
-int ACE_TMAIN (int, ACE_TCHAR *[])
+// FUZZ: disable check_for_improper_main_declaration
+int main (int, char *[])
 {
   PRINTF ("main called\n");
 

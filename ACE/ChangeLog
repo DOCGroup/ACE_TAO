@@ -1,3 +1,12 @@
+Tue Jun 24 13:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_2980_Regression_Test.cpp:
+        * tests/tests.mpc:
+
+          Remove ACE_TMAIN from this test and stop it building on
+          wide systems (as per original test). The test can not use
+          ace directly.
+
 Tue Jun 24 13:30:31  2008  Steve Huston  <shuston@riverace.com>
 
         * ace/CDR_Stream.h: For ACE_OutputCDR, note that attempting to set a
