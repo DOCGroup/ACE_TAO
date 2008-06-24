@@ -9,13 +9,13 @@
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 
-const char *broker_ior = "file://StockBroker.ior";
-const char *subscribe_name = 0;
-const char *unsubscribe_name = 0;
+const ACE_TCHAR *broker_ior = ACE_TEXT ("file://StockBroker.ior");
+const ACE_TCHAR *subscribe_name = 0;
+const ACE_TCHAR *unsubscribe_name = 0;
 
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:s:u:");
   int c;
@@ -52,7 +52,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try
   {
@@ -66,7 +66,7 @@ int main (int argc, char* argv[])
 
     // create the factory object reference of StockBrokerHome
     CORBA::Object_var broker_obj =
-      orb->string_to_object (broker_ior);
+      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (broker_ior));
 
     // downcast the object reference to the appropriate type
     Stock::StockBroker_var broker =
@@ -82,14 +82,14 @@ int main (int argc, char* argv[])
 
     if (subscribe_name != 0)
     {
-      broker->stock_subscribe (subscribe_name);
+      broker->stock_subscribe (ACE_TEXT_ALWAYS_CHAR (subscribe_name));
 
       ACE_DEBUG ((LM_DEBUG, "Subscribe successful!\n"));
     }
 
     if (unsubscribe_name != 0)
     {
-      broker->stock_unsubscribe (unsubscribe_name);
+      broker->stock_unsubscribe (ACE_TEXT_ALWAYS_CHAR (unsubscribe_name));
 
       ACE_DEBUG ((LM_DEBUG, "Unsubscribe successful!\n"));
     }
