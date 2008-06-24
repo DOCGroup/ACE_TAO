@@ -11,8 +11,8 @@
 #define ARG_LIM 64
 
 int exec_program( int argc, char ** argv);
-
-int main( int argc, char ** argv) {
+// FUZZ: disable check_for_improper_main_declaration
+int main (int argc, char ** argv) {
     int     status;
 
     if (argc - 1 >= ARG_LIM) {
