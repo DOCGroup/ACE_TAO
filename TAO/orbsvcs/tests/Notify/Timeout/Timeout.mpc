@@ -1,11 +1,11 @@
 // $Id$
 
-project(*idl): taoidldefaults {
+project(tao_*idl): taoidldefaults {
   custom_only = 1
 }
 
 project(*consumer): notifytest {
-  after  += *idl
+  after  += tao_*idl
   exename = Structured_Consumer
 
   IDL_Files {
@@ -19,7 +19,7 @@ project(*consumer): notifytest {
 }
 
 project(*supplier): notifytest {
-  after  += *idl
+  after  += tao_*idl
   exename = Structured_Supplier
 
   IDL_Files {
