@@ -7,15 +7,15 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Monitor/Monitor.h"
 
-const char *monitor_ior = "file://monitor.ior";
+const ACE_TCHAR *monitor_ior = ACE_TEXT ("file://monitor.ior");
 ::Monitor::NameList* monitor_point = 0;
 bool mp_clear = false;
 int n_iterations = 1;
 ACE_Time_Value sleep_time = ACE_Time_Value (1);
-const char * filter = "";
+const ACE_TCHAR * filter = ACE_TEXT ("");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:p:ci:s:f:");
   int c;
@@ -73,7 +73,7 @@ parse_args (int argc, char *argv[])
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -86,7 +86,7 @@ main (int argc, char *argv[])
 
       /// Get the MC object reference that the client has exposed.
       CORBA::Object_var obj =
-        orb->string_to_object (monitor_ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (monitor_ior));
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -122,7 +122,7 @@ main (int argc, char *argv[])
 
               for (CORBA::ULong index = 0; index < data->length (); ++index)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "MP <%s>:\n", data[index].itemname.in ()));
+                  ACE_DEBUG ((LM_DEBUG, "MP <%s>:\n", ACE_TEXT_CHAR_TO_TCHAR (data[index].itemname.in ())));
                   Monitor::DataItem dlist = data[index];
 
                   for (CORBA::ULong valueindex = 0;
@@ -139,11 +139,11 @@ main (int argc, char *argv[])
         }
       else
         {
-          Monitor::NameList_var list = monitor->get_statistic_names (filter);
+          Monitor::NameList_var list = monitor->get_statistic_names (ACE_TEXT_ALWAYS_CHAR (filter));
 
           for (CORBA::ULong index = 0; index < list->length (); ++index)
             {
-              ACE_DEBUG ((LM_DEBUG, "MP: <%s>\n", list[index].in ()));
+              ACE_DEBUG ((LM_DEBUG, "MP: <%s>\n", ACE_TEXT_CHAR_TO_TCHAR (list[index].in ())));
             }
         }
 

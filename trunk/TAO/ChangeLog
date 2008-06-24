@@ -1,3 +1,11 @@
+Tue Jun 24 12:43:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/contrib/mcpp/testmain.cpp:
+        * TAO_IDL/contrib/mcpp/cc1.cpp:
+        * utils/monitor/monitor_client.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Tue Jun 24 12:02:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * docs/tutorials/Quoter/Naming_Service/server.cpp:

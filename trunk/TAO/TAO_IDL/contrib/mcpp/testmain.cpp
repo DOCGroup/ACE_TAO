@@ -12,8 +12,8 @@
 
 #define MCPP_LIB    1
 #include "mcpp_lib.h"
-
-int main(int argc, char *argv[])
+// FUZZ: disable check_for_improper_main_declaration
+int main (int argc, char *argv[])
 {
     int     i, j;
     char ** tmp_argv;
