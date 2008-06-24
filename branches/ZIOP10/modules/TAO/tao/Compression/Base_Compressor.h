@@ -39,11 +39,11 @@ namespace TAO
     BaseCompressor (::Compression::CompressionLevel compression_level,
                     ::Compression::CompressorFactory_ptr compressor_factory);
 
-    virtual void compress (const ::CORBA::OctetSeq &source,
-                           ::CORBA::OctetSeq &target) = 0;
+    virtual void compress (const ::Compression::Buffer &source,
+                           ::Compression::Buffer &target) = 0;
 
-    virtual void decompress (const ::CORBA::OctetSeq &source,
-                             ::CORBA::OctetSeq &target) = 0;
+    virtual void decompress (const ::Compression::Buffer &source,
+                             ::Compression::Buffer &target) = 0;
 
     virtual ::Compression::CompressorFactory_ptr compressor_factory (void);
 

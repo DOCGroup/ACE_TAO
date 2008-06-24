@@ -59,6 +59,8 @@ module Compression
     typedef unsigned long CompressionLevel;
 
     local interface CompressorFactory;
+    
+    typedef CORBA::OctetSeq Buffer;
 
     /**
      * Compressor - abstraction of a compressor and decompressor.
@@ -70,13 +72,13 @@ module Compression
          * the target Buffer. If an error occurs during the compression, it
          * throws CompressionException
          */
-        void compress(in CORBA::OctetSeq source, inout CORBA::OctetSeq target) raises (CompressionException);
+        void compress(in Buffer source, inout Buffer target) raises (CompressionException);
         /**
          * Operation that decompresses data contained in the source Buffer into
          * the target Buffer. If an error occurs during the decompression, it
          * throws CompressionException
          */
-        void decompress(in CORBA::OctetSeq source, inout CORBA::OctetSeq target) raises(CompressionException);
+        void decompress(in Buffer source, inout Buffer target) raises(CompressionException);
         /**
          * The CompressorFactory associated with this Compressor.
          */

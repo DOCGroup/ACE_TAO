@@ -37,12 +37,12 @@ namespace TAO
                       ::Compression::CompressorFactory_ptr compressor_factory);
 
       virtual void compress (
-          const ::CORBA::OctetSeq & source,
-          ::CORBA::OctetSeq & target);
+          const ::Compression::Buffer & source,
+          ::Compression::Buffer & target);
 
       virtual void decompress (
-          const ::CORBA::OctetSeq & source,
-          ::CORBA::OctetSeq & target);
+          const ::Compression::Buffer & source,
+          ::Compression::Buffer & target);
   };
 }
 
