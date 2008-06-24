@@ -22,7 +22,7 @@ public:
 };
 
 
-int main (int argc, char* argv[]) {
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
 
   try {
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);

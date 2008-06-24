@@ -27,7 +27,7 @@ public:
   void show (void);
   // Call show on all the window objects
 
-  void parse_args (int argc, char *argv[]);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
   static void x_cb (Fl_Widget *widget, void* cookie);
@@ -50,7 +50,7 @@ private:
   // The server.
 };
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   TAO::FlResource_Loader fl_loader;
 
@@ -158,9 +158,9 @@ Client::y_changed (void)
 }
 
 void
-Client::parse_args (int argc, char *argv[])
+Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  const char *ior = "file://test.ior";
+  const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
   ACE_Get_Opt get_opts (argc, argv, "k:");
   int c;
@@ -181,7 +181,7 @@ Client::parse_args (int argc, char *argv[])
       }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
   this->server_ =
     Simple_Server::_narrow (object.in ());

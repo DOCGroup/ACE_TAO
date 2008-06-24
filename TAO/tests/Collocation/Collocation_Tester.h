@@ -31,10 +31,10 @@ public:
 
   void shutdown (void);
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initializing the Collocation_Test object.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the test specific arguments.
 
   int test_narrow (void);
