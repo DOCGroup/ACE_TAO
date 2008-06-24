@@ -5,7 +5,7 @@
 #include "Handler_i.h"
 #include "ace/streams.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try {
     // First initialize the ORB, that will remove some arguments...
@@ -34,7 +34,7 @@ int main (int argc, char* argv[])
     // in real applications we use the naming service, but let's do
     // the easy part first!
     CORBA::Object_var factory_object =
-      orb->string_to_object (argv[1]);
+      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (argv[1]));
 
     // Now downcast the object reference to the appropriate type
     Quoter::Stock_Factory_var factory =
@@ -52,7 +52,7 @@ int main (int argc, char* argv[])
       try {
         // Get the stock object
         Quoter::Stock_var tmp =
-          factory->get_stock (argv[i]);
+          factory->get_stock (ACE_TEXT_ALWAYS_CHAR (argv[i]));
         Quoter::Single_Query_Stock_var stock =
           Quoter::Single_Query_Stock::_narrow (tmp.in ());
         if (CORBA::is_nil (stock.in ())) {

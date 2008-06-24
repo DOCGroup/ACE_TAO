@@ -61,7 +61,7 @@ public:
   ~DII_Cubit_Client (void);
   // Destructor.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialize the ORB and gets the Cubit objref.
 
   int run (void);
@@ -109,7 +109,7 @@ private:
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   CORBA::ULong loop_count_;
@@ -190,7 +190,7 @@ const char *DII_Cubit_Client::stats_messages_[] =
 };
 
 int
-DII_Cubit_Client::init (int argc, char **argv)
+DII_Cubit_Client::init (int argc, ACE_TCHAR **argv)
 {
   // Nice and safe.
   this->argc_ = argc;
@@ -788,7 +788,7 @@ DII_Cubit_Client::run (void)
 
 // Start the test.
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   DII_Cubit_Client cubit_client;
 
