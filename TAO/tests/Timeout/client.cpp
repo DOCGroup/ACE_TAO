@@ -8,12 +8,12 @@
 
 ACE_RCSID(Timeout, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int min_timeout = 0;
 int max_timeout = 20;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:l:h:");
   int c;
@@ -85,7 +85,7 @@ send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
 }
 
 
-int main (int argc, char* argv[])
+int ACE_TCHAR (int argc, ACE_TMAIN *argv[])
 {
   try
     {
@@ -96,7 +96,7 @@ int main (int argc, char* argv[])
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in ());
@@ -236,8 +236,8 @@ int main (int argc, char* argv[])
         timeout_count_total += timeout_count[i];
         in_time_count_total += in_time_count[i];
         ACE_DEBUG ((LM_DEBUG, "in_time_count[%s]= %d timeout_count[%s]= %d\n",
-                    to_type_names[i], in_time_count[i],
-                    to_type_names[i], timeout_count[i]));
+                    ACE_TEXT_CHAR_TO_TCHAR (to_type_names[i]), in_time_count[i],
+                    ACE_TEXT_CHAR_TO_TCHAR (to_type_names[i]), timeout_count[i]));
       }
 
       if (timeout_count_total == 0)

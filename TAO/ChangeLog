@@ -1,3 +1,17 @@
+Tue Jun 24 14:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_1383_Regression/SimpleServer.cpp:
+        * tests/Bug_1383_Regression/SimpleClient.cpp:
+        * tests/Bug_1639_Regression/struct_client.cpp:
+        * tests/Bug_2543_Regression/bug_2543_regression.cpp:
+        * tests/Bug_3198_Regression/bug_3198_regression.cpp:
+        * tests/DynUnion_Test/DynUnionTest.cpp:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+        * tests/POA/wait_for_completion/wait_for_completion.cpp:
+        * tests/Timeout/client.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Tue Jun 24 13:37:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_1869_Regression/client.cpp:

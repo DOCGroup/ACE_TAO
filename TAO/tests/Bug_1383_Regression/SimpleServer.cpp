@@ -24,12 +24,12 @@ void advertise(CORBA::ORB_ptr orb, CORBA::Object_ptr obj)
   // trading service
 }
 
-int main(int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize the orb.
-      CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Get the "RootPOA"
       CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
