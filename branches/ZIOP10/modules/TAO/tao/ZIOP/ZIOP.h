@@ -25,6 +25,7 @@
 
 #include "tao/PI/PI.h"
 #include "tao/ZIOP_Adapter.h"
+#include "tao/Policy_Validator.h"
 #include "ace/Service_Config.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -53,7 +54,7 @@ public:
   /// Initialize the BiDIR loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
 
-  virtual void load_policy_validators (TAO_Policy_Validator &validator;)
+  virtual void load_policy_validators (TAO_Policy_Validator &validator);
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);

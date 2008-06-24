@@ -26,8 +26,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
 
       if ((value >>= CORBA::Any::to_boolean (val)) == 0)
         {
-          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                            CORBA::Policy::_nil ());
+          throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
 
       ACE_NEW_THROW_EX (policy,
@@ -46,8 +45,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
       // Extract the value from the any.
       if ((value >>= val) == 0)
         {
-          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                            CORBA::Policy::_nil ());
+          throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
 
       ACE_NEW_THROW_EX (policy,
@@ -68,8 +66,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
 
       if ((value >>= val) == 0)
         {
-          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                            CORBA::Policy::_nil ());
+          throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
 
       ACE_NEW_THROW_EX (policy,
@@ -90,8 +87,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
 
       if ((value >>= val) == 0)
         {
-          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                            CORBA::Policy::_nil ());
+          throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
 
       ACE_NEW_THROW_EX (policy,
@@ -105,8 +101,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
       return policy;
     }
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

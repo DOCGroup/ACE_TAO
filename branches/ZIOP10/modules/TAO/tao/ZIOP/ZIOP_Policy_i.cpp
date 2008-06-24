@@ -59,8 +59,7 @@ CompressorIdListPolicy::copy (void)
   ACE_NEW_THROW_EX (tmp, CompressorIdListPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
+ 
   return tmp;
 }
 
@@ -122,8 +121,7 @@ CompressionEnablingPolicy::clone (void) const
 }
 
 CORBA::Policy_ptr
-CompressionEnablingPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
- ACE_THROW_SPEC ((CORBA::SystemException))
+CompressionEnablingPolicy::copy (void)
 {
   // Future policy implementors: notice how the following code is
  // exception safe!

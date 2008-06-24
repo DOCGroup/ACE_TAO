@@ -178,7 +178,10 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
         throw ::CORBA::MARSHAL ();
       }
 
-    if (use_ziop) {
+    current = const_cast <ACE_Message_Block*> (stream.current());
+    CORBA::ULong const original_data_length =(CORBA::ULong)(current->wr_ptr() - current->rd_ptr());
+
+    if (use_ziop && original_data_length > 0) {
          // We can only compress one message block, so when compression is enabled first do
          // a consolidate.
          stream.consolidate ();
@@ -194,8 +197,6 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
     Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
     Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 9);
 
-    current = const_cast <ACE_Message_Block*> (stream.current());
-    CORBA::ULong const original_data_length =(CORBA::ULong)(current->wr_ptr() - current->rd_ptr());
     if (original_data_length > this->compression_low_value (resolver))
     {
       CORBA::OctetSeq myout;

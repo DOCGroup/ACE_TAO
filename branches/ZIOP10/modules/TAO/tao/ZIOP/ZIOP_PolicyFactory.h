@@ -36,15 +36,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// Policy factory for all Messaging related policies.
 class TAO_ZIOP_PolicyFactory
   : public PortableInterceptor::PolicyFactory
-  , public TAO_Local_RefCounted_Object
+  , public ::CORBA::LocalObject
 {
 public:
 
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any & value
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::PolicyError));
+                                           const CORBA::Any & value);
 
 };
 
