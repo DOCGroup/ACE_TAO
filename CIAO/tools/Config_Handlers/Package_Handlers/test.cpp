@@ -11,11 +11,10 @@
 #include "tao/ORB.h"
 #include "Utils/Exceptions.h"
 
-static const char *input_file = "BasicSP.cdp";
-
+static const ACE_TCHAR *input_file = ACE_TEXT ("BasicSP.cdp");
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "i:");
 
@@ -45,12 +44,10 @@ void check_srd (const Deployment::DeploymentPlan &);
 
 using namespace CIAO::Config_Handlers;
 
-
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-
       if (parse_args (argc, argv) != 0)
         return 1;
 
@@ -59,7 +56,7 @@ int main (int argc, char *argv[])
       ACE_UNUSED_ARG (orb);
 
 
-      if (xercesc::DOMDocument *doc = XML_HELPER->create_dom (input_file))
+      if (xercesc::DOMDocument *doc = XML_HELPER->create_dom (ACE_TEXT_ALWAYS_CHAR (input_file)))
         {
 
           ::Deployment::PackageConfiguration idl_pc;
@@ -69,7 +66,7 @@ int main (int argc, char *argv[])
             //std::cerr << "XML to XSC conversion succeeded. Converting to IDL...\n";
 
             //Convert the XSC to an IDL datatype
-            Packaging::PCD_Handler::package_config (input_file, idl_pc);
+            Packaging::PCD_Handler::package_config (ACE_TEXT_ALWAYS_CHAR (input_file), idl_pc);
             std::cout << "Instance document import succeeded.  Dumping contents to file\n";
           }
 
