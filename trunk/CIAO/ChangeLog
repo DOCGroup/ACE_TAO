@@ -1,3 +1,18 @@
+Tue Jun 24 12:23:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tools/Config_Handlers/test.cpp:
+        * tools/Config_Handlers/RT-CCM/test.cpp:
+        * tools/Config_Handlers/Package_Handlers/test.cpp:
+        * tools/Config_Handlers/CIAO_Events/test.cpp:
+        * tests/Bug_2130_Regression/SEC_CheckPoint/controller.cpp:
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.cpp:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.cpp:
+        * performance-tests/mico/mico-thrput-st/server.cc:
+        * performance-tests/mico/mico-thrput-st/client.cc:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Mon Jun 23 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tools/IDL3_TO_IDL2/IDL3_TO_IDL2.mpc:

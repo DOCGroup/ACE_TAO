@@ -10,11 +10,11 @@
 #include "Utils/XML_Helper.h"
 #include "DnC_Dump.h"
 #include "tao/ORB.h"
-static const char *input_file = "BasicSP.cdp";
+static const ACE_TCHAR *input_file = ACE_TEXT ("BasicSP.cdp");
 
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "i:");
 
@@ -45,7 +45,7 @@ void check_srd (const Deployment::DeploymentPlan &);
 using namespace CIAO::Config_Handlers;
 
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   if (parse_args (argc, argv) != 0)
@@ -58,7 +58,7 @@ int main (int argc, char *argv[])
   //Create an XML_Helper for all the file work
   XML_Helper the_helper;
 
-  if (xercesc::DOMDocument *doc = the_helper.create_dom (input_file))
+  if (xercesc::DOMDocument *doc = the_helper.create_dom (ACE_TEXT_ALWAYS_CHAR (input_file)))
     {
       //Read in the XSC type structure from the DOMDocument
       DeploymentPlan dp = deploymentPlan (doc);

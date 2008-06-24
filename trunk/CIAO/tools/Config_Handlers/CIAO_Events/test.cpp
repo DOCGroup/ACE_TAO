@@ -9,11 +9,10 @@
 #include "ace/Get_Opt.h"
 #include "tao/ORB.h"
 
-static const char *input_file = "test.ced";
-
+static const ACE_TCHAR *input_file = ACE_TEXT ("test.ced");
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "i:");
 
@@ -40,13 +39,13 @@ parse_args (int argc, char *argv[])
 
 using namespace CIAO::Config_Handlers;
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   if (parse_args (argc, argv) != 0)
     return 1;
 
-  CIAOEvents_Handler event_handler (input_file);
+  CIAOEvents_Handler event_handler (ACE_TEXT_ALWAYS_CHAR (input_file));
   // Convert XSC to idl datatype
 
   std::cout << "Instance document import succeeded.  Dumping contents to file\n";

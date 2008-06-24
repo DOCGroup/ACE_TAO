@@ -30,7 +30,7 @@ namespace TM_Tester
   void write_to_file (::Deployment::Domain domain);
 
   /// variable contains IOR of the TM
-  const char * stringified_TM_IOR;
+  const ACE_TCHAR * stringified_TM_IOR;
 
   /// if add or delete from domain
   bool add_to_domain = true;
@@ -39,10 +39,10 @@ namespace TM_Tester
   bool call_update = false;
 
   /// contains the host name
-  const char * host_name;
+  const ACE_TCHAR* host_name;
 
     /// parses the arguments and extracts the params
-  bool parse_args (int argc, char *argv[])
+  bool parse_args (int argc, ACE_TCHAR *argv[])
   {
     ACE_Get_Opt get_opts (argc, argv, "t:u:d");
     int c;
@@ -76,7 +76,7 @@ namespace TM_Tester
 }
 
   /// The main function
-  int main (int argc, char* argv[])
+  int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   {
     try {
       // First initialize the ORB, that will remove some arguments...
@@ -91,7 +91,7 @@ namespace TM_Tester
       // in real applications we use the naming service, but let's do
       // the easy part first!
       CORBA::Object_var factory_object =
-        orb->string_to_object (TM_Tester::stringified_TM_IOR);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (TM_Tester::stringified_TM_IOR));
 
       // Now downcast the object reference to the appropriate type
       CIAO::TargetManagerImpl_var targetCmp =
@@ -158,10 +158,10 @@ namespace TM_Tester
 
         ACE_ERROR ((LM_ERROR ,
               "ResourceCommitmentFailure\n reason=[%s]\n elementName=[%s]\n resourceName=[%s]\n propertyName=[%s]\n",
-              e.reason.in (),
-              resource_seq[e.index].elementName.in (),
-              resource_seq[e.index].resourceName.in (),
-              e.propertyName.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR (e.reason.in ()),
+              ACE_TEXT_CHAR_TO_TCHAR (resource_seq[e.index].elementName.in ()),
+              ACE_TEXT_CHAR_TO_TCHAR (resource_seq[e.index].resourceName.in ()),
+              ACE_TEXT_CHAR_TO_TCHAR (e.propertyName.in ())));
       }
       catch(const CORBA::Exception &)
       {
@@ -198,7 +198,7 @@ namespace TM_Tester
 
       ::Deployment::Domain updated;
       updated.node.length (1);
-      updated.node[0].name = CORBA::string_dup (TM_Tester::host_name);
+      updated.node[0].name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (TM_Tester::host_name));
 
       ::CORBA::StringSeq elements;
       elements.length (0);
