@@ -1,3 +1,22 @@
+Tue Jun 24 13:37:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_1869_Regression/client.cpp:
+        * tests/Bug_1869_Regression/server.cpp:
+        * tests/Bug_2419_Regression/client.cpp:
+        * tests/Collocation/Collocation.cpp:
+        * tests/Collocation/Collocation_Tester.cpp:
+        * tests/Collocation/Collocation_Tester.h:
+        * tests/FL_Cube/client.cpp:
+        * tests/Oneway_Timeouts/client.cpp:
+        * tests/Oneway_Timeouts/server.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_String.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Octet.cpp:
+        * tests/Sequence_Unit_Tests/Bounded_String.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+        * tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Tue Jun 24 12:43:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/contrib/mcpp/testmain.cpp:

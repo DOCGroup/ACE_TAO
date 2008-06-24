@@ -167,7 +167,7 @@ namespace {
     //FUZZ: enable check_for_lack_ACE_OS
   }
 
-  bool parse_command_line (int ac, char *av[])
+  bool parse_command_line (int ac, ACE_TCHAR *av[])
   {
     ACE_Arg_Shifter args (ac, av);
     args.consume_arg ();
@@ -260,7 +260,7 @@ namespace {
 
 }
 
-int main (int ac, char *av[])
+int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 {
   try
     {

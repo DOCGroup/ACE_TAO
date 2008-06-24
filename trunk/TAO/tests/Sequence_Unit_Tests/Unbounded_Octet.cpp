@@ -13,7 +13,7 @@
 
 typedef TAO::unbounded_value_sequence <CORBA::Octet> s_sequence;
 
-int main(int,char*[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   s_sequence a;
   s_sequence b(23);
