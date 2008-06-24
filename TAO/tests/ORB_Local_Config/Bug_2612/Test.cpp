@@ -19,7 +19,7 @@ char const * const scpc_loadOrb =
 
 char const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE ("testDllOrb");
 
-int ACE_TMAIN(int, char **)
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,"\nbefore first load process directive\n"));
   if (0 > ACE_Service_Config::process_directive(scpc_loadOrb))

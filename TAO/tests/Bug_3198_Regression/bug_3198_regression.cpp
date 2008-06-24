@@ -9,10 +9,10 @@ ACE_RCSID (Bug_3198_Regression,
            bug_3198_regression,
            "$Id$")
 
-const char *ior = "corbaloc:iiop:localhost:12345/MyObjectKey";
+const ACE_TCHAR *ior = ACE_TEXT ("corbaloc:iiop:localhost:12345/MyObjectKey");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:");
   int c;
@@ -38,7 +38,7 @@ parse_args (int argc, char *argv[])
 }
 
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
@@ -47,7 +47,7 @@ int main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-    CORBA::Object_var obj = orb->string_to_object (ior);
+    CORBA::Object_var obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
     CORBA::PolicyList_var policies;
     CORBA::Boolean result = obj->_validate_connection (policies.out());
     if (result)

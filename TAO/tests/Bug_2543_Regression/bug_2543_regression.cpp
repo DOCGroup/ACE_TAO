@@ -7,12 +7,11 @@ ACE_RCSID (Bug_2543_Regression,
            bug_2543_regression,
            "$Id$")
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
-       CORBA::ORB_var orb = CORBA::ORB_init(argc,argv);
+       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
        orb->register_value_factory(
                Base::_tao_obv_static_repository_id(),

@@ -45,7 +45,7 @@ test_i::destroy_poa (void)
 
 PortableServer::POA_ptr
 init_orb (int argc,
-          char **argv,
+          ACE_TCHAR **argv,
           const char *orb_name,
           CORBA::ORB_ptr &orb_ptr)
 {
@@ -73,10 +73,8 @@ init_orb (int argc,
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb1;
