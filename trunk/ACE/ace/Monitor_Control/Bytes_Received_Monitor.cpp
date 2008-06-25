@@ -25,7 +25,7 @@ namespace ACE
 #elif defined (ACE_HAS_KSTAT)
         , Solaris_Network_Interface_Monitor (ACE_TEXT ("rbytes"))
 #elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__)
-        , BSD_Network_Interface_Monitor (ACE_Text ("ibytes"))
+        , BSD_Network_Interface_Monitor (ACE_TEXT ("ibytes"))
 #endif
     {}
 
