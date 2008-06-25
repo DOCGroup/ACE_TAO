@@ -290,7 +290,6 @@ AC_CONFIG_FILES([
   orbsvcs/examples/Notify/MC/monitor/Makefile
   orbsvcs/examples/Notify/Subscribe/Makefile
   orbsvcs/examples/Notify/ThreadPool/Makefile
-  orbsvcs/examples/Notify/Timeout/Makefile
   orbsvcs/examples/ORT/Makefile
   orbsvcs/examples/RtEC/Makefile
   orbsvcs/examples/RtEC/IIOPGateway/Makefile
@@ -434,6 +433,7 @@ AC_CONFIG_FILES([
   orbsvcs/tests/Notify/performance-tests/Filter/Makefile
   orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile
   orbsvcs/tests/Notify/performance-tests/Throughput/Makefile
+  orbsvcs/tests/Notify/Timeout/Makefile
   orbsvcs/tests/Property/Makefile
   orbsvcs/tests/Redundant_Naming/Makefile
   orbsvcs/tests/Sched/Makefile
