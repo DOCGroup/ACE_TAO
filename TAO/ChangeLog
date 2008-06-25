@@ -1,3 +1,30 @@
+Wed Jun 25 11:49:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * examples/ior_corbaloc/corbaname_client.cpp:
+        * examples/ior_corbaloc/server.cpp:
+        * examples/ior_corbaloc/ior_corbaloc_client_i.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/client.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/server.cpp:
+        * docs/tutorials/Quoter/AMI/client.cpp:
+        * docs/tutorials/Quoter/AMI/server.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/client.cpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/client.cpp:
+        * docs/tutorials/Quoter/Simple/Client/client.cpp:
+        * docs/tutorials/Quoter/Simple/Server/server.cpp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+        * docs/tutorials/Quoter/Event_Service/client.cpp:
+        * docs/tutorials/Quoter/Event_Service/server.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/server.cpp:
+        * docs/tutorials/Quoter/Naming_Service/client.cpp:
+        * docs/tutorials/Quoter/Naming_Service/server.cpp:
+        * orbsvcs/examples/PSS/client.cpp:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+        * orbsvcs/tests/IOR_MCast/server_i.cpp:
+        * orbsvcs/tests/IOR_MCast/ior_mcast_client_i.cpp:
+
+          Remove redundant "" 3rd parameter (orbID) from ORB_init() calls.
+
 Wed Jun 25 11:03:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Timeout/client.cpp:
