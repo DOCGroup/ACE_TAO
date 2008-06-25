@@ -1,3 +1,9 @@
+Wed Jun 25 05:59:52 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * include/makeinclude/platform_netbsd.GNU:
+
+          Conditionally set no_hidden_visibility to 1.
+
 Tue Jun 24 13:52:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_2980_Regression_Test.cpp:
@@ -19,7 +25,7 @@ Tue Jun 24 11:46:41 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * ace/Monitor_Control/Packets_Received_Monitor.cpp:
         * ace/Monitor_Control/Bytes_Sent_Monitor.cpp:
         * ace/Monitor_Control/Packets_Sent_Monitor.cpp:
-        
+
           For Solaris and *BSD WChar builds, ACE_TEXT-ified the argument
           in the call to the platform-specific base class
           constructor.
@@ -43,9 +49,9 @@ Tue Jun 24 00:03:27 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
         * ace/Monitor_Control/BSD_Network_Interface_Monitor.cpp:
         * ace/Monitor_Control/BSD_Network_Interface_Monitor.h:
 
-          Changed to fetch current value in constructor, and subtract 
+          Changed to fetch current value in constructor, and subtract
           that from subsequent values in each update() call.
-        
+
 Mon Jun 23 15:28:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/Svc_Conf_y.cpp:
@@ -61,12 +67,12 @@ Mon Jun 23 15:27:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 Mon Jun 23 13:51:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Control/Windows_Monitor.h:
-        
+
           Changed class member type from ACE_CString to ACE_TString
           to accomondate Unicode builds.
-           
+
         * ace/Monitor_Control/Windows_Monitor.cpp:
-        
+
           Removed incorrect use of ACE_TEXT wrapper on a non-literal.
 
 Mon Jun 23 12:34:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>

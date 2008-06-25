@@ -9,6 +9,7 @@ debug ?= 1
 optimize ?= 1
 threads ?= 1
 pipes ?= 1
+no_hidden_visibility ?= 1
 
 CC              = gcc
 CXX		= g++
