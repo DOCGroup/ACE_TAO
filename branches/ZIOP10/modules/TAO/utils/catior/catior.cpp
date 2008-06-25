@@ -1119,18 +1119,17 @@ cat_tag_policies (TAO_InputCDR& stream) {
 
   for (unsigned int iter=0; iter < policies.length() ; iter++) {
     // Create new stream for pvalue contents
-    char *pmbuf = new char [policies[iter].pvalue.length()];
+    const CORBA::Octet *pmbuf = policies[iter].pvalue.get_buffer ();
 
-    for (unsigned int biter=1 ;
-         biter < policies[iter].pvalue.length();
-         biter++) {
-      pmbuf[biter] = policies[iter].pvalue[biter];
-    }
+    TAO_InputCDR stream3 (
+      reinterpret_cast <const char*>  (pmbuf),
+      policies[iter].pvalue.length ());
 
-    int byteOrder = policies[iter].pvalue[0];
-    TAO_InputCDR stream3 (pmbuf,
-                          policies[iter].pvalue.length(),
-                          static_cast<int> (byteOrder));
+    CORBA::Boolean byte_order;
+    if (!(stream3 >> ACE_InputCDR::to_boolean (byte_order)))
+      return 1;
+
+    stream3.reset_byte_order (static_cast <int> (byte_order));
 
     if (policies[iter].ptype == RTCORBA::PRIORITY_MODEL_POLICY_TYPE) {
       ACE_DEBUG ((LM_DEBUG,
@@ -1257,8 +1256,6 @@ cat_tag_policies (TAO_InputCDR& stream) {
                   "%I Policy #%d Type: %d (UNKNOWN)\n", iter+1,
                   policies[iter].ptype));
     }
-
-    delete [] pmbuf;
   }
 
   return 1;
