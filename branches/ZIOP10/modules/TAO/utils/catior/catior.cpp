@@ -1001,18 +1001,30 @@ cat_tag_orb_type (TAO_InputCDR& stream) {
   if (!(stream2 >> orbtype))
     return false;
 
-  if (orbtype == TAO_ORB_TYPE)
+  switch (orbtype) 
+  {
+   case TAO_ORB_TYPE:
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%I ORB Type: 0x%x (TAO)\n",
                   orbtype));
+      break;
     }
-  else
+  case 0x29A:
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I ORB Type: 0x%x (TIDorbC++)\n",
+                  orbtype));
+      break;
+    }
+  default:
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%I ORB Type: 0x%x\n",
                   orbtype));
     }
+    break;
+  }
 
   return true;
 }
