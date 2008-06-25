@@ -1,3 +1,32 @@
+Wed Jun 25 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/combined.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/test_server.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/controller.cpp:
+        * orbsvcs/examples/ImR/Advanced/server_main.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestServer.h:
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
+        * orbsvcs/examples/ImR/Advanced/client_main.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestClient.h:
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * orbsvcs/examples/ImR/Advanced/manager_main.cpp:
+        * orbsvcs/examples/PSS/client.cpp:
+        * orbsvcs/PSS/psdl_tao.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Wed Jun 25 13:45:29 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

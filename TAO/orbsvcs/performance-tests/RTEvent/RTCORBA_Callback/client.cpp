@@ -180,7 +180,7 @@ private:
   int period_in_usecs_;
 };
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   /// Move the test to the real-time class if it is possible.
   RT_Class rt_class;

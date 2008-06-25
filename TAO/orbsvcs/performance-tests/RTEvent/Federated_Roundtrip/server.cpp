@@ -18,7 +18,7 @@ ACE_RCSID (TAO_PERF_RTEC_Federated_Roundtrip,
            server,
            "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 int iterations = 10000;
 int nthreads   = 1;
 int peer_count = 2;
@@ -26,7 +26,7 @@ int do_dump_history = 0;
 int use_rt_corba = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:i:p:n:rd");
   int c;
@@ -76,7 +76,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   RT_Class rt_class;
 

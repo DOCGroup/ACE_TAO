@@ -4,7 +4,7 @@
 #include "PSDL_Extern.h"
 #include "Dump_Visitor.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   void *result_ptr = 0;
 
@@ -15,9 +15,9 @@ int main (int argc, char *argv [])
   else
     psdl_extern.TAO_PSDL_Extern_yyin (ACE_OS::fopen (argv[1], "r"));
 
-  ACE_OS::strtok (argv[1], ".");
+  ACE_OS::strtok (argv[1], ACE_TEXT ("."));
 
-  TAO_PSDL_Scope::instance ()->set_stub_prefix (argv[1]);
+  TAO_PSDL_Scope::instance ()->set_stub_prefix (ACE_TEXT_ALWAYS_CHAR (argv[1]));
   TAO_PSDL_Scope::instance ()->set_root_scope ();
 
   // The syntax is checked and ASTs are build.

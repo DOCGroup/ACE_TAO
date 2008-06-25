@@ -39,11 +39,9 @@ POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poam
   return poa._retn();
 }
 
-int main(int argc, char* argv[]) {
-
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
   try {
-
-    ORB_var orb = ORB_init(argc, argv);
+    ORB_var orb = ORB_init (argc, argv);
 
     Object_var obj = orb->resolve_initial_references("RootPOA");
     POA_var root_poa = POA::_narrow(obj.in());
