@@ -1,3 +1,18 @@
+Wed Jun 25 15:35:59 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Timestamp_Monitor.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Dynamic_Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Timestamp_Monitor.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h:
+
+          Added TAO_HAS_MONITOR_FRAMEWORK==1 guards or changed existing ones
+          from ACE_HAS_MONITOR_FRAMEWORK==1.
+
 Wed Jun 25 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/HandleExhaustion/client.cpp:
