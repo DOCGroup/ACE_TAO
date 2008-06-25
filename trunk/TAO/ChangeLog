@@ -1,3 +1,19 @@
+Wed Jun 25 14:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/HandleExhaustion/client.cpp:
+        * tests/HandleExhaustion/server.cpp:
+        * tests/Bug_2424_Regression/client.cpp:
+        * tests/Bug_2549_Regression/test.cpp:
+        * tests/Multiple/client.cpp:
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/test.cpp:
+        * tests/Smart_Proxies/Collocation/main.cpp:
+        * tests/Smart_Proxies/Collocation/Coll_Tester.h:
+        * tests/Smart_Proxies/Collocation/Coll_Tester.cpp:
+        * tests/Smart_Proxies/dtor/client.cpp:
+        * tests/Smart_Proxies/dtor/server.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Wed Jun 25 13:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp:
