@@ -20,6 +20,7 @@
 
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Messaging/Messaging_TypesC.h"
+#include "tao/ZIOP/ZIOP.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/IIOP_Profile.h"
@@ -1120,10 +1121,10 @@ cat_tag_policies (TAO_InputCDR& stream) {
     // Create new stream for pvalue contents
     char *pmbuf = new char [policies[iter].pvalue.length()];
 
-    for (unsigned int biter=0 ;
-         biter < policies[iter].pvalue.length() - sizeof(int) ;
+    for (unsigned int biter=1 ;
+         biter < policies[iter].pvalue.length();
          biter++) {
-      pmbuf[biter] = policies[iter].pvalue[biter + sizeof(int)];
+      pmbuf[biter] = policies[iter].pvalue[biter];
     }
 
     int byteOrder = policies[iter].pvalue[0];
@@ -1229,6 +1230,28 @@ cat_tag_policies (TAO_InputCDR& stream) {
                   "%I Policy #%d Type: %d (QUEUE_ORDER_POLICY_TYPE)\n",
                   iter+1,
                   policies[iter].ptype));
+    } else if (policies[iter].ptype == ZIOP::COMPRESSION_ID_LIST_POLICY_ID) {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I Policy #%d Type: %d (COMPRESSION_ID_LIST_POLICY_ID)\n",
+                  iter+1,
+                  policies[iter].ptype));
+      ::Compression::CompressorIdList idlist;
+      stream3 >> idlist;
+      CORBA::ULong index = 0;
+      for (index; index < idlist.length(); index++)
+        {
+          ACE_DEBUG ((LM_DEBUG,"%I\t Compressor: %d\n",
+                      idlist[index]));
+        }
+    } else if (policies[iter].ptype == ZIOP::COMPRESSION_ENABLING_POLICY_ID) {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I Policy #%d Type: %d (COMPRESSION_ENABLING_POLICY_ID)\n",
+                  iter+1,
+                  policies[iter].ptype));
+      CORBA::Boolean status;
+      stream3 >> ACE_InputCDR::to_boolean (status);
+      ACE_DEBUG ((LM_DEBUG,"%I\t Enabled: %d\n",
+                  status));
     } else {
       ACE_DEBUG ((LM_DEBUG,
                   "%I Policy #%d Type: %d (UNKNOWN)\n", iter+1,
