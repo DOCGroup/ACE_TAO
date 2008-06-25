@@ -1,3 +1,11 @@
+Wed Jun 25 13:45:29 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Move orbsvcs/examples/* and orbsvcs/tests/* from the list of
+          AC_CONFIG_FILES that are generated unconditionally, to lists
+          that are generated if examples and/or tests are configured.
+
 Wed Jun 25 13:35:06 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
