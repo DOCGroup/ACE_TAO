@@ -1,9 +1,9 @@
-This is ../../../apps/gperf/gperf.info, produced by makeinfo version
-4.3 from ../../../apps/gperf/gperf.texi.
+This is ../../../apps/gperf/ace_gperf.info, produced by makeinfo version
+4.3 from ../../../apps/gperf/ace_gperf.texi.
 
 INFO-DIR-SECTION GNU programming tools
 START-INFO-DIR-ENTRY
-* Gperf: (gperf).                Perfect Hash Function Generator.
+* Gperf: (ace_gperf).                Perfect Hash Function Generator.
 END-INFO-DIR-ENTRY
 
    This file documents the features of the GNU Perfect Hash Function
@@ -78,7 +78,7 @@ GNU GENERAL PUBLIC LICENSE
                        Version 1, February 1989
      Copyright (C) 1989 Free Software Foundation, Inc.
      675 Mass Ave, Cambridge, MA 02139, USA
-     
+
      Everyone is permitted to copy and distribute verbatim copies
      of this license document, but changing it is not allowed.
 
@@ -287,17 +287,17 @@ convey the exclusion of warranty; and each file should have at least the
 
      ONE LINE TO GIVE THE PROGRAM'S NAME AND A BRIEF IDEA OF WHAT IT DOES.
      Copyright (C) 19YY  NAME OF AUTHOR
-     
+
      This program is free software; you can redistribute it and/or modify
      it under the terms of the GNU General Public License as published by
      the Free Software Foundation; either version 1, or (at your option)
      any later version.
-     
+
      This program is distributed in the hope that it will be useful,
      but WITHOUT ANY WARRANTY; without even the implied warranty of
      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
      GNU General Public License for more details.
-     
+
      You should have received a copy of the GNU General Public License
      along with this program; if not, write to the Free Software
      Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -326,7 +326,7 @@ if necessary.  Here a sample; alter the names:
      Yoyodyne, Inc., hereby disclaims all copyright interest in the
      program `Gnomovision' (a program to direct compilers to make passes
      at assemblers) written by James Hacker.
-     
+
      SIGNATURE OF TY COON, 1 April 1989
      Ty Coon, President of Vice
 
@@ -358,12 +358,12 @@ Contributors to GNU `gperf' Utility
      of `gperf'.
 
 
-File: gperf.info,  Node: Motivation,  Next: Search Structures,  Prev: Contributors,  Up: Top
+File: ace_gperf.info,  Node: Motivation,  Next: Search Structures,  Prev: Contributors,  Up: Top
 
 Introduction
 ************
 
-   `gperf' is a perfect hash function generator written in C++.  It
+   `ace_gperf' is a perfect hash function generator written in C++.  It
 transforms an _n_ element user-specified keyword set _W_ into a perfect
 hash function _F_.  _F_ uniquely maps keywords in _W_ onto the range
 0.._k_, where _k_ >= _n_.  If _k = n_ then _F_ is a _minimal_ perfect
@@ -372,7 +372,7 @@ and a pair of C functions.  These functions determine whether a given
 character string _s_ occurs in _W_, using at most one probe into the
 lookup table.
 
-   `gperf' currently generates the reserved keyword recognizer for
+   `ace_gperf' currently generates the reserved keyword recognizer for
 lexical analyzers in several production and research compilers and
 language processing tools, including GNU C, GNU C++, GNU Pascal, GNU
 Modula 3, and GNU indent.  Complete C++ source code for `gperf' is
