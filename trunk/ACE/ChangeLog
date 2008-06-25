@@ -1,3 +1,14 @@
+Wed Jun 25 14:09:52 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-config.patch
+          Removed ACE_GPERF
+
+        * rpmbuild/ace-tao.spec:
+          Document changes
+
+        * rpmbuild/ace-tao-gperf-info.patch:
+          Removed, not needed anymore
+
 Wed Jun 25 13:29:13 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
