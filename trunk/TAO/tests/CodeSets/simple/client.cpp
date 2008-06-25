@@ -36,7 +36,7 @@ make_wstring (const char *str)
   size_t len = ACE_OS::strlen (str) + 1;
   wchar_t *wstr = new wchar_t[len];
   ACE_DEBUG ((LM_DEBUG,
-              "make_wstring: str = %s\n",str));
+              "make_wstring: str = %s\n", ACE_TEXT_CHAR_TO_TCHAR (str)));
   for (size_t i = 0; i < len; i++)
     {
       char *t = const_cast<char *> (str);
@@ -50,7 +50,7 @@ make_wstring (const char *str)
 // ------------------------------------------------------------
 // Client
 // ------------------------------------------------------------
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   char buf[1000];
   int error_count = 0;
@@ -67,7 +67,7 @@ int main (int argc, char *argv[])
         }
       else
         {
-          ACE_OS::strcpy (buf, argv[1]);
+          ACE_OS::strcpy (buf, ACE_TEXT_ALWAYS_CHAR (argv[1]));
         }
 
       // The first arg should be the IOR
@@ -94,7 +94,7 @@ int main (int argc, char *argv[])
       outarg >>= any_reply;
 
       ACE_DEBUG ((LM_DEBUG,
-                 "Client sent %s, got %s\n", bare_string, reply.in () ));
+                 "Client sent %s, got %s\n", ACE_TEXT_CHAR_TO_TCHAR (bare_string), ACE_TEXT_CHAR_TO_TCHAR (reply.in ()) ));
 
       if (ACE_OS::strcmp (bare_string, reply.in ()) != 0)
         {
@@ -102,7 +102,7 @@ int main (int argc, char *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                 "Client sent %s, got %s\n", any_string, any_reply ));
+                 "Client sent %s, got %s\n", ACE_TEXT_CHAR_TO_TCHAR (any_string), ACE_TEXT_CHAR_TO_TCHAR (any_reply) ));
 
       if (ACE_OS::strcmp (any_string, any_reply) != 0)
         {

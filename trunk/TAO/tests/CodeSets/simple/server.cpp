@@ -41,11 +41,11 @@ public:
               CORBA::Any_out outany)
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Server: bare string: %s\n", name));
+                "Server: bare string: %s\n", ACE_TEXT_CHAR_TO_TCHAR (name)));
     const char *any_str;
     inany >>= any_str;
     ACE_DEBUG ((LM_DEBUG,
-                "Server: inserted string: %s\n\n", any_str));
+                "Server: inserted string: %s\n\n", ACE_TEXT_CHAR_TO_TCHAR (any_str)));
 
     CORBA::Any *out_ptr = 0;
     ACE_NEW_RETURN (out_ptr,
@@ -78,14 +78,13 @@ private:
 // ------------------------------------------------------------
 // Main routine
 // ------------------------------------------------------------
-int main(int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
       // Init the orb
-      CORBA::ORB_var orb= CORBA::ORB_init (argc,
-                                           argv);
+      CORBA::ORB_var orb= CORBA::ORB_init (argc, argv);
 
       // Initialize POA
       CORBA::Object_var poa_object=
@@ -127,9 +126,8 @@ int main(int argc, char *argv[])
       FILE *output_file= ACE_OS::fopen ("server.ior", "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           "server.ior"),
-                              1);
+                           "Cannot open output file for writing IOR: server.ior"),
+                           1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 

@@ -37,10 +37,10 @@ enum TEST_TYPE
   };
 
   /// Initialize the driver object.
-  int init (int argc, char* argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
 
   /// Parse command line arguments.
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Execute test code.
   int run (void);

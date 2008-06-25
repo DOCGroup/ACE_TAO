@@ -55,7 +55,7 @@ int vc_check(foo_ptr ff, bool active=true)
 }
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
   try
@@ -124,45 +124,3 @@ int main (int argc, char *argv[])
   }
   return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

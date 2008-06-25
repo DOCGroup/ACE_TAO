@@ -2,7 +2,7 @@
 
 #include "tao/corba.h"
 
-int main(int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (TAO_debug_level != 0)
     {
@@ -22,15 +22,13 @@ int main(int argc, char* argv[])
   ACE_DEBUG ((LM_INFO, "TAO_debug_level after first ORB_init: %d\n",
     TAO_debug_level));
 
-  const char* my_argv[3];
+  ACE_TCHAR *my_argv[3];
   my_argv[0] = argv[0];
-  my_argv[1] = "-ORBDebugLevel";
-  my_argv[2] = "10";
+  my_argv[1] = ACE_TEXT ("-ORBDebugLevel");
+  my_argv[2] = ACE_TEXT ("10");
   int my_argc = 3;
 
-  CORBA::ORB_var orb2_ = CORBA::ORB_init(my_argc,
-                                         const_cast<char**> (my_argv),
-                                         "ServerORB2");
+  CORBA::ORB_var orb2_ = CORBA::ORB_init (my_argc, my_argv, "ServerORB2");
 
   ACE_DEBUG ((LM_INFO, "TAO_debug_level after second ORB_init: %d\n",
     TAO_debug_level));
@@ -42,4 +40,3 @@ int main(int argc, char* argv[])
 
   return 0;
 }
-

@@ -9,14 +9,14 @@
 
 ACE_RCSID(Collocation, main, "$Id$")
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       Collocation_Test coll_test;
 
       int orig_argc = argc;
-      char **orig_argv = new char*[argc];
+      ACE_TCHAR **orig_argv = new ACE_TCHAR*[argc];
       for (int i = 0; i < argc; ++i)
         {
           orig_argv[i] = argv[i];

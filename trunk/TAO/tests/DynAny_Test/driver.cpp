@@ -25,7 +25,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Driver driver;
 
@@ -64,14 +64,12 @@ Driver::~Driver (void)
 
 // initialize the driver
 int
-Driver::init (int argc, char* argv[])
+Driver::init (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Retrieve the underlying ORB
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    "local");
+      this->orb_ = CORBA::ORB_init (argc, argv, "local");
 
 
       // Parse command line and verify parameters.
@@ -92,7 +90,7 @@ Driver::init (int argc, char* argv[])
 }
 
 int
-Driver::parse_args (int argc, char* argv[])
+Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc == 1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -104,7 +102,7 @@ Driver::parse_args (int argc, char* argv[])
 
   ACE_Get_Opt get_opts (argc, argv, "t:d");
   int c;
-  const char *test_str = 0;
+  const ACE_TCHAR *test_str = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -112,17 +110,17 @@ Driver::parse_args (int argc, char* argv[])
       case 't':
         test_str = get_opts.opt_arg ();
 
-        if (!ACE_OS::strcmp (test_str, "dynany"))
+        if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynany)"))
           this->test_type_ = TEST_DYNANY;
-        else if (!ACE_OS::strcmp (test_str, "dynarray"))
+        else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynarray")))
           this->test_type_ = TEST_DYNARRAY;
-        else if (!ACE_OS::strcmp (test_str, "dynenum"))
+        else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynenum")))
           this->test_type_ = TEST_DYNENUM;
-        else if (!ACE_OS::strcmp (test_str, "dynsequence"))
+        else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynsequence")))
           this->test_type_ = TEST_DYNSEQUENCE;
-        else if (!ACE_OS::strcmp (test_str, "dynstruct"))
+        else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynstruct")))
           this->test_type_ = TEST_DYNSTRUCT;
-        else if (!ACE_OS::strcmp (test_str, "dynunion"))
+        else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynunion")))
           this->test_type_ = TEST_DYNUNION;
         else
           ACE_DEBUG ((LM_DEBUG,

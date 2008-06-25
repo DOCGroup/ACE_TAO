@@ -7,12 +7,12 @@ ACE_RCSID (Bug_2542_Regression,
            bug_2542_regression,
            "$Id$")
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
     {
-       CORBA::ORB_var orb = CORBA::ORB_init(argc,argv);
+       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
        CORBA::Object_var object =
                orb->resolve_initial_references("CodecFactory");
 
