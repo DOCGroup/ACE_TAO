@@ -1,3 +1,9 @@
+Wed Jun 25 14:59:13 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * apps/gperf/tests/Makefile.am:
+
+          Re-tabify.
+
 Wed Jun 25 14:09:52 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-config.patch
