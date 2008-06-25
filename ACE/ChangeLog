@@ -1,3 +1,10 @@
+Wed Jun 25 11:23:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Monitor_Control/Bytes_Received_Monitor.cpp:
+
+          Tue Jun 24 11:46:41 UTC 2008  Jeff Parsons committed
+          Miss-cased ACE_TEXT.
+
 Wed Jun 25 10:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/fuzz.pl:
