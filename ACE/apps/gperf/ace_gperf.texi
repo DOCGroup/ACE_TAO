@@ -12,7 +12,7 @@
 @ifinfo
 @dircategory GNU programming tools
 @direntry
-* Gperf: (gperf).                Perfect Hash Function Generator.
+* Gperf: (ace_gperf).                Perfect Hash Function Generator.
 @end direntry
 @end ifinfo
 
@@ -56,7 +56,7 @@ Free Software Foundation instead of in the original English.
 @subtitle For GPERF version @value{VERSION}
 @author Douglas C. Schmidt
 
-@c  The following two commands 
+@c  The following two commands
 @c  start the copyright page.
 @page
 @vskip 0pt plus 1filll

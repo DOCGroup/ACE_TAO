@@ -26,7 +26,7 @@ CLEANFILES += \
   ada.cpp
 
 ada.cpp: $(srcdir)/ada.gperf
-	../src/gperf -a -k1,4,$$ $(srcdir)/ada.gperf > ada.cpp
+        ../src/ace_gperf -a -k1,4,$$ $(srcdir)/ada.gperf > ada.cpp
 
 noinst_PROGRAMS += aout
 
@@ -54,7 +54,7 @@ CLEANFILES += \
   c.cpp
 
 c.cpp: $(srcdir)/c.gperf
-	../src/gperf -a -p -c -l -S1 -o $(srcdir)/c.gperf > c.cpp
+        ../src/ace_gperf -a -p -c -l -S1 -o $(srcdir)/c.gperf > c.cpp
 
 noinst_PROGRAMS += cout
 
@@ -82,7 +82,7 @@ CLEANFILES += \
   cpp.cpp
 
 cpp.cpp: $(srcdir)/cpp.gperf
-	../src/gperf -a -D $(srcdir)/cpp.gperf > cpp.cpp
+        ../src/ace_gperf -a -D $(srcdir)/cpp.gperf > cpp.cpp
 
 noinst_PROGRAMS += cppout
 
@@ -110,7 +110,7 @@ CLEANFILES += \
   idl.cpp
 
 idl.cpp: $(srcdir)/idl.gperf
-	../src/gperf -m -M -c -C -D -S1 -E -T -a -o -p $(srcdir)/idl.gperf > idl.cpp
+        ../src/ace_gperf -m -M -c -C -D -S1 -E -T -a -o -p $(srcdir)/idl.gperf > idl.cpp
 
 noinst_PROGRAMS += iout
 
@@ -139,7 +139,7 @@ CLEANFILES += \
 
 iout2_gen/idl.cpp: $(srcdir)/idl.gperf
 	mkdir -p iout2_gen
-	../src/gperf -m -M -c -C -D -E -T -a -o -p $(srcdir)/idl.gperf > iout2_gen/idl.cpp
+        ../src/ace_gperf -m -M -c -C -D -E -T -a -o -p $(srcdir)/idl.gperf > iout2_gen/idl.cpp
 
 noinst_PROGRAMS += iout2
 
@@ -167,7 +167,7 @@ CLEANFILES += \
   modula3.cpp
 
 modula3.cpp: $(srcdir)/modula3.gperf
-	../src/gperf -a -k1,2,$$ $(srcdir)/modula3.gperf > modula3.cpp
+        ../src/ace_gperf -a -k1,2,$$ $(srcdir)/modula3.gperf > modula3.cpp
 
 noinst_PROGRAMS += m3out
 
@@ -195,7 +195,7 @@ CLEANFILES += \
   pascal.cpp
 
 pascal.cpp: $(srcdir)/pascal.gperf
-	../src/gperf -a -o -S2 -p $(srcdir)/pascal.gperf > pascal.cpp
+        ../src/ace_gperf -a -o -S2 -p $(srcdir)/pascal.gperf > pascal.cpp
 
 noinst_PROGRAMS += pout
 
@@ -223,7 +223,7 @@ CLEANFILES += \
   adadefs.cpp
 
 adadefs.cpp: $(srcdir)/adadefs.gperf
-	../src/gperf -a -p -D -k1,$$ -s 2 -o $(srcdir)/adadefs.gperf > adadefs.cpp
+        ../src/ace_gperf -a -p -D -k1,$$ -s 2 -o $(srcdir)/adadefs.gperf > adadefs.cpp
 
 noinst_PROGRAMS += preout
 
@@ -251,7 +251,7 @@ CLEANFILES += \
   tao.cpp
 
 tao.cpp: $(srcdir)/tao.gperf
-	../src/gperf -c -C -D -E -f 0 -a -o $(srcdir)/tao.gperf > tao.cpp
+        ../src/ace_gperf -c -C -D -E -f 0 -a -o $(srcdir)/tao.gperf > tao.cpp
 
 noinst_PROGRAMS += taoout
 
@@ -279,7 +279,7 @@ CLEANFILES += \
   corba.cpp
 
 corba.cpp: $(srcdir)/corba.gperf
-	../src/gperf -a -o $(srcdir)/corba.gperf > corba.cpp
+        ../src/ace_gperf -a -o $(srcdir)/corba.gperf > corba.cpp
 
 noinst_PROGRAMS += tout
 

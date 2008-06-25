@@ -45,7 +45,6 @@ Source0: http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-%{ACE
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
 ## Patch0: ace-tao-config.patch
-## Patch4: ace-tao-gperf-info.patch
 ## Patch5: ace-tao-orbsvcs-daemon.patch
 ## Patch7: ace-tao-unusedarg.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -621,8 +620,6 @@ export CIAO_ROOT=$TAO_ROOT/CIAO
 
 # patch0 and patch1 are applied a bit later
 
-#patch4 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-gperf-info.patch | patch -p 1
 #patch5 -p 1
 cat ${ACE_ROOT}/rpmbuild/ace-tao-orbsvcs-daemon.patch | patch -p 1
 #%patch7 -p 1
@@ -769,9 +766,6 @@ EOF
 
 # Need to regenerate all of the Makefiles ...
 (cd $ACE_ROOT && $ACE_ROOT/bin/mwc.pl -type gnuace)
-
-# Create a symbolic link so tao_idl can refer to gperf as gperf-ace
-ln -s ${ACE_ROOT}/bin/gperf ${ACE_ROOT}/bin/gperf-ace
 
 # Fix source file permissions
 find $TAO_ROOT/orbsvcs/FT_ReplicationManager -type f -exec chmod a-x {} \;
@@ -1067,7 +1061,7 @@ install \
 (cd $RPM_BUILD_ROOT%{_libdir} && ln -sf libTAO_IDL_FE.so.%{ACEVERSO} libTAO_IDL_FE.so)
 
 install -d $RPM_BUILD_ROOT%{_bindir}
-install ${ACE_ROOT}/bin/gperf $RPM_BUILD_ROOT%{_bindir}/gperf-ace
+install ${ACE_ROOT}/bin/ace_gperf $RPM_BUILD_ROOT%{_bindir}
 install ${ACE_ROOT}/bin/tao_idl $RPM_BUILD_ROOT%{_bindir}
 install ${ACE_ROOT}/bin/tao_imr $RPM_BUILD_ROOT%{_bindir}
 install ${ACE_ROOT}/bin/tao_ifr $RPM_BUILD_ROOT%{_bindir}
@@ -1137,9 +1131,9 @@ rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
 install -d $RPM_BUILD_ROOT%{_mandir}
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 install ${TAO_ROOT}/TAO_IDL/tao_idl.1 $RPM_BUILD_ROOT%{_mandir}/man1
-install ${ACE_ROOT}/apps/gperf/gperf.1 $RPM_BUILD_ROOT%{_mandir}/man1/gperf-ace.1
+install ${ACE_ROOT}/apps/gperf/ace_gperf.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install -d  $RPM_BUILD_ROOT%{_infodir}
-install ${ACE_ROOT}/apps/gperf/gperf.info $RPM_BUILD_ROOT%{_infodir}/gperf-ace.info
+install ${ACE_ROOT}/apps/gperf/ace_gperf.info $RPM_BUILD_ROOT%{_infodir}
 
 # ================================================================
 # Create lists of symlinked so's.  We need two lists because we need
@@ -1263,7 +1257,7 @@ exit 0
 
 %post -n ace-devel
 
-/sbin/install-info %{_infodir}/gperf-ace.info%{_extension} %{_infodir}/dir
+/sbin/install-info %{_infodir}/ace_gperf.info%{_extension} %{_infodir}/dir
 
 # ---------------- ace-xml ----------------
 
@@ -1388,7 +1382,7 @@ exit 0
 %preun -n ace-devel
 
 if [ $1 = 0 ]; then
-    /sbin/install-info --delete %{_infodir}/gperf-ace.info.gz %{_infodir}/dir
+    /sbin/install-info --delete %{_infodir}/ace_gperf.info.gz %{_infodir}/dir
 fi
 
 # ---------------- tao-cosnaming ----------------
@@ -1611,7 +1605,7 @@ fi
 
 %files -n ace-devel -f ace-headers.list
 %defattr(-,root,root,-)
-%{_bindir}/gperf-ace
+%{_bindir}/ace_gperf
 %{_libdir}/libACE.so
 %{_libdir}/libACE_ETCL_Parser.so
 %{_libdir}/libACE_ETCL.so
@@ -1620,8 +1614,8 @@ fi
 %{_libdir}/libACE_RMCast.so
 %{_libdir}/libACE_SSL.so
 %{_libdir}/libACE_TMCast.so
-%attr(0644,root,root) %{_mandir}/man1/gperf-ace.1%{_extension}
-%attr(0644,root,root) %{_infodir}/gperf-ace.info%{_extension}
+%attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
+%attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 %exclude %{_includedir}/ace/FlReactor/FlReactor.h
@@ -2183,6 +2177,10 @@ fi
 # ================================================================
 
 %changelog
+* Wed Jun 25 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.5-6
+- Removed gperf to gperf_ace rename, ACE ships now ace_gperf by default
+- Removed ace-tao-strrecvfd.patch
+
 * Mon Jun  2 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-5
 - Added ace-tao-strrecvfd.patch (related to bug #3291).
 - Changed make loop construct to abort when subcomponent fails.

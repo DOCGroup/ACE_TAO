@@ -36,7 +36,7 @@ ifeq ($(HOSTTYPE),ia64)
   SYMVEC_OPT_FILE ?= $(LIB_NAME)_symvec.opt
   ifeq ($(PRJ_TYPE),library)
     ifeq ($(shared_libs),1)
-    CCFLAGS         += "-Wc/export_sym=(OPTIONS_FILE=$(SYMVEC_OPT_FILE),ALL,NOTEMPLATES)"
+      CCFLAGS         += "-Wc/export_sym=(OPTIONS_FILE=$(SYMVEC_OPT_FILE),ALL,NOTEMPLATES)"
     endif
   endif
 else

@@ -5,7 +5,7 @@ project: aceexe, crosscompile {
   after += gperf
   avoids += uses_wchar
   Define_Custom(GPERF) {
-    command           = $(ACE_ROOT)/bin/gperf
+    command           = $(ACE_ROOT)/bin/ace_gperf
     libpath          += $(ACE_ROOT)/lib
     output_option     = >
     inputext          = .gperf
@@ -14,7 +14,7 @@ project: aceexe, crosscompile {
   }
 
   specific(automake) {
-    gperf_cmd = ../src/gperf
+    gperf_cmd = ../src/ace_gperf
   }
 
   Source_Files {
