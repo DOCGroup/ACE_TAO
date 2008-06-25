@@ -3,6 +3,7 @@
 #include "tao/ZIOP/ZIOP_ORBInitializer.h"
 
 #include "tao/ZIOP/ZIOP.h"
+#include "tao/ZIOP/ZIOP_Stub_Factory.h"
 #include "tao/ZIOP/ZIOP_PolicyFactory.h"
 #include "tao/ZIOP/ZIOP_Service_Context_Handler.h"
 #include "tao/ORB_Core.h"
@@ -43,6 +44,9 @@ TAO_ZIOP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
            TAO_ZIOP_Service_Context_Handler());
   tao_info->orb_core ()->service_context_registry ().bind (ZIOP::TAG_ZIOP_COMPONENT, h);
   tao_info->orb_core ()->ziop_adapter (this->loader_);
+  // Set the name of the stub factory to be ZIOP_Stub_Factory.
+  tao_info->orb_core ()->orb_params ()->stub_factory_name ("ZIOP_Stub_Factory");
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_ZIOP_Stub_Factory);
 }
 
 void

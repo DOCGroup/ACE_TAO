@@ -18,13 +18,15 @@ TAO_ZIOP_PolicyFactory::create_policy (
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
-  if (type == ZIOP::COMPRESSION_ENABLING_POLICY_ID)
+  switch (type)
+  {
+    case ZIOP::COMPRESSION_ENABLING_POLICY_ID:
     {
       ::CORBA::Boolean val;
 
       // Extract the value from the any.
 
-      if ((value >>= CORBA::Any::to_boolean (val)) == 0)
+      if (!(value >>= CORBA::Any::to_boolean (val)))
         {
           throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
@@ -39,17 +41,18 @@ TAO_ZIOP_PolicyFactory::create_policy (
 
       return policy;
     }
-  else if (type == ZIOP::COMPRESSION_ID_LIST_POLICY_ID) {
-      ::Compression::CompressorIdList* val;
+  case ZIOP::COMPRESSION_ID_LIST_POLICY_ID :
+    {
+      ::Compression::CompressorIdList* val = 0;
 
       // Extract the value from the any.
-      if ((value >>= val) == 0)
+      if (!(value >>= val))
         {
           throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
 
       ACE_NEW_THROW_EX (policy,
-                        TAO::CompressorIdListPolicy (val),
+                        TAO::CompressorIdListPolicy (*val),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,
@@ -58,13 +61,13 @@ TAO_ZIOP_PolicyFactory::create_policy (
 
       return policy;
     }
-  else if (type == ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID)
+  case ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID:
     {
       ::CORBA::ULong val;
 
       // Extract the value from the any.
 
-      if ((value >>= val) == 0)
+      if (!(value >>= val))
         {
           throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
@@ -79,13 +82,13 @@ TAO_ZIOP_PolicyFactory::create_policy (
 
       return policy;
     }
-  else if (type == ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID)
+  case ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID:
     {
       ::CORBA::ULong val;
 
       // Extract the value from the any.
 
-      if ((value >>= val) == 0)
+      if (!(value >>= val))
         {
           throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
@@ -100,9 +103,46 @@ TAO_ZIOP_PolicyFactory::create_policy (
 
       return policy;
     }
+  }
 
   throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
+
+CORBA::Policy_ptr
+TAO_ZIOP_PolicyFactory::_create_policy (CORBA::PolicyType type)
+{
+  CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
+
+  switch (type)
+  {
+    case ZIOP::COMPRESSION_ENABLING_POLICY_ID:
+    {
+      ACE_NEW_THROW_EX (policy,
+                        TAO::CompressionEnablingPolicy,
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO::VMCID,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+
+      return policy;
+    }
+  case ZIOP::COMPRESSION_ID_LIST_POLICY_ID:
+    {
+      ACE_NEW_THROW_EX (policy,
+                        TAO::CompressorIdListPolicy,
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO::VMCID,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+
+      return policy;
+    }
+  }
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
+}
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

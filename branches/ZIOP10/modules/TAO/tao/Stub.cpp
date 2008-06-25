@@ -50,9 +50,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   , profile_lock_ptr_ (0)
   , profile_success_ (false)
   , refcount_ (1)
-#if (TAO_HAS_CORBA_MESSAGING == 1)
   , policies_ (0)
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
   , ior_info_ (0)
   , forwarded_ior_info_ (0)
   , collocation_opt_ (orb_core->optimize_collocation_objects ())
@@ -102,11 +100,7 @@ TAO_Stub::~TAO_Stub (void)
 
   delete this->profile_lock_ptr_;
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
   delete this->policies_;
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   if (this->ior_info_)
     delete this->ior_info_;
@@ -385,8 +379,6 @@ TAO_Stub::forward_back_one (void)
 //
 // ****************************************************************
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
 // Some policies can only be set locally on the client, while others
 // can only be exported in the IOR by the server, and yet others can
 // be set by both by client and server.  Furthermore, reconciliation
@@ -492,8 +484,6 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
       return this->policies_->get_policy_overrides (types);
     }
 }
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 CORBA::Boolean
 TAO_Stub::marshal (TAO_OutputCDR &cdr)

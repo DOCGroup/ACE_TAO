@@ -216,8 +216,7 @@ TAO_Profile::decode (TAO_InputCDR& cdr)
 
   // Tagged Components *only* exist after version 1.0!
   // For GIOP 1.2, IIOP and GIOP have same version numbers!
-  if (this->version_.major > 1
-      || this->version_.minor > 0)
+  if (this->version_.major > 1 || this->version_.minor > 0)
     {
       if (this->tagged_components_.decode (cdr) == 0)
         {
@@ -336,8 +335,6 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
 void
 TAO_Profile::policies (CORBA::PolicyList *policy_list)
 {
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
   if (policy_list == 0)
     {
       if (TAO_debug_level)
@@ -353,14 +350,14 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   Messaging::PolicyValue pv;
   Messaging::PolicyValueSeq policy_value_seq;
 
-  size_t length;
+  size_t length = 0;
   CORBA::Octet *buf = 0;
-
-  policy_value_seq.length (policy_list->length ());
 
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
   size_t const plen = policy_list->length ();
+
+  policy_value_seq.length (plen);
 
   for (CORBA::ULong i = 0; i < plen; ++i)
     {
@@ -415,12 +412,6 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   // member variable.
   tagged_components_.set_component (tagged_component);
   this->are_policies_parsed_ = true;
-
-#else /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-  ACE_UNUSED_ARG (policy_list);
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
 
@@ -428,8 +419,6 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 void
 TAO_Profile::get_policies (CORBA::PolicyList& pl)
 {
-#if (TAO_HAS_CORBA_MESSAGING == 1) && !defined (CORBA_E_MICRO)
-
   if (!this->are_policies_parsed_)
     // None has already parsed the policies.
     {
@@ -467,18 +456,13 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
 
           // Here we extract the Messaging::PolicyValue out of the sequence
           // and we convert those into the proper CORBA::Policy
-
-          CORBA::Policy_var policy;
           CORBA::ULong const length = policy_value_seq.length ();
-
-          // Set the policy list length.
-          pl.length (length);
 
           for (CORBA::ULong i = 0; i < length; ++i)
             {
               try
                 {
-                  policy =
+                  CORBA::Policy_var policy =
                     this->orb_core_->orb ()->_create_policy (
                       policy_value_seq[i].ptype);
 
@@ -495,7 +479,13 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
 
                       in_cdr.reset_byte_order (static_cast <int> (byte_order));
 
-                      policy->_tao_decode (in_cdr);
+                      if (!policy->_tao_decode (in_cdr))
+                        throw ::CORBA::INV_OBJREF ();
+
+                      // Increase the policy length with 1 when we know we support
+                      // this policy, this way we don't get nil values in the list
+                      pl.length (pl.length () + 1);
+
                       pl[i] = policy._retn ();
                     }
                   else
@@ -505,7 +495,6 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
                       // so as specified by the RT-CORBA
                       // spec. ptc/99-05-03 we just ignore these
                       // un-understood policies.
-
                       if (TAO_debug_level >= 5)
                         ACE_DEBUG ((LM_DEBUG,
                                     ACE_TEXT ("The IOR contains unsupported ")
@@ -527,13 +516,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
             }
         }
     }
-
-#else
-  ACE_UNUSED_ARG (pl);
-#endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
-
 }
-
 
 void
 TAO_Profile::verify_orb_configuration (void)

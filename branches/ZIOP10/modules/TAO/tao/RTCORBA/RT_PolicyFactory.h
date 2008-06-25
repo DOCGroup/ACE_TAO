@@ -45,13 +45,10 @@ class TAO_RT_PolicyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
+  virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                           const CORBA::Any &value);
 
-  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any &value
-                                   );
-
-  CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
-                                    );
+  virtual CORBA::Policy_ptr _create_policy (CORBA::PolicyType type);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

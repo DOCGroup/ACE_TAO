@@ -16,12 +16,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 CompressorIdListPolicy::CompressorIdListPolicy (
-    ::Compression::CompressorIdList* val)
+    const ::Compression::CompressorIdList& val)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressorIdListPolicy ()
   , ::CORBA::LocalObject ()
   , value_ (val)
+{
+}
+
+CompressorIdListPolicy::CompressorIdListPolicy (void)
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::ZIOP::CompressorIdListPolicy ()
+  , ::CORBA::LocalObject ()
+  , value_ (0)
 {
 }
 
@@ -60,7 +69,7 @@ CompressorIdListPolicy::copy (void)
   ACE_NEW_THROW_EX (tmp, CompressorIdListPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
- 
+
   return tmp;
 }
 
@@ -72,31 +81,38 @@ CompressorIdListPolicy::destroy (void)
 ::Compression::CompressorIdList *
 CompressorIdListPolicy::compressor_ids (void)
 {
-  return this->value_;
+  ::Compression::CompressorIdList *tmp = 0;
+  ACE_NEW_THROW_EX (tmp,
+                    ::Compression::CompressorIdList (this->value_),
+                    CORBA::NO_MEMORY (TAO::VMCID,
+                                      CORBA::COMPLETED_NO));
+
+  return tmp;
 }
 
 TAO_Cached_Policy_Type
 CompressorIdListPolicy::_tao_cached_type (void) const
 {
-  return TAO_CACHED_POLICY_UNCACHED;
+  return TAO_CACHED_COMPRESSION_ID_LIST_POLICY;
 }
 
 TAO_Policy_Scope
 CompressorIdListPolicy::_tao_scope (void) const
 {
-  return TAO_POLICY_DEFAULT_SCOPE;
+  return static_cast<TAO_Policy_Scope> (TAO_POLICY_DEFAULT_SCOPE |
+                          TAO_POLICY_CLIENT_EXPOSED);
 }
 
 CORBA::Boolean
 CompressorIdListPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
-  return out_cdr << *this->value_;
+  return out_cdr << this->value_;
 }
 
 CORBA::Boolean
 CompressorIdListPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 {
-  return in_cdr >> *this->value_;
+  return in_cdr >> this->value_;
 }
 
 CompressionEnablingPolicy::CompressionEnablingPolicy (
@@ -106,6 +122,15 @@ CompressionEnablingPolicy::CompressionEnablingPolicy (
   , ::ZIOP::CompressionEnablingPolicy ()
   , ::CORBA::LocalObject ()
   , value_ (val)
+{
+}
+
+CompressionEnablingPolicy::CompressionEnablingPolicy (void)
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::ZIOP::CompressionEnablingPolicy ()
+  , ::CORBA::LocalObject ()
+  , value_ (false)
 {
 }
 
@@ -172,7 +197,8 @@ CompressionEnablingPolicy::_tao_cached_type (void) const
 TAO_Policy_Scope
 CompressionEnablingPolicy::_tao_scope (void) const
 {
-  return TAO_POLICY_DEFAULT_SCOPE;
+  return static_cast<TAO_Policy_Scope> (TAO_POLICY_DEFAULT_SCOPE |
+                          TAO_POLICY_CLIENT_EXPOSED);
 }
 
 CORBA::Boolean

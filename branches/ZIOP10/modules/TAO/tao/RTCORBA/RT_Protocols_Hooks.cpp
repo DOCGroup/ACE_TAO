@@ -74,19 +74,19 @@ TAO_RT_Protocols_Hooks::server_protocol_properties (IOP::ProfileId protocol_tag,
                                                     CORBA::Policy_ptr policy)
 {
   if (CORBA::is_nil (policy))
-    return 0;
+    return RTCORBA::ProtocolProperties::_nil ();
 
   RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
     RTCORBA::ServerProtocolPolicy::_narrow (policy);
 
   if (CORBA::is_nil (server_protocol_policy.in ()))
-    return 0;
+    return RTCORBA::ProtocolProperties::_nil ();
 
   TAO_ServerProtocolPolicy *server_protocols =
     dynamic_cast<TAO_ServerProtocolPolicy *> (server_protocol_policy.in ());
 
   if (server_protocols == 0)
-    return 0;
+    return RTCORBA::ProtocolProperties::_nil ();
 
   // TAO_ServerProtocolPolicy
   RTCORBA::ProtocolList &protocols =
@@ -101,7 +101,7 @@ TAO_RT_Protocols_Hooks::server_protocol_properties (IOP::ProfileId protocol_tag,
         }
     }
 
-  return 0;
+  return RTCORBA::ProtocolProperties::_nil ();
 }
 
 RTCORBA::ProtocolProperties_ptr
@@ -109,19 +109,19 @@ TAO_RT_Protocols_Hooks::client_protocol_properties (IOP::ProfileId protocol_tag,
                                                     CORBA::Policy_ptr policy)
 {
   if (CORBA::is_nil (policy))
-    return 0;
+    return RTCORBA::ProtocolProperties::_nil ();
 
   RTCORBA::ClientProtocolPolicy_var client_protocol_policy =
     RTCORBA::ClientProtocolPolicy::_narrow (policy);
 
   if (CORBA::is_nil (client_protocol_policy.in ()))
-    return 0;
+    return RTCORBA::ProtocolProperties::_nil ();
 
   TAO_ClientProtocolPolicy *client_protocols =
     dynamic_cast<TAO_ClientProtocolPolicy *> (client_protocol_policy.in ());
 
   if (client_protocols == 0)
-    return 0;
+    return RTCORBA::ProtocolProperties::_nil ();
 
   // TAO_ClientProtocolPolicy
   RTCORBA::ProtocolList &protocols =
@@ -136,7 +136,7 @@ TAO_RT_Protocols_Hooks::client_protocol_properties (IOP::ProfileId protocol_tag,
         }
     }
 
-  return 0;
+  return RTCORBA::ProtocolProperties::_nil ();
 }
 
 RTCORBA::ProtocolProperties_ptr

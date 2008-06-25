@@ -41,9 +41,10 @@ class CompressorIdListPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-
+  CompressorIdListPolicy (void);
+  
   /// Constructor.
-  CompressorIdListPolicy (::Compression::CompressorIdList* val);
+  CompressorIdListPolicy (const ::Compression::CompressorIdList& val);
 
   /// Copy constructor.
   CompressorIdListPolicy (const CompressorIdListPolicy &rhs);
@@ -73,7 +74,7 @@ public:
 private:
 
   /// The attribute
-  ::Compression::CompressorIdList* value_;
+  ::Compression::CompressorIdList value_;
 };
 
 /**
@@ -86,7 +87,8 @@ class CompressionEnablingPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-
+  CompressionEnablingPolicy (void);
+  
   /// Constructor.
   CompressionEnablingPolicy (const ::CORBA::Boolean val);
 
