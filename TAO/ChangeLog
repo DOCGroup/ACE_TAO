@@ -1,3 +1,9 @@
+Wed Jun 25 11:03:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Timeout/client.cpp:
+
+          miss edited swapped ACE_TMAIN / ACE_TCHAR macros around!
+
 Wed Jun 25 07:01:52 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_global.cpp:
