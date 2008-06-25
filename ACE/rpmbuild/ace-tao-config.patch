@@ -3,11 +3,9 @@
 @@ -9,6 +9,10 @@
  #define ACE_CONFIG_LINUX_H
  #include /**/ "ace/pre.h"
- 
-+#define ACE_GPERF "gperf-ace"
-+
+
 +#define TAO_IDL_INCLUDE_DIR "/usr/include/tao"
 +
  #define ACE_PLATFORM_CONFIG config-linux.h
- 
+
  #include "ace/config-linux-common.h"
