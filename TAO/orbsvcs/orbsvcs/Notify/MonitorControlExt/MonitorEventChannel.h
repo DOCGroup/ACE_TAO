@@ -17,6 +17,8 @@
 
 #include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -154,6 +156,8 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
 #include /**/ "ace/post.h"
 

@@ -7,6 +7,8 @@
 
 #include "ace/Monitor_Base.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -38,6 +40,8 @@ protected:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
 #include /**/ "ace/post.h"
 
