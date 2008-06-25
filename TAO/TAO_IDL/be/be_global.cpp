@@ -1838,7 +1838,7 @@ BE_GlobalData::parse_args (long &i, char **av)
 
         break;
       // Path for the perfect hash generator(gperf) program. Default
-      // is $ACE_ROOT/bin/gperf.
+      // is $ACE_ROOT/bin/ace_gperf.
       case 'g':
         if (av[i][2] == '\0')
           {
@@ -1849,7 +1849,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             // when the gperf path is modified, but not for the default
             // path given above. Other platforms don't need the
             // executable name at all.
-            tmp += "\\gperf.exe";
+            tmp += "\\ace_gperf.exe";
 #endif
             idl_global->gperf_path (tmp.fast_rep ());
             ++i;
@@ -2510,8 +2510,7 @@ BE_GlobalData::arg_post_proc (void)
       (be_global->lookup_strategy () == BE_GlobalData::TAO_LINEAR_SEARCH))
     {
       // Testing whether GPERF works or no.
-      int return_value = idl_global->check_gperf ();
-      if (return_value == -1)
+      if (idl_global->check_gperf () == -1)
         {
           // If gperf_path is an absolute path, try to call this
           // again with
@@ -2667,7 +2666,7 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -g <gperf_path>\tPath for the GPERF program.")
-      ACE_TEXT (" Default is $ACE_ROOT/bin/gperf\n")));
+      ACE_TEXT (" Default is $ACE_ROOT/bin/ace_gperf\n")));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -GC \t\t\tGenerate the AMI classes\n")
