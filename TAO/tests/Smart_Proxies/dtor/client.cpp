@@ -6,11 +6,11 @@
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 bool dtor_called;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "i:");
   int c;
@@ -19,7 +19,7 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'i':
-        ior = ACE_OS::strdup (get_opts.opt_arg ());
+        ior = get_opts.opt_arg ();
       break;
       case '?':
       default:
@@ -33,17 +33,16 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
-    CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                          argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
-    CORBA::Object_var obj = orb->string_to_object (ior);
+    CORBA::Object_var obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
     // force a scope to see the destruction of the server object
     {

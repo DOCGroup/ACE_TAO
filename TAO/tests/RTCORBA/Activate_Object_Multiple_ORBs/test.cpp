@@ -21,14 +21,14 @@ public:
 };
 
 
-int main(int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb1 =
-                    CORBA::ORB_init(argc, argv, "orb1");
+                    CORBA::ORB_init (argc, argv, "orb1");
       CORBA::ORB_var orb2 =
-                    CORBA::ORB_init(argc, argv, "orb2");
+                    CORBA::ORB_init (argc, argv, "orb2");
 
       CORBA::Object_var poaObj_var =
                     orb1->resolve_initial_references ("RootPOA");
