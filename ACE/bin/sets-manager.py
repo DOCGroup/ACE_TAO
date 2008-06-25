@@ -90,7 +90,7 @@ def get_head_revision (url):
 
     import re
     lineregex = re.compile ("Last Changed Rev: (\d+)")
-    
+
     for line in os.popen (command).readlines ():
         match = lineregex.match (line)
         if (match is not None):
@@ -110,13 +110,13 @@ def branch_ACE ():
 #    execute ("svn up -N " + opts.repo + path + "/modules/ACE sets_manager_temp/module_ACE")
     execute ("svn up -N sets_manager_temp/modules/ACE")
     mpc_rev = get_head_revision ("svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk")
-    
+
     svn_propset ("sets_manager_temp/modules/ACE",
                  "svn:externals",
                  "%s\t-r %d %s" % ("MPC",
                                    mpc_rev,
                                    "svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk"))
-    
+
     #Create the set
     svn_mkdir_local ("sets_manager_temp/sets/ACE")
     svn_propset ("sets_manager_temp/sets/ACE",
@@ -177,14 +177,14 @@ def main (opts, args):
     svn_mkdir (opts.repo + path)
 
     execute ("svn co " + opts.repo + path + " sets_manager_temp")
-    
+
     # Make modules and sets subdirectory
     svn_mkdir_local ("sets_manager_temp/modules")
     svn_mkdir_local ("sets_manager_temp/sets")
-    
+
     # commit the new directories
     execute ('svn commit -m "branching/tagging" sets_manager_temp')
-    
+
     # opts.dest should now be set to path, all of the branching
     # functions assume dest now points to the branch/tag in which
     # the copies should be places

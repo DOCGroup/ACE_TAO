@@ -1,3 +1,28 @@
+Wed Jun 25 06:58:52 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/gperf.1:
+        * apps/gperf/gperf.info:
+        * apps/gperf/gperf.mpc:
+        * apps/gperf/gperf.texi:
+        * apps/gperf/ace_gperf.1:
+        * apps/gperf/ace_gperf.info:
+        * apps/gperf/ace_gperf.mpc:
+        * apps/gperf/ace_gperf.texi:
+        * apps/gperf/gperf/src/gperf.mpc:
+        * apps/gperf/gperf/tests/gperf_test.mpb:
+        * apps/gperf/gperf/tests/Makefile.am:
+          Renamed gperf to ace_gperf to make sure we always get the gperf
+          from ace, fedora also has a regular gperf package
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Updated for gperf rename
+
+        * rpmbuild/ace-tao.spec:
+          Removed gperf rename which only was done in the rpm package.
+          This fixes bugzilla 3342
+
 Wed Jun 25 05:59:52 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * include/makeinclude/platform_netbsd.GNU:

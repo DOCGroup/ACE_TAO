@@ -64,7 +64,7 @@ ifeq ("$(WIND_HOST_TYPE)","x86-win32")
 endif # x86-win32
 
 ifneq (,$(HOST_ROOT))
-TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf
+TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
 ifeq ("$(WIND_HOST_TYPE)","x86-win32")
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl.exe
   TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2.exe
