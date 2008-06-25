@@ -259,10 +259,7 @@ NContextExt_Client_i::init (int argc, char **argv)
 
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (this->argc_,
-                         this->argv_,
-                         "" /* the ORB name, it can be anything! */
-                         );
+        CORBA::ORB_init (this->argc_, this->argv_);
 
       // There must be at least one argument, the file that has to be
       // retrieved

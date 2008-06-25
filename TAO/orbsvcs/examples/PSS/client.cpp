@@ -29,9 +29,7 @@ int main (int argc, char *argv [])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         "" /* the ORB name, it can be anything! */);
+        CORBA::ORB_init (argc, argv);
 
       // Get a reference to the RootPOA
       CORBA::Object_var poa_object =
