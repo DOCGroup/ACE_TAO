@@ -1,3 +1,11 @@
+Wed Jun 25 07:01:52 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+          Updated for the rename of gperf to ace_gperf as part of bugzilla
+          3342
+
 Tue Jun 24 15:22:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_1636_Regression/client.cpp:
