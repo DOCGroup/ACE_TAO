@@ -5395,65 +5395,6 @@ ACE_CACHE_CHECK([if mmap() takes a void* first argument],
   ], [AC_DEFINE([ACE_HAS_VOIDPTR_MMAP])],)
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
-dnl Check if msync is broken, i.e. doesn't accept third "sync" argument.
-dnl This test should come after the test for checking if mmap takes a void*
-dnl argument since we need the ACE_MMAP_TYPE type for this test.
-if test "$ac_cv_func_msync" = yes; then
-ACE_CACHE_CHECK([if msync accepts a third "sync" argument],
-  [ace_cv_lib_broken_msync],
-  [
-   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <sys/mman.h>
-
-#if defined (ACE_HAS_VOIDPTR_MMAP)
-      /* Needed for some odd OS's (e.g., SGI). */
-      typedef void *ACE_MMAP_TYPE;
-#else
-      typedef char *ACE_MMAP_TYPE;
-#endif /* ACE_HAS_VOIDPTR_MMAP */
-     ]], [[
-      ACE_MMAP_TYPE start = 0;
-      size_t length = 0;
-      int flags = MS_SYNC;
-
-      int result;
-
-      result = msync(start, length, flags);
-     ]])],[
-      ace_cv_lib_broken_msync=no
-     ],[
-      dnl Now see if it works with just two arguments
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-        [[
-#include <sys/mman.h>
-
-#if defined (ACE_HAS_VOIDPTR_MMAP)
-         /* Needed for some odd OS's (e.g., SGI). */
-         typedef void *ACE_MMAP_TYPE;
-#else
-         typedef char *ACE_MMAP_TYPE;
-#endif /* ACE_HAS_VOIDPTR_MMAP */
-        ]],
-        [[
-         ACE_MMAP_TYPE start = 0;
-         size_t length = 0;
-
-         int result;
-
-         result = msync(start, length);
-        ]])],
-        [
-         ace_cv_lib_broken_msync=yes
-        ],
-        [
-         dnl If we get to this point then we don't know if msync is
-         dnl is broken or not.
-         ace_cv_lib_broken_msync=no
-        ])
-     ])
-  ], [AC_DEFINE([ACE_HAS_BROKEN_NETBSD_MSYNC])],)
-fi  dnl test "$ac_cv_func_msync" = yes
-
 dnl Check if platform has iostream method ipfx()
 ACE_CACHE_CHECK([for iostream method ipfx()],
   [ace_cv_feature_has_iostream_ipfx],[

@@ -204,12 +204,7 @@ ACE_OS::msync (void *addr, size_t len, int sync)
 
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FlushViewOfFile (addr, len), ace_result_), int, -1);
 #elif !defined (ACE_LACKS_MSYNC)
-# if !defined (ACE_HAS_BROKEN_NETBSD_MSYNC)
   ACE_OSCALL_RETURN (::msync ((ACE_MMAP_TYPE) addr, len, sync), int, -1);
-# else
-  ACE_OSCALL_RETURN (::msync ((ACE_MMAP_TYPE) addr, len), int, -1);
-  ACE_UNUSED_ARG (sync);
-# endif /* ACE_HAS_BROKEN_NETBSD_MSYNC */
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
