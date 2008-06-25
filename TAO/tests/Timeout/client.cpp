@@ -85,7 +85,7 @@ send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
 }
 
 
-int ACE_TCHAR (int argc, ACE_TMAIN *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
