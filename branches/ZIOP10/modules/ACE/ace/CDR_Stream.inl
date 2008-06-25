@@ -1453,7 +1453,7 @@ ACE_OutputCDR::append_longdouble (ACE_InputCDR &stream)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_string (ACE_InputCDR &stream)
 {
-  ACE_CDR::Char *x;
+  ACE_CDR::Char *x = 0;
   const ACE_CDR::Boolean flag =
     (stream.read_string (x) ? this->write_string (x) : false);
   delete [] x;
@@ -1463,7 +1463,7 @@ ACE_OutputCDR::append_string (ACE_InputCDR &stream)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_wstring (ACE_InputCDR &stream)
 {
-  ACE_CDR::WChar *x;
+  ACE_CDR::WChar *x = 0;
   const ACE_CDR::Boolean flag =
     (stream.read_wstring (x) ? this->write_wstring (x) : false);
   delete [] x;
