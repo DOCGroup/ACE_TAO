@@ -242,7 +242,33 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
 
   if (!CORBA::is_nil(manager.in ()))
   {
-    Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
+      Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
+      if (resolver.stub () == 0)
+        {
+          policy =
+            resolver.stub()->orb_core()->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ID_LIST_POLICY);
+        }
+      else
+        {
+          policy = resolver.stub ()->get_cached_policy (TAO_CACHED_COMPRESSION_ID_LIST_POLICY);
+        }
+
+      if (!CORBA::is_nil (policy.in ()))
+        {
+          ZIOP::CompressorIdListPolicy_var srp =
+            ZIOP::CompressorIdListPolicy::_narrow (policy.in ());
+
+          if (!CORBA::is_nil (srp.in ()))
+            {
+              ::Compression::CompressorIdList* list = srp->compressor_ids ();
+              if (list)
+              {
+                compressor_id = (*list)[0];
+              }
+              //use_ziop = srp->compression_enabled ();
+
+            }
+        }
     Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 9);
 
     if (original_data_length > this->compression_low_value (resolver))
