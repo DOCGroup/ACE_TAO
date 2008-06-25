@@ -38,10 +38,7 @@ Server_i::init (int &argc,
     {
       // First initialize the ORB, that will remove some arguments...
       this->orb_ =
-        CORBA::ORB_init (this->argc_,
-                         this->argv_,
-                         "" /* the ORB name, it can be anything! */
-                         );
+        CORBA::ORB_init (this->argc_, this->argv_);
 
       // Get a reference to the RootPOA.
       CORBA::Object_var poa_object =

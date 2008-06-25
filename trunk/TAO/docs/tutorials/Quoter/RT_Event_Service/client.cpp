@@ -14,8 +14,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   try {
     // First initialize the ORB, that will remove some arguments...
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv,
-                       "" /* the ORB name, it can be anything! */);
+      CORBA::ORB_init (argc, argv);
     CORBA::Object_var poa_object =
       orb->resolve_initial_references ("RootPOA");
     PortableServer::POA_var poa =

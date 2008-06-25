@@ -11,9 +11,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv,
-                         "" /* the ORB name, it can be anything! */
-                         );
+        CORBA::ORB_init (argc, argv);
 
       if (argc < 2)
         {

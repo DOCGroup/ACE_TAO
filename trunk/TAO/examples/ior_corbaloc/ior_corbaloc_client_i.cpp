@@ -95,10 +95,7 @@ IOR_corbaloc_Client_i::init (int& argc,
 
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         "" /* the ORB name, it can be anything! */
-                         );
+        CORBA::ORB_init (argc, argv);
 
       if(argc < 2){
               ACE_DEBUG((LM_DEBUG, "\nUsage:\n  %s [corbaloc URL for NameService]\n", argv[0]));

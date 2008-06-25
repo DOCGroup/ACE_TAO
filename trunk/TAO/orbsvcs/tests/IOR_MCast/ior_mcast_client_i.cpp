@@ -22,10 +22,7 @@ ior_mcast_Client_i::init (int& argc,
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         "" /* the ORB name, it can be anything! */
-                         );
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var mcast_server_object =
         orb->resolve_initial_references ("MCASTServer");
