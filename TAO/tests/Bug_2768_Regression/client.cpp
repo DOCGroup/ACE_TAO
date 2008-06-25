@@ -3,10 +3,10 @@
 #include "MessengerC.h"
 #include "ace/Get_Opt.h"
 
-const char *ior = "";
+const ACE_TCHAR *ior = ACE_TEXT ("");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:");
   int c;
@@ -32,18 +32,18 @@ parse_args (int argc, char *argv[])
 }
 
 
-int main(int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
     //init the orb
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
     CORBA::Object_var object_temp =
-      orb->string_to_object(ior);
+      orb->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
 
     SimpleMessenger::Messenger_var messenger =
       SimpleMessenger::Messenger::_unchecked_narrow( object_temp.in ());

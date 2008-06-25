@@ -5,12 +5,12 @@
 
 ACE_RCSID(Bug_2174_Regression, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int min_timeout = 0;
 int max_timeout = 20;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:l:h:");
   int c;
@@ -42,7 +42,7 @@ int result = 1;
 // 4 : CORBA::OBJECT_NOT_EXIST exception
 // 5 : CORBA::TRANSIENT exception
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -53,7 +53,7 @@ int main (int argc, char* argv[])
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in ());

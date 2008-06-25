@@ -6,10 +6,10 @@ ACE_RCSID (BlobServer,
            server,
            "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:");
   int c;
@@ -34,7 +34,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main(int argc, char** argv)
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
                               1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
+      ACE_OS::fprintf (output_file, "%s", ACE_TEXT_CHAR_TO_TCHAR (ior.in ()));
       ACE_OS::fclose (output_file);
 
       poa_manager->activate ();

@@ -7,7 +7,7 @@
 const char *ior_output_file = "test.ior";
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -41,7 +41,7 @@ main (int argc, char *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Can't open output file for writing IOR: %s",
-                             ior_output_file),
+                             ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)),
                             1);
         }
 

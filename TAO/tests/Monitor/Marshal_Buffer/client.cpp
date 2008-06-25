@@ -41,7 +41,7 @@ public:
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -77,7 +77,7 @@ main (int argc, char *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Can't open output file for writing IOR: %s",
-                             monitor_output_file),
+                             ACE_TEXT_CHAR_TO_TCHAR (monitor_output_file)),
                             1);
         }
 

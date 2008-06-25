@@ -3,10 +3,10 @@
 
 ACE_RCSID(Hello, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:");
   int c;
@@ -32,7 +32,7 @@ parse_args (int argc, char *argv[])
 }
 
 
-int main(int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
     try
     {
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
 
       BlobServer_var blobServer = BlobServer::_narrow(tmp.in());
       if(CORBA::is_nil(blobServer.in()))

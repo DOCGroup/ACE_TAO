@@ -20,7 +20,7 @@ public:
 };
 }
 
-int main(int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
   CORBA::ORB_var orb = CORBA::ORB::_nil();
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 
       iorTable->bind("hello", ior_string.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Created binding of name 'hello' in IOR table for IOR:\n%s\n", ior_string.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Created binding of name 'hello' in IOR table for IOR:\n%s\n", ACE_TEXT_CHAR_TO_TCHAR (ior_string.in ())));
 
       // Activate the POA manager
       PortableServer::POAManager_var poaManager = rootPOA->the_POAManager ();
@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
 
       friendly_corbaloc += "/hello";
 
-      ACE_DEBUG ((LM_DEBUG, "Trying to access object with object ref:\n%s\n", friendly_corbaloc.c_str ()));
+      ACE_DEBUG ((LM_DEBUG, "Trying to access object with object ref:\n%s\n", ACE_TEXT_CHAR_TO_TCHAR (friendly_corbaloc.c_str ())));
 
       CORBA::Object_var obj = orb->string_to_object (friendly_corbaloc.c_str ());
 

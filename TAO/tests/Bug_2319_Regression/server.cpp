@@ -47,7 +47,7 @@ protected:
 class ST_AMH_Server
 {
 public:
-  ST_AMH_Server (int *argc, char **argv);
+  ST_AMH_Server (int *argc, ACE_TCHAR **argv);
   virtual ~ST_AMH_Server ();
 
   /// ORB inititalisation stuff
@@ -63,7 +63,7 @@ public:
 
 protected:
   int *argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   char *ior_output_file_;
   CORBA::ORB_ptr orb_;
   PortableServer::POA_var root_poa_;
@@ -79,7 +79,7 @@ private:
 
 // ------------------------------------------------------------------------
 //
-int parse_args (int argc, char *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "n:");
   int c;
@@ -128,7 +128,7 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 
 // ------------------------------------------------------------------------
 //
-ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
+ST_AMH_Server::ST_AMH_Server (int* argc, ACE_TCHAR **argv)
   : argc_ (argc), argv_ (argv)
 {
   this->ior_output_file_ = const_cast<char*>(ior_file);
@@ -241,7 +241,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var iorstr)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",
-                  ST_AMH_Server::ior_output_file_));
+                  ACE_TEXT_CHAR_TO_TCHAR (ST_AMH_Server::ior_output_file_)));
       return -1;
     }
 
@@ -283,13 +283,13 @@ static ACE_THR_FUNC_RETURN start_client(void* _arg)
 
 // ------------------------------------------------------------------------
 //
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) != 0)
     return 1;
 
   ST_AMH_Server amh_server (&argc, argv);
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
 
   amh_server.start_orb_and_poa(orb);
@@ -306,7 +306,7 @@ int main (int argc, char *argv[])
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Nil Test::Roundtrip reference <%s>\n",
-                         ior),
+                         ACE_TEXT_CHAR_TO_TCHAR (ior)),
                         1);
     }
 
