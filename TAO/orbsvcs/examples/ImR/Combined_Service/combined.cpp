@@ -35,14 +35,14 @@ public:
   }
 };
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
 
     ACE_Service_Config config;
-    config.open(argc, argv);
+    config.open (argc, argv);
 
-    ORB_var orb = ORB_init(argc, argv);
+    ORB_var orb = ORB_init (argc, argv);
 
     Object_var obj = orb->resolve_initial_references("RootPOA");
     POA_var poa = POA::_narrow(obj.in());
@@ -77,4 +77,3 @@ int main (int argc, char* argv[])
   }
   return 0;
 }
-

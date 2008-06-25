@@ -156,7 +156,7 @@ private:
   int workload_;
 };
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   RT_Class rt_class;
 

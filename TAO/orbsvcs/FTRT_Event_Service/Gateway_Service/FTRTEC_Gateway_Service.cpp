@@ -18,17 +18,17 @@ ACE_RCSID (Gateway_Service,
 namespace {
   CORBA::ORB_var orb;
   FtRtecEventChannelAdmin::EventChannel_var ftec;
-  ACE_CString ior_file_name;
+  ACE_TString ior_file_name;
 }
 
-int parse_args(int argc, ACE_TCHAR** argv)
+int parse_args (int argc, ACE_TCHAR *argv[])
 {
   try{
-    ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:n:o:"));
+    ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:n:o:"));
     int opt;
     CosNaming::Name name(1);
     name.length(1);
-    name[0].id = CORBA::string_dup("FT_EventService");
+    name[0].id = CORBA::string_dup ("FT_EventService");
 
     while ((opt = get_opt ()) != EOF)
     {
@@ -36,12 +36,12 @@ int parse_args(int argc, ACE_TCHAR** argv)
       {
       case 'i':
         {
-          CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ());
-          ftec = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in());
+          CORBA::Object_var obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+          ftec = FtRtecEventChannelAdmin::EventChannel::_narrow (obj.in());
         }
         break;
       case 'n':
-        name[0].id = CORBA::string_dup(get_opt.opt_arg ());
+        name[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
         break;
       case 'o':
         ior_file_name = get_opt.opt_arg ();
@@ -68,13 +68,13 @@ int parse_args(int argc, ACE_TCHAR** argv)
   return 0;
 }
 
-int main(int argc,  ACE_TCHAR** argv)
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
     orb = CORBA::ORB_init (argc, argv);
 
-    if (parse_args(argc, argv)==-1)
+    if (parse_args (argc, argv) == -1)
       return 1;
 
     PortableServer::POA_var
@@ -97,8 +97,7 @@ int main(int argc,  ACE_TCHAR** argv)
       CORBA::String_var str = orb->object_to_string(gateway.in());
 
       FILE *output_file=
-        ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name.c_str()),
-        ACE_TEXT("w"));
+        ACE_OS::fopen (ior_file_name.c_str(), "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
         "Cannot open output file for writing IOR: %s",

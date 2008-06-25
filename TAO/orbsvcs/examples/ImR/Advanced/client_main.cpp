@@ -3,14 +3,14 @@
 
 #include <ace/streams.h>
 
-int main(int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     {
-      TestClient client(orb.in(), argc, argv);
+      TestClient client (orb.in (), argc, argv);
       client.run();
     }
 

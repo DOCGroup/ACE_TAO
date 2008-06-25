@@ -123,7 +123,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
   return string(buffer);
 }
 
-TestServer::TestServer(CORBA::ORB_ptr orb, int argc, char* argv[])
+TestServer::TestServer (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[])
 : serverID_(1)
 , serverInstanceID_(-1)
 , useIORTable_(false)
@@ -142,7 +142,7 @@ TestServer::TestServer(CORBA::ORB_ptr orb, int argc, char* argv[])
 , root_(PortableServer::POA::_nil())
 , mgr_(PortableServer::POAManager::_nil())
 {
-  parseCommands(argc, argv);
+  parseCommands (argc, argv);
 
   verifyEnvironment();
 
@@ -162,11 +162,11 @@ TestServer::~TestServer()
 //  TestServer::parseCommands
 //  Reads params from command line
 //
-int TestServer::parseCommands(int argc, char* argv[])
+int TestServer::parseCommands (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, "w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:");
+  ACE_Get_Opt get_opts (argc, argv, "w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:");
   int c;
-  while ((c = get_opts()) != -1)
+  while ((c = get_opts ()) != -1)
   {
     switch (c)
     {
@@ -280,7 +280,7 @@ bool TestServer::verifyEnvironment() const
   if (expectedDir_.empty() == false && currentDir != expectedDir_)
   {
     ACE_DEBUG((LM_DEBUG, "Error: directory paths (%s,%s) do not match.\n",
-               currentDir.c_str(), expectedDir_.c_str()));
+               ACE_TEXT_CHAR_TO_TCHAR (currentDir.c_str()), ACE_TEXT_CHAR_TO_TCHAR (expectedDir_.c_str())));
     err |= true;
   }
 
@@ -291,13 +291,13 @@ bool TestServer::verifyEnvironment() const
     if (realValue == 0)
     {
       ACE_DEBUG((LM_DEBUG, "Error, env variable '%s' not found\n",
-                 expectedEnv_[i].first.c_str()));
+                 ACE_TEXT_CHAR_TO_TCHAR (expectedEnv_[i].first.c_str())));
       err |= true;
     }
     else if (expectedEnv_[i].second != realValue)
     {
       ACE_DEBUG((LM_DEBUG, "Error, env variable '%s' values (%s,%s) do not match.\n",
-                 expectedEnv_[i].first.c_str(), realValue, expectedEnv_[i].second.c_str()));
+                 ACE_TEXT_CHAR_TO_TCHAR (expectedEnv_[i].first.c_str()), ACE_TEXT_CHAR_TO_TCHAR (realValue), ACE_TEXT_CHAR_TO_TCHAR (expectedEnv_[i].second.c_str())));
       err |= true;
     }
   }
@@ -452,7 +452,7 @@ void TestServer::buildObjects()
       poaName = poaStream.str();
     }
 
-    ACE_DEBUG((LM_DEBUG, "* Creating POA: %s\n", poaName.c_str()));
+    ACE_DEBUG((LM_DEBUG, "* Creating POA: %s\n", ACE_TEXT_CHAR_TO_TCHAR (poaName.c_str())));
 
     PortableServer::POA_var sub_poa = root_->create_POA(poaName.c_str(), mgr_.in(), policies);
 
@@ -467,7 +467,7 @@ void TestServer::buildObjects()
         objStream << "OBJ_" << serverID_ << "_" << (i + 1) << "_" << (j + 1);
         objName = objStream.str();
       }
-      ACE_DEBUG((LM_DEBUG, "* Activating Obj: %s\n", objName.c_str()));
+      ACE_DEBUG((LM_DEBUG, "* Activating Obj: %s\n", ACE_TEXT_CHAR_TO_TCHAR (objName.c_str())));
 
       PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId(objName.c_str());
       sub_poa->activate_object_with_id(oid.in(), servant_.get());
