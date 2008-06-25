@@ -16,7 +16,7 @@ SUBDIRS = \
 
 ## Makefile.gperf_docs.am
 
-man_MANS = gperf.1
+man_MANS = ace_gperf.1
 
 ## Clean up template repositories, etc.
 clean-local:
