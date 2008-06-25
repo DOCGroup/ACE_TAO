@@ -1,3 +1,9 @@
+Wed Jun 25 11:53:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+
+          Remove redundant "" 3rd parameter (orbID) from ORB_init() calls.
+
 Tue Jun 24 12:23:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tools/Config_Handlers/test.cpp:

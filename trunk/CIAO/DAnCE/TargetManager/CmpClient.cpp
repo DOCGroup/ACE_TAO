@@ -81,8 +81,7 @@ namespace TM_Tester
     try {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv,
-            "" /* the ORB name, it can be anything! */);
+        CORBA::ORB_init (argc, argv);
 
       if (!TM_Tester::parse_args (argc, argv))
         return -1;
