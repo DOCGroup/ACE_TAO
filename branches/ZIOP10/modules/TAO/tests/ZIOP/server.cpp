@@ -79,10 +79,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
 CORBA::Boolean compression_enabling = true;
-Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
-Compression::CompressorIdList compressor_id_list(1);
-compressor_id_list.length(1);
-compressor_id_list[0] = compressor_id;
+Compression::CompressorIdList compressor_id_list(2);
+compressor_id_list.length(2);
+compressor_id_list[0] = Compression::COMPRESSORID_ZLIB;
+compressor_id_list[1] = Compression::COMPRESSORID_GZIP;
 //CORBA::ULong compression_low_value = 16384;
 //CORBA::ULong min_compression_ratio = 40;
 CORBA::Any compression_enabling_any;//, compressor_id_any, low_value_any;
