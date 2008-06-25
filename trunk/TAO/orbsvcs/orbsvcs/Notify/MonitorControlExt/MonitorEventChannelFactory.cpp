@@ -9,6 +9,8 @@
 
 #include "ace/Monitor_Point_Registry.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ******************************************************************
@@ -377,3 +379,6 @@ TAO_MonitorEventChannelFactory::Unbinder::release (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
