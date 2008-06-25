@@ -16,13 +16,13 @@ ACE_ROOT = $(top_srcdir)
 
 if !BUILD_USES_WCHAR
 
-bin_PROGRAMS = gperf
+bin_PROGRAMS = ace_gperf
 
-gperf_CPPFLAGS = \
+ace_gperf_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
-gperf_SOURCES = \
+ace_gperf_SOURCES = \
   Bool_Array.cpp \
   Gen_Perf.cpp \
   Hash_Table.cpp \
@@ -42,7 +42,7 @@ gperf_SOURCES = \
   Options.h \
   Vectors.h
 
-gperf_LDADD = \
+ace_gperf_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
