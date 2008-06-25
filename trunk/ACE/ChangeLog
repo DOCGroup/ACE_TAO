@@ -1,3 +1,17 @@
+Wed Jun 25 13:29:13 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * configure.ac:
+
+          Remove feature test and autoheader template for
+          ACE_HAS_BROKEN_NETBSD_MSYNC.
+
+        * ace/OS_NS_sys_mman.inl:
+
+          Remove the use of the ACE_HAS_BROKEN_NETBSD_MSYNC feature test
+          macro. It was removed since ACE no longer supports the systems
+          that required it.
+
 Wed Jun 25 11:23:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * ace/Monitor_Control/Bytes_Received_Monitor.cpp:
