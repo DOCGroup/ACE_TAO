@@ -36,10 +36,10 @@ Test_i::shutdown (void)
   this->orb_->shutdown (0);
 }
 
-static const char *ior_output_file = 0;
+static const ACE_TCHAR *ior_output_file = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:");
   int c;
@@ -48,7 +48,7 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = ACE_OS::strdup (get_opts.opt_arg ());
+        ior_output_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -63,13 +63,12 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
   {
-    CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                          argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return 1;
@@ -104,8 +103,9 @@ int main (int argc, char* argv[])
 
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             ior_output_file),
+                             "Cannot open output file %s for writing IOR: %s",
+                             ior_output_file,
+                             ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
                             1);
 
         ACE_OS::fprintf (output_file, "%s", ior.in ());

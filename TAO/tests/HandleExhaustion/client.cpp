@@ -7,10 +7,10 @@
 ACE_RCSID(ConnectionSpinning,
           client, "$Id$")
 
-static const char *ior = "file://server.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:x");
   int c;
@@ -36,7 +36,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -47,7 +47,7 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Test_var test = Test::_narrow(tmp.in ());
 
