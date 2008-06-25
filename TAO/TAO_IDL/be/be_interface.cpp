@@ -1905,8 +1905,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
   if (result != -1)
     {
-      FILE* gperfOutputFile;
-      gperfOutputFile = ACE_OS::fopen (gperfOutput, "r");
+      FILE* gperfOutputFile = ACE_OS::fopen (gperfOutput, "r");
 
       if (gperfOutputFile == 0)
         {

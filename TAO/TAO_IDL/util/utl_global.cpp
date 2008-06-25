@@ -195,10 +195,10 @@ IDL_GlobalData::IDL_GlobalData (void)
       // Set it to the default value.
       ACE_NEW (this->gperf_path_,
                char [ACE_OS::strlen (ace_root)
-                     + ACE_OS::strlen ("/bin/gperf")
+                     + ACE_OS::strlen ("/bin/ace_gperf")
                      + 1]);
       ACE_OS::sprintf (this->gperf_path_,
-                       "%s" ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A "gperf",
+                       "%s" ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A "ace_gperf",
                        ace_root);
 #endif /* ACE_GPERF */
     }
@@ -1175,7 +1175,7 @@ IDL_GlobalData::update_prefix (char *filename)
           status =
             this->file_prefixes_.find (this->pd_filename->get_string (),
                                        prefix);
-          
+
           // This function is called just before we transition to a
           // new file at global scope. If there is a non-null prefix
           // stored in the table under our not-yet-changed filename,
@@ -1435,7 +1435,7 @@ IDL_GlobalData::check_gperf (void)
 #if defined (ACE_GPERF)
       idl_global->gperf_path (ACE_GPERF);
 #else
-      idl_global->gperf_path ("gperf");
+      idl_global->gperf_path ("ace_gperf");
 #endif /* ACE_GPERF */
     }
 
@@ -1448,7 +1448,7 @@ IDL_GlobalData::check_gperf (void)
 #if defined (ACE_GPERF)
   if (ACE_OS::strcmp (idl_global->gperf_path (), ACE_GPERF) != 0)
 #else
-  if (ACE_OS::strcmp (idl_global->gperf_path (), "gperf") != 0)
+  if (ACE_OS::strcmp (idl_global->gperf_path (), "ace_gperf") != 0)
 #endif /* ACE_GPERF */
     {
       // It is absolute path. Check the existance, permissions and
@@ -1463,7 +1463,7 @@ IDL_GlobalData::check_gperf (void)
 #if defined (ACE_GPERF)
           idl_global->gperf_path (ACE_GPERF);
 #else
-          idl_global->gperf_path ("gperf");
+          idl_global->gperf_path ("ace_gperf");
 #endif /* ACE_GPERF */
         }
     }
@@ -1851,7 +1851,7 @@ IDL_GlobalData::open_included_file (char const * filename,
   FILE * f = 0;
   ACE_CString const the_file (ACE_CString ('/')
                               + ACE_CString (filename));
-  
+
   for (ACE_Unbounded_Queue_Iterator<char *> i (this->include_paths_);
        !i.done () && f == 0;
        i.advance ())
