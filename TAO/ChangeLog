@@ -1,3 +1,11 @@
+Wed Jun 25 13:35:06 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Remove orbsvcs/examples/Notify/Timeout/Makefile and add
+          orbsvcs/tests/Notify/Timeout/Makefile from list of makefiles
+          to generate.
+
 Wed Jun 25 13:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_1254_Regression/client.cpp:
