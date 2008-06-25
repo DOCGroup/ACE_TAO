@@ -746,7 +746,7 @@ sub check_for_improper_main_declaration ()
                     }
                     elsif ($disable == 0) {
                         s/^\s+//;           ## Remove leading space
-                        s/\s*(\/\/.*)?$//;  ## Remove trailling space and line comments
+                        s/\s*(\/\/.*)?$//;  ## Remove trailing space and line comments
                         if (s/^(?:.*\s)?(main|ACE_TMAIN)\s*//) {
                             $type_of_main = $1; ## main or ACE_TMAIN
                             $multi_line   = $_; ## Rest of the line
@@ -766,6 +766,7 @@ sub check_for_improper_main_declaration ()
                         $multi_line .= ' ' . $_;
                     }
                 }
+                $multi_line =~ s!^(/+\*.*?\*/\s*)*!!;  ## Remove leading /* ... */ comments
                 next if ($multi_line eq "");  ## Must have something after main
                 if ($multi_line !~ m/^\(/) {
                     ## Not a function opening bracket, we will ignore this one
@@ -773,25 +774,33 @@ sub check_for_improper_main_declaration ()
                     undef $multi_line;
                     $not_found_end_line_count = 0;
                 }
-                elsif ($multi_line =~ s/^\(\s*([^\)]*?)\s*\)\s*\{//) {
+                elsif ($multi_line =~ s/^\(\s*([^\)]*?)\s*\)[^;\{]*?\{//) {
                     $multi_line = $1;                             ## What was between the main's ( and )
                     $multi_line =~ s/\s{2,}/ /g;                  ## Compress white space
                     my $was = $multi_line;
                     $multi_line =~ s!([^/])\*\s([^/])!$1\*$2!g;   ## Remove space after * (except around comment)
                     $multi_line =~ s!([^/])\s\[!$1\[!g;           ## Remove space before [ (except following comment)
-                    if ($multi_line =~ s/^([^,]*?)\s?,\s?//) { # Fails if only 1 parameter (ignore this main)
+                    $multi_line =~ s!\s?\*/\s?/\*\s?! !g;         ## Connect seporate adjacent /* ... */ comments
+                    if ($multi_line =~ s!^([^,]*?)\s?,\s?(/+\*.*?\*/\s?)*!!) { # Fails if only 1 parameter (ignore this main)
                         my $arg1 = $1;
                         if ($multi_line =~ s/^(\w[\w\d]*)\s?//) { # Fails if no type for 2nd parameter (ignore this main)
                             my $arg2_type = $1;
-                            $multi_line =~ s!^(\**)(\w[\w\d]*|\s?/\*.*?\*/\s?)?!!;
-                            # $1 is now arg2's Prefix, i.e. should be *
-                            # $2 is now arg2's variable name
-                            # $multi_line is now arg2's Postfix, i.e. should be []
+                            $multi_line =~ s!^(?:/+\*.*?\*/\s?)?(\**)(\w[\w\d]*|\s?/\*.*?\*/\s?)?!!;
+                            my $prefix = $1; ## should be * or **
+                            my $name   = $2; ## is now arg2's variable name
+                            $multi_line =~ s!\s?\*/\s?/\*\s?! !g;  ## Connect seporate adjacent /* ... */ comments
+
+                            ## remove any comment after postfix
+                            if ($multi_line =~ s!\s?(/+\*.*?\*/)$!! && $name eq '') {
+                                $name = "$1 ";  ## Some name argv in comment after []
+                            }
+                            ## multi_line now postfix, should be []
+
                             if ($type_of_main ne 'ACE_TMAIN'       ||
                                 $arg2_type ne 'ACE_TCHAR'          ||
-                                !(($1 eq '*' && $multi_line eq '[]') ||
-                                  ($1 eq '**' && $multi_line eq '' ))  ) {
-                                print_error ("$file:$.:  $type_of_main ($was)  should be  ACE_TMAIN ($arg1, ACE_TCHAR \*$2\[])");
+                                !(($prefix eq '*' && $multi_line eq '[]') ||
+                                  ($prefix eq '**' && $multi_line eq '' ))  ) {
+                                print_error ("$file:$.:  $type_of_main ($was)  should be  ACE_TMAIN ($arg1, ACE_TCHAR \*$name\[])");
                            }
                         }
                     }
@@ -1808,13 +1817,15 @@ sub check_for_ORB_init ()
                     }
                 }
                 my $testing = $multi_line;
-                if ($testing =~ s/^\(([^\"\)]*(\"([^\"\\]*(\\.)*)\")?)*\)//) {
+                if ($testing =~ s/^\(([^\"\/\)]*(\"([^\"\\]*(\\.)*)\")?(\/+\*.*?\*\/\s*)*)*\)//) {
                     # $testing has thrown away what we actually want, i.e.
                     # we want to ignore what's left in $testing.
 
                     $multi_line = substr ($multi_line, 0, -length ($testing));
-                    $multi_line =~ s/^\(\s*//; ## Trim leading ( and space
-                    $multi_line =~ s/\s*\)$//; ## Trim trailing space and )
+                    $multi_line =~ s!/\*.*?\*/! !g;  ## Remove any internal /* ... */ comments
+                    $multi_line =~ s!\s{2,}! !g;     ## collapse multi spaces
+                    $multi_line =~ s/^\(\s*//;       ## Trim leading ( and space
+                    $multi_line =~ s/\s*\)$//;       ## Trim trailing space and )
 
                     if ($multi_line =~ s/^[^,]*,\s*//) { # If this fails there is only 1 parameter (which we will ignore)
                         # 1st parameter has been removed by the above, split up remaining 2 & 3

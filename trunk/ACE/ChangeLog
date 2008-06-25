@@ -1,3 +1,9 @@
+Wed Jun 25 10:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/fuzz.pl:
+
+          Enhance ACE_TMAIN and ORB_init checks for /* .. */ comments.
+
 Wed Jun 25 06:58:52 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/gperf/gperf.1:
