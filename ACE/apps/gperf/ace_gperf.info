@@ -3,7 +3,7 @@ This is ../../../apps/gperf/ace_gperf.info, produced by makeinfo version
 
 INFO-DIR-SECTION GNU programming tools
 START-INFO-DIR-ENTRY
-* Gperf: (ace_gperf).                Perfect Hash Function Generator.
+* ACE_Gperf: (ace_gperf).                Perfect Hash Function Generator.
 END-INFO-DIR-ENTRY
 
    This file documents the features of the GNU Perfect Hash Function
