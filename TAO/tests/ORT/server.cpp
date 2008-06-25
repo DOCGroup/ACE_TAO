@@ -11,10 +11,10 @@ ACE_RCSID (ORT,
            "$Id$")
 
 
-const char *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:");
   int c;
@@ -39,7 +39,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -54,9 +54,7 @@ int main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "ORT Test ORB");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "ORT Test ORB");
 
       if (parse_args (argc, argv) != 0)
         return -1;
@@ -122,9 +120,10 @@ int main (int argc, char *argv[])
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing "
+                               "Cannot open output file %s for writing "
                                "IOR: %s",
-                               ior_output_file),
+                               ior_output_file,
+                               ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
                               1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);

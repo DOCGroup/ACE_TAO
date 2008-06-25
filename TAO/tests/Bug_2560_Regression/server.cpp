@@ -7,10 +7,10 @@
 #include "ace/streams.h"
 #include "ace/OS_NS_stdio.h"
 
-const char *ior_output_file = "server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:");
   int c;
@@ -35,11 +35,11 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // First initialize the ORB, that will remove some arguments...
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TestORB" );
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TestORB");
     CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
     PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in());
     PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();

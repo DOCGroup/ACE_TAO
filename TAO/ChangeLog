@@ -1,3 +1,47 @@
+Wed Jun 25 13:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Bug_1254_Regression/client.cpp:
+        * tests/Bug_1254_Regression/server.cpp:
+        * tests/Bug_2122_Regression/test.cpp:
+        * tests/Bug_2124_Regression/test.cpp:
+        * tests/Bug_2126_Regression/test.cpp:
+        * tests/Bug_2134_Regression/Hello.cpp:
+        * tests/Bug_2144_Regression/test.cpp:
+        * tests/Bug_2174_Regression/client.cpp:
+        * tests/Bug_2234_Regression/client.cpp:
+        * tests/Bug_2234_Regression/server.cpp:
+        * tests/Bug_2319_Regression/server.cpp:
+        * tests/Bug_2345_Regression/server.cpp:
+        * tests/Bug_2375_Regression/test.cpp:
+        * tests/Bug_2542_Regression/bug_2542_regression.cpp:
+        * tests/Bug_2560_Regression/client.cpp:
+        * tests/Bug_2560_Regression/server.cpp:
+        * tests/Bug_2678_Regression/server.cpp:
+        * tests/Bug_2734_Regression/client.cpp:
+        * tests/Bug_2768_Regression/client.cpp:
+        * tests/Bug_2768_Regression/server.cpp:
+        * tests/Bug_2791_Regression/client.cpp:
+        * tests/Bug_2809_Regression/server.cpp:
+        * tests/Bug_2826_Regression/bug_2826_regression.cpp:
+        * tests/Bug_3163_Regression/server.cpp:
+        * tests/Bug_3311_Regression/test.cpp:
+        * tests/CDR/alignment.cpp:
+        * tests/CDR/octet_sequence.cpp:
+        * tests/CodeSets/simple/client.cpp:
+        * tests/CodeSets/simple/server.cpp:
+        * tests/CSD_Collocation/Collocation.cpp:
+        * tests/CSD_Collocation/Collocation_Tester.h:
+        * tests/CSD_Collocation/Collocation_Tester.cpp:
+        * tests/DynAny_Test/driver.h:
+        * tests/DynAny_Test/driver.cpp:
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+        * tests/Monitor/Marshal_Buffer/server.cpp:
+        * tests/MProfile_Forwarding/Manager.h:
+        * tests/MProfile_Forwarding/Manager.cpp:
+        * tests/ORT/server.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Wed Jun 25 11:49:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * examples/ior_corbaloc/corbaname_client.cpp:

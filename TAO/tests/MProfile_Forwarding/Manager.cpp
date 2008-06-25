@@ -7,13 +7,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const char *first_ior = 0;
-const char *second_ior = 0;
-const char *third_ior = 0;
-const char *ior_output_file = 0;
+const ACE_TCHAR *first_ior = 0;
+const ACE_TCHAR *second_ior = 0;
+const ACE_TCHAR *third_ior = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "a:b:c:d:");
   int c;
@@ -41,17 +41,15 @@ parse_args (int argc, char *argv[])
                            "-b <iorfile>"
                            "-c <iorfile>"
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
+                           argv [0]),
                           -1);
       }
   // Indicates sucessful parsing of the command line
   return 0;
 }
 
-
 int
-main (int argc,
-      char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   Manager manager;
@@ -59,8 +57,7 @@ main (int argc,
   try
     {
       // Initilaize the ORB, POA etc.
-      manager.init (argc,
-                    argv);
+      manager.init (argc, argv);
 
       if (parse_args (argc, argv) == -1)
         return -1;
@@ -88,8 +85,7 @@ Manager::Manager (void)
 }
 
 int
-Manager::init (int argc,
-               char *argv[])
+Manager::init (int argc, ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -147,7 +143,6 @@ Manager::init (int argc,
   return 0;
 }
 
-
 int
 Manager::activate_servant (void)
 {
@@ -175,24 +170,23 @@ Manager::activate_servant (void)
   return 0;
 }
 
-
 int
 Manager::make_iors_register (void)
 {
   // First  server
   CORBA::Object_var object_primary =
-    this->orb_->string_to_object (first_ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (first_ior));
 
   //Second server
   CORBA::Object_var object_secondary =
-    this->orb_->string_to_object (second_ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (second_ior));
 
   if (third_ior == 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Here is the culprit \n"));
   // Third Server
   CORBA::Object_var object_tertiary =
-    this->orb_->string_to_object (third_ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (third_ior));
 
   // Get an object reference for the ORBs IORManipultion object!
   CORBA::Object_ptr IORM =
@@ -241,7 +235,7 @@ Manager::make_iors_register (void)
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)),
+                           ior_output_file),
                           1);
       ACE_OS::fprintf (output_file, "%s", iorref1.in ());
       ACE_OS::fclose (output_file);
@@ -251,7 +245,6 @@ Manager::make_iors_register (void)
 
   return 0;
 }
-
 
 int
 Manager::run (void)

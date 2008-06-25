@@ -27,20 +27,20 @@ ACE_Message_Block * m1;
 ACE_Message_Block * m2;
 ACE_Message_Block * m3;
 
-void dump(const char * msg)
+void dump (const char * msg)
 {
   ACE_DEBUG ((LM_INFO,
               "%s\n"
               "m1: %d\n"
               "m2: %d\n"
               "m3: %d\n",
-              msg,
+              ACE_TEXT_CHAR_TO_TCHAR (msg),
               m1->data_block()->reference_count(),
               m2->data_block()->reference_count(),
               m3->data_block()->reference_count()));
 }
 
-int main(int, char*[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // setup mb's
   char buf[1024];
