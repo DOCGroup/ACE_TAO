@@ -2180,6 +2180,8 @@ fi
 * Wed Jun 25 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.5-6
 - Removed gperf to gperf_ace rename, ACE ships now ace_gperf by default
 - Removed ace-tao-strrecvfd.patch
+- Removed gperf macro from ace-tao-config.patch
+- Removed gperf.info patch
 
 * Mon Jun  2 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-5
 - Added ace-tao-strrecvfd.patch (related to bug #3291).
