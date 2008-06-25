@@ -4,16 +4,16 @@
 #include <ace/Get_Opt.h>
 #include <ace/streams.h>
 
-int main(int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
     long retryCount = 0;
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-    ACE_Get_Opt get_opts(argc, argv, "r:");
+    ACE_Get_Opt get_opts (argc, argv, "r:");
     int c;
-    while ((c = get_opts()) != -1)
+    while ((c = get_opts ()) != -1)
     {
       switch (c)
       {

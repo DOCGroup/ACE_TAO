@@ -30,7 +30,7 @@
 
 ACE_RCSID(TAO_RTEC_PERF_Roundtrip, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int nthreads   = 0;
 int high_priority_period = 0;
 int high_priority_workload = 0;
@@ -63,7 +63,7 @@ private:
 };
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:n:l:h:w:v:zr");
   int c;
@@ -124,7 +124,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs();
   RT_Class rt_class;
@@ -164,7 +164,7 @@ int main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Finished peer configuration and activation\n"));
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Federated_Test::Control_var control =
         Federated_Test::Control::_narrow (object.in ());

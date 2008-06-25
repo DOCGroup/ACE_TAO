@@ -21,12 +21,12 @@ ACE_RCSID (TAO_PERF_RTEC_RTCORBA_Baseline,
            server,
            "$Id$")
 
-const char *ior_output_file = "test.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 int use_rt_corba = 0;
 int nthreads = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:n:r");
   int c;
@@ -61,7 +61,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   /// Move the test to the real-time class if it is possible.
   RT_Class rt_class;

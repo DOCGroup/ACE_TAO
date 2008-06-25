@@ -19,16 +19,16 @@ ACE_RCSID (TAO_RTEC_PERF_TCP_Baseline,
            client,
            "$Id$")
 
-char const * hi_endpoint = "localhost:12345";
-char const * lo_endpoint = "localhost:23456";
+char ACE_TCHAR *hi_endpoint = ACE_TEXT ("localhost:12345");
+char ACE_TCHAR *lo_endpoint = ACE_TEXT ("localhost:23456");
 
 int
-parse_args (int argc, char *argv[]);
+parse_args (int argc, ACE_TCHAR *argv[]);
 
 class Scavenger_Task : public ACE_Task_Base
 {
 public:
-  Scavenger_Task (char const * endpoint,
+  Scavenger_Task (ACE_TCHAR const * endpoint,
                   ACE_Barrier * the_barrier,
                   int period_in_usecs);
 
@@ -37,7 +37,7 @@ public:
   virtual int svc ();
 
 private:
-  char const * endpoint_;
+  ACE_TCHAR const * endpoint_;
   ACE_Barrier * the_barrier_;
   int period_in_usecs_;
   TAO_SYNCH_MUTEX mutex_;
@@ -47,7 +47,7 @@ private:
 class Measuring_Task : public ACE_Task_Base
 {
 public:
-  Measuring_Task (char const * endpoint,
+  Measuring_Task (ACE_TCHAR const * endpoint,
                   ACE_Barrier *the_barrier,
                   int iterations,
                   int period_in_usecs);
@@ -57,13 +57,13 @@ public:
   ACE_Sample_History sample_history;
 
 private:
-  char const * endpoint_;
+  ACE_TCHAR const * endpoint_;
   ACE_Barrier * the_barrier_;
   int iterations_;
   int period_in_usecs_;
 };
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   RT_Class rt_class;
 
@@ -122,7 +122,7 @@ int main (int argc, char *argv[])
 
 // ****************************************************************
 
-Scavenger_Task::Scavenger_Task(char const * endpoint,
+Scavenger_Task::Scavenger_Task(ACE_TCHAR const * endpoint,
                                ACE_Barrier * the_barrier,
                                int period_in_usecs)
   : endpoint_ (endpoint)
@@ -194,14 +194,14 @@ Scavenger_Task::svc(void)
 
 // ****************************************************************
 
-Measuring_Task::Measuring_Task (char const * endpoint,
+Measuring_Task::Measuring_Task (ACE_TCHAR const * endpoint,
                                 ACE_Barrier * the_barrier,
                                 int iterations,
                                 int period_in_usecs)
   : sample_history (iterations)
-  , endpoint_(endpoint)
-  , the_barrier_(the_barrier)
-  , iterations_ (iterations)
+  , endpoint_ (endpoint)
+  , the_barrier_ (the_barrier)
+  , iterations_  (iterations)
   , period_in_usecs_ (period_in_usecs)
 {
 }
@@ -233,12 +233,12 @@ Measuring_Task::svc ()
       if (n == 0) {
         ACE_ERROR((LM_ERROR,
                    "Connection closed while writing data to server <%s>\n",
-                   endpoint_, ""));
+                   endpoint_));
         break;
       } else if (n == -1) {
         ACE_ERROR((LM_ERROR,
                    "Error writing data to server <%s> %p\n",
-                   endpoint_, ""));
+                   endpoint_));
         break;
       }
       if (n == 0 || n == -1)
@@ -253,12 +253,12 @@ Measuring_Task::svc ()
       if (n == 0) {
         ACE_ERROR((LM_ERROR,
                    "Connection closed while reading data from server <%s>\n",
-                   endpoint_, ""));
+                   endpoint_));
         break;
       } else if (n == -1) {
         ACE_ERROR((LM_ERROR,
                    "Error reading data from server <%s> %p\n",
-                   endpoint_, ""));
+                   endpoint_));
         break;
       }
 
@@ -279,7 +279,7 @@ Measuring_Task::svc ()
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "H:L:");
   int c;
