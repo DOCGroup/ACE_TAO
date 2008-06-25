@@ -768,9 +768,6 @@ AH_TEMPLATE([ACE_LACKS_MODE_MASKS],
 AH_TEMPLATE([ACE_LACKS_MSG_ACCRIGHTS],
 [Platform defines ACE_HAS_MSG, but lacks msg_accrights{len}.])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_NETBSD_MSYNC],
-[Platform doesn't support "sync" third argument to msync (?)])
-
 AH_TEMPLATE([ACE_LACKS_MUTEXATTR_PSHARED],
 [Platform lacks pthread_mutexattr_setpshared().])
 
