@@ -249,14 +249,13 @@ NContextExt_Client_i::run (void)
 }
 
 int
-NContextExt_Client_i::init (int argc, char **argv)
+NContextExt_Client_i::init (int argc, ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
   try
     {
-
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
         CORBA::ORB_init (this->argc_, this->argv_);
@@ -305,30 +304,30 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
              "The first component kind is %s,"
              "The second component id is %s,"
              "The second component kind is %s\n\n"),
-             name[0].id.in (),
-             name[0].kind.in (),
-             name[1].id.in (),
-             name[1].kind.in ()));
+             ACE_TEXT_CHAR_TO_TCHAR (name[0].id.in ()),
+             ACE_TEXT_CHAR_TO_TCHAR (name[0].kind.in ()),
+             ACE_TEXT_CHAR_TO_TCHAR (name[1].id.in ()),
+             ACE_TEXT_CHAR_TO_TCHAR (name[1].kind.in ())));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The string form of the input name is: \n%s\n\n"),
-              str_name.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR (str_name.in ())));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The unstringified version of the name components are:,"
               "The first component id is %s,"
               "The first component kind is %s,"
               "The second component id is %s,"
               "The second component kind is %s\n\n"),
-              nm[0].id.in (),
-              nm[0].kind.in (),
-              nm[1].id.in (),
-              nm[1].kind.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR (nm[0].id.in ()),
+              ACE_TEXT_CHAR_TO_TCHAR (nm[0].kind.in ()),
+              ACE_TEXT_CHAR_TO_TCHAR (nm[1].id.in ()),
+              ACE_TEXT_CHAR_TO_TCHAR (nm[1].kind.in ())));
 
  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("When the address of the NamingContext is:"
              "myhost.555xyz.com:9999"
              "and the Object name is \n%s\n"),
-             obj_name.in ()));
+             ACE_TEXT_CHAR_TO_TCHAR (obj_name.in ())));
 
  ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("The URL form of the string is \n %s\n"),
-             url_string.in ()));
+             ACE_TEXT_CHAR_TO_TCHAR (url_string.in ())));
 
 }
