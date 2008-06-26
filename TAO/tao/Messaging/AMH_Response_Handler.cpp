@@ -78,6 +78,10 @@ TAO_AMH_Response_Handler::init(TAO_ServerRequest &server_request,
   orb_core_ = server_request.orb_core ();
   allocator_ = allocator;
 
+  TAO_GIOP_Message_Version v;
+  server_request.outgoing()->get_version(v);
+  this->_tao_out.set_version(v.major, v.minor);
+
   this->transport_->add_reference ();
 }
 
