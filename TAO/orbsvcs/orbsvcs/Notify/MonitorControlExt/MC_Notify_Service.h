@@ -4,21 +4,22 @@
  *  $Id$
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
- *
- *
  */
 
 #ifndef TAO_MC_NOTIFY_SERVICE_H
 #define TAO_MC_NOTIFY_SERVICE_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+
+#include "orbsvcs/Notify/CosNotify_Service.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/CosNotify_Service.h"
+#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -47,5 +48,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_Notify_MC_Ext, TAO_MC_Notify_Service)
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_MC_NOTIFY_SERVICE_H */

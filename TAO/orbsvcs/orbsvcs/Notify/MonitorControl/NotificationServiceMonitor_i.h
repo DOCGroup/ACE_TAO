@@ -7,9 +7,9 @@
 
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMCS.h"
 
-#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
-
 #include "tao/ORB.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

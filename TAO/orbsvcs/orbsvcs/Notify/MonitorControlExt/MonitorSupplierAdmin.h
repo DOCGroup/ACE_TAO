@@ -1,16 +1,19 @@
 // $Id$
+
 #ifndef MONITORSUPPLIERADMIN_H
 #define MONITORSUPPLIERADMIN_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+
+#include "orbsvcs/Notify/SupplierAdmin.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/SupplierAdmin.h"
 #include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,5 +51,8 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
 #include /**/ "ace/post.h"
+
 #endif /* MONITORSUPPLIERADMIN_H */

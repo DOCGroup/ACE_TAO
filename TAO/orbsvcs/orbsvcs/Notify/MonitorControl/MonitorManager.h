@@ -6,15 +6,14 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
-
-#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
-
 #include "ace/Task.h"
 #include "ace/ARGV.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Barrier.h"
 
 #include "tao/ORB.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 #include "orbsvcs/Notify/MonitorControl/notify_mc_export.h"
 

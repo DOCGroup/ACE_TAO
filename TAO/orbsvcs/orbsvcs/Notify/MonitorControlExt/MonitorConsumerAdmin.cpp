@@ -10,6 +10,8 @@
 #include "orbsvcs/Notify/Buffering_Strategy.h"
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ConsumerAdminControl : public TAO_NS_Control
@@ -195,3 +197,6 @@ TAO_MonitorConsumerAdmin::update_queue_count (size_t count)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+

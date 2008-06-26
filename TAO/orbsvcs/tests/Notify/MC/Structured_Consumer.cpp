@@ -92,13 +92,18 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 int main (int argc, char* argv[])
 {
   int status = 0;
+  
   try
     {
       Consumer_Client client;
-
       status = client.init (argc, argv);
+      
       if (status != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "Error: Client init failed.\n"),1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error: Client init failed.\n"),
+                            1);
+        }
 
       CosNotifyChannelAdmin::EventChannel_var ec =
         client.create_event_channel ("MyEventChannel", 0);
@@ -111,13 +116,21 @@ int main (int argc, char* argv[])
         MonitorTestInterface::_narrow (object.in ());
 
       if (CORBA::is_nil (sig.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Error: Narrow failed.\n"),1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error: Narrow failed.\n"),
+                            1);
+        }
 
       CosNotifyChannelAdmin::ConsumerAdmin_var admin =
         create_consumeradmin (ec.in ());
 
       if (CORBA::is_nil (admin.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Error: nil ConsumerAdmin.\n"),1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error: nil ConsumerAdmin.\n"),
+                            1);
+        }
 
       create_consumers (admin.in (), &client);
 
@@ -126,10 +139,14 @@ int main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "\nConsumer waiting for events...\n"));
 
       FILE* ready_file = ACE_OS::fopen (ready, "w");
+      
       if (ready_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open ready file for writing\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open ready file for writing\n"),
+                            1);
+        }
+        
       ACE_OS::fprintf (ready_file, "ready\n");
       ACE_OS::fclose (ready_file);
 
