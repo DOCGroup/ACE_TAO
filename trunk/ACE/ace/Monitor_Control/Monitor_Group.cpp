@@ -44,6 +44,12 @@ namespace ACE
     }
     
     void
+    Monitor_Group::receive (const Monitor_Control_Types::NameList& /* data */)
+    {
+      /// No-op, should always call update().
+    }
+    
+    void
     Monitor_Group::clear (void)
     {
       for (MEMBERS_ITERATOR i (this->members_); !i.done (); i.advance ())

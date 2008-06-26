@@ -34,7 +34,7 @@ namespace ACE
     /**
      * @class Monitor_Group
      *
-     * @brief Updates and/or clears a group of monitors iwth a single call.
+     * @brief Updates and/or clears a group of monitors with a single call.
      */
     class MONITOR_CONTROL_Export Monitor_Group : public Monitor_Base
     {
@@ -48,6 +48,7 @@ namespace ACE
       /// These are overridden to be no-ops.
       virtual void receive (double data);
       virtual void receive (size_t data);
+      virtual void receive (const Monitor_Control_Types::NameList& data);
 
       virtual void clear (void);
 
