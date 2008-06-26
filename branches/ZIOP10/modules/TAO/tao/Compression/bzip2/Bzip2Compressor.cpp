@@ -1,16 +1,16 @@
-#include "ZlibCompressor.h"
+#include "Bzip2Compressor.h"
 
-ACE_RCSID (ZLIB,
-           ZlibCompressor,
+ACE_RCSID (BZIP2,
+           Bzip2Compressor,
            "$Id$")
 
-#include "zlib.h"
+#include "bzip2.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-ZlibCompressor::ZlibCompressor (
+Bzip2Compressor::Bzip2Compressor (
   ::Compression::CompressionLevel compression_level,
   ::Compression::CompressorFactory_ptr compressor_factory) :
     BaseCompressor (compression_level, compressor_factory)
@@ -18,7 +18,7 @@ ZlibCompressor::ZlibCompressor (
 }
 
 void
-ZlibCompressor::compress (
+Bzip2Compressor::compress (
     const ::Compression::Buffer & source,
     ::Compression::Buffer & target
   )
@@ -40,13 +40,13 @@ ZlibCompressor::compress (
     {
       target.length (static_cast <CORBA::ULong> (max_length));
     }
-   
+
   // Update statistics for this compressor
   this->update_stats (source.length (), target.length ());
 }
 
 void
-ZlibCompressor::decompress (
+Bzip2Compressor::decompress (
   const ::Compression::Buffer & source,
   ::Compression::Buffer & target)
 {

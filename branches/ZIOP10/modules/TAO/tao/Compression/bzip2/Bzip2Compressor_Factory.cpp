@@ -1,8 +1,8 @@
-#include "tao/Compression/zlib/ZlibCompressor_Factory.h"
-#include "tao/Compression/zlib/ZlibCompressor.h"
+#include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
+#include "tao/Compression/bzip2/Bzip2Compressor.h"
 
-ACE_RCSID (ZLIB,
-           ZlibCompressor_Factory,
+ACE_RCSID (BZIP2,
+           Bzip2_Compressor_Factory,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -10,20 +10,20 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 
-Zlib_CompressorFactory::Zlib_CompressorFactory (void) :
-  ::TAO::CompressorFactory (::Compression::COMPRESSORID_ZLIB),
+Bzip2_CompressorFactory::Bzip2_CompressorFactory (void) :
+  ::TAO::CompressorFactory (::Compression::COMPRESSORID_BZIP2),
   compressor_ (::Compression::Compressor::_nil ())
 {
 }
 
 ::Compression::Compressor_ptr
-Zlib_CompressorFactory::get_compressor (
+Bzip2_CompressorFactory::get_compressor (
     ::Compression::CompressionLevel compression_level)
 {
   // @todo, make a array based on compression level
   if (CORBA::is_nil (compressor_.in ()))
     {
-      compressor_ = new ZlibCompressor (compression_level, this);
+      compressor_ = new Bzip2Compressor (compression_level, this);
     }
 
   return ::Compression::Compressor::_duplicate (compressor_.in ());
