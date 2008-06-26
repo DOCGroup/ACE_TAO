@@ -3,7 +3,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/ORBInitializer_Registry.h"
-#include "tao/Operation_Details.h"
+#include "tao/operation_details.h"
 #include "tao/Stub.h"
 
 ACE_RCSID (ZIOP,
@@ -100,8 +100,8 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
   else
     {
       return false;
-    }  
-    
+    }
+
   return true;
 }
 
@@ -173,12 +173,12 @@ TAO_ZIOP_Loader::generate_service_context (TAO_Service_Context &service_cntx, TA
   }
 }
 
-bool 
+bool
 TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
                            const ::Compression::Buffer &source,
                            ::Compression::Buffer &target)
 {
-  try 
+  try
     {
       compressor->compress (source, target);
     }
