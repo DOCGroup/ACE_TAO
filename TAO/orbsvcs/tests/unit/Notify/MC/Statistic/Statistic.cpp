@@ -3,7 +3,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Monitor_Base.h"
 
-#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
@@ -14,12 +14,12 @@ error (const char* msg)
   ACE_OS::exit (1);
 }
 
-#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
 int
 ACE_TMAIN (int, ACE_TCHAR*[])
 {
-#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
   try
     {
@@ -108,13 +108,29 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         {
           error ("Interval Monitor_Base::sum_of_squares() failed");
         }
+
+      Monitor_Base list ("list", Monitor_Base::MC_LIST);
+      Monitor_Control_Types::NameList l;
+      l.push_back ("one");
+      l.push_back ("two");
+      l.push_back ("three");
+      list.receive (l);
+      
+      if (counter.count () != 3)
+        {
+          error ("List Monitor_Base::receive() failed");
+        }
+
+      /// Test for memory leaks (with valgrind).
+      list.clear ();
+      list.receive (l);
     }
   catch (...)
     {
       error ("Caught an unexpected exception type");
     }
 
-#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;
 }

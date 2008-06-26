@@ -2,11 +2,11 @@
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
-#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
-
 #include "ace/Auto_Ptr.h"
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Base.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.h"
 
@@ -250,24 +250,42 @@ NotificationServiceMonitor_i::get_data (
           monitor->update ();
         }
         
-      CosNotification::NotificationServiceMonitorControl::Numeric num;
-      num.count = static_cast<CORBA::ULong> (monitor->count ());
-      num.minimum = monitor->minimum_sample ();
-      num.maximum = monitor->maximum_sample ();
-      num.last = monitor->last_sample ();
-
-      if (monitor->type() == Monitor_Base::MC_COUNTER)
+      // Populate the data structure based on the type of statistic
+      if (monitor->type () == Monitor_Base::MC_LIST)
         {
-          num.average = 0;
-          num.sum_of_squares = 0;
+          Monitor_Control_Types::NameList slist (monitor->get_list ());
+          CORBA::ULong size = static_cast<CORBA::ULong> (slist.size ());
+          Monitor::NameList list (size);
+          list.length (size);
+
+          for (CORBA::ULong i = 0; i < size; ++i)
+            {
+              list[i] = CORBA::string_dup (slist[i].c_str ());
+            }
+
+          data.list (list);
         }
       else
         {
-          num.average = monitor->average ();
-          num.sum_of_squares = monitor->sum_of_squares ();
-        }
+          CosNotification::NotificationServiceMonitorControl::Numeric num;
+          num.count = static_cast<CORBA::ULong> (monitor->count ());
+          num.minimum = monitor->minimum_sample ();
+          num.maximum = monitor->maximum_sample ();
+          num.last = monitor->last_sample ();
 
-      data.num (num);
+          if (monitor->type() == Monitor_Base::MC_COUNTER)
+            {
+              num.average = 0;
+              num.sum_of_squares = 0;
+            }
+          else
+            {
+              num.average = monitor->average ();
+              num.sum_of_squares = monitor->sum_of_squares ();
+            }
+
+          data.num (num);
+        }
     }
 }
 

@@ -139,7 +139,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         {
           error ("Invalid active event channel count");
         }
-/*
+
       stat_name =
         ecf_name
         + "/"
@@ -152,8 +152,8 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           error ("Could not find InactiveEventChannels statistic");
         }
 
-      stat->calculate ();
-      TAO_Statistic::List list = stat->get_list ();
+      stat->update ();
+      Monitor_Control_Types::NameList list = stat->get_list ();
       
       if (list.size () != 1)
         {
@@ -164,9 +164,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       
       if (list[0] != full_ec_name)
         {
-          error("Wrong event channel name");
+          error ("Wrong event channel name");
         }
-*/
+
       CosNotifyChannelAdmin::AdminID aid;
       CosNotifyChannelAdmin::SupplierAdmin_var admin =
         mec->named_new_for_suppliers (CosNotifyChannelAdmin::AND_OP,

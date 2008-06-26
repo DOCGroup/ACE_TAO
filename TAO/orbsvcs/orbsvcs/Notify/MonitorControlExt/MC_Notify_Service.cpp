@@ -1,9 +1,15 @@
 // $Id$
+
 #include "orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h"
+
+#include "tao/debug.h"
+
+#include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
+
 #include "orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h"
-#include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
-#include "tao/debug.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -75,3 +81,6 @@ TAO_MC_Notify_Service::finalize_service (
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_Notify_MC_Ext, TAO_MC_Notify_Service)
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+

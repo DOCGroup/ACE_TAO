@@ -3,11 +3,11 @@
 #include "ace/Monitor_Base.h"
 #include "ace/Monitor_Point_Registry.h"
 
-#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
+#include "tao/TAO_Singleton_Manager.h"
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
-#include "tao/TAO_Singleton_Manager.h"
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
