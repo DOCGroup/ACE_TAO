@@ -28,7 +28,7 @@ Bzip2Compressor::compress (
 
   int const retval = ::BZ2_bzBuffToBuffCompress (reinterpret_cast <char*>(target.get_buffer ()),
                                   &max_length,
-                                  reinterpret_cast <const char*>(source.get_buffer ()),
+                                  reinterpret_cast <char*>(source.get_buffer ()),
                                   source.length (),
                                   0,
                                   1,
@@ -55,7 +55,7 @@ Bzip2Compressor::decompress (
   unsigned int max_length = static_cast <unsigned int> (target.length ());
   int const retval = ::BZ2_bzBuffToBuffDecompress (reinterpret_cast <char*>(target.get_buffer ()),
                                  &max_length,
-                                 reinterpret_cast <const Bytef*>(source.get_buffer ()),
+                                 reinterpret_cast <char*>(source.get_buffer ()),
                                  source.length (),
                                  0,
                                  1);
