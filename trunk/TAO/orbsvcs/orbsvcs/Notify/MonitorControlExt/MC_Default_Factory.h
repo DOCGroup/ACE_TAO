@@ -4,21 +4,24 @@
  *  $Id$
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
- *
- *
  */
 
 #ifndef TAO_MC_DEFAULT_FACTORY_H
 #define TAO_MC_DEFAULT_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Notify/Default_Factory.h"
+
+#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,5 +58,8 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_MC_DEFAULT_FACTORY_H */

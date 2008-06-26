@@ -49,7 +49,8 @@ sorter (const void* a, const void* b)
 
 bool
 process_command (CosNotification::NotificationServiceMonitorControl_ptr nsm,
-                 char* buf, const char* command)
+                 char* buf,
+                 const char* command)
 {
   if (ACE_OS::strstr (buf, command) == buf)
     {
@@ -62,27 +63,40 @@ process_command (CosNotification::NotificationServiceMonitorControl_ptr nsm,
           space = true;
           i++;
         }
+        
       if (space)
         {
           try
             {
               const char* start = name + i;
+              
               if (ACE_OS::strcmp (command, shutdown_cmd) == 0)
-                nsm->shutdown_event_channel (start);
+                {
+                  nsm->shutdown_event_channel (start);
+                }
               else if (ACE_OS::strcmp (command, rm_consumer) == 0)
-                nsm->remove_consumer (start);
+                {
+                  nsm->remove_consumer (start);
+                }
               else if (ACE_OS::strcmp (command, rm_supplier) == 0)
-                nsm->remove_supplier (start);
+                {
+                  nsm->remove_supplier (start);
+                }
               else if (ACE_OS::strcmp (command, rm_consumeradmin) == 0)
-                nsm->remove_consumeradmin (start);
+                {
+                  nsm->remove_consumeradmin (start);
+                }
               else if (ACE_OS::strcmp (command, rm_supplieradmin) == 0)
-                nsm->remove_supplieradmin (start);
+                {
+                  nsm->remove_supplieradmin (start);
+                }
             }
           catch (const CORBA::Exception& ex)
             {
               ACE_OS::strcat (buf, ": ");
               ex._tao_print_exception (buf);
             }
+            
           return true;
         }
     }
@@ -94,12 +108,15 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   int status = 0;
+  
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       CORBA::Object_var obj = orb->string_to_object (
         ACE_TEXT_ALWAYS_CHAR (monitor_ior));
@@ -117,22 +134,25 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       bool done = false;
       static const size_t lsize = 1024;
       char prev[lsize];
-      while(!done)
+      
+      while (!done)
         {
           ACE_OS::printf ("NotifyService> ");
           ACE_OS::fflush (stdout);
 
           char line[lsize] = "";
           char* rl = ACE_OS::fgets (line, lsize, stdin);
+          
           if (rl != 0)
             {
               int len = static_cast<int> (ACE_OS::strlen (line));
-              for(int i = 0; i < len && ACE_OS::ace_isspace (rl[0]); i++)
+              
+              for (int i = 0; i < len && ACE_OS::ace_isspace (rl[0]); ++i)
                 {
                   rl++;
                 }
 
-              for(int i = len - 1; i >= 0 && ACE_OS::ace_isspace (line[i]); i--)
+              for (int i = len - 1; i >= 0 && ACE_OS::ace_isspace (line[i]); --i)
                 {
                   line[i] = '\0';
                 }
@@ -142,6 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                   ACE_OS::strcpy (line, prev);
                   rl = line;
                 }
+                
               ACE_OS::strcpy (prev, line);
             }
 

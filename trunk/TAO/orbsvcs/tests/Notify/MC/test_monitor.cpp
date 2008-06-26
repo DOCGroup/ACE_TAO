@@ -19,8 +19,7 @@ class MonitorTestInterface_i: public virtual POA_MonitorTestInterface
 public:
   MonitorTestInterface_i (
     CosNotification::NotificationServiceMonitorControl_ptr nsm)
-    : base_ ("NotifyEventChannelFactory")
-    , nsm_ (CosNotification::NotificationServiceMonitorControl::_duplicate (nsm))
+    : nsm_ (CosNotification::NotificationServiceMonitorControl::_duplicate (nsm))
   {
   }
 
@@ -31,10 +30,6 @@ public:
   finished (MonitorTestInterface::Which proc);
   
 private:
-  Monitor::NameList
-  ec_names (Monitor::NameList_var &reg_names);
-            
-private:
   ACE_CString base_;
   CosNotification::NotificationServiceMonitorControl_var nsm_;
 };
@@ -44,17 +39,26 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
 {
   ACE_CString str;
   CosNotification::NotificationServiceMonitorControl::Data_var data;
+  Monitor::NameList list;
   CosNotification::NotificationServiceMonitorControl::Numeric num; 
-  Monitor::NameList_var reg_names;
-  Monitor::NameList ec_names;
       
   switch (proc)
     {
     case MonitorTestInterface::NotifyService:
-      str = this->base_
-            + "/"
-            + NotifyMonitoringExt::ActiveEventChannelCount;
-            
+      data =
+        nsm_->get_statistic (NotifyMonitoringExt::EventChannelFactoryNames);
+      list = data->list ();
+      
+      if (list.length () != 1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: There should be only one Event "
+                      "Channel Factory\n"));
+        }
+        
+      this->base_ = list[0];
+      this->base_ += "/";
+      str = this->base_ + NotifyMonitoringExt::ActiveEventChannelCount;
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->num ();
       
@@ -65,10 +69,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
                       "Channels\n"));
         }
 
-      str = this->base_
-            + "/"
-            + NotifyMonitoringExt::InactiveEventChannelCount;
-            
+      str = this->base_ + NotifyMonitoringExt::InactiveEventChannelCount;          
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->num ();
       
@@ -81,21 +82,22 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
         
       break;
     case MonitorTestInterface::Consumer:
-      reg_names = this->nsm_->get_statistic_names ();
-      ec_names = this->ec_names (reg_names);
+      str = this->base_ + NotifyMonitoringExt::ActiveEventChannelNames;
+      data = nsm_->get_statistic (str.c_str ());
+      list = data->list ();
       
-      // Length should be 0 or 1.
-      if (ec_names.length () == 0)
+      if (list.length () != 1)
         {
-          break;
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: There should be only one active "
+                      "Event Channel\n"));
         }
-      
-      str = this->base_
-            + "/"
-            + ec_names[0].in ()
-            + "/"
-            + NotifyMonitoringExt::EventChannelConsumerCount;
-            
+
+      // Base will now be the factory plus the event channel.
+      this->base_ = list[0];
+      this->base_ += "/";
+
+      str = this->base_ + NotifyMonitoringExt::EventChannelConsumerCount;      
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->num ();
       
@@ -104,12 +106,8 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
           ACE_ERROR ((LM_ERROR, "There should be only one Consumer\n"));
         }
 
-      str = this->base_
-            + "/"
-            + ec_names[0].in ()
-            + "/"
-            + NotifyMonitoringExt::EventChannelConsumerAdminCount;
-            
+      str =
+        this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminCount;          
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->num ();
       
@@ -118,12 +116,8 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
           ACE_ERROR ((LM_ERROR, "There should be only one ConsumerAdmin\n"));
         }
 
-      str = this->base_
-            + "/"
-            + ec_names[0].in ()
-            + "/"
-            + NotifyMonitoringExt::EventChannelQueueElementCount;
-            
+      str =
+        this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;  
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->num ();
       
@@ -134,21 +128,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
         
       break;
     case MonitorTestInterface::Supplier:
-      reg_names = this->nsm_->get_statistic_names ();
-      ec_names = this->ec_names (reg_names);
-      
-      // Length should be 0 or 1.
-      if (ec_names.length () == 0)
-        {
-          break;
-        }
-      
-      str = this->base_
-            + "/"
-            + ec_names[0].in ()
-            + "/"
-            + NotifyMonitoringExt::EventChannelSupplierCount;
-            
+      str = this->base_ + NotifyMonitoringExt::EventChannelSupplierCount;          
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->num ();
       
@@ -157,12 +137,8 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
           ACE_ERROR ((LM_ERROR, "There should be only one Supplier\n"));
         }
 
-      str = this->base_
-            + "/"
-            + ec_names[0].in ()
-            + "/"
-            + NotifyMonitoringExt::EventChannelSupplierAdminCount;
-            
+      str =
+        this->base_ + NotifyMonitoringExt::EventChannelSupplierAdminCount;      
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->num ();
       
@@ -199,21 +175,7 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
       this->running (MonitorTestInterface::NotifyService);
       break;
     case MonitorTestInterface::Supplier:
-      reg_names = this->nsm_->get_statistic_names ();
-      ec_names = this->ec_names (reg_names);
-      
-      // Length should be 0 or 1.
-      if (ec_names.length () == 0)
-        {
-          break;
-        }
-      
-      str = this->base_
-            + "/"
-            + ec_names[0].in ()
-            + "/"
-            + NotifyMonitoringExt::EventChannelConsumerCount;
-            
+      str = this->base_ + NotifyMonitoringExt::EventChannelConsumerCount;
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->num ();
       
@@ -222,12 +184,8 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
           ACE_ERROR ((LM_ERROR, "There should still be one Consumer\n"));
         }
 
-      str = this->base_
-            + "/"
-            + ec_names[0].in ()
-            + "/"
-            + NotifyMonitoringExt::EventChannelQueueElementCount;
-            
+      str =
+        this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->num ();
       
@@ -237,20 +195,25 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
                       "There should be at least one event queued\n"));
         }
 
-      str = this->base_
-            + "/"
-            + ec_names[0].in ()
-            + "/"
-            + NotifyMonitoringExt::EventChannelQueueSize;
-            
-      data = this->nsm_->get_statistic (str.c_str ());
-      num = data->num ();
+      str =
+        this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminNames;
+      data = nsm_->get_statistic(str.c_str ());
+      list = data->list ();
       
-      ACE_DEBUG ((LM_DEBUG, "Average Queue Size: %f\n", num.average));
-      
-      if (num.average == 0.0)
+      for (CORBA::ULong i = 0; i < list.length (); ++i)
         {
-          ACE_ERROR ((LM_ERROR, "The average should be non-zero\n"));
+          str = list[i].in ();
+          str += "/";
+          str += NotifyMonitoringExt::EventChannelQueueSize;
+          data = nsm_->get_statistic(str.c_str ());
+          num = data->num ();
+          ACE_DEBUG ((LM_DEBUG, "Average Queue Size: %f\n", num.average));
+          
+          if (num.average == 0.0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "The average should be non-zero\n"));
+            }
         }
 
       break;
@@ -258,48 +221,6 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
       ACE_ERROR ((LM_ERROR, "Impossible enum value %d\n", proc));
       break;
     }
-}
-
-Monitor::NameList
-MonitorTestInterface_i::ec_names (Monitor::NameList_var &reg_names)
-{
-  // The correctness of this code depends on 2 things:
-  // 1. all the monitors for each event channel are added at once
-  // 2. the monitor registry iterator preserves order of addition
-  // If either of those things ever changes, the code below will
-  // have to change as well.
-  
-  Monitor::NameList retval (0);
-  CORBA::ULong index = 0UL;
-  retval.length (index);
-  ACE_CString current;
-  
-  ACE_CString::size_type len = this->base_.length ();
-
-  for (CORBA::ULong i = 0UL; i < reg_names->length (); ++i)
-    {
-      ACE_CString reg_name = reg_names[i].in ();
-      
-      if (reg_name.find (this->base_) == 0 && reg_name[len] == '/')
-        {
-          ACE_CString tail = reg_name.substr (len + 1);
-          ACE_CString::size_type pos = tail.find ('/');
-          
-          if (pos != ACE_CString::npos)
-            {
-              ACE_CString ec_name = tail.substr (0, pos);
-              
-              if (ec_name != current)
-                {
-                  retval.length (index + 1);
-                  retval[index++] = ec_name.c_str ();
-                  current = ec_name;
-                }
-            }
-        }
-    }
-    
-  return retval;
 }
 
 static const ACE_TCHAR* ior_output_file = ACE_TEXT ("test_monitor.ior");
@@ -397,18 +318,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager ();
       poa_manager->activate ();
 
       orb->run ();
       orb->destroy ();
-    }
-  catch (const CosNotification::NotificationServiceMonitorControl::InvalidName& e)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "test_monitor: caught invalid name %s\n",
-                  e.names[0].in ()));
-      status++;
     }
   catch (const CORBA::Exception& ex)
     {

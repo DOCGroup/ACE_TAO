@@ -2,7 +2,7 @@
 
 #include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
 
-#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
@@ -17,7 +17,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_MonitorManager::TAO_MonitorManager (void)
- : run_ (false)
+  : run_ (false)
 {
 }
 
@@ -315,4 +315,4 @@ ACE_STATIC_SVC_DEFINE (TAO_MonitorAndControl,
                        0)
 ACE_FACTORY_DEFINE (TAO_Notify_MC, TAO_MonitorAndControl)
 
-#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */

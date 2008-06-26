@@ -34,7 +34,16 @@ public:
   
   virtual void update (void)
   {
-    this->receive (this->interf_->get_ecs (0, this->active_));
+    if (this->type () == Monitor_Base::MC_LIST)
+      {
+        Monitor_Control_Types::NameList names;
+        this->interf_->get_ecs (&names, this->active_);
+        this->receive (names);
+      }
+    else
+      {
+        this->receive (this->interf_->get_ecs (0, this->active_));
+      }
   }
 
 private:
@@ -80,6 +89,17 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
           
       this->stat_names_.push_back (stat_name);
          
+      stat_name = dir_name + NotifyMonitoringExt::InactiveEventChannelNames;
+      event_channels = 0;
+      ACE_NEW (event_channels,
+               EventChannels (this,
+                              stat_name,
+                              Monitor_Base::MC_LIST,
+                              false));
+                              
+      event_channels->add_to_registry ();
+      event_channels->remove_ref ();
+          
       this->stat_names_.push_back (stat_name);
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelCreationTime;
@@ -94,6 +114,29 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       timestamp->remove_ref ();
           
       this->stat_names_.push_back (stat_name);
+      
+      Monitor_Point_Registry* instance =
+        Monitor_Point_Registry::instance ();
+
+      ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
+      
+      Monitor_Base* names =
+        instance->get (NotifyMonitoringExt::EventChannelFactoryNames);
+        
+      if (names == 0)
+        {
+          stat_name = NotifyMonitoringExt::EventChannelFactoryNames;
+          ACE_NEW_THROW_EX (names,
+                            Monitor_Base (stat_name.c_str (),
+                                          Monitor_Base::MC_LIST),
+                            CORBA::NO_MEMORY ());
+          names->add_to_registry ();
+        }
+        
+      Monitor_Control_Types::NameList list = names->get_list ();
+      list.push_back (this->name_);
+      names->receive (list);
+      names->remove_ref ();
     }
 }
 

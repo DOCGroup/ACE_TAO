@@ -11,9 +11,10 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
-
+#include "tao/orbconf.h"
 #include "tao/Versioned_Namespace.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/notify_mc_export.h"
 

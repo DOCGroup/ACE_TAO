@@ -1,9 +1,12 @@
 // $Id$
+
 #include "orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
+
+#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,3 +46,6 @@ TAO_MC_Default_Factory::create (TAO_Notify_ConsumerAdmin*& admin)
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
+

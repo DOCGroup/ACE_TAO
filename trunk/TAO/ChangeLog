@@ -1,3 +1,35 @@
+Thu Jun 26 13:14:15 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExt.idl:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Timestamp_Monitor.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Dynamic_Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorManager.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+        * orbsvcs/tests/Notify/MC/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/MC/test_monitor.cpp:
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+
+          - Restored support and testing for monitors storing string data.
+
+          - Additions and fixes to #ifdef guards that ensure a
+            successful build when monitors are disabled.
+
 Thu Jun 26 12:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Bug_2809_Regression/server.cpp:
