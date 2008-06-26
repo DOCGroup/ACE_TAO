@@ -23,16 +23,18 @@ Bzip2Compressor::compress (
     ::Compression::Buffer & target
   )
 {
-  uLongf max_length = static_cast <uLongf> (source.length () * 1.1) + 12;
+  unsigned int max_length = static_cast <unsigned int> (source.length () * 1.1) + 12;
   target.length (static_cast <CORBA::ULong> (max_length));
 
-  int const retval = ::compress2 (reinterpret_cast <Bytef*>(target.get_buffer ()),
+  int const retval = ::BZ2_bzBuffToBuffCompress (reinterpret_cast <char*>(target.get_buffer ()),
                                   &max_length,
-                                  reinterpret_cast <const Bytef*>(source.get_buffer ()),
+                                  reinterpret_cast <const char*>(source.get_buffer ()),
                                   source.length (),
+                                  0,
+                                  1,
                                   this->compression_level ());
 
-  if (retval != Z_OK)
+  if (retval != BZ_OK)
     {
       throw ::Compression::CompressionException (retval);
     }
@@ -50,13 +52,15 @@ Bzip2Compressor::decompress (
   const ::Compression::Buffer & source,
   ::Compression::Buffer & target)
 {
-  uLongf max_length = static_cast <uLongf> (target.length ());
-  int const retval = uncompress (reinterpret_cast <Bytef*>(target.get_buffer ()),
+  unsigned int max_length = static_cast <unsigned int> (target.length ());
+  int const retval = ::BZ2_bzBuffToBuffDecompress (reinterpret_cast <char*>(target.get_buffer ()),
                                  &max_length,
                                  reinterpret_cast <const Bytef*>(source.get_buffer ()),
-                                 source.length ());
+                                 source.length (),
+                                 0,
+                                 1);
 
-  if (retval != Z_OK)
+  if (retval != BZ_OK)
     {
       throw ::Compression::CompressionException (retval);
     }
