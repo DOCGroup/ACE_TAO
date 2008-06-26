@@ -110,7 +110,7 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
       case 't':
         test_str = get_opts.opt_arg ();
 
-        if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynany)"))
+        if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynany")))
           this->test_type_ = TEST_DYNANY;
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynarray")))
           this->test_type_ = TEST_DYNARRAY;
