@@ -9,6 +9,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
+#if defined (ACE_HAS_PRUSAGE_T)
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
+#endif
+
 ACE_RCSID(ace, Profile_Timer, "$Id$")
 
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
