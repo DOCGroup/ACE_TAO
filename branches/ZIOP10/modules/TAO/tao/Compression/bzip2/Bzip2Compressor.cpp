@@ -4,7 +4,7 @@ ACE_RCSID (BZIP2,
            Bzip2Compressor,
            "$Id$")
 
-#include "bzip2.h"
+#include "bzlib.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
