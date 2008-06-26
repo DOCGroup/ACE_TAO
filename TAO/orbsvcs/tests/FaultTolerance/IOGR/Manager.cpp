@@ -15,15 +15,15 @@
 #include "ace/OS_NS_fcntl.h"
 
 // Files which have the IOR
-const char *first_ior = 0;
-const char *second_ior = 0;
-const char *ior_output_file = 0;
+const ACE_TCHAR *first_ior = 0;
+const ACE_TCHAR *second_ior = 0;
+const ACE_TCHAR *ior_output_file = 0;
 
 // Reference to the IOR manipulator
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "a:b:c:");
   int c;
@@ -48,17 +48,15 @@ parse_args (int argc, char *argv[])
                            "-b <iorfile>"
                            "-c <output ior file>"
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
+                           argv [0]),
                           -1);
       }
   // Indicates sucessful parsing of the command line
   return 0;
 }
 
-
 int
-main (int argc,
-      char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   Manager manager;
@@ -66,8 +64,7 @@ main (int argc,
   try
     {
       // Initilaize the ORB, POA etc.
-      manager.init (argc,
-                    argv);
+      manager.init (argc, argv);
 
       // the command line arguments
       if (parse_args (argc, argv) == -1)
@@ -98,8 +95,7 @@ main (int argc,
 }
 
 void
-Manager::init (int argc,
-               char *argv[])
+Manager::init (int argc, ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -123,11 +119,11 @@ Manager::make_merged_iors (void)
 {
   // First  server
   this->object_primary_ =
-    this->orb_->string_to_object (first_ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (first_ior));
 
   //Second server
   this->object_secondary_ =
-    this->orb_->string_to_object (second_ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (second_ior));
 
   // Get an object reference for the ORBs IORManipultion object!
   CORBA::Object_var IORM =
@@ -223,7 +219,7 @@ Manager::write_to_file (void)
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)),
+                           ior_output_file),
                           1);
       ACE_OS::fprintf (output_file, "%s", iorref.in ());
       ACE_OS::fclose (output_file);
@@ -256,7 +252,7 @@ Client_i::init (void)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR,
                 "Unable to open %s for writing: %p\n",
-                ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)));
+                ior_output_file));
 
   ACE_Read_Buffer ior_buffer (f_handle);
 
@@ -268,7 +264,7 @@ Client_i::init (void)
 
 
   int argc = 0;
-  char **argv = 0;
+  ACE_TCHAR **argv = 0;
   this->orb_ = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var object =

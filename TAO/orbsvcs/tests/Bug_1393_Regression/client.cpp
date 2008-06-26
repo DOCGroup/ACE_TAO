@@ -5,7 +5,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
-int main(int argc, char** argv)
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -40,7 +40,7 @@ int main(int argc, char** argv)
       if (ACE_OS::strcmp (name.in(), "int"))
       {
         ACE_DEBUG ((LM_DEBUG, "CLIENT (%P): Interface name has been munged - it is now %s\n",
-                      name.in()));
+                      ACE_TEXT_CHAR_TO_TCHAR (name.in())));
         return -1;
       }
 

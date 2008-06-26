@@ -8,11 +8,11 @@
 
 namespace
 {
-  const char *ifr_ior_file = 0;
+  const ACE_TCHAR *ifr_ior_file = 0;
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "i:s:");
   const unsigned char full_success = 0x01;
@@ -51,7 +51,7 @@ parse_args (int argc, char *argv[])
 
 // ----------------------------------------------------------------------
 
-int main (int argc, char** argv)
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result= 0;
   ACE_DEBUG (( LM_DEBUG, "Start\n" ));
@@ -68,7 +68,7 @@ int main (int argc, char** argv)
     {
       ACE_DEBUG (( LM_DEBUG, "Get IFR\n" ));
       CORBA::Object_var objref =
-        the_orb->string_to_object (ifr_ior_file);
+        the_orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ifr_ior_file));
       if (objref.in () == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -99,7 +99,7 @@ int main (int argc, char** argv)
       CORBA::String_var c2_name= c2_def->absolute_name ();
       CORBA::TypeCode_var c2_tc = c2_def->type ();
       CORBA::String_var c2_id = c2_tc->id ();
-      ACE_DEBUG (( LM_DEBUG, "constant \"%s\" is type \"%s\"", c2_name.in (), c2_id.in ()));
+      ACE_DEBUG (( LM_DEBUG, "constant \"%s\" is type \"%s\"", ACE_TEXT_CHAR_TO_TCHAR (c2_name.in ()), ACE_TEXT_CHAR_TO_TCHAR (c2_id.in ()) ));
       CORBA::TCKind c2_tckind = c2_tc->kind ();
       ACE_DEBUG (( LM_DEBUG, ", tkkind %d", c2_tckind ));
       if (CORBA::tk_enum == c2_tckind)
@@ -115,7 +115,7 @@ int main (int argc, char** argv)
           CORBA::ULong the_intValue = denum->get_as_ulong ();
 
           ACE_DEBUG ((LM_DEBUG, "Whose value is \"%s\" which has an integer value of %d\n",
-                     the_strValue.in (), the_intValue ));
+                     ACE_TEXT_CHAR_TO_TCHAR (the_strValue.in ()), the_intValue ));
 
           if (0 == ACE_OS::strcmp( "e1_2", the_strValue.in () ))
             {

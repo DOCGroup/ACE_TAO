@@ -1,3 +1,34 @@
+Thu Jun 26 15:08:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Security/ssliop_CSD/MessengerClient.cpp:
+        * orbsvcs/tests/Security/ssliop_CSD/MessengerServer.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/test.cpp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/test_idl.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/test_idl.cpp:
+        * orbsvcs/tests/Interoperable_Naming/client.cpp:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.h:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/NameService/test.cpp:
+        * orbsvcs/tests/ImplRepo/scale/client.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/MessengerClient.cpp:
+        * orbsvcs/tests/Bug_1334_Regression/client.cpp:
+        * orbsvcs/tests/Bug_1393_Regression/client.cpp:
+        * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+        * orbsvcs/tests/Bug_2074_Regression/test.cpp:
+        * orbsvcs/tests/Bug_2247_Regression/Manager.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Thu Jun 26 13:14:15 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:

@@ -42,7 +42,7 @@ class NContextExt_Client_i
   int run (void);
   // Execute the client example code.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the client communication endpoint with the server.
 
  private:
@@ -67,7 +67,7 @@ class NContextExt_Client_i
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   CosNaming::NamingContextExt_var naming_context_;

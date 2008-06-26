@@ -55,8 +55,7 @@ const char *Admin_Client::test_names_[] =
 };
 
 int
-Admin_Client::init (int argc,
-                    char *argv[])
+Admin_Client::init (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -136,14 +135,13 @@ Admin_Client::run (void)
 }
 
 int
-Admin_Client::parse_args (int argc,
-                          char *argv[])
+Admin_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, "di:t:");
   int c;
   int result = 0;
   CORBA::ULong i = 0;
-  char *name = 0;
+  ACE_TCHAR *name = 0;
 
   while ((c = opts ()) != -1)
     switch (c)
@@ -162,7 +160,7 @@ Admin_Client::parse_args (int argc,
 
         for (i = 0; i < NUMBER_OF_TESTS; ++i)
           {
-            if (ACE_OS::strcmp (name, this->test_names_[i]) == 0)
+            if (ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (name), this->test_names_[i]) == 0)
               {
                 this->which_test_ = i;
                 break;
@@ -178,7 +176,7 @@ Admin_Client::parse_args (int argc,
                            " [-i iterations]"
                            " [-t test name]"
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
+                           argv [0]),
                           -1);
       }
 

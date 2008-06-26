@@ -15,11 +15,11 @@
 #include "ace/OS_NS_stdio.h"
 
 // Files which have the IOR
-const char *first_ior = 0;
-const char *first_key = 0;
-const char *second_ior = 0;
-const char *second_key = 0;
-const char *ior_output_file = 0;
+const ACE_TCHAR *first_ior = 0;
+const ACE_TCHAR *first_key = 0;
+const ACE_TCHAR *second_ior = 0;
+const ACE_TCHAR *second_key = 0;
+const ACE_TCHAR *ior_output_file = 0;
 int shutdown_test = 0;
 int merged_test = 0;
 
@@ -31,7 +31,7 @@ CORBA::Object_var object_secondary = 0;
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "a:k:b:l:c:sm");
   int c;
@@ -68,7 +68,7 @@ parse_args (int argc, char *argv[])
                            "-b <iorfile2> -l <key2> "
                            "-c <output ior file>"
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
+                           argv [0]),
                           -1);
       }
   // Indicates sucessful parsing of the command line
@@ -77,8 +77,8 @@ parse_args (int argc, char *argv[])
 
 
 int
-main (int argc,
-      char *argv[])
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
 
   Manager manager;
@@ -86,8 +86,7 @@ main (int argc,
   try
     {
       // Initilaize the ORB, POA etc.
-      manager.init (argc,
-                    argv);
+      manager.init (argc, argv);
 
       // the command line arguments
       if (parse_args (argc, argv) == -1)
@@ -129,7 +128,7 @@ Manager::Manager (void)
 
 void
 Manager::init (int argc,
-               char *argv[])
+               ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -153,13 +152,13 @@ Manager::make_merged_iors (void)
 {
   // First  server
   object_primary =
-    this->orb_->string_to_object (first_ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (first_ior));
 
   if (merged_test)
     {
       //Second server
       object_secondary =
-        this->orb_->string_to_object (second_ior);
+        this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (second_ior));
 
       // Get an object reference for the ORBs IORManipultion object!
       CORBA::Object_var IORM =
@@ -260,7 +259,7 @@ Manager::write_to_file (void)
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)),
+                           ior_output_file),
                           1);
       ACE_OS::fprintf (output_file, "%s", iorref.in ());
       ACE_OS::fclose (output_file);
@@ -280,13 +279,13 @@ Client_i::Client_i (CORBA::ORB_ptr orb)
 {
 }
 
-int run_remote_test (Simple_Server_ptr server, const char* execute_key)
+int run_remote_test (Simple_Server_ptr server, const ACE_TCHAR* execute_key)
 {
   char expected[1024], received[1024];
   if (execute_key)
     {
       ACE_OS::sprintf (expected,
-               "remote_call() completed by %s", execute_key);
+               "remote_call() completed by %s", ACE_TEXT_ALWAYS_CHAR (execute_key));
     }
   else if (shutdown_test && !merged_test)
     {
@@ -339,14 +338,14 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key)
 }
 
 int run_abort_test (Simple_Server_ptr server,
-            const char* request_key, const char* execute_key)
+            const ACE_TCHAR* request_key, const ACE_TCHAR* execute_key)
 {
   char expected[1024], received[1024];
   if (execute_key)
     {
       ACE_OS::sprintf (expected,
                "abort() completed by %s, still_alive=1",
-               execute_key);
+               ACE_TEXT_ALWAYS_CHAR (execute_key));
     }
   else if (merged_test)
     {
@@ -359,7 +358,7 @@ int run_abort_test (Simple_Server_ptr server,
 
   try
     {
-      CORBA::String_var s = server->abort (request_key);
+      CORBA::String_var s = server->abort (ACE_TEXT_ALWAYS_CHAR (request_key));
 
       if (!s.in())
         {
@@ -396,14 +395,14 @@ int run_abort_test (Simple_Server_ptr server,
 }
 
 int run_shutdown_test (Simple_Server_ptr server,
-            const char* request_key, const char* execute_key)
+            const ACE_TCHAR* request_key, const ACE_TCHAR* execute_key)
 {
   char expected[1024], received[1024];
   if (execute_key)
     {
       ACE_OS::sprintf (expected,
                "shutdown() completed by %s, still_alive=0",
-               execute_key);
+               ACE_TEXT_ALWAYS_CHAR (execute_key));
     }
   else
     {
@@ -412,7 +411,7 @@ int run_shutdown_test (Simple_Server_ptr server,
 
   try
     {
-      CORBA::String_var s = server->shutdown (request_key);
+      CORBA::String_var s = server->shutdown (ACE_TEXT_ALWAYS_CHAR (request_key));
 
       if (!s.in())
         {
@@ -524,7 +523,7 @@ Client_i::init (void)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR,
                 "Unable to open %s for writing: %p\n",
-                ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)));
+                ior_output_file));
 
   ACE_Read_Buffer ior_buffer (f_handle);
 
@@ -536,7 +535,7 @@ Client_i::init (void)
 
 
   int argc = 0;
-  char **argv = 0;
+  ACE_TCHAR **argv = 0;
   this->orb_ = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var object =

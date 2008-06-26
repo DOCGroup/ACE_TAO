@@ -3,9 +3,9 @@
 #include "tao/corba.h"
 #include "ORB_Task.h"
 
-int main( int argc, char* argv[] )
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     ORB_Task worker (orb.in ());
     worker.activate (THR_NEW_LWP | THR_JOINABLE,

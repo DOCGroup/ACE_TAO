@@ -2,11 +2,12 @@
 
 #include "MessengerC.h"
 #include <iostream>
-int main( int argc, char *argv[] )
+
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     // Destringify ior
     CORBA::Object_var obj = orb->string_to_object( "file://Messenger.ior" );

@@ -3,12 +3,13 @@
 #include "Messenger_i.h"
 #include <iostream>
 #include <fstream>
+
 int
-main( int argc, char *argv[] )
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     //Get reference to Root POA
     CORBA::Object_var obj = orb->resolve_initial_references( "RootPOA" );
