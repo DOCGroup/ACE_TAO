@@ -11,7 +11,6 @@ ACE_RCSID (ZIOP,
            ZIOP_Stub,
            "$Id$")
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ZIOP_Stub::TAO_ZIOP_Stub (const char *repository_id,

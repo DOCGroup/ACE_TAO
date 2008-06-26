@@ -338,7 +338,7 @@ namespace CORBA
     // Non-local interface only.
     Policy (
         TAO_Stub *objref,
-        CORBA::Boolean _tao_collocated = 0,
+        CORBA::Boolean _tao_collocated = false,
         TAO_Abstract_ServantBase *servant = 0,
         TAO_ORB_Core *orb_core = 0
       );

@@ -25,6 +25,7 @@
 
 #include "tao/PI/PI.h"
 #include "tao/ZIOP_Adapter.h"
+#include "tao/Compression/Compression.h"
 #include "tao/Policy_Validator.h"
 #include "ace/Service_Config.h"
 
@@ -69,6 +70,10 @@ private:
 
   /// Get the compression low value, returns 0 when it is not set
   CORBA::ULong compression_low_value (TAO::Profile_Transport_Resolver &resolver) const;
+
+  bool compress (Compression::Compressor_ptr compressor,
+                 const ::Compression::Buffer &source,
+                 ::Compression::Buffer &target);
 
   bool check_min_ratio (CORBA::ULong original_data_length, CORBA::ULong compressed_length) const;
 };
