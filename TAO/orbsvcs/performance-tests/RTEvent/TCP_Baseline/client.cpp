@@ -19,8 +19,8 @@ ACE_RCSID (TAO_RTEC_PERF_TCP_Baseline,
            client,
            "$Id$")
 
-char ACE_TCHAR *hi_endpoint = ACE_TEXT ("localhost:12345");
-char ACE_TCHAR *lo_endpoint = ACE_TEXT ("localhost:23456");
+ACE_TCHAR const *hi_endpoint = ACE_TEXT ("localhost:12345");
+ACE_TCHAR const *lo_endpoint = ACE_TEXT ("localhost:23456");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);

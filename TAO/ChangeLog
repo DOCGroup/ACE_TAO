@@ -1,3 +1,10 @@
+Thu Jun 26 11:04:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp:
+        * tests/DynAny_Test/driver.cpp:
+
+          Fix slight miss-edits from yesterdays commits.
+
 Thu Jun 26 02:37:59 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Messaging/AMH_Response_Handler.cpp:
