@@ -28,7 +28,7 @@ Bzip2Compressor::compress (
 
   int const retval = ::BZ2_bzBuffToBuffCompress (reinterpret_cast <char*>(target.get_buffer ()),
                                   &max_length,
-                                  reinterpret_cast <char*>(source.get_buffer ()),
+                                  reinterpret_cast <char*>(const_cast<CORBA::Octet*>(source.get_buffer ())),
                                   source.length (),
                                   0,
                                   1,
