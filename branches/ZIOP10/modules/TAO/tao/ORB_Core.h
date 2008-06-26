@@ -202,8 +202,8 @@ public:
   /// yet
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry (void);
 
-  TAO_ZIOP_Adapter *TAO_ORB_Core::ziop_adapter () const;
-  void TAO_ORB_Core::ziop_adapter (TAO_ZIOP_Adapter *adapter);
+  TAO_ZIOP_Adapter *ziop_adapter () const;
+  void ziop_adapter (TAO_ZIOP_Adapter *adapter);
 
   TAO_Service_Context_Registry &service_context_registry (void);
 
