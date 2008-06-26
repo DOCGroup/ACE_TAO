@@ -1,3 +1,13 @@
+Thu Jun 26 02:37:59 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        
+          Set the outbound GIOP version number to the correct value when
+          sending a response from an AMH servant. The problem is that there
+          are too many output CDR instances and AMH response handler uses
+          a different one from the generated skeletons. This resolves the
+          issue raised by Steve Vinoski and Ittehad Shaikh.
+
 Wed Jun 25 15:35:59 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h:
