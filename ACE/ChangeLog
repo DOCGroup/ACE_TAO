@@ -1,3 +1,18 @@
+Thu Jun 26 13:13:16 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Control_Types.h:
+        * ace/Monitor_Base.cpp:
+        * ace/Monitor_Base.h:
+        * ace/Monitor_Control/Monitor_Group.h:
+        * ace/Monitor_Control/Monitor_Group.cpp:
+
+          Restored support for string data type in
+          monitor storage, by moving data types,
+          members and methods from their original
+          location in an earlier version of the
+          Notification Service monitor classes,
+          to the appropriate locations in ACE.
+
 Thu Jun 26 02:45:21 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * THANKS: added Ittehad Shaikh
