@@ -18,8 +18,7 @@ Ptest::~Ptest (void)
 }
 
 int
-Ptest::init (int argc,
-                    char *argv[])
+Ptest::init (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -87,7 +86,7 @@ Ptest::run (void)
 
 int
 Ptest::parse_args (int argc,
-                   char *argv[])
+                   ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, "dq");
   int c;
@@ -108,7 +107,7 @@ Ptest::parse_args (int argc,
                            " [-d]"
                            " [-q]"
                            "\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (argv [0])),
+                           argv [0]),
                           -1);
       }
 

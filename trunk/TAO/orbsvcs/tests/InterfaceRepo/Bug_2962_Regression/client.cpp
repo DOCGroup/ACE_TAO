@@ -8,7 +8,7 @@
 const char *ifr_ior= "file://ifr.ior";
 const char *member_type_id= "IDL:arrayOfStruct:1.0";
 
-int main (int argc, char **argv)
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
     CORBA::ORB_ptr the_orb = CORBA::ORB_init (argc, argv);
 
@@ -34,7 +34,7 @@ int main (int argc, char **argv)
       return 1;
     }
 
-    ACE_DEBUG ((LM_DEBUG, "Looking up %s", member_type_id ));
+    ACE_DEBUG ((LM_DEBUG, "Looking up %s", ACE_TEXT_CHAR_TO_TCHAR (member_type_id) ));
     CORBA::Contained_var
       dependency = ifr->lookup_id (member_type_id);
     if (CORBA::is_nil (dependency.in ()))
@@ -61,7 +61,7 @@ int main (int argc, char **argv)
       *name= tc_content->content_type ()->name ();
     ACE_DEBUG ((LM_DEBUG,
                 " = %s [%u]\n",
-                name,
+                ACE_TEXT_CHAR_TO_TCHAR (name),
                 length ));
 
     if (2u == length)
@@ -70,7 +70,7 @@ int main (int argc, char **argv)
     }
     else
     {
-      ACE_DEBUG ((LM_DEBUG, "Error: Should have been %s [2]\n", name ));
+      ACE_DEBUG ((LM_DEBUG, "Error: Should have been %s [2]\n", ACE_TEXT_CHAR_TO_TCHAR (name) ));
       return 2;
     }
 
