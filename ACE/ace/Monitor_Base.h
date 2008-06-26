@@ -60,6 +60,7 @@ namespace ACE
         MC_NUMBER,
         MC_TIME,
         MC_INTERVAL,
+        MC_LIST,
         MC_GROUP
       };
 
@@ -78,6 +79,9 @@ namespace ACE
 
       /// Updates the monitor's data if it is an integer size.
       virtual void receive (size_t data);
+
+      /// Updates the monitor's data if it is a string type.
+      virtual void receive (const Monitor_Control_Types::NameList& data);
 
       /// Add a constraint, returns a unique constraint id.
       long add_constraint (const char* expression,
@@ -129,6 +133,9 @@ namespace ACE
 
       /// Return the type of this statistic
       Information_Type type (void) const;
+      
+      /// Return the list or error msg if wrong type.
+      Monitor_Control_Types::NameList get_list (void) const;
 
     protected:
       /// Overridden in some monitors (for example the OS monitors) where

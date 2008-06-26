@@ -45,6 +45,7 @@ namespace ACE
         Data (void);
         ACE_Time_Value timestamp_;
         double value_;
+        ACE_Array_Base<char *> list_;
       };
 
       /**
