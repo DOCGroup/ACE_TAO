@@ -88,7 +88,7 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR *argv[]);
   // Method to initialize the various data components.
 
   void set_protocol_object (TAO_AV_Protocol_Object *protocol_object);
@@ -110,7 +110,7 @@ public:
   // The requested frame rate for sending each frame of data read from the file.
 
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Method to parse the command line arguments.
 
   int bind_to_server (void);
@@ -132,7 +132,7 @@ private:
   // Number of frames sent.
 
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
 
   const char *filename_;
   // File from which data is read.
