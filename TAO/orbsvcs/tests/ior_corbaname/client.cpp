@@ -21,7 +21,7 @@
 
 #include "ior_corbaname_client_i.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try

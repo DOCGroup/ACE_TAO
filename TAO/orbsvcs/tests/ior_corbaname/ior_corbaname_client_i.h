@@ -19,7 +19,6 @@
 //
 //============================================================
 
-
 #if !defined (IOR_CORBANAME_CLIENT_I_H)
 #define IOR_CORBANAME_CLIENT_I_H
 
@@ -42,7 +41,7 @@ class IOR_corbaname_Client_i
   int run (void);
   // Execute the client example code.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialize the client communication endpoint with the server.
 
  private:
@@ -50,7 +49,7 @@ class IOR_corbaname_Client_i
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   CORBA::ORB_var orb_;
@@ -58,7 +57,6 @@ class IOR_corbaname_Client_i
 
   CosNaming::NamingContextExt_var naming_context_;
   // Naming context
-
 };
 
 #endif /* IOR_CORBANAME_CLIENT_I_H */

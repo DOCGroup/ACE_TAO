@@ -17,8 +17,8 @@ public:
   TAO_FT_ReplicationManagerController ();
   virtual ~TAO_FT_ReplicationManagerController ();
 
-  int init (int & argc, char * argv[]);
-  int parse_args (int & argc, char* argv[]);
+  int init (int &argc, ACE_TCHAR *argv[]);
+  int parse_args (int &argc, ACE_TCHAR *argv[]);
   int run ();
 
 /////////////////////////////
@@ -39,7 +39,7 @@ private:
 private:
   CORBA::ORB_var orb_;
   FT::ReplicationManager_var replication_manager_;
-  const char * rm_ior_;
+  const ACE_TCHAR *rm_ior_;
   int shutdown_;
 
 };
@@ -56,7 +56,7 @@ TAO_FT_ReplicationManagerController::~TAO_FT_ReplicationManagerController ()
 {
 }
 
-int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
+int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
 {
   int result = 0;
 
@@ -73,7 +73,7 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
       if (this->rm_ior_ != 0)
       {
         obj = this->orb_->string_to_object (
-          this->rm_ior_);
+          ACE_TEXT_ALWAYS_CHAR (this->rm_ior_));
       }
       else
       {
@@ -105,7 +105,7 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
 }
 
 
-int TAO_FT_ReplicationManagerController::parse_args (int & argc, char * argv[])
+int TAO_FT_ReplicationManagerController::parse_args (int &argc, ACE_TCHAR *argv[])
 {
   int result = 0;
 
@@ -130,7 +130,7 @@ int TAO_FT_ReplicationManagerController::parse_args (int & argc, char * argv[])
 
       default:
         ACE_OS::fprintf (stderr, "%s: Unknown argument - %c\n",
-                         argv[0], c);
+                         ACE_TEXT_ALWAYS_CHAR (argv[0]), c);
         this->usage(stderr);
         result = -1;
         break;
@@ -175,7 +175,7 @@ int TAO_FT_ReplicationManagerController::run ()
   return result;
 }
 
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   TAO_FT_ReplicationManagerController rmctrl;
@@ -186,4 +186,3 @@ int main (int argc, char * argv[])
   }
   return result;
 }
-

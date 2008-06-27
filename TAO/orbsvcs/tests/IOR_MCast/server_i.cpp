@@ -29,7 +29,7 @@ Server_i::~Server_i (void)
 
 int
 Server_i::init (int &argc,
-                char **&argv)
+                ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -143,7 +143,7 @@ Server_i::enable_multicast (const char *ior)
 }
 
 int
-Server_i::parse_args (int argc, char *argv [])
+Server_i::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "a:");
   int c;
@@ -152,7 +152,7 @@ Server_i::parse_args (int argc, char *argv [])
     switch (c)
       {
       case 'a':
-        this->mcast_address_ = get_opts.opt_arg ();
+        this->mcast_address_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
 
       case '?':
