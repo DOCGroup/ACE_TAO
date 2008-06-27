@@ -22,27 +22,38 @@ EchoEventConsumer_i::EchoEventConsumer_i(CORBA::ORB_ptr orb, int event_limit)
 void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
 {
   // Loop through the events, looking for shutdown events.
-  for (u_int i = 0; i < events.length (); ++i) {
-    //ACE_OS::printf(".");
-    // Extract event data from the any.
-    const char* eventData;
-    std::ostringstream out;
+  for (u_int i = 0; i < events.length (); ++i) 
+    {
+      //ACE_OS::printf(".");
+      // Extract event data from the any.
+      const char* eventData;
+      std::ostringstream out;
 
 #ifndef ACE_LACKS_GETPID
-    out << "[" << ACE_OS::getpid();
+      out << "[" << ACE_OS::getpid();
 #endif
-    out << "] Received event,"
-        << "  type: "   << events[i].header.type
-         << "  source: " << events[i].header.source;
-    if (events[i].data.any_value >>= eventData) {
-      out << "  text: "   << eventData;
-    }
+      out << "] Received event,"
+          << "  type: "   << events[i].header.type
+          << "  source: " << events[i].header.source;
 
-    ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized
-  }
-  if (--event_limit_ <= 0) {
-    orb_->shutdown(0);
-  }
+#if !defined (TAO_LACKS_EVENT_CHANNEL_ANY)
+      if (events[i].data.any_value >>= eventData) 
+        {
+          out << "  text: "   << eventData;
+        }
+#else
+      if (events[i].data.payload.length() > 0)
+        {
+          out << "  text: " << 
+            (const char *)events[i].data.payload.get_buffer();
+        }
+#endif  /* !TAO_LACKS_EVENT_CHANNEL_ANY */
+      ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized
+    }
+  if (--event_limit_ <= 0)
+    {
+      orb_->shutdown(0);
+    }
 }
 
 // Implement the disconnect_push_consumer() operation.
