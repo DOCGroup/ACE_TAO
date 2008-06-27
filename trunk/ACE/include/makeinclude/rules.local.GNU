@@ -382,13 +382,11 @@ ifdef shared_libs
   endif # !CLEANUP_SHLIB
 endif # shared_libs
 
-CLEANUP_OBJS += $(addsuffix .o, $(addprefix $(VDIR),$(CLEANUP_BIN))) $(VOBJS)
-
 ifdef OBJS
   CLEANUP_OBJS += $(addprefix $(VDIR), $(OBJS))
 endif # OBJS
 ifneq ($(CLEANUP_BIN),)
-  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(CLEANUP_BIN))))
+  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(CLEANUP_BIN)))) $(VOBJS)
 endif # CLEANUP_BIN
 ifdef VSHOBJS
   CLEANUP_OBJS += $(VSHOBJS)

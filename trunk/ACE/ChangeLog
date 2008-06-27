@@ -1,3 +1,12 @@
+Fri Jun 27 18:04:52 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.local.GNU: Removed the first setting of
+          CLEANUP_OBJS by itself - it was a duplicate of what's done in
+          CLEANUP_BIN's case, but with possibly an incorrect objext. Prevents
+          a main executable's object file from being deleted twice and ensures
+          only valid object file extension is used. Thanks to Howard Finer
+          for pointing this out.
+
 Fri Jun 27 16:08:27 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/rules.local.GNU: Add $(VOBJS) to CLEANUP_OBJS to
