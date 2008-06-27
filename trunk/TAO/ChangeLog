@@ -1,3 +1,12 @@
+Fri Jun 27 08:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Notify/Timeout/run_test.pl:
+
+          Added missing PerlACE::add_lib_path ('../lib'); to run-time
+          test so that test dynamic libraries can be found. Stops
+          windows dialog concerning missing dll.
+          (Update to Mon Jun 23 12:32:07 UTC 2008 Chad Elliott)
+
 Thu Jun 26 19:39:28 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorClient.cpp(main):
