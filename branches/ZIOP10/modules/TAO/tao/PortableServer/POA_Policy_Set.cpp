@@ -75,7 +75,7 @@ TAO_POA_Policy_Set::validate_policies (TAO_Policy_Validator &validator,
 
       CORBA::PolicyType type = policy->policy_type ();
 
-      if (validator.legal_policy (type) == 0)
+      if (!(validator.legal_policy (type)))
         {
 #if !defined (CORBA_E_MICRO)
           // An invalid policy was specified.  Let the user know about

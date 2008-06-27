@@ -337,6 +337,128 @@ TAO_ZIOP_Loader::marshal_data (TAO_Operation_Details &details, TAO_OutputCDR &st
   return true;
 }
 
+bool
+TAO_ZIOP_Loader::marshal_reply_data (TAO_ServerRequest& server_request,
+                                     TAO::Argument * const * args,
+                                     size_t nargs)
+{
+  CORBA::Boolean use_ziop = false;
+  Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
+  Compression::CompressionLevel compression_level = 0;
+  TAO_Transport& transport = *server_request.transport ();
+
+  CORBA::Policy_var policy = transport.orb_core()->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
+
+  if (!CORBA::is_nil (policy.in ()))
+    {
+      ZIOP::CompressionEnablingPolicy_var srp =
+        ZIOP::CompressionEnablingPolicy::_narrow (policy.in ());
+
+      if (!CORBA::is_nil (srp.in ()))
+        {
+          use_ziop = srp->compression_enabled ();
+        }
+    }
+
+  if (use_ziop)
+    {
+      policy = transport.orb_core()->get_cached_policy_including_current (TAO_CACHED_COMPRESSION_ID_LIST_POLICY);
+
+      if (!CORBA::is_nil (policy.in ()))
+        {
+          ZIOP::CompressorIdListPolicy_var srp =
+            ZIOP::CompressorIdListPolicy::_narrow (policy.in ());
+
+          if (!CORBA::is_nil (srp.in ()))
+            {
+              ::Compression::CompressorIdLevelList* list = srp->compressor_ids ();
+              if (list)
+                {
+                  compressor_id = (*list)[0].compressor_id;
+                  compression_level = (*list)[0].compression_level;
+                }
+              else
+                {
+                  // No compatible compressor found
+                  use_ziop = false;
+                }
+            }
+        }
+    }
+
+  TAO_OutputCDR & stream = (*server_request.outgoing ());
+  ACE_Message_Block* current = const_cast <ACE_Message_Block*> (stream.current ());
+
+  if (use_ziop)
+    {
+       // Set the read pointer to the point where the application data starts
+       current->rd_ptr (current->wr_ptr());
+    }
+
+  // Marshal application data
+  TAO::Argument * const * const begin = args;
+  TAO::Argument * const * const end   = args + nargs;
+
+  for (TAO::Argument * const * i = begin; i != end; ++i)
+    {
+      if (!(*i)->marshal (stream))
+        {
+          TAO_OutputCDR::throw_skel_exception (errno);
+        }
+    }
+
+  // Reply body marshaling completed.  No other fragments to send.
+  stream.more_fragments (false);
+
+  current = const_cast <ACE_Message_Block*> (stream.current());
+  CORBA::ULong const original_data_length =(CORBA::ULong)(current->wr_ptr() - current->rd_ptr());
+
+  if (use_ziop && original_data_length > 0)
+    {
+      // We can only compress one message block, so when compression is enabled first do
+      // a consolidate.
+      stream.consolidate ();
+
+      CORBA::Object_var compression_manager =
+        server_request.transport ()->orb_core()->resolve_compression_manager();
+
+      Compression::CompressionManager_var manager =
+        Compression::CompressionManager::_narrow (compression_manager.in ());
+
+      if (!CORBA::is_nil(manager.in ()))
+        {
+          Compression::Compressor_var compressor = manager->get_compressor (compressor_id, compression_level);
+
+//          if (original_data_length > this->compression_low_value (resolver)
+if (1)
+            {
+              CORBA::OctetSeq myout;
+              CORBA::OctetSeq input (original_data_length, current);
+              myout.length (original_data_length);
+
+              bool compressed = this->compress (compressor.in (), input, myout);
+
+              if (compressed && (myout.length () < original_data_length)) // && (this->check_min_ratio (original_data_length, myout.length())))
+                {
+                  stream.compressed (true);
+                  current->wr_ptr (current->rd_ptr ());
+                  stream.current_alignment (current->wr_ptr() - current->base ());
+                  ZIOP::CompressedData data;
+                  data.compressorid = compressor_id;
+                  data.original_length = input.length();
+                  data.data = myout;
+                  stream << data;
+                }
+            }
+        }
+    }
+
+  // Set the read pointer back to the starting point
+  current->rd_ptr (current->base ());
+
+  return true;
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_ZIOP_Loader,

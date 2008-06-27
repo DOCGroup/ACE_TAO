@@ -275,8 +275,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 void
 TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
                                                           CORBA::Short servant_priority,
-                                                          TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-                                                          )
+                                                          TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
 {
   TAO_Thread_Pool *thread_pool =
     static_cast <TAO_Thread_Pool *> (poa.thread_pool ());

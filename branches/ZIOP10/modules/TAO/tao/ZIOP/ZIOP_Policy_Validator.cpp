@@ -35,14 +35,69 @@ TAO_ZIOPPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
 }
 
 void
-TAO_ZIOPPolicy_Validator::merge_policies_impl (TAO_Policy_Set &)
+TAO_ZIOPPolicy_Validator::merge_policies_impl (TAO_Policy_Set &policies)
 {
+  // Check if the user has specified the priority model policy.
+  CORBA::Policy_var priority_model =
+    policies.get_cached_policy (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
+
+  if (CORBA::is_nil (priority_model.in ()))
+    {
+      // If not, check if the priority model policy has been specified
+      // at the ORB level.
+      priority_model =
+        this->orb_core_.get_cached_policy (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
+
+      if (!CORBA::is_nil (priority_model.in ()))
+        {
+          // If so, we'll use that policy.
+          policies.set_policy (priority_model.in ());
+        }
+    }
+
+  // Check if the user has specified the server protocol policy.
+  CORBA::Policy_var server_protocol =
+    policies.get_cached_policy (TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
+
+  if (CORBA::is_nil (server_protocol.in ()))
+    {
+      // If not, check if the server protocol policy has been
+      // specified at the ORB level.
+      server_protocol =
+        this->orb_core_.get_cached_policy (TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY);
+
+      if (!CORBA::is_nil (server_protocol.in ()))
+        {
+          // If so, we'll use that policy.
+          policies.set_policy (server_protocol.in ());
+        }
+    }
+
+  // Check if the user has specified the server protocol policy.
+  CORBA::Policy_var x =
+    policies.get_cached_policy (TAO_CACHED_COMPRESSION_ID_LIST_POLICY);
+
+  if (CORBA::is_nil (x.in ()))
+    {
+      // If not, check if the server protocol policy has been
+      // specified at the ORB level.
+      x =
+        this->orb_core_.get_cached_policy (TAO_CACHED_COMPRESSION_ID_LIST_POLICY);
+
+      if (!CORBA::is_nil (x.in ()))
+        {
+          // If so, we'll use that policy.
+          policies.set_policy (x.in ());
+        }
+    }
 }
 
 CORBA::Boolean
 TAO_ZIOPPolicy_Validator::legal_policy_impl (CORBA::PolicyType type)
 {
-  return true;//(type == ZIOPPolicy::ZIOPECTIONAL_POLICY_TYPE);
+  return (type == ZIOP::COMPRESSION_ENABLING_POLICY_ID ||
+          type == ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID ||
+          type == ZIOP::COMPRESSION_ID_LIST_POLICY_ID);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

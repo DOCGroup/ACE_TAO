@@ -195,6 +195,8 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
   ZIOP::CompressorIdListPolicy_var exposed_policy_var =
     ZIOP::CompressorIdListPolicy::_narrow (exposed.in ());
 
+  // Check which compressor id we should use and which level
+
   return exposed._retn ();
 }
 

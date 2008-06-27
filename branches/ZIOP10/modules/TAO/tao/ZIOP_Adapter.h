@@ -47,6 +47,10 @@ public:
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
 
+  virtual bool marshal_reply_data (TAO_ServerRequest& server_request,
+                                   TAO::Argument * const * args,
+                                   size_t nargs) = 0;
+
   /// The virtual destructor
   virtual ~TAO_ZIOP_Adapter (void);
 };

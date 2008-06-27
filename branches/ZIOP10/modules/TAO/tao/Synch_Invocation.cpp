@@ -349,6 +349,9 @@ namespace TAO
       case GIOP::NO_EXCEPTION:
         {
           Reply_Guard mon (this, TAO_INVOKE_FAILURE);
+
+// @todo ziop check compression, maybe check the compressed flag of the input
+// stream, if that is set, we try to marshal also the output stream
           if (this->details_.demarshal_args (cdr) == false)
             {
               throw ::CORBA::MARSHAL ();

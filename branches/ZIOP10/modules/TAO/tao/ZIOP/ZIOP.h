@@ -62,6 +62,10 @@ public:
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
 
+  bool marshal_reply_data (TAO_ServerRequest& server_request,
+                           TAO::Argument * const * args,
+                           size_t nargs);
+
 private:
 
   /// Flag to indicate whether the ZIOP library has been
