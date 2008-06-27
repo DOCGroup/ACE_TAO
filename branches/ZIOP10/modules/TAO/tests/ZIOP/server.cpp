@@ -5,6 +5,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/ZIOP/ZIOP.h"
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
+#include "tao/Policy_ManagerC.h"
+#include "tao/Policy_CurrentC.h"
 
 ACE_RCSID (Hello,
            server,
@@ -113,6 +115,22 @@ my_compress_poa = root_poa->create_POA("My_Compress_Poa", NULL, policies);
 policies.length(0);
 my_compress_poa = root_poa->create_POA("My_Compress_Poa", NULL, policies);
 }
+      CORBA::Object_var objectman =
+        orb->resolve_initial_references ("ORBPolicyManager");
+
+      CORBA::PolicyManager_var policy_manager =
+        CORBA::PolicyManager::_narrow (objectman.in ());
+
+      policy_manager->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
+
+      CORBA::Object_var pcobject =
+        orb->resolve_initial_references ("PolicyCurrent");
+
+      CORBA::PolicyCurrent_var policy_current =
+        CORBA::PolicyCurrent::_narrow (pcobject.in ());
+
+      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
+
       PortableServer::POAManager_var poa_manager = my_compress_poa->the_POAManager ();
 
       Hello *hello_impl = 0;

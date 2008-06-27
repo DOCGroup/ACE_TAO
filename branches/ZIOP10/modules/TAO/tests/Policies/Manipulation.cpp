@@ -299,7 +299,6 @@ Manipulation::svc (void)
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
-
       for (int i = 0; i != this->niterations_; ++i)
         {
           CORBA::PolicyList_var policies;
