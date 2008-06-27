@@ -38,9 +38,9 @@ Sender::Sender (void)
   : sender_mmdevice_ (0),
     streamctrl_ (0),
     frame_count_ (0),
-    filename_ ("input"),
+    filename_ (ACE_TEXT ("input")),
     input_file_ (0),
-    protocol_ ("UDP"),
+    protocol_ (ACE_TEXT ("UDP")),
     frame_rate_ (30.0),
     mb_ (1000),
     address_ (0),
@@ -63,7 +63,7 @@ Sender::protocol_object (TAO_AV_Protocol_Object *object)
 
 int
 Sender::parse_args (int argc,
-                    char **argv)
+                    ACE_TCHAR *argv[])
 {
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "f:p:r:dl:a:s:b:");
@@ -165,7 +165,7 @@ Sender::bind_to_receiver (void)
 
 int
 Sender::init (int argc,
-              char **argv)
+              ACE_TCHAR *argv[])
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -195,7 +195,7 @@ Sender::init (int argc,
   if (this->input_file_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %s\n",
-                       ACE_TEXT_CHAR_TO_TCHAR (this->filename_.c_str ())),
+                       this->filename_.c_str () ),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -232,7 +232,7 @@ Sender::init (int argc,
                                     "IN",
                                     "USER_DEFINED",
                                     "",
-                                    this->protocol_.c_str (),
+                                    ACE_TEXT_ALWAYS_CHAR (this->protocol_.c_str ()),
                                     &addr);
 
   ACE_INET_Addr peer_addr;
@@ -417,8 +417,7 @@ Sender::pace_data (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {

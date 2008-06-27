@@ -59,10 +59,10 @@ Client::set_protocol_object (TAO_AV_Protocol_Object *object)
 
 int
 Client::parse_args (int argc,
-                    char **argv)
+                    ACE_TCHAR *argv[])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc,argv,"f:l:a:p:r:sd");
+  ACE_Get_Opt opts (argc, argv, "f:l:a:p:r:sd");
 
   this->use_sfp_ = 0;
 
@@ -72,16 +72,16 @@ Client::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_OS::strdup (opts.opt_arg ());
+          this->filename_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 'l':
-          this->address_ = ACE_OS::strdup (opts.opt_arg ());
+          this->address_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 'a':
-          this->peer_addr_str_ = ACE_OS::strdup (opts.opt_arg ());
+          this->peer_addr_str_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
+          this->protocol_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 'r':
           this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
@@ -158,7 +158,7 @@ Client::bind_to_server (void)
 
 int
 Client::init (int argc,
-              char **argv)
+              ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -399,8 +399,7 @@ Client::pace_data (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
