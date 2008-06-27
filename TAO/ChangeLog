@@ -1,3 +1,12 @@
+Fri Jun 27 09:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Bug_2248_Regression/client.h:
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp:
+
+          This mornings round of fixes/typos etc. to my changes yesterday,
+          missed the header change corresponding to the cpp. Tidied this up
+          as well.
+
 Fri Jun 27 08:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Notify/Timeout/run_test.pl:
