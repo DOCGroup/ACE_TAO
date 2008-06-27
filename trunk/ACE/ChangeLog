@@ -1,3 +1,10 @@
+Fri Jun 27 14:58:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Control/Solaris_Network_Interface_Monitor.h:
+        
+          Changed ACE_CString member to ACE_TString, to accommodate
+          wchar builds.
+
 Thu Jun 26 20:41:20 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Profile_Timer.cpp:
