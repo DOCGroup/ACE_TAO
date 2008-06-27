@@ -12,16 +12,16 @@ ACE_RCSID (Latency,
            ping,
            "$Id$")
 
-const char *ping_ior = CORBA::string_dup ("file://ping.ior");
-const char *pong_ior = CORBA::string_dup ("file://pong.ior");
-const char *ping_address = CORBA::string_dup ("localhost:12345");
-const char *pong_address = CORBA::string_dup ("localhost:23456");
-const char *protocol = CORBA::string_dup ("UDP");
+const ACE_TCHAR *ping_ior = ACE_TEXT ("file://ping.ior");
+const ACE_TCHAR *pong_ior = ACE_TEXT ("file://pong.ior");
+const ACE_TCHAR *ping_address = ACE_TEXT ("localhost:12345");
+const ACE_TCHAR *pong_address = ACE_TEXT ("localhost:23456");
+const ACE_TCHAR *protocol = ACE_TEXT ("UDP");
 
 int milliseconds = 30000;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "f:g:s:r:t:p:d");
   int c;
@@ -77,13 +77,11 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       parse_args (argc, argv);
 
       CORBA::Object_var obj
@@ -110,7 +108,7 @@ int main (int argc, char *argv[])
                                        "IN",
                                        "UNS:ping",
                                        "",
-                                       protocol,
+                                       ACE_TEXT_ALWAYS_CHAR (protocol),
                                        &ping_addr);
       flow_spec[0] = CORBA::string_dup (ping.entry_to_string ());
 
@@ -120,7 +118,7 @@ int main (int argc, char *argv[])
                                        "OUT",
                                        "UNS:pong",
                                        "",
-                                       protocol,
+                                       ACE_TEXT_ALWAYS_CHAR (protocol),
                                        &pong_addr);
       flow_spec[1] = CORBA::string_dup (pong.entry_to_string ());
 
@@ -129,11 +127,11 @@ int main (int argc, char *argv[])
       AVStreams::StreamCtrl_var stream_control =
         stream_control_impl._this ();
 
-      obj = orb->string_to_object (ping_ior);
+      obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ping_ior));
       AVStreams::MMDevice_var ping_sender =
         AVStreams::MMDevice::_narrow (obj.in ());
 
-      obj = orb->string_to_object (pong_ior);
+      obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (pong_ior));
       AVStreams::MMDevice_var pong_sender =
         AVStreams::MMDevice::_narrow (obj.in ());
 
