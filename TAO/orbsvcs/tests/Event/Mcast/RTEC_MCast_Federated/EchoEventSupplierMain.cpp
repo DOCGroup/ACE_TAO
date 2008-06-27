@@ -110,7 +110,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosNaming::NamingContextExt::_narrow(tmpobj.in());
 
     // Bind the Event Channel using Naming Services
-    CosNaming::Name_var name = root_context->to_name (ACE_TEXT_ALWAYS_CHAR (ecname));
+    CosNaming::Name_var name = 
+      root_context->to_name (ACE_TEXT_ALWAYS_CHAR (ecname));
     root_context->rebind(name.in(), ec.in());
 
     // Get a proxy push consumer from the EventChannel.
@@ -213,7 +214,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
     // Create an event (just a string in this case).
-    const CORBA::String_var eventData = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
 
     // Create an event set for one event
     RtecEventComm::EventSet event (1);
@@ -224,8 +224,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     event[0].header.ttl = 1;
     event[0].header.type = MY_EVENT_TYPE;
 
+#if !defined (TAO_LACKS_EVENT_CHANNEL_ANY)
     // Initialize data fields in event.
+    const CORBA::String_var eventData = 
+      CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
+
     event[0].data.any_value <<= eventData;
+#else
+    // Use the octet sequence payload instead
+    char *tmpstr = const_cast<char *>(ACE_TEXT_ALWAYS_CHAR (ecname));
+    size_t len = ACE_OS::strlen(tmpstr) +1;
+    event[0].data.payload.replace (len,len,
+				   reinterpret_cast<CORBA::Octet *>(tmpstr));
+#endif  /* !TAO_LACKS_EVENT_CHANNEL_ANY */
 
     if (iorfile != 0) {
       CORBA::String_var str = orb->object_to_string( ec.in() );

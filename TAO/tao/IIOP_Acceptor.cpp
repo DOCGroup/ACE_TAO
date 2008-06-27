@@ -39,16 +39,21 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
     reuse_addr_ (1),
-#if defined (ACE_HAS_IPV6)
+#if defined (ACE_HAS_IPV6) && !defined (ACE_USES_IPV4_IPV6_MIGRATION)
     default_address_ (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6),
 #else
     default_address_ (static_cast<unsigned short> (0), static_cast<ACE_UINT32> (INADDR_ANY)),
-#endif /* ACE_HAS_IPV6 */
+#endif /* ACE_HAS_IPV6  && !ACE_USES_IPV4_IPV6_MIGRATION */
     base_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0)
 {
+#if defined (ACE_HAS_IPV6) && defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  if (ACE::ipv6_enabled())
+    default_address_.set (static_cast<unsigned short> (0), 
+			  ACE_IPV6_ANY, AF_INET6);
+#endif /* ACE_HAS_IPV6 && ACE_USES_IPV4_IPV6_MIGRATION */
 }
 
 //@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END

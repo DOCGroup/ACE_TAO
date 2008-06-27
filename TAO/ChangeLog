@@ -1,3 +1,21 @@
+Fri Jun 27 14:48:54 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        
+          Fix the test for cases when TAO_LACKS_EVENT_CHANNEL_ANY is defined.
+        
+        * tao/Acceptor_Registry.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        
+          Allow TAO to work on win32 hosts with only IPv4 when TAO is built
+          with ACE_HAS_IPV6 and ACE_USES_IPV4_IPV6_MIGRATION both set. The 
+          migration flag is intended to make ACE/TAO test if IPv6 is enabled
+          at runtime, and to work without it. However, when TAO was required
+          to default its endpoint, it insisted on making an IPv6 endpoint 
+          regardless of the enablement. This fix resolves bug 3353.
+
 Fri Jun 27 12:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/AVStreams/Pluggable/ftp.h:
@@ -168,7 +186,7 @@ Thu Jun 26 11:04:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 Thu Jun 26 02:37:59 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Messaging/AMH_Response_Handler.cpp:
-        
+
           Set the outbound GIOP version number to the correct value when
           sending a response from an AMH servant. The problem is that there
           are too many output CDR instances and AMH response handler uses
