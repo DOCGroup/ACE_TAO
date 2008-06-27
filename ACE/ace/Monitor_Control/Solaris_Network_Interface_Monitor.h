@@ -74,7 +74,7 @@ namespace ACE
       ACE_UINT64 value_array_lo_[MAX_LO_INTERFACES];
       ACE_UINT64 value_array_hme_[MAX_HME_INTERFACES];
       ACE_UINT64 start_;
-      ACE_CString lookup_str_;
+      ACE_TString lookup_str_;
       kstat_ctl_t *kstats_;
       kstat_t *kstat_;
       kid_t kstat_id_;
