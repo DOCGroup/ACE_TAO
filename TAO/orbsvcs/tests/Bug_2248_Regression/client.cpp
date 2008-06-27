@@ -112,7 +112,7 @@ Manager::Manager (void)
 
 void
 Manager::init (int& argc,
-               ACE_TCHAR **argv)
+               ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
