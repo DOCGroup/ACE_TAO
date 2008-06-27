@@ -62,7 +62,7 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR *argv[]);
   // Method to initialize the various data components.
 
   int pace_data (void);
@@ -72,7 +72,7 @@ public:
   // Set the protocol object corresponding to the transport protocol chosen.
 
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Method to parse the command line arguments.
 
   int bind_to_receiver (void);
@@ -93,7 +93,7 @@ private:
   int frame_count_;
   // Number of frames sent.
 
-  ACE_CString filename_;
+  ACE_TString filename_;
   // File from which data is read.
 
   TAO_Naming_Client naming_client_;
@@ -102,7 +102,7 @@ private:
   FILE *input_file_;
   // File handle of the file read from.
 
-  ACE_CString protocol_;
+  ACE_TString protocol_;
   // Selected protocol - default is UDP
 
   double frame_rate_;

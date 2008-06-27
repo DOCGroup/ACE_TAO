@@ -1,3 +1,16 @@
+Fri Jun 27 12:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.h:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.h:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Fri Jun 27 12:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/AVStreams/Latency/ping.cpp:

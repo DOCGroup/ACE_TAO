@@ -8,7 +8,7 @@
 static FILE *output_file = 0;
 // File into which the received data is written.
 
-static const char *output_file_name = "output";
+static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
 // File handle of the file into which data is written.
 
 int done = 0;
@@ -74,7 +74,7 @@ Server::~Server (void)
 
 int
 Server::init (int,
-              char **)
+              ACE_TCHAR *[])
 {
   int result =
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
@@ -111,7 +111,7 @@ Server::init (int,
 
 int
 parse_args (int argc,
-            char **argv)
+            ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc,
                     argv,
@@ -136,8 +136,7 @@ parse_args (int argc,
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
