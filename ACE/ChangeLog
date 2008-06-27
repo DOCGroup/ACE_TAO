@@ -1,14 +1,21 @@
+Fri Jun 27 15:35:58 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Changed TAO_IDLFLAGS to Rename executable from gperf to
+          ace_gperf.
+
 Fri Jun 27 14:58:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Control/Solaris_Network_Interface_Monitor.h:
-        
+
           Changed ACE_CString member to ACE_TString, to accommodate
           wchar builds.
 
 Thu Jun 26 20:41:20 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Profile_Timer.cpp:
-        
+
           Explictly #include "ace/OS_NS_fcntl.h" and "ace/OS_NS_unistd.h"
           if ACE_HAS_PRUSAGE_T is defined.  These headers are implicitly
           #included with inline builds, but are required for builds
