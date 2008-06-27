@@ -80,10 +80,10 @@ Receiver_Callback::handle_destroy (void)
 
 Receiver::Receiver (void)
   : mmdevice_ (0),
-    output_file_name_ ("output"),
-    addr_file_ ("addr_file"),
-    sender_name_ ("distributer"),
-    receiver_name_ ("receiver")
+    output_file_name_ (ACE_TEXT ("output")),
+    addr_file_ (ACE_TEXT ("addr_file")),
+    sender_name_ (ACE_TEXT ("distributer")),
+    receiver_name_ (ACE_TEXT ("receiver"))
 {
 }
 
@@ -92,8 +92,7 @@ Receiver::~Receiver (void)
 }
 
 int
-Receiver::init (int,
-                char **)
+Receiver::init (int, ACE_TCHAR *[])
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -108,7 +107,7 @@ Receiver::init (int,
   if (result != 0)
     return result;
 
-  this->connection_manager_.load_ep_addr (this->addr_file_.c_str ());
+  this->connection_manager_.load_ep_addr (ACE_TEXT_ALWAYS_CHAR (this->addr_file_.c_str ()));
 
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
@@ -123,8 +122,8 @@ Receiver::init (int,
     this->mmdevice_->_this ();
 
   // Bind to sender.
-  this->connection_manager_.bind_to_sender (this->sender_name_,
-                                            this->receiver_name_,
+  this->connection_manager_.bind_to_sender (ACE_TEXT_ALWAYS_CHAR (this->sender_name_),
+                                            ACE_TEXT_ALWAYS_CHAR (this->receiver_name_),
                                             mmdevice.in ());
 
   // Connect to the sender.
@@ -134,8 +133,7 @@ Receiver::init (int,
 }
 
 int
-Receiver::parse_args (int argc,
-                      char **argv)
+Receiver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Parse the command line arguments
   ACE_Get_Opt opts (argc,
@@ -169,15 +167,14 @@ Receiver::parse_args (int argc,
   return 0;
 }
 
-ACE_CString
+ACE_TString
 Receiver::output_file_name (void)
 {
   return this->output_file_name_;
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -203,8 +200,7 @@ main (int argc,
 
       Receiver receiver;
       int result =
-        receiver.parse_args (argc,
-                             argv);
+        receiver.parse_args (argc, argv);
       if (result == -1)
         return -1;
 
@@ -215,7 +211,7 @@ main (int argc,
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (receiver.output_file_name ().c_str ())),
+                           receiver.output_file_name ().c_str () ),
                           -1);
 
       else
@@ -223,8 +219,7 @@ main (int argc,
                     "File Opened Successfully\n"));
 
       result =
-        receiver.init (argc,
-                       argv);
+        receiver.init (argc, argv);
 
       if (result != 0)
         return result;

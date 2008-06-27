@@ -82,15 +82,13 @@ public:
   ~Receiver (void);
   // Destructor.
 
-  int init (int argc,
-            char **argv);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize data components.
 
-  int parse_args (int argc,
-                  char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse args.
 
-  ACE_CString output_file_name (void);
+  ACE_TString output_file_name (void);
   // Name of the output file.
 
 protected:
@@ -110,10 +108,10 @@ protected:
   AVStreams::MMDevice_var sender_mmdevice_;
   // The sender MMDevice
 
-  ACE_CString output_file_name_;
+  ACE_TString output_file_name_;
   // File name of the file into which received data is written.
 
-  ACE_CString addr_file_;
+  ACE_TString addr_file_;
 
   ACE_CString sender_name_;
   // Sender name.

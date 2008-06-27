@@ -90,7 +90,7 @@ private:
   FILE *input_file_;
   // File handle of the file read from.
 
-  ACE_CString addr_file_;
+  ACE_TString addr_file_;
   // File from which data is read.
 
   double frame_rate_;

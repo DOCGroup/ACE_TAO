@@ -15,7 +15,7 @@ ACE_RCSID (Latency,
            ping,
            "$Id$")
 
-const char *ior_output_file = "pong.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("pong.ior");
 const char *protocol = "RTP/UDP";
 int milliseconds = 100;
 size_t message_size = 64;
@@ -31,7 +31,7 @@ ACE_Throughput_Stats send_latency;
 
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "xo:s:r:t:b:d");
   int c;
@@ -47,7 +47,7 @@ parse_args (int argc, char *argv[])
         {
           CORBA::ULong l = ping_protocols.length ();
           ping_protocols.length (l + 1);
-          ping_protocols[l] = CORBA::string_dup (get_opts.opt_arg ());
+          ping_protocols[l] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         }
         break;
 
@@ -55,7 +55,7 @@ parse_args (int argc, char *argv[])
         {
           CORBA::ULong l = pong_protocols.length ();
           pong_protocols.length (l + 1);
-          pong_protocols[l] = CORBA::string_dup (get_opts.opt_arg ());
+          pong_protocols[l] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         }
         break;
 
@@ -110,14 +110,11 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-
-
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       parse_args (argc, argv);
 
@@ -151,7 +148,7 @@ int main (int argc, char *argv[])
       CORBA::String_var ior =
         orb->object_to_string (mmdevice.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ACE_TEXT_CHAR_TO_TCHAR (ior.in ()) ));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -159,8 +156,9 @@ int main (int argc, char *argv[])
           FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
+                               "Cannot open output file %s for writing IOR: %s",
+                               ior_output_file,
+                               ACE_TEXT_CHAR_TO_TCHAR (ior.in ()) ),
                               1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);

@@ -94,10 +94,10 @@ Distributer_Receiver_Callback::handle_destroy (void)
 }
 
 Distributer::Distributer (void)
-  : sender_name_ ("sender")
-  , distributer_name_ ("distributer")
+  : sender_name_ (ACE_TEXT ("sender"))
+  , distributer_name_ (ACE_TEXT ("distributer"))
   , done_ (0)
-    , addr_file_ ("addr_file")
+  , addr_file_ (ACE_TEXT ("addr_file"))
 {
 }
 
@@ -112,8 +112,7 @@ Distributer::connection_manager (void)
 }
 
 int
-Distributer::parse_args (int argc,
-                         char **argv)
+Distributer::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "s:r:a:");
@@ -142,8 +141,7 @@ Distributer::parse_args (int argc,
 
 
 int
-Distributer::init (int argc,
-                   char ** argv)
+Distributer::init (int argc, ACE_TCHAR *argv[])
 {
   // Initialize the connection class.
   int result =
@@ -166,12 +164,11 @@ Distributer::init (int argc,
 
   // Parse the command line arguments
   result =
-    this->parse_args (argc,
-                      argv);
+    this->parse_args (argc, argv);
   if (result != 0)
     return result;
 
-  this->connection_manager_.load_ep_addr (this->addr_file_.c_str ());
+  this->connection_manager_.load_ep_addr (ACE_TEXT_ALWAYS_CHAR (this->addr_file_.c_str ()));
 
   ACE_NEW_RETURN (this->distributer_sender_mmdevice_,
                   TAO_MMDevice (&this->sender_endpoint_strategy_),
@@ -193,15 +190,15 @@ Distributer::init (int argc,
     this->distributer_receiver_mmdevice_->_this ();
 
   // Bind to receivers.
-  this->connection_manager_.bind_to_receivers (this->distributer_name_,
+  this->connection_manager_.bind_to_receivers (ACE_TEXT_ALWAYS_CHAR (this->distributer_name_),
                                                distributer_sender_mmdevice.in ());
 
   // Connect to receivers
   this->connection_manager_.connect_to_receivers (distributer_sender_mmdevice.in ());
 
   // Bind to sender.
-  this->connection_manager_.bind_to_sender (this->sender_name_,
-                                            this->distributer_name_,
+  this->connection_manager_.bind_to_sender (ACE_TEXT_ALWAYS_CHAR (this->sender_name_),
+                                            ACE_TEXT_ALWAYS_CHAR (this->distributer_name_),
                                             distributer_receiver_mmdevice.in ());
 
   // Connect to sender.
@@ -223,8 +220,7 @@ Distributer::done (int done)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -250,8 +246,7 @@ main (int argc,
 
       // Initialize the Distributer
       int result =
-        DISTRIBUTER::instance ()->init (argc,
-                                        argv);
+        DISTRIBUTER::instance ()->init (argc, argv);
 
       if (result != 0)
         return result;

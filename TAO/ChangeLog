@@ -1,3 +1,17 @@
+Fri Jun 27 12:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.h:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.h:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Fri Jun 27 11:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
