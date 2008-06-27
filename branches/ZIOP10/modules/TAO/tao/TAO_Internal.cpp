@@ -651,6 +651,7 @@ namespace
         bidir_loader->init (0, 0);
       }
 
+#if defined (TAO_HAS_ZIOP)
     ACE_Service_Object * const ziop_loader =
       ACE_Dynamic_Service<ACE_Service_Object>::instance (
         pcfg,
@@ -660,6 +661,7 @@ namespace
       {
         ziop_loader->init (0, 0);
       }
+#endif
 
     ACE_Service_Object * const messaging_loader =
       ACE_Dynamic_Service<ACE_Service_Object>::instance (

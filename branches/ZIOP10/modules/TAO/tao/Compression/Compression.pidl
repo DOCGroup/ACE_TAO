@@ -59,7 +59,13 @@ module Compression
     typedef unsigned long CompressionLevel;
 
     local interface CompressorFactory;
-    
+
+   struct CompressorIdLevel {
+      CompressorId     compressor_id;
+      CompressionLevel compression_level;
+    };
+    typedef sequence <CompressorIdLevel> CompressorIdLevelList;
+
     typedef CORBA::OctetSeq Buffer;
 
     /**
@@ -107,7 +113,7 @@ module Compression
          * this CompressorFactory, usually a value between 0 and >=1.
          * (i.e. compressed_bytes divided by uncompressed_bytes).
          */
-        readonly attribute double average_compression;
+        readonly attribute unsigned long compression_ratio;
     };
 
     local interface CompressorFactory
@@ -149,6 +155,10 @@ module Compression
          * CompressorFactory with the given CompressorId
          */
         Compressor get_compressor(in CompressorId compressor_id, in CompressionLevel compression_level) raises(UnknownCompressorId);
+        /**
+         * Create a Compressor with the given CompressorIdLevel
+         */
+        //Compressor get_compressor(in CompressorIdLevel compressor_id_level) raises(UnknownCompressorId);
         /**
          * List all registered CompressorFactories
          */

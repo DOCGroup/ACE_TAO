@@ -16,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 CompressorIdListPolicy::CompressorIdListPolicy (
-    const ::Compression::CompressorIdList& val)
+    const ::Compression::CompressorIdLevelList& val)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressorIdListPolicy ()
@@ -78,12 +78,12 @@ CompressorIdListPolicy::destroy (void)
 {
 }
 
-::Compression::CompressorIdList *
+::Compression::CompressorIdLevelList *
 CompressorIdListPolicy::compressor_ids (void)
 {
-  ::Compression::CompressorIdList *tmp = 0;
+  ::Compression::CompressorIdLevelList *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
-                    ::Compression::CompressorIdList (this->value_),
+                    ::Compression::CompressorIdLevelList (this->value_),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
 

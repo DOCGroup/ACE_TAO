@@ -261,6 +261,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
     ziop_adapter_ (0),
+    ziop_enabled_ (false),
     flushing_strategy_ (0),
     codeset_manager_ (0),
     config_ (gestalt),
@@ -1894,7 +1895,15 @@ TAO_ORB_Core::load_policy_validators (TAO_Policy_Validator &validator)
 
   // Call the BiDir library if it has been loaded
   if (this->bidir_adapter_)
-    this->bidir_adapter_->load_policy_validators (validator);
+    {
+      this->bidir_adapter_->load_policy_validators (validator);
+    }
+
+  // Call the ZIOP library if it has been loaded
+  if (this->ziop_adapter_)
+    {
+      this->ziop_adapter_->load_policy_validators (validator);
+    }
 }
 
 CORBA::Object_ptr

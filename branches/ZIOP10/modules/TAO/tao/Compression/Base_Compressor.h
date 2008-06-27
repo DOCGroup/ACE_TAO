@@ -53,7 +53,7 @@ namespace TAO
 
     virtual ::CORBA::ULongLong uncompressed_bytes (void);
 
-    virtual ::CORBA::Double average_compression (void);
+    virtual ::CORBA::ULong compression_ratio (void);
 
   protected:
     void update_stats (::CORBA::ULongLong compressed_bytes,

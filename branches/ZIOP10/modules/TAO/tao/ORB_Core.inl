@@ -448,6 +448,18 @@ TAO_ORB_Core::ziop_adapter (TAO_ZIOP_Adapter *adapter)
   this->ziop_adapter_ = adapter;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::ziop_enabled () const
+{
+  return this->ziop_enabled_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::ziop_enabled (CORBA::Boolean value)
+{
+  this->ziop_enabled_ = value;
+}
+
 ACE_INLINE TAO::ORBInitializer_Registry_Adapter *
 TAO_ORB_Core::orbinitializer_registry ()
 {

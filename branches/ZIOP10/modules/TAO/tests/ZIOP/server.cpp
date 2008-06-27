@@ -11,11 +11,12 @@ ACE_RCSID (Hello,
            "$Id$")
 
 const char *ior_output_file = "test.ior";
+Compression::CompressionLevel level = 9;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:l:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -23,6 +24,9 @@ parse_args (int argc, char *argv[])
       {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
+        break;
+      case 'l':
+        level = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -79,10 +83,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
 CORBA::Boolean compression_enabling = true;
-Compression::CompressorIdList compressor_id_list(2);
+Compression::CompressorIdLevelList compressor_id_list(2);
 compressor_id_list.length(2);
-compressor_id_list[0] = Compression::COMPRESSORID_ZLIB;
-compressor_id_list[1] = Compression::COMPRESSORID_GZIP;
+Compression::CompressorIdLevel levelid;
+levelid.compressor_id = Compression::COMPRESSORID_ZLIB;
+levelid.compression_level = 9;
+compressor_id_list[0] = levelid;
+levelid.compressor_id = Compression::COMPRESSORID_BZIP2;
+compressor_id_list[1] = levelid;
 //CORBA::ULong compression_low_value = 16384;
 //CORBA::ULong min_compression_ratio = 40;
 CORBA::Any compression_enabling_any;//, compressor_id_any, low_value_any;

@@ -36,7 +36,7 @@ namespace TAO
   ::CORBA::ULongLong
   BaseCompressor::compressed_bytes (void)
   {
-    ::CORBA::ULongLong return_value;
+    ::CORBA::ULongLong return_value = 0;
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return_value = compressed_bytes_;
@@ -47,7 +47,7 @@ namespace TAO
   ::CORBA::ULongLong
   BaseCompressor::uncompressed_bytes (void)
   {
-    ::CORBA::ULongLong return_value;
+    ::CORBA::ULongLong return_value = 0;
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return_value = uncompressed_bytes_;
@@ -55,17 +55,15 @@ namespace TAO
     return return_value;
   }
 
-  ::CORBA::Double
-  BaseCompressor::average_compression (void)
+  ::CORBA::ULong
+  BaseCompressor::compression_ratio (void)
   {
-    ::CORBA::Double return_value = 0.0;
+    ::CORBA::ULong return_value = 0;
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       if (this->uncompressed_bytes_ > 0)
         {
-          return_value = static_cast < ::CORBA::Double>(
-            (this->uncompressed_bytes_ - this->compressed_bytes_) /
-            this->uncompressed_bytes_);
+          return_value = 100 - (this->compressed_bytes_ / this->uncompressed_bytes_) * 100;
         }
     }
     return return_value;

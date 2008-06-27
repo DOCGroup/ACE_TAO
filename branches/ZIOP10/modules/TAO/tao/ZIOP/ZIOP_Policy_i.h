@@ -44,7 +44,7 @@ public:
   CompressorIdListPolicy (void);
   
   /// Constructor.
-  CompressorIdListPolicy (const ::Compression::CompressorIdList& val);
+  CompressorIdListPolicy (const ::Compression::CompressorIdLevelList& val);
 
   /// Copy constructor.
   CompressorIdListPolicy (const CompressorIdListPolicy &rhs);
@@ -52,7 +52,7 @@ public:
   /// Returns a copy of <this>.
   virtual CompressorIdListPolicy *clone (void) const;
 
-  virtual ::Compression::CompressorIdList * compressor_ids ();
+  virtual ::Compression::CompressorIdLevelList * compressor_ids ();
 
   virtual CORBA::PolicyType policy_type (void);
 
@@ -74,7 +74,7 @@ public:
 private:
 
   /// The attribute
-  ::Compression::CompressorIdList value_;
+  ::Compression::CompressorIdLevelList value_;
 };
 
 /**

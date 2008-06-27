@@ -64,7 +64,7 @@ module ZIOP
      */
     local interface CompressorIdListPolicy : CORBA::Policy
     {
-        readonly attribute Compression::CompressorIdList compressor_ids;
+        readonly attribute Compression::CompressorIdLevelList compressor_ids;
     };
 
     const CORBA::PolicyType COMPRESSION_LOW_VALUE_POLICY_ID = 5557;

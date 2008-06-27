@@ -1246,13 +1246,14 @@ cat_tag_policies (TAO_InputCDR& stream) {
                   "%I Policy #%d Type: %d (COMPRESSION_ID_LIST_POLICY_ID)\n",
                   iter+1,
                   policies[iter].ptype));
-      ::Compression::CompressorIdList idlist;
-      stream3 >> idlist;
+      ::Compression::CompressorIdLevelList idlist;
+      if (!(stream3 >> idlist))
+        return 1;
       CORBA::ULong index = 0;
       for (index; index < idlist.length(); index++)
         {
-          ACE_DEBUG ((LM_DEBUG,"%I\t Compressor: %d\n",
-                      idlist[index]));
+          ACE_DEBUG ((LM_DEBUG,"%I\t CompressorId: %d Level: %d\n",
+                      idlist[index].compressor_id, idlist[index].compression_level));
         }
     } else if (policies[iter].ptype == ZIOP::COMPRESSION_ENABLING_POLICY_ID) {
       ACE_DEBUG ((LM_DEBUG,

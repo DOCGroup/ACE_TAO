@@ -67,12 +67,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ULong min_value = 0;
       CORBA::Any compression_enabled;
       CORBA::Any compmin;
+Compression::CompressorIdLevelList compressor_id_list(2);
+compressor_id_list.length(2);
+Compression::CompressorIdLevel levelid;
+levelid.compressor_id = Compression::COMPRESSORID_ZLIB;
+levelid.compression_level = 9;
+compressor_id_list[0] = levelid;
+levelid.compressor_id = Compression::COMPRESSORID_BZIP2;
+compressor_id_list[1] = levelid;
+CORBA::Any compressor_id_any;
+compressor_id_any <<= compressor_id_list;
       compression_enabled <<= CORBA::Any::from_boolean (comp_enables);
       compmin <<= min_value;
-      CORBA::PolicyList policies (2);
-      policies.length (2);
+      CORBA::PolicyList policies (3);
+      policies.length (3);
       policies[0] = orb->create_policy (ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabled);
       policies[1] = orb->create_policy (ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID, compmin);
+      policies[2] = orb->create_policy(ZIOP::COMPRESSION_ID_LIST_POLICY_ID,compressor_id_any);
       CORBA::Object_var tmp = orb->string_to_object(ior);
       CORBA::Object_var tmp2 = tmp->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 

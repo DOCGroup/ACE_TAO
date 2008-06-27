@@ -436,7 +436,7 @@ namespace TAO
 
     CORBA::Object_var fwd;
 
-    if ((inp_stream >> fwd) == 0)
+    if (!(inp_stream >> fwd))
       {
         throw ::CORBA::MARSHAL (
           CORBA::SystemException::_tao_minor_code (
@@ -466,7 +466,7 @@ namespace TAO
     // Pull the exception from the stream.
     CORBA::String_var buf;
 
-    if ((cdr >> buf.inout ()) == 0)
+    if (!(cdr >> buf.inout ()))
       {
         // Could not demarshal the exception id, raise an local
         // CORBA::MARSHAL
@@ -511,7 +511,7 @@ namespace TAO
 
     CORBA::String_var type_id;
 
-    if ((cdr >> type_id.inout ()) == 0)
+    if (!(cdr >> type_id.inout ()))
       {
         // Could not demarshal the exception id, raise an local
         // CORBA::MARSHAL

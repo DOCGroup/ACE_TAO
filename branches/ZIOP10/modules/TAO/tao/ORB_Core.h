@@ -205,6 +205,9 @@ public:
   TAO_ZIOP_Adapter *ziop_adapter () const;
   void ziop_adapter (TAO_ZIOP_Adapter *adapter);
 
+  CORBA::Boolean ziop_enabled () const;
+  void ziop_enabled (CORBA::Boolean value);
+
   TAO_Service_Context_Registry &service_context_registry (void);
 
   /// Get the protocol factories
@@ -1238,6 +1241,9 @@ protected:
 
   /// ZIOP Adapter
   TAO_ZIOP_Adapter *ziop_adapter_;
+
+  /// ZIOP enabled or not
+  CORBA::Boolean ziop_enabled_;
 
   /// Hold the flushing strategy
   TAO_Flushing_Strategy *flushing_strategy_;
