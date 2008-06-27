@@ -1,3 +1,8 @@
+Fri Jun 27 16:08:27 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.local.GNU: Add $(VOBJS) to CLEANUP_OBJS to
+          be sure all objects that go into a binary are cleaned up.
+
 Fri Jun 27 15:35:58 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
