@@ -114,12 +114,10 @@ public:
   ~Distributer (void);
   // Destructor.
 
-  int init (int argc,
-            char **argv);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize data components.
 
-  int parse_args (int argc,
-                  char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse args.
 
   // Flag to know when we are done.
@@ -145,14 +143,14 @@ protected:
   TAO_MMDevice* distributer_sender_mmdevice_;
   // The distributer receiver multimedia device
 
-  ACE_CString sender_name_;
+  ACE_TString sender_name_;
   // The name of the sender to connect to.
 
-  ACE_CString distributer_name_;
+  ACE_TString distributer_name_;
   // Our name.
 
   int done_;
   // Flag to know when we are done.
 
-  ACE_CString addr_file_;
+  ACE_TString addr_file_;
 };

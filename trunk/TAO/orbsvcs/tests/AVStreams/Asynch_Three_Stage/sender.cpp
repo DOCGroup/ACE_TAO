@@ -45,7 +45,7 @@ Sender::Sender (void)
     frame_count_ (0),
     filename_ ("input"),
     input_file_ (0),
-    addr_file_ ("addr_file"),
+    addr_file_ (ACE_TEXT ("addr_file")),
     frame_rate_ (10.0),
     mb_ (BUFSIZ),
     sender_name_ ("sender")
@@ -53,8 +53,7 @@ Sender::Sender (void)
 }
 
 int
-Sender::parse_args (int argc,
-                    char **argv)
+Sender::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "s:f:r:da:");
@@ -88,8 +87,7 @@ Sender::parse_args (int argc,
 }
 
 int
-Sender::init (int argc,
-              char **argv)
+Sender::init (int argc, ACE_TCHAR *argv[])
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -108,12 +106,11 @@ Sender::init (int argc,
 
   // Parse the command line arguments
   result =
-    this->parse_args (argc,
-                      argv);
+    this->parse_args (argc, argv);
   if (result != 0)
     return result;
 
-  this->connection_manager_.load_ep_addr (this->addr_file_.c_str ());
+  this->connection_manager_.load_ep_addr (ACE_TEXT_ALWAYS_CHAR (this->addr_file_.c_str ()));
 
   // Open file to read.
   this->input_file_ =
@@ -280,8 +277,7 @@ Sender::connection_manager (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -305,8 +301,7 @@ main (int argc,
 
       // Initialize the Client.
       int result = 0;
-      result = SENDER::instance ()->init (argc,
-                                          argv);
+      result = SENDER::instance ()->init (argc, argv);
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
