@@ -99,10 +99,9 @@ FTP_Client_Producer::get_callback (const char *,
 }
 
 int
-Client::parse_args (int argc,
-                    char **argv)
+Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc,argv,"f:a:p:sd");
+  ACE_Get_Opt opts (argc, argv, "f:a:p:sd");
 
   this->use_sfp_ = 0;
   int c;
@@ -111,13 +110,13 @@ Client::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_OS::strdup (opts.opt_arg ());
+          this->filename_ = opts.opt_arg ();
           break;
         case 'a':
-          this->address_ = ACE_OS::strdup (opts.opt_arg ());
+          this->address_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
+          this->protocol_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 's':
           this->use_sfp_ = 1;
@@ -152,7 +151,7 @@ Client::protocols (void)
   AVStreams::protocolSpec protocols (1);
   protocols.length (1);
   char buf [BUFSIZ];
-  ACE_OS::sprintf (buf,"%s=%s",this->protocol_,this->address_);
+  ACE_OS::sprintf (buf, "%s=%s", this->protocol_, this->address_);
   protocols [0] = CORBA::string_dup (buf);
   return protocols;
 }
@@ -191,7 +190,6 @@ Client::Client (void)
 int
 Client::bind_to_server (const char *name)
 {
-
   try
     {
       // Initialize the naming services
@@ -212,7 +210,8 @@ Client::bind_to_server (const char *name)
 
       if (CORBA::is_nil (this->server_mmdevice_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Server_Mmdevice in Naming service <%s>\n"),
+                           " could not resolve Server_Mmdevice in Naming service <%s>\n",
+                           ACE_TEXT_CHAR_TO_TCHAR (name)),
                           -1);
     }
   catch (const CORBA::Exception& ex)
@@ -225,7 +224,7 @@ Client::bind_to_server (const char *name)
 }
 
 int
-Client::init (int argc,char **argv)
+Client::init (int argc, ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -239,7 +238,7 @@ Client::init (int argc,char **argv)
 
       this->parse_args (this->argc_, this->argv_);
 
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address  %s\n", this->address_));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address  %s\n", ACE_TEXT_CHAR_TO_TCHAR (this->address_)));
 
       ACE_NEW_RETURN (this->fdev_,
                       FTP_Client_FDev,
@@ -261,7 +260,7 @@ Client::init (int argc,char **argv)
                            "the TAO_Naming_Client. \n"),
                           -1);
 
-      this->fp_ = ACE_OS::fopen (this->filename_,"r");
+      this->fp_ = ACE_OS::fopen (this->filename_, "r");
       if (this->fp_ != 0)
         {
           ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
@@ -282,13 +281,13 @@ Client::run (void)
     {
       char flow_protocol_str [BUFSIZ];
       if (this->use_sfp_)
-        ACE_OS::strcpy (flow_protocol_str,"sfp:1.0");
+        ACE_OS::strcpy (flow_protocol_str, "sfp:1.0");
       else
-        ACE_OS::strcpy (flow_protocol_str,"");
+        ACE_OS::strcpy (flow_protocol_str, "");
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec flow_spec (1);
       // Bind the client and server mmdevices.
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address %s\n", this->address_));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address %s\n", ACE_TEXT_CHAR_TO_TCHAR (this->address_) ));
       ACE_INET_Addr *addr = new ACE_INET_Addr(this->address_);
       TAO_Forward_FlowSpec_Entry entry (this->flowname_,
                                         "IN",
@@ -296,7 +295,7 @@ Client::run (void)
                                         flow_protocol_str,
                                         this->protocol_,
                                         addr);
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) flowspec: %s\n", entry.entry_to_string() ));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) flowspec: %s\n", ACE_TEXT_CHAR_TO_TCHAR (entry.entry_to_string()) ));
       flow_spec.length (1);
       flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
 
@@ -356,13 +355,9 @@ Client::run (void)
 }
 
 int
-main (int argc,
-      char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        argv);
-
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
   try
     {
@@ -382,7 +377,7 @@ main (int argc,
     }
 
   int result = 0;
-  result = CLIENT::instance ()->init (argc,argv);
+  result = CLIENT::instance ()->init (argc, argv);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
   result = CLIENT::instance ()->run ();

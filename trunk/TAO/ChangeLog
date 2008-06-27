@@ -1,3 +1,13 @@
+Fri Jun 27 12:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.h:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.h:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Fri Jun 27 12:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/AVStreams/Latency/control.cpp:

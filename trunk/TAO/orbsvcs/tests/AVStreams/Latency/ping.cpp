@@ -42,7 +42,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         {
           CORBA::ULong l = ping_protocols.length ();
           ping_protocols.length (l + 1);
-          ping_protocols[l] = CORBA::string_dup (get_opts.opt_arg ());
+          ping_protocols[l] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         }
         break;
 
@@ -50,7 +50,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         {
           CORBA::ULong l = pong_protocols.length ();
           pong_protocols.length (l + 1);
-          pong_protocols[l] = CORBA::string_dup (get_opts.opt_arg ());
+          pong_protocols[l] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         }
         break;
 
