@@ -5,21 +5,20 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Argv_Type_Converter.h"
 
-NamingTask::NamingTask (const char* orbname, int argc, char** argv, unsigned short port)
+NamingTask::NamingTask (const char* orbname, int argc, ACE_TCHAR **argv, unsigned short port)
  : initialized_(false)
 {
-  char** my_argv = new char*[argc + 2];
-  char buf[128];
+  ACE_TCHAR **my_argv = new ACE_TCHAR *[argc + 2];
+  ACE_TCHAR buf[128];
   int my_argc = 0;
   for(; my_argc<argc ;++my_argc)
     my_argv[my_argc] = argv[my_argc];
-  ACE_OS::sprintf (buf, "iiop://localhost:%d", port);
-  const char* epopt = "-ORBEndpoint";
-  my_argv[my_argc++] = const_cast<char*> (epopt);
+  ACE_OS::sprintf (buf, ACE_TEXT ("iiop://localhost:%d"), port);
+  const ACE_TCHAR* epopt = ACE_TEXT ("-ORBEndpoint");
+  my_argv[my_argc++] = const_cast<ACE_TCHAR *> (epopt);
   my_argv[my_argc++] = buf;
 
-  ACE_Argv_Type_Converter satc (my_argc, my_argv);
-  orb_ = CORBA::ORB_init(satc.get_argc (), satc.get_TCHAR_argv (), orbname);
+  orb_ = CORBA::ORB_init (my_argc, my_argv, orbname);
 }
 
 void NamingTask::waitInit ()

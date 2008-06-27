@@ -1,3 +1,25 @@
+Fri Jun 27 11:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicationManagerController.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/NamingTeask.h:
+        * orbsvcs/tests/Bug_2800_Regression/NamingTeask.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/server.cpp:
+        * orbsvcs/tests/ior_corbaname/client.cpp:
+        * orbsvcs/tests/ior_corbaname/ior_corbaname_client_i.h:
+        * orbsvcs/tests/ior_corbaname/ior_corbaname_client_i.cpp:
+        * orbsvcs/tests/ior_corbaname/server.cpp:
+        * orbsvcs/tests/IOR_MCast/client.cpp:
+        * orbsvcs/tests/IOR_MCast/ior_mcast_client_i.h:
+        * orbsvcs/tests/IOR_MCast/ior_mcast_client_i.cpp:
+        * orbsvcs/tests/IOR_MCast/server.cpp:
+        * orbsvcs/tests/IOR_MCast/server_i.h:
+        * orbsvcs/tests/IOR_MCast/server_i.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Fri Jun 27 09:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Bug_2248_Regression/client.h:

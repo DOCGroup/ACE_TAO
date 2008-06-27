@@ -20,7 +20,7 @@ public:
   Server_i (void);
   ~Server_i (void);
 
-  int init (int &argc, char **&argv);
+  int init (int &argc, ACE_TCHAR **argv);
   // Initialize the server multicast.
 
 private:
@@ -30,14 +30,14 @@ private:
   int enable_multicast (const char *ior);
 
   /// Parse the command line arguments.
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
 
   int argc_;
   // # of arguments on the command line.
 
-  char **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   CORBA::ORB_var orb_;

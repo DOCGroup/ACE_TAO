@@ -15,9 +15,8 @@ ior_mcast_Client_i::~ior_mcast_Client_i (void)
 
 int
 ior_mcast_Client_i::init (int& argc,
-                          char *argv[])
+                          ACE_TCHAR *argv[])
 {
-
   try
     {
       // First initialize the ORB, that will remove some arguments...

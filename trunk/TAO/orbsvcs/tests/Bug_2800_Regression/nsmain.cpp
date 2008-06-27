@@ -12,10 +12,10 @@ const char *ior_output_file = "shutdown.ior";
 class TestTask : public ACE_Task_Base
 {
 public:
-  TestTask(int argc, char **argv);
-  virtual int svc();
+  TestTask (int argc, ACE_TCHAR **argv);
+  virtual int svc ();
 
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR **argv);
 
   void end();
 private:
@@ -25,13 +25,13 @@ private:
   CORBA::Boolean shutdown_ns_;
 };
 
-TestTask::TestTask(int argc, char **argv)
+TestTask::TestTask (int argc, ACE_TCHAR **argv)
  : namingServiceA_("NamingORBA", argc, argv, 9931),
    namingServiceB_("NamingORBB", argc, argv, 9932)
 {
-  orb_ = CORBA::ORB_init(argc, argv, "ServerORB");
+  orb_ = CORBA::ORB_init (argc, argv, "ServerORB");
   shutdown_ns_ = false;
-  parse_args(argc, argv);
+  parse_args (argc, argv);
 }
 
 void TestTask::end()
@@ -41,7 +41,7 @@ void TestTask::end()
 }
 
 int
-TestTask::parse_args (int argc, char **argv)
+TestTask::parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "s");
   int c;
@@ -75,7 +75,7 @@ int TestTask::svc()
       ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot open output file for writing IOR: ns.ior\n"),
                           1);
-    ACE_OS::fprintf (output_file, "%s", namingServiceA_.ior ());
+    ACE_OS::fprintf (output_file, "%s", ACE_TEXT_CHAR_TO_TCHAR (namingServiceA_.ior ()));
     ACE_OS::fclose (output_file);
 
     // Get reference to Root POA
@@ -145,8 +145,9 @@ int TestTask::svc()
     output_file= ACE_OS::fopen (ior_output_file, "w");
     if (output_file == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "Cannot open output file for writing IOR: %s\n",
-                          ior_output_file),
+                          "Cannot open output file %s for writing IOR: %s\n",
+                          ACE_TEXT_CHAR_TO_TCHAR (ior_output_file),
+                          ACE_TEXT_CHAR_TO_TCHAR (ior.in ()) ),
                           1);
     ACE_OS::fprintf (output_file, "%s", ior.in ());
     ACE_OS::fclose (output_file);
@@ -174,10 +175,10 @@ int TestTask::svc()
   return -1;
 }
 
-int main(int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Start the Test task
-  TestTask test_(argc, argv);
+  TestTask test_ (argc, argv);
   if (test_.activate() == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to start test task.\n"), -1);
