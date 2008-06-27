@@ -11,7 +11,7 @@
 class NamingTask : public ACE_Task_Base
 {
 public:
-  NamingTask (const char* orbname, int argc, char** argv, unsigned short port);
+  NamingTask (const char* orbname, int argc, ACE_TCHAR **argv, unsigned short port);
   virtual int svc();
   void waitInit ();
   void end();

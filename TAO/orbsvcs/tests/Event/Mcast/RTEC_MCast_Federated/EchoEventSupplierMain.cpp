@@ -30,7 +30,7 @@ const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
 // Initialize the ORB.
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
@@ -38,11 +38,11 @@ int main (int argc, char* argv[])
     TAO_EC_Default_Factory::init_svcs ();
 
     // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-    const char* ecname = "EventService";
-    const char* address = "localhost";
-    const char* iorfile = 0;
+    const ACE_TCHAR *ecname = ACE_TEXT ("EventService");
+    const ACE_TCHAR *address = ACE_TEXT ("localhost");
+    const ACE_TCHAR *iorfile = 0;
     u_short port = 12345;
     u_short listenport = 12345;
 
@@ -50,42 +50,42 @@ int main (int argc, char* argv[])
 
     for (int i = 0; argv[i] != 0; i++)
       {
-        if (ACE_OS::strcasecmp(argv[i], "-ecname") == 0)
+        if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-ecname")) == 0)
           {
             if (argv[i+1] != 0)
                 ecname = argv[++i];
             else
               ACE_ERROR_RETURN ((LM_ERROR,  "Missing Event channel name\n"),0);
           }
-        else if (ACE_OS::strcasecmp(argv[i], "-address") == 0)
+        else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-address")) == 0)
           {
             if (argv[i+1] != 0)
               address = argv[++i];
             else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing address\n"),0);
           }
-        else if (ACE_OS::strcasecmp(argv[i], "-port") == 0)
+        else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-port")) == 0)
           {
             if (argv[i+1] != 0)
               port = ACE_OS::atoi(argv[++i]);
             else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"),0);
           }
-        else if (ACE_OS::strcasecmp(argv[i], "-listenport") == 0)
+        else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-listenport")) == 0)
           {
             if (argv[i+1] != 0)
               listenport = ACE_OS::atoi(argv[++i]);
             else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"), 0);
           }
-        else if (ACE_OS::strcmp(argv[i], "-iorfile") == 0)
+        else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-iorfile")) == 0)
           {
             if (argv[i+1] != 0)
               iorfile = argv[++i];
              else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing ior file\n"), 0);
           }
-        else if (ACE_OS::strcmp(argv[i], "-udp") == 0)
+        else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-udp")) == 0)
           mcast = 0;
       }
 
@@ -110,7 +110,7 @@ int main (int argc, char* argv[])
       CosNaming::NamingContextExt::_narrow(tmpobj.in());
 
     // Bind the Event Channel using Naming Services
-    CosNaming::Name_var name = root_context->to_name(ecname);
+    CosNaming::Name_var name = root_context->to_name (ACE_TEXT_ALWAYS_CHAR (ecname));
     root_context->rebind(name.in(), ec.in());
 
     // Get a proxy push consumer from the EventChannel.
@@ -213,7 +213,7 @@ int main (int argc, char* argv[])
     }
 
     // Create an event (just a string in this case).
-    const CORBA::String_var eventData = CORBA::string_dup(ecname);
+    const CORBA::String_var eventData = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
 
     // Create an event set for one event
     RtecEventComm::EventSet event (1);
@@ -252,7 +252,8 @@ int main (int argc, char* argv[])
   {
     ACE_ERROR ((LM_ERROR,
     "Caught CORBA::Exception\n%s (%s)\n",
-    exc._name (), exc._rep_id ()));
+    ACE_TEXT_CHAR_TO_TCHAR (exc._name ()),
+    ACE_TEXT_CHAR_TO_TCHAR (exc._rep_id ()) ));
   }
   return 1;
 }

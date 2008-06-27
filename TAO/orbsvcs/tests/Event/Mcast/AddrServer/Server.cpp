@@ -8,22 +8,22 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if defined ACE_HAS_IPV6
   try
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      const char *ior_file_name = "as.ior";
-      const char* address = "224.6.6.1";
-      const char* address6 = "FF01::ABCD";
+      const ACE_TCHAR *ior_file_name = ACE_TEXT ("as.ior");
+      const char *address = "224.6.6.1";
+      const char *address6 = "FF01::ABCD";
       u_short port = 12345;
 
       for (int i = 0; argv[i] != 0; i++)
         {
-          if (ACE_OS::strcasecmp(argv[i], "-o") == 0)
+          if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-o")) == 0)
             {
               if (argv[i+1] != 0)
                 ior_file_name = argv[++i];
@@ -55,8 +55,9 @@ int main (int argc, char* argv[])
       FILE *output_file= ACE_OS::fopen (ior_file_name, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           ior_file_name),
+                           "Cannot open output file %s for writing IOR: %s\n",
+                           ior_file_name,
+                           ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
@@ -70,7 +71,8 @@ int main (int argc, char* argv[])
     {
       ACE_ERROR ((LM_ERROR,
                   "Caught CORBA::Exception\n%s (%s)\n",
-                  exc._name (), exc._rep_id ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (exc._name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (exc._rep_id ()) ));
     }
 #else
   ACE_UNUSED_ARG (argc);

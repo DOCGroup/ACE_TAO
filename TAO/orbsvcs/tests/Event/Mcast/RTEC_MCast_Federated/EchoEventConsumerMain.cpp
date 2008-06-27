@@ -16,16 +16,16 @@ const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
 const int EVENT_LIMIT = 20;
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
     // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-    const char* ecname = "EventService";
+    const ACE_TCHAR *ecname = ACE_TEXT ("EventService");
     for (int i = 0; argv[i] != 0; i++) {
-      if (ACE_OS::strcmp(argv[i], "-ecname") == 0) {
+      if (ACE_OS::strcmp (argv[i], ACE_TEXT ("-ecname")) == 0) {
         if (argv[i+1] != 0) {
           ecname = argv[i+1];
         } else {
@@ -40,7 +40,7 @@ int main (int argc, char* argv[])
     CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(obj.in());
 
     // Find the EchoEventChannel.
-    obj = root_context->resolve_str(ecname);
+    obj = root_context->resolve_str (ACE_TEXT_ALWAYS_CHAR (ecname));
 
     // Downcast the object reference to an EventChannel reference.
     RtecEventChannelAdmin::EventChannel_var ec =
@@ -107,7 +107,8 @@ int main (int argc, char* argv[])
   {
     ACE_ERROR ((LM_ERROR,
     "Caught CORBA::Exception\n%s (%s)\n",
-    exc._name (), exc._rep_id ()));
+    ACE_TEXT_CHAR_TO_TCHAR (exc._name ()),
+    ACE_TEXT_CHAR_TO_TCHAR (exc._rep_id ()) ));
   }
 
   return 1;

@@ -53,7 +53,7 @@ IOR_corbaname_Client_i::run (void)
       // <name>. "#" refers to the seperator between the host and the
       // entry.
 
-      ACE_CString corbaname_url (this->argv_[1], 0, 1);
+      ACE_CString corbaname_url (ACE_TEXT_ALWAYS_CHAR (this->argv_[1]), 0, 1);
 
       // Append the seperator '#' to the host.
       corbaname_url += "#";
@@ -107,7 +107,7 @@ IOR_corbaname_Client_i::run (void)
 }
 
 int
-IOR_corbaname_Client_i::init (int argc, char **argv)
+IOR_corbaname_Client_i::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -121,7 +121,7 @@ IOR_corbaname_Client_i::init (int argc, char **argv)
       // retrieved
       if (this->argc_ < 2)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Address of naming context not specified\n",
+                           "%s: Address of naming context not specified\n",
                            this->argv_[0]),
                            -1);
 

@@ -2,13 +2,10 @@
 
 #include "ior_mcast_client_i.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
-
   try
     {
-
       ior_mcast_Client_i client;
 
       int init_result;
@@ -18,7 +15,7 @@ int main (int argc, char *argv [])
     }
   catch (const CORBA::SystemException&)
     {
-      //
+      // Ignore
     }
   catch (const CORBA::Exception& ex)
     {
