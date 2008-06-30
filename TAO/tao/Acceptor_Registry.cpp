@@ -384,7 +384,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                           ACE_TEXT ("TAO (%P|%t) unable to create ")
                           ACE_TEXT ("an acceptor for <%s>\n"),
                           ACE_TEXT_CHAR_TO_TCHAR ((*i)->
-						  protocol_name ().c_str ())
+                            protocol_name ().c_str ())
                         ));
                     }
 
@@ -397,7 +397,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                   ACE_INET_Addr addr(static_cast<unsigned short> (0));
 
                   TAO_IIOP_Acceptor* iiop_acceptor = 
-		    dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                    dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
 
                   if (!iiop_acceptor)
                     return -1;
@@ -417,7 +417,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 
                   // record the port chosen for the IPv4 acceptor
                   u_short port = 
-		    iiop_acceptor->default_address ().get_port_number ();
+                    iiop_acceptor->default_address ().get_port_number ();
 
                   // Create second acceptor for IPV6 traffic
                   acceptor =
@@ -432,7 +432,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                               ACE_TEXT ("TAO (%P|%t) unable to create ")
                               ACE_TEXT ("an acceptor for <%s>\n"),
                               ACE_TEXT_CHAR_TO_TCHAR ((*i)->
-						      protocol_name ().c_str ())
+                                protocol_name ().c_str ())
                             ));
                         }
 
@@ -440,28 +440,27 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                     }
 
                   if (ACE::ipv6_enabled() && 
-		      addr.set (port, ACE_IPV6_ANY, 1, AF_INET6) == 0)
-		    {
+                      addr.set (port, ACE_IPV6_ANY, 1, AF_INET6) == 0)
+                    {
+                      iiop_acceptor = 
+                        dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
 
-		      iiop_acceptor = 
-			dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                      if (!iiop_acceptor)
+                        return -1;
 
-		      if (!iiop_acceptor)
-			return -1;
+                      iiop_acceptor->set_default_address (addr);
 
-		      iiop_acceptor->set_default_address (addr);
-
-		      if (this->open_default_i (orb_core,
-						reactor,
-						TAO_DEF_GIOP_MAJOR,
-						TAO_DEF_GIOP_MINOR,
-						i,
-						acceptor,
-						options) != 0)
-			{
-			  return -1;
-			}
-		    }
+                      if (this->open_default_i (orb_core,
+                          reactor,
+                          TAO_DEF_GIOP_MAJOR,
+                          TAO_DEF_GIOP_MINOR,
+                          i,
+                          acceptor,
+                          options) != 0)
+                        {
+                          return -1;
+                        }
+                    }
                 }
               else
                 {
