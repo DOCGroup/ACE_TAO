@@ -1,3 +1,11 @@
+Mon Jun 30 08:33:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * tao/Acceptor_Registry.cpp:
+        * tao/IIOP_Acceptor.cpp:
+
+          Remove tabs introduced by commit (Fri Jun 27 14:48:54 UTC 2008 Phil Mesnier)
+
 Fri Jun 27 15:16:58 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * docs/tutorials/Quoter/AMI/Makefile.am:
@@ -457,7 +465,6 @@ Fri Jun 27 15:16:58 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
           Regenerated for new name of gperf executable.
 
 Fri Jun 27 14:48:54 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
-
 
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:

@@ -234,8 +234,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Use the octet sequence payload instead
     char *tmpstr = const_cast<char *>(ACE_TEXT_ALWAYS_CHAR (ecname));
     size_t len = ACE_OS::strlen(tmpstr) +1;
-    event[0].data.payload.replace (len,len,
-				   reinterpret_cast<CORBA::Octet *>(tmpstr));
+    event[0].data.payload.replace (
+      len,
+      len,
+      reinterpret_cast<CORBA::Octet *> (tmpstr));
 #endif  /* !TAO_LACKS_EVENT_CHANNEL_ANY */
 
     if (iorfile != 0) {
