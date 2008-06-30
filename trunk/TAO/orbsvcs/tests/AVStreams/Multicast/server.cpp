@@ -64,7 +64,7 @@ Server::Server (void)
 
 int
 Server::init (int argc,
-              char **argv)
+              ACE_TCHAR *argv[])
 {
   try
     {
@@ -74,7 +74,7 @@ Server::init (int argc,
 
       mgr->activate ();
 
-      int result = this->parse_args (argc,argv);
+      int result = this->parse_args (argc, argv);
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
       // Initialize the naming services
@@ -146,7 +146,7 @@ Server::run (void)
 }
 
 int
-Server::parse_args (int argc,char **argv)
+Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc,argv,"f:p:");
 
@@ -163,7 +163,7 @@ Server::parse_args (int argc,char **argv)
             }
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
+          this->protocol_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,"Usage: server -f filename"),-1);
@@ -179,8 +179,7 @@ Server::file (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
@@ -204,7 +203,7 @@ main (int argc,
       return -1;
     }
 
-  result = FTP_SERVER::instance ()->init (argc,argv);
+  result = FTP_SERVER::instance ()->init (argc, argv);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::init failed\n"),1);
   result = FTP_SERVER::instance ()->run ();

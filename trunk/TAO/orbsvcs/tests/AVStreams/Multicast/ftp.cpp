@@ -122,9 +122,9 @@ Endpoint_Reactive_Strategy::make_stream_endpoint (FTP_Client_StreamEndPoint *&en
 
 int
 Client::parse_args (int argc,
-                    char **argv)
+                    ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc,argv,"f:a:p:s");
+  ACE_Get_Opt opts (argc, argv, "f:a:p:s");
 
   this->use_sfp_ = 0;
   int c;
@@ -133,19 +133,19 @@ Client::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_OS::strdup (opts.opt_arg ());
+          this->filename_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 'a':
-          this->address_ = ACE_OS::strdup (opts.opt_arg ());
+          this->address_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
+          this->protocol_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 's':
           this->use_sfp_ = 1;
           break;
         default:
-          ACE_DEBUG ((LM_DEBUG,"Unknown option\n"));
+          ACE_DEBUG ((LM_DEBUG, "Unknown option\n"));
           return -1;
         }
     }
@@ -198,7 +198,8 @@ Client::bind_to_server (const char *name)
 
       if (CORBA::is_nil (this->server_mmdevice_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Server_Mmdevice in Naming service <%s>\n"),
+                           " could not resolve Server_Mmdevice in Naming service <%s>\n",
+                           ACE_TEXT_CHAR_TO_TCHAR (name)),
                           -1);
     }
   catch (const CORBA::Exception& ex)
@@ -210,7 +211,7 @@ Client::bind_to_server (const char *name)
 }
 
 int
-Client::init (int argc,char **argv)
+Client::init (int argc, ACE_TCHAR *argv[])
 {
 
   PortableServer::POAManager_var mgr
@@ -238,7 +239,7 @@ Client::init (int argc,char **argv)
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %s could not be opened\n",
-                                   this->filename_), -1);
+                                   ACE_TEXT_CHAR_TO_TCHAR (this->filename_)), -1);
     }
 
   return 0;
@@ -272,7 +273,7 @@ Client::run (void)
                                         &addr);
       flow_spec.length (1);
       flow_spec [0] = entry.entry_to_string ();
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Flowspec: %s\n", entry.entry_to_string() ));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Flowspec: %s\n", ACE_TEXT_CHAR_TO_TCHAR (entry.entry_to_string()) ));
 
       AVStreams::MMDevice_var client_mmdevice
         = this->client_mmdevice_._this ();
@@ -324,8 +325,7 @@ Client::run (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -341,7 +341,7 @@ main (int argc,
                                       poa.in ());
 
       int result = 0;
-      result = CLIENT::instance ()->init (argc,argv);
+      result = CLIENT::instance ()->init (argc, argv);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
       result = CLIENT::instance ()->run ();

@@ -226,6 +226,4 @@ protected:
 
   Signal_Handler signal_handler_;
   /// Reference to the signal handler.
-
 };
-

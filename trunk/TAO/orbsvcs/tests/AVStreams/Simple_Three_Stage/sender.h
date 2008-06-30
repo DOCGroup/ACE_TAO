@@ -62,7 +62,7 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR *argv[]);
   // Method to initialize the various data components.
 
   int pace_data (void);
@@ -74,7 +74,7 @@ public:
   void streamctrl (AVStreams::StreamCtrl_ptr streamctrl);
 
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Method to parse the command line arguments.
 
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;

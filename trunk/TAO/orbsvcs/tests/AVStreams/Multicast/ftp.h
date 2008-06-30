@@ -70,13 +70,13 @@ class Client
 {
 public:
   Client (void);
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR *argv[]);
   int run (void);
   FILE *file (void);
   char *flowname (void);
   TAO_StreamCtrl* streamctrl (void);
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   int bind_to_server (const char *name);
   Endpoint_Reactive_Strategy endpoint_strategy_;
   AVStreams::MMDevice_var server_mmdevice_;
@@ -85,7 +85,7 @@ private:
   // Video stream controller
 
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   const char *filename_;
   const char *address_;
 

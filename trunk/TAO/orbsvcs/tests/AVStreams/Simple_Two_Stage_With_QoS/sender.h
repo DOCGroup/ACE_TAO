@@ -65,7 +65,7 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR *argv[]);
   // Method to initialize the various data components.
 
   int pace_data (void);
@@ -78,7 +78,7 @@ public:
   // Method to populate the required qos.
 
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Method to parse the command line arguments.
 
   int bind_to_receiver (void);
@@ -120,10 +120,10 @@ private:
   TAO_AV_Protocol_Object *protocol_object_;
   // Protocol object corresponding to the transport protocol selected.
 
-  char* address_;
+  ACE_TCHAR *address_;
   // Destination Address.
 
-  char* peer_addr_;
+  ACE_TCHAR *peer_addr_;
   // Destination Address.
 
   ACE_CString flowname_;

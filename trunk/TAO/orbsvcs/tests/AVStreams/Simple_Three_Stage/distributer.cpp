@@ -144,7 +144,7 @@ Distributer::bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
 
 int
 Distributer::init (int /*argc*/,
-                   char *[] /*argv*/
+                   ACE_TCHAR *[] /*argv*/
                    )
 {
   // Initialize the naming services
@@ -284,8 +284,8 @@ Distributer::done (int done)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   try
     {
