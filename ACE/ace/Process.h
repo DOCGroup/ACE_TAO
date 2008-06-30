@@ -593,6 +593,11 @@ protected:
   ACE_Handle_Set handles_passed_;
   /// Handle duplicates made for the child process.
   ACE_Handle_Set dup_handles_;
+
+private:
+#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+  wchar_t* convert_env_buffer (const char* env) const;
+#endif
 };
 
 
@@ -616,11 +621,6 @@ protected:
 
   /// Make sure that we're allocated dynamically!
   virtual ~ACE_Managed_Process (void);
-
-private:
-#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
-  wchar_t* convert_env_buffer (const char* env) const;
-#endif
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

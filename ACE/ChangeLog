@@ -1,3 +1,9 @@
+Mon Jun 30 16:50:05 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Process.h:
+
+          Fixed a misplaced bit of code.
+
 Mon Jun 30 12:41:00 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Process.h:
