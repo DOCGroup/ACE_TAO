@@ -20,6 +20,7 @@
 #include "ace/OS_Memory.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
+#include "ace/Vector_T.h"
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS > 0x600) && defined (__RTP__)
 # include <rtpLib.h>
@@ -157,17 +158,34 @@ ACE_Process::spawn (ACE_Process_Options &options)
   return ACE_INVALID_PID;
 
 #elif defined (ACE_WIN32)
+  void* env_buf = options.env_buf ();
+  DWORD flags = options.creation_flags ();
+# if !defined (ACE_USES_WCHAR)
+  wchar_t* wenv_buf = 0;
+  if (options.use_unicode_environment ())
+    {
+      wenv_buf = this->convert_env_buffer (options.env_buf ());
+      env_buf = wenv_buf;
+      flags |= CREATE_UNICODE_ENVIRONMENT;
+    }
+# endif
+
   BOOL fork_result =
     ACE_TEXT_CreateProcess (0,
                             options.command_line_buf (),
                             options.get_process_attributes (),
                             options.get_thread_attributes (),
                             options.handle_inheritence (),
-                            options.creation_flags (),
-                            options.env_buf (), // environment variables
+                            flags,
+                            env_buf, // environment variables
                             options.working_directory (),
                             options.startup_info (),
                             &this->process_info_);
+
+# if !defined (ACE_USES_WCHAR)
+  if (options.use_unicode_environment ())
+    delete wenv_buf;
+# endif
 
   if (fork_result)
     {
@@ -712,6 +730,56 @@ ACE_Process::close_passed_handles (void)
   return;
 }
 
+#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+wchar_t*
+ACE_Process::convert_env_buffer (const char* env) const
+{
+  // Total starts out at 1 due to the final block nul terminator
+  size_t total = 1;
+
+  // Convert each individual character string to the equivalent wide
+  // character string.
+  ACE_Vector<wchar_t*> buffer;
+  size_t start = 0;
+  size_t i = 0;
+  while (true)
+    {
+      if (env[i] == '\0')
+        {
+          // Convert the char string to wchar_t
+          wchar_t* str = ACE_Ascii_To_Wide::convert (env + start);
+
+          // Add the length of the string plus the nul terminator
+          total += ACE_OS::strlen (str) + 1;
+
+          // Save it and set up for the next string
+          buffer.push_back (str);
+          start = ++i;
+          if (env[start] == '\0')
+            break;
+        }
+      else
+        {
+          i += ACE_OS::strlen (env + i);
+        }
+    }
+
+  // Copy each string into the buffer leaving a nul terminator between
+  // each string and adding a second nul terminator at the end
+  start = 0;
+  wchar_t* wenv = new wchar_t[total];
+  size_t length = buffer.size ();
+  for (i = 0; i < length; ++i)
+    {
+      ACE_OS::strcpy(wenv + start, buffer[i]);
+      start += ACE_OS::strlen (buffer[i]) + 1;
+      delete [] buffer[i];
+    }
+  wenv[start] = 0;
+  return wenv;
+}
+#endif
+
 ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
                                           int command_line_buf_len,
                                           int env_buf_len,
@@ -749,7 +817,8 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
     command_line_buf_ (0),
     command_line_copy_ (0),
     command_line_buf_len_ (command_line_buf_len),
-    process_group_ (ACE_INVALID_PID)
+    process_group_ (ACE_INVALID_PID),
+    use_unicode_environment_ (false)
 {
   ACE_NEW (command_line_buf_,
            ACE_TCHAR[command_line_buf_len]);
@@ -817,6 +886,24 @@ ACE_Process_Options::env_argv (void)
 }
 
 #endif /* ACE_WIN32 */
+
+void
+ACE_Process_Options::enable_unicode_environment (void)
+{
+  this->use_unicode_environment_ = true;
+}
+
+void
+ACE_Process_Options::disable_unicode_environment (void)
+{
+  this->use_unicode_environment_ = false;
+}
+
+bool
+ACE_Process_Options::use_unicode_environment (void) const
+{
+  return this->use_unicode_environment_;
+}
 
 int
 ACE_Process_Options::setenv (ACE_TCHAR *envp[])

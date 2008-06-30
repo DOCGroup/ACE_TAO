@@ -1548,3 +1548,10 @@ project(Bug_2610_Regression_Test) : acetest {
     Bug_2610_Regression_Test.cpp
   }
 }
+
+project(Process_Env_Test) : acetest {
+  exename = Process_Env_Test
+  Source_Files {
+    Process_Env_Test.cpp
+  }
+}

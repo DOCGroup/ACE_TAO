@@ -260,6 +260,16 @@ public:
   /// Get current value for avoid_zombies.
   int avoid_zombies (void);
 
+  /// Enable the use of a Unicode environment.  This only makes sense
+  /// for Win32 when ACE_USES_WCHAR is not defined.
+  void enable_unicode_environment (void);
+
+  /// Disable the use of a Unicode environment.
+  void disable_unicode_environment (void);
+
+  /// Return the unicode environment status
+  bool use_unicode_environment (void) const;
+
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
 
@@ -427,6 +437,9 @@ protected:
   /// Pathname for the process. Relative path or absolute path or just
   /// the program name.
   ACE_TCHAR process_name_[MAXPATHLEN + 1];
+
+  /// Indicate if a Unicode environment should be used
+  bool use_unicode_environment_;  
 };
 
 //class ACE_Process_Manager;
@@ -604,6 +617,10 @@ protected:
   /// Make sure that we're allocated dynamically!
   virtual ~ACE_Managed_Process (void);
 
+private:
+#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+  wchar_t* convert_env_buffer (const char* env) const;
+#endif
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

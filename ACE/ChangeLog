@@ -1,3 +1,24 @@
+Mon Jun 30 12:41:00 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Process.h:
+        * ace/Process.cpp:
+
+          Added an option to ACE_Process_Options to use a wchar_t environmet
+          buffer instead of char.  This is useful only on Windows with
+          ACE_USES_WCHAR undefined.  The benefit of using a wchar_t
+          environment buffer is that it is not limited to 32kb as a char
+          environment buffer is.
+
+          In ACE_Process::spawn(), convert the char environment buffer to a
+          wchar_t environment buffer if specified to do so in the process
+          options.
+
+        * tests/Process_Env_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Added a test for the above feature.
+
 Fri Jun 27 18:04:52 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/rules.local.GNU: Removed the first setting of
