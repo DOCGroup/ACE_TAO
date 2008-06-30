@@ -267,7 +267,7 @@ Distributer::connection_manager (void)
 
 int
 Distributer::parse_args (int argc,
-                         char **argv)
+                         ACE_TCHAR *argv[])
 {
   /// Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "s:r:");
@@ -278,10 +278,10 @@ Distributer::parse_args (int argc,
       switch (c)
         {
         case 's':
-          this->sender_name_ = opts.opt_arg ();
+          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->distributer_name_ = opts.opt_arg ();
+          this->distributer_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown Option\n"));
@@ -294,7 +294,7 @@ Distributer::parse_args (int argc,
 
 int
 Distributer::init (int argc,
-                   char ** argv)
+                   ACE_TCHAR *argv[])
 {
   /// Initialize the connection class.
   int result =
@@ -412,8 +412,8 @@ Distributer::done (int done)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   try
     {

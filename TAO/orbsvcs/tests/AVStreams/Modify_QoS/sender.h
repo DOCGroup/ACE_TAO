@@ -60,7 +60,7 @@ public:
   /// Constructor
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR *argv[]);
   /// Method to initialize the various data components.
 
   int pace_data (void);
@@ -70,7 +70,7 @@ public:
   /// Set the protocol object corresponding to the transport protocol chosen.
 
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   /// Method to parse the command line arguments.
 
   int bind_to_receiver (void);
@@ -112,9 +112,3 @@ private:
   TAO_AV_Protocol_Object *protocol_object_;
   /// Protocol object corresponding to the transport protocol selected.
 };
-
-
-
-
-
-

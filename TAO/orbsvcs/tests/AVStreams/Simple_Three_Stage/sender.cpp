@@ -82,7 +82,7 @@ Sender::streamctrl (AVStreams::StreamCtrl_ptr streamctrl)
 
 int
 Sender::parse_args (int argc,
-                    char **argv)
+                    ACE_TCHAR *argv[])
 {
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "f:r:d");
@@ -93,7 +93,7 @@ Sender::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = opts.opt_arg ();
+          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
           this->frame_rate_ = (double)ACE_OS::atoi (opts.opt_arg ());
@@ -111,7 +111,7 @@ Sender::parse_args (int argc,
 
 int
 Sender::init (int argc,
-              char **argv)
+              ACE_TCHAR *argv[])
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -302,8 +302,8 @@ Sender::pace_data (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   try
     {

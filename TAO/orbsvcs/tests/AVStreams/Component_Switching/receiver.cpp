@@ -165,7 +165,7 @@ Receiver::receiver_name (void)
 
 int
 Receiver::init (int,
-                char **)
+                ACE_TCHAR *[])
 {
   /// Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -217,7 +217,7 @@ Receiver::init (int,
 
 int
 Receiver::parse_args (int argc,
-                      char **argv)
+                      ACE_TCHAR *argv[])
 {
   /// Parse the command line arguments
   ACE_Get_Opt opts (argc,
@@ -230,13 +230,13 @@ Receiver::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->output_file_name_ = opts.opt_arg ();
+          this->output_file_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 's':
-          this->sender_name_ = opts.opt_arg ();
+          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->receiver_name_ = opts.opt_arg ();
+          this->receiver_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -277,8 +277,8 @@ Receiver::shut_down (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   try
     {

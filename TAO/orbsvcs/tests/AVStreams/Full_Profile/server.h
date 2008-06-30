@@ -34,13 +34,12 @@ public:
                     TAO_AV_Callback *&callback);
 };
 
-
 class Server
 {
 public:
   Server (void);
   int init (int argc,
-            char **argv);
+            ACE_TCHAR *argv[]);
   int run (void);
   FILE *file (void);
   AVStreams::protocolSpec protocols (void);
@@ -50,7 +49,7 @@ public:
   void poa (PortableServer::POA_ptr poa_in);
   const char *format (void);
 protected:
-  int parse_args (int argc,char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   TAO_Naming_Client my_naming_client_;
   TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
   FILE *fp_;

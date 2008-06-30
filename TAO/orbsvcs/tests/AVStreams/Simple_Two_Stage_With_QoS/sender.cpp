@@ -82,7 +82,7 @@ Sender::protocol_object (TAO_AV_Protocol_Object *object)
 
 int
 Sender::parse_args (int argc,
-                    char **argv)
+                    ACE_TCHAR *argv[])
 {
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "f:p:r:l:a:d");
@@ -93,10 +93,10 @@ Sender::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = opts.opt_arg ();
+          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'p':
-            this->protocol_ = opts.opt_arg ();
+            this->protocol_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
 #ifdef ACE_HAS_RAPI
             if (this->protocol_ != ACE_CString ("QoS_UDP"))
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -201,7 +201,7 @@ Sender::bind_to_receiver (void)
 
   if (CORBA::is_nil (this->receiver_mmdevice_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not resolve Receiver_MMdevice in Naming service <%s>\n"),
+                       "Could not resolve Receiver_MMdevice in Naming service\n"),
                       -1);
 
   return 0;
@@ -209,7 +209,7 @@ Sender::bind_to_receiver (void)
 
 int
 Sender::init (int argc,
-              char **argv)
+              ACE_TCHAR *argv[])
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -479,8 +479,8 @@ Sender::pace_data (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   try
     {

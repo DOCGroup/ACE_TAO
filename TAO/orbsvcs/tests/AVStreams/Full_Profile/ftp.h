@@ -52,7 +52,7 @@ class Client
 {
 public:
   Client (void);
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR *argv[]);
   int run (void);
   FILE *file (void);
   const char *flowname (void);
@@ -61,13 +61,13 @@ public:
   const char *format (void);
   const char *address (void);
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   ENDPOINT_STRATEGY endpoint_strategy_;
   TAO_StreamCtrl streamctrl_;
   // Video stream controller
 
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   const char *filename_;
   ACE_CString address_;
   ACE_CString peer_addr_;

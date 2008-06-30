@@ -97,7 +97,7 @@ Server::format (void)
 
 int
 Server::init (int argc,
-              char **argv)
+              ACE_TCHAR *argv[])
 {
   try
     {
@@ -106,7 +106,7 @@ Server::init (int argc,
 
       mgr->activate ();
 
-      int result = this->parse_args (argc,argv);
+      int result = this->parse_args (argc, argv);
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
 
@@ -127,7 +127,7 @@ Server::init (int argc,
 
       CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in() );
 
-     ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", s1.in() ));
+     ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", ACE_TEXT_CHAR_TO_TCHAR (s1.in()) ));
 
 
       // Register the mmdevice with the naming service.
@@ -165,9 +165,9 @@ Server::run (void)
 }
 
 int
-Server::parse_args (int argc,char **argv)
+Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc,argv,"f:p:");
+  ACE_Get_Opt opts (argc, argv, "f:p:");
 
   int c;
   while ((c = opts ()) != -1)
@@ -182,7 +182,7 @@ Server::parse_args (int argc,char **argv)
             }
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
+          this->protocol_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,"Usage: server -f filename\n"),-1);
@@ -204,8 +204,8 @@ Server::file (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   int result = 0;
 
@@ -228,7 +228,7 @@ main (int argc,
       return -1;
     }
 
-  result = FTP_SERVER::instance ()->init (argc,argv);
+  result = FTP_SERVER::instance ()->init (argc, argv);
 
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"SERVER::init failed\n"),1);

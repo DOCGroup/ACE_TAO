@@ -1,3 +1,48 @@
+Mon Jun 30 15:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.h:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.h:
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.h:
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.h:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.h:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/receiver.h:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/sender.h:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.h:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.h:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/receiver.h:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.h:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.h:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.h:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Mon Jun 30 08:33:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:

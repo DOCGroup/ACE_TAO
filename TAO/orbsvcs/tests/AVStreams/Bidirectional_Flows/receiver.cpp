@@ -7,7 +7,7 @@
 static FILE *output_file = 0;
 // File handle of the file into which received data is written.
 
-static const char *output_file_name = "output";
+static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
 // File name of the file into which received data is written.
 
 typedef ACE_Unmanaged_Singleton<Receiver,ACE_Null_Mutex> RECEIVER;
@@ -157,7 +157,7 @@ Receiver::protocol_object (TAO_AV_Protocol_Object *object)
 
 int
 Receiver::parse_args (int argc,
-                      char **argv)
+                      ACE_TCHAR *argv[])
 {
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "f:r:d");
@@ -168,7 +168,7 @@ Receiver::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = opts.opt_arg ();
+          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
           this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
@@ -186,7 +186,7 @@ Receiver::parse_args (int argc,
 
 int
 Receiver::init (int argc,
-                char ** argv)
+                ACE_TCHAR *argv[])
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -261,8 +261,8 @@ Receiver::input_file (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   try
     {
@@ -291,7 +291,7 @@ main (int argc,
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (output_file_name)),
+                           output_file_name),
                           -1);
 
       else

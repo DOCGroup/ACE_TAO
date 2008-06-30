@@ -169,7 +169,7 @@ Sender::shut_down (void)
 
 int
 Sender::parse_args (int argc,
-                    char **argv)
+                    ACE_TCHAR *argv[])
 {
   /// Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "s:f:r:d");
@@ -180,13 +180,13 @@ Sender::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = opts.opt_arg ();
+          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
           this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 's':
-          this->sender_name_ = opts.opt_arg ();
+          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'd':
           TAO_debug_level++;
@@ -201,7 +201,7 @@ Sender::parse_args (int argc,
 
 int
 Sender::init (int argc,
-              char **argv)
+              ACE_TCHAR *argv[])
 {
   /// Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -436,8 +436,8 @@ Sender::connection_manager (void)
 //  }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   try
     {
