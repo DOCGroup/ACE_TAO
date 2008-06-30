@@ -51,8 +51,10 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 {
 #if defined (ACE_HAS_IPV6) && defined (ACE_USES_IPV4_IPV6_MIGRATION)
   if (ACE::ipv6_enabled())
-    default_address_.set (static_cast<unsigned short> (0), 
-			  ACE_IPV6_ANY, AF_INET6);
+    default_address_.set (
+      static_cast<unsigned short> (0), 
+      ACE_IPV6_ANY,
+      AF_INET6);
 #endif /* ACE_HAS_IPV6 && ACE_USES_IPV4_IPV6_MIGRATION */
 }
 
