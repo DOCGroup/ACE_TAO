@@ -1,3 +1,9 @@
+Mon Jun 30 15:41:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/SizeTypeCalculator.cpp:
+        
+          Added missing support for bounded sequences.
+
 Wed Jun 25 11:53:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * DAnCE/TargetManager/CmpClient.cpp:

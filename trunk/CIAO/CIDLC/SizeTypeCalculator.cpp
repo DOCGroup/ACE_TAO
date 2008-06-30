@@ -21,6 +21,7 @@ namespace
                      public Traversal::Union,
                      public Traversal::Wstring,
                      public Traversal::UnboundedSequence,
+                     public Traversal::BoundedSequence,
                      public Traversal::Interface,
                      public Traversal::ValueType
   {
@@ -45,6 +46,12 @@ namespace
 
     virtual void
     traverse (SemanticGraph::UnboundedSequence&)
+    {
+      top () = true;
+    }
+
+    virtual void
+    traverse (SemanticGraph::BoundedSequence&)
     {
       top () = true;
     }
