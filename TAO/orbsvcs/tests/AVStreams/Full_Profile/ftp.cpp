@@ -101,9 +101,9 @@ FTP_Client_Producer::get_callback (const char *,
 
 int
 Client::parse_args (int argc,
-                    char **argv)
+                    ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc,argv,"f:l:a:p:s");
+  ACE_Get_Opt opts (argc, argv, "f:l:a:p:s");
 
   this->use_sfp_ = 0;
   int c;
@@ -114,18 +114,18 @@ Client::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_OS::strdup (opts.opt_arg ());
+          this->filename_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 'l':
-          this->address_ = ACE_OS::strdup (opts.opt_arg ());
+          this->address_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           l_addr = 1;
           break;
         case 'a':
-          this->peer_addr_ = ACE_OS::strdup (opts.opt_arg ());
+          this->peer_addr_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           p_addr =1;
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
+          this->protocol_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
           break;
         case 's':
           this->use_sfp_ = 1;
@@ -210,7 +210,7 @@ Client::Client (void)
 
 
 int
-Client::init (int argc,char **argv)
+Client::init (int argc, ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -238,7 +238,7 @@ Client::init (int argc,char **argv)
 
       CORBA::String_var s1 = sep_a_->add_fep( fep_a_obj_.in());
 
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", s1.in() ));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", ACE_TEXT_CHAR_TO_TCHAR (s1.in()) ));
 
       this->fp_ = ACE_OS::fopen (this->filename_,"r");
 
@@ -249,7 +249,7 @@ Client::init (int argc,char **argv)
       else
         {
           ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %s could not be opened\n",
-                                       this->filename_), -1);
+                                       ACE_TEXT_CHAR_TO_TCHAR (this->filename_)), -1);
         }
     }
   catch (const CORBA::Exception& ex)
@@ -327,8 +327,8 @@ Client::run (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   try
     {
@@ -345,7 +345,7 @@ main (int argc,
 
 
       int result = 0;
-      result = CLIENT::instance ()->init (argc,argv);
+      result = CLIENT::instance ()->init (argc, argv);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
       result = CLIENT::instance ()->run ();

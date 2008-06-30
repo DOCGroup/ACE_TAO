@@ -71,7 +71,7 @@ public:
   /// Destructor.
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR *argv);
   /// Initialize data components.
 
 
@@ -86,4 +86,3 @@ protected:
   TAO_MMDevice *mmdevice_;
   /// Receiver MMDevice.
 };
-

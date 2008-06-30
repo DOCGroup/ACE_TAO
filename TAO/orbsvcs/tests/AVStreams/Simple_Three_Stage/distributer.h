@@ -115,7 +115,7 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR *argv[]);
   // Initialize data components.
 
   void bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,

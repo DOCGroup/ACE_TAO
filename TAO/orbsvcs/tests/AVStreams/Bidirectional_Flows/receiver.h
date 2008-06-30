@@ -93,7 +93,7 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR *argv[]);
   // Initialize data components.
 
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
@@ -130,16 +130,10 @@ protected:
   ACE_CString filename_;
   // File from which data is read.
 
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Method to parse the command line arguments.
 
   ACE_Message_Block mb_;
   // Message block into which data is read from a file and then sent.
 
 };
-
-
-
-
-
-

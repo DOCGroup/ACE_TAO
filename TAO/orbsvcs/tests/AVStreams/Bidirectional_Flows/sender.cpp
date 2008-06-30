@@ -11,7 +11,7 @@ typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
 static FILE *output_file = 0;
 // File handle of the file into which received data is written.
 
-static const char *output_file_name = "output";
+static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
 // File name of the file into which received data is written.
 
 
@@ -122,7 +122,7 @@ Sender::shutdown (void)
 
 int
 Sender::parse_args (int argc,
-                    char **argv)
+                    ACE_TCHAR *argv[])
 {
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, "f:p:r:d");
@@ -133,10 +133,10 @@ Sender::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = opts.opt_arg ();
+          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'p':
-          this->protocol_ = opts.opt_arg ();
+          this->protocol_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
           this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
@@ -178,7 +178,7 @@ Sender::bind_to_receiver (void)
 
 int
 Sender::init (int argc,
-              char **argv)
+              ACE_TCHAR *argv[])
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -405,8 +405,8 @@ Sender::pace_data (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
   try
     {
@@ -448,7 +448,7 @@ main (int argc,
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
-                           ACE_TEXT_CHAR_TO_TCHAR (output_file_name)),
+                           output_file_name),
                           -1);
 
       else

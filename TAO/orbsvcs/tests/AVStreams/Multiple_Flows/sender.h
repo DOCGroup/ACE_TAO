@@ -65,7 +65,7 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv);
+            ACE_TCHAR *argv[]);
   // Method to initialize the various data components.
 
   int pace_data (void);
@@ -77,7 +77,7 @@ public:
   void shutdown (void);
 
 private:
-  int parse_args (int argc, char **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Method to parse the command line arguments.
 
   int bind_to_receiver (void);
