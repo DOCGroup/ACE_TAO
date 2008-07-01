@@ -595,7 +595,9 @@ protected:
   ACE_Handle_Set dup_handles_;
 
 private:
-#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && \
+    defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR) && \
+    !defined (ACE_HAS_WINCE)
   wchar_t* convert_env_buffer (const char* env) const;
 #endif
 };

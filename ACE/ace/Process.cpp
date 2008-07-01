@@ -160,7 +160,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 #elif defined (ACE_WIN32)
   void* env_buf = options.env_buf ();
   DWORD flags = options.creation_flags ();
-# if !defined (ACE_USES_WCHAR)
+# if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
   wchar_t* wenv_buf = 0;
   if (options.use_unicode_environment ())
     {
@@ -182,7 +182,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
                             options.startup_info (),
                             &this->process_info_);
 
-# if !defined (ACE_USES_WCHAR)
+# if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
   if (options.use_unicode_environment ())
     delete wenv_buf;
 # endif
@@ -730,7 +730,9 @@ ACE_Process::close_passed_handles (void)
   return;
 }
 
-#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && \
+    defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR) && \
+    !defined (ACE_HAS_WINCE)
 wchar_t*
 ACE_Process::convert_env_buffer (const char* env) const
 {
