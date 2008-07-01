@@ -16,16 +16,16 @@ namespace ACE
     Packets_Received_Monitor::Packets_Received_Monitor (const char* name)
       : Monitor_Base (name, Monitor_Base::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
-        , Windows_Multi_Instance_Monitor (
+      , Windows_Multi_Instance_Monitor (
             ACE_TEXT ("\\Network Interface(*)\\Packets Received/sec"))
 #elif defined (linux) || defined (AIX)
-        , Linux_Network_Interface_Monitor (
+      , Linux_Network_Interface_Monitor (
             " %*[^:]: %*u %lu %*u %*u %*u %*u %*u %*u %*u %*u")
             /// Scan format for /proc/net/dev
 #elif defined (ACE_HAS_KSTAT)
-        , Solaris_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
+      , Solaris_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
 #elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) 
-        , BSD_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
+      , BSD_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
 #endif
     {}
 
