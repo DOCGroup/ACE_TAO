@@ -1,3 +1,10 @@
+Tue Jul 01 08:48:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.h:
+
+          This mornings round of fixes/typos etc. to my changes yesterday,
+          missed edited the init() signature.
+
 Mon Jun 30 15:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
