@@ -25,36 +25,36 @@ IdAssignment::~IdAssignment (void)
 
 int
 IdAssignment::parse_args (int argc,
-                          char *argv[])
+                          ACE_TCHAR *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
-    const char *current_arg = 0;
+    const ACE_TCHAR *current_arg = 0;
 
     while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-iter")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-iter"))))
         {
           this->iter_ = ACE_OS::atoi (current_arg);
           // The number of times to repeat the test.
           arg_shifter.consume_arg ();
         }
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-ec_count")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ec_count"))))
         {
           this->ec_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-ca_count")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ca_count"))))
         {
           this->consumer_admin_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      if (0 != (current_arg = arg_shifter.get_the_parameter ("-sa_count")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-sa_count"))))
         {
           this->supplier_admin_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-?") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-?")) == 0)
         {
           ACE_DEBUG((LM_DEBUG,
                      "usage: %s "
@@ -62,7 +62,6 @@ IdAssignment::parse_args (int argc,
                      "-ec_count <count>",
                      "-ca_count <count>",
                      "-sa_count <count>\n",
-                     argv[0],
                      argv[0]));
 
           arg_shifter.consume_arg ();
@@ -80,7 +79,7 @@ IdAssignment::parse_args (int argc,
 
 void
 IdAssignment::init (int argc,
-                    char *argv[])
+                    ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
@@ -400,7 +399,7 @@ IdAssignment::run_test(void)
   //********************************************************************************
 }
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {

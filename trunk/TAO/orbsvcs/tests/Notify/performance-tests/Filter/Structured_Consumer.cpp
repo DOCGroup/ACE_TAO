@@ -18,7 +18,7 @@
 // Data Section
 // ******************************************************************
 
-static const char* ior = "file://supplier.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://supplier.ior");
 static CORBA::Boolean filter = 0;
 static unsigned int consumers = 2;
 static unsigned int expected = 1000;
@@ -32,12 +32,12 @@ static unsigned int expected = 1000;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:e:c:f");
   int c;
@@ -140,7 +140,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
   try
@@ -163,7 +163,7 @@ int main (int argc, char* argv[])
 
           CORBA::ORB_ptr orb = client.orb ();
           CORBA::Object_var object =
-                              orb->string_to_object (ior);
+                              orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
           sig_var sig = sig::_narrow (object.in ());
 

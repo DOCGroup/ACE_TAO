@@ -18,11 +18,11 @@
 // Data Section
 // ******************************************************************
 
-static const char* ior = "file://supplier.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://supplier.ior");
 static unsigned int low = 10;
 static unsigned int high = 20;
 static CORBA::Boolean filter = 1;
-static const char* constraintString = "Number == 10";
+static const ACE_TCHAR *constraintString = ACE_TEXT ("Number == 10");
 
 // ******************************************************************
 // Subroutine Section
@@ -31,11 +31,11 @@ static const char* constraintString = "Number == 10";
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:l:h:d:c:");
   int c;
@@ -108,7 +108,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
@@ -123,7 +123,7 @@ int main (int argc, char* argv[])
 
     CORBA::ORB_ptr orb = client.orb ();
     CORBA::Object_var object =
-      orb->string_to_object (ior);
+      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
     sig_var sig = sig::_narrow (object.in ());
 
@@ -146,7 +146,7 @@ int main (int argc, char* argv[])
       constraint_list.length(1);
 
       constraint_list[0].event_types.length (0);
-      constraint_list[0].constraint_expr = CORBA::string_dup(constraintString);
+      constraint_list[0].constraint_expr = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (constraintString));
 
       filter->add_constraints (constraint_list);
 

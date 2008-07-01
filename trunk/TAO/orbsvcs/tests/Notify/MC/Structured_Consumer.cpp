@@ -17,7 +17,7 @@
 // Data Section
 // ******************************************************************
 
-static const char* ior = "file://test_monitor.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://test_monitor.ior");
 static const char* ready = "ready.txt";
 static unsigned int expected = 2000;
 static Notify_Structured_Push_Consumer* consumer_1 = 0;
@@ -25,12 +25,12 @@ static Notify_Structured_Push_Consumer* consumer_1 = 0;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:e:");
   int c;
@@ -89,7 +89,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
   
@@ -110,7 +110,7 @@ int main (int argc, char* argv[])
 
       CORBA::ORB_ptr orb = client.orb ();
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       MonitorTestInterface_var sig =
         MonitorTestInterface::_narrow (object.in ());

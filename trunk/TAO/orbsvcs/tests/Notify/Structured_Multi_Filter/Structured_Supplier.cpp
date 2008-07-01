@@ -66,12 +66,12 @@ private:
 class Supplier_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 
 int
-Supplier_Client::parse_args (int argc, char *argv[])
+Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "e:f:");
   int x;
@@ -81,7 +81,7 @@ Supplier_Client::parse_args (int argc, char *argv[])
   {
     case 'f':
       useFilters = true;
-      if (ACE_OS::strcasecmp ("OR", get_opts.optarg) == 0)
+      if (ACE_OS::strcasecmp (ACE_TEXT ("OR"), get_opts.optarg) == 0)
         use_or_operator = true;
       break;
 
@@ -186,7 +186,7 @@ void add_admin_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   admin->add_filter (filter.in ());
 }
 
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Auto_Ptr< sig_i > sig_impl;
   try

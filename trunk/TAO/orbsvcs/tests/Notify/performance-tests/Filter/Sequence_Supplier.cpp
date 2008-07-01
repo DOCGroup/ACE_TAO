@@ -26,7 +26,7 @@
 static TAO_Notify_Tests_SequencePushSupplier* supplier_1 = 0;
 static int max_events = 100;  // 100 sets of 10
 static const CORBA::ULong amount = 10;
-static const char* ior_output_file = "supplier.ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
 
 // ******************************************************************
 // Subroutine Section
@@ -74,12 +74,12 @@ private:
 class Supplier_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 
 int
-Supplier_Client::parse_args (int argc, char *argv[])
+Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:e:");
   int c;
@@ -174,7 +174,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Auto_Ptr< sig_i > sig_impl;
   int status = 0;
@@ -203,9 +203,10 @@ int main (int argc, char* argv[])
         FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-          "Cannot open output file for "
+          "Cannot open output file %s for "
           "writing IOR: %s",
-          ior_output_file),
+          ior_output_file,
+          ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
           1);
         ACE_OS::fprintf (output_file, "%s", ior.in ());
         ACE_OS::fclose (output_file);

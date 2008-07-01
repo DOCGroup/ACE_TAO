@@ -9,7 +9,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-static const char* ior = "file://supplier.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://supplier.ior");
 static CORBA::Short order_policy = CosNotification::FifoOrder;
 static int expected = 30;
 static Notify_Structured_Push_Consumer* consumer_1;
@@ -18,11 +18,11 @@ static bool use_ordering = false;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "ok:e:d:");
   int c;
@@ -44,16 +44,16 @@ Consumer_Client::parse_args (int argc, char *argv[])
 
     case 'd':
       {
-        const char* order = get_opts.optarg;
-        if (ACE_OS::strcmp (order, "fifo") == 0)
+        const ACE_TCHAR *order = get_opts.optarg;
+        if (ACE_OS::strcmp (order, ACE_TEXT ("fifo")) == 0)
         {
           order_policy = CosNotification::FifoOrder;
         }
-        else if (ACE_OS::strcmp (order, "priority") == 0)
+        else if (ACE_OS::strcmp (order, ACE_TEXT ("priority")) == 0)
         {
           order_policy = CosNotification::PriorityOrder;
         }
-        else if (ACE_OS::strcmp (order, "deadline") == 0)
+        else if (ACE_OS::strcmp (order, ACE_TEXT ("deadline")) == 0)
         {
           order_policy = CosNotification::DeadlineOrder;
 #if !defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
@@ -116,7 +116,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
   consumer_1->_connect (admin);
 }
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
@@ -131,7 +131,7 @@ int main (int argc, char* argv[])
 
     CORBA::ORB_ptr orb = client.orb ();
     CORBA::Object_var object =
-      orb->string_to_object (ior);
+      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
     sig_var sig = sig::_narrow (object.in ());
 
