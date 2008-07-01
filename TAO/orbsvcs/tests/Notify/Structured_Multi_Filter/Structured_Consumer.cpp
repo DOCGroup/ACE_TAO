@@ -25,11 +25,11 @@ static const char* GRAMMAR = "TCL";
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "f:s:e:");
   int x;
@@ -42,14 +42,14 @@ Consumer_Client::parse_args (int argc, char *argv[])
       break;
 
     case 'f':
-      if (ACE_OS::strcasecmp ("OR", get_opts.optarg) == 0)
+      if (ACE_OS::strcasecmp (ACE_TEXT ("OR"), get_opts.optarg) == 0)
         consumerFilter = OrOp;
       else
         consumerFilter = AndOp;
       break;
 
     case 's':
-      if (ACE_OS::strcasecmp ("OR", get_opts.optarg) == 0)
+      if (ACE_OS::strcasecmp (ACE_TEXT ("OR"), get_opts.optarg) == 0)
         supplierFilter = OrOp;
       else
         supplierFilter = AndOp;
@@ -83,7 +83,7 @@ create_consumer (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
   consumer->_connect (admin, ec);
 }
 
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {

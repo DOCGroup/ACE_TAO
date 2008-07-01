@@ -37,10 +37,10 @@ public:
   Notify_Test_Client (void);
   virtual ~Notify_Test_Client ();
 
-  virtual int init (int argc, char *argv []);
+  virtual int init (int argc, ACE_TCHAR *argv []);
   // starts the orb and resolves the notify factory via a naming service.
 
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
   // Allow the user to override this empty method
 
   int ORB_run (void);
@@ -75,7 +75,7 @@ public:
 
 protected:
   int init_ORB (int argc,
-                char *argv []);
+                ACE_TCHAR *argv []);
   // Initializes the ORB.
 
   void resolve_naming_service (void);

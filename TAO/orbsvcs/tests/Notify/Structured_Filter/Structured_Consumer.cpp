@@ -24,11 +24,11 @@ static const char* GRAMMAR = "TCL";
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "fe:");
   int x;
@@ -66,7 +66,7 @@ create_consumer (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
   consumer->_connect (admin, ec);
 }
 
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {

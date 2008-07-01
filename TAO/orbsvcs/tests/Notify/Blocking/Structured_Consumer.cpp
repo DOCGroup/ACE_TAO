@@ -19,7 +19,7 @@
 // Data Section
 // ******************************************************************
 
-static const char* ior = "file://supplier.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://supplier.ior");
 // TimeT is in 10ths of a microsecond
 static TimeBase::TimeT blocking_timeout = 2 * 1000 * 1000 * 10; // 2 secs
 // Must match the number sent by supplier. (-1 if blocking_timeout less than 1)
@@ -29,12 +29,12 @@ static Notify_Structured_Push_Consumer* consumer_1 = 0;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:e:t:");
   int c;
@@ -104,7 +104,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
   try
@@ -120,7 +120,7 @@ int main (int argc, char* argv[])
 
     CORBA::ORB_ptr orb = client.orb ();
     CORBA::Object_var object =
-      orb->string_to_object (ior);
+      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
     sig_var sig = sig::_narrow (object.in ());
 
