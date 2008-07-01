@@ -1,4 +1,10 @@
-Tue Jul  1 12:29:34 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+Tue Jul  1 14:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/PythonACE/fuzz/check_no_tabs.py:
+        
+          Attempt to provide tabs check.
+
+Tue Jul  1 12:29:34 UTC 2008  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Control/Bytes_Received_Monitor.cpp:
         * ace/Monitor_Control/Packets_Received_Monitor.cpp:
