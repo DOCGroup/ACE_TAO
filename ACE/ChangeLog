@@ -1,3 +1,10 @@
+Tue Jul  1 22:47:17 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.{h cpp}: Can't define or use the new convert_env_buffer()
+          method unless ACE_HAS_WCHAR is defined. This extra check is needed
+          for LabVIEW RT / Pharlap ETS because it purports to be Win32 but
+          does not have wide-char support.
+
 Tue Jul  1 14:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/PythonACE/fuzz/check_no_tabs.py:
