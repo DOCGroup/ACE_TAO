@@ -71,7 +71,7 @@ public:
   /// Destructor.
 
   int init (int argc,
-            ACE_TCHAR *argv);
+            ACE_TCHAR *argv[]);
   /// Initialize data components.
 
 
