@@ -18,7 +18,7 @@
 static TAO_Notify_Tests_SequencePushSupplier* supplier_1 = 0;
 static CORBA::Short order_policy = CosNotification::FifoOrder;
 static int num_events = 30;
-static const char* ior_output_file = "supplier.ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
 static const int BATCH_SIZE = 5;
 
 class sig_i : public POA_sig
@@ -64,11 +64,11 @@ private:
 class Supplier_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 int
-Supplier_Client::parse_args (int argc, char *argv[])
+Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:e:d:");
   int c;
@@ -78,16 +78,16 @@ Supplier_Client::parse_args (int argc, char *argv[])
   {
     case 'd':
       {
-        const char* order = get_opts.optarg;
-        if (ACE_OS::strcasecmp (order, "fifo") == 0)
+        const ACE_TCHAR *order = get_opts.optarg;
+        if (ACE_OS::strcasecmp (order, ACE_TEXT ("fifo")) == 0)
         {
           order_policy = CosNotification::FifoOrder;
         }
-        else if (ACE_OS::strcasecmp (order, "priority") == 0)
+        else if (ACE_OS::strcasecmp (order, ACE_TEXT ("priority")) == 0)
         {
           order_policy = CosNotification::PriorityOrder;
         }
-        else if (ACE_OS::strcasecmp (order, "deadline") == 0)
+        else if (ACE_OS::strcasecmp (order, ACE_TEXT ("deadline")) == 0)
         {
           order_policy = CosNotification::DeadlineOrder;
 #if !defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
@@ -191,7 +191,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Auto_Ptr< sig_i > sig_impl;
   try
@@ -223,9 +223,10 @@ int main (int argc, char* argv[])
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-        "Cannot open output file for "
+        "Cannot open output file %s for "
         "writing IOR: %s",
-        ior_output_file),
+        ior_output_file,
+        ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
         1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);

@@ -36,7 +36,7 @@ static int num_events = 40;
 // allows us to validate the discard policy.
 static const CORBA::Long BATCH_SIZE = 4;
 
-static const char* ior_output_file = "supplier.ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
 
 // ******************************************************************
 // Subroutine Section
@@ -87,12 +87,12 @@ private:
 class Supplier_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 
 int
-Supplier_Client::parse_args (int argc, char *argv[])
+Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:e:d");
   int c;
@@ -198,7 +198,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
   ACE_Auto_Ptr< sig_i > sig_impl;

@@ -80,7 +80,7 @@ namespace {
 }
 
 
-int main(int, char**)
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   try
   {

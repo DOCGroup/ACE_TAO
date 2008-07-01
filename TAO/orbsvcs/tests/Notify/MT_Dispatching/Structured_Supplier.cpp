@@ -27,7 +27,7 @@ static const unsigned int supplier_max = 32;
 static TAO_Notify_Tests_StructuredPushSupplier* suppliers[supplier_max] = {0};
 static unsigned int supplier_count = 1;
 static int event_count = 1;
-static const char* ior_output_file = "supplier.ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
 
 // ******************************************************************
 // Subroutine Section
@@ -75,12 +75,12 @@ private:
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:e:fc:");
   int c;
@@ -183,7 +183,7 @@ disconnect_suppliers (void)
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Auto_Ptr< sig_i > sig_impl;
   try
@@ -209,9 +209,10 @@ int main (int argc, char* argv[])
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-        "Cannot open output file for "
+        "Cannot open output file %s for "
         "writing IOR: %s",
-        ior_output_file),
+        ior_output_file,
+        ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
         1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);

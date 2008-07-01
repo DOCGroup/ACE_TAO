@@ -18,7 +18,7 @@
 // Data Section
 // ******************************************************************
 
-static const char* ior = "file://supplier.ior";
+static const ACE_TCHAR *ior = ACE_TEXT ("file://supplier.ior");
 static CORBA::Short discard_policy = CosNotification::AnyOrder;
 static int sent = 40;
 static Notify_Sequence_Push_Consumer* consumer_1 = 0;
@@ -30,12 +30,12 @@ static Notify_Sequence_Push_Consumer* consumer_1 = 0;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:l:h:d:");
   int c;
@@ -49,20 +49,20 @@ Consumer_Client::parse_args (int argc, char *argv[])
 
     case 'd':
       {
-        const char* discard = get_opts.optarg;
-        if (ACE_OS::strcmp (discard, "fifo") == 0)
+        const ACE_TCHAR* discard = get_opts.optarg;
+        if (ACE_OS::strcmp (discard, ACE_TEXT ("fifo")) == 0)
         {
           discard_policy = CosNotification::FifoOrder;
         }
-        else if (ACE_OS::strcmp (discard, "priority") == 0)
+        else if (ACE_OS::strcmp (discard, ACE_TEXT ("priority")) == 0)
         {
           discard_policy = CosNotification::PriorityOrder;
         }
-        else if (ACE_OS::strcmp (discard, "lifo") == 0)
+        else if (ACE_OS::strcmp (discard, ACE_TEXT ("lifo")) == 0)
         {
           discard_policy = CosNotification::LifoOrder;
         }
-        else if (ACE_OS::strcmp (discard, "deadline") == 0)
+        else if (ACE_OS::strcmp (discard, ACE_TEXT ("deadline")) == 0)
         {
           discard_policy = CosNotification::DeadlineOrder;
 #if !defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
@@ -127,7 +127,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
   try
@@ -143,7 +143,7 @@ int main (int argc, char* argv[])
 
     CORBA::ORB_ptr orb = client.orb ();
     CORBA::Object_var object =
-      orb->string_to_object (ior);
+      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
     sig_var sig = sig::_narrow (object.in ());
     ACE_ASSERT(! CORBA::is_nil (sig.in ()));

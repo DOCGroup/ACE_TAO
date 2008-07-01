@@ -1,3 +1,41 @@
+Tue Jul 01 12:18:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+        * orbsvcs/tests/Notify/MC/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/MC/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Persistent_POA/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/PluggableTopology/main.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
+
+          Fix fuzz errors incorrect ACE_TMAIN/main use.
+
 Tue Jul 01 08:48:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/AVStreams/Modify_QoS/receiver.h:

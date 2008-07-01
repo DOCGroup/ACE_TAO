@@ -121,7 +121,7 @@ static void create_supplier (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   supplier->connect (admin);
 }
 
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Auto_Ptr< sig_i > sig_impl;
   try
