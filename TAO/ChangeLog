@@ -1,3 +1,9 @@
+Wed Jul 02 09:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/OC_Endpoint_Selector_Factory.cpp:
+          Renamed timeout to connect_timeout, timeout is a macro in some
+          environments
+
 Tue Jul 01 12:18:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
