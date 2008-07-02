@@ -565,11 +565,11 @@ Key_List::output_switch (int use_keyword_table)
       comp_buffer = safe_comp_buffer.get ();
 
       if (option[COMP])
-        ACE_OS::sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1, len - 1)",
+        ACE_OS::sprintf (comp_buffer, "%s == *resword->%s && !ACE_OS::%s (str + 1, resword->%s + 1, len - 1)",
                          option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
                          option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ());
       else
-        ACE_OS::sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1)",
+        ACE_OS::sprintf (comp_buffer, "%s == *resword->%s && !ACE_OS::%s (str + 1, resword->%s + 1)",
                          option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
                          option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ());
     }
@@ -741,11 +741,11 @@ Key_List::output_switch (int use_keyword_table)
 
           ACE_OS::printf ("                default: return 0;\n                }\n              ");
           if (option[COMP])
-            ACE_OS::printf ("return %s == *s && !%s;\n            }\n",
+            ACE_OS::printf ("return %s == *s && !ACE_OS::%s;\n            }\n",
                     option[STRCASECMP] ? "charmap[*str]" : "*str",
                     option[STRCASECMP] ? "strncasecmp (s + 1, str + 1, len - 1)" : "strcmp (s + 1, str + 1)");
           else
-            ACE_OS::printf ("return %s == *s && !%s;\n            }\n",
+            ACE_OS::printf ("return %s == *s && !ACE_OS::%s;\n            }\n",
                     option[STRCASECMP] ? "charmap[*str]" : "*str",
                     option[STRCASECMP] ? "strcasecmp (s + 1, str + 1, len - 1)" : "strcmp (s + 1, str + 1)");
           curr = temp;
@@ -1531,7 +1531,7 @@ Key_List::output_lookup_function (void)
           if (array_type_ != Key_List::default_array_type)
             ACE_OS::printf (".%s", option.key_name ());
 
-          ACE_OS::printf (";\n\n              if (%s%s == *s && !%s)\n                return %s;\n            }\n",
+          ACE_OS::printf (";\n\n              if (%s%s == *s && !ACE_OS::%s)\n                return %s;\n            }\n",
                   option[LENTABLE] ? "len == lengthtable[key]\n              && " : "",
                   option[STRCASECMP] ? "charmap[*str]" : "*str",
                   option[COMP] ? (option[STRCASECMP] ? "strncasecmp (str + 1, s + 1, len - 1)" : "strncmp (str + 1, s + 1, len - 1)")
@@ -1550,16 +1550,16 @@ Key_List::output_lookup_function (void)
       if (array_type_ != Key_List::default_array_type)
         {
           if (option[COMP])
-              ACE_OS::printf ("if (%s == *ptr->%s && !%s (str + 1, ptr->%s + 1, len - 1",
+              ACE_OS::printf ("if (%s == *ptr->%s && !ACE_OS::%s (str + 1, ptr->%s + 1, len - 1",
                       option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
                       option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ());
           else
-              ACE_OS::printf ("if (%s == *ptr->%s && !%s (str + 1, ptr->%s + 1",
+              ACE_OS::printf ("if (%s == *ptr->%s && !ACE_OS::%s (str + 1, ptr->%s + 1",
                       option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
                       option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ());
         }
       else
-        ACE_OS::printf (option[STRCASECMP] ? "if (charmap[*str] == **ptr && !%s" : "if (*str == **ptr && !%s",
+        ACE_OS::printf (option[STRCASECMP] ? "if (charmap[*str] == **ptr && !ACE_OS::%s" : "if (*str == **ptr && !ACE_OS::%s",
                 option[COMP]
                 ? (option[STRCASECMP] ? "strncasecmp (str + 1, *ptr + 1, len - 1" : "strncmp (str + 1, *ptr + 1, len - 1")
                 : (option[STRCASECMP] ? "strcasecmp (str + 1, *ptr + 1" : "strcmp (str + 1, *ptr + 1"));
@@ -1580,7 +1580,7 @@ Key_List::output_lookup_function (void)
           if (array_type_ != Key_List::default_array_type)
             ACE_OS::printf (".%s", option.key_name ());
 
-          ACE_OS::printf (";\n\n          if (%s%s == *s && !%s)\n            return %s",
+          ACE_OS::printf (";\n\n          if (%s%s == *s && !ACE_OS::%s)\n            return %s",
                   option[LENTABLE] ? "len == lengthtable[key]\n              && " : "",
                   option[STRCASECMP] ? "charmap[*str]" : "*str",
                   option[COMP]
