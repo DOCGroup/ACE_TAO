@@ -138,7 +138,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Client: exception caught:");
       return 1;
     }
-
+#else /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;
