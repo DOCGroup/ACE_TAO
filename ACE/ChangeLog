@@ -1,3 +1,10 @@
+Wed Jul 02 11:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Process_Env_Test.cpp:
+
+          Annoyingly the ACE_RCSID() macro provides it's own ;
+          This fixes the "Process_Env_Test.cpp:23: error: extra ';'" error.
+
 Tue Jul  1 22:47:17 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.{h cpp}: Can't define or use the new convert_env_buffer()

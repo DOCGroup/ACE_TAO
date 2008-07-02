@@ -22,7 +22,7 @@
 
 ACE_RCSID(tests,
           Process_Env_Test,
-          "$Id$");
+          "$Id$")
 
 int
 run_main (int, ACE_TCHAR*[])
