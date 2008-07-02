@@ -86,8 +86,8 @@ namespace ACE
               if (ACE_OS::strcmp (this->kstat_->ks_module, "lo") == 0)
                 {
                   /// Interfaces 'lo' have only packet counters.
-                  if (this->lookup_str_ == "obytes" 
-                      || this->lookup_str_ == "rbytes")
+                  if (this->lookup_str_ == ACE_TEXT ("obytes") 
+                      || this->lookup_str_ == ACE_TEXT ("rbytes"))
                     {
                       continue;
                     }
@@ -191,7 +191,7 @@ namespace ACE
       kstat_named_t *value =
         (kstat_named_t *) kstat_data_lookup (
           this->kstat_,
-          this->lookup_str_.rep ());
+          ACE_TEXT_ALWAYS_CHAR (this->lookup_str_.rep ()));
           
       if (value == 0)
         {
