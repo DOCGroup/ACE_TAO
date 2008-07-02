@@ -1,3 +1,10 @@
+Wed Jul 02 12:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * ace/Framework_Component.cpp:
+
+          Annoying text constant problem in a build. No need for ACE_TEXT()
+          here.
+
 Wed Jul  2 11:51:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Makefile.am:
