@@ -124,7 +124,7 @@ private:
  * Class used to remove the circular dependencies between the
  * Attribute classes and the Trader class.
  */
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x593)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x610)
 // Work around Borland unresolved symbol errors concerning the
 // out-of-line virtual destructor.  The virtual destructor should
 // not be inlined, nor should we have to export TAO_Lockable from the
