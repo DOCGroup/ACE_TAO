@@ -1,3 +1,9 @@
+Wed Jul  2 11:51:03 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Makefile.am:
+
+          Added the Process_Env_Test.
+
 Wed Jul 02 11:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Process_Env_Test.cpp:
@@ -15,7 +21,7 @@ Tue Jul  1 22:47:17 UTC 2008  Steve Huston  <shuston@riverace.com>
 Tue Jul  1 14:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/PythonACE/fuzz/check_no_tabs.py:
-        
+
           Attempt to provide tabs check.
 
 Tue Jul  1 12:29:34 UTC 2008  Jeff Parsons  <j.parsons@vanderbilt.edu>
@@ -24,7 +30,7 @@ Tue Jul  1 12:29:34 UTC 2008  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * ace/Monitor_Control/Packets_Received_Monitor.cpp:
         * ace/Monitor_Control/Bytes_Sent_Monitor.cpp:
         * ace/Monitor_Control/Packets_Sent_Monitor.cpp:
-        
+
           Cosmetic changes.
 
 Mon Jun 30 16:50:05 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
