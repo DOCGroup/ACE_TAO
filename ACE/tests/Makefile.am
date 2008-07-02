@@ -2043,6 +2043,22 @@ Process_Manager_Test_LDADD = \
 
 endif !BUILD_ACE_FOR_TAO
 
+## Makefile.Process_Env_Test.am
+
+noinst_PROGRAMS += Process_Env_Test
+
+Process_Env_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Process_Env_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Process_Env_Test.cpp
+
+Process_Env_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
 ## Makefile.Process_Manual_Event_Test.am
 
 noinst_PROGRAMS += Process_Manual_Event_Test
