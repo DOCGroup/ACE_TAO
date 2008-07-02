@@ -28,7 +28,7 @@ TAO_OC_Endpoint_Selector_Factory::~TAO_OC_Endpoint_Selector_Factory (void)
 int
 TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Time_Value timeout(0,0);
+  ACE_Time_Value connect_timeout(0,0);
 
   for (int count = 0; count < argc; count++)
     {
@@ -38,7 +38,7 @@ TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
         {
           ++count;
           long const ms = ACE_OS::strtol(argv[count],0,10);
-          timeout.msec (ms);
+          connect_timeout.msec (ms);
         }
     }
 
@@ -46,7 +46,7 @@ TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
     return -1;
 
   ACE_NEW_RETURN (this->oc_endpoint_selector_,
-                  TAO_Optimized_Connection_Endpoint_Selector(timeout),
+                  TAO_Optimized_Connection_Endpoint_Selector(connect_timeout),
                   -1);
   return 0;
 }
