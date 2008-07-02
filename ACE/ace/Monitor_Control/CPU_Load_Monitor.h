@@ -60,6 +60,9 @@ namespace ACE
     private:
       /// Overridden reset, calls platform-specific reset.
       virtual void clear_i (void);
+      
+      /// Common code to the constructor and to clear_i().
+      void init (void);
 
     private:
 #if defined (linux)

@@ -1,3 +1,23 @@
+Wed Jul  2 18:30:15 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Monitor_Base.cpp (clear_i):
+
+          Added resize of string array (if applicable) to 0.
+
+        * ace/Monitor_Control/CPU_Load_Monitor.h:
+        * ace/Monitor_Control/Bytes_Received_Monitor.cpp:
+        * ace/Monitor_Control/Packets_Received_Monitor.cpp:
+        * ace/Monitor_Control/Memory_Usage_Monitor.h:
+        * ace/Monitor_Control/Num_Threads_Monitor.h:
+        * ace/Monitor_Control/CPU_Load_Monitor.cpp:
+        * ace/Monitor_Control/Memory_Usage_Monitor.cpp:
+        * ace/Monitor_Control/Num_Threads_Monitor.cpp:
+        * ace/Monitor_Control/Bytes_Sent_Monitor.cpp:
+        * ace/Monitor_Control/Packets_Sent_Monitor.cpp:
+
+          Finished implementation of clear_i() method for all
+          platforms.
+
 Wed Jul  2 12:45:53 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * Updated the COPYING file to make it consistent with what's on the website.
