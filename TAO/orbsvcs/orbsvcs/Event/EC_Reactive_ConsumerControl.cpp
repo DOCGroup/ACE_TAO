@@ -110,8 +110,7 @@ TAO_EC_Reactive_ConsumerControl::activate (void)
       this->policy_list_.length (1);
       this->policy_list_[0] =
         this->orb_->create_policy (
-               Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-               any);
+               Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE, any);
 
       // Only schedule the timer, when the rate is not zero
       if (this->rate_ != ACE_Time_Value::zero)
