@@ -48,6 +48,7 @@ namespace ACE
     Bytes_Received_Monitor::clear_i (void)
     {
       this->clear_impl ();
+      this->Monitor_Base::clear_i ();
     }
   }
 }
