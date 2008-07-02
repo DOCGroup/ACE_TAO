@@ -123,7 +123,7 @@ public:
   ACE_Lock *profile_lock (void) const;
 
   // Manage the base (non-forwarded) profiles.
-  /// returns a pointer to the profile_in_use object.  This object
+  /// Returns a pointer to the profile_in_use object.  This object
   /// retains ownership of this profile.
   TAO_Profile *profile_in_use (void);
 
@@ -245,9 +245,7 @@ public:
    * Create the IOP::IOR info. We will create the info at most once.
    * Get the index of the profile we are using to make the invocation.
    */
-  int create_ior_info (IOP::IOR *&ior_info,
-                       CORBA::ULong &index
-                      );
+  int create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index);
 
   /// Deallocate the TAO_Stub object.
   /**
@@ -299,9 +297,7 @@ private:
   TAO_Profile *next_forward_profile (void);
 
   /// THREAD-SAFE Create the IOR info
-  int get_profile_ior_info (TAO_MProfile &profile,
-                            IOP::IOR *&ior_info
-                           );
+  int get_profile_ior_info (TAO_MProfile &profile, IOP::IOR *&ior_info);
 
 private:
 
@@ -405,7 +401,7 @@ protected:
    * reason for caching this helps our generated code, notably the
    * stubs to be decoubled from ORB_Core. Please do not move it away.
    */
-  const CORBA::Boolean collocation_opt_;
+  CORBA::Boolean const collocation_opt_;
 };
 
 // Define a TAO_Stub auto_ptr class.
