@@ -49,7 +49,7 @@ TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv [])
   this->orb_ = CORBA::ORB_init (command_line.get_argc(),
                                 command_line.get_ASCII_argv());
 
-  this->apply_timeout (this->orb_);
+  this->apply_timeout (this->orb_.in ());
 
   CORBA::Object_var object =
     this->orb_->resolve_initial_references("RootPOA");
@@ -80,7 +80,7 @@ TAO_Notify_Service_Driver::init_dispatching_ORB (int& argc, ACE_TCHAR *argv [])
                                 command_line.get_ASCII_argv(),
                                 "dispatcher");
 
-  this->apply_timeout (this->dispatching_orb_);
+  this->apply_timeout (this->dispatching_orb_.in ());
 
   return 0;
 }

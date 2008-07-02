@@ -1,3 +1,15 @@
+Wed Jul 02 12:47:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorManager.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+        * tests/Monitor/Marshal_Buffer/client.cpp:
+
+          Fixed unused variable warnings.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+
+          Fixed choosing this over that warnings.
+
 Wed Jul 02 09:14:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/OC_Endpoint_Selector_Factory.cpp:

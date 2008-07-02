@@ -48,7 +48,8 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
     {
       error ("Caught an unexpected exception type");
     }
-
+#else /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+  ACE_UNUSED_ARG (argv);
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;

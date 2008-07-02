@@ -376,7 +376,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     {
       error ("Caught an unexpected exception type");
     }
-
+#else /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;
