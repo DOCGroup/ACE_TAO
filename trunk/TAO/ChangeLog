@@ -1,3 +1,9 @@
+Wed Jul 02 12:59:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+
+          Fixed multiple definition of for loop i warnings.
+
 Wed Jul  2 12:45:53 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * Updated the COPYING file to make it consistent with what's on the website.

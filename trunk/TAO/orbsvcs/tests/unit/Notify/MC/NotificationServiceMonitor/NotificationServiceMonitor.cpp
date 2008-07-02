@@ -49,10 +49,10 @@ ACE_TMAIN (int, ACE_TCHAR*[])
           error ("clean Monitor_Point_Registry::add() failed");
         }
         
-      for (int i = 0; i < 10; ++i)
+      {for (int i = 0; i < 10; ++i)
         {
           s->receive (0.0);
-        }
+        }}
 
       ACE_NEW_RETURN (s,
                       Monitor_Base ("test2",
@@ -64,10 +64,10 @@ ACE_TMAIN (int, ACE_TCHAR*[])
           error ("second Monitor_Point_Registry::add() failed");
         }
         
-      for (size_t i = 0; i < 10; ++i)
+      {for (size_t i = 0; i < 10; ++i)
         {
           s->receive  (i);
-        }
+        }}
 
       ACE_NEW_RETURN (s,
                       Monitor_Base ("test3",
@@ -79,10 +79,10 @@ ACE_TMAIN (int, ACE_TCHAR*[])
           error ("third Monitor_Point_Registry::add() failed");
         }
         
-      for (int i = 0; i < 10; ++i)
+      {for (int i = 0; i < 10; ++i)
         {
           s->receive (i / .08);
-        }
+        }}
 
       NotificationServiceMonitor_i monitor;
       Monitor::NameList* names = monitor.get_statistic_names ();
@@ -145,10 +145,10 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         }
         
       // Test the clear_statistics method.
-      for (int i = 0; i < 10; ++i)
+      {for (int i = 0; i < 10; ++i)
         {
           s->receive (i / .7);
-        }
+        }}
         
       monitor.clear_statistics (*names);
       
@@ -168,4 +168,3 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
   return 0;
 }
-
