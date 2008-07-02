@@ -66,7 +66,6 @@ namespace ACE
 
 #if defined (ACE_HAS_LINUX_SYSINFO)
       struct sysinfo sysinfo_;
-#elif defined (ACE_HAS_KSTAT)
 #endif
     };
   }

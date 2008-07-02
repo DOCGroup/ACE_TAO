@@ -409,6 +409,8 @@ namespace ACE
             {
               ACE::strdelete (this->data_.list_[i]);
             }
+
+          this->data_.list_.max_size (0UL);
         }
 
       this->data_.value_ = 0.0;

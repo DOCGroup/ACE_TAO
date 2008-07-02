@@ -74,7 +74,6 @@ namespace ACE
       FILE *file_ptr_;
       char buf_[1024];
       unsigned long nthreads_;
-#elif defined (ACE_HAS_KSTAT)
 #endif
     };
   }

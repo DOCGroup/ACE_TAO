@@ -21,7 +21,6 @@ namespace ACE
       : Monitor_Base (name, Monitor_Base::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Monitor (ACE_TEXT ("\\Memory\\% Committed Bytes In Use"))
-#elif defined (ACE_HAS_KSTAT)
 #endif
     {
     }
@@ -65,11 +64,11 @@ namespace ACE
     void
     Memory_Usage_Monitor::clear_i (void)
     {
-/// (JP) 2008-06-22 - Similar implmentations for the other platforms 
-/// will be coming shortly.
 #if defined (ACE_HAS_WIN32_PDH)
       this->clear_impl ();
 #endif
+
+      this->Monitor_Base::clear_i ();
     }
   }
 }

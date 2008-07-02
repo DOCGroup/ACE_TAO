@@ -42,21 +42,7 @@ namespace ACE
       , kstat_id_ (0)
 #endif
     {
-#if defined (linux)
-      /// All data in this file are stored as running 'jiffy' totals, so we
-      /// get values here in the constructor to subtract for the difference
-      /// in subsequent calls.
-      this->access_proc_stat (&this->prev_idle_);
-
-      this->prev_total_ =
-        this->user_ + this->wait_ + this->kernel_ + this->prev_idle_;
-#elif defined (ACE_HAS_KSTAT)
-      /// Stored similarly to Linux, in a system file.
-      this->access_kstats (&this->prev_idle_);
-
-      this->prev_total_ =
-        this->user_ + this->wait_ + this->kernel_ + this->prev_idle_;
-#endif
+      this->init ();
     }
 
     void
@@ -103,10 +89,31 @@ namespace ACE
     void
     CPU_Load_Monitor::clear_i (void)
     {
-/// (JP) 2008-06-22 - Similar implmentations for the other platforms 
-/// will be coming shortly.
 #if defined (ACE_HAS_WIN32_PDH)
       this->clear_impl ();
+#endif
+
+      this->init ();
+      this->Monitor_Base::clear_i ();
+    }
+    
+    void
+    CPU_Load_Monitor::init (void)
+    {
+#if defined (linux)
+      /// All data in this file are stored as running 'jiffy' totals, so we
+      /// get values here in the constructor to subtract for the difference
+      /// in subsequent calls.
+      this->access_proc_stat (&this->prev_idle_);
+
+      this->prev_total_ =
+        this->user_ + this->wait_ + this->kernel_ + this->prev_idle_;
+#elif defined (ACE_HAS_KSTAT)
+      /// Stored similarly to Linux, in a system file.
+      this->access_kstats (&this->prev_idle_);
+
+      this->prev_total_ =
+        this->user_ + this->wait_ + this->kernel_ + this->prev_idle_;
 #endif
     }
 
