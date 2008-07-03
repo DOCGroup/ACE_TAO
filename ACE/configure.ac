@@ -1159,8 +1159,7 @@ AC_CHECK_TYPE([sig_atomic_t],
 
 AC_CHECK_TYPE([sigval_t],
 	      [],
-	      [AC_DEFINE([ACE_LACKS_SIGVAL_T], 1,
-			 [Define to 1 if the system lacks the type 'sigval_t'.])],
+	      [],
 	      [#include <signal.h>])
 
 if test "$ac_cv_type_sigval_t" = yes; then
