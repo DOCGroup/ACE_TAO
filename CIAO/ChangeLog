@@ -1,11 +1,17 @@
+Thu Jul  3 19:21:37 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+          Added a strict ordering dependency with TAO_IDL_EXE, as some builds
+          appear to have a race between these two, causing some errors.
+
 Wed Jul  2 12:45:53 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * Updated the COPYING file to make it consistent with what's on the website.
-  
+
 Mon Jun 30 15:41:05 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/SizeTypeCalculator.cpp:
-        
+
           Added missing support for bounded sequences.
 
 Wed Jun 25 11:53:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
