@@ -1,3 +1,18 @@
+Thu Jul  3 21:42:54 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        
+          Changed the feature test used for the existance of the sigval_t
+          type not to define ACE_LACKS_SIGVAL_T if it does not exist.  
+        
+          However, it is still needed to set the ac_cv_type_sigval_t shell
+          variable, which is used to decide whether to perform the
+          ACE_HAS_SIGVAL_SIGVAL_INT and ACE_HAS_SIGVAL_SIGVAL_PTR feature
+          tests.
+        
+          This fixes (the newly reopened) bugzilla #2794.  Thanks to Olli
+          Savi for suggesting taking another look.
+
 Thu Jul  3 16:38:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
