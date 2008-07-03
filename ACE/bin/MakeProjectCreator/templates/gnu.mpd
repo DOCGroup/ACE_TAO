@@ -653,6 +653,9 @@ realclean: clean
 ifneq ($(GENERATED_DIRTY),)
 	-$(RM) -r $(GENERATED_DIRTY)
 endif
+<%if(postclean)%>
+	-<%eval(postclean)%>
+<%endif%>
 
 __prebuild__:
 <%if(prebuild)%>

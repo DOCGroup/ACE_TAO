@@ -1,3 +1,10 @@
+Thu Jul  3 16:38:35 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added the use of 'postclean' to be used during the realclean
+          target.
+
 Wed Jul  2 18:30:15 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Base.cpp (clear_i):
