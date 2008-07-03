@@ -35,7 +35,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, tao_output, crosscompile {
     TAO_IDL3_TO_IDL2_BE_Export.h
   }
 }
-
+2
 project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile, tao_idl_mcpp {
   after          += TAO_IDL3_TO_IDL2_BE TAO_IDL_FE
   exename         = tao_idl3_to_idl2
@@ -45,6 +45,10 @@ project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile, tao_i
                     $(TAO_ROOT)
   libpaths       += $(TAO_ROOT)/TAO_IDL
   exeout          = $(ACE_ROOT)/bin
+  
+  // Adding a strict ordering dependency with TAO_IDL_EXE.  It appears on some systems, there
+  // can be a race between these two projects for tao_idl.cpp, causing some erroors.
+  after += TAO_IDL_EXE
 
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
