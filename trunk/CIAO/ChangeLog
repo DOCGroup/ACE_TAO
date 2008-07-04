@@ -1,6 +1,13 @@
+Fri Jul 04 10:43:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+
+          Remove extrainious character from Will's commit below.
+
 Thu Jul  3 19:21:37 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+
           Added a strict ordering dependency with TAO_IDL_EXE, as some builds
           appear to have a race between these two, causing some errors.
 
