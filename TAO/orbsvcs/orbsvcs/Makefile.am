@@ -2010,7 +2010,7 @@ libTAO_CosNotification_MC_la_SOURCES = \
   Notify/MonitorControl/NotificationServiceMCC.cpp \
   Notify/MonitorControl/NotificationServiceMCS.cpp \
   Notify/MonitorControl/NotificationServiceMonitor_i.cpp \
-  Notify/MonitorControl/Statistic.cpp
+  Notify/MonitorControl/Timestamp_Monitor.cpp
 
 libTAO_CosNotification_MC_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2031,7 +2031,6 @@ libTAO_CosNotification_MC_la_LIBADD = \
 nobase_include_HEADERS += \
   Notify/MonitorControl/Control.h \
   Notify/MonitorControl/Control_Registry.h \
-  Notify/MonitorControl/Dynamic_Statistic.h \
   Notify/MonitorControl/MonitorManager.h \
   Notify/MonitorControl/NotificationServiceMC.idl \
   Notify/MonitorControl/NotificationServiceMCC.h \
@@ -2039,8 +2038,7 @@ nobase_include_HEADERS += \
   Notify/MonitorControl/NotificationServiceMCS.h \
   Notify/MonitorControl/NotificationServiceMCS.inl \
   Notify/MonitorControl/NotificationServiceMonitor_i.h \
-  Notify/MonitorControl/Statistic.h \
-  Notify/MonitorControl/Statistic.inl \
+  Notify/MonitorControl/Timestamp_Monitor.h \
   Notify/MonitorControl/notify_mc_export.h
 
 endif !BUILD_WINCE

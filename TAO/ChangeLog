@@ -1,3 +1,18 @@
+Fri Jul  4 15:31:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Removed Statistic.{h,inl,cpp} and added
+          Timestamp_Monitor.{h,cpp} to the CosNotification_MC build.
+
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+
+          Disabled some test result checks for HPUX platforms,
+          they seem to have a different number of monitors in
+          the registry, since several are now created automatically
+          for ACE message queues, CDR buffers, POA active object
+          maps, etc., but it isn't a bug.
+
 Thu Jul  3 19:17:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp:
