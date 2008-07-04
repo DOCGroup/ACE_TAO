@@ -210,12 +210,16 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   // <ACE_Service_Config> gets called.
   ACE_Service_Config daemon;
 
-  ACE_ASSERT (daemon.open (new_argv.argc (),
-                           new_argv.argv ()) != -1 || errno == ENOENT);
+  if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1 &&
+      errno != ENOENT)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l %p\n"), ACE_TEXT ("daemon.open")));
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
 
-  ACE_ASSERT (ACE_Reactor::instance()->run_reactor_event_loop (tv) == 0);
+  if (ACE_Reactor::instance()->run_reactor_event_loop (tv) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("line %l %p\n"),
+                ACE_TEXT ("run_reactor_event_loop")));
 
   // Wait for all threads to complete.
   ACE_Thread_Manager::instance ()->wait ();
@@ -263,12 +267,16 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   // <ACE_Service_Config> gets called.
   ACE_Service_Config daemon;
 
-  ACE_ASSERT (daemon.open (new_argv.argc (),
-                           new_argv.argv ()) != -1 || errno == ENOENT);
+  if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1 &&
+      errno != ENOENT)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l %p\n"), ACE_TEXT ("daemon.open")));
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
 
-  ACE_ASSERT (ACE_Reactor::instance()->run_reactor_event_loop (tv) == 0);
+  if (ACE_Reactor::instance()->run_reactor_event_loop (tv) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("line %l %p\n"),
+                ACE_TEXT ("run_reactor_event_loop")));
 
   // Wait for all threads to complete.
   ACE_Thread_Manager::instance ()->wait ();

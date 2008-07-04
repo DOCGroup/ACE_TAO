@@ -540,6 +540,14 @@ else {
 
   my $target = PerlACE::TestTarget::create_target (1);
 
+  # Put needed files in place for targets that require them.
+  #
+  # Service_Config_Test needs service config file.
+  my $svc_conf_file = $target->LocalFile ("Service_Config_Test.conf");
+  if ($target->PutFile ("Service_Config_Test.conf", $svc_conf_file) == -1) {
+      print STDERR "WARNING: Cannot send $svc_conf_file to target\n";
+  }
+
   foreach $test (@tests) {
     if (defined $opt_d) {
       print "Would run test $test now\n";
@@ -555,6 +563,9 @@ else {
     }
     $target->GetStderrLog();
   }
+
+  # Clean up specially placed test files.
+  $target->DeleteFile($svc_conf_file);
 }
 
 check_resources ($oh) if (!defined $opt_d);

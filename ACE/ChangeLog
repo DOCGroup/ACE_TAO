@@ -1,3 +1,26 @@
+Fri Jul  4 20:11:02 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-macros.h: Don't set ACE_HAS_PROCESS_SPAWN for
+          ACE_HAS_PHARLAP - there's only one process available.
+
+        * ace/Recursive_Thread_Mutex.cpp (get_nesting_level): Add Pharlap ETS
+          to those platforms without access to the recursion count on a
+          recursive mutex.
+
+        * tests/run_test.lst: Disable Sendfile_Test on LABVIEW_RT - it lacks
+          sendfile support.
+
+        * tests/Reference_Counted_Event_Handler_Test.cpp: Replaced ACE_ASSERT
+          with ACE_ERROR; surrounded naked strings with ACE_TEXT; added a test
+          option for using ACE_Dev_Poll_Reactor where available.
+
+        * tests/Service_Config_Test.cpp: Replaced ACE_ASSERT with ACE_ERROR.
+
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp: Add ACE_HAS_PHARLAP to those
+          platforms that need to scale back the max number of connections
+          due to limited capacity.
+
 Thu Jul  3 21:42:54 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
