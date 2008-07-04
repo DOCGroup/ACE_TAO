@@ -135,7 +135,9 @@
 # endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
 
 # if !defined (ACE_HAS_PROCESS_SPAWN)
-#   if !defined (ACE_LACKS_FORK) || defined (ACE_WIN32) || defined (ACE_WINCE) || defined (ACE_OPENVMS)
+#   if !defined (ACE_LACKS_FORK) || \
+       (defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)) || \
+       defined (ACE_WINCE) || defined (ACE_OPENVMS)
 #     define ACE_HAS_PROCESS_SPAWN 1
 #   endif
 # endif /* ACE_HAS_PROCESS_SPAWN */
