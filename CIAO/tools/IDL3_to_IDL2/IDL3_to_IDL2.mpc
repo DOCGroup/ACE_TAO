@@ -35,7 +35,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, tao_output, crosscompile {
     TAO_IDL3_TO_IDL2_BE_Export.h
   }
 }
-2
+
 project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, tao_output, crosscompile, tao_idl_mcpp {
   after          += TAO_IDL3_TO_IDL2_BE TAO_IDL_FE
   exename         = tao_idl3_to_idl2
