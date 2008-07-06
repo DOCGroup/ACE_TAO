@@ -959,6 +959,12 @@ for j in $BASEHDR; do
             -x c++ - -MM -MF mmout 2>> rawhdrs.log && cat mmout || true;
 done > mmraw.list
 
+# Append IDL headers to the raw list.
+find \
+    TAO/tao \
+    TAO/orbsvcs/orbsvcs \
+    -regex '.*\.p?idl$' >> mmraw.list
+
 # Cleanup dependency output:
 #   remove '-:' sequences
 #   change all sequences of whitespace into \n
@@ -2180,6 +2186,7 @@ fi
 * Sat Jul  5 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.6-1
 - Updated for latest DOC Group release (x.6.6).
 - Tracked libACE_Monitor_Control name change.
+- Added idl and pidl include files to tao-devel package.
 
 * Wed Jun 25 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.5-6
 - Removed gperf to gperf_ace rename, ACE ships now ace_gperf by default

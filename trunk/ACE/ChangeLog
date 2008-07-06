@@ -1,3 +1,8 @@
+Sun Jul  6 19:47:27 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
+
+	* rpmbuild/ace-tao.spec:
+          Added idl and pidl include files to tao-devel package.
+
 Sun Jul  6 18:28:58 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
 	* rpmbuild/ace-tao.spec:
