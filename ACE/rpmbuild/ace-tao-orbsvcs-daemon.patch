@@ -8,9 +8,9 @@
                             ACE_TEXT ("\n"),
                             argv [0], reqNonMinCorba),
                            -1);
---- ACE_wrappers/TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp~	2007-02-11 23:54:49.000000000 -0800
-+++ ACE_wrappers/TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp	2008-05-31 16:30:39.000000000 -0700
-@@ -164,6 +164,7 @@
+--- ACE_wrappers/TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp~	2008-07-05 14:39:32.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp	2008-07-05 15:46:01.000000000 -0700
+@@ -161,6 +161,7 @@
                            ACE_TEXT ("-b [send callBacks on disconnect] ")
                            ACE_TEXT ("-t [enable typed event channel]")
                            ACE_TEXT ("-d [destroy typed event channelon shutdown] ")
@@ -18,7 +18,7 @@
                            ACE_TEXT ("\n"),
                            argv[0]));
  #else
-@@ -175,6 +176,7 @@
+@@ -172,6 +173,7 @@
                            ACE_TEXT ("-x [disable naming service bind] ")
                            ACE_TEXT ("-r [rebind, no AlreadyBound failures] ")
                            ACE_TEXT ("-b [send callBacks on disconnect] ")
@@ -26,8 +26,8 @@
                            ACE_TEXT ("\n"),
                            argv[0]));
  #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
---- ACE_wrappers/TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.cpp~	2007-02-11 23:54:49.000000000 -0800
-+++ ACE_wrappers/TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.cpp	2008-05-31 16:17:36.000000000 -0700
+--- ACE_wrappers/TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.cpp~	2008-06-03 09:45:24.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.cpp	2008-07-05 15:46:01.000000000 -0700
 @@ -20,6 +20,7 @@
  #include "tao/default_ports.h"
  #include "tao/IORTable/IORTable.h"
@@ -36,7 +36,7 @@
  #include "ace/Dynamic_Service.h"
  #include "ace/Arg_Shifter.h"
  #include "ace/Argv_Type_Converter.h"
-@@ -28,6 +28,43 @@
+@@ -28,6 +29,43 @@
  
  ACE_RCSID (Trader, Trading_Loader, "$Id$")
  
@@ -80,7 +80,7 @@
  TAO_Trading_Loader::TAO_Trading_Loader (void)
    : federate_ (0),
      ior_output_file_ (0),
-@@ -85,6 +122,12 @@
+@@ -85,6 +123,12 @@
        // Copy command line parameter.
        ACE_Argv_Type_Converter command_line(argc, argv);
  
@@ -160,8 +160,8 @@
                        ACE_TEXT("\n"),
                        argv[0]));
            return -1;
---- ACE_wrappers/TAO/orbsvcs/Naming_Service/Naming_Service.cpp~	2008-03-31 01:41:47.000000000 -0700
-+++ ACE_wrappers/TAO/orbsvcs/Naming_Service/Naming_Service.cpp	2008-05-31 16:05:29.000000000 -0700
+--- ACE_wrappers/TAO/orbsvcs/Naming_Service/Naming_Service.cpp~	2008-07-05 14:39:33.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/Naming_Service/Naming_Service.cpp	2008-07-05 15:56:58.000000000 -0700
 @@ -7,6 +7,43 @@
  
  ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
@@ -206,19 +206,18 @@
  // Default Constructor.
  
  TAO_Naming_Service::TAO_Naming_Service (void)
-@@ -33,6 +70,12 @@
-       // Copy command line parameter.
-       ACE_Argv_Type_Converter command_line(argc, argv);
+@@ -30,6 +67,11 @@
  
+   try
+     {
 +      // Instead of using -ORBDaemon we check for a "--daemon" flag
 +      // explicitly.  This allows us to daemonize early, before
 +      // calling ORB_init.
-+      check_for_daemon (command_line.get_argc(),
-+                        command_line.get_TCHAR_argv());
++      check_for_daemon (argc, argv);
 +
        // Initialize the ORB
        this->orb_ =
-         CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0);
+         CORBA::ORB_init (argc, argv);
 --- ACE_wrappers/TAO/orbsvcs/CosEvent_Service/CosEvent_Service.cpp~	2007-01-25 10:04:11.000000000 -0800
 +++ ACE_wrappers/TAO/orbsvcs/CosEvent_Service/CosEvent_Service.cpp	2008-05-31 16:07:37.000000000 -0700
 @@ -12,6 +12,43 @@
@@ -278,8 +277,8 @@
        // Intialize the ORB
        CORBA::ORB_var orb =
          CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0);
---- ACE_wrappers/TAO/orbsvcs/Concurrency_Service/Concurrency_Service.cpp~	2007-01-25 10:04:11.000000000 -0800
-+++ ACE_wrappers/TAO/orbsvcs/Concurrency_Service/Concurrency_Service.cpp	2008-05-31 16:39:05.000000000 -0700
+--- ACE_wrappers/TAO/orbsvcs/Concurrency_Service/Concurrency_Service.cpp~	2008-07-05 14:39:38.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/Concurrency_Service/Concurrency_Service.cpp	2008-07-05 15:46:01.000000000 -0700
 @@ -15,6 +15,7 @@
  
  #include "Concurrency_Service.h"
@@ -288,7 +287,7 @@
  #include "ace/Argv_Type_Converter.h"
  #include "tao/debug.h"
  #include "ace/OS_main.h"
-@@ -25,6 +25,43 @@
+@@ -25,6 +26,43 @@
            Concurrency_Service,
            "$Id$")
  
@@ -332,7 +331,7 @@
  // Default Constructor.
  
  Concurrency_Service::Concurrency_Service (void)
-@@ -75,6 +112,7 @@
+@@ -75,6 +113,7 @@
                             ACE_TEXT("usage:  %s")
                             ACE_TEXT(" [-d]")
                             ACE_TEXT(" [-o] <ior_output_file>")
@@ -340,7 +339,7 @@
                             ACE_TEXT("\n"),
                             argv[0]),
                             1);
-@@ -95,6 +133,12 @@
+@@ -95,6 +134,12 @@
    // Copy command line parameter.
    ACE_Argv_Type_Converter command_line(argc, argv);
  
@@ -353,9 +352,9 @@
    if (this->orb_manager_.init_child_poa (command_line.get_argc(),
                                           command_line.get_ASCII_argv(),
                                           "child_poa") == -1)
---- ACE_wrappers/TAO/orbsvcs/Notify_Service/Notify_Service.cpp~	2008-04-24 12:24:02.000000000 -0700
-+++ ACE_wrappers/TAO/orbsvcs/Notify_Service/Notify_Service.cpp	2008-05-31 16:33:35.000000000 -0700
-@@ -14,6 +14,43 @@
+--- ACE_wrappers/TAO/orbsvcs/Notify_Service/Notify_Service.cpp~	2008-07-05 14:39:33.000000000 -0700
++++ ACE_wrappers/TAO/orbsvcs/Notify_Service/Notify_Service.cpp	2008-07-05 15:58:45.000000000 -0700
+@@ -19,6 +19,43 @@
  #include "ace/Synch.h"
  #include "ace/Argv_Type_Converter.h"
  
@@ -399,7 +398,7 @@
  TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
  : notify_service_ (0)
  , bootstrap_ (false)
-@@ -40,6 +77,12 @@
+@@ -46,6 +83,12 @@
    // Copy command line parameter.
    ACE_Argv_Type_Converter command_line(argc, argv);
  
@@ -412,11 +411,11 @@
    this->orb_ = CORBA::ORB_init (command_line.get_argc(),
                                  command_line.get_ASCII_argv());
  
-@@ -408,6 +451,7 @@
+@@ -460,6 +503,7 @@
                       "-Boot -[No]NameSvc "
                       "-IORoutput file_name "
                       "-Channel -ChannelName channel_name "
 +                     "--daemon "
-                      "-ORBRunThreads threads\n"
+                      "-ORBRunThreads threads "
+                      "-Timeout <msec>\n"
                       "default: %s -Factory NotifyEventChannelFactory "
-                      "-NameSvc -Channel NotifyEventChannel -ORBRunThreads 1\n",

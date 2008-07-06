@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.6.5
-%define TAOVER  1.6.5
-%define CIAOVER 0.6.5
+%define ACEVER  5.6.6
+%define TAOVER  1.6.6
+%define CIAOVER 0.6.6
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # Conditional build
@@ -37,7 +37,7 @@
 Summary: The ADAPTIVE Communication Environment (ACE) and The ACE ORB (TAO)
 Name: ace-tao
 Version: %{ACEVER}
-Release: 5%{?OPTTAG}%{?dist}
+Release: 1%{?OPTTAG}%{?dist}
 Group: Development/Libraries
 URL: http://www.cs.wustl.edu/~schmidt/ACE.html
 License: DOC License
@@ -1587,7 +1587,7 @@ fi
 %{_libdir}/libACE_ETCL_Parser.so.%{ACEVERSO}
 %{_libdir}/libACE_ETCL.so.%{ACEVERSO}
 %{_libdir}/libACE_HTBP.so.%{ACEVERSO}
-%{_libdir}/libACE_MonitorControl.so.%{ACEVERSO}
+%{_libdir}/libACE_Monitor_Control.so.%{ACEVERSO}
 %{_libdir}/libACE_RMCast.so.%{ACEVERSO}
 %{_libdir}/libACE_SSL.so.%{ACEVERSO}
 %{_libdir}/libACE_TMCast.so.%{ACEVERSO}
@@ -1610,7 +1610,7 @@ fi
 %{_libdir}/libACE_ETCL_Parser.so
 %{_libdir}/libACE_ETCL.so
 %{_libdir}/libACE_HTBP.so
-%{_libdir}/libACE_MonitorControl.so
+%{_libdir}/libACE_Monitor_Control.so
 %{_libdir}/libACE_RMCast.so
 %{_libdir}/libACE_SSL.so
 %{_libdir}/libACE_TMCast.so
@@ -2177,6 +2177,10 @@ fi
 # ================================================================
 
 %changelog
+* Sat Jul  5 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.6-1
+- Updated for latest DOC Group release (x.6.6).
+- Tracked libACE_Monitor_Control name change.
+
 * Wed Jun 25 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.5-6
 - Removed gperf to gperf_ace rename, ACE ships now ace_gperf by default
 - Removed ace-tao-strrecvfd.patch
