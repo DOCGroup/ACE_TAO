@@ -1,9 +1,8 @@
 // -*- C++ -*-
 
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "Server_Request_Interceptor.h"
-
 #include "tao/ORB_Constants.h"
-
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (ForwardRequest,
@@ -98,6 +97,8 @@ Server_Request_Interceptor::receive_request (
   // Request 3 -- forwarded by receive_request_service_contexts()
   // Request 4 -- non-forwarded (give client chance to print result)
   // Request 5 -- forwarded by this interception point
+  // Request 6 -- non-forwarded (request 5 gets forwarded here)
+  // Request 7 -- throw exception to initiate forwarding from sent_exception
 
   if (this->request_count_ == 5)
     {
@@ -116,6 +117,21 @@ Server_Request_Interceptor::receive_request (
 
       throw PortableInterceptor::ForwardRequest (this->obj_[1]);
     }
+
+  if (this->request_count_ == 7)
+    {
+      // Throw an exception to force the invocation of send_exception.
+      ACE_DEBUG ((LM_DEBUG,
+                  "SERVER (%P|%t) OBJ_NOT_EXIST exception thrown for request %d\n"
+                  "SERVER (%P|%t) via receive_request().\n",
+                  this->request_count_ - 2));
+      
+      throw CORBA::OBJECT_NOT_EXIST (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
+    }
 }
 
 void
@@ -126,8 +142,26 @@ Server_Request_Interceptor::send_reply (
 
 void
 Server_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
 {
+  CORBA::Any_var exception = ri->sending_exception ();
+  CORBA::TypeCode_var tc = exception->type ();
+  const char *id = tc->id ();
+
+  CORBA::OBJECT_NOT_EXIST nonexist_exception;
+
+  if (ACE_OS::strcmp (id, nonexist_exception._rep_id ()) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "SERVER (%P|%t) OBJ_NOT_EXIST exception caught for request %d\n"
+                  "SERVER (%P|%t) will be forwarded to object 1\n"
+                  "SERVER (%P|%t) via send_exception().\n",
+                  this->request_count_ - 2));
+
+      throw PortableInterceptor::ForwardRequest (this->obj_[0]);
+
+    }
+
 }
 
 void

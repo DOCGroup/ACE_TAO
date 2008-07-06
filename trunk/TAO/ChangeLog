@@ -1,3 +1,11 @@
+Sun Jul  6 20:43:24 UTC 2008  Nanbor Wang  <nanbor (at) txcorp (dot) com>
+
+        * tests/Portable_Interceptors/ForwardRequest/README:
+        * tests/Portable_Interceptors/ForwardRequest/client.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/Serer_Request_Interceptor:
+          Extended the test to verify that ForwardRequest is work properly
+          from the send_exception() interception point.
+        
 Fri Jul  4 15:31:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Makefile.am:
