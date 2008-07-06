@@ -1,3 +1,12 @@
+Sun Jul  6 18:28:58 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
+
+	* rpmbuild/ace-tao.spec:
+	* rpmbuild/ace-tao-orbsvcs-daemon.patch:
+	* rpmbuild/ace-tao-config.patch:
+          Updated for latest DOC Group release (x.6.6).
+          Tracked libACE_Monitor_Control name change.
+          Fixed broken patches.
+        
 Fri Jul  4 20:11:02 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/config-macros.h: Don't set ACE_HAS_PROCESS_SPAWN for
