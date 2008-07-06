@@ -45,6 +45,6 @@ if ($server != 0) {
     $status = 1;
 }
 
-unlink $file;
+#unlink $file;
 
 exit $status;
