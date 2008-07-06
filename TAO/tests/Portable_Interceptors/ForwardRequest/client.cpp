@@ -98,7 +98,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Short old_number = 0;  // Previous invocation result.
       CORBA::Short number = 0;      // New invocation result.
-      for (int i = 1; i <= 4; ++i)
+      for (int i = 1; i <= 5; ++i)
         {
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Issuing request %d.\n",
