@@ -303,6 +303,9 @@ ImR_Activator_i::start_server(const char* name,
       proc_opts.setenv (env[i].name.in (), env[i].value.in ());
     }
 
+  // We always enable the unicode environmet buffer on Windows.  This works
+  // around a 32kb environment buffer limitation.
+  proc_opts.enable_unicode_environment ();
   int pid = this->process_mgr_.spawn (proc_opts);
   if (pid == ACE_INVALID_PID)
     {

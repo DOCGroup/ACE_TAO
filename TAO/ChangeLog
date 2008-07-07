@@ -1,3 +1,10 @@
+Mon Jul  7 11:44:40 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+          Always use the wchar_t environment buffer when activating
+          processes (on Windows).
+
 Sun Jul  6 20:43:24 UTC 2008  Nanbor Wang  <nanbor (at) txcorp (dot) com>
 
         * tests/Portable_Interceptors/ForwardRequest/README:
@@ -5,7 +12,7 @@ Sun Jul  6 20:43:24 UTC 2008  Nanbor Wang  <nanbor (at) txcorp (dot) com>
         * tests/Portable_Interceptors/ForwardRequest/Serer_Request_Interceptor:
           Extended the test to verify that ForwardRequest is work properly
           from the send_exception() interception point.
-        
+
 Fri Jul  4 15:31:27 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Makefile.am:
@@ -25,8 +32,8 @@ Thu Jul  3 19:17:57 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp:
           Added a couple spaces to a comment to force a commit, some builds were
-          thinking this was out of date. 
-        
+          thinking this was out of date.
+
 Wed Jul 02 16:16:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.h:
