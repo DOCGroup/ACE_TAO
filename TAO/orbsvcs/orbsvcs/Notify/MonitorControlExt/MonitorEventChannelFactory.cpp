@@ -89,6 +89,19 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
           
       this->stat_names_.push_back (stat_name);
          
+      stat_name = dir_name + NotifyMonitoringExt::ActiveEventChannelNames;
+      event_channels = 0;
+      ACE_NEW (event_channels,
+               EventChannels (this,
+                              stat_name,
+                              Monitor_Base::MC_LIST,
+                              true));
+                              
+      event_channels->add_to_registry ();
+      event_channels->remove_ref ();
+          
+      this->stat_names_.push_back (stat_name);
+
       stat_name = dir_name + NotifyMonitoringExt::InactiveEventChannelNames;
       event_channels = 0;
       ACE_NEW (event_channels,
