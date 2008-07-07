@@ -52,7 +52,9 @@ public:
     DISPATCH_SUCCESS,
     DISPATCH_RETRY,   // retry this message
     DISPATCH_DISCARD, // discard this message
-    DISPATCH_FAIL};   // discard all messages and disconnect consumer
+    DISPATCH_FAIL,    // discard all messages and disconnect consumer
+    DISPATCH_FAIL_TIMEOUT // Same as DISPATCH_FAIL, but due to a timeout
+  };
 
 public:
   /// Constructor

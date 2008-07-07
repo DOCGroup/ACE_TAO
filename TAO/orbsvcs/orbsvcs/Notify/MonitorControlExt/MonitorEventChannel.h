@@ -69,7 +69,8 @@ public:
 
   /// Remove the supplier/consumer proxy id/name mapping.
   virtual void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
-                              bool is_supplier);
+                              bool is_supplier,
+                              bool experienced_timeout);
 
   /// Remove the consumer admin id/name mapping.
   virtual void remove_consumeradmin (CosNotifyChannelAdmin::AdminID id);
@@ -105,6 +106,7 @@ public:
 private:
   size_t get_consumers (Monitor_Control_Types::NameList* names);
   size_t get_suppliers (Monitor_Control_Types::NameList* names);
+  void get_timedout_consumers (Monitor_Control_Types::NameList* names);
   size_t get_consumeradmins (Monitor_Control_Types::NameList* names);
   size_t get_supplieradmins (Monitor_Control_Types::NameList* names);
   TAO_Notify_ThreadPool_Task* get_threadpool_task (
@@ -118,6 +120,7 @@ private:
 
   friend class RemoveConsumerSupplierControl;
   friend class EventChannelConsumersSuppliers;
+  friend class EventChannelTimedoutConsumers;
   friend class EventChannelConsumerSupplierAdmins;
   friend class SlowestConsumers;
   friend class QueuedEvents;
@@ -147,6 +150,9 @@ private:
 
   mutable TAO_SYNCH_RW_MUTEX consumer_mutex_;
   Map consumer_map_;
+
+  mutable TAO_SYNCH_RW_MUTEX timedout_supplier_mutex_;
+  Map timedout_supplier_map_;
 
   mutable TAO_SYNCH_RW_MUTEX supplieradmin_mutex_;
   Map supplieradmin_map_;

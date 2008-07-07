@@ -95,7 +95,8 @@ public:
 
   // cleanup any proxy resources held by the EC
   virtual void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
-                              bool is_supplier);
+                              bool is_supplier,
+                              bool experienced_timeout);
 
   /// Shutdown
   virtual int shutdown (void);
