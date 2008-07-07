@@ -147,6 +147,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     ACE_ASSERT (pos > 0);
 
     ace_mon.release ();
+    bool from_timeout = false;
     TAO_Notify_Consumer::DispatchStatus status =
       this->dispatch_batch (batch);
     ace_mon.acquire ();
@@ -163,6 +164,9 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
         result = true;
         break;
       }
+    case DISPATCH_FAIL_TIMEOUT:
+      from_timeout = true;
+      // Fall through
     case DISPATCH_FAIL:
       {
         TAO_Notify_Method_Request_Event_Queueable * request = 0;
@@ -211,7 +215,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
         ace_mon.release();
         try
         {
-          this->proxy_supplier ()->destroy ();
+          this->proxy_supplier ()->destroy (from_timeout);
         }
         catch (const CORBA::Exception&)
         {

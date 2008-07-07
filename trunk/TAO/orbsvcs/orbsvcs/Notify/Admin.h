@@ -57,7 +57,9 @@ public:
   void insert (TAO_Notify_Proxy* proxy);
 
   /// Remove type from container_ and cleanup any EC resources.
-  void cleanup_proxy (TAO_Notify_Proxy *proxy, bool is_supplier);
+  void cleanup_proxy (TAO_Notify_Proxy *proxy,
+                      bool is_supplier,
+                      bool experienced_timeout);
 
   /// Access Admin FilterAdmin.
   TAO_Notify_FilterAdmin& filter_admin (void);
