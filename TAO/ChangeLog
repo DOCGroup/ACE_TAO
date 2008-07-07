@@ -1,3 +1,47 @@
+Mon Jul  7 12:09:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/Notify/MC/TkMonitor/README:
+
+          Added more info on how to run the example.
+
+        * orbsvcs/examples/Notify/MC/TkMonitor/external_idl.pl:
+
+          Fixed up the script for the monitor idl changes.
+
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+
+          Added a parameter to cleanup_proxy that allows the caller to
+          indicate if a timeout was experienced.
+
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+
+          If a timeout occurred, indicate this by returning a status of
+          DISPATCH_FAIL_TIMEOUT.
+
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+
+          We're not keeping track of consumer proxies, so pass false to the
+          cleanup_proxy method.
+
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+
+          Added a destroy method that takes a boolean to indicate if a
+          timeout had occurred.  This flag is passed to cleanup_proxy called
+          on the consumer admin.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExt.idl:
+
+          Added a text based monitor to keep track of consumers that were
+          removed due to a timeout.
+
 Mon Jul  7 11:44:40 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:

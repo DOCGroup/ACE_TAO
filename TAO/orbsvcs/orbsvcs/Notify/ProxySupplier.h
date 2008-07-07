@@ -63,6 +63,10 @@ public:
   /// Destroy this object.
   virtual void destroy (void);
 
+  /// Destroy this object, but also indicate if it is due to a timeout or
+  /// not.
+  void destroy (bool from_timeout);
+
   /// Override, TAO_Notify_Proxy::qos_changed to apply MaxEventssPerConsumer QoS.
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 

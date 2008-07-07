@@ -26,15 +26,15 @@ if (!defined $ENV{OPALORB_ROOT}) {
   exit(1);
 }
 
-my($rm)   = undef;
-my($root) = undef;
+my $rm;
+my @includes;
 for(my $i = 0; $i <= $#ARGV; $i++) {
   if ($ARGV[$i] eq '-r') {
     $rm = $i + 1;
     last;
   }
   else {
-    $root = $ARGV[$i];
+    push(@includes, $ARGV[$i]);
   }
 }
 
@@ -45,16 +45,16 @@ if ($rm) {
   exit(0);
 }
 
-if (!defined $root) {
+if (!defined $includes[0]) {
   if (defined $ENV{NOTIFY_ROOT}) {
-    $root = $ENV{NOTIFY_ROOT};
+    push(@includes, $ENV{NOTIFY_ROOT});
   }
   elsif (defined $ENV{TAO_ROOT}) {
-    $root = "$ENV{TAO_ROOT}/orbsvcs/orbsvcs";
+    push(@includes, $ENV{TAO_ROOT}, "$ENV{TAO_ROOT}/orbsvcs/orbsvcs");
   }
 }
 
-if (!defined $root) {
+if (!defined $includes[0]) {
   print STDERR "Please provide the full path ",
                "to the Notify Service IDL files\n";
   exit(1);
@@ -62,5 +62,13 @@ if (!defined $root) {
 
 foreach my $i ('Notify/MonitorControl/NotificationServiceMC.idl',
                'Notify/MonitorControlExt/NotifyMonitoringExt.idl') {
-  system("$ENV{OPALORB_ROOT}/idl/idl.pl --include $root --include $root/.. --client $root/$i");
+  my $root;
+  my $cmd = "$ENV{OPALORB_ROOT}/idl/idl.pl --client";
+  foreach my $include (@includes) {
+    $cmd .= " --include $include --include $include/..";
+    if (-r "$include/$i") {
+      $cmd .= " $include/$i";
+    }
+  }
+  system($cmd);
 }

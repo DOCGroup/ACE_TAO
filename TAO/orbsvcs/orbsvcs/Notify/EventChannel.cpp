@@ -196,8 +196,10 @@ TAO_Notify_EventChannel::release (void)
 }
 
 void
-TAO_Notify_EventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID, bool)
-{ }
+TAO_Notify_EventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID,
+                                        bool, bool)
+{
+}
 
 int
 TAO_Notify_EventChannel::shutdown (void)

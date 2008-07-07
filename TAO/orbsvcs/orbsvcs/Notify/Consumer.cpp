@@ -149,6 +149,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
   bool queued = enqueue_if_necessary (request);
   if (!queued)
     {
+      bool from_timeout = false;
       DispatchStatus status = this->dispatch_request (request);
       switch (status)
         {
@@ -181,6 +182,9 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
             request->complete ();
             break;
           }
+        case DISPATCH_FAIL_TIMEOUT:
+          from_timeout = true;
+          // Fall through
         case DISPATCH_FAIL:
           {
             if (DEBUG_LEVEL  > 0)
@@ -193,7 +197,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
             request->complete ();
             try
               {
-                this->proxy_supplier ()->destroy ();
+                this->proxy_supplier ()->destroy (from_timeout);
               }
             catch (const CORBA::Exception&)
               {
@@ -282,7 +286,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
                     this->proxy ()->id (),
                     ex._info().c_str ()
                     ));
-      result = DISPATCH_FAIL;
+      result = DISPATCH_FAIL_TIMEOUT;
     }
   catch (const CORBA::COMM_FAILURE& ex)
     {
@@ -322,7 +326,8 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
   // for persistent events that haven't timed out
   // convert "FAIL" & "DISCARD" to "RETRY"
   // for transient events, convert RETRY to DISCARD (hey, best_effort.)
-  if (result == DISPATCH_FAIL || result == DISPATCH_DISCARD)
+  if (result == DISPATCH_FAIL ||
+      result == DISPATCH_FAIL_TIMEOUT || result == DISPATCH_DISCARD)
     {
       if (request->should_retry ())
         {
@@ -408,7 +413,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
                     this->proxy ()->id (),
                     ex._info().c_str ()
                     ));
-      result = DISPATCH_FAIL;
+      result = DISPATCH_FAIL_TIMEOUT;
     }
   catch (const CORBA::COMM_FAILURE& ex)
     {

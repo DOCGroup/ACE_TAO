@@ -5,7 +5,7 @@ It will require some form of make (GNU make, nmake, Borland make, etc.)
 You must have the TAO_ROOT environment variable set to the full path of the
 TAO directory and you must also have the OPALORB_ROOT environment variable
 set to the full path of opalORB.  Then run make.  It will generate the stubs
-and at that point you are ready to run monitor.pl.
+and at that point you are ready to run monitor.pl -ORBInitRef NameService=...
 
 By default, the monitor interface will use the Name Service to locate the
 monitor service.  However, an IOR can be passed as the first parameter to

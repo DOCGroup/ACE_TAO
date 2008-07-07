@@ -73,6 +73,27 @@ private:
   bool is_supplier_;
 };
 
+class EventChannelTimedoutConsumers
+  : public TAO_Dynamic_Statistic<TAO_MonitorEventChannel>
+{
+public:
+  EventChannelTimedoutConsumers (TAO_MonitorEventChannel* ec,
+                                 const ACE_CString& name,
+                                 Monitor_Base::Information_Type type)
+    : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
+                                                      name.c_str (),
+                                                      type)
+  {
+  }
+
+  virtual void update (void)
+  {
+    Monitor_Control_Types::NameList list;
+    this->interf_->get_timedout_consumers (&list);
+    this->receive (list);
+  }
+};
+
 class EventChannelConsumerSupplierAdmins
   : public TAO_Dynamic_Statistic<TAO_MonitorEventChannel>
 {
@@ -438,7 +459,8 @@ TAO_MonitorEventChannel::map_consumer_proxy (
 
 void
 TAO_MonitorEventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
-                                        bool is_supplier)
+                                        bool is_supplier,
+                                        bool experienced_timeout)
 {
   ACE_CString name;
   
@@ -454,6 +476,16 @@ TAO_MonitorEventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
       // cause an unexpected exception call which will cause the program to
       // abort.
       this->supplier_map_.unbind (id, name);
+
+      // If this supplier proxy is being cleaned up because it
+      // experienced a timeout, we need to add it to the timeout supplier
+      // map.
+      if (experienced_timeout && name.length () != 0)
+        {
+          ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, tguard,
+                           this->timedout_supplier_mutex_);
+          this->timedout_supplier_map_.bind (id, name);
+        }
     }
   else
     {
@@ -561,6 +593,26 @@ TAO_MonitorEventChannel::add_stats (const char* name)
         
       // Registry manages refcount, so we do this regardless.
       consumers->remove_ref ();
+
+      stat_name = dir_name
+                  + NotifyMonitoringExt::EventChannelTimedoutConsumerNames;
+      EventChannelTimedoutConsumers* tconsumers = 0;
+      ACE_NEW_THROW_EX (tconsumers,
+                        EventChannelTimedoutConsumers (
+                          this,
+                          stat_name.c_str (),
+                          Monitor_Base::MC_LIST),
+                        CORBA::NO_MEMORY ());
+
+      if (!this->register_statistic (stat_name, tconsumers))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Unable to add statistic %s\n",
+                      stat_name.c_str ()));
+        }
+
+      // Registry manages refcount, so we do this regardless.
+      tconsumers->remove_ref ();
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierCount;
@@ -962,6 +1014,21 @@ TAO_MonitorEventChannel::get_consumers (
     }
     
   return count;
+}
+
+void
+TAO_MonitorEventChannel::get_timedout_consumers (
+                           Monitor_Control_Types::NameList* names)
+{
+  ACE_READ_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->timedout_supplier_mutex_);
+
+  Map::const_iterator itr (this->timedout_supplier_map_);
+  Map::value_type* entry = 0;
+  while (itr.next (entry))
+    {
+      names->push_back (entry->item ());
+      itr.advance ();
+    }
 }
 
 size_t

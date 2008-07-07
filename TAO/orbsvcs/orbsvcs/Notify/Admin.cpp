@@ -68,13 +68,14 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
 }
 
 void
-TAO_Notify_Admin::cleanup_proxy (TAO_Notify_Proxy *proxy
-                                 , bool is_supplier)
+TAO_Notify_Admin::cleanup_proxy (TAO_Notify_Proxy *proxy,
+                                 bool is_supplier,
+                                 bool experienced_timeout)
 {
   // We must clean up the proxy before calling remove.  Doing it in the
   // opposite order causes us to use invalid memory (through the call of
   // id() into the proxy).
-  ec_->cleanup_proxy (proxy->id(), is_supplier);
+  ec_->cleanup_proxy (proxy->id(), is_supplier, experienced_timeout);
 
   this->remove (proxy);
 }
