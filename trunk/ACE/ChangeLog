@@ -1,3 +1,10 @@
+Tue Jul  8 21:53:31 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Service_Manager.cpp (process_request): Ensure that requests
+          are processed using the global context, rather than the current
+          one.  Thanks to Michael Doubez <michael dot doubez at gmail dot
+          com> for suggesting this fix. 
+
 Tue Jul  8 16:44:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
