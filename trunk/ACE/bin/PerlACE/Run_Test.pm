@@ -248,6 +248,48 @@ sub check_privilege_group {
   }
 }
 
+# waits until it finds a matching regular expression in a file
+#  escape metacharacters in the text to wait for
+sub waitforfileoutput {
+  my $file = shift;
+  my $waittext = shift;
+
+  if (-e $file && -s $file) {
+    open (DATA, $file);
+    while (my $line = <DATA>) {
+      if ($line =~ /($waittext)/) {
+        close(DATA);
+        return 0;
+      }
+    }
+    close(DATA);
+  }
+  sleep 1;
+}
+
+sub waitforfileoutput_timed {
+  my $file = shift;
+  my $waittext = shift;
+  my $maxtime = shift;
+
+  $maxtime *= (($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test) ? $PerlACE::ProcessVX::WAIT_DELAY_FACTOR : $PerlACE::Process::WAIT_DELAY_FACTOR);
+
+  while ($maxtime-- != 0) {
+    if (-e $file && -s $file) {
+      open (DATA, $file);
+      while (my $line = <DATA>) {
+        if ($line =~ /($waittext)/) {
+          close(DATA);
+          return 0;
+        }
+      }
+      close(DATA);
+    }
+    sleep 1;
+  }
+  return -1;
+}
+
 # Add PWD to the load library path
 add_lib_path ('.');
 
