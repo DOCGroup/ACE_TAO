@@ -493,7 +493,7 @@ DRV_cpp_post_init (void)
 
       if (ACE_ROOT != 0)
         {
-          DRV_add_include_path (include_path3, TAO_ROOT, "/TAO/orbsvcs");
+          DRV_add_include_path (include_path3, ACE_ROOT, "/TAO/orbsvcs");
         }
       else
         {
@@ -919,7 +919,7 @@ DRV_check_file_for_includes (const char *filename)
       // "#include's in the stubs and skeletons.
       DRV_check_for_include (drv_line);
     }
-  
+
   ACE_OS::fclose(fin);
 }
 
@@ -951,14 +951,14 @@ DRV_pre_proc (const char *myfile)
   idl_global->set_real_filename (idl_global->utl_string_factory (myfile)); //t_ifile));
 
   DRV_cpp_putarg (myfile);
-  
+
   char * tmp_arglist [DRV_MAX_ARGCOUNT] = { 0 };
-  
+
   for (size_t i = 0; i < DRV_argcount; ++i)
     {
       tmp_arglist[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (DRV_arglist[i]));
     }
-  
+
   // tell mcpp to use memory buffers, instead of an output file.
   mcpp_use_mem_buffers(1);
 
@@ -981,7 +981,7 @@ DRV_pre_proc (const char *myfile)
   DRV_arglist[DRV_argcount] = 0;
 
   char * yyin = mcpp_get_mem_buffer(OUT);
-  
+
 
   if (yyin == 0)
     {

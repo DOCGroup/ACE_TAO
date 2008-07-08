@@ -1,7 +1,14 @@
+Tue Jul  8 14:20:44 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Fixed mistakenly used TAO_ROOT where ACE_ROOT was meant.
+
 Mon Jul  7 15:13:09 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
-        
+
           Restored creation of ActiveEventChannelNames monitor.
 
 Mon Jul  7 12:09:10 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
