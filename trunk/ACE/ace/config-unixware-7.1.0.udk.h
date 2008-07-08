@@ -379,9 +379,6 @@
 /* Compile using multi-thread libraries */
 #define ACE_MT_SAFE 1
 
-/* Platform needs regexpr.h for regular expression support */
-#define ACE_NEEDS_REGEXPR_H 1
-
 /* Platform needs to #include <sched.h> to get thread scheduling defs. */
 #define ACE_NEEDS_SCHED_H 1
 

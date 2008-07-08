@@ -1,3 +1,17 @@
+Tue Jul  8 16:35:57 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * configure.ac:
+
+          Remove feature test and autoheader template for
+          ACE_NEEDS_REGEXPR_H.  It is no longer used by ACE.
+
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+
+          Remove the ACE_NEEDS_REGEXPR_H feature test macro definition.
+          It is no longer used by ACE.
+
 Tue Jul  8 16:06:46 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * NEWS:
