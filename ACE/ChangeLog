@@ -1,3 +1,19 @@
+Tue Jul  8 16:06:46 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * NEWS:
+
+          Document new --enable-rcsid option for autoconf build.
+
+        * m4/ace.m4:
+        * m4/config_h.m4:
+        * m4/platform.m4:
+
+          Add support of a new --enable-rcsid option for the autoconf
+          build.  Previously, compiling RCS IDs into object files was
+          tightly coupled with the --enable-debug option and was always
+          disabled for certain operating systems. A separate option allows
+          the user to select this behavior independently.
+
 Tue Jul  8 14:41:08  2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Reference_Counted_Event_Handler_Test.cpp: Fixed test cases
@@ -24,7 +40,7 @@ Sun Jul  6 18:28:58 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
           Updated for latest DOC Group release (x.6.6).
           Tracked libACE_Monitor_Control name change.
           Fixed broken patches.
-        
+
 Fri Jul  4 20:11:02 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/config-macros.h: Don't set ACE_HAS_PROCESS_SPAWN for
@@ -51,15 +67,15 @@ Fri Jul  4 20:11:02 UTC 2008  Steve Huston  <shuston@riverace.com>
 Thu Jul  3 21:42:54 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
-        
+
           Changed the feature test used for the existance of the sigval_t
-          type not to define ACE_LACKS_SIGVAL_T if it does not exist.  
-        
+          type not to define ACE_LACKS_SIGVAL_T if it does not exist.
+
           However, it is still needed to set the ac_cv_type_sigval_t shell
           variable, which is used to decide whether to perform the
           ACE_HAS_SIGVAL_SIGVAL_INT and ACE_HAS_SIGVAL_SIGVAL_PTR feature
           tests.
-        
+
           This fixes (the newly reopened) bugzilla #2794.  Thanks to Olli
           Savi for suggesting taking another look.
 
@@ -153,7 +169,7 @@ Mon Jun 30 12:41:00 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
         * ace/Process.h:
         * ace/Process.cpp:
 
-          Added an option to ACE_Process_Options to use a wchar_t environmet
+          Added an option to ACE_Process_Options to use a wchar_t environment
           buffer instead of char.  This is useful only on Windows with
           ACE_USES_WCHAR undefined.  The benefit of using a wchar_t
           environment buffer is that it is not limited to 32kb as a char
