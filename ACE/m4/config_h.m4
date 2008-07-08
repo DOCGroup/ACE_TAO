@@ -916,9 +916,6 @@ AH_TEMPLATE([ACE_NEEDS_LWP_PRIO_SET],
 [OS has LWPs, and when the priority of a bound thread is set, then
    the LWP priority must be set also.])
 
-AH_TEMPLATE([ACE_NEEDS_REGEXPR_H],
-[Platform needs regexpr.h for regular expression support])
-
 AH_TEMPLATE([ACE_NEEDS_SCHED_H],
 [Platform needs to #include <sched.h> to get thread scheduling defs.])
 
