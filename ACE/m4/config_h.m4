@@ -96,8 +96,6 @@ dnl HP/UX specific configuration parameters
 AH_TEMPLATE([HPUX],[Configure for use on HP-UX])
 AH_TEMPLATE([HPUX_10],[Configure for use on HP-UX 10])
 AH_TEMPLATE([HPUX_11],[Configure for use on HP-UX 11])
-AH_TEMPLATE([ACE_HAS_BROKEN_HPUX_TEMPLATES],
-[Earlier versions of HP/UX C++ are damned...])
 
 dnl Irix specific configuration parameters
 AH_TEMPLATE([IRIX5],[Configure for use on Irix 5])

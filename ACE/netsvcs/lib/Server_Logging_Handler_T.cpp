@@ -26,12 +26,12 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::AC
    LMR const &receiver)
    // Initialize the CString to something that is not the empty string
    // to avoid problems when calling fast_rep()
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
   : receiver_ (receiver, ACE_TString (ACE_TEXT(" "), 1))
 #else
   : receiver_ (receiver),
     host_name_ (ACE_TString (ACE_TEXT (" "), 1))
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
 {
 }
 
@@ -48,11 +48,11 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> const ACE_TCHAR *
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::host_name (void)
 {
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
   return this->receiver_.m_.fast_rep ();
 #else
   return this->host_name_.fast_rep ();
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
 }
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
@@ -258,13 +258,13 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
                        ACE_TEXT ("get_remote_addr")),
                       -1);
 
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
   this->receiver_.m_ =
     ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (client_addr.get_host_name ()));
 #else
   this->host_name_ =
     ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (client_addr.get_host_name ()));
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) accepted connection from host %C on fd %d\n"),
@@ -288,11 +288,11 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::receiver (void)
 template<class SLH, class LMR, class SST> SST &
 ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::scheduling_strategy (void)
 {
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+#if !defined (__GNUG__)
   return receiver_.m_;
 #else
   return schedule_strategy_;
-#endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+#endif /* ! __GNUG__ */
 }
 
 template<class SLH, class LMR, class SST> int
