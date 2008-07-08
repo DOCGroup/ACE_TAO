@@ -1,3 +1,9 @@
+Tue Jul  8 14:41:08  2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Reference_Counted_Event_Handler_Test.cpp: Fixed test cases
+          that I accidentally reversed in
+          Fri Jul  4 20:11:02 UTC 2008  Steve Huston  <shuston@riverace.com>
+
 Tue Jul 08 06:44:09 MST 2008  Trevor Fields  <fields_t@ociweb.com>
 
         * bin/PerlACE/Run_Test.pm:
