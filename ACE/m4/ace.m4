@@ -417,6 +417,26 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    esac
   ],)
 
+ AC_ARG_ENABLE([rcsid],
+  AS_HELP_STRING(--enable-rcsid,compile RCS id strings into object files [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_rcsid=yes
+      ;;
+    no)
+      ace_user_enable_rcsid=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-rcsid])
+      ;;
+   esac
+  ])
+ if test X$ace_user_enable_rcsid = Xyes; then
+   AC_DEFINE(ACE_USE_RCSID, 1, 
+             [Define to 1 to embed RCS ID strings into compiled object files.])
+ fi
+
  dnl The ace/config-all.h file defaults ACE_NTRACE properly, so only emit
  dnl something if the user specifies this option.
  AC_ARG_ENABLE([trace],
@@ -679,7 +699,6 @@ AC_DEFUN([ACE_COMPILATION_OPTIONS],
       ;;
     no)
       AC_DEFINE([ACE_NDEBUG])
-      AC_DEFINE([ACE_USE_RCSID],[0])
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-debug])

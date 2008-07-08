@@ -4,6 +4,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 ====================================================
 
+. A new configure option, --enable-rcsid, was added to the autoconf build.
+  This is used to embed RCS IDs in object files.
+
 . A new method was added: void ACE_Time_Value::msec (ACE_UINT64&)
   This method, like the existing msec(ACE_UINT64&)const method, obtains the
   time value in milliseconds and stores it in the passed ACE_UINT64 object.
