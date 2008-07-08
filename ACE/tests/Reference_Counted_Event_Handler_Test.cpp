@@ -349,10 +349,9 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                             &result_handler);
         ACE_Event_Handler_var safe_result_handler (result_handler);
 
-        if (result != 0)
+        if (result == 0)
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("Looking up pipe write handler")));
+                      ACE_TEXT ("Pipe write handler succeeded but shouldn't")));
       }
 
       {
@@ -656,10 +655,9 @@ simple_event_handler (ACE_Reactor *reactor)
                             ACE_Event_Handler::WRITE_MASK,
                             &result_handler);
         ACE_Event_Handler_var safe_result_handler (result_handler);
-        if (result == -1)
+        if (result != -1)
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("line %l %p\n"),
-                      ACE_TEXT ("handler()")));
+                      ACE_TEXT ("line %l handler() suceeded but shouldn't\n")));
       }
 
       {
