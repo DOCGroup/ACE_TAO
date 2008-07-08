@@ -495,7 +495,7 @@ DRV_cpp_post_init (void)
 
       if (ACE_ROOT != 0)
         {
-          DRV_add_include_path (include_path3, TAO_ROOT, "/TAO/orbsvcs");
+          DRV_add_include_path (include_path3, ACE_ROOT, "/TAO/orbsvcs");
         }
       else
         {
