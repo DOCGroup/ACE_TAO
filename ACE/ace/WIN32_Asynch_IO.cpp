@@ -1013,15 +1013,33 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
 
   result->set_error (0); // Clear error before starting IO.
 
-  // Initiate the write
-  int initiate_result = ::WriteFile (result->handle (),
-                                     result->message_block ().rd_ptr (),
-                                     bytes_to_write,
-                                     &bytes_written,
-                                     result);
+  // Initiate the write; Winsock 2 is required for the higher-performing
+  // WSASend() function. For Winsock 1, fall back to the slower WriteFile().
+  int initiate_result = 0;
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+  WSABUF iov;
+  iov.buf = result->message_block ().rd_ptr ();
+  iov.len = bytes_to_write;
+  initiate_result = ::WSASend (reinterpret_cast<SOCKET> (result->handle ()),
+                               &iov,
+                               1,
+                               &bytes_written,
+                               0, // flags
+                               result,
+                               0);
+  if (initiate_result == 0)
+    // Immediate success: the OVERLAPPED will still get queued.
+    return 0;
+#else
+  initiate_result = ::WriteFile (result->handle (),
+                                 result->message_block ().rd_ptr (),
+                                 bytes_to_write,
+                                 &bytes_written,
+                                 result);
   if (initiate_result == 1)
     // Immediate success: the OVERLAPPED will still get queued.
     return 0;
+#endif /* ACE_HAS_WINSOCK2 */
 
   // If initiate failed, check for a bad error.
   ACE_OS::set_errno_to_last_error ();
@@ -1039,7 +1057,7 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
       if (ACE::debug ())
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("WriteFile")));
+                    ACE_TEXT ("Initiating write")));
       return -1;
     }
 }

@@ -1,3 +1,10 @@
+Tue Jul  8 16:41:26  2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/WIN32_Asynch_IO.cpp (ACE_WIN32_Asynch_Write_Stream::write): For
+          Winsock 2-capable platforms, use WSASend() instead of WriteFile().
+          The former performs an order of magnitude faster. Thanks to
+          Namrata Gandhi for running the Win32 native performance tests.
+
 Tue Jul  8 16:35:57 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
