@@ -160,7 +160,6 @@ dnl  */
     AC_DEFINE([__NO_INCLUDE_WARN__])
     AC_DEFINE([ACE_MALLOC_ALIGN], [8])
     AC_DEFINE([ACE_MAP_PRIVATE], [ACE_MAP_SHARED])
-    AC_DEFINE([ACE_USE_RCSID], [0])
     AC_DEFINE([ACE_HAS_LYNXOS_SIGNALS])
     AC_DEFINE([ACE_TIMER_SKEW], [(1000 * 10)])
     ;;
@@ -274,7 +273,6 @@ dnl Check for _POSIX_C_SOURCE macro
 #endif
       ], [AC_DEFINE([ACE_DEFAULT_THREAD_KEYS], [16])],[])
     AC_DEFINE([ACE_THR_PRI_FIFO_DEF], [101])
-    AC_DEFINE([ACE_USE_RCSID], [0])
     ;;
   *cygwin32*)
     AC_DEFINE([CYGWIN32])
