@@ -1025,26 +1025,6 @@ AC_CHECK_HEADERS([iomanip ios iostream istream ostream fstream streambuf],
                     [AC_DEFINE([ACE_USES_OLD_IOSTREAMS])],
                     [AC_DEFINE([ACE_LACKS_IOSTREAM_TOTALLY])])])
 
-dnl Check if platform needs to #include <regexpr.h> for
-dnl regular expression support
-ACE_CACHE_CHECK([regexpr.h for regular expression support],
-   [ace_cv_needs_regexpr_h],
-   [
-    AC_EGREP_HEADER([compile],[regexpr.h],
-     [
-      ace_cv_needs_regexpr_h=yes
-     ],
-     [
-      AC_EGREP_HEADER([step],[regexpr.h],
-        [
-         ace_cv_needs_regexpr_h=yes
-        ],
-        [
-         ace_cv_needs_regexpr_h=no
-        ])
-     ])
-   ],[AC_DEFINE([ACE_NEEDS_REGEXPR_H])],)
-
 dnl Check for old malloc() prototype.
 ACE_CONVERT_WARNINGS_TO_ERRORS([
 ACE_CACHE_CHECK([for old malloc() prototype],
