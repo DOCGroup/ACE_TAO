@@ -262,9 +262,12 @@ ACE_Service_Manager::process_request (ACE_TCHAR *request)
     // Trigger a reconfiguration by re-reading the local <svc.conf> file.
     this->reconfigure_services ();
   else
-    // Just process a single request passed in via the socket
-    // remotely.
-    ACE_Service_Config::process_directive (request);
+    {
+      // Just process a single request passed in via the socket
+      // remotely.
+      ACE_Service_Config_Guard guard (ACE_Service_Config::global ());
+      ACE_Service_Config::process_directive (request);
+    }
 
   // Additional management services may be handled here...
 }
