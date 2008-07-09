@@ -1,3 +1,12 @@
+Wed Jul  9 16:02:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Changed ACE_HAS_SIGVAL_SIGVAL_INT and ACE_HAS_SIGVAL_SIGVAL_PTR
+          feature tests to use "union sigval" instead of "sigval_t".  The
+          former is what ACE uses; while the latter is a common extension,
+          it is not in the XPG3 specification.  Thanks to Olli Savia.
+
 Wed Jul  9 14:23:00 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/README:

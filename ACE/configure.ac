@@ -1118,27 +1118,27 @@ AC_CHECK_TYPE([sig_atomic_t],
 	      [],
 	      [#include <signal.h>])
 
-AC_CHECK_TYPE([sigval_t],
+AC_CHECK_TYPE([union sigval],
 	      [],
 	      [],
 	      [#include <signal.h>])
 
-if test "$ac_cv_type_sigval_t" = yes; then
+if test "$ac_cv_type_union_sigval" = yes; then
   dnl Depending on the system, the field names of union sigval have
   dnl either a sival_ (POSIX) or sigval_ (older versions of FreeBSD)
   dnl prefix.  Define ACE_HAS_SIGVAL_SIGVAL_INT accordingly.
-  AC_CHECK_MEMBER([sigval_t.sigval_int],
+  AC_CHECK_MEMBER([union sigval.sigval_int],
 		  [AC_DEFINE([ACE_HAS_SIGVAL_SIGVAL_INT], 1,
-			     [Define to 1 if `sigval_int' is a member of `sigval_t'.])],
+			     [Define to 1 if `sigval_int' is a member of `union sigval'.])],
 		  [],
 		  [#include <signal.h>])
 
   dnl Depending on the system, the field names of union sigval have
   dnl either a sival_ (POSIX) or sigval_ (older versions of FreeBSD)
   dnl prefix.  Define ACE_HAS_SIGVAL_SIGVAL_PTR accordingly.
-  AC_CHECK_MEMBER([sigval_t.sigval_ptr],
+  AC_CHECK_MEMBER([union sigval.sigval_ptr],
 		  [AC_DEFINE([ACE_HAS_SIGVAL_SIGVAL_PTR], 1,
-			     [Define to 1 if `sigval_ptr' is a member of `sigval_t'.])],
+			     [Define to 1 if `sigval_ptr' is a member of `union sigval'.])],
 		  [],
 		  [#include <signal.h>])
 fi
