@@ -1,3 +1,11 @@
+Wed Jul  9 19:07:24  2008  Steve Huston  <shuston@riverace.com>
+
+        * tests/Reactor_Dispatch_Order_Test.cpp: Reversed this change:
+          Sat Mar 29 08:16:57 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+          which disabled testing for ACE_Dev_Poll_Reactor. Let's see what the
+          issues are then address and/or disable as needed.
+          Also fixed a cut/paste error.
+
 Wed Jul  9 18:37:57  2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Reference_Counted_Event_Handler_Test.cpp: Enabled test for
