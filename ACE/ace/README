@@ -666,8 +666,6 @@ ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA   Compiler's template
                                         Group compilers, e.g., SGI C++
                                         and Green Hills 1.8.8 and
                                         later, support this.
-ACE_HAS_TEMPLATE_SPECIALIZATION         Compiler implements template
-                                        specialization
 ACE_HAS_TEMPLATE_TYPEDEFS               Compiler implements templates
                                         that support typedefs inside
                                         of classes used as formal
