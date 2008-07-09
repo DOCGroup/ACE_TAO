@@ -56,12 +56,8 @@ client (void *arg)
   ACE_INET_Addr client_addr;
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
-#if defined (ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS)
-  ACE_Time_Value *timeout = 0;
-#else
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value *timeout = &tv;
-#endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client: Connecting...\n")));
   // Initiate timed connection with server.

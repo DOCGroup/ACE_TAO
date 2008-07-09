@@ -1,3 +1,15 @@
+Wed Jul  9 17:45:40 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+
+          Remove autoheader template for ACE_HAS_NON_BLOCKING_CONNECTS.
+
+        * tests/MT_SOCK_Test.cpp:
+
+          Remove use of ACE_HAS_NON_BLOCKING_CONNECTS feature test macro.
+          It was removed since ACE no longer supports any systems that
+          required it.
+
 Wed Jul  9 16:09:30 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
