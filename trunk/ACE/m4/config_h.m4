@@ -318,10 +318,6 @@ AH_TEMPLATE([ACE_HAS_DIRENT],
 [Platform supports operations on directories via struct dirent,
 readdir_r, etc.])
 
-AH_TEMPLATE([ACE_HAS_DLFCN_H_BROKEN_EXTERN_C],
-[For platforms, e.g., RedHat 4.2/Linux 2.0.30/Alpha, that don't
-declare dl* functions as extern "C" in dlfcn.h.])
-
 AH_TEMPLATE([ACE_HAS_EXCEPTIONS],[Compiler supports C++ exception handling.])
 
 AH_TEMPLATE([ACE_HAS_FL],[Platform has Fast-Light (FL) toolkit installed.])
