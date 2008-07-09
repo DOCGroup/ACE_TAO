@@ -1,9 +1,19 @@
+Wed Jul  9 09:20:03 UTC 2008  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.h:
+        * ace/TTY_IO.cpp:
+          Removed deprecated 'parityenb' member from ACE_TTY_IO::Serial_Params
+          structure.
+
+        * NEWS:
+          Added a note about change above.
+
 Tue Jul  8 21:53:31 UTC 2008  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Service_Manager.cpp (process_request): Ensure that requests
           are processed using the global context, rather than the current
           one.  Thanks to Michael Doubez <michael dot doubez at gmail dot
-          com> for suggesting this fix. 
+          com> for suggesting this fix.
 
 Tue Jul  8 16:44:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -11,7 +21,7 @@ Tue Jul  8 16:44:24 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Remove autoheader template for ACE_HAS_BROKEN_HPUX_TEMPLATES.
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
         * netsvcs/lib/Server_Logging_Handler_T.h:
 
           Remove use of ACE_HAS_BROKEN_HPUX_TEMPLATES feature test macro.
@@ -74,14 +84,14 @@ Tue Jul 08 06:44:09 MST 2008  Trevor Fields  <fields_t@ociweb.com>
 
 Sun Jul  6 19:47:27 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
-	* rpmbuild/ace-tao.spec:
+        * rpmbuild/ace-tao.spec:
           Added idl and pidl include files to tao-devel package.
 
 Sun Jul  6 18:28:58 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
-	* rpmbuild/ace-tao.spec:
-	* rpmbuild/ace-tao-orbsvcs-daemon.patch:
-	* rpmbuild/ace-tao-config.patch:
+        * rpmbuild/ace-tao.spec:
+        * rpmbuild/ace-tao-orbsvcs-daemon.patch:
+        * rpmbuild/ace-tao-config.patch:
           Updated for latest DOC Group release (x.6.6).
           Tracked libACE_Monitor_Control name change.
           Fixed broken patches.
