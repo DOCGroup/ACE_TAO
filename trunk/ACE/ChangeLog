@@ -1,3 +1,21 @@
+Wed Jul  9 16:09:30 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * configure.ac:
+
+          Remove feature test and autoheader template for
+          ACE_LACKS_WILDCARD_BIND.
+
+        * ace/Sock_Connect.cpp:
+
+          Remove use of ACE_LACKS_WILDCARD_BIND feature test macro.
+
+        * ace/README:
+
+          Remove ACE_LACKS_WILDCARD_BIND from the list of feature test
+          macros.  It was removed since ACE no longer supports any systems
+          that required it.
+
 Wed Jul  9 16:02:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:

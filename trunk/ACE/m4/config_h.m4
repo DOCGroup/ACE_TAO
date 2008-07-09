@@ -887,9 +887,6 @@ AH_TEMPLATE([ACE_LACKS_UNIX_SIGNALS],
 AH_TEMPLATE([ACE_LACKS_UTSNAME_T],
 [Platform lacks struct utsname (e.g., Win32 and VxWorks)])
 
-AH_TEMPLATE([ACE_LACKS_WILDCARD_BIND],
-[The bind() call will not select the port if it's 0.])
-
 AH_TEMPLATE([ACE_MAIN],
 [Renames "main (int, char *[])", for platforms such as g++/VxWorks
    that don't allow main.  Requires the use of
