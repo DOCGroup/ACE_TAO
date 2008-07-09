@@ -11,7 +11,7 @@
 
 
 ServerApp::ServerApp()
-  : TestAppBase("TP_Test_1_Server"),
+  : TestAppBase ("TP_Test_1_Server"),
     ior_filename_ ("test.ior"),
     num_clients_ (1)
 {
@@ -22,16 +22,16 @@ ServerApp::~ServerApp()
 }
 
 int
-ServerApp::run_i(int argc, char* argv[])
+ServerApp::run_i(int argc, ACE_TCHAR *argv[])
 {
   // Initialize the ORB before parsing our own args.
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
   // Parse the command-line args for this application.
   // * Returns -1 if problems are encountered.
   // * Returns 1 if the usage statement was explicitly requested.
   // * Returns 0 otherwise.
-  int result = this->parse_args(argc, argv);
+  int result = this->parse_args (argc, argv);
   if (result != 0)
     {
       return result;
@@ -113,23 +113,23 @@ ServerApp::run_i(int argc, char* argv[])
 
 
 int
-ServerApp::parse_args(int argc, char* argv[])
+ServerApp::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, "o:n:");
+  ACE_Get_Opt get_opts (argc, argv, "o:n:");
 
   int c;
 
-  while ((c = get_opts()) != -1)
+  while ((c = get_opts ()) != -1)
     {
       switch (c)
       {
         case 'o':
-          this->ior_filename_ = get_opts.opt_arg();
+          this->ior_filename_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg());
           break;
 
         case 'n':
           {
-            int tmp = ACE_OS::atoi(get_opts.opt_arg());
+            int tmp = ACE_OS::atoi (get_opts.opt_arg());
             if (tmp < 1)
               {
                 ACE_ERROR((LM_ERROR,
