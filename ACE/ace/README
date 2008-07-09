@@ -1162,8 +1162,6 @@ ACE_LACKS_UTSNAME_T                     Platform lacks struct utsname
                                         (e.g., Win32 and VxWorks)
 ACE_LACKS_UNAME                         Platform lacks uname calls
 ACE_LACKS_WAIT                          The platform lacks wait
-ACE_LACKS_WILDCARD_BIND                 The bind() call will not
-                                        select the port if it's 0.
 ACE_LACKS_WIN32_GETPROCESSTIMES         The Windows platform doesn't have
                                         GetProcessTimes().
 ACE_LACKS_WIN32_MOVEFILEEX              The Windows platform doesn't have

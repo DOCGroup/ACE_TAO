@@ -3541,45 +3541,6 @@ main ()
 
 AC_CHECK_FUNC([gethostbyaddr],,)
 
-AC_CHECK_FUNC([bind],
-  [
-   ACE_CACHE_CHECK([if bind() will select the port if it is zero],
-     [ace_cv_have_wildcard_bind],
-     [
-      AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <string.h>  /* for memset() */
-
-         int main () {
-
-           int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-
-           sockaddr_in serv_addr;
-
-           (void) memset ((void *) &serv_addr, 0, sizeof(serv_addr));
-
-           serv_addr.sin_family      = AF_INET;
-           serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-           serv_addr.sin_port        = 0;
-
-           return bind (sockfd, (struct sockaddr *) &serv_addr,
-                        sizeof(serv_addr));
-         }
-        ]])],[
-         ace_cv_have_wildcard_bind=yes
-        ],[
-         ace_cv_have_wildcard_bind=no
-        ],[
-         dnl action if cross-compiling
-         ace_cv_have_wildcard_bind=yes
-        ])
-     ],,[AC_DEFINE([ACE_LACKS_WILDCARD_BIND])])
-  ],)
-
 case "$host" in
   *linux*)
     dnl Linux Event Poll
