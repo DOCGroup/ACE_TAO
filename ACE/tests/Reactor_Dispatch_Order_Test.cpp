@@ -141,7 +141,7 @@ Handler::handle_input (ACE_HANDLE fd)
   int me = this->dispatch_order_++;
   if (me != 3)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("handle_timeout should be #3; it's %d\n"),
+                ACE_TEXT ("handle_input should be #3; it's %d\n"),
                 me));
 
   char buffer[BUFSIZ];
