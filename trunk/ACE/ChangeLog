@@ -1,3 +1,10 @@
+Wed Jul  9 14:23:00 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/README:
+
+          Remove ACE_HAS_TEMPLATE_SPECIALIZATION from list of feature
+          test macros.
+
 Wed Jul  9 14:18:26 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
