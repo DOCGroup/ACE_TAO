@@ -5,10 +5,10 @@
 
 ACE_RCSID(Muxing, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:");
   int c;
@@ -33,7 +33,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -44,10 +44,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Test::Big_Reply_var reply_gen =
-        Test::Big_Reply::_narrow(tmp.in ());
+        Test::Big_Reply::_narrow (tmp.in ());
 
       if (CORBA::is_nil (reply_gen.in ()))
         {
@@ -56,7 +56,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              ior),
                             1);
         }
-
 
       Client_Task client_task (reply_gen.in (),
                                10,

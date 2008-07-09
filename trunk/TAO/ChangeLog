@@ -1,3 +1,19 @@
+Wed Jul 09 13:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.cpp:
+        * tests/Big_Reply/client.cpp:
+        * tests/Bug_3251_Regression/PersistentPoa.h:
+        * tests/Bug_3251_Regression/PersistentPoa.cpp:
+        * tests/TransportCurrent/Framework/server.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/server.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/AppTestBase.h:
+        * tests/CSD_Strategy_Tests/TP_Common/AppTestBase.cpp:
+
+          Added wide character compatablity.
+
 Tue Jul  8 14:20:44 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:

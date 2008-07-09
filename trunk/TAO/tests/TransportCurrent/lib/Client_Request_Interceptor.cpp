@@ -67,7 +67,7 @@ namespace Test
   Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   {
     // Test TC
-    test_transport_current ("send_request");
+    test_transport_current (ACE_TEXT ("send_request"));
 
     CORBA::Boolean const response_expected =
       ri->response_expected ();
@@ -104,25 +104,24 @@ namespace Test
   void
   Client_Request_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
   {
-    test_transport_current ("send_poll");
+    test_transport_current (ACE_TEXT ("send_poll"));
   }
 
   void
   Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
   {
-    test_transport_current ("receive_reply");
+    test_transport_current (ACE_TEXT ("receive_reply"));
   }
 
   void
   Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
   {
-    test_transport_current ("receive_exception");
+    test_transport_current (ACE_TEXT ("receive_exception"));
   }
 
   void
   Client_Request_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
   {
-    test_transport_current ("receive_other");
+    test_transport_current (ACE_TEXT ("receive_other"));
   }
-
 }
