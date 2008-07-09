@@ -1079,7 +1079,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
 #if defined (ACE_WIN32) && \
-    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0))
+    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
   if (test_wfmo_reactor)
     {
