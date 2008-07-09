@@ -25,13 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_LACKS_DLFCN_H)
-#  if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
-     extern "C" {
-#  endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
 #  include /**/ <dlfcn.h>
-#  if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
-     }
-#  endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
 #endif /* !ACE_LACKS_DLFCN_H */
 
 #if defined (__hpux)

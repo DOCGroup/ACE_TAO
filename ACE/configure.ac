@@ -1069,26 +1069,7 @@ if test "$ac_cv_have_decl_getrlimit" != yes ||
 fi
 
 
-dnl Check for platforms that don't declare dl* functions
-dnl as extern "C" in dlfcn.h.
-dnl TODO: This check looks feeble to me...
-dnl NOTE: Linux header files ARE protected with extern "C" by the
-dnl       __BEGIN_DECLS macro, so don't be surprised!
-ACE_CACHE_CHECK([if dlfcn.h is protected by extern "C"],
-    [ace_cv_lib_dlfcn_with_extern_c],[
-      AC_EGREP_HEADER([extern \"C\"],[dlfcn.h],
-        [
-         ace_cv_lib_dlfcn_with_extern_c=yes
-        ],
-        [
-         ace_cv_lib_dlfcn_with_extern_c=no
-        ])
-],,[AC_DEFINE([ACE_HAS_DLFCN_H_BROKEN_EXTERN_C])])
-
-
-
 dnl SECTION 6: Checks for typedefs
-
 
 dnl dnl Standard typedef checks (All of them may not be needed)
 dnl AC_TYPE_UID_T
