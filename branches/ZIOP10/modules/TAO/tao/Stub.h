@@ -118,8 +118,8 @@ public:
   /// profiles need to be edited.
   ACE_Lock *profile_lock (void) const;
 
-  // Manage the base (non-forwarded) profiles.
-  /// returns a pointer to the profile_in_use object.  This object
+  /// Manage the base (non-forwarded) profiles.
+  /// Returns a pointer to the profile_in_use object.  This object
   /// retains ownership of this profile.
   TAO_Profile *profile_in_use (void);
 
@@ -157,20 +157,20 @@ public:
 
   /**
    * THREAD SAFE
-   * this method will reset the base profile list to reference the first
+   * This method will reset the base profile list to reference the first
    * profile and if there are anmy existing forward profiles they are
    * reset.
    */
   void reset_profiles (void);
 
-  /// Returns 1 if a forward profile has successfully been used.
+  /// Returns true if a forward profile has successfully been used.
   /// profile_success_ && forward_profiles_
   CORBA::Boolean valid_forward_profile (void);
 
-  /// NON-THREAD-SAFE.  Will set profile_success_ to 0.
+  /// NON-THREAD-SAFE.  Will set profile_success_ to true.
   void set_valid_profile (void);
 
-  /// Returns TRUE if a connection was successful with at least
+  /// Returns true if a connection was successful with at least
   /// one profile.
   CORBA::Boolean valid_profile (void) const;
 
