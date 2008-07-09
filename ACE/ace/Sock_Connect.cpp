@@ -189,50 +189,10 @@ ACE::bind_port (ACE_HANDLE handle, ACE_UINT32 ip_addr, int address_family)
    addr.set ((u_short)0, ip_addr, 1, 1);
 #endif /* ACE_HAS_IPV6 */
 
-#if !defined (ACE_LACKS_WILDCARD_BIND)
   // The OS kernel should select a free port for us.
   return ACE_OS::bind (handle,
                        (sockaddr*)addr.get_addr(),
                        addr.get_size());
-#else
-  static u_short upper_limit = ACE_MAX_DEFAULT_PORT;
-  int round_trip = upper_limit;
-  int lower_limit = IPPORT_RESERVED;
-
-  // We have to select the port explicitly.
-
-  for (;;)
-    {
-      addr.set((u_short)upper_limit,ip_addr);
-
-      if (ACE_OS::bind (handle,
-                        (sockaddr*)addr.get_addr()
-                        addr.get_size()) >= 0)
-        {
-#if defined (ACE_WIN32)
-          upper_limit--;
-#endif /* ACE_WIN32 */
-          return 0;
-        }
-      else if (errno != EADDRINUSE)
-        return -1;
-      else
-        {
-          upper_limit--;
-
-          // Wrap back around when we reach the bottom.
-          if (upper_limit <= lower_limit)
-            upper_limit = ACE_MAX_DEFAULT_PORT;
-
-          // See if we have already gone around once!
-          if (upper_limit == round_trip)
-            {
-              errno = EAGAIN;
-              return -1;
-            }
-        }
-    }
-#endif /* ACE_HAS_WILDCARD_BIND */
 }
 
 int
