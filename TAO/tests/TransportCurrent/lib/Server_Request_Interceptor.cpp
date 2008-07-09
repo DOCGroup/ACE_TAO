@@ -83,31 +83,30 @@ namespace Test
   void
   Server_Request_Interceptor::receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr)
   {
-    test_transport_current ("receive_request_service_contexts");
+    test_transport_current (ACE_TEXT ("receive_request_service_contexts"));
   }
 
   void
   Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr)
   {
-    test_transport_current ("receive_request");
+    test_transport_current (ACE_TEXT ("receive_request"));
   }
 
   void
   Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
   {
-    test_transport_current ("send_reply");
+    test_transport_current (ACE_TEXT ("send_reply"));
   }
 
   void
   Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
   {
-    test_transport_current ("send_exception");
+    test_transport_current (ACE_TEXT ("send_exception"));
   }
 
   void
   Server_Request_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr)
   {
-    test_transport_current ("send_other");
+    test_transport_current (ACE_TEXT ("send_other"));
   }
-
 } /* namespace Test */

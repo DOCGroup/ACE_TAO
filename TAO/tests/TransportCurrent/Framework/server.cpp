@@ -10,17 +10,16 @@
 #include "Server_Request_Interceptor.h"
 #include "Server_ORBInitializer.h"
 
-
 ACE_RCSID (Transport_Current,
            server,
            "$Id$")
 
-const char *ior_output_file = "server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 int nthreads = 1;
 int use_collocated_call = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "t:o:n:c:");
   int c;
@@ -55,8 +54,6 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-
-
 /// A helper class to encapsulate a task
 
 class Worker : public ACE_Task_Base
@@ -70,14 +67,12 @@ private:
   CORBA::ORB_var orb_;
 };
 
-
 /// Ctor
 
 Worker::Worker (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
-
 
 /// Test referencing the TC data *inside* the context of a client-side
 /// interceptor
@@ -95,8 +90,6 @@ Worker::svc (void)
     }
   return 0;
 }
-
-
 
 /// Main driver
 
@@ -122,7 +115,7 @@ server_main (int argc,
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ACE_TEXT ("test_orb"));
+                                            "test_orb");
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
@@ -168,9 +161,10 @@ server_main (int argc,
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Server (%P|%t) Cannot write "
+                               "Server (%P|%t) Cannot write %s "
                                "IOR: %s - %m",
-                               ior_output_file),
+                               ior_output_file,
+                               ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
                               -1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);

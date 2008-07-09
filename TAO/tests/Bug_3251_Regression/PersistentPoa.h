@@ -12,7 +12,6 @@
 #include "DllOrb.h"
 #include "bug_3251_export.h"
 
-
 class bug_3251_Export PersistentPoa:  public ACE_Service_Object
 {
   // public types and methods
@@ -24,7 +23,7 @@ class bug_3251_Export PersistentPoa:  public ACE_Service_Object
 
   // protected types and methods
   protected:
-    virtual int init (int argc, char *argv[]);
+    virtual int init (int argc, ACE_TCHAR *argv[]);
 
     virtual int fini (void);
 
@@ -37,8 +36,6 @@ class bug_3251_Export PersistentPoa:  public ACE_Service_Object
     PortableServer::POAManager_var mv_poaManager;
 }; /* end of class PersistentPoa */
 
-
 ACE_FACTORY_DECLARE (bug_3251, PersistentPoa)
-
 
 #endif /* bug_3251_PersistentPoa_h */

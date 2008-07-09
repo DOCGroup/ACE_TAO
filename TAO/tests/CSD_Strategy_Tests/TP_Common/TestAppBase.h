@@ -7,7 +7,6 @@
 #include "tao/Environment.h"
 #include "ace/CORBA_macros.h"
 
-
 class CSD_TP_Test_Export TestAppBase
 {
   public:
@@ -15,18 +14,16 @@ class CSD_TP_Test_Export TestAppBase
     virtual ~TestAppBase();
 
     // Returns 0 for success, and -1 for failure.
-    int run(int argc, char* argv[]);
+    int run (int argc, ACE_TCHAR *argv[]);
 
-    const char* name() const;
-
+    const char *name() const;
 
   protected:
 
-    TestAppBase(const char* name);
+    TestAppBase (const char* name);
 
     // Returns -1 for failure, 0 for success
-    virtual int run_i(int argc, char* argv[]) = 0;
-
+    virtual int run_i (int argc, ACE_TCHAR *argv[]) = 0;
 
   private:
 
