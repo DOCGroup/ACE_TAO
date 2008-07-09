@@ -307,10 +307,6 @@ ACE_HAS_CPLUSPLUS_HEADERS               Compiler/platform has
                                         files
 ACE_HAS_DIRENT                          Compiler/platform has Dirent
                                         iterator functions
-ACE_HAS_DLFCN_H_BROKEN_EXTERN_C         For platforms, e.g., RedHat
-                                        4.2/Linux 2.0.30/Alpha, that
-                                        don't declare dl* functions as
-                                        extern "C" in dlfcn.h.
 ACE_HAS_DLL                             Build ACE using the frigging
                                         PC DLL nonsense...
 ACE_HAS_EBCDIC                          Compile in the ACE code set classes

@@ -1,3 +1,22 @@
+Wed Jul  9 14:18:26 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+        * configure.ac:
+
+          Remove feature test and autoheader template for
+          ACE_HAS_DLFCN_H_BROKEN_EXTERN_C.
+
+        * ace/os_include/os_dlfcn.h:
+
+          Remove use of ACE_HAS_DLFCN_H_BROKEN_EXTERN_C feature test
+          macro.
+
+        * ace/README:
+
+          Remove ACE_HAS_DLFCN_H_BROKEN_EXTERN_C from the list of feature
+          test macros.  It was removed since ACE no longer supports any
+          systems that required it.
+
 Wed Jul  9 09:20:03 UTC 2008  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.h:
