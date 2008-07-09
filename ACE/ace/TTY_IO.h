@@ -62,15 +62,6 @@ public:
     /** Specifies the time to wait before returning from read. Negative value
         means infinite timeout. */
     int readtimeoutmsec;
-    /** 
-      * @deprecated
-      *   Note that this member is going away in a subsequent
-      *   release. Use <code>paritymode = "none"</code> to disable parity
-      *   checking.
-      *
-      * Enable/disable parity checking.
-      */
-    bool parityenb;
     /** Specifies the parity mode. POSIX supports "none", "even" and
         "odd" parity. Additionally Win32 supports "mark" and "space"
         parity modes. */

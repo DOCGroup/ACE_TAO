@@ -37,7 +37,6 @@ ACE_TTY_IO::Serial_Params::Serial_Params (void)
   xofflim = 0;
   readmincharacters = 0;
   readtimeoutmsec = 10000;
-  parityenb = true;
   paritymode = ACE_TTY_IO_NONE;
   ctsenb = false;
   rtsenb = 0;
@@ -239,7 +238,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
           return -1;
         }
 
-      if (arg->parityenb && arg->paritymode)
+      if (arg->paritymode)
         {
           if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_ODD) == 0)
             {
@@ -438,7 +437,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
           return -1;
         }
 
-      if (arg->parityenb && arg->paritymode)
+      if (arg->paritymode)
         {
           dcb.fParity = TRUE;
           if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_ODD) == 0)
