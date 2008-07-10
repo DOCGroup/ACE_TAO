@@ -110,7 +110,7 @@ catiiop (char* string)
 
   ACE_DEBUG ((LM_DEBUG,
               "Host Name:\t%s\n",
-              hostname.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR (hostname.in ())));
   ACE_DEBUG ((LM_DEBUG,
               "Port Number:\t%d\n",
               port_number));
@@ -121,7 +121,7 @@ catiiop (char* string)
   //                                      string);
   ACE_DEBUG ((LM_DEBUG,
               "\nThe Object Key as string:\n%s\n",
-              string));
+              ACE_TEXT_CHAR_TO_TCHAR (string)));
   return 1;
 }
 
@@ -218,7 +218,7 @@ catior (char const * str)
 
   ACE_DEBUG ((LM_DEBUG,
               "The Type Id:\t\"%s\"\n",
-              type_hint.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR (type_hint.in ())));
 
   // Read the profiles, discarding all until an IIOP profile comes by.
   // Once we see an IIOP profile, ignore any further ones.
@@ -373,7 +373,7 @@ catpoop (char* string)
 
   ACE_DEBUG ((LM_DEBUG,
               "Host Name:\t%s\n",
-              hostname));
+              ACE_TEXT_CHAR_TO_TCHAR (hostname)));
   CORBA::string_free (hostname);
 
   //  read the server name
@@ -391,7 +391,7 @@ catpoop (char* string)
 
   ACE_DEBUG ((LM_DEBUG,
               "Server Name:\t%s\n",
-              server_name));
+              ACE_TEXT_CHAR_TO_TCHAR (server_name)));
 
   CORBA::string_free (server_name);
 
@@ -410,7 +410,7 @@ catpoop (char* string)
 
   ACE_DEBUG ((LM_DEBUG,
               "Marker:\t\t%s\n",
-              marker));
+              ACE_TEXT_CHAR_TO_TCHAR (marker)));
   CORBA::string_free (marker);
 
   cp = ACE_OS::strchr (string, ':');
@@ -428,7 +428,7 @@ catpoop (char* string)
 
   ACE_DEBUG ((LM_DEBUG,
               "IR Host:\t\t%s\n",
-              IR_host));
+              ACE_TEXT_CHAR_TO_TCHAR (IR_host)));
   CORBA::string_free (IR_host);
 
   // Read the IR_server
@@ -446,29 +446,25 @@ catpoop (char* string)
 
   ACE_DEBUG ((LM_DEBUG,
               "IR Server:\t\t%s\n",
-              IR_server));
+              ACE_TEXT_CHAR_TO_TCHAR (IR_server)));
   CORBA::string_free (IR_server);
 
   // Read the interface_marker
   ACE_DEBUG ((LM_DEBUG,
               "Interface Marker:\t%s\n",
-              string));
+              ACE_TEXT_CHAR_TO_TCHAR (string)));
   return 1;
 }
 
 int
 ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
-  ACE_Argv_Type_Converter argcon (argcw, argvw);
-  CORBA::ORB_var orb_var =  CORBA::ORB_init (argcon.get_argc (),
-                                             argcon.get_ASCII_argv (),
-                                             "TAO");
+  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO");
   CORBA::Boolean b = 0;
   CORBA::Boolean have_argument = 0;
   int opt;
 
-  ACE_Get_Opt get_opt (argcon.get_argc (), argcon.get_TCHAR_argv (),
-                       ACE_TEXT ("f:n:x"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:n:x"));
 
   while ((opt = get_opt ()) != EOF)
     {
@@ -504,7 +500,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 }
 
                 CosNaming::Name *name =
-                  naming_context->to_name (get_opt.opt_arg ());
+                  naming_context->to_name (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
 
                 try
                   {
@@ -512,27 +508,27 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                       if (CORBA::is_nil (server_object.in ()))
                       {
                         ACE_ERROR_RETURN ((LM_ERROR,
-                              "name %s is not resolved to a valid object\n"),
+                              "name is not resolved to a valid object\n"),
                                           -1);
                       }
                   }
                 catch (const CosNaming::NamingContext::NotFound& nf)
                   {
-                    const char     *reason;
+                    const ACE_TCHAR *reason;
 
                     switch (nf.why)
                       {
                         case CosNaming::NamingContext::missing_node:
-                          reason = "missing node";
+                          reason = ACE_TEXT ("missing node");
                           break;
                         case CosNaming::NamingContext::not_context:
-                          reason = "not context";
+                          reason = ACE_TEXT ("not context");
                           break;
                         case CosNaming::NamingContext::not_object:
-                          reason = "not object";
+                          reason = ACE_TEXT ("not object");
                           break;
                         default:
-                          reason = "not known";
+                          reason = ACE_TEXT ("not known");
                           break;
                       }
                     ACE_ERROR_RETURN ((LM_ERROR,
@@ -575,7 +571,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",
-                            aString.rep ()));
+                            ACE_TEXT_CHAR_TO_TCHAR (aString.rep ())));
 
                 char * str = 0;
                 if (aString.find ("IOR:") == 0)
@@ -745,7 +741,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",
-                            aString.rep ()));
+                            ACE_TEXT_CHAR_TO_TCHAR (aString.rep ())));
 
                 char* str;
                 if (aString.find ("IOR:") == 0)
@@ -900,7 +896,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",
-                            aString.rep ()));
+                            ACE_TEXT_CHAR_TO_TCHAR (aString.rep ())));
 
                 char* str;
                 if (aString.find ("IOR:") == 0)
@@ -1070,12 +1066,12 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream)
                 "%I Endpoint #%d:\n",iter+1));
     const char *host = epseq[iter].host;
     ACE_DEBUG ((LM_DEBUG,
-                "%I Host: %s\n",host));
+                "%I Host: %s\n", ACE_TEXT_CHAR_TO_TCHAR (host)));
     CORBA::UShort port = epseq[iter].port;
     ACE_DEBUG ((LM_DEBUG,
-                "%I Port: %d\n",port));
+                "%I Port: %d\n", port));
     ACE_DEBUG ((LM_DEBUG,
-                "%I Priority: %d\n",epseq[iter].priority));
+                "%I Priority: %d\n", epseq[iter].priority));
   }
 
   return 1;
@@ -1096,7 +1092,7 @@ cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
       (stream2 >> port) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"cannot extract endpoint info\n"),0);
   ACE_DEBUG ((LM_DEBUG,
-              "%I endpoint: %s:%d\n",host.in(),port));
+              "%I endpoint: %s:%d\n", ACE_TEXT_CHAR_TO_TCHAR (host.in()), port));
   return 1;
 }
 
@@ -1337,12 +1333,12 @@ cat_octet_seq (const char *object_name,
 
   ACE_DEBUG ((LM_DEBUG,
               "%I %s len:\t%d\n",
-              object_name,
+              ACE_TEXT_CHAR_TO_TCHAR (object_name),
               length));
 
   ACE_DEBUG ((LM_DEBUG,
               "%I %s as hex:\n",
-              object_name));
+              ACE_TEXT_CHAR_TO_TCHAR (object_name)));
 
   CORBA::Octet anOctet;
   CORBA::String_var objKey = CORBA::string_alloc (length + 1);
@@ -1371,7 +1367,7 @@ cat_octet_seq (const char *object_name,
 
   ACE_DEBUG ((LM_DEBUG,
               "\n%I The %s as string:\n%I ",
-              object_name));
+              ACE_TEXT_CHAR_TO_TCHAR (object_name)));
 
   for (i = 0; i < length; ++i)
     {
@@ -1424,7 +1420,7 @@ void displayHex (TAO_InputCDR & str)
   if (theDescr.length () == 0)
     ACE_DEBUG ((LM_DEBUG," Unknown CodeSet \n "));
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %s \n"), theDescr.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %s \n"), ACE_TEXT_CHAR_TO_TCHAR (theDescr.c_str ())));
 }
 
 CORBA::Boolean
@@ -1441,7 +1437,7 @@ cat_codeset_info (TAO_InputCDR& cdr)
 
   ACE_DEBUG ((LM_DEBUG,
                "\tComponent byte order:\t%s Endian\n",
-              (stream.byte_order () ? "Little" : "Big")));
+              (stream.byte_order () ? ACE_TEXT ("Little") : ACE_TEXT ("Big"))));
 
   // CodesetId for char
   // CORBA::ULong c_ncsId;
@@ -1615,13 +1611,13 @@ cat_profile_helper (TAO_InputCDR& stream,
                   "%I detected new v%d.%d %s profile that catior cannot decode\n",
                   iiop_version_major,
                   iiop_version_minor,
-                  protocol));
+                  ACE_TEXT_CHAR_TO_TCHAR (protocol)));
       return 1;
     }
 
   ACE_DEBUG ((LM_DEBUG,
               "%s Version:\t%d.%d\n",
-              protocol,
+              ACE_TEXT_CHAR_TO_TCHAR (protocol),
               iiop_version_major,
               iiop_version_minor));
 
@@ -1640,7 +1636,7 @@ cat_profile_helper (TAO_InputCDR& stream,
 
   ACE_DEBUG ((LM_DEBUG,
               "%I Host Name:\t%s\n",
-              hostname.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR (hostname.in ())));
   ACE_DEBUG ((LM_DEBUG,
               "%I Port Number:\t%d\n",
               port_number));
@@ -1718,7 +1714,7 @@ cat_coiop_profile (TAO_InputCDR& stream)
 
   ACE_DEBUG ((LM_DEBUG,
               "%I UUID:\t%s\n",
-              uuid.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR (uuid.in ())));
 
   if (cat_object_key (str) == 0)
     return false;
@@ -1798,7 +1794,7 @@ cat_uiop_profile (TAO_InputCDR& stream)
 
   ACE_DEBUG ((LM_DEBUG,
               "%I Rendezvous point:\t%s\n",
-              rendezvous.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR (rendezvous.in ())));
 
   if (cat_object_key (str) == 0)
     return 0;
@@ -1879,7 +1875,7 @@ cat_sciop_profile (TAO_InputCDR& stream)
 
       ACE_DEBUG ((LM_DEBUG,
                   "%I Host Name:\t%s\n",
-                  hostname.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (hostname.in ())));
     }
 
 
@@ -1946,13 +1942,13 @@ cat_nsk_profile_helper (TAO_InputCDR& stream,
                   "%I detected new v%d.%d %s profile that catior cannot decode",
                   iiop_version_major,
                   iiop_version_minor,
-                  protocol));
+                  ACE_TEXT_CHAR_TO_TCHAR (protocol)));
       return 1;
     }
 
   ACE_DEBUG ((LM_DEBUG,
               "%s Version:\t%d.%d\n",
-              protocol,
+              ACE_TEXT_CHAR_TO_TCHAR (protocol),
               iiop_version_major,
               iiop_version_minor));
 
@@ -1968,7 +1964,7 @@ cat_nsk_profile_helper (TAO_InputCDR& stream,
 
   ACE_DEBUG ((LM_DEBUG,
               "%I FS Address:\t%s\n",
-              fsaddress));
+              ACE_TEXT_CHAR_TO_TCHAR (fsaddress)));
   CORBA::string_free (fsaddress);
 
   if (cat_object_key (str) == 0)

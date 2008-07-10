@@ -12,7 +12,6 @@
 
 ACE_RCSID (tests, server, "$Id$")
 
-
 #include "Service_Configuration_Per_ORB.h"
 
 int
@@ -38,14 +37,14 @@ testCompatibility (int , ACE_TCHAR *[])
     // This uses the same default ACE_Service_Repository
     ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> one (new ACE_Service_Gestalt_Test());
 
-    svcname = "CORBANAME_Parser";
+    svcname = ACE_TEXT ("CORBANAME_Parser");
 
     ACE_Service_Object* p20 = ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
     if (p20 == 0)
       ACE_ERROR_RETURN ((LM_DEBUG,
                          ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
-    svcname = "CORBALOC_Parser";
+    svcname = ACE_TEXT ("CORBALOC_Parser");
 
     ACE_Service_Object* p21 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
     if ((p21 == 0))
@@ -55,14 +54,14 @@ testCompatibility (int , ACE_TCHAR *[])
     // Exiting this scope should fini all services in the glob ...
   }
 
-  svcname = "CORBANAME_Parser";
+  svcname = ACE_TEXT ("CORBANAME_Parser");
 
   ACE_Service_Object* p20 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (glob.get (), svcname);
   if ((p20 != 0))
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
 
-  svcname = "CORBALOC_Parser";
+  svcname = ACE_TEXT ("CORBALOC_Parser");
 
   ACE_Service_Object* p21 = ACE_Dynamic_Service<ACE_Service_Object>::instance (glob.get (), svcname);
   if ((p21 != 0))
@@ -73,7 +72,6 @@ testCompatibility (int , ACE_TCHAR *[])
 }
 
 // @brief Test commandline processing
-
 
 int
 testCommandLineDirectives (int , ACE_TCHAR *[])
@@ -110,8 +108,6 @@ testCommandLineDirectives (int , ACE_TCHAR *[])
 
   return 0;
 }
-
-
 
 // @brief Test the helper components used to implement the temporary
 // substitution of the repository currently used as "global" for the
@@ -155,8 +151,6 @@ testTSSGestalt (int , ACE_TCHAR *[])
   return 0;
 }
 
-
-
 // @brief the main driver
 
 int
@@ -167,7 +161,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     && testCommandLineDirectives (argc, argv)
     && testTSSGestalt(argc, argv);
 }
-
-
-
-

@@ -12,9 +12,8 @@ ACE_RCSID (tests,
            ORB_DLL,
            "$Id$")
 
-
 //
-Abstract_Worker::Abstract_Worker (const char* s)
+Abstract_Worker::Abstract_Worker (const ACE_TCHAR *s)
   : ior_file_ (s)
 {
 }
@@ -23,7 +22,6 @@ Abstract_Worker::Abstract_Worker (const char* s)
 Abstract_Worker::~Abstract_Worker (void)
 {
 }
-
 
 //
 Service_Config_ORB_DLL::Service_Config_ORB_DLL (void)
@@ -137,9 +135,7 @@ Service_Config_ORB_DLL::svc (void)
                        ACE_TEXT ("(%P|%t) Aborting.\n")),
                        -1);
   }
-
 }
-
 
 // Define our service for using with the Service Configurator
 ACE_FACTORY_DEFINE (Service_Config_ORB_DLL, Service_Config_ORB_DLL)

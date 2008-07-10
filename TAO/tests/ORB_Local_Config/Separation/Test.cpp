@@ -14,7 +14,7 @@
 // and inaccesible through anyone but the one they were gegistered with
 
 int
-testSeparation(int , ACE_TCHAR *[])
+testSeparation (int , ACE_TCHAR *[])
 {
   ACE_TRACE ("testSeparation");
 
@@ -24,7 +24,7 @@ testSeparation(int , ACE_TCHAR *[])
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> two (new ACE_Service_Gestalt_Test (10));
   two->process_directive (ace_svc_desc_TAO_CORBALOC_Parser);
 
-  const ACE_TCHAR * svcname = "IIOP_Factory";
+  const ACE_TCHAR *svcname = ACE_TEXT ("IIOP_Factory");
 
   TAO_Protocol_Factory* p10 = ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (one.get (), svcname);
   if (p10 != 0)
@@ -34,7 +34,7 @@ testSeparation(int , ACE_TCHAR *[])
   if (p11 != 0)
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Not expected %s locally in two\n"), svcname), -1);
 
-  svcname = "CORBANAME_Parser";
+  svcname = ACE_TEXT ("CORBANAME_Parser");
 
   ACE_Service_Object* p20 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
   if (p20 == 0)
@@ -44,7 +44,7 @@ testSeparation(int , ACE_TCHAR *[])
   if (p31 != 0)
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Not expected %s locally, in two\n"), svcname), -1);
 
-  svcname = "CORBALOC_Parser";
+  svcname = ACE_TEXT ("CORBALOC_Parser");
 
   ACE_Service_Object* p21 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
   if (p21 != 0)
@@ -62,5 +62,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   return testSeparation (argc, argv);
 }
-
-
