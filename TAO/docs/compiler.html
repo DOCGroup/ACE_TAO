@@ -884,6 +884,18 @@ also receives other options that are specific to it.<p>
   TAO libs to prevent cyclic includes;</td>
   </tr>
 
+  <tr><a name="Se">
+    <td><tt>-Se</tt></td>
+
+    <td>Disable custom header file name endings for files
+        that are found in TAO specific include directories,
+        (i.e. $TAO_ROOT, $TAO_ROOT/tao, $TAO_ROOT/orbsvcs,
+        $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao).</td>
+    <td>This option is useful when used together with -hs or -hc. I.e. when user
+        needs custom file name endings for his/her own files but still wants to
+        use TAO specific files with their original endings;</td>
+  </tr>
+
 </table> <P>
 
 <P><HR><P>

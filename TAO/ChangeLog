@@ -1,3 +1,20 @@
+Thu Jul 10 09:52:15 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * docs/compiler.html:
+          Added documentation about -Se tao_idl option.
+
+        * TAO_IDL/be/be_global.cpp:
+          Updated help message for -Se option.
+
+        * TAO_IDL/include/fe_extern.h:
+        * TAO_IDL/fe/fe_init.cpp:
+          Added FE_extract_env_include_paths which extracts include
+          paths from INCLUDE environment variable.
+
+        * TAO_IDL/util/utl_global.cpp:
+          Updated the algorithm implemented for bug 3154 to make it more
+          maintainable.
+
 Wed Jul 09 13:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:

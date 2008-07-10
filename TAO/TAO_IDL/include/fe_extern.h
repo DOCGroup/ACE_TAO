@@ -72,8 +72,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Declares all global functions for the FE
 
+template <class T>
+class ACE_Unbounded_Queue;
+
 TAO_IDL_FE_Export void FE_init (void);
 TAO_IDL_FE_Export void FE_populate (void);
+TAO_IDL_FE_Export void FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list);
 TAO_IDL_FE_Export void FE_store_env_include_paths (void);
 TAO_IDL_FE_Export const char *FE_get_cpp_loc_from_env (void);
 TAO_IDL_FE_Export const char *FE_get_cpp_args_from_env (void);

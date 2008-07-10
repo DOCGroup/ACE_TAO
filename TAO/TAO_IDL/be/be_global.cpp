@@ -2907,9 +2907,9 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Se\t\t\tdisable custom file ending for included")
-      ACE_TEXT (" idl/pidl files\n\t\t\t")
-      ACE_TEXT ("that are found in TAO specific includes directories,\n\t\t\t")
+      ACE_TEXT (" -Se\t\t\tdisable custom header file name endings")
+      ACE_TEXT (" for files\n\t\t\t")
+      ACE_TEXT ("that are found in TAO specific include directories,\n\t\t\t")
       ACE_TEXT ("(i.e. $TAO_ROOT, $TAO_ROOT/tao, $TAO_ROOT/orbsvcs,\n\t\t\t")
       ACE_TEXT ("$TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao)")
       ACE_TEXT (" (enabled by default)\n")
