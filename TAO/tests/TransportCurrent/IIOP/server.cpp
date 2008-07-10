@@ -15,12 +15,12 @@ ACE_RCSID (Transport_Current,
            server,
            "$Id$")
 
-const char *ior_output_file = "server.ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 int nthreads = 1;
 int use_collocated_call = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "t:o:n:c:");
   int c;
@@ -122,7 +122,7 @@ server_main (int argc,
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ACE_TEXT ("test_orb"));
+                                            "test_orb");
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
@@ -168,9 +168,10 @@ server_main (int argc,
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Server (%P|%t) Cannot write "
+                               "Server (%P|%t) Cannot write file %s "
                                "IOR: %s - %m",
-                               ior_output_file),
+                               ior_output_file,
+                               ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
                               -1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);

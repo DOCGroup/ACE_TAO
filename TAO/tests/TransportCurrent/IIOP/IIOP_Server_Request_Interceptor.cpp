@@ -44,7 +44,7 @@ namespace Test {
                                           orbid);
 
     CORBA::Object_var tcobject =
-      orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("TAO::Transport::IIOP::Current"));
+      orb->resolve_initial_references ("TAO::Transport::IIOP::Current");
 
     return TAO::Transport::IIOP::Current::_narrow (tcobject.in ());
   }
@@ -70,14 +70,14 @@ namespace Test {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("%s (%P|%t) ")
                       ACE_TEXT ("push_request_info: %d ...\n"),
-                      name.in (),
+                      ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
                       requestID));
       }
     else
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%s (%P|%t) ")
                   ACE_TEXT ("push_request_info: Can't track that many requests %d\n"),
-                  name.in (),
+                  ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
                   requestID));
 
   }
@@ -92,7 +92,7 @@ namespace Test {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s (%P|%t) ")
                   ACE_TEXT ("pop_request_info: %d ...\n"),
-                  name.in (),
+                  ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
                   requestID));
 
     if (requestID >= sizeof (this->endPoints_) / sizeof (*this->endPoints_))
@@ -100,11 +100,10 @@ namespace Test {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%s (%P|%t) ")
                     ACE_TEXT ("pop_request_info: Can't track that many requests %d\n"),
-                    name.in (),
+                    ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
                     requestID));
         return;
       }
-
 
     try
       {
@@ -119,7 +118,7 @@ namespace Test {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("%s (%P|%t) ")
                         ACE_TEXT ("pop_request_info: The expected host and port don't match for request %d\n"),
-                        name.in (),
+                        ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
                         requestID));
             return;
           }
@@ -153,7 +152,7 @@ namespace Test {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("%s (%P|%t) Endpoint at ")
                         ACE_TEXT ("index=%d has not been removed yet\n"),
-                        name.in (),
+                        ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
                         count));
           }
       }
@@ -174,7 +173,7 @@ namespace Test {
     if (TAO_debug_level >=1)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%s (%P|%t) Intercepted operation %s ()\n"),
-                  name.in (),
+                  ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
                   op.in ()));
 
     try
@@ -197,7 +196,7 @@ namespace Test {
                     ACE_TEXT (" is unavailable when invoking %s (). ")
                     ACE_TEXT ("A colocated invocation would have ")
                     ACE_TEXT ("no service context.\n"),
-                    name.in (),
+                    ACE_TEXT_CHAR_TO_TCHAR (name.in ()),
                     op.in ()));
       }
 
@@ -235,7 +234,7 @@ namespace Test {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT("%s (%P|%t) Inbound_process_context failed in  ")
                     ACE_TEXT(" receive_request_service_contexts.\n"),
-                    name.in ()));
+                    ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
       }
 
     Server_Request_Interceptor::receive_request_service_contexts (ri);
@@ -257,7 +256,7 @@ namespace Test {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT("%s (%P|%t) Outbound_process_context failed in  ")
                     ACE_TEXT("send_reply.\n"),
-                    name.in ()));
+                    ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
       }
 
     Server_Request_Interceptor::send_reply (ri);
@@ -279,7 +278,7 @@ namespace Test {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT("%s (%P|%t) Outbound_process_context failed in  ")
                     ACE_TEXT("send_exception.\n"),
-                    name.in ()));
+                    ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
 
       }
 
@@ -299,10 +298,9 @@ namespace Test {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT("%s (%P|%t) Outbound_process_context failed in  ")
                     ACE_TEXT("send_other.\n"),
-                    name.in ()));
+                    ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
       }
 
     Server_Request_Interceptor::send_other (ri);
   }
-
 }
