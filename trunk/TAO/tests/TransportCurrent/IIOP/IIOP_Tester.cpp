@@ -17,7 +17,6 @@ ACE_STATIC_SVC_REQUIRE (TAO_Transport_IIOP_Current_Loader)
 
 using namespace TAO;
 
-
 /// Test referencing the TC data outside of the context of an upcall,
 /// or a client-side interceptor
 
@@ -26,7 +25,7 @@ test_transport_current (CORBA::ORB_ptr orb)
 {
   // Get the Current object.
   CORBA::Object_var tcobject =
-    orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("TAO::Transport::IIOP::Current"));
+    orb->resolve_initial_references ("TAO::Transport::IIOP::Current");
 
   if (TAO_debug_level >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -66,12 +65,11 @@ test_transport_current (CORBA::ORB_ptr orb)
               ACE_TEXT ("Tester (%P|%t) Transport [%q] [%s:%d -> %s:%d] ")
               ACE_TEXT ("Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),
               (ACE_UINT64)id,
-              rhost.in (), tc->remote_port (),
-              lhost.in (), tc->local_port (),
+              ACE_TEXT_CHAR_TO_TCHAR (rhost.in ()), tc->remote_port (),
+              ACE_TEXT_CHAR_TO_TCHAR (lhost.in ()), tc->local_port (),
               (ACE_UINT64)bs,
               (ACE_UINT64)br,
               (ACE_UINT64)rs,
               (ACE_UINT64)rr));
   return 0;
 }
-
