@@ -32,7 +32,7 @@ class DllOrb_Export DllOrb
 
     CORBA::ORB_ptr orb (void) const;
 
-    virtual int init (int argc, char *argv[]);
+    virtual int init (int argc, ACE_TCHAR *argv[]);
 
     virtual int fini (void);
 
@@ -54,8 +54,6 @@ class DllOrb_Export DllOrb
     PortableServer::POAManager_var mv_poaManager;
 }; /* end of DllOrb */
 
-
 ACE_FACTORY_DECLARE (DllOrb, DllOrb)
-
 
 #endif /* DllOrb_h */

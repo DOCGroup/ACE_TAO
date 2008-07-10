@@ -16,7 +16,7 @@ ACE_RCSID (Hello,
 
 //
 Server_Worker::Server_Worker ()
-  : Abstract_Worker ("test.ior")
+  : Abstract_Worker (ACE_TEXT ("test.ior"))
 {
 }
 
@@ -58,12 +58,10 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
   // Making sure there are no stale ior files to confuse a client
   ACE_OS::unlink (ior_file_.c_str ());
 
-  ACE_Argv_Type_Converter cvt (argc, argv);
-  CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (),
-                                        cvt.get_ASCII_argv ());
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var poa_object =
-    orb->resolve_initial_references("RootPOA");
+    orb->resolve_initial_references ("RootPOA");
 
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (poa_object.in ());
@@ -76,7 +74,7 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
   PortableServer::POAManager_var poa_manager =
     root_poa->the_POAManager ();
 
-  if (parse_args (cvt.get_argc (), cvt.get_ASCII_argv ()) != 0)
+  if (parse_args (argc, argv) != 0)
     return 1;
 
   Hello *hello_impl;
@@ -84,7 +82,7 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
                   Hello (orb.in ()),
                   1);
 
-  PortableServer::ServantBase_var owner_transfer(hello_impl);
+  PortableServer::ServantBase_var owner_transfer (hello_impl);
 
   PortableServer::ObjectId_var id =
     root_poa->activate_object (hello_impl);
@@ -106,8 +104,9 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
   FILE *output_file= ACE_OS::fopen (ior_file_.c_str (), "w");
   if (output_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Cannot open output file for writing IOR: %s"),
-                       ior_file_.c_str ()),
+                       ACE_TEXT ("(%P|%t) Cannot open output file %s for writing IOR: %s"),
+                       ior_file_.c_str (),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior.in ()),
                       1);
   ACE_OS::fprintf (output_file, "%s", ior.in ());
   ACE_OS::fclose (output_file);

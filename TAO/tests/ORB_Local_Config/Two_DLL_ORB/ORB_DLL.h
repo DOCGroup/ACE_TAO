@@ -30,7 +30,7 @@
 class Abstract_Worker
 {
 public:
-  Abstract_Worker (const char* ior);
+  Abstract_Worker (const ACE_TCHAR *ior);
   virtual ~Abstract_Worker (void);
   virtual int test_main (int argc,
                     ACE_TCHAR *argv[]) = 0;
@@ -69,7 +69,6 @@ private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
-
 /**
  * @class Service_Config_ORB_DLL
  *
@@ -102,10 +101,7 @@ private:
   ACE_Auto_Ptr<ACE_ARGV> argv_;
 };
 
-
 ACE_FACTORY_DECLARE (Service_Config_ORB_DLL, Service_Config_ORB_DLL)
-
-
 
 #include /**/ "ace/post.h"
 

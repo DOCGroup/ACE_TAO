@@ -319,7 +319,7 @@ testServiceDependency (int , ACE_TCHAR *[])
     // Stating that a thing depends on that dynamic service. Why?
     // Read on ...
 
-    pdep = new ACE_Dynamic_Service_Dependency (one.get (), "TAO_Codeset");
+    pdep = new ACE_Dynamic_Service_Dependency (one.get (), ACE_TEXT ("TAO_Codeset"));
 
     // This would ordinarily cause the dynamic services to get
     // unloaded and their DLL's unmapped ...
