@@ -688,12 +688,9 @@ FE_populate (void)
   fe_populate_idl_keywords ();
 }
 
-// Store include paths from the environment variable, if any.
 void
-FE_store_env_include_paths (void)
+FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list)
 {
-  // If this method have to change then don't forget to update
-  // util/utl_global.cpp:IDL_GlobalData::validate_orb_include (...).
   ACE_Env_Value<char*> incl_paths (ACE_TEXT ("INCLUDE"),
                                    (char *) 0);
   const char *aggr_str = incl_paths;
@@ -712,9 +709,25 @@ FE_store_env_include_paths (void)
       do
         {
           pos = aggr_cstr.find (separator);
-          idl_global->add_include_path (aggr_cstr.substr (0, pos).fast_rep ());
+          list.enqueue_tail (aggr_cstr.substr (0, pos));
           aggr_cstr = aggr_cstr.substr (pos + 1);
         } while (pos != ACE_CString::npos);
+    }
+}
+
+// Store include paths from the environment variable, if any.
+void
+FE_store_env_include_paths (void)
+{
+  ACE_Unbounded_Queue<ACE_CString> list;
+  FE_extract_env_include_paths (list);
+
+  ACE_CString *path_tmp = 0;
+  for (ACE_Unbounded_Queue_Iterator<ACE_CString>iter (list);
+       !iter.done (); iter.advance ())
+    {
+      iter.next (path_tmp);
+      idl_global->add_include_path (path_tmp->fast_rep ());
     }
 }
 
@@ -793,4 +806,3 @@ FE_get_cpp_args_from_env (void)
 
   return cpp_args;
 }
-
