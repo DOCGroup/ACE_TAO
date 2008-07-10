@@ -8,12 +8,12 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "server_interceptor.h"
 
-const char *output = "test.ior";
+const ACE_TCHAR *output = ACE_TEXT ("test.ior");
 
 ACE_CString proc_mode_str;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "p:o:");
   int c;
@@ -40,7 +40,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc,
                   argv) == -1)
@@ -89,11 +89,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      ACE_Argv_Type_Converter atc (argc, argv);
       CORBA::ORB_var orb =
-        CORBA::ORB_init (atc.get_argc (),
-                         atc.get_TCHAR_argv (),
-                         "");
+        CORBA::ORB_init (argc, argv);
 
       ACE_Manual_Event me;
       Server_Task server_task (output,

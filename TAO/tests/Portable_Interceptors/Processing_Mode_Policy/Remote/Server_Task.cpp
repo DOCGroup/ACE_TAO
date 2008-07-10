@@ -12,7 +12,7 @@ ACE_RCSID(Remote,
           "$Id$")
 
 
-Server_Task::Server_Task (const char *output,
+Server_Task::Server_Task (const ACE_TCHAR *output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)
@@ -60,7 +60,7 @@ Server_Task::svc (void)
       CORBA::String_var ior =
         this->sorb_->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%s>\n", ACE_TEXT_CHAR_TO_TCHAR (ior.in ())));
 
       // If the ior_output_file exists, output the ior to it
       if (output_ != 0)
@@ -68,8 +68,9 @@ Server_Task::svc (void)
           FILE *output_file= ACE_OS::fopen (this->output_, "w");
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               this->output_),
+                               "Cannot open output file %s for writing IOR: %s",
+                               this->output_,
+                               ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
                               1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);

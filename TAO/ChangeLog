@@ -1,3 +1,15 @@
+Thu Jul 10 15:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Client_Leaks/client.cpp:
+        * tests/Transport_Current/IIOP/server.cpp:
+        * tests/Transport_Current/IIOP/IIOP_Tester.cpp:
+        * tests/Transport_Current/IIOP/IIOP_Server_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_main.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Server_Task.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Server_Task.cpp:
+
+          Added/Corrected wide-character compatablity.
+
 Thu Jul 10 13:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
