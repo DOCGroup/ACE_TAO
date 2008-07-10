@@ -1,3 +1,8 @@
+Wed Jul  9 21:20:13 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
+
+	* rpmbuild/README:
+          Added basic rpmbuild instructions.
+
 Wed Jul  9 19:07:24  2008  Steve Huston  <shuston@riverace.com>
 
         * tests/Reactor_Dispatch_Order_Test.cpp: Reversed this change:
