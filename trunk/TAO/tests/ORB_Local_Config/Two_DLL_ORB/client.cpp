@@ -10,7 +10,7 @@
 ACE_RCSID(Hello, client, "$Id$")
 
 Client_Worker::Client_Worker ()
-  : Abstract_Worker ("file://test.ior")
+  : Abstract_Worker (ACE_TEXT ("file://test.ior"))
 {
   //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %@ Client::<ctor>\n", this));
 }
@@ -46,12 +46,9 @@ Client_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 int
 Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
 {
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-  ACE_Argv_Type_Converter cvt (argc, argv);
-
-  CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (), cvt.get_ASCII_argv ());
-
-  if (parse_args (cvt.get_argc (), cvt.get_ASCII_argv ()) != 0)
+  if (parse_args (argc, argv) != 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("(%P|%t) Could not parse the arguments\n")),
                       1);
@@ -66,7 +63,7 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
 
     try
     {
-      co = orb->string_to_object(ior_file_.c_str ());
+      co = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior_file_.c_str ()));
 
       if (co == 0)
         {
@@ -95,7 +92,7 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) String returned from the server <%s>\n"),
-                  the_string.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (the_string.in ())));
 
       hello->shutdown ();
 

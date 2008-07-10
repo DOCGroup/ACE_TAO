@@ -1,3 +1,25 @@
+Thu Jul 10 13:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+
+          Both server and client are compiling the same files (I'm
+          not sure why or if this is correct, but it was multi-build
+          unsafe, which I have corrected).
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.h:
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.cpp:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.h:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Separation/Test.cpp:
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * utils/catior/catior.cpp:
+
+          Added/Corrected wide-character compatablity.
+
 Thu Jul 10 09:52:15 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * docs/compiler.html:
