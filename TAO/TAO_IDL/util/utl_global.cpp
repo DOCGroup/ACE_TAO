@@ -1945,8 +1945,7 @@ IDL_GlobalData::validate_orb_include (UTL_String * idl_file_name)
   //      option (include_counter >= env_includes + orb_includes &&
   //      include_counter < all_includes - svcs_includes). If idl_file_name
   //      is found here then check for existence of the same path in group 4.
-  //   4) $TAO_ROOT/idl (PrismTech addition),
-  //      $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao
+  //   4) $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao
   //      (include_counter >= all_includes - svcs_includes && include_counter
   //      < all_includes). Return true if nothing was found in groups
   //      1 or 3 and idl_file_name is found here OR idl_file_name

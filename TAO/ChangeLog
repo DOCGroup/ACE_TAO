@@ -1,3 +1,10 @@
+Fri Jul 11 07:28:12 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Removed comment about Prism addition which slipped in during
+          my previous commit.
+
 Thu Jul 10 15:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Client_Leaks/client.cpp:
