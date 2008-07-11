@@ -1,3 +1,10 @@
+Fri Jul 11 11:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
+        * utils/catior/catior.cpp:
+
+          Missing bracket and missnamed argcw & argvw.
+
 Fri Jul 11 08:00:25 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * TAO_IDL/include/fe_extern.h:
