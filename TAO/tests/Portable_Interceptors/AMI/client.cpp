@@ -13,12 +13,12 @@ ACE_RCSID (AMI,
            "$Id$")
 
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 static int exit_status = 0;
 const unsigned long ITERATIONS = 100;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:");
   int c;
@@ -48,7 +48,7 @@ static void test_synchronous (Test::Echo_ptr echo);
 static void test_ami (CORBA::ORB_ptr orb,
                       Test::Echo_ptr echo);
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -79,7 +79,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Test::Echo_var echo =
         Test::Echo::_narrow (tmp.in ());

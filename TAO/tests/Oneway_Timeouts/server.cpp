@@ -173,55 +173,55 @@ namespace {
     args.consume_arg ();
     while (args.is_anything_left ())
       {
-        if (args.cur_arg_strncasecmp ("-activate_delay") == 0)
+        if (args.cur_arg_strncasecmp (ACE_TEXT ("-activate_delay")) == 0)
           {
             args.consume_arg ();
             activate_delay = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-run_delay") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT ("-run_delay")) == 0)
           {
             args.consume_arg ();
             run_delay = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-request_delay") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT ("-request_delay")) == 0)
           {
             args.consume_arg ();
             request_delay = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-expected") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT ("-expected")) == 0)
           {
             args.consume_arg ();
             num_expected = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-elapsed_max") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT ("-elapsed_max")) == 0)
           {
             args.consume_arg ();
             elapsed_max = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-elapsed_min") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT ("-elapsed_min")) == 0)
           {
             args.consume_arg ();
             elapsed_min = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-first_min") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT ("-first_min")) == 0)
           {
             args.consume_arg ();
             first_min = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-first_max") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT ("-first_max")) == 0)
           {
             args.consume_arg ();
             first_max = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp ("-abort_after") == 0)
+        else if (args.cur_arg_strncasecmp (ACE_TEXT ("-abort_after")) == 0)
           {
             args.consume_arg ();
             abort_after = ACE_OS::atoi (args.get_current ());
@@ -257,7 +257,6 @@ namespace {
     POA_var poa = root->create_POA ("X", man.in (), pols);
     return poa._retn ();
   }
-
 }
 
 int ACE_TMAIN (int ac, ACE_TCHAR *av[])
@@ -308,7 +307,6 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
         }
 
       return 0;
-
     }
   catch (CORBA::Exception &ex)
     {
@@ -316,5 +314,4 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
     }
 
   return 1;
-
 }

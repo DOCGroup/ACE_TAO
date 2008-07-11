@@ -24,10 +24,10 @@
 
 ACE_RCSID(Default_Servant, server, "$Id$")
 
-static const char *ior_output_file = "ior";
+static const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:d");
   int c;
@@ -39,7 +39,7 @@ parse_args (int argc, char **argv)
         ior_output_file = get_opts.opt_arg ();
         break;
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case '?':
       default:
@@ -56,11 +56,9 @@ parse_args (int argc, char **argv)
   return 0;
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB
@@ -131,13 +129,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var file_system_ior =
         orb->object_to_string (file_system.in ());
 
-      ACE_DEBUG ((LM_DEBUG,"%s\n",
-                  file_system_ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "%s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (file_system_ior.in ())));
 
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
+                           "Cannot open output file %s for writing IOR",
                            ior_output_file),
                           -1);
       ACE_OS::fprintf (output_file, "%s", file_system_ior.in ());
