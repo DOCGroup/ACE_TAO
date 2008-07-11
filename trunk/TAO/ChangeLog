@@ -1,3 +1,9 @@
+Fri Jul 11 08:00:25 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
+
+        * TAO_IDL/include/fe_extern.h:
+
+          Fixed a compile error on versioned namespace builds.
+
 Fri Jul 11 07:28:12 UTC 2008  Vladimir Zykov  <vzykov@prismtech.com>
 
         * TAO_IDL/util/utl_global.cpp:
