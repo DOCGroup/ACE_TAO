@@ -18,6 +18,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
   within their application on supported platforms. A new conversion 
   character, the question mark, was added to ACE_Log_Msg for stack 
   trace logging. 
+  
+. Added iterator support to ACE_Message_Queue_Ex class. The resulted in
+  the addition of ACE_Message_Queue_Ex_Iterator class and 
+  ACE_Message_Queue_Ex_Reverse_Iterator class.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.4 and ACE-5.6.5
 ====================================================
