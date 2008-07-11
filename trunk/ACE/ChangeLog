@@ -1,6 +1,14 @@
+Fri Jul 11 08:06:40 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * ace/Message_Queue_T.h:
+        * ace/Message_Queue_T.cpp:
+        
+          Implemented the iterator and reverse iterator for the 
+          ACE_Message_Queue_Ex class. 
+
 Wed Jul  9 21:20:13 UTC 2008  Ken Sedgwick  <ken+5a4@bonsai.com>
 
-	* rpmbuild/README:
+        * rpmbuild/README:
           Added basic rpmbuild instructions.
 
 Wed Jul  9 19:07:24  2008  Steve Huston  <shuston@riverace.com>
