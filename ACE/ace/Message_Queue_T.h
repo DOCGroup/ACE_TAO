@@ -960,6 +960,10 @@ public:
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 };
 
+// Forward decls.
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> class ACE_Message_Queue_Ex_Iterator;
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> class ACE_Message_Queue_Ex_Reverse_Iterator;
+
 /**
  * @class ACE_Message_Queue_Ex
  *
@@ -988,18 +992,14 @@ public:
     DEFAULT_PRIORITY = 0
   };
 
-#if 0
-  //  @@ Iterators are not implemented yet...
-
-  friend class ACE_Message_Queue_Iterator<ACE_SYNCH_USE>;
-  friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>;
+  friend class ACE_Message_Queue_Ex_Iterator <ACE_MESSAGE_TYPE, ACE_SYNCH_USE>;
+  friend class ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>;
 
   // = Traits
-  typedef ACE_Message_Queue_Iterator<ACE_SYNCH_USE>
+  typedef ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>
           ITERATOR;
-  typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>
+  typedef ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>
           REVERSE_ITERATOR;
-#endif /* 0 */
 
   /**
    * @name Initialization methods
@@ -1376,6 +1376,76 @@ public:
 protected:
   /// Implement this via an ACE_Message_Queue.
   ACE_Message_Queue<ACE_SYNCH_USE> queue_;
+};
+
+/**
+ * @class ACE_Message_Queue_Ex_Iterator
+ *
+ * @brief Iterator for the ACE_Message_Queue_Ex.
+ */
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
+class ACE_Message_Queue_Ex_Iterator
+{
+public:
+  // = Initialization method.
+  ACE_Message_Queue_Ex_Iterator (ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE> & queue);
+
+  // = Iteration methods.
+  /// Pass back the @a entry that hasn't been seen in the queue.
+  /// Returns 0 when all items have been seen, else 1.
+  int next (ACE_MESSAGE_TYPE *&entry);
+
+  /// Returns 1 when all items have been seen, else 0.
+  int done (void) const;
+
+  /// Move forward by one element in the queue.  Returns 0 when all the
+  /// items in the set have been seen, else 1.
+  int advance (void);
+
+  /// Dump the state of an object.
+  void dump (void) const;
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
+private:
+  /// Implement this via the ACE_Message_Queue_Iterator
+  ACE_Message_Queue_Iterator<ACE_SYNCH_USE> iter_;
+};
+
+/**
+ * @class ACE_Message_Queue_Ex_Iterator
+ *
+ * @brief Reverse iterator for the ACE_Message_Queue_Ex.
+ */
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
+class ACE_Message_Queue_Ex_Reverse_Iterator
+{
+public:
+  // = Initialization method.
+  ACE_Message_Queue_Ex_Reverse_Iterator (ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE> & queue);
+
+  // = Iteration methods.
+  /// Pass back the @a entry that hasn't been seen in the queue.
+  /// Returns 0 when all items have been seen, else 1.
+  int next (ACE_MESSAGE_TYPE *&entry);
+
+  /// Returns 1 when all items have been seen, else 0.
+  int done (void) const;
+
+  /// Move forward by one element in the queue.  Returns 0 when all the
+  /// items in the set have been seen, else 1.
+  int advance (void);
+
+  /// Dump the state of an object.
+  void dump (void) const;
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
+private:
+  /// Implement this via the ACE_Message_Queue_Reverse_Iterator
+  ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE> iter_;
 };
 
 /**

@@ -338,6 +338,87 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notify (void)
   return this->queue_.notify ();
 }
 
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
+ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::
+ACE_Message_Queue_Ex_Iterator (ACE_Message_Queue_Ex <ACE_MESSAGE_TYPE, ACE_SYNCH_USE> & queue)
+: iter_ (queue.queue_)
+{
+
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::
+next (ACE_MESSAGE_TYPE *&entry)
+{
+  ACE_Message_Block * mb = 0;
+  int retval = this->iter_.next (mb);
+
+  if (retval == 1)
+    entry = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
+
+  return retval;
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::done (void) const
+{
+  return this->iter_.done ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::advance (void)
+{
+  return this->iter_.advance ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
+ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump (void) const
+{
+  return this->iter_.dump ();
+}
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Ex_Iterator)
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
+ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::
+ACE_Message_Queue_Ex_Reverse_Iterator (ACE_Message_Queue_Ex <ACE_MESSAGE_TYPE, ACE_SYNCH_USE> & queue)
+: iter_ (queue.queue_)
+{
+
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::
+next (ACE_MESSAGE_TYPE *&entry)
+{
+  ACE_Message_Block * mb = 0;
+  int retval = this->iter_.next (mb);
+
+  if (retval == 1)
+    entry = reinterpret_cast<ACE_MESSAGE_TYPE *> (mb->base ());
+
+  return retval;
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::done (void) const
+{
+  return this->iter_.done ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::advance (void)
+{
+  return this->iter_.advance ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
+ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump (void) const
+{
+  return this->iter_.dump ();
+}
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Ex_Reverse_Iterator)
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
 ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex_N
