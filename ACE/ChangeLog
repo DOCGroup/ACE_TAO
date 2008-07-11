@@ -1,7 +1,14 @@
+Fri Jul 11 23:48:19 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Don't exclude the mwc files for vc8. Thanks to Michael Guntli
+          <michael dot guntli at leica-geosystems dot com> for reporting
+          this. This fixes bugzilla 3364
+
 Fri Jul 11 14:41:19 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * NEWS:
-        
+
           Updated the NEW file to reflect previous ChangeLog entry.
 
 Fri Jul 11 08:06:40 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>

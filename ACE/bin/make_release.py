@@ -723,7 +723,7 @@ def generate_workspaces (stage_dir):
     ex (mpc_command + " -type vc8 " + mpc_option + vc8_option + redirect_option)
 
     print "\tGenerating VC8 Windows CE solutions..."
-    ex (mpc_command + " -type vc8 " + mpc_option + exclude_option + ce_option + redirect_option)
+    ex (mpc_command + " -type vc8 " + mpc_option + ce_option + redirect_option)
 
     print "\tGenerating VC71 solutions..."
     ex (mpc_command + " -type vc71 " + mpc_option + vc71_option + redirect_option)
