@@ -10,7 +10,7 @@
 
 const ACE_TCHAR *output = ACE_TEXT ("test.ior");
 
-ACE_CString proc_mode_str;
+ACE_TString proc_mode_str;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -18,7 +18,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opts (argc, argv, "p:o:");
   int c;
 
-  proc_mode_str.set ("LOCAL_AND_REMOTE");
+  proc_mode_str.set (ACE_TEXT ("LOCAL_AND_REMOTE"));
 
   while ((c = get_opts ()) != -1)
   {
@@ -57,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableInterceptor::ProcessingMode proc_mode =
                                    PortableInterceptor::LOCAL_AND_REMOTE;
 
-      if (proc_mode_str == "LOCAL_ONLY")
+      if (proc_mode_str == ACE_TEXT ("LOCAL_ONLY"))
         {
           proc_mode = PortableInterceptor::LOCAL_ONLY;
           ACE_DEBUG((LM_DEBUG,
@@ -69,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           // server interceptor.
           expected_interceptor_check = 0;
         }
-      else if (proc_mode_str == "REMOTE_ONLY")
+      else if (proc_mode_str == ACE_TEXT ("REMOTE_ONLY"))
         {
           proc_mode = PortableInterceptor::REMOTE_ONLY;
           ACE_DEBUG((LM_DEBUG,

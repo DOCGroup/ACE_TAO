@@ -1,3 +1,20 @@
+Fri Jul 11 16:35:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_main.cpp:
+        * tests/Abstract_Interface/client.cpp:
+        * tests/Hang_Shutdown/server.cpp:
+        * tests/Portable_Interceptors/AMI/client.cpp:
+        * tests/POA/Persistent_ID/server.cpp:
+        * tests/Object_Loader/Loader.h:
+        * tests/Object_Loader/Loader.cpp:
+        * tests/Oneway_Timeouts/server.cpp:
+        * tests/POA/EndpointPolicy/server.cpp:
+        * tests/POA/EndpointPolicy/client.cpp:
+        * tests/POA/Default_Servant2/server.cpp:
+        * tests/POA/Default_Servant2/client.cpp:
+
+          Added/Corrected wide-character compatablity.
+
 Fri Jul 11 11:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:

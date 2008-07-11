@@ -5,11 +5,11 @@
 
 ACE_RCSID(Hello, client, "$Id$")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int bad_ior = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:b");
   int c;
@@ -39,7 +39,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
   CORBA::Object_var tmp;
@@ -51,7 +51,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      tmp = orb->string_to_object(ior);
+      tmp = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
     }
   catch (const CORBA::Exception& ex)
     {
@@ -61,8 +61,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      ACE_DEBUG ((LM_DEBUG,"client: Invocation expecting to %s\n",
-                  (bad_ior ? "fail" : "work")));
+      ACE_DEBUG ((LM_DEBUG, "client: Invocation expecting to %s\n",
+                  (bad_ior ? ACE_TEXT ("fail") : ACE_TEXT ("work"))));
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in ());
 

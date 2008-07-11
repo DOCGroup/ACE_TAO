@@ -74,7 +74,7 @@ test_i::method (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "Method invoked on servant in POA = %s\n",
-              poa_name.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR (poa_name.in ())));
 }
 
 void
@@ -152,10 +152,10 @@ test_i::destroy_POA (void)
   this->child_poa_->destroy (1, 0);
 }
 
-const char *ior_file = "ior";
+const ACE_TCHAR *ior_file = ACE_TEXT ("ior");
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "f:");
   int c;
@@ -199,7 +199,7 @@ write_ior_to_file (const char *ior)
   if (result != ACE_OS::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
-                       ior,
+                       ACE_TEXT_CHAR_TO_TCHAR (ior),
                        ior_file),
                       -1);
 
@@ -209,7 +209,7 @@ write_ior_to_file (const char *ior)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try

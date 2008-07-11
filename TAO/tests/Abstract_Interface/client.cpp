@@ -7,7 +7,7 @@ ACE_RCSID (Abstract_Interface,
            client,
            "$Id$")
 
-const char *ior_input_file = "file://test.ior";
+const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://test.ior");
 int debug = 0;
 
 enum test_select
@@ -21,7 +21,7 @@ enum test_select
 test_select which_test = TEST_ALL;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "k:dsoe");
   int c;
@@ -78,7 +78,7 @@ dump_node (BaseNode* bn,
         {
           ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %s\n",
                      bn,
-                     sn->name ()));
+                     ACE_TEXT_CHAR_TO_TCHAR (sn->name ())));
         }
       else
         {
@@ -132,7 +132,7 @@ test_operation (base_ptr abs)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
-                  retval.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (retval.in ())));
     }
 
   CORBA::Object_var obj = abs->_to_object ();
@@ -145,7 +145,7 @@ test_operation (base_ptr abs)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
-                  retval.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (retval.in ())));
     }
 
   retval = concrete->base_op ("base_op");
@@ -154,7 +154,7 @@ test_operation (base_ptr abs)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
-                  retval.in ()));
+                  ACE_TEXT_CHAR_TO_TCHAR (retval.in ())));
     }
 }
 
@@ -169,7 +169,7 @@ test_exception (base_ptr abs)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "%s\n",
-                      retval.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (retval.in ())));
         }
     }
   catch (const BadInput& ex)
@@ -178,13 +178,13 @@ test_exception (base_ptr abs)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "%s\n",
-                      ex.message.in ()));
+                      ACE_TEXT_CHAR_TO_TCHAR (ex.message.in ())));
         }
     }
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::String_var retval;
 
@@ -198,7 +198,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior_input_file);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior_input_file));
 
       if (CORBA::is_nil (obj.in ()))
         {

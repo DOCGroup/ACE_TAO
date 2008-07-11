@@ -25,12 +25,12 @@
 
 ACE_RCSID(Default_Servant, client, "$Id$")
 
-static const char *iorfile = 0;
-static const char *filename = "test";
-static const char *message = "POA rules!!";
+static const ACE_TCHAR *iorfile = 0;
+static const ACE_TCHAR *filename = ACE_TEXT ("test");
+static const ACE_TCHAR *message = ACE_TEXT ("POA rules!!");
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "dk:f:m:");
   int c;
@@ -39,7 +39,7 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'k':
         iorfile = get_opts.opt_arg ();
@@ -71,7 +71,7 @@ parse_args (int argc, char **argv)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   try
@@ -90,7 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_HANDLE input_file = ACE_OS::open (iorfile, 0);
       if (input_file == ACE_INVALID_HANDLE)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open input file for reading IOR: %s\n",
+                           "Cannot open input file %s for reading IOR\n",
                            iorfile),
                           -1);
       ACE_Read_Buffer ior_buffer (input_file);
@@ -115,7 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       int message_length = ACE_OS::strlen (message) + 1;
       CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (message_length);
-      ACE_OS::strcpy ((char *) buffer, message);
+      ACE_OS::strcpy ((char *) buffer, ACE_TEXT_ALWAYS_CHAR (message));
       File::Descriptor::DataBuffer data_sent (message_length, message_length, buffer, 1);
 
       // write the message to the file
@@ -130,8 +130,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       char *result = (char *) &data_received[0];
 
       // print the read message
-      ACE_DEBUG((LM_DEBUG,"%s\n",
-                 result));
+      ACE_DEBUG((LM_DEBUG, "%s\n",
+                 ACE_TEXT_CHAR_TO_TCHAR (result)));
 
       // close the file
       fd->destroy ();
