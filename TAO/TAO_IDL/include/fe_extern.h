@@ -69,11 +69,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 #include "ace/SString.h"
+#include "ace/Unbounded_Queue.h"
 
 // Declares all global functions for the FE
-
-template <class T>
-class ACE_Unbounded_Queue;
 
 TAO_IDL_FE_Export void FE_init (void);
 TAO_IDL_FE_Export void FE_populate (void);
