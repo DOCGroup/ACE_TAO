@@ -14,8 +14,8 @@ ACE_RCSID (Hello,
            server,
            "$Id$")
 
-const char *good_ior_file = "good.ior";
-const char *bad_ior_file = "bad.ior";
+const ACE_TCHAR *good_ior_file = ACE_TEXT ("good.ior");
+const ACE_TCHAR *bad_ior_file = ACE_TEXT ("bad.ior");
 const char *root_ior_file = "root.ior";
 
 CORBA::Short endpoint_port = 12345;
@@ -29,48 +29,48 @@ enum HostNameForm
     multi_protocol
   };
 
-const char * form_arg;
+const ACE_TCHAR *form_arg;
 
 HostNameForm host_form = from_hostname;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   for (int c = 1; c < argc; c++) {
-    if (ACE_OS::strcasecmp(argv[c],"-g") == 0)
+    if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-g")) == 0)
       {
         good_ior_file = argv[++c];
       }
-    else if (ACE_OS::strcasecmp(argv[c],"-b") == 0)
+    else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-b")) == 0)
       {
         bad_ior_file = argv[++c];
       }
-    else if (ACE_OS::strcasecmp(argv[c],"-p") == 0)
+    else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-p")) == 0)
       {
         endpoint_port = ACE_OS::atoi (argv[++c]);
       }
-    else if (ACE_OS::strcasecmp(argv[c],"-v") == 0)
+    else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-v")) == 0)
       {
         verbose = 1;
       }
-    else if (ACE_OS::strcasecmp(argv[c],"-h") == 0)
+    else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-h")) == 0)
       {
         ++c;
         if (c == argc)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "host form option requires an argument\n"),-1);
         form_arg = argv[c];
-        if (ACE_OS::strcasecmp(form_arg,"local") == 0)
+        if (ACE_OS::strcasecmp (form_arg, ACE_TEXT ("local")) == 0)
           host_form = use_localhost;
-        else if (ACE_OS::strcasecmp(form_arg,"default") == 0)
+        else if (ACE_OS::strcasecmp (form_arg, ACE_TEXT ("default")) == 0)
           host_form = use_defaulted;
-        else if (ACE_OS::strcasecmp(form_arg,"multi") == 0)
+        else if (ACE_OS::strcasecmp (form_arg, ACE_TEXT ("multi")) == 0)
           host_form = multi_protocol;
         else
           ACE_ERROR_RETURN ((LM_ERROR,
                              "invalid host form arg, '%s'\n", form_arg), -1);
       }
-    else if (ACE_OS::strstr(argv[c],"-ORB") == argv[c])
+    else if (ACE_OS::strstr (argv[c], ACE_TEXT ("-ORB")) == argv[c])
       {
         c++;
         continue;
@@ -90,7 +90,6 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-
 int
 make_ior (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa,
@@ -98,7 +97,7 @@ make_ior (CORBA::ORB_ptr orb,
           const char *ior_file)
 {
   CORBA::String_var poa_name = poa->the_name();
-  ACE_DEBUG ((LM_DEBUG, "Creating IOR from %s\n", poa_name.in()));
+  ACE_DEBUG ((LM_DEBUG, "Creating IOR from %s\n", ACE_TEXT_CHAR_TO_TCHAR (poa_name.in())));
 
   PortableServer::ObjectId_var oid = poa->activate_object (servant);
   CORBA::Object_var o = poa->id_to_reference (oid.in ());
@@ -115,8 +114,9 @@ make_ior (CORBA::ORB_ptr orb,
       FILE *output_file= ACE_OS::fopen (ior_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_file),
+                           "Cannot open output file %s for writing IOR: %s",
+                           ior_file,
+                           ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
@@ -126,7 +126,7 @@ make_ior (CORBA::ORB_ptr orb,
 
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
   CORBA::Object_var obj;
@@ -136,51 +136,55 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (parse_args (argc, argv) != 0)
     return 1;
 
-  const char* e1_format= "iiop://%s:%d";
-  const char* e2_format= "iiop://%s:%d/hostname_in_ior=unreachable";
-  char hostname[256];
+  const ACE_TCHAR *e1_format= ACE_TEXT ("iiop://%s:%d");
+  const ACE_TCHAR *e2_format= ACE_TEXT ("iiop://%s:%d/hostname_in_ior=unreachable");
+  ACE_TCHAR hostname[256];
   int num_extra = 4;
 
   switch (host_form)
     {
     case from_hostname:
-      ACE_OS::hostname(hostname,sizeof(hostname));
+      ACE_OS::hostname (hostname, sizeof(hostname));
       break;
 
     case use_localhost:
-      ACE_OS::strcpy (hostname,"localhost");
+      ACE_OS::strcpy (hostname, ACE_TEXT ("localhost"));
       break;
 
     case use_defaulted:
-      hostname[0] = '\0';
+      hostname[0] = ACE_TEXT ('\0');
       break;
 
     case multi_protocol:
-      hostname[0] = '\0';
-      e2_format="shmiop://";
+      hostname[0] = ACE_TEXT ('\0');
+      e2_format = ACE_TEXT ("shmiop://");
       num_extra = 6;
       break;
     }
 
-  size_t hostname_len = ACE_OS::strlen(hostname);
-  size_t e1_len = ACE_OS::strlen(e1_format) + 5; // 5 for the port#
-  size_t e2_len = ACE_OS::strlen(e2_format) + 5;
-  char ** extra;
-  ACE_NEW_RETURN(extra, char*[num_extra], -1);
+  size_t hostname_len = ACE_OS::strlen (hostname);
+  size_t e1_len = ACE_OS::strlen (e1_format) + 5; // 5 for the port#
+  size_t e2_len = ACE_OS::strlen (e2_format) + 5;
+  ACE_TCHAR **extra;
+  ACE_NEW_RETURN (extra, ACE_TCHAR *[num_extra], -1);
 
-  extra[0] = CORBA::string_dup("-ORBEndpoint");
-  extra[1] = CORBA::string_alloc(e1_len + hostname_len);
-  ACE_OS::sprintf (extra[1],e1_format, hostname, endpoint_port);
-  extra[2] = CORBA::string_dup("-ORBEndpoint");
-  extra[3] = CORBA::string_alloc(e2_len + hostname_len);
-  ACE_OS::sprintf (extra[3],e2_format, hostname, endpoint_port+1);
+  extra[0] = ACE::strnew (ACE_TEXT ("-ORBEndpoint"));
+  ACE_NEW_RETURN (extra[1],
+                  ACE_TCHAR[e1_len + hostname_len + 1],
+                  -1);
+  ACE_OS::sprintf (extra[1], e1_format, hostname, endpoint_port);
+  extra[2] = ACE::strnew (ACE_TEXT ("-ORBEndpoint"));
+  ACE_NEW_RETURN (extra[3],
+                  ACE_TCHAR[e2_len + hostname_len + 1],
+                  -1);
+  ACE_OS::sprintf (extra[3], e2_format, hostname, endpoint_port+1);
   if (host_form == multi_protocol)
     {
-      extra[4] = CORBA::string_dup("-ORBSvcConf");
-      extra[5] = CORBA::string_dup("multi_prot.conf");
+      extra[4] = ACE::strnew (ACE_TEXT ("-ORBSvcConf"));
+      extra[5] = ACE::strnew (ACE_TEXT ("multi_prot.conf"));
     }
 
-  char **largv = new char *[argc+num_extra];
+  ACE_TCHAR **largv = new ACE_TCHAR *[argc+num_extra];
   int i = 0;
   for (i = 0; i < argc; i++)
     largv[i] = argv[i];
@@ -188,10 +192,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,"server adding args: "));
   for (i = 0; i < num_extra; i++)
     {
-      ACE_DEBUG ((LM_DEBUG,"%s ", extra[i]));
+      ACE_DEBUG ((LM_DEBUG, "%s ", extra[i]));
       largv[argc+i] = extra[i];
     }
-  ACE_DEBUG ((LM_DEBUG,"\n"));
+  ACE_DEBUG ((LM_DEBUG, "\n"));
 
   argc += num_extra;
 
@@ -221,14 +225,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   for (i = 0; i < num_extra; i++)
-    CORBA::string_free(extra[i]);
+    ACE::strdelete (extra[i]);
   delete [] extra;
-
   delete [] largv;
 
-
   //-----------------------------------------------------------------------
-
 
   // Create two valid endpoint policies. One to match each of the generated
   // endpoint arguments supplied to ORB_init().
@@ -274,7 +275,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-
   list[0] = new IIOPEndpointValue_i("unreachable", endpoint_port+1);
   try
     {
@@ -313,7 +313,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (result != 0)
         return result;
 
-      result = make_ior (orb.in(), good_poa.in(), hello_impl, good_ior_file);
+      result = make_ior (orb.in(), good_poa.in(), hello_impl, ACE_TEXT_ALWAYS_CHAR (good_ior_file));
       if (result != 0)
         return result;
 
@@ -327,7 +327,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           root_poa->create_POA ("badPOA",
                                 bad_pm.in (),
                                 policies);
-          result = make_ior (orb.in(), bad_poa.in(), hello_impl, bad_ior_file);
+          result = make_ior (orb.in(), bad_poa.in(), hello_impl, ACE_TEXT_ALWAYS_CHAR (bad_ior_file));
           if (result != 0)
             return result;
 

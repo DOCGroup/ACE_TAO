@@ -10,7 +10,7 @@ namespace Test
 
   static int
   try_main (int argc,
-            char *argv[])
+            ACE_TCHAR *argv[])
   {
 
     try
@@ -54,7 +54,7 @@ namespace Test
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
-                             ior_output_file),
+                             ACE_TEXT_CHAR_TO_TCHAR (ior_output_file)),
                             1);
         ACE_OS::fprintf (output_file, "%s", ior.in ());
         ACE_OS::fclose (output_file);
@@ -83,7 +83,7 @@ namespace Test
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   return Test::try_main (argc, argv);
 }
