@@ -459,12 +459,12 @@ catpoop (char* string)
 int
 ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
-  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO");
+  CORBA::ORB_var orb_var =  CORBA::ORB_init (argcw, argvw, "TAO");
   CORBA::Boolean b = 0;
   CORBA::Boolean have_argument = 0;
   int opt;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:n:x"));
+  ACE_Get_Opt get_opt (argcw, argvw, ACE_TEXT ("f:n:x"));
 
   while ((opt = get_opt ()) != EOF)
     {
