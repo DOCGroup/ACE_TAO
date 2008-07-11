@@ -106,7 +106,7 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Cannot open output file %s for writing IOR: %s"),
                        ior_file_.c_str (),
-                       ACE_TEXT_CHAR_TO_TCHAR (ior.in ()),
+                       ACE_TEXT_CHAR_TO_TCHAR (ior.in ())),
                       1);
   ACE_OS::fprintf (output_file, "%s", ior.in ());
   ACE_OS::fclose (output_file);
