@@ -596,8 +596,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             {
               // Wait for the blocking to subside.
-              int result = ACE::handle_read_ready (handle,
-                                                   0);
+              int const result = ACE::handle_read_ready (handle, 0);
 
               // Did select() succeed?
               if (result != -1)

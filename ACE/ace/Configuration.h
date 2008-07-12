@@ -23,7 +23,6 @@
  *   -# TAO's IFR, it makes extensive use of ACE_Configuration
  *
  *  @todo Templatize this class with an ACE_LOCK to provide thread safety
- *
  */
 //=============================================================================
 
@@ -65,7 +64,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Implementations subclass this base class to represent a
  * section key.
- *
  */
 class ACE_Export ACE_Section_Key_Internal
 {
@@ -349,7 +347,7 @@ public:
                             const ACE_TCHAR* name) = 0;
 
   /**
-   * Expands <path_in> to <key_out> from @a key.  If create is true,
+   * Expands @a path_in to @a key_out from @a key.  If create is true,
    * the subsections are created.  Returns 0 on success, non zero on
    * error The path consists of sections separated by the backslash
    * '\' or forward slash '/'.
@@ -380,14 +378,14 @@ public:
   /**
    * Determine if the contents of this object is the same as the
    * contents of the object on the right hand side.
-   * Returns 1 (True) if they are equal and 0 (False) if they are not equal
+   * Returns true if they are equal and false if they are not equal
    */
   bool operator==(const ACE_Configuration& rhs) const;
 
   /**
    * Determine if the contents of this object are different from the
    * contents of the object on the right hand side.
-   * Returns 0 (False) if they are equal and 1 (True) if they are not equal
+   * Returns false if they are equal and true if they are not equal
    */
   bool operator!=(const ACE_Configuration& rhs) const;
 
@@ -774,7 +772,7 @@ protected:
  * configuration database
  *
  * This class uses ACE's Allocators to manage a memory
- * representation of a configuraiton database. A persistent heap
+ * representation of a configuration database. A persistent heap
  * may be used to store configurations persistently
  *
  * @note Before using this class you must call one of the open methods.
@@ -853,7 +851,7 @@ public:
                             const ACE_TCHAR* name);
 
 private:
-  /// <sub_section> may not contain path separators
+  /// @a sub_section may not contain path separators
   int open_simple_section (const ACE_Configuration_Section_Key &base,
                             const ACE_TCHAR *sub_section,
                             int create, ACE_Configuration_Section_Key &result);
