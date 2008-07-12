@@ -1,3 +1,23 @@
+Sat Jul 12 12:59:19 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-borland-common.h:
+          Removed BCB4 support
+
+        * ace/ACE.cpp:
+          Const/layout changes
+
+        * ace/Configuration.h:
+          Doxygen changes
+
+        * ace/Monitor_Base.cpp (retrieve_and_clear):
+          Use clear_i to prevent deadlocks
+
+        * ace/SOCK_IO.cpp:
+          Const changes
+
+        * ace/Strategies_T.cpp:
+          layout changes
+
 Fri Jul 11 23:48:19 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:
