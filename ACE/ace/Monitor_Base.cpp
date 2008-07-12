@@ -47,7 +47,7 @@ namespace ACE
             }
         }
     }
-    
+
     void
     Monitor_Base::update (void)
     {
@@ -108,7 +108,7 @@ namespace ACE
     {
       this->receive (static_cast<double> (data));
     }
-    
+
     void
     Monitor_Base::receive (const Monitor_Control_Types::NameList& data)
     {
@@ -194,7 +194,7 @@ namespace ACE
     Monitor_Base::retrieve (Monitor_Control_Types::Data& data) const
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-      
+
       data = this->data_;
     }
 
@@ -212,7 +212,7 @@ namespace ACE
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
 
       data = this->data_;
-      this->clear ();
+      this->clear_i ();
     }
 
     void
@@ -262,7 +262,7 @@ namespace ACE
           delete this;
         }
     }
-  
+
     double
     Monitor_Base::average (void) const
     {
@@ -374,19 +374,19 @@ namespace ACE
     {
       return this->type_;
     }
-    
+
     Monitor_Control_Types::NameList
     Monitor_Base::get_list (void) const
     {
       Monitor_Control_Types::NameList retval;
-    
+
       if (this->type_ != MC_LIST)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("get_list: %s is not a ")
                       ACE_TEXT ("list monitor type\n"),
                       this->name_.c_str ()));
-                      
+
           return retval;
         }
 

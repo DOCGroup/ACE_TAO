@@ -305,8 +305,7 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 {
   this->reuse_addr_ = reuse_addr;
   this->peer_acceptor_addr_ = local_addr;
-  if (this->peer_acceptor_.open (local_addr,
-                                 reuse_addr) == -1)
+  if (this->peer_acceptor_.open (local_addr, reuse_addr) == -1)
     return -1;
 
   // Set the peer acceptor's handle into non-blocking mode.  This is a
