@@ -1,3 +1,11 @@
+Mon Jul 14 20:07:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+          No need to generate a constructor for the proxy broker and made
+          some layout changes to the generated code. This got discussed
+          as part of bugzilla 3363.
+
 Mon Jul 14 18:40:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           Moved the contents of IOP_IOR.pidl to IOP.pidl and removed IOP_IOR.pidl
