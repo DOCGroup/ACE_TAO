@@ -17,14 +17,17 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
   const and non-const ACE_Time_Value objects without triggering compile errors.
   Fixes Bugzilla #3336.
 
-. Added ACE_Stack_Trace class to allow users to obtain a stack trace 
-  within their application on supported platforms. A new conversion 
-  character, the question mark, was added to ACE_Log_Msg for stack 
-  trace logging. 
-  
+. Added ACE_Stack_Trace class to allow users to obtain a stack trace
+  within their application on supported platforms. A new conversion
+  character, the question mark, was added to ACE_Log_Msg for stack
+  trace logging.
+
 . Added iterator support to ACE_Message_Queue_Ex class. The resulted in
-  the addition of ACE_Message_Queue_Ex_Iterator class and 
+  the addition of ACE_Message_Queue_Ex_Iterator class and
   ACE_Message_Queue_Ex_Reverse_Iterator class.
+
+. Renamed gperf to ace_gperf to prevent clashes with the regular gperf
+  tool that is available in linux distributions
 
 USER VISIBLE CHANGES BETWEEN ACE-5.6.4 and ACE-5.6.5
 ====================================================
