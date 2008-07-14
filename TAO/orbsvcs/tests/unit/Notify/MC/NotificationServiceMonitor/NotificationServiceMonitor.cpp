@@ -36,6 +36,12 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         {
           error ("Monitor_Point_Registry::instance() failed");
         }
+      
+      // This can vary with the platform, so to make the test more
+      // portable we get the starting size here and make sure that
+      // the monitors we add subsequently are recognized.  
+      Monitor_Control_Types::NameList start_names = reg->names ();
+      size_t start_size = start_names.size ();
 
       // Test registry addition.
       Monitor_Base* s = 0;
@@ -91,17 +97,11 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       Monitor::NameList* names = monitor.get_statistic_names ();
       Monitor::NameList_var safe_names = names;
       
-      // We added 3 and there's one in the default reactor's
-      // message queue.  
-      if (names == 0 || names->length () != 4)
+      // We added 3 to whatever was there already.  
+      if (names == 0 || names->length () != start_size + 3)
         {
-/// This platform has a different number of monitors created 
-/// automatically at the ACE and/or ORB level - no sense in
-/// blowing off this part of the test for all others.
-#if !defined (HPUX)        
           error ("get_statistic_names() returned "
                  "the incorrect number of names");
-#endif
         }
 
       CORBA::ULong index = 1UL;
@@ -118,15 +118,11 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       CosNotification::NotificationServiceMonitorControl::DataList_var data =
         monitor.get_statistics (*names);
         
-      if (data.ptr () == 0 || data.in ().length () != 4)
+      // We added 3 to whatever was there already.  
+      if (data.ptr () == 0 || data.in ().length () != start_size + 3)
         {
-/// This platform has a different number of monitors created 
-/// automatically at the ACE and/or ORB level - no sense in
-/// blowing off this part of the test for all others.
-#if !defined (HPUX)        
           error ("get_statistics() returned the "
                  "incorrect number of data elements");
-#endif
         }
         
       index = 2UL;  
@@ -139,15 +135,11 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         
       data = monitor.get_and_clear_statistics (*names);
       
-      if (data.ptr () == 0 || data.in ().length () != 4)
+      // We added 3 to whatever was there already.  
+      if (data.ptr () == 0 || data.in ().length () != start_size + 3)
         {
-/// This platform has a different number of monitors created 
-/// automatically at the ACE and/or ORB level - no sense in
-/// blowing off this part of the test for all others.
-#if !defined (HPUX)        
           error ("get_and_clear_statistics() returned "
                  "the incorrect number of data elements");
-#endif
         }
         
       // Skip the first one, which is an ACE_Message_Queue
