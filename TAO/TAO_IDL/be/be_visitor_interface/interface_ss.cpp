@@ -519,7 +519,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << be_idt << be_idt_nl
         << "TAO_ORB_Core::ifr_client_adapter_name ()" << be_uidt_nl
         << ");" << be_uidt_nl << be_uidt_nl;
-    *os << "if (_tao_adapter == 0)" << be_idt_nl
+    *os << "if (!_tao_adapter)" << be_idt_nl
         << "{" << be_idt_nl
         << "throw ::CORBA::INTF_REPOS (::CORBA::OMGVMCID | 1, ::CORBA::COMPLETED_NO);"
         << be_uidt_nl
@@ -541,7 +541,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << be_uidt_nl << be_nl
         << "_tao_adapter->dispose (_tao_retval);" << be_nl << be_nl;
 
-    *os << "if (_tao_result == false)" << be_idt_nl
+    *os << "if (!_tao_result)" << be_idt_nl
         << "{" << be_idt_nl
         << "throw ::CORBA::MARSHAL ();" << be_uidt_nl
         << "}" << be_uidt;
