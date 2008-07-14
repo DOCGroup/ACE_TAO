@@ -29,6 +29,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 . Renamed gperf to ace_gperf to prevent clashes with the regular gperf
   tool that is available in linux distributions
 
+. Added support for FC9
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.4 and ACE-5.6.5
 ====================================================
 
