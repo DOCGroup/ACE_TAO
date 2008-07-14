@@ -14,8 +14,7 @@
 #ifndef _CSI_IDL_
 #define _CSI_IDL_
 
-// #include <IOP.idl>
-#include "tao/IOP_IOR.pidl"
+#include "tao/IOP.pidl"
 
 module IOP
 {
