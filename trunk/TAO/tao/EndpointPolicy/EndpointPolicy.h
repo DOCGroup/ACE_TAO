@@ -51,7 +51,7 @@ ACE_FACTORY_DECLARE (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
 #define TAO_ENDPOINTPOLICY_SAFE_INCLUDE
 #include "tao/EndpointPolicy/EndpointPolicyC.h"
 #include "tao/EndpointPolicy/EndpointPolicyA.h"
-#include "tao/IOP_IORC.h"
+#include "tao/IOPC.h"
 #include "tao/AnyTypeCode/Any.h"
 #undef TAO_ENDPOINTPOLICY_SAFE_INCLUDE
 

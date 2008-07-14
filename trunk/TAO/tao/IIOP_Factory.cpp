@@ -4,7 +4,7 @@
 
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Connector.h"
-#include "tao/IOP_IORC.h"
+#include "tao/IOPC.h"
 #include "ace/OS_NS_strings.h"
 
 ACE_RCSID (tao,

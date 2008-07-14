@@ -159,25 +159,6 @@ IOP-stamp: $(srcdir)/IOP.pidl $(TAO_IDL_DEP)
 	@touch $@
 
 BUILT_SOURCES += \
-  AnyTypeCode/IOP_IORA.cpp \
-  AnyTypeCode/IOP_IORA.h \
-  IOP_IORC.cpp \
-  IOP_IORC.h
-
-CLEANFILES += \
-  IOP_IOR-stamp \
-  AnyTypeCode/IOP_IORA.cpp \
-  AnyTypeCode/IOP_IORA.h \
-  IOP_IORC.cpp \
-  IOP_IORC.h
-
-AnyTypeCode/IOP_IORA.cpp AnyTypeCode/IOP_IORA.h IOP_IORC.cpp IOP_IORC.h: IOP_IOR-stamp
-
-IOP_IOR-stamp: $(srcdir)/IOP_IOR.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -GA -Gp -Gd -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -Sci $(srcdir)/IOP_IOR.pidl
-	@touch $@
-
-BUILT_SOURCES += \
   AnyTypeCode/Messaging_PolicyValueA.cpp \
   AnyTypeCode/Messaging_PolicyValueA.h \
   Messaging_PolicyValueC.cpp \
@@ -848,7 +829,6 @@ libTAO_la_SOURCES = \
   IIOP_Profile.cpp \
   IIOP_Transport.cpp \
   IOPC.cpp \
-  IOP_IORC.cpp \
   IORInterceptor_Adapter.cpp \
   IORInterceptor_Adapter_Factory.cpp \
   IOR_Parser.cpp \
@@ -1186,8 +1166,6 @@ nobase_include_HEADERS = \
   IOP.pidl \
   IOPC.h \
   IOPS.h \
-  IOP_IOR.pidl \
-  IOP_IOR.pidl \
   IOP_IORC.h \
   IORInterceptor_Adapter.h \
   IORInterceptor_Adapter_Factory.h \
@@ -1788,8 +1766,8 @@ libTAO_AnyTypeCode_la_SOURCES = \
   AnyTypeCode/FloatSeqA.cpp \
   AnyTypeCode/GIOPA.cpp \
   AnyTypeCode/IIOPA.cpp \
+  AnyTypeCode/IOPA.cpp \
   AnyTypeCode/IIOP_EndpointsA.cpp \
-  AnyTypeCode/IOP_IORA.cpp \
   AnyTypeCode/LongDoubleSeqA.cpp \
   AnyTypeCode/LongLongSeqA.cpp \
   AnyTypeCode/LongSeqA.cpp \
@@ -1909,7 +1887,6 @@ nobase_include_HEADERS += \
   AnyTypeCode/IIOPA.h \
   AnyTypeCode/IIOP_EndpointsA.h \
   AnyTypeCode/IOPA.h \
-  AnyTypeCode/IOP_IORA.h \
   AnyTypeCode/LongDoubleSeqA.h \
   AnyTypeCode/LongLongSeqA.h \
   AnyTypeCode/LongSeqA.h \

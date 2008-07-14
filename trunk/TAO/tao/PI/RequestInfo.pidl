@@ -26,7 +26,7 @@
 #include "tao/AnyTypeCode/Dynamic.pidl"
 #include "tao/Messaging_SyncScope.pidl"
 #include "tao/PI/InvalidSlot.pidl"
-#include "tao/IOP_IOR.pidl"
+#include "tao/IOP.pidl"
 
 module PortableInterceptor {
 
