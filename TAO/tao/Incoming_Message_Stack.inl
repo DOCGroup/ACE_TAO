@@ -35,7 +35,7 @@ Incoming_Message_Stack::push(TAO_Queued_Data *data)
 }
 
 
-    /* @return 0 for Ok, -1 for error */
+/* @return 0 for Ok, -1 for error */
 ACE_INLINE int
 Incoming_Message_Stack::pop (TAO_Queued_Data* &data)
 {

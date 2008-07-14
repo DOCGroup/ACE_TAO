@@ -1,7 +1,43 @@
+Mon Jul 14 18:40:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Moved the contents of IOP_IOR.pidl to IOP.pidl and removed IOP_IOR.pidl
+          and updated all files that included IOP_IORC.h
+
+        * tao/AnyTypeCode.mpc:
+        * tao/Makefile.am
+        * tao/tao.mpc
+          Updated files to build
+
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+        * tao/EndpointPolicy/EndpointPolicy.h
+        * tao/GIOP.pidl
+        * tao/IIOP_Endpoint.cpp
+        * tao/IIOP_Factory.cpp
+        * tao/IORInterceptor/IORInfo.pidl
+        * tao/Messaging_PolicyValue.pidl
+        * tao/Object.h
+        * tao/PI/RequestInfo.pidl
+        * tao/Pluggable_Messaging_Utils.h
+        * tao/Protocols_Hooks.h
+        * tao/Service_Context_Handler.h
+        * tao/Service_Context_Handler_Registry.h
+        * tao/Tagged_Components.h
+        * tao/Transport.cpp
+          Updated include
+
+        * tao/Collocation_Proxy_Broker.h:
+        * tao/Incoming_Message_Stack.inl
+        * tao/Monitor/Monitor_Impl.cpp
+          Layout change
+
+        * tao/IOP.pidl
+        * tao/IOP_IOR.pidl
+          Moved contents
+
 Mon Jul 14 15:29:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
-        
+
           Added a fetch of the number of entries in the registry at the
           start of the test, subsequent compares check that all monitors
           added by the test itself are found and recognized. The number of
