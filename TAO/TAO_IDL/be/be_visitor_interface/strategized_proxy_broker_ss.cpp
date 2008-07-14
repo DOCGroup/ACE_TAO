@@ -51,12 +51,6 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "return &strategized_proxy_broker;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // Constructor Implementation.
-  *os << node->full_strategized_proxy_broker_name () << "::"
-      << node->strategized_proxy_broker_name () << " (void)" << be_nl
-      << "{" << be_nl
-      << "}" << be_nl << be_nl;
-
   // Destructor Implementation.
   *os << node->full_strategized_proxy_broker_name () << "::~"
       << node->strategized_proxy_broker_name () << " (void)" << be_nl
@@ -67,13 +61,9 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
   *os << "TAO::Collocation_Strategy" << be_nl
       << node->full_strategized_proxy_broker_name () << "::"
       << "get_strategy (" << be_idt << be_idt_nl
-      << "::CORBA::Object_ptr obj" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "::CORBA::Object_ptr obj)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO::Collocation_Strategy strategy =" << be_idt_nl
-      << "TAO_ORB_Core::collocation_strategy (obj);" << be_uidt
-      << be_nl << be_nl
-      << "return strategy;" << be_uidt_nl
+      << "return TAO_ORB_Core::collocation_strategy (obj);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // create_proxy implementation
@@ -87,8 +77,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "int num_args," << be_nl
       << "const char * op," << be_nl
       << "size_t op_len," << be_nl
-      << "TAO::Collocation_Strategy strategy" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "TAO::Collocation_Strategy strategy)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << "TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;" << be_nl
       << "collocation_upcall_wrapper.upcall (" << be_idt_nl
