@@ -100,7 +100,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Invocation_Adapter.cpp
     Invocation_Base.cpp
     Invocation_Endpoint_Selectors.cpp
-    IOP_IORC.cpp
     IOPC.cpp
     IOR_Parser.cpp
     IORInterceptor_Adapter.cpp
@@ -376,7 +375,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Invocation_Endpoint_Selectors.h
     Invocation_Utils.h
     IOPC.h
-    IOP_IORC.h
     IOPS.h
     IORInterceptor_Adapter_Factory.h
     IORInterceptor_Adapter.h
@@ -604,7 +602,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     IIOP.pidl >> AnyTypeCode/IIOPA.h AnyTypeCode/IIOPA.cpp
     IIOP_Endpoints.pidl >> AnyTypeCode/IIOP_EndpointsA.h AnyTypeCode/IIOP_EndpointsA.cpp
     IOP.pidl >> AnyTypeCode/IOPA.h AnyTypeCode/IOPA.cpp
-    IOP_IOR.pidl >> AnyTypeCode/IOP_IORA.h AnyTypeCode/IOP_IORA.cpp
     Messaging_PolicyValue.pidl >> AnyTypeCode/Messaging_PolicyValueA.h AnyTypeCode/Messaging_PolicyValueA.cpp
     Messaging_SyncScope.pidl >> AnyTypeCode/Messaging_SyncScopeA.h AnyTypeCode/Messaging_SyncScopeA.cpp
     ObjectIdList.pidl >> AnyTypeCode/ObjectIdListA.h AnyTypeCode/ObjectIdListA.cpp

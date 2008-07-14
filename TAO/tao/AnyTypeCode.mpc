@@ -38,8 +38,8 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, tao_versi
     AnyTypeCode/FloatSeqA.cpp
     AnyTypeCode/GIOPA.cpp
     AnyTypeCode/IIOPA.cpp
+    AnyTypeCode/IOPA.cpp
     AnyTypeCode/IIOP_EndpointsA.cpp
-    AnyTypeCode/IOP_IORA.cpp
     AnyTypeCode/LongDoubleSeqA.cpp
     AnyTypeCode/LongLongSeqA.cpp
     AnyTypeCode/LongSeqA.cpp
@@ -97,9 +97,9 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, tao_versi
     AnyTypeCode/FloatSeqA.h
     AnyTypeCode/LongSeqA.h
     AnyTypeCode/IIOPA.h
+    AnyTypeCode/IOPA.h
     AnyTypeCode/IIOP_EndpointsA.h
     AnyTypeCode/IOPA.h
-    AnyTypeCode/IOP_IORA.h
     AnyTypeCode/LongDoubleSeqA.h
     AnyTypeCode/LongLongSeqA.h
     AnyTypeCode/LongSeqA.h

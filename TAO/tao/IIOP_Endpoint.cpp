@@ -8,7 +8,7 @@
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/IOP_IORC.h"
+#include "tao/IOPC.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 

@@ -33,7 +33,7 @@ public:
       {
       }
   }
-  
+
 private:
   ::Monitor::Subscriber_var sub_;
 };
@@ -55,7 +55,7 @@ Monitor_Impl::get_statistic_names (const char * /* filter */)
                     CORBA::NO_MEMORY ());
 
   CORBA::ULong index = 0;
-  
+
   for (Monitor_Control_Types::NameList::Iterator i (mc_names);
        !i.done ();
        i.advance (), ++index)
@@ -64,7 +64,7 @@ Monitor_Impl::get_statistic_names (const char * /* filter */)
       namelist->length (length + 1);
       ACE_CString *item = 0;
       i.next (item);
-      
+
       // @todo Check filter
       (*namelist)[length] = CORBA::string_dup (item->c_str ());
     }

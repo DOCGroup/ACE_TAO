@@ -439,7 +439,7 @@ TAO_Transport::generate_request_header (
     TAO_Target_Specification &spec,
     TAO_OutputCDR &output)
 {
-  // codeset service context is only supposed to be sent in the first request
+  // Codeset service context is only supposed to be sent in the first request
   // on a particular connection.
   if (this->first_request_)
     {
