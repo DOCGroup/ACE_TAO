@@ -1,3 +1,9 @@
+Mon Jul 14 12:48:54 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Added an entry for my change from Mon Jul  7 12:09:10 UTC 2008.
+
 Fri Jul 11 16:35:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_main.cpp:
