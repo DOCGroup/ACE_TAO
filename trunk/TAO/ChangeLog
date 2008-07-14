@@ -1,3 +1,14 @@
+Mon Jul 14 15:29:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+        
+          Added a fetch of the number of entries in the registry at the
+          start of the test, subsequent compares check that all monitors
+          added by the test itself are found and recognized. The number of
+          monitors extant at the start of the test on different platforms
+          varies, so this is the only way to decouple the test code from
+          the platform.
+
 Mon Jul 14 12:48:54 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
