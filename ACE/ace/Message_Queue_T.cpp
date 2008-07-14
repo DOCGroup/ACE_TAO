@@ -374,7 +374,7 @@ ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::advance (void)
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
 ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump (void) const
 {
-  return this->iter_.dump ();
+  this->iter_.dump ();
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Ex_Iterator)
@@ -415,7 +415,7 @@ ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::advance 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
 ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump (void) const
 {
-  return this->iter_.dump ();
+  this->iter_.dump ();
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Ex_Reverse_Iterator)
