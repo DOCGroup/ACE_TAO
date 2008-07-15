@@ -2,7 +2,7 @@
 
 #include "ServerRequest_Interceptor2.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
-#include "tao/IOP_IORC.h"
+#include "tao/IOPC.h"
 #include "tao/ORB_Constants.h"
 #include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
