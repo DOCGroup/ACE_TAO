@@ -40,15 +40,17 @@ public:
       {
         ACE_OS::sleep (2);
 
-        Monitor_Control_Types::Data data;
-        cpu_monitor->retrieve (data);
-        MC_Test_Utilities::display_cpu_load (data);
+        Monitor_Control_Types::Data cpu_data (cpu_monitor->type ());
+        cpu_monitor->retrieve (cpu_data);
+        MC_Test_Utilities::display_cpu_load (cpu_data);
 
-        memory_monitor->retrieve (data);
-        MC_Test_Utilities::display_memory_usage (data);
+        Monitor_Control_Types::Data mem_data (memory_monitor->type ());
+        memory_monitor->retrieve (mem_data);
+        MC_Test_Utilities::display_memory_usage (mem_data);
 
-        bytes_monitor->retrieve (data);
-        MC_Test_Utilities::display_bytes_sent (data);
+        Monitor_Control_Types::Data bytes_data (bytes_monitor->type ());
+        bytes_monitor->retrieve (bytes_data);
+        MC_Test_Utilities::display_bytes_sent (bytes_data);
 
         cout << endl;
       }

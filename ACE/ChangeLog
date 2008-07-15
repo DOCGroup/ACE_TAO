@@ -1,3 +1,17 @@
+Tue Jul 15 17:29:22 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Monitor/Bytes_Sent/bytes_sent.cpp:
+        * examples/Monitor/Message_Queue_Size/message_queue_size.cpp:
+        * examples/Monitor/Constraint/constraint.cpp:
+        * examples/Monitor/CPU_Load/cpu_load.cpp:
+        * examples/Monitor/Num_Threads/num_threads.cpp:
+        * examples/Monitor/Group/group.cpp:
+        * examples/Monitor/Memory_Usage/memory_usage.cpp:
+
+          Changes corresponding to the relocation in
+
+          Tue Jul 15 17:19:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Tue Jul 15 17:19:14 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Size.cpp:
