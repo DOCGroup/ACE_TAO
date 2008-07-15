@@ -11,7 +11,7 @@ namespace ACE
   namespace Monitor_Control
   {
     Monitor_Group::Monitor_Group (const char* name)
-      : Monitor_Base (name, Monitor_Base::MC_GROUP)
+      : Monitor_Base (name, Monitor_Control_Types::MC_GROUP)
     {}
 
     void

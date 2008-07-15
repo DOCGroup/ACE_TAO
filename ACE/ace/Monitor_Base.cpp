@@ -21,17 +21,11 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Monitor_Base::Monitor_Base (const char* name, Information_Type type)
+    Monitor_Base::Monitor_Base (const char* name,
+                                Monitor_Control_Types::Information_Type type)
       : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
+      , data_ (type)
       , name_ (name)
-      , type_ (type)
-      , index_ (0UL)
-      , minimum_set_ (false)
-      , minimum_ (0.0)
-      , maximum_ (0.0)
-      , sum_ (0.0)
-      , sum_of_squares_ (0.0)
-      , last_ (0.0)
     {
     }
 
@@ -39,9 +33,9 @@ namespace ACE
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
 
-      if (this->type_ == MC_LIST)
+      if (this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
-          for (size_t i = 0UL; i < this->index_; ++i)
+          for (size_t i = 0UL; i < this->data_.index_; ++i)
             {
               delete [] this->data_.list_[i];
             }
@@ -57,7 +51,7 @@ namespace ACE
     void
     Monitor_Base::receive (double data)
     {
-      if (this->type_ == MC_LIST)
+      if (this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("receive: can't store numeric value - ")
@@ -70,35 +64,35 @@ namespace ACE
       this->data_.timestamp_ = ACE_OS::gettimeofday ();
       this->data_.value_ = data;
 
-      if (this->type_ != MC_COUNTER)
+      if (this->data_.type_ != Monitor_Control_Types::MC_COUNTER)
         {
-          this->sum_ += data;
-          this->sum_of_squares_ += (data * data);
-          ++this->index_;
+          this->data_.sum_ += data;
+          this->data_.sum_of_squares_ += (data * data);
+          ++this->data_.index_;
         }
 
-      if (this->type_ == MC_COUNTER)
+      if (this->data_.type_ == Monitor_Control_Types::MC_COUNTER)
         {
-          ++this->last_;
-          this->maximum_ = this->last_;
+          ++this->data_.last_;
+          this->data_.maximum_ = this->data_.last_;
         }
       else
         {
-          this->last_ = data;
+          this->data_.last_ = data;
 
-          if (!this->minimum_set_)
+          if (!this->data_.minimum_set_)
             {
-              this->minimum_set_ = true;
-              this->minimum_ = data;
+              this->data_.minimum_set_ = true;
+              this->data_.minimum_ = data;
             }
-          else if (this->minimum_ > data)
+          else if (this->data_.minimum_ > data)
             {
-              this->minimum_ = data;
+              this->data_.minimum_ = data;
             }
 
-          if (this->maximum_ < data)
+          if (this->data_.maximum_ < data)
             {
-              this->maximum_ = data;
+              this->data_.maximum_ = data;
             }
         }
     }
@@ -112,7 +106,7 @@ namespace ACE
     void
     Monitor_Base::receive (const Monitor_Control_Types::NameList& data)
     {
-      if (this->type_ != MC_LIST)
+      if (this->data_.type_ != Monitor_Control_Types::MC_LIST)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("receive: can't store string values - ")
@@ -123,15 +117,15 @@ namespace ACE
 
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
 
-      for (size_t i = 0UL; i < this->index_; ++i)
+      for (size_t i = 0UL; i < this->data_.index_; ++i)
         {
           ACE::strdelete (this->data_.list_[i]);
         }
 
-      this->index_ = data.size ();
-      this->data_.list_.max_size (this->index_);
+      this->data_.index_ = data.size ();
+      this->data_.list_.max_size (this->data_.index_);
 
-      for (size_t i = 0UL; i < this->index_; ++i)
+      for (size_t i = 0UL; i < this->data_.index_; ++i)
         {
           this->data_.list_[i] = ACE::strnew (data[i].c_str ());
         }
@@ -182,12 +176,6 @@ namespace ACE
       }
 
       return retval;
-    }
-
-    Monitor_Base::CONSTRAINTS&
-    Monitor_Base::constraints (void)
-    {
-      return this->constraints_;
     }
 
     void
@@ -246,29 +234,12 @@ namespace ACE
         }
     }
 
-    void
-    Monitor_Base::add_ref (void)
-    {
-      (void) this->increment ();
-    }
-
-    void
-    Monitor_Base::remove_ref (void)
-    {
-      long const new_count = this->decrement ();
-
-      if (new_count == 0)
-        {
-          delete this;
-        }
-    }
-
     double
     Monitor_Base::average (void) const
     {
-      if (this->type_ == MC_COUNTER
-          || this->type_ == MC_GROUP
-          || this->type_ == MC_LIST)
+      if (this->data_.type_ == Monitor_Control_Types::MC_COUNTER
+          || this->data_.type_ == Monitor_Control_Types::MC_GROUP
+          || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("average: %s is wrong monitor type\n"),
@@ -278,15 +249,17 @@ namespace ACE
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0.0);
 
-      return (this->index_== 0UL ? 0.0 : this->sum_ / this->index_);
+      return (this->data_.index_== 0UL
+              ? 0.0
+              : this->data_.sum_ / this->data_.index_);
     }
 
     double
     Monitor_Base::sum_of_squares (void) const
     {
-      if (this->type_ == MC_COUNTER
-          || this->type_ == MC_GROUP
-          || this->type_ == MC_LIST)
+      if (this->data_.type_ == Monitor_Control_Types::MC_COUNTER
+          || this->data_.type_ == Monitor_Control_Types::MC_GROUP
+          || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("sum_of_squares: %s ")
@@ -297,13 +270,13 @@ namespace ACE
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0.0);
 
-      return this->sum_of_squares_;
+      return this->data_.sum_of_squares_;
     }
 
     size_t
     Monitor_Base::count (void) const
     {
-      if (this->type_ == MC_GROUP)
+      if (this->data_.type_ == Monitor_Control_Types::MC_GROUP)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("count: %s is a monitor group\n"),
@@ -313,15 +286,16 @@ namespace ACE
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0UL);
 
-      return (this->type_ == MC_COUNTER
-              ? static_cast<size_t> (this->last_)
-              : this->index_);
+      return (this->data_.type_ == Monitor_Control_Types::MC_COUNTER
+              ? static_cast<size_t> (this->data_.last_)
+              : this->data_.index_);
     }
 
     double
     Monitor_Base::minimum_sample (void) const
     {
-      if (this->type_ == MC_GROUP || this->type_ == MC_LIST)
+      if (this->data_.type_ == Monitor_Control_Types::MC_GROUP
+          || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("minimum_sample: %s ")
@@ -332,13 +306,14 @@ namespace ACE
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0.0);
 
-      return this->minimum_;
+      return this->data_.minimum_;
     }
 
     double
     Monitor_Base::maximum_sample (void) const
     {
-      if (this->type_ == MC_GROUP || this->type_ == MC_LIST)
+      if (this->data_.type_ == Monitor_Control_Types::MC_GROUP
+          || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("maximum_sample: %s ")
@@ -349,13 +324,14 @@ namespace ACE
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0.0);
 
-      return this->maximum_;
+      return this->data_.maximum_;
     }
 
     double
     Monitor_Base::last_sample (void) const
     {
-      if (this->type_ == MC_GROUP || this->type_ == MC_LIST)
+      if (this->data_.type_ == Monitor_Control_Types::MC_GROUP
+          || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("last_sample: %s ")
@@ -366,13 +342,7 @@ namespace ACE
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0.0);
 
-      return this->last_;
-    }
-
-    Monitor_Base::Information_Type
-    Monitor_Base::type (void) const
-    {
-      return this->type_;
+      return this->data_.last_;
     }
 
     Monitor_Control_Types::NameList
@@ -380,7 +350,7 @@ namespace ACE
     {
       Monitor_Control_Types::NameList retval;
 
-      if (this->type_ != MC_LIST)
+      if (this->data_.type_ != Monitor_Control_Types::MC_LIST)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("get_list: %s is not a ")
@@ -392,7 +362,7 @@ namespace ACE
 
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, retval);
 
-      for (size_t i = 0UL; i < this->index_; ++i)
+      for (size_t i = 0UL; i < this->data_.index_; ++i)
         {
           retval.push_back (this->data_.list_[i]);
         }
@@ -403,9 +373,9 @@ namespace ACE
     void
     Monitor_Base::clear_i (void)
     {
-      if (this->type_ == MC_LIST)
+      if (this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
-          for (size_t i = 0UL; i < this->index_; ++i)
+          for (size_t i = 0UL; i < this->data_.index_; ++i)
             {
               ACE::strdelete (this->data_.list_[i]);
             }
@@ -415,13 +385,13 @@ namespace ACE
 
       this->data_.value_ = 0.0;
       this->data_.timestamp_ = ACE_Time_Value::zero;
-      this->index_ = 0UL;
-      this->minimum_set_ = false;
-      this->minimum_ = 0.0;
-      this->maximum_ = 0.0;
-      this->sum_ = 0.0;
-      this->sum_of_squares_ = 0.0;
-      this->last_ = 0.0;
+      this->data_.index_ = 0UL;
+      this->data_.minimum_set_ = false;
+      this->data_.minimum_ = 0.0;
+      this->data_.maximum_ = 0.0;
+      this->data_.sum_ = 0.0;
+      this->data_.sum_of_squares_ = 0.0;
+      this->data_.last_ = 0.0;
     }
   }
 }

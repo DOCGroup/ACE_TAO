@@ -63,7 +63,7 @@ namespace ACE
           Constraint_Interpreter interpreter;
           interpreter.build_tree (i->second.expr.fast_rep ());
 
-          Monitor_Control_Types::Data data;
+          Monitor_Control_Types::Data data (this->monitor_->type ());
           this->monitor_->retrieve (data);
           Constraint_Visitor visitor (data);
           bool satisfied = interpreter.evaluate (visitor);

@@ -18,7 +18,7 @@ namespace ACE
       "OS/Memory/TotalUsage";
 
     Memory_Usage_Monitor::Memory_Usage_Monitor (const char* name)
-      : Monitor_Base (name, Monitor_Base::MC_NUMBER)
+      : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Monitor (ACE_TEXT ("\\Memory\\% Committed Bytes In Use"))
 #endif

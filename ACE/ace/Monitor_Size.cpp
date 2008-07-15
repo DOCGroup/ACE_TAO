@@ -13,12 +13,12 @@ namespace ACE
   namespace Monitor_Control
   {
     Size_Monitor::Size_Monitor (void)
-      : Monitor_Base ("", Monitor_Base::MC_NUMBER)
+      : Monitor_Base ("", Monitor_Control_Types::MC_NUMBER)
     {
     }
 
     Size_Monitor::Size_Monitor (const char* name)
-      : Monitor_Base (name, Monitor_Base::MC_NUMBER)
+      : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
     {
     }
 
