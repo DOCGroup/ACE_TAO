@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/CDR.h"
-#include "tao/AnyTypeCode/IOP_IORA.h"
+#include "tao/AnyTypeCode/IOPA.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h"
 #include "orbsvcs/FTRTC.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
@@ -46,7 +46,7 @@ TAO_Set_Update_Interceptor::send_request (
   CORBA::String_var operation = ri->operation ();
 
   if (ACE_OS::strcmp(operation.in(), "set_update")==0 ||
-      ACE_OS::strcmp(operation.in(), "oneway_set_update") ==0) 
+      ACE_OS::strcmp(operation.in(), "oneway_set_update") ==0)
     {
       CORBA::Any_var a = Request_Context_Repository().get_ft_request_service_context(ri);
 
