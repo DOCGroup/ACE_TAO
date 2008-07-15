@@ -23,7 +23,7 @@ class EventChannels
 public:
   EventChannels (TAO_MonitorEventChannelFactory* ecf,
                  const ACE_CString& name,
-                 Monitor_Base::Information_Type type,
+                 Monitor_Control_Types::Information_Type type,
                  bool active)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannelFactory> (ecf,
                                                              name.c_str (),
@@ -34,7 +34,7 @@ public:
   
   virtual void update (void)
   {
-    if (this->type () == Monitor_Base::MC_LIST)
+    if (this->type () == Monitor_Control_Types::MC_LIST)
       {
         Monitor_Control_Types::NameList names;
         this->interf_->get_ecs (&names, this->active_);
@@ -68,7 +68,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
-                              Monitor_Base::MC_NUMBER,
+                              Monitor_Control_Types::MC_NUMBER,
                               true));
                               
       event_channels->add_to_registry (); 
@@ -81,7 +81,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
-                              Monitor_Base::MC_NUMBER,
+                              Monitor_Control_Types::MC_NUMBER,
                               false));
                               
       event_channels->add_to_registry ();     
@@ -94,7 +94,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
-                              Monitor_Base::MC_LIST,
+                              Monitor_Control_Types::MC_LIST,
                               true));
                               
       event_channels->add_to_registry ();
@@ -107,7 +107,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
-                              Monitor_Base::MC_LIST,
+                              Monitor_Control_Types::MC_LIST,
                               false));
                               
       event_channels->add_to_registry ();
@@ -141,7 +141,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
           stat_name = NotifyMonitoringExt::EventChannelFactoryNames;
           ACE_NEW_THROW_EX (names,
                             Monitor_Base (stat_name.c_str (),
-                                          Monitor_Base::MC_LIST),
+                                          Monitor_Control_Types::MC_LIST),
                             CORBA::NO_MEMORY ());
           names->add_to_registry ();
         }
