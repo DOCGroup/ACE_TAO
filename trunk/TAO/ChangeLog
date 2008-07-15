@@ -1,3 +1,13 @@
+Tue Jul 15 00:34:58 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Time_Utilities.cpp:
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+
+          An error in transcribing the Julian Date representation for
+          January 1, 1970 resulted in the constant for the difference
+          between the CORBA and POSIX epochs being off by 9 days.  Thanks
+          to Hans Utz < hans dot utz at nasa dot gov> for reporting this.
+
 Mon Jul 14 20:24:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
