@@ -34,7 +34,7 @@ public:
           {
             ACE_OS::sleep (2);
 
-            Monitor_Control_Types::Data data;
+            Monitor_Control_Types::Data data (bytes_monitor->type ());
             bytes_monitor->retrieve (data);
             MC_Test_Utilities::display_bytes_sent (data);
           }

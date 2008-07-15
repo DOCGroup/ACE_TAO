@@ -50,7 +50,7 @@ public:
           {
             ACE_OS::sleep (1);
 
-            Monitor_Control_Types::Data data;
+            Monitor_Control_Types::Data data (mq_monitor->type ());
             mq_monitor->retrieve (data);
             MC_Test_Utilities::display_mq_size (data);
           }
