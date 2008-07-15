@@ -2,8 +2,8 @@
 //$Id$
 //
 
-ACE_RCSID (be_visitor_interface, 
-           direct_proxy_impl_ss, 
+ACE_RCSID (be_visitor_interface,
+           direct_proxy_impl_ss,
            "$Id$")
 
 be_visitor_interface_direct_proxy_impl_ss::
@@ -29,20 +29,15 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
   this->ctx_->node (node);
 
   *os << be_nl << be_nl
-      << "///////////////////////////////////////////////////////////////////////" 
+      << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//                 Direct Proxy  Implementation" << be_nl
       << "//" << be_nl << be_nl;
 
-  // Ctor Implementation
-  *os << node->full_direct_proxy_impl_name () << "::"
-      << node->direct_proxy_impl_name () << " (void)"
-      << be_nl << "{}" << be_nl << be_nl;
-
   // Destructor Implementation
   *os << node->full_direct_proxy_impl_name () << "::~"
       << node->direct_proxy_impl_name () << " (void)"
-      << be_nl << "{}" << be_nl << be_nl;
+      << be_nl << "{" << be_nl << "}" << be_nl << be_nl;
 
   if (this->visit_scope (node) == -1)
     {
@@ -61,7 +56,7 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
   return 0;
 }
 
-int 
+int
 be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
     be_interface *node,
     be_interface *base,
@@ -94,10 +89,10 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
         }
 
       AST_Decl::NodeType nt = d->node_type ();
-  
+
       UTL_ScopedName *item_new_name = 0;
       UTL_ScopedName *new_name = 0;
-      
+
       if (AST_Decl::NT_op == nt || AST_Decl::NT_attr == nt)
         {
           ACE_NEW_RETURN (item_new_name,
@@ -125,10 +120,10 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
           op->set_name (new_name);
           op->set_defined_in (node);
           op->is_abstract (node->is_abstract ());
-          
+
           be_visitor_operation_direct_proxy_impl_ss op_visitor (&ctx);
           op_visitor.visit_operation (op);
-          
+
           op->set_name (old_name);
           op->set_defined_in (base);
           op->is_abstract (base->is_abstract ());
@@ -143,21 +138,21 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
                                  attr->is_abstract ());
           new_attr.set_defined_in (node);
           new_attr.set_name (new_name);
-          
+
           UTL_ExceptList *get_exceptions = attr->get_get_exceptions ();
-          
+
           if (0 != get_exceptions)
             {
               new_attr.be_add_get_exceptions (get_exceptions->copy ());
             }
-            
+
           UTL_ExceptList *set_exceptions = attr->get_set_exceptions ();
-          
+
           if (0 != set_exceptions)
             {
               new_attr.be_add_set_exceptions (set_exceptions->copy ());
             }
-            
+
           be_visitor_attribute attr_visitor (&ctx);
           attr_visitor.visit_attribute (&new_attr);
           ctx.attribute (0);

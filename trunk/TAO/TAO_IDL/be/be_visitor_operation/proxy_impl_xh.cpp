@@ -39,11 +39,10 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
         }
     }
 
-  *os << node->local_name () << " (" << be_idt << be_idt_nl
-      << "TAO_Abstract_ServantBase *servant," << be_nl
-      << "TAO::Argument ** args," << be_nl
-      << "int num_args" << be_uidt_nl
-      << ");";
+  *os << node->local_name () << " (" << be_idt_nl
+      << "TAO_Abstract_ServantBase *servant, "
+      << "TAO::Argument **args, "
+      << "int num_args);" << be_uidt_nl;
 
   return 0;
 }
