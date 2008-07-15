@@ -1,3 +1,12 @@
+Tue Jul 15 17:36:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Statistic_Registry.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
+
+          Changes corresponding to relocation of monitor statistics-related 
+          values in ACE.
+
 Tue Jul 15 17:20:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
