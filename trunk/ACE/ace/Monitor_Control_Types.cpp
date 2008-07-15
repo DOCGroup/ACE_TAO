@@ -12,9 +12,18 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Monitor_Control_Types::Data::Data (void)
-      : timestamp_ (ACE_Time_Value::zero),
-        value_ (0.0)
+    Monitor_Control_Types::Data::Data (
+      Monitor_Control_Types::Information_Type type)
+      : timestamp_ (ACE_Time_Value::zero)
+      , value_ (0.0)
+      , type_ (type)
+      , index_ (0UL)
+      , minimum_set_ (false)
+      , minimum_ (0.0)
+      , maximum_ (0.0)
+      , sum_ (0.0)
+      , sum_of_squares_ (0.0)
+      , last_ (0.0)
     {}
 
     //=============================================================
