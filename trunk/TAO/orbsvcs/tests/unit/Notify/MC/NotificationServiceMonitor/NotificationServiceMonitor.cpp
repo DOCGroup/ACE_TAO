@@ -47,7 +47,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       Monitor_Base* s = 0;
       ACE_NEW_RETURN (s,
                       Monitor_Base ("test1",
-                                    Monitor_Base::MC_COUNTER),
+                                    Monitor_Control_Types::MC_COUNTER),
                       2);
 
       if (reg->add (s) == false)
@@ -65,7 +65,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       ACE_NEW_RETURN (s,
                       Monitor_Base ("test2",
-                                    Monitor_Base::MC_NUMBER),
+                                    Monitor_Control_Types::MC_NUMBER),
                       2);
                       
       if (reg->add (s) == false)
@@ -80,7 +80,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       ACE_NEW_RETURN (s,
                       Monitor_Base ("test3",
-                                    Monitor_Base::MC_INTERVAL),
+                                    Monitor_Control_Types::MC_INTERVAL),
                       2);
                       
       if (reg->add (s) == false)
