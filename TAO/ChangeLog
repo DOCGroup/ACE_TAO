@@ -1,3 +1,16 @@
+Tue Jul 15 17:20:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Dynamic_Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Timestamp_Monitor.cpp:
+        * tao/Monitor/Monitor_Impl.cpp:
+
+          Minor changes required by the relocation in ACE of the
+          statistics-related values from Monitor_Base to
+          Monitor_Control_Types.
+
 Tue Jul 15 11:25:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CSI.idl

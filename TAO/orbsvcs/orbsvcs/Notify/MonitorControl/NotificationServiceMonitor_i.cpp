@@ -245,13 +245,13 @@ NotificationServiceMonitor_i::get_data (
       // If it's not a counter, we need to make sure that we have
       // the most up-to-date information.  A counter will always have
       // the correct value.
-      if (monitor->type () != Monitor_Base::MC_COUNTER)
+      if (monitor->type () != Monitor_Control_Types::MC_COUNTER)
         {
           monitor->update ();
         }
         
       // Populate the data structure based on the type of statistic
-      if (monitor->type () == Monitor_Base::MC_LIST)
+      if (monitor->type () == Monitor_Control_Types::MC_LIST)
         {
           Monitor_Control_Types::NameList slist (monitor->get_list ());
           CORBA::ULong size = static_cast<CORBA::ULong> (slist.size ());
@@ -273,7 +273,7 @@ NotificationServiceMonitor_i::get_data (
           num.maximum = monitor->maximum_sample ();
           num.last = monitor->last_sample ();
 
-          if (monitor->type() == Monitor_Base::MC_COUNTER)
+          if (monitor->type() == Monitor_Control_Types::MC_COUNTER)
             {
               num.average = 0;
               num.sum_of_squares = 0;

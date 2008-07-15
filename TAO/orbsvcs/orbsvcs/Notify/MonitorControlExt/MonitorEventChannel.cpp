@@ -30,7 +30,7 @@ class EventChannelConsumersSuppliers
 public:
   EventChannelConsumersSuppliers (TAO_MonitorEventChannel* ec,
                                   const ACE_CString& name,
-                                  Monitor_Base::Information_Type type,
+                                  Monitor_Control_Types::Information_Type type,
                                   bool is_supplier = false)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
@@ -41,7 +41,7 @@ public:
   
   virtual void update (void)
   {
-    if (this->type () == Monitor_Base::MC_LIST)
+    if (this->type () == Monitor_Control_Types::MC_LIST)
       {
         Monitor_Control_Types::NameList list;
         
@@ -79,7 +79,7 @@ class EventChannelTimedoutConsumers
 public:
   EventChannelTimedoutConsumers (TAO_MonitorEventChannel* ec,
                                  const ACE_CString& name,
-                                 Monitor_Base::Information_Type type)
+                                 Monitor_Control_Types::Information_Type type)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
                                                       type)
@@ -100,7 +100,7 @@ class EventChannelConsumerSupplierAdmins
 public:
   EventChannelConsumerSupplierAdmins (TAO_MonitorEventChannel* ec,
                                       const ACE_CString& name,
-                                      Monitor_Base::Information_Type type,
+                                      Monitor_Control_Types::Information_Type type,
                                       bool is_supplier = false)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
@@ -111,7 +111,7 @@ public:
   
   virtual void update (void)
   {
-    if (this->type () == Monitor_Base::MC_LIST)
+    if (this->type () == Monitor_Control_Types::MC_LIST)
       {
         Monitor_Control_Types::NameList list;
         
@@ -149,7 +149,7 @@ class QueuedEvents
 public:
   QueuedEvents (TAO_MonitorEventChannel* ec,
                 const ACE_CString& name,
-                Monitor_Base::Information_Type type,
+                Monitor_Control_Types::Information_Type type,
                 bool count)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
@@ -173,7 +173,7 @@ class OldestEvent
 public:
   OldestEvent (TAO_MonitorEventChannel* ec,
                const ACE_CString& name,
-               Monitor_Base::Information_Type type)
+               Monitor_Control_Types::Information_Type type)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
                                                       type)
@@ -192,7 +192,7 @@ class SlowestConsumers
 public:
   SlowestConsumers (TAO_MonitorEventChannel* ec,
                     const ACE_CString& name,
-                    Monitor_Base::Information_Type type)
+                    Monitor_Control_Types::Information_Type type)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
                                                       type)
@@ -561,7 +561,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumersSuppliers (
                           this,
                           stat_name.c_str (),
-                          Monitor_Base::MC_NUMBER),
+                          Monitor_Control_Types::MC_NUMBER),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, consumers))
@@ -581,7 +581,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumersSuppliers (
                           this,
                           stat_name.c_str (),
-                          Monitor_Base::MC_LIST),
+                          Monitor_Control_Types::MC_LIST),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, consumers))
@@ -601,7 +601,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelTimedoutConsumers (
                           this,
                           stat_name.c_str (),
-                          Monitor_Base::MC_LIST),
+                          Monitor_Control_Types::MC_LIST),
                         CORBA::NO_MEMORY ());
 
       if (!this->register_statistic (stat_name, tconsumers))
@@ -621,7 +621,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumersSuppliers (
                           this,
                           stat_name.c_str (),
-                          Monitor_Base::MC_NUMBER,
+                          Monitor_Control_Types::MC_NUMBER,
                           true),
                         CORBA::NO_MEMORY ());
                         
@@ -642,7 +642,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumersSuppliers (
                           this,
                           stat_name.c_str (),
-                          Monitor_Base::MC_LIST,
+                          Monitor_Control_Types::MC_LIST,
                           true),
                         CORBA::NO_MEMORY ());
                         
@@ -663,7 +663,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumerSupplierAdmins (
                           this,
                           stat_name.c_str (),
-                          Monitor_Base::MC_NUMBER),
+                          Monitor_Control_Types::MC_NUMBER),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, conadmins))
@@ -683,7 +683,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumerSupplierAdmins (
                           this,
                           stat_name.c_str (),
-                          Monitor_Base::MC_LIST),
+                          Monitor_Control_Types::MC_LIST),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, conadmins))
@@ -703,7 +703,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumerSupplierAdmins (
                           this,
                           stat_name.c_str (),
-                          Monitor_Base::MC_NUMBER,
+                          Monitor_Control_Types::MC_NUMBER,
                           true),
                         CORBA::NO_MEMORY ());
                         
@@ -724,7 +724,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
                         EventChannelConsumerSupplierAdmins (
                           this,
                           stat_name.c_str (),
-                          Monitor_Base::MC_LIST,
+                          Monitor_Control_Types::MC_LIST,
                           true),
                         CORBA::NO_MEMORY ());
                         
@@ -743,7 +743,8 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       ACE_NEW_THROW_EX (events,
                         QueuedEvents (this,
                                       stat_name.c_str (),
-                                      Monitor_Base::MC_NUMBER, false),
+                                      Monitor_Control_Types::MC_NUMBER,
+                                      false),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, events))
@@ -762,7 +763,8 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       ACE_NEW_THROW_EX (events,
                         QueuedEvents (this,
                                       stat_name.c_str (),
-                                      Monitor_Base::MC_NUMBER, true),
+                                      Monitor_Control_Types::MC_NUMBER,
+                                      true),
                         CORBA::NO_MEMORY ());
                         
       events->add_to_registry ();
@@ -772,7 +774,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       OldestEvent* oldest = 0;
       ACE_NEW_THROW_EX (oldest,
                         OldestEvent (this, stat_name.c_str (),
-                                     Monitor_Base::MC_TIME),
+                                     Monitor_Control_Types::MC_TIME),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, oldest))
@@ -791,7 +793,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       ACE_NEW_THROW_EX (slowest,
                         SlowestConsumers (this,
                                           stat_name.c_str (),
-                                          Monitor_Base::MC_LIST),
+                                          Monitor_Control_Types::MC_LIST),
                         CORBA::NO_MEMORY ());
                         
       if (!this->register_statistic (stat_name, slowest))
