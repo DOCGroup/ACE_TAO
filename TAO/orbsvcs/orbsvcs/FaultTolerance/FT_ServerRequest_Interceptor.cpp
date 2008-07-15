@@ -1,5 +1,5 @@
 #include "orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h"
-#include "tao/IOP_IORC.h"
+#include "tao/IOPC.h"
 #include "tao/ORB_Constants.h"
 #include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
