@@ -7,7 +7,7 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
-#include "tao/AnyTypeCode/IOP_IORA.h"
+#include "tao/AnyTypeCode/IOPA.h"
 #include "ace/TSS_T.h"
 
 ACE_RCSID (EventChannel,
