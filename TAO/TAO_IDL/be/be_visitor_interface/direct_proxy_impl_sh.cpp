@@ -83,9 +83,6 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   *os << be_nl
       << "{" << be_nl << "public:" << be_idt_nl;
 
-  // Ctor
-  *os << node->direct_proxy_impl_name () << " (void);" << be_nl << be_nl;
-
   // Dtor
   *os << "virtual ~" << node->direct_proxy_impl_name () << " (void);";
 
@@ -179,21 +176,21 @@ be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper (
                                  attr->is_local (),
                                  attr->is_abstract ());
           new_attr.set_defined_in (node);
-          
+
           UTL_ExceptList *get_exceptions = attr->get_get_exceptions ();
-          
+
           if (0 != get_exceptions)
             {
               new_attr.be_add_get_exceptions (get_exceptions->copy ());
             }
-            
+
           UTL_ExceptList *set_exceptions = attr->get_set_exceptions ();
-          
+
           if (0 != set_exceptions)
             {
               new_attr.be_add_set_exceptions (set_exceptions->copy ());
             }
-            
+
           be_visitor_attribute attr_visitor (&ctx);
           attr_visitor.visit_attribute (&new_attr);
           ctx.attribute (0);

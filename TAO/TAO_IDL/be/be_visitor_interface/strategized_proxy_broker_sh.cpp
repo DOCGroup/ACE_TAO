@@ -43,27 +43,27 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
       << "public: " << be_idt;
 
   // Destructor
-  *os << be_nl << be_nl
+  *os << be_nl
       << "virtual ~" << node->strategized_proxy_broker_name () << " (void);";
 
   *os << be_nl << be_nl
-      << "TAO::Collocation_Strategy" << be_nl
+      << "TAO::Collocation_Strategy "
       << "get_strategy (::CORBA::Object_ptr obj);" << be_nl;
 
-  *os << be_nl << be_nl
+  *os << be_nl
       << "void" << be_nl
       << "dispatch (" << be_idt << be_idt_nl
       << "::CORBA::Object_ptr obj," << be_nl
       << "::CORBA::Object_out forward_obj," << be_nl
-      << "bool & is_forwarded," << be_nl
+      << "bool &is_forwarded," << be_nl
       << "TAO::Argument ** args," << be_nl
       << "int num_args," << be_nl
       << "const char * op," << be_nl
       << "size_t op_len," << be_nl
       << "TAO::Collocation_Strategy strategy" << be_uidt_nl
-      << ");" << be_nl;
+      << ");" << be_uidt_nl;
 
-  *os << be_uidt_nl << be_nl
+  *os << be_nl
       << "static " << node->strategized_proxy_broker_name ()
       << " *" << be_nl
       << "the" << node->strategized_proxy_broker_name ()

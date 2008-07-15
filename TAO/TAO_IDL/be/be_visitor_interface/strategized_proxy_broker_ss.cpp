@@ -39,6 +39,12 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << "// Global static proxy broker." << be_nl
+      << "static " << node->full_strategized_proxy_broker_name () << be_nl
+      << "tao_" << node->flat_client_enclosing_scope ()
+      << node->base_proxy_broker_name ()
+      << ";" << be_nl << be_nl;
+
   *os << "// Factory function Implementation." << be_nl
       << node->full_strategized_proxy_broker_name ()
       << " *" << be_nl
@@ -46,9 +52,8 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << node->strategized_proxy_broker_name ()
       << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "static " << node->full_strategized_proxy_broker_name () << be_nl
-      << "strategized_proxy_broker;" << be_nl << be_nl
-      << "return &strategized_proxy_broker;" << be_uidt_nl
+      << "return &" << "tao_" << node->flat_client_enclosing_scope ()
+      << node->base_proxy_broker_name () << ";" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // Destructor Implementation.
