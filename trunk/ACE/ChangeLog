@@ -1,3 +1,9 @@
+Tue Jul 15 01:27:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Added pragma comment for iphlpapi.lib. Thanks to Yongming Wang
+          <wangym at gmail dot com> for reporting this
+
 Mon Jul 14 12:50:34 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
