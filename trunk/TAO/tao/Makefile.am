@@ -1166,7 +1166,6 @@ nobase_include_HEADERS = \
   IOP.pidl \
   IOPC.h \
   IOPS.h \
-  IOP_IORC.h \
   IORInterceptor_Adapter.h \
   IORInterceptor_Adapter_Factory.h \
   IOR_Parser.h \
