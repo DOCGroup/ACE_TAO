@@ -36,8 +36,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * To convert between the CORBA and the UNIX epochs, we need to adjust
  * absolute times by the difference between October 15th, 1582 (Julian
- * Date 2299160.5) and January 1st, 1970 (Julian Date 2440578.5):
- * 141418.0 days.
+ * Date 2299160.5) and January 1st, 1970 (Julian Date 2440587.5):
+ * 141427.0 days.
  */
 class TAO_Svc_Utils_Export ORBSVCS_Time
 {
