@@ -13,8 +13,7 @@
 #ifndef _CSIIOP_IDL_
 #define _CSIIOP_IDL_
 
-//#include <tao/IOP.pidl>
-#include "tao/IOP_IOR.pidl"
+#include "tao/IOP.pidl"
 #include "CSI.idl"
 //import ::IOP
 //import ::CSI
