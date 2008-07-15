@@ -18,7 +18,7 @@ namespace ACE
       "OS/System/NumThreads";
 
     Num_Threads_Monitor::Num_Threads_Monitor (const char* name)
-      : Monitor_Base (name, Monitor_Base::MC_NUMBER)
+      : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Monitor (ACE_TEXT ("\\System\\Threads"))
 #elif defined (linux)

@@ -37,15 +37,37 @@ namespace ACE
 
     struct ACE_Export Monitor_Control_Types
     {
+      /// A monitor can hold various types of data and maintains stats
+      /// differently depending upon the type of information stored.
+      enum ACE_Export Information_Type
+      {
+        MC_COUNTER,
+        MC_NUMBER,
+        MC_TIME,
+        MC_INTERVAL,
+        MC_LIST,
+        MC_GROUP
+      };
+
       /**
        * @brief An instance is contained by each enabled monitor point.
        */
       struct ACE_Export Data
       {
-        Data (void);
+        Data (Monitor_Control_Types::Information_Type type);
         ACE_Time_Value timestamp_;
         double value_;
         ACE_Array_Base<char *> list_;
+        
+        Information_Type type_;
+
+        size_t index_;
+        bool minimum_set_;
+        double minimum_;
+        double maximum_;
+        double sum_;
+        double sum_of_squares_;
+        double last_;
       };
 
       /**

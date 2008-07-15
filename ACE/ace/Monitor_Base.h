@@ -52,22 +52,11 @@ namespace ACE
       : private ACE_Refcountable_T<ACE_SYNCH_MUTEX>
     {
     public:
-      /// A monitor can hold various types of data and maintains stats
-      /// differently depending upon the type of information stored.
-      enum Information_Type
-      {
-        MC_COUNTER,
-        MC_NUMBER,
-        MC_TIME,
-        MC_INTERVAL,
-        MC_LIST,
-        MC_GROUP
-      };
-
       typedef Monitor_Control_Types::ConstraintList CONSTRAINTS;
       typedef CONSTRAINTS::const_iterator CONSTRAINT_ITERATOR;
 
-      Monitor_Base (const char* name, Information_Type type);
+      Monitor_Base (const char* name,
+                    Monitor_Control_Types::Information_Type type);
       virtual ~Monitor_Base (void);
 
       /// Implemented by the most-derived class. Does the actual
@@ -132,7 +121,7 @@ namespace ACE
       double last_sample (void) const;
 
       /// Return the type of this statistic
-      Information_Type type (void) const;
+      Monitor_Control_Types::Information_Type type (void) const;
       
       /// Return the list or error msg if wrong type.
       Monitor_Control_Types::NameList get_list (void) const;
@@ -150,15 +139,6 @@ namespace ACE
 
     private:
       ACE_CString name_;
-      Information_Type type_;
-
-      size_t index_;
-      bool minimum_set_;
-      double minimum_;
-      double maximum_;
-      double sum_;
-      double sum_of_squares_;
-      double last_;
     };
   }
 }
