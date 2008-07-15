@@ -7,7 +7,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Timestamp_Monitor::Timestamp_Monitor (const char *name)
-  : Monitor_Base (name, Monitor_Base::MC_TIME)
+  : Monitor_Base (name, Monitor_Control_Types::MC_TIME)
 {
 }
 

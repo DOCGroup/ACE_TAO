@@ -24,7 +24,7 @@ public:
   /// with the life of this object.
   TAO_Dynamic_Statistic (TYPE* interf,
                          const char* name,
-                         Monitor_Base::Information_Type type)
+                         Monitor_Control_Types::Information_Type type)
     : Monitor_Base (name, type),
       interf_ (interf)
   {

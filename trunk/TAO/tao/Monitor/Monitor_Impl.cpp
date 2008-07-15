@@ -84,8 +84,6 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-  Monitor_Control_Types::Data d;
-
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
@@ -103,6 +101,7 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
           dataitem->itemname = CORBA::string_dup (names[index].in());
           dataitem->dlist.length (1);
           ::Monitor::Data data;
+          Monitor_Control_Types::Data d (monitor->type ());
           monitor->retrieve (d);
           data.value = d.value_;
           ACE_UINT64 usecs;
@@ -130,8 +129,6 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
-  Monitor_Control_Types::Data d;
-
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
       /// Call on the administrator class to look up the desired monitors.
@@ -149,6 +146,7 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
           dataitem->itemname = CORBA::string_dup (names[index].in());
           dataitem->dlist.length (1);
           ::Monitor::Data data;
+          Monitor_Control_Types::Data d (monitor->type ());
           monitor->retrieve_and_clear (d);
           data.value = d.value_;
           ACE_UINT64 usecs;
