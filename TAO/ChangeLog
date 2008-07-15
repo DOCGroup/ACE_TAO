@@ -1,3 +1,18 @@
+Tue Jul 15 11:25:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CSI.idl
+        * orbsvcs/orbsvcs/CSIIOP.idl
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp
+        * orbsvcs/tests/Bug_3215_Regression/ServerRequest_Interceptor2.cpp
+        * orbsvcs/tests/Bug_3216_Regression/ServerRequest_Interceptor.cpp
+        * orbsvcs/tests/Bug_2615_Regression/ServerRequest_Interceptor2.cpp
+        * orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.cpp
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor2.cpp
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor.cpp
+          Replace IOP_IOR with IOP
+
 Tue Jul 15 01:10:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp
