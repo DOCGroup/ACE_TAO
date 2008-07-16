@@ -43,10 +43,6 @@ namespace ACE
      *
      * @brief Base class from which the template monitor point class is
      *        derived.
-     *
-     * All the operations are pure virtual so they can
-     * be implemented in the 'disabled' template specialization
-     * as no-ops.
      */
     class ACE_Export Monitor_Base
       : private ACE_Refcountable_T<ACE_SYNCH_MUTEX>
@@ -101,7 +97,7 @@ namespace ACE
 
       void add_ref (void);
       void remove_ref (void);
-      
+
       /// Calculate the average of the accumulated samples.
       double average (void) const;
 
@@ -122,7 +118,7 @@ namespace ACE
 
       /// Return the type of this statistic
       Monitor_Control_Types::Information_Type type (void) const;
-      
+
       /// Return the list or error msg if wrong type.
       Monitor_Control_Types::NameList get_list (void) const;
 
