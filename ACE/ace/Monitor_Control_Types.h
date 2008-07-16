@@ -39,7 +39,7 @@ namespace ACE
     {
       /// A monitor can hold various types of data and maintains stats
       /// differently depending upon the type of information stored.
-      enum ACE_Export Information_Type
+      enum Information_Type
       {
         MC_COUNTER,
         MC_NUMBER,
@@ -58,7 +58,7 @@ namespace ACE
         ACE_Time_Value timestamp_;
         double value_;
         ACE_Array_Base<char *> list_;
-        
+
         Information_Type type_;
 
         size_t index_;
