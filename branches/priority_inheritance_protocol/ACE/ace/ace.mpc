@@ -32,6 +32,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Barrier.cpp
     Base_Thread_Adapter.cpp
     Based_Pointer_Repository.cpp
+    Basic_P_Strategy.cpp
     Basic_Stats.cpp
     Basic_Types.cpp
     Capabilities.cpp
@@ -51,6 +52,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Copy_Disabled.cpp
     Countdown_Time.cpp
     Date_Time.cpp
+    DA_Strategy_Base.cpp
     DEV.cpp
     DEV_Addr.cpp
     DEV_Connector.cpp
@@ -90,7 +92,9 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     IO_Cntl_Msg.cpp
     IOStream.cpp
     IPC_SAP.cpp
+    k_Efficient_P_Strategy.cpp    
     Lib_Find.cpp
+    Live_P_Strategy.cpp    
     Local_Memory_Pool.cpp
     Lock.cpp
     Log_Msg.cpp
@@ -123,6 +127,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Method_Request.cpp
     MMAP_Memory_Pool.cpp
     Msg_WFMO_Reactor.cpp
+    MT_Priority_Reactor.cpp
     Multihomed_INET_Addr.cpp
     Mutex.cpp
     Netlink_Addr.cpp
@@ -175,6 +180,15 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     PI_Malloc.cpp
     Ping_Socket.cpp
     Pipe.cpp
+    PIP_Active_IO_Handler.cpp
+    PIP_Connection_Manager.cpp
+    PIP_DA_Strategy_Adapter.cpp
+    PIP_Dispatcher.cpp
+    PIP_Invocation_Manager.cpp
+    PIP_IO_Handler.cpp
+    PIP_Messages.cpp
+    PIP_Message_Handler.cpp
+    PIP_Reactive_IO_Handler.cpp
     POSIX_Asynch_IO.cpp
     POSIX_CB_Proactor.cpp
     POSIX_Proactor.cpp
@@ -375,9 +389,11 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
   Header_Files {
     ACE_export.h
     Array.h
+    Basic_P_Strategy.h
     Bound_Ptr.h
     CORBA_macros.h
     Condition_T.h
+    DA_Strategy_Base.h
     Default_Constants.h
     Exception_Macros.h
     Global_Macros.h
@@ -386,12 +402,14 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Handle_Gobbler.h
     If_Then_Else.h
     IO_Cntl_Msg.h
+    k_Efficient_P_Strategy.h
     Lock_Adapter_T.h
     Log_Priority.h
     Malloc_Base.h
     Method_Object.h
     Memory_Pool.h
     Min_Max.h
+    MT_Priority_Reactor.h
     Netlink_Addr.h
     Null_Barrier.h
     Null_Condition.h
@@ -406,6 +424,15 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     OS_Thread_Adapter.h
     Object_Manager_Base.h
     Pair.h
+    PIP_Active_IO_Handler.h
+    PIP_Connection_Manager.h
+    PIP_DA_Strategy_Adapter.h
+    PIP_Dispatcher.h
+    PIP_Invocation_Manager.h
+    PIP_IO_Handler.h
+    PIP_Messages.h
+    PIP_Message_Handler.h
+    PIP_Reactive_IO_Handler.h
     Proactor_Impl.h
     Reactor_Impl.h
     Reactor_Timer_Interface.h
