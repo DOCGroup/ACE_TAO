@@ -394,7 +394,16 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
         return -1;
     }
   else
-    return result;
+    {
+#  if defined (ACE_HAS_PHARLAP)
+      // Pharlap ETS (at least to v13) returns a legit address but doesn't
+      // include the sin_zero[8] bytes in the count. Correct for this here.
+      if (addrlen != 0 && addr != 0 &&
+          *addrlen == 8 && addr->sa_family == AF_INET)
+        *addrlen = sizeof(sockaddr_in);
+#  endif /* ACE_HAS_PHARLAP */
+      return result;
+    }
 #else /* non Win32 */
   ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle,
                                    buf,
