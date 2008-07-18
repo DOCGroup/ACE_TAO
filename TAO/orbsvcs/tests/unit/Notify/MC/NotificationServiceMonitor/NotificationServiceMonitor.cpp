@@ -104,7 +104,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                  "the incorrect number of names");
         }
 
-      CORBA::ULong index = 1UL;
+      CORBA::ULong index = start_size;
       CosNotification::NotificationServiceMonitorControl::Data_var d =
         monitor.get_statistic (safe_names[index]);
       CosNotification::NotificationServiceMonitorControl::Numeric num =
@@ -118,14 +118,14 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       CosNotification::NotificationServiceMonitorControl::DataList_var data =
         monitor.get_statistics (*names);
         
-      // We added 3 to whatever was there already.  
+      // We added 3 monitors to whatever was there already.  
       if (data.ptr () == 0 || data.in ().length () != start_size + 3)
         {
           error ("get_statistics() returned the "
                  "incorrect number of data elements");
         }
         
-      index = 2UL;  
+      index = start_size + 1;  
       num = data[index].num ();
       
       if (num.average != 4.5)
@@ -142,9 +142,8 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                  "the incorrect number of data elements");
         }
         
-      // Skip the first one, which is an ACE_Message_Queue
-      // monitor.  
-      for (index = 1UL; i < data.in ().length (); ++index)
+      // Skip the monitors not added by this test.
+      for (index = start_size; i < data.in ().length (); ++index)
         {
           num = data[index].num ();
           
