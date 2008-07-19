@@ -10,14 +10,6 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#if defined (__GNUG__)
-# include "ace/config-g++-common.h"
-#endif /* __GNUG__ */
-
-#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-
-#define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%lu")
-
 #if !defined (ACE_SIZEOF_LONG_DOUBLE)
 # if (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
    // Size of long double in GCC 3.3 is 8.
@@ -27,6 +19,14 @@
 #  define ACE_SIZEOF_LONG_DOUBLE 16
 # endif // GCC 3.3
 #endif // ACE_SIZEOF_LONG_DOUBLE
+
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+#endif /* __GNUG__ */
+
+#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+
+#define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%lu")
 
 #if !defined (__i386__)
 # if defined (ACE_HAS_PENTIUM)
