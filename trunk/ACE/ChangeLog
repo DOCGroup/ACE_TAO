@@ -1,3 +1,9 @@
+Sat Jul 19 19:58:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macosx-tiger.h:
+          Make sure we set the correct ACE_SIZEOF_LONG_DOUBLE value. Thanks
+          to Frank Förster <F dot Forster at herts dot ac dot uk> for reporting this
+
 Thu Jul 17 20:24:11 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_sys_socket.inl (recvfrom): For Pharlap ETS, correct for
