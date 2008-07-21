@@ -109,7 +109,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           /// Access the monitor's value a few times and watch it grow.
           for (int i = 0; i < n_iterations; ++i)
             {
-              Monitor::DataItemList_var data;
+              Monitor::DataList_var data;
 
               if (mp_clear)
                 {
@@ -123,14 +123,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               for (CORBA::ULong index = 0; index < data->length (); ++index)
                 {
                   ACE_DEBUG ((LM_DEBUG, "MP <%s>:\n", ACE_TEXT_CHAR_TO_TCHAR (data[index].itemname.in ())));
-                  Monitor::DataItem dlist = data[index];
+                  Monitor::Data dlist = data[index];
 
-                  for (CORBA::ULong valueindex = 0;
-                       valueindex < dlist.dlist.length ();
-                       ++valueindex)
+                  if (dlist.data_union._d() == Monitor::DATA_TEXT)
                   {
-                    Monitor::Data d = dlist.dlist[valueindex];
-                    ACE_DEBUG ((LM_DEBUG, "\t value <%A>:\n", d.value));
+                    for (CORBA::ULong valueindex = 0;
+                         valueindex < dlist.data_union.num().dlist.length ();
+                         ++valueindex)
+                    {
+                      Monitor::DataValue d = dlist.data_union.num().dlist[valueindex];
+                      ACE_DEBUG ((LM_DEBUG, "\t value <%A>:\n", d.value));
+                    }
                   }
                 }
 

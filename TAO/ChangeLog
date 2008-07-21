@@ -1,3 +1,11 @@
+Mon Jul 21 13:08:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/monitor/monitor_client.cpp:
+          updated for changes below
+
+        * utils/nslist/run_test.pl:
+          Updated for vxworks testing
+
 Mon Jul 21 13:06:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
