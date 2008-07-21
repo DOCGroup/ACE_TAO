@@ -5,7 +5,7 @@
 
 module Monitor
 {
-  struct Data
+  struct DataValue
   {
     /// The number of samples currently taken into account
     TimeBase::TimeT timestamp;
@@ -15,13 +15,27 @@ module Monitor
   typedef string Name;
   typedef string NameFilter;
   typedef CORBA::StringSeq NameList;
-  typedef sequence<Data> DataList;
-  struct DataItem
+  typedef sequence<DataValue> DataValueList;
+  struct Numeric
+  {
+    DataValueList dlist;
+    unsigned long count;
+    double average;
+    double sum_of_squares;
+    double minimum;
+    double maximum;
+  };
+  enum DataType { DATA_NUMERIC, DATA_TEXT };
+  union UData switch (DataType) {
+    case DATA_NUMERIC: Numeric num;
+    case DATA_TEXT: NameList list;
+  };
+  struct Data
   {
     Name itemname;
-    DataList dlist;
+    UData data_union;
   };
-  typedef sequence<DataItem> DataItemList;
+  typedef sequence<Data> DataList;
   typedef long ConstraintId;
   typedef sequence<ConstraintId> ConstraintIdList;
   typedef string Constraint;
@@ -34,7 +48,7 @@ module Monitor
 
   interface Subscriber
   {
-    oneway void push (in DataItemList dil);
+    oneway void push (in DataList dil);
   };
 
   /**
@@ -50,7 +64,7 @@ module Monitor
      * monitoring points. If they don't exist they are just
      * not in the list.
      */
-    DataItemList get_statistics (in NameList names);
+    DataList get_statistics (in NameList names);
 
     /**
      * Get and clear the statistics for the given monitor points.
@@ -58,7 +72,7 @@ module Monitor
      * monitoring points. If they don't exist they are just
      * not in the list.
      */
-    DataItemList get_and_clear_statistics (in NameList names);
+    DataList get_and_clear_statistics (in NameList names);
 
     /**
      * Clear the statistics for the given monitor points.

@@ -11,7 +11,17 @@
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
+#include "ace/Monitor_Base.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO_Monitor
+{
+  void get_monitor_data (
+   ::ACE::Monitor_Control::Monitor_Base *monitor,
+   Monitor::Data& data,
+   bool clear);
+}
 
 class Monitor_Impl
   : public virtual POA_Monitor::MC
@@ -22,10 +32,10 @@ public:
 
   virtual ::Monitor::NameList * get_statistic_names (const char * filter);
 
-  virtual ::Monitor::DataItemList * get_statistics (
+  virtual ::Monitor::DataList * get_statistics (
       const ::Monitor::NameList & names);
 
-  virtual ::Monitor::DataItemList * get_and_clear_statistics (
+  virtual ::Monitor::DataList * get_and_clear_statistics (
       const ::Monitor::NameList & names);
 
   virtual ::Monitor::NameList * clear_statistics (

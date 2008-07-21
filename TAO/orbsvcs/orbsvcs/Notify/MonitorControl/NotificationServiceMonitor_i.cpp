@@ -2,6 +2,7 @@
 
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
+#include "tao/Monitor/Monitor_Impl.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Base.h"
@@ -46,7 +47,7 @@ NotificationServiceMonitor_i::get_statistic_names (void)
   return safe_names._retn ();
 }
 
-CosNotification::NotificationServiceMonitorControl::Data*
+Monitor::Data*
 NotificationServiceMonitor_i::get_statistic (const char* name)
 {
   Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
@@ -62,15 +63,15 @@ NotificationServiceMonitor_i::get_statistic (const char* name)
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
     }
 
-  CosNotification::NotificationServiceMonitorControl::Data* data = 0;
+  Monitor::Data* data = 0;
   ACE_NEW_THROW_EX (data,
-                    CosNotification::NotificationServiceMonitorControl::Data,
+                    Monitor::Data,
                     CORBA::NO_MEMORY ());
   this->get_data (registry, name, *data);
   return data;
 }
 
-CosNotification::NotificationServiceMonitorControl::DataList*
+Monitor::DataList*
 NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
 {
   Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
@@ -83,14 +84,13 @@ NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
     }
 
-  CORBA::ULong length = names.length ();
-  CosNotification::NotificationServiceMonitorControl::DataList* data = 0;
+  CORBA::ULong const length = names.length ();
+  Monitor::DataList* data = 0;
   ACE_NEW_RETURN (data,
-                  CosNotification::NotificationServiceMonitorControl::DataList (
+                  Monitor::DataList (
                     length),
                   0);
-  ACE_Auto_Basic_Ptr<CosNotification::NotificationServiceMonitorControl::DataList>
-    safe_data (data);
+  ACE_Auto_Basic_Ptr<Monitor::DataList> safe_data (data);
 
   data->length (length);
 
@@ -102,11 +102,11 @@ NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
   return safe_data.release ();
 }
 
-CosNotification::NotificationServiceMonitorControl::DataList*
+Monitor::DataList*
 NotificationServiceMonitor_i::get_and_clear_statistics (
   const Monitor::NameList& names)
 {
-  CosNotification::NotificationServiceMonitorControl::DataList* data =
+  Monitor::DataList* data =
     this->get_statistics (names);
 
   // We've gotten to the point where we have a list of data.
@@ -143,7 +143,7 @@ NotificationServiceMonitor_i::clear_statistics (
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
     }
 
-  CORBA::ULong length = names.length ();
+  CORBA::ULong const length = names.length ();
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
@@ -220,7 +220,7 @@ void
 NotificationServiceMonitor_i::get_data (
    Monitor_Point_Registry* registry,
    const char* name,
-   CosNotification::NotificationServiceMonitorControl::Data& data)
+   Monitor::Data& data)
 {
   // Get the statistic by name.
   Monitor_Base* monitor = registry->get (name);
@@ -231,61 +231,16 @@ NotificationServiceMonitor_i::get_data (
       // statistic was available.  However, we have failed to
       // retrieve it.  The only reason that could happen is if
       // some one removed the statistic from the registry.
-      CosNotification::NotificationServiceMonitorControl::Numeric num;
+      Monitor::Numeric num;
       num.count = 0;
       num.average = 0;
       num.sum_of_squares = 0;
       num.minimum = 0;
       num.maximum = 0;
-      num.last = 0;
-      data.num (num);
     }
   else
     {
-      // If it's not a counter, we need to make sure that we have
-      // the most up-to-date information.  A counter will always have
-      // the correct value.
-      if (monitor->type () != Monitor_Control_Types::MC_COUNTER)
-        {
-          monitor->update ();
-        }
-        
-      // Populate the data structure based on the type of statistic
-      if (monitor->type () == Monitor_Control_Types::MC_LIST)
-        {
-          Monitor_Control_Types::NameList slist (monitor->get_list ());
-          CORBA::ULong size = static_cast<CORBA::ULong> (slist.size ());
-          Monitor::NameList list (size);
-          list.length (size);
-
-          for (CORBA::ULong i = 0; i < size; ++i)
-            {
-              list[i] = CORBA::string_dup (slist[i].c_str ());
-            }
-
-          data.list (list);
-        }
-      else
-        {
-          CosNotification::NotificationServiceMonitorControl::Numeric num;
-          num.count = static_cast<CORBA::ULong> (monitor->count ());
-          num.minimum = monitor->minimum_sample ();
-          num.maximum = monitor->maximum_sample ();
-          num.last = monitor->last_sample ();
-
-          if (monitor->type() == Monitor_Control_Types::MC_COUNTER)
-            {
-              num.average = 0;
-              num.sum_of_squares = 0;
-            }
-          else
-            {
-              num.average = monitor->average ();
-              num.sum_of_squares = monitor->sum_of_squares ();
-            }
-
-          data.num (num);
-        }
+      TAO_Monitor::get_monitor_data (monitor, data, false);
     }
 }
 
@@ -298,7 +253,7 @@ NotificationServiceMonitor_i::get_invalid_names (
   invalid.length (0);
 
   CORBA::ULong ilength = 0;
-  CORBA::ULong length  = names.length ();
+  CORBA::ULong const length  = names.length ();
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {

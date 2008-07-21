@@ -39,16 +39,16 @@ public:
   virtual Monitor::NameList* get_statistic_names (void);
 
   /// Get the data from a single statistic
-  virtual CosNotification::NotificationServiceMonitorControl::Data*
+  virtual Monitor::Data*
   get_statistic (const char* name);
 
   /// Get the data from multiple statistic instances
-  virtual CosNotification::NotificationServiceMonitorControl::DataList*
+  virtual Monitor::DataList*
   get_statistics (const Monitor::NameList& names);
 
   /// Get the data from multiple statistic instances and clear them
   /// directly afterward
-  virtual CosNotification::NotificationServiceMonitorControl::DataList*
+  virtual Monitor::DataList*
   get_and_clear_statistics (const Monitor::NameList& names);
 
   /// Clear the data from multiple statistic instances
@@ -73,12 +73,11 @@ public:
   virtual void shutdown (void);
 
 private:
-  void send_control_command (const char* name,
-                             const char* cmd);
+  void send_control_command (const char* name, const char* cmd);
 
   void get_data (Monitor_Point_Registry* registry,
                  const char* name,
-                 CosNotification::NotificationServiceMonitorControl::Data& data);
+                 Monitor::Data& data);
 
   void get_invalid_names (Monitor_Point_Registry* registry,
                           const Monitor::NameList& names,

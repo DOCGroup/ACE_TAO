@@ -35,7 +35,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                             -1);
         }
     }
-      
+
   return 0;
 }
 
@@ -57,19 +57,19 @@ process_command (CosNotification::NotificationServiceMonitorControl_ptr nsm,
       const char* name = buf + ACE_OS::strlen (command);
       bool space = false;
       size_t i = 0;
-      
+
       while (ACE_OS::ace_isspace (name[i]))
         {
           space = true;
-          i++;
+          ++i;
         }
-        
+
       if (space)
         {
           try
             {
               const char* start = name + i;
-              
+
               if (ACE_OS::strcmp (command, shutdown_cmd) == 0)
                 {
                   nsm->shutdown_event_channel (start);
@@ -96,7 +96,7 @@ process_command (CosNotification::NotificationServiceMonitorControl_ptr nsm,
               ACE_OS::strcat (buf, ": ");
               ex._tao_print_exception (buf);
             }
-            
+
           return true;
         }
     }
@@ -108,7 +108,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   int status = 0;
-  
+
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -134,7 +134,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       bool done = false;
       static const size_t lsize = 1024;
       char prev[lsize];
-      
+
       while (!done)
         {
           ACE_OS::printf ("NotifyService> ");
@@ -142,11 +142,11 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
           char line[lsize] = "";
           char* rl = ACE_OS::fgets (line, lsize, stdin);
-          
+
           if (rl != 0)
             {
               int len = static_cast<int> (ACE_OS::strlen (line));
-              
+
               for (int i = 0; i < len && ACE_OS::ace_isspace (rl[0]); ++i)
                 {
                   rl++;
@@ -162,7 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                   ACE_OS::strcpy (line, prev);
                   rl = line;
                 }
-                
+
               ACE_OS::strcpy (prev, line);
             }
 
@@ -211,12 +211,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                   ACE_NEW_THROW_EX (narray,
                                     const char* [length],
                                     CORBA::NO_MEMORY ());
-                                    
+
                   for (CORBA::ULong i = 0; i < length; ++i)
                     {
                       narray[i] = names[i].in ();
                     }
-                    
+
                   ACE_OS::qsort (narray,
                                  length,
                                  sizeof (const char*),
@@ -226,7 +226,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG, "  %s\n", narray[i]));
                     }
-                    
+
                   delete [] narray;
                 }
               catch (const CORBA::Exception& ex)
@@ -259,29 +259,27 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
               try
                 {
-                  CosNotification::NotificationServiceMonitorControl::Data_var data =
+                  Monitor::Data_var data =
                     nsm->get_statistic (rl);
                   ACE_DEBUG ((LM_DEBUG, "%s => ", rl));
-                  
-                  if (data->_d () == CosNotification::NotificationServiceMonitorControl::DATA_NUMERIC)
+
+                  if (data->data_union._d () == Monitor::DATA_NUMERIC)
                     {
-                      CosNotification::NotificationServiceMonitorControl::Numeric_var num =
-                        data->num ();
                       ACE_DEBUG ((LM_DEBUG,
                                   "Last: %g Average: %g\n",
-                                  num->last,
-                                  num->average));
+                                  data->data_union.num().dlist[0],
+                                  data->data_union.num().average));
                     }
                   else
                     {
-                      Monitor::NameList list = data->list ();
-                      CORBA::ULong length = list.length ();
-                      
+                      Monitor::NameList list = data->data_union.list ();
+                      CORBA::ULong const length = list.length ();
+
                       for (CORBA::ULong i = 0; i < length; ++i)
                         {
                           ACE_DEBUG ((LM_DEBUG, "%s ", list[i].in ()));
                         }
-                        
+
                       ACE_DEBUG ((LM_DEBUG, "\n"));
                     }
                 }
@@ -298,12 +296,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   catch (const CORBA::UserException& ex)
     {
       ex._tao_print_exception ("Notification Service Monitor: ");
-      status++;
+      ++status;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Notification Service Monitor: ");
-      status++;
+      ++status;
     }
   catch (...)
     {
