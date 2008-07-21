@@ -1,3 +1,8 @@
+Mon Jul 21 13:09:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Run nslist tests under vxworks
+
 Sat Jul 19 19:58:54 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macosx-tiger.h:
