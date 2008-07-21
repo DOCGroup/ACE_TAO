@@ -16,8 +16,15 @@ use PerlACE::Run_Test;
 
 # Variables for command-line arguments to client and server
 # executables.
-my $iorfile = PerlACE::LocalFile ("ns.ior");
-my $NS = new PerlACE::Process ("../../orbsvcs/Naming_Service/Naming_Service");
+my $iorfilebase = "ns.ior";
+my $iorfile = PerlACE::LocalFile ("$iorfilebase");
+my $NS;
+if (PerlACE::is_vxworks_test()) {
+  $NS = new PerlACE::ProcessVX ("../../orbsvcs/Naming_Service/Naming_Service");
+}
+else {
+  $NS = new PerlACE::Process ("../../orbsvcs/Naming_Service/Naming_Service");
+}
 my $CL = new PerlACE::Process ("../../orbsvcs/tests/Simple_Naming/client");
 my $LS = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/nslist");
 my $AD = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/nsadd");
