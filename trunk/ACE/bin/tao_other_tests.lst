@@ -166,7 +166,7 @@ TAO/examples/RTCORBA/Activity/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS  !STATIC !ST !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ST !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/examples/ior_corbaloc/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO !CORBA_E_MICRO !VxWorks !VxWorks_RTP
-TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO !CORBA_E_MICRO !VxWorks !VxWorks_RTP
+TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO !CORBA_E_MICRO
 TAO/orbsvcs/tests/BiDir_CORBALOC/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO !CORBA_E_MICRO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/IOR_MCast/run_test_ipv6.pl: IPV6 !NO_MCAST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Bug_2709_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !ST !VxWorks !VxWorks_RTP
