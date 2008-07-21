@@ -61,17 +61,14 @@ TAO_CEC_TypedConsumerAdmin::shutdown (void)
 
 CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_typed_pull_supplier (
-    const char * /*supported_interface*/
-  )
+    const char * /*supported_interface*/)
 {
   throw CosTypedEventChannelAdmin::InterfaceNotSupported ();
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
-    const char * uses_interface
-  )
-
+    const char * uses_interface)
 {
   // Register the consumer uses_interface with the EC
   int result = this->typed_event_channel_->consumer_register_uses_interace (uses_interface);

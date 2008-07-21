@@ -1,7 +1,33 @@
+Mon Jul 21 13:06:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+          Updated to use new monitor types
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.cpp:
+          Layout changes
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMC.idl:
+          Moved struct definitions to TAO monitor lib and use the structs from
+          there
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h:
+          Updated to use TAO Monitor code
+
+        * tao/Monitor/Monitor.pidl:
+          Extended structs with the information from the notification service
+
+        * tao/Monitor/Monitor_Impl.cpp:
+        * tao/Monitor/Monitor_Impl.h:
+          Update to fill updated structs
+
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.h:
+          Layout change
+
 Fri Jul 18 12:16:28 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
-        
+
           More fixes to make this test portable over platforms that
           have differing numbers of monitors already added at the start
           of the test.
@@ -12,7 +38,7 @@ Tue Jul 15 17:36:24 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Statistic_Registry.cpp:
         * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
 
-          Changes corresponding to relocation of monitor statistics-related 
+          Changes corresponding to relocation of monitor statistics-related
           values in ACE.
 
 Tue Jul 15 17:20:17 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
