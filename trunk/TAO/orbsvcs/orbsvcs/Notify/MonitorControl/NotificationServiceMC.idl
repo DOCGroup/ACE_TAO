@@ -11,7 +11,6 @@
 #ifndef NOTIFICATIONSERVICEMC_IDL
 #define NOTIFICATIONSERVICEMC_IDL
 
-//#include <orb.idl>
 #include "tao/Monitor/Monitor_include.pidl"
 
 #pragma prefix "sandia.gov"
@@ -20,49 +19,19 @@ module CosNotification
 {
   interface NotificationServiceMonitorControl
   {
-    struct Numeric
-    {
-      /// The number of samples currently taken into account
-      unsigned long count;
-
-      /// The average of the accumulated samples.
-      double average;
-
-      /// The sum of the squares of the samples.
-      double sum_of_squares;
-
-      /// The minimum sample value recorded
-      double minimum;
-
-      /// The maximum sample value recorded
-      double maximum;
-
-      /// The last sample value recored
-      double last;
-    };
-
-//    typedef sequence<string> NameList;
-
     exception InvalidName {
       Monitor::NameList names;
     };
 
-    enum DataType { DATA_NUMERIC, DATA_TEXT };
-    union Data switch (DataType) {
-      case DATA_NUMERIC: Numeric num;
-      case DATA_TEXT: Monitor::NameList list;
-    };
-
     Monitor::NameList get_statistic_names ();
 
-    Data get_statistic (in string name)
+    Monitor::Data get_statistic (in string name)
       raises (InvalidName);
 
-    typedef sequence<Data> DataList;
-    DataList get_statistics (in Monitor::NameList names)
+    Monitor::DataList get_statistics (in Monitor::NameList names)
       raises (InvalidName);
 
-    DataList get_and_clear_statistics (in Monitor::NameList names)
+    Monitor::DataList get_and_clear_statistics (in Monitor::NameList names)
       raises (InvalidName);
 
     void clear_statistics (in Monitor::NameList names)

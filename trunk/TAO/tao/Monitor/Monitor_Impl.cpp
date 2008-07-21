@@ -26,7 +26,7 @@ public:
     try
       {
         // @todo, really want to send the value to the subscriber.
-        ::Monitor::DataItemList d;
+        ::Monitor::DataList d;
         sub_->push (d);
       }
     catch (const ::CORBA::Exception&)
@@ -44,7 +44,7 @@ Monitor_Impl::Monitor_Impl (CORBA::ORB_ptr orb)
 }
 
 ::Monitor::NameList *
-Monitor_Impl::get_statistic_names (const char * /* filter */)
+Monitor_Impl::get_statistic_names (const char * filter)
 {
   Monitor_Control_Types::NameList mc_names =
     Monitor_Point_Registry::instance ()->names ();
@@ -60,29 +60,32 @@ Monitor_Impl::get_statistic_names (const char * /* filter */)
        !i.done ();
        i.advance (), ++index)
     {
-      CORBA::ULong length = namelist->length ();
-      namelist->length (length + 1);
       ACE_CString *item = 0;
       i.next (item);
 
-      // @todo Check filter
-      (*namelist)[length] = CORBA::string_dup (item->c_str ());
+      if (ACE::wild_match (item->c_str (), filter, false))
+        {
+          CORBA::ULong const length = namelist->length ();
+          namelist->length (length + 1);
+          (*namelist)[length] = CORBA::string_dup (item->c_str ());
+        }
     }
 
   return namelist;
 }
 
-::Monitor::DataItemList *
+::Monitor::DataList *
 Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
 {
-  ::Monitor::DataItemList *datalist = 0;
+  ::Monitor::DataList *datalist = 0;
   ACE_NEW_THROW_EX (datalist,
-                    ::Monitor::DataItemList (names.length ()),
+                    ::Monitor::DataList (names.length ()),
                     CORBA::NO_MEMORY ());
 
   /// Get an instance of the MC service singleton.
   MC_ADMINMANAGER* mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+
 
   for (CORBA::ULong index = 0; index < names.length (); ++index)
     {
@@ -92,23 +95,12 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
 
       if (monitor != 0)
         {
+          Monitor_Control_Types::Data d (monitor->type ());
           CORBA::ULong const length = datalist->length();
           datalist->length (length + 1);
-          ::Monitor::DataItem *dataitem = 0;
-          ACE_NEW_THROW_EX (dataitem,
-                            ::Monitor::DataItem,
-                            CORBA::NO_MEMORY ());
-          dataitem->itemname = CORBA::string_dup (names[index].in());
-          dataitem->dlist.length (1);
           ::Monitor::Data data;
-          Monitor_Control_Types::Data d (monitor->type ());
-          monitor->retrieve (d);
-          data.value = d.value_;
-          ACE_UINT64 usecs;
-          d.timestamp_.to_usec (usecs);
-          data.timestamp = usecs;
-          (*dataitem).dlist[0] = data;
-          (*datalist)[length] = *dataitem;
+          TAO_Monitor::get_monitor_data (monitor, data, false);
+          (*datalist)[length] = data;
 
           monitor->remove_ref ();
         }
@@ -117,12 +109,12 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
   return datalist;
 }
 
-::Monitor::DataItemList *
+::Monitor::DataList *
 Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
 {
-  ::Monitor::DataItemList *datalist = 0;
+  ::Monitor::DataList *datalist = 0;
   ACE_NEW_THROW_EX (datalist,
-                    ::Monitor::DataItemList (names.length ()),
+                    ::Monitor::DataList (names.length ()),
                     CORBA::NO_MEMORY ());
 
   /// Get an instance of the MC service singleton.
@@ -139,21 +131,9 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
         {
           CORBA::ULong const length = datalist->length();
           datalist->length (length + 1);
-          ::Monitor::DataItem *dataitem = 0;
-          ACE_NEW_THROW_EX (dataitem,
-                            ::Monitor::DataItem,
-                            CORBA::NO_MEMORY ());
-          dataitem->itemname = CORBA::string_dup (names[index].in());
-          dataitem->dlist.length (1);
           ::Monitor::Data data;
-          Monitor_Control_Types::Data d (monitor->type ());
-          monitor->retrieve_and_clear (d);
-          data.value = d.value_;
-          ACE_UINT64 usecs;
-          d.timestamp_.to_usec (usecs);
-          data.timestamp = usecs;
-          (*dataitem).dlist[0] = data;
-          (*datalist)[length] = *dataitem;
+          TAO_Monitor::get_monitor_data (monitor, data, true);
+          (*datalist)[length] = data;
 
           monitor->remove_ref ();
         }
@@ -161,6 +141,75 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
 
   return datalist;
 }
+
+void
+TAO_Monitor::get_monitor_data (
+   ACE::Monitor_Control::Monitor_Base *monitor,
+   Monitor::Data& data,
+   bool clear)
+{
+  // If it's not a counter, we need to make sure that we have
+  // the most up-to-date information.  A counter will always have
+  // the correct value.
+  if (monitor->type () != Monitor_Control_Types::MC_COUNTER)
+    {
+      monitor->update ();
+    }
+
+  // Populate the data structure based on the type of statistic
+  if (monitor->type () == Monitor_Control_Types::MC_LIST)
+    {
+      Monitor_Control_Types::NameList slist (monitor->get_list ());
+      CORBA::ULong size = static_cast<CORBA::ULong> (slist.size ());
+      Monitor::NameList list (size);
+      list.length (size);
+
+      for (CORBA::ULong i = 0; i < size; ++i)
+        {
+          list[i] = CORBA::string_dup (slist[i].c_str ());
+        }
+
+      data.data_union._d (::Monitor::DATA_TEXT);
+      data.data_union.list (list);
+    }
+  else
+    {
+      Monitor::Numeric num;
+      num.count = static_cast<CORBA::ULong> (monitor->count ());
+      num.minimum = monitor->minimum_sample ();
+      num.maximum = monitor->maximum_sample ();
+      num.dlist.length (1);
+      num.dlist[0].value = monitor->last_sample ();
+      Monitor_Control_Types::Data d (monitor->type ());
+      if (clear)
+        {
+          monitor->retrieve_and_clear (d);
+        }
+      else
+        {
+          monitor->retrieve (d);
+        }
+      ACE_UINT64 usecs;
+      d.timestamp_.to_usec (usecs);
+
+      if (monitor->type() == Monitor_Control_Types::MC_COUNTER)
+        {
+          num.average = 0;
+          num.sum_of_squares = 0;
+        }
+      else
+        {
+          num.average = monitor->average ();
+          num.sum_of_squares = monitor->sum_of_squares ();
+        }
+
+      data.data_union._d (::Monitor::DATA_NUMERIC);
+      data.data_union.num (num);
+      data.data_union.num ().dlist[0].value = d.value_;
+      data.data_union.num ().dlist[0].timestamp = usecs;
+    }
+}
+
 
 ::Monitor::NameList *
 Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
@@ -181,8 +230,7 @@ Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
       ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
-      if (monitor != 0)
-        {
+      if (monitor != 0)        {
           CORBA::ULong const length = namelist->length ();
           namelist->length (length + 1);
           (*namelist)[length] = CORBA::string_dup (names[index].in ());
