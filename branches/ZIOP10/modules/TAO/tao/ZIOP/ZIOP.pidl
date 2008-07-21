@@ -7,33 +7,8 @@ module ZIOP
   struct CompressedData {
     Compression::CompressorId compressorid;
     unsigned long original_length;
-    CORBA::OctetSeq data;
+    Compression::Buffer data;
    };
-
-  const IOP::ComponentId TAG_ZIOP_COMPONENT = 0x54410555;
-
-    //
-    // IOR Component for ZIOP
-    //
-
-    /**
-     * The ZIOP IOR Component. Has an CompressorId attribute indicating the
-     * compression algorithm supported by the server side.
-     */
-//    local interface CompressionComponent : IT_IOR::Component
-//    {
-//        readonly attribute CompressorId compressor_id;
-//    };
-
-    /**
-     * Factory for ZIOP IOR Components
-     */
-//    local interface CompressionComponentFactory : IT_IOR::ComponentFactory
-//    {
-//        CompressionComponent get_compression_component(
-//            in CompressorId compressor_id
-//        );
-//    };
 
     //
     // ORB Policies for ZIOP
@@ -62,7 +37,7 @@ module ZIOP
      * The ZIOP CompressorIdListPolicy. Has an CompressorId attribute indicating
      * the compression algorithm to be used.
      */
-    local interface CompressorIdListPolicy : CORBA::Policy
+    local interface CompressorIdLevelListPolicy : CORBA::Policy
     {
         readonly attribute Compression::CompressorIdLevelList compressor_ids;
     };

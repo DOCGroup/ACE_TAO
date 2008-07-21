@@ -105,8 +105,8 @@ private:
   //   override for a given policy type, and then reconciling it with
   //   the policy value exported in the Object's IOR.
 
-  CORBA::Policy *effective_priority_banded_connection (void);
-  CORBA::Policy *effective_client_protocol (void);
+  CORBA::Policy_ptr effective_priority_banded_connection (void);
+  CORBA::Policy_ptr effective_client_protocol (void);
 
   // The following attribute are used to cache
   // the different kind of policies and avoid to
@@ -119,7 +119,7 @@ private:
 
   CORBA::Policy_var client_protocol_policy_;
 
-  CORBA::Boolean are_policies_parsed_;
+  bool are_policies_parsed_;
 
 private:
   // = Disallow copying and assignment.

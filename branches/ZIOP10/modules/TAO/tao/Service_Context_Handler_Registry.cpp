@@ -21,10 +21,13 @@ TAO_Service_Context_Registry::process_service_contexts (
        ++index)
   {
     IOP::ServiceContext const & context = sc[index];
-    TAO_Service_Context_Handler* const handler = registry_[context.context_id];
-    if (handler)
+// bug here on next lone
+    iterator handler_iter = registry.find ('context.context_id');
+
+//    TAO_Service_Context_Handler* const handler = registry_[context.context_id];
+    if (iterator != registry_.end ())
       {
-        return handler->process_service_context (transport, context);
+        return iterator->process_service_context (transport, context);
       }
   }
   return 0;

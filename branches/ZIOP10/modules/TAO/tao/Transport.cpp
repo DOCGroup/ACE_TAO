@@ -448,10 +448,10 @@ TAO_Transport::generate_request_header (
       TAO_Codeset_Manager * const csm = this->orb_core ()->codeset_manager ();
       if (csm)
         csm->generate_service_context (opdetails, *this);
-        
+
       TAO_ZIOP_Adapter* ziop_adapter = this->orb_core ()->ziop_adapter ();
       if (ziop_adapter)
-        ziop_adapter->generate_service_context (opdetails.request_service_context (), *this);  
+        ziop_adapter->generate_service_context (opdetails.request_service_context (), *this);
     }
 
   if (this->messaging_object ()->generate_request_header (opdetails,

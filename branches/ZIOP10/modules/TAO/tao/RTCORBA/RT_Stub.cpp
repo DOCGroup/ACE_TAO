@@ -54,8 +54,7 @@ TAO_RT_Stub::parse_policies (void)
         {
           case RTCORBA::PRIORITY_MODEL_POLICY_TYPE:
             {
-              this->exposed_priority_model (policy_list[i]);
-            }
+              this->exposed_priority_model (policy_list[i]);            }
             break;
           case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE :
             {
@@ -198,7 +197,7 @@ TAO_RT_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
   return this->TAO_Stub::set_policy_overrides(policies, set_add);
 }
 
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_RT_Stub::effective_priority_banded_connection (void)
 {
   // Get effective override.
@@ -246,7 +245,7 @@ TAO_RT_Stub::effective_priority_banded_connection (void)
   throw ::CORBA::INV_POLICY ();
 }
 
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_RT_Stub::effective_client_protocol (void)
 {
   // Get effective override.
