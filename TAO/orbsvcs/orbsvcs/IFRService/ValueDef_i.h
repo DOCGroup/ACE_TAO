@@ -248,6 +248,14 @@ public:
   static int name_clash (const char *name);
 
   void fill_value_description (CORBA::ValueDescription &desc);
+
+  /// Gathers the members of all the ancestors.
+  void value_contents (
+      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
+      ACE_Unbounded_Queue<ACE_TString> &path_queue,
+      CORBA::DefinitionKind limit_type,
+      CORBA::Boolean exclude_inherited
+    );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
