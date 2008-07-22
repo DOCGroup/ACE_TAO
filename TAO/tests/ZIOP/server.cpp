@@ -108,7 +108,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       try {
         policies[0] = orb->create_policy(ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabling_any);
-        policies[1] = orb->create_policy(ZIOP::COMPRESSION_ID_LIST_POLICY_ID,compressor_id_any);
+        policies[1] = orb->create_policy(ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID,compressor_id_any);
         //policies[2] = orb->create_policy(ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID,compressor_id_any);
         //policies[3] = orb->create_policy(ZIOP::MIN_COMPRESSION_RATIO_POLICY_ID,min_compression_ratio);
         my_compress_poa = root_poa->create_POA("My_Compress_Poa", 0, policies);
