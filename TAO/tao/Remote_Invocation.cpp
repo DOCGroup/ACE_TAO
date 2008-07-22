@@ -11,6 +11,7 @@
 #include "tao/Network_Priority_Protocols_Hooks.h"
 #include "tao/debug.h"
 #include "tao/SystemException.h"
+#include "tao/ZIOP_Adapter.h"
 
 ACE_RCSID (tao,
            Remote_Invocation,
@@ -40,8 +41,8 @@ namespace TAO
   {
     /**
      * Mega hack for RTCORBA start. I don't think that
-     * PortableInterceptor  would work here esp. for RTCORBA. PI needs
-     * to be improved to  help our cause.
+     * PortableInterceptor would work here esp. for RTCORBA. PI needs
+     * to be improved to help our cause.
      */
     this->resolver_.stub ()->orb_core ()->service_context_list (
       this->resolver_.stub (),
@@ -118,10 +119,22 @@ namespace TAO
 
   void
   Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
-  {
-    if (this->details_.marshal_args (out_stream) == false)
+    {
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+    TAO_ZIOP_Adapter* ziop_adapter = this->stub()->orb_core()->ziop_adapter ();
+
+    if (ziop_adapter)
       {
-        throw ::CORBA::MARSHAL ();
+         ziop_adapter->marshal_data (this->details_, out_stream, this->resolver_);
+      }
+    else
+#endif
+      {
+        // Marshal application data
+        if (this->details_.marshal_args (out_stream) == false)
+          {
+            throw ::CORBA::MARSHAL ();
+          }
       }
   }
 

@@ -23,6 +23,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/MMAP_Allocator.h"
 #include "tao/SystemException.h"
+#include "tao/operation_details.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -148,7 +149,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , char_translator_ (0)
   , wchar_translator_ (0)
   , tcs_set_ (0)
-  , first_request_ (1)
+  , first_request_ (true)
   , partial_message_ (0)
 #if TAO_HAS_SENDFILE == 1
     // The ORB has been configured to use the MMAP allocator, meaning
@@ -421,7 +422,7 @@ TAO_Transport::generate_locate_request (
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - Transport[%d]::generate_locate_request, ")
                       ACE_TEXT ("error while marshalling the LocateRequest header\n"),
                       this->id ()));
@@ -445,7 +446,7 @@ TAO_Transport::generate_request_header (
     {
       TAO_Codeset_Manager * const csm = this->orb_core ()->codeset_manager ();
       if (csm)
-        csm->generate_service_context (opdetails,*this);
+        csm->generate_service_context (opdetails, *this);
     }
 
   if (this->messaging_object ()->generate_request_header (opdetails,
@@ -454,9 +455,9 @@ TAO_Transport::generate_request_header (
     {
       if (TAO_debug_level > 0)
         {
-        ACE_DEBUG ((LM_DEBUG,
-                   ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
-                   ACE_TEXT ("error while marshalling the Request header\n"),
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
+                      ACE_TEXT ("error while marshalling the Request header\n"),
                       this->id()));
         }
 
@@ -781,12 +782,6 @@ TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_mess
     }
 
   return 0;
-}
-
-bool
-TAO_Transport::queue_is_empty_i (void)
-{
-  return (this->head_ == 0);
 }
 
 int
@@ -1889,9 +1884,9 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
 
 
 int
-TAO_Transport::handle_input_parse_extra_messages (ACE_Message_Block &message_block)
+TAO_Transport::handle_input_parse_extra_messages (
+  ACE_Message_Block &message_block)
 {
-
   // store buffer status of last extraction: -1 parse error, 0
   // incomplete message header in buffer, 1 complete messages header
   // parsed
@@ -1935,7 +1930,6 @@ int
 TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                                          ACE_Time_Value * max_wait_time)
 {
-
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -1943,7 +1937,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
          ACE_TEXT ("enter\n"),
          this->id ()));
     }
-
 
   // The buffer on the stack which will be used to hold the input
   // messages, ACE_CDR::MAX_ALIGNMENT compensates the
@@ -2067,7 +2060,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   // invocation context to get meaningful information.
   this->recv_buffer_size_ = recv_size;
 
-  // Read the message into the  message block that we have created on
+  // Read the message into the message block that we have created on
   // the stack.
   ssize_t const n = this->recv (message_block.wr_ptr (),
                                 recv_size,
@@ -2164,8 +2157,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
       size_t mesg_length  = 0;
 
-      if (this->messaging_object ()->parse_next_message (qd,
-                                                         mesg_length) == -1
+      if (this->messaging_object ()->parse_next_message (qd, mesg_length) == -1
           || (qd.missing_data () == 0
               && mesg_length > message_block.length ()) )
         {
@@ -2232,8 +2224,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                     }
                 }
 
-              TAO_Queued_Data *nqd =
-                TAO_Queued_Data::duplicate (qd);
+              TAO_Queued_Data *nqd = TAO_Queued_Data::duplicate (qd);
 
               if (nqd == 0)
                 {
@@ -2303,7 +2294,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
                 }
 
-              const int retval = this->notify_reactor ();
+              int const retval = this->notify_reactor ();
 
               if (retval == 1)
                 {
@@ -2322,8 +2313,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
             }
 
           // PRE: incoming_message_queue is empty
-          if (this->process_parsed_messages (&qd,
-                                             rh) == -1)
+          if (this->process_parsed_messages (&qd, rh) == -1)
             {
               return -1;
             }
@@ -2381,10 +2371,12 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     case GIOP::CloseConnection:
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-           ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
-           ACE_TEXT ("received CloseConnection message - %m\n"),
-           this->id()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+             ACE_TEXT ("received CloseConnection message - %m\n"),
+             this->id()));
+        }
 
       // Return a "-1" so that the next stage can take care of
       // closing connection and the necessary memory management.
@@ -2398,9 +2390,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       // request. This will open up the handle for other threads.
       rh.resume_handle ();
 
-      if (this->messaging_object ()->process_request_message (
-            this,
-            qd) == -1)
+      if (this->messaging_object ()->process_request_message (this, qd) == -1)
         {
           // Return a "-1" so that the next stage can take care of
           // closing connection and the necessary memory management.
@@ -2418,10 +2408,12 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       if (this->messaging_object ()->process_reply_message (params, qd) == -1)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
-               ACE_TEXT ("error in process_reply_message - %m\n"),
-               this->id ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+                 ACE_TEXT ("error in process_reply_message - %m\n"),
+                 this->id ()));
+            }
 
           return -1;
         }

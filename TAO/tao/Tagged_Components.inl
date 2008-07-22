@@ -47,7 +47,7 @@ TAO_Tagged_Components::get_code_sets (
   return this->code_sets_set_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Tagged_Components::known_tag (IOP::ComponentId tag) const
 {
   return (tag == IOP::TAG_ORB_TYPE
@@ -55,7 +55,7 @@ TAO_Tagged_Components::known_tag (IOP::ComponentId tag) const
 }
 
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
 {
   return (tag == IOP::TAG_ORB_TYPE

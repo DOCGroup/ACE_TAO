@@ -137,7 +137,7 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
                                    ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object_->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream) != 0)
     return -1;
 
   // This guarantees to send all data (bytes) or return an error.

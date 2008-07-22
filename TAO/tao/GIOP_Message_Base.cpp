@@ -12,6 +12,7 @@
 #include "tao/Request_Dispatcher.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/SystemException.h"
+#include "tao/ZIOP_Adapter.h"
 #include "ace/Min_Max.h"
 
 /*
@@ -648,6 +649,10 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           qd->giop_version ().minor_version (),
                           this->orb_core_);
 
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  input_cdr.compressed_ = qd->state().compressed ();
+#endif
+
   transport->assign_translators(&input_cdr,&output);
 
   // We know we have some request message. Check whether it is a
@@ -864,6 +869,26 @@ TAO_GIOP_Message_Base::process_request (
 
       CORBA::Object_var forward_to;
 
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+      if (cdr.compressed_)
+        {
+          TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
+          if (adapter)
+            {
+              adapter->decompress (request);
+            }
+          else
+            {
+              if (TAO_debug_level > 0)
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) ERROR: Unable to decompress ")
+                            ACE_TEXT ("data.\n")));
+
+              return -1;
+            }
+      }
+#endif
+
       /*
        * Hook to specialize request processing within TAO
        * This hook will be replaced by specialized request
@@ -902,7 +927,8 @@ TAO_GIOP_Message_Base::process_request (
           output.message_attributes (request_id,
                                      0,
                                      TAO_Transport::TAO_REPLY,
-                                     0);
+                                     0,
+                                     false);
 
           // Make the GIOP header and Reply header
           this->generate_reply_header (output, reply_params);
@@ -919,9 +945,9 @@ TAO_GIOP_Message_Base::process_request (
 
           output.more_fragments (false);
 
-          int result = transport->send_message (output,
-                                                0,
-                                                TAO_Transport::TAO_REPLY);
+          int const result = transport->send_message (output,
+                                                      0,
+                                                      TAO_Transport::TAO_REPLY);
           if (result == -1)
             {
               if (TAO_debug_level > 0)
@@ -1439,6 +1465,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
     // Byte order.
     int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
+    int compressed = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x04;
 
     // Get the version info
     CORBA::Octet major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
@@ -1480,14 +1507,15 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     // Print.
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
-                "%s GIOP v%c.%c msg, %d data bytes, %s endian, "
-                "Type %s[%u]\n",
-                ACE_TEXT_CHAR_TO_TCHAR (label),
+                "%C GIOP v%c.%c msg, %d data bytes, %s endian, "
+                "%s compressed, Type %C[%u]\n",
+                label,
                 digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                 digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                 len - TAO_GIOP_MESSAGE_HEADER_LEN ,
                 (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
-                ACE_TEXT_CHAR_TO_TCHAR(message_name),
+                (compressed == 0) ? ACE_TEXT("not") : ACE_TEXT("is"),
+                message_name,
                 *id));
 
     if (TAO_debug_level >= 10)
@@ -1920,6 +1948,11 @@ TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
   // Only supported in GIOP 1.1 or better.
   if (!(major <= 1 && minor == 0))
     ACE_SET_BITS (flags, msg.more_fragments () << 1);
+
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  if (!(major <= 1 && minor < 2))
+    ACE_SET_BITS (flags, msg.compressed () << 2);
+#endif
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

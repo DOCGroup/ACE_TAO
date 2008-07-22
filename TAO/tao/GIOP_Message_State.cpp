@@ -154,14 +154,12 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
     }
 
     // Let us be specific that this is for 1.0
-  if (this->giop_version_.minor == 0 &&
-      this->giop_version_.major == 1)
+  if (this->giop_version_.minor == 0 && this->giop_version_.major == 1)
     {
       this->byte_order_ =
         buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET];
 
-      if (this->byte_order_ != 0 &&
-          this->byte_order_ != 1)
+      if (this->byte_order_ != 0 && this->byte_order_ != 1)
         {
           if (TAO_debug_level > 2)
             {
@@ -181,21 +179,13 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 
       // Read the fragment bit
       this->more_fragments_ =
-        (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
+        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02) == 2);
 
-      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
-        {
-          if (TAO_debug_level > 2)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - invalid flags for <%d> ")
-                          ACE_TEXT ("for version <%d %d> \n"),
-                          buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
-                          this->giop_version_.major,
-                          this->giop_version_.minor));
-            }
-          return -1;
-        }
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+      // Read the compressed flag
+      this->compressed_ =
+        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x04) == 4);
+#endif
     }
 
   return 0;

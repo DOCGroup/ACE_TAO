@@ -772,8 +772,11 @@ public:
   /// Return true if the tcs has been set
   CORBA::Boolean is_tcs_set() const;
 
-  /// Set the state of the first_request_ flag to 0
+  /// Set the state of the first_request_ flag to false
   void first_request_sent();
+
+  /// Get the first request flag
+  bool first_request () const;
 
   /// Notify all the components inside a Transport when the underlying
   /// connection is closed.
@@ -807,7 +810,7 @@ private:
    *
    * @return true if the queue is empty
    */
-  bool queue_is_empty_i (void);
+  bool queue_is_empty_i (void) const;
 
   /// A helper routine used in drain_queue_i()
   int drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max_wait_time);
@@ -1031,10 +1034,10 @@ protected:
   /// buffer the requests in this transport until the connection is ready
   bool is_connected_;
 
+private:
+
   /// Our messaging object.
   TAO_GIOP_Message_Base *messaging_object_;
-
-private:
 
   /// @@Phil, I think it would be nice if we could think of a way to
   /// do the following.
@@ -1061,7 +1064,7 @@ private:
   /// is necessary since codeset context information is necessary only on the
   /// first request. After that, the translators are fixed for the life of the
   /// connection.
-  CORBA::Boolean first_request_;
+  bool first_request_;
 
   /// Holds the partial GIOP message (if there is one)
   ACE_Message_Block* partial_message_;

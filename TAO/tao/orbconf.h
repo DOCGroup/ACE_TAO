@@ -246,6 +246,10 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # define TAO_HAS_MONITOR_POINTS ACE_HAS_MONITOR_POINTS
 #endif
 
+#if !defined (TAO_HAS_ZIOP)
+# define TAO_HAS_ZIOP 0
+#endif
+
 // Avoid namespace pollution that's common on older UNIXes...
 #if defined (minor)
 #undef minor
@@ -764,6 +768,12 @@ enum TAO_Cached_Policy_Type
   TAO_CACHED_POLICY_NETWORK_PRIORITY,
 
   TAO_CACHED_POLICY_ENDPOINT,
+
+  TAO_CACHED_COMPRESSION_ENABLING_POLICY,
+
+  TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY,
+
+  TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY,
 
   /// NOTE: The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last.
   ///       This value is used as the cached_policies_ array size in TAO_Policy_Set,

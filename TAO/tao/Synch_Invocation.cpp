@@ -88,7 +88,8 @@ namespace TAO
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
-                                max_wait_time);
+                                max_wait_time,
+                                false);
 
         this->write_header (cdr);
 
@@ -305,7 +306,7 @@ namespace TAO
             try
               {
                 return
-                  this->orb_core ()->service_raise_comm_failure (
+                  this->stub()->orb_core ()->service_raise_comm_failure (
                     this->details_.request_service_context ().service_info (),
                     this->resolver_.profile ());
 
@@ -367,7 +368,7 @@ namespace TAO
             {
               // de-marshalling of permanent object reference was successfull
               CORBA::Boolean const permanent_forward_condition =
-                this->orb_core ()->is_permanent_forward_condition
+                this->stub ()->orb_core ()->is_permanent_forward_condition
                   (this->forwarded_to_.in (),
                    this->request_service_context ());
 
@@ -435,7 +436,7 @@ namespace TAO
 
     CORBA::Object_var fwd;
 
-    if ((inp_stream >> fwd) == 0)
+    if (!(inp_stream >> fwd))
       {
         throw ::CORBA::MARSHAL (
           CORBA::SystemException::_tao_minor_code (
@@ -465,7 +466,7 @@ namespace TAO
     // Pull the exception from the stream.
     CORBA::String_var buf;
 
-    if ((cdr >> buf.inout ()) == 0)
+    if (!(cdr >> buf.inout ()))
       {
         // Could not demarshal the exception id, raise an local
         // CORBA::MARSHAL
@@ -510,7 +511,7 @@ namespace TAO
 
     CORBA::String_var type_id;
 
-    if ((cdr >> type_id.inout ()) == 0)
+    if (!(cdr >> type_id.inout ()))
       {
         // Could not demarshal the exception id, raise an local
         // CORBA::MARSHAL
@@ -546,7 +547,7 @@ namespace TAO
            * forcing us into this.
            */
           Invocation_Status const s =
-            this->orb_core ()->service_raise_transient_failure (
+            this->stub ()->orb_core ()->service_raise_transient_failure (
               this->details_.request_service_context ().service_info (),
               this->resolver_.profile ());
 
@@ -656,7 +657,8 @@ namespace TAO
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
                                 TAO_Transport::TAO_ONEWAY_REQUEST,
-                                max_wait_time);
+                                max_wait_time,
+                                false);
 
         this->write_header (cdr);
 

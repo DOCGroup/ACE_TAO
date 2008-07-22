@@ -76,6 +76,9 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
   , stub_ (0)
   , message_semantics_ (TAO_Transport::TAO_TWOWAY_REQUEST)
   , timeout_ (0)
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  , compressed_ (false)
+#endif
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
 
@@ -112,6 +115,9 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
   , stub_ (0)
   , message_semantics_ (TAO_Transport::TAO_TWOWAY_REQUEST)
   , timeout_ (0)
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  , compressed_ (false)
+#endif
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
 }
@@ -141,6 +147,9 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
   , stub_ (0)
   , message_semantics_ (TAO_Transport::TAO_TWOWAY_REQUEST)
   , timeout_ (0)
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  , compressed_ (false)
+#endif
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
 }
@@ -161,6 +170,9 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
   , stub_ (0)
   , message_semantics_ (TAO_Transport::TAO_TWOWAY_REQUEST)
   , timeout_ (0)
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  , compressed_ (false)
+#endif
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR4_ENTER);
 }
@@ -184,6 +196,9 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Data_Block *data_block,
   , stub_ (0)
   , message_semantics_ (TAO_Transport::TAO_TWOWAY_REQUEST)
   , timeout_ (0)
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  , compressed_ (false)
+#endif
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR5_ENTER);
 }
@@ -277,6 +292,9 @@ TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
                   : (orb_core ?
                      orb_core->output_cdr_msgblock_allocator () : 0)),
   orb_core_ (orb_core)
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  , compressed_ (false)
+#endif
 {
 }
 

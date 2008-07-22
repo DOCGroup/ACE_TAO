@@ -94,7 +94,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   tao_info->orb_core ()->orb_params ()->stub_factory_name ("RT_Stub_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Stub_Factory);
 
-  // Set the name of the stub factory to be RT_Stub_Factory.
+  // Set the name of the endpoint selector factory to be RT_Endpoint_Selector_Factory.
   tao_info->orb_core ()->orb_params ()->endpoint_selector_factory_name ("RT_Endpoint_Selector_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_RT_Endpoint_Selector_Factory);
 

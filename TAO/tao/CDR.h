@@ -180,11 +180,20 @@ public:
   /// Specify whether there are more data fragments to come.
   void more_fragments (bool more);
 
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  /// Are we containing compressed data?
+  bool compressed (void) const;
+
+  /// Specify whether we have compressed data.
+  void compressed (bool compressed);
+#endif
+
   /// Set fragmented message attributes.
   void message_attributes (CORBA::ULong request_id,
                            TAO_Stub * stub,
                            TAO_Transport::TAO_Message_Semantics message_semantics,
-                           ACE_Time_Value * timeout);
+                           ACE_Time_Value * timeout,
+                           bool compressed);
 
   /// Fragmented message request ID.
   CORBA::ULong request_id (void) const;
@@ -235,8 +244,12 @@ private:
 
   /// Request/reply send timeout.
   ACE_Time_Value * timeout_;
-  //@}
 
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  /// Do we contain compressed data
+  bool compressed_;
+#endif
+  //@}
 };
 
 /**
@@ -367,9 +380,21 @@ public:
   static void throw_stub_exception (int error_num);
   static void throw_skel_exception (int error_num);
 
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  /// Are we containing compressed data?
+  bool compressed (void) const;
+
+  /// Specify whether we have compressed data.
+  void compressed (bool compressed);
+#endif
+
 private:
   /// The ORB_Core, required to extract object references.
   TAO_ORB_Core* orb_core_;
+
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  CORBA::Boolean compressed_;
+#endif
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

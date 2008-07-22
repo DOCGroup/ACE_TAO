@@ -82,6 +82,7 @@ class TAO_Message_State_Factory;
 class TAO_Protocols_Hooks;
 class TAO_Network_Priority_Protocols_Hooks;
 class TAO_BiDir_Adapter;
+class TAO_ZIOP_Adapter;
 
 class TAO_Flushing_Strategy;
 
@@ -200,6 +201,12 @@ public:
   /// this ORB core. Tries to load the PI library if it is not loaded
   /// yet
   TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry (void);
+
+  TAO_ZIOP_Adapter *ziop_adapter () const;
+  void ziop_adapter (TAO_ZIOP_Adapter *adapter);
+
+  CORBA::Boolean ziop_enabled () const;
+  void ziop_enabled (CORBA::Boolean value);
 
   TAO_Service_Context_Registry &service_context_registry (void);
 
@@ -581,7 +588,7 @@ public:
   /// Check if ORB has shutdown.  If it has, throw an exception.
   void check_shutdown (void);
 
-  /// Returns the <timeout> value used by the server threads to poll
+  /// Returns the @a timeout value used by the server threads to poll
   /// the shutdown flag. If the return value is zero then the server
   /// threads block forever.
   int thread_per_connection_timeout (ACE_Time_Value &timeout) const;
@@ -655,6 +662,8 @@ public:
 
   /// Resolve the IOR Manipulation reference for this ORB.
   CORBA::Object_ptr resolve_ior_manipulation (void);
+
+  TAO_ZIOP_Adapter* ziop_adapter_i (void);
 
   /// Resolve the IOR Table reference for this ORB.
   CORBA::Object_ptr resolve_ior_table (void);
@@ -1231,6 +1240,12 @@ protected:
 
   /// Bir Dir GIOP policy value
   CORBA::Boolean bidir_giop_policy_;
+
+  /// ZIOP Adapter
+  TAO_ZIOP_Adapter *ziop_adapter_;
+
+  /// ZIOP enabled or not
+  CORBA::Boolean ziop_enabled_;
 
   /// Hold the flushing strategy
   TAO_Flushing_Strategy *flushing_strategy_;
