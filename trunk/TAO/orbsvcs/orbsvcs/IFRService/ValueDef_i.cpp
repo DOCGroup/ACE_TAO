@@ -1709,4 +1709,98 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc)
   desc.base_value = holder.fast_rep ();
 }
 
+void
+TAO_ValueDef_i::value_contents (
+    ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
+    ACE_Unbounded_Queue<ACE_TString> &path_queue,
+    CORBA::DefinitionKind limit_type,
+    CORBA::Boolean exclude_inherited
+  )
+{
+  ACE_TString id;
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "id",
+                                            id);
+
+  ACE_TString path;
+  this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
+                                            id.c_str (),
+                                            path);
+
+  ACE_TString section_name;
+  int index = 0;
+  int status = 0;
+
+  // Value Members
+  if (limit_type == CORBA::dk_ValueMember
+      || limit_type == CORBA::dk_all)
+    {
+      ACE_Configuration_Section_Key members_key;
+      status =
+        this->repo_->config ()->open_section (this->section_key_,
+                                              "members",
+                                              0,
+                                              members_key);
+
+      // Only if we have any.
+      if (status == 0)
+        {
+          while (this->repo_->config ()->enumerate_sections (members_key,
+                                                             index++,
+                                                             section_name)
+                  == 0)
+            {
+              kind_queue.enqueue_tail (CORBA::dk_ValueMember);
+
+              path_queue.enqueue_tail (
+                  path + "\\members\\" + section_name.c_str ()
+                );
+            }
+        }
+    }
+
+  if (exclude_inherited == 0)
+    {
+      // Must recurse through the base value.
+      ACE_Configuration_Section_Key base_key;
+      status =
+        this->repo_->config ()->open_section (this->section_key_,
+                                              "base",
+                                              0,
+                                              base_key);
+
+      if (status == 0)
+        {
+          ACE_TString base_path;
+          ACE_Configuration_Section_Key base_key;
+          ACE_Configuration::VALUETYPE type;
+          index = 0;
+
+          while (this->repo_->config ()->enumerate_values (base_key,
+                                                           index++,
+                                                           section_name,
+                                                           type)
+                  == 0)
+            {
+              this->repo_->config ()->get_string_value (base_key,
+                                                        section_name.c_str (),
+                                                        base_path);
+
+              this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                                   base_path,
+                                                   base_key,
+                                                   0);
+
+              TAO_ValueDef_i base_value (this->repo_);
+              base_value.section_key (base_key);
+
+              base_value.value_contents (kind_queue,
+					                               path_queue,
+					                               limit_type,
+					                               exclude_inherited);
+            }
+        }
+    }
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
