@@ -83,7 +83,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       policies.length (3);
       policies[0] = orb->create_policy (ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabled);
       policies[1] = orb->create_policy (ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID, compmin);
-      policies[2] = orb->create_policy(ZIOP::COMPRESSION_ID_LEVEL_LIST_POLICY_ID,compressor_id_any);
+      policies[2] = orb->create_policy(ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID,compressor_id_any);
       CORBA::Object_var tmp = orb->string_to_object(ior);
       CORBA::Object_var tmp2 = tmp->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 
