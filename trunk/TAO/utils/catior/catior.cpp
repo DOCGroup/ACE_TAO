@@ -1246,7 +1246,7 @@ cat_tag_policies (TAO_InputCDR& stream) {
       if (!(stream3 >> idlist))
         return 1;
       CORBA::ULong index = 0;
-      for (index; index < idlist.length(); index++)
+      for (; index < idlist.length(); index++)
         {
           ACE_DEBUG ((LM_DEBUG,"%I\t CompressorId: %d Level: %d\n",
                       idlist[index].compressor_id, idlist[index].compression_level));
