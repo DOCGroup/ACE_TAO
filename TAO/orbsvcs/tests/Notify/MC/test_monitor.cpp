@@ -28,7 +28,7 @@ public:
 
   virtual void
   finished (MonitorTestInterface::Which proc);
-  
+
 private:
   ACE_CString base_;
   CosNotification::NotificationServiceMonitorControl_var nsm_;
@@ -38,54 +38,54 @@ void
 MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
 {
   ACE_CString str;
-  CosNotification::NotificationServiceMonitorControl::Data_var data;
+  Monitor::Data_var data;
   Monitor::NameList list;
-  CosNotification::NotificationServiceMonitorControl::Numeric num; 
-      
+  Monitor::Numeric num;
+
   switch (proc)
     {
     case MonitorTestInterface::NotifyService:
       data =
         nsm_->get_statistic (NotifyMonitoringExt::EventChannelFactoryNames);
-      list = data->list ();
-      
+      list = data->data_union.list ();
+
       if (list.length () != 1)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: There should be only one Event "
                       "Channel Factory\n"));
         }
-        
+
       this->base_ = list[0];
       this->base_ += "/";
       str = this->base_ + NotifyMonitoringExt::ActiveEventChannelCount;
       data = this->nsm_->get_statistic (str.c_str ());
-      num = data->num ();
-      
-      if (num.last != 0)
+      num = data->data_union.num ();
+
+      if (num.dlist[0].value != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: There should be no active Event "
                       "Channels\n"));
         }
 
-      str = this->base_ + NotifyMonitoringExt::InactiveEventChannelCount;          
+      str = this->base_ + NotifyMonitoringExt::InactiveEventChannelCount;
       data = this->nsm_->get_statistic (str.c_str ());
-      num = data->num ();
-      
-      if (num.last != 0)
+      num = data->data_union.num ();
+
+      if (num.dlist[0].value != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: There should be no inactive Event "
                       "Channels\n"));
         }
-        
+
       break;
     case MonitorTestInterface::Consumer:
       str = this->base_ + NotifyMonitoringExt::ActiveEventChannelNames;
       data = nsm_->get_statistic (str.c_str ());
-      list = data->list ();
-      
+      list = data->data_union.list ();
+
       if (list.length () != 1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -97,56 +97,56 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       this->base_ = list[0];
       this->base_ += "/";
 
-      str = this->base_ + NotifyMonitoringExt::EventChannelConsumerCount;      
+      str = this->base_ + NotifyMonitoringExt::EventChannelConsumerCount;
       data = this->nsm_->get_statistic (str.c_str ());
-      num = data->num ();
-      
-      if (num.last != 1)
+      num = data->data_union.num ();
+
+      if (num.dlist[0].value != 1)
         {
           ACE_ERROR ((LM_ERROR, "There should be only one Consumer\n"));
         }
 
       str =
-        this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminCount;          
+        this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminCount;
       data = this->nsm_->get_statistic (str.c_str ());
-      num = data->num ();
-      
-      if (num.last != 1)
+      num = data->data_union.num ();
+
+      if (num.dlist[0].value != 1)
         {
           ACE_ERROR ((LM_ERROR, "There should be only one ConsumerAdmin\n"));
         }
 
       str =
-        this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;  
+        this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
       data = this->nsm_->get_statistic (str.c_str ());
-      num = data->num ();
-      
-      if (num.last != 0)
+      num = data->data_union.num ();
+
+      if (num.dlist[0].value != 0)
         {
           ACE_ERROR ((LM_ERROR, "There should be no events queued\n"));
         }
-        
+
       break;
     case MonitorTestInterface::Supplier:
-      str = this->base_ + NotifyMonitoringExt::EventChannelSupplierCount;          
+      str = this->base_ + NotifyMonitoringExt::EventChannelSupplierCount;
       data = this->nsm_->get_statistic (str.c_str ());
-      num = data->num ();
-      
-      if (num.last != 1)
+      num = data->data_union.num ();
+
+      if (num.dlist[0].value != 1)
         {
           ACE_ERROR ((LM_ERROR, "There should be only one Supplier\n"));
         }
 
       str =
-        this->base_ + NotifyMonitoringExt::EventChannelSupplierAdminCount;      
+        this->base_ + NotifyMonitoringExt::EventChannelSupplierAdminCount;
       data = this->nsm_->get_statistic (str.c_str ());
-      num = data->num ();
-      
-      if (num.last != 1)
+      num = data->data_union.num ();
+
+      if (num.dlist[0].value != 1)
         {
           ACE_ERROR ((LM_ERROR, "There should be only one SupplierAdmin\n"));
         }
-        
+
       break;
     default:
       ACE_ERROR ((LM_ERROR, "Impossible enum value %d\n", proc));
@@ -158,9 +158,9 @@ void
 MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
 {
   ACE_CString str;
-  CosNotification::NotificationServiceMonitorControl::Data_var data;
+  Monitor::Data_var data;
   Monitor::NameList list;
-  CosNotification::NotificationServiceMonitorControl::Numeric num;
+  Monitor::Numeric num;
   Monitor::NameList_var reg_names;
   Monitor::NameList ec_names;
 
@@ -177,9 +177,9 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
     case MonitorTestInterface::Supplier:
       str = this->base_ + NotifyMonitoringExt::EventChannelConsumerCount;
       data = this->nsm_->get_statistic (str.c_str ());
-      num = data->num ();
-      
-      if (num.last != 1)
+      num = data->data_union.num ();
+
+      if (num.dlist[0].value != 1)
         {
           ACE_ERROR ((LM_ERROR, "There should still be one Consumer\n"));
         }
@@ -187,9 +187,9 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
       str =
         this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
       data = this->nsm_->get_statistic (str.c_str ());
-      num = data->num ();
-      
-      if (num.last == 0)
+      num = data->data_union.num ();
+
+      if (num.dlist[0].value == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "There should be at least one event queued\n"));
@@ -198,17 +198,17 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
       str =
         this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminNames;
       data = nsm_->get_statistic(str.c_str ());
-      list = data->list ();
-      
+      list = data->data_union.list ();
+
       for (CORBA::ULong i = 0; i < list.length (); ++i)
         {
           str = list[i].in ();
           str += "/";
           str += NotifyMonitoringExt::EventChannelQueueSize;
           data = nsm_->get_statistic(str.c_str ());
-          num = data->num ();
+          num = data->data_union.num ();
           ACE_DEBUG ((LM_DEBUG, "Average Queue Size: %f\n", num.average));
-          
+
           if (num.average == 0.0)
             {
               ACE_ERROR ((LM_ERROR,
@@ -260,7 +260,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   int status = 0;
-  
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
   try
@@ -299,14 +299,14 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       MonitorTestInterface_var test =
         MonitorTestInterface::_narrow (object.in ());
-      CORBA::String_var ior = orb->object_to_string (test.in ());   
+      CORBA::String_var ior = orb->object_to_string (test.in ());
 
       // Test the case where there are no consumers or suppliers first
       // before we write out our IOR
       mti->running (MonitorTestInterface::NotifyService);
 
       FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT ("w"));
-      
+
       if (output_file == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -314,7 +314,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                              ior_output_file),
                              1);
         }
-        
+
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
