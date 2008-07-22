@@ -1,3 +1,40 @@
+Tue Jul 22 10:02:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bzip2Compressor.mpc:
+          Use correct base project
+
+        * tao/Compression.mpc:
+          Generate Any insertion operators
+
+        * tao/GIOP_Fragmentation_Strategy.h:
+          Layout changes
+
+        * tao/Muxed_TMS.cpp:
+          When the unbind fails print the request id that failed
+
+        * tao/Object.h:
+          Use false instead of 0
+
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+          Updated layout of some debug message to match other messages
+          in TAO
+
+        * tao/BiDir_GIOP/BiDirPolicy_Validator.cpp:
+          Use is_nil to check whether a policy is nil or not, don't compare
+          it with 0
+
+        * tao/IIOP_Acceptor.cpp:
+          Documentation change
+
+        * tao/Messaging/Messaging_Policy_i.h:
+          Layout change
+
+        * tao/tao.mpc:
+        * tao/ZIOP_Adapter.{h,cpp}:
+          Added new ZIOP Adapter for the ZIOP library which will be added
+          to the repository soon
+
 Tue Jul 22 08:14:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression.mpc:
