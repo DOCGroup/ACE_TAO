@@ -1,3 +1,13 @@
+Tue Jul 22 17:51:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
+        
+          Applied patches sent by Frank Pilhofer <fp@mc.com> to fix
+          Container::lookup() and Container::contents() methods
+          bugs related to value members. This fix closes [BUGID:3373].
+
 Tue Jul 22 17:32:46 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:

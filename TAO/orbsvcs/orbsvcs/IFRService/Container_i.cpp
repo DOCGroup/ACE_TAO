@@ -359,6 +359,54 @@ TAO_Container_i::lookup_i (const char *search_name)
                                   break;
                                 }
                             }
+                        }
+                    }
+
+                  if (so_far_so_good)
+                    {
+                      break;
+                    }
+                  else
+                    {
+                      ACE_Configuration_Section_Key members_key;
+                      status =
+                        this->repo_->config ()->open_section (iter_key,
+                                                              "members",
+                                                              0,
+                                                              members_key);
+
+                      if (status == 0)
+                        {
+                          index = 0;
+
+                          while (this->repo_->config ()->enumerate_sections (
+                                                             members_key,
+                                                             index++,
+                                                             section_name
+                                                           )
+                                  == 0)
+                            {
+                              this->repo_->config ()->open_section (
+                                  members_key,
+                                  section_name.c_str (),
+                                  0,
+                                  work_key
+                               );
+
+                              ACE_TString member_name;
+                              this->repo_->config ()->get_string_value (
+                                                          work_key,
+                                                          "name",
+                                                          member_name
+                                                        );
+
+                              // If we're here, name has only one segment.
+                              if (member_name == work_string)
+                                {
+                                  so_far_so_good = 1;
+                                  break;
+                                }
+                            }
 
                           if (so_far_so_good)
                             {
@@ -500,6 +548,20 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
                                     path_queue,
                                     limit_type,
                                     exclude_inherited);
+        }
+    }
+  else if (def_kind == CORBA::dk_Value)
+    {
+      if (limit_type == CORBA::dk_ValueMember
+          || limit_type == CORBA::dk_all)
+        {
+          TAO_ValueDef_i value (this->repo_);
+          value.section_key (this->section_key_);
+
+          value.value_contents (kind_queue,
+				                        path_queue,
+				                        limit_type,
+				                        exclude_inherited);
         }
     }
 
