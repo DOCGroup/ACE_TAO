@@ -1,3 +1,8 @@
+Tue Jul 22 09:55:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          bzip2 is default disabled
+
 Tue Jul 22 07:36:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.{h,cpp,inl}:
