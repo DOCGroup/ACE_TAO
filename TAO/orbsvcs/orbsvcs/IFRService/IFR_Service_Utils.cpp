@@ -331,53 +331,28 @@ TAO_IFR_Server::create_repository (void)
   // Add the repository to the ORB's table of initialized object references.
   this->orb_->register_initial_reference ("InterfaceRepository",
                                           repo_ref);
-   
-  const char *ior_filename = OPTIONS::instance ()->ior_output_file ();                                      
-  ACE_HANDLE fd = ACE_OS::open (ior_filename,
-                                O_RDWR | O_CREAT | O_TRUNC,
-                                ACE_DEFAULT_FILE_PERMS);
 
-  if (fd == ACE_INVALID_HANDLE)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO_IFR_Server::create_repository - ",
-                         "ACE_OS::open() failed\n"),
-                        -1);
-    }
-    
-  const char *ifr_ior = this->ifr_ior_.in ();
-  size_t ior_size = ACE_OS::strlen (ifr_ior) + 1; 
-  ssize_t result = ACE_OS::write (fd, ifr_ior, ior_size);
+  // Write our IOR to a file.
   
-  if (result != static_cast<ssize_t> (ior_size))
-    {
-      ACE_OS::unlink (ior_filename);
-      ACE_OS::close (fd);
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO_IFR_Server::create_repository - ",
-                         "ACE_OS::write() failed\n"),
-                        -1);
-    }
-
-  if (ACE_OS::close (fd) != 0)
-    {
-      ACE_OS::unlink (ior_filename);
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO_IFR_Server::create_repository - ",
-                         ACE_TEXT ("ACE_OS::close() failed\n")),
-                        -1);
-    }
-/*
   FILE *output_file_ =
-    ACE_OS::fopen (OPTIONS::instance()->ior_output_file (),
-                   "w");
+    ACE_OS::fopen (OPTIONS::instance ()->ior_output_file (),
+                   ACE_TEXT ("w"));
+                   
+  if (output_file_ == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO_IFR_Server::create_repository - ")
+                         ACE_TEXT ("can't open IOR output ")
+                         ACE_TEXT ("file for writing\n")),
+                        -1);
+    }
 
   ACE_OS::fprintf (output_file_,
-                   "%s",
+                   "%s\n",
                    this->ifr_ior_.in ());
 
   ACE_OS::fclose (output_file_);
-*/
+
   return 0;
 }
 
