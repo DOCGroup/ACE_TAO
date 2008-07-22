@@ -131,6 +131,8 @@ TAO_ZIOP_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
         {
           return this->effective_compression_id_list_policy ();
         }
+      default:
+        break;
     }
 
   return this->TAO_Stub::get_cached_policy (type);
