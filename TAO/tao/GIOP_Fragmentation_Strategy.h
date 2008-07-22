@@ -70,11 +70,9 @@ public:
                         ACE_CDR::ULong pending_length) = 0;
 
 private:
-
   // Disallow copying and assignment.
   TAO_GIOP_Fragmentation_Strategy (TAO_GIOP_Fragmentation_Strategy const &);
   void operator= (TAO_GIOP_Fragmentation_Strategy const &);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

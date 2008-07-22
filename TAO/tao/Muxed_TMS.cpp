@@ -138,7 +138,8 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
         if (TAO_debug_level > 0)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
-                      ACE_TEXT ("unbind dispatcher failed: result = %d\n"),
+                      ACE_TEXT ("unbind dispatcher failed, id %d: result = %d\n"),
+                      params.request_id_,
                       result));
 
         // This return value means that the mux strategy was not able
