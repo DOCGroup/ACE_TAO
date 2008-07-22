@@ -166,6 +166,8 @@ TAO_RT_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
         {
           return this->effective_client_protocol ();
         }
+      default:
+        break;
     }
 
   return this->TAO_Stub::get_cached_policy (type);
