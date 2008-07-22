@@ -1,3 +1,14 @@
+Tue Jul 22 17:04:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        
+          In code that writes the IFR Service's IOR to a file,
+          replaced use of ACE_OS::write() with ACE_OS:fprintf(),
+          which is used in all other ORB services for this purpose.
+          This fix closes [BUGID:3371]. Thanks to Frank Pilhofer
+          <fp@mc.com> for reporting the problem of the extra
+          NULL character in the Bugzilla entry.
+
 Tue Jul 22 11:53:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ZIOP.pdf:
