@@ -2,7 +2,7 @@
 
 // ===================================================================
 /**
- *  @file   ZlibCompressor.h
+ *  @file   Bzip2Compressor.h
  *
  *  $Id$
  *
@@ -12,12 +12,12 @@
  */
 // ===================================================================
 
-#ifndef TAO_ZLIBCOMPRESSOR_H
-#define TAO_ZLIBCOMPRESSOR_H
+#ifndef TAO_BZIP2COMPRESSOR_H
+#define TAO_BZIP2COMPRESSOR_H
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Compression/zlib/ZlibCompressor_export.h"
+#include "tao/Compression/bzip2/Bzip2Compressor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,11 +30,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  class TAO_ZLIBCOMPRESSOR_Export ZlibCompressor : public BaseCompressor
+  class TAO_BZIP2COMPRESSOR_Export Bzip2Compressor : public BaseCompressor
   {
     public:
-      ZlibCompressor (::Compression::CompressionLevel compression_level,
-                      ::Compression::CompressorFactory_ptr compressor_factory);
+      Bzip2Compressor (::Compression::CompressionLevel compression_level,
+                       ::Compression::CompressorFactory_ptr compressor_factory);
 
       virtual void compress (
           const ::Compression::Buffer & source,
@@ -50,4 +50,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_ZLIBCOMPRESSOR_H */
+#endif /* TAO_BZIP2COMPRESSOR_H */

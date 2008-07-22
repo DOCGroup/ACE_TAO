@@ -34,8 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Class that loads the Compression library.
  */
 
-class TAO_Compression_Export TAO_Compression_Loader
-  : public TAO_Object_Loader
+class TAO_Compression_Export TAO_Compression_Loader : public TAO_Object_Loader
 {
 public:
   /// Creates a Compression Manager and returns it.
@@ -47,7 +46,8 @@ public:
 };
 
 static int
-  TAO_Requires_Compression_Initializer = TAO_Compression_Loader::Initializer ();
+  TAO_Requires_Compression_Initializer = TAO_Compression_Loader::Initializer
+  ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

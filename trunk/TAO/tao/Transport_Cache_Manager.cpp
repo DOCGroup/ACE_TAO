@@ -52,16 +52,16 @@ namespace TAO
              ACE::Monitor_Control::Size_Monitor);
     ACE_NEW (this->size_monitor_,
              ACE::Monitor_Control::Size_Monitor);
-             
+
     ACE_CString purge_name ("Connection_Cache_Purge_");
     ACE_CString size_name ("Connection_Cache_Size_");
-    
+
     purge_name += orb_core.orbid ();
     size_name += orb_core.orbid ();
-    
+
     this->purge_monitor_->name (purge_name.c_str ());
     this->size_monitor_->name (size_name.c_str ());
-    
+
     this->purge_monitor_->add_to_registry ();
     this->size_monitor_->add_to_registry ();
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
@@ -462,8 +462,8 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::is_entry_available:")
-          ACE_TEXT ("returns %s state is [%d]\n"),
-          (result?"True":"False"),
+          ACE_TEXT ("returns %C state is [%d]\n"),
+          (result ? "true" : "false"),
           entry_state));
       }
 
@@ -487,8 +487,8 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::is_entry_connecting: ")
-          ACE_TEXT ("Returns %s, state is [%d]\n"),
-          (result?"True":"False"),
+          ACE_TEXT ("returns %C, state is [%d]\n"),
+          (result ? "true" : "false"),
           entry_state));
       }
 
