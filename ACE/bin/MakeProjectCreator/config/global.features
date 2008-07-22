@@ -32,6 +32,7 @@ minimum_corba = 0
 java          = 0
 zlib          = 0
 zzip          = 0
+bzip2         = 0
 ipv6          = 0
 mfc           = 0
 rpc           = 0
