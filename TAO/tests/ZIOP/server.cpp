@@ -84,37 +84,40 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-CORBA::Boolean compression_enabling = true;
-Compression::CompressorIdLevelList compressor_id_list(2);
-compressor_id_list.length(2);
-Compression::CompressorIdLevel levelid;
-levelid.compressor_id = Compression::COMPRESSORID_ZLIB;
-levelid.compression_level = 9;
-compressor_id_list[0] = levelid;
-levelid.compressor_id = Compression::COMPRESSORID_BZIP2;
-compressor_id_list[1] = levelid;
-//CORBA::ULong compression_low_value = 16384;
-//CORBA::ULong min_compression_ratio = 40;
-CORBA::Any compression_enabling_any;//, compressor_id_any, low_value_any;
-//CORBA::Any min_compression_ratio_any;
-compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
-CORBA::Any compressor_id_any;
-compressor_id_any <<= compressor_id_list;
-//low_value_any <<= compression_low_value;
-//min_compression_ratio_any <<= min_compression_ratio;
-PortableServer::POA_var my_compress_poa = NULL;
-CORBA::PolicyList policies(2);
-policies.length(2);
-try {
-policies[0] = orb->create_policy(ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabling_any);
-policies[1] = orb->create_policy(ZIOP::COMPRESSION_ID_LIST_POLICY_ID,compressor_id_any);
-//policies[2] = orb->create_policy(ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID,compressor_id_any);
-//policies[3] = orb->create_policy(ZIOP::MIN_COMPRESSION_RATIO_POLICY_ID,min_compression_ratio);
-my_compress_poa = root_poa->create_POA("My_Compress_Poa", NULL, policies);
-} catch(const CORBA::PolicyError&) {
-policies.length(0);
-my_compress_poa = root_poa->create_POA("My_Compress_Poa", NULL, policies);
-}
+      CORBA::Boolean compression_enabling = true;
+      Compression::CompressorIdLevelList compressor_id_list(2);
+      compressor_id_list.length(2);
+      Compression::CompressorIdLevel levelid;
+      levelid.compressor_id = Compression::COMPRESSORID_ZLIB;
+      levelid.compression_level = 9;
+      compressor_id_list[0] = levelid;
+      levelid.compressor_id = Compression::COMPRESSORID_BZIP2;
+      compressor_id_list[1] = levelid;
+      //CORBA::ULong compression_low_value = 16384;
+      //CORBA::ULong min_compression_ratio = 40;
+      CORBA::Any compression_enabling_any;//, compressor_id_any, low_value_any;
+      //CORBA::Any min_compression_ratio_any;
+      compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
+      CORBA::Any compressor_id_any;
+      compressor_id_any <<= compressor_id_list;
+      //low_value_any <<= compression_low_value;
+      //min_compression_ratio_any <<= min_compression_ratio;
+      PortableServer::POA_var my_compress_poa = 0;
+      CORBA::PolicyList policies(2);
+      policies.length(2);
+
+      try {
+        policies[0] = orb->create_policy(ZIOP::COMPRESSION_ENABLING_POLICY_ID, compression_enabling_any);
+        policies[1] = orb->create_policy(ZIOP::COMPRESSION_ID_LIST_POLICY_ID,compressor_id_any);
+        //policies[2] = orb->create_policy(ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID,compressor_id_any);
+        //policies[3] = orb->create_policy(ZIOP::MIN_COMPRESSION_RATIO_POLICY_ID,min_compression_ratio);
+        my_compress_poa = root_poa->create_POA("My_Compress_Poa", 0, policies);
+      }
+      catch(const CORBA::PolicyError&) {
+        policies.length(0);
+        my_compress_poa = root_poa->create_POA("My_Compress_Poa", 0, policies);
+      }
+
       CORBA::Object_var objectman =
         orb->resolve_initial_references ("ORBPolicyManager");
 
