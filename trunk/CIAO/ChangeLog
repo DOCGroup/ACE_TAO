@@ -1,3 +1,12 @@
+Tue Jul 22 07:50:38 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * CCF/CCF/CodeGenerationKit/IndentationCxx.hpp:
+
+          Bug fix where using a curly brace, i.e.,  '{' or '}', inside a
+          string or comment caused the code generator to treat it as a
+          regular curly brace. This meant the code generator inserted a
+          newline when it was not supposed to.
+
 Fri Jul 04 10:43:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:

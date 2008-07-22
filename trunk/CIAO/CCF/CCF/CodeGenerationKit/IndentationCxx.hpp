@@ -83,39 +83,48 @@ namespace Indentation
           }
         case '{':
           {
-            ensure_new_line ();
-            output_indentation ();
-            result = write (c);
-            ensure_new_line ();
+            if (!(construct_ == CXX_COMMENT || construct_ == STRING_LITERAL))
+            {
+              ensure_new_line ();
+              output_indentation ();
+              result = write (c);
+              ensure_new_line ();
 
-            indentation_.push (indentation_.top () + spaces_);
-
+              indentation_.push (indentation_.top () + spaces_);
+            }
+            else
+              defaulting = true;
             break;
           }
         case '}':
           {
-            if (indentation_.size () > 1)
-              indentation_.pop ();
-
-            // Reduce multiple newlines to one.
-            while (hold_.size () > 1)
+            if (!(construct_ == CXX_COMMENT || construct_ == STRING_LITERAL))
             {
-              typename Hold::reverse_iterator i = hold_.rbegin ();
-              if (*i == '\n' && *(i + 1) == '\n') hold_.pop_back ();
-              else break;
+              if (indentation_.size () > 1)
+                indentation_.pop ();
+
+              // Reduce multiple newlines to one.
+              while (hold_.size () > 1)
+              {
+                typename Hold::reverse_iterator i = hold_.rbegin ();
+                if (*i == '\n' && *(i + 1) == '\n') hold_.pop_back ();
+                else break;
+              }
+
+              ensure_new_line ();
+              output_indentation ();
+
+              hold_.push_back (c);
+
+
+              // Add double newline after '}'.
+              //
+              hold_.push_back ('\n');
+              hold_.push_back ('\n');
+              position_ = 0;
             }
-
-            ensure_new_line ();
-            output_indentation ();
-
-            hold_.push_back (c);
-
-
-            // Add double newline after '}'.
-            //
-            hold_.push_back ('\n');
-            hold_.push_back ('\n');
-            position_ = 0;
+            else
+              defaulting = true;
 
             break;
           }
@@ -184,12 +193,13 @@ namespace Indentation
           }
         case '\"':
           {
-            if (construct_ != CXX_COMMENT &&
-                (hold_.empty () || hold_.back () != '\\'))
+            if (construct_ != CXX_COMMENT && (hold_.empty () || hold_.back () != '\\'))
             {
               // not escape sequence
-              if (construct_ == STRING_LITERAL) construct_ = OTHER;
-              else construct_ = STRING_LITERAL;
+              if (construct_ == STRING_LITERAL)
+                construct_ = OTHER;
+              else
+                construct_ = STRING_LITERAL;
             }
 
             defaulting = true;
