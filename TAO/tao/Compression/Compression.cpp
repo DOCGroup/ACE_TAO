@@ -13,8 +13,8 @@ TAO_Compression_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR *[])
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
   ACE_NEW_RETURN (obj,
-                    TAO::CompressionManager (),
-                    CORBA::Object::_nil ());
+                      TAO::CompressionManager (),
+                      CORBA::Object::_nil ());
   return obj;
 }
 

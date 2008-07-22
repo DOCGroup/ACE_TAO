@@ -1,3 +1,38 @@
+Tue Jul 22 08:14:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression.mpc:
+        * tao/Compression/Base_Compressor.cpp:
+        * tao/Compression/Base_Compressor.h:
+        * tao/Compression/Compression.cpp:
+        * tao/Compression/Compression.h:
+        * tao/Compression/Compression.pidl:
+        * tao/Compression/Compression_Manager.cpp:
+        * tao/Compression/Compressor_Factory.cpp:
+        * tao/Compression/Compressor_Factory.h:
+          Updated the Compression library to match the latest ZIOP
+          proposal. Statistics are now gathered per compressor and
+          added a few types used by ZIOP
+
+        * tao/Compression/zlib/ZlibCompressor.cpp:
+        * tao/Compression/zlib/ZlibCompressor.h:
+          Updated for the compression changes
+
+        * tao/Compression/bzip2/Bzip2Compressor.cpp:
+        * tao/Compression/bzip2/Bzip2Compressor.h:
+        * tao/Compression/bzip2/Bzip2Compressor_export.h:
+        * tao/Compression/bzip2/Bzip2Compressor_Factory.cpp:
+        * tao/Compression/bzip2/Bzip2Compressor_Factory.h:
+        * tao/Compression/bzip2/TAO_Bzip2Compressor.pc.in:
+        * tao/Compression/bzip2/TAO_Bzip2Compressor.rc:
+        * tao/Bzip2Compressor.mpc:
+          Added new bzip2 compressor
+
+        * tao/Transport_Cache_Manager.cpp:
+          Use true/false and correct logging format specifier
+
+        * tao/PortableServer/Key_Adapters.cpp:
+          Const changes
+
 Tue Jul 22 06:26:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Monitor.mpc:

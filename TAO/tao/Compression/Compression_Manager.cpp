@@ -74,7 +74,7 @@ namespace TAO
   CompressionManager::get_factory (::Compression::CompressorId compressor_id)
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_,
-        ::Compression::CompressorFactory::_nil ());
+            ::Compression::CompressorFactory::_nil ());
 
     CORBA::ULong const length = this->factories_.length ();
 
