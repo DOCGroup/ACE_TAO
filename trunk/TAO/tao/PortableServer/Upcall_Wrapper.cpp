@@ -4,6 +4,7 @@
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"
 #include "tao/SystemException.h"
+#include "tao/ZIOP_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ServerRequestInterceptor_Adapter.h"
@@ -205,7 +206,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
     {
       if (server_request.outgoing ())
         {
-          this->post_upcall (*server_request.outgoing (), args, nargs);
+          this->post_upcall (server_request, args, nargs);
         }
     }
 
@@ -241,26 +242,37 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
 }
 
 void
-TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
+TAO::Upcall_Wrapper::post_upcall (TAO_ServerRequest& server_request,
                                   TAO::Argument * const * args,
                                   size_t nargs)
 {
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   // Marshal the operation "inout" and "out" arguments and return
   // value, if any.
+  TAO_ZIOP_Adapter* ziop_adapter = server_request.orb_core ()->ziop_adapter ();
 
-  TAO::Argument * const * const begin = args;
-  TAO::Argument * const * const end   = args + nargs;
-
-  for (TAO::Argument * const * i = begin; i != end; ++i)
+  if (ziop_adapter)
     {
-      if (!(*i)->marshal (cdr))
-        {
-          TAO_OutputCDR::throw_skel_exception (errno);
-        }
+       ziop_adapter->marshal_reply_data (server_request, args, nargs);
     }
+  else
+#endif
+    {
+      TAO_OutputCDR & cdr = (*server_request.outgoing ());
+      TAO::Argument * const * const begin = args;
+      TAO::Argument * const * const end   = args + nargs;
 
-  // Reply body marshaling completed.  No other fragments to send.
-  cdr.more_fragments (false);
+      for (TAO::Argument * const * i = begin; i != end; ++i)
+        {
+          if (!(*i)->marshal (cdr))
+            {
+              TAO_OutputCDR::throw_skel_exception (errno);
+            }
+        }
+
+      // Reply body marshaling completed.  No other fragments to send.
+      cdr.more_fragments (false);
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

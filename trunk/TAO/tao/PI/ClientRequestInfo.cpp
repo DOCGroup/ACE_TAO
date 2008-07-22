@@ -41,7 +41,7 @@ TAO_ClientRequestInfo::setup_picurrent (void)
 {
   // Retrieve the thread scope current (no TSS access incurred yet).
   CORBA::Object_ptr pi_current_obj =
-    this->invocation_->orb_core ()->pi_current ();
+    this->invocation_->stub ()->orb_core ()->pi_current ();
 
   TAO::PICurrent *pi_current =
     dynamic_cast <TAO::PICurrent*> (pi_current_obj);

@@ -1,9 +1,6 @@
 // $Id$
 
 #include "tao/RTCORBA/RT_Stub.h"
-
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
@@ -53,17 +50,23 @@ TAO_RT_Stub::parse_policies (void)
   // Cache away the policies that we'll need later.
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      if (policy_list[i]->policy_type () ==
-           RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-        this->exposed_priority_model (policy_list[i]);
-
-      else if (policy_list[i]->policy_type () ==
-                RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
-        this->exposed_priority_banded_connection (policy_list[i]);
-
-      else if (policy_list[i]->policy_type () ==
-                RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
-        this->exposed_client_protocol (policy_list[i]);
+      switch (policy_list[i]->policy_type ())
+        {
+          case RTCORBA::PRIORITY_MODEL_POLICY_TYPE:
+            {
+              this->exposed_priority_model (policy_list[i]);            }
+            break;
+          case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE :
+            {
+              this->exposed_priority_banded_connection (policy_list[i]);
+            }
+            break;
+          case RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE :
+            {
+              this->exposed_client_protocol (policy_list[i]);
+            }
+            break;
+        }
     }
 
   this->are_policies_parsed_ = true;
@@ -120,21 +123,26 @@ TAO_RT_Stub::exposed_client_protocol (CORBA::Policy_ptr policy)
   this->client_protocol_policy_ = CORBA::Policy::_duplicate (policy);
 }
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
 CORBA::Policy_ptr
 TAO_RT_Stub::get_policy (CORBA::PolicyType type)
 {
   // If we are dealing with a client exposed policy, check if any
   // value came in the IOR/reconcile IOR value and overrides.
-  if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-    return this->exposed_priority_model ();
-
-  if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
-    return this->effective_priority_banded_connection ();
-
-  if (type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
-    return this->effective_client_protocol ();
+  switch (type)
+    {
+      case RTCORBA::PRIORITY_MODEL_POLICY_TYPE:
+        {
+          return this->exposed_priority_model ();
+        }
+      case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE :
+        {
+          return this->effective_priority_banded_connection ();
+        }
+      case RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE :
+        {
+          return this->effective_client_protocol ();
+        }
+    }
 
   return this->TAO_Stub::get_policy (type);
 }
@@ -144,14 +152,21 @@ TAO_RT_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
 {
   // If we are dealing with a client exposed policy, check if any
   // value came in the IOR/reconcile IOR value and overrides.
-  if (type == TAO_CACHED_POLICY_PRIORITY_MODEL)
-    return this->exposed_priority_model ();
-
-  if (type == TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION)
-    return this->effective_priority_banded_connection ();
-
-  if (type == TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL)
-    return this->effective_client_protocol ();
+  switch (type)
+    {
+      case TAO_CACHED_POLICY_PRIORITY_MODEL:
+        {
+          return this->exposed_priority_model ();
+        }
+      case TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION :
+        {
+          return this->effective_priority_banded_connection ();
+        }
+      case TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL :
+        {
+          return this->effective_client_protocol ();
+        }
+    }
 
   return this->TAO_Stub::get_cached_policy (type);
 }
@@ -182,9 +197,7 @@ TAO_RT_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
   return this->TAO_Stub::set_policy_overrides(policies, set_add);
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_RT_Stub::effective_priority_banded_connection (void)
 {
   // Get effective override.
@@ -206,13 +219,18 @@ TAO_RT_Stub::effective_priority_banded_connection (void)
     RTCORBA::PriorityBandedConnectionPolicy::_narrow (override.in ());
 
   TAO_PriorityBandedConnectionPolicy *override_policy =
-    static_cast<TAO_PriorityBandedConnectionPolicy *> (override_policy_var.in ());
+    dynamic_cast<TAO_PriorityBandedConnectionPolicy *> (override_policy_var.in ());
 
   RTCORBA::PriorityBandedConnectionPolicy_var exposed_policy_var =
     RTCORBA::PriorityBandedConnectionPolicy::_narrow (exposed.in ());
 
   TAO_PriorityBandedConnectionPolicy *exposed_policy =
-    static_cast<TAO_PriorityBandedConnectionPolicy *> (exposed_policy_var.in ());
+    dynamic_cast<TAO_PriorityBandedConnectionPolicy *> (exposed_policy_var.in ());
+
+  if (!override_policy || !exposed_policy)
+    {
+      throw ::CORBA::INV_POLICY ();
+    }
 
   // Both override and exposed have been set.
   // See if either of them has empty priority bands.
@@ -227,7 +245,7 @@ TAO_RT_Stub::effective_priority_banded_connection (void)
   throw ::CORBA::INV_POLICY ();
 }
 
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_RT_Stub::effective_client_protocol (void)
 {
   // Get effective override.
@@ -249,13 +267,18 @@ TAO_RT_Stub::effective_client_protocol (void)
     RTCORBA::ClientProtocolPolicy::_narrow (override.in ());
 
   TAO_ClientProtocolPolicy *override_policy =
-    static_cast<TAO_ClientProtocolPolicy *> (override_policy_var.in ());
+    dynamic_cast<TAO_ClientProtocolPolicy *> (override_policy_var.in ());
 
   RTCORBA::ClientProtocolPolicy_var exposed_policy_var =
     RTCORBA::ClientProtocolPolicy::_narrow (exposed.in ());
 
   TAO_ClientProtocolPolicy *exposed_policy =
-    static_cast<TAO_ClientProtocolPolicy *> (exposed_policy_var.in ());
+    dynamic_cast<TAO_ClientProtocolPolicy *> (exposed_policy_var.in ());
+
+  if (!override_policy || !exposed_policy)
+    {
+      throw ::CORBA::INV_POLICY ();
+    }
 
   // Both override and exposed have been set.
   // See if either of them has empty priority bands.
@@ -275,4 +298,3 @@ TAO_RT_Stub::effective_client_protocol (void)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_HAS_CORBA_MESSAGING  && TAO_HAS_CORBA_MESSAGING != 0 */

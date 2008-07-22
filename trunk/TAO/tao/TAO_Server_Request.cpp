@@ -270,7 +270,8 @@ TAO_ServerRequest::init_reply (void)
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
                                        TAO_Transport::TAO_REPLY,
-                                       0);
+                                       0,
+                                       false);
 
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_, reply_params);
@@ -317,7 +318,8 @@ TAO_ServerRequest::send_no_exception_reply (void)
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
                                        TAO_Transport::TAO_REPLY,
-                                       0);
+                                       0,
+                                       false);
 
   // Construct a REPLY header.
   this->mesg_base_->generate_reply_header (*this->outgoing_, reply_params);
@@ -352,9 +354,9 @@ TAO_ServerRequest::tao_send_reply (void)
 
   this->outgoing_->more_fragments (false);
 
-  int result = this->transport_->send_message (*this->outgoing_,
-                                               0,
-                                               TAO_Transport::TAO_REPLY);
+  int const result = this->transport_->send_message (*this->outgoing_,
+                                                     0,
+                                                     TAO_Transport::TAO_REPLY);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -509,7 +511,8 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
                                        TAO_Transport::TAO_REPLY,
-                                       0);
+                                       0,
+                                       false);
 
   // Make the reply message
   if (this->mesg_base_->generate_reply_header (*this->outgoing_,
@@ -527,9 +530,11 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
     s.length ());
 
   if (!this->outgoing_->good_bit ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
-                ACE_TEXT ("could not marshal reply\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
+                  ACE_TEXT ("could not marshal reply\n")));
+    }
 
   this->outgoing_->more_fragments (false);
 

@@ -104,10 +104,9 @@ namespace TAO
      * Perform post-upcall operations, including operation @c INOUT
      * and @c OUT argument marshaling.
      */
-    void post_upcall (TAO_OutputCDR & cdr,
+    void post_upcall (TAO_ServerRequest& server_request,
                       TAO::Argument * const * args,
                       size_t nargs);
-
   };
 
 }  // End namespace TAO

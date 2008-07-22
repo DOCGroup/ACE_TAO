@@ -18,11 +18,11 @@ ACE_RCSID (RTCORBA,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Policy *
+CORBA::Policy_ptr
 TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
                                TAO::Profile_Transport_Resolver &r)
 {
-  CORBA::Policy *policy = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
   TAO_RT_Stub * const rt_stub =
     dynamic_cast<TAO_RT_Stub *> (r.stub ());
@@ -32,8 +32,7 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
 
   try
     {
-      policy =
-        rt_stub->get_cached_policy (type);
+      policy = rt_stub->get_cached_policy (type);
     }
   catch (const ::CORBA::INV_POLICY&)
     {

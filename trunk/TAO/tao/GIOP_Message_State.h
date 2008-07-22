@@ -72,6 +72,11 @@ public:
   /// Get the GIOP version
   TAO_GIOP_Message_Version const &giop_version (void) const;
 
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  /// Return the compressed information
+  CORBA::Boolean compressed (void) const;
+#endif
+
 private:
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
@@ -115,6 +120,11 @@ private:
   /// fragments.  A value of non-zero indicates that it does have
   /// fragments.
   CORBA::Boolean more_fragments_;
+
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+  /// Compressed
+  CORBA::Boolean compressed_;
+#endif
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

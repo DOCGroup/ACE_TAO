@@ -44,9 +44,8 @@ class TAO_RTCORBA_Export TAO_RT_Endpoint_Utils
 {
 public:
   static
-  CORBA::Policy *policy (TAO_Cached_Policy_Type type,
-                         TAO::Profile_Transport_Resolver &r
-                        );
+  CORBA::Policy_ptr policy (TAO_Cached_Policy_Type type,
+                            TAO::Profile_Transport_Resolver &r);
 
 private:
   /// ctor.

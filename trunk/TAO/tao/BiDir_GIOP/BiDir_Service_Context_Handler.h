@@ -26,7 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_BiDIR_Service_Context_Handler :
   public TAO_Service_Context_Handler
 {
-  virtual int process_service_context (TAO_ServerRequest& server_request,
+  virtual int process_service_context (TAO_Transport& transport,
                                        const IOP::ServiceContext& context);
 };
 

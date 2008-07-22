@@ -247,13 +247,13 @@ TAO::ORB::open_global_services (int argc,
   // (global) Service Configurator instance.
   // Be certain to copy the program name so that service configurator
   // has something to skip!
-  ACE_ARGV global_svc_config_argv (true); // only this ctor allows 
+  ACE_ARGV global_svc_config_argv (true); // only this ctor allows
   // subsequent use of add()!
-  global_svc_config_argv.add ((argc <= 0 || argv == 0) ? 
+  global_svc_config_argv.add ((argc <= 0 || argv == 0) ?
             ACE_TEXT ("") : argv[0]);
 
   // Will expand the environment variables, if any were used.
-  // Is this a good thing? I guess it provides greater flexibility 
+  // Is this a good thing? I guess it provides greater flexibility
   // for deployment,so let's leave it. Will also quote arguments.
 
   ACE_ARGV copyargv (argc, argv, true, true);
@@ -287,11 +287,11 @@ TAO::ORB::open_global_services (int argc,
     return -1;
 
   // register_global_services_i depends on the parsing of at least the
-  // -ORBNegotiateCodesets option, and must be invoked after all the 
+  // -ORBNegotiateCodesets option, and must be invoked after all the
   // parsing methods, but still must preceed the opening of other services.
 
   register_global_services_i (theone);
-    
+
   // Perform the open magic (unless SC::open() has been called already)
   int global_svc_config_argc = global_svc_config_argv.argc ();
   int status = open_private_services_i (theone,
@@ -407,7 +407,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   // Parse any globally applicable arguments, but do not make them effective.
   // We are effectively purging the command line from them without affecting
-  // the global state - after all, it may be a private (local) configuration 
+  // the global state - after all, it may be a private (local) configuration
   // context.
   int status = parse_global_args_i(argc, argv, global_svc_config_argv, false);
 
@@ -650,6 +650,18 @@ namespace
       {
         bidir_loader->init (0, 0);
       }
+
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP == 1
+    ACE_Service_Object * const ziop_loader =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (
+        pcfg,
+        "ZIOP_Loader");
+
+    if (ziop_loader != 0)
+      {
+        ziop_loader->init (0, 0);
+      }
+#endif
 
     ACE_Service_Object * const messaging_loader =
       ACE_Dynamic_Service<ACE_Service_Object>::instance (
