@@ -38,7 +38,7 @@ namespace PortableInterceptor
       if (TAO_Singleton_Manager::instance ()->init () == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) register_orb_initializer: ")
+                      ACE_TEXT ("TAO (%P|%t) - register_orb_initializer: ")
                       ACE_TEXT ("Unable to pre-initialize TAO\n")));
         }
     }

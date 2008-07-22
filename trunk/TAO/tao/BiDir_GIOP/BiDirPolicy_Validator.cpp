@@ -21,13 +21,13 @@ TAO_BiDirPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP);
 
-  if (policy.in () == 0)
+  if (CORBA::is_nil (policy.in ()))
     return;
 
   BiDirPolicy::BidirectionalPolicy_var srp =
     BiDirPolicy::BidirectionalPolicy::_narrow (policy.in ());
 
-  if (srp.in () == 0)
+  if (CORBA::is_nil (srp.in ()))
     return;
 
   BiDirPolicy::BidirectionalPolicyValue val = srp->value ();

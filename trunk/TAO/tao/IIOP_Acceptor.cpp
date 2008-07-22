@@ -166,7 +166,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   TAO_Profile *pfile = 0;
   TAO_IIOP_Profile *iiop_profile = 0;
 
-  // First see if <mprofile> already contains a IIOP profile.
+  // First see if @a mprofile already contains a IIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);

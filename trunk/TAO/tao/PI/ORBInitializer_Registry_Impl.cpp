@@ -85,7 +85,7 @@ TAO::ORBInitializer_Registry::fini (void)
       --i;
       if (TAO_debug_level > 8)
         {
-          ACE_DEBUG((LM_DEBUG, ACE_TEXT("TAO(%P|%t)OrbInitializer::fini clearing %d @%@\n"),
+          ACE_DEBUG((LM_DEBUG, ACE_TEXT("TAO (%P|%t) - ORBInitializer_Registry::fini clearing %d @%@\n"),
             i, this->initializers_[i].operator->()
             ));
         }
@@ -114,7 +114,7 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
       // Add the given ORBInitializer to the sequence.
       if (TAO_debug_level > 8)
         {
-          ACE_DEBUG((LM_DEBUG, ACE_TEXT("TAO(%P|%t)OrbInitializer::register_orb_initializer %d @%@\n"),
+          ACE_DEBUG((LM_DEBUG, ACE_TEXT("TAO (%P|%t) - ORBInitializer_Registry::register_orb_initializer %d @%@\n"),
             cur_len, init
             ));
         }
