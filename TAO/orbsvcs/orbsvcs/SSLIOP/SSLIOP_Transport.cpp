@@ -141,7 +141,7 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
                                       ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
-  if (this->messaging_object_->format_message (stream) != 0)
+  if (this->messaging_object ()->format_message (stream) != 0)
     return -1;
 
   // Strictly speaking, should not need to loop here because the
@@ -181,7 +181,7 @@ TAO::SSLIOP::Transport::generate_request_header (
   // and also make sure that we have not recd. or sent any information
   // regarding this before...
   if (this->orb_core ()->bidir_giop_policy ()
-      && this->messaging_object_->is_ready_for_bidirectional (msg)
+      && this->messaging_object ()->is_ready_for_bidirectional (msg)
       && this->bidirectional_flag () < 0)
     {
       this->set_bidir_context_info (opdetails);
