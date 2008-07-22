@@ -1,3 +1,13 @@
+Tue Jul 22 17:32:46 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        
+          In converting a predefined type in the AST to a CORBA
+          pk_kind, added a case in the switch statement for
+          ValueBase nodes. Thanks to Frank Pilhofer <fp@mc.com>
+          for reporting the problem and supplying a patch.
+          This fix closes [BUGID:3372].
+
 Tue Jul 22 17:04:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
