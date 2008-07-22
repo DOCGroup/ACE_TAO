@@ -11,13 +11,14 @@
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
+#include "tao/Monitor/Monitor_export.h"
 #include "ace/Monitor_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Monitor
 {
-  void get_monitor_data (
+  TAO_Monitor_Export void get_monitor_data (
    ::ACE::Monitor_Control::Monitor_Base *monitor,
    Monitor::Data& data,
    bool clear);
