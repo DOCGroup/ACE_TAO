@@ -2449,6 +2449,8 @@ ifr_adding_visitor::predefined_type_to_pkind (AST_PredefinedType *node)
       return CORBA::pk_void;
     case AST_PredefinedType::PT_object:
       return CORBA::pk_objref;
+    case AST_PredefinedType::PT_value:
+      return CORBA::pk_value_base;
     case AST_PredefinedType::PT_pseudo:
       {
         const char *local_name = node->local_name ()->get_string ();
