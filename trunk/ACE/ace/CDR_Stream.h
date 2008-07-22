@@ -440,6 +440,8 @@ public:
    */
   size_t current_alignment (void) const;
 
+  void current_alignment (size_t current_alignment);
+
   /**
    * Returns (in @a buf) the next position in the buffer aligned to
    * @a size, it advances the Message_Block wr_ptr past the data

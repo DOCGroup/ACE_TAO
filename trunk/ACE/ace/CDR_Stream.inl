@@ -565,6 +565,17 @@ ACE_OutputCDR::current_alignment (void) const
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
 }
 
+ACE_INLINE void
+ACE_OutputCDR::current_alignment (size_t current_alignment)
+{
+#if !defined (ACE_LACKS_CDR_ALIGNMENT)
+  this->current_alignment_ = current_alignment;
+#else
+  ACE_UNUSED_ARG (current_alignment);
+  return 0;
+#endif /* ACE_LACKS_CDR_ALIGNMENT */
+}
+
 ACE_INLINE int
 ACE_OutputCDR::align_write_ptr (size_t alignment)
 {
@@ -1442,8 +1453,8 @@ ACE_OutputCDR::append_longdouble (ACE_InputCDR &stream)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_string (ACE_InputCDR &stream)
 {
-  ACE_CDR::Char *x;
-  const ACE_CDR::Boolean flag =
+  ACE_CDR::Char *x = 0;
+  ACE_CDR::Boolean const flag =
     (stream.read_string (x) ? this->write_string (x) : false);
   delete [] x;
   return flag;
@@ -1452,8 +1463,8 @@ ACE_OutputCDR::append_string (ACE_InputCDR &stream)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_wstring (ACE_InputCDR &stream)
 {
-  ACE_CDR::WChar *x;
-  const ACE_CDR::Boolean flag =
+  ACE_CDR::WChar *x = 0;
+  ACE_CDR::Boolean const flag =
     (stream.read_wstring (x) ? this->write_wstring (x) : false);
   delete [] x;
   return flag;

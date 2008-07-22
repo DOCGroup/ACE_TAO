@@ -1685,10 +1685,8 @@ ACE_InputCDR::skip_string (void)
 ACE_CDR::Boolean
 ACE_InputCDR::skip_wstring (void)
 {
-  ACE_CDR::Boolean continue_skipping = true;
   ACE_CDR::ULong len = 0;
-
-  continue_skipping = read_ulong (len);
+  ACE_CDR::Boolean continue_skipping = read_ulong (len);
 
   if (continue_skipping && len != 0)
     {
