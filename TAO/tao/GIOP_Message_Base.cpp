@@ -650,7 +650,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           this->orb_core_);
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-  input_cdr.compressed_ = qd->state().compressed ();
+  input_cdr.compressed (qd->state().compressed ());
 #endif
 
   transport->assign_translators(&input_cdr,&output);
@@ -870,7 +870,7 @@ TAO_GIOP_Message_Base::process_request (
       CORBA::Object_var forward_to;
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
-      if (cdr.compressed_)
+      if (cdr.compressed ())
         {
           TAO_ZIOP_Adapter* adapter = this->orb_core_->ziop_adapter ();
           if (adapter)
