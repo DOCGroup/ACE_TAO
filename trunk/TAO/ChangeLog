@@ -1,3 +1,8 @@
+Tue Jul 22 11:34:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ZIOP/*:
+          New ZIOP test using zlib
+
 Tue Jul 22 11:31:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Major commit to add ZIOP to the core of TAO. This adds the capability
