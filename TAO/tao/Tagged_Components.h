@@ -139,10 +139,10 @@ private:
   int get_component_i (IOP::TaggedComponent& component) const;
 
   /// Is @a tag a well-known component?
-  int known_tag (IOP::ComponentId tag) const;
+  bool known_tag (IOP::ComponentId tag) const;
 
   /// Does @a tag show up only once?
-  int unique_tag (IOP::ComponentId tag) const;
+  bool unique_tag (IOP::ComponentId tag) const;
 
 private:
   /// The ORB_TYPE component value

@@ -12,6 +12,9 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
     message_type_ (GIOP::Request),
     payload_size_ (0),
     more_fragments_ (false)
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+    , compressed_ (false)
+#endif
 {
 }
 
@@ -56,5 +59,13 @@ TAO_GIOP_Message_State::giop_version (void) const
 {
   return this->giop_version_;
 }
+
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+ACE_INLINE CORBA::Boolean
+TAO_GIOP_Message_State::compressed (void) const
+{
+  return this->compressed_;
+}
+#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL

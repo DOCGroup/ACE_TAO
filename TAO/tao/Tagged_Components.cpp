@@ -63,10 +63,10 @@ TAO_Tagged_Components::set_code_sets_i (
     CONV_FRAME::CodeSetComponent &rhs)
 {
   lhs.native_code_set = rhs.native_code_set;
-  CORBA::ULong max = rhs.conversion_code_sets.maximum ();
-  CORBA::ULong len = rhs.conversion_code_sets.length ();
-  CONV_FRAME::CodeSetId *buffer = rhs.conversion_code_sets.get_buffer (1);
-  lhs.conversion_code_sets.replace (max, len, buffer, 1);
+  CORBA::ULong const max = rhs.conversion_code_sets.maximum ();
+  CORBA::ULong const len = rhs.conversion_code_sets.length ();
+  CONV_FRAME::CodeSetId *buffer = rhs.conversion_code_sets.get_buffer (true);
+  lhs.conversion_code_sets.replace (max, len, buffer, true);
 }
 
 // ****************************************************************
@@ -140,7 +140,7 @@ TAO_Tagged_Components::set_known_component_i (
 
   CORBA::Boolean byte_order;
 
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     {
       return;
     }
@@ -151,7 +151,7 @@ TAO_Tagged_Components::set_known_component_i (
     {
       CORBA::ULong orb_type;
 
-      if ((cdr >> orb_type) == 0)
+      if (!(cdr >> orb_type))
         {
           return;
         }
@@ -163,7 +163,7 @@ TAO_Tagged_Components::set_known_component_i (
     {
       CONV_FRAME::CodeSetComponentInfo ci;
 
-      if ((cdr >> ci) == 0)
+      if (!(cdr >> ci))
         {
           return;
         }
@@ -315,7 +315,7 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
   this->orb_type_set_ = 0;
   this->code_sets_set_ = 0;
 
-  if ((cdr >> this->components_) == 0)
+  if (!(cdr >> this->components_))
     {
       return 0;
     }

@@ -305,8 +305,7 @@ public:
    */
   RTCORBA::ProtocolList & protocols_rep (void);
 
-  RTCORBA::ProtocolList *protocols
-  (void);
+  RTCORBA::ProtocolList *protocols (void);
 
   CORBA::PolicyType policy_type (void);
 
@@ -364,8 +363,7 @@ public:
    */
   RTCORBA::ProtocolList & protocols_rep (void);
 
-  RTCORBA::ProtocolList *protocols
-  (void);
+  RTCORBA::ProtocolList *protocols (void);
 
   CORBA::PolicyType policy_type (void);
 

@@ -1,3 +1,168 @@
+Tue Jul 22 11:31:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Major commit to add ZIOP to the core of TAO. This adds the capability
+        to compress the data on the wire. This is a proof of concept implementation
+        that we try to get standardized within the CORBA spec. Interoperability
+        with other ORBs and different TAO versions isn't guaranteed until ZIOP
+        has been formally adopted by the OMG. If you want to experiment with ZIOP
+        add TAO_HAS_ZIOP 1 as define to your config.h file. This prototype will need
+        some more work to support ZIOP for the full request/reply chain, in some
+        cases the reply isn't compressed at this moment. For this we need to rework
+        the full policy support in the ORB for which we search funding.
+
+        * MPC/config/ziop.mpb:
+          New base project for anyone using ZIOP
+
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.cpp:
+        * tao/BiDir_GIOP/BiDir_Service_Context_Handler.h:
+          Updated this class to the new service context handler API which is more
+          generic
+
+        * tao/CDR.cpp:
+        * tao/CDR.h:
+        * tao/CDR.inl:
+          Added a compressed flag to the input and output stream which indicated
+          whether this stream contains compressed data
+
+        * tao/GIOP_Message_Base.cpp:
+          Decompress the data when it is compressed
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+          Use new service context handler api
+
+        * tao/GIOP_Message_State.{h,cpp,inl}:
+          Added compressed flag
+
+        * tao/IIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/SCIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+
+          Made messaging_object_ private, derived classes should use
+          messaging_object()
+
+        * tao/Invocation_Base.{h,cpp,inl}:
+          Removed cached orb_core, can easily get this from the stub when we need
+          it
+
+        * tao/Messaging/Asynch_Invocation.cpp:
+          Set compressed to false again
+
+        * tao/ORB_Core.{h,cpp,inl}:
+          Added ziop_adapter
+
+        * tao/orbconf.h:
+          Disabled ZIOP by default, added cached values for ZIOP policies
+
+        * tao/PI/ClientRequestInfo.cpp:
+          Get the core from the stub
+
+        * tao/PolicyC.h:
+          Use false instead of 0
+
+        * tao/PortableServer/POA_Policy_Set.cpp:
+          Use prefix increment and use ! operator
+
+        * tao/PortableServer/Upcall_Wrapper.{h,cpp}:
+          Use ZIOP
+
+        * tao/Profile.cpp:
+          Client exposed policies are not really related to CORBA messaging anymore, do
+          handle them each time. Fixed a bug which could lead to a crash when a
+          not supported policy was found in the object reference
+
+        * tao/Remote_Invocation.cpp:
+          Use ziop
+
+        * tao/RTCORBA/RT_Endpoint_Utils.{h,cpp}:
+          Use Policy_ptr
+
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+          Fixed some comments
+
+        * tao/RTCORBA/RT_Policy_i.{h,cpp}:
+          Layout changes, const changes, use ! operator
+
+        * tao/RTCORBA/RT_PolicyFactory.cpp:
+        * tao/RTCORBA/RT_PolicyFactory.h:
+          Layout changes and use switch instead of a lot of if checks
+
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+          Use _nil() instead of 0
+
+        * tao/RTCORBA/RT_Stub.cpp:
+        * tao/RTCORBA/RT_Stub.h:
+          Use dynamic_cast, use switch, not dependent on messaging
+
+        * tao/Service_Context_Handler.h:
+          Made the api more generic
+
+        * tao/Service_Context_Handler_Registry.cpp:
+        * tao/Service_Context_Handler_Registry.h:
+          Updated the api and fixed a possible bug when a handler is
+          requested but which is not there. This fixes bugzilla 3354
+          Thanks to Russ Noseworthy <j dot russell dot noseworthy at saic dot com>
+          for reporting this
+
+        * tao/Stub.cpp:
+        * tao/Stub.h:
+          Make policies independent of messaging
+
+        * tao/Synch_Invocation.cpp:
+          Use operator!
+
+        * tao/Synch_Reply_Dispatcher.cpp:
+          Call service context handler registry
+
+        * tao/Tagged_Components.cpp
+        * tao/Tagged_Components.h
+        * tao/Tagged_Components.inl
+          Use operator! and use bool
+
+        * tao/TAO_Internal.cpp:
+          Use ZIOP
+
+        * tao/TAO_Server_Request.cpp:
+          Set compressed to false
+
+        * tao/Transport.cpp
+        * tao/Transport.h
+        * tao/Transport.inl
+          Use bool, layout changes, use ACE_ERROR for errors
+
+        * tao/ZIOP.mpc:
+          New file
+
+        * tao/ZIOP/TAO_ZIOP.pc.in
+        * tao/ZIOP/ZIOP.cpp
+        * tao/ZIOP/ZIOP.h
+        * tao/ZIOP/ZIOP.pidl
+        * tao/ZIOP/ziop_export.h
+        * tao/ZIOP/ZIOP_ORBInitializer.cpp
+        * tao/ZIOP/ZIOP_ORBInitializer.h
+        * tao/ZIOP/ZIOP_Policy_i.cpp
+        * tao/ZIOP/ZIOP_Policy_i.h
+        * tao/ZIOP/ZIOP_Policy_Validator.cpp
+        * tao/ZIOP/ZIOP_Policy_Validator.h
+        * tao/ZIOP/ZIOP_PolicyFactory.cpp
+        * tao/ZIOP/ZIOP_PolicyFactory.h
+        * tao/ZIOP/ZIOP_Stub.cpp
+        * tao/ZIOP/ZIOP_Stub.h
+        * tao/ZIOP/ZIOP_Stub_Factory.cpp
+        * tao/ZIOP/ZIOP_Stub_Factory.h
+          New ZIOP library implementation
+
+        * tao/catior/catior.cpp:
+          Recognize TIDC++ orb, handle policy values correctly, added support
+          for ZIOP
+
+        * tao/catior/catior.mpc:
+          Added ziop as base
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+          Documentation change
+
 Tue Jul 22 10:02:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bzip2Compressor.mpc:

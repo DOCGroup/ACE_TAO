@@ -62,8 +62,14 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   // this data.
   CORBA::ULong const max = params.svc_ctx_.maximum ();
   CORBA::ULong const len = params.svc_ctx_.length ();
-  IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (1);
-  this->reply_service_info_.replace (max, len, context_list, 1);
+  IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (true);
+  this->reply_service_info_.replace (max, len, context_list, true);
+
+  if (this->reply_service_info_.length() > 0)
+    {
+      orb_core_->service_context_registry ().
+        process_service_contexts (this->reply_service_info_, *(params.transport_));
+    }
 
   // Must reset the message state, it is possible that the same reply
   // dispatcher is used because the request must be re-sent.

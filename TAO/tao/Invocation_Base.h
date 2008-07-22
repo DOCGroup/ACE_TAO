@@ -63,8 +63,6 @@ namespace TAO
 
     /// Accessor and mutator methods
     //@{
-    TAO_ORB_Core *orb_core (void) const;
-
     TAO_Stub *stub (void) const;
 
     /// Accessor and mutator methods for forwarded object
@@ -101,8 +99,10 @@ namespace TAO
     /// Does this invocation return a response?
     CORBA::Boolean response_expected (void) const;
 
-    /// Accessor and mutator of reply_status of the invocation.
+    /// Accessor of reply_status of the invocation.
     GIOP::ReplyStatusType reply_status (void) const;
+
+    /// Mutator of reply_status of the invocation.
     void reply_status (GIOP::ReplyStatusType s);
 
     /// The operaton details of the invocation
@@ -160,12 +160,9 @@ namespace TAO
 
     /// The effective target on which the invocation is on.
     CORBA::Object_ptr target_;
-
-    /// Cache the ORB_Core
-    TAO_ORB_Core *orb_core_;
+    //@}
 
     TAO_Stub *stub_;
-    //@}
 
     /// Operations invoked by the
     /// PortableInterceptor::ClientRequestInfo object to get details

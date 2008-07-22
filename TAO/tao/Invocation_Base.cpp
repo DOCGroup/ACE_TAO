@@ -45,10 +45,9 @@ namespace TAO
     , reply_status_ (GIOP::NO_EXCEPTION)
     , otarget_ (ot)
     , target_ (t)
-    , orb_core_ (stub->orb_core ())
     , stub_ (stub)
 #if TAO_HAS_INTERCEPTORS == 1
-    , adapter_ (orb_core_->clientrequestinterceptor_adapter ())
+    , adapter_ (stub->orb_core ()->clientrequestinterceptor_adapter ())
     , stack_size_ (0)
     , invoke_status_ (TAO_INVOKE_START)
     , caught_exception_ (0)

@@ -167,7 +167,7 @@ CORBA::Policy_ptr
 TAO_ThreadpoolPolicy::create (const CORBA::Any &val)
 {
   RTCORBA::ThreadpoolId value;
-  if ((val >>= value) == 0)
+  if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_ThreadpoolPolicy *tmp = 0;
@@ -324,7 +324,7 @@ CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val)
 {
   RTCORBA::PriorityBands *value = 0;
-  if ((val >>= value) == 0)
+  if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_PriorityBandedConnectionPolicy *tmp = 0;
@@ -339,7 +339,7 @@ TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val)
 RTCORBA::PriorityBands *
 TAO_PriorityBandedConnectionPolicy::priority_bands (void)
 {
-  RTCORBA::PriorityBands *tmp;
+  RTCORBA::PriorityBands *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::PriorityBands (this->priority_bands_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -374,13 +374,13 @@ TAO_PriorityBandedConnectionPolicy::destroy (void)
 CORBA::Boolean
 TAO_PriorityBandedConnectionPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
-  return out_cdr << priority_bands_;
+  return out_cdr << this->priority_bands_;
 }
 
 CORBA::Boolean
 TAO_PriorityBandedConnectionPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 {
-  return in_cdr >> priority_bands_;
+  return in_cdr >> this->priority_bands_;
 }
 
 TAO_Cached_Policy_Type
@@ -399,7 +399,7 @@ TAO_PriorityBandedConnectionPolicy::_tao_scope (void) const
 RTCORBA::PriorityBands &
 TAO_PriorityBandedConnectionPolicy::priority_bands_rep (void)
 {
-  return priority_bands_;
+  return this->priority_bands_;
 }
 
 // ****************************************************************
@@ -430,7 +430,7 @@ CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::create (const CORBA::Any &val)
 {
   RTCORBA::ProtocolList *value = 0;
-  if ((val >>= value) == 0)
+  if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_ServerProtocolPolicy *tmp = 0;
@@ -529,7 +529,7 @@ CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::create (const CORBA::Any &val)
 {
   RTCORBA::ProtocolList *value = 0;
-  if ((val >>= value) == 0)
+  if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_ClientProtocolPolicy *tmp = 0;
@@ -1242,8 +1242,8 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
 
   else if (id == TAO_TAG_UIOP_PROFILE)
     {
-      int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
-      int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
+      int const send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
+      int const recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
 
       ACE_NEW_RETURN (property,
                       TAO_UnixDomain_Protocol_Properties (send_buffer_size,
@@ -1253,8 +1253,8 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
 
   else if (id == TAO_TAG_DIOP_PROFILE)
     {
-      int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
-      int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
+      int const send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
+      int const recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
       CORBA::Boolean enable_network_priority = false;
 
       ACE_NEW_RETURN (property,

@@ -20,6 +20,7 @@
 
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Messaging/Messaging_TypesC.h"
+#include "tao/ZIOP/ZIOP.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/IIOP_Profile.h"
@@ -996,18 +997,30 @@ cat_tag_orb_type (TAO_InputCDR& stream) {
   if (!(stream2 >> orbtype))
     return false;
 
-  if (orbtype == TAO_ORB_TYPE)
+  switch (orbtype)
+  {
+   case TAO_ORB_TYPE:
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%I ORB Type: 0x%x (TAO)\n",
                   orbtype));
+      break;
     }
-  else
+  case 0x29A:
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I ORB Type: 0x%x (TIDorbC++)\n",
+                  orbtype));
+      break;
+    }
+  default:
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%I ORB Type: 0x%x\n",
                   orbtype));
     }
+    break;
+  }
 
   return true;
 }
@@ -1114,18 +1127,17 @@ cat_tag_policies (TAO_InputCDR& stream) {
 
   for (unsigned int iter=0; iter < policies.length() ; iter++) {
     // Create new stream for pvalue contents
-    char *pmbuf = new char [policies[iter].pvalue.length()];
+    const CORBA::Octet *pmbuf = policies[iter].pvalue.get_buffer ();
 
-    for (unsigned int biter=0 ;
-         biter < policies[iter].pvalue.length() - sizeof(int) ;
-         biter++) {
-      pmbuf[biter] = policies[iter].pvalue[biter + sizeof(int)];
-    }
+    TAO_InputCDR stream3 (
+      reinterpret_cast <const char*>  (pmbuf),
+      policies[iter].pvalue.length ());
 
-    int byteOrder = policies[iter].pvalue[0];
-    TAO_InputCDR stream3 (pmbuf,
-                          policies[iter].pvalue.length(),
-                          static_cast<int> (byteOrder));
+    CORBA::Boolean byte_order;
+    if (!(stream3 >> ACE_InputCDR::to_boolean (byte_order)))
+      return 1;
+
+    stream3.reset_byte_order (static_cast <int> (byte_order));
 
     if (policies[iter].ptype == RTCORBA::PRIORITY_MODEL_POLICY_TYPE) {
       ACE_DEBUG ((LM_DEBUG,
@@ -1225,13 +1237,34 @@ cat_tag_policies (TAO_InputCDR& stream) {
                   "%I Policy #%d Type: %d (QUEUE_ORDER_POLICY_TYPE)\n",
                   iter+1,
                   policies[iter].ptype));
+    } else if (policies[iter].ptype == ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID) {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I Policy #%d Type: %d (COMPRESSOR_ID_LEVEL_LIST_POLICY_ID)\n",
+                  iter+1,
+                  policies[iter].ptype));
+      ::Compression::CompressorIdLevelList idlist;
+      if (!(stream3 >> idlist))
+        return 1;
+      CORBA::ULong index = 0;
+      for (index; index < idlist.length(); index++)
+        {
+          ACE_DEBUG ((LM_DEBUG,"%I\t CompressorId: %d Level: %d\n",
+                      idlist[index].compressor_id, idlist[index].compression_level));
+        }
+    } else if (policies[iter].ptype == ZIOP::COMPRESSION_ENABLING_POLICY_ID) {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I Policy #%d Type: %d (COMPRESSION_ENABLING_POLICY_ID)\n",
+                  iter+1,
+                  policies[iter].ptype));
+      CORBA::Boolean status;
+      stream3 >> ACE_InputCDR::to_boolean (status);
+      ACE_DEBUG ((LM_DEBUG,"%I\t Enabled: %d\n",
+                  status));
     } else {
       ACE_DEBUG ((LM_DEBUG,
                   "%I Policy #%d Type: %d (UNKNOWN)\n", iter+1,
                   policies[iter].ptype));
     }
-
-    delete [] pmbuf;
   }
 
   return 1;

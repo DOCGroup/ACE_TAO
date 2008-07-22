@@ -69,8 +69,6 @@ namespace IOP
 class TAO_Export TAO_Stub
 {
 public:
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
   /**
    * Returns the effective policy if @a type is a known client-exposed
    * policy type.  Returns the effective override for all other policy
@@ -85,8 +83,6 @@ public:
 
   virtual CORBA::PolicyList *get_policy_overrides (
     const CORBA::PolicyTypeSeq & types);
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   /// Return the queueing strategy to be used in by the transport.
   /// Selection will be based on the SyncScope policies.
@@ -122,7 +118,7 @@ public:
   /// profiles need to be edited.
   ACE_Lock *profile_lock (void) const;
 
-  // Manage the base (non-forwarded) profiles.
+  /// Manage the base (non-forwarded) profiles.
   /// Returns a pointer to the profile_in_use object.  This object
   /// retains ownership of this profile.
   TAO_Profile *profile_in_use (void);
@@ -161,20 +157,20 @@ public:
 
   /**
    * THREAD SAFE
-   * this method will reset the base profile list to reference the first
+   * This method will reset the base profile list to reference the first
    * profile and if there are anmy existing forward profiles they are
    * reset.
    */
   void reset_profiles (void);
 
-  /// Returns 1 if a forward profile has successfully been used.
+  /// Returns true if a forward profile has successfully been used.
   /// profile_success_ && forward_profiles_
   CORBA::Boolean valid_forward_profile (void);
 
-  /// NON-THREAD-SAFE.  Will set profile_success_ to 0.
+  /// NON-THREAD-SAFE.  Will set profile_success_ to true.
   void set_valid_profile (void);
 
-  /// Returns TRUE if a connection was successful with at least
+  /// Returns true if a connection was successful with at least
   /// one profile.
   CORBA::Boolean valid_profile (void) const;
 
@@ -352,7 +348,6 @@ protected:
     * () etc.
     */
   TAO::Object_Proxy_Broker *object_proxy_broker_;
-
 
   /// Ordered list of profiles for this object.
   TAO_MProfile base_profiles_;
