@@ -474,7 +474,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    ACE_Timer_Queue *tq,
    int disable_notify_pipe,
    ACE_Reactor_Notify *notify,
-   int mask_signals,
+   bool mask_signals,
    int s_queue)
     : ACE_Select_Reactor_Impl (mask_signals)
     , token_ (s_queue)
@@ -527,7 +527,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    ACE_Timer_Queue *tq,
    int disable_notify_pipe,
    ACE_Reactor_Notify *notify,
-   int mask_signals,
+   bool mask_signals,
    int s_queue)
     : ACE_Select_Reactor_Impl (mask_signals)
     , token_ (s_queue)

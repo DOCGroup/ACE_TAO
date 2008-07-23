@@ -100,7 +100,7 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
 
 ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
-                                int mask_signals,
+                                bool mask_signals,
                                 int s_queue)
   : ACE_Select_Reactor (sh, tq, ACE_DISABLE_NOTIFY_PIPE_DEFAULT, 0, mask_signals, s_queue)
 {
@@ -112,7 +112,7 @@ ACE_TP_Reactor::ACE_TP_Reactor (size_t max_number_of_handles,
                                 int restart,
                                 ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
-                                int mask_signals,
+                                bool mask_signals,
                                 int s_queue)
   : ACE_Select_Reactor (max_number_of_handles, restart, sh, tq, ACE_DISABLE_NOTIFY_PIPE_DEFAULT, 0, mask_signals, s_queue)
 {
