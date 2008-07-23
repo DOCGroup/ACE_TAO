@@ -58,6 +58,7 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
              ,'tao_dynamicinterface'
              ,'tao_iormanip'
              ,'tao_iortable'
+             ,'tao_ziop'
              ,'tao_esf'
              ,'tao_rtevent'
              ,'tao_cosevent'
