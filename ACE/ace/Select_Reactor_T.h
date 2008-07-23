@@ -61,23 +61,23 @@ public:
   /// If @a disable_notify_pipe is non-0 then the reactor will
   /// not create a notification pipe, which will save two I/O handles
   /// but will elide the <notify()> feature.  If @a mask_signals is
-  /// 1 the reactor is "signal-safe" when dispatching handlers to
-  /// signal events, whereas if @a mask_signals is 0 the reactor will
+  /// true the reactor is "signal-safe" when dispatching handlers to
+  /// signal events, whereas if @a mask_signals is false the reactor will
   /// be more efficient, but not signal-safe (which may be perfectly
   /// fine if your application doesn't use the reactor to handle signals).
   ACE_Select_Reactor_T (ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT,
                         ACE_Reactor_Notify *notify = 0,
-                        int mask_signals = 1,
+                        bool mask_signals = true,
                         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
   /// Initialize @c ACE_Select_Reactor with size @arg size.
   /// If @arg disable_notify_pipe is non-0 then the reactor will
   /// not create a notification pipe, which will save two I/O handles
   /// but will elide the notification feature.  If @arg mask_signals is
-  /// 1 the reactor is "signal-safe" when dispatching handlers to
-  /// signal events, whereas if @arg mask_signals is 0 the reactor will
+  /// true the reactor is "signal-safe" when dispatching handlers to
+  /// signal events, whereas if @arg mask_signals is false the reactor will
   /// be more efficient, but not signal-safe (which may be perfectly
   /// fine if your application doesn't use the reactor to handle signals).
   /**
@@ -94,7 +94,7 @@ public:
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT,
                         ACE_Reactor_Notify *notify = 0,
-                        int mask_signals = 1,
+                        bool mask_signals = true,
                         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
   /**

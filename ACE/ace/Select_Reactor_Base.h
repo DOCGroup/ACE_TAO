@@ -577,7 +577,7 @@ protected:
   bool state_changed_;
 
   /**
-   * If 0 then the Reactor will not mask the signals during the event
+   * If false then the Reactor will not mask the signals during the event
    * dispatching.  This is useful for applications that do not
    * register any signal handlers and want to reduce the overhead
    * introduce by the kernel level locks required to change the mask.
