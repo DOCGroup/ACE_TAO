@@ -1,3 +1,11 @@
+Wed Jul 23 13:46:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+
+          Fixed Fuzz errors introduced by
+          Tue Jul 22 17:51:55 UTC 2008  Jeff Parsons
+
 Wed Jul 23 12:59:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ZIOP/ZIOP_ORBInitializer.cpp
