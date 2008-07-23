@@ -1,6 +1,8 @@
 // $Id$
 #include "tao/ZIOP/ZIOP_Stub_Factory.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/ZIOP/ZIOP_Stub.h"
 
 #include "tao/ORB_Constants.h"
@@ -45,3 +47,4 @@ ACE_STATIC_SVC_DEFINE (TAO_ZIOP_Stub_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO_ZIOP, TAO_ZIOP_Stub_Factory)
 
+#endif
