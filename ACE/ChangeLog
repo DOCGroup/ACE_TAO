@@ -1,3 +1,10 @@
+Wed Jul 23 13:08:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+        * etc/tao_ziop.doxygen:
+        * html/index.html:
+          Added TAO ZIOP to the documentation
+
 Wed Jul 23 10:51:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.h:
