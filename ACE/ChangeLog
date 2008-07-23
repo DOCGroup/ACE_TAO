@@ -1,3 +1,8 @@
+Wed Jul 23 13:30:28 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/PerlACE/Process_Win32.pm:
+          Allow named .bat files for windows.
+
 Wed Jul 23 13:08:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_doxygen.pl:

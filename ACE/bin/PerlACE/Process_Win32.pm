@@ -132,7 +132,7 @@ sub Executable
         $executable = $self->Normalize_Executable_Name ($executable);
     }
     else {
-        if ($executable !~ m/.EXE$/i) {
+        if ($executable !~ m/\.(BAT|EXE)$/i) {
             $executable = $executable.".EXE";
         }
         $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
