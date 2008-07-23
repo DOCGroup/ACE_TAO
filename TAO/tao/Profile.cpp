@@ -414,12 +414,11 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   this->are_policies_parsed_ = true;
 }
 
-
-
 void
 TAO_Profile::get_policies (CORBA::PolicyList& pl)
 {
-  if (!this->are_policies_parsed_)
+#if !defined(CORBA_E_MICRO)
+     if (!this->are_policies_parsed_)
     // None has already parsed the policies.
     {
       IOP::TaggedComponent tagged_component;
@@ -516,6 +515,9 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
             }
         }
     }
+#else
+ ACE_UNUSED_ARG (pl);
+#endif
 }
 
 void
