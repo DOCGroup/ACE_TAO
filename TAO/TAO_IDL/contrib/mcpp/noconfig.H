@@ -463,7 +463,7 @@
 #define NEED_GETOPT     TRUE
 
 
-extern char *   stpcpy( char * dest, const char * src);
+extern char *   mcpp_stpcpy( char * dest, const char * src);
 
 /* For debugging malloc systems by kmatsui  */
 #if     KMMALLOC && _MEM_DEBUG

@@ -1059,7 +1059,7 @@ static char *   mgtoken_save( const char * macroname)
     if (str_eq( macroname, identifier)) {   /* Macro name in body   */
         repl_cur = token_p;                 /* Overwrite on token   */
         *repl_cur++ = DEF_MAGIC;            /* Save magic marker    */
-        repl_cur = stpcpy( repl_cur, identifier);
+        repl_cur = mcpp_stpcpy( repl_cur, identifier);
                                             /* And save the token   */
         return  repl_cur;
     } else {

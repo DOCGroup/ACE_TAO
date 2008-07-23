@@ -361,7 +361,7 @@
 #define NEED_GETOPT     FALSE
 #endif
 
-extern char *   stpcpy( char * dest, const char * src);
+extern char *   mcpp_stpcpy( char * dest, const char * src);
 
 /* For debugging malloc systems by kmatsui  */
 #if     KMMALLOC && _MEM_DEBUG

@@ -2064,7 +2064,7 @@ static char *   norm_path(
     if (*start != '/') {    /* Relative path to current directory   */
         /* Make absolute path   */
         abs_path = xmalloc( len + ACE_OS::strlen( cur_work_dir) + 1);
-        cp1 = stpcpy( abs_path, cur_work_dir);
+        cp1 = mcpp_stpcpy( abs_path, cur_work_dir);
         ACE_OS::strcpy( cp1, start);
         ACE_OS::free( norm_name);
         norm_name = abs_path;
@@ -2371,7 +2371,7 @@ void    put_depend(
         llen = ACE_OS::strlen( output);
         pos_num = 0;            /* Initialize for MCPP_LIB build    */
     } else if (filename == 0) {              /* End of input     */
-        out_p = stpcpy( out_p, "\n\n");
+        out_p = mcpp_stpcpy( out_p, "\n\n");
         if (mkdep & MD_PHONY) {
             /* Output the phony target line for each recorded header files. */
             char *  cp;
@@ -2399,8 +2399,8 @@ void    put_depend(
                     c = *(++cp);
                 }
                 *cp = EOS;
-                out_p = stpcpy( out_p, *pos_pp);
-                out_p = stpcpy( out_p, ":\n\n");
+                out_p = mcpp_stpcpy( out_p, *pos_pp);
+                out_p = mcpp_stpcpy( out_p, ":\n\n");
                 *cp = c;
             }
         }
@@ -2420,7 +2420,7 @@ void    put_depend(
     }
     /* Any new header.  Append its name to output.  */
     if (llen + fnamlen > MAX_OUT_LEN) {         /* Line is long     */
-        out_p = stpcpy( out_p, " \\\n ");       /* Fold it          */
+        out_p = mcpp_stpcpy( out_p, " \\\n ");       /* Fold it          */
         llen = 1;
     }
     llen += fnamlen + 1;
@@ -2429,7 +2429,7 @@ void    put_depend(
         cfatal( "Too long dependency line: %s", output, 0L, 0);
     *out_p++ = ' ';
     pos[ pos_num++] = out_p;
-    out_p = stpcpy( out_p, filename);
+    out_p = mcpp_stpcpy( out_p, filename);
 }
 
 static char *   md_init(
@@ -2475,11 +2475,11 @@ static char *   md_init(
         if (mkdep & MD_QUOTE) {         /* 'Quote' $, \t and space  */
             out_p = md_quote( output);
         } else {
-            out_p = stpcpy( output, mkdep_target);
+            out_p = mcpp_stpcpy( output, mkdep_target);
         }
     } else {
         ACE_OS::strcpy( cp, OBJEXT);
-        out_p = stpcpy( output, prefix);
+        out_p = mcpp_stpcpy( output, prefix);
     }
 
     *out_p++ = ':';
@@ -2567,7 +2567,7 @@ int     do_include(
                                 /* Expand any macros in the line    */
             if (header + FILENAMEMAX < hp + (int) (workp - work_buf))
                 cfatal( toolong_fname, header, 0L, work_buf);
-            hp = stpcpy( hp, work_buf);
+            hp = mcpp_stpcpy( hp, work_buf);
             while ((c = get_ch()) == ' ')
                 *hp++ = ' ';
         }
@@ -2773,7 +2773,7 @@ static int  search_dir(
     for ( ; incptr < incend; incptr++) {
         if (ACE_OS::strlen( *incptr) + ACE_OS::strlen( filename) >= FILENAMEMAX) {
             char *  cp;
-            cp = stpcpy( work_buf, *incptr);
+            cp = mcpp_stpcpy( work_buf, *incptr);
             ACE_OS::strcpy( cp, filename);
             cfatal( toolong_fname, work_buf, 0L, "");       /* _F_  */
         }
@@ -2812,7 +2812,7 @@ static int  open_file(
         mcpp_fprintf( DBG, "Searching %s\n", **dirp == EOS ? "." : *dirp);
     if (standard && included( *dirp, filename)) /* Once included    */
         return  TRUE;
-    cp = stpcpy( fullname, *dirp);
+    cp = mcpp_stpcpy( fullname, *dirp);
     ACE_OS::strcat( cp, filename);
 
     if ((max_open != 0 && max_open <= include_nest)
@@ -2934,7 +2934,7 @@ void cur_file( void)
 
     while (file->fp == 0)
         file = file->parent;
-    cp = stpcpy( work_buf, *(file->dirp));
+    cp = mcpp_stpcpy( work_buf, *(file->dirp));
     ACE_OS::strcpy( cp, file->filename);
     name = work_buf;
     if (sharp_filename == 0 || ! str_eq( name, sharp_filename)) {
@@ -3070,7 +3070,7 @@ void    do_pragma( void)
         bp = mp = xmalloc( (size_t)(NMACWORK + IDMAX));
                                     /* Buffer for macro expansion   */
         mp_end = mp + NMACWORK;
-        tp = stpcpy( mp, identifier);
+        tp = mcpp_stpcpy( mp, identifier);
         do {                /* Expand all the macros in the line    */
             if (token_type == NAM && (defp = is_macro( &tp)) != 0) {
                 tp = expand_macro( defp, bp, mp_end);

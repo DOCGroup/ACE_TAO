@@ -277,11 +277,11 @@ static char *   replace(
         defp = def_special( defp);
         if (mcpp_mode == STD) {
             *out++ = TOK_SEP;       /* Wrap repl-text with token    */
-            out = stpcpy( out, defp->repl); /*   separators to pre- */
+            out = mcpp_stpcpy( out, defp->repl); /*   separators to pre- */
             *out++ = TOK_SEP;               /*   vent token merging.*/
             *out = EOS;
         } else {
-            out = stpcpy( out, defp->repl);
+            out = mcpp_stpcpy( out, defp->repl);
         }
         return  out;
     } else if (nargs >= 0) {                /* Function-like macro  */
@@ -436,7 +436,7 @@ static int  prescan(
     } else {
         *out++ = TOK_SEP;                   /* Wrap replacement     */
         workp = work_buf;                   /*  text with token     */
-        workp = stpcpy( workp, defp->repl); /*   separators to      */
+        workp = mcpp_stpcpy( workp, defp->repl); /*   separators to      */
         *workp++ = TOK_SEP;                 /*    prevent unintended*/
         *workp = EOS;                       /*     token merging.   */
         file = unget_string( work_buf, defp->name);
@@ -693,7 +693,7 @@ static char *   stringize(
             *out_p = EOS;
             break;
         default:
-            out_p = stpcpy( out_p, work_buf);
+            out_p = mcpp_stpcpy( out_p, work_buf);
             break;
         }
     }
@@ -993,7 +993,7 @@ static char *   expand_prestd(
     char    macrobuf[ NMACWORK + IDMAX];    /* Buffer for rescan_pre()      */
     char *  mac_end = &macrobuf[ NMACWORK]; /* End of macrobuf[]    */
     char *  out_p;                          /* Pointer into out[]   */
-    char *  mp = macrobuf;                  /* Pointer into macrobuf*/
+    char *  volatile mp = macrobuf;                  /* Pointer into macrobuf*/
     int     len;                            /* Length of a token    */
     int     token_type;                     /* Type of token        */
     int     c;
@@ -1069,7 +1069,7 @@ exp_end:
         macro_line = MACRO_ERROR;
     }
 err_end:
-    out_p = stpcpy( out, macrobuf);
+    out_p = mcpp_stpcpy( out, macrobuf);
     if (mcpp_debug & EXPAND) {
         dump_string( "expand_prestd exit", out);
     }
@@ -1212,7 +1212,7 @@ static void substitute_pre(
              */
             if (out_end <= (out_p + ACE_OS::strlen( arglist_pre[ c])))
                 goto nospace;
-            out_p = stpcpy( out_p, arglist_pre[ c]);
+            out_p = mcpp_stpcpy( out_p, arglist_pre[ c]);
         } else {
             *out_p++ = c;
         }
@@ -1281,7 +1281,7 @@ static int  collect_args(
     arg_end = argp + NMACWORK/2;
     seq = sequence = arg_end + IDMAX;   /* Use latter half of argp  */
     seq_end = seq + NMACWORK/2;
-    seq = stpcpy( seq, name);
+    seq = mcpp_stpcpy( seq, name);
     *seq++ = '(';
     /*
      * in_getarg is set TRUE while getting macro arguments, for the sake of
@@ -1455,7 +1455,7 @@ static int  get_an_arg(
     }                                       /* Collected an argument*/
 
     *argp = EOS;
-    *seqp = stpcpy( *seqp, *argpp);         /* Save the sequence    */
+    *seqp = mcpp_stpcpy( *seqp, *argpp);         /* Save the sequence    */
     if (c == '\n' || c == RT_END)
         return  -1;                         /* Unterminated macro   */
     argp--;                                 /* Remove the punctuator*/
