@@ -23,6 +23,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PI/PI.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -69,6 +72,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#endif
 
 #include /**/ "ace/post.h"
 

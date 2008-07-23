@@ -27,10 +27,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward references.
-namespace TAO 
+namespace TAO
 {
   class CompressorIdListPolicy;
   class CompressionEnablingPolicy;
@@ -60,7 +62,7 @@ public:
   CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
 
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
-  
+
 private:
 
   /// Helper method used to parse the policies.
@@ -92,10 +94,11 @@ private:
   // = Disallow copying and assignment.
   TAO_ZIOP_Stub (const TAO_ZIOP_Stub &);
   TAO_ZIOP_Stub &operator = (const TAO_ZIOP_Stub &);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif
 
 #include /**/ "ace/post.h"
 
