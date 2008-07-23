@@ -512,7 +512,7 @@ int     scan_token(
         default:
 ident:
             scan_id( c);
-            out = stpcpy( out, identifier);
+            out = mcpp_stpcpy( out, identifier);
             token_type = NAM;
             break;
         }
@@ -1568,7 +1568,7 @@ int     get_ch( void)
         ACE_OS::free( file->filename);              /* Free filename        */
         file->filename = 0;
         ACE_OS::fclose( file->fp);                  /* Close finished file  */
-        cp = stpcpy( cur_fullname, *(infile->dirp));
+        cp = mcpp_stpcpy( cur_fullname, *(infile->dirp));
         ACE_OS::strcpy( cp, infile->real_fname);
         cur_fname = infile->real_fname;     /* Restore current fname*/
         if (infile->pos != 0L) {            /* Includer was closed  */
