@@ -1,9 +1,16 @@
+Wed Jul 23 06:17:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Fixed crash when -b is used, thanks to Roger Leblanc
+          <rog dot leblanc at gmail dot com> for reporting this.
+          This fixes bugzilla 3370
+
 Tue Jul 22 17:51:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
-        
+
           Applied patches sent by Frank Pilhofer <fp@mc.com> to fix
           Container::lookup() and Container::contents() methods
           bugs related to value members. This fix closes [BUGID:3373].
@@ -11,7 +18,7 @@ Tue Jul 22 17:51:55 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Jul 22 17:32:46 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
-        
+
           In converting a predefined type in the AST to a CORBA
           pk_kind, added a case in the switch statement for
           ValueBase nodes. Thanks to Frank Pilhofer <fp@mc.com>
@@ -21,7 +28,7 @@ Tue Jul 22 17:32:46 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Jul 22 17:04:23 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
-        
+
           In code that writes the IFR Service's IOR to a file,
           replaced use of ACE_OS::write() with ACE_OS:fprintf(),
           which is used in all other ORB services for this purpose.
