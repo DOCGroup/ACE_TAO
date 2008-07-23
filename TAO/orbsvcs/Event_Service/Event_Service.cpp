@@ -183,17 +183,19 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
         }
       else
         {
-          int index = 0;
+          CORBA::ULong index = 0;
 
           // Create child POA
           CORBA::PolicyList policies (3);
 
           if (persistent != 0)
             {
-              policies[index++] =
+              policies.length (index++);
+              policies[index] =
                 root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
-              policies[index++] =
+              policies.length (index++);
+              policies[index] =
                 root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
             }
 
@@ -201,12 +203,11 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
             {
               CORBA::Any pol;
               pol <<= BiDirPolicy::BOTH;
-              policies[index++] =
+              policies.length (index++);
+              policies[index] =
                 this->orb_->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
                                            pol);
             }
-
-          policies.length (index);
 
           ACE_CString child_poa_name = "childPOA";
           PortableServer::POA_var child_poa =
@@ -230,8 +231,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           PortableServer::ObjectId_var ec_object_id =
             PortableServer::string_to_ObjectId(object_id_.c_str());
 
-          child_poa->activate_object_with_id(ec_object_id.in(),
-                                             this);
+          child_poa->activate_object_with_id(ec_object_id.in(), this);
 
           CORBA::Object_var ec_obj =
             child_poa->id_to_reference(ec_object_id.in());
