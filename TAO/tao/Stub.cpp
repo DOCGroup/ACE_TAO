@@ -16,6 +16,7 @@
 #include "tao/Transport_Queueing_Strategies.h"
 #include "tao/debug.h"
 #include "tao/Policy_Manager.h"
+#include "tao/Policy_Set.h"
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
 
@@ -25,7 +26,6 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"
-
 
 ACE_RCSID (tao,
            TAO_Stub,
