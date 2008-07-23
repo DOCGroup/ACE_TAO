@@ -1,3 +1,13 @@
+Wed Jul 23 12:59:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ZIOP/ZIOP_ORBInitializer.cpp
+        * tao/ZIOP/ZIOP_ORBInitializer.h
+        * tao/ZIOP/ZIOP_Stub.cpp
+        * tao/ZIOP/ZIOP_Stub.h
+        * tao/ZIOP/ZIOP_Stub_Factory.cpp
+        * tao/ZIOP/ZIOP_Stub_Factory.h
+          Don't build when there is no messaging
+
 Wed Jul 23 06:17:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Event_Service/Event_Service.cpp:
