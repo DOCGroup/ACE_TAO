@@ -559,9 +559,9 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
           value.section_key (this->section_key_);
 
           value.value_contents (kind_queue,
-				                        path_queue,
-				                        limit_type,
-				                        exclude_inherited);
+                                path_queue,
+                                limit_type,
+                                exclude_inherited);
         }
     }
 

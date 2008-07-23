@@ -1795,9 +1795,9 @@ TAO_ValueDef_i::value_contents (
               base_value.section_key (base_key);
 
               base_value.value_contents (kind_queue,
-					                               path_queue,
-					                               limit_type,
-					                               exclude_inherited);
+                                         path_queue,
+                                         limit_type,
+                                         exclude_inherited);
             }
         }
     }
