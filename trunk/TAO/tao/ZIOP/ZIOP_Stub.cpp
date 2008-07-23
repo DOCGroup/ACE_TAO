@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/ZIOP/ZIOP_Stub.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/ZIOP/ZIOP_Policy_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
@@ -204,3 +207,4 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#endif

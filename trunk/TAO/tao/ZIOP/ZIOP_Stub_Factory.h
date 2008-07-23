@@ -29,6 +29,8 @@
 
 #include "tao/Stub_Factory.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "ace/Service_Config.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -57,6 +59,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_ZIOP, TAO_ZIOP_Stub_Factory)
 ACE_FACTORY_DECLARE (TAO_ZIOP, TAO_ZIOP_Stub_Factory)
+
+#endif
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ZIOP_STUB_FACTORY_H_ */

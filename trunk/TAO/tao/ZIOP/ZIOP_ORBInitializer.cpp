@@ -2,6 +2,8 @@
 
 #include "tao/ZIOP/ZIOP_ORBInitializer.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/ZIOP/ZIOP.h"
 #include "tao/ZIOP/ZIOP_Stub_Factory.h"
 #include "tao/ZIOP/ZIOP_PolicyFactory.h"
@@ -102,3 +104,4 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#endif
