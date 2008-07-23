@@ -180,7 +180,7 @@ public:
   /// Initialize ACE_TP_Reactor with the default size.
   ACE_TP_Reactor (ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0,
-                  int mask_signals = 1,
+                  bool mask_signals = true,
                   int s_queue = ACE_Select_Reactor_Token::FIFO);
 
   /**
@@ -195,7 +195,7 @@ public:
                   int restart = 0,
                   ACE_Sig_Handler *sh = 0,
                   ACE_Timer_Queue *tq = 0,
-                  int mask_signals = 1,
+                  bool mask_signals = true,
                   int s_queue = ACE_Select_Reactor_Token::FIFO);
 
   /**
