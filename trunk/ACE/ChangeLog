@@ -1,3 +1,9 @@
+Wed Jul 23 08:11:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Use reentrant get_host_addr. This fixes bugzilla 3368. Thanks to
+          Yongming Wang <wangym at gmail dot com> for reporting this
+
 Tue Jul 22 15:02:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/group_test_stats.sh:
