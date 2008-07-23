@@ -111,7 +111,7 @@ int     getopt(
 
 #if ! HOST_HAVE_STPCPY
 
-char *  stpcpy(
+char *  mcpp_stpcpy(
     char *          dest,
     const char *    src
 )
