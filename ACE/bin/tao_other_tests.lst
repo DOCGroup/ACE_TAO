@@ -146,7 +146,7 @@ TAO/orbsvcs/tests/Property/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO !CORBA_E_MICR
 #HANGS'TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane_ir !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Security/Bug_1107_Regression/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
-TAO/orbsvcs/tests/Security/Bug_2908_Regression/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/Security/Bug_2908_Regression/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !VxWorks !VxWorks_RTP !FIXED_BUGS_ONLY
 TAO/orbsvcs/tests/Security/Big_Request/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Security/BiDirectional/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/Security/Callback/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
