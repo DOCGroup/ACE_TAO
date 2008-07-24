@@ -1,3 +1,8 @@
+Thu Jul 24 12:49:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ZIOP.pdf:
+          Updated to the latest version of the ZIOP proposal specification
+
 Wed Jul 23 17:15:32 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/contrib/mcpp/configed.H:
@@ -10,8 +15,8 @@ Wed Jul 23 17:15:32 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
         * TAO_IDL/contrib/mcpp/system.cpp:
 
           Enforced use of mcpp implementation of stpcpy, as ACE doesn't
-          implement it, and its not gauranteed to be present everywhere. 
-        
+          implement it, and its not gauranteed to be present everywhere.
+
 Wed Jul 23 13:46:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
