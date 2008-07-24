@@ -69,6 +69,7 @@ namespace IOP
 class TAO_Export TAO_Stub
 {
 public:
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   /**
    * Returns the effective policy if @a type is a known client-exposed
    * policy type.  Returns the effective override for all other policy
@@ -83,6 +84,7 @@ public:
 
   virtual CORBA::PolicyList *get_policy_overrides (
     const CORBA::PolicyTypeSeq & types);
+#endif
 
   /// Return the queueing strategy to be used in by the transport.
   /// Selection will be based on the SyncScope policies.
