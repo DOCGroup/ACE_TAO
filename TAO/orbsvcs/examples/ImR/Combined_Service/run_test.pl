@@ -15,6 +15,7 @@ use Sys::Hostname;
 use File::Copy;
 
 use strict;
+use POSIX "sys_wait_h";
 
 my $cwd = getcwd();
 
@@ -45,7 +46,80 @@ my $CLI = new PerlACE::Process ('test');
 my $test_initref = "-orbinitref Test=$imr_corbaloc";
 
 my $hostname = hostname();
+
+my $rundate = POSIX::strftime("%Y_%m_%d_%H_%M", localtime);
+my $output_file = PerlACE::LocalFile ("run_test_$rundate");
+
+my $status = 0;
+
 ###############################################################################
+
+sub restore_output
+{
+    # Restore output facilities.
+    close (STDERR);
+    close (STDOUT);
+    open (STDOUT, ">&OLDOUT");
+    open (STDERR, ">&OLDERR");
+}
+
+sub redirect_output
+{
+    open (OLDOUT, ">&STDOUT");
+    open (STDOUT, ">$output_file") or die "can't redirect stdout: $!";
+    open (OLDERR, ">&STDERR");
+    open (STDERR, ">&STDOUT") or die "can't redirect stderror: $!";
+}
+
+sub print_output
+{
+  open( TEST_OUTPUT, "< $output_file" ) or die "Can't open $output_file : $!";
+  while( <TEST_OUTPUT> ) {
+    print;
+  }
+  close (TEST_OUTPUT);
+}
+
+sub cleanup
+{
+  # Retrieve spawned process id from the log file.
+  my @pids = ();
+  
+  if (! open (TEST_OUTPUT, "<$output_file"))
+  {
+      print STDERR "ERROR: Could not open $output_file\n";
+      return -1;
+  }
+  
+  my $i = 0;
+  
+  while (<TEST_OUTPUT>)
+  {
+      if (m/ImR Activator: Successfully started/)
+      {
+          chomp $_;
+          my @words = split (/=/, $_);
+          push(@pids, $words[1]); 
+          ++ $i;         
+      }
+  }
+  close (TEST_OUTPUT);
+  
+  # Kill the MessengerService processes spawed by activator 
+  # if they are still running.
+  my $size = @pids;
+  
+  for (my $i = 0; $i < $size; ++$i)
+  {
+      if (kill ('KILL', $pids[$i]) == 1)
+       {
+         print STDERR "ERROR: Killed the test server (pid=$pids[$i]) " .
+           "that was still running after IMR shutdown. \n";
+         $status = 1;
+       }
+  }
+}
+
 
 sub do_test
 {
@@ -113,12 +187,12 @@ print STDERR "Starting imr\n";
 
     # Now we can kill the server.
     $IMRUTIL->Arguments("$imr_initref shutdown TestObject1");
-    $ret = $IMRUTIL->SpawnWaitKill(5);
+    $ret = $IMRUTIL->SpawnWaitKill(10);
     if ($ret != 0) {
         print "ERROR : Shutting down test server.\n";
         return $ret;
     }
-
+       
     # Both TestObject1 and TestObject2 should now show up as "not running"
     $IMRUTIL->Arguments("$imr_initref list -v");
     $ret = $IMRUTIL->SpawnWaitKill(5);
@@ -150,19 +224,19 @@ print STDERR "Starting client\n";
     # not refer to the actual process anymore since a new server
     # was started by the ImR Activator.
     $IMRUTIL->Arguments("$imr_initref shutdown TestObject1");
-    $ret = $IMRUTIL->SpawnWaitKill(5);
+    $ret = $IMRUTIL->SpawnWaitKill(10);
     if ($ret != 0) {
         print "ERROR : Shutting down test server.\n";
         return $ret;
     }
 
-    $COMB->TerminateWaitKill(5);
+    $ret = $COMB->TerminateWaitKill(10);
     if ($ret != 0) {
         print "ERROR : Terminating combined service.\n";
         return $ret;
     }
 
-    $SERV->TerminateWaitKill(5);
+    $ret = $SERV->TerminateWaitKill(5);
     if ($ret != 0) {
         print "ERROR : Terminating test server.\n";
         return $ret;
@@ -173,7 +247,22 @@ print STDERR "Starting client\n";
     return $ret;
 }
 
-my $ret = do_test();
+
+$status  = 0;
+
+redirect_output();
+
+if (do_test () == -1) {
+    $status = 1;
+}
+
+cleanup ();
+
+restore_output();
+
+print_output ();
+
+unlink $output_file;
 
 # Regardless of the return value, ensure that the processes
 # are terminated before exiting
@@ -181,4 +270,5 @@ $CLI->Kill();
 $COMB->Kill();
 $SERV->Kill();
 
-exit $ret;
+exit $status;
+
