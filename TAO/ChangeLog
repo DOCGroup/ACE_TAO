@@ -1,3 +1,17 @@
+Thu Jul 24 21:09:35 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+          Made logging of pid of the spawned process. It would help 
+          test script to make sure spawned processes exit when test 
+          finishes.
+    
+        * orbsvcs/examples/ImR/Combined_Service/run_test.pl:
+
+          Redirected the output to a file and retrieve the id of
+          spawned processes from log file. Kill the process if they
+          do not exit for some reasons and report an error.
+
 Thu Jul 24 12:49:28 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ZIOP.pdf:
