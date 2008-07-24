@@ -1,3 +1,11 @@
+Thu Jul 24 12:50:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          This shell script runs the perl diff-builds.pl script between
+          the date given as the first parameter and the current utc date.
+          The output is tidied up and any !FIXED_BUGS_ONLY bugs are
+          removed before being grouped and the failed tests counted.
+
 Thu Jul 24 08:10:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/tao_orb_tests.lst:
