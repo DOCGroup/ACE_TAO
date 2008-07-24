@@ -1,3 +1,12 @@
+Thu Jul 24 19:04:13  2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Containers_T.h: Improved documentation for ACE_DLList, noting
+          especially that T pointers inserted into the list are not deleted
+          when removed. Thank you to Bob Fiske for this improvement and sample
+          code to illustrate.
+
+        * THANKS: Added Bob Fiske.
+
 Thu Jul 24 12:50:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:

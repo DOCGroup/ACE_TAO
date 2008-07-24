@@ -1016,9 +1016,16 @@ typedef ACE_Double_Linked_List<ACE_DLList_Node> ACE_DLList_Base;
  *
  * @brief A double-linked list container class.
  *
- * This implementation uses ACE_Double_Linked_List to perform
- * the logic behind this container class.  It delegates all of its
- * calls to ACE_Double_Linked_List.
+ * ACE_DLList is a simple, unbounded container implemented using a
+ * double-linked list. It is critical to remember that ACE_DLList inherits
+ * from ACE_Double_Linked_List, wrapping each T pointer in a ACE_DLList_Node
+ * object which satisfies the next/prev pointer requirements imposed by
+ * ACE_Double_Linked_List.
+ * 
+ * Each item inserted to an ACE_DLList is a pointer to a T object. The
+ * caller is responsible for lifetime of the T object. ACE_DLList takes no
+ * action on the T object; it is not copied on insertion and it is not
+ * deleted on removal from the ACE_DLList.
  */
 template <class T>
 class ACE_DLList : public ACE_DLList_Base
@@ -1033,26 +1040,51 @@ public:
   /// Delegates to ACE_Double_Linked_List.
   void operator= (const ACE_DLList<T> &l);
 
-  // = Classic queue operations.
-
-  /// Delegates to ACE_Double_Linked_List.
-  T *insert_tail (T *new_item);
-
-  /// Delegates to ACE_Double_Linked_List.
-  T *insert_head (T *new_item);
-
-  /// Delegates to ACE_Double_Linked_List.
-  T *delete_head (void);
-
-  /// Delegates to ACE_Double_Linked_List.
-  T *delete_tail (void);
-
-  // = Additional utility methods.
+  /**
+   * @name Queue-like insert and delete methods
+   */
+  //@{
 
   /**
-   * Delegates to {ACE_Double_Linked_List}, but where
-   * {ACE_Double_Linked_List} returns the node as the item, this get
-   * returns the contents of the node in item.
+   * Insert pointer for a new item at the tail of the list.
+   *
+   * @return Pointer to item inserted; 0 on error.
+   */
+  T *insert_tail (T *new_item);
+
+  /**
+   * Insert pointer for a new item at the head of the list.
+   *
+   * @return Pointer to item inserted; 0 on error.
+   */
+  T *insert_head (T *new_item);
+
+  /**
+   * Removes the item at the head of the list and returns its pointer.
+   *
+   * @return Pointer to previously inserted item; 0 if the list is empty,
+   *         an error occurred, or the original pointer inserted was 0.
+   */
+  T *delete_head (void);
+
+  /**
+   * Removes the item at the tail of the list and returns its pointer.
+   *
+   * @return Pointer to previously inserted item; 0 if the list is empty,
+   *         an error occurred, or the original pointer inserted was 0.
+   */
+  T *delete_tail (void);
+  //@}
+
+  /**
+   * Provide random access to any item in the list.
+   *
+   * @param item  Receives a pointer to the T object pointer held at the
+   *              specified position in the list.
+   * @param slot  Position in the list to access. The first position is 0.
+   *
+   * @retval 0  Success; T pointer returned in item.
+   * @retval -1 Error, most likely slot is outside the range of the list.
    */
   int get (T *&item, size_t slot = 0);
 
@@ -1062,15 +1094,32 @@ public:
   /// Delegates to ACE_Double_Linked_List.
   int remove (ACE_DLList_Node *n);
 
-  // = Initialization and termination methods.
-
-  /// Delegates to ACE_Double_Linked_List.
+  /**
+   * Constructor.
+   *
+   * @param the_allocator  Allocator to use for allocating ACE_DLList_Node
+   *                       objects that wrap T objects for inclusion in the
+   *                       list. If 0, ACE_Allocator::instance() is used.
+   */
   ACE_DLList (ACE_Allocator *the_allocator = 0);
 
   /// Delegates to ACE_Double_Linked_List.
   ACE_DLList (const ACE_DLList<T> &l);
 
-  /// Deletes the list starting from the head.
+  /**
+   * Deletes all ACE_DLList_Node objects in the list starting from the head.
+   * No T objects referred to by the deleted ACE_DLList_Node objects are
+   * modified or freed. If you desire all of the T objects in the list to
+   * be deleted as well, code such as this should be used prior to destroying
+   * the ACE_DLList:
+   * @code
+        ACE_DLList<Item> list;
+        ...   // insert dynamically allocated Items...
+        Item *p;
+        while ((p = list.delete_head()) != 0)
+          delete *p;
+      @endcode
+   */
   ~ACE_DLList (void);
 };
 
