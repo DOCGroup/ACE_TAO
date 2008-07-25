@@ -1,3 +1,16 @@
+Fri Jul 25 14:09:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_qt3.mpb
+        * bin/MakeProjectCreator/config/ace_qt4.mpb
+        * bin/MakeProjectCreator/config/global.features:
+          Set qt3 and qt4 default to 0. qt4 has different libs
+          that we need to link with but also the qglobal.h is
+          located on a different location, so added ACE_HAS_QT4
+          which is then used to select which qglobal.h we include.
+
+        * bin/MakeProjectCreator/config/ace_qtreactor.mpb:
+          This is for qt3 so derive from ace_qt3
+
 Thu Jul 24 19:04:13  2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Containers_T.h: Improved documentation for ACE_DLList, noting
