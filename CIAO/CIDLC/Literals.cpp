@@ -66,7 +66,7 @@ namespace StringLiterals
     "CIDLC::RepositoryIdGenerator::TypePrefix",           // TYPE_PREFIX
     "CIDLC::RepositoryIdGenerator::RepoId",               // REPO_ID
 
-    "// Your code here.",                                 // YCH
+    "/* Your code here. */",                                 // YCH
     "//==================================================================", // SEP
 
     "variable-size",                                      // VAR_SIZE
