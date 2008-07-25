@@ -1,3 +1,27 @@
+Fri Jul 25 11:51:26 UTC 2008  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/DynAny_Test/test_dynsequence.cpp:
+          This fixes the following bug.
+            http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3341
+          Short recap, the test was failing silently.  The failure was a
+          false positive because the test had been changed to reproduce
+          one bug (2877), but in the process broke the original test.
+          Fortunately or unfortunately, you had to read the output to
+          detect the problem.
+
+        * tests/DynAny_Test/driver.h:
+        * tests/DynAny_Test/driver.cpp:
+        * tests/DynAny_Test/test_dynany.cpp:
+        * tests/DynAny_Test/test_dynunion.cpp:
+        * tests/DynAny_Test/test_dynenum.cpp:
+        * tests/DynAny_Test/test_wrapper.cpp:
+        * tests/DynAny_Test/test_wrapper.h:
+        * tests/DynAny_Test/test_dynarray.cpp:
+        * tests/DynAny_Test/test_dynstruct.cpp:
+          Change all the tests and drivers to return the number of errors
+          detected.  The main program exits with the number of errors
+          detect by Johnny's request.
+
 Thu Jul 24 21:09:35 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:

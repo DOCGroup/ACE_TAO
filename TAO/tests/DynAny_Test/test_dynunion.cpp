@@ -333,12 +333,12 @@ Test_DynUnion::run_test (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("test_dynunion::run_test");
-      return -1;
+      ++this->error_count_;
     }
 
   ACE_DEBUG ((LM_DEBUG,
               "\n%d errors\n",
               this->error_count_));
 
-  return 0;
+  return !!error_count_;
 }

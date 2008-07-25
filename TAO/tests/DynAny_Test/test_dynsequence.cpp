@@ -15,9 +15,39 @@
 #include "test_dynsequence.h"
 #include "da_testsC.h"
 #include "data.h"
-#include "tao/DynamicAny/DynamicAny.h"
 #include "analyzer.h"
+#include "tao/DynamicAny/DynamicAny.h"
 #include "ace/OS_NS_string.h"
+
+namespace
+{
+
+bool
+compare_string_sequence_elements(
+    CORBA::ULong i,
+    DynamicAny::DynAnySeq const & lhs,
+    DynamicAny::DynAnySeq const & rhs)
+{
+    CORBA::String_var lhs_string = lhs[i]->get_string ();
+
+    ACE_DEBUG ((LM_DEBUG, "elem[%d] = %s\n", i, lhs_string.in()));
+
+    CORBA::Boolean match =
+        lhs[i]->equal (rhs[i]);
+
+    if (!match)
+    {
+        CORBA::String_var rhs_string =
+            rhs[i]->get_string();
+
+        ACE_DEBUG ((LM_DEBUG,
+                    "  mismatch with elements[%d] = %s\n", i,
+                    rhs_string.in() ));
+    }
+
+    return match;
+}
+}
 
 Test_DynSequence::Test_DynSequence (CORBA::ORB_var orb, int debug)
   : orb_ (orb),
@@ -140,13 +170,12 @@ Test_DynSequence::run_test (void)
                       -1);
       elem_ptr->length (length);
       DynamicAny::DynAnySeq_var elements (elem_ptr);
-      CORBA::Any elem_any;
       CORBA::ULong i;
 
       for (i = 0; i < length; ++i)
         {
-          elem_any <<= CORBA::Any::from_string (values[i],
-                                                8);
+	    CORBA::Any elem_any;
+          elem_any <<= CORBA::Any::from_string (values[i], 8);
           elements[i] = dynany_factory->create_dyn_any (elem_any);
         }
 
@@ -161,33 +190,47 @@ Test_DynSequence::run_test (void)
           return -1;
         }
 
-      elem_any <<= CORBA::Any::from_string ("replacement",20);
-      CORBA::ULong io_index = 0;
-      DynamicAny::DynAny *&io = out_elems[io_index].inout();
-
-      io = dynany_factory->create_dyn_any (elem_any);
-
       analyzer.analyze (fa1.in());
-
-      CORBA::String_var out_str;
 
       for (i = 0; i < length; ++i)
         {
-          out_str = out_elems[i]->get_string ();
-          ACE_DEBUG ((LM_DEBUG,"elem[%d] = %s\n", i, out_str.in()));
-
-          CORBA::Boolean equal =
-            out_elems[i]->equal (elements[i]);
-
-          if (!equal)
-            {
-              ++this->error_count_;
-            }
+          if (!compare_string_sequence_elements(i,
+                                                elements.in(), out_elems.in()))
+          {
+              error_count_++;
+          }
 
           // To show that calling destroy() on a component does
           // nothing, as required by the spec.
           out_elems[i]->destroy ();
         }
+
+      // Now verify that we can replace an element using the in/out return
+      // type.  This illustrates the problems described in bug # 2877:
+      //   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2877
+      // notice that this code has side-effects on the out_elems sequence, so
+      // do not move this code up or you will make the comparisons above fail.
+      {
+	  char replacement[] = "replacement";
+	  CORBA::Any tmp;
+	  tmp <<= CORBA::Any::from_string (replacement,20);
+	  CORBA::ULong io_index = 0;
+	  DynamicAny::DynAny *&io = out_elems[io_index].inout();
+	  io = dynany_factory->create_dyn_any (tmp);
+
+	  // Compare the value of the replaced string.
+	  CORBA::String_var new_str = out_elems[io_index]->get_string();
+	  if (0 != ACE_OS::strcmp(new_str.in(), replacement))
+	  {
+	      ACE_DEBUG((LM_DEBUG,
+			 "  Mismatch after replacing through in/out.\n"
+			 "  expected = %s, got = %s\n",
+			 replacement, new_str.in()));
+	      this->error_count_++;
+	  }
+      }
+
+
 
       if (this->error_count_ == 0)
         {
@@ -283,7 +326,7 @@ Test_DynSequence::run_test (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("test_dynsequence::run_test");
-      return -1;
+      ++this->error_count_;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -291,5 +334,5 @@ Test_DynSequence::run_test (void)
               this->error_count_));
 
 
-  return 0;
+  return !!error_count_;
 }

@@ -27,6 +27,11 @@ public:
 
   ~Test_Wrapper (void);
 
+  /**
+   * @brief Run the test.
+   *
+   * @return The number of errors detected.
+   */
   int run_test (void);
 
 private:
