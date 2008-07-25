@@ -1,3 +1,16 @@
+Fri Jul 25 14:21:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_qtreactor.mpc:
+        * ace/ace_qt3reactor.mpc:
+          Renamed qt to qt3, this builds and links the qtreactor
+          with qt3
+
+        * ace/ace_qt4reactor.mpc:
+          New project for qt4
+
+          You can set qt=1 and qt3=1 together or set qt4=1, but not
+          both at the same time
+
 Fri Jul 25 14:13:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/QtReactor/QtReactor.cpp:
