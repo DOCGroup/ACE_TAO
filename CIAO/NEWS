@@ -1,15 +1,9 @@
-PLANNED MAJOR CHANGES FOR NEXT RELEASE (i.e., after 0.5.7)
+PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
-. Start update of IDL/semantics to conform to 06-04-01 specification.
-  This will immediately break most CIAO specific extensions, such as shared
-  components and ReDaC.
 
 . Expand support for complex types in deployment XML.
 
 . Enable use of CDR encoded deployment plans.
-
-PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
-===========================================================================
 
 . Enhance Execution Manager and Domain Application Manager to make calls
   on the Target Manager to get resource information.
@@ -71,8 +65,14 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
+. Start update of IDL/semantics to conform to 06-04-01 specification.
+  This will immediately break most CIAO specific extensions, such as shared
+  components and ReDaC.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.5 and CIAO-0.6.6
 ======================================================
+
+. None
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.4 and CIAO-0.6.5
 ======================================================
