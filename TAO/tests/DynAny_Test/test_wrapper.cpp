@@ -43,17 +43,7 @@ Test_Wrapper<T>::run_test (void)
               "********************* %s *******************\n\n",
               test_name));
 
-  if (this->test_object_->run_test () == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) test_wrapper.cpp - run_test:"
-                  "run_test exception in %s",
-                  test_name));
-
-      return -1;
-    }
-
-  return 0;
+  return this->test_object_->run_test ();
 }
 
 #endif /* TEST_WRAPPER_CPP */

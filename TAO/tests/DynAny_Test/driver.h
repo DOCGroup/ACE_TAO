@@ -43,6 +43,9 @@ enum TEST_TYPE
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Execute test code.
+  /**
+   * @return The number of errors detected
+   */
   int run (void);
 
 private:
