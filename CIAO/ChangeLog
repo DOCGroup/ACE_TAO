@@ -1,3 +1,17 @@
+Fri Jul 25 21:37:24 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * CIDLC/Literals.cpp:
+
+          Bug fix related to ChangeLog entry
+
+            Tue Jul 22 07:50:38 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+          This was resolved by converting C++ style comments that
+          preceded a close bracket '}' to a C style comment so that it
+          would force a newline to be generated, instead of thinking
+          the bracket was part of the comment (since there is no way to
+          really tell in this case).
+
 Fri Jul 25 16:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * NEWS:
