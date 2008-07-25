@@ -1,3 +1,9 @@
+Fri Jul 25 16:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * NEWS:
+
+          Tidied this up a little.
+
 Tue Jul 22 07:50:38 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * CCF/CCF/CodeGenerationKit/IndentationCxx.hpp:
