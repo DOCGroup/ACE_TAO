@@ -1,3 +1,9 @@
+Fri Jul 25 14:13:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/QtReactor/QtReactor.cpp:
+        * ace/QtReactor/QtReactor.h:
+          Improved qt4 support
+
 Fri Jul 25 14:09:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ace_qt3.mpb

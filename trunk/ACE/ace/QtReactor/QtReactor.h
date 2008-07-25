@@ -25,19 +25,23 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Map_Manager.h"
 
-#include "qglobal.h"
+#if defined (ACE_HAS_QT4)
+# include "Qt/qglobal.h"
+#else
+# include "qglobal.h"
+#endif
 
 // QT toolkit specific includes.
-#if QT_VERSION >= 0x040000
-#include /**/ <QtGui/QApplication>
-#include /**/ <QtCore/QObject>
-#include /**/ <QtCore/QSocketNotifier.h>
-#include /**/ <QtCore/QTimer.h>
-#else
+#if QT_VERSION < 0x040000
 #include /**/ <qapplication.h>
 #include /**/ <qobject.h>
 #include /**/ <qsocketnotifier.h>
 #include /**/ <qtimer.h>
+#else
+#include /**/ <QtGui/QApplication>
+#include /**/ <QtCore/QObject>
+#include /**/ <QtCore/QSocketNotifier>
+#include /**/ <QtCore/QTimer>
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -106,7 +110,7 @@ public:
         ACE_Timer_Queue * = 0,
         int disable_notify_pipe = 0,
         ACE_Reactor_Notify *notify = 0,
-        int mask_signals = 1,
+        bool mask_signals = true,
         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
     /** \brief Constructor follows @ACE_Select_Reactor
@@ -119,7 +123,7 @@ public:
         ACE_Timer_Queue * = 0,
         int disable_notify_pipe = 0,
         ACE_Reactor_Notify *notify = 0,
-        int mask_signals = 1,
+        bool mask_signals = true,
         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
     virtual ~ACE_QtReactor (void);
