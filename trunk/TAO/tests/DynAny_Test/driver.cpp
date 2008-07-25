@@ -37,12 +37,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       -1);
 
   // run the tests
-  if (driver.run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) driver.cpp - "
-                       "tests failed\n"),
-                      -1);
-  return 0;
+  int error_count = driver.run ();
+  if (error_count != 0)
+    {
+        ACE_ERROR ((LM_ERROR,
+                    "(%N:%l) driver.cpp - "
+                    "%d tests failed\n",
+                    error_count));
+    }
+
+  return error_count;
 }
 
 // constructor
@@ -150,7 +154,7 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
 int
 Driver::run (void)
 {
-  int retstatus = 0;
+  int error_count = 0;
 
   switch (this->test_type_)
     {
@@ -158,7 +162,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynAny>* wrapper =
             new Test_Wrapper<Test_DynAny> (new Test_DynAny (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -166,7 +170,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynArray>* wrapper =
             new Test_Wrapper<Test_DynArray> (new Test_DynArray (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -174,7 +178,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynEnum>* wrapper =
             new Test_Wrapper<Test_DynEnum> (new Test_DynEnum (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -182,7 +186,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynSequence>* wrapper =
             new Test_Wrapper<Test_DynSequence> (new Test_DynSequence (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -190,7 +194,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynStruct>* wrapper =
             new Test_Wrapper<Test_DynStruct> (new Test_DynStruct (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -198,7 +202,7 @@ Driver::run (void)
         {
           Test_Wrapper<Test_DynUnion>* wrapper =
             new Test_Wrapper<Test_DynUnion> (new Test_DynUnion (this->orb_, debug_));
-          retstatus = wrapper->run_test ();
+          error_count = wrapper->run_test ();
           delete wrapper;
         }
         break;
@@ -206,5 +210,5 @@ Driver::run (void)
         break;
     }
 
-  return retstatus;
+  return error_count;
 }
