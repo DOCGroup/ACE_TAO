@@ -9,7 +9,8 @@ Fri Jul 25 14:21:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
           New project for qt4
 
           You can set qt=1 and qt3=1 together or set qt4=1, but not
-          both at the same time
+          both at the same time. Thanks to Kees van Marle
+          <kvmarle at remedy dot nl> for testing qt4
 
 Fri Jul 25 14:13:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
