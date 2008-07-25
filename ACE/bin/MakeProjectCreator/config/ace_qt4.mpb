@@ -2,5 +2,5 @@
 // $Id$
 
 project: qt4_core, qt4_gui {
-  CPPFLAGS += ACE_HAS_QT4
+  macros += ACE_HAS_QT4
 }
