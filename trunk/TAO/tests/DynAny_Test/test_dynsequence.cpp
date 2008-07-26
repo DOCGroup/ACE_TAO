@@ -174,7 +174,7 @@ Test_DynSequence::run_test (void)
 
       for (i = 0; i < length; ++i)
         {
-	    CORBA::Any elem_any;
+          CORBA::Any elem_any;
           elem_any <<= CORBA::Any::from_string (values[i], 8);
           elements[i] = dynany_factory->create_dyn_any (elem_any);
         }
@@ -211,23 +211,23 @@ Test_DynSequence::run_test (void)
       // notice that this code has side-effects on the out_elems sequence, so
       // do not move this code up or you will make the comparisons above fail.
       {
-	  char replacement[] = "replacement";
-	  CORBA::Any tmp;
-	  tmp <<= CORBA::Any::from_string (replacement,20);
-	  CORBA::ULong io_index = 0;
-	  DynamicAny::DynAny *&io = out_elems[io_index].inout();
-	  io = dynany_factory->create_dyn_any (tmp);
+          char replacement[] = "replacement";
+          CORBA::Any tmp;
+          tmp <<= CORBA::Any::from_string (replacement,20);
+          CORBA::ULong io_index = 0;
+          DynamicAny::DynAny *&io = out_elems[io_index].inout();
+          io = dynany_factory->create_dyn_any (tmp);
 
-	  // Compare the value of the replaced string.
-	  CORBA::String_var new_str = out_elems[io_index]->get_string();
-	  if (0 != ACE_OS::strcmp(new_str.in(), replacement))
-	  {
-	      ACE_DEBUG((LM_DEBUG,
-			 "  Mismatch after replacing through in/out.\n"
-			 "  expected = %s, got = %s\n",
-			 replacement, new_str.in()));
-	      this->error_count_++;
-	  }
+          // Compare the value of the replaced string.
+          CORBA::String_var new_str = out_elems[io_index]->get_string();
+          if (0 != ACE_OS::strcmp(new_str.in(), replacement))
+          {
+              ACE_DEBUG((LM_DEBUG,
+                         "  Mismatch after replacing through in/out.\n"
+                         "  expected = %s, got = %s\n",
+                         replacement, new_str.in()));
+              this->error_count_++;
+          }
       }
 
 

@@ -1,3 +1,8 @@
+Sat Jul 26 21:32:41 UTC 2008  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/DynAny_Test/test_dynsequence.cpp:
+          Removed tabs.
+
 Fri Jul 25 11:51:26 UTC 2008  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/DynAny_Test/test_dynsequence.cpp:
