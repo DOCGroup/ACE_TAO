@@ -7,7 +7,8 @@ workspace {
   ace_for_tao.mpc
   ace_flreactor.mpc
   ace_foxreactor.mpc
-  ace_qtreactor.mpc
+  ace_qt3reactor.mpc
+  ace_qt4reactor.mpc
   ace_tkreactor.mpc
   ace_xtreactor.mpc
   ETCL
