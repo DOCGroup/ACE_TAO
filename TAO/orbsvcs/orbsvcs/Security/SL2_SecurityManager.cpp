@@ -138,12 +138,8 @@ TAO::Security::AccessDecision::OBJECT_KEY
 TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr /*obj */)
 {
   ACE_ERROR ((LM_ERROR, "map_key_from_objref is currently not implemented\n"));
-  throw CORBA::NO_IMPLEMENT();
 
-#if defined (__HP_aCC)
-  OBJECT_KEY key;
-  return key;
-#endif /* __HP_aCC */
+  throw CORBA::NO_IMPLEMENT();
 }
 
 CORBA::Boolean
