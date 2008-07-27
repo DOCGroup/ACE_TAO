@@ -4,6 +4,7 @@
 #include "tao/PolicyC.h"
 #include "tao/EndpointPolicy/EndpointPolicy.h"
 #include "tao/EndpointPolicy/IIOPEndpointValue_i.h"
+#include "tao/Strategies/advanced_resource.h"
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_strings.h"
@@ -17,6 +18,8 @@ ACE_RCSID (Hello,
 const ACE_TCHAR *good_ior_file = ACE_TEXT ("good.ior");
 const ACE_TCHAR *bad_ior_file = ACE_TEXT ("bad.ior");
 const char *root_ior_file = "root.ior";
+int load_advanced_resources =
+ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
 
 CORBA::Short endpoint_port = 12345;
 int verbose = 0;
@@ -157,7 +160,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     case multi_protocol:
       hostname[0] = ACE_TEXT ('\0');
-      e2_format = ACE_TEXT ("shmiop://");
+      e2_format = ACE_TEXT ("diop://");
       num_extra = 6;
       break;
     }
@@ -350,4 +353,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
