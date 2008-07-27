@@ -27,6 +27,7 @@ TAO_ZIOP_Loader::~TAO_ZIOP_Loader (void)
 int
 TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
 {
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   if (TAO_ZIOP_Loader::is_activated_ == false && TAO_DEF_GIOP_MINOR >= 2)
     {
       PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
@@ -60,7 +61,7 @@ TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
           return -1;
         }
     }
-
+#endif
   return 0;
 }
 
@@ -132,6 +133,7 @@ CORBA::ULong
 TAO_ZIOP_Loader::compression_low_value (TAO::Profile_Transport_Resolver &resolver) const
 {
   CORBA::ULong result = 0;
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   CORBA::Policy_var policy = CORBA::Policy::_nil ();
 
   if (resolver.stub () == 0)
@@ -154,7 +156,7 @@ TAO_ZIOP_Loader::compression_low_value (TAO::Profile_Transport_Resolver &resolve
           result = srp->low_value ();
         }
     }
-
+#endif
   return result;
 }
 
