@@ -1,4 +1,7 @@
 #include "tao/ZIOP/ZIOP_Policy_Validator.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/ZIOP/ZIOP_Policy_i.h"
 #include "tao/Policy_Set.h"
 #include "tao/ORB_Core.h"
@@ -102,3 +105,4 @@ TAO_ZIOPPolicy_Validator::legal_policy_impl (CORBA::PolicyType type)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#endif
