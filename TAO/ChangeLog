@@ -1,3 +1,8 @@
+Sun Jul 27 06:18:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+          Removed obsolete HPUX compiler workaround
+
 Sun Jul 27 00:51:11 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
