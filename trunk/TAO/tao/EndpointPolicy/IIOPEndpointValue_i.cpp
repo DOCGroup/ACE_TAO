@@ -24,7 +24,7 @@ IIOPEndpointValue_i::IIOPEndpointValue_i (const char *host, CORBA::UShort port)
   :host_(host),
    port_(port)
 {
-  if (this->addr_.set(port, host) != 0)
+  if (this->addr_.set(port, host) != 0 || host == 0 || host[0] == 0)
     this->addr_.set_type (-1);
 }
 

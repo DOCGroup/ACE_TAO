@@ -9,7 +9,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, endpointpolicy, pi_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Server): taoserver, strategies, endpointpolicy, pi_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
   Source_Files {
     Hello.cpp
