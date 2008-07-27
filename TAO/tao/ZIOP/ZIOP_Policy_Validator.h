@@ -24,6 +24,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/Policy_Validator.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Policy_Set;
@@ -49,6 +51,8 @@ public:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ZIOP_POLICY_VALIDATOR_H_ */
