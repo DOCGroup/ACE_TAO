@@ -68,6 +68,7 @@ TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
 void
 TAO_ZIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
 {
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   // Is this true? Does the GIOP protocol version matter here?
   if (TAO_DEF_GIOP_MINOR < 2)
     return;
@@ -90,6 +91,9 @@ TAO_ZIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   // the design simple and not try to avoid an ineficiency of such
   // small proportions.
   val.add_validator (validator);
+#else
+  ACE_UNUSED_ARG (val);
+#endif
 }
 
 int
