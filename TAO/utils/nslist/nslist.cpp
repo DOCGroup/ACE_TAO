@@ -117,7 +117,7 @@ namespace
       tag_string = "SHMEM";
 #ifdef TAO_TAG_DIOP_PROFILE
     else if (tag == TAO_TAG_DIOP_PROFILE)
-      tag_string = "GIOP over UDP";
+      tag_string = "DIOP";
 #endif /* TAO_TAG_DIOP_PROFILE */
     else
       {
@@ -153,7 +153,7 @@ namespace
       }
 
     // Display protocol
-    CORBA::ULong tag = endpoint->tag ();
+    CORBA::ULong const tag = endpoint->tag ();
     ACE_CString tag_name;
     get_tag_name (tag, tag_name);
 
@@ -298,8 +298,7 @@ namespace
 
   //==========================================================================
   void
-  list_context (const CosNaming::NamingContext_ptr nc,
-                const int level)
+  list_context (const CosNaming::NamingContext_ptr nc, int level)
   {
     CosNaming::BindingIterator_var it;
     CosNaming::BindingList_var bl;
