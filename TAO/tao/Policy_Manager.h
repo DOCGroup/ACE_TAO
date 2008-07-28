@@ -56,7 +56,6 @@ public:
                                      CORBA::SetOverrideType set_add);
 
 private:
-
   // Disallow copying.
   TAO_Policy_Manager (TAO_Policy_Manager const &);
   TAO_Policy_Manager & operator= (TAO_Policy_Manager const &);

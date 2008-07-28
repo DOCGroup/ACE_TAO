@@ -45,7 +45,7 @@ TAO_MCAST_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
   char const * const mcast_name =
     ior + sizeof (::mcast_prefix) + 1;
 
-  assign_to_variables (mcast_name);
+  this->assign_to_variables (mcast_name);
 
   /*
    * Now that we got the global variables.
@@ -141,7 +141,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           ACE_TCHAR addr[64];
           my_addr.addr_to_string (addr, sizeof(addr));
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) TAO_MCAST_Parser: acceptor local address %s.\n",
+                      ACE_TEXT(" TAO (%P|%t) - MCAST_Parser: acceptor local address %s.\n"),
                       addr));
         }
 
@@ -441,7 +441,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
       int const the_port =
         ACE_OS::atoi (mcast_name_cstring.substring (0, pos_colon2).c_str ());
 
-      if (the_port > 0 && the_port < 0xffffL)
+      if (the_port >= 0 && the_port <= ACE_MAX_DEFAULT_PORT)
         this->mcast_port_ = the_port;
     }
 
