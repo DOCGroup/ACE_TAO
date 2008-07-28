@@ -48,8 +48,7 @@ TAO_Muxed_TMS::request_id (void)
   //  == -1 --> no bi-directional connection was negotiated
   // The originating side must have an even request ID, and the other
   // side must have an odd request ID.  Make sure that is the case.
-  int bidir_flag =
-    this->transport_->bidirectional_flag ();
+  int const bidir_flag = this->transport_->bidirectional_flag ();
 
   if ((bidir_flag == 1 && ACE_ODD (this->request_id_generator_))
        || (bidir_flag == 0 && ACE_EVEN (this->request_id_generator_)))

@@ -131,6 +131,8 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   : tag_ (tag)
   , orb_core_ (orb_core)
   , cache_map_entry_ (0)
+  , tms_ (0)
+  , ws_ (0)
   , bidirectional_flag_ (-1)
   , opening_connection_role_ (TAO::TAO_UNSPECIFIED_ROLE)
   , head_ (0)
@@ -1973,10 +1975,10 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   // Pointer to newly parsed message
   TAO_Queued_Data *q_data = 0;
 
-  // optimizing access of constants
+  // Optimizing access of constants
   size_t const header_length = this->messaging_object ()->header_length ();
 
-  // paranoid check
+  // Paranoid check
   if (header_length > message_block.space ())
     {
       return -1;
