@@ -1,3 +1,11 @@
+Mon Jul 28 11:40:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ETCL/ETCL_Interpreter.h:
+          Doxygen fixes and made destructor virtual, this is a base class
+
+        * ace/INET_Addr.cpp:
+          Const change
+
 Fri Jul 25 14:21:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_qtreactor.mpc:
