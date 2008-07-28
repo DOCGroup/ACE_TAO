@@ -188,16 +188,20 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_IIOP_Connection_Handler *svc_handler = 0;
   TAO_IIOP_Endpoint *iiop_endpoint =
     this->remote_endpoint (desc.endpoint());
-  int result = -1;
   if (iiop_endpoint == 0)
     return 0;
 
-  result = this->begin_connection (svc_handler, r, iiop_endpoint, timeout);
+  int const result =
+    this->begin_connection (svc_handler, r, iiop_endpoint, timeout);
 
   if (result == -1 && errno != EWOULDBLOCK)
     {
       // connect completed unsuccessfully
-      svc_handler->remove_reference();
+      if (svc_handler)
+        {
+          svc_handler->remove_reference();
+        }
+
        // Give users a clue to the problem.
       if (TAO_debug_level > 1)
         {
@@ -208,8 +212,9 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                       iiop_endpoint->port (),
                       ACE_TEXT("errno")));
         }
-    return 0;
+      return 0;
     }
+
   TAO_IIOP_Connection_Handler **sh_ptr = &svc_handler;
   TAO_IIOP_Endpoint **ep_ptr = &iiop_endpoint;
   TAO_LF_Multi_Event mev;
@@ -323,7 +328,7 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
     iiop_endpoint->object_addr ();
 
   u_short port = 0;
-  const ACE_UINT32 ia_any = INADDR_ANY;
+  ACE_UINT32 const ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr(port, ia_any);
 
   if (iiop_endpoint->is_preferred_network ())
@@ -346,8 +351,7 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   // Get the right synch options
   ACE_Synch_Options synch_options;
 
-  this->active_connect_strategy_->synch_options (timeout,
-                                                 synch_options);
+  this->active_connect_strategy_->synch_options (timeout, synch_options);
 
   // The code used to set the timeout to zero, with the intent of
   // polling the reactor for connection completion. However, the side-effect
@@ -355,7 +359,7 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
 
   svc_handler = 0;
 
-  int result =
+  int const result =
     this->base_connector_.connect (svc_handler,
                                    remote_address,
                                    synch_options,
