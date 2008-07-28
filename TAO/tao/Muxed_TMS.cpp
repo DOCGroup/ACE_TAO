@@ -104,11 +104,8 @@ TAO_Muxed_TMS::unbind_dispatcher (CORBA::ULong request_id)
                     ace_mon,
                     *this->lock_,
                     -1);
-  TAO_Reply_Dispatcher *rd = 0;
 
-  // @todo: WTH are we sending the rd in? We can just unbind using
-  // the request_id
-  return this->dispatcher_table_.unbind (request_id, rd);
+  return this->dispatcher_table_.unbind (request_id);
 }
 
 int

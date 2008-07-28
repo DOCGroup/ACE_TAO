@@ -1,3 +1,12 @@
+Mon Jul 28 14:58:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Asynch_Timeout_Handler.cpp:
+          Added a debug statement to print a message when a request gets
+          a timeout
+
+        * tao/Muxed_TMS.cpp:
+          Just unbind without getting the rd
+
 Mon Jul 28 14:41:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Asynch_Reply_Dispatcher.cpp:

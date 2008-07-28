@@ -54,7 +54,15 @@ int
 TAO_Asynch_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
                                             const void *)
 {
-  this->tms_->unbind_dispatcher (request_id_);
+  if (TAO_debug_level >= 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Timeout_Handler")
+                  ACE_TEXT ("::handle_timeout, request %d timed out\n"),
+                            this->request_id_));
+    }
+
+  this->tms_->unbind_dispatcher (this->request_id_);
 
   this->rd_->reply_timed_out ();
 
