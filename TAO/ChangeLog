@@ -3,6 +3,9 @@ Mon Jul 28 12:04:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * utils/nslist/nslist.cpp:
           Fixed OpenVMS warning
 
+        * tao/ZIOP/ZIOP.cpp:
+          Fixed compile problem when messaging is disabled
+
 Mon Jul 28 10:17:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * MPC/config/imr_client.mpb:
