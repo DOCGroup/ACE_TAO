@@ -1,3 +1,11 @@
+Mon Jul 28 13:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO/TAO_IDL/driver/drv_preproc.cpp:
+          Vista specifically has some OS file timing issues, TAO_IDL
+          keeps failing to open temporary files. These mods should
+          help identify where these are comming from. (I beleive it is
+          a timing issue with file deletetion, then immediate recreation.)
+
 Mon Jul 28 12:04:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/nslist/nslist.cpp:
