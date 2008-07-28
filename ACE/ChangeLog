@@ -1,3 +1,9 @@
+Mon Jul 28 11:52:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Registry.cpp:
+          Don't declare a static object within a method because that
+          could lead to race conditions in a multi threaded program
+
 Mon Jul 28 11:40:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ETCL/ETCL_Interpreter.h:
