@@ -877,9 +877,10 @@ DRV_copy_input (FILE *fin,
   if (f == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: cannot open temp file \"%s\" for writing\n",
+                  "%s: cannot open temp file \"%s\" for copying from \"%s\"\n",
                   ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-                  ACE_TEXT_CHAR_TO_TCHAR (fn)));
+                  ACE_TEXT_CHAR_TO_TCHAR (fn),
+                  ACE_TEXT_CHAR_TO_TCHAR (orig_filename)));
 
       throw Bailout ();
     }
@@ -1115,6 +1116,9 @@ DRV_pre_proc (const char *myfile)
 
   // Remove any existing output file.
   (void) ACE_OS::unlink (t_file);
+#if defined (ACE_WIN32)
+  ACE_OS::sleep (1); // Seems to be a timing problem with vista specifically
+#endif
 
   ACE_HANDLE fd = ACE_INVALID_HANDLE;
 
