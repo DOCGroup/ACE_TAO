@@ -1,3 +1,21 @@
+Mon Jul 28 14:20:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+          Make sure tms_ and ws_ are initialised to 0
+
+        * tao/Resume_Handle.h:
+          Documentation changes
+
+        * tao/Muxed_TMS.cpp:
+          Const changes
+
+        * tao/Connection_Handler.cpp:
+          Layout changes
+
+        * tao/GIOP_Message_Base.cpp (dump_msg):
+          Return directly when we don't have orb debug level 10, increases
+          performance when we run at level 5 until 9
+
 Mon Jul 28 13:57:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO/TAO_IDL/driver/drv_preproc.cpp:

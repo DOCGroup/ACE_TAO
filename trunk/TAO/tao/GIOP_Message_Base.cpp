@@ -704,7 +704,6 @@ TAO_GIOP_Message_Base::process_reply_message (
                       qd->msg_block ()->length ());
     }
 
-
   // Create a empty buffer on stack
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
@@ -1444,6 +1443,11 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                                  const u_char *ptr,
                                  size_t len)
 {
+    if (TAO_debug_level < 10)
+      {
+        return;
+      }
+
     static const char digits[] = "0123456789ABCD";
     static const char *names[] =
     {
@@ -1464,12 +1468,12 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       message_name = names[slot];
 
     // Byte order.
-    int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
-    int compressed = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x04;
+    int const byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
+    int const compressed = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x04;
 
     // Get the version info
-    CORBA::Octet major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
-    CORBA::Octet minor = ptr[TAO_GIOP_VERSION_MINOR_OFFSET];
+    CORBA::Octet const major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
+    CORBA::Octet const minor = ptr[TAO_GIOP_VERSION_MINOR_OFFSET];
 
     // request/reply id.
     CORBA::ULong tmp = 0;
@@ -1518,11 +1522,10 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                 message_name,
                 *id));
 
-    if (TAO_debug_level >= 10)
-      ACE_HEX_DUMP ((LM_DEBUG,
-                      (const char *) ptr,
-                      len,
-                      ACE_TEXT ("GIOP message")));
+    ACE_HEX_DUMP ((LM_DEBUG,
+                    (const char *) ptr,
+                    len,
+                    ACE_TEXT ("GIOP message")));
 }
 
 int
