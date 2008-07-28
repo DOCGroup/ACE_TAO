@@ -748,6 +748,8 @@ ACE_Registry::Naming_Context::name (ACE_TString &name)
   name = this->name_;
 }
 
+// Empty list
+static const ACE_Registry::Binding_List ace_binding_empty_list;
 
 // listing function: iterator creator
 // This is useful when there are many objects and contexts
@@ -758,10 +760,8 @@ ACE_Registry::Naming_Context::list (u_long how_many,
                                     Binding_List &list,
                                     Binding_Iterator &iter)
 {
-  // Empty list
-  static const ACE_Registry::Binding_List empty_list;
   // Make sure that the list is empty
-  list = empty_list;
+  list = ace_binding_empty_list;
 
   // Correctly initalize the iterator
   iter.reset ();
@@ -773,9 +773,7 @@ ACE_Registry::Naming_Context::list (u_long how_many,
   iter.current_enumeration (iter.object_iteration_);
 
   // Get the next <how_many> values
-  long result = iter.next_n (how_many,
-                                 list);
-  return result;
+  return iter.next_n (how_many, list);
 }
 
 
@@ -784,10 +782,8 @@ ACE_Registry::Naming_Context::list (u_long how_many,
 int
 ACE_Registry::Naming_Context::list (Binding_List &list)
 {
-  // Empty list
-  static const ACE_Registry::Binding_List empty_list;
   // Make sure that the list is empty
-  list = empty_list;
+  list = ace_binding_empty_list;
 
   // Create an iterator
   ACE_Registry::Binding_Iterator iterator;
@@ -875,10 +871,8 @@ int
 ACE_Registry::Binding_Iterator::next_n (u_long how_many,
                                         Binding_List &list)
 {
-  // Empty list
-  static const ACE_Registry::Binding_List empty_list;
   // Make sure that the list is empty
-  list = empty_list;
+  list = ace_binding_empty_list;
 
   return this->current_enumeration_->next_n (how_many, list);
 }
