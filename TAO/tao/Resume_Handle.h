@@ -44,16 +44,15 @@ class TAO_ORB_Core;
  * resume_handler () on the reactor at every point in the code, we
  * use this utility class to take care of the resumption.
  */
-
 class TAO_Export TAO_Resume_Handle
 {
 
 public:
 
-  /// Ctor.
+  /// Constructor.
   TAO_Resume_Handle (TAO_ORB_Core *orb_core = 0,
                      ACE_HANDLE h = ACE_INVALID_HANDLE);
-  /// Dtor
+  /// Destructor
   ~TAO_Resume_Handle (void);
 
   enum TAO_Handle_Resume_Flag

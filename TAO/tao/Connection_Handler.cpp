@@ -215,8 +215,7 @@ TAO_Connection_Handler::handle_output_eh (
 }
 
 int
-TAO_Connection_Handler::handle_input_eh (
-  ACE_HANDLE h, ACE_Event_Handler *eh)
+TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
 {
   // If we can't process upcalls just return
   if (!this->transport ()->wait_strategy ()->can_process_upcalls ())
@@ -251,8 +250,7 @@ TAO_Connection_Handler::handle_input_internal (
   // Grab the transport id now and use the cached value for printing
   // since the  transport could dissappear by the time the thread
   // returns.
-  size_t const t_id =
-    this->transport ()->id ();
+  size_t const t_id = this->transport ()->id ();
 
   if (TAO_debug_level > 6)
     {
@@ -268,6 +266,7 @@ TAO_Connection_Handler::handle_input_internal (
   int return_value = 0;
 
   this->pre_io_hook (return_value);
+
   if (return_value != 0)
     return return_value;
 
