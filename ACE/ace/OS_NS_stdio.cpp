@@ -186,15 +186,15 @@ ACE_OS::fopen (const char *filename,
 
       if (fd != -1)
         {
-#   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
+#   if defined (ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)
           FILE * const fp = ::_fdopen (fd, const_cast<ACE_TCHAR *> (mode));
-#   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#   elif defined (ACE_HAS_NONCONST_FDOPEN) && defined (ACE_USES_WCHAR)
           FILE * const fp = ::_wfdopen (fd, const_cast<ACE_TCHAR *> (mode));
 #   elif defined (ACE_USES_WCHAR)
           FILE * const fp = ::_wfdopen (fd, mode);
 #   else
           FILE * const fp = ::fdopen (fd, mode);
-#   endif /* defined(__BORLANDC__) && !defined (ACE_USES_WCHAR)) */
+#   endif /* defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)) */
           if (fp != 0)
           {
 #   if defined (ACE_USES_WCHAR)
@@ -244,15 +244,15 @@ ACE_OS::fopen (const wchar_t *filename,
 
       if (fd != -1)
         {
-#   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
+#   if defined (ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)
           FILE *fp = ::_fdopen (fd, const_cast<char *> (mode));
-#   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#   elif defined (ACE_HAS_NONCONST_FDOPEN) && defined (ACE_USES_WCHAR)
           FILE *fp = ::_wfdopen (fd, const_cast<wchar_t *> (mode));
 #   elif defined (ACE_USES_WCHAR)
           FILE *fp = ::_wfdopen (fd, mode);
 #   else
           FILE *fp = ::fdopen (fd, mode);
-#   endif /* defined(__BORLANDC__) && !defined (ACE_USES_WCHAR)) */
+#   endif /* defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)) */
           if (fp != 0)
           {
 #   if defined (ACE_USES_WCHAR)
@@ -415,7 +415,7 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
   size = ACE_OS::vsnprintf(0, 0, format, ap);
   va_end (ap);
 
-  if (size != -1) 
+  if (size != -1)
     {
       char *buf = reinterpret_cast<char*>(ACE_OS::malloc(size + 1));
       if (!buf)
@@ -446,7 +446,7 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
   size = ACE_OS::vsnprintf(0, 0, format, ap);
   va_end (ap);
 
-  if (size != -1) 
+  if (size != -1)
     {
       wchar_t *buf = reinterpret_cast<wchar_t*>
         (ACE_OS::malloc((size + 1) * sizeof(wchar_t)));

@@ -359,14 +359,12 @@ ACE_Asynch_Acceptor<HANDLER>::cancel (void)
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) && \
-    (defined (_MSC_VER) || defined (__BORLANDC__))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   return (int) ::CancelIo (this->listen_handle_);
 #else
   // Supported now
   return this->asynch_accept_.cancel();
-
-#endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) && (defined (_MSC_VER)) || defined (__BORLANDC__)) */
+#endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) */
 }
 
 template <class HANDLER> void

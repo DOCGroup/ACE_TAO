@@ -519,15 +519,11 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
       file = ::_wfdopen (crt_handle, mode);
 #   else
       file = ::_fdopen (crt_handle, mode);
-#   endif /* __BORLANDC__ */
+#   endif /* ACE_HAS_NONCONST_FDOPEN */
 
       if (!file)
         {
-#   if defined(__BORLANDC__)
-          ::_rtl_close (crt_handle);
-#   else
           ::_close (crt_handle);
-#   endif /* defined(__BORLANDC__) */
         }
     }
 
