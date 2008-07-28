@@ -50,10 +50,10 @@ protected:
   ETCL_Interpreter (void);
 
   /// Destructor.
-  ~ETCL_Interpreter (void);
+  virtual ~ETCL_Interpreter (void);
 
   /// Using the Yacc generated parser, construct an expression tree
-  /// representing <constraints> from the tokens returned by it.
+  /// representing @a constraints from the tokens returned by it.
   int build_tree (const char* constraints);
 
   static int is_empty_string (const char* str);
@@ -77,7 +77,7 @@ extern int yylex (void);
 #define YY_INPUT(b, r, ms) (r = Lex_String_Input::copy_into(b, ms))
 
 /**
- * @class TAO_Lex_String_Input
+ * @class Lex_String_Input
  *
  * @brief Have Lex read from a string and not from stdin. Essentially,
  * the interpreter needs to call yylex() until EOF, and call
