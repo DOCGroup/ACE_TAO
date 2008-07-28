@@ -226,7 +226,7 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
   if (port_p == 0) // Assume it's a port number.
     {
       char *endp = 0;
-      long port = ACE_OS::strtol (ip_addr, &endp, 10);
+      long const port = ACE_OS::strtol (ip_addr, &endp, 10);
 
       if (*endp == '\0')    // strtol scanned the entire string - all digits
         {
