@@ -1116,7 +1116,7 @@ DRV_pre_proc (const char *myfile)
 
   // Remove any existing output file.
   (void) ACE_OS::unlink (t_file);
-#if defined (ACE_WIN32)
+#if defined (WINVER) && (WINVER==0x0600) // Vista / Win2008Server
   ACE_OS::sleep (1); // Seems to be a timing problem with vista specifically
 #endif
 
