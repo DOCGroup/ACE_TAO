@@ -1,3 +1,9 @@
+Mon Jul 28 13:39:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+        * ace/streams.h:
+          Removed workarounds for ancient Borland C++ versions
+
 Mon Jul 28 13:32:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Asynch_Acceptor.cpp:

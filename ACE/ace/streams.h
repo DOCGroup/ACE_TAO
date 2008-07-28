@@ -55,9 +55,6 @@
   // when it is used.
 #     include /**/ <iomanip.h>
 #   else
-#     if defined (__BORLANDC__) && (__BORLANDC__ == 0x551)
-#       include /**/ <iterator>
-#     endif /* __BORLANDC__ && __BORLANDC__ == 0x551 */
 #     include /**/ <iostream>
 #     include /**/ <fstream>
 #     include /**/ <istream>
