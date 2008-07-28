@@ -103,7 +103,9 @@
 # define ACE_HAS_NONCONST_FDOPEN
 #endif
 
-#define ACE_HAS_NONCONST_TEMPNAM
+#if (__BORLANDC__ < 0x610)
+# define ACE_HAS_NONCONST_TEMPNAM
+#endif
 
 #if (__BORLANDC__ <= 0x593)
 // Older Borland compilers can't handle assembly in inline methods or
