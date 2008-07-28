@@ -1,3 +1,8 @@
+Mon Jul 28 13:57:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO/TAO_IDL/driver/drv_preproc.cpp:
+          Change test for Vista specifically not just all win32.
+
 Mon Jul 28 13:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO/TAO_IDL/driver/drv_preproc.cpp:
