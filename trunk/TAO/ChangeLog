@@ -1,3 +1,12 @@
+Mon Jul 28 09:15:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp:
+          Only call remove_reference when we have a valid svc_handler
+          pointer. Could be zero in the case we run out of TSS keys
+
+        * tao/MCAST_Parser.cpp:
+          Use ACE_MAX_DEFAULT_PORT
+
 Sun Jul 27 06:18:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
