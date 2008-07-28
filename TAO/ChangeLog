@@ -1,3 +1,10 @@
+Mon Jul 28 14:41:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+          Only parse the reply and generate a fake exception when there
+          is a reply handler. Improved performance if a client makes
+          AMI invocations but doesn't specify a reply handler
+
 Mon Jul 28 14:20:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:
