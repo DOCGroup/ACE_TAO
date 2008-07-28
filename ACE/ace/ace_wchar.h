@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+//* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -78,7 +78,7 @@
 #   include /**/ <cwctype>
 # elif defined (ACE_HAS_WINCE)
 #   include /**/ <wtypes.h>
-# elif !defined (__BORLANDC__)
+# else
 #   include /**/ <wchar.h>
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #endif /* ACE_HAS_WCHAR */
