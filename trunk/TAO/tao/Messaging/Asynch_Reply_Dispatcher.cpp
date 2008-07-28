@@ -74,55 +74,56 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   // datablocks of the stack. If this method is called twice, as is in
   // some cases where the same invocation object is used to make two
   // invocations like forwarding, the release becomes essential.
-  if (ACE_BIT_DISABLED (db->flags (),
-                        ACE_Message_Block::DONT_DELETE))
-    db->release ();
-
-  // Steal the buffer, that way we don't do any unnecesary copies of
-  // this data.
-  CORBA::ULong const max = params.svc_ctx_.maximum ();
-  CORBA::ULong const len = params.svc_ctx_.length ();
-  IOP::ServiceContext *context_list = params.svc_ctx_.get_buffer (1);
-  this->reply_service_info_.replace (max, len, context_list, 1);
-
-  if (TAO_debug_level >= 4)
+  if (ACE_BIT_DISABLED (db->flags (), ACE_Message_Block::DONT_DELETE))
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher")
-                  ACE_TEXT ("::dispatch_reply status = %d\n"),
-                            this->reply_status_));
-    }
-
-  CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
-  switch (this->reply_status_)
-    {
-    case GIOP::NO_EXCEPTION:
-      reply_error = TAO_AMI_REPLY_OK;
-      break;
-    case GIOP::USER_EXCEPTION:
-      reply_error = TAO_AMI_REPLY_USER_EXCEPTION;
-      break;
-    case GIOP::SYSTEM_EXCEPTION:
-      reply_error = TAO_AMI_REPLY_SYSTEM_EXCEPTION;
-      break;
-    case GIOP::LOCATION_FORWARD:
-      reply_error = TAO_AMI_REPLY_LOCATION_FORWARD;
-      break;
-    case GIOP::LOCATION_FORWARD_PERM:
-      reply_error = TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
-      break;
-
-    default:
-      // @@ Michael: Not even the spec mentions this case.
-      //             We have to think about this case.
-      // Handle the forwarding and return so the stub restarts the
-      // request!
-      reply_error = TAO_AMI_REPLY_NOT_OK;
-      break;
+      db->release ();
     }
 
   if (!CORBA::is_nil (this->reply_handler_.in ()))
     {
+      // Steal the buffer, that way we don't do any unnecesary copies of
+      // this data.
+      CORBA::ULong const max = params.svc_ctx_.maximum ();
+      CORBA::ULong const len = params.svc_ctx_.length ();
+      IOP::ServiceContext *context_list = params.svc_ctx_.get_buffer (1);
+      this->reply_service_info_.replace (max, len, context_list, 1);
+
+      if (TAO_debug_level >= 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher")
+                      ACE_TEXT ("::dispatch_reply status = %d\n"),
+                                this->reply_status_));
+        }
+
+      CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
+      switch (this->reply_status_)
+        {
+        case GIOP::NO_EXCEPTION:
+          reply_error = TAO_AMI_REPLY_OK;
+          break;
+        case GIOP::USER_EXCEPTION:
+          reply_error = TAO_AMI_REPLY_USER_EXCEPTION;
+          break;
+        case GIOP::SYSTEM_EXCEPTION:
+          reply_error = TAO_AMI_REPLY_SYSTEM_EXCEPTION;
+          break;
+        case GIOP::LOCATION_FORWARD:
+          reply_error = TAO_AMI_REPLY_LOCATION_FORWARD;
+          break;
+        case GIOP::LOCATION_FORWARD_PERM:
+          reply_error = TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
+          break;
+
+        default:
+          // @@ Michael: Not even the spec mentions this case.
+          //             We have to think about this case.
+          // Handle the forwarding and return so the stub restarts the
+          // request!
+          reply_error = TAO_AMI_REPLY_NOT_OK;
+          break;
+        }
+
       try
         {
           // Call the Reply Handler's stub.
@@ -159,18 +160,18 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
           this->timeout_handler_ = 0;
         }
 
-      // Generate a fake exception....
-      CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
-
-      TAO_OutputCDR out_cdr;
-
-      comm_failure._tao_encode (out_cdr);
-
-      // Turn into an output CDR
-      TAO_InputCDR cdr (out_cdr);
-
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {
+          // Generate a fake exception....
+          CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
+
+          TAO_OutputCDR out_cdr;
+
+          comm_failure._tao_encode (out_cdr);
+
+          // Turn into an output CDR
+          TAO_InputCDR cdr (out_cdr);
+
           this->reply_handler_stub_ (cdr,
                                      this->reply_handler_.in (),
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION);
@@ -197,17 +198,6 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 
   try
     {
-      // Generate a fake exception....
-      CORBA::TIMEOUT timeout_failure (
-        CORBA::SystemException::_tao_minor_code (
-            TAO_TIMEOUT_RECV_MINOR_CODE,
-            errno),
-         CORBA::COMPLETED_MAYBE);
-
-      TAO_OutputCDR out_cdr;
-
-      timeout_failure._tao_encode (out_cdr);
-
       // This is okay here... Everything relies on our refcount being
       // held by the timeout handler, whose refcount in turn is held
       // by the reactor.
@@ -223,11 +213,22 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
           this->timeout_handler_ = 0;
         }
 
-      // Turn into an output CDR
-      TAO_InputCDR cdr (out_cdr);
-
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {
+          // Generate a fake exception....
+          CORBA::TIMEOUT timeout_failure (
+            CORBA::SystemException::_tao_minor_code (
+                TAO_TIMEOUT_RECV_MINOR_CODE,
+                errno),
+             CORBA::COMPLETED_MAYBE);
+
+          TAO_OutputCDR out_cdr;
+
+          timeout_failure._tao_encode (out_cdr);
+
+          // Turn into an output CDR
+          TAO_InputCDR cdr (out_cdr);
+
           this->reply_handler_stub_ (cdr,
                                      this->reply_handler_.in (),
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION);
