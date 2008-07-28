@@ -449,32 +449,19 @@
   while (0)
 
 #if defined (ACE_WIN32)
-#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x550)
-#   define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
-  do { \
-    TYPE ace_result_; \
-    TYPE ace_local_result_ = (TYPE) X; \
-    ace_result_ = ace_local_result_; \
-    if (ace_result_ == FAILVALUE) \
-      ACE_OS::set_errno_to_last_error (); \
-    return ace_result_; \
-  } while (0)
-#   else
-#     define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
+# define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
     TYPE ace_result_ = (TYPE) X; \
     if (ace_result_ == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
     return ace_result_; \
   } while (0)
-#   endif /* defined (__BORLANDC__) && (__BORLANDC__ <= 0x550) */
-#   define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
+# define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
   do { \
     RESULT = (TYPE) X; \
     if (RESULT == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
   } while (0)
-
 #endif  /* ACE_WIN32 */
 
 // The C99 security-improved run-time returns an error value on failure;
