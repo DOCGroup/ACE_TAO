@@ -1,3 +1,15 @@
+Mon Jul 28 13:32:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_Acceptor.cpp:
+        * ace/WIN32_Asynch_IO.cpp:
+          Removed compiler checks
+
+        * ace/OS_NS_stdio.cpp:
+          Don't check for Borland C++ but for ACE_HAS_NONCONST_FDOPEN
+
+        * ace/OS_NS_stdio.inl:
+          Removed workaround for Borland C++
+
 Mon Jul 28 13:10:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Global_Macros.h:
