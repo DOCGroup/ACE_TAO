@@ -877,7 +877,7 @@ DRV_copy_input (FILE *fin,
   if (f == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: cannot open temp file \"%s\" for copying from \"%s\"\n",
+                  "%s: cannot open temp file \"%s\" for copying from \"%s\": %p\n",
                   ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
                   ACE_TEXT_CHAR_TO_TCHAR (fn),
                   ACE_TEXT_CHAR_TO_TCHAR (orig_filename)));
@@ -1009,7 +1009,7 @@ DRV_pre_proc (const char *myfile)
   if (ti_fd == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to create temporary file \"%s\": %m\n",
+                  "%s: Unable to create temporary file \"%s\": %p\n",
                   ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
                   ACE_TEXT_CHAR_TO_TCHAR (tmp_ifile)));
 
@@ -1020,7 +1020,7 @@ DRV_pre_proc (const char *myfile)
   if (tf_fd == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to create temporary file \"%s\": %m\n",
+                  "%s: Unable to create temporary file \"%s\": %p\n",
                   ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
                   ACE_TEXT_CHAR_TO_TCHAR (tmp_file)));
 
@@ -1094,7 +1094,7 @@ DRV_pre_proc (const char *myfile)
   if (ACE_OS::rename (tmp_file, t_file) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to rename temporary file \"%s\" to \"%s\": %m\n",
+                  "%s: Unable to rename temporary file \"%s\" to \"%s\": %p\n",
                   ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
                   ACE_TEXT_CHAR_TO_TCHAR (tmp_file),
                   ACE_TEXT_CHAR_TO_TCHAR (t_file)));
@@ -1105,7 +1105,7 @@ DRV_pre_proc (const char *myfile)
   if (ACE_OS::rename (tmp_ifile, t_ifile) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Unable to rename temporary file \"%s\" to \"%s\": %m\n",
+                  "%s: Unable to rename temporary file \"%s\" to \"%s\": %p\n",
                   ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
                   ACE_TEXT_CHAR_TO_TCHAR (tmp_ifile),
                   ACE_TEXT_CHAR_TO_TCHAR (t_ifile)));
@@ -1116,9 +1116,6 @@ DRV_pre_proc (const char *myfile)
 
   // Remove any existing output file.
   (void) ACE_OS::unlink (t_file);
-#if defined (WINVER) && (WINVER==0x0600) // Vista / Win2008Server
-  ACE_OS::sleep (1); // Seems to be a timing problem with vista specifically
-#endif
 
   ACE_HANDLE fd = ACE_INVALID_HANDLE;
 
@@ -1142,7 +1139,7 @@ DRV_pre_proc (const char *myfile)
       if (fd == ACE_INVALID_HANDLE)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s: cannot open temp file \"%s\" for writing\n",
+                      "%s: cannot open temp file \"%s\" for writing: %p\n",
                       ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
                       ACE_TEXT_CHAR_TO_TCHAR (t_file)));
 
@@ -1169,7 +1166,7 @@ DRV_pre_proc (const char *myfile)
       if (ACE_OS::close (fd) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s: cannot close temp file \"%s\" on parent\n",
+            "%s: cannot close temp file \"%s\" on parent: %p\n",
                       ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
                       ACE_TEXT_CHAR_TO_TCHAR (t_file)));
 

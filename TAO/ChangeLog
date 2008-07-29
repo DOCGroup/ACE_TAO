@@ -1,3 +1,10 @@
+Tue Jul 29 08:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO/TAO_IDL/driver/drv_preproc.cpp:
+          Interesting results, looks like some sort of fd conflict or
+          temporary name problem, remove the delay and increase error
+          diagnostics.
+
 Mon Jul 28 14:58:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Asynch_Timeout_Handler.cpp:
