@@ -1,3 +1,9 @@
+Tue Jul 29 18:11:32 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          TAO/tests/Bug_3000_Regression fails because that issue remains
+          unresolved, added !FIXED_BUGS_ONLY.
+
 Tue Jul 29 14:21:32 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:
