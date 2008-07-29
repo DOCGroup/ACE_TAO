@@ -149,7 +149,7 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::send_message, ")
                     ACE_TEXT (" write failure - %m\n"),
                     this->id ()));
@@ -169,7 +169,7 @@ TAO_SCIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
   // and also make sure that we have not recd. or sent any information
   // regarding this before...
   if (this->orb_core ()->bidir_giop_policy () &&
-      this->messaging_object_->is_ready_for_bidirectional (msg) &&
+      this->messaging_object ()->is_ready_for_bidirectional (msg) &&
       this->bidirectional_flag () < 0)
     {
       this->set_bidir_context_info (opdetails);
@@ -251,10 +251,7 @@ TAO_SCIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
     return;
 
   // Add this info in to the svc_list
-  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
-                                                    cdr);
-
-  return;
+  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
 }
 
 int
