@@ -1,3 +1,9 @@
+Tue Jul 29 18:26:14 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerate.
+
 Tue Jul 29 08:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO/TAO_IDL/driver/drv_preproc.cpp:
