@@ -1,3 +1,17 @@
+Tue Jul 29 19:50:46 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Queued_Message.h:
+
+          Cleaned up comments.
+
+        * tao/Transport.cpp (send_reply_message_i):
+
+          When the flushing strategy indicates MUST_FLUSH, flush the whole
+          transport instead of the "current" message.  Because the lock was
+          released and reacquired, the is no way to identify the "current"
+          message and ensure it wasn't already destroyed.  This should fix
+          bug #3163.
+
 Tue Jul 29 18:26:14 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:

@@ -756,7 +756,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
       typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
       TAO_REVERSE_LOCK reverse (*this->handler_lock_);
       ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
-      (void) flushing_strategy->flush_message (this, msg, 0);
+      (void) flushing_strategy->flush_transport (this, 0);
     }
 
   return 1;

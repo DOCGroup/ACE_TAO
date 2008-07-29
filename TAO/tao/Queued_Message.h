@@ -53,10 +53,10 @@ class TAO_ORB_Core;
  *
  * In many cases the message corresponds to some application request,
  * the application may be blocked waiting for the request to be sent,
- * even more importantlyl, the ORB can be configured to use the
+ * even more importantly, the ORB can be configured to use the
  * Leader/Followers strategy, in which case one of the waiting threads
- * can be required to wake up before its message completes
- * each message may contain a 'Sent_Notifier'
+ * can be required to wake up before its message completes.
+ * Each message may contain a 'Sent_Notifier'
  *
  * <H4>NOTE:</H4> The contents of the ACE_Message_Block may have been
  * allocated from TSS storage, in that case we cannot steal them.
