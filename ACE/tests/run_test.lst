@@ -129,6 +129,7 @@ Process_Semaphore_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 RB_Tree_Test
 Bug_3332_Regression_Test
 Reactor_Dispatch_Order_Test
+Reactor_Dispatch_Order_Test_Dev_Poll: !FIXED_BUGS_ONLY
 Reactor_Exceptions_Test
 Reactor_Notify_Test: !ST !ACE_FOR_TAO
 Reactor_Notification_Queue_Test

@@ -248,26 +248,18 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test"));
-
+  ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test_Dev_Poll"));
   int result = 0;
-  ACE_Select_Reactor select_reactor_impl;
-  ACE_Reactor select_reactor (&select_reactor_impl);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_Select_Reactor\n")));
-  if (!test_reactor_dispatch_order (select_reactor))
+
+#if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
+  ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
+  ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
+  if (!test_reactor_dispatch_order (dev_poll_reactor))
     ++result;
-
-  // Winsock 2 things are needed for WFMO_Reactor.
-#if defined (ACE_WIN32) && \
-    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-
-  ACE_WFMO_Reactor wfmo_reactor_impl;
-  ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_WFMO_Reactor\n")));
-  if (!test_reactor_dispatch_order (wfmo_reactor))
-    ++result;
-
-#endif /* ACE_WIN32 && ACE_HAS_WINSOCK2 */
+#else
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dev_Poll_Reactor is UNSUPPORTED on this platform\n")));
+#endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
 
   ACE_END_TEST;
   return result;
