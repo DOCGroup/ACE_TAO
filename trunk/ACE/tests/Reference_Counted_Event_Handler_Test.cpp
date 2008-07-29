@@ -970,7 +970,7 @@ test<REACTOR_IMPLEMENTATION>::test (void)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:f:g:h:i:k:l:m:z:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:d:f:g:h:i:k:l:m:z:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -1014,7 +1014,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
           debug = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case '?':
-        case 'u':
         default:
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("\nusage: %s \n\n")
@@ -1106,6 +1105,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_END_TEST;
 
-  return 0;
+  return result;
 }
 
