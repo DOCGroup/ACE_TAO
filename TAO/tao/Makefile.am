@@ -2569,6 +2569,162 @@ EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
 
 
+## Makefile.Compression.am
+
+if BUILD_EXCEPTIONS
+
+BUILT_SOURCES += \
+  Compression/CompressionA.cpp \
+  Compression/CompressionA.h \
+  Compression/CompressionC.cpp \
+  Compression/CompressionC.h \
+  Compression/CompressionS.h
+
+CLEANFILES += \
+  Compression/Compression-stamp \
+  Compression/CompressionA.cpp \
+  Compression/CompressionA.h \
+  Compression/CompressionC.cpp \
+  Compression/CompressionC.h \
+  Compression/CompressionS.h
+
+Compression/CompressionA.cpp Compression/CompressionA.h Compression/CompressionC.cpp Compression/CompressionC.h Compression/CompressionS.h: Compression/Compression-stamp
+
+Compression/Compression-stamp: $(srcdir)/Compression/Compression.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -Sci -GA -Wb,export_macro=TAO_Compression_Export -o Compression -Gp -Gd -Sal -Wb,export_macro=TAO_Compression_Export -Wb,export_include=tao/Compression/compression_export.h -Wb,include_guard=TAO_COMPRESSION_SAFE_INCLUDE -Wb,safe_include=tao/Compression/Compression.h $(srcdir)/Compression/Compression.pidl
+	@touch $@
+
+BUILT_SOURCES += \
+  Compression/Compression_includeA.cpp \
+  Compression/Compression_includeA.h \
+  Compression/Compression_includeC.cpp \
+  Compression/Compression_includeC.h \
+  Compression/Compression_includeS.h
+
+CLEANFILES += \
+  Compression/Compression_include-stamp \
+  Compression/Compression_includeA.cpp \
+  Compression/Compression_includeA.h \
+  Compression/Compression_includeC.cpp \
+  Compression/Compression_includeC.h \
+  Compression/Compression_includeS.h
+
+Compression/Compression_includeA.cpp Compression/Compression_includeA.h Compression/Compression_includeC.cpp Compression/Compression_includeC.h Compression/Compression_includeS.h: Compression/Compression_include-stamp
+
+Compression/Compression_include-stamp: $(srcdir)/Compression/Compression_include.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -Sci -GA -Wb,export_macro=TAO_Compression_Export -o Compression -Wb,export_include=tao/Compression/compression_export.h -Wb,unique_include=tao/Compression/Compression.h $(srcdir)/Compression/Compression_include.pidl
+	@touch $@
+
+lib_LTLIBRARIES += libTAO_Compression.la
+
+libTAO_Compression_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_COMPRESSION_BUILD_DLL
+
+libTAO_Compression_la_SOURCES = \
+  Compression/Base_Compressor.cpp \
+  Compression/Compression.cpp \
+  Compression/CompressionA.cpp \
+  Compression/CompressionC.cpp \
+  Compression/Compression_Manager.cpp \
+  Compression/Compression_includeA.cpp \
+  Compression/Compression_includeC.cpp \
+  Compression/Compressor_Factory.cpp
+
+libTAO_Compression_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_Compression_la_LIBADD = \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Compression/Base_Compressor.h \
+  Compression/Compression.h \
+  Compression/Compression.pidl \
+  Compression/Compression.pidl \
+  Compression/CompressionA.h \
+  Compression/CompressionC.h \
+  Compression/CompressionS.h \
+  Compression/Compression_Manager.h \
+  Compression/Compression_include.pidl \
+  Compression/Compression_include.pidl \
+  Compression/Compression_includeA.h \
+  Compression/Compression_includeC.h \
+  Compression/Compression_includeS.h \
+  Compression/Compressor_Factory.h \
+  Compression/compression_export.h
+
+pkgconfig_DATA += \
+  TAO_Compression.pc
+
+CLEANFILES += \
+  TAO_Compression.pc
+
+TAO_Compression.pc: ${top_builddir}/config.status ${srcdir}/Compression/TAO_Compression.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Compression/TAO_Compression.pc.in
+
+endif BUILD_EXCEPTIONS
+
+EXTRA_DIST += \
+  Compression/TAO_Compression.pc.in \
+  Compression/TAO_Compression.rc
+
+
+## Makefile.Bzip2Compressor.am
+
+if BUILD_BZIP2
+if BUILD_EXCEPTIONS
+
+lib_LTLIBRARIES += libTAO_Bzip2Compressor.la
+
+libTAO_Bzip2Compressor_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  $(ACE_BZIP2_CPPFLAGS) \
+  -DTAO_BZIP2COMPRESSOR_BUILD_DLL
+
+libTAO_Bzip2Compressor_la_SOURCES = \
+  Compression/bzip2/Bzip2Compressor.cpp \
+  Compression/bzip2/Bzip2Compressor_Factory.cpp
+
+libTAO_Bzip2Compressor_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_BZIP2_LDFLAGS)
+
+libTAO_Bzip2Compressor_la_LIBADD = \
+  libTAO_Compression.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  $(ACE_BZIP2_LIBS)
+
+nobase_include_HEADERS += \
+  Compression/bzip2/Bzip2Compressor.h \
+  Compression/bzip2/Bzip2Compressor_Factory.h \
+  Compression/bzip2/Bzip2Compressor_export.h
+
+pkgconfig_DATA += \
+  TAO_Bzip2Compressor.pc
+
+CLEANFILES += \
+  TAO_Bzip2Compressor.pc
+
+TAO_Bzip2Compressor.pc: ${top_builddir}/config.status ${srcdir}/Compression/zlib/TAO_Bzip2Compressor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Compression/zlib/TAO_Bzip2Compressor.pc.in
+
+endif BUILD_EXCEPTIONS
+endif BUILD_BZIP2
+
+EXTRA_DIST += \
+  Compression/bzip2/TAO_Bzip2Compressor.rc \
+  Compression/zlib/TAO_Bzip2Compressor.pc.in
+
+
 ## Makefile.PortableServer.am
 
 if BUILD_EXCEPTIONS
@@ -3544,112 +3700,6 @@ endif BUILD_EXCEPTIONS
 
 EXTRA_DIST += \
   CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
-
-
-## Makefile.Compression.am
-
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  Compression/CompressionA.cpp \
-  Compression/CompressionA.h \
-  Compression/CompressionC.cpp \
-  Compression/CompressionC.h \
-  Compression/CompressionS.h
-
-CLEANFILES += \
-  Compression/Compression-stamp \
-  Compression/CompressionA.cpp \
-  Compression/CompressionA.h \
-  Compression/CompressionC.cpp \
-  Compression/CompressionC.h \
-  Compression/CompressionS.h
-
-Compression/CompressionA.cpp Compression/CompressionA.h Compression/CompressionC.cpp Compression/CompressionC.h Compression/CompressionS.h: Compression/Compression-stamp
-
-Compression/Compression-stamp: $(srcdir)/Compression/Compression.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -Sci -GA -Wb,export_macro=TAO_Compression_Export -o Compression -Gp -Gd -Sal -Wb,export_macro=TAO_Compression_Export -Wb,export_include=tao/Compression/compression_export.h -Wb,include_guard=TAO_COMPRESSION_SAFE_INCLUDE -Wb,safe_include=tao/Compression/Compression.h $(srcdir)/Compression/Compression.pidl
-	@touch $@
-
-BUILT_SOURCES += \
-  Compression/Compression_includeA.cpp \
-  Compression/Compression_includeA.h \
-  Compression/Compression_includeC.cpp \
-  Compression/Compression_includeC.h \
-  Compression/Compression_includeS.h
-
-CLEANFILES += \
-  Compression/Compression_include-stamp \
-  Compression/Compression_includeA.cpp \
-  Compression/Compression_includeA.h \
-  Compression/Compression_includeC.cpp \
-  Compression/Compression_includeC.h \
-  Compression/Compression_includeS.h
-
-Compression/Compression_includeA.cpp Compression/Compression_includeA.h Compression/Compression_includeC.cpp Compression/Compression_includeC.h Compression/Compression_includeS.h: Compression/Compression_include-stamp
-
-Compression/Compression_include-stamp: $(srcdir)/Compression/Compression_include.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -Sci -GA -Wb,export_macro=TAO_Compression_Export -o Compression -Wb,export_include=tao/Compression/compression_export.h -Wb,unique_include=tao/Compression/Compression.h $(srcdir)/Compression/Compression_include.pidl
-	@touch $@
-
-lib_LTLIBRARIES += libTAO_Compression.la
-
-libTAO_Compression_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTAO_COMPRESSION_BUILD_DLL
-
-libTAO_Compression_la_SOURCES = \
-  Compression/Base_Compressor.cpp \
-  Compression/Compression.cpp \
-  Compression/CompressionA.cpp \
-  Compression/CompressionC.cpp \
-  Compression/Compression_Manager.cpp \
-  Compression/Compression_includeA.cpp \
-  Compression/Compression_includeC.cpp \
-  Compression/Compressor_Factory.cpp
-
-libTAO_Compression_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_Compression_la_LIBADD = \
-  libTAO_AnyTypeCode.la \
-  libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  Compression/Base_Compressor.h \
-  Compression/Compression.h \
-  Compression/Compression.pidl \
-  Compression/Compression.pidl \
-  Compression/CompressionA.h \
-  Compression/CompressionC.h \
-  Compression/CompressionS.h \
-  Compression/Compression_Manager.h \
-  Compression/Compression_include.pidl \
-  Compression/Compression_include.pidl \
-  Compression/Compression_includeA.h \
-  Compression/Compression_includeC.h \
-  Compression/Compression_includeS.h \
-  Compression/Compressor_Factory.h \
-  Compression/compression_export.h
-
-pkgconfig_DATA += \
-  TAO_Compression.pc
-
-CLEANFILES += \
-  TAO_Compression.pc
-
-TAO_Compression.pc: ${top_builddir}/config.status ${srcdir}/Compression/TAO_Compression.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/Compression/TAO_Compression.pc.in
-
-endif BUILD_EXCEPTIONS
-
-EXTRA_DIST += \
-  Compression/TAO_Compression.pc.in \
-  Compression/TAO_Compression.rc
 
 
 ## Makefile.DiffServPolicy.am

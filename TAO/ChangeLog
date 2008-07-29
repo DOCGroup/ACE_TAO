@@ -1,3 +1,9 @@
+Tue Jul 29 22:30:27 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerate (adds bzip2 support).
+
 Tue Jul 29 19:50:46 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Queued_Message.h:
