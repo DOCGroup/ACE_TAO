@@ -1,3 +1,14 @@
+Tue Jul 29 12:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/run_test.lst:
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+
+          Corrected the disabling of ACE_Dev_Poll_Reactor test and split
+          the test into two runs once with this reactor test disabled
+          and once with just this reactor test enabled (marked with
+          !FIXED_BUGS_ONLY) due to internal problems with
+          ACE_Dev_Poll_Reactor.
+
 Tue Jul 29 12:14:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/run_test.lst:

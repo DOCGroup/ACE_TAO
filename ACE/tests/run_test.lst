@@ -142,7 +142,8 @@ Reader_Writer_Test
 Recursive_Condition_Test: !ST
 Recursive_Mutex_Test: !ST
 Refcounted_Auto_Ptr_Test: !ACE_FOR_TAO
-Reference_Counted_Event_Handler_Test
+Reference_Counted_Event_Handler_Test -d 0
+Reference_Counted_Event_Handler_Test -a 0 -b 0 -c 0 -d 1 -f 0 -g 0 -h 0 -i 0 -k 0 -l 0 -m 0: !FIXED_BUGS_ONLY
 Reverse_Lock_Test
 RW_Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 Sendfile_Test: !QNX !NO_NETWORK !VxWorks !LabVIEW_RT
