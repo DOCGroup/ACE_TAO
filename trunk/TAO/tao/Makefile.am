@@ -970,6 +970,7 @@ libTAO_la_SOURCES = \
   Wait_On_Read.cpp \
   Wait_Strategy.cpp \
   WrongTransactionC.cpp \
+  ZIOP_Adapter.cpp \
   debug.cpp \
   default_client.cpp \
   default_resource.cpp \
@@ -1503,6 +1504,7 @@ nobase_include_HEADERS = \
   WrongTransaction.pidl \
   WrongTransactionC.h \
   WrongTransactionS.h \
+  ZIOP_Adapter.h \
   corba.h \
   corbafwd.h \
   debug.h \
@@ -1765,8 +1767,8 @@ libTAO_AnyTypeCode_la_SOURCES = \
   AnyTypeCode/FloatSeqA.cpp \
   AnyTypeCode/GIOPA.cpp \
   AnyTypeCode/IIOPA.cpp \
-  AnyTypeCode/IOPA.cpp \
   AnyTypeCode/IIOP_EndpointsA.cpp \
+  AnyTypeCode/IOPA.cpp \
   AnyTypeCode/LongDoubleSeqA.cpp \
   AnyTypeCode/LongLongSeqA.cpp \
   AnyTypeCode/LongSeqA.cpp \
@@ -3549,20 +3551,45 @@ EXTRA_DIST += \
 if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
+  Compression/CompressionA.cpp \
+  Compression/CompressionA.h \
   Compression/CompressionC.cpp \
   Compression/CompressionC.h \
   Compression/CompressionS.h
 
 CLEANFILES += \
   Compression/Compression-stamp \
+  Compression/CompressionA.cpp \
+  Compression/CompressionA.h \
   Compression/CompressionC.cpp \
   Compression/CompressionC.h \
   Compression/CompressionS.h
 
-Compression/CompressionC.cpp Compression/CompressionC.h Compression/CompressionS.h: Compression/Compression-stamp
+Compression/CompressionA.cpp Compression/CompressionA.h Compression/CompressionC.cpp Compression/CompressionC.h Compression/CompressionS.h: Compression/Compression-stamp
 
 Compression/Compression-stamp: $(srcdir)/Compression/Compression.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -Sa -St -Wb,export_macro=TAO_Compression_Export -Wb,export_include=tao/Compression/compression_export.h -Wb,include_guard=TAO_COMPRESSION_SAFE_INCLUDE -Wb,safe_include=tao/Compression/Compression.h -o Compression $(srcdir)/Compression/Compression.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -Sci -GA -Wb,export_macro=TAO_Compression_Export -o Compression -Gp -Gd -Sal -Wb,export_macro=TAO_Compression_Export -Wb,export_include=tao/Compression/compression_export.h -Wb,include_guard=TAO_COMPRESSION_SAFE_INCLUDE -Wb,safe_include=tao/Compression/Compression.h $(srcdir)/Compression/Compression.pidl
+	@touch $@
+
+BUILT_SOURCES += \
+  Compression/Compression_includeA.cpp \
+  Compression/Compression_includeA.h \
+  Compression/Compression_includeC.cpp \
+  Compression/Compression_includeC.h \
+  Compression/Compression_includeS.h
+
+CLEANFILES += \
+  Compression/Compression_include-stamp \
+  Compression/Compression_includeA.cpp \
+  Compression/Compression_includeA.h \
+  Compression/Compression_includeC.cpp \
+  Compression/Compression_includeC.h \
+  Compression/Compression_includeS.h
+
+Compression/Compression_includeA.cpp Compression/Compression_includeA.h Compression/Compression_includeC.cpp Compression/Compression_includeC.h Compression/Compression_includeS.h: Compression/Compression_include-stamp
+
+Compression/Compression_include-stamp: $(srcdir)/Compression/Compression_include.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -Sci -GA -Wb,export_macro=TAO_Compression_Export -o Compression -Wb,export_include=tao/Compression/compression_export.h -Wb,unique_include=tao/Compression/Compression.h $(srcdir)/Compression/Compression_include.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_Compression.la
@@ -3577,14 +3604,18 @@ libTAO_Compression_la_CPPFLAGS = \
 libTAO_Compression_la_SOURCES = \
   Compression/Base_Compressor.cpp \
   Compression/Compression.cpp \
+  Compression/CompressionA.cpp \
   Compression/CompressionC.cpp \
   Compression/Compression_Manager.cpp \
+  Compression/Compression_includeA.cpp \
+  Compression/Compression_includeC.cpp \
   Compression/Compressor_Factory.cpp
 
 libTAO_Compression_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_Compression_la_LIBADD = \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3593,9 +3624,15 @@ nobase_include_HEADERS += \
   Compression/Compression.h \
   Compression/Compression.pidl \
   Compression/Compression.pidl \
+  Compression/CompressionA.h \
   Compression/CompressionC.h \
   Compression/CompressionS.h \
   Compression/Compression_Manager.h \
+  Compression/Compression_include.pidl \
+  Compression/Compression_include.pidl \
+  Compression/Compression_includeA.h \
+  Compression/Compression_includeC.h \
+  Compression/Compression_includeS.h \
   Compression/Compressor_Factory.h \
   Compression/compression_export.h
 
@@ -5872,10 +5909,7 @@ BUILT_SOURCES += \
   Monitor/Monitor_includeA.h \
   Monitor/Monitor_includeC.cpp \
   Monitor/Monitor_includeC.h \
-  Monitor/Monitor_includeC.inl \
-  Monitor/Monitor_includeS.cpp \
-  Monitor/Monitor_includeS.h \
-  Monitor/Monitor_includeS.inl
+  Monitor/Monitor_includeS.h
 
 CLEANFILES += \
   Monitor/Monitor_include-stamp \
@@ -5883,15 +5917,12 @@ CLEANFILES += \
   Monitor/Monitor_includeA.h \
   Monitor/Monitor_includeC.cpp \
   Monitor/Monitor_includeC.h \
-  Monitor/Monitor_includeC.inl \
-  Monitor/Monitor_includeS.cpp \
-  Monitor/Monitor_includeS.h \
-  Monitor/Monitor_includeS.inl
+  Monitor/Monitor_includeS.h
 
-Monitor/Monitor_includeA.cpp Monitor/Monitor_includeA.h Monitor/Monitor_includeC.cpp Monitor/Monitor_includeC.h Monitor/Monitor_includeC.inl Monitor/Monitor_includeS.cpp Monitor/Monitor_includeS.h Monitor/Monitor_includeS.inl: Monitor/Monitor_include-stamp
+Monitor/Monitor_includeA.cpp Monitor/Monitor_includeA.h Monitor/Monitor_includeC.cpp Monitor/Monitor_includeC.h Monitor/Monitor_includeS.h: Monitor/Monitor_include-stamp
 
 Monitor/Monitor_include-stamp: $(srcdir)/Monitor/Monitor_include.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -GA -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -Wb,unique_include=tao/Monitor/Monitor.h $(srcdir)/Monitor/Monitor_include.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -GA -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -Wb,unique_include=tao/Monitor/Monitor.h -SS -Sci $(srcdir)/Monitor/Monitor_include.pidl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -5901,8 +5932,7 @@ BUILT_SOURCES += \
   Monitor/MonitorC.h \
   Monitor/MonitorC.inl \
   Monitor/MonitorS.cpp \
-  Monitor/MonitorS.h \
-  Monitor/MonitorS.inl
+  Monitor/MonitorS.h
 
 CLEANFILES += \
   Monitor/Monitor-stamp \
@@ -5912,13 +5942,35 @@ CLEANFILES += \
   Monitor/MonitorC.h \
   Monitor/MonitorC.inl \
   Monitor/MonitorS.cpp \
-  Monitor/MonitorS.h \
-  Monitor/MonitorS.inl
+  Monitor/MonitorS.h
 
-Monitor/MonitorA.cpp Monitor/MonitorA.h Monitor/MonitorC.cpp Monitor/MonitorC.h Monitor/MonitorC.inl Monitor/MonitorS.cpp Monitor/MonitorS.h Monitor/MonitorS.inl: Monitor/Monitor-stamp
+Monitor/MonitorA.cpp Monitor/MonitorA.h Monitor/MonitorC.cpp Monitor/MonitorC.h Monitor/MonitorC.inl Monitor/MonitorS.cpp Monitor/MonitorS.h: Monitor/Monitor-stamp
 
 Monitor/Monitor-stamp: $(srcdir)/Monitor/Monitor.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -GA -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -Wb,include_guard=TAO_MONITOR_SAFE_INCLUDE -Wb,safe_include=tao/Monitor/Monitor.h $(srcdir)/Monitor/Monitor.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -GA -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -Wb,include_guard=TAO_MONITOR_SAFE_INCLUDE -Wb,safe_include=tao/Monitor/Monitor.h -Ssi $(srcdir)/Monitor/Monitor.pidl
+	@touch $@
+
+BUILT_SOURCES += \
+  Monitor/Monitor_TypesA.cpp \
+  Monitor/Monitor_TypesA.h \
+  Monitor/Monitor_TypesC.cpp \
+  Monitor/Monitor_TypesC.h \
+  Monitor/Monitor_TypesC.inl \
+  Monitor/Monitor_TypesS.h
+
+CLEANFILES += \
+  Monitor/Monitor_Types-stamp \
+  Monitor/Monitor_TypesA.cpp \
+  Monitor/Monitor_TypesA.h \
+  Monitor/Monitor_TypesC.cpp \
+  Monitor/Monitor_TypesC.h \
+  Monitor/Monitor_TypesC.inl \
+  Monitor/Monitor_TypesS.h
+
+Monitor/Monitor_TypesA.cpp Monitor/Monitor_TypesA.h Monitor/Monitor_TypesC.cpp Monitor/Monitor_TypesC.h Monitor/Monitor_TypesC.inl Monitor/Monitor_TypesS.h: Monitor/Monitor_Types-stamp
+
+Monitor/Monitor_Types-stamp: $(srcdir)/Monitor/Monitor_Types.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -GA -Wb,export_macro=TAO_Monitor_Export -Wb,export_include=tao/Monitor/Monitor_export.h -o Monitor -SS -Wb,include_guard=TAO_MONITOR_SAFE_INCLUDE -Wb,safe_include=tao/Monitor/Monitor.h $(srcdir)/Monitor/Monitor_Types.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_Monitor.la
@@ -5936,9 +5988,10 @@ libTAO_Monitor_la_SOURCES = \
   Monitor/MonitorC.cpp \
   Monitor/MonitorS.cpp \
   Monitor/Monitor_Impl.cpp \
+  Monitor/Monitor_TypesA.cpp \
+  Monitor/Monitor_TypesC.cpp \
   Monitor/Monitor_includeA.cpp \
-  Monitor/Monitor_includeC.cpp \
-  Monitor/Monitor_includeS.cpp
+  Monitor/Monitor_includeC.cpp
 
 libTAO_Monitor_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -5960,16 +6013,19 @@ nobase_include_HEADERS += \
   Monitor/MonitorC.h \
   Monitor/MonitorC.inl \
   Monitor/MonitorS.h \
-  Monitor/MonitorS.inl \
   Monitor/Monitor_Impl.h \
+  Monitor/Monitor_Types.pidl \
+  Monitor/Monitor_Types.pidl \
+  Monitor/Monitor_TypesA.h \
+  Monitor/Monitor_TypesC.h \
+  Monitor/Monitor_TypesC.inl \
+  Monitor/Monitor_TypesS.h \
   Monitor/Monitor_export.h \
   Monitor/Monitor_include.pidl \
   Monitor/Monitor_include.pidl \
   Monitor/Monitor_includeA.h \
   Monitor/Monitor_includeC.h \
-  Monitor/Monitor_includeC.inl \
-  Monitor/Monitor_includeS.h \
-  Monitor/Monitor_includeS.inl
+  Monitor/Monitor_includeS.h
 
 pkgconfig_DATA += \
   TAO_Monitor.pc
@@ -6385,6 +6441,86 @@ endif BUILD_EXCEPTIONS
 EXTRA_DIST += \
   TypeCodeFactory/TAO_TypeCodeFactory.pc.in \
   TypeCodeFactory/TypeCodeFactory.rc
+
+
+## Makefile.ZIOP.am
+
+if BUILD_EXCEPTIONS
+
+BUILT_SOURCES += \
+  ZIOP/ZIOPC.cpp \
+  ZIOP/ZIOPC.h \
+  ZIOP/ZIOPS.h
+
+CLEANFILES += \
+  ZIOP/ZIOP-stamp \
+  ZIOP/ZIOPC.cpp \
+  ZIOP/ZIOPC.h \
+  ZIOP/ZIOPS.h
+
+ZIOP/ZIOPC.cpp ZIOP/ZIOPC.h ZIOP/ZIOPS.h: ZIOP/ZIOP-stamp
+
+ZIOP/ZIOP-stamp: $(srcdir)/ZIOP/ZIOP.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -Wb,export_macro=TAO_ZIOP_Export -Wb,export_include=tao/ZIOP/ziop_export.h -Wb,include_guard=TAO_ZIOP_SAFE_INCLUDE -Wb,safe_include=tao/ZIOP/ZIOP.h -o ZIOP $(srcdir)/ZIOP/ZIOP.pidl
+	@touch $@
+
+lib_LTLIBRARIES += libTAO_ZIOP.la
+
+libTAO_ZIOP_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_ZIOP_BUILD_DLL
+
+libTAO_ZIOP_la_SOURCES = \
+  ZIOP/ZIOP.cpp \
+  ZIOP/ZIOPC.cpp \
+  ZIOP/ZIOP_ORBInitializer.cpp \
+  ZIOP/ZIOP_PolicyFactory.cpp \
+  ZIOP/ZIOP_Policy_Validator.cpp \
+  ZIOP/ZIOP_Policy_i.cpp \
+  ZIOP/ZIOP_Stub.cpp \
+  ZIOP/ZIOP_Stub_Factory.cpp
+
+libTAO_ZIOP_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_ZIOP_la_LIBADD = \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
+  libTAO_Compression.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  ZIOP/ZIOP.h \
+  ZIOP/ZIOP.pidl \
+  ZIOP/ZIOP.pidl \
+  ZIOP/ZIOPC.h \
+  ZIOP/ZIOPS.h \
+  ZIOP/ZIOP_ORBInitializer.h \
+  ZIOP/ZIOP_PolicyFactory.h \
+  ZIOP/ZIOP_Policy_Validator.h \
+  ZIOP/ZIOP_Policy_i.h \
+  ZIOP/ZIOP_Stub.h \
+  ZIOP/ZIOP_Stub_Factory.h \
+  ZIOP/ziop_export.h
+
+pkgconfig_DATA += \
+  TAO_ZIOP.pc
+
+CLEANFILES += \
+  TAO_ZIOP.pc
+
+TAO_ZIOP.pc: ${top_builddir}/config.status ${srcdir}/ZIOP/TAO_ZIOP.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ZIOP/TAO_ZIOP.pc.in
+
+endif BUILD_EXCEPTIONS
+
+EXTRA_DIST += \
+  ZIOP/TAO_ZIOP.pc.in
 
 
 ## Makefile.ZlibCompressor.am
