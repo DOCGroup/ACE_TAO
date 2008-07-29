@@ -545,6 +545,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  # placeholder for WxWindows/wxWidgets support
  AM_CONDITIONAL([BUILD_WXWINDOWS], false)
 
+ ACE_PATH_BZIP2
  ACE_PATH_ZLIB
  ACE_PATH_ZZIP
 
@@ -1352,6 +1353,60 @@ if test "$no_x" != yes; then
 fi
 
 AM_CONDITIONAL([BUILD_X11], [test X$no_x != Xyes])
+])
+
+
+# ACE_PATH_BZIP2
+#---------------------------------------------------------------------------
+# Find bzip2 Libraries, flags, etc.
+AC_DEFUN([ACE_PATH_BZIP2],
+[
+ACE_BZIP2_CPPFLAGS=""
+ACE_BZIP2_LDFLAGS=""
+
+dnl TODO: default to false, at least until we add a check to see if
+dnl the bzip2 library is usable.
+AC_ARG_WITH([bzip2],
+  AS_HELP_STRING([--with-bzip2@<:@=DIR@:>@],
+		 [root directory of bzip2 installation]),
+  [
+  ace_with_bzip2="${withval}"
+  if test "${ace_with_bzip2}" != yes; then
+       ace_bzip2_include="${ace_with_bzip2}/include"
+       ace_bzip2_libdir="${ace_with_bzip2}/lib"
+  fi
+  ],[ace_with_bzip2=no])
+
+dnl TODO: let's wait and see before adding options to specify header
+dnl and library location separately.
+dnl
+dnl AC_ARG_WITH([bzip2_include],
+dnl   AS_HELP_STRING([--with-bzip2-include=DIR],
+dnl 		 [specify exact include dir for bzip2 headers]),
+dnl   [ace_bzip2_include="$withval"])
+dnl
+dnl AC_ARG_WITH([bzip2_libdir],
+dnl   AS_HELP_STRING([--with-bzip2-libdir=DIR],
+dnl 		 [specify exact include dir for bzip2 libraries]),
+dnl   [ace_bzip2_libdir="$withval"])
+
+if test "${ace_bzip2_include}"; then
+  ACE_BZIP2_CPPFLAGS="-I$ace_bzip2_include"
+fi
+
+if test "${ace_bzip2_libdir}"; then
+  ACE_BZIP2_LDFLAGS="-L$ace_bzip2_libdir"
+fi
+
+ACE_BZIP2_CPPFLAGS="${ACE_BZIP2_CPPFLAGS} -DBZIP2"
+
+if test "${ace_with_bzip2}" != no; then
+  ACE_BZIP2_LIBS="-lbz2"
+  AC_SUBST(ACE_BZIP2_CPPFLAGS)
+  AC_SUBST(ACE_BZIP2_LDFLAGS)
+  AC_SUBST(ACE_BZIP2_LIBS)
+fi
+AM_CONDITIONAL([BUILD_BZIP2], test "${ace_with_bzip2}" != no)
 ])
 
 
