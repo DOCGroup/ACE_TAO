@@ -1,3 +1,11 @@
+Tue Jul 29 22:23:08 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/ace.m4:
+
+          Add ACE_PATH_BZIP2 feature test, sets ACE_BZIP2_CPPFLAGS,
+          ACE_BZIP2_LDFLAGS, and ACE_BZIP2_LIBS as needed when
+          --with-bzip2 is specified on the command line.
+
 Tue Jul 29 21:33:14 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/config/automake.features:
