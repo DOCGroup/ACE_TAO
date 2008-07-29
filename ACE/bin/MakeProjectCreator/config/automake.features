@@ -32,6 +32,7 @@ tao_xtresource=1
 wxWindows=1
 
 stl=1
+bzip2=1
 boost=1
 java=1
 zlib=1
