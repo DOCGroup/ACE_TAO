@@ -1,3 +1,17 @@
+Tue Jul 29 12:14:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/run_test.lst:
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test_Dev_Poll.cpp:
+
+          These tests now actually return a failure if the test failed
+          instead of always returning 0. I have also split out the
+          problematic part of this test re-enabled by:
+          Wed Jul  9 19:07:24  2008  Steve Huston  which itself reversed:
+          Sat Mar 29 08:16:57 UTC 2008  Johnny Willemsen  that originally
+          disabled testing for ACE_Dev_Poll_Reactor due to internal
+          problems with ACE_Dev_Poll_Reactor.
+
 Mon Jul 28 13:39:13  2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macros.h:
