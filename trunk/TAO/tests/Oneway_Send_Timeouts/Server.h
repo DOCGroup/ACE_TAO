@@ -32,8 +32,6 @@ class Server
   bool shutdown_;
   TAO_SYNCH_MUTEX mutex_;
   std::auto_ptr<Test_i> test_i_;
-  bool orb_shutdown_;
-  bool management_orb_shutdown_;
 };
 
 #endif //_SERVER_
