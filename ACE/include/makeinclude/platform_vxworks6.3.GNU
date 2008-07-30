@@ -61,6 +61,7 @@ ifeq ("$(WIND_HOST_TYPE)","x86-win32")
   ACE_ROOT:=$(subst \,/,$(ACE_ROOT))
   TAO_ROOT:=$(subst \,/,$(TAO_ROOT))
   CIAO_ROOT:=$(subst \,/,$(CIAO_ROOT))
+  HOST_ROOT:=$(subst \,/,$(HOST_ROOT))
   override RM=rm -f
 endif # x86-win32
 
