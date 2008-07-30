@@ -69,19 +69,11 @@ namespace TAO
 
   Transport_Cache_Manager::~Transport_Cache_Manager (void)
   {
-    // Delete the lock that we have
-    if (this->cache_lock_)
-      {
-        delete this->cache_lock_;
-        this->cache_lock_ = 0;
-      }
+    delete this->cache_lock_;
+    this->cache_lock_ = 0;
 
-    // Delete the purging strategy
-    if (this->purging_strategy_)
-      {
-        delete this->purging_strategy_;
-        this->purging_strategy_ = 0;
-      }
+    delete this->purging_strategy_;
+    this->purging_strategy_ = 0;
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     this->purge_monitor_->remove_from_registry ();
@@ -436,13 +428,11 @@ namespace TAO
   void
   Transport_Cache_Manager::mark_invalid_i (HASH_MAP_ENTRY *entry)
   {
-    if (entry == 0)
+    if (entry != 0)
       {
-        return;
+        // Mark the entry as not usable
+        entry->item ().recycle_state (ENTRY_PURGABLE_BUT_NOT_IDLE);
       }
-
-    // Mark the entry as not usable
-    entry->item ().recycle_state (ENTRY_PURGABLE_BUT_NOT_IDLE);
   }
 
   bool

@@ -845,11 +845,10 @@ TAO_GIOP_Message_Base::process_request (
 
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = false;
-  int parse_error = 0;
 
   try
     {
-      parse_error = parser->parse_request_header (request);
+      int parse_error = parser->parse_request_header (request);
 
       // Throw an exception if the
       if (parse_error != 0)
