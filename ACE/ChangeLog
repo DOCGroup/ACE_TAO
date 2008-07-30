@@ -1,3 +1,10 @@
+Wed Jul 30 09:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/tests.mpc:
+
+          Missed adding the new Reactor_Dispatch_Order_Test_Dev_Poll
+          entry.
+
 Tue Jul 29 22:23:08 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/ace.m4:

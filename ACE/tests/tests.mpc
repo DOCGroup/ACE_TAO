@@ -923,6 +923,13 @@ project(Reactor Dispatch Order Test) : acetest {
   }
 }
 
+project(Reactor_Dispatch_Order_Test_Dev_Poll) : acetest {
+  exename = Reactor_Dispatch_Order_Test_Dev_Poll
+  Source_Files {
+    Reactor_Dispatch_Order_Test_Dev_Poll.cpp
+  }
+}
+
 project(Reactor Performance Test) : acetest {
   avoids += ace_for_tao
   exename = Reactor_Performance_Test
