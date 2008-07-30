@@ -249,14 +249,23 @@ TAO_Default_Client_Strategy_Factory::create_profile_lock (void)
 {
   ACE_Lock *the_lock = 0;
 
-  if (this->profile_lock_type_ == TAO_NULL_LOCK)
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
-                    0);
-  else
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
-                    0);
+  switch (this->profile_lock_type_)
+    {
+      case TAO_NULL_LOCK:
+        {
+          ACE_NEW_RETURN (the_lock,
+                          ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                          0);
+          break;
+        }
+      case TAO_THREAD_LOCK:
+        {
+          ACE_NEW_RETURN (the_lock,
+                          ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
+                          0);
+          break;
+        }
+    }
 
   return the_lock;
 }
@@ -276,20 +285,29 @@ TAO_Default_Client_Strategy_Factory::create_profile_refcount (void)
     }
 }
 
-// Create the correct client transport muxing strategy.
+/// Create the correct client transport muxing strategy.
 TAO_Transport_Mux_Strategy *
 TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (TAO_Transport *transport)
 {
   TAO_Transport_Mux_Strategy *tms = 0;
 
-  if (this->transport_mux_strategy_ == TAO_MUXED_TMS)
-    ACE_NEW_RETURN (tms,
-                    TAO_Muxed_TMS (transport),
-                    0);
-  else
-    ACE_NEW_RETURN (tms,
-                    TAO_Exclusive_TMS (transport),
-                    0);
+  switch (this->transport_mux_strategy_)
+    {
+      case TAO_MUXED_TMS:
+      {
+        ACE_NEW_RETURN (tms,
+                        TAO_Muxed_TMS (transport),
+                        0);
+        break;
+      }
+      case TAO_EXCLUSIVE_TMS:
+      {
+        ACE_NEW_RETURN (tms,
+                        TAO_Exclusive_TMS (transport),
+                        0);
+        break;
+      }
+    }
 
   return tms;
 }
@@ -299,14 +317,23 @@ TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy_lock (void)
 {
   ACE_Lock *the_lock = 0;
 
-  if (this->muxed_strategy_lock_type_ == TAO_NULL_LOCK)
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
-                    0);
-  else
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> (),
-                    0);
+  switch (this->muxed_strategy_lock_type_)
+    {
+      case TAO_NULL_LOCK:
+        {
+          ACE_NEW_RETURN (the_lock,
+                          ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                          0);
+          break;
+        }
+      case TAO_THREAD_LOCK:
+        {
+          ACE_NEW_RETURN (the_lock,
+                          ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> (),
+                          0);
+          break;
+        }
+    }
 
   return the_lock;
 }
@@ -327,25 +354,36 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
  * object is known a priori.
  */
 //@@ WAIT_STRATEGY_SPL_COMMENT_HOOK_START
-  if (this->wait_strategy_ == TAO_WAIT_ON_READ)
-    ACE_NEW_RETURN (ws,
-                    TAO_Wait_On_Read (transport),
-                    0);
-  else if (this->wait_strategy_ == TAO_WAIT_ON_REACTOR)
-    ACE_NEW_RETURN (ws,
-                    TAO_Wait_On_Reactor (transport),
-                    0);
-  else if (this->wait_strategy_ == TAO_WAIT_ON_LF_NO_UPCALL)
-    ACE_NEW_RETURN (ws,
-                    TAO::Wait_On_LF_No_Upcall (transport),
-                    0);
-  else
+  switch (this->wait_strategy_)
     {
-      // = Leader follower model.
-
-      ACE_NEW_RETURN (ws,
-                      TAO_Wait_On_Leader_Follower (transport),
-                      0);
+      case TAO_WAIT_ON_LEADER_FOLLOWER :
+        {
+          ACE_NEW_RETURN (ws,
+                          TAO_Wait_On_Leader_Follower (transport),
+                          0);
+          break;
+        }
+      case TAO_WAIT_ON_REACTOR:
+        {
+          ACE_NEW_RETURN (ws,
+                          TAO_Wait_On_Reactor (transport),
+                          0);
+          break;
+        }
+      case TAO_WAIT_ON_READ:
+        {
+          ACE_NEW_RETURN (ws,
+                          TAO_Wait_On_Read (transport),
+                          0);
+          break;
+        }
+      case TAO_WAIT_ON_LF_NO_UPCALL:
+        {
+          ACE_NEW_RETURN (ws,
+                          TAO::Wait_On_LF_No_Upcall (transport),
+                          0);
+          break;
+        }
     }
 //@@ WAIT_STRATEGY_SPL_COMMENT_HOOK_END
 
@@ -363,21 +401,29 @@ TAO_Default_Client_Strategy_Factory::create_connect_strategy (TAO_ORB_Core *orb_
 {
   TAO_Connect_Strategy *cs = 0;
 
-  if (this->connect_strategy_ == TAO_BLOCKED_CONNECT)
-    ACE_NEW_RETURN (cs,
-                    TAO_Blocked_Connect_Strategy (orb_core),
-                    0);
-  else if (this->connect_strategy_ == TAO_REACTIVE_CONNECT)
-    ACE_NEW_RETURN (cs,
-                    TAO_Reactive_Connect_Strategy (orb_core),
-                    0);
-  else
+  switch (this->connect_strategy_)
     {
-      // = Leader follower model.
-
-      ACE_NEW_RETURN (cs,
-                      TAO_LF_Connect_Strategy (orb_core),
-                      0);
+      case TAO_BLOCKED_CONNECT:
+        {
+          ACE_NEW_RETURN (cs,
+                          TAO_Blocked_Connect_Strategy (orb_core),
+                          0);
+          break;
+        }
+      case TAO_REACTIVE_CONNECT:
+        {
+          ACE_NEW_RETURN (cs,
+                          TAO_Reactive_Connect_Strategy (orb_core),
+                          0);
+          break;
+        }
+      case TAO_LEADER_FOLLOWER_CONNECT :
+        {
+          ACE_NEW_RETURN (cs,
+                          TAO_LF_Connect_Strategy (orb_core),
+                          0);
+          break;
+        }
     }
 
   return cs;

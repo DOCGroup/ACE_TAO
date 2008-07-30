@@ -1,3 +1,8 @@
+Wed Jul 30 12:13:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_client.cpp:
+          Use switch, makes the code more readable, explicit, and faster
+
 Wed Jul 30 11:48:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Muxed_TMS.cpp {dispatch_reply):
