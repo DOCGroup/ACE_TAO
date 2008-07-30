@@ -160,6 +160,8 @@ TAO_ZIOP_Loader::compression_low_value (TAO::Profile_Transport_Resolver &resolve
           result = srp->low_value ();
         }
     }
+#else
+  ACE_UNUSED_ARG (resolver);
 #endif
   return result;
 }
