@@ -1,3 +1,9 @@
+Wed Jul 30 13:19:45 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * utils/catior/Makefile.am:
+
+          Regenerate (link with ZIOP libraries).
+
 Wed Jul 30 12:13:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_client.cpp:

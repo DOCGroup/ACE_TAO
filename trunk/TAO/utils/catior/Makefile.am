@@ -34,6 +34,8 @@ catior_SOURCES = \
   catior.cpp
 
 catior_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_ZIOP.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Compression.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
