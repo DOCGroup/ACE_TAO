@@ -1,3 +1,12 @@
+Wed Jul 30 14:13:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Cache_Manager.cpp:
+          No need to check a pointer before deleting it. Simplified
+          mark_invalid_i
+
+        * tao/GIOP_Message_Base.cpp:
+          Moved variable into a try block, only used there
+
 Wed Jul 30 13:19:45 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * utils/catior/Makefile.am:
