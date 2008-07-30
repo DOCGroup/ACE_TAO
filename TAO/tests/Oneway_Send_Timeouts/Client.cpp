@@ -288,6 +288,15 @@ Client::test_oneway_timeout (bool flood)
     std::string scope_name ("SYNC_EAGER_BUFFERING");
     ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
 
+    /* BLOCKed flushing has SYNCH_WITH_TRANSPORT semantics. With flooding turned on
+        you would have received a TIMEOUT in the previous test (SYNC_NONE). Even without
+        flooding there is a chance to get back a TIMEOUT. The TIMEOUT has the side-effect
+        closing out the connection. Therefore when flush_strategy is set to BLOCK we want
+        to re-establish connection before each test. With flooding turned on we need
+        to first unsleep the test server, re-establish connection and put it back to sleep.
+        With flooding=0 we simple re-establish connection. This trick is performed at beginning
+        of every test for flush_strategy == BLOCKING.
+     */
     if (flush_strategy_ == BLOCKING) {
       if (flood) {
         management_->unsleep ();
@@ -355,6 +364,12 @@ Client::test_oneway_timeout (bool flood)
     }
   }
 
+  /* Cleanup queue before the synchronous tests. We don't want the test
+      results affected by leftovers from previous runs.
+   */
+  ACE_Time_Value tv_tmp (1);
+  orb_->run (tv_tmp);
+
   // Timeout with SYNC_SCOPE SYNC_WITH_TRANSPORT
   try {
     std::string scope_name ("SYNC_WITH_TRANSPORT");
@@ -393,8 +408,7 @@ Client::test_oneway_timeout (bool flood)
     }
   }
 
-
-  // Timeout with default SYNC_SCOPE SYNC_WITH_SERVER
+// Timeout with default SYNC_SCOPE SYNC_WITH_SERVER
   try {
     std::string scope_name ("SYNC_WITH_SERVER");
     ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
@@ -511,6 +525,13 @@ Client::flood_connection (ACE_Time_Value& tv)
   test_obj_->sleep (static_cast<CORBA::Long>(tv.sec())
                     , static_cast<CORBA::Long>(tv.msec()));
 
+  /* BLOCK flush startegy always has SYNC_WITH_TRANSPORT semantics.
+      Trying to flood a BLOCKed flushing connection can lead to a TIMEOUT
+      exception being thrown. This will close out the connection and
+      the whole flooding attempt fails. Therefore in BLOCK flushing case
+      don't attempt to flood (unless BLOCK flush accepts SYNC_WITH_TRANSPORT
+      semantics).
+   */
   if (flush_strategy_ != BLOCKING)
     {
       mod_test_obj->dummy_one_way (msg);
