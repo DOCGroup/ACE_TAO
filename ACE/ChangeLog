@@ -1,3 +1,20 @@
+Thu Jul 31 10:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Reactor_Dispatch_Order_Test_Dev_Poll.cpp:
+
+          To avoid warnings on platforms where:
+          #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
+          is false, this test has now been fully guarded and an alternate
+          main provided.
+
+        * tests/Reference_Counted_Event_Handler_Test_Dev_Poll.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Since the collated test scores are actually grouping both runs
+          of the original test together (they ignore parameters apparently),
+          a newly named test was needed.
+
 Thu Jul 31 10:05:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macros.h:
