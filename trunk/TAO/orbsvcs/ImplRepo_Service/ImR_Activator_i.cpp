@@ -25,6 +25,7 @@ ImR_Activator_i::ImR_Activator_i (void)
 , notify_imr_ (false)
 , name_ (getHostName ())
 , env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
+, max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
 {
 }
 
@@ -103,6 +104,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
   debug_ = opts.debug ();
   notify_imr_ = opts.notify_imr ();
   env_buf_len_ = opts.env_buf_len ();
+  max_env_vars_ = opts.max_env_vars ();
   if (opts.name ().length () > 0)
     {
       name_ = opts.name();
@@ -282,7 +284,7 @@ ImR_Activator_i::start_server(const char* name,
   ACE_Process_Options proc_opts (
                         1,
                         ACE_Process_Options::DEFAULT_COMMAND_LINE_BUF_LEN,
-                        this->env_buf_len_);
+                        this->env_buf_len_, this->max_env_vars_);
   proc_opts.command_line (cmdline);
   proc_opts.working_directory (dir);
   // Win32 does not support the CLOSE_ON_EXEC semantics for sockets
@@ -290,6 +292,12 @@ ImR_Activator_i::start_server(const char* name,
   // hold the listen socket open, we force the child to inherit no
   // handles. This includes stdin, stdout, logs, etc.
   proc_opts.handle_inheritence (0);
+
+  // We always enable the unicode environmet buffer on Windows.  This works
+  // around a 32kb environment buffer limitation.  This must come before any of
+  // the setenv() calls, since the first of those will copy the current
+  // process's environment.
+  proc_opts.enable_unicode_environment ();
 
   proc_opts.setenv ("TAO_USE_IMR", "1");
   if (!CORBA::is_nil (this->locator_.in ()))
@@ -303,9 +311,6 @@ ImR_Activator_i::start_server(const char* name,
       proc_opts.setenv (env[i].name.in (), env[i].value.in ());
     }
 
-  // We always enable the unicode environmet buffer on Windows.  This works
-  // around a 32kb environment buffer limitation.
-  proc_opts.enable_unicode_environment ();
   int pid = this->process_mgr_.spawn (proc_opts);
   if (pid == ACE_INVALID_PID)
     {

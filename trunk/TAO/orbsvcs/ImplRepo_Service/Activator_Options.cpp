@@ -30,6 +30,7 @@ Activator_Options::Activator_Options ()
 , notify_imr_ (false)
 , service_command_(SC_NONE)
 , env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
+, max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
 {
 }
 
@@ -102,6 +103,21 @@ Activator_Options::parse_args (int &argc, char *argv[])
             }
 
           this->env_buf_len_ = ACE_OS::atoi (shifter.get_current ());
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-m")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR, "Error: -m option needs "
+                                    "a maximum number of environment vars\n"));
+              this->print_usage ();
+              return -1;
+            }
+
+          this->max_env_vars_ = ACE_OS::atoi (shifter.get_current ());
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-o")) == 0)
@@ -190,7 +206,7 @@ Activator_Options::print_usage (void) const
   ACE_ERROR ((LM_ERROR,
               "Usage:\n"
               "\n"
-              "ImR_Activator [-c cmd] [-d 0|1|2] [-e buflen] [-o file] [-l] [-n name]\n"
+              "ImR_Activator [-c cmd] [-d 0|1|2] [-e buflen] [-o file] [-l] [-n name] [-m maxenv]\n"
               "\n"
               "  -c command  Runs service commands \n"
               "              ('install' or 'remove' or 'install_no_imr')\n"
@@ -242,6 +258,16 @@ Activator_Options::save_registry_options()
   err = ACE_TEXT_RegSetValueEx (key, "NotifyImR", 0, REG_DWORD,
     (LPBYTE) &tmpint , sizeof (tmpint));
   ACE_ASSERT (err == ERROR_SUCCESS);
+
+  tmpint = this->env_buf_len_;
+  err = ACE_TEXT_RegSetValueEx(key, ACE_TEXT("EnvBufLen"), 0, REG_DWORD,
+    (LPBYTE) &tmpint , sizeof(tmpint));
+  ACE_ASSERT(err == ERROR_SUCCESS);
+
+  tmpint = this->max_env_vars_;
+  err = ACE_TEXT_RegSetValueEx(key, ACE_TEXT("MaxEnvVars"), 0, REG_DWORD,
+    (LPBYTE) &tmpint , sizeof(tmpint));
+   ACE_ASSERT(err == ERROR_SUCCESS);
 
   err = ::RegCloseKey (key);
   ACE_ASSERT (err == ERROR_SUCCESS);
@@ -316,6 +342,20 @@ Activator_Options::load_registry_options ()
     }
   this->notify_imr_ = tmpint != 0;
 
+  err = ACE_TEXT_RegQueryValueEx(key, ACE_TEXT("EnvBufLen"), 0, &type,
+    (LPBYTE) &tmpint , &sz);
+  if (err == ERROR_SUCCESS) {
+    ACE_ASSERT(type == REG_DWORD);
+  }
+  this->env_buf_len_ = tmpint;
+
+  err = ACE_TEXT_RegQueryValueEx(key, ACE_TEXT("MaxEnvArgs"), 0, &type,
+    (LPBYTE) &tmpint , &sz);
+  if (err == ERROR_SUCCESS) {
+    ACE_ASSERT(type == REG_DWORD);
+  }
+  this->max_env_vars_ = tmpint;
+
   err = ::RegCloseKey (key);
   ACE_ASSERT(err == ERROR_SUCCESS);
 #endif /* ACE_WIN32 */
@@ -368,4 +408,10 @@ int
 Activator_Options::env_buf_len (void) const
 {
   return this->env_buf_len_;
+}
+
+int
+Activator_Options::max_env_vars (void) const
+{
+  return this->max_env_vars_;
 }
