@@ -1,3 +1,9 @@
+Thu Jul 31 10:05:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+          Only define ACE_UNUSED_ARG when it is not defined yet. Makes it
+          easier to test how to resolve warnings with gcc 4.3
+
 Wed Jul 30 14:03:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.2.GNU:
