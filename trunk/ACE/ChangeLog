@@ -1,3 +1,11 @@
+Thu Jul 31 13:16:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/tao_orb_tests.lst:
+
+          The QUICK test alternatives should have the same configs as
+          their non-quick alternative tests. This has been playing havok
+          with !Win32 tests on windows platforms that are using QUICK.
+
 Thu Jul 31 12:35:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/run_test.lst:
