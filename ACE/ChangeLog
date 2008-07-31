@@ -1,3 +1,21 @@
+Thu Jul 31 10:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Use a different ACE_UNUSED_ARG macro for GCC 4.2 and newer. Moved
+          also the definition for gcc to this file instead of config-macros.h.
+          Thanks to Jules Colding <colding at 42tools dot com>, Jonathan Brannan
+          <jbrannan at atdesk dot com>, and Ken Sedgwick <ken at bonsai dot com>
+          for providing the patches. This fixes bugzilla 3270
+
+        * ace/config-macros.h:
+          Don't define ACE_UNUSED_ARG for GCC
+
+        * rpmbuild/ace-tao.spec:
+          Removed unused arg patch
+
+        * rpmbuild/ace-tao-unusedarg.patch:
+          Removed, not needed anymore
+
 Thu Jul 31 10:20:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Reactor_Dispatch_Order_Test_Dev_Poll.cpp:
