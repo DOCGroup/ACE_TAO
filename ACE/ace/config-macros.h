@@ -378,7 +378,7 @@
 // ============================================================================
 
 #if !defined (ACE_UNUSED_ARG)
-# if defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM)
+# if defined (ghs) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  @note that may only be true if -O is enabled,

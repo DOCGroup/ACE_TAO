@@ -46,7 +46,6 @@ Source0: http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-%{ACE
 ## Source2: ace-tao-macros.patch
 ## Patch0: ace-tao-config.patch
 ## Patch5: ace-tao-orbsvcs-daemon.patch
-## Patch7: ace-tao-unusedarg.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires(post): /sbin/install-info, /sbin/install-info
@@ -622,8 +621,6 @@ export CIAO_ROOT=$TAO_ROOT/CIAO
 
 #patch5 -p 1
 cat ${ACE_ROOT}/rpmbuild/ace-tao-orbsvcs-daemon.patch | patch -p 1
-#%patch7 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-unusedarg.patch | patch -p 1
 
 # don't use patch8 until we verify wether needed
 
@@ -2183,6 +2180,9 @@ fi
 # ================================================================
 
 %changelog
+* Thu Jul 31 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.6-2
+- Removed ace-tao-unusedarg.patch (related to bug #3270).
+
 * Sat Jul  5 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.6-1
 - Updated for latest DOC Group release (x.6.6).
 - Tracked libACE_Monitor_Control name change.
