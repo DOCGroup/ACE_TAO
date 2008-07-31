@@ -49,26 +49,26 @@ TAO/tests/Leader_Followers/run_test_mt.pl: !ST !ACE_FOR_TAO !LabVIEW_RT
 TAO/tests/Multiple_Inheritance/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_933_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_1269_Regression/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !QUICK !LabVIEW_RT
-TAO/tests/Bug_1269_Regression/run_test.pl -quick : QUICK !LabVIEW_RT
+TAO/tests/Bug_1269_Regression/run_test.pl -quick : !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO QUICK !LabVIEW_RT
 TAO/tests/Bug_1495_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !DISABLE_INTERCEPTORS !LabVIEW_RT
 TAO/tests/Bug_1535_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_1568_Regression/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_1670_Regression/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_1270_Regression/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !QUICK !LabVIEW_RT
-TAO/tests/Bug_1270_Regression/run_test.pl -quick : QUICK !LabVIEW_RT
+TAO/tests/Bug_1270_Regression/run_test.pl -quick : !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO QUICK !LabVIEW_RT
 TAO/tests/Bug_1020_Basic_Regression/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !VxWorks !QUICK !LabVIEW_RT
-TAO/tests/Bug_1020_Basic_Regression/run_test.pl -quick : QUICK !LabVIEW_RT
+TAO/tests/Bug_1020_Basic_Regression/run_test.pl -quick : !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !VxWorks QUICK !LabVIEW_RT
 TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !QUICK !LabVIEW_RT
-TAO/tests/Bug_1020_Regression/run_test.pl -quick : QUICK !LabVIEW_RT
+TAO/tests/Bug_1020_Regression/run_test.pl -quick : !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 QUICK !LabVIEW_RT
 TAO/tests/Bug_1254_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_1330_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !IRIX !QUICK !LabVIEW_RT
-TAO/tests/Bug_1361_Regression/run_test.pl -quick : QUICK !LabVIEW_RT
+TAO/tests/Bug_1361_Regression/run_test.pl -quick : !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !IRIX QUICK !LabVIEW_RT
 TAO/tests/Bug_1476_Test/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_1482_Regression/run_test.pl: !VxWorks !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !VxWorks_RTP !QUICK !LabVIEW_RT !LynxOS
-TAO/tests/Bug_1482_Regression/run_test.pl -quick : QUICK !LabVIEW_RT
+TAO/tests/Bug_1482_Regression/run_test.pl -quick : !VxWorks !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !VxWorks_RTP QUICK !LabVIEW_RT !LynxOS
 TAO/tests/Bug_1551_Regression/run_test.pl: !VxWorks !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !IRIX !OpenVMS_IA64Crash !QUICK !LabVIEW_RT
-TAO/tests/Bug_1551_Regression/run_test.pl -quick: QUICK !LabVIEW_RT
+TAO/tests/Bug_1551_Regression/run_test.pl -quick: !VxWorks !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !IRIX !OpenVMS_IA64Crash QUICK !LabVIEW_RT
 TAO/tests/Bug_1676_Regression/run_test.pl: !LabVIEW_RT
 TAO/tests/Bug_2084_Regression/run_test.pl: !ST !LabVIEW_RT
 TAO/tests/Bug_2085_Regression/run_test.pl: !LabVIEW_RT !FIXED_BUGS_ONLY
@@ -183,7 +183,7 @@ TAO/tests/Smart_Proxies/Policy/run_test.pl: !LabVIEW_RT
 TAO/tests/Smart_Proxies/run_test.pl: !LabVIEW_RT
 TAO/tests/Smart_Proxies/dtor/run_test.pl: !LabVIEW_RT
 TAO/tests/Stack_Recursion/run_test.pl: !ST !DISABLE_ToFix_LynxOS_PPC !QUICK !LabVIEW_RT
-TAO/tests/Stack_Recursion/run_test.pl -quick : QUICK !LabVIEW_RT
+TAO/tests/Stack_Recursion/run_test.pl -quick : !ST !DISABLE_ToFix_LynxOS_PPC QUICK !LabVIEW_RT
 TAO/tests/Faults/run_test.pl: !VxWorks !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !OpenVMS_IA64Crash !LabVIEW_RT
 TAO/tests/CallbackTest/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/CallbackTest/run_test_ipv6.pl: IPV6 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
@@ -192,7 +192,7 @@ TAO/tests/Crashed_Callback/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 # Disabled Crash On Write on Win32, see bugzilla 959 why !LabVIEW_RT
 TAO/tests/Crash_On_Write/run_test.pl: !VxWorks !ST !Win32 !LabVIEW_RT
 TAO/tests/Nested_Upcall_Crash/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !OpenVMS_IA64Crash !QUICK !LabVIEW_RT
-TAO/tests/Nested_Upcall_Crash/run_test.pl -quick: QUICK !LabVIEW_RT
+TAO/tests/Nested_Upcall_Crash/run_test.pl -quick: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !OpenVMS_IA64Crash QUICK !LabVIEW_RT
 TAO/tests/NestedUpcall/Simple/run_test.pl: !ST !LabVIEW_RT
 TAO/tests/NestedUpcall/MT_Client_Test/run_test.pl: !ST !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/NestedUpcall/Triangle_Test/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT
