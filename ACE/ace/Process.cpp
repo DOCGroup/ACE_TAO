@@ -855,7 +855,28 @@ ACE_Process_Options::inherit_environment (void)
   environment_inherited_ = 1;
 
   // Get the existing environment.
-  ACE_TCHAR *existing_environment = ACE_OS::getenvstrings ();
+  ACE_TCHAR *existing_environment = 0;
+#ifndef ACE_USES_WCHAR
+  WCHAR *existing_wide_env = 0;
+  ACE_Vector<char> temp_narrow_env;
+  if (this->use_unicode_environment_)
+    {
+      existing_wide_env = ::GetEnvironmentStringsW ();
+      for (WCHAR *iter = existing_wide_env; *iter; ++iter)
+        {
+          ACE_Wide_To_Ascii wta (iter);
+          size_t len = ACE_OS::strlen (wta.char_rep ());
+          size_t idx = temp_narrow_env.size ();
+          temp_narrow_env.resize (idx + len + 1, 0);
+          ACE_OS::strncpy (&temp_narrow_env[idx], wta.char_rep (), len);
+          iter += len;
+        }
+      temp_narrow_env.push_back (0);
+      existing_environment = &temp_narrow_env[0];
+    }
+  else
+#endif
+  existing_environment = ACE_OS::getenvstrings ();
 
   size_t slot = 0;
 
@@ -876,6 +897,11 @@ ACE_Process_Options::inherit_environment (void)
       slot += len + 1;
     }
 
+#ifndef ACE_USES_WCHAR
+  if (this->use_unicode_environment_)
+    ::FreeEnvironmentStringsW (existing_wide_env);
+  else
+#endif
   ACE_TEXT_FreeEnvironmentStrings (existing_environment);
 }
 
