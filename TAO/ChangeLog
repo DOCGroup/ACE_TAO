@@ -1,3 +1,17 @@
+Thu Jul 31 15:13:48 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Activator_Options.h:
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+          By default ACE_Process_Options limits us to 512 environment
+          variables.  This change adds a -m option to the Activator, which will
+          pass its argument on to ACE_Process_Options as the maximum number of
+          environment variables which will be passed to the child process.
+          Also, store the -m and -e options in the Windows Registry along with
+          all the other options.
+
 Thu Jul 31 12:41:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_2133/client.cpp:

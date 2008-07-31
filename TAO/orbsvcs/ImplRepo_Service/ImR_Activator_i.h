@@ -124,6 +124,9 @@ private:
 
   /// The default environment buffer length
   int env_buf_len_;
+ 
+  /// Maximum number of environment variables
+  int max_env_vars_;
 };
 
 #endif /* IMR_ACTIVATOR_I_H */
