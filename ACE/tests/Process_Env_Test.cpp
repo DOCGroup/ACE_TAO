@@ -19,10 +19,45 @@
 
 #include "test_config.h"
 #include "ace/Process.h"
+#include "ace/SString.h"
 
 ACE_RCSID(tests,
           Process_Env_Test,
           "$Id$")
+
+typedef void (*setenvfn_t) (const ACE_TCHAR *name, const ACE_TCHAR *value,
+                            void *ctx);
+
+void create_large_env (setenvfn_t setenv, void *ctx)
+{
+  static const size_t varsize = 1200;
+  for (int i = 0; i < 26; i++)
+    {
+      char name[2] = { 'A' + i, '\0' };
+      char value[varsize];
+      memset (value, 'R', varsize);
+      value[varsize - 1] = '\0';
+      setenv (ACE_TEXT_CHAR_TO_TCHAR (name),
+              ACE_TEXT_CHAR_TO_TCHAR (value),
+              ctx);
+    }
+}
+
+
+void apo_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *ctx)
+{
+  ACE_Process_Options *apo = static_cast<ACE_Process_Options *> (ctx);
+  apo->setenv (name, value);
+}
+
+
+void thisproc_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *)
+{
+  ACE_TString putstr (name);
+  putstr += ACE_TEXT ('=');
+  putstr += value;
+  ACE_OS::putenv (putstr.c_str ());
+}
 
 int
 run_main (int, ACE_TCHAR*[])
@@ -36,16 +71,7 @@ run_main (int, ACE_TCHAR*[])
                         ACE_Process_Options::DEFAULT_COMMAND_LINE_BUF_LEN,
                         32 * 1024);
   options.command_line (ACE_TEXT ("attrib.exe /?"));
-  static const size_t varsize = 1200;
-  for(int i = 0; i < 26; i++)
-    {
-      char name[2] = { 'A' + i, '\0' };
-      char value[varsize];
-      memset(value, 'R', varsize);
-      value[varsize - 1] = '\0';
-      options.setenv (ACE_TEXT (name), ACE_TEXT (value));
-  }
-
+  create_large_env (apo_setenv, &options);
 
   ACE_OS::fclose(stdout);
   ACE_Process process;
@@ -64,6 +90,32 @@ run_main (int, ACE_TCHAR*[])
                   "ERROR: This should have succeeded\n"));
       test_status = 1;
     }
+
+  //test inheriting a large env block with enable_unicode_environment
+  ACE_Process_Options opts2 (1,
+                             ACE_Process_Options::DEFAULT_COMMAND_LINE_BUF_LEN,
+                             128 * 1024);
+  create_large_env (thisproc_setenv, 0);
+  opts2.enable_unicode_environment ();
+  opts2.setenv (ACE_TEXT ("ZZ"), ACE_TEXT ("1"));
+  opts2.command_line (ACE_TEXT ("cmd.exe /d /c ")
+    ACE_TEXT ("\"if defined Z (exit 1) else (exit 2)\""));
+  ACE_Process process2;
+  if (process2.spawn (opts2) == -1)
+    {
+       ACE_ERROR ((LM_DEBUG,
+                  "ERROR: Failed to spawn process2.\n"));
+      test_status = 1;
+    }
+  ACE_exitcode status;
+  process2.wait (&status);
+  if (status != 1)
+    {
+       ACE_ERROR ((LM_DEBUG,
+                  "ERROR: process2 did not inherit env var Z.\n"));
+      test_status = 1;
+    }
+
 #else
   ACE_ERROR ((LM_INFO, "This test is for Win32 without ACE_USES_WCHAR\n"));
 #endif /* ACE_WIN32 && !ACE_USES_WCHAR && !ACE_HAS_WINCE */
