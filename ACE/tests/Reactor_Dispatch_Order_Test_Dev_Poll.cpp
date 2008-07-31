@@ -28,6 +28,8 @@
 
 ACE_RCSID(tests, Reactor_Dispatch_Order_Test, "$Id$")
 
+#if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
+
 static const char *message =
 "Hello there! Hope you get this message";
 
@@ -251,16 +253,22 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test_Dev_Poll"));
   int result = 0;
 
-#if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
   ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
   ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
   if (!test_reactor_dispatch_order (dev_poll_reactor))
     ++result;
-#else
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dev_Poll_Reactor is UNSUPPORTED on this platform\n")));
-#endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
 
   ACE_END_TEST;
   return result;
 }
+#else
+int
+run_main (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test_Dev_Poll"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dev_Poll_Reactor is UNSUPPORTED on this platform\n")));
+  ACE_END_TEST;
+  return 0;
+}
+#endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
