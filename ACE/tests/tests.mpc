@@ -1374,10 +1374,10 @@ project(Reference Counted Event Handler Test) : acetest {
   }
 }
 
-project(Reference_Counted_Event_Handler_Test_Dev_Poll) : acetest {
-  exename = Reference_Counted_Event_Handler_Test_Dev_Poll
+project(Refcounted_Event_Handler_Test_DevPoll) : acetest {
+  exename = Refcounted_Event_Handler_Test_DevPoll
   Source_Files {
-    Reference_Counted_Event_Handler_Test_Dev_Poll.cpp
+    Refcounted_Event_Handler_Test_DevPoll.cpp
   }
   Header_Files {
   }
