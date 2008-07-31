@@ -1,3 +1,16 @@
+Thu Jul 31 15:10:16 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Process.cpp (inherit_environment):
+
+          When "use_unicode_environment" is in effect, use the unicode env
+          block (GetEnvironmentStringsW) when copying the current environment
+          in order to inherit it (Win32 only).
+
+        * tests/Process_Env_Test.cpp:
+
+          Extended this test to verify that a large environment block is indeed
+          inherited by the spawned process.
+
 Thu Jul 31 13:16:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/tao_orb_tests.lst:
