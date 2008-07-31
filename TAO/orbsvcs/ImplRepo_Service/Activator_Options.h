@@ -44,7 +44,8 @@ public:
   // however, the real value is protected -- CAE 4/16/2007
   enum ACTIVATOR_PROCESS
   {
-    ENVIRONMENT_BUFFER = 16 * 1024
+    ENVIRONMENT_BUFFER = 16 * 1024,
+    ENVIRONMENT_MAX_VARS = 512
   };
 
   Activator_Options ();
@@ -79,6 +80,8 @@ public:
 
   int env_buf_len (void) const;
 
+  int max_env_vars (void) const;
+
 private:
   /// Parses and pulls out arguments for the ImR
   int parse_args (int &argc, char *argv[]);
@@ -112,6 +115,9 @@ private:
 
   /// The default environment buffer length
   int env_buf_len_;
+
+  /// Maximum number of environment variables
+  int max_env_vars_;
 };
 
 #endif
