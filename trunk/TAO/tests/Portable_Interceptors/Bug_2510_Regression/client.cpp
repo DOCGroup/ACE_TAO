@@ -12,9 +12,9 @@ ACE_RCSID(Bug_2510_Regression, client, "$Id$")
 const char *ior = "file://test.ior";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "ef:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ef:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -68,11 +68,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
         PortableInterceptor::register_orb_initializer (initializer.in ());
 
-        CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
         if (parse_args (argc, argv) != 0)
-        return 1;
+          return 1;
 
         CORBA::Object_var object =
         orb->string_to_object (ior);
