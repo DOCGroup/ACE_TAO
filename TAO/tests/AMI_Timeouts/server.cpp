@@ -7,7 +7,6 @@
  *
  *  Implementation of the server running the Timeout object.
  *
- *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
 //=============================================================================
@@ -36,7 +35,7 @@ parse_args (int argc, char *argv[])
         ior_output_file = get_opts.opt_arg ();
         break;
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case '?':
       default:

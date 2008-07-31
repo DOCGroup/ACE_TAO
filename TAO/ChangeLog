@@ -1,3 +1,12 @@
+Thu Jul 31 12:41:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_2133/client.cpp:
+        * tests/Portable_Interceptors/Bug_2510_Regression/client.cpp:
+          Wchar improvements
+
+        * tests/AMI_Timeouts/server.cpp:
+          Use prefix increment
+
 Wed Jul 30 18:41:27 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Send_Timeouts/Client.cpp:
