@@ -31,6 +31,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 
 . Added support for FC9
 
+. Added support for OpenSuSE 11.0
+
+. Improved support for GCC 4.2 and 4.3
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.4 and ACE-5.6.5
 ====================================================
 
