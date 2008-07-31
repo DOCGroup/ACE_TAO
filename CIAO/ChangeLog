@@ -1,3 +1,9 @@
+Thu Jul 31 17:17:06 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+
+          Stab at fixing a problem on Rawhide. 
+        
 Fri Jul 25 21:37:24 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * CIDLC/Literals.cpp:
