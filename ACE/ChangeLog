@@ -1,3 +1,12 @@
+Thu Jul 31 12:35:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+        * tests/Refcounted_Event_Handler_Test_DevPoll.cpp:
+        * tests/Reference_Counted_Event_Handler_Test_Dev_Poll.cpp:
+
+          Test renamed (has to be less than 38 characters).
+
 Thu Jul 31 10:25:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
