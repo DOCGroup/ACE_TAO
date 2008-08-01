@@ -1,3 +1,10 @@
+Fri Aug  1 17:44:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Document that we first need to build TAO_IDL before we can
+          build TAO. Thanks to antred <NutJob at gmx dot net>
+          for reporting this.
+
 Thu Jul 31 15:13:48 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Activator_Options.h:
