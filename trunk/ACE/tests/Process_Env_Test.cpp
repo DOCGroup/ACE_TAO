@@ -28,6 +28,8 @@ ACE_RCSID(tests,
 typedef void (*setenvfn_t) (const ACE_TCHAR *name, const ACE_TCHAR *value,
                             void *ctx);
 
+#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+
 void create_large_env (setenvfn_t setenv, void *ctx)
 {
   static const size_t varsize = 1200;
@@ -58,6 +60,8 @@ void thisproc_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *)
   putstr += value;
   ACE_OS::putenv (putstr.c_str ());
 }
+
+#endif
 
 int
 run_main (int, ACE_TCHAR*[])

@@ -1,3 +1,10 @@
+Fri Aug  1 10:59:55 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Process_Env_Test.cpp:
+
+          #ifdef-out the helper functions in the cases where the body of
+          run_main is also #ifdef'ed-out.
+
 Thu Jul 31 15:10:16 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Process.cpp (inherit_environment):
