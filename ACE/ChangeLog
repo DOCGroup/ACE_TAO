@@ -1,3 +1,14 @@
+Mon Aug 04 13:08:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Reactor_Remove_Resume_Test.cpp:
+        * tests/Reactor_Remove_Resume_Test_Dev_Poll.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Split out the ACE_Dev_Poll_Reactor part of this test since
+          this is excersing a known problem with ACE_Dev_Poll_Reactor
+          (see Bugzilla 3178).
+
 Mon Aug  4 07:20:12 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
