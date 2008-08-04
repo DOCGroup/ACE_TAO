@@ -243,7 +243,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   EndpointPolicy::EndpointList list;
   list.length (1);
-  list[0] = new IIOPEndpointValue_i(hostname, endpoint_port);
+  list[0] = new IIOPEndpointValue_i (ACE_TEXT_ALWAYS_CHAR (hostname), endpoint_port);
 
   try
     {
