@@ -149,7 +149,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
     }
 }
 
-const ACE_TCHAR *ior_output_file = "ior";
+const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)
