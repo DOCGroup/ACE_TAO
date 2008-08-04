@@ -1,5 +1,5 @@
 /**
- * @file  Reactor_Remove_Resume_Test.cpp
+ * @file  Reactor_Remove_Resume_Test_Dev_Poll.cpp
  *
  * $Id$
  *
@@ -17,8 +17,10 @@
 
 
 #include "test_config.h"
+
+#if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 #include "ace/Reactor.h"
-#include "ace/TP_Reactor.h"
+#include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
 #include "ace/Auto_Ptr.h"
 
@@ -368,12 +370,12 @@ handle_events (ACE_Reactor & reactor,
 typedef auto_ptr<ACE_Reactor_Impl> (*reactor_factory_type) (void);
 
 auto_ptr<ACE_Reactor_Impl>
-tp_reactor_factory (void)
+dev_poll_reactor_factory (void)
 {
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("Creating ACE_TP_Reactor.\n")));
+              ACE_TEXT ("Creating ACE_Dev_Poll_Reactor.\n")));
 
-  return auto_ptr<ACE_Reactor_Impl> (new ACE_TP_Reactor);
+  return auto_ptr<ACE_Reactor_Impl> (new ACE_Dev_Poll_Reactor);
 }
 
 // ------------------------------------------------------------
@@ -446,11 +448,11 @@ struct Run_Test : public std::unary_function<reactor_factory_type, void>
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Reactor_Remove_Resume_Test"));
+  ACE_START_TEST (ACE_TEXT ("Reactor_Remove_Resume_Test_Dev_Poll"));
 
   static reactor_factory_type const factories[] =
     {
-      tp_reactor_factory
+      dev_poll_reactor_factory
     };
 
   static size_t const factory_count = sizeof (factories) / sizeof (factories[0]);
@@ -468,3 +470,14 @@ run_main (int, ACE_TCHAR *[])
 
   return overall_result;
 }
+#else   /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
+int
+run_main (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT ("Reactor_Remove_Resume_Test_Dev_Poll"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dev_Poll_Reactor is not supported in this build\n")));
+  ACE_END_TEST;
+
+  return 0;
+}
+#endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
