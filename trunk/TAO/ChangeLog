@@ -1,3 +1,13 @@
+Mon Aug 04 14:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * TAO/tests/POA/Adapter_Activator/server.cpp:
+        * TAO/tests/Portable_Interceptors/AdvSlot/client.cpp:
+        * TAO/tests/Portable_Interceptors/AdvSlotDblCpy/client.cpp:
+        * TAO/tests/Portable_Interceptors/AdvSlotExt/client.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_2133/client.cpp:
+
+          Minor wide character conversions misses from previous commits.
+
 Mon Aug 04 14:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO/tests/POA/EndpointPolicy/server.cpp:
