@@ -9,7 +9,7 @@
 
 ACE_RCSID(Hello, client, "client.cpp,v 1.5 2002/01/29 20:21:07 okellogg Exp")
 
-const char *ior = "file://test.ior";
+const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -38,7 +38,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -61,7 +61,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior );
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in () );
@@ -80,8 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         hello->get_string ();
 
       ACE_ERROR_RETURN ((LM_DEBUG,
-                            "Error - the remote call succeeded which is bloody miraculous given that no server is running !!\n",
-                             ior),
+                            "Error - the remote call succeeded which is bloody miraculous given that no server is running !!\n"),
                             1);
     }
   catch (const CORBA::Exception&)
@@ -98,7 +97,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
     }
-
 
   return 1;
 }
