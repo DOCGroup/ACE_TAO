@@ -136,6 +136,7 @@ Reactor_Notification_Queue_Test
 Reactor_Performance_Test: !ACE_FOR_TAO
 Reactor_Registration_Test
 Reactor_Remove_Resume_Test
+Reactor_Remove_Resume_Test_Dev_Poll: !FIXED_BUGS_ONLY
 Reactor_Timer_Test: !ACE_FOR_TAO
 Reactors_Test
 Reader_Writer_Test
