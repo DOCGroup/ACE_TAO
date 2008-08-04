@@ -1,3 +1,10 @@
+Mon Aug  4 19:58:20 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.cpp (inherit_environment): Re using Unicode from
+          Thu Jul 31 15:10:16 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+          only do it for systems that have ACE_HAS_WCHAR. Fixes a LabVIEW
+          Pharlap ETS build issue.
+
 Mon Aug 04 13:08:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Reactor_Remove_Resume_Test.cpp:
