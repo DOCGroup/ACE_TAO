@@ -856,7 +856,7 @@ ACE_Process_Options::inherit_environment (void)
 
   // Get the existing environment.
   ACE_TCHAR *existing_environment = 0;
-#ifndef ACE_USES_WCHAR
+#if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
   WCHAR *existing_wide_env = 0;
   ACE_Vector<char> temp_narrow_env;
   if (this->use_unicode_environment_)
@@ -897,7 +897,7 @@ ACE_Process_Options::inherit_environment (void)
       slot += len + 1;
     }
 
-#ifndef ACE_USES_WCHAR
+#if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
   if (this->use_unicode_environment_)
     ::FreeEnvironmentStringsW (existing_wide_env);
   else
