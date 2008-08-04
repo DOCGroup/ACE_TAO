@@ -110,7 +110,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       File::System_var file_system = File::System::_narrow (object.in ());
 
       // Creat the file filename i.e "test"
-      File::Descriptor_var fd = file_system->open (filename,
+      File::Descriptor_var fd = file_system->open (ACE_TEXT_ALWAYS_CHAR (filename),
                                                    O_CREAT | O_RDWR);
 
       int message_length = ACE_OS::strlen (message) + 1;
