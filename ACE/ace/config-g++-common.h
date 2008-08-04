@@ -31,12 +31,6 @@
 # define ACE_LACKS_MEMBER_TEMPLATES
 #endif /* __GNUC__ < 3 */
 
-#if (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2))
-# define ACE_UNUSED_ARG(a) (void) (a)
-#else
-# define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
-#endif /* __GNUC__ >= 3.4 */
-
 // __EXCEPTIONS is defined with -fexceptions, the egcs default.  It
 // is not defined with -fno-exceptions, the ACE default for g++.
 // ACE_HAS_EXCEPTIONS is defined in
