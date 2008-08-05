@@ -1,3 +1,8 @@
+Mon Aug  5 06:44:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl.1:
+          Removed -Ge which has been removed a long time ago
+
 Mon Aug 04 14:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO/tests/POA/Adapter_Activator/server.cpp:
