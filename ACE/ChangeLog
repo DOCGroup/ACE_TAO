@@ -1,3 +1,9 @@
+Tue Aug  5 14:33:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-ciao.txt:
+          Spec file that is work in progress. Didn't use spec as extension
+          because that gives problems with rpmbuild.
+
 Tue Aug  5 13:52:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Guard_T.h:
