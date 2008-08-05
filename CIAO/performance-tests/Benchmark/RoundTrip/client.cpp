@@ -29,9 +29,10 @@ int do_dump_history = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  //parse arguments
+  // Parse arguments.
   ACE_Get_Opt get_opts (argc, argv, "hxk:i:");
-  char c;
+  int c;
+  
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -52,6 +53,7 @@ parse_args (int argc, char *argv[])
         /* Could be any other parameter like -ORBSvcConf file so ignore */
        break;
       }
+      
   // Indicates sucessful parsing of the command line
   return 0;
 }
