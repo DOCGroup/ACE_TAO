@@ -126,10 +126,16 @@ ACEXML_HttpCharStream::get_url (size_t& len)
       buf = this->stream_->recv (buflen);
 
       if (buf == 0)
-        if (buflen == 0)
-          break;
-        else
-          continue;
+        {
+          if (buflen == 0)
+            {
+              break;
+            }
+          else
+            {
+              continue;
+            }
+        }
 
       for (b = 0; b < buflen; ++b)
         {
