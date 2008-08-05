@@ -1,3 +1,23 @@
+Tue Aug  5 16:41:03 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.h: Changed key_created_ from int to bool.
+
+        * ace/Log_Msg.cpp (close): Two changes related to Bugzilla 2980:
+          - Remove the #if ACE_HAS_BROKEN_THREAD_KEYFREE - the code inside
+            that block was what should always be done - delete the ACE_Log_Msg
+            instance and reset the TSS value to 0 so it's not cleaned up again
+            later when the thread runs down. The whole idea of the
+            ACE_HAS_BROKEN_THREAD_KEYFREE seems dubious and should probably be
+            removed, but I haven't gone that far - there's one more use in
+            OS_NS_Thread which seems pertinent for LynxOS and I can't test
+            it, so it's still there - but should be reviewed and probably
+            removed.
+          - Free the TSS key - if setting key_created_ to 0, what's the point
+            of leaving the key? Any future attempt to get the per-thread value
+            would result in a new key being created. Again, freeing the key
+            has no affect on already-allocated instances.
+          This should resolve Bugzilla 2980 again.
+
 Tue Aug  5 14:33:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.txt:
