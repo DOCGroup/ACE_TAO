@@ -465,7 +465,7 @@ ACE_TSS_Guard<ACE_LOCK>::cleanup (void *ptr)
 }
 
 template <class ACE_LOCK>
-ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard (ACE_LOCK &lock, int block)
+ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard (ACE_LOCK &lock, bool block)
 {
 // ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard");
 
@@ -534,12 +534,12 @@ ACE_TSS_Guard<ACE_LOCK>::tryacquire (void)
 
 template <class ACE_LOCK>
 ACE_TSS_Write_Guard<ACE_LOCK>::ACE_TSS_Write_Guard (ACE_LOCK &lock,
-                                                    int block)
+                                                    bool block)
 {
 // ACE_TRACE ("ACE_TSS_Write_Guard<ACE_LOCK>::ACE_TSS_Write_Guard");
 
   this->init_key ();
-  ACE_Guard<ACE_LOCK> *guard;
+  ACE_Guard<ACE_LOCK> *guard = 0;
   ACE_NEW (guard,
            ACE_Write_Guard<ACE_LOCK> (lock,
                                       block));
@@ -627,12 +627,12 @@ ACE_TSS_Write_Guard<ACE_LOCK>::dump (void) const
 }
 
 template <class ACE_LOCK>
-ACE_TSS_Read_Guard<ACE_LOCK>::ACE_TSS_Read_Guard (ACE_LOCK &lock, int block)
+ACE_TSS_Read_Guard<ACE_LOCK>::ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block)
 {
 // ACE_TRACE ("ACE_TSS_Read_Guard<ACE_LOCK>::ACE_TSS_Read_Guard");
 
   this->init_key ();
-  ACE_Guard<ACE_LOCK> *guard;
+  ACE_Guard<ACE_LOCK> *guard = 0;
   ACE_NEW (guard,
            ACE_Read_Guard<ACE_LOCK> (lock,
                                      block));

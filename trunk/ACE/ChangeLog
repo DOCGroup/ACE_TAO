@@ -1,3 +1,13 @@
+Tue Aug  5 13:52:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Guard_T.h:
+        * ace/Guard_T.inl:
+        * ace/TSS_T.cpp:
+          Changed block to a bool
+
+        * ace/Guard_T.h:
+          Initialise owner_ to solve gcc 4.3 warnings
+
 Tue Aug 05 10:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/Reactor_Remove_Resume_Test_Dev_Poll.cpp:
