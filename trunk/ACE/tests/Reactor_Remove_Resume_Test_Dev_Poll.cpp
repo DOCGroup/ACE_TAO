@@ -20,6 +20,7 @@
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 #include "ace/Reactor.h"
+#include "ace/ACE.h"
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
 #include "ace/Auto_Ptr.h"
