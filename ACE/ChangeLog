@@ -1,4 +1,14 @@
-Mon Aug  5 06:45:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Aug  5 07:11:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SOCK_SAP/run_test
+        * examples/IPC_SAP/SOCK_SAP/summarize
+        * examples/IPC_SAP/SSL_SAP/summarize
+        * examples/IPC_SAP/SOCK_SAP/run_test.sh
+        * examples/IPC_SAP/SOCK_SAP/summarize.pl
+        * examples/IPC_SAP/SSL_SAP/summarize.pl
+          Renamed files to have an extension that matches the type of file
+
+Tue Aug  5 06:45:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/add_rel_link.sh:
           Added missing path
