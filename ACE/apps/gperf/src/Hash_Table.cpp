@@ -95,17 +95,21 @@ Hash_Table::find (List_Node *item,
   // of 2...
   size_t size = this->size_ - 1;
   size_t probe;
-  size_t increment = (hash_val ^ (ignore_length == 0 ? item->length : 0) | 1) & size;
+  size_t increment = ((hash_val ^ (ignore_length == 0 ? item->length : 0)) | 1) & size;
 
   for (probe = hash_val & size;
        this->table_[probe]
          && (ACE_OS::strcmp (this->table_[probe]->keysig, item->keysig) != 0
              || (ignore_length == 0 && this->table_[probe]->length != item->length));
-       probe = probe + increment & size)
-    this->collisions_++;
+       probe = (probe + increment) & size)
+    {
+      ++this->collisions_;
+    }
 
   if (this->table_[probe])
-    return this->table_[probe];
+    {
+      return this->table_[probe];
+    }
   else
     {
       this->table_[probe] = item;

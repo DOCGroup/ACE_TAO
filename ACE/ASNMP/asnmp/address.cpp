@@ -662,23 +662,34 @@ void IpAddress::mask( const IpAddress& ipaddr)
 //=======================================================================
 
 
-Address_Iter::Address_Iter(const char *hostname): valid_(0), count_(0),
-  entry_(0)
+Address_Iter::Address_Iter (const char *hostname)
+  : valid_(0),
+    count_(0),
+    entry_(0)
 {
-   ACE_OS::memset(&buffer_, 0, sizeof(ACE_HOSTENT_DATA));
-   ACE_OS::memset(&lookupResult_, 0, sizeof(struct hostent));
-   if (ACE_OS::inet_addr(hostname) == (unsigned long) -1)
-     valid_ = query_dns(hostname);
-   else {
-     ACE_ASSERT(0);             // don't support dot-quad lookup yet
-   }
+  ACE_OS::memset (&buffer_, 0, sizeof (ACE_HOSTENT_DATA));
+  ACE_OS::memset (&lookupResult_, 0, sizeof (struct hostent));
+  
+  if (ACE_OS::inet_addr (hostname) == (unsigned long) -1)
+    {
+      valid_ = query_dns (hostname);
+    }
+  else
+    {
+      ACE_ASSERT (0);             // don't support dot-quad lookup yet
+    }
 
-   // count number of hostnames
-   int n;
-   char **pc;
-   for (n = 0, pc = lookupResult_.h_addr_list; *pc != 0; ++n, ++pc);
-   count_ = n;          // plus first one
-   entry_ = lookupResult_.h_addr_list;
+  // count number of hostnames
+  int n;
+  char **pc;
+
+  for (n = 0, pc = lookupResult_.h_addr_list; *pc != 0; ++n, ++pc)
+    {
+      // Do nothing.
+    }
+
+  count_ = n;          // plus first one
+  entry_ = lookupResult_.h_addr_list;
 }
 
 int Address_Iter::valid() const

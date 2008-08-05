@@ -38,17 +38,19 @@ List_Node::sort (char *base, int len)
 {
   int i, j;
 
-  for (i = 0, j = len - 1; i < j; i++)
+  for (i = 0, j = len - 1; i < j; ++i)
     {
-      char curr, tmp;
+      char tmp;
+      int curr;
 
-      for (curr = static_cast<char> (i + 1), tmp = base[curr];
-           curr > 0 && tmp < base[curr-1];
-           curr--)
-        base[curr] = base[curr - 1];
+      for (curr = i + 1, tmp = base[curr];
+           curr > 0 && tmp < base[curr - 1];
+           --curr)
+        {
+          base[curr] = base[curr - 1];
+        }
 
       base[curr] = tmp;
-
     }
 }
 

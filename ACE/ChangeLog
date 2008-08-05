@@ -1,3 +1,23 @@
+Tue Aug  5 18:51:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/Service_Manager.cpp:
+        * ace/Stream.cpp:
+        * Kokyu/Dispatcher_Task.cpp:
+        * apps/gperf/src/List_Node.cpp:
+        * apps/gperf/src/Key_List.cpp:
+        * apps/gperf/src/Gen_Perf.cpp:
+        * apps/gperf/src/Iterator.cpp:
+        * apps/gperf/src/Hash_Table.cpp:
+        * ACEXML/common/ZipCharStream.cpp:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/parser/parser/Parser.inl:
+        * ASNMP/asnmp/asn1.cpp:
+        * ASNMP/asnmp/address.cpp:
+
+          Cosmetic changes to eliminate warnings on
+          Fedora Rawhide.
+
 Tue Aug  5 18:37:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-init-fedora.tar.bz2:

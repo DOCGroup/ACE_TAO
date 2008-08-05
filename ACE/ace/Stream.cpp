@@ -361,8 +361,8 @@ ACE_Stream<ACE_SYNCH_USE>::open (void *a,
     }
 
   // Make sure *all* the allocation succeeded!
-  if (head == 0 && (h1 == 0 || h2 == 0)
-      || tail == 0 && (t1 == 0 || t2 == 0))
+  if ((head == 0 && (h1 == 0 || h2 == 0))
+      || (tail == 0 && (t1 == 0 || t2 == 0)))
     {
       delete h1;
       delete h2;

@@ -57,7 +57,8 @@ ACEXML_ZipCharStream::determine_encoding (void)
 //                   this->encoding_));
     }
   // Move over the byte-order-mark if present.
-  char ch;
+  int ch;
+  
   for (int j = 0; j < 3; ++j)
     {
       if ((ch = this->peekchar_i()) < 0)
@@ -68,6 +69,7 @@ ACEXML_ZipCharStream::determine_encoding (void)
       else
         break;
     }
+    
   return 0;
 }
 

@@ -1020,13 +1020,18 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
   struct variable_list *vars = 0;
 
   // if we don't have a vb list ,create one
-  if (pdu->variables == 0) {
-    ACE_NEW(pdu->variables, variable_list);
-    vars = pdu->variables;
-  }
+  if (pdu->variables == 0)
+    {
+      ACE_NEW(pdu->variables, variable_list);
+      vars = pdu->variables;
+    }
   else
     { // we have one, find the end
-      for(vars = pdu->variables; vars->next_variable; vars = vars->next_variable);
+      for (vars = pdu->variables; vars->next_variable; vars = vars->next_variable)
+        {
+          // Do nothing.
+        }
+        
       // create one
       ACE_NEW(vars->next_variable, variable_list);
       // bump ptr
