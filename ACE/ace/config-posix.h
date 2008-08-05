@@ -28,7 +28,8 @@
 #   define ACE_HAS_POSIX_SEM
 #  endif /* ACE_HAS_POSIX_SEM */
 #  if defined(ACE_HAS_POSIX_SEM)
-#   if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && defined (_POSIX_TIMEOUTS)
+#   if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && \
+       (defined (_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS-0 != -1))
 #     define ACE_HAS_POSIX_SEM_TIMEOUT
 #   endif /* ACE_HAS_POSIX_SEM_TIMEOUT && _POSIX_TIMEOUTS */
 #  endif /* ACE_HAS_POSIX_SEM */
