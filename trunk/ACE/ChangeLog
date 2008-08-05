@@ -1,3 +1,8 @@
+Tue Aug  5 08:02:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/common/HttpCharStream.cpp:
+          Fixed gcc4.3 warning
+
 Tue Aug  5 07:53:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Message_Queue_Test.cpp:
