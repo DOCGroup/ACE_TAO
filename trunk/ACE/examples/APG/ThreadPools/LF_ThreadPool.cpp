@@ -181,7 +181,7 @@ LF_ThreadPool::elect_new_leader (void)
       Follower *fw;
       if (this->followers_.dequeue_head (fw) != 0)
         return -1;
-      ACE_DEBUG ((LM_ERROR,
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Resigning and Electing %d\n"),
                   fw->owner ()));
       return (fw->signal () == 0) ? 0 : -1;

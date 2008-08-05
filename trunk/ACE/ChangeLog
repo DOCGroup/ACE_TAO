@@ -1,3 +1,18 @@
+Tue Aug  5 19:33:26  2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp: Fixed tab characters.
+
+        * ace/config-posix.h: Only set ACE_HAS_POSIX_SEM_TIMEOUT if the
+          _POSIX_TIMEOUTS feature test is not -1 (disabled). Fixes build
+          on HP-UX 11iv3.
+
+        * examples/APG/ThreadPools/LF_ThreadPool.cpp (elect_new_leader): Log
+          the "Resiging and Electing" message at LM_DEBUG severity, not
+          LM_ERROR. This is on APG page 342. Thanks to Julien Vintrou for
+          pointing this out.
+
+        * THANKS: Added Julien Vintrou.
+
 Tue Aug  5 20:19:28 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/config-linux-common.h: Removed ACE_HAS_BROKEN_THREAD_KEYFREE.
