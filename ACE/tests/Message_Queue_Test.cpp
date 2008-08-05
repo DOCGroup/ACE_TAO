@@ -861,12 +861,18 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Message_Queue_Test"));
 
   if (argc == 2)
-    if (!ACE_OS::strcmp (argv[1], ACE_TEXT ("-?")))
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%s/n"),
-                  usage));
-    else
-      max_messages = ACE_OS::atoi (argv[1]);
+    {
+      if (!ACE_OS::strcmp (argv[1], ACE_TEXT ("-?")))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%s/n"),
+                      usage));
+        }
+      else
+        {
+          max_messages = ACE_OS::atoi (argv[1]);
+        }
+    }
 
   int status = prio_test ();
 
