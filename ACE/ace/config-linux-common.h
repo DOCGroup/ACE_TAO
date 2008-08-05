@@ -396,10 +396,6 @@
 
 #define ACE_HAS_VOIDPTR_MMAP
 
-#if !defined (ACE_AS_STATIC_LIBS)
-# define ACE_HAS_BROKEN_THREAD_KEYFREE
-#endif
-
 #if defined (ACE_LACKS_NETWORKING)
 # include "ace/config-posix-nonetworking.h"
 #else

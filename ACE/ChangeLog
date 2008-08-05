@@ -1,3 +1,10 @@
+Tue Aug  5 20:19:28 UTC 2008  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-linux-common.h: Removed ACE_HAS_BROKEN_THREAD_KEYFREE.
+          Reverts change from
+          Thu Aug  9 13:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+          which is no longer needed.
+
 Tue Aug  5 18:51:02 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/MMAP_Memory_Pool.cpp:
