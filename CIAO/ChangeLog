@@ -1,3 +1,20 @@
+Tue Aug  5 15:13:53 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+        
+          Replace a char type local variable with an int. On some
+          platforms, chars are unsigned - in such cases, checks for
+          < 0 or > 0 cause warnings because theya re always true or
+          always false.
+          
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        
+          Added dance_utils.mpb as a base project to get the Dance_Utils
+          lib in the link list. The plan launcher executable doesn't
+          need it directly, but some versions of gcc are problematic,
+          giving warnings if such indirect linkings aren't in the
+          makefile explicitly.
+
 Thu Jul 31 17:17:06 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/XSCRT/Elements.hpp:
