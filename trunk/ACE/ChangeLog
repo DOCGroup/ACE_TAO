@@ -1,3 +1,8 @@
+Mon Aug  5 06:45:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/add_rel_link.sh:
+          Added missing path
+
 Mon Aug  4 19:58:20 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.cpp (inherit_environment): Re using Unicode from

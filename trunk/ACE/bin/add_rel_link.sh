@@ -1,3 +1,4 @@
+#!/bin/sh
 # This script assumes it is being run by bash
 
 # ======= needed functions ======
@@ -71,7 +72,7 @@ if expr "$1" : '\/' >/dev/null; then
   if expr "$2" : '\/' >/dev/null; then
     # The link path is already absolute, so just use it
     lpath=$2
-  else 
+  else
     # The link path is relative, this is the expected case
     # WARNING: don't use $PWD here, it won't work right
     # WARNING: pwd may be a shell alias.  Use /bin/pwd.
