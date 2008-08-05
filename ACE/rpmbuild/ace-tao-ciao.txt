@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.6.6
-%define TAOVER  1.6.6
-%define CIAOVER 0.6.6
+%define ACEVER  5.6.5
+%define TAOVER  1.6.5
+%define CIAOVER 0.6.5
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # Conditional build
@@ -11,6 +11,7 @@
 #                    --with opt        (Optimized build)
 #                    --with zlib       (Zlib compressor)
 #                    --with bzip2      (Bzip2 compressor)
+#                    --with autoconf   (Use autoconf to build)
 
 #
 # Read: If neither macro exists, then add the default definition.
@@ -20,6 +21,7 @@
 %{!?_with_opt: %{!?_without_opt: %define _with_opt --with-opt}}
 %{!?_with_zlib: %{!?_without_zlib: %define _with_zlib --with-zlib}}
 %{!?_with_bzip2: %{!?_without_bzip2: %define _with_bzip2 --with-bzip2}}
+%{!?_with_autoconf: %{!?_without_autoconf: %define _without_autoconf --without-autoconf}}
 #
 # Read: It's an error if both or neither required options exist.
 %{?_with_guilibs: %{?_without_guilibs: %{error: both _with_guilibs and _without_guilibs}}}
@@ -28,10 +30,13 @@
 %{?_with_opt: %{?_without_opt: %{error: both _with_opt and _without_opt}}}
 %{?_with_zlib: %{?_without_zlib: %{error: both _with_zlib and _without_zlib}}}
 %{?_with_bzip2: %{?_without_bzip2: %{error: both _with_bzip2 and _without_bzip2}}}
+%{?_with_autoconf: %{?_without_autoconf: %{error: both _with_autoconf and _without_autoconf}}}
 
 %{!?skip_make:%define skip_make 0}
 %{!?make_nosrc:%define make_nosrc 0}
 %{!?is_major_ver:%define is_major_ver 0}
+
+%define have_fox 0
 
 # I think Mandrake sets this to .bz2, but Fedora doesn't seem to set it
 %{!?_extension:%define _extension .gz}
@@ -47,29 +52,36 @@ Release: 1%{?OPTTAG}%{?dist}
 Group: Development/Libraries
 URL: http://www.cs.wustl.edu/~schmidt/ACE.html
 License: DOC License
-Source0: http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.bz2
-Packager: Johnny Willemsen  <jwillemsen@remedy.nl>
+Source0: http://download.dre.vanderbilt.edu/previous_versions/ACEhead05082008.tar.bz2
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
 ## Patch0: ace-tao-config.patch
 ## Patch5: ace-tao-orbsvcs-daemon.patch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires(post): /sbin/install-info, /sbin/install-info
 Requires(preun):  /sbin/install-info
 Requires(postun): /sbin/ldconfig
 
-BuildRequires: openssl-devel
-BuildRequires: gcc-c++
-BuildRequires: libstdc++-devel
-BuildRequires: lsb
+#%if 0%{?suse_version} <= 1000
+#Requires(post):   /sbin/install-info
+#Requires(preun):  /sbin/install-info
+#Requires(postun): /sbin/ldconfig
+#%else
+#PreReq:         %install_info_prereq /sbin/ldconfig %insserv_prereq
+#%fillup_prereq %endif
+
+BuildRequires:  openssl-devel
+BuildRequires:  gcc-c++
+BuildRequires:  libstdc++-devel
+BuildRequires:  lsb
 
 %if %{?_with_zlib:1}%{!?_with_zlib:0}
-BuildRequires: zlib-devel
+BuildRequires:  zlib-devel
 %endif
 
 %if %{?_with_bzip2:1}%{!?_with_bzip2:0}
-BuildRequires: bzip2
+BuildRequires:  bzip2
 %endif
 
 %if 0%{?mandriva_version}
@@ -78,20 +90,29 @@ BuildRequires: sendmail
 
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
-BuildRequires: perl
-BuildRequires: fltk-devel
-BuildRequires: tcl-devel
-BuildRequires: tk-devel
-BuildRequires: tk
+BuildRequires:  perl
+BuildRequires:  fltk-devel
+BuildRequires:  tcl-devel
+BuildRequires:  tk-devel
+BuildRequires:  tk
 
 # qt3 has a name change in F9
 %if 0%{?fedora} > 8
-BuildRequires: qt3-devel
+BuildRequires:  qt3-devel
 %else
-BuildRequires: qt-devel
+BuildRequires:  qt-devel
 %endif
 
-%if 0%{?suse_version} > 1020
+%if %{defined suse_version}
+%if 0%{?suse_version} <= 1030
+%define qtpac qt3
+%else
+%define qtpac qt4
+%endif
+BuildRequires:  %{qtpac}-devel
+%endif
+
+%if 0%{?suse_version} == 1020
 BuildRequires: fox16-devel
 %endif
 
@@ -132,11 +153,11 @@ conventional ORBs for high-performance and real-time applications.
 
 # ---------------- ace ----------------
 
-%package -n ace
-Summary: The ADAPTIVE Communication Environment (ACE)
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: openssl
+%package -n     ace
+Summary:        The ADAPTIVE Communication Environment (ACE)
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       openssl
 
 %description -n ace
 
@@ -153,12 +174,12 @@ services, concurrent execution and synchronization.
 
 # ---------------- ace-devel ----------------
 
-%package -n ace-devel
-Summary: Header files and development components for ACE
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace = %{ACEVER}
-Requires: openssl-devel
+%package -n     ace-devel
+Summary:        Header files and development components for ACE
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace = %{ACEVER}
+Requires:       openssl-devel
 
 %description -n ace-devel
 
@@ -167,11 +188,11 @@ using ACE.
 
 # ---------------- ace-xml ----------------
 
-%package -n ace-xml
-Summary:  ACE XML Runtime Support
-Version:  %{ACEVER}
-Group: Development/Libraries
-Requires: ace = %{ACEVER}
+%package -n     ace-xml
+Summary:        ACE XML Runtime Support
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace = %{ACEVER}
 
 %description -n ace-xml
 
@@ -184,12 +205,12 @@ don't support C++ exceptions.  SAX is defined by David Megginson
 
 # ---------------- ace-xml-devel ----------------
 
-%package -n ace-xml-devel
-Summary:  Header files and development components for ACE XML
-Version:  %{ACEVER}
-Group: Development/Libraries
-Requires: ace-devel = %{ACEVER}
-Requires: ace-xml = %{ACEVER}
+%package -n     ace-xml-devel
+Summary:        Header files and development components for ACE XML
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-devel = %{ACEVER}
+Requires:       ace-xml = %{ACEVER}
 
 %description -n ace-xml-devel
 
@@ -198,11 +219,11 @@ using ACEXML.
 
 # ---------------- ace-kokyu ----------------
 
-%package -n ace-kokyu
-Summary: Kokyu scheduling framework for ACE
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace = %{ACEVER}
+%package -n     ace-kokyu
+Summary:        Kokyu scheduling framework for ACE
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace = %{ACEVER}
 
 %description -n ace-kokyu
 
@@ -217,12 +238,12 @@ implementations.
 
 # ---------------- ace-kokyu-devel ----------------
 
-%package -n ace-kokyu-devel
-Summary: Header files and development components for the ACE Kokyu scheduler
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace-devel = %{ACEVER}
-Requires: ace-kokyu = %{ACEVER}
+%package -n     ace-kokyu-devel
+Summary:        Header files and development components for the ACE Kokyu scheduler
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-devel = %{ACEVER}
+Requires:       ace-kokyu = %{ACEVER}
 
 %description -n ace-kokyu-devel
 
@@ -232,14 +253,16 @@ using Kokyu.
 
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+
+%if %{have_fox} = 1
 # ---------------- ace-foxreactor ----------------
 
-%package -n ace-foxreactor
-Summary: ACE_FoxReactor for use with the FOX toolkit
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace = %{ACEVER}
-Requires: fox16
+%package -n     ace-foxreactor
+Summary:        ACE_FoxReactor for use with the FOX toolkit
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace = %{ACEVER}
+Requires:       fox16
 
 %description -n ace-foxreactor
 
@@ -249,27 +272,27 @@ ACE and/or TAO.
 
 # ---------------- ace-foxreactor-devel ----------------
 
-%package -n ace-foxreactor-devel
-Summary: Header files for development with ACE_FoxReactor
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace-devel = %{ACEVER}
-Requires: ace-foxreactor = %{ACEVER}
-Requires: fox16-devel
+%package -n     ace-foxreactor-devel
+Summary:        Header files for development with ACE_FoxReactor
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-devel = %{ACEVER}
+Requires:       ace-foxreactor = %{ACEVER}
+Requires:       fox16-devel
 
 %description -n ace-foxreactor-devel
 
 This package contains the components needed for developing programs
 using the ACE_FoxReactor.
-
+%endif
 # ---------------- ace-flreactor ----------------
 
-%package -n ace-flreactor
-Summary: ACE_FlReactor for use with the Fast-Light toolkit
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace = %{ACEVER}
-Requires: fltk
+%package -n     ace-flreactor
+Summary:        ACE_FlReactor for use with the Fast-Light toolkit
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace = %{ACEVER}
+Requires:       fltk
 
 %description -n ace-flreactor
 
@@ -279,13 +302,13 @@ ACE and/or TAO.
 
 # ---------------- ace-flreactor-devel ----------------
 
-%package -n ace-flreactor-devel
-Summary: Header files for development with ACE_FlReactor
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace-devel = %{ACEVER}
-Requires: ace-flreactor = %{ACEVER}
-Requires: fltk-devel
+%package -n     ace-flreactor-devel
+Summary:        Header files for development with ACE_FlReactor
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-devel = %{ACEVER}
+Requires:       ace-flreactor = %{ACEVER}
+Requires:       fltk-devel
 
 %description -n ace-flreactor-devel
 
@@ -294,12 +317,12 @@ using the ACE_FlReactor.
 
 # ---------------- ace-qtreactor ----------------
 
-%package -n ace-qtreactor
-Summary: ACE_QtReactor for use with Qt library
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace = %{ACEVER}
-Requires: qt
+%package -n     ace-qtreactor
+Summary:        ACE_QtReactor for use with Qt library
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace = %{ACEVER}
+Requires:       qt
 
 %description -n ace-qtreactor
 
@@ -309,13 +332,13 @@ and/or TAO.
 
 # ---------------- ace-qtreactor-devel ----------------
 
-%package -n ace-qtreactor-devel
-Summary: Header files for development with ACE_QtReactor
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace-devel = %{ACEVER}
-Requires: ace-qtreactor = %{ACEVER}
-Requires: qt-devel
+%package -n     ace-qtreactor-devel
+Summary:        Header files for development with ACE_QtReactor
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-devel = %{ACEVER}
+Requires:       ace-qtreactor = %{ACEVER}
+Requires:       qt-devel
 
 %description -n ace-qtreactor-devel
 
@@ -324,12 +347,12 @@ using the ACE_QtReactor.
 
 # ---------------- ace-tkreactor ----------------
 
-%package -n ace-tkreactor
-Summary: ACE_TkReactor for use with Tk toolkit
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace = %{ACEVER}
-Requires: tk
+%package -n     ace-tkreactor
+Summary:        ACE_TkReactor for use with Tk toolkit
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace = %{ACEVER}
+Requires:       tk
 
 %description -n ace-tkreactor
 
@@ -339,13 +362,13 @@ and/or TAO.
 
 # ---------------- ace-tkreactor-devel ----------------
 
-%package -n ace-tkreactor-devel
-Summary: Header files for development with ACE_TkReactor
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace-devel = %{ACEVER}
-Requires: ace-tkreactor = %{ACEVER}
-Requires: tk-devel
+%package -n     ace-tkreactor-devel
+Summary:        Header files for development with ACE_TkReactor
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-devel = %{ACEVER}
+Requires:       ace-tkreactor = %{ACEVER}
+Requires:       tk-devel
 
 %description -n ace-tkreactor-devel
 
@@ -354,11 +377,11 @@ using the ACE_TkReactor.
 
 # ---------------- ace-xtreactor ----------------
 
-%package -n ace-xtreactor
-Summary: ACE_XtReactor for use with the X Toolkit
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace = %{ACEVER}
+%package -n     ace-xtreactor
+Summary:        ACE_XtReactor for use with the X Toolkit
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace = %{ACEVER}
 # The xorg packaging scheme changed, let autoreq to the job for now.
 # Requires: xorg-x11-libs
 
@@ -370,12 +393,12 @@ and/or TAO.
 
 # ---------------- ace-xtreactor-devel ----------------
 
-%package -n ace-xtreactor-devel
-Summary: Header files for development with ACE_XtReactor
-Version: %{ACEVER}
-Group: Development/Libraries
-Requires: ace-devel = %{ACEVER}
-Requires: ace-xtreactor = %{ACEVER}
+%package -n     ace-xtreactor-devel
+Summary:        Header files for development with ACE_XtReactor
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-devel = %{ACEVER}
+Requires:       ace-xtreactor = %{ACEVER}
 # The xorg package naming scheme changed, use specific files for now.
 # old -> Requires: xorg-x11-devel
 # new -> Requires: libX11-devel
@@ -395,7 +418,7 @@ using the ACE_XtReactor.
 ## %package -n ace-mpc
 ## Summary: Make Project Creator
 ## Version: %{ACEVER}
-## Group: Development/Libraries
+## Group: Development/Libraries/C and C++
 ##
 ## %description -n ace-mpc
 ##
@@ -411,12 +434,12 @@ using the ACE_XtReactor.
 
 # ---------------- tao ----------------
 
-%package -n tao
-Summary: The ACE ORB (TAO)
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: ace = %{ACEVER}
-Requires: ace-xml = %{ACEVER}
+%package -n     tao
+Summary:        The ACE ORB (TAO)
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace = %{ACEVER}
+Requires:       ace-xml = %{ACEVER}
 
 %description -n tao
 
@@ -429,13 +452,13 @@ conventional ORBs for high-performance and real-time applications.
 
 # ---------------- tao-devel ----------------
 
-%package -n tao-devel
-Summary: Header files and development components for TAO
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: tao = %{TAOVER}
-Requires: ace-devel = %{ACEVER}
-Requires: ace-xml-devel = %{ACEVER}
+%package -n     tao-devel
+Summary:        Header files and development components for TAO
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       tao = %{TAOVER}
+Requires:       ace-devel = %{ACEVER}
+Requires:       ace-xml-devel = %{ACEVER}
 
 %description -n tao-devel
 
@@ -444,11 +467,12 @@ using TAO.
 
 # ---------------- tao-cosnaming ----------------
 
-%package -n tao-cosnaming
-Summary: The TAO CORBA Naming Service (CosNaming) and Interoperable Naming Service (INS)
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: tao = %{TAOVER}
+%package -n     tao-cosnaming
+Summary:        The TAO CORBA Naming Service (CosNaming) and Interoperable Naming Service (INS)
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       tao = %{TAOVER}
+Requires: logrotate
 
 %description -n tao-cosnaming
 
@@ -471,11 +495,12 @@ install time.
 
 # ---------------- tao-cosevent ----------------
 
-%package -n tao-cosevent
-Summary: The TAO CORBA CosEvent Service
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: tao = %{TAOVER}
+%package -n     tao-cosevent
+Summary:        The TAO CORBA CosEvent Service
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       tao = %{TAOVER}
+Requires: logrotate
 
 %description -n tao-cosevent
 
@@ -487,11 +512,12 @@ used by suppliers and consumers to send and receive events.
 
 # ---------------- tao-cosnotification ----------------
 
-%package -n tao-cosnotification
-Summary: The TAO CORBA Notification Service
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: tao = %{TAOVER}
+%package -n     tao-cosnotification
+Summary:        The TAO CORBA Notification Service
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       tao = %{TAOVER}
+Requires: logrotate
 
 %description -n tao-cosnotification
 
@@ -503,11 +529,12 @@ and registers it with the Naming Service under the name
 
 # ---------------- tao-costrading ----------------
 
-%package -n tao-costrading
-Summary: The TAO CORBA Trading Service
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: tao = %{TAOVER}
+%package -n     tao-costrading
+Summary:        The TAO CORBA Trading Service
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       tao = %{TAOVER}
+Requires: logrotate
 
 %description -n tao-costrading
 
@@ -515,23 +542,26 @@ The Trading_Service is a COS compilant Trading Service.
 
 # ---------------- tao-rtevent ----------------
 
-%package -n tao-rtevent
-Summary: The TAO Real-time Event Service
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: tao = %{TAOVER}
+%package -n     tao-rtevent
+Summary:        The TAO Real-time Event Service
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       tao = %{TAOVER}
+Requires: logrotate
 
 %description -n tao-rtevent
 
-The TAO Real-time Event Service.
+The TAO Real-Time Event Service. This is a TAO specific service
+implementation
 
 # ---------------- tao-cosconcurrency ----------------
 
-%package -n tao-cosconcurrency
-Summary: The TAO CORBA Concurrency Service
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: tao = %{TAOVER}
+%package -n     tao-cosconcurrency
+Summary:        The TAO CORBA Concurrency Service
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       tao = %{TAOVER}
+Requires: logrotate
 
 %description -n tao-cosconcurrency
 
@@ -542,12 +572,12 @@ The CORBA Concurrency Service.
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 
-%package -n tao-flresource
-Summary: FlResource_Factory for creating FlReactor
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: ace-flreactor = %{ACEVER}
-Requires: tao = %{TAOVER}
+%package -n     tao-flresource
+Summary:        FlResource_Factory for creating FlReactor
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-flreactor = %{ACEVER}
+Requires:       tao = %{TAOVER}
 
 %description -n tao-flresource
 
@@ -557,13 +587,13 @@ method which is usually done by TAO_FlResource_Loader.
 
 # ---------------- tao-flresource-devel ----------------
 
-%package -n tao-flresource-devel
-Summary: Header files for development with FlResource_Factory
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: ace-flreactor-devel = %{ACEVER}
-Requires: tao-devel = %{TAOVER}
-Requires: tao-flresource = %{TAOVER}
+%package -n     tao-flresource-devel
+Summary:        Header files for development with FlResource_Factory
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-flreactor-devel = %{ACEVER}
+Requires:       tao-devel = %{TAOVER}
+Requires:       tao-flresource = %{TAOVER}
 
 %description -n tao-flresource-devel
 
@@ -572,12 +602,12 @@ using the FlResource_Factory.
 
 # ---------------- tao-qtresource ----------------
 
-%package -n tao-qtresource
-Summary: QtResource_Factory for creating QtReactor
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: ace-qtreactor = %{ACEVER}
-Requires: tao = %{TAOVER}
+%package -n     tao-qtresource
+Summary:        QtResource_Factory for creating QtReactor
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-qtreactor = %{ACEVER}
+Requires:       tao = %{TAOVER}
 
 %description -n tao-qtresource
 
@@ -587,13 +617,13 @@ method which is usually done by TAO_QtResource_Loader.
 
 # ---------------- tao-qtresource-devel ----------------
 
-%package -n tao-qtresource-devel
-Summary: Header files for development with QtResource_Factory
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: ace-qtreactor-devel = %{ACEVER}
-Requires: tao-devel = %{TAOVER}
-Requires: tao-qtresource = %{TAOVER}
+%package -n     tao-qtresource-devel
+Summary:        Header files for development with QtResource_Factory
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-qtreactor-devel = %{ACEVER}
+Requires:       tao-devel = %{TAOVER}
+Requires:       tao-qtresource = %{TAOVER}
 
 %description -n tao-qtresource-devel
 
@@ -602,12 +632,12 @@ using the QtResource_Factory.
 
 # ---------------- tao-tkresource ----------------
 
-%package -n tao-tkresource
-Summary: TkResource_Factory for creating TkReactor
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: ace-tkreactor = %{ACEVER}
-Requires: tao = %{TAOVER}
+%package -n     tao-tkresource
+Summary:        TkResource_Factory for creating TkReactor
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-tkreactor = %{ACEVER}
+Requires:       tao = %{TAOVER}
 
 %description -n tao-tkresource
 
@@ -617,13 +647,13 @@ method which is usually done by TAO_TkResource_Loader.
 
 # ---------------- tao-tkresource-devel ----------------
 
-%package -n tao-tkresource-devel
-Summary: Header files for development with TkResource_Factory
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: ace-tkreactor-devel = %{ACEVER}
-Requires: tao-devel = %{TAOVER}
-Requires: tao-tkresource = %{TAOVER}
+%package -n     tao-tkresource-devel
+Summary:        Header files for development with TkResource_Factory
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-tkreactor-devel = %{ACEVER}
+Requires:       tao-devel = %{TAOVER}
+Requires:       tao-tkresource = %{TAOVER}
 
 %description -n tao-tkresource-devel
 
@@ -632,12 +662,12 @@ using the TkResource_Factory.
 
 # ---------------- tao-xtresource ----------------
 
-%package -n tao-xtresource
-Summary: XtResource_Factory for creating XtReactor
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: ace-xtreactor = %{ACEVER}
-Requires: tao = %{TAOVER}
+%package -n     tao-xtresource
+Summary:        XtResource_Factory for creating XtReactor
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-xtreactor = %{ACEVER}
+Requires:       tao = %{TAOVER}
 
 %description -n tao-xtresource
 
@@ -647,13 +677,13 @@ method which is usually done by TAO_XtResource_Loader.
 
 # ---------------- tao-xtresource-devel ----------------
 
-%package -n tao-xtresource-devel
-Summary: Header files for development with XtResource_Factory
-Version: %{TAOVER}
-Group: Development/Libraries
-Requires: ace-xtreactor-devel = %{ACEVER}
-Requires: tao-devel = %{TAOVER}
-Requires: tao-xtresource = %{TAOVER}
+%package -n     tao-xtresource-devel
+Summary:        Header files for development with XtResource_Factory
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace-xtreactor-devel = %{ACEVER}
+Requires:       tao-devel = %{TAOVER}
+Requires:       tao-xtresource = %{TAOVER}
 
 %description -n tao-xtresource-devel
 
@@ -733,17 +763,12 @@ gcc_template_instantiation_visibility = 1
 EOF
 %endif
 
-%if 0%{?fedora} > 5
+%if 0%{?fedora} > 5 || 0%{?rhel_version} > 5
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 gcc_template_instantiation_visibility = 1
 EOF
 %endif
 
-%if 0%{?rhel_version} > 5
-cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
-gcc_template_instantiation_visibility = 1
-EOF
-%endif
 
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
@@ -753,13 +778,15 @@ tk = 1
 fl = 1
 qt = 1
 gl = 1
-#fox = 1
-#ace_foxreactor = 1
+%if %{have_fox} = 1
+fox = 1
+ace_foxreactor = 1
+tao_foxresource = 1
+%endif
 ace_qtreactor = 1
 ace_xtreactor = 1
 ace_tkreactor = 1
 ace_flreactor = 1
-#tao_foxresource = 1
 tao_qtresource = 1
 tao_xtresource = 1
 tao_tkresource = 1
@@ -823,13 +850,15 @@ tk=1
 fl=1
 qt=1
 gl=1
-#fox=1
-#ace_foxreactor=1
+%if %{have_fox} = 1
+fox=1
+ace_foxreactor=1
+tao_foxresource=1
+%endif
 ace_qtreactor=1
 ace_xtreactor=1
 ace_tkreactor=1
 ace_flreactor=1
-#tao_foxresource=1
 tao_qtresource=1
 tao_xtresource=1
 tao_tkresource=1
@@ -931,71 +960,75 @@ export TAO_ROOT=$ACE_ROOT/TAO
 cat ${ACE_ROOT}/rpmbuild/ace-tao-macros.patch | patch -p 1
 %endif
 
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 # make a new build root dir
-mkdir -p $RPM_BUILD_ROOT
+mkdir %{buildroot}
 
 # ---------------- Runtime Components ----------------
 
 # install shared libraries
-install -d $RPM_BUILD_ROOT%{_libdir}
+install -d %{buildroot}%{_libdir}
 
 # ACE + XML libraries
 INSTLIBS=`ls ${ACE_ROOT}/lib/libACE*.so.%{ACEVERSO}`
-install $INSTLIBS $RPM_BUILD_ROOT%{_libdir}
+install $INSTLIBS %{buildroot}%{_libdir}
 
 # ACE-Kokyu libraries
 INSTLIBS=`ls ${ACE_ROOT}/lib/libKokyu.so.%{ACEVERSO}`
-install $INSTLIBS $RPM_BUILD_ROOT%{_libdir}
+install $INSTLIBS %{buildroot}%{_libdir}
 
 # TAO libraries
 INSTLIBS=`ls ${ACE_ROOT}/lib/libTAO*.so.%{TAOVERSO}`
-install $INSTLIBS $RPM_BUILD_ROOT%{_libdir}
+install $INSTLIBS %{buildroot}%{_libdir}
 
 # Create un-versioned symbolic links for libraries
-(cd $RPM_BUILD_ROOT%{_libdir} && \
+(cd %{buildroot}%{_libdir} && \
  ls *.so.* | awk 'BEGIN{FS="."}{print "ln -sf " $0 " " $1 "." $2;}' | sh)
 
 # install binaries
-install -d $RPM_BUILD_ROOT%{_sbindir}
+install -d %{buildroot}%{_sbindir}
 
 # Rename the service binaries:
 
 install ${ACE_ROOT}/TAO/orbsvcs/Naming_Service/Naming_Service \
-    $RPM_BUILD_ROOT%{_sbindir}/tao-cosnaming
+    %{buildroot}%{_sbindir}/tao-cosnaming
 
 install ${ACE_ROOT}/TAO/orbsvcs/CosEvent_Service/CosEvent_Service \
-    $RPM_BUILD_ROOT%{_sbindir}/tao-cosevent
+    %{buildroot}%{_sbindir}/tao-cosevent
 
 install ${ACE_ROOT}/TAO/orbsvcs/Notify_Service/Notify_Service \
-    $RPM_BUILD_ROOT%{_sbindir}/tao-cosnotification
+    %{buildroot}%{_sbindir}/tao-cosnotification
 
 install ${ACE_ROOT}/TAO/orbsvcs/Trading_Service/Trading_Service \
-    $RPM_BUILD_ROOT%{_sbindir}/tao-costrading
+    %{buildroot}%{_sbindir}/tao-costrading
 
 install ${ACE_ROOT}/TAO/orbsvcs/Event_Service/Event_Service \
-    $RPM_BUILD_ROOT%{_sbindir}/tao-rtevent
+    %{buildroot}%{_sbindir}/tao-rtevent
 
 install ${ACE_ROOT}/TAO/orbsvcs/Concurrency_Service/Concurrency_Service \
-    $RPM_BUILD_ROOT%{_sbindir}/tao-cosconcurrency
+    %{buildroot}%{_sbindir}/tao-cosconcurrency
 
-# Create the tao cache directory.
-mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/cache/tao
-
-# Create data files which will be ghosted.
-touch $RPM_BUILD_ROOT%{_localstatedir}/cache/tao/tao-cosnaming.dat
-
-# Create the tao log directory.
-mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log/tao
+#Create directories
+for dir in %{_localstatedir}/{cache,log}/tao
+        mkdir -p %{buildroot}$dir
+done
 
 # Create data files which will be ghosted.
-touch $RPM_BUILD_ROOT%{_localstatedir}/log/tao/tao-cosnaming.log
-touch $RPM_BUILD_ROOT%{_localstatedir}/log/tao/tao-cosconcurrency.log
-touch $RPM_BUILD_ROOT%{_localstatedir}/log/tao/tao-cosevent.log
-touch $RPM_BUILD_ROOT%{_localstatedir}/log/tao/tao-cosnotification.log
-touch $RPM_BUILD_ROOT%{_localstatedir}/log/tao/tao-costrading.log
-touch $RPM_BUILD_ROOT%{_localstatedir}/log/tao/tao-rtevent.log
+touch %{buildroot}%{_localstatedir}/cache/tao/tao-cosnaming.dat
+
+# Create data files which will be ghosted.
+for logfile in cosnaming cosconcurrency cosevent cosnotification costrading rtevent; do
+    touch %{buildroot}%{_localstatedir}/log/tao/tao-${logfile}.log
+done
+
+%if %{defined suse_version}
+pushd %{buildroot}%{_sysconfdir}/init.d
+for f in *; do
+        ln -s /etc/init.d/$f %{buildroot}%{_sbindir}/rc${f}
+done
+popd
+%endif
 
 # ---------------- Development Components ----------------
 
@@ -1003,7 +1036,7 @@ touch $RPM_BUILD_ROOT%{_localstatedir}/log/tao/tao-rtevent.log
 INSTHDR="install -m 0644 -p"
 
 # install headers
-install -d $RPM_BUILD_ROOT%{_includedir}
+install -d %{buildroot}%{_includedir}
 ( set +x
 echo "Building list of headers..."
 
@@ -1060,44 +1093,44 @@ rm -f tao-headers.tmp
 for i in `cat allhdrs.list`; do
     case "$i" in
     protocols/ace/*)
-        mkdir -p `dirname $RPM_BUILD_ROOT%{_includedir}/${i/protocols\/}`
-        $INSTHDR $i $RPM_BUILD_ROOT%{_includedir}/${i/protocols/}
+        mkdir -p `dirname %{buildroot}%{_includedir}/${i/protocols\/}`
+        $INSTHDR $i %{buildroot}%{_includedir}/${i/protocols/}
         echo '%dir %{_includedir}/'`dirname ${i/protocols/}` >> ace-headers.tmp
         echo '%{_includedir}/'${i/protocols/} >> ace-headers.tmp
         ;;
     ace/*)
-        mkdir -p `dirname $RPM_BUILD_ROOT%{_includedir}/$i`
-        $INSTHDR $i $RPM_BUILD_ROOT%{_includedir}/$i
+        mkdir -p `dirname %{buildroot}%{_includedir}/$i`
+        $INSTHDR $i %{buildroot}%{_includedir}/$i
         echo '%dir %{_includedir}/'`dirname $i` >> ace-headers.tmp
         echo '%{_includedir}/'$i >> ace-headers.tmp
         ;;
     ACEXML/*)
-        mkdir -p `dirname $RPM_BUILD_ROOT%{_includedir}/$i`
-        $INSTHDR $i $RPM_BUILD_ROOT%{_includedir}/$i
+        mkdir -p `dirname %{buildroot}%{_includedir}/$i`
+        $INSTHDR $i %{buildroot}%{_includedir}/$i
         echo '%dir %{_includedir}/'`dirname $i` >> acexml-headers.tmp
         echo '%{_includedir}/'$i >> acexml-headers.tmp
         ;;
     Kokyu/*)
-        mkdir -p `dirname $RPM_BUILD_ROOT%{_includedir}/$i`
-        $INSTHDR $i $RPM_BUILD_ROOT%{_includedir}/$i
+        mkdir -p `dirname %{buildroot}%{_includedir}/$i`
+        $INSTHDR $i %{buildroot}%{_includedir}/$i
         echo '%dir %{_includedir}/'`dirname $i` >> kokyu-headers.tmp
         echo '%{_includedir}/'$i >> kokyu-headers.tmp
         ;;
     TAO/tao/*)
-        mkdir -p `dirname $RPM_BUILD_ROOT%{_includedir}/${i/TAO\/}`
-        $INSTHDR $i $RPM_BUILD_ROOT%{_includedir}/${i/TAO\/}
+        mkdir -p `dirname %{buildroot}%{_includedir}/${i/TAO\/}`
+        $INSTHDR $i %{buildroot}%{_includedir}/${i/TAO\/}
         echo '%dir %{_includedir}/'`dirname ${i/TAO\/}` >> tao-headers.tmp
         echo '%{_includedir}/'${i/TAO\/} >> tao-headers.tmp
         ;;
     TAO/orbsvcs/orbsvcs/*)
-        mkdir -p `dirname $RPM_BUILD_ROOT%{_includedir}/${i/TAO\/orbsvcs\/}`
-        $INSTHDR $i $RPM_BUILD_ROOT%{_includedir}/${i/TAO\/orbsvcs\/}
+        mkdir -p `dirname %{buildroot}%{_includedir}/${i/TAO\/orbsvcs\/}`
+        $INSTHDR $i %{buildroot}%{_includedir}/${i/TAO\/orbsvcs\/}
         echo '%dir %{_includedir}/'`dirname ${i/TAO\/orbsvcs\/}` >> tao-headers.tmp
         echo '%{_includedir}/'${i/TAO\/orbsvcs\/} >> tao-headers.tmp
         ;;
     *)
-        # mkdir -p `dirname $RPM_BUILD_ROOT%{_includedir}/$i`
-        # $INSTHDR $i $RPM_BUILD_ROOT%{_includedir}/$i
+        # mkdir -p `dirname %{buildroot}%{_includedir}/$i`
+        # $INSTHDR $i %{buildroot}%{_includedir}/$i
         echo $i
         ;;
     esac
@@ -1121,7 +1154,7 @@ rm -f tao-headers.tmp
 )
 
 # install the TAO_IDL compiler
-install -d $RPM_BUILD_ROOT%{_libdir}
+install -d %{buildroot}%{_libdir}
 
 # NOTE - it appears that when TAO's build copies the files to the
 # ACE_ROOT/ace directory they get versioned with ACE's version number
@@ -1129,28 +1162,36 @@ install -d $RPM_BUILD_ROOT%{_libdir}
 install \
         ${ACE_ROOT}/lib/libTAO_IDL_BE.so.%{ACEVERSO} \
         ${ACE_ROOT}/lib/libTAO_IDL_FE.so.%{ACEVERSO} \
-        $RPM_BUILD_ROOT%{_libdir}
+        %{buildroot}%{_libdir}
 
-(cd $RPM_BUILD_ROOT%{_libdir} && ln -sf libTAO_IDL_BE.so.%{ACEVERSO} libTAO_IDL_BE.so)
-(cd $RPM_BUILD_ROOT%{_libdir} && ln -sf libTAO_IDL_FE.so.%{ACEVERSO} libTAO_IDL_FE.so)
+(cd %{buildroot}%{_libdir} && ln -sf libTAO_IDL_BE.so.%{ACEVERSO} libTAO_IDL_BE.so)
+(cd %{buildroot}%{_libdir} && ln -sf libTAO_IDL_FE.so.%{ACEVERSO} libTAO_IDL_FE.so)
 
-install -d $RPM_BUILD_ROOT%{_bindir}
-install ${ACE_ROOT}/bin/ace_gperf $RPM_BUILD_ROOT%{_bindir}
-install ${ACE_ROOT}/bin/tao_idl $RPM_BUILD_ROOT%{_bindir}
-install ${ACE_ROOT}/bin/tao_imr $RPM_BUILD_ROOT%{_bindir}
-install ${ACE_ROOT}/bin/tao_ifr $RPM_BUILD_ROOT%{_bindir}
-install ${ACE_ROOT}/bin/catior $RPM_BUILD_ROOT%{_bindir}/tao_catior
-install ${ACE_ROOT}/bin/nsadd $RPM_BUILD_ROOT%{_bindir}/tao_nsadd
-install ${ACE_ROOT}/bin/nsdel $RPM_BUILD_ROOT%{_bindir}/tao_nsdel
-install ${ACE_ROOT}/bin/nslist $RPM_BUILD_ROOT%{_bindir}/tao_nslist
+install -d %{buildroot}%{_bindir}
+install ${ACE_ROOT}/bin/ace_gperf %{buildroot}%{_bindir}
+install ${ACE_ROOT}/bin/tao_idl %{buildroot}%{_bindir}
+install ${ACE_ROOT}/bin/tao_imr %{buildroot}%{_bindir}
+install ${ACE_ROOT}/bin/tao_ifr %{buildroot}%{_bindir}
+install ${ACE_ROOT}/bin/catior %{buildroot}%{_bindir}/tao_catior
+install ${ACE_ROOT}/bin/nsadd %{buildroot}%{_bindir}/tao_nsadd
+install ${ACE_ROOT}/bin/nsdel %{buildroot}%{_bindir}/tao_nsdel
+install ${ACE_ROOT}/bin/nslist %{buildroot}%{_bindir}/tao_nslist
 
 # ================================================================
 # Config & Options
 # ================================================================
 
-install -d $RPM_BUILD_ROOT%{_sysconfdir}
-tar -xzvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.gz \
-	-C $RPM_BUILD_ROOT%{_sysconfdir}
+install -d %{buildroot}%{_sysconfdir}
+tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.bz2 \
+        -C %{buildroot}%{_sysconfdir}
+
+%if %{defined suse_version}
+tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-init-suse.tar.bz2 \
+        -C %{buildroot}%{_sysconfdir}
+%else
+tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora.tar.bz2 \
+        -C %{buildroot}%{_sysconfdir}
+%endif
 
 ## # FIXME - namespace issues need to be resolved
 ##
@@ -1158,7 +1199,7 @@ tar -xzvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.gz \
 ## # Makefiles
 ## # ================================================================
 ##
-## install -d $RPM_BUILD_ROOT%{_includedir}/makeinclude
+## install -d %{buildroot}%{_includedir}/makeinclude
 ##
 ## for mk_macros in \
 ##     all_in_one.GNU \
@@ -1175,39 +1216,39 @@ tar -xzvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.gz \
 ##     rules.nolocal.GNU \
 ##     rules.nonested.GNU \
 ##     wrapper_macros.GNU; do (
-## install ${ACE_ROOT}/include/makeinclude/$mk_macros $RPM_BUILD_ROOT%{_includedir}/makeinclude
+## install ${ACE_ROOT}/include/makeinclude/$mk_macros %{buildroot}%{_includedir}/makeinclude
 ## ); done
 ##
-## install ${TAO_ROOT}/rules.tao.GNU $RPM_BUILD_ROOT%{_includedir}/makeinclude
+## install ${TAO_ROOT}/rules.tao.GNU %{buildroot}%{_includedir}/makeinclude
 ##
-## install -d $RPM_BUILD_ROOT%{_datadir}
-## install -d $RPM_BUILD_ROOT%{_datadir}/ace
-## install -d $RPM_BUILD_ROOT%{_datadir}/ace/MPC
-## cp -a ${ACE_ROOT}/MPC $RPM_BUILD_ROOT%{_datadir}/ace/
+## install -d %{buildroot}%{_datadir}
+## install -d %{buildroot}%{_datadir}/ace
+## install -d %{buildroot}%{_datadir}/ace/MPC
+## cp -a ${ACE_ROOT}/MPC %{buildroot}%{_datadir}/ace/
 ##
-## install -d $RPM_BUILD_ROOT%{_datadir}/ace/bin
-## cp -a ${ACE_ROOT}/bin/DependencyGenerator $RPM_BUILD_ROOT%{_datadir}/ace/bin
-## cp -a ${ACE_ROOT}/bin/MakeProjectCreator $RPM_BUILD_ROOT%{_datadir}/ace/bin
-## install -d $RPM_BUILD_ROOT%{_datadir}/ace/bin/PerlACE
-## install ${ACE_ROOT}/bin/PerlACE/{ConfigList,Process,Process_Unix}.pm $RPM_BUILD_ROOT%{_datadir}/ace/bin/PerlACE
-## install ${ACE_ROOT}/bin/mpc.pl $RPM_BUILD_ROOT%{_datadir}/ace/bin
-## install ${ACE_ROOT}/bin/mwc.pl $RPM_BUILD_ROOT%{_datadir}/ace/bin
-## install ${ACE_ROOT}/bin/g++dep $RPM_BUILD_ROOT%{_datadir}/ace/bin
-## install ${ACE_ROOT}/bin/depgen.pl $RPM_BUILD_ROOT%{_datadir}/ace/bin
-## install ${ACE_ROOT}/bin/generate_export_file.pl $RPM_BUILD_ROOT%{_datadir}/ace/bin
-## install ${ACE_ROOT}/bin/{ACEutils,Process,Process_Unix,Uniqueid}.pm $RPM_BUILD_ROOT%{_datadir}/ace/bin
+## install -d %{buildroot}%{_datadir}/ace/bin
+## cp -a ${ACE_ROOT}/bin/DependencyGenerator %{buildroot}%{_datadir}/ace/bin
+## cp -a ${ACE_ROOT}/bin/MakeProjectCreator %{buildroot}%{_datadir}/ace/bin
+## install -d %{buildroot}%{_datadir}/ace/bin/PerlACE
+## install ${ACE_ROOT}/bin/PerlACE/{ConfigList,Process,Process_Unix}.pm %{buildroot}%{_datadir}/ace/bin/PerlACE
+## install ${ACE_ROOT}/bin/mpc.pl %{buildroot}%{_datadir}/ace/bin
+## install ${ACE_ROOT}/bin/mwc.pl %{buildroot}%{_datadir}/ace/bin
+## install ${ACE_ROOT}/bin/g++dep %{buildroot}%{_datadir}/ace/bin
+## install ${ACE_ROOT}/bin/depgen.pl %{buildroot}%{_datadir}/ace/bin
+## install ${ACE_ROOT}/bin/generate_export_file.pl %{buildroot}%{_datadir}/ace/bin
+## install ${ACE_ROOT}/bin/{ACEutils,Process,Process_Unix,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
 
-rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
+rm -rf %{buildroot}%{_sysconfdir}/profile.d
 
 # ================================================================
 # Manuals
 # ================================================================
-install -d $RPM_BUILD_ROOT%{_mandir}
-install -d $RPM_BUILD_ROOT%{_mandir}/man1
-install ${TAO_ROOT}/TAO_IDL/tao_idl.1 $RPM_BUILD_ROOT%{_mandir}/man1
-install ${ACE_ROOT}/apps/gperf/ace_gperf.1 $RPM_BUILD_ROOT%{_mandir}/man1
-install -d  $RPM_BUILD_ROOT%{_infodir}
-install ${ACE_ROOT}/apps/gperf/ace_gperf.info $RPM_BUILD_ROOT%{_infodir}
+install -d %{buildroot}%{_mandir}
+install -d %{buildroot}%{_mandir}/man1
+install ${TAO_ROOT}/TAO_IDL/tao_idl.1 %{buildroot}%{_mandir}/man1
+install ${ACE_ROOT}/apps/gperf/ace_gperf.1 %{buildroot}%{_mandir}/man1
+install -d  %{buildroot}%{_infodir}
+install ${ACE_ROOT}/apps/gperf/ace_gperf.info %{buildroot}%{_infodir}
 
 # ================================================================
 # Create lists of symlinked so's.  We need two lists because we need
@@ -1216,12 +1257,12 @@ install ${ACE_ROOT}/apps/gperf/ace_gperf.info $RPM_BUILD_ROOT%{_infodir}
 # ================================================================
 
 # Make a list of all shared objects.
-(cd $RPM_BUILD_ROOT/%{_libdir} && ls *.so | \
+(cd %{buildroot}/%{_libdir} && ls *.so | \
         awk '{ print "%{_libdir}/"$1; }' | \
         sort) > all-so.list
 
 # Make a list of likely svc.conf targets.
-(cd $RPM_BUILD_ROOT/%{_libdir} && ls *.so | \
+(cd %{buildroot}/%{_libdir} && ls *.so | \
     nm --print-file-name *.so | \
     grep _make_ | \
     awk 'BEGIN { FS=":"} /^[^:]+:/ { print "%{_libdir}/"$1; }' | \
@@ -1251,7 +1292,7 @@ cat tao-headers.list tao-nonsvc-so.list > tao-devel-files.list
 # ================================================================
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 # ================================================================
 # pre install
@@ -1323,9 +1364,7 @@ exit 0
 
 # ---------------- ace ----------------
 
-%post -n ace
-
-/sbin/ldconfig
+%post -n ace -p /sbin/ldconfig
 
 # ---------------- ace-devel ----------------
 
@@ -1335,128 +1374,121 @@ exit 0
 
 # ---------------- ace-xml ----------------
 
-%post -n ace-xml
-
-/sbin/ldconfig
+%post -n ace-xml -p /sbin/ldconfig
 
 # ---------------- ace-kokyu ----------------
 
-%post -n ace-kokyu
-
-/sbin/ldconfig
-
-# ---------------- ace-kokyu-devel ----------------
-
-%post -n ace-kokyu-devel
-
-/sbin/ldconfig
+%post -n ace-kokyu -p /sbin/ldconfig
 
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 # ---------------- ace-foxreactor ----------------
 
-%post -n ace-foxreactor
-
-/sbin/ldconfig
+%if %{undefined suse_version} || 0%{?suse_version} = 1020
+%post -n ace-foxreactor -p /sbin/ldconfig
+%endif
 
 # ---------------- ace-flreactor ----------------
 
-%post -n ace-flreactor
-
-/sbin/ldconfig
+%post -n ace-flreactor -p /sbin/ldconfig
 
 # ---------------- ace-qtreactor ----------------
 
-%post -n ace-qtreactor
-
-/sbin/ldconfig
+%post -n ace-qtreactor -p /sbin/ldconfig
 
 # ---------------- ace-tkreactor ----------------
 
-%post -n ace-tkreactor
-
-/sbin/ldconfig
+%post -n ace-tkreactor -p /sbin/ldconfig
 
 # ---------------- ace-xtreactor ----------------
 
-%post -n ace-xtreactor
-
-/sbin/ldconfig
+%post -n ace-xtreactor -p /sbin/ldconfig
 %endif
 
 # ---------------- tao ----------------
 
-%post -n tao
-
-/sbin/ldconfig
+%post -n tao -p /sbin/ldconfig
 
 # ---------------- tao-devel ----------------
 
-%post -n tao-devel
-
-/sbin/ldconfig
+%post -n tao-devel -p /sbin/ldconfig
 
 # ---------------- tao-cosnaming ----------------
 
 %post -n tao-cosnaming
-
+%if %{defined suse_version}
+%{fillup_and_insserv tao-cosnaming}
+%else
 /sbin/chkconfig --add tao-cosnaming
+%endif
 
 # ---------------- tao-cosevent ----------------
 
 %post -n tao-cosevent
 
+%if %{defined suse_version}
+%{fillup_and_insserv tao-cosevent}
+%else
 /sbin/chkconfig --add tao-cosevent
+%endif
 
 # ---------------- tao-cosnotification ----------------
 
 %post -n tao-cosnotification
 
+%if %{defined suse_version}
+%{fillup_and_insserv tao-cosnotification}
+%else
 /sbin/chkconfig --add tao-cosnotification
+%endif
 
 # ---------------- tao-costrading ----------------
 
 %post -n tao-costrading
 
+%if %{defined suse_version}
+%{fillup_and_insserv tao-costrading}
+%else
 /sbin/chkconfig --add tao-costrading
+%endif
 
 # ---------------- tao-rtevent ----------------
 
 %post -n tao-rtevent
 
+%if %{defined suse_version}
+%{fillup_and_insserv tao-rtevent}
+%else
 /sbin/chkconfig --add tao-rtevent
+%endif
 
 # ---------------- tao-cosconcurrency ----------------
 
 %post -n tao-cosconcurrency
 
+%if %{defined suse_version}
+%{fillup_and_insserv tao-cosconcurrency}
+%else
 /sbin/chkconfig --add tao-cosconcurrency
+%endif
 
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 # ---------------- tao-flresource ----------------
 
-%post -n tao-flresource
-
-/sbin/ldconfig
+%post -n tao-flresource -p /sbin/ldconfig
 
 # ---------------- tao-qtresource ----------------
 
-%post -n tao-qtresource
-
-/sbin/ldconfig
+%post -n tao-qtresource -p /sbin/ldconfig
 
 # ---------------- tao-tkresource ----------------
 
-%post -n tao-tkresource
-
-/sbin/ldconfig
+%post -n tao-tkresource -p /sbin/ldconfig
 
 # ---------------- tao-xtresource ----------------
 
-%post -n tao-xtresource
-
-/sbin/ldconfig
+%post -n tao-xtresource -p /sbin/ldconfig
 %endif
 
 # ================================================================
@@ -1474,7 +1506,6 @@ fi
 # ---------------- tao-cosnaming ----------------
 
 %preun -n tao-cosnaming
-
 if [ $1 = 0 ]; then
     /sbin/service tao-cosnaming stop > /dev/null 2>&1
     /sbin/chkconfig --del tao-cosnaming
@@ -1531,73 +1562,55 @@ fi
 
 # ---------------- ace ----------------
 
-%postun -n ace
-
-/sbin/ldconfig
+%postun -n ace -p /sbin/ldconfig
 
 # ---------------- ace-xml ----------------
 
-%postun -n ace-xml
-
-/sbin/ldconfig
+%postun -n ace-xml -p /sbin/ldconfig
 
 # ---------------- ace-kokyu ----------------
 
-%postun -n ace-kokyu
-
-/sbin/ldconfig
+%postun -n ace-kokyu -p /sbin/ldconfig
 
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 # ---------------- ace-foxreactor ----------------
 
-%postun -n ace-foxreactor
-
-/sbin/ldconfig
+%if %{have_fox} = 1
+%postun -n ace-foxreactor -p /sbin/ldconfig
+%endif
 
 # ---------------- ace-flreactor ----------------
 
-%postun -n ace-flreactor
-
-/sbin/ldconfig
+%postun -n ace-flreactor -p /sbin/ldconfig
 
 # ---------------- ace-qtreactor ----------------
 
-%postun -n ace-qtreactor
-
-/sbin/ldconfig
+%postun -n ace-qtreactor -p /sbin/ldconfig
 
 # ---------------- ace-tkreactor ----------------
 
-%postun -n ace-tkreactor
-
-/sbin/ldconfig
+%postun -n ace-tkreactor -p /sbin/ldconfig
 
 # ---------------- ace-xtreactor ----------------
 
-%postun -n ace-xtreactor
-
-/sbin/ldconfig
+%postun -n ace-xtreactor -p /sbin/ldconfig
 %endif
 
 # ---------------- tao ----------------
 
-%postun -n tao
-
-/sbin/ldconfig
+%postun -n tao -p /sbin/ldconfig
 
 # ---------------- tao-devel ----------------
 
-%postun -n tao-devel
-
-/sbin/ldconfig
+%postun -n tao-devel -p /sbin/ldconfig
 
 # ---------------- tao-cosnaming ----------------
 
 %postun -n tao-cosnaming
 
 if [ "$1" -ge "1" ]; then
-    /sbin/service tao-cosnaming condrestart > /dev/null 2>&1
+    /sbin/service tao-cosnaming %{cond_restart} > /dev/null 2>&1
 fi
 
 # ---------------- tao-cosevent ----------------
@@ -1605,7 +1618,7 @@ fi
 %postun -n tao-cosevent
 
 if [ "$1" -ge "1" ]; then
-    /sbin/service tao-cosevent condrestart > /dev/null 2>&1
+    /sbin/service tao-cosevent %{cond_restart} > /dev/null 2>&1
 fi
 
 # ---------------- tao-cosnotification ----------------
@@ -1613,7 +1626,7 @@ fi
 %postun -n tao-cosnotification
 
 if [ "$1" -ge "1" ]; then
-    /sbin/service tao-cosnotification condrestart > /dev/null 2>&1
+    /sbin/service tao-cosnotification %{cond_restart} > /dev/null 2>&1
 fi
 
 # ---------------- tao-costrading ----------------
@@ -1621,7 +1634,7 @@ fi
 %postun -n tao-costrading
 
 if [ "$1" -ge "1" ]; then
-    /sbin/service tao-costrading condrestart > /dev/null 2>&1
+    /sbin/service tao-costrading %{cond_restart} > /dev/null 2>&1
 fi
 
 # ---------------- tao-rtevent ----------------
@@ -1629,7 +1642,7 @@ fi
 %postun -n tao-rtevent
 
 if [ "$1" -ge "1" ]; then
-    /sbin/service tao-rtevent condrestart > /dev/null 2>&1
+    /sbin/service tao-rtevent %{cond_restart} > /dev/null 2>&1
 fi
 
 # ---------------- tao-cosconcurrency ----------------
@@ -1637,34 +1650,26 @@ fi
 %postun -n tao-cosconcurrency
 
 if [ "$1" -ge "1" ]; then
-    /sbin/service tao-cosconcurrency condrestart > /dev/null 2>&1
+    /sbin/service tao-cosconcurrency %{cond_restart} > /dev/null 2>&1
 fi
 
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 # ---------------- tao-flresource ----------------
 
-%postun -n tao-flresource
-
-/sbin/ldconfig
+%postun -n tao-flresource -p /sbin/ldconfig
 
 # ---------------- tao-qtresource ----------------
 
-%postun -n tao-qtresource
-
-/sbin/ldconfig
+%postun -n tao-qtresource -p /sbin/ldconfig
 
 # ---------------- tao-tkresource ----------------
 
-%postun -n tao-tkresource
-
-/sbin/ldconfig
+%postun -n tao-tkresource -p /sbin/ldconfig
 
 # ---------------- tao-xtresource ----------------
 
-%postun -n tao-xtresource
-
-/sbin/ldconfig
+%postun -n tao-xtresource -p /sbin/ldconfig
 %endif
 
 # ================================================================
@@ -1783,6 +1788,7 @@ fi
 
 # ---------------- ace-foxreactor ----------------
 
+%if %{have_fox} = 1
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 
@@ -1797,7 +1803,7 @@ fi
 %doc VERSION
 
 %endif
-
+%endif
 # ---------------- ace-flreactor ----------------
 
 # Read: true if _with_guilibs is defined, false if not defined.
@@ -1993,7 +1999,7 @@ fi
 %{_bindir}/tao_nsadd
 %{_bindir}/tao_nsdel
 %{_bindir}/tao_nslist
-%attr(0644,root,root) %{_mandir}/man1/tao_idl.1%{_extension}
+%attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}
 
 # These get missed by the automatic list generator because they
 # contain no immediate files.
@@ -2028,10 +2034,18 @@ fi
 %files -n tao-cosnaming
 %defattr(-,root,root,-)
 
-%{_sbindir}/tao-cosnaming
-%{_sysconfdir}/rc.d/init.d/tao-cosnaming
 %dir %{_sysconfdir}/tao
+
+%{_sbindir}/tao-cosnaming
+
+%if %{defined suse_version}
+%{_sysconfdir}/init.d/tao-cosnaming
+%{_sbindir}/rctao-cosnaming
+%else
+%{_sysconfdir}/rc.d/init.d/tao-cosnaming
 %config(noreplace) %{_sysconfdir}/tao/tao-cosnaming.opt
+%endif
+
 %config(noreplace) %{_sysconfdir}/tao/tao-cosnaming.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/tao-cosnaming
 %attr(-,tao,tao) %dir %{_localstatedir}/cache/tao
@@ -2049,10 +2063,17 @@ fi
 %files -n tao-cosevent
 %defattr(-,root,root,-)
 
-%{_sbindir}/tao-cosevent
-%{_sysconfdir}/rc.d/init.d/tao-cosevent
 %dir %{_sysconfdir}/tao
+%{_sbindir}/tao-cosevent
+
+%if %{defined suse_version}
+%{_sysconfdir}/init.d/tao-cosevent
+%{_sbindir}/rctao-cosevent
+%else
+%{_sysconfdir}/rc.d/init.d/tao-cosevent
 %config(noreplace) %{_sysconfdir}/tao/tao-cosevent.opt
+%endif
+
 %config(noreplace) %{_sysconfdir}/tao/tao-cosevent.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/tao-cosevent
 %attr(-,tao,tao) %dir %{_localstatedir}/log/tao
@@ -2069,9 +2090,16 @@ fi
 %defattr(-,root,root,-)
 
 %{_sbindir}/tao-cosnotification
-%{_sysconfdir}/rc.d/init.d/tao-cosnotification
 %dir %{_sysconfdir}/tao
+
+%if %{defined suse_version}
+%{_sysconfdir}/init.d/tao-cosnotification
+%{_sbindir}/rctao-cosnotification
+%else
+%{_sysconfdir}/rc.d/init.d/tao-cosnotification
 %config(noreplace) %{_sysconfdir}/tao/tao-cosnotification.opt
+%endif
+
 %config(noreplace) %{_sysconfdir}/tao/tao-cosnotification.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/tao-cosnotification
 %attr(-,tao,tao) %dir %{_localstatedir}/log/tao
@@ -2087,10 +2115,18 @@ fi
 %files -n tao-costrading
 %defattr(-,root,root,-)
 
-%{_sbindir}/tao-costrading
-%{_sysconfdir}/rc.d/init.d/tao-costrading
 %dir %{_sysconfdir}/tao
+
+%{_sbindir}/tao-costrading
+
+%if %{defined suse_version}
+%{_sysconfdir}/init.d/tao-costrading
+%{_sbindir}/rctao-costrading
+%else
+%{_sysconfdir}/rc.d/init.d/tao-costrading
 %config(noreplace) %{_sysconfdir}/tao/tao-costrading.opt
+%endif
+
 %config(noreplace) %{_sysconfdir}/tao/tao-costrading.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/tao-costrading
 %attr(-,tao,tao) %dir %{_localstatedir}/log/tao
@@ -2106,10 +2142,17 @@ fi
 %files -n tao-rtevent
 %defattr(-,root,root,-)
 
-%{_sbindir}/tao-rtevent
-%{_sysconfdir}/rc.d/init.d/tao-rtevent
 %dir %{_sysconfdir}/tao
+%{_sbindir}/tao-rtevent
+
+%if %{defined suse_version}
+%{_sysconfdir}/init.d/tao-rtevent
+%{_sbindir}/rctao-rtevent
+%else
+%{_sysconfdir}/rc.d/init.d/tao-rtevent
 %config(noreplace) %{_sysconfdir}/tao/tao-rtevent.opt
+%endif
+
 %config(noreplace) %{_sysconfdir}/tao/tao-rtevent.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/tao-rtevent
 %attr(-,tao,tao) %dir %{_localstatedir}/log/tao
@@ -2125,10 +2168,17 @@ fi
 %files -n tao-cosconcurrency
 %defattr(-,root,root,-)
 
-%{_sbindir}/tao-cosconcurrency
-%{_sysconfdir}/rc.d/init.d/tao-cosconcurrency
 %dir %{_sysconfdir}/tao
+%{_sbindir}/tao-cosconcurrency
+
+%if %{defined suse_version}
+%{_sysconfdir}/init.d/tao-cosconcurrency
+%{_sbindir}/rctao-cosconcurrency
+%else
+%{_sysconfdir}/rc.d/init.d/tao-cosconcurrency
 %config(noreplace) %{_sysconfdir}/tao/tao-cosconcurrency.opt
+%endif
+
 %config(noreplace) %{_sysconfdir}/tao/tao-cosconcurrency.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/tao-cosconcurrency
 %attr(-,tao,tao) %dir %{_localstatedir}/log/tao
