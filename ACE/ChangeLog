@@ -1,3 +1,11 @@
+Tue Aug 05 10:15:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/Reactor_Remove_Resume_Test_Dev_Poll.cpp:
+
+          I don't know why removing "TP_Reactor.h" stopped ACE.h from
+          being included; but is seems it was incidently included in
+          the previous (non-Dev_Poll) test.
+
 Tue Aug  5 08:02:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACEXML/common/HttpCharStream.cpp:
