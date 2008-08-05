@@ -59,17 +59,19 @@ ACEXML_Parser::setErrorHandler (ACEXML_ErrorHandler *handler)
 ACEXML_INLINE int
 ACEXML_Parser::isChar (ACEXML_UCS4 c) const
 {
-  return (c == 0x9 || c == 0xA || c == 0xD ||
-          c >= 0x20 && c <= 0xD7FF ||
-          c >= 0xE000 && c <= 0xFFFD ||
-          c >= 0x10000 && c <= 0x10FFFF);
+  return (c == 0x9
+          || c == 0xA
+          || c == 0xD
+          || (c >= 0x20 && c <= 0xD7FF)
+          || (c >= 0xE000 && c <= 0xFFFD)
+          || (c >= 0x10000 && c <= 0x10FFFF));
 }
 
 ACEXML_INLINE int
 ACEXML_Parser::isCharRef (const ACEXML_Char c) const
-    {
-  return ((c >= 'a' && c <= 'f') ||
-          (c >= 'A' && c <= 'F'));
+{
+  return ((c >= 'a' && c <= 'f')
+          || (c >= 'A' && c <= 'F'));
 }
 
 ACEXML_INLINE int

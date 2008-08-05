@@ -146,12 +146,14 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
 
   // Try all legal associated values.
 
-  for (int i = total_iterations - 1; i >= 0; i--)
+  for (int i = total_iterations - 1; i >= 0; --i)
     {
       int collisions = 0;
 
-      Vectors::asso_values[(int) c] = Vectors::asso_values[(int) c] +
-        (option.jump () ? option.jump () : ACE_OS::rand ()) & option.asso_max () - 1;
+      Vectors::asso_values[(int) c] =
+        (Vectors::asso_values[(int) c]
+         + (option.jump () ? option.jump () : ACE_OS::rand ()))
+        & (option.asso_max () - 1);
 
       // Iteration Number array is a win, O(1) intialization time!
       this->char_search.reset ();
@@ -161,17 +163,23 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
 
       for (List_Node *ptr = this->key_list.head;
            this->char_search.find (this->hash (ptr)) == 0
-             || ++collisions < fewest_collisions;
+           || ++collisions < fewest_collisions;
            ptr = ptr->next)
-        if (ptr == curr)
-          {
-            fewest_collisions = collisions;
-            if (option[DEBUGGING])
-              ACE_DEBUG ((LM_DEBUG,
-                          "- resolved after %d iterations",
-                          total_iterations - i));
-            return 0;
-          }
+        {
+          if (ptr == curr)
+            {
+              fewest_collisions = collisions;
+              
+              if (option[DEBUGGING])
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "- resolved after %d iterations",
+                              total_iterations - i));
+                }
+                
+              return 0;
+            }
+        }
     }
 
   // Restore original values, no more tries.
@@ -254,8 +262,10 @@ Gen_Perf::open (void)
     {
       ACE_OS::srand ((u_int) ACE_OS::time (0));
 
-      for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; i++)
-        Vectors::asso_values[i] = (ACE_OS::rand () & asso_value_max - 1);
+      for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; ++i)
+        {
+          Vectors::asso_values[i] = (ACE_OS::rand () & (asso_value_max - 1));
+        }
     }
   else
     {
@@ -263,11 +273,16 @@ Gen_Perf::open (void)
 
       // Initialize array if user requests non-zero default.
       if (asso_value)
-        for (int i = ACE_STANDARD_CHARACTER_SET_SIZE - 1; i >= 0; i--)
-          Vectors::asso_values[i] = asso_value & option.asso_max () - 1;
+        {
+          for (int i = ACE_STANDARD_CHARACTER_SET_SIZE - 1; i >= 0; --i)
+            {
+              Vectors::asso_values[i] = asso_value & (option.asso_max () - 1);
+            }
+        }
     }
 
-  this->max_hash_value = this->key_list.max_key_length ()
+  this->max_hash_value =
+    this->key_list.max_key_length ()
     + option.asso_max ()
     * option.max_keysig_size ();
 
@@ -372,21 +387,27 @@ Gen_Perf::compute_perfect_hash (void)
   for (curr = this->key_list.head;
        curr;
        curr = curr->next)
-    if (this->char_search.find (this->hash (curr)) != 0)
-      if (option[DUP])
-        // Keep track of the number of "dynamic" links (i.e., keys
-        // that hash to the same value) so that we can use it later
-        // when generating the output.
-        this->key_list.total_duplicates++;
-      else
+    {
+      if (this->char_search.find (this->hash (curr)) != 0)
         {
-          // Yow, big problems.  we're outta here!
-          ACE_ERROR ((LM_ERROR,
-                      "\nInternal error, duplicate value %d:\n"
-                      "try options -D or -r, or use new key positions.\n\n",
-                      this->hash (curr)));
-          return -1;
+          if (option[DUP])
+            {
+              // Keep track of the number of "dynamic" links (i.e., keys
+              // that hash to the same value) so that we can use it later
+              // when generating the output.
+              this->key_list.total_duplicates++;
+            }
+          else
+            {
+              // Yow, big problems.  we're outta here!
+              ACE_ERROR ((LM_ERROR,
+                          "\nInternal error, duplicate value %d:\n"
+                          "try options -D or -r, or use new key positions.\n\n",
+                          this->hash (curr)));
+              return -1;
+            }
         }
+    }
 
   return 0;
 }

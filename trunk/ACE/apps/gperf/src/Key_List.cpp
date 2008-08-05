@@ -358,13 +358,17 @@ Key_List::read_keys (void)
 List_Node *
 Key_List::merge (List_Node *list1, List_Node *list2)
 {
-  if (!list1)
-    return list2;
-  else if (!list2)
-    return list1;
+  if (list1 == 0)
+    {
+      return list2;
+    }
+  else if (list2 == 0)
+    {
+      return list1;
+    }
   else if (occurrence_sort && list1->occurrence < list2->occurrence
-           || hash_sort && list1->hash_value > list2->hash_value
-           || key_sort && ACE_OS::strcmp (list1->key, list2->key) >= 0)
+           || (hash_sort && list1->hash_value > list2->hash_value)
+           || (key_sort && ACE_OS::strcmp (list1->key, list2->key) >= 0))
     {
       list2->next = merge (list2->next, list1);
       return list2;
@@ -1699,28 +1703,43 @@ Key_List::output (void)
       output_hash_function ();
 
       if (option[GLOBAL])
-        if (option[SWITCH])
-          {
-            if (option[LENTABLE] && option[DUP])
-              output_keylength_table ();
-            if (option[POINTER] && option[TYPE])
+        {
+          if (option[SWITCH])
+            {
+              if (option[LENTABLE] && option[DUP])
+                {
+                  output_keylength_table ();
+                }
+                
+              if (option[POINTER] && option[TYPE])
+                {
+                  output_keyword_table ();
+                }
+            }
+          else
+            {
+              if (option[LENTABLE])
+                {
+                  output_keylength_table ();
+                }
+                
               output_keyword_table ();
-          }
-        else
-          {
-            if (option[LENTABLE])
-              output_keylength_table ();
-            output_keyword_table ();
-            if (output_lookup_array () == -1)
-              ACE_ERROR_RETURN ((LM_DEBUG,
-                                 "%p\n",
-                                 "output_lookup_array"),
-                                -1);
-          }
+              
+              if (output_lookup_array () == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_DEBUG,
+                                     "%p\n",
+                                     "output_lookup_array"),
+                                    -1);
+                }
+            }
+        }
 
       // Use the inline keyword to remove function overhead.
       if (option[INLINE])
-        ACE_OS::printf ("inline\n");
+        {
+          ACE_OS::printf ("inline\n");
+        }
 
       int pointer_and_type_enabled = option[POINTER] && option[TYPE];
 
