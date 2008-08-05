@@ -76,20 +76,29 @@ Iterator::operator() (void)
           case '0': case '1': case '2': case '3': case '4':
           case '5': case '6': case '7': case '8': case '9':
             for (curr_value = 0; ACE_OS::ace_isdigit (*str); str++)
-              curr_value = curr_value * 10 + *str - '0';
+              {
+                curr_value = curr_value * 10 + *str - '0';
+              }
 
             if (*str == '-')
               {
 
                 for (size = 1, upper_bound = 0;
                      ACE_OS::ace_isdigit (*++str);
-                     upper_bound = upper_bound * 10 + *str - '0');
+                     upper_bound = upper_bound * 10 + *str - '0')
+                  {
+                    // Do nothing.
+                  }
 
                 if (upper_bound <= curr_value || upper_bound > hi_bound)
-                  return error_value;
+                  {
+                    return error_value;
+                  }
               }
+              
             return curr_value >= lo_bound && curr_value <= hi_bound
-              ? curr_value : error_value;
+                   ? curr_value
+                   : error_value;
           }
 
       return end;

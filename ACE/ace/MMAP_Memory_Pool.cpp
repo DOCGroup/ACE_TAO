@@ -290,11 +290,11 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
                        this->base_addr_,
                        0,
                        this->sa_) == -1
-      || this->base_addr_ != 0
+      || (this->base_addr_ != 0
 #ifdef ACE_HAS_WINCE
-      && this->mmap_.addr () == 0)  // WinCE does not allow users to specify alloc addr.
+      && this->mmap_.addr () == 0))  // WinCE does not allow users to specify alloc addr.
 #else
-      && this->mmap_.addr () != this->base_addr_)
+      && this->mmap_.addr () != this->base_addr_))
 #endif  // ACE_HAS_WINCE
     {
 #if 0
@@ -311,8 +311,12 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
     {
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
       this->base_addr_ = this->mmap_.addr ();
-      if(obase_addr && this->base_addr_ != obase_addr)
-         ACE_BASED_POINTER_REPOSITORY::instance ()->unbind (obase_addr);
+      
+      if (obase_addr && this->base_addr_ != obase_addr)
+        {
+          ACE_BASED_POINTER_REPOSITORY::instance ()->unbind (obase_addr);
+        }
+        
       ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->base_addr_,
                                                        map_size);
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
