@@ -691,7 +691,7 @@ private:
   } conditional_values_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  static int key_created_;
+  static bool key_created_;
 #endif /* ACE_MT_SAFE */
 
   /// For cleanup, at program termination.
