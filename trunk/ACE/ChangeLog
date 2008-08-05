@@ -1,3 +1,10 @@
+Tue Aug  5 18:37:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao-init-fedora.tar.bz2:
+        * rpmbuild/ace-tao-init-suse.tar.bz2:
+          Seperated distribution specific files in two bz2 archives,
+          the rpm spec file will use one of them
+
 Tue Aug  5 16:41:03 UTC 2008  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.h: Changed key_created_ from int to bool.
