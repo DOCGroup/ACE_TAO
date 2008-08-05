@@ -1,3 +1,9 @@
+Tue Aug  5 07:53:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Message_Queue_Test.cpp:
+        * tests/Message_Queue_Test_Ex.cpp:
+          Fixed gcc4.3 warning
+
 Tue Aug  5 07:11:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SOCK_SAP/run_test
