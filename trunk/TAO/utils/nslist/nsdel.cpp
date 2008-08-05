@@ -332,11 +332,13 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         }
 
         if (failure && !quiet)
-          if (destroy) {
-            ACE_DEBUG ((LM_DEBUG, "Failed to destroy context.\n"));
-          }
-          else {
-            ACE_DEBUG ((LM_DEBUG, "Failed to check for orphaned naming context.\n"));
+          {
+            if (destroy) {
+              ACE_DEBUG ((LM_DEBUG, "Failed to destroy context.\n"));
+            }
+            else {
+              ACE_DEBUG ((LM_DEBUG, "Failed to check for orphaned naming context.\n"));
+            }
           }
       }
     }
