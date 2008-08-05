@@ -59,7 +59,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 #endif /* ACE_HAS_SYS_SIGLIST */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  int ACE_Log_Msg::key_created_ = 0;
+  bool ACE_Log_Msg::key_created_ = 0;
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
     defined (ACE_HAS_TSS_EMULATION)
 
@@ -279,7 +279,7 @@ ACE_Log_Msg::exists (void)
                          // void to keep G++ from complaining.
 
   // Get the tss_log_msg from thread-specific storage.
-  return key_created_
+  return ACE_Log_Msg::key_created_
     && ACE_Thread::getspecific (*(log_msg_tss_key ()), &tss_log_msg) != -1
     && tss_log_msg != 0;
 # else
@@ -298,7 +298,7 @@ ACE_Log_Msg::instance (void)
      defined (ACE_HAS_TSS_EMULATION)
   // TSS Singleton implementation.
 
-  if (key_created_ == 0)
+  if (!ACE_Log_Msg::key_created_)
     {
       ACE_thread_mutex_t *lock =
         reinterpret_cast<ACE_thread_mutex_t *> (
@@ -313,7 +313,7 @@ ACE_Log_Msg::instance (void)
       else
         ACE_OS::thread_mutex_lock (lock);
 
-      if (key_created_ == 0)
+      if (!ACE_Log_Msg::key_created_)
         {
           // Allocate the Singleton lock.
           ACE_Log_Msg_Manager::get_lock ();
@@ -329,12 +329,12 @@ ACE_Log_Msg::instance (void)
                   //single threaded and so don't need the lock.
                   ;
                 else
-                ACE_OS::thread_mutex_unlock (lock);
+		  ACE_OS::thread_mutex_unlock (lock);
                 return 0; // Major problems, this should *never* happen!
               }
           }
 
-          key_created_ = 1;
+          ACE_Log_Msg::key_created_ = true;
         }
 
       if (1 == ACE_OS_Object_Manager::starting_up())
@@ -488,52 +488,46 @@ ACE_Log_Msg::close (void)
     (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
      defined (ACE_HAS_TSS_EMULATION))
 
-     if (key_created_ == 1)
-       {
-         ACE_thread_mutex_t *lock =
-           reinterpret_cast<ACE_thread_mutex_t *> (
-             ACE_OS_Object_Manager::preallocated_object
-             [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
-         ACE_OS::thread_mutex_lock (lock);
+  if (ACE_Log_Msg::key_created_)
+    {
+      ACE_thread_mutex_t *lock =
+	reinterpret_cast<ACE_thread_mutex_t *>
+	  (ACE_OS_Object_Manager::preallocated_object
+	   [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
+      ACE_OS::thread_mutex_lock (lock);
 
-         if (key_created_ == 1)
-           {
-             // The same as the ACE_TSS_Cleanup's own key doesn't get
-             // detached, the log_msg_tss_key_ won't get detached
-             // until ACE_TSS_Cleanup::free_all_keys_left, so it will
-             // be in the ACE_TSS_Cleanup::table_.  However, there's
-             // no resource associated with it, so we don't need to
-             // keyfree it.  The dynamic memory associated with it was
-             // already deleted by ACE_TSS_Cleanup::exit (), so we
-             // don't want to access it again.
-             key_created_ = 0;
-#ifdef ACE_HAS_BROKEN_THREAD_KEYFREE
-             // for some systems, e.g. LynxOS, we need to ensure that
-             // any registered thread destructor action for this thread
-             // is disabled. Otherwise in the event of a dynamic library
-             // unload of libACE, by a program not linked with libACE,
-             // ACE_TSS_cleanup will be invoked after libACE has been unloaded.
-            ACE_Log_Msg *tss_log_msg = 0;
-            void *temp = 0;
+      if (ACE_Log_Msg::key_created_)
+	{
+	  // Clean up this ACE_Log_Msg instance and reset the TSS to
+	  // prevent any future cleanup attempts via TSS mechanisms at
+	  // thread exit. Otherwise in the event of a dynamic library
+	  // unload of libACE, by a program not linked with libACE,
+	  // ACE_TSS_cleanup will be invoked after libACE has been unloaded.
+	  // See Bugzilla 2980 for lots of details.
+	  ACE_Log_Msg *tss_log_msg = 0;
+	  void *temp = 0;
 
-             // Get the tss_log_msg from thread-specific storage.
-             if (ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) != -1
-                  && temp)
-              {
-                tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
-                // we haven't been cleaned up
-                ACE_TSS_CLEANUP_NAME(tss_log_msg);
-                if (ACE_Thread::setspecific(*(log_msg_tss_key()),
-                                           reinterpret_cast <void *>(0)) != 0)
-                {
-                  ACE_OS::printf ("ACE_Log_Msg::close failed to ACE_Thread::setspecific to 0\n");
-                }
-             }
-#endif /* ACE_HAS_BROKEN_THREAD_KEYFREE */
-           }
+	  // Get the tss_log_msg from thread-specific storage.
+	  if (ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) != -1
+	      && temp)
+	    {
+	      tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
+	      // we haven't been cleaned up
+	      ACE_TSS_CLEANUP_NAME(tss_log_msg);
+	      if (ACE_Thread::setspecific(*(log_msg_tss_key()),
+					  reinterpret_cast <void *>(0)) != 0)
+		ACE_OS::printf ("ACE_Log_Msg::close failed to ACE_Thread::setspecific to 0\n");
+	    }
 
-         ACE_OS::thread_mutex_unlock (lock);
-       }
+	  // The key is not needed any longer; ACE_Log_Msg is closing
+	  // and will need to be reopened if this process wishes to use
+	  // logging again. So delete the key.
+	  ACE_Thread::keyfree (*(log_msg_tss_key()));
+	  ACE_Log_Msg::key_created_ = false;
+	}
+
+      ACE_OS::thread_mutex_unlock (lock);
+    }
 #endif /* (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) && ACE_MT_SAFE */
 }
 
