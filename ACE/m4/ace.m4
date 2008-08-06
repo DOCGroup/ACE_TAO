@@ -433,7 +433,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    esac
   ])
  if test X$ace_user_enable_rcsid = Xyes; then
-   AC_DEFINE(ACE_USE_RCSID, 1, 
+   AC_DEFINE(ACE_USE_RCSID, 1,
              [Define to 1 to embed RCS ID strings into compiled object files.])
  fi
 
@@ -686,6 +686,37 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_WCSDUP_EMULATION
 ])
 
+AC_DEFUN([ACE_CHECK_LIB64],
+[
+    AC_ARG_ENABLE(libsuffix,
+        AC_HELP_STRING([--enable-libsuffix],
+            [/lib directory suffix (64,32,none,auto[=default])]),
+            acelibsuff=$enableval, acelibsuff="auto")
+
+    if test "$acelibsuff" = "auto"; then
+
+cat > conftest.cpp << _ACEOF
+#include <iostream>
+int main(int, char **) {
+ return 0;
+}
+_ACEOF
+        acelibsuff=`$CXX conftest.cpp -o conftest.out; ldd conftest.out |sed -ne '/libc.so/{
+    s,.*/lib\([[^\/]]*\)/.*,\1,
+    p
+}'`
+	rm -rf conftest.*
+    fi
+
+    if test "$acelibsuff" = "no" || test "$acelibsuff" = "none"; then
+       acelibsuff=
+    fi
+    if test -z "$acelibsuff"; then
+        AC_MSG_RESULT([not using lib directory suffix])
+    else
+        AC_MSG_RESULT([using lib directory suffix $acelibsuff])
+    fi
+])
 
 dnl Macros that add ACE compilation options to a `configure' script.
 dnl ACE_COMPILATION_OPTIONS
@@ -959,18 +990,18 @@ dnl    fi
                [case "${enableval}" in
                  yes)
                   AC_DEFINE([ACE_USES_WCHAR])
-                  ace_user_enable_wide_char=yes
+                  ace_cv_user_enable_wide_char=yes
                   ;;
                  no)
-                  ace_user_enable_wide_char=no
+                  ace_cv_user_enable_wide_char=no
                   ;;
                  *)
                   AC_MSG_ERROR([bad value ${enableval} for --enable-uses-wchar])
                   ;;
                 esac])
  AC_CACHE_CHECK([whether to use wide characters internally],
-                [ace_user_enable_wide_char], [ace_user_enable_wide_char=no])
- AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_enable_wide_char = Xyes])
+                [ace_cv_user_enable_wide_char], [ace_cv_user_enable_wide_char=no])
+ AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_cv_user_enable_wide_char = Xyes])
 
 ])
 
@@ -1131,18 +1162,18 @@ AC_DEFUN([ACE_ENABLE_QOS],
 			      [compile/use the ACE_QoS library [[no]]]),
 	       [case "${enableval}" in
 		 yes)
-		  ace_user_enable_qos=yes
+		  ace_cv_user_enable_qos=yes
 		  ;;
 		 no)
-		  ace_user_enable_qos=no
+		  ace_cv_user_enable_qos=no
 		  ;;
 		 *)
 		  AC_MSG_ERROR(bad value ${enableval} for --enable-qos)
 		  ;;
 		esac])
 AC_CACHE_CHECK([whether to compile/use the ACE_QoS library],
-               [ace_user_enable_qos],[ace_user_enable_qos=no])
-AM_CONDITIONAL([BUILD_QOS], [test X$ace_user_enable_qos = Xyes])
+               [ace_cv_user_enable_qos],[ace_cv_user_enable_qos=no])
+AM_CONDITIONAL([BUILD_QOS], [test X$ace_cv_user_enable_qos = Xyes])
 ])
 
 AC_DEFUN([ACE_ENABLE_SSL],
@@ -1152,18 +1183,18 @@ AC_ARG_ENABLE([ssl],
 			      [compile/use the ACE_SSL library [[yes]]]),
 	       [case "${enableval}" in
 		 yes)
-		  ace_user_enable_ssl=yes
+		  ace_cv_user_enable_ssl=yes
 		  ;;
 		 no)
-		  ace_user_enable_ssl=no
+		  ace_cv_user_enable_ssl=no
 		  ;;
 		 *)
 		  AC_MSG_ERROR(bad value ${enableval} for --enable-ssl)
 		  ;;
 		esac])
 AC_CACHE_CHECK([whether to compile/use the ACE_SSL library],
-               [ace_user_enable_ssl], [ace_user_enable_ssl=yes])
-AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_enable_ssl = Xyes])
+               [ace_cv_user_enable_ssl], [ace_cv_user_enable_ssl=yes])
+AM_CONDITIONAL([BUILD_SSL], [test X$ace_cv_user_enable_ssl = Xyes])
 ])
 
 AC_DEFUN([ACE_ENABLE_ACEXML],
@@ -1172,21 +1203,21 @@ AC_DEFUN([ACE_ENABLE_ACEXML],
 			      [compile/use the ACEXML library [[yes]]]),
 	       [case "${enableval}" in
 		 yes)
-		  ace_user_enable_acexml=yes
+		  ace_cv_user_enable_acexml=yes
 		  ;;
 		 no)
-		  ace_user_enable_acexml=no
+		  ace_cv_user_enable_acexml=no
 		  ;;
 		 *)
 		  AC_MSG_ERROR(bad value ${enableval} for --enable-acexml)
 		  ;;
 		esac],
 		[
-		 ace_user_enable_acexml=yes
+		 ace_cv_user_enable_acexml=yes
 		])
 AC_CACHE_CHECK([whether to compile/use the ACEXML library],
-               [ace_user_enable_acexml], [ace_user_enable_acexml=yes])
-AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_enable_acexml = Xyes])
+               [ace_cv_user_enable_acexml], [ace_cv_user_enable_acexml=yes])
+AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_cv_user_enable_acexml = Xyes])
 ])
 
 
@@ -1255,22 +1286,36 @@ AC_DEFUN([ACE_PATH_QT],
 #---------------------------------------------------------------------------
 # Find Tcl Libraries, flags, etc.
 AC_DEFUN([ACE_PATH_TCL],
-[AC_ARG_WITH([tclconfig],
+[AC_REQUIRE([ACE_CHECK_LIB64])
+ AC_ARG_WITH([tclconfig],
  AS_HELP_STRING([--with-tclconfig=DIR],
                 [path to tclConfig.sh [[automatic]]]),
  [ ac_tclconfig_dir="${withval}" ])
+
  if test X"${ac_tclconfig_dir}" = X; then
-   AC_PATH_PROG([TCLCONFIG], [tclConfig.sh], [],
-                [${PATH}:/usr/local/lib:/usr/pkg/lib:/usr/lib/tcl8.4:/usr/lib/tcl8.3:/usr/lib])
- else
-  AC_MSG_CHECKING([whether tclConfig.sh exists in ${ac_tclconfig_dir}])
-   if test -f "${ac_tclconfig_dir}/tclConfig.sh"; then
-     TCLCONFIG="${ac_tclconfig_dir}/tclConfig.sh"
-     AC_MSG_RESULT([yes])
-   else
-     AC_MSG_RESULT([no])
-   fi
+   for i in `ls -d ${exec_prefix}/lib${acelibsuff} 2>/dev/null` \
+           `ls -d ${prefix}/lib${acelibsuff} 2>/dev/null` \
+           `ls -d /usr/local/lib${acelibsuff} 2>/dev/null` \
+           `ls -d /usr/contrib/lib${acelibsuff} 2>/dev/null` \
+           `ls -d /usr/lib${acelibsuff} 2>/dev/null` \
+           `ls -d /usr/pkg/lib${acelibsuff} 2>/dev/null` \
+           `ls -d /usr/lib${acelibsuff}/tcl8.[[43]]* 2>/dev/null` \
+           ; do
+       if test -f "$i/tclConfig.sh" ; then
+           ac_tclconfig_dir=`(cd $i; pwd)`
+           break
+       fi
+   done
  fi
+
+ AC_MSG_CHECKING([whether tclConfig.sh exists in ${ac_tclconfig_dir}])
+ if test -f "${ac_tclconfig_dir}/tclConfig.sh"; then
+   TCLCONFIG="${ac_tclconfig_dir}/tclConfig.sh"
+   AC_MSG_RESULT([yes])
+ else
+   AC_MSG_RESULT([no])
+ fi
+
  if test X"${TCLCONFIG}" != X; then
    . ${TCLCONFIG}
 
@@ -1293,17 +1338,33 @@ AC_DEFUN([ACE_PATH_TK],
                 [path to tkConfig.sh [[automatic]]]),
  [ ac_tkconfig_dir="${withval}" ])
  if test X"${ac_tkconfig_dir}" = X; then
-   AC_PATH_PROG([TKCONFIG], [tkConfig.sh], [],
-                [${PATH}:/usr/local/lib:/usr/pkg/lib:/usr/lib/tk8.4:/usr/lib/tk8.3:/usr/lib])
- else
-   AC_MSG_CHECKING([whether tkConfig.sh exists in ${ac_tkconfig_dir}])
-   if test -f "${ac_tkconfig_dir}/tkConfig.sh"; then
-     TKCONFIG="${ac_tkconfig_dir}/tkConfig.sh"
-     AC_MSG_RESULT([yes])
+   if test X"${ac_tclconfig_dir}" != X && test -f ${ac_tclconfig_dir}/tkConfig.sh; then
+     ac_tkconfig_dir=$ac_tclconfig_dir;
    else
-     AC_MSG_RESULT([no])
+     for i in `ls -d ${exec_prefix}/lib${acelibsuff} 2>/dev/null` \
+             `ls -d ${prefix}/lib${acelibsuff} 2>/dev/null` \
+             `ls -d /usr/local/lib${acelibsuff} 2>/dev/null` \
+             `ls -d /usr/contrib/lib${acelibsuff} 2>/dev/null` \
+             `ls -d /usr/lib${acelibsuff} 2>/dev/null` \
+             `ls -d /usr/pkg/lib${acelibsuff} 2>/dev/null` \
+             `ls -d /usr/lib${acelibsuff}/tk8.[[43]]* 2>/dev/null` \
+             ; do
+         if test -f "$i/tkConfig.sh" ; then
+             ac_tkconfig_dir=`(cd $i; pwd)`
+             break
+         fi
+     done
    fi
  fi
+
+ AC_MSG_CHECKING([whether tkConfig.sh exists in ${ac_tkconfig_dir}])
+ if test -f "${ac_tkconfig_dir}/tkConfig.sh"; then
+   TKCONFIG="${ac_tkconfig_dir}/tkConfig.sh"
+   AC_MSG_RESULT([yes])
+ else
+   AC_MSG_RESULT([no])
+ fi
+
  if test X"${TKCONFIG}" != X; then
    . ${TKCONFIG}
 
@@ -1516,6 +1577,59 @@ if test "${ace_with_zzip}" != no; then
   AC_SUBST(ACE_ZZIP_LIBS)
 fi
 AM_CONDITIONAL([BUILD_ZZIP], test "${ace_with_zzip}" != no)
+])
+
+# ACE_PATH_BZIP2
+#---------------------------------------------------------------------------
+# Find bzip2 Libraries, flags, etc.
+AC_DEFUN([ACE_PATH_BZIP2],
+[
+ACE_BZIP2_CPPFLAGS=""
+ACE_BZIP2_LDFLAGS=""
+
+dnl TODO: default to false, at least until we add a check to see if
+dnl the bzip2 library is usable.
+AC_ARG_WITH([bzip2],
+  AS_HELP_STRING([--with-bzip2@<:@=DIR@:>@],
+                 [root directory of bzip2 installation]),
+  [
+  ace_with_bzip2="${withval}"
+  if test "${ace_with_bzip2}" != yes; then
+       ace_bzip2_include="${ace_with_bzip2}/include"
+       ace_bzip2_libdir="${ace_with_bzip2}/lib"
+  fi
+  ],[ace_with_bzip2=no])
+
+dnl TODO: let's wait and see before adding options to specify header
+dnl and library location separately.
+dnl
+dnl AC_ARG_WITH([bzip2_include],
+dnl   AS_HELP_STRING([--with-bzip2-include=DIR],
+dnl              [specify exact include dir for bzip2 headers]),
+dnl   [ace_bzip2_include="$withval"])
+dnl
+dnl AC_ARG_WITH([bzip2_libdir],
+dnl   AS_HELP_STRING([--with-bzip2-libdir=DIR],
+dnl              [specify exact include dir for bzip2 libraries]),
+dnl   [ace_bzip2_libdir="$withval"])
+
+if test "${ace_bzip2_include}"; then
+  ACE_BZIP2_CPPFLAGS="-I$ace_bzip2_include"
+fi
+
+if test "${ace_bzip2_libdir}"; then
+  ACE_BZIP2_LDFLAGS="-L$ace_bzip2_libdir"
+fi
+
+ACE_BZIP2_CPPFLAGS="${ACE_BZIP2_CPPFLAGS} -DBZIP2"
+
+if test "${ace_with_bzip2}" != no; then
+  ACE_BZIP2_LIBS="-lz"
+  AC_SUBST(ACE_BZIP2_CPPFLAGS)
+  AC_SUBST(ACE_BZIP2_LDFLAGS)
+  AC_SUBST(ACE_BZIP2_LIBS)
+fi
+AM_CONDITIONAL([BUILD_BZIP2], test "${ace_with_bzip2}" != no)
 ])
 
 
