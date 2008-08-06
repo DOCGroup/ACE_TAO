@@ -254,7 +254,7 @@ using Kokyu.
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 
-#%if 0%{?have_fox} == 1
+%if 0%{?have_fox} == 1
 # ---------------- ace-foxreactor ----------------
 
 %package -n     ace-foxreactor
@@ -778,7 +778,7 @@ tk = 1
 fl = 1
 qt = 1
 gl = 1
-#%if 0%{?have_fox} == 1
+%if 0%{?have_fox} == 1
 fox = 1
 ace_foxreactor = 1
 tao_foxresource = 1
@@ -850,7 +850,7 @@ tk=1
 fl=1
 qt=1
 gl=1
-#%if 0%{?have_fox} == 1
+%if 0%{?have_fox} == 1
 fox=1
 ace_foxreactor=1
 tao_foxresource=1
@@ -1576,7 +1576,7 @@ fi
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 # ---------------- ace-foxreactor ----------------
 
-#%if 0%{?have_fox} == 1
+%if 0%{?have_fox} == 1
 %postun -n ace-foxreactor -p /sbin/ldconfig
 %endif
 
