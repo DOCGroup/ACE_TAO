@@ -790,13 +790,22 @@ ACEXML_Parser::normalize_systemid (const ACEXML_Char* systemId)
       ACE_ASSERT (baseURI);
       const ACEXML_Char* temp = 0;
       if (ACE_OS::strstr (baseURI, ACE_TEXT ("http://")) != 0)
-        // baseURI is a HTTP URL and systemId is relative. Note that this
-        // is not compliant with RFC2396. Caveat Emptor !
-        temp = ACE_OS::strrchr (baseURI, '/');
+        {
+          // baseURI is a HTTP URL and systemId is relative. Note that this
+          // is not compliant with RFC2396. Caveat Emptor !
+          temp = ACE_OS::strrchr (baseURI, '/');
+        }
       else
-        // baseURI is a local file and systemId is relative
-        // Unlike the HTTP one, this will work always.
-        temp = ACE_OS::strrchr (baseURI,ACE_DIRECTORY_SEPARATOR_CHAR);
+        {
+          // baseURI is a local file and systemId is relative
+          // Unlike the HTTP one, this will work always.
+          temp = ACE_OS::strrchr (baseURI, ACE_TEXT ('\\'));
+          if (!temp)
+            {
+              temp = ACE_OS::strrchr (baseURI, ACE_TEXT ('/'));
+            }
+        }
+
       if (temp)
         {
           size_t pos = temp - baseURI + 1;
