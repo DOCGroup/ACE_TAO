@@ -31,8 +31,18 @@ Peer::create_session (Test::Session_Control_ptr control,
                              peer_count),
                     CORBA::NO_MEMORY ());
   PortableServer::ServantBase_var transfer_ownership (session_impl);
+  Test::Session_var session;
 
-  return session_impl->_this ();
+#if defined (CORBA_E_COMPACT) || defined (CORBA_E_MICRO)
+  PortableServer::POA_var poa = this->_default_POA ();
+  PortableServer::ObjectId_var id = poa->activate_object (transfer_ownership.in ());
+  CORBA::Object_var object = poa->id_to_reference (id.in ());
+  session = Test::Session::_unchecked_narrow (object.in());
+#else
+  session = session_impl->_this ();
+#endif /* CORBA_E_COMPACT || CORBA_E_MICRO */
+
+  return session._retn ();
 }
 
 void
