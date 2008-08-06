@@ -1,5 +1,5 @@
 <!-- $Id$ -->
-
+<body>
 <html>
 <head>
 <title>The realm of the build czar</title>
@@ -8,7 +8,7 @@
 <h2>Build Czar Duties</h2>
 <p>
 
-  Th main duties of the Build Czar are summarized as follows
+  The main duties of the Build Czar are summarized as follows
 
   <li> Continuously monitor the builds using the <a
   href="http://www.dre.vanderbilt.edu/scoreboard"> Scoreboard </a> as
@@ -215,14 +215,24 @@ these before you do anything with them.</li></ul>
 <li>Check the file, generate_rel_manpages into the repository if you have made some changes to it.</li>
 <li>Make sure the new version is available in Bugzilla.</li>
 <ul>
-<li>now we have a bczar Bugzilla user with full privileges. This bczar Bugzilla account would point to bczar user at ISIS. For example, as a new build czar, you could update the .forward file on one of the ISIS hosts, say, naboo.dre.vanderbilt.edu with your build czar email.</li>
-<li>you should be able to send request through the bugzilla system to email you the password at any time to bczar@dre.vanderbilt.edu</li>
+<li>We now have a bczar Bugzilla user (bczar@dre.vanderbilt.edu) with full privileges which points
+    to the bczar user at ISIS. To gain access to this account as a new build czar, you could update
+    the ~/.forward file on one of the ISIS hosts (for example bczar@naboo.dre.vanderbilt.edu) with
+    your own email address (but be aware that if you leave this ~/.forward file in effect, you will
+    get innundated with cron mail messages from all of the ISIS lab build machines, so it is probably
+    best to remove it after obtaining the Bugzilla password). From the "Bugzilla - Main Page"
+    (http://bugzilla.dre.vanderbilt.edu/index.cgi) click on one of the various "LogIn" links,
+    and from this login page you should be able to "Submit Request" to change a forgotten password.
+    If you enter bczar@dre.vanderbilt.edu and click "Submit Request" this will email you the password
+    change link to bczar@dre.vanderbilt.edu, which will then in turn be forwarded to your own email
+    account. Simply copy this link into your browser to set your own bczar password for the next
+    steps.</li>
 <li>here is the description of how to add a new version through Bugzilla.</li>
-<li>go to any Bugzilla "Query" page, you should see a yellow box at the bottom. click "Log in" link to log in as bczar@dre.vanderbilt.edu.</li>
-<li>look at the yellow box at bottom again. You will see several links following "Edit". Click on the "components" link.</li>
+<li>go to any Bugzilla "Query" page, you should see a grey box at the bottom. click "Log in" link to log in as bczar@dre.vanderbilt.edu.</li>
+<li>look at the grey box at bottom again. You will see several links following "Edit". Click on the "Product" link.</li>
 <li>you are then at "Select product" page. You should see a list components, i.e., ACE CIAO TAO. Click on the product you want to edit.</li>
 <li>you are then at "Edit product" page. Scroll down a bit, you should see a list of all versions coming with this product. At the very beginning of the list, you should see "Edit versions" link. Click this link.</li>
-<li>you should see a "Add a new version" text box and a "Add" link just above the yellow box at the bottom. Click on this link</li>
+<li>you should see a "Add a new version" text box and a "Add" link just above the grey box at the bottom. Click on this link</li>
 <li>you are then at "Add version of [Name of the product]" page.</li>
 <li>you are able to add the new version now.</li>
 </ul>
@@ -315,9 +325,8 @@ as Solaris).<br>
 17. Update this page if you have any more tips for future build czars :-). This
 page is in svn under <code>ACE_wrappres/docs/bczar/bczar.html</code><br>
 </p>
-</body>
+<hr>
 
-<body>
 <Center> <h1>The Realm of the Build Czar</h1></center>
 <hr>
 <h2>Build Czar Arthur</h2>
@@ -367,6 +376,5 @@ While enimes and evils I seeke,<br>
 I shall fight against them bothe.<br>
 <br></tt>
 <hr>
-
-
 </html>
+</body>
