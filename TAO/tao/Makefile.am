@@ -2677,8 +2677,8 @@ EXTRA_DIST += \
 
 ## Makefile.Bzip2Compressor.am
 
-if BUILD_EXCEPTIONS
 if BUILD_BZIP2
+if BUILD_EXCEPTIONS
 
 lib_LTLIBRARIES += libTAO_Bzip2Compressor.la
 
@@ -2715,14 +2715,14 @@ CLEANFILES += \
   TAO_Bzip2Compressor.pc
 
 TAO_Bzip2Compressor.pc: ${top_builddir}/config.status ${srcdir}/Compression/bzip2/TAO_Bzip2Compressor.pc.in
-        ${top_builddir}/config.status --file $@:${srcdir}/Compression/bzip2/TAO_Bzip2Compressor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Compression/bzip2/TAO_Bzip2Compressor.pc.in
 
-endif BUILD_BZIP2
 endif BUILD_EXCEPTIONS
+endif BUILD_BZIP2
 
 EXTRA_DIST += \
-  Compression/bzip2/TAO_Bzip2Compressor.rc \
-  Compression/bzip2/TAO_Bzip2Compressor.pc.in
+  Compression/bzip2/TAO_Bzip2Compressor.pc.in \
+  Compression/bzip2/TAO_Bzip2Compressor.rc
 
 
 ## Makefile.PortableServer.am
@@ -6345,7 +6345,8 @@ nobase_include_HEADERS += \
   TransportCurrent/TCC.inl \
   TransportCurrent/TCS.h \
   TransportCurrent/TCS.inl \
-  TransportCurrent/Transport_Current.h
+  TransportCurrent/Transport_Current.h \
+  TransportCurrent/Transport_Current_Export.h
 
 endif BUILD_TRANSPORT_CURRENT
 endif BUILD_INTERCEPTORS
