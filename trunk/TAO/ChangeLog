@@ -1,3 +1,17 @@
+Wed Aug  6 22:30:40 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated.
+
+        * tao/Bzip2Compressor.mpc:
+
+          Changed to inherit from ace_bzip2 instead of bzip2 base project.
+
+        * tao/TC.mpc:
+
+          Added Transport_Current_Export.h to Header_Files section.
+
 Wed Aug  6 19:08:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * rbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:

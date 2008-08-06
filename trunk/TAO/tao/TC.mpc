@@ -18,6 +18,7 @@ project(TC) : taolib_with_idl, tao_output, tao_versioning_idl_defaults, install,
     TransportCurrent/Current_ORBInitializer.h
     TransportCurrent/Current_ORBInitializer_Base.h
     TransportCurrent/Transport_Current.h
+    TransportCurrent/Transport_Current_Export.h
   }
 
   Inline_Files {
