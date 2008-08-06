@@ -671,7 +671,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if (getopt.opt_ind () >= argc && client || argc == 1)
+  if ((getopt.opt_ind () >= argc && client != 0) || argc == 1)
     {
       usage ();
       return 1;
@@ -691,7 +691,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           // Handle input in the current thread.
           while (server.handle_input (0) != 1)
-            continue;
+            {
+              continue;
+            }
         }
     }
   else

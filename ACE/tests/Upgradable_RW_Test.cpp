@@ -194,8 +194,8 @@ Reader_Task::svc (void)
           }
       }
 
-      if (result == -1 && errno == EBUSY // we tried and failed
-          || !use_try_upgrade)           // we did not try at all
+      if ((result == -1 && errno == EBUSY) // we tried and failed
+          || !use_try_upgrade)             // we did not try at all
         {
 #if defined (RW_MUTEX)
           ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
@@ -207,9 +207,11 @@ Reader_Task::svc (void)
           find_last ();
         }
       else if (result == -1 && errno != EBUSY)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT (" (%t) failure in upgrading to write lock!\n"),
-                    1));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (" (%t) failure in upgrading to write lock!\n"),
+                      1));
+        }
     }
 
   // Stop the timer.

@@ -183,7 +183,12 @@ Library::~Library ()
 {
   delete mpcfile_;
   int i;
-  for (i = 0; i < num_modules_; delete modules_[i++]);
+  
+  for (i = 0; i < num_modules_; delete modules_[i++])
+    {
+      // No action.
+    }
+  
   delete [] modules_;
 }
 

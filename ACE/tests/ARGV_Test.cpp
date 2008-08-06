@@ -247,7 +247,7 @@ test_argv_quotes (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args2.argc ()));
 
   // args3
-  ACE_ARGV args3(argv);
+  ACE_ARGV args3 (argv);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** args-5 ***\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("args.argc (): %d\n"), args3.argc ()));

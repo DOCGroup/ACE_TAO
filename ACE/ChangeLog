@@ -1,3 +1,26 @@
+Wed Aug  6 18:17:32 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * protocols/ace/HTBP/HTBP_Channel.cpp:
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * performance-tests/TCP/tcp_test.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+        * tests/Upgradable_RW_Test.cpp:
+        * tests/ARGV_Test.cpp:
+        * tests/OrdMultiSet_Test.cpp:
+        * apps/JAWS/server/HTTP_Server.cpp:
+        * apps/soreduce/Obj_Module.cpp:
+        * apps/soreduce/Library.cpp:
+        * apps/soreduce/soreduce.cpp:
+        * apps/soreduce/SO_Group.cpp:
+        * websvcs/lib/URL_Addr.cpp:
+        * examples/OS/Process/imore.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+
+          Cosmetic changes to eliminate warnings from
+          some Linux compilers.
+
 Wed Aug  6 13:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * docs/bczar/bczar.html:
