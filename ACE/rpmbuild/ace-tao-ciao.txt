@@ -58,21 +58,22 @@
 %define OPTTAG .O0
 %endif
 
-Summary: The ADAPTIVE Communication Environment (ACE) and The ACE ORB (TAO)
-Name: ace-tao
-Version: %{ACEVER}
-Release: 1%{?OPTTAG}%{?dist}
-Group: Development/Libraries
-URL: http://www.cs.wustl.edu/~schmidt/ACE.html
-License: DOC License
-Source0: http://download.dre.vanderbilt.edu/previous_versions/ACEhead05082008.tar.bz2
-## Source1: ace-tao-etc.tar.bz2
+Summary:      The ADAPTIVE Communication Environment (ACE) and The ACE ORB (TAO)
+Name:         ace-tao
+Version:      %{ACEVER}
+Release:      1%{?OPTTAG}%{?dist}
+Group:        Development/Libraries/C and C++
+URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
+License:      DOC License
+Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead06082008.tar.bz2
+Source1:      ace-tao-rpmlintrc
+## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
 ## Patch0: ace-tao-config.patch
 ## Patch5: ace-tao-orbsvcs-daemon.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Requires(post): /sbin/install-info, /sbin/install-info
+Requires(post):   /sbin/install-info
 Requires(preun):  /sbin/install-info
 Requires(postun): /sbin/ldconfig
 
@@ -82,7 +83,8 @@ Requires(postun): /sbin/ldconfig
 #Requires(postun): /sbin/ldconfig
 #%else
 #PreReq:         %install_info_prereq /sbin/ldconfig %insserv_prereq
-#%fillup_prereq %endif
+#%fillup_prereq
+#%endif
 
 BuildRequires:  openssl-devel
 BuildRequires:  gcc-c++
@@ -114,6 +116,7 @@ BuildRequires:  tk
 %endif
 
 %if %{?_with_qt:1}%{!?_with_qt:0}
+
 # qt3 has a name change in F9
 %if 0%{?fedora} > 8
 BuildRequires:  qt3-devel
@@ -129,6 +132,7 @@ BuildRequires:  qt-devel
 %endif
 BuildRequires:  %{qtpac}-devel
 %endif
+
 %endif
 
 %if %{?_with_fox:1}%{!?_with_fox:0}
@@ -289,9 +293,13 @@ Requires:       fox16
 A Reactor implementation that uses the FOX toolkit for
 event demultiplexing.  This will let us integrate the FOX toolkit with
 ACE and/or TAO.
+%endif
+%endif
 
 # ---------------- ace-foxreactor-devel ----------------
 
+%if %{?_with_fox:1}%{!?_with_fox:0}
+%if 0%{?have_fox} == 1
 %package -n     ace-foxreactor-devel
 Summary:        Header files for development with ACE_FoxReactor
 Version:        %{ACEVER}
@@ -304,6 +312,7 @@ Requires:       fox16-devel
 
 This package contains the components needed for developing programs
 using the ACE_FoxReactor.
+%endif
 %endif
 
 # ---------------- ace-flreactor ----------------
@@ -321,9 +330,11 @@ Requires:       fltk
 A Reactor implementation that uses the Fast-Light (FL) toolkit for
 event demultiplexing.  This will let us integrate the FL toolkit with
 ACE and/or TAO.
+%endif
 
 # ---------------- ace-flreactor-devel ----------------
 
+%if %{?_with_fl:1}%{!?_with_fl:0}
 %package -n     ace-flreactor-devel
 Summary:        Header files for development with ACE_FlReactor
 Version:        %{ACEVER}
@@ -353,9 +364,11 @@ Requires:       qt
 A Reactor implementation that uses the Qt toolkit for event
 demultiplexing.  This will let us integrate the Qt toolkit with ACE
 and/or TAO.
+%endif
 
 # ---------------- ace-qtreactor-devel ----------------
 
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %package -n     ace-qtreactor-devel
 Summary:        Header files for development with ACE_QtReactor
 Version:        %{ACEVER}
@@ -385,9 +398,11 @@ Requires:       tk
 A Reactor implementation that uses the Tk toolkit for event
 demultiplexing.  This will let us integrate the Tk toolkit with ACE
 and/or TAO.
+%endif
 
 # ---------------- ace-tkreactor-devel ----------------
 
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %package -n     ace-tkreactor-devel
 Summary:        Header files for development with ACE_TkReactor
 Version:        %{ACEVER}
@@ -418,9 +433,11 @@ Requires:       ace = %{ACEVER}
 A Reactor implementation that uses the X Toolkit for event
 demultiplexing.  This will let us integrate the X Toolkit with ACE
 and/or TAO.
+%endif
 
 # ---------------- ace-xtreactor-devel ----------------
 
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %package -n     ace-xtreactor-devel
 Summary:        Header files for development with ACE_XtReactor
 Version:        %{ACEVER}
@@ -500,7 +517,7 @@ Summary:        The TAO CORBA Naming Service (CosNaming) and Interoperable Namin
 Version:        %{TAOVER}
 Group:          Development/Libraries/C and C++
 Requires:       tao = %{TAOVER}
-Requires: logrotate
+Requires:       logrotate
 
 %description -n tao-cosnaming
 
@@ -528,11 +545,11 @@ Summary:        The TAO CORBA CosEvent Service
 Version:        %{TAOVER}
 Group:          Development/Libraries/C and C++
 Requires:       tao = %{TAOVER}
-Requires: logrotate
+Requires:       logrotate
 
 %description -n tao-cosevent
 
-The CosEvent_Service is a COS compilant Event Service.
+The CosEvent_Service is a COS compliant Event Service.
 
 The service is registered with the naming service with the name
 "CosEventService" . It exposes the <EventChannel> interface which can be
@@ -545,11 +562,11 @@ Summary:        The TAO CORBA Notification Service
 Version:        %{TAOVER}
 Group:          Development/Libraries/C and C++
 Requires:       tao = %{TAOVER}
-Requires: logrotate
+Requires:       logrotate
 
 %description -n tao-cosnotification
 
-The Notify_Service is a COS compilant Notification Service.
+The Notify_Service is a COS compliant Notification Service.
 
 The Notify_Service executable starts up a Notification Service factory
 and registers it with the Naming Service under the name
@@ -562,11 +579,11 @@ Summary:        The TAO CORBA Trading Service
 Version:        %{TAOVER}
 Group:          Development/Libraries/C and C++
 Requires:       tao = %{TAOVER}
-Requires: logrotate
+Requires:       logrotate
 
 %description -n tao-costrading
 
-The Trading_Service is a COS compilant Trading Service.
+The Trading_Service is a COS compliant Trading Service.
 
 # ---------------- tao-rtevent ----------------
 
@@ -575,7 +592,7 @@ Summary:        The TAO Real-time Event Service
 Version:        %{TAOVER}
 Group:          Development/Libraries/C and C++
 Requires:       tao = %{TAOVER}
-Requires: logrotate
+Requires:       logrotate
 
 %description -n tao-rtevent
 
@@ -589,7 +606,7 @@ Summary:        The TAO CORBA Concurrency Service
 Version:        %{TAOVER}
 Group:          Development/Libraries/C and C++
 Requires:       tao = %{TAOVER}
-Requires: logrotate
+Requires:       logrotate
 
 %description -n tao-cosconcurrency
 
@@ -598,7 +615,6 @@ The CORBA Concurrency Service.
 # ---------------- tao-flresource ----------------
 
 %if %{?_with_fl:1}%{!?_with_fl:0}
-
 %package -n     tao-flresource
 Summary:        FlResource_Factory for creating FlReactor
 Version:        %{TAOVER}
@@ -611,9 +627,11 @@ Requires:       tao = %{TAOVER}
 This factory is intended for creating FlReactor for ORB. This factory
 can be feed into ORB using TAO_ORB_Core::set_gui_resource_factory
 method which is usually done by TAO_FlResource_Loader.
+%endif
 
 # ---------------- tao-flresource-devel ----------------
 
+%if %{?_with_fl:1}%{!?_with_fl:0}
 %package -n     tao-flresource-devel
 Summary:        Header files for development with FlResource_Factory
 Version:        %{TAOVER}
@@ -643,9 +661,10 @@ Requires:       tao = %{TAOVER}
 This factory is intended for creating QtReactor for ORB. This factory
 can be feed into ORB using TAO_ORB_Core::set_gui_resource_factory
 method which is usually done by TAO_QtResource_Loader.
-
+%endif
 # ---------------- tao-qtresource-devel ----------------
 
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %package -n     tao-qtresource-devel
 Summary:        Header files for development with QtResource_Factory
 Version:        %{TAOVER}
@@ -675,9 +694,11 @@ Requires:       tao = %{TAOVER}
 This factory is intended for creating TkReactor for ORB. This factory
 can be feed into ORB using TAO_ORB_Core::set_gui_resource_factory
 method which is usually done by TAO_TkResource_Loader.
+%endif
 
 # ---------------- tao-tkresource-devel ----------------
 
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %package -n     tao-tkresource-devel
 Summary:        Header files for development with TkResource_Factory
 Version:        %{TAOVER}
@@ -707,9 +728,11 @@ Requires:       tao = %{TAOVER}
 This factory is intended for creating XtReactor for ORB. This factory
 can be feed into ORB using TAO_ORB_Core::set_gui_resource_factory
 method which is usually done by TAO_XtResource_Loader.
+%endif
 
 # ---------------- tao-xtresource-devel ----------------
 
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %package -n     tao-xtresource-devel
 Summary:        Header files for development with XtResource_Factory
 Version:        %{TAOVER}
@@ -1056,14 +1079,6 @@ for logfile in cosnaming cosconcurrency cosevent cosnotification costrading rtev
     touch %{buildroot}%{_localstatedir}/log/tao/tao-${logfile}.log
 done
 
-%if %{defined suse_version}
-pushd %{buildroot}%{_sysconfdir}/init.d
-for f in *; do
-        ln -s /etc/init.d/$f %{buildroot}%{_sbindir}/rc${f}
-done
-popd
-%endif
-
 # ---------------- Development Components ----------------
 
 # INSTHDR="cp --preserve=timestamps"
@@ -1225,6 +1240,14 @@ tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-init-suse.tar.bz2 \
 %else
 tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora.tar.bz2 \
         -C %{buildroot}%{_sysconfdir}
+%endif
+
+%if %{defined suse_version}
+pushd %{buildroot}%{_sysconfdir}/init.d
+for f in *; do
+        ln -s /etc/init.d/$f %{buildroot}%{_sbindir}/rc${f}
+done
+popd
 %endif
 
 ## # FIXME - namespace issues need to be resolved
@@ -1404,7 +1427,11 @@ exit 0
 
 %post -n ace-devel
 
+%if %{defined suse_version}
+%install_info --info-dir=%_infodir %_infodir/ace_gperf.info.%{_extension}
+%else
 /sbin/install-info %{_infodir}/ace_gperf.info%{_extension} %{_infodir}/dir
+%endif
 
 # ---------------- ace-xml ----------------
 
@@ -1552,55 +1579,79 @@ fi
 # ---------------- tao-cosnaming ----------------
 
 %preun -n tao-cosnaming
+%if %{defined suse_version}
+%stop_on_removal tao-cosnaming
+%else
 if [ $1 = 0 ]; then
     /sbin/service tao-cosnaming stop > /dev/null 2>&1
     /sbin/chkconfig --del tao-cosnaming
 fi
+%endif
 
 # ---------------- tao-cosevent ----------------
 
 %preun -n tao-cosevent
 
+%if %{defined suse_version}
+%stop_on_removal tao-cosevent
+%else
 if [ $1 = 0 ]; then
     /sbin/service tao-cosevent stop > /dev/null 2>&1
     /sbin/chkconfig --del tao-cosevent
 fi
+%endif
 
 # ---------------- tao-cosnotification ----------------
 
 %preun -n tao-cosnotification
 
+%if %{defined suse_version}
+%stop_on_removal tao-cosnotification
+%else
 if [ $1 = 0 ]; then
     /sbin/service tao-cosnotification stop > /dev/null 2>&1
     /sbin/chkconfig --del tao-cosnotification
 fi
+%endif
 
 # ---------------- tao-costrading ----------------
 
 %preun -n tao-costrading
 
+%if %{defined suse_version}
+%stop_on_removal tao-costrading
+%else
 if [ $1 = 0 ]; then
     /sbin/service tao-costrading stop > /dev/null 2>&1
     /sbin/chkconfig --del tao-costrading
 fi
+%endif
 
 # ---------------- tao-rtevent ----------------
 
 %preun -n tao-rtevent
 
+%if %{defined suse_version}
+%stop_on_removal tao-rtevent
+%else
 if [ $1 = 0 ]; then
     /sbin/service tao-rtevent stop > /dev/null 2>&1
     /sbin/chkconfig --del tao-rtevent
 fi
+%endif
 
 # ---------------- tao-cosconcurrency ----------------
 
 %preun -n tao-cosconcurrency
 
+%if %{defined suse_version}
+%stop_on_removal tao-cosconcurrency
+%else
 if [ $1 = 0 ]; then
     /sbin/service tao-cosconcurrency stop > /dev/null 2>&1
     /sbin/chkconfig --del tao-cosconcurrency
 fi
+%endif
 
 # ================================================================
 # post uninstall
@@ -1662,49 +1713,79 @@ fi
 
 %postun -n tao-cosnaming
 
+%if %{defined suse_version}
+%restart_on_update tao-cosnaming
+%insserv_cleanup
+%else
 if [ "$1" -ge "1" ]; then
     /sbin/service tao-cosnaming %{cond_restart} > /dev/null 2>&1
 fi
+%endif
 
 # ---------------- tao-cosevent ----------------
 
 %postun -n tao-cosevent
 
+%if %{defined suse_version}
+%restart_on_update tao-cosevent
+%insserv_cleanup
+%else
 if [ "$1" -ge "1" ]; then
     /sbin/service tao-cosevent %{cond_restart} > /dev/null 2>&1
 fi
+%endif
 
 # ---------------- tao-cosnotification ----------------
 
 %postun -n tao-cosnotification
 
+%if %{defined suse_version}
+%restart_on_update tao-cosnotification
+%insserv_cleanup
+%else
 if [ "$1" -ge "1" ]; then
     /sbin/service tao-cosnotification %{cond_restart} > /dev/null 2>&1
 fi
+%endif
 
 # ---------------- tao-costrading ----------------
 
 %postun -n tao-costrading
 
+%if %{defined suse_version}
+%restart_on_update tao-costrading
+%insserv_cleanup
+%else
 if [ "$1" -ge "1" ]; then
     /sbin/service tao-costrading %{cond_restart} > /dev/null 2>&1
 fi
+%endif
 
 # ---------------- tao-rtevent ----------------
 
 %postun -n tao-rtevent
 
+%if %{defined suse_version}
+%restart_on_update tao-rtevent
+%insserv_cleanup
+%else
 if [ "$1" -ge "1" ]; then
     /sbin/service tao-rtevent %{cond_restart} > /dev/null 2>&1
 fi
+%endif
 
 # ---------------- tao-cosconcurrency ----------------
 
 %postun -n tao-cosconcurrency
 
+%if %{defined suse_version}
+%restart_on_update tao-cosconcurrency
+%insserv_cleanup
+%else
 if [ "$1" -ge "1" ]; then
     /sbin/service tao-cosconcurrency %{cond_restart} > /dev/null 2>&1
 fi
+%endif
 
 # ---------------- tao-flresource ----------------
 
@@ -2407,246 +2488,3 @@ fi
 %changelog
 * Thu Jul 31 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.6-2
 - Removed ace-tao-unusedarg.patch (related to bug #3270).
-
-* Sat Jul  5 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.6-1
-- Updated for latest DOC Group release (x.6.6).
-- Tracked libACE_Monitor_Control name change.
-- Added idl and pidl include files to tao-devel package.
-
-* Wed Jun 25 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.5-6
-- Removed gperf to gperf_ace rename, ACE ships now ace_gperf by default
-- Removed ace-tao-strrecvfd.patch
-- Removed gperf macro from ace-tao-config.patch
-- Removed gperf.info patch
-
-* Mon Jun  2 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-5
-- Added ace-tao-strrecvfd.patch (related to bug #3291).
-- Changed make loop construct to abort when subcomponent fails.
-- Removed PSS from TAO build list.
-- Added ace-tao-unusedarg.patch (related to bug #3270).
-- Made qt3 BuildRequires conditional on Fedora version.
-
-* Wed May 28 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-4
-- Added ace-tao-orbsvcs-daemon.patch.
-- Fixed tao-cosconcurrency command line arguments.
-
-* Sat May 24 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-3
-- Removed obstack patch, no longer needed.
-- Converted ace-tao-config-ipv6.patch into conditional rpm script.
-- Converted ace-tao-rnq.patch into conditional rpm script.
-- Converted ace-tao-config-tmplvis.patch and ace-tao-hasicmp.patch
-  into rpm script.
-
-* Thu May 22 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.5-3
-- Removed codeset patch, merged into the distribution
-
-* Wed May 21 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-2
-- Fixed without opt processing.
-
-* Mon May 19 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.5-1
-- Updated to latest DOC Group release (x.6.5).
-- Updated ace-tao-codeset.patch.
-- Removed ace-tao-x86_64.patch (fixed in repository.)
-- Added libACE_ETCL, libACE_ETCL_Parser and libACE_MonitorControl.
-
-* Sun May 18 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.4-4
-- Fixed tao-cosnaming.dat path bug.
-
-* Sun May 18 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.4-3
-- Improved to use _localstatedir where appropriate.
-- Made adjustments to file/dir permissions for services.
-- Added service logrotate scripts.
-
-* Wed May 14 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.4-2
-- Renamed tao services again per Fedora service spec.
-
-* Thu May  1 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.4-1
-- Updated to latest DOC Group release (x.6.4).
-
-* Thu May  1 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.3-3
-- Install service binaries in /usr/sbin instead of /usr/bin.
-
-* Sun Mar 30 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.3-2
-- Added dist macro to Release tag.
-- Miscellaneous rpmlint fixes.
-- Renamed service executables.
-
-* Sat Feb 23 2008 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.3-1
-- Updated to latest DOC group release (x.6.3).
-- Removed ace-tao-conf-epoll patch, no longer needed.
-
-* Sat Dec 15 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.2-1
-- Updated to latest DOC group release (x.6.2).
-
-* Sat Dec 15 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.1-3
-- Added service modules back into runtime packages.
-
-* Mon Dec  3 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.1-2
-- Added QtResource_Loader to explicit headers.
-
-* Sun Oct 28 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.1-2
-- Applied Tom Callaway's Fedora fixes.
-
-* Sat Sep 22 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6.1-1
-- Updated to latest DOC group release (x.6.1).
-
-* Mon Sep  3 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.6-1
-- Updated to latest DOC group release (x.6).
-- Combined 64bit patches into ace-tao-x86_64.patch.
-
-* Wed Aug  1 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.10-1
-- Updated to latest DOC group release (x.5.10).
-
-* Sun Jul  1 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.9-1
-- Updated to latest DOC group release (x.5.9).
-
-* Sat May  5 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.8-1
-- Updated to latest DOC group release (x.5.8).
-- Added ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS.
-
-* Sat Mar 24 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.7-1
-- Updated to latest DOC group release (x.5.7).
-
-* Mon Feb 19 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.6-2
-- Added SSLIOP refcount patch (DOC BUG 1506).
-
-* Fri Feb  2 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.6-1
-- Updated to latest DOC group release (x.5.6).
-
-* Thu Jan 25 2007 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.5-1
-- Updated to latest DOC group release (x.5.5).
-- Adjusted paths to {Fl,Qt,Tk,Xt}Reactor headers.
-
-* Sat Dec 16 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.4-2
-- Defined ACE_HAS_EVENT_POLL config parameter.
-
-* Wed Nov 29 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.4-1
-- Updated to latest DOC group release (x.5.4).
-
-* Mon Nov 20 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.3-3
-- Improved obstack patch per Johnny Willemsen.
-
-* Sat Nov 18 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.3-2
-- Added obstack workaround for FC6 builds.
-- Fixed IPV6 configuration patch.
-
-* Tue Oct 10 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.3-1
-- Updated to latest DOC group release (x.5.3).
-
-* Tue Sep  5 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.2-2
-- Added ACE_HAS_ICMP_SUPPORT to config.h
-- Added patch to re-enable setting ssl verify mode.
-
-* Wed Jul 12 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.2-1
-- Updated to latest DOC group release (x.5.2).
-
-* Sat Jun 24 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.1-4
-- Added IPv6 support by default.
-
-* Wed Jun 14 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.1-3
-- Added x86_64 patch back in (required for GUI builds).
-
-* Sun May 21 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.1-2
-- Added aio64 patch for librt.so detection.
-
-* Wed Apr 19 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5.1-1
-- Updated to latest DOC group release (x.5.1).
-- Added conditional (on by default) addition of
-  ACE_HAS_REACTOR_NOTIFICATION_QUEUE to config.h.
-
-* Sat Mar 25 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5-2
-- Added Doug Schmidt's patches for gcc 4.1.0 type-punned warnings.
-- Removed X11 build dependencies due to xorg package renaming.
-
-* Tue Mar  7 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.5-1
-- Updated to latest DOC group release (x.5)
-
-* Wed Feb 22 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.10-1
-- Updated to latest DOC group release (x.4.10)
-
-* Sat Feb 11 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.9-2
-- Created unversioned symlinks for svc.conf loadable shared objects
-  in runtime packages.
-- Now run mwc during rpmbuild even if _with_guilibs is not defined.
-- Removed patch for fixed namespace bugs.
-
-* Thu Feb  9 2006 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.9-1
-- Updated to latest DOC group release (x.4.9)
-
-* Fri Dec 23 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.8-1
-- Added ace-tao-idl-preproc patch for IDL include path bug.
-
-* Thu Dec 22 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.8-0
-- Updated to the latest DOC group release (5.4.8)
-
-* Fri Dec  9 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.7-1
-- Added buildbits=64 macro for 64 bit archs.
-
-* Mon Aug  8 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.7-0
-- Updated to latest DOC group release (5.4.7)
-
-* Fri Jun 10 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.6-0
-- Updated to latest DOC group release (5.4.6)
-
-* Sun May 15 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.5-0
-- Updated to latest DOC group release (5.4.5)
-- Removed TSS Cleanup patch (bug fixed in release).
-
-* Sat Mar  5 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.4-5
-- Fixed include directory uninstall cleanup for GUI reactor packages.
-- Fixed installation to preserve header timestamps.
-
-* Wed Mar  2 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.4-4
-- Integrated Marek Brudka's GUI library additions.
-
-* Thu Feb 24 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.4-3
-- Changed name of spec, source rpm and patches to remove '+'.
-
-* Sat Feb 19 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.4-2
-- Fixed installed doc, header and debug source file permissions.
-
-* Fri Feb 18 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.4-2
-- Updated spec tags per Fedora PackagingHints wiki document.
-
-* Thu Feb 17 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.4-1
-- Added patch to rename gperf info menu entry to gperf-ace.
-- Replaced TSS-Cleanup patch with candidate fixes from Dale Wilson.
-
-* Wed Feb 16 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.4-1
-- Macroed some absolute paths in the files section.
-- Added post and preun calls to install-info.
-
-* Mon Feb 14 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.4-1
-- Fixed BuildRequires entries.
-
-* Sun Feb 13 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.4-1
-- Added Giovanni Ferro's _extension macro for info and man pages.
-
-* Thu Feb 10 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.4-0
-- Updated to latest DOC group release (5.4.4).
-- Removed idl-rootinc patch (fixed in distro).
-- Removed orbdaemon patch (fixed in distro).
-- Added libTAO_TMCast.so to ace package.
-
-* Mon Feb  7 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.3-5
-- Added /usr/include/ACEXML to explicit directory list.
-
-* Sun Feb  6 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.3-4
-- Fixed unfulfilled dependency in tao package for libTAO_IDL_FE.so
-- Removed bidir-noassert patch, not needed.
-
-* Mon Jan 31 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.3-4
-- Added TSS Cleanup fixes patch (DOC bugzilla #2044)
-
-* Mon Jan 17 2005 Andrew L. Shwaika <als@solvo.ru> - 5.4.3-3
-- Add CORBA services
-
-* Sat Jan 15 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.3-2
-- Used ACE_GPERF to change name of installed gperf to gperf-ace.
-
-* Mon Jan 10 2005 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.3-1
-- Added bidir-noassert2 patch.
-
-* Sat Dec 18 2004 Ken Sedgwick <ken+5a4@bonsai.com> - 5.4.2-0
-- Initial build.
-
