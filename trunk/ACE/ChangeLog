@@ -1,3 +1,9 @@
+Wed Aug  6 08:45:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+          Fixed gcc 4.3 warnings
+
 Wed Aug  6 08:12:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:

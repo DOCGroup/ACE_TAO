@@ -215,7 +215,7 @@ int AC_Output_Handler::svc () {
     }
   }
 
-  if (message_index > 0) 
+  if (message_index > 0)
     this->send (chunk, message_index);
   no_sigpipe.restore_action (SIGPIPE, original_action);
   return 0;
@@ -270,12 +270,15 @@ int AC_Input_Handler::handle_input (ACE_HANDLE handle) {
   ACE_Message_Block *mblk = 0;
   Logging_Handler logging_handler (handle);
 
-  if (logging_handler.recv_log_record (mblk) != -1)
+  if (logging_handler.recv_log_record (mblk) != -1) {
     if (output_handler_->put (mblk->cont ()) != -1) {
       mblk->cont (0);
       mblk->release ();
       return 0; // Success return.
-    } else mblk->release ();
+    } else {
+      mblk->release ();
+    }
+  }
   return -1; // Error return.
 }
 

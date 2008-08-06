@@ -126,12 +126,15 @@ int CLD_Handler::handle_input (ACE_HANDLE handle) {
   ACE_Message_Block *mblk = 0;
   Logging_Handler logging_handler (handle);
 
-  if (logging_handler.recv_log_record (mblk) != -1)
+  if (logging_handler.recv_log_record (mblk) != -1) {
     if (msg_queue_.enqueue_tail (mblk->cont ()) != -1) {
       mblk->cont (0);
       mblk->release ();
       return 0; // Success return.
-    } else mblk->release ();
+    } else {
+      mblk->release ();
+    }
+  }
   return -1; // Error return.
 }
 
@@ -191,7 +194,7 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
     }
   }
 
-  if (message_index > 0) 
+  if (message_index > 0)
     this->send (chunk, message_index);
 
   msg_queue_.close ();
