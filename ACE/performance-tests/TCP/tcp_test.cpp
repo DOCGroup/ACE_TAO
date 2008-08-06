@@ -638,7 +638,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if (getopt.opt_ind () >= argc && client || argc == 1)
+  if ((getopt.opt_ind () >= argc && client != 0) || argc == 1)
     {
       usage ();
       return 1;
@@ -647,13 +647,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr addr (dstport);
 
   if (server)
-    return run_server (addr);
+    {
+      return run_server (addr);
+    }
 
   if ((u_int) bufsz < sizeof (ACE_hrtime_t))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "\nbufsz must be >= %d\n",
-                       sizeof (ACE_hrtime_t)),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "\nbufsz must be >= %d\n",
+                         sizeof (ACE_hrtime_t)),
+                        1);
+    }
 
   ACE_INET_Addr remote_addr;
 

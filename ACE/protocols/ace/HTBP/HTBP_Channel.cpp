@@ -496,15 +496,19 @@ ACE::HTBP::Channel::send (const void *buf,
 
 ssize_t
 ACE::HTBP::Channel::sendv (const iovec iov[],
-                  int iovcnt,
-                  const ACE_Time_Value *timeout)
+                           int iovcnt,
+                           const ACE_Time_Value *timeout)
 {
   if (this->ace_stream_.get_handle() == ACE_INVALID_HANDLE)
     this->session_->inbound();
 
   ssize_t result = 0;
   size_t n = 0;
-  for (int i = 0; i < iovcnt; n += iov[i++].iov_len);
+  
+  for (int i = 0; i < iovcnt; n += iov[i++].iov_len)
+    {
+      // No action.
+    }
 
   if (this->filter_->send_data_header(n,this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

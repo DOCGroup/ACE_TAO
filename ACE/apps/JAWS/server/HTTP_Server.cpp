@@ -143,10 +143,16 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
   HTTP_Handler_Factory *f = 0;
 
   if (this->strategy_ != (JAWS::JAWS_POOL | JAWS::JAWS_ASYNCH))
-    if (this->caching_)
-      ACE_NEW_RETURN (f, Synch_HTTP_Handler_Factory (), -1);
-    else
-      ACE_NEW_RETURN (f, No_Cache_Synch_HTTP_Handler_Factory (), -1);
+    {
+      if (this->caching_)
+        {
+          ACE_NEW_RETURN (f, Synch_HTTP_Handler_Factory (), -1);
+        }
+      else
+        {
+          ACE_NEW_RETURN (f, No_Cache_Synch_HTTP_Handler_Factory (), -1);
+        }
+    }
 
   //NOTE: At this point f better not be a NULL pointer,
   //so please do not change the ACE_NEW_RETURN macros unless

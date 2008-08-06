@@ -49,8 +49,15 @@ run_main (int, ACE_TCHAR *[])
     set.insert (2 * i, iter);
 
   // Remove the first and last elements of range.
-  while (set.remove (-20) == 0);
-  while (set.remove (20) == 0);
+  while (set.remove (-20) == 0)
+    {
+      // No action.
+    }
+    
+  while (set.remove (20) == 0)
+    {
+      // No action.
+    }
 
   // Should still have 39 elements in the set.
   ACE_ASSERT (set.is_empty () == 0);
@@ -59,6 +66,7 @@ run_main (int, ACE_TCHAR *[])
   // Iterate forward through the range we created: should be one of
   // each.
   iter.first ();
+  
   for (i = -19; i <= 19; ++i)
     {
       // we should still be in the set
@@ -79,6 +87,7 @@ run_main (int, ACE_TCHAR *[])
   // Iterate backward through the range we created: should be one of
   // each.
   iter.last ();
+  
   for (i = 19; i >= -19; --i)
     {
       // We should still be in the set.
@@ -99,6 +108,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Iterate through the set and use the operator* to get the element
   iter.first ();
+  
   for (i = -19; i <= 19; ++i)
     {
       // we should still be in the set
@@ -149,9 +159,20 @@ run_main (int, ACE_TCHAR *[])
   set.insert (202);
 
   // remove the middle elements
-  while (set.remove (204) == 0);
-  while (set.remove (202) == 0);
-  while (set.remove (203) == 0);
+  while (set.remove (204) == 0)
+    {
+      // No action.
+    }
+    
+  while (set.remove (202) == 0)
+    {
+      // No action.
+    }
+    
+  while (set.remove (203) == 0)
+    {
+      // No action.
+    }
 
   // Put the iterator out of range and make sure it stays
   // that way for finds on the missing elements.
@@ -202,8 +223,15 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (iter.done () != 0);
 
   // remove the rest
-  while (set.remove (205) == 0);
-  while (set.remove (201) == 0);
+  while (set.remove (205) == 0)
+    {
+      // No action.
+    }
+    
+  while (set.remove (201) == 0)
+    {
+      // No action.
+    }
 
   // Should have no more elements in the set.
   ACE_ASSERT (set.is_empty () != 0);

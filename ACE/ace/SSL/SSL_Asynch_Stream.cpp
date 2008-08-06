@@ -189,7 +189,9 @@ ACE_SSL_Asynch_Stream::cancel (void)
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
   if ((flags_ & SF_STREAM_OPEN) == 0) // not open
-    return 1;   //   AIO_ALLDONE
+    {
+      return 1;   //   AIO_ALLDONE
+    }
 
   // attempt to cancel internal, i.e. user's read/write
   int rc_r_int = bio_istream_.cancel();
@@ -199,17 +201,23 @@ ACE_SSL_Asynch_Stream::cancel (void)
   int rc_r_ext = notify_read (0, ERR_CANCELED);
   int rc_w_ext = notify_write (0, ERR_CANCELED);
 
-  if (rc_r_int < 0  || rc_w_int < 0
-      && rc_r_ext < 0  || rc_w_ext < 0)
-    return -1;  // at least one error
+  if ((rc_r_int < 0 || rc_w_int < 0)
+      && (rc_r_ext < 0 || rc_w_ext < 0))
+    {
+      return -1;  // at least one error
+    }
 
   if (rc_r_int == 1 && rc_w_int == 1
       && rc_r_ext == 1 && rc_w_ext == 1)
-    return 1;  // AIO_ALLDONE
+    {
+      return 1;  // AIO_ALLDONE
+    }
 
-  if (rc_r_int == 2 || rc_w_int == 2
-      && rc_r_ext == 2 || rc_w_ext == 2)
-    return 2;  // AIO_NOT_CANCELED , at least one not canceled
+  if ((rc_r_int == 2 || rc_w_int == 2)
+      && (rc_r_ext == 2 || rc_w_ext == 2))
+    {
+      return 2;  // AIO_NOT_CANCELED , at least one not canceled
+    }
 
   return 0;    // AIO_CANCELED, at least will be one notification
 }
