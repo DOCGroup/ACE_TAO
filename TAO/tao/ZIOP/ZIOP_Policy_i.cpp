@@ -284,7 +284,7 @@ CompressionLowValuePolicy::_tao_cached_type (void) const
 }
 
 CompressionMinRatioPolicy::CompressionMinRatioPolicy (
-    const ::CORBA::ULong val)
+    const ::Compression::CompressionRatio val)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressionMinRatioPolicy ()
@@ -340,7 +340,7 @@ CompressionMinRatioPolicy::destroy (void)
 {
 }
 
-::CORBA::ULong
+::Compression::CompressionRatio
 CompressionMinRatioPolicy::ratio (void)
 {
   return this->value_;

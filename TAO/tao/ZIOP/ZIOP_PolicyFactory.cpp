@@ -84,7 +84,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
     }
   case ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID:
     {
-      ::CORBA::ULong val;
+      ::Compression::CompressionRatio val;
 
       // Extract the value from the any.
 

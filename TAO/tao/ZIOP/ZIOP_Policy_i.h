@@ -172,7 +172,7 @@ class CompressionMinRatioPolicy
 public:
 
   /// Constructor.
-  CompressionMinRatioPolicy (const ::CORBA::ULong val);
+  CompressionMinRatioPolicy (const ::Compression::CompressionRatio val);
 
   /// Copy constructor.
   CompressionMinRatioPolicy (const CompressionMinRatioPolicy &rhs);
@@ -180,8 +180,7 @@ public:
   /// Returns a copy of <this>.
   virtual CompressionMinRatioPolicy *clone (void) const;
 
-  /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::CORBA::ULong ratio (void);
+  virtual ::Compression::CompressionRatio ratio (void);
 
   virtual CORBA::PolicyType policy_type (void);
 
@@ -194,7 +193,7 @@ public:
 private:
 
   /// The attribute
-  ::CORBA::ULong value_;
+  ::Compression::CompressionRatio value_;
 };
 }
 

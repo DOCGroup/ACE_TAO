@@ -64,9 +64,11 @@ module Compression
      */
     typedef unsigned long CompressionLevel;
 
+    typedef long CompressionRatio;
+
     local interface CompressorFactory;
 
-   struct CompressorIdLevel {
+    struct CompressorIdLevel {
       CompressorId     compressor_id;
       CompressionLevel compression_level;
     };
@@ -119,7 +121,7 @@ module Compression
          * this CompressorFactory, usually a value between 0 and >=1.
          * (i.e. compressed_bytes divided by uncompressed_bytes).
          */
-        readonly attribute unsigned long compression_ratio;
+        readonly attribute CompressionRatio compression_ratio;
     };
 
     local interface CompressorFactory
