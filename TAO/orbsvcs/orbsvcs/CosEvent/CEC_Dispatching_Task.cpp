@@ -21,18 +21,24 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_CEC_Dispatching_Task::svc (void)
 {
-  int done = 0;
+  bool done = false;
   while (!done)
     {
       try
         {
-          ACE_Message_Block *mb;
+          ACE_Message_Block *mb = 0;
           if (this->getq (mb) == -1)
-            if (ACE_OS::last_error () == ESHUTDOWN)
-              return 0;
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) getq error in Dispatching Queue\n"));
+            {
+              if (ACE_OS::last_error () == ESHUTDOWN)
+                {
+                  return 0;
+                }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "EC (%P|%t) getq error in Dispatching Queue\n"));
+                }
+            }
 
           TAO_CEC_Dispatch_Command *command =
             dynamic_cast<TAO_CEC_Dispatch_Command*> (mb);
@@ -48,7 +54,7 @@ TAO_CEC_Dispatching_Task::svc (void)
           ACE_Message_Block::release (mb);
 
           if (result == -1)
-            done = 1;
+            done = true;
         }
       catch (const CORBA::Exception& ex)
         {
