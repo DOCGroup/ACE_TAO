@@ -1,3 +1,9 @@
+Wed Aug  6 11:45:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.cpp:
+          Fixed gcc 4.3 warning
+
 Wed Aug  6 11:42:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
