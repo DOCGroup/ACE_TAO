@@ -1788,7 +1788,7 @@ fi
 
 # ---------------- ace-foxreactor ----------------
 
-#%if 0%{?have_fox} == 1
+%if 0%{?have_fox} == 1
 # Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 
