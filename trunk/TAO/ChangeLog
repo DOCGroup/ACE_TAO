@@ -1,3 +1,8 @@
+Wed Aug  6 11:42:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+          Fixed gcc 4.3 warning
+
 Wed Aug  6 07:45:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ZIOP/ZIOP.cpp:
