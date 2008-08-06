@@ -2822,14 +2822,16 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
   if (current_ptr_array_size <= handle)
     {
       long new_size = handle + 1;
-      ARRAY_ELEMENT_TYPE ** new_array;
+      ARRAY_ELEMENT_TYPE ** new_array = 0;
 
       if (current_ptr_array_size > 0)
         {
           // Store previous array size.
           for (new_size = 2 * current_ptr_array_size;
                new_size <= handle;
-               new_size *= 2);
+               new_size *= 2)
+            {
+            }
         }
 
       // Allocate the new array of the proper size, zero it out.

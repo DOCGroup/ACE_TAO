@@ -1,3 +1,8 @@
+Wed Aug  6 12:02:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp
+          Fixed gcc 4.3 warning
+
 Wed Aug  6 11:53:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
