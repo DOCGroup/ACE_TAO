@@ -566,7 +566,7 @@ AC_CHECK_HEADER([sys/procfs.h],
    dnl Some (early?) versions of glibc2.1 define the same variables
    dnl in <sys/procfs.h> and <ucontext.h>.
    ACE_CACHE_CHECK([if sys/procfs.h conflicts with ucontext.h],
-     [ace_has_procfs_conflict],
+     [ace_cv_has_procfs_conflict],
      [
       AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifndef ACE_LACKS_UCONTEXT_H
@@ -577,15 +577,15 @@ AC_CHECK_HEADER([sys/procfs.h],
         ]],[[
          int a = 0;
         ]])],[
-         ace_has_procfs_conflict=no
+         ace_cv_has_procfs_conflict=no
         ],[
-         ace_has_procfs_conflict=yes
+         ace_cv_has_procfs_conflict=yes
         ])
      ],
      [
      ],
      [
-      dnl If ace_has_procfs_conflict = no then define ACE_HAS_PROC_FS.
+      dnl If ace_cv_has_procfs_conflict = no then define ACE_HAS_PROC_FS.
       AC_DEFINE([ACE_HAS_PROC_FS])
      ])
   ],)
