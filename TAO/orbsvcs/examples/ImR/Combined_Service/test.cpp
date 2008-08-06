@@ -33,7 +33,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Long n = test->get ();
       Long m = test->get ();
-      assertTrue (m == n + 1);
+      assertTrue (m == (n + 1));
 
       ACE_DEBUG ((LM_DEBUG, "All tests ran successfully.\n"));
 

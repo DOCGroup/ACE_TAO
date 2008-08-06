@@ -42,83 +42,116 @@ string getWorkingPath(char delim, bool toLower)
 
 string normalizePath(const string& dir, char delim, bool toLower)
 {
-  if (dir.empty() == true) return string();
+  if (dir.empty ())
+    {
+      return string ();
+    }
+    
   char buffer[PATH_MAX + 2];
 
   string::size_type i = 0;
  
-  for (; ACE_OS::ace_isspace(dir[i]); i++);
+  for (; ACE_OS::ace_isspace (dir[i]); i++)
+    {
+      // No action.
+    }
 
   string::size_type begin = i;
 
   int j = 0;
-  for (; i < dir.size(); i++)
-  {
-    if (dir[i] == '\\' || dir[i] == '/')
+  
+  for (; i < dir.size (); i++)
     {
-      // skip redundant
-      if (dir[i + 1] == '\\' || dir[i + 1] == '/')
-      {
-      }
-      // Convert to proper delim
-      else
-      {
-        buffer[j] = delim; j++;
-      }
-    }
-    else if (dir[i] == '.')
-    {
-      // If specifying current, skip
-      if (dir[i + 1] == '\\' || dir[i + 1] == '/' || dir[i + 1] == '\0')
-      {
-        if (i == begin) // relative start
+      if (dir[i] == '\\' || dir[i] == '/')
         {
-          string curDir = getWorkingPath();
-          ACE_OS::strncpy(buffer, curDir.c_str(), sizeof(buffer));
-          j = curDir.length();
+          // skip redundant
+          if (dir[i + 1] == '\\' || dir[i + 1] == '/')
+            {
+            }
+          // Convert to proper delim
+          else
+            {
+              buffer[j] = delim; j++;
+            }
         }
-        else
+      else if (dir[i] == '.')
         {
-          i += 2;
+          // If specifying current, skip
+          if (dir[i + 1] == '\\' || dir[i + 1] == '/' || dir[i + 1] == '\0')
+            {
+              if (i == begin) // relative start
+                {
+                  string curDir = getWorkingPath ();
+                  ACE_OS::strncpy( buffer, curDir.c_str (), sizeof (buffer));
+                  j = curDir.length();
+                }
+              else
+                {
+                  i += 2;
+                }
+            }
+          // If specifying parent, go back
+          else if (dir[i + 1] == '.')
+            {
+              if (i == begin) // relative start
+                {
+                  string curDir = getWorkingPath ();
+                  ACE_OS::strncpy (buffer, curDir.c_str (), sizeof( buffer));
+                  j = curDir.length();
+                }
+                
+              int k = j;
+              
+              for (; buffer[k] != delim; k--)
+                {
+                  // No action.
+                }
+                
+              k--;
+              
+              for (; buffer[k] != delim; k--)
+                {
+                  // No action.
+                }
+                
+              j = (k + 1);
+              i += 2;
+            }
+          else
+            {
+              if (toLower)
+                {
+                  buffer[j] = ACE_OS::ace_tolower (dir[i]);
+                }
+              else
+                {
+                  buffer[j] = dir[i];
+                }
+                
+              j++;
+            }
         }
-      }
-      // If specifying parent, go back
-      else if (dir[i + 1] == '.')
-      {
-        if (i == begin) // relative start
+      // normal character
+      else
         {
-          string curDir = getWorkingPath();
-          ACE_OS::strncpy(buffer, curDir.c_str(), sizeof(buffer));
-          j = curDir.length();
+          if (toLower)
+            {
+              buffer[j] = ACE_OS::ace_tolower (dir[i]);
+            }
+          else
+            {
+              buffer[j] = dir[i];
+            }
+            
+          j++;
         }
-        int k = j;
-        for (; buffer[k] != delim; k--);
-        k--;
-        for (; buffer[k] != delim; k--);
-        j = (k + 1);
-        i+=2;
-      }
-      else
-      {
-        if (toLower)
-          buffer[j] = ACE_OS::ace_tolower(dir[i]);
-        else
-          buffer[j] = dir[i];
-        j++;
-      }
     }
-    // normal character
-    else
-    {
-      if (toLower)
-        buffer[j] = ACE_OS::ace_tolower(dir[i]);
-      else
-        buffer[j] = dir[i];
-      j++;
-    }
-  }
 
-  if (buffer[j - 1] == delim) j--;
+  if (buffer[j - 1] == delim)
+    {
+      j--;
+    }
+    
   buffer[j] ='\0';
   return string(buffer);
 }

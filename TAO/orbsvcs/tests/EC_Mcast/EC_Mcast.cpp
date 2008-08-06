@@ -521,7 +521,11 @@ ECM_Driver::skip_blanks (FILE* file,
 {
   int c;
   // Consume all the blanks.
-  while (ACE_OS::ace_isspace (c = ACE_OS::fgetc (file)));
+  while (ACE_OS::ace_isspace (c = ACE_OS::fgetc (file)))
+    {
+      // No action.
+    }
+  
   if (c == EOF)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -529,6 +533,7 @@ ECM_Driver::skip_blanks (FILE* file,
                          error_msg),
                         -1);
     }
+    
   ACE_OS::ungetc (c, file);
   return 0;
 }

@@ -360,14 +360,19 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
     {
       // pre GIOP 1.2:  include null terminator in length
       ACE_CDR::ULong l = len + 1;
+      
       if (this->write_4 (cdr, &l))
-        if (x != 0)
-          return this->write_wchar_array_i (cdr, x, len + 1);
-        else
-          {
-            ACE_UTF16_T s = 0;
-            return this->write_2 (cdr,&s);
-          }
+        {
+          if (x != 0)
+            {
+              return this->write_wchar_array_i (cdr, x, len + 1);
+            }
+          else
+            {
+              ACE_UTF16_T s = 0;
+              return this->write_2 (cdr,&s);
+            }
+        }
     }
 
   return 0;

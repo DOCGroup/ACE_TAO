@@ -2831,6 +2831,7 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
                new_size <= handle;
                new_size *= 2)
             {
+              // No action at this time.
             }
         }
 
