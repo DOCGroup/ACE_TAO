@@ -86,26 +86,30 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
   else
     {
       if (local != ACE_Addr::sap_any)
-        protocol_family = local.get_type ();
+        {
+          protocol_family = local.get_type ();
+        }
     }
   if (ACE_SOCK::open (SOCK_DGRAM,
                       protocol_family,
                       protocol,
                       reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
-      int error = 0;
+      bool error = false;
 
       if (local == ACE_Addr::sap_any && remote == ACE_Addr::sap_any)
         {
           // Assign an arbitrary port number from the transient range!!
-          if (protocol_family == PF_INET
+          if ((protocol_family == PF_INET
 #if defined (ACE_HAS_IPV6)
                || protocol_family == PF_INET6
 #endif /* ACE_HAS_IPV6 */
-              && ACE::bind_port (this->get_handle ()) == -1)
-            error = 1;
+              ) && ACE::bind_port (this->get_handle ()) == -1)
+            error = true;
         }
       // We are binding just the local address.
       else if (local != ACE_Addr::sap_any && remote == ACE_Addr::sap_any)
@@ -113,7 +117,7 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
           if (ACE_OS::bind (this->get_handle (),
                             (sockaddr *) local.get_addr (),
                             local.get_size ()) == -1)
-            error = 1;
+            error = true;
         }
       // We are connecting to the remote address.
       else if (local == ACE_Addr::sap_any && remote != ACE_Addr::sap_any)
@@ -121,7 +125,7 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
           if (ACE_OS::connect (this->get_handle (),
                                (sockaddr *) remote.get_addr (),
                                remote.get_size ()) == -1)
-            error = 1;
+            error = true;
         }
       // We are binding to the local address and connecting to the
       // remote addresses.
@@ -133,7 +137,7 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
               || ACE_OS::connect (this->get_handle (),
                                   (sockaddr *) remote.get_addr (),
                                   remote.get_size ()) == -1)
-            error = 1;
+            error = true;
         }
       if (error)
         {
