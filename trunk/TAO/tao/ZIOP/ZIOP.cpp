@@ -186,7 +186,7 @@ TAO_ZIOP_Loader::compress (Compression::Compressor_ptr compressor,
 bool
 TAO_ZIOP_Loader::check_min_ratio (CORBA::ULong /* original_data_length */, CORBA::ULong /*compressed_length*/) const
 {
-/*  CORBA::ULong ratio = 100 - (compressed_length /original_length) * 100;
+/*  ::Compression::CompressionRatio ratio = 100 - (compressed_length /original_length) * 100;
   if (resolver.stub () == 0)
     {
       policy =

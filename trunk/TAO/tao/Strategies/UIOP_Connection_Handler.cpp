@@ -163,8 +163,7 @@ TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_UIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  const int result =
-    this->handle_output_eh (handle, this);
+  int const result = this->handle_output_eh (handle, this);
 
   if (result == -1)
     {

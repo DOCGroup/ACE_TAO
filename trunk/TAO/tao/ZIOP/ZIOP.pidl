@@ -55,6 +55,6 @@ module ZIOP
 
     local interface CompressionMinRatioPolicy : CORBA::Policy
     {
-        readonly attribute unsigned long ratio;
+        readonly attribute Compression::CompressionRatio ratio;
     };
 };
