@@ -1,3 +1,10 @@
+Wed Aug  6 08:12:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+        * m4/ace.m4:
+          Use more cached values, improved detection of tcl. Add bzip2
+          support
+
 Wed Aug  6 08:01:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACEXML/common/ZipCharStream.cpp:
