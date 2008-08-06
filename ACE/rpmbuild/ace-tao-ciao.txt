@@ -66,7 +66,7 @@ Group: Development/Libraries
 URL: http://www.cs.wustl.edu/~schmidt/ACE.html
 License: DOC License
 Source0: http://download.dre.vanderbilt.edu/previous_versions/ACEhead05082008.tar.bz2
-## Source1: ace-tao-etc.tar.gz
+## Source1: ace-tao-etc.tar.bz2
 ## Source2: ace-tao-macros.patch
 ## Patch0: ace-tao-config.patch
 ## Patch5: ace-tao-orbsvcs-daemon.patch
@@ -1216,7 +1216,7 @@ install ${ACE_ROOT}/bin/nslist %{buildroot}%{_bindir}/tao_nslist
 # ================================================================
 
 install -d %{buildroot}%{_sysconfdir}
-tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.gz \
+tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.bz2 \
         -C %{buildroot}%{_sysconfdir}
 
 %if %{defined suse_version}
