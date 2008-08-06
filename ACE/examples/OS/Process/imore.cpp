@@ -179,15 +179,19 @@ print_file (ACE_HANDLE infd)
   while ((len = ACE_OS::read (infd, buffer, BUFSIZ)) > 0)
     {
       if ((ACE_OS::write (ACE_STDOUT, buffer, len) != len))
-    if (errno == EPIPE)
-    {
-    // I tried to "produce" EPIPE warning to test
-    // the program but never seen one.  (odd.)
-    // ACE_ERROR ((LM_ERROR, "\n\nEPIPE\n"));
-    break;
-    }
-    else
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write"), -1);
+        {
+          if (errno == EPIPE)
+           {
+              // I tried to "produce" EPIPE warning to test
+              // the program but never seen one.  (odd.)
+              // ACE_ERROR ((LM_ERROR, "\n\nEPIPE\n"));
+              break;
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write"), -1);
+            }
+        }
     }
   return 0;
 }

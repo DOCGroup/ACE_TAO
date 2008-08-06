@@ -1,3 +1,8 @@
+Wed Aug  6 08:49:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/OS/Process/imore.cpp:
+
 Wed Aug  6 08:45:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:

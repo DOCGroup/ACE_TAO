@@ -75,22 +75,26 @@ Peer_Handler::handle_input (ACE_HANDLE)
                             sizeof buf);
 
   if (n > 0)
-    if (this->peer ().send (buf, n) != n)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("write failed")),
-                        -1);
-    else if (n == 0) // Explicitly close the connection.
-      {
-        if (this->peer ().close () == -1)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("close")),
-                            1);
-        return -1;
-      }
-    else
-      this->display_menu ();
+    {
+      if (this->peer ().send (buf, n) != n)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("write failed")),
+                          -1);
+      else if (n == 0) // Explicitly close the connection.
+        {
+          if (this->peer ().close () == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("close")),
+                              1);
+          return -1;
+        }
+      else
+        {
+          this->display_menu ();
+        }
+    }
   return 0;
 }
 
