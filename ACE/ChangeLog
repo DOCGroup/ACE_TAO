@@ -1,3 +1,9 @@
+Wed Aug  6 13:40:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * docs/bczar/bczar.html:
+          Updated the "Bugzilla" section to match the current version
+          of bugzilla's interface.
+
 Wed Aug  6 13:01:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_CODgram.cpp:
