@@ -5,32 +5,45 @@
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # Conditional build
-# Default values are --with guilibs    (fltk, tk ,xt, fox and qt support)
+# Default values are
 #                    --with rnq        (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
 #                    --with ipv6       (IPv6 support)
 #                    --with opt        (Optimized build)
 #                    --with zlib       (Zlib compressor)
 #                    --with bzip2      (Bzip2 compressor)
 #                    --with autoconf   (Use autoconf to build)
+#                    --with fltk       (ftlk support)
+#                    --with tk         (tk support)
+#                    --with xt         (xt support)
+#                    --with fox        (fox support)
+#                    --with qt         (qt support)
 
 #
 # Read: If neither macro exists, then add the default definition.
-%{!?_with_guilibs: %{!?_without_guilibs: %define _without_guilibs --without-guilibs}}
 %{!?_with_rnq: %{!?_without_rnq: %define _with_rnq --with-rnq}}
 %{!?_with_ipv6: %{!?_without_ipv6: %define _with_ipv6 --with-ipv6}}
 %{!?_with_opt: %{!?_without_opt: %define _with_opt --with-opt}}
 %{!?_with_zlib: %{!?_without_zlib: %define _with_zlib --with-zlib}}
 %{!?_with_bzip2: %{!?_without_bzip2: %define _with_bzip2 --with-bzip2}}
 %{!?_with_autoconf: %{!?_without_autoconf: %define _without_autoconf --without-autoconf}}
+%{!?_with_ftlk: %{!?_without_ftlk: %define _without_ftlk --without-ftlk}}
+%{!?_with_tk: %{!?_without_tk: %define _without_tk --without-tk}}
+%{!?_with_xt: %{!?_without_xt: %define _without_xt --without-xt}}
+%{!?_with_fox: %{!?_without_fox: %define _without_fox --without-fox}}
+%{!?_with_qt: %{!?_without_qt: %define _without_qt --without-qt}}
 #
 # Read: It's an error if both or neither required options exist.
-%{?_with_guilibs: %{?_without_guilibs: %{error: both _with_guilibs and _without_guilibs}}}
 %{?_with_rnq: %{?_without_rnq: %{error: both _with_rnq and _without_rnq}}}
 %{?_with_ipv6: %{?_without_ipv6: %{error: both _with_ipv6 and _without_ipv6}}}
 %{?_with_opt: %{?_without_opt: %{error: both _with_opt and _without_opt}}}
 %{?_with_zlib: %{?_without_zlib: %{error: both _with_zlib and _without_zlib}}}
 %{?_with_bzip2: %{?_without_bzip2: %{error: both _with_bzip2 and _without_bzip2}}}
 %{?_with_autoconf: %{?_without_autoconf: %{error: both _with_autoconf and _without_autoconf}}}
+%{?_with_fltk: %{?_without_fltk: %{error: both _with_fltk and _without_fltk}}}
+%{?_with_tk: %{?_without_tk: %{error: both _with_tk and _without_tk}}}
+%{?_with_xt: %{?_without_xt: %{error: both _with_xt and _without_xt}}}
+%{?_with_fox: %{?_without_fox: %{error: both _with_fox and _without_fox}}}
+%{?_with_qt: %{?_without_qt: %{error: both _with_qt and _without_qt}}}
 
 %{!?skip_make:%define skip_make 0}
 %{!?make_nosrc:%define make_nosrc 0}
@@ -88,14 +101,19 @@ BuildRequires:  bzip2
 BuildRequires: sendmail
 %endif
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 BuildRequires:  perl
+
+# Read: true if _with_guilibs is defined, false if not defined.
+%if %{?_with_fltk:1}%{!?_with_fltk:0}
 BuildRequires:  fltk-devel
+%endif
+%if %{?_with_tk:1}%{!?_with_tk:0}
 BuildRequires:  tcl-devel
 BuildRequires:  tk-devel
 BuildRequires:  tk
+%endif
 
+%if %{?_with_qt:1}%{!?_with_qt:0}
 # qt3 has a name change in F9
 %if 0%{?fedora} > 8
 BuildRequires:  qt3-devel
@@ -111,14 +129,18 @@ BuildRequires:  qt-devel
 %endif
 BuildRequires:  %{qtpac}-devel
 %endif
+%endif
 
+%if %{?_with_fox:1}%{!?_with_fox:0}
 %if 0%{?suse_version} == 1020
 BuildRequires: fox16-devel
+%endif
 %endif
 
 %if 0%{?rhel_version} > 4
 %endif
 
+%if %{?_with_xt:1}%{!?_with_xt:0}
 # The xorg package naming scheme changed, use specific files for now.
 # old -> BuildRequires: xorg-x11-devel
 # new -> BuildRequires: libX11-devel
@@ -251,12 +273,10 @@ This package contains the components needed for developing programs
 using Kokyu.
 
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
-
-%if 0%{?have_fox} == 1
 # ---------------- ace-foxreactor ----------------
 
+%if %{?_with_fox:1}%{!?_with_fox:0}
+%if 0%{?have_fox} == 1
 %package -n     ace-foxreactor
 Summary:        ACE_FoxReactor for use with the FOX toolkit
 Version:        %{ACEVER}
@@ -285,8 +305,10 @@ Requires:       fox16-devel
 This package contains the components needed for developing programs
 using the ACE_FoxReactor.
 %endif
+
 # ---------------- ace-flreactor ----------------
 
+%if %{?_with_fl:1}%{!?_with_fl:0}
 %package -n     ace-flreactor
 Summary:        ACE_FlReactor for use with the Fast-Light toolkit
 Version:        %{ACEVER}
@@ -314,9 +336,11 @@ Requires:       fltk-devel
 
 This package contains the components needed for developing programs
 using the ACE_FlReactor.
+%endif
 
 # ---------------- ace-qtreactor ----------------
 
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %package -n     ace-qtreactor
 Summary:        ACE_QtReactor for use with Qt library
 Version:        %{ACEVER}
@@ -344,9 +368,11 @@ Requires:       qt-devel
 
 This package contains the components needed for developing programs
 using the ACE_QtReactor.
+%endif
 
 # ---------------- ace-tkreactor ----------------
 
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %package -n     ace-tkreactor
 Summary:        ACE_TkReactor for use with Tk toolkit
 Version:        %{ACEVER}
@@ -374,9 +400,11 @@ Requires:       tk-devel
 
 This package contains the components needed for developing programs
 using the ACE_TkReactor.
+%endif
 
 # ---------------- ace-xtreactor ----------------
 
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %package -n     ace-xtreactor
 Summary:        ACE_XtReactor for use with the X Toolkit
 Version:        %{ACEVER}
@@ -569,8 +597,7 @@ The CORBA Concurrency Service.
 
 # ---------------- tao-flresource ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_fl:1}%{!?_with_fl:0}
 
 %package -n     tao-flresource
 Summary:        FlResource_Factory for creating FlReactor
@@ -599,9 +626,11 @@ Requires:       tao-flresource = %{TAOVER}
 
 This package contains the components needed for developing programs
 using the FlResource_Factory.
+%endif
 
 # ---------------- tao-qtresource ----------------
 
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %package -n     tao-qtresource
 Summary:        QtResource_Factory for creating QtReactor
 Version:        %{TAOVER}
@@ -629,9 +658,11 @@ Requires:       tao-qtresource = %{TAOVER}
 
 This package contains the components needed for developing programs
 using the QtResource_Factory.
+%endif
 
 # ---------------- tao-tkresource ----------------
 
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %package -n     tao-tkresource
 Summary:        TkResource_Factory for creating TkReactor
 Version:        %{TAOVER}
@@ -659,9 +690,11 @@ Requires:       tao-tkresource = %{TAOVER}
 
 This package contains the components needed for developing programs
 using the TkResource_Factory.
+%endif
 
 # ---------------- tao-xtresource ----------------
 
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %package -n     tao-xtresource
 Summary:        XtResource_Factory for creating XtReactor
 Version:        %{TAOVER}
@@ -770,28 +803,47 @@ EOF
 %endif
 
 
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_tk:1}%{!?_with_tk:0}
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
-x11 = 1
 xt = 1
+ace_xtreactor = 1
+x11 = 1
+tao_xtresource = 1
+EOF
+%endif
+
+%if %{?_with_tk:1}%{!?_with_tk:0}
+cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
+ace_tkreactor = 1
+tao_tkresource = 1
 tk = 1
+EOF
+%endif
+
+%if %{?_with_fl:1}%{!?_with_fl:0}
+cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 fl = 1
+tao_flresource = 1
+ace_flreactor = 1
+EOF
+%endif
+
+%if %{?_with_qt:1}%{!?_with_qt:0}
+cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 qt = 1
 gl = 1
+ace_qtreactor = 1
+tao_qtresource = 1
+EOF
+%endif
+
+%if %{?_with_fox:1}%{!?_with_fox:0}
 %if 0%{?have_fox} == 1
+cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 fox = 1
 ace_foxreactor = 1
 tao_foxresource = 1
 %endif
-ace_qtreactor = 1
-ace_xtreactor = 1
-ace_tkreactor = 1
-ace_flreactor = 1
-tao_qtresource = 1
-tao_xtresource = 1
-tao_tkresource = 1
-tao_flresource = 1
-EOF
 %endif
 
 # 64 bit machines need additional macro.
@@ -840,30 +892,12 @@ EOF
 # does not seem to set.
 
 # Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
-cat >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features <<EOF
-motif=1
-athena=1
-x11=1
-xt=1
-tk=1
-fl=1
-qt=1
-gl=1
+%if %{?_with_fox:1}%{!?_with_fox:0}
 %if 0%{?have_fox} == 1
+cat >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features <<EOF
 fox=1
-ace_foxreactor=1
-tao_foxresource=1
-%endif
-ace_qtreactor=1
-ace_xtreactor=1
-ace_tkreactor=1
-ace_flreactor=1
-tao_qtresource=1
-tao_xtresource=1
-tao_tkresource=1
-tao_flresource=1
 EOF
+%endif
 %endif
 
 # Need to regenerate all of the GNUMakefiles ...
@@ -1380,28 +1414,35 @@ exit 0
 
 %post -n ace-kokyu -p /sbin/ldconfig
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 # ---------------- ace-foxreactor ----------------
 
+%if %{?_with_fox:1}%{!?_with_fox:0}
 %if %{undefined suse_version} || 0%{?suse_version} = 1020
 %post -n ace-foxreactor -p /sbin/ldconfig
 %endif
+$endif
 
 # ---------------- ace-flreactor ----------------
 
+%if %{?_with_fl:1}%{!?_with_fl:0}
 %post -n ace-flreactor -p /sbin/ldconfig
+%endif
 
 # ---------------- ace-qtreactor ----------------
 
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %post -n ace-qtreactor -p /sbin/ldconfig
+%endif
 
 # ---------------- ace-tkreactor ----------------
 
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %post -n ace-tkreactor -p /sbin/ldconfig
+%endif
 
 # ---------------- ace-xtreactor ----------------
 
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %post -n ace-xtreactor -p /sbin/ldconfig
 %endif
 
@@ -1472,22 +1513,27 @@ exit 0
 /sbin/chkconfig --add tao-cosconcurrency
 %endif
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 # ---------------- tao-flresource ----------------
 
+%if %{?_with_fl:1}%{!?_with_fl:0}
 %post -n tao-flresource -p /sbin/ldconfig
+%endif
 
 # ---------------- tao-qtresource ----------------
 
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %post -n tao-qtresource -p /sbin/ldconfig
+%endif
 
 # ---------------- tao-tkresource ----------------
 
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %post -n tao-tkresource -p /sbin/ldconfig
+%endif
 
 # ---------------- tao-xtresource ----------------
 
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %post -n tao-xtresource -p /sbin/ldconfig
 %endif
 
@@ -1572,28 +1618,35 @@ fi
 
 %postun -n ace-kokyu -p /sbin/ldconfig
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 # ---------------- ace-foxreactor ----------------
 
+%if %{?_with_fox:1}%{!?_with_fox:0}
 %if 0%{?have_fox} == 1
 %postun -n ace-foxreactor -p /sbin/ldconfig
+%endif
 %endif
 
 # ---------------- ace-flreactor ----------------
 
+%if %{?_with_fl:1}%{!?_with_fl:0}
 %postun -n ace-flreactor -p /sbin/ldconfig
+%endif
 
 # ---------------- ace-qtreactor ----------------
 
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %postun -n ace-qtreactor -p /sbin/ldconfig
+%endif
 
 # ---------------- ace-tkreactor ----------------
 
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %postun -n ace-tkreactor -p /sbin/ldconfig
+%endif
 
 # ---------------- ace-xtreactor ----------------
 
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %postun -n ace-xtreactor -p /sbin/ldconfig
 %endif
 
@@ -1653,22 +1706,27 @@ if [ "$1" -ge "1" ]; then
     /sbin/service tao-cosconcurrency %{cond_restart} > /dev/null 2>&1
 fi
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
 # ---------------- tao-flresource ----------------
 
+%if %{?_with_fl:1}%{!?_with_fl:0}
 %postun -n tao-flresource -p /sbin/ldconfig
+%endif
 
 # ---------------- tao-qtresource ----------------
 
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %postun -n tao-qtresource -p /sbin/ldconfig
+%endif
 
 # ---------------- tao-tkresource ----------------
 
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %postun -n tao-tkresource -p /sbin/ldconfig
+%endif
 
 # ---------------- tao-xtresource ----------------
 
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %postun -n tao-xtresource -p /sbin/ldconfig
 %endif
 
@@ -1714,15 +1772,23 @@ fi
 %attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
 %attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_fox:1}%{!?_with_fox:0}
 %exclude %{_includedir}/ace/FoxReactor/FoxReactor.h
 %exclude %{_includedir}/ace/FoxReactor/ACE_FoxReactor_export.h
+%endif
+%if %{?_with_fl:1}%{!?_with_fl:0}
 %exclude %{_includedir}/ace/FlReactor/FlReactor.h
 %exclude %{_includedir}/ace/FlReactor/ACE_FlReactor_export.h
+%endif
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %exclude %{_includedir}/ace/QtReactor/QtReactor.h
 %exclude %{_includedir}/ace/QtReactor/ACE_QtReactor_export.h
+%endif
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %exclude %{_includedir}/ace/TkReactor/TkReactor.h
 %exclude %{_includedir}/ace/TkReactor/ACE_TkReactor_export.h
+%endif
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %exclude %{_includedir}/ace/XtReactor/XtReactor.h
 %exclude %{_includedir}/ace/XtReactor/ACE_XtReactor_export.h
 %endif
@@ -1789,9 +1855,7 @@ fi
 # ---------------- ace-foxreactor ----------------
 
 %if 0%{?have_fox} == 1
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
-
+%if %{?_with_fox:1}%{!?_with_fox:0}
 %files -n ace-foxreactor
 %defattr(-,root,root,-)
 %{_libdir}/libACE_FoxReactor.so.%{ACEVERSO}
@@ -1806,8 +1870,7 @@ fi
 %endif
 # ---------------- ace-flreactor ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_fl:1}%{!?_with_fl:0}
 
 %files -n ace-flreactor
 %defattr(-,root,root,-)
@@ -1824,7 +1887,7 @@ fi
 # ---------------- ace-flreactor-devel ----------------
 
 # Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_fl:1}%{!?_with_fl:0}
 
 %files -n ace-flreactor-devel
 %defattr(-,root,root,-)
@@ -1844,7 +1907,7 @@ fi
 # ---------------- ace-qtreactor ----------------
 
 # Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_qt:1}%{!?_with_qt:0}
 
 %files -n ace-qtreactor
 %defattr(-,root,root,-)
@@ -1861,7 +1924,7 @@ fi
 # ---------------- ace-qtreactor-devel ----------------
 
 # Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_qt:1}%{!?_with_qt:0}
 
 %files -n ace-qtreactor-devel
 %defattr(-,root,root,-)
@@ -1881,7 +1944,7 @@ fi
 # ---------------- ace-tkreactor ----------------
 
 # Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_tk:1}%{!?_with_tk:0}
 
 %files -n ace-tkreactor
 %defattr(-,root,root,-)
@@ -1898,7 +1961,7 @@ fi
 # ---------------- ace-tkreactor-devel ----------------
 
 # Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_tk:1}%{!?_with_tk:0}
 
 %files -n ace-tkreactor-devel
 %defattr(-,root,root,-)
@@ -1918,7 +1981,7 @@ fi
 # ---------------- ace-xtreactor ----------------
 
 # Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_xt:1}%{!?_with_xt:0}
 
 %files -n ace-xtreactor
 %defattr(-,root,root,-)
@@ -1935,7 +1998,7 @@ fi
 # ---------------- ace-xtreactor-devel ----------------
 
 # Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_xt:1}%{!?_with_xt:0}
 
 %files -n ace-xtreactor-devel
 %defattr(-,root,root,-)
@@ -1968,10 +2031,16 @@ fi
 
 %exclude %{_libdir}/libTAO_IDL_BE*
 
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_fl:1}%{!?_with_fl:0}
 %exclude %{_libdir}/libTAO_FlResource.so*
+%endif
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %exclude %{_libdir}/libTAO_QtResource.so*
+%endif
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %exclude %{_libdir}/libTAO_TkResource.so*
+%endif
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %exclude %{_libdir}/libTAO_XtResource.so*
 %endif
 
@@ -2005,22 +2074,28 @@ fi
 # contain no immediate files.
 %dir %{_includedir}/orbsvcs/FtRtEvent
 
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_fl:1}%{!?_with_fl:0}
 %exclude %{_includedir}/tao/FlResource/FlResource_Factory.h
 %exclude %{_includedir}/tao/FlResource/FlResource_Loader.h
 %exclude %{_includedir}/tao/FlResource/TAO_FlResource_Export.h
+%exclude %{_libdir}/libTAO_FlResource.so
+%endif
+%if %{?_with_qt:1}%{!?_with_qt:0}
 %exclude %{_includedir}/tao/QtResource/QtResource_Factory.h
 %exclude %{_includedir}/tao/QtResource/QtResource_Loader.h
 %exclude %{_includedir}/tao/QtResource/TAO_QtResource_Export.h
+%exclude %{_libdir}/libTAO_QtResource.so
+%endif
+%if %{?_with_tk:1}%{!?_with_tk:0}
 %exclude %{_includedir}/tao/TkResource/TkResource_Factory.h
 %exclude %{_includedir}/tao/TkResource/TkResource_Loader.h
 %exclude %{_includedir}/tao/TkResource/TAO_TkResource_Export.h
+%exclude %{_libdir}/libTAO_TkResource.so
+%endif
+%if %{?_with_xt:1}%{!?_with_xt:0}
 %exclude %{_includedir}/tao/XtResource/XtResource_Factory.h
 %exclude %{_includedir}/tao/XtResource/XtResource_Loader.h
 %exclude %{_includedir}/tao/XtResource/TAO_XtResource_Export.h
-%exclude %{_libdir}/libTAO_FlResource.so
-%exclude %{_libdir}/libTAO_QtResource.so
-%exclude %{_libdir}/libTAO_TkResource.so
 %exclude %{_libdir}/libTAO_XtResource.so
 %endif
 
@@ -2191,8 +2266,7 @@ fi
 
 # ---------------- tao-flresource ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_fl:1}%{!?_with_fl:0}
 
 %files -n tao-flresource
 %defattr(-,root,root,-)
@@ -2207,8 +2281,7 @@ fi
 
 # ---------------- tao-flresource-devel ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_fl:1}%{!?_with_fl:0}
 
 %files -n tao-flresource-devel
 %defattr(-,root,root,-)
@@ -2227,8 +2300,7 @@ fi
 
 # ---------------- tao-qtresource ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_qt:1}%{!?_with_qt:0}
 
 %files -n tao-qtresource
 %defattr(-,root,root,-)
@@ -2243,8 +2315,7 @@ fi
 
 # ---------------- tao-qtresource-devel ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_qt:1}%{!?_with_qt:0}
 
 %files -n tao-qtresource-devel
 %defattr(-,root,root,-)
@@ -2263,8 +2334,7 @@ fi
 
 # ---------------- tao-tkresource ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_tk:1}%{!?_with_tk:0}
 
 %files -n tao-tkresource
 %defattr(-,root,root,-)
@@ -2279,8 +2349,7 @@ fi
 
 # ---------------- tao-tkresource-devel ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_tk:1}%{!?_with_tk:0}
 
 %files -n tao-tkresource-devel
 %defattr(-,root,root,-)
@@ -2299,8 +2368,7 @@ fi
 
 # ---------------- tao-xtresource ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_xt:1}%{!?_with_xt:0}
 
 %files -n tao-xtresource
 %defattr(-,root,root,-)
@@ -2315,8 +2383,7 @@ fi
 
 # ---------------- tao-xtresource-devel ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
-%if %{?_with_guilibs:1}%{!?_with_guilibs:0}
+%if %{?_with_xt:1}%{!?_with_xt:0}
 
 %files -n tao-xtresource-devel
 %defattr(-,root,root,-)
