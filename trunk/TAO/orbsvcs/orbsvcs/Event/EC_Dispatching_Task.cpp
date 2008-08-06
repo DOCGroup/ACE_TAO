@@ -99,18 +99,24 @@ TAO_EC_Queue::is_full_i (void)
 int
 TAO_EC_Dispatching_Task::svc (void)
 {
-  int done = 0;
+  bool done = false;
   while (!done)
     {
       try
         {
           ACE_Message_Block *mb = 0;
           if (this->getq (mb) == -1)
-            if (ACE_OS::last_error () == ESHUTDOWN)
-              return 0;
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) getq error in Dispatching Queue\n"));
+            {
+              if (ACE_OS::last_error () == ESHUTDOWN)
+                {
+                  return 0;
+                }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                            "EC (%P|%t) getq error in Dispatching Queue\n"));
+                }
+            }
 
           TAO_EC_Dispatch_Command *command =
             dynamic_cast<TAO_EC_Dispatch_Command*> (mb);
@@ -121,12 +127,12 @@ TAO_EC_Dispatching_Task::svc (void)
               continue;
             }
 
-          int result = command->execute ();
+          int const result = command->execute ();
 
           ACE_Message_Block::release (mb);
 
           if (result == -1)
-            done = 1;
+            done = true;
         }
       catch (const CORBA::Exception& ex)
         {
