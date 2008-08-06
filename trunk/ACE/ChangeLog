@@ -1,7 +1,13 @@
+Wed Aug  6 13:01:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_CODgram.cpp:
+          Fixed gcc 4.3 warnings
+
 Wed Aug  6 08:49:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Connection/blocking/SPIPE-connector.cpp:
         * examples/OS/Process/imore.cpp:
+          Fixed gcc 4.3 warnings
 
 Wed Aug  6 08:45:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
