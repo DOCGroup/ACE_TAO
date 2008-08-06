@@ -2714,15 +2714,15 @@ pkgconfig_DATA += \
 CLEANFILES += \
   TAO_Bzip2Compressor.pc
 
-TAO_Bzip2Compressor.pc: ${top_builddir}/config.status ${srcdir}/Compression/zlib/TAO_Bzip2Compressor.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/Compression/zlib/TAO_Bzip2Compressor.pc.in
+TAO_Bzip2Compressor.pc: ${top_builddir}/config.status ${srcdir}/Compression/bzip2/TAO_Bzip2Compressor.pc.in
+        ${top_builddir}/config.status --file $@:${srcdir}/Compression/bzip2/TAO_Bzip2Compressor.pc.in
 
 endif BUILD_EXCEPTIONS
 endif BUILD_BZIP2
 
 EXTRA_DIST += \
   Compression/bzip2/TAO_Bzip2Compressor.rc \
-  Compression/zlib/TAO_Bzip2Compressor.pc.in
+  Compression/bzip2/TAO_Bzip2Compressor.pc.in
 
 
 ## Makefile.PortableServer.am

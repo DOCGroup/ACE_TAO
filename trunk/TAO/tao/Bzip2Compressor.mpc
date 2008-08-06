@@ -33,6 +33,6 @@ project(Bzip2Compressor) : taolib, tao_output, install, compression, tao_version
   }
 
   Pkgconfig_Files {
-    Compression/zlib/TAO_Bzip2Compressor.pc.in
+    Compression/bzip2/TAO_Bzip2Compressor.pc.in
   }
 }
