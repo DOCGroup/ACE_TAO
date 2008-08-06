@@ -820,13 +820,13 @@ ssl=1
 cidl=0
 EOF
 
-%if %{?_with_bzip2:0}%{!?_with_bzip2:1}
+%if %{?_with_bzip2:1}%{!?_with_bzip2:0}
 cat >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features <<EOF
 bzip2 = 1
 EOF
 %endif
 
-%if %{?_with_zlib:0}%{!?_with_zlib:1}
+%if %{?_with_zlib:1}%{!?_with_zlib:0}
 cat >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features <<EOF
 zlib = 1
 EOF
@@ -1010,8 +1010,8 @@ install ${ACE_ROOT}/TAO/orbsvcs/Concurrency_Service/Concurrency_Service \
     %{buildroot}%{_sbindir}/tao-cosconcurrency
 
 #Create directories
-for dir in %{_localstatedir}/{cache,log}/tao
-        mkdir -p %{buildroot}$dir
+for dir in cache log; do
+        mkdir -p %{buildroot}%{_localstatedir}/${dir}/tao
 done
 
 # Create data files which will be ghosted.
