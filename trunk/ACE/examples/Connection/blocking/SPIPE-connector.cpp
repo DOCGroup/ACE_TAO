@@ -32,16 +32,21 @@ Peer_Handler::open (void *)
   if (iterations_ == 0)
     {
       this->display_menu ();
-      if (ACE_Event_Handler::register_stdin_handler
-          (this,
-           ACE_Reactor::instance (),
-           ACE_Thread_Manager::instance ()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("register_stdin_handler")),
-                          -1);
+      
+      if (ACE_Event_Handler::register_stdin_handler (
+            this,
+            ACE_Reactor::instance (),
+            ACE_Thread_Manager::instance ()) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("register_stdin_handler")),
+                            -1);
+        }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
   else // If iterations_ has been set, send iterations_ buffers.
     {
@@ -55,9 +60,10 @@ Peer_Handler::open (void *)
       int length = ACE_OS::strlen (buffer);
 
       while (iterations_-- > 0
-             && this->peer ().send_n (buffer,
-                                      length) == length)
-        continue;
+             && this->peer ().send_n (buffer, length) == length)
+        {
+          continue;
+        }
 
       this->peer ().close ();
       ACE_Reactor::instance ()->end_reactor_event_loop();
@@ -77,17 +83,22 @@ Peer_Handler::handle_input (ACE_HANDLE)
   if (n > 0)
     {
       if (this->peer ().send (buf, n) != n)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("write failed")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("write failed")),
+                            -1);
+        }
       else if (n == 0) // Explicitly close the connection.
         {
           if (this->peer ().close () == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("close")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("close")),
+                                1);
+            }
+            
           return -1;
         }
       else
@@ -95,6 +106,7 @@ Peer_Handler::handle_input (ACE_HANDLE)
           this->display_menu ();
         }
     }
+      
   return 0;
 }
 
