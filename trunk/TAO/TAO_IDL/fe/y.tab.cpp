@@ -46,8 +46,6 @@
 /* Using locations.  */
 #define TAO_YYLSP_NEEDED 0
 
-
-
 /* Tokens.  */
 #ifndef TAO_YYTOKENTYPE
 # define TAO_YYTOKENTYPE
