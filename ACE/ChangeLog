@@ -1,3 +1,8 @@
+Wed Aug  6 18:45:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc:
+          Added a few missing header files
+
 Wed Aug  6 18:17:32 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * protocols/ace/HTBP/HTBP_Channel.cpp:
