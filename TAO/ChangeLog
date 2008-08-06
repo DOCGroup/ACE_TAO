@@ -1,3 +1,27 @@
+Wed Aug  6 07:45:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ZIOP/ZIOP.cpp:
+        * tao/ZIOP/ZIOP.pidl:
+        * tao/ZIOP/ZIOP_Policy_i.cpp:
+        * tao/ZIOP/ZIOP_Policy_i.h:
+        * tao/ZIOP/ZIOP_PolicyFactory.cpp:
+        * tao/Compression/Base_Compressor.cpp:
+        * tao/Compression/Base_Compressor.h:
+        * tao/Compression/Compression.pidl:
+          CompressionRatio could get negative, so make it a regular long.
+          Added a new typedef for the ratio and uses this. Thanks to IONA
+          for pointing out that the ratio could get negative.
+
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+          Use ACE_TEXT
+
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+          Const and layout changes
+
+        * tao/Valuetype/ValueBase.h:
+          Changed Value_tag_sigbits to 0x7fffff00L to resolve warnings
+          with gcc 4.3
+
 Tue Aug  5 07:51:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/nslist/nsdel.cpp:

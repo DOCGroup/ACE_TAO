@@ -63,8 +63,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
         {
           ACE_ERROR ((
             LM_ERROR,
-            "TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher::dispatch_reply "
-            "clone_from failed \n"));
+            ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher::dispatch_reply ")
+            ACE_TEXT ("clone_from failed \n")));
         }
       return -1;
     }
@@ -195,7 +195,6 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 void
 TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 {
-
   try
     {
       // This is okay here... Everything relies on our refcount being

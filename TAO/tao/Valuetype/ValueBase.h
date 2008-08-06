@@ -189,14 +189,14 @@ namespace CORBA
       TAO_InputCDR &strm,
       const char * const repo_id_expected,
       CORBA::Boolean & null_object);
-      
+
 #if defined (GEN_OSTREAM_OPS)
 
     /// Used by optionally generated ostream operators for valuetypes
-    /// to output the state of the actual type for debugging.  
+    /// to output the state of the actual type for debugging.
     static std::ostream& _tao_stream (std::ostream &strm, const ValueBase *value);
     virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
-    
+
 #endif /* GEN_OSTREAM_OPS */
 
   public:  // otherwise these cannot be called from a static function
@@ -319,12 +319,12 @@ namespace CORBA
  *
  * @brief TAO_OBV_GIOP_Flags
  *
- * @see CORBA 2.3 -- Section 15.3.4
+ * @see CORBA 3.0.3 -- Section 15.3.4
  */
 namespace TAO_OBV_GIOP_Flags
 {
   const CORBA::Long Value_tag_base    = 0x7fffff00L;
-  const CORBA::Long Value_tag_sigbits = 0xffffff00L;
+  const CORBA::Long Value_tag_sigbits = 0x7fffff00L;
   const CORBA::Long Codebase_url      = 1;
   const CORBA::Long Type_info_sigbits = 0x00000006L;
   const CORBA::Long Type_info_none    = 0;
@@ -334,17 +334,17 @@ namespace TAO_OBV_GIOP_Flags
   const CORBA::Long Indirection_tag   = 0x7fffffffL;
   const CORBA::Long Null_tag          = 0x00000000L;
 
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_value_tag         (CORBA::Long);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_codebase_url     (CORBA::Long);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_no_type_info     (CORBA::Long);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_single_type_info (CORBA::Long);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_list_type_info   (CORBA::Long);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_chunked           (CORBA::Long);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection_tag   (CORBA::Long);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection       (CORBA::Long);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_block_size        (CORBA::Long);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_end_tag           (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long tag);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_value_tag         (CORBA::Long tag);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_codebase_url     (CORBA::Long tag);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_no_type_info     (CORBA::Long tag);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_single_type_info (CORBA::Long tag);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_list_type_info   (CORBA::Long tag);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_chunked           (CORBA::Long tag);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection_tag   (CORBA::Long tag);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection       (CORBA::Long tag);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_block_size        (CORBA::Long tag);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_end_tag           (CORBA::Long tag);
 }
 
 TAO_Valuetype_Export CORBA::Boolean

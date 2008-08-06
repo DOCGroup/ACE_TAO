@@ -17,7 +17,6 @@ ACE_RCSID (AnyTypeCode,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 TAO::Unknown_IDL_Type::LOCK
 TAO::Unknown_IDL_Type::lock_i (void)
 {
