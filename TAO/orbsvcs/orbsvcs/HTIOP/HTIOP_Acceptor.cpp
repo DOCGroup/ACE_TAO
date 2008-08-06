@@ -232,12 +232,17 @@ TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
       // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
       //
       if (endp->port() == this->addrs_[i].get_port_number())
-        if (endp->port() == 0)
-          return (ACE_OS::strcmp (endp->htid(),
-                                  this->addrs_[i].get_htid()) == 0);
-        else
-          return (ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0);
-      //        return 1;
+        {
+          if (endp->port() == 0)
+            {
+              return (ACE_OS::strcmp (endp->htid(),
+                                      this->addrs_[i].get_htid()) == 0);
+            }
+          else
+            {
+              return (ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0);
+            }
+        }
     }
 
   return 0;

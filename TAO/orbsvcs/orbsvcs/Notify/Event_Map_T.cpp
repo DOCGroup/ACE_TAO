@@ -56,7 +56,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::disconnect (PROXY* proxy)
 template <class PROXY, class ACE_LOCK> int
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_EventType& event_type)
 {
-  ENTRY* entry;
+  ENTRY* entry = 0;
 
   int result = -1;
 
