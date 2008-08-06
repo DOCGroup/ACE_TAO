@@ -2677,8 +2677,8 @@ EXTRA_DIST += \
 
 ## Makefile.Bzip2Compressor.am
 
-if BUILD_BZIP2
 if BUILD_EXCEPTIONS
+if BUILD_BZIP2
 
 lib_LTLIBRARIES += libTAO_Bzip2Compressor.la
 
@@ -2717,8 +2717,8 @@ CLEANFILES += \
 TAO_Bzip2Compressor.pc: ${top_builddir}/config.status ${srcdir}/Compression/bzip2/TAO_Bzip2Compressor.pc.in
         ${top_builddir}/config.status --file $@:${srcdir}/Compression/bzip2/TAO_Bzip2Compressor.pc.in
 
-endif BUILD_EXCEPTIONS
 endif BUILD_BZIP2
+endif BUILD_EXCEPTIONS
 
 EXTRA_DIST += \
   Compression/bzip2/TAO_Bzip2Compressor.rc \
