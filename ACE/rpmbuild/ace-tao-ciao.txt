@@ -1216,7 +1216,7 @@ install ${ACE_ROOT}/bin/nslist %{buildroot}%{_bindir}/tao_nslist
 # ================================================================
 
 install -d %{buildroot}%{_sysconfdir}
-tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.bz2 \
+tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.gz \
         -C %{buildroot}%{_sysconfdir}
 
 %if %{defined suse_version}
