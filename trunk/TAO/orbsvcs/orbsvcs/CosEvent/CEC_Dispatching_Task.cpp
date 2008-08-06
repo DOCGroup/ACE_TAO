@@ -22,11 +22,13 @@ int
 TAO_CEC_Dispatching_Task::svc (void)
 {
   bool done = false;
+  
   while (!done)
     {
       try
         {
           ACE_Message_Block *mb = 0;
+          
           if (this->getq (mb) == -1)
             {
               if (ACE_OS::last_error () == ESHUTDOWN)
@@ -54,13 +56,16 @@ TAO_CEC_Dispatching_Task::svc (void)
           ACE_Message_Block::release (mb);
 
           if (result == -1)
-            done = true;
+            {
+              done = true;
+            }
         }
       catch (const CORBA::Exception& ex)
         {
           ex._tao_print_exception ("EC (%P|%t) exception in dispatching queue");
         }
     }
+    
   return 0;
 }
 

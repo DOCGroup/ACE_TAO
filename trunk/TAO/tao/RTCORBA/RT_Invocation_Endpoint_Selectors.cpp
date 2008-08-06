@@ -283,14 +283,14 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
       //    case there is only one acceptor
       // In both cases we should use the endpoint regardless of its priority.
 
-      if (all_endpoints_are_valid ||
-          (match_priority &&
-           client_thread_priority == endpoint_priority) ||
-          (match_bands &&
-           endpoint_priority <= max_priority &&
-           endpoint_priority >= min_priority) ||
-          r.profile ()->endpoint_count () == 1 &&
-          endpoint_priority == TAO_INVALID_PRIORITY)
+      if (all_endpoints_are_valid
+          || (match_priority
+              && client_thread_priority == endpoint_priority)
+          || (match_bands
+              && endpoint_priority <= max_priority
+              && endpoint_priority >= min_priority)
+          || (r.profile ()->endpoint_count () == 1
+              && endpoint_priority == TAO_INVALID_PRIORITY))
         {
           TAO_RT_Transport_Descriptor_Private_Connection_Property
             private_connection_descriptor_property;

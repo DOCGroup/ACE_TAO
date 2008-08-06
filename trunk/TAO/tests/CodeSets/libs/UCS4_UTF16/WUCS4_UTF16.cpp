@@ -500,24 +500,31 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
       ACE_UTF16_T bom = ACE_UNICODE_BOM_CORRECT;
       ACE_CDR::ULong length = len + count_potential_surrogates (x, len);
       ACE_CDR::ULong l = length * ACE_UTF16_CODEPOINT_SIZE;
+      
       if (this->write_4 (cdr, &l) && x != 0)
         {
-          this->write_2 (cdr,&bom);
+          this->write_2 (cdr, &bom);
           return this->write_measured_wchar_array (cdr, x, len, length);
         }
     }
   else
     {
       ACE_CDR::ULong l = len + 1;
+      
       if (this->write_4 (cdr, &l))
-        if (x != 0)
-          return this->write_wchar_array (cdr, x, len + 1);
-    else
-      {
-        ACE_UTF16_T s = 0;
-        return this->write_2 (cdr,&s);
-      }
+        {
+          if (x != 0)
+            {
+              return this->write_wchar_array (cdr, x, len + 1);
+            }
+          else 
+            {
+              ACE_UTF16_T s = 0;
+              return this->write_2 (cdr, &s);
+            }
+        }
     }
+    
   return 0;
 }
 

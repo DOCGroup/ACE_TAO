@@ -1,3 +1,22 @@
+Wed Aug  6 19:08:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * rbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/test.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/Codeset/UTF16_BOM_Translator.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tests/Server_Connection_Purging/client.cpp:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Translator.cpp:
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
+
+          Cosmetic changes to eliminate warnings from some
+          Linux compilers.
+
 Wed Aug  6 12:25:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/fe/y.tab.cpp:

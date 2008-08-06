@@ -936,16 +936,20 @@ Test_ECG::shutdown_consumer (int id)
 {
   ACE_DEBUG ((LM_DEBUG, "Shutdown consumer %d\n", id));
   this->running_consumers_--;
+  
   if (this->running_consumers_ == 0)
-    if (TAO_ORB_Core_instance ()->orb () == 0)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) Test_ECG::shutdown_consumer, "
+    {
+      if (TAO_ORB_Core_instance ()->orb () == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) Test_ECG::shutdown_consumer, "
                       "ORB instance is 0\n"));
-
-      }
-    else
-      TAO_ORB_Core_instance ()->orb ()->shutdown ();
+        }
+      else
+        {
+          TAO_ORB_Core_instance ()->orb ()->shutdown ();
+        }
+    }
 }
 
 int
