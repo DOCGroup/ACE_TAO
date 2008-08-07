@@ -553,7 +553,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               // handle the connection completion.
 
               TransportCleanupGuard tg(base_transport);
-              if (!this->wait_for_connection_completion (r, base_transport, timeout))
+              if (!this->wait_for_connection_completion (r, *desc,
+                                                         base_transport,
+                                                         timeout))
                 {
                   if (TAO_debug_level > 2)
                     {
@@ -652,9 +654,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                   return base_transport;
                 }
 
-              // Should this code be moved?  If so, where to?
-              base_transport->opened_as (TAO::TAO_CLIENT_ROLE);
-
               if (TAO_debug_level > 4)
                 {
                   ACE_DEBUG ((LM_DEBUG,
@@ -676,10 +675,11 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                     }
                   (void) base_transport->purge_entry ();
                 }
-              // The new transport is in the cache.  We'll pick it up from th
-              // next time thru this loop (using it from here causes more pro
-              // than it fixes due to the changes that allow a new connection
-              // re-used by a nested upcall before we get back here.)
+              // The new transport is in the cache.  We'll pick it up from the
+              // next time thru this loop (using it from here causes more
+              // problems than it fixes due to the changes that allow a new
+              // connectionto be re-used by a nested upcall before we get back
+              // here.)
               base_transport->remove_reference ();
             }
           else // not making new connection
@@ -694,6 +694,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 bool
 TAO_Connector::wait_for_connection_completion (
     TAO::Profile_Transport_Resolver *r,
+    TAO_Transport_Descriptor_Interface &desc,
     TAO_Transport *&transport,
     ACE_Time_Value *timeout)
 {
@@ -746,6 +747,18 @@ TAO_Connector::wait_for_connection_completion (
     }
   else
     {
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport_Connector::"
+                      "wait_for_connection_completion, "
+                      "caching before wait, hash %d = [%d]\n",
+                      desc.hash(),
+                      transport->id ()));
+        }
+      TAO::Transport_Cache_Manager &tcm =
+        this->orb_core ()->lane_resources ().transport_cache ();
+      tcm.cache_transport (&desc, transport, TAO::ENTRY_CONNECTING);
       if (TAO_debug_level > 2)
         {
             ACE_DEBUG ((LM_DEBUG,

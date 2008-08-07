@@ -124,6 +124,15 @@ namespace TAO
                 // update the cache status
                 // we are already holding the lock, do not call set_entry_state
                 entry->item ().recycle_state (int_id.recycle_state ());
+                if (TAO_debug_level > 9 &&
+                    entry->item ().is_connected_ != int_id.is_connected_)
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_")
+                              ACE_TEXT ("Manager::bind_i: Updating existing ")
+                              ACE_TEXT ("entry sets is_connected_ to %C\n"),
+                              (int_id.is_connected_ ? "true" : "false")));
+
+                entry->item ().is_connected_ = int_id.is_connected_;
                 retval = 0;
                 more_to_do = false;
               }
@@ -451,10 +460,10 @@ namespace TAO
     if (TAO_debug_level > 8)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::is_entry_available:")
-          ACE_TEXT ("returns %C state is [%d]\n"),
-          (result ? "true" : "false"),
-          entry_state));
+                    ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::")
+                    ACE_TEXT ("is_entry_available: %C state is %C\n"),
+                    (result ? "true" : "false"),
+                    Cache_IntId::state_name (entry_state)));
       }
 
     return result;
@@ -473,13 +482,13 @@ namespace TAO
         result = !entry.int_id_.is_connected_;
       }
 
-    if (TAO_debug_level  > 8)
+    if (TAO_debug_level > 8)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::is_entry_connecting: ")
-          ACE_TEXT ("returns %C, state is [%d]\n"),
-          (result ? "true" : "false"),
-          entry_state));
+                    ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::")
+                    ACE_TEXT ("is_entry_connecting: %C, state is %C\n"),
+                    (result ? "true" : "false"),
+                    Cache_IntId::state_name (entry_state)));
       }
 
     return result;

@@ -442,6 +442,10 @@ TAO_IIOP_Connector::complete_connection (int result,
       // the winner is the last member of the list, because the
       // iterator stopped on a successful connect.
       transport = tlist[count-1];
+      desc.reset_endpoint (ep_list[count-1]);
+      TAO::Transport_Cache_Manager &tcm =
+        this->orb_core ()->lane_resources ().transport_cache ();
+      tcm.cache_transport (&desc, transport);
     }
   else
     {
@@ -450,6 +454,7 @@ TAO_IIOP_Connector::complete_connection (int result,
           transport = tlist[0];
           desc.reset_endpoint(ep_list[0]);
           if (!this->wait_for_connection_completion (r,
+                                                     desc,
                                                      transport,
                                                      timeout))
             {
@@ -579,8 +584,8 @@ TAO_IIOP_Connector::complete_connection (int result,
 #endif // INDUCE_BUG_2654_C
   int retval = 0;
 
-  // Update the cache to show this in idle state
-  if (count == 1 || desc.reset_endpoint(iiop_endpoint))
+  // Only for parallel connect, update the cache to show this in idle state
+  if (count > 1 && desc.reset_endpoint (iiop_endpoint))
     {
       retval = this->orb_core ()->
         lane_resources ().transport_cache ().cache_transport (&desc,

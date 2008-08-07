@@ -172,11 +172,6 @@ namespace TAO
     HASH_MAP &map (void);
 
   private:
-    /// Associate @a ext_id with @a int_id. Grabs the lock and calls the
-    /// implementation function bind_i.
-    int bind (Cache_ExtId &ext_id,
-              Cache_IntId &int_id);
-
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
     /// implementation function find_i.
     Find_Result find (

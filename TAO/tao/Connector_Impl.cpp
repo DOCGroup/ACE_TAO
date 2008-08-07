@@ -4,6 +4,7 @@
 #define TAO_CONNECTOR_IMPL_CPP
 
 #include "tao/Connector_Impl.h"
+#include "tao/Transport.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,6 +29,8 @@ TAO_Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
     ACE_NEW_RETURN (sh,
                     SVC_HANDLER (this->orb_core_),
                     -1);
+
+  sh->transport ()->opened_as (TAO::TAO_CLIENT_ROLE);
 
   // We add to the #REFCOUNT# since the Connector needs this. See
   // Connector::make_connection() for details.
