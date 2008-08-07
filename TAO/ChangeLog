@@ -1,3 +1,9 @@
+Thu Aug  7 17:30:28 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/POA/EndpointPolicy/Makefile.am:
+
+          Regenerated.
+
 Thu Aug  7 09:43:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Muxed_TMS.{h,cpp}:
