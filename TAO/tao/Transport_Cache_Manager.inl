@@ -7,17 +7,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  ACE_INLINE int
-  Transport_Cache_Manager::bind (Cache_ExtId &ext_id,
-                                 Cache_IntId &int_id)
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                              guard,
-                              *this->cache_lock_,
-                              -1));
-
-    return this->bind_i (ext_id, int_id);
-  }
 
   ACE_INLINE int
   Transport_Cache_Manager::cache_transport (
@@ -27,17 +16,19 @@ namespace TAO
   {
     // Compose the ExternId & Intid
     Cache_ExtId ext_id (prop);
-    Cache_IntId int_id (transport);
-
     int retval = 0;
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                                 guard,
                                 *this->cache_lock_,
                                 -1));
+      Cache_IntId int_id (transport);
 
-      // Do as the semantics of this method dictates
-      int_id.recycle_state (state);
+      // If it has already connected, go directly to the IDLE_BNP state
+      if (int_id.is_connected_ && state == ENTRY_CONNECTING)
+        int_id.recycle_state (ENTRY_IDLE_BUT_NOT_PURGABLE);
+      else
+        int_id.recycle_state (state);
 
       retval = this->bind_i (ext_id, int_id);
     }
@@ -82,7 +73,11 @@ namespace TAO
       return;
 
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
-
+    if (TAO_debug_level > 9 && state != entry->item ().is_connected_)
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager")
+                  ACE_TEXT ("::mark_connected %C Transport=%d\n"),
+                  (state ? "true" : "false"), entry->item ().transport_
+                  ));
     entry->item().is_connected_ = state;
   }
 

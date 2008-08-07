@@ -9,11 +9,12 @@ const char *ior = "file://test.ior";
 test_var global_client;
 int iterations = 100;
 bool server_shutdown = true;
+int n_tasks = 45;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:x");
+  ACE_Get_Opt get_opts (argc, argv, "k:c:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -21,6 +22,9 @@ parse_args (int argc, char *argv[])
       {
       case 'k':
         ior = get_opts.opt_arg ();
+        break;
+      case 'c':
+        n_tasks = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
         server_shutdown = false;
@@ -30,7 +34,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior> "
-                           "-x"
+                           "[-x] [-c concurrent_tasks]"
                            "\n",
                            argv [0]),
                           -1);
@@ -93,7 +97,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Client client (server.in ());
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
-                            45) != 0)
+                           n_tasks) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                             "Cannot activate client threads\n"),
                           1);

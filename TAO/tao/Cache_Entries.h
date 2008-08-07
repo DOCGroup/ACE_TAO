@@ -128,6 +128,8 @@ namespace TAO
     /// This is an analog for the transport::is_connected(), which is
     /// guarded by a mutex.
     bool is_connected_;
+
+    static const char *state_name (Cache_Entries_State st);
   };
 
 

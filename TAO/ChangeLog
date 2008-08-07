@@ -1,3 +1,74 @@
+Thu Aug  7 17:46:45 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        This commit fixes Bug 2935 (again) and resolves other transport cache
+        management issues.  The key issue of 2935 is that the transport is
+        cached while the connection is in progress, so that other threads see
+        that there's a connection in progress and don't start their own.
+        That feature is essentially restoring one of the changes from
+        Tue May 20 18:05:08 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+        that were reverted in
+        Fri May 30 13:21:20 UTC 2008  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+
+          Cache the transport before waiting for the connection to complete.
+          This requires the re-addition of a Transport_Descriptor_Interface
+          parameter to wait_for_connection_completion().
+
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+
+          Pass the transport descriptor to wait_for_connection_completion().
+
+        * tao/IIOP_Connector.cpp:
+
+          Pass the transport descriptor to wait_for_connection_completion().
+          In the case where the transport is already connected in
+          complete_connection() add it to the cache here.  In the case of
+          parallel connects in complete_connection(), modified the logic for
+          when the cache is updated.        
+
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+
+          Removed the unused, private, bind() method.  Added logging at level
+          10.  Update the is_connected_ flag in the case where we're updating
+          an existing cache entry.  In cache_transport(), construct the IntId
+          with the lock held so ensure consistent state.  Also, if the
+          transport is already connected make sure not to set the state to
+          ENTRY_CONNECTING.
+
+        * tao/Connector_Impl.cpp:
+
+          Moved the line that sets the transport to CLIENT_ROLE here.
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Transport.cpp:
+
+          Logging improvements.
+
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.inl:
+        * tao/Cache_Entries.cpp:
+
+          Added logging using state names instead of numbers.
+
+        * tests/Bug_2243_Regression/run_test.pl:
+
+          Removed faulty assumption that required $TAO_ROOT == $ACE_ROOT/TAO.
+
+        * tests/Bug_3108_Regression/client.cpp:
+
+          Added a -c parameter to client to change the number of threads.
+
+        * tests/Bug_3108_Regression/run_test.pl:
+
+          Added separate log files {client,server}.log when -debug is used.
+
 Thu Aug  7 17:30:28 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/POA/EndpointPolicy/Makefile.am:

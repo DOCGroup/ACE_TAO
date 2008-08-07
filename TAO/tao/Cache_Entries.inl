@@ -2,6 +2,9 @@
 //
 // $Id$
 
+#include "tao/debug.h"
+#include "ace/Log_Msg.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -50,6 +53,11 @@ namespace TAO
   ACE_INLINE void
   Cache_IntId::recycle_state (Cache_Entries_State st)
   {
+    if (TAO_debug_level > 9)
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Cache_IntId::")
+                  ACE_TEXT ("recycle_state %C->%C Transport=%d IntId=%d\n"),
+                  state_name (recycle_state_), state_name (st), transport_,
+                  this));
     this->recycle_state_ = st;
   }
 
@@ -66,6 +74,24 @@ namespace TAO
     TAO_Transport *val = this->transport_;
     this->transport_ = 0;
     return val;
+  }
+
+  ACE_INLINE const char *
+  Cache_IntId::state_name (Cache_Entries_State st)
+  {
+#define TAO_CACHE_INTID_ENTRY(X) case X: return #X
+    switch (st)
+      {
+        TAO_CACHE_INTID_ENTRY (ENTRY_IDLE_AND_PURGABLE);
+        TAO_CACHE_INTID_ENTRY (ENTRY_IDLE_BUT_NOT_PURGABLE);
+        TAO_CACHE_INTID_ENTRY (ENTRY_PURGABLE_BUT_NOT_IDLE);
+        TAO_CACHE_INTID_ENTRY (ENTRY_BUSY);
+        TAO_CACHE_INTID_ENTRY (ENTRY_CLOSED);
+        TAO_CACHE_INTID_ENTRY (ENTRY_CONNECTING);
+        TAO_CACHE_INTID_ENTRY (ENTRY_UNKNOWN);
+      }
+    return "***Unknown enum value, update Cache_IntId::state_name()";
+#undef TAO_CACHE_INTID_ENTRY
   }
 
   /*******************************************************/
