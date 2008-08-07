@@ -38,7 +38,7 @@ Thu Aug  7 17:46:45 UTC 2008  Adam Mitz  <mitza@ociweb.com>
           Removed the unused, private, bind() method.  Added logging at level
           10.  Update the is_connected_ flag in the case where we're updating
           an existing cache entry.  In cache_transport(), construct the IntId
-          with the lock held so ensure consistent state.  Also, if the
+          with the lock held to ensure consistent state.  Also, if the
           transport is already connected make sure not to set the state to
           ENTRY_CONNECTING.
 
