@@ -458,10 +458,12 @@ ACE_OS::read_n (ACE_HANDLE handle,
                         len - bytes_transferred);
 
       if (n == -1 || n == 0)
-        return n;
+        {
+          return n;
+        }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -846,7 +848,10 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
           if (argv[i] == 0)
             {
               if (argp != arg)
-                delete [] argp;
+                {
+                  delete [] argp;
+                }
+                
               errno = ENOMEM;
               return -1;
             }
@@ -854,7 +859,9 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
     }
 
   if (argp != arg)
-    delete [] argp;
+    {
+      delete [] argp;
+    }
 
   argv[argc] = 0;
   return 0;
@@ -882,10 +889,12 @@ ACE_OS::write_n (ACE_HANDLE handle,
                          len - bytes_transferred);
 
       if (n == -1 || n == 0)
-        return n;
+        {
+          return n;
+        }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

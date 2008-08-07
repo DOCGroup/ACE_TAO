@@ -186,19 +186,19 @@ ACE_UPIPE_Stream::send_n (const char *buf,
   size_t bytes_written;
   ssize_t len = 0;
 
-  for (bytes_written = 0;
-       bytes_written < n;
-       bytes_written += len)
+  for (bytes_written = 0; bytes_written < n; bytes_written += len)
     {
       len = this->send (buf + bytes_written,
                         n - bytes_written,
                         timeout);
 
       if (len == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
-  return bytes_written;
+  return static_cast<ssize_t> (bytes_written);
 }
 
 ssize_t
@@ -210,20 +210,23 @@ ACE_UPIPE_Stream::recv_n (char *buf,
   size_t bytes_read;
   ssize_t len = 0;
 
-  for (bytes_read = 0;
-       bytes_read < n;
-       bytes_read += len)
+  for (bytes_read = 0; bytes_read < n; bytes_read += len)
     {
       len = this->recv (buf + bytes_read,
                         n - bytes_read,
                         timeout);
+                        
       if (len == -1)
-        return -1;
+        {
+          return -1;
+        }
       else if (len == 0)
-        break;
+        {
+          break;
+        }
     }
 
-  return bytes_read;
+  return static_cast< ssize_t> (bytes_read);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -19,6 +19,7 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID (ace,
            Process_Manager,
@@ -685,9 +686,13 @@ ACE_Process_Manager::find_proc (pid_t pid)
 {
   ACE_TRACE ("ACE_Process_Manager::find_proc");
 
-  for (size_t i = 0; i < this->current_count_; ++i)
-    if (pid == this->process_table_[i].process_->getpid ())
-      return i;
+  for (size_t i = 0; i < this->current_count_; ++i) 
+    {
+      if (pid == this->process_table_[i].process_->getpid ())
+        {
+          return ACE_Utils::truncate_cast<ssize_t> (i);
+        }
+    }
 
   return -1;
 }
@@ -702,8 +707,12 @@ ACE_Process_Manager::find_proc (ACE_HANDLE h)
   ACE_TRACE ("ACE_Process_Manager::find_proc");
 
   for (size_t i = 0; i < this->current_count_; ++i)
-    if (h == this->process_table_[i].process_->gethandle ())
-      return i;
+    {
+      if (h == this->process_table_[i].process_->gethandle ())
+        {
+          return ACE_Utils::truncate_cast<ssize_t> (i);
+        }
+    }
 
   return -1;
 }

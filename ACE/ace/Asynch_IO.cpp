@@ -12,6 +12,7 @@ ACE_RCSID(ace, Asynch_IO, "$Id$")
 #include "ace/INET_Addr.h"
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/os_include/os_errno.h"
+#include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1006,7 +1007,9 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
 {
   // If both are zero, return zero
   if (this->header_ == 0 && this->trailer_ == 0)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       // Something is valid
@@ -1015,12 +1018,12 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
       if (this->header_ != 0)
         {
           this->transmit_buffers_.Head = this->header_->rd_ptr ();
-#if defined(ACE_WIN64)
+#if defined (ACE_WIN64) || defined (ACE_WIN32)
           this->transmit_buffers_.HeadLength =
-            static_cast<DWORD> (this->header_bytes_);
+            ACE_Utils::truncate_cast<DWORD> (this->header_bytes_);
 #else
           this->transmit_buffers_.HeadLength = this->header_bytes_;
-#endif /* ACE_WIN64 */
+#endif /* ACE_WIN64 || ACE_WIN32 */
         }
       else
         {
@@ -1032,12 +1035,12 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
       if (this->trailer_ != 0)
         {
           this->transmit_buffers_.Tail = this->trailer_->rd_ptr ();
-#if defined(ACE_WIN64)
+#if defined(ACE_WIN64) || defined (ACE_WIN32)
           this->transmit_buffers_.TailLength =
-            static_cast<DWORD> (this->trailer_bytes_);
+            ACE_Utils::truncate_cast<DWORD> (this->trailer_bytes_);
 #else
           this->transmit_buffers_.TailLength = this->trailer_bytes_;
-#endif /* ACE_WIN64 */
+#endif /* ACE_WIN64 || ACE_WIN32 */
         }
       else
         {

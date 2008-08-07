@@ -1,3 +1,27 @@
+Thu Aug  7 20:21:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Process_Manager.cpp:
+        * ace/Asynch_IO.cpp:
+        * ace/Pagefile_Memory_Pool.cpp:
+        * ace/MEM_IO.cpp:
+        * ace/Time_Value.inl:
+        * ace/SV_Semaphore_Simple.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/MEM_IO.inl:
+        * ace/ETCL/ETCL_Interpreter.cpp:
+        * ace/UPIPE_Stream.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/FILE_IO.cpp:
+        * ace/OS_NS_unistd.cpp:
+        * ace/FIFO_Recv_Msg.inl:
+        * ace/CDR_Size.cpp:
+        * ace/ACE.cpp:
+        * ace/CDR_Stream.cpp:
+
+          Added usage of ACE_Utils::truncate_cast<>
+          to get rid of conversion warnings, mostly from size_t
+          to ssize_t.
+
 Thu Aug  7 18:02:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

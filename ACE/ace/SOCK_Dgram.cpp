@@ -111,7 +111,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
         }
       else
         {
-          io_vec->iov_len = ACE_Utils::truncate_cast<size_t> (rcv_len);
+          io_vec->iov_len = ACE_Utils::truncate_cast<u_long> (rcv_len);
           addr.set_size (addr_len);
         }
       return rcv_len;
