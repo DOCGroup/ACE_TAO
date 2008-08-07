@@ -73,24 +73,9 @@ Source1:      ace-tao-rpmlintrc
 ## Patch5: ace-tao-orbsvcs-daemon.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-#%if %{defined suse_version}
-#%if 0%{?sles_version}
-#BuildRequires:  sles-release
-#%else
-#BuildRequires:  openSUSE-release
-#%endif
-#%endif
-
-%if %{undefined suse_version}
 Requires(post):   /sbin/install-info
 Requires(preun):  /sbin/install-info
 Requires(postun): /sbin/ldconfig
-%endif
-
-%if %{defined suse_version}
-PreReq:         %install_info_prereq /sbin/ldconfig %insserv_prereq
-PreReq:         %fillup_prereq pwdutils
-%endif
 
 BuildRequires:  openssl-devel
 BuildRequires:  gcc-c++
