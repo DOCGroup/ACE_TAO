@@ -109,6 +109,7 @@ BuildRequires:  perl
 %if %{?_with_fltk:1}%{!?_with_fltk:0}
 BuildRequires:  fltk-devel
 %endif
+
 %if %{?_with_tk:1}%{!?_with_tk:0}
 BuildRequires:  tcl-devel
 BuildRequires:  tk-devel
@@ -662,6 +663,7 @@ This factory is intended for creating QtReactor for ORB. This factory
 can be feed into ORB using TAO_ORB_Core::set_gui_resource_factory
 method which is usually done by TAO_QtResource_Loader.
 %endif
+
 # ---------------- tao-qtresource-devel ----------------
 
 %if %{?_with_qt:1}%{!?_with_qt:0}
@@ -1447,7 +1449,7 @@ exit 0
 %if %{undefined suse_version} || 0%{?suse_version} = 1020
 %post -n ace-foxreactor -p /sbin/ldconfig
 %endif
-$endif
+%endif
 
 # ---------------- ace-flreactor ----------------
 
@@ -1967,7 +1969,6 @@ fi
 
 # ---------------- ace-flreactor-devel ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_fl:1}%{!?_with_fl:0}
 
 %files -n ace-flreactor-devel
@@ -1987,7 +1988,6 @@ fi
 
 # ---------------- ace-qtreactor ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_qt:1}%{!?_with_qt:0}
 
 %files -n ace-qtreactor
@@ -2004,7 +2004,6 @@ fi
 
 # ---------------- ace-qtreactor-devel ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_qt:1}%{!?_with_qt:0}
 
 %files -n ace-qtreactor-devel
@@ -2024,7 +2023,6 @@ fi
 
 # ---------------- ace-tkreactor ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_tk:1}%{!?_with_tk:0}
 
 %files -n ace-tkreactor
@@ -2041,7 +2039,6 @@ fi
 
 # ---------------- ace-tkreactor-devel ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_tk:1}%{!?_with_tk:0}
 
 %files -n ace-tkreactor-devel
@@ -2061,7 +2058,6 @@ fi
 
 # ---------------- ace-xtreactor ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_xt:1}%{!?_with_xt:0}
 
 %files -n ace-xtreactor
@@ -2078,7 +2074,6 @@ fi
 
 # ---------------- ace-xtreactor-devel ----------------
 
-# Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_xt:1}%{!?_with_xt:0}
 
 %files -n ace-xtreactor-devel
@@ -2488,3 +2483,4 @@ fi
 %changelog
 * Thu Jul 31 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.6-2
 - Removed ace-tao-unusedarg.patch (related to bug #3270).
+
