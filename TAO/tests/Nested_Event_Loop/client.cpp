@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS.h"
 #include "test_i.h"
 
 #include "tao/Strategies/advanced_resource.h"
@@ -99,10 +100,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Try to narrow the object reference to a <server> reference.
       server_var server_object = server::_narrow (object.in ());
 
-      client_i servant (server_object.in ());
+      client_i * servant = 0;
+      ACE_NEW_RETURN (servant,
+                      client_i(server_object.in ()),
+                      1);
+      PortableServer::ServantBase_var client_transfer(servant);
 
-      servant.loop (event_loop_depth,
-                    event_loop_iterations);
+      servant->loop (event_loop_depth,
+                     event_loop_iterations);
 
       // Shutdown server.
       if (shutdown_server)
