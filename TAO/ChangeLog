@@ -1,8 +1,15 @@
+Thu Aug  7 09:43:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Muxed_TMS.{h,cpp}:
+          Made all members private. Changed clear_cache to
+          clear_cache_i to make clear this method expects the
+          lock to be hold. Simplified logic in the bind_dispatcher
+
 Wed Aug  6 23:12:35 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * tests/Big_Oneways/Peer.cpp:
 
-          Updated create_session() to explicitly activate servant for CORBA e 
+          Updated create_session() to explicitly activate servant for CORBA e
           build since CORBA e does not allow implicit servant activation. This
           prevents WrongPolicy exception raised and hence avoids the MARSHAL
           exception when trying to send WrongPolicy reply exception.

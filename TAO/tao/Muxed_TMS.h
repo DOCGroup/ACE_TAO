@@ -68,7 +68,7 @@ public:
   virtual bool idle_after_reply (void);
   virtual void connection_closed (void);
 
-protected:
+private:
   /// Lock to protect the state of the object
   ACE_Lock *lock_;
 
@@ -90,8 +90,7 @@ protected:
   /// Table of <Request ID, Reply Dispatcher> pairs.
   REQUEST_DISPATCHER_TABLE dispatcher_table_;
 
-protected:
-  int clear_cache (void);
+  int clear_cache_i (void);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
