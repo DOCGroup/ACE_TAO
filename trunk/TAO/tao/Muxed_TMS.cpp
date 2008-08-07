@@ -63,7 +63,7 @@ TAO_Muxed_TMS::request_id (void)
   return this->request_id_generator_;
 }
 
-// Bind the dispatcher with the request id.
+/// Bind the dispatcher with the request id.
 int
 TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                                 TAO_Reply_Dispatcher *rd)
@@ -73,13 +73,16 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                     *this->lock_,
                     -1);
 
-  if (TAO_debug_level > 0 && rd == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher, ")
-                ACE_TEXT ("null reply dispatcher\n")));
-
   if (rd == 0)
-    return 0;
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher, ")
+                      ACE_TEXT ("null reply dispatcher\n")));
+        }
+      return 0;
+    }
 
   int const result = this->dispatcher_table_.bind (request_id, rd);
 
@@ -187,13 +190,13 @@ TAO_Muxed_TMS::connection_closed (void)
   int retval = 0;
   do
     {
-      retval = this->clear_cache ();
+      retval = this->clear_cache_i ();
     }
   while (retval != -1);
 }
 
 int
-TAO_Muxed_TMS::clear_cache (void)
+TAO_Muxed_TMS::clear_cache_i (void)
 {
   if (this->dispatcher_table_.current_size () == 0)
     return -1;
