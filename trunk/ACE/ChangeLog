@@ -1,7 +1,12 @@
+Thu Aug  7 18:02:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          ACE/TAO/CIAO now supports CodeGear C++ Builder 2009
+
 Thu Aug  7 15:28:13 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Monitor_Control/Makefile.am:
-        
+
           Added source file Null_Network_Interface_Monitor.cpp that
           was overlooked until now.
 

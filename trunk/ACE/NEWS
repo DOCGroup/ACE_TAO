@@ -37,6 +37,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 
 . Improved support for GCC 4.2 and 4.3
 
+. Added support for CodeGear C++ Builder 2009
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.4 and ACE-5.6.5
 ====================================================
 
