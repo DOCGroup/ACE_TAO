@@ -33,6 +33,10 @@ USER VISIBLE CHANGES BETWEEN TAO-1.6.5 and TAO-1.6.6
   policy mechanism in the ORB which will take a few weeks to rework.
   Also note that ZIOP doesn't work together with RTCORBA
 
+. Added a -m option to the ImplRepo (ImR, Implementation Repository) Activator,
+  which specifies the maximum number of environment variables which will be
+  passed to the child process.  The default (and previous behavior) is 512.
+
 USER VISIBLE CHANGES BETWEEN TAO-1.6.4 and TAO-1.6.5
 ====================================================
 
