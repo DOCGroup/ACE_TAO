@@ -72,10 +72,16 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
   ACE_TRACE ("ACE_Reactive_MEM_IO::send_buf");
 
   if (this->shm_malloc_ == 0 || this->handle_ == ACE_INVALID_HANDLE)
-    return -1;
-
-  ACE_OFF_T offset = reinterpret_cast<char *> (buf) -
-    static_cast<char *> (this->shm_malloc_->base_addr ()); // the offset.
+    {
+      return -1;
+    }
+    
+  // The offset.
+  ACE_OFF_T offset =
+    ACE_Utils::truncate_cast<ACE_OFF_T> (
+      reinterpret_cast<char *> (buf)
+      - static_cast<char *> (this->shm_malloc_->base_addr ()));
+      
   // Send the offset value over the socket.
   if (ACE::send (this->handle_,
                  (const char *) &offset,
@@ -88,7 +94,8 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
 
       return -1;
     }
-  return buf->size ();
+    
+  return ACE_Utils::truncate_cast<ssize_t> (buf->size ());
 }
 
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
@@ -258,19 +265,27 @@ ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
   ACE_UNUSED_ARG (flags);
 
   if (this->shm_malloc_ == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Need to handle timeout here.
   if (this->recv_channel_.sema_->acquire () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   {
     // @@ We can probably skip the lock in certain circumstance.
     ACE_GUARD_RETURN (ACE_SYNCH_PROCESS_MUTEX, ace_mon, *this->recv_channel_.lock_, -1);
 
     buf = this->recv_channel_.queue_.read ();
+    
     if (buf != 0)
-      return buf->size ();
+      {
+        return ACE_Utils::truncate_cast<ssize_t> (buf->size ());
+      }
+      
     return -1;
   }
 }
@@ -287,7 +302,9 @@ ACE_MT_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
   ACE_UNUSED_ARG (flags);
 
   if (this->shm_malloc_ == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   {
     // @@ We can probably skip the lock in certain curcumstances.
@@ -301,9 +318,11 @@ ACE_MT_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
   }
 
   if (this->send_channel_.sema_->release () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
-  return buf->size ();
+  return ACE_Utils::truncate_cast<ssize_t> (buf->size ());
 }
 #endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
 
@@ -348,12 +367,16 @@ ACE_MEM_IO::init (const ACE_TCHAR *name,
 }
 
 int
-ACE_MEM_IO::fini ()
+ACE_MEM_IO::fini (void)
 {
   if (this->deliver_strategy_ != 0)
-    return this->deliver_strategy_->fini ();
+    {
+      return this->deliver_strategy_->fini ();
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 // Allows a client to read from a socket without having to provide
@@ -368,7 +391,9 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
   ACE_TRACE ("ACE_MEM_IO::send");
 
   if (this->deliver_strategy_ == 0)
-    return -1;                  // Something went seriously wrong.
+    {
+      return -1;                  // Something went seriously wrong.
+    }
 
   size_t len = message_block->total_length ();
 
@@ -376,8 +401,11 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
     {
       ACE_MEM_SAP_Node *buf =
         reinterpret_cast<ACE_MEM_SAP_Node *> (
-          this->deliver_strategy_->acquire_buffer (len));
+          this->deliver_strategy_->acquire_buffer (
+            ACE_Utils::truncate_cast<ssize_t> (len)));
+          
       size_t n = 0;
+      
       while (message_block != 0)
         {
           ACE_OS::memcpy (static_cast<char *> (buf->data ()) + n,
@@ -386,9 +414,13 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
           n += message_block->length ();
 
           if (message_block->cont ())
-            message_block = message_block->cont ();
+            {
+              message_block = message_block->cont ();
+            }
           else
-            message_block = message_block->next ();
+            {
+              message_block = message_block->next ();
+            }
         }
 
       buf->size_ = len;
@@ -397,6 +429,7 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
                                                 0,
                                                 timeout);
     }
+    
   return 0;
 }
 

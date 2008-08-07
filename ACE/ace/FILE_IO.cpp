@@ -124,7 +124,8 @@ ACE_FILE_IO::recvv (iovec *io_vec)
   ACE_TRACE ("ACE_FILE_IO::recvv");
 
   io_vec->iov_base = 0;
-  size_t const length = static_cast <size_t> (ACE_OS::filesize (this->get_handle ()));
+  size_t const length =
+    static_cast <size_t> (ACE_OS::filesize (this->get_handle ()));
 
   if (length > 0)
     {
@@ -136,7 +137,9 @@ ACE_FILE_IO::recvv (iovec *io_vec)
       return io_vec->iov_len;
     }
   else
-    return length;
+    {
+      return ACE_Utils::truncate_cast<ssize_t> (length);
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

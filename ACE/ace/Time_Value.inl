@@ -70,7 +70,7 @@ ACE_INLINE void
 ACE_Time_Value::set (time_t sec, suseconds_t usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-  this->tv_.tv_sec = sec;
+  this->tv_.tv_sec = ACE_Utils::truncate_cast<long> (sec);
   this->tv_.tv_usec = usec;
 #if __GNUC__
   if (__builtin_constant_p(sec) &&
@@ -134,7 +134,7 @@ ACE_INLINE void
 ACE_Time_Value::sec (time_t sec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::sec");
-  this->tv_.tv_sec = sec;
+  this->tv_.tv_sec = ACE_Utils::truncate_cast<long> (sec);
 }
 
 // Converts from Time_Value format into milli-seconds format.
