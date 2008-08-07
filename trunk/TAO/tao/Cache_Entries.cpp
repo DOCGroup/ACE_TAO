@@ -24,6 +24,10 @@ namespace TAO
   {
     this->is_connected_ = transport->is_connected();
     transport->add_reference ();
+    if (TAO_debug_level > 9)
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Cache_IntId::Cache_IntId")
+                  ACE_TEXT (" this=%d Transport[%d] is%Cconnected\n"), this,
+                  transport->id (), (is_connected_ ? " " : " not ")));
   }
 
   Cache_IntId::~Cache_IntId (void)

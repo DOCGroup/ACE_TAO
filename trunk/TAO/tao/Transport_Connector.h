@@ -172,6 +172,7 @@ protected:
    */
   virtual bool wait_for_connection_completion(
       TAO::Profile_Transport_Resolver *r,
+      TAO_Transport_Descriptor_Interface &desc,
       TAO_Transport *&transport,
       ACE_Time_Value *timeout);
 

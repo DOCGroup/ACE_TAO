@@ -11,10 +11,14 @@ use PerlACE::TestTarget;
 
 $status = 0;
 $debug_level = '0';
+$debug_opts_sv = '';
+$debug_opts_cl = '';
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
+        $debug_opts_sv = '-ORBLogFile server.log';
+        $debug_opts_cl = '-ORBLogFile client.log';
     } 
 }
 
@@ -28,10 +32,10 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o $iorbase");
 }
 else {
-    $SV = $target->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $iorfile");
+    $SV = $target->CreateProcess ("server", "$debug_opts_sv -ORBdebuglevel $debug_level -o $iorfile");
 }
-$CL = $target->CreateProcess ("client", " -k file://$iorfile");
-    
+$CL = $target->CreateProcess ("client", "$debug_opts_cl -ORBDebugLevel $debug_level -k file://$iorfile");
+
 $server = $SV->Spawn ();
 
 if ($server != 0) {
