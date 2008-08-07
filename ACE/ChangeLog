@@ -1,3 +1,9 @@
+Thu Aug  7 21:59:58 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added the new test TAO/tests/Bug_3068_Regression.
+
 Thu Aug  7 20:21:29 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Process_Manager.cpp:
