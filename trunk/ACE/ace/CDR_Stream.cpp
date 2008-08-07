@@ -1,6 +1,7 @@
 #include "ace/CDR_Stream.h"
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Stream.inl"
@@ -374,12 +375,21 @@ ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
           //In GIOP 1.2 the length field contains the number of bytes
           //the wstring occupies rather than number of wchars
           //Taking sizeof might not be a good way! This is a temporary fix.
-          if (this->write_ulong (ACE_OutputCDR::wchar_maxbytes_ * len))
-            return this->write_wchar_array (x, len);
+          ACE_CDR::Boolean good_ulong =
+            this->write_ulong (
+              ACE_Utils::truncate_cast<ACE_CDR::ULong> (
+                ACE_OutputCDR::wchar_maxbytes_ * len));
+          
+          if (good_ulong)
+            {
+              return this->write_wchar_array (x, len);
+            }
         }
       else
-        //In GIOP 1.2 zero length wstrings are legal
-        return this->write_ulong (0);
+        {
+          //In GIOP 1.2 zero length wstrings are legal
+          return this->write_ulong (0);
+        }
     }
 
   else
@@ -1361,8 +1371,11 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
     }
 
   ACE_CDR::ULong len = 0;
+  
   if (!this->read_ulong (len))
-    return false;
+    {
+      return false;
+    }
 
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
@@ -1374,7 +1387,9 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
       if (static_cast<ACE_CDR::Short> (this->major_version_) == 1
           && static_cast<ACE_CDR::Short> (this->minor_version_) == 2)
         {
-          len /= ACE_OutputCDR::wchar_maxbytes_;
+          len /=
+            ACE_Utils::truncate_cast<ACE_CDR::ULong> (
+              ACE_OutputCDR::wchar_maxbytes_);
 
           //allocating one extra for the null character needed by applications
           ACE_NEW_RETURN (x,

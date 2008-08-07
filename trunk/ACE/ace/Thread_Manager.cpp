@@ -7,19 +7,17 @@
 #include "ace/Singleton.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Guard_T.h"
-
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID (ace,
            Thread_Manager,
            "$Id$")
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1889,8 +1887,12 @@ ACE_Thread_Manager::num_threads_in_task (ACE_Task_Base *task)
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
        !iter.done ();
        iter.advance ())
-    if (iter.next ()->task_ == task)
-      ++threads_count;
+    {
+      if (iter.next ()->task_ == task)
+        {
+          ++threads_count;
+        }
+    }
 
   return threads_count;
 }
@@ -1911,23 +1913,34 @@ ACE_Thread_Manager::task_all_list (ACE_Task_Base *task_list[],
        iter.advance ())
     {
       if (task_list_count >= n)
-        break;
+        {
+          break;
+        }
 
       ACE_Task_Base *task_p = iter.next ()->task_;
+      
       if (0 != task_p)
         {
           // This thread has a task pointer; see if it's already in the
           // list. Don't add duplicates.
           size_t i = 0;
+          
           for (; i < task_list_count; ++i)
-            if (task_list[i] == task_p)
-              break;
+            {
+              if (task_list[i] == task_p)
+                {
+                  break;
+                }
+            }
+            
           if (i == task_list_count)        // No match - add this one
-            task_list[task_list_count++] = task_p;
+            {
+              task_list[task_list_count++] = task_p;
+            }
         }
     }
 
-  return task_list_count;
+  return ACE_Utils::truncate_cast<ssize_t> (task_list_count);
 }
 
 // Returns in thread_list a list of all thread ids
@@ -1946,13 +1959,15 @@ ACE_Thread_Manager::thread_all_list (ACE_thread_t thread_list[],
        iter.advance ())
     {
       if (thread_count >= n)
-        break;
+        {
+          break;
+        }
 
       thread_list[thread_count] = iter.next ()->thr_id_;
       ++thread_count;
     }
 
-  return thread_count;
+  return ACE_Utils::truncate_cast<ssize_t> (thread_count);
 }
 
 
@@ -1970,16 +1985,24 @@ ACE_Thread_Manager::thr_state (ACE_thread_t id,
   if (self_check)
     {
       ACE_Thread_Descriptor *desc = ACE_LOG_MSG->thr_desc ();
+      
       if (desc == 0)
-        return 0;               // Always return false.
+        {
+          return 0;               // Always return false.
+        }
+        
       state = desc->thr_state_;
     }
   else
     {
       // Not calling from self, have to look it up from the list.
       ACE_FIND (this->find_thread (id), ptr);
+      
       if (ptr == 0)
-        return 0;
+        {
+          return 0;
+        }
+        
       state = ptr->thr_state_;
     }
 
@@ -2005,7 +2028,9 @@ ACE_Thread_Manager::task_list (int grp_id,
        iter.advance ())
     {
       if (task_list_count >= n)
-        break;
+        {
+          break;
+        }
 
       if (iter.next ()->grp_id_ == grp_id
           && this->find_task (iter.next ()->task_, i) == 0)
@@ -2017,7 +2042,7 @@ ACE_Thread_Manager::task_list (int grp_id,
       ++i;
     }
 
-  return task_list_count;
+  return ACE_Utils::truncate_cast<ssize_t> (task_list_count);
 }
 
 // Returns in thread_list a list of thread ids in an ACE_Task.
@@ -2037,7 +2062,9 @@ ACE_Thread_Manager::thread_list (ACE_Task_Base *task,
        iter.advance ())
     {
       if (thread_count >= n)
-        break;
+        {
+          break;
+        }
 
       if (iter.next ()->task_ == task)
         {
@@ -2046,7 +2073,7 @@ ACE_Thread_Manager::thread_list (ACE_Task_Base *task,
         }
     }
 
-  return thread_count;
+  return ACE_Utils::truncate_cast<ssize_t> (thread_count);
 }
 
 // Returns in thread_list a list of thread handles in an ACE_Task.
@@ -2066,7 +2093,9 @@ ACE_Thread_Manager::hthread_list (ACE_Task_Base *task,
        iter.advance ())
     {
       if (hthread_count >= n)
-        break;
+        {
+          break;
+        }
 
       if (iter.next ()->task_ == task)
         {
@@ -2075,7 +2104,7 @@ ACE_Thread_Manager::hthread_list (ACE_Task_Base *task,
         }
     }
 
-  return hthread_count;
+  return ACE_Utils::truncate_cast<ssize_t> (hthread_count);
 }
 
 ssize_t
@@ -2093,7 +2122,9 @@ ACE_Thread_Manager::thread_grp_list (int grp_id,
        iter.advance ())
     {
       if (thread_count >= n)
-        break;
+        {
+          break;
+        }
 
       if (iter.next ()->grp_id_ == grp_id)
         {
@@ -2102,7 +2133,7 @@ ACE_Thread_Manager::thread_grp_list (int grp_id,
         }
     }
 
-  return thread_count;
+  return ACE_Utils::truncate_cast<ssize_t> (thread_count);
 }
 
 // Returns in thread_list a list of thread handles in an ACE_Task.
@@ -2122,7 +2153,9 @@ ACE_Thread_Manager::hthread_grp_list (int grp_id,
        iter.advance ())
     {
       if (hthread_count >= n)
-        break;
+        {
+          break;
+        }
 
       if (iter.next ()->grp_id_ == grp_id)
         {
@@ -2131,7 +2164,7 @@ ACE_Thread_Manager::hthread_grp_list (int grp_id,
         }
     }
 
-  return hthread_count;
+  return ACE_Utils::truncate_cast<ssize_t> (hthread_count);
 }
 
 int
@@ -2143,8 +2176,12 @@ ACE_Thread_Manager::set_grp (ACE_Task_Base *task, int grp_id)
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
        !iter.done ();
        iter.advance ())
-    if (iter.next ()->task_ == task)
-      iter.next ()->grp_id_ = grp_id;
+    {
+      if (iter.next ()->task_ == task)
+        {
+          iter.next ()->grp_id_ = grp_id;
+        }
+    }
 
   return 0;
 }

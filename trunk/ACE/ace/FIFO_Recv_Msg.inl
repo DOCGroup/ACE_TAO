@@ -4,6 +4,7 @@
 
 #include "ace/Min_Max.h"
 #include "ace/OS_NS_stropts.h"
+#include "ace/Truncate.h"
 
 #if !defined (ACE_HAS_STREAM_PIPES)
 #include "ace/OS_NS_unistd.h"
@@ -21,14 +22,20 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
                       (strbuf *) 0,
                       (strbuf *) &recv_msg,
                       &i) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return recv_msg.len;
+    {
+      return recv_msg.len;
+    }
 #else /* Do the ol' 2-read trick... */
   if (ACE_OS::read (this->get_handle (),
                     (char *) &recv_msg.len,
                     sizeof recv_msg.len) != sizeof recv_msg.len)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       size_t remaining = static_cast<size_t> (recv_msg.len);
@@ -36,8 +43,12 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
       ssize_t recv_len = ACE_OS::read (this->get_handle (),
                                        (char *) recv_msg.buf,
                                        ACE_MIN (remaining, requested));
+                                       
       if (recv_len == -1)
-        return -1;
+        {
+          return -1;
+        }
+        
       // Tell caller what's really in the buffer.
       recv_msg.len = static_cast<int> (recv_len);
 
@@ -49,6 +60,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
       // saving the indication here either to read the remainder later.
       size_t total_msg_size = remaining;
       remaining -= recv_len;
+      
       while (remaining > 0)
         {
           const size_t throw_away = 1024;
@@ -56,11 +68,16 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
           recv_len = ACE_OS::read (this->get_handle (),
                                    dev_null,
                                    ACE_MIN (remaining, throw_away));
+                                   
           if (recv_len == -1)
-            break;
+            {
+              break;
+            }
+            
           remaining -= recv_len;
         }
-      return total_msg_size;
+        
+      return ACE_Utils::truncate_cast<ssize_t> (total_msg_size);
     }
 #endif /* ACE_HAS_STREAM_PIPES */
 }
@@ -85,9 +102,13 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf *data,
                       (strbuf *) cntl,
                       (strbuf *) data,
                       flags) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    {
+      return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    }
 }
 
 ACE_INLINE ssize_t
@@ -97,14 +118,19 @@ ACE_FIFO_Recv_Msg::recv (int *band,
                          int *flags)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
+  
   if (ACE_OS::getpmsg (this->get_handle (),
                        (strbuf *) cntl,
                        (strbuf *) data,
                        band,
                        flags) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    {
+      return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    }
 }
 #endif /* ACE_HAS_STREAM_PIPES */
 

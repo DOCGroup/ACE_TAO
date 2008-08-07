@@ -14,6 +14,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Truncate.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"
@@ -252,7 +253,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
       size_low  = static_cast<DWORD> (this->local_cb_.sh_.max_size_ & 0xFFFFFFFF);
 #else
       size_high = 0;
-      size_low = this->local_cb_.sh_.max_size_;
+      size_low = ACE_Utils::truncate_cast<DWORD> (this->local_cb_.sh_.max_size_);
 #endif
 
       object_handle_ =

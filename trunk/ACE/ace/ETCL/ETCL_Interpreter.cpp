@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/Guard_T.h"
+#include "ace/Truncate.h"
 
 #include "ace/ETCL/ETCL_Interpreter.h"
 #include "ace/ETCL/ETCL_Constraint.h"
@@ -83,7 +84,10 @@ int
 Lex_String_Input::copy_into (char* buf, 
                              int max_size)
 {
-  int chars_left =  Lex_String_Input::end_ - Lex_String_Input::current_;
+  int chars_left = 
+    ACE_Utils::truncate_cast<int> (
+      Lex_String_Input::end_ - Lex_String_Input::current_);
+      
   int n = max_size > chars_left ? chars_left : max_size;
 
   if (n > 0)

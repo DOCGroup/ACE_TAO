@@ -1036,7 +1036,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
         }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -1112,9 +1112,13 @@ ACE::recvv_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return result;
+    {
+      return result;
+    }
   else
-    return bytes_transferred;
+    {
+      return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
+    }
 }
 
 ssize_t
@@ -1208,11 +1212,13 @@ ACE::recv_n (ACE_HANDLE handle,
 
       // Errors.
       if (result == -1 || result == 0)
-        return result;
+        {
+          return result;
+        }
     }
 
   // Return total bytes transferred.
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -1387,7 +1393,7 @@ ACE::send_n_i (ACE_HANDLE handle,
         }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -1452,9 +1458,13 @@ ACE::send_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return result;
+    {
+      return result;
+    }
   else
-    return bytes_transferred;
+    {
+      return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
+    }
 }
 
 #if defined (ACE_HAS_TLI)
@@ -1599,7 +1609,9 @@ ACE::send_n_i (ACE_HANDLE handle,
                        len - bytes_transferred);
       // Check EOF.
       if (n == 0)
-        return 0;
+        {
+          return 0;
+        }
 
       // Check for other errors.
       if (n == -1)
@@ -1625,7 +1637,7 @@ ACE::send_n_i (ACE_HANDLE handle,
         }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -1688,9 +1700,13 @@ ACE::send_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return result;
+    {
+      return result;
+    }
   else
-    return bytes_transferred;
+    {
+      return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
+    }
 }
 
 // Send N char *ptrs and int lengths.  Note that the char *'s precede
@@ -1811,7 +1827,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
         }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -1889,9 +1905,13 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return result;
+    {
+      return result;
+    }
   else
-    return bytes_transferred;
+    {
+      return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
+    }
 }
 
 ssize_t
@@ -1986,7 +2006,7 @@ ACE::write_n (ACE_HANDLE handle,
     }
 
   // Return total bytes transferred.
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -2080,11 +2100,13 @@ ACE::send_n (ACE_HANDLE handle,
 
       // Errors.
       if (result == -1 || result == 0)
-        return result;
+        {
+          return result;
+        }
     }
 
   // Return total bytes transferred.
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -2122,7 +2144,7 @@ ACE::readv_n (ACE_HANDLE handle,
         }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 ssize_t
@@ -2144,8 +2166,11 @@ ACE::writev_n (ACE_HANDLE handle,
       ssize_t n = ACE_OS::writev (handle,
                                   iov + s,
                                   iovcnt - s);
+   
       if (n == -1 || n == 0)
-        return n;
+        {
+          return n;
+        }
 
       for (bytes_transferred += n;
            s < iovcnt
@@ -2161,7 +2186,7 @@ ACE::writev_n (ACE_HANDLE handle,
         }
     }
 
-  return bytes_transferred;
+  return ACE_Utils::truncate_cast<ssize_t> (bytes_transferred);
 }
 
 int
