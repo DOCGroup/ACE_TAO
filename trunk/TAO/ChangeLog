@@ -1,3 +1,13 @@
+Thu Aug  7 23:19:55 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/Nested_Event_Loop/client.cpp:
+        * tests/Nested_Event_Loop/test_i.h:
+        * tests/Nested_Event_Loop/test_i.cpp:
+
+          Made client servant explicitly activated for CORBA e build 
+          since CORBA e does not allow implicit servant activation. This
+          should fix test failure due to WrongPolicy exception.
+
 Thu Aug  7 21:30:32 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_3068_Regression:

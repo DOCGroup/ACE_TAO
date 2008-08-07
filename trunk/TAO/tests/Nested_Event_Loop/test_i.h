@@ -39,4 +39,5 @@ public:
 
 private:
   server_var remote_partner_;
+  client_var self_;
 };

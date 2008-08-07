@@ -108,6 +108,14 @@ server_i::shutdown (void)
 client_i::client_i (server_ptr remote_partner)
   : remote_partner_ (server::_duplicate (remote_partner))
 {
+#if defined (CORBA_E_COMPACT) || defined (CORBA_E_MICRO)
+  PortableServer::POA_var poa = this->_default_POA ();
+  PortableServer::ObjectId_var id = poa->activate_object (transfer_ownership.in ());
+  CORBA::Object_var object = poa->id_to_reference (id.in ());
+  self_ = client::_unchecked_narrow (object.in());
+#else
+  self_ = this->_this ();
+#endif /* CORBA_E_COMPACT || CORBA_E_MICRO */
 }
 
 void
@@ -122,10 +130,7 @@ client_i::loop (CORBA::ULong event_loop_depth,
 
   try
     {
-      client_var self =
-        this->_this ();
-
-      this->remote_partner_->loop (self.in (),
+      this->remote_partner_->loop (self_.in (),
                                    event_loop_depth,
                                    event_loop_iterations);
     }
@@ -142,10 +147,7 @@ client_i::oneway_no_op (const act &act_for_iterations,
 
   try
     {
-      client_var self =
-        this->_this ();
-
-      this->remote_partner_->no_op (self.in (),
+      this->remote_partner_->no_op (self_.in (),
                                     act_for_iterations,
                                     act_for_flag);
     }
