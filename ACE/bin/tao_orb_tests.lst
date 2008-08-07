@@ -117,6 +117,7 @@ TAO/tests/Bug_2953_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_2966_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_3000_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LabVIEW_RT !FIXED_BUGS_ONLY
 TAO/tests/Bug_3042_Regression/run_test.pl: !LabVIEW_RT
+TAO/tests/Bug_3068_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_BIDIR !LabVIEW_RT !FIXED_BUGS_ONLY
 TAO/tests/Bug_3108_Regression/run_test.pl: !ST !LabVIEW_RT
 TAO/tests/Bug_3154_Regression/run_test.pl: !NO_IFR !LabVIEW_RT
 TAO/tests/Bug_3163_Regression/run_test.pl: !LabVIEW_RT
