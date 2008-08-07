@@ -1,3 +1,9 @@
+Thu Aug  7 21:30:32 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_3068_Regression:
+
+          Added a test for bug 3068.
+
 Thu Aug  7 19:15:34 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * NEWS:
