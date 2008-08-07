@@ -1,0 +1,15 @@
+project(*Server): taoserver, messaging, bidir_giop {
+  exename = server
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoserver, bidir_giop {
+  exename = client
+  Source_Files {
+    test_i.cpp
+    client.cpp
+  }
+}
