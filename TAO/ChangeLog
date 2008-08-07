@@ -1,3 +1,10 @@
+Thu Aug  7 19:15:34 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * NEWS:
+
+          Added a news entry for the ImR Activator change in
+          Thu Jul 31 15:13:48 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
 Thu Aug  7 17:46:45 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         This commit fixes Bug 2935 (again) and resolves other transport cache
@@ -29,7 +36,7 @@ Thu Aug  7 17:46:45 UTC 2008  Adam Mitz  <mitza@ociweb.com>
           In the case where the transport is already connected in
           complete_connection() add it to the cache here.  In the case of
           parallel connects in complete_connection(), modified the logic for
-          when the cache is updated.        
+          when the cache is updated.
 
         * tao/Transport_Cache_Manager.h:
         * tao/Transport_Cache_Manager.inl:
