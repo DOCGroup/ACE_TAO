@@ -35,8 +35,7 @@ using namespace CosNotifyComm;
 using namespace CosNotification;
 using namespace CosNotifyChannelAdmin;
 
-class Agent : public POA_CosNotifyComm::StructuredPushConsumer,
-              public PortableServer::RefCountServantBase
+class Agent : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
   Agent (char const* space_craft_name,
