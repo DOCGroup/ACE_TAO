@@ -1,3 +1,11 @@
+Fri Aug  8 20:35:37 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Stack_Trace.cpp:
+
+          Glibc implementation: fixed whitespace
+          VxWorks (both kernel and RTP): VxWorks can return -1 for the number
+          of arguments when the actual number is unknown.
+
 Fri Aug  8 19:33:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Message_Queue_T.cpp:
@@ -25,7 +33,7 @@ Fri Aug  8 19:33:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Aug  8 17:58:28 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
-        
+
           Changed the ACE_NEW_THROWS_EXCEPTION feature test to use
           setrlimit() (on systems that have it) to reduce the RLIMIT_DATA
           limit so the test, which continuously allocates memory in order

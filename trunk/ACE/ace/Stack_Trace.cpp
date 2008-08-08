@@ -72,18 +72,17 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
       stack_syms = ::backtrace_symbols (stack, stack_size);
 
       for (size_t i = starting_frame;
-     i < stack_size && num_frames > 0;
-     i++, num_frames--)
-  {
-    // this could be more efficient by remembering where we left off in buf_
-    char *symp = &stack_syms[i][0];
-    while (this->buflen_ < SYMBUFSIZ
-     && *symp != '\0')
-      {
-        this->buf_[this->buflen_++] = *symp++;
-      }
-    this->buf_[this->buflen_++] = '\n'; // put a newline at the end
-  }
+           i < stack_size && num_frames > 0;
+           i++, num_frames--)
+        {
+          // this could be more efficient by remembering where we left off in buf_
+          char *symp = &stack_syms[i][0];
+          while (this->buflen_ < SYMBUFSIZ && *symp != '\0')
+            {
+              this->buf_[this->buflen_++] = *symp++;
+            }
+          this->buf_[this->buflen_++] = '\n'; // put a newline at the end
+        }
       this->buf_[this->buflen_+1] = '\0'; // zero terminate the string
 
       ::free (stack_syms);
@@ -139,6 +138,9 @@ ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
 
   // At some point try using symFindByValue() to lookup func (and caller?)
   // to print out symbols rather than simply addresses.
+
+  // VxWorks can pass -1 for "nargs" if there was an error
+  if (nargs == static_cast<unsigned int> (-1)) nargs = 0;
 
   len += ACE_OS::sprintf (&buf[len], "%#10x: %#10x (", (int)caller, func);
   for (unsigned int i = 0; i < nargs; ++i)
@@ -241,6 +243,9 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
           int numArgs =
             trcLibFuncs.lvlArgsGet (prevPc, prevFn, prevFp,
                                     buf, N_ARGS, &pArgs);
+
+          // VxWorks can return -1 for "numArgs" if there was an error
+          if (numArgs == -1) numArgs = 0;
 
           size_t len = ACE_OS::strlen (this->buf_);
           size_t space = SYMBUFSIZ - len - 1;
