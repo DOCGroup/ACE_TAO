@@ -717,6 +717,18 @@ namespace ACE_Utils
   };
 
   template<>
+  struct Truncator<const unsigned int, signed int>
+  {
+    signed int operator() (const unsigned int val)
+    {
+      return
+        (val > static_cast<unsigned int> (ACE_Numeric_Limits<signed int>::max ())
+         ? ACE_Numeric_Limits<signed int>::max ()
+         : static_cast<signed int> (val));
+    }
+  };
+
+  template<>
   struct Truncator<signed long, unsigned long>
   {
     unsigned long operator() (signed long val)
@@ -746,6 +758,15 @@ namespace ACE_Utils
     unsigned long operator() (signed int val)
     {
       return static_cast<unsigned long> (val);
+    }
+  };
+
+  template<>
+  struct Truncator<signed int, signed long>
+  {
+    signed long operator() (signed int val)
+    {
+      return static_cast<signed long> (val);
     }
   };
 
