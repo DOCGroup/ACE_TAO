@@ -2,6 +2,7 @@
 
 #include "ACEXML/common/Transcode.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
 
 int
 ACEXML_Transcoder::utf162utf8 (ACEXML_UTF16 src,
@@ -148,17 +149,23 @@ ACEXML_Transcoder::utf82ucs4 (const ACEXML_UTF8 *the_src,
                               ACEXML_UCS4 &dst)
 {
   if (the_src == 0)
-    return ACEXML_INVALID_ARGS;
+    {
+      return ACEXML_INVALID_ARGS;
+    }
 
   const unsigned char *src = reinterpret_cast<const unsigned char *> (the_src);
 
   size_t forward = 1;
 
   if (forward > len)
-    return ACEXML_END_OF_SOURCE;
+    {
+      return ACEXML_END_OF_SOURCE;
+    }
 
   if (static_cast<unsigned char> (*src) < 0x80)
-    dst = *src;
+    {
+      dst = *src;
+    }
   else if ((*src & 0xE0) == 0xC0)
     {
       dst = (*(src++) & 0x1f) * 0x40;
@@ -202,9 +209,11 @@ ACEXML_Transcoder::utf82ucs4 (const ACEXML_UTF8 *the_src,
       dst += *src & 0x3f;
     }
   else
-    return ACEXML_NON_UNICODE;
+    {
+      return ACEXML_NON_UNICODE;
+    }
 
-  return forward;
+  return ACE_Utils::truncate_cast<int> (forward);
 }
 
 int
@@ -213,13 +222,18 @@ ACEXML_Transcoder::utf162ucs4 (const ACEXML_UTF16 *src,
                                ACEXML_UCS4 &dst)
 {
   if (src == 0)
-    return ACEXML_INVALID_ARGS;
+    {
+      return ACEXML_INVALID_ARGS;
+    }
 
   size_t forward = 1;
   if (*src >= 0xDC00 && *src < 0xE000)
     {
       if (len < 2)
-        return ACEXML_END_OF_SOURCE;
+        {
+          return ACEXML_END_OF_SOURCE;
+        }
+        
       return ACEXML_Transcoder::surrogate2ucs4 (*src,
                                                 *(src+1),
                                                 dst);
@@ -227,20 +241,25 @@ ACEXML_Transcoder::utf162ucs4 (const ACEXML_UTF16 *src,
   else
     {
       if (len < 1)
-        return ACEXML_END_OF_SOURCE;
+        {
+          return ACEXML_END_OF_SOURCE;
+        }
+        
       dst = *src;
     }
 
-  return forward;
+  return ACE_Utils::truncate_cast<int> (forward);
 }
 
 int
 ACEXML_Transcoder::utf8s2utf16s (const ACEXML_UTF8 *src,
-                                ACEXML_UTF16 *dst,
-                                size_t len)
+                                 ACEXML_UTF16 *dst,
+                                 size_t len)
 {
   if (src == 0 || dst == 0)
-    return ACEXML_INVALID_ARGS;
+    {
+      return ACEXML_INVALID_ARGS;
+    }
 
   size_t src_len = ACE_OS::strlen (src) + 1;
 
@@ -268,13 +287,13 @@ ACEXML_Transcoder::utf8s2utf16s (const ACEXML_UTF8 *src,
       len -= forward;
     }
 
-  return static_cast<int> (total_len);
+  return ACE_Utils::truncate_cast<int> (total_len);
 }
 
 int
 ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
-                                ACEXML_UTF8 *dst,
-                                size_t len)
+                                 ACEXML_UTF8 *dst,
+                                 size_t len)
 {
   if (src == 0 || dst == 0)
     return ACEXML_INVALID_ARGS;
@@ -307,5 +326,5 @@ ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
       len -= forward;
     }
 
-  return static_cast<int> (total_len);
+  return ACE_Utils::truncate_cast<int> (total_len);
 }

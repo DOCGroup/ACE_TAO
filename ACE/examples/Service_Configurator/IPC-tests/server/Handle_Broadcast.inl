@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -34,16 +35,23 @@ Handle_Broadcast::info (ACE_TCHAR **strp, size_t length) const
   ACE_INET_Addr sa;
 
   if (this->get_local_addr (sa) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_OS::sprintf (buf, ACE_TEXT("%d/"), sa.get_port_number ());
   ACE_OS::strcat (buf, ACE_TEXT("udp # tests broadcasting\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+    {
+      ACE_OS::strncpy (*strp, buf, length);
+    }
+    
+  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buf));
 }
 
 ACE_INLINE int

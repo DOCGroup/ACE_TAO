@@ -11,6 +11,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
+#include "ace/Truncate.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
@@ -511,7 +512,8 @@ ACE_SSL_Context::set_verify_peer (int strict, int once, int depth)
 int
 ACE_SSL_Context::random_seed (const char * seed)
 {
-  ::RAND_seed (seed, ACE_OS::strlen (seed));
+  int len = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (seed));
+  ::RAND_seed (seed, len);
 
 #if OPENSSL_VERSION_NUMBER >= 0x00905100L
   // RAND_status() returns 1 if the PRNG has enough entropy.

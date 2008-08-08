@@ -232,8 +232,12 @@ ACEXML_HttpCharStream::get_url (size_t& len)
         }
     }
  end_of_headers:
+ 
   if (b == 0)
-    return -1;
+    {
+      return -1;
+    }
+    
   ++b;
   // Store the address of the beginning of data. We will use it to seek to
   // beginning of the data in the URL.
@@ -251,11 +255,17 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   // Move the pointer to the beginning of the file store.
   this->stream_->rewind();
 
-  this->data_offset_ = data_beg - this->stream_->recv();
+  this->data_offset_ =
+    ACE_Utils::truncate_cast<ACE_OFF_T> (data_beg - this->stream_->recv());
+    
   // Forward to the beginning of data.
   if (this->stream_->seek (this->data_offset_, SEEK_SET) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%s: %m",
-                       "Error in seeking to beginning of data"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s: %m",
+                         "Error in seeking to beginning of data"),
+                        -1);
+    }
 
   return status;
 }

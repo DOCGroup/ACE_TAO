@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stropts.h"
@@ -33,10 +34,15 @@ Handle_L_FIFO::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcat (buf, ACE_TEXT(" # tests local ACE_FIFO\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+    {
+      ACE_OS::strncpy (*strp, buf, length);
+    }
+    
+  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buf));
 }
 
 ACE_INLINE int
