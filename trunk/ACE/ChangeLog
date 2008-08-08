@@ -1,3 +1,10 @@
+Fri Aug  8 08:17:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+          Added missing Svc_Conf_Token_Table.h which was already in the MPC
+          file. Thanks to haibin zhang <dragzhb at yahoo dot com dot cn>
+          for reporting this
+
 Thu Aug  7 21:59:58 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_orb_tests.lst:
