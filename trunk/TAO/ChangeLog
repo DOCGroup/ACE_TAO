@@ -1,3 +1,13 @@
+Fri Aug  8 14:47:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        
+          Reverted the change in
+          
+          Wed Aug  6 19:08:39 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+          
+          since it seems to have caused a test failure.
+
 Fri Aug  8 14:22:01 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_3068_Regression/test_i.h:
