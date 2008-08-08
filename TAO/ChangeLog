@@ -7,7 +7,7 @@ Fri Aug  8 15:25:13 UTC 2008  Adam Mitz  <mitza@ociweb.com>
         * tao/Transport_Connector.cpp:
 
           Add the transport to the cache (ENTRY_CONNECTING) in the non-blocked
-          case this covers non-blocking invocations such as AMI and oneways
+          case.  This covers non-blocking invocations such as AMI and oneways
           with SYNC_NONE, etc.
 
 Fri Aug  8 14:47:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
