@@ -1,3 +1,8 @@
+Fri Aug  8 14:42:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also check cpp/inl files for RefCountServantBase
+
 Fri Aug  8 08:36:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h:
