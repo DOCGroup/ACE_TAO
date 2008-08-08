@@ -7,8 +7,7 @@ Callback_i::Callback_i (CORBA::ORB_ptr orb)
 }
 
 ACE_INLINE
-Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb,
-                                  int no_iterations)
+Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      flag_ (0),
      caller_ (0),
