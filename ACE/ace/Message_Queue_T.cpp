@@ -2243,7 +2243,9 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i");
 
   if (new_item == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   int result = 0;
 
@@ -2253,8 +2255,11 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
   // Refresh priority status boundaries in the queue.
 
   result = this->refresh_queue (current_time);
+  
   if (result < 0)
-    return result;
+    {
+      return result;
+    }
 
   // Where we enqueue depends on the message's priority status.
   switch (message_strategy_.priority_status (*new_item,
@@ -2336,9 +2341,13 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
           // so just put the new one at the end of the beyond late
           // messages
           if (this->beyond_late_tail_->next ())
-            this->beyond_late_tail_->next ()->prev (new_item);
+            {
+              this->beyond_late_tail_->next ()->prev (new_item);
+            }
           else
-            this->tail_ = new_item;
+            {
+              this->tail_ = new_item;
+            }
 
           new_item->next (this->beyond_late_tail_->next ());
           this->beyond_late_tail_->next (new_item);
@@ -2355,7 +2364,9 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
     }
 
   if (result < 0)
-    return result;
+    {
+      return result;
+    }
 
   size_t mb_bytes = 0;
   size_t mb_length = 0;
@@ -2366,9 +2377,13 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
   ++this->cur_count_;
 
   if (this->signal_dequeue_waiters () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->cur_count_;
+    {
+      return ACE_Utils::truncate_cast<int> (this->cur_count_);
+    }
 }
 
 // Enqueue an <ACE_Message_Block *> in accordance with its priority.
@@ -2519,7 +2534,9 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
       this->head_ = this->beyond_late_head_->next ();
 
       if (0 == this->beyond_late_head_->next ())
-        this->tail_ = this->beyond_late_head_->prev ();
+        {
+          this->tail_ = this->beyond_late_head_->prev ();
+        }
       else
         {
           this->beyond_late_head_->next ()->prev (this->beyond_late_head_->prev ());
@@ -2543,7 +2560,9 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
     }
 
   if (result < 0)
-    return result;
+    {
+      return result;
+    }
 
   size_t mb_bytes = 0;
   size_t mb_length = 0;
@@ -2558,9 +2577,13 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
   // water mark.
   if (this->cur_bytes_ <= this->low_water_mark_
       && this->signal_enqueue_waiters () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->cur_count_;
+    {
+      return ACE_Utils::truncate_cast<int> (this->cur_count_);
+    }
 }
 
 // Dequeue and return the <ACE_Message_Block *> at the head of the

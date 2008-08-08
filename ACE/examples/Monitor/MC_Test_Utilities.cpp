@@ -31,7 +31,7 @@ MC_Test_Utilities::display_num_threads (
 {
   cout << "# of threads:             ";
   display_timestamp (data);
-  cout << static_cast<size_t> (data.value_) << endl;
+  cout << static_cast<unsigned int> (data.value_) << endl;
 }
 
 void
@@ -40,7 +40,7 @@ MC_Test_Utilities::display_mq_size (
 {
   cout << "Message queue size:       ";
   display_timestamp (data);
-  cout << static_cast<size_t> (data.value_) << endl;
+  cout << static_cast<unsigned int> (data.value_) << endl;
 }
 
 void

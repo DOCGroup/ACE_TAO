@@ -9,6 +9,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/Countdown_Time.h"
+#include "ace/Truncate.h"
 
 #include <openssl/err.h>
 
@@ -74,6 +75,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   ACE_Countdown_Time countdown ((timeout == 0 ? 0 : &t));
 
   int status;
+  
   do
     {
       // These handle sets are used to set up for whatever SSL_connect
@@ -124,14 +126,23 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
               // Use that to decide what to do.
               status = 1;               // Wait for more activity
               if (SSL_want_write (ssl))
-                wr_handle.set_bit (handle);
+                {
+                  wr_handle.set_bit (handle);
+                }
               else if (SSL_want_read (ssl))
-                rd_handle.set_bit (handle);
+                {
+                  rd_handle.set_bit (handle);
+                }
               else
-                status = -1;            // Doesn't want anything - bail out
+                {
+                  status = -1;            // Doesn't want anything - bail out
+                }
             }
           else
-            status = -1;
+            {
+              tatus = -1;
+            }
+            
           break;
 
         default:
@@ -146,7 +157,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
           // Block indefinitely if timeout pointer is zero.
-          status = ACE::select (int (handle) + 1,
+          status = ACE::select (ACE_Utils::truncate_cast<int> (handle) + 1,
                                 &rd_handle,
                                 &wr_handle,
                                 0,
@@ -158,9 +169,13 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           // -1 is error, so we're done.
           // Could be both handles set (same handle in both masks) so set to 1.
           if (status >= 1)
-            status = 1;
+            {
+              status = 1;
+            }
           else                 // Timeout or socket failure
-            status = -1;
+            {
+              status = -1;
+            }
         }
 
     } while (status == 1 && !SSL_is_init_finished (ssl));
@@ -172,7 +187,6 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
     }
 
   return (status == -1 ? -1 : 0);
-
 }
 
 int

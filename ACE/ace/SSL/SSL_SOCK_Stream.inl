@@ -3,6 +3,7 @@
 // $Id$
 
 #include "ace/OS_NS_errno.h"
+#include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -16,7 +17,7 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
     }
   else
     {
-      (void) ::SSL_set_fd (this->ssl_, (int) fd);
+      (void) ::SSL_set_fd (this->ssl_, ACE_Utils::truncate_cast<int> (fd));
       this->ACE_SSL_SOCK::set_handle (fd);
       this->stream_.set_handle (fd);
     }
@@ -33,11 +34,13 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
 
   // No send flags are supported in SSL.
   if (flags != 0)
-    ACE_NOTSUP_RETURN (-1);
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
 
   int const bytes_sent = ::SSL_write (this->ssl_,
                                       static_cast<const char *> (buf),
-                                      n);
+                                      ACE_Utils::truncate_cast<int> (n));
 
   switch (::SSL_get_error (this->ssl_, bytes_sent))
     {
@@ -128,17 +131,21 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   if (flags)
     {
       if (ACE_BIT_ENABLED (flags, MSG_PEEK))
-        bytes_read = ::SSL_peek (this->ssl_,
-                                 static_cast<char *> (buf),
-                                 n);
+        {
+          bytes_read = ::SSL_peek (this->ssl_,
+                                   static_cast<char *> (buf),
+                                   ACE_Utils::truncate_cast<int> (n));
+        }
       else
-        ACE_NOTSUP_RETURN (-1);
+        {
+          ACE_NOTSUP_RETURN (-1);
+        }
     }
   else
     {
       bytes_read = ::SSL_read (this->ssl_,
                                static_cast<char *> (buf),
-                               n);
+                               ACE_Utils::truncate_cast<int> (n));
     }
 
   int const status = ::SSL_get_error (this->ssl_, bytes_read);

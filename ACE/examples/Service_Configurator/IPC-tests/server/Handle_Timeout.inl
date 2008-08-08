@@ -5,6 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
 
 ACE_INLINE
 Handle_Timeout::Handle_Timeout (void): count (0)
@@ -19,10 +20,15 @@ Handle_Timeout::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcpy (buf, ACE_TEXT("# tests timeout facility\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+    {
+      ACE_OS::strncpy (*strp, buf, length);
+    }
+    
+  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buf));
 }
 
 ACE_INLINE int
@@ -81,6 +87,9 @@ Handle_Timeout::handle_timeout (const ACE_Time_Value &tv,
   // size as a long on all current ACE platforms.
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("time for this(%u) expired at (%d, %d) with arg = %d\n"),
-             this, tv.sec (), tv.usec (), (int) (long) arg));
+              this,
+              tv.sec (),
+              tv.usec (),
+              (int) (ptrdiff_t) arg));
   return 0;
 }
