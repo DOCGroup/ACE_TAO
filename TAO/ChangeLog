@@ -1,3 +1,11 @@
+Fri Aug  8 14:08:58 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_3068_Regression/Bug_3068_Regression.mpc:
+        * tests/Bug_3068_Regression/test.idl:
+        * tests/Bug_3068_Regression/test_i.h:
+
+          Addressed "fuzz" errors.
+
 Fri Aug  8 12:10:12 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Nested_Event_Loop/test_i.cpp:
