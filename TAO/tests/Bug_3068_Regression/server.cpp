@@ -57,7 +57,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
