@@ -2,7 +2,7 @@
 // $Id$
 //
 
-#include <tao/OctetSeq.pidl>
+#include "tao/OctetSeq.pidl"
 
 interface Callback
 {

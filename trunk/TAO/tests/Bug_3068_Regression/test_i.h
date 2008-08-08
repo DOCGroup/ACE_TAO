@@ -32,8 +32,8 @@ public:
 private:
   Callback_var cbobj_;
   CORBA::ORB_var orb_;
-  ACE_Thread_Mutex lock_;
-  ACE_Condition<ACE_Thread_Mutex> cond_;
+  TAO_SYNCH_MUTEX lock_;
+  ACE_Condition<TAO_SYNCH_MUTEX> cond_;
   bool going_;
   CORBA::OctetSeq payload_;
 };
