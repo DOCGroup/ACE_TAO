@@ -4871,12 +4871,28 @@ if test "$ace_user_enable_exceptions" = yes; then
 #include <limits>
 #endif
 
+/* We already checked for ACE_LACKS_SYS_RESOURCE_H */
+#if !defined ACE_LACKS_SYS_RESOURCE_H
+#include <sys/resource.h>
+#endif
+
         int main(int, char *[]) {
 #if defined ACE_LACKS_NUMERIC_LIMITS
           const size_t ALLOC_SIZE = 2 * 1024 * 1024 * 1024;
 #else
           const size_t ALLOC_SIZE = std::numeric_limits<size_t>::max () / 2;
 #endif
+
+#if !defined (ACE_LACKS_RLIMIT)
+	  /* set memory limit to the allocation size, so this test
+             should terminate on the first iteration. */
+	  struct rlimit rlimit;
+	  if (getrlimit(RLIMIT_DATA, &rlimit) == 0) {
+	    rlimit.rlim_cur = ALLOC_SIZE;
+            setrlimit(RLIMIT_DATA, &rlimit);
+          }
+#endif
+
           while (1) {
             try {
               char *a = new char[ALLOC_SIZE];
@@ -4928,12 +4944,29 @@ if test "$ace_user_enable_exceptions" = yes; then
 #include <limits>
 #endif
 
+/* We already checked for ACE_LACKS_SYS_RESOURCE_H */
+#if !defined ACE_LACKS_SYS_RESOURCE_H
+#include <sys/resource.h>
+#endif
+
+
         int main(int, char *[]) {
 #if defined ACE_LACKS_NUMERIC_LIMITS
           const size_t ALLOC_SIZE = 2 * 1024 * 1024 * 1024;
 #else
           const size_t ALLOC_SIZE = std::numeric_limits<size_t>::max () / 2;
 #endif
+
+#if !defined (ACE_LACKS_RLIMIT)
+	  /* set memory limit to the allocation size, so this test
+             should terminate on the first iteration. */
+	  struct rlimit rlimit;
+	  if (getrlimit(RLIMIT_DATA, &rlimit) == 0) {
+	    rlimit.rlim_cur = ALLOC_SIZE;
+            setrlimit(RLIMIT_DATA, &rlimit);
+          }
+#endif
+
           while (1) {
             try {
               char *a = new char[ALLOC_SIZE];
