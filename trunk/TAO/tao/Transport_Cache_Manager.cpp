@@ -688,7 +688,7 @@ namespace TAO
 
             this->sort_set (sorted_set, current_size);
           }
-    }
+      }
 
     return current_size;
   }

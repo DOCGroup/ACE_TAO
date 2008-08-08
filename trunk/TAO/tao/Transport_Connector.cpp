@@ -740,6 +740,10 @@ TAO_Connector::wait_for_connection_completion (
                           "transport [%d], Connection not complete.\n",
                           transport->id ()));
             }
+          TAO::Transport_Cache_Manager &tcm =
+            this->orb_core ()->lane_resources ().transport_cache ();
+          tcm.cache_transport (&desc, transport, TAO::ENTRY_CONNECTING);
+
           transport->connection_handler ()->
             reset_state (TAO_LF_Event::LFS_CONNECTION_WAIT);
           result = 0;
