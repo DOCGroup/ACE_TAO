@@ -1,3 +1,8 @@
+Fri Aug  8 16:30:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+          Removed deprecated RefCountServantBase
+
 Fri Aug  8 15:25:13 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport_Cache_Manager.cpp:
