@@ -25,9 +25,9 @@ class Caller : public ACE_Task_Base
 {
 public:
   Caller (Callback_ptr cb, CORBA::ORB_ptr orb);
-  void go (void);
+  void go ();
 
-  int svc (void);
+  int svc ();
 
 private:
   Callback_var cbobj_;
@@ -52,7 +52,7 @@ public:
   Callback_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown ();
   // Safe way to shutdown
 
   void callback_method (const CORBA::OctetSeq& payload);
