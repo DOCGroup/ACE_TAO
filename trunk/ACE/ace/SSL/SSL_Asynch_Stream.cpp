@@ -15,6 +15,7 @@ ACE_RCSID (ACE_SSL,
 
 #include "ace/OS_NS_string.h"
 #include "ace/Proactor.h"
+#include "ace/Truncate.h"
 
 #include <openssl/err.h>
 
@@ -547,7 +548,9 @@ int
 ACE_SSL_Asynch_Stream::do_SSL_read (void)
 {
   if (this->ext_read_result_ == 0)  // nothing to do
-    return 0;
+    {
+      return 0;
+    }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
     {
@@ -558,11 +561,12 @@ ACE_SSL_Asynch_Stream::do_SSL_read (void)
   ACE_Message_Block & mb = this->ext_read_result_->message_block ();
   size_t bytes_req = this->ext_read_result_->bytes_to_read ();
 
-  ERR_clear_error();
+  ERR_clear_error ();
 
-  const int bytes_trn = ::SSL_read (this->ssl_,
-                                    mb.wr_ptr (),
-                                    bytes_req);
+  const int bytes_trn =
+    ::SSL_read (this->ssl_,
+                mb.wr_ptr (),
+                ACE_Utils::truncate_cast<int> (bytes_req));
 
   int const status = ::SSL_get_error (this->ssl_, bytes_trn);
 
@@ -606,7 +610,9 @@ int
 ACE_SSL_Asynch_Stream::do_SSL_write (void)
 {
   if (this->ext_write_result_ == 0)  // nothing to do
-    return 0;
+    {
+      return 0;
+    }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)
     {
@@ -617,11 +623,12 @@ ACE_SSL_Asynch_Stream::do_SSL_write (void)
   ACE_Message_Block & mb = this->ext_write_result_->message_block ();
   size_t       bytes_req = this->ext_write_result_->bytes_to_write ();
 
-  ERR_clear_error();
+  ERR_clear_error ();
 
-  const int bytes_trn = ::SSL_write (this->ssl_,
-                                     mb.rd_ptr (),
-                                     bytes_req);
+  const int bytes_trn =
+    ::SSL_write (this->ssl_,
+                 mb.rd_ptr (),
+                 ACE_Utils::truncate_cast<int> (bytes_req));
 
   int const status = ::SSL_get_error (this->ssl_, bytes_trn);
 
@@ -802,13 +809,15 @@ ACE_SSL_Asynch_Stream::ssl_bio_read (char * buf,
       const char * rd_ptr = this->bio_inp_msg_.rd_ptr ();
 
       if (cur_len > len)
-        cur_len = len;
+        {
+          cur_len = len;
+        }
 
       ACE_OS::memcpy (buf, rd_ptr, cur_len);
 
       this->bio_inp_msg_.rd_ptr (cur_len); // go ahead
 
-      return cur_len;
+      return ACE_Utils::truncate_cast<int> (cur_len);
     }
 
   if (this->bio_inp_errno_ != 0)     // if was error - it is permanent !
@@ -818,12 +827,16 @@ ACE_SSL_Asynch_Stream::ssl_bio_read (char * buf,
     }
 
   if (this->bio_inp_flag_ & BF_EOS)  // End of stream
-    return 0;
+    {
+      return 0;
+    }
 
   errval = EINPROGRESS;          // SSL will try later
 
   if (this->bio_inp_flag_ & BF_AIO)  // we are busy
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->bio_inp_msg_.size (len) != 0)
     {
@@ -940,7 +953,7 @@ ACE_SSL_Asynch_Stream::ssl_bio_write (const char * buf,
   this->bio_out_flag_ |= BF_AIO;  // AIO is active
   errval = 0;               // Ok, go ahead
 
-  return len;
+  return ACE_Utils::truncate_cast<int> (len);
 }
 
 // ************************************************************

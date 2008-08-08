@@ -124,7 +124,10 @@ ACEXML_Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
       this->get_pos_ = this->end_of_mapping_plus1_;
 
   this->recv_pos_ = this->get_pos_;
-  return this->recv_pos_ - reinterpret_cast<char *> (this->mem_map_.addr ());
+  
+  return
+    ACE_Utils::truncate_cast<ACE_OFF_T> (
+      this->recv_pos_ - reinterpret_cast<char *> (this->mem_map_.addr ()));
 }
 
 Svc_Handler *

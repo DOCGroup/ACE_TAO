@@ -7,7 +7,9 @@
 #include "Default_Dispatcher_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Kokyu, Default_Dispatcher_Impl, "$Id$")
+ACE_RCSID (Kokyu,
+           Default_Dispatcher_Impl,
+           "$Id$")
 
 namespace Kokyu
 {
@@ -23,11 +25,12 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
   //create and init the dispatcher tasks here
 
   ACE_DEBUG ((LM_DEBUG, "entering init_t\n" ));
-  int size;
-  size = attrs.config_info_set_.size ();
+  int size = ACE_Utils::truncate_cast<int> (attrs.config_info_set_.size ());
 
   if (size == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   this->ntasks_ = size;
 

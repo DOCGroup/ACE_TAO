@@ -6,12 +6,11 @@
 
 #include "SSL_Asynch_Stream.h"
 #include "ace/OS_NS_string.h"
-
+#include "ace/Truncate.h"
 
 ACE_RCSID (ACE_SSL,
            SSL_Asynch_BIO,
            "$Id$")
-
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define ACE_ASYNCH_BIO_WRITE_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_Asynch_BIO_write)
@@ -245,7 +244,9 @@ ACE_ASYNCH_BIO_PUTS_NAME (BIO *pBIO, const char *str)
 {
   size_t const n = ACE_OS::strlen (str);
 
-  return ACE_ASYNCH_BIO_WRITE_NAME (pBIO, str, n);
+  return ACE_ASYNCH_BIO_WRITE_NAME (pBIO,
+                                    str,
+                                    ACE_Utils::truncate_cast<int> (n));
 }
 
 #endif  /* OPENSSL_VERSION_NUMBER > 0x0090581fL && (ACE_WIN32 ||

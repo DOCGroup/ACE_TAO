@@ -43,16 +43,23 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::info (ACE_TCHAR **strp,
   ACE_INET_Addr sa;
 
   if (this->acceptor ().get_local_addr (sa) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_OS::sprintf (buf, ACE_TEXT("%d/"), sa.get_port_number ());
   ACE_OS::strcat (buf, ACE_TEXT("tcp # tests threaded remote stream\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+    {
+      ACE_OS::strncpy (*strp, buf, length);
+    }
+    
+  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buf));
 }
 
 template <class SVH, PR_AC_1> int

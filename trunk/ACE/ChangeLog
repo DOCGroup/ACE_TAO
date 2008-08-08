@@ -1,3 +1,27 @@
+Fri Aug  8 19:33:42 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Message_Queue_T.cpp:
+        * ace/SSL/SSL_Asynch_BIO.cpp:
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_SOCK_Connector.cpp:
+        * ace/SSL/SSL_SOCK_Stream.cpp:
+        * ace/SSL/SSL_SOCK_Stream.inl:
+        * Kokyu/DSRT_Sched_Queue_T.cpp:
+        * Kokyu/Default_Dispatcher_Impl.cpp:
+        * ACEXML/common/Transcode.cpp:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/Mem_Map_Stream.cpp:
+        * examples/Monitor/MC_Test_Utilities.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.inl:
+
+          Fixes for VC 7.1 warnings, mostly truncation.
+
 Fri Aug  8 17:58:28 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
