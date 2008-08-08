@@ -1757,7 +1757,7 @@ sub check_for_refcountservantbase ()
 {
     print "Running PortableServer::RefCountServantBase derivation check\n";
 
-    foreach $file (@files_h) {
+    foreach $file (@files_h, @files_cpp, @files_inl) {
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
