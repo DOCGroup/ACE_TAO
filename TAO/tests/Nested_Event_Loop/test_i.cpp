@@ -110,9 +110,9 @@ client_i::client_i (server_ptr remote_partner)
 {
 #if defined (CORBA_E_COMPACT) || defined (CORBA_E_MICRO)
   PortableServer::POA_var poa = this->_default_POA ();
-  PortableServer::ObjectId_var id = poa->activate_object (transfer_ownership.in ());
+  PortableServer::ObjectId_var id = poa->activate_object (this);
   CORBA::Object_var object = poa->id_to_reference (id.in ());
-  self_ = client::_unchecked_narrow (object.in());
+  self_ = client::_unchecked_narrow (object.in ());
 #else
   self_ = this->_this ();
 #endif /* CORBA_E_COMPACT || CORBA_E_MICRO */
