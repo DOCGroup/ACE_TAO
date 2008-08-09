@@ -7,6 +7,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Truncate.h"
 
 ACE_INLINE
 Handle_R_Stream::Handle_R_Stream (void)
