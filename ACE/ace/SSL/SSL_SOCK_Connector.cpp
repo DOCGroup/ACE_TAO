@@ -140,7 +140,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
             }
           else
             {
-              tatus = -1;
+              status = -1;
             }
             
           break;
@@ -157,7 +157,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
           // Block indefinitely if timeout pointer is zero.
-          status = ACE::select (ACE_Utils::truncate_cast<int> (handle) + 1,
+          status = ACE::select (int (handle) + 1,
                                 &rd_handle,
                                 &wr_handle,
                                 0,

@@ -1,3 +1,15 @@
+Sat Aug  9 17:42:10 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ace/SSL/SSL_SOCK_Connector.cpp:
+        * ace/SSL/SSL_SOCK_Stream.inl:
+        * ace/SSL/SSL_SOCK_Stream.cpp:
+
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.inl:
+
+          Fixed compile errors in inline=0 and Win32-ssl builds.
+          ACE_Utils::truncate_cast can't cast ACE_HANDLE to int on Win32.
+
 Fri Aug  8 20:35:37 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Stack_Trace.cpp:

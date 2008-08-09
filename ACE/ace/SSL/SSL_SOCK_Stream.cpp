@@ -135,7 +135,7 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
 
   // Check the status of the current socket.
   switch (
-    ACE_OS::select (ACE_Utils::truncate_cast<int> (this->get_handle ()) + 1,
+    ACE_OS::select (int (this->get_handle ()) + 1,
                     handle_set,
                     0,
                     0,
