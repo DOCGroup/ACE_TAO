@@ -4,7 +4,6 @@ Sat Aug  9 17:42:10 UTC 2008  Adam Mitz  <mitza@ociweb.com>
         * ace/SSL/SSL_SOCK_Connector.cpp:
         * ace/SSL/SSL_SOCK_Stream.inl:
         * ace/SSL/SSL_SOCK_Stream.cpp:
-
         * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.inl:
 
           Fixed compile errors in inline=0 and Win32-ssl builds.
