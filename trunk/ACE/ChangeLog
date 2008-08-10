@@ -1,3 +1,10 @@
+Sun Aug 10 23:02:15 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/SSL/SSL_SOCK_Stream.inl (set_handle):
+
+          Reverted back to the C-style cast that was there before Jeff's commit
+          because many compilers didn't like a reinterpret_cast<int> here.
+
 Sat Aug  9 17:42:10 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/SSL/SSL_SOCK_Acceptor.cpp:
