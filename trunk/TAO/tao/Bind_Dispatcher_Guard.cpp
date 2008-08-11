@@ -18,11 +18,10 @@ TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Guard (CORBA::ULong request_id,
                                                       TAO_Transport_Mux_Strategy *tms)
   : status_(TAO_Bind_Dispatcher_Guard::UNBIND),
     request_id_(request_id),
-    rd_(rd),
     tms_(tms)
 {
   int const retval =
-    this->tms_->bind_dispatcher (this->request_id_, this->rd_);
+    this->tms_->bind_dispatcher (this->request_id_, rd);
 
   if (retval == -1)
     this->status_ = TAO_Bind_Dispatcher_Guard::NO_UNBIND;

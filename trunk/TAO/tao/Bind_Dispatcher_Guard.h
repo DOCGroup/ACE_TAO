@@ -54,7 +54,6 @@ public:
 private:
   TAO_Bind_Dispatcher_Status  status_;
   CORBA::ULong                request_id_;
-  TAO_Reply_Dispatcher*       rd_;
   TAO_Transport_Mux_Strategy* tms_;
 };
 
