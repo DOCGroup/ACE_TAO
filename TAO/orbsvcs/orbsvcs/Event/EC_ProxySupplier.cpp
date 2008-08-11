@@ -28,7 +28,7 @@ typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
 TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* ec, int validate_connection)
   : event_channel_ (ec),
     refcount_ (1),
-    suspended_ (0),
+    suspended_ (false),
     child_ (0),
     consumer_validate_connection_(validate_connection)
 {
@@ -37,6 +37,8 @@ TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* e
 
   this->default_POA_ =
     this->event_channel_->supplier_poa ();
+
+  this->qos_.is_gateway = false;
 }
 
 TAO_EC_ProxyPushSupplier::~TAO_EC_ProxyPushSupplier (void)
@@ -97,7 +99,7 @@ TAO_EC_ProxyPushSupplier::shutdown (void)
         ACE_Lock, ace_mon, *this->lock_,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-    int connected = this->is_connected_i ();
+    bool const connected = this->is_connected_i ();
 
     consumer = this->consumer_._retn ();
 
@@ -194,10 +196,10 @@ TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
             ACE_Lock, ace_mon, *this->lock_,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-    if (this->is_connected_i () == 0)
-      return 0;
-
-    result = this->child_->filter (event, qos_info);
+    if (this->is_connected_i ())
+      {
+        result = this->child_->filter (event, qos_info);
+      }
   }
   return result;
 }
@@ -216,10 +218,10 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
             ACE_Lock, ace_mon, *this->lock_,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-    if (this->is_connected_i () == 0)
-      return 0;
-
-    result = this->child_->filter_nocopy (event, qos_info);
+    if (this->is_connected_i ())
+      {
+        result = this->child_->filter_nocopy (event, qos_info);
+      }
   }
   return result;
 }
@@ -230,10 +232,10 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
 {
   // The mutex is already held by the caller (usually the filter()
   // method)
-  if (this->is_connected_i () == 0)
+  if (!this->is_connected_i ())
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
 
-  if (this->suspended_ != 0)
+  if (this->suspended_)
     return;
 
   TAO_ESF_RefCount_Guard<CORBA::ULong> ace_mon (this->refcount_);
@@ -280,10 +282,10 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
 {
   // The mutex is already held by the caller (usually the filter()
   // method)
-  if (this->is_connected_i () == 0)
+  if (!this->is_connected_i ())
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
 
-  if (this->suspended_ != 0)
+  if (this->suspended_)
     return;
 
   TAO_ESF_RefCount_Guard<CORBA::ULong> ace_mon (this->refcount_);
@@ -328,10 +330,10 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
             ACE_Lock, ace_mon, *this->lock_,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-    if (this->is_connected_i () == 0)
+    if (!this->is_connected_i ())
       return; // ACE_THROW (RtecEventComm::Disconnected ());????
 
-    if (this->suspended_ != 0)
+    if (this->suspended_)
       return;
   }
 
@@ -420,11 +422,11 @@ TAO_EC_ProxyPushSupplier::consumer_non_existent (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
 
-    disconnected = 0;
-    if (this->is_connected_i () == 0)
+    disconnected = false;
+    if (!this->is_connected_i ())
       {
-        disconnected = 1;
-        return 0;
+        disconnected = true;
+        return false;
       }
 
     consumer = CORBA::Object::_duplicate (this->consumer_.in ());
@@ -433,7 +435,7 @@ TAO_EC_ProxyPushSupplier::consumer_non_existent (
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   return consumer->_non_existent ();
 #else
-  return 0;
+  return false;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
@@ -459,7 +461,7 @@ TAO_EC_ProxyPushSupplier::can_match (
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
-  if (this->is_connected_i () == 0)
+  if (!this->is_connected_i ())
     return 0;
 
   return this->child_->can_match (header);
@@ -474,8 +476,7 @@ TAO_EC_ProxyPushSupplier::add_dependencies (
           ACE_Lock, ace_mon, *this->lock_,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-  return this->child_->add_dependencies (header,
-                                         qos_info);
+  return this->child_->add_dependencies (header, qos_info);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -77,7 +77,7 @@ public:
   /// Disconnect this from
   virtual void disconnect_push_consumer () = 0;
 
-  /// Return 0 if no supplier is connected...
+  /// Return false if no supplier is connected...
   CORBA::Boolean is_connected (void) const;
 
   /// Return the consumer object reference. It returns nil() if it has
@@ -150,7 +150,7 @@ protected:
 
   /// If the flag is not zero then we are connected, notice that the
   /// supplier can be nil.
-  int connected_;
+  bool connected_;
 
   /// The publication and QoS information...
   RtecEventChannelAdmin::SupplierQOS qos_;
@@ -166,9 +166,7 @@ private:
   virtual void shutdown_hook (void);
   virtual void refcount_zero_hook (void);
 
-  virtual PortableServer::ObjectId
-            object_id (void)
-    = 0;
+  virtual PortableServer::ObjectId object_id (void) = 0;
 };
 
 // ****************************************************************
@@ -213,9 +211,9 @@ private:
   /// The proxy whose lifetime is controlled by the reference count
   TAO_EC_ProxyPushConsumer *proxy_;
 
-  /// This flag is set to 1 if the reference count was successfully
+  /// This flag is set to true if the reference count was successfully
   /// acquired.
-  int locked_;
+  bool locked_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
