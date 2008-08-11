@@ -607,7 +607,7 @@ test_format_specs (void)
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE);
   ACE_LOG_MSG->linenum (42);
-  ACE_LOG_MSG->file (ACE_TEXT ("Log_Msg_Test.cpp"));
+  ACE_LOG_MSG->file ("Log_Msg_Test.cpp");
 
   ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l1:%l"));
   ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l2:%5l"));
