@@ -193,8 +193,8 @@ public:
   /// Destructor
   ~TAO_EC_ProxyPushConsumer_Guard (void);
 
-  /// Returns 1 if the reference count successfully acquired
-  int locked (void) const;
+  /// Returns true if the reference count successfully acquired
+  bool locked (void) const;
 
   TAO_EC_Supplier_Filter *filter;
 
