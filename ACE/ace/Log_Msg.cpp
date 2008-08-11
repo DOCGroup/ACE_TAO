@@ -1050,16 +1050,16 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   if (timestamp_ > 0)
   {
      ACE_TCHAR day_and_time[35];
-     const ACE_TCHAR *s;
+     const ACE_TCHAR *s = 0;
      if (timestamp_ == 1)
      {
         // Print just the time
-        s = ACE::timestamp (day_and_time, sizeof day_and_time, 1);
+        s = ACE::timestamp (day_and_time, sizeof day_and_time / sizeof (ACE_TCHAR), 1);
      }
      else
      {
         // Print time and date
-        ACE::timestamp (day_and_time, sizeof day_and_time);
+        ACE::timestamp (day_and_time, sizeof day_and_time / sizeof (ACE_TCHAR));
         s = day_and_time;
      }
 
@@ -1559,7 +1559,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     ACE_TCHAR day_and_time[35];
                     ACE::timestamp (day_and_time,
-                                    sizeof day_and_time);
+                                    sizeof day_and_time / sizeof (ACE_TCHAR));
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                     ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else
@@ -1578,15 +1578,19 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           // hour:minute:sec:usec format.
                   {
                     ACE_TCHAR day_and_time[35];
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                    ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
+#else
                     ACE_OS::strcpy (fp, ACE_TEXT ("s"));
+#endif
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format,
-                         ACE::timestamp (day_and_time, sizeof day_and_time));
+                         ACE::timestamp (day_and_time, sizeof day_and_time / sizeof (ACE_TCHAR)));
                     else
                       this_len = ACE_OS::sprintf
                         (bp, format, ACE::timestamp (day_and_time,
-                                                     sizeof day_and_time));
+                                                     sizeof day_and_time / sizeof (ACE_TCHAR)));
                     ACE_UPDATE_COUNT (bspace, this_len);
                     break;
                   }
@@ -1989,7 +1993,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   // Stack trace up to this point
                   {
                     // skip the frame that we're currently in
-                    ACE_Stack_Trace t(2); 
+                    ACE_Stack_Trace t(2);
                     ACE_OS::strcpy (fp, ACE_TEXT ("s"));
                     if (can_check)
                       this_len = ACE_OS::snprintf
@@ -2234,7 +2238,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
 
   buf[0] = 0; // in case size = 0
 
-  const size_t len = ACE::format_hexdump
+  size_t const len = ACE::format_hexdump
     (buffer, size, buf, buf_sz / sizeof (ACE_TCHAR) - text_sz);
 
   int sz = 0;

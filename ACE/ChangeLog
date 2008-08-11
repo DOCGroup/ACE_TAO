@@ -1,3 +1,23 @@
+Mon Aug 11 08:56:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Log_Msg_Test.cpp:
+          Extending testing of ACE_Log_Msg by enabling the format specifiers
+          tests and add a test for %T. Also removed the check for vsnprintf
+          to see that VxWorks 5.5.x still has a problem with buffer overflows.
+          In that case we have to fix that in ACE_Log_Msg.
+
+        * ace/Log_Msg.cpp:
+          Fixed some buffer size calculations when ACE_TCHAR != char. Fixed
+          %T when wchar is used, thanks to Nathalie D'Amours
+          <nathalie at bearsontheloose dot com> for reporting this. This fixes
+          bugzilla 3388
+
+        * ace/ACE.{h,cpp} (timestamp):
+          Use bool and sizes of buffers should have size_t as type
+
+        * ace/MEM_Stream_Test.cpp:
+          Removed incorrect comment
+
 Mon Aug 11 07:36:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.am:

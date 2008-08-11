@@ -476,9 +476,8 @@ namespace ACE
    * the time portion.
    */
   extern ACE_Export ACE_TCHAR *timestamp (ACE_TCHAR date_and_time[],
-                                          int time_len,
-                                          int return_pointer_to_first_digit =
-                                            0);
+                                          size_t time_len,
+                                          bool return_pointer_to_first_digit = false);
 
   /**
    * if @a avoid_zombies == 0 call @c ACE_OS::fork directly, else
