@@ -1,6 +1,6 @@
 // $Id$
 
-project(*Server): taoserver, messaging, bidir_giop {
+project(*Server): taoserver, messaging, bidir_giop, threads {
   exename = server
   Source_Files {
     test_i.cpp
@@ -8,7 +8,7 @@ project(*Server): taoserver, messaging, bidir_giop {
   }
 }
 
-project(*Client): taoserver, bidir_giop {
+project(*Client): taoserver, bidir_giop, threads {
   exename = client
   Source_Files {
     test_i.cpp
