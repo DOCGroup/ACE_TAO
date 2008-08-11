@@ -1,3 +1,12 @@
+Mon Aug 11 13:49:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/tests.mpc:
+          There were still some tests that produce test libraries that were
+          not updated when acelib was devorced from ace_output project. Such
+          tests need to either add the dependancy (to place their output in
+          the standard lib directory) or have "libout = ." to specify the
+          library to be placed locally in the test directory.
+
 Mon Aug 11 13:37:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Thread_Manager.{h,cpp,inl}:
