@@ -2,6 +2,7 @@
 // $Id$
 
 project(Test_Output) : acelib, script {
+  libout       = .
   sharedname = Test_Output
   dynamicflags = TEST_OUTPUT_BUILD_DLL
   Source_Files {
@@ -26,6 +27,7 @@ TESTS_ENVIRONMENT = $(srcdir)/run_test.pl -t
 }
 
 project(Framework Component DLL) : acelib {
+  libout       = .
   sharedname   = Framework_Component_DLL
   dynamicflags = FRAMEWORK_COMPONENT_DLL_BUILD_DLL
 
@@ -42,6 +44,7 @@ project(Framework Component DLL) : acelib {
 
 
 project(DLL Test Parent Lib) : acelib {
+  libout       = .
   sharedname   = DLL_Test_Parent
   dynamicflags = DLL_TEST_PARENT_BUILD_DLL
 
@@ -57,6 +60,7 @@ project(DLL Test Parent Lib) : acelib {
 }
 
 project(DLL Test Lib) : acelib, dll_test_parent_lib {
+  libout       = .
   sharedname   = DLL_Test_Lib
   dynamicflags = ACE_SVC_BUILD_DLL
 
@@ -71,6 +75,7 @@ project(DLL Test Lib) : acelib, dll_test_parent_lib {
 }
 
 project(Based Pointer Test Lib) : acelib {
+  libout       = .
   avoids      += ace_for_tao
   sharedname   = Based_Pointer_Test_Lib
   dynamicflags = ACE_SVC_BUILD_DLL
@@ -83,6 +88,7 @@ project(Based Pointer Test Lib) : acelib {
 }
 
 project(Service Config DLL) : acelib {
+  libout       = .
   sharedname   = Service_Config_DLL
   dynamicflags = SERVICE_CONFIG_DLL_BUILD_DLL
 
@@ -279,6 +285,7 @@ project (Bug_2980_Regression_Test) {
 }
 
 project (Bug_2980_Regression_Dll): acelib {
+  libout       = .
   sharedname = Bug_2980_Regression
   dynamicflags = TEST_OUTPUT_BUILD_DLL
   Source_Files {
