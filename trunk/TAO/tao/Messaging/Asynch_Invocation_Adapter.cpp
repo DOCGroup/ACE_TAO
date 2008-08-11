@@ -68,7 +68,6 @@ namespace TAO
         // New reply dispatcher on the heap or allocator, because
         // we will go out of scope and hand over the reply dispatcher
         // to the ORB.
-
         TAO_Asynch_Reply_Dispatcher *rd = 0;
 
         // Get the allocator we could use.

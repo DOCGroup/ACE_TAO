@@ -61,6 +61,8 @@ public:
 
   virtual void connection_closed (void);
 
+  virtual void reply_timed_out (void);
+
 protected:
   /// The service context list
   IOP::ServiceContextList &reply_service_info_;
