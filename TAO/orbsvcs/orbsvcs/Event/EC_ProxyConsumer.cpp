@@ -23,7 +23,7 @@ TAO_EC_ProxyPushConsumer::
     TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* ec)
   : event_channel_ (ec),
     refcount_ (1),
-    connected_ (0),
+    connected_ (false),
     filter_ (0)
 {
   this->lock_ =
@@ -32,7 +32,7 @@ TAO_EC_ProxyPushConsumer::
   this->default_POA_ =
     this->event_channel_->consumer_poa ();
 
-  this->qos_.is_gateway = 0;
+  this->qos_.is_gateway = false;
 }
 
 TAO_EC_ProxyPushConsumer::~TAO_EC_ProxyPushConsumer (void)
@@ -53,14 +53,14 @@ TAO_EC_ProxyPushConsumer::supplier_non_existent (
         CORBA::INTERNAL ());
 
     disconnected = 0;
-    if (this->is_connected_i () == 0)
+    if (!this->is_connected_i ())
       {
-        disconnected = 1;
-        return 0;
+        disconnected = true;
+        return false;
       }
     if (CORBA::is_nil (this->supplier_.in ()))
       {
-        return 0;
+        return false;
       }
     supplier = CORBA::Object::_duplicate (this->supplier_.in ());
   }
@@ -142,7 +142,7 @@ TAO_EC_ProxyPushConsumer::shutdown (void)
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     supplier = this->supplier_._retn ();
-    this->connected_ = 0;
+    this->connected_ = false;
 
     this->shutdown_hook ();
 
@@ -175,7 +175,7 @@ TAO_EC_ProxyPushConsumer::cleanup_i (void)
 {
   this->supplier_ =
     RtecEventComm::PushSupplier::_nil ();
-  this->connected_ = 0;
+  this->connected_ = false;
 
   if (this->filter_ != 0)
     {
@@ -243,7 +243,7 @@ TAO_EC_ProxyPushConsumer_Guard::
      refcount_ (refcount),
      event_channel_ (ec),
      proxy_ (proxy),
-     locked_ (0)
+     locked_ (false)
 {
   ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
   // If the guard fails there is not much we can do, raising an
@@ -253,14 +253,14 @@ TAO_EC_ProxyPushConsumer_Guard::
   // @@ Returning something won't work either, the error should be
   // logged though!
 
-  if (proxy->is_connected_i () == 0)
-    return;
+  if (proxy->is_connected_i ())
+    {
+      this->filter = this->proxy_->filter_i ();
+      this->filter->_incr_refcnt ();
 
-  this->filter = this->proxy_->filter_i ();
-  this->filter->_incr_refcnt ();
-
-  this->locked_ = 1;
-  this->refcount_++;
+      this->locked_ = true;
+      ++this->refcount_;
+    }
 }
 
 TAO_EC_ProxyPushConsumer_Guard::

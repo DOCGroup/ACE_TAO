@@ -13,7 +13,7 @@ TAO_EC_ProxyPushConsumer::is_connected_i (void) const
 ACE_INLINE CORBA::Boolean
 TAO_EC_ProxyPushConsumer::is_connected (void) const
 {
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, false);
 
   return this->is_connected_i ();
 }
@@ -62,7 +62,7 @@ TAO_EC_ProxyPushConsumer::filter_i (void) const
 
 // ****************************************************************
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_EC_ProxyPushConsumer_Guard::locked (void) const
 {
   return this->locked_;

@@ -1,3 +1,12 @@
+Mon Aug 11 09:02:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.{h,cpp}:
+          Initialise the is_gateway member to false, use bool and some
+          minor code improvements. Thanks to Joe Seward
+          <joseph dot f dot seward at saic dot com> for reporting this. This
+          fixes bugzilla 3392
+
 Fri Aug  8 16:30:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:

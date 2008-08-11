@@ -192,9 +192,7 @@ private:
   /// Template method hooks.
   virtual void refcount_zero_hook (void);
   virtual void pre_dispatch_hook (RtecEventComm::EventSet&);
-  virtual PortableServer::ObjectId
-            object_id (void)
-    = 0;
+  virtual PortableServer::ObjectId object_id (void) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
