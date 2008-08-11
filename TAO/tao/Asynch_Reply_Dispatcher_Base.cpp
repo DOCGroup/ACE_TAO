@@ -67,24 +67,6 @@ TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
   this->transport_->add_reference ();
 }
 
-// Must override pure virtual method in TAO_Reply_Dispatcher.
-int
-TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
-    TAO_Pluggable_Reply_Params & /*params*/)
-{
-  return 0;
-}
-
-void
-TAO_Asynch_Reply_Dispatcher_Base::connection_closed (void)
-{
-}
-
-void
-TAO_Asynch_Reply_Dispatcher_Base::reply_timed_out (void)
-{
-}
-
 void
 TAO_Asynch_Reply_Dispatcher_Base::incr_refcount (void)
 {

@@ -14,25 +14,18 @@ ACE_RCSID (Messaging,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
-  TAO_Asynch_Reply_Dispatcher_Base *rd,
   ACE_Reactor *reactor)
-  : rd_ (rd),
-    tms_ (0),
+  : tms_ (0),
     request_id_ (0),
     reactor_ (reactor)
 {
   // Enable reference counting on the event handler.
   this->reference_counting_policy ().value (
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
-
-  // We own a reference
-  (void) this->rd_->incr_refcount ();
 }
 
 TAO_Asynch_Timeout_Handler::~TAO_Asynch_Timeout_Handler ()
 {
-  // Forget rd's reference
-  (void) this->rd_->decr_refcount ();
 }
 
 
@@ -54,17 +47,30 @@ int
 TAO_Asynch_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
                                             const void *)
 {
-  if (TAO_debug_level >= 4)
+  TAO_Reply_Dispatcher* rb_base = 0;
+
+  // Check if there was a reply dispatcher registered in the tms, if not
+  // the reply already got dispatched by another thread
+  if (this->tms_->reply_timed_out (this->request_id_) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Timeout_Handler")
-                  ACE_TEXT ("::handle_timeout, request %d timed out\n"),
-                            this->request_id_));
+      if (TAO_debug_level >= 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Timeout_Handler")
+                      ACE_TEXT ("::handle_timeout, request %d timed out\n"),
+                                this->request_id_));
+        }
     }
-
-  this->tms_->unbind_dispatcher (this->request_id_);
-
-  this->rd_->reply_timed_out ();
+  else
+    {
+      if (TAO_debug_level >= 1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Timeout_Handler")
+                      ACE_TEXT ("::handle_timeout, unable to dispatch timed out request %d\n"),
+                                this->request_id_));
+        }
+    }
 
   // reset any possible timeout errno
   errno = 0;

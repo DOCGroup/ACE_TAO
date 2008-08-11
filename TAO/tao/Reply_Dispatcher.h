@@ -68,6 +68,9 @@ public:
    */
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
 
+  /// Inform that the reply timed out
+  virtual void reply_timed_out (void) = 0;
+
   /**
    * The used for the pending reply has been closed.
    * No reply is expected.

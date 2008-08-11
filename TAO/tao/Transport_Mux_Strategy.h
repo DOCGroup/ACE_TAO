@@ -55,9 +55,6 @@ public:
   /// invocation.
   virtual CORBA::ULong request_id (void) = 0;
 
-  // = Bind and Find methods for the <Request ID, ReplyDispatcher>
-  //   pairs.
-
   /// Bind the dispatcher with the request id. Commonalities in the
   /// derived class implementations is kept here.
   virtual int bind_dispatcher (CORBA::ULong request_id,
@@ -71,6 +68,11 @@ public:
    * A later reply for that request should be ignored.
    */
   virtual int unbind_dispatcher (CORBA::ULong request_id) = 0;
+
+  /**
+   * Dispatch a reply timeout for request @a request_id
+   **/
+  virtual int reply_timed_out (CORBA::ULong request_id) = 0;
 
   /// Dispatch the reply for <request_id>, cleanup any resources
   /// allocated for that request.

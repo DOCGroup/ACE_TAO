@@ -1,3 +1,37 @@
+Mon Aug 11 17:56:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Some changes related to AMI timeouts. The tms stores the relationship
+          between the request id and the reply dispatcher. For AMI timeouts the
+          Asynch_Timeout_Handler did the same, so reworked that. The ATH now just
+          calls a method on the TMS, then also we can callback to the rd with the
+          tms lock hold just as we do for regular replies.
+
+        * tao/Asynch_Reply_Dispatcher_Base.cpp:
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+          No need to deliver an implementation for pure virtual methods
+
+        * tao/Exclusive_TMS.cpp:
+        * tao/Exclusive_TMS.h:
+        * tao/Muxed_TMS.cpp:
+        * tao/Muxed_TMS.h:
+        * tao/Transport_Mux_Strategy.h:
+          Added reply_timed_out method
+
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+          Make sure we always cancel the timeout handler
+
+        * tao/Messaging/Asynch_Timeout_Handler.cpp:
+        * tao/Messaging/Asynch_Timeout_Handler.h:
+          No need to store the reply_dispatcher, it is stored in the tms
+
+        * tao/Reply_Dispatcher.h:
+        * tao/Synch_Reply_Dispatcher.cpp
+        * tao/Synch_Reply_Dispatcher.h
+          Added reply_timed_out method
+
+        * tao/ORB.cpp:
+          Layout change
+
 Mon Aug 11 16:23:52 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * MPC/config/bidir_giop.mpb:

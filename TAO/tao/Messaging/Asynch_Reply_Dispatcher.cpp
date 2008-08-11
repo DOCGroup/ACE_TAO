@@ -35,12 +35,6 @@ TAO_Asynch_Reply_Dispatcher::~TAO_Asynch_Reply_Dispatcher (void)
 int
 TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
-  if (params.input_cdr_ == 0)
-    return -1;
-
-  if (!this->try_dispatch_reply ())
-    return 0;
-
   if (this->timeout_handler_)
     {
       // If we had registered timeout handlers just cancel them and
@@ -50,6 +44,12 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       this->timeout_handler_ = 0;
       // AMI Timeout Handling End
     }
+
+  if (!params.input_cdr_)
+    return -1;
+
+  if (!this->try_dispatch_reply ())
+    return 0;
 
   this->reply_status_ = params.reply_status ();
   this->locate_reply_status_ = params.locate_reply_status ();
@@ -148,9 +148,6 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 {
   try
     {
-      if (!this->try_dispatch_reply ())
-        return;
-
       if (this->timeout_handler_)
         {
           // If we had registered timeout handlers just cancel them and
@@ -159,6 +156,9 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
           this->timeout_handler_->remove_reference ();
           this->timeout_handler_ = 0;
         }
+
+      if (!this->try_dispatch_reply ())
+        return;
 
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {
@@ -197,12 +197,6 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 {
   try
     {
-      // This is okay here... Everything relies on our refcount being
-      // held by the timeout handler, whose refcount in turn is held
-      // by the reactor.
-      if (!this->try_dispatch_reply ())
-        return;
-
       // @@ This check probably is unnecessary..
       if (this->timeout_handler_)
         {
@@ -211,6 +205,12 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
           this->timeout_handler_->remove_reference ();
           this->timeout_handler_ = 0;
         }
+
+      // This is okay here... Everything relies on our refcount being
+      // held by the timeout handler, whose refcount in turn is held
+      // by the reactor.
+      if (!this->try_dispatch_reply ())
+        return;
 
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {
@@ -239,7 +239,6 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
         {
           ex._tao_print_exception ("Asynch_Reply_Dispacher::reply_timed_out");
         }
-
     }
 
   (void) this->decr_refcount ();
@@ -254,7 +253,6 @@ TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
       // @@ Need to use the pool for this..
       ACE_NEW_THROW_EX (this->timeout_handler_,
                         TAO_Asynch_Timeout_Handler (
-                          this,
                           this->transport_->orb_core ()->reactor ()),
                         CORBA::NO_MEMORY ());
     }

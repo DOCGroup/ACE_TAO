@@ -32,7 +32,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Asynch_Reply_Dispatcher_Base;
 class TAO_Transport_Mux_Strategy;
 
 /**
@@ -44,8 +43,7 @@ class TAO_Asynch_Timeout_Handler
   : public ACE_Event_Handler
 {
 public:
-  TAO_Asynch_Timeout_Handler (TAO_Asynch_Reply_Dispatcher_Base *rd,
-                              ACE_Reactor *reactor);
+  TAO_Asynch_Timeout_Handler (ACE_Reactor *reactor);
 
   ~TAO_Asynch_Timeout_Handler ();
 
@@ -62,9 +60,6 @@ public:
   virtual void cancel ();
 
 public:
-  /// The reply dispatcher expecting the reply
-  TAO_Asynch_Reply_Dispatcher_Base *rd_;
-
   /// The transport mux strategy dispatching the reply
   TAO_Transport_Mux_Strategy *tms_;
 

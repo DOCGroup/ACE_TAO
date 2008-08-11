@@ -53,16 +53,6 @@ public:
   /// Sets the transport for this invocation.
   void transport (TAO_Transport *t);
 
-  /// @name The Reply Dispatcher methods
-  //@{
-  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &) = 0;
-
-  virtual void connection_closed (void) = 0;
-  //@}
-
-  /// Inform that the reply timed out
-  virtual void reply_timed_out (void) = 0;
-
   /// Install the timeout handler
   virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &) = 0;
 

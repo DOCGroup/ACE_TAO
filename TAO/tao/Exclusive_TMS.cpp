@@ -103,6 +103,32 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   return rd->dispatch_reply (params);
 }
 
+int
+TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
+{
+  // Check the ids.
+  if (!this->has_request_ || this->request_id_ != request_id)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) TAO_Exclusive_TMS::reply_timed_out - <%d != %d>\n"),
+                    this->request_id_, request_id));
+
+      // The return value 0 informs the transport that the mux strategy
+      // did not find the right reply handler.
+      return 0;
+    }
+
+  TAO_Reply_Dispatcher *rd = this->rd_;
+  this->has_request_ = false;
+  this->request_id_ = 0; // @@ What is a good value???
+  this->rd_ = 0;
+
+  rd->reply_timed_out ();
+
+  return 0;
+}
+
 bool
 TAO_Exclusive_TMS::idle_after_send (void)
 {
