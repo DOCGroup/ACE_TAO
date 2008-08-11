@@ -679,10 +679,10 @@ public:
   /**
    * Advance the iterator while removing the original item from the
    * list.  Return a pointer points to the original (removed) item.
-   * If {dont_remove} equals 0, this function behaves like {advance}
+   * If @a dont_remove equals false, this function behaves like {advance}
    * but return 0 (NULL) instead.
    */
-  T* advance_and_remove (int dont_remove);
+  T* advance_and_remove (bool dont_remove);
 
   // = STL-style iteration methods
 
@@ -748,10 +748,10 @@ public:
   /**
    * Advance the iterator while removing the original item from the
    * list.  Return a pointer points to the original (removed) item.
-   * If {dont_remove} equals 0, this function behaves like {advance}
+   * If @a dont_remove equals false, this function behaves like {advance}
    * but return 0 (NULL) instead.
    */
-  T* advance_and_remove (int dont_remove);
+  T* advance_and_remove (bool dont_remove);
 
   // = STL-style iteration methods
 
@@ -1021,7 +1021,7 @@ typedef ACE_Double_Linked_List<ACE_DLList_Node> ACE_DLList_Base;
  * from ACE_Double_Linked_List, wrapping each T pointer in a ACE_DLList_Node
  * object which satisfies the next/prev pointer requirements imposed by
  * ACE_Double_Linked_List.
- * 
+ *
  * Each item inserted to an ACE_DLList is a pointer to a T object. The
  * caller is responsible for lifetime of the T object. ACE_DLList takes no
  * action on the T object; it is not copied on insertion and it is not

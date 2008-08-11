@@ -8,20 +8,19 @@ ACE_INLINE
 ACE_At_Thread_Exit::ACE_At_Thread_Exit (void)
   : next_ (0),
     td_ (0),
-    was_applied_ (0),
+    was_applied_ (false),
     is_owner_ (true)
 {
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_At_Thread_Exit::was_applied() const
-
 {
    return was_applied_;
 }
 
-ACE_INLINE int
-ACE_At_Thread_Exit::was_applied (int applied)
+ACE_INLINE bool
+ACE_At_Thread_Exit::was_applied (bool applied)
 {
   was_applied_ = applied;
   if (was_applied_)
