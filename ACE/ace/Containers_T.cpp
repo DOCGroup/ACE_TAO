@@ -481,7 +481,7 @@ ACE_Double_Linked_List_Iterator<T>::advance (void)
 }
 
 template <class T> T*
-ACE_Double_Linked_List_Iterator<T>::advance_and_remove (int dont_remove)
+ACE_Double_Linked_List_Iterator<T>::advance_and_remove (bool dont_remove)
 {
   T* item = 0;
   if (dont_remove)
@@ -586,11 +586,13 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::advance (void)
 }
 
 template <class T> T*
-ACE_Double_Linked_List_Reverse_Iterator<T>::advance_and_remove (int dont_remove)
+ACE_Double_Linked_List_Reverse_Iterator<T>::advance_and_remove (bool dont_remove)
 {
   T* item = 0;
   if (dont_remove)
-    this->do_retreat ();
+    {
+      this->do_retreat ();
+    }
   else
     {
       item = this->next ();

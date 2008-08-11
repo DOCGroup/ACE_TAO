@@ -1,3 +1,14 @@
+Mon Aug 11 13:37:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread_Manager.{h,cpp,inl}:
+          Make sure we don't miss any already terminated threads when doing
+          a join. Also made some code more readable, removed ancient AIX
+          workarounds. This fixes bugzilla 3391. Thanks to
+          <giovanni dot mele at nagra dot com> for reporting this
+
+        * ace/Containers_T.{h,cpp}:
+          Changed dont_remove to a bool
+
 Mon Aug 11 12:45:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.cpp:
