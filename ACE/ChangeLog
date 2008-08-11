@@ -1,3 +1,9 @@
+Mon Aug 11 07:36:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+          Added missing header files. Thanks to haibin zhang
+          <dragzhb at yahoo dot com dot cn> for reporting this
+
 Sun Aug 10 23:02:15 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * ace/SSL/SSL_SOCK_Stream.inl (set_handle):

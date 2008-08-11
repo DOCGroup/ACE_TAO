@@ -877,6 +877,7 @@ nobase_include_HEADERS += \
   Recursive_Thread_Mutex.inl \
   Recyclable.h \
   Recyclable.inl \
+  Refcountable.h \
   Refcountable_T.cpp \
   Refcountable_T.h \
   Refcountable_T.inl \
@@ -1070,6 +1071,12 @@ nobase_include_HEADERS += \
   Timer_Queuefwd.h \
   Timer_Wheel_T.cpp \
   Timer_Wheel_T.h \
+  Timer_Hash.h \
+  Timer_Heap.h \
+  Timer_List.h \
+  Timer_Queue.h \
+  Timer_Queuefwd.h \
+  Timer_Wheel.h \
   Token.h \
   Token.inl \
   Token_Collection.h \
