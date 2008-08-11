@@ -52,7 +52,7 @@
 %define have_fox 0
 
 # I think Mandrake sets this to .bz2, but Fedora doesn't seem to set it
-%{!?_extension:%define _extension .gz}
+#%{!?_extension:%define _extension .gz}
 
 %if %{?_with_opt:0}%{!?_with_opt:1}
 %define OPTTAG .O0
@@ -1421,9 +1421,9 @@ exit 0
 %post -n ace-devel
 
 %if %{defined suse_version}
-%install_info --info-dir=%_infodir %_infodir/ace_gperf.info.%{_extension}
+%install_info --info-dir=%_infodir %_infodir/ace_gperf.info.gz
 %else
-/sbin/install-info %{_infodir}/ace_gperf.info%{_extension} %{_infodir}/dir
+/sbin/install-info %{_infodir}/ace_gperf.info.gz %{_infodir}/dir
 %endif
 
 # ---------------- ace-xml ----------------
@@ -1843,8 +1843,8 @@ fi
 %{_libdir}/libACE_RMCast.so
 %{_libdir}/libACE_SSL.so
 %{_libdir}/libACE_TMCast.so
-%attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
-%attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
+%attr(0644,root,root) %{_mandir}/man1/ace_gperf.1.gz
+%attr(0644,root,root) %{_infodir}/ace_gperf.info.gz
 
 %if %{?_with_fox:1}%{!?_with_fox:0}
 %exclude %{_includedir}/ace/FoxReactor/FoxReactor.h
@@ -2135,7 +2135,7 @@ fi
 %{_bindir}/tao_nsadd
 %{_bindir}/tao_nsdel
 %{_bindir}/tao_nslist
-%attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}
+%attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1.gz
 
 # These get missed by the automatic list generator because they
 # contain no immediate files.
