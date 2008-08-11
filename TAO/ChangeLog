@@ -1,3 +1,8 @@
+Mon Aug 11 12:47:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+          Corrected locked signature
+
 Mon Aug 11 09:02:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.{h,cpp,inl}:
