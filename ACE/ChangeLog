@@ -1,3 +1,9 @@
+Mon Aug 11 16:09:20 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Exclude TAO/tests/Bug_3068_Regression from single-threaded builds.
+
 Mon Aug 11 13:49:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/tests.mpc:
