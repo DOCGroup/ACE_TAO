@@ -43,7 +43,7 @@ ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 #  define _TEST_USES_PROCESSES
 #  include "ace/Process.h"
 #  include "ace/Process_Manager.h"
-#endif /* ACE_HAS_FORK */
+#endif
 
 #include "MEM_Stream_Test.h"         // Defines Echo_Handler
 

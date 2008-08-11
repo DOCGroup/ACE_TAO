@@ -2166,7 +2166,7 @@ ACE::writev_n (ACE_HANDLE handle,
       ssize_t n = ACE_OS::writev (handle,
                                   iov + s,
                                   iovcnt - s);
-   
+
       if (n == -1 || n == 0)
         {
           return n;
@@ -2407,8 +2407,8 @@ ACE::format_hexdump (const char *buffer,
 
 ACE_TCHAR *
 ACE::timestamp (ACE_TCHAR date_and_time[],
-                int date_and_timelen,
-                int return_pointer_to_first_digit)
+                size_t date_and_timelen,
+                bool return_pointer_to_first_digit)
 {
   //ACE_TRACE ("ACE::timestamp");
 
