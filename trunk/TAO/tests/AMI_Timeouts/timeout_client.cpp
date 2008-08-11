@@ -65,7 +65,7 @@ TimeoutClient::svc ()
       // shut down remote ORB
       timeoutObject_->shutdown ();
 
-      ACE_Time_Value tv (0, 20); // wait for the ORB to deliver the shutdonw
+      ACE_Time_Value tv (0, 20); // wait for the ORB to deliver the shutdown
       ACE_OS::sleep (tv);
 
       // shut down local ORB
