@@ -1,7 +1,6 @@
 // $Id$
 
 project(*Server): taoserver, messaging, bidir_giop, threads {
-  exename = server
   Source_Files {
     test_i.cpp
     server.cpp

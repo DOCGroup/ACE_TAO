@@ -73,7 +73,7 @@ TimeoutHandler_i::sendTimeToWait (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "reply"));
-  reply_counter_++;
+  ++reply_counter_;
   timer_.stop ();
 }
 
@@ -90,7 +90,7 @@ TimeoutHandler_i::sendTimeToWait_excep (::Messaging::ExceptionHolder *excep_hold
     {
       ACE_DEBUG ((LM_DEBUG,
                   "timeout"));
-      reply_excep_counter_++;
+      ++reply_excep_counter_;
     }
   catch (...)
     {

@@ -54,7 +54,7 @@ Simple_Server_i::ow_test ()
 void
 Simple_Server_i::callback_object (Callback_ptr callback)
 {
-  this->caller_ = new Caller (callback, orb_);
+  this->caller_ = new Caller (callback, orb_.in ());
 }
 
 Caller::Caller (Callback_ptr callback, CORBA::ORB_ptr orb)

@@ -1,3 +1,17 @@
+Mon Aug 11 18:35:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3068_Regression/Bug_3068_Regression.mpc:
+          No need to give server an exename
+
+        * tests/Bug_3068_Regression/test_i.cpp:
+          Fixed gcc 2.96 warning
+
+        * tests/AMI_Timeouts/timeout_client.cpp:
+          Documentation fix
+
+        * tests/AMI_Timeouts/timeout_i.cpp:
+          Prefix increment
+
 Mon Aug 11 17:56:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           Some changes related to AMI timeouts. The tms stores the relationship
