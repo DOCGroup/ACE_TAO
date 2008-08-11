@@ -104,10 +104,10 @@ public:
   bool is_owner (bool owner);
 
   /// This At_Thread_Exit was applied?
-  int was_applied (void) const;
+  bool was_applied (void) const;
 
   /// Set applied state of At_Thread_Exit.
-  int was_applied (int applied);
+  bool was_applied (bool applied);
 
 protected:
   /// The next At_Thread_Exit hook in the list.
@@ -123,7 +123,7 @@ protected:
   ACE_Thread_Descriptor* td_;
 
   /// The at was applied?
-  int was_applied_;
+  bool was_applied_;
 
   /// The at has the ownership of this?
   bool is_owner_;
