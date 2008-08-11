@@ -356,10 +356,9 @@ int
 ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::snprintf");
-  int result;
   va_list ap;
   va_start (ap, format);
-  result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
+  int result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
   va_end (ap);
   return result;
 }
@@ -369,10 +368,9 @@ int
 ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::snprintf");
-  int result;
   va_list ap;
   va_start (ap, format);
-  result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
+  int result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
   va_end (ap);
   return result;
 }
@@ -382,10 +380,9 @@ int
 ACE_OS::sprintf (char *buf, const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::sprintf");
-  int result;
   va_list ap;
   va_start (ap, format);
-  result = ACE_OS::vsprintf (buf, format, ap);
+  int result = ACE_OS::vsprintf (buf, format, ap);
   va_end (ap);
   return result;
 }
@@ -395,10 +392,9 @@ int
 ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::sprintf");
-  int result;
   va_list ap;
   va_start (ap, format);
-  result = ACE_OS::vsprintf (buf, format, ap);
+  int result = ACE_OS::vsprintf (buf, format, ap);
   va_end (ap);
   return result;
 }
@@ -408,11 +404,9 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 int
 ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
 {
-  int size;
-
   va_list ap;
   va_copy (ap, argptr);
-  size = ACE_OS::vsnprintf(0, 0, format, ap);
+  int size = ACE_OS::vsnprintf(0, 0, format, ap);
   va_end (ap);
 
   if (size != -1)
@@ -439,11 +433,9 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
 int
 ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argptr)
 {
-  int size;
-
   va_list ap;
   va_copy (ap, argptr);
-  size = ACE_OS::vsnprintf(0, 0, format, ap);
+  int size = ACE_OS::vsnprintf(0, 0, format, ap);
   va_end (ap);
 
   if (size != -1)
