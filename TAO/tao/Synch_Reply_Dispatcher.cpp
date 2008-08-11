@@ -48,6 +48,12 @@ TAO_Synch_Reply_Dispatcher::reply_cdr (void)
   return this->reply_cdr_;
 }
 
+void
+TAO_Synch_Reply_Dispatcher::reply_timed_out (void)
+{
+  // noop
+}
+
 int
 TAO_Synch_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params)

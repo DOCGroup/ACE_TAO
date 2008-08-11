@@ -59,6 +59,7 @@ public:
   virtual int unbind_dispatcher (CORBA::ULong request_id);
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
+  virtual int reply_timed_out (CORBA::ULong request_id);
 
   virtual bool idle_after_send (void);
   virtual bool idle_after_reply (void);
