@@ -7,6 +7,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Malloc.h"
 #include "ace/Signal.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_wait.h"
@@ -20,10 +21,16 @@ static int
 gen_size (void)
 {
 #if defined (ACE_HAS_THREADS)
-  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (reinterpret_cast<unsigned long> (&seed));
-  return (ACE_OS::rand_r (seed) % Options::instance ()->max_msg_size ()) + 1;
+  ACE_RANDR_TYPE seed =
+    static_cast<ACE_RANDR_TYPE> (reinterpret_cast<uintptr_t> (&seed));
+    
+  return (
+    ACE_Utils::truncate_cast<int> (
+      ACE_OS::rand_r (seed) % Options::instance ()->max_msg_size ()) + 1);
 #else
-  return (ACE_OS::rand () % Options::instance ()->max_msg_size ()) + 1;
+  return (
+    ACE_Utils::truncate_cast<int> (
+      ACE_OS::rand () % Options::instance ()->max_msg_size ()) + 1);
 #endif /* ACE_HAS_THREADS */
 }
 
@@ -84,7 +91,7 @@ worker (void *arg)
 {
   // Cast the arg to a long, first, because a pointer is the same
   // size as a long on all current ACE platforms.
-  malloc_recurse ((int) (long) arg);
+  malloc_recurse (static_cast<int> (reinterpret_cast<intptr_t> (arg)));
 
   return 0;
 }

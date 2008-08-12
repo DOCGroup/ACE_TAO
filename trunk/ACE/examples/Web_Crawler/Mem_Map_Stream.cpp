@@ -2,6 +2,7 @@
 
 #include "ace/FILE_Addr.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Truncate.h"
 #include "Options.h"
 #include "Mem_Map_Stream.h"
 
@@ -122,7 +123,9 @@ Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
       return (ACE_OFF_T) -1;
 
   this->recv_pos_ = this->get_pos_;
-  return this->recv_pos_ - reinterpret_cast<char *> (this->mem_map_.addr ());
+  return
+    ACE_Utils::truncate_cast<ACE_OFF_T> (
+      this->recv_pos_ - reinterpret_cast<char *> (this->mem_map_.addr ()));
 }
 
 Mem_Map_Stream::Svc_Handler * 

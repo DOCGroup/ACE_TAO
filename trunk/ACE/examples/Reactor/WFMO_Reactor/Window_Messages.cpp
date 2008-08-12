@@ -75,16 +75,19 @@ ACE_TMAIN (int, ACE_TCHAR*[])
   global_event_handler = &event_handler;
 
   event_handler.iterations_ = 5;
-  int result = ACE_Reactor::instance ()->register_handler (&event_handler,
-                                                           event_handler.handle_.handle ());
+  int result =
+    ACE_Reactor::instance ()->register_handler (&event_handler,
+                                                event_handler.handle_.handle ());
   ACE_ASSERT (result == 0);
 
   ACE_Time_Value timeout (1);
-  result = ::SetTimer (0,                         // handle of window for timer messages
-                       0,                            // timer identifier
-                       timeout.msec (),              // time-out value
-                       (TIMERPROC) &timer_callback   // address of timer procedure
-                       );
+  result = 
+    ACE_Utils::truncate_cast<int> (
+      ::SetTimer (0,                         // handle of window for timer messages
+                  0,                             // timer identifier
+                  timeout.msec (),               // time-out value
+                  (TIMERPROC) &timer_callback)); // address of timer procedure
+ 
   ACE_ASSERT (result != 0);
 
   ACE_Reactor::run_event_loop ();

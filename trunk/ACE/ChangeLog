@@ -1,3 +1,53 @@
+Tue Aug 12 19:45:16 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Time_Value.inl:
+        * examples/OS/Process/process.cpp:
+        * examples/Misc/test_dump.h:
+        * examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp:
+        * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
+        * examples/ASX/Event_Server/Event_Server/Consumer_Router.cpp:
+        * examples/ASX/Message_Queue/buffer_stream.cpp:
+        * examples/ASX/Message_Queue/bounded_buffer.cpp:
+        * examples/ASX/Message_Queue/priority_buffer.cpp:
+        * examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp:
+        * examples/ASX/UPIPE_Event_Server/Event_Analyzer.cpp:
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp:
+        * examples/Web_Crawler/Iterators.cpp:
+        * examples/Web_Crawler/URL_Visitor.cpp:
+        * examples/Web_Crawler/Mem_Map_Stream.cpp:
+        * examples/Shared_Malloc/test_malloc.cpp:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
+        * examples/APG/ThreadPools/TP_Reactor.cpp:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-client.cpp:
+        * examples/Logger/client/logging_app.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
+        * examples/Threads/thread_pool.cpp:
+        * examples/Threads/thread_specific.cpp:
+        * examples/Threads/task_four.cpp:
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+        * examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * examples/Reactor/Proactor/test_cancel.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/Mem_Map/file-reverse/file-reverse.cpp:
+        * examples/C++NPv1/Logging_Handler.cpp:
+        * examples/C++NPv1/Logging_Client.cpp:
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp:
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Service_Reporter.cpp:
+        * examples/C++NPv2/Logging_Handler.cpp:
+
+          More truncation warning fixes.
+
 Tue Aug 12 18:15:08 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/ace_guidelines.vsmacros:

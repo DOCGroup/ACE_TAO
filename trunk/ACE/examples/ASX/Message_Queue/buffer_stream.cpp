@@ -17,6 +17,7 @@
 #include "ace/Stream.h"
 #include "ace/Module.h"
 #include "ace/Task.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(Message_Queue, buffer_stream, "$Id$")
 
@@ -203,7 +204,7 @@ Consumer::svc (void)
       if (result == -1)
         break;
 
-      int length = mb->length ();
+      int length = ACE_Utils::truncate_cast<int> (mb->length ());
 
       if (length > 0)
         ACE_OS::write (ACE_STDOUT,

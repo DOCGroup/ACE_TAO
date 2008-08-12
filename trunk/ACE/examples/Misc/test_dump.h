@@ -6,6 +6,7 @@
 #define __TEST_DUMP_H
 
 #include "ace/Dump.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
 class SOCK
@@ -15,7 +16,7 @@ public:
   ~SOCK (void) { ACE_REMOVE_OBJECT; }
 
   void dump (void) const {
-    ACE_OS::fprintf (stderr, "hello from SOCK = %lu\n", (u_long) this);
+    ACE_OS::fprintf (stderr, "hello from SOCK = %@\n", this);
   }
 
   // ...
@@ -28,7 +29,7 @@ public:
   ~SOCK_Acceptor (void) { ACE_REMOVE_OBJECT; }
 
   void dump (void) const {
-    ACE_OS::fprintf (stderr, "hello from SOCK_Acceptor = %lu\n", (u_long) this);
+    ACE_OS::fprintf (stderr, "hello from SOCK_Acceptor = %@\n", this);
   }
 
   // ...
@@ -41,7 +42,7 @@ public:
   ~SOCK_Stream (void) { ACE_REMOVE_OBJECT; }
 
   void dump (void) const {
-    ACE_OS::fprintf (stderr, "hello from SOCK_Stream = %lu\n", (u_long) this);
+    ACE_OS::fprintf (stderr, "hello from SOCK_Stream = %@\n", this);
   }
 
   // ...

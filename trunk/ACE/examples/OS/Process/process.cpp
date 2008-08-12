@@ -28,6 +28,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 #include "ace/SString.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(Process, process, "$Id$")
 
@@ -418,7 +419,9 @@ win32_spawn_environment_process (void)
 
   int size = 0;
   while (existing_environment[size] != '\0')
-    size += ACE_OS::strlen (existing_environment + size) + 1;
+    size +=
+      ACE_Utils::truncate_cast<int> (
+        ACE_OS::strlen (existing_environment + size) + 1);
 
   ACE_OS::memcpy (environment + (ACE_OS::strlen (environment) + 1),
                   existing_environment,

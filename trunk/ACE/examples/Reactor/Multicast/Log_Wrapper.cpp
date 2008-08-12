@@ -3,6 +3,7 @@
 // client.C
 
 #include "Log_Wrapper.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_string.h"
@@ -64,7 +65,8 @@ Log_Wrapper::log_message (Log_Priority type, char *message)
   // Casting time() to long will start causing bad results sometime in 2038
   // but the receiver isn't looking at the time, so who cares?
   this->log_msg_.time = (long) ACE_OS::time (0);
-  this->log_msg_.msg_length = ACE_OS::strlen(message)+1;
+  this->log_msg_.msg_length =
+    ACE_Utils::truncate_cast<ACE_INT32> (ACE_OS::strlen (message) + 1);
   this->log_msg_.sequence_number = ACE_HTONL(sequence_number_);
 
   iovec iovp[2];

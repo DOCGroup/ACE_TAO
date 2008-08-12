@@ -13,6 +13,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Singleton.h"
 #include "ace/Get_Opt.h"
+#include "ace/Truncate.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Basic_Types.h"
 #include "ace/OS_NS_string.h"
@@ -66,7 +67,9 @@ Options::init (void)
                   -1);
 
   // Copy the length into the beginning of the message.
-  ACE_UINT32 length = ACE_NTOHL (this->message_len_);
+  ACE_UINT32 length =
+    ACE_NTOHL (ACE_Utils::truncate_cast<ACE_UINT32> (this->message_len_));
+    
   ACE_OS::memcpy ((void *) this->message_buf_,
                   (void *) &length,
                   sizeof length);
@@ -77,7 +80,9 @@ Options::init (void)
 
   // Allocate the barrier with the correct count.
   ACE_MT (ACE_NEW_RETURN (this->barrier_,
-                          ACE_Barrier (this->threads_),
+                          ACE_Barrier (
+                            ACE_Utils::truncate_cast<unsigned int> (
+                              this->threads_)),
                           -1));
   return 0;
 }
@@ -109,7 +114,7 @@ Options::read (void *buf, size_t len, size_t &iteration)
                       this->message_buf (),
                       len);
       iteration++;
-      return len;
+      return ACE_Utils::truncate_cast<ssize_t> (len);
     }
 }
 
@@ -209,7 +214,8 @@ Options::shared_client_test (u_short port,
                 remote_addr.get_host_name (),
                 remote_addr.get_port_number ()));
 
-  ACE_INT32 len = ACE_HTONL (this->message_len ());
+  ACE_INT32 len =
+    ACE_HTONL (ACE_Utils::truncate_cast<ACE_INT32> (this->message_len ()));
 
   // Allocate the transmit buffer.
   char *buf;
@@ -249,7 +255,8 @@ Options::oneway_client_test (void *)
 
   // Keep track of return value.
   intptr_t result = 0;
-  ACE_INT32 len = options->message_len ();
+  ACE_INT32 len =
+    ACE_Utils::truncate_cast<ACE_INT32> (options->message_len ());
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) starting oneway transmission\n"));
@@ -305,7 +312,8 @@ Options::twoway_client_test (void *)
   // Timer business.
   ACE_High_Res_Timer timer;
 
-  ACE_INT32 len = options->message_len ();
+  ACE_INT32 len =
+    ACE_Utils::truncate_cast<ACE_INT32> (options->message_len ());
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) starting twoway transmission\n"));

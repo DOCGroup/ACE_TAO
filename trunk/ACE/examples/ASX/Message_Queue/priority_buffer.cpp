@@ -10,6 +10,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(Message_Queue, priority_buffer, "$Id$")
 
@@ -40,7 +41,7 @@ consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
       if (msg_queue->dequeue_head (mb) == -1)
         break;
 
-      int length = mb->length ();
+      int length = ACE_Utils::truncate_cast<int> (mb->length ());
 
       if (length > 0)
         ACE_OS::puts (mb->rd_ptr ());
@@ -99,7 +100,7 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
                           0,
                           buffer),
                           0);
-          mb->msg_priority (rb.size ());
+          mb->msg_priority (ACE_Utils::truncate_cast<unsigned long> (rb.size ()));
           mb->wr_ptr (rb.size ());
 
           ACE_DEBUG ((LM_DEBUG,

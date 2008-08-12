@@ -6,6 +6,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Thread.h"
 #include "ace/Signal.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(Misc, notification, "$Id$")
 
@@ -238,7 +239,7 @@ Thread_Handler::svc (void)
 {
   ACE_Time_Value sleep_timeout (Thread_Handler::interval_.sec () / 2);
 
-  for (int i = this->iterations_;
+  for (int i = ACE_Utils::truncate_cast<int> (this->iterations_);
        i > 0;
        --i)
     {

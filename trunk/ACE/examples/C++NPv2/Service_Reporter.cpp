@@ -13,8 +13,8 @@
 #include "ace/Service_Repository.h"
 #include "ace/Service_Types.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/Truncate.h"
 #include "Service_Reporter.h"
-
 
 int Service_Reporter::init (int argc, ACE_TCHAR *argv[]) {
   ACE_INET_Addr local_addr (Service_Reporter::DEFAULT_PORT);
@@ -51,17 +51,24 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
        iterator.advance ()) {
     iovec iov[3];
     iov[0].iov_base = const_cast<ACE_TCHAR *> (st->name ());
+    
     iov[0].iov_len =
-      ACE_OS::strlen (st->name ()) * sizeof (ACE_TCHAR);
+      ACE_Utils::truncate_cast<u_long> (
+        ACE_OS::strlen (st->name ()) * sizeof (ACE_TCHAR));
+        
     const ACE_TCHAR *state = st->active () ?
            ACE_TEXT (" (active) ") : ACE_TEXT (" (paused) ");
     iov[1].iov_base = const_cast<ACE_TCHAR *> (state);
+    
     iov[1].iov_len =
-      ACE_OS::strlen (state) * sizeof (ACE_TCHAR);
+      ACE_Utils::truncate_cast<u_long> (
+        ACE_OS::strlen (state) * sizeof (ACE_TCHAR));
+        
     ACE_TCHAR *report = 0;   // Ask info() to allocate buffer
     int len = st->type ()->info (&report, 0);
     iov[2].iov_base = static_cast<ACE_TCHAR *> (report);
-    iov[2].iov_len = static_cast<size_t> (len);
+    
+    iov[2].iov_len = static_cast<u_long> (len);
     iov[2].iov_len *= sizeof (ACE_TCHAR);
     peer_stream.sendv_n (iov, 3);
     ACE::strdelete (report);
@@ -86,7 +93,8 @@ int Service_Reporter::info (ACE_TCHAR **bufferp,
     *bufferp = ACE::strnew (buf);
   else
     ACE_OS::strncpy (*bufferp, buf, length);
-  return ACE_OS::strlen (*bufferp);
+    
+  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (*bufferp));
 }
 
 

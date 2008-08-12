@@ -4,6 +4,7 @@
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 
@@ -36,7 +37,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        argv[1]),
                       -1);
 
-  ssize_t len = ACE_OS::strlen (argv[2]) + 1;
+  ssize_t len =
+    ACE_Utils::truncate_cast<ssize_t> (ACE_OS::strlen (argv[2]) + 1);
 
   if (cli_file.send (argv[2], len) != len)
     ACE_ERROR_RETURN ((LM_ERROR,
