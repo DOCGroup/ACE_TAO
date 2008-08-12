@@ -9,6 +9,7 @@
 #include "ace/SPIPE_Connector.h"
 #include "ace/Proactor.h"
 #include "ace/Get_Opt.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_unistd.h"
 #include "SPIPE-connector.h"
 
@@ -57,7 +58,7 @@ Peer_Handler::open (void *)
         "Where seldom is heard\n"
         "A discouraging word,\n"
         "And the skies are not cloudy all day.\n";
-      int length = ACE_OS::strlen (buffer);
+      int length = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buffer));
 
       while (iterations_-- > 0
              && this->peer ().send_n (buffer, length) == length)

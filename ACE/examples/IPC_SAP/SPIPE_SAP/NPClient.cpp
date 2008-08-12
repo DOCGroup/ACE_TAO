@@ -4,6 +4,7 @@
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_Memory.h"
@@ -44,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_OS::strcpy (buf, "hello");
-  size = ACE_OS::strlen (buf) + 1;
+  size = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buf) + 1);
 
   for (i = 0; i < iterations; i++)
     if (cli_stream.send (buf, size) != size)

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Truncate.h"
 #include "Options.h"
 #include "Iterators.h"
 
@@ -37,10 +38,10 @@ HTML_Body_Iterator::next (ACE_CString &url)
 
       buffer.set (buf, BUFSIZ, 1);
 
-      href_index = buffer.find ("HREF");
+      href_index = ACE_Utils::truncate_cast<int> (buffer.find ("HREF"));
 
       if (href_index < 0)
-        href_index = buffer.find ("href");
+        href_index = ACE_Utils::truncate_cast<int> (buffer.find ("href"));
 
       // Grep fpr " and grab the string until end-"
       if ( href_index > 0)
@@ -49,15 +50,19 @@ HTML_Body_Iterator::next (ACE_CString &url)
           this->url_.stream ().seek (-1 * static_cast<ACE_OFF_T> (len),
                                      SEEK_CUR);
 
-          int start_index = buffer.find ('\"',
-                                         href_index);
+          int start_index =
+            ACE_Utils::truncate_cast<int> (
+              buffer.find ('\"', href_index));
+              
           if (start_index <= 0)
             break;
 
           start_index += href_index;
 
-          int end_index = buffer.find ('\"',
-                                       start_index + 1);
+          int end_index =
+            ACE_Utils::truncate_cast<int> (
+              buffer.find ('\"', start_index + 1));
+              
           if (end_index <= 0)
             break;
 

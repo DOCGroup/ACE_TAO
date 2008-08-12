@@ -45,7 +45,6 @@ ACE_Time_Value::set (const timeval &tv)
 
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (const struct timeval &tv)
-  // : tv_ ()
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
@@ -70,7 +69,7 @@ ACE_INLINE void
 ACE_Time_Value::set (time_t sec, suseconds_t usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-  this->tv_.tv_sec = ACE_Utils::truncate_cast<long> (sec);
+  this->tv_.tv_sec = sec;
   this->tv_.tv_usec = usec;
 #if __GNUC__
   if (__builtin_constant_p(sec) &&

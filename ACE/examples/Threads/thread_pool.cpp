@@ -177,7 +177,7 @@ producer (Thread_Pool &thread_pool)
           ACE_OS::sprintf (mb->rd_ptr (),
                            "%d\n",
                            count);
-          n = ACE_OS::strlen (mb->rd_ptr ());
+          n = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (mb->rd_ptr ()));
 
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.

@@ -13,6 +13,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Record.h"
+#include "ace/Truncate.h"
 #include "ace/Message_Block.h"
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
@@ -216,9 +217,10 @@ int CLD_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
 
   for (iov_size = 0; iov_size < count; ++iov_size) {
     iov[iov_size].iov_base = chunk[iov_size]->rd_ptr ();
-    iov[iov_size].iov_len = chunk[iov_size]->length ();
+    iov[iov_size].iov_len =
+      ACE_Utils::truncate_cast<u_long> (chunk[iov_size]->length ());
   }
-  while (peer ().sendv_n (iov, iov_size) == -1)
+  while (peer ().sendv_n (iov, ACE_Utils::truncate_cast<int> (iov_size)) == -1)
     if (connector_->reconnect () == -1) {
       result = -1;
       break;

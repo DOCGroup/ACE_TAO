@@ -7,6 +7,7 @@
 #include "ace/Service_Config.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
+#include "ace/Truncate.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -68,7 +69,7 @@ consumer (void *)
   ACE_UPIPE_Addr c_addr (ACE_TEXT ("/tmp/conupipe"));
 
   int verb = options.verbose ();
-  int msiz = options.message_size ();
+  int msiz = ACE_Utils::truncate_cast<int> (options.message_size ());
   time_t secs, par1, par2;
   time_t currsec;
 
@@ -133,9 +134,9 @@ supplier (void *dummy)
   ACE_UPIPE_Addr serv_addr (ACE_TEXT ("/tmp/supupipe"));
   ACE_UPIPE_Connector con;
 
-  int iter = options.iterations ();
+  int iter = ACE_Utils::truncate_cast<int> (options.iterations ());
   int verb = options.verbose ();
-  int msiz = options.message_size ();
+  int msiz = ACE_Utils::truncate_cast<int> (options.message_size ());
   cout << "supplier starting connect" << endl;
 
   if (con.connect (s_stream, serv_addr) == -1)
@@ -230,13 +231,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Set the high and low water marks appropriately.
 
-  int wm = options.low_water_mark ();
+  int wm = ACE_Utils::truncate_cast<int> (options.low_water_mark ());
 
   if (event_server.control (ACE_IO_Cntl_Msg::SET_LWM, &wm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("push (setting low watermark)")), -1);
 
-  wm = options.high_water_mark ();
+  wm = ACE_Utils::truncate_cast<int> (options.high_water_mark ());
+  
   if (event_server.control (ACE_IO_Cntl_Msg::SET_HWM, &wm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("push (setting high watermark)")), -1);

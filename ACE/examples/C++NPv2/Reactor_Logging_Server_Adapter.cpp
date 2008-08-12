@@ -10,6 +10,7 @@
 #include "ace/ACE.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
+#include "ace/Truncate.h"
 #include "Reactor_Logging_Server_Adapter.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
@@ -53,7 +54,8 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::info
     *bufferp = ACE::strnew (buf);
   else
     ACE_OS::strncpy (*bufferp, buf, length);
-  return ACE_OS::strlen (*bufferp);
+    
+  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (*bufferp));
 }
 
 

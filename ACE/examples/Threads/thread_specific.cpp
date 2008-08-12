@@ -6,6 +6,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
+#include "ace/Truncate.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Threads, thread_specific, "$Id$")
 
@@ -118,7 +120,7 @@ worker (void *c)
 
       // This sets the static state (note how C++ makes it easy to do
       // both).
-      tss_error->flags (count);
+      tss_error->flags (ACE_Utils::truncate_cast<int> (count));
 
       {
         ACE_hthread_t handle;
@@ -127,14 +129,9 @@ worker (void *c)
         // Use the guard to serialize access to printf...
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, printf_lock, 0);
 
-#if defined(linux) || defined(__OpenBSD__)
-        // @@ Normally the platform specific way to print a thread ID
-        // is encapsulated in Log_Msg.cpp, but for this small example
-        // we cannot (or do not want to) use ACE_Log_Msg.
-        ACE_OS::printf ("(%lu)", (unsigned long)handle);
-#else
-        ACE_OS::printf ("(%u)", handle);
-#endif /* ! linux */
+        // Print the thread id portably.
+        ACE_OS::printf ("(%t)", handle);
+
         ACE_OS::printf (" errno = %d, lineno = %d, flags = %d\n",
                         tss_error->error (),
                         tss_error->line (),

@@ -115,7 +115,7 @@ Worker_Task::open (void *)
 {
   // Create the pool of worker threads.
   return this->activate (THR_NEW_LWP,
-                         n_threads_,
+                         ACE_Utils::truncate_cast<int> (this->n_threads_),
                          0,
                          -1,
                          -1,
