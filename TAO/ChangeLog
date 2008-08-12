@@ -1,3 +1,9 @@
+Mon Aug 11 11:14:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          Check if we have a valid orb reference before using it. Could be
+          zero if we start the naming service and kill it just a second later
+
 Mon Aug 11 18:35:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3068_Regression/Bug_3068_Regression.mpc:
