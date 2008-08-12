@@ -1,3 +1,14 @@
+Tue Aug 12 18:15:08 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/ace_guidelines.vsmacros:
+
+          Update the macros file to ingore .xsd files.
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+
+          Added .aspx files to the configuration preferences.
+
 Tue Aug 12 08:00:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Thread_Manager.cpp:
