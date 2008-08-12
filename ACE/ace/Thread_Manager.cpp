@@ -1514,7 +1514,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
         // can't help much.
         if (biter.next ()->grp_id_ == grp_id)
           {
-            ACE_Thread_Descriptor_Base *tdb = biter.next ();
+            ACE_Thread_Descriptor_Base *tdb = biter.advance_and_remove (false);
             copy_table[copy_count++] = *tdb;
             delete tdb;
           }
