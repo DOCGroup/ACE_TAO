@@ -1,3 +1,9 @@
+Mon Aug 11 18:09:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Muxed_TMS.cpp:
+          Dispatch timeout after unlocking the mutex, same behaviour as
+          previously, but the rd is now stored in one place
+
 Mon Aug 11 11:14:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Naming_Service/Naming_Service.cpp:
