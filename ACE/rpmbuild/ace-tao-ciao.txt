@@ -65,7 +65,7 @@ Release:      1%{?OPTTAG}%{?dist}
 Group:        Development/Libraries/C and C++
 URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
-Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead06082008.tar.bz2
+Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead12082008.tar.bz2
 Source1:      ace-tao-rpmlintrc
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
@@ -73,9 +73,14 @@ Source1:      ace-tao-rpmlintrc
 ## Patch5: ace-tao-orbsvcs-daemon.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
+%if !0%{?suse_version}
 Requires(post):   /sbin/install-info
 Requires(preun):  /sbin/install-info
 Requires(postun): /sbin/ldconfig
+%else
+PreReq:         %install_info_prereq %insserv_prereq  %fillup_prereq
+PreReq:         pwdutils
+%endif
 
 BuildRequires:  openssl-devel
 BuildRequires:  gcc-c++
