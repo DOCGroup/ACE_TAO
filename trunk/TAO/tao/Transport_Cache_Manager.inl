@@ -47,32 +47,24 @@ namespace TAO
   ACE_INLINE int
   Transport_Cache_Manager::purge_entry (HASH_MAP_ENTRY *&entry)
   {
-    if(entry == 0)
-      return 0;
-
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
-
     return this->purge_entry_i (entry);
   }
 
   ACE_INLINE void
   Transport_Cache_Manager::mark_invalid (HASH_MAP_ENTRY *entry)
   {
-    if(entry == 0)
-      return;
-
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
-
     this->mark_invalid_i (entry);
   }
 
   ACE_INLINE void
   Transport_Cache_Manager::mark_connected (HASH_MAP_ENTRY *entry, bool state)
   {
-    if(entry == 0)
+    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
+    if (entry == 0)
       return;
 
-    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
     if (TAO_debug_level > 9 && state != entry->item ().is_connected_)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager")
                   ACE_TEXT ("::mark_connected %C Transport=%d\n"),
@@ -84,22 +76,8 @@ namespace TAO
   ACE_INLINE int
   Transport_Cache_Manager::make_idle (HASH_MAP_ENTRY *entry)
   {
-    if(entry == 0)
-      return -1;
-
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
     return this->make_idle_i (entry);
-  }
-
-  ACE_INLINE void
-  Transport_Cache_Manager::set_entry_state (HASH_MAP_ENTRY *entry,
-                                            TAO::Cache_Entries_State state)
-  {
-    if (entry != 0)
-      {
-        ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
-        entry->item ().recycle_state (state);
-      }
   }
 
   ACE_INLINE Transport_Cache_Manager::Find_Result

@@ -181,14 +181,7 @@ TAO_Transport::first_request (void) const
 ACE_INLINE bool
 TAO_Transport::is_connected (void) const
 {
-  // @TODO: this flag does not seem to be protecting anything.
-  // The state of is_connected_ is modified without the guard
-  // in Transport.cpp.
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->handler_lock_,
-                    false);
-
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, false);
   return this->is_connected_;
 }
 
