@@ -2706,12 +2706,15 @@ TAO_Transport::post_open (size_t id)
         }
     }
 
-  // @TODO: something needs to be done with is_connected_. Checking it is
-  // guarded by a mutex, but setting it is not. Until the need for mutexed
-  // protection is required, the transport cache is holding its own copy
-  // of the is_connected_ flag, so that during cache lookups the cache
-  // manager doesn't need to be burdened by the lock in is_connected().
-  this->is_connected_ = true;
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, false);
+    this->is_connected_ = true;
+  }
+
+  if (TAO_debug_level > 9 && !this->cache_map_entry_)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open")
+                          ACE_TEXT (", cache_map_entry_ is 0\n"), this->id_));
+
   this->transport_cache_manager ().mark_connected (this->cache_map_entry_,
                                                    true);
 

@@ -1,3 +1,33 @@
+Tue Aug 12 21:54:43 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport_Connector.cpp (wait_for_transport):
+
+          If the connection is timed-out or closed, return false immediately.
+
+        * tao/Transport.cpp (post_open):
+
+          Write to is_connected_ within the handler_lock_, updated comment.
+
+        * tao/Transport.inl (is_connected):
+
+          Updated comment to reflect change to is_connected_ in post_open().
+
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+
+          set_entry_state() now updates the cache entry's is_connected_ flag to
+          match the real state of the transport.  This change required
+          un-inlining the method.
+          Removed multiple instances of the code "if (entry == 0) ..."
+          that occured before locking.  These could be added back if they are
+          proved safe.  As of now I'm not convinced, so that check is done with
+          the lock held.  These were in set_entry_state(), purge_entry(),
+          mark_invalid(), mark_connected(), and mark_idle().
+
+        * tests/Bug_1361_Regression/run_test.pl:
+
+          Added lots of logging when -debug is passed on the command line.
+
 Mon Aug 11 18:09:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Muxed_TMS.cpp:

@@ -361,6 +361,8 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
             ACE_TEXT("transport [%d], Connection Timed out.\n"),
             transport->id () ));
         }
+
+      return false;
     }
   else if (transport->connection_handler()->is_closed ())
     {
@@ -380,9 +382,9 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
       // Close the handler.
       transport->close_connection ();
 
+      return false;
     }
-
-  if (transport->connection_handler ()->is_open ())
+  else if (transport->connection_handler ()->is_open ())
     {
       if (TAO_debug_level > 5)
         {
