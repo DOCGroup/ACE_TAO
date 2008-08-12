@@ -31,8 +31,7 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
   try
     {
       // Initialize the ORB
-      this->orb_ =
-        CORBA::ORB_init (argc, argv);
+      this->orb_ = CORBA::ORB_init (argc, argv);
 
       // Parse the args for '-t' option. If '-t' option is passed, do
       // the needful and then remove the option from the list of
@@ -97,14 +96,17 @@ TAO_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
 int
 TAO_Naming_Service::run (void)
 {
-  if (time_ == 0)
+  if (!CORBA::is_nil (orb_.in ()))
     {
-      this->orb_->run ();
-    }
-  else
-    {
-      ACE_Time_Value tv (time_);
-      this->orb_->run (tv);
+      if (time_ == 0)
+        {
+          this->orb_->run ();
+        }
+      else
+        {
+          ACE_Time_Value tv (time_);
+          this->orb_->run (tv);
+        }
     }
 
   return 0;
@@ -113,7 +115,10 @@ TAO_Naming_Service::run (void)
 void
 TAO_Naming_Service::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  if (!CORBA::is_nil (orb_.in ()))
+    {
+      this->orb_->shutdown (0);
+    }
 }
 
 int
@@ -124,7 +129,10 @@ TAO_Naming_Service::fini (void)
   try
   {
     // destroy implies shutdown
-    this->orb_->destroy ();
+    if (!CORBA::is_nil (orb_.in ()))
+      {
+        this->orb_->destroy ();
+      }
   }
   catch (const CORBA::Exception& ex)
   {
