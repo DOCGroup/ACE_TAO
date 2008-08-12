@@ -84,6 +84,22 @@ namespace TAO
   }
 
 
+  void
+  Transport_Cache_Manager::set_entry_state (HASH_MAP_ENTRY *entry,
+                                            TAO::Cache_Entries_State state)
+  {
+    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
+    if (entry != 0)
+      {
+        entry->item ().recycle_state (state);
+        if (state != ENTRY_UNKNOWN && state != ENTRY_CONNECTING
+            && entry->item ().transport_)
+          entry->item ().is_connected_ =
+            entry->item ().transport_->is_connected ();
+      }
+  }
+
+
   int
   Transport_Cache_Manager::bind_i (Cache_ExtId &ext_id,
                                    Cache_IntId &int_id)
@@ -348,9 +364,6 @@ namespace TAO
   int
   Transport_Cache_Manager::update_entry (HASH_MAP_ENTRY *&entry)
   {
-    if(entry == 0)
-      return -1;
-
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                               guard,
                               *this->cache_lock_, -1));

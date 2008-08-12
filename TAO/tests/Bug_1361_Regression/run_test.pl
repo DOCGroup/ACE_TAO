@@ -13,6 +13,14 @@ $iorfilebase = "server.ior";
 $iorfile = PerlACE::LocalFile ("$iorfilebase");
 unlink $iorfile;
 
+$debug_opts = '';
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_opts = '-ORBDebugLevel 10 -ORBVerboseLogging 1 '
+                    . '-ORBLogFile client';
+    } 
+}
+
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase");
 }
@@ -20,7 +28,7 @@ else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
 }
 $threads = int (rand() * 6) + 1;
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -t $threads");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -t $threads $debug_opts");
 
 
 $SV->Spawn ();
@@ -32,7 +40,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
 }
 
 local $start_time = time();
-local $max_running_time = 360;
+local $max_running_time = 720;
 local $elapsed = time() - $start_time;
 my $p = $SV->{'PROCESS'};
 
@@ -41,10 +49,18 @@ if ($ARGV[0] eq '-quick')  {
     $max_running_time = 1;
 }
 
+my $client_idx = 0;
 while (($elapsed < $max_running_time) )
 {
- # Start all clients in parallel
+ # ?? Start all clients in parallel
+  my $args_saved = $CL->Arguments ();
+  $CL->Arguments ("$args_saved$client_idx.log") unless $debug_opts eq '';
   $client = $CL->Spawn ();
+  if ($debug_opts ne '') {
+    $CL->Arguments ($args_saved);
+    print "Spawned client $client_idx\n";
+    ++$client_idx;
+  }
 
   $CL->WaitKill(60) unless $client < 0;
 
