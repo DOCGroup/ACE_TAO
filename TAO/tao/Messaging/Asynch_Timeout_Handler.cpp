@@ -47,8 +47,6 @@ int
 TAO_Asynch_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
                                             const void *)
 {
-  TAO_Reply_Dispatcher* rb_base = 0;
-
   // Check if there was a reply dispatcher registered in the tms, if not
   // the reply already got dispatched by another thread
   if (this->tms_->reply_timed_out (this->request_id_) == 0)
