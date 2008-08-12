@@ -1,3 +1,9 @@
+Tue Aug 12 08:00:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread_Manager.cpp:
+          Revert changes of bugzilla 3391, Thread_Pool_Test does fail
+          with the change
+
 Mon Aug 11 18:18:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Log_Msg_Test.cpp:
