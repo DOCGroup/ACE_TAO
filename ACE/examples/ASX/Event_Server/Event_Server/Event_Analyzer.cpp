@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
 #include "Options.h"
 #include "Event_Analyzer.h"
 
@@ -76,5 +77,6 @@ Event_Analyzer::info (ACE_TCHAR **strp, size_t length) const
     return -1;
   else
     ACE_OS::strncpy (*strp, mod_name, length);
-  return ACE_OS::strlen (mod_name);
+    
+  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (mod_name));
 }

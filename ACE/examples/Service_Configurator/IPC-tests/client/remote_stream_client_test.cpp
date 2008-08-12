@@ -12,6 +12,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(client, remote_stream_client_test, "$Id$")
 
@@ -83,7 +84,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   iov[0].iov_base = (char *) "filename: ";
   iov[0].iov_len  = 11;
   iov[1].iov_base = (char *) file_name;
-  iov[1].iov_len  = ACE_OS::strlen (file_name);
+  iov[1].iov_len  =
+    ACE_Utils::truncate_cast<u_long> (ACE_OS::strlen (file_name));
 
   if (dc.send (iov, 2) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

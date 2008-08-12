@@ -8,6 +8,7 @@
 #include "ace/CDR_Stream.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Record.h"
+#include "ace/Truncate.h"
 #include "ace/Message_Block.h"
 #include "ace/OS_NS_string.h"
 
@@ -94,7 +95,7 @@ Logging_Handler::write_log_record (ACE_Message_Block *mblk)
     cdr >> log_record;  // Finally extract the <ACE_log_record>.
     log_record.print (mblk->rd_ptr (), 1, cerr);
   }
-  return mblk->total_length ();
+  return ACE_Utils::truncate_cast<int> (mblk->total_length ());
 }
 
 

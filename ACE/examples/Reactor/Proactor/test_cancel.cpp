@@ -121,9 +121,9 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));

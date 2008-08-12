@@ -6,6 +6,7 @@
 
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -81,7 +82,7 @@ static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
       if (result == -1)
         break;
 
-      int length = mb->length ();
+      int length = ACE_Utils::truncate_cast<int> (mb->length ());
 
       if (length > 0)
         ACE_OS::write (ACE_STDOUT, mb->rd_ptr (), length);

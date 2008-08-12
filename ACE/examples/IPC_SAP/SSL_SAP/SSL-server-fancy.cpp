@@ -9,6 +9,7 @@
 #include "ace/Singleton.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_sys_select.h"
 
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
@@ -157,7 +158,7 @@ Options::verbose (void) const
 int
 Options::reply_message_len (void) const
 {
-  return this->reply_message_len_;
+  return ACE_Utils::truncate_cast<int> (this->reply_message_len_);
 }
 
 Options::~Options (void)

@@ -17,6 +17,7 @@
 #include "ace/Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
+#include "ace/Truncate.h"
 
 #include "Request_Handler.h"
 
@@ -148,7 +149,8 @@ class Client: public ACE_Task_Base
         ACE_TEXT ("Message from Connection worker");
 
       ACE_TCHAR buf [BUFSIZ];
-      buf[0] = ACE_OS::strlen (msg) + 1;
+      buf[0] =
+        ACE_Utils::truncate_cast<ACE_TCHAR> (ACE_OS::strlen (msg) + 1);
       ACE_OS::strcpy (&buf[1], msg);
 
       for (size_t i = 0; i < cli_runs; i++)
@@ -242,11 +244,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                       1);
 
   ACE_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("(%t) Spawning %d server threads...\n"),
-             svr_thrno));
+              ACE_TEXT ("(%t) Spawning %d server threads...\n"),
+              svr_thrno));
 
   ServerTP serverTP;
-  serverTP.activate (THR_NEW_LWP | THR_JOINABLE, svr_thrno);
+  serverTP.activate (THR_NEW_LWP | THR_JOINABLE,
+                     ACE_Utils::truncate_cast<int> (svr_thrno));
 
   Client client;
   client.activate ();

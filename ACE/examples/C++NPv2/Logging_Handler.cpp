@@ -9,6 +9,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Record.h"
 #include "ace/Message_Block.h"
+#include "ace/Truncate.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -77,23 +78,28 @@ int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
   // Peer hostname is in the <mblk> and the log record data
   // is in its continuation.
   if (log_file_->send_n (mblk) == -1)
-    return -1;
-  if (ACE::debug ()) {
-    // Build a CDR stream from the log record data.
-    ACE_InputCDR cdr (mblk->cont ());
-    ACE_CDR::Boolean byte_order;
-    ACE_CDR::ULong length;
-    // Extract the byte-order and length, ending up at the start
-    // of the log record itself. Use the byte order to properly
-    // set the CDR stream for extracting the contents.
-    cdr >> ACE_InputCDR::to_boolean (byte_order);
-    cdr.reset_byte_order (byte_order);
-    cdr >> length;
-    ACE_Log_Record log_record;
-    cdr >> log_record;  // Finally extract the <ACE_log_record>.
-    log_record.print (mblk->rd_ptr (), 1, cerr);
-  }
-  return mblk->total_length ();
+    {
+      return -1;
+    }
+    
+  if (ACE::debug ())
+    {
+      // Build a CDR stream from the log record data.
+      ACE_InputCDR cdr (mblk->cont ());
+      ACE_CDR::Boolean byte_order;
+      ACE_CDR::ULong length;
+      // Extract the byte-order and length, ending up at the start
+      // of the log record itself. Use the byte order to properly
+      // set the CDR stream for extracting the contents.
+      cdr >> ACE_InputCDR::to_boolean (byte_order);
+      cdr.reset_byte_order (byte_order);
+      cdr >> length;
+      ACE_Log_Record log_record;
+      cdr >> log_record;  // Finally extract the <ACE_log_record>.
+      log_record.print (mblk->rd_ptr (), 1, cerr);
+    }
+  
+  return ACE_Utils::truncate_cast<int> (mblk->total_length ());
 }
 
 

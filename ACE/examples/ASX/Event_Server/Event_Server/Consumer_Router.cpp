@@ -3,6 +3,7 @@
 #include "ace/os_include/os_assert.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
 #include "Consumer_Router.h"
 #include "Options.h"
 
@@ -154,5 +155,5 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
   else
     ACE_OS::strncpy (*strp, mod_name, length);
 
-  return ACE_OS::strlen (mod_name);
+  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (mod_name));
 }

@@ -6,6 +6,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Record.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 #include "ace/CDR_Stream.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -55,7 +56,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       payload << log_record;
 
       // Get the number of bytes used by the CDR stream.
-      ACE_CDR::ULong length = payload.total_length ();
+      ACE_CDR::ULong length =
+        ACE_Utils::truncate_cast<ACE_CDR::ULong> (payload.total_length ());
 
       // Send a header so the receiver can determine the byte order and
       // size of the incoming CDR stream.
