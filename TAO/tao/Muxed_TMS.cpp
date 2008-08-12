@@ -136,7 +136,7 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
         // Do not move it outside the scope of the lock. A follower thread
         // could have timedout unwinding the stack and the reply
         // dispatcher, and that would mean the present thread could be left
-        // with a dangling pointer and may crash. To safeguard againt such
+        // with a dangling pointer and may crash. To safeguard against such
         // cases we dispatch with the lock held.
         // Dispatch the reply.
         // They return 1 on success, and -1 on failure.
@@ -166,6 +166,8 @@ int
 TAO_Muxed_TMS::reply_timed_out (CORBA::ULong request_id)
 {
   int result = 0;
+  TAO_Reply_Dispatcher *rd = 0;
+
   // Grab the reply dispatcher for this id.
   {
     ACE_GUARD_RETURN (ACE_Lock,
@@ -173,41 +175,42 @@ TAO_Muxed_TMS::reply_timed_out (CORBA::ULong request_id)
                       *this->lock_,
                       -1);
 
-    TAO_Reply_Dispatcher *rd = 0;
     result = this->dispatcher_table_.unbind (request_id, rd);
+  }
 
-    if (result == 0 && rd)
-      {
-        if (TAO_debug_level > 8)
+  if (result == 0 && rd)
+    {
+      if (TAO_debug_level > 8)
+        {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::reply_timed_out, ")
                       ACE_TEXT ("id = %d\n"),
                       request_id));
+        }
 
-        // Do not move it outside the scope of the lock. A follower thread
-        // could have timedout unwinding the stack and the reply
-        // dispatcher, and that would mean the present thread could be left
-        // with a dangling pointer and may crash. To safeguard againt such
-        // cases we dispatch with the lock held.
-        // Dispatch the reply.
-        rd->reply_timed_out ();
-      }
-    else
-      {
-        if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::reply_timed_out, ")
-                      ACE_TEXT ("unbind dispatcher failed, id %d: result = %d\n"),
-                      request_id,
-                      result));
+      // Do not move it outside the scope of the lock. A follower thread
+      // could have timedout unwinding the stack and the reply
+      // dispatcher, and that would mean the present thread could be left
+      // with a dangling pointer and may crash. To safeguard against such
+      // cases we dispatch with the lock held.
+      // Dispatch the reply.
+      rd->reply_timed_out ();
+    }
+  else
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::reply_timed_out, ")
+                    ACE_TEXT ("unbind dispatcher failed, id %d: result = %d\n"),
+                    request_id,
+                    result));
 
-        // Result = 0 means that the mux strategy was not able
-        // to find a registered reply handler, either because the reply
-        // was not our reply - just forget about it - or it was ours, but
-        // the reply timed out - just forget about the reply.
-        result = 0;
-      }
-  }
+      // Result = 0 means that the mux strategy was not able
+      // to find a registered reply handler, either because the reply
+      // was not our reply - just forget about it - or it was ours, but
+      // the reply timed out - just forget about the reply.
+      result = 0;
+    }
 
   return result;
 }
