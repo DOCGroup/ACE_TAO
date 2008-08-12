@@ -34,6 +34,7 @@ REGEDIT4
 [HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\tunnels]
 
 [HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\auto-props]
+"*.aspx"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cpp"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cxx"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cc"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
