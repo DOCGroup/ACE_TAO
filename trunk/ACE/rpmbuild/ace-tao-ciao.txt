@@ -824,12 +824,17 @@ gcc_template_instantiation_visibility = 1
 EOF
 %endif
 
-%if 0%{?fedora} > 5 || 0%{?rhel_version} > 5
+%if 0%{?fedora} > 5
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 gcc_template_instantiation_visibility = 1
 EOF
 %endif
 
+%if 0%{?rhel_version} > 5
+cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
+gcc_template_instantiation_visibility = 1
+EOF
+%endif
 
 %if %{?_with_tk:1}%{!?_with_tk:0}
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
