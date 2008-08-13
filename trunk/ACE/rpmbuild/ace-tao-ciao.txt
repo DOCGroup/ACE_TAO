@@ -51,9 +51,6 @@
 
 %define have_fox 0
 
-# I think Mandrake sets this to .bz2, but Fedora doesn't seem to set it
-#%{!?_extension:%define _extension .gz}
-
 %if %{?_with_opt:0}%{!?_with_opt:1}
 %define OPTTAG .O0
 %endif
@@ -65,13 +62,29 @@ Release:      1%{?OPTTAG}%{?dist}
 Group:        Development/Libraries/C and C++
 URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
-Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead12082008.tar.bz2
+Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead13082008.tar.bz2
 Source1:      ace-tao-rpmlintrc
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
 ## Patch0: ace-tao-config.patch
 ## Patch5: ace-tao-orbsvcs-daemon.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+%if 0%{?centos_version}
+%define _extension .gz
+%endif
+
+%if 0%{?fedora_version}
+%define _extension .gz
+%endif
+
+%if 0%{?rhel_version}
+%define _extension .gz
+%endif
+
+%if 0%{?suse_version}
+%define _extension .gz
+%endif
 
 %if !0%{?suse_version}
 Requires(post):   /sbin/install-info
@@ -136,9 +149,6 @@ BuildRequires:  %{qtpacnam}-devel
 %if 0%{?suse_version} == 1020
 BuildRequires: fox16-devel
 %endif
-%endif
-
-%if 0%{?rhel_version} > 4
 %endif
 
 %if %{?_with_xt:1}%{!?_with_xt:0}
@@ -453,26 +463,24 @@ This package contains the components needed for developing programs
 using the ACE_XtReactor.
 %endif
 
-## FIXME - namespace issues need to be resolved
-##
-## # ---------------- MPC ----------------
-##
-## %package -n ace-mpc
-## Summary: Make Project Creator
-## Version: %{ACEVER}
-## Group: Development/Libraries/C and C++
-##
-## %description -n ace-mpc
-##
-## The Makefile, Project and Workspace Creator.
-## Designed by Justin Michel (michel_j@ociweb.com) and Chad Elliott.
-## Implemented by Chad Elliott (elliott_c@ociweb.com).
-##
-## A single tool (MPC) can be used to generate tool specific input (i.e.
-## Makefile, dsp, vcproj, etc). The generator takes platform and building
-## tool generic files (mpc files) as input which describe basic information
-## needed to generate a "project" file for various build tools. These tools
-## include Make, NMake, Visual C++ 6, Visual C++ 7, etc.
+# ---------------- MPC ----------------
+
+%package -n   ace-mpc
+Summary:      Make Project Creator
+Version:      %{ACEVER}
+Group:        Development/Tools/Building
+
+%description -n ace-mpc
+
+The Makefile, Project and Workspace Creator.
+Designed by Justin Michel (michel_j@ociweb.com) and Chad Elliott.
+Implemented by Chad Elliott (elliott_c@ociweb.com).
+
+A single tool (MPC) can be used to generate tool specific input (i.e.
+Makefile, dsp, vcproj, etc). The generator takes platform and building
+tool generic files (mpc files) as input which describe basic information
+needed to generate a "project" file for various build tools. These tools
+include Make, NMake, Visual C++ 6, Visual C++ 7, etc.
 
 # ---------------- tao ----------------
 
@@ -767,46 +775,30 @@ cat ${ACE_ROOT}/rpmbuild/ace-tao-orbsvcs-daemon.patch | patch -p 1
 
 %if %{?_with_autoconf:0}%{!?_with_autoconf:1}
 
-# config.h
-( cd $ACE_ROOT/ace
-rm -f config.h
-cp config-linux.h config.h
-)
+cat > $ACE_ROOT/ace/config.h << EOF
+#define TAO_IDL_INCLUDE_DIR "/usr/include/tao"
+EOF
 
-#patch0 -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-config.patch | patch -p 1
-
-# If ipv6 support is indicated insert some lines into the config.h
-# file, right before the ace/post.h include.
+# If ipv6 support is indicated insert some lines into the config.h file
 #
 %if %{?_with_ipv6:1}%{!?_with_ipv6:0}
-rm -f $ACE_ROOT/ace/config.h.tmp
-awk 'BEGIN { FLG = 1 }; /ace\/post/ { FLG = 0 }; { if (FLG==1) print }' \
-$ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
-cat >> $ACE_ROOT/ace/config.h.tmp <<"EOF"
-#define ACE_HAS_IPV6 // Ken Sedgwick 2006-06-14
-#define ACE_USES_IPV4_IPV6_MIGRATION // Ken Sedgwick 2006-06-14
+cat >> $ACE_ROOT/ace/config.h << EOF
+#define ACE_HAS_IPV6
+#define ACE_USES_IPV4_IPV6_MIGRATION
 EOF
-awk 'BEGIN { FLG = 0 }; /ace\/post/ { FLG = 1 }; { if (FLG==1) print }' \
-$ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
-mv $ACE_ROOT/ace/config.h.tmp $ACE_ROOT/ace/config.h
 %endif
 
-# If rnq support is indicated insert some lines into the config.h
-# file, right before the ace/post.h include.
-#
+# If rnq support is indicated insert some lines into the config.h file
 %if %{?_with_rnq:1}%{!?_with_rnq:0}
-# Insert into the config.h file, right before the ace/post.h include.
-rm -f $ACE_ROOT/ace/config.h.tmp
-awk 'BEGIN { FLG = 1 }; /ace\/post/ { FLG = 0 }; { if (FLG==1) print }' \
-$ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
-cat >> $ACE_ROOT/ace/config.h.tmp <<"EOF"
-#define ACE_HAS_REACTOR_NOTIFICATION_QUEUE  // Ken Sedgwick 2006-04-19
+cat >> $ACE_ROOT/ace/config.h << EOF
+#define ACE_HAS_REACTOR_NOTIFICATION_QUEUE
 EOF
-awk 'BEGIN { FLG = 0 }; /ace\/post/ { FLG = 1 }; { if (FLG==1) print }' \
-$ACE_ROOT/ace/config.h >> $ACE_ROOT/ace/config.h.tmp
-mv $ACE_ROOT/ace/config.h.tmp $ACE_ROOT/ace/config.h
 %endif
+
+# Include platform include
+cat >> $ACE_ROOT/ace/config.h << EOF
+#include "ace/config-linux.h"
+EOF
 
 # platform_macros.GNU
 %if 0%{?suse_version}
@@ -1303,52 +1295,57 @@ done
 popd
 %endif
 
-## # FIXME - namespace issues need to be resolved
-##
-## # ================================================================
-## # Makefiles
-## # ================================================================
-##
-## install -d %{buildroot}%{_includedir}/makeinclude
-##
-## for mk_macros in \
-##     all_in_one.GNU \
-##     component_check.GNU \
-##     macros.GNU \
-##     platform_g++_common.GNU \
-##     platform_linux.GNU \
-##     platform_macros.GNU \
-##     rules.bin.GNU \
-##     rules.common.GNU \
-##     rules.lib.GNU \
-##     rules.local.GNU \
-##     rules.nested.GNU \
-##     rules.nolocal.GNU \
-##     rules.nonested.GNU \
-##     wrapper_macros.GNU; do (
-## install ${ACE_ROOT}/include/makeinclude/$mk_macros %{buildroot}%{_includedir}/makeinclude
-## ); done
-##
-## install ${TAO_ROOT}/rules.tao.GNU %{buildroot}%{_includedir}/makeinclude
-##
-## install -d %{buildroot}%{_datadir}
-## install -d %{buildroot}%{_datadir}/ace
-## install -d %{buildroot}%{_datadir}/ace/MPC
-## cp -a ${ACE_ROOT}/MPC %{buildroot}%{_datadir}/ace/
-##
-## install -d %{buildroot}%{_datadir}/ace/bin
-## cp -a ${ACE_ROOT}/bin/DependencyGenerator %{buildroot}%{_datadir}/ace/bin
-## cp -a ${ACE_ROOT}/bin/MakeProjectCreator %{buildroot}%{_datadir}/ace/bin
-## install -d %{buildroot}%{_datadir}/ace/bin/PerlACE
-## install ${ACE_ROOT}/bin/PerlACE/{ConfigList,Process,Process_Unix}.pm %{buildroot}%{_datadir}/ace/bin/PerlACE
-## install ${ACE_ROOT}/bin/mpc.pl %{buildroot}%{_datadir}/ace/bin
-## install ${ACE_ROOT}/bin/mwc.pl %{buildroot}%{_datadir}/ace/bin
-## install ${ACE_ROOT}/bin/g++dep %{buildroot}%{_datadir}/ace/bin
-## install ${ACE_ROOT}/bin/depgen.pl %{buildroot}%{_datadir}/ace/bin
-## install ${ACE_ROOT}/bin/generate_export_file.pl %{buildroot}%{_datadir}/ace/bin
-## install ${ACE_ROOT}/bin/{ACEutils,Process,Process_Unix,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
+# ================================================================
+# Makefiles
+# ================================================================
 
+install -d %{buildroot}%{_includedir}/makeinclude
+
+for mk_macros in \
+    all_in_one.GNU \
+    component_check.GNU \
+    macros.GNU \
+    platform_g++_common.GNU \
+    platform_linux.GNU \
+    platform_macros.GNU \
+    rules.bin.GNU \
+    rules.common.GNU \
+    rules.lib.GNU \
+    rules.local.GNU \
+    rules.nested.GNU \
+    rules.nolocal.GNU \
+    rules.nonested.GNU \
+    wrapper_macros.GNU; do (
+	install ${ACE_ROOT}/include/makeinclude/$mk_macros %{buildroot}%{_includedir}/makeinclude)
+done
+
+install ${TAO_ROOT}/rules.tao.GNU %{buildroot}%{_includedir}/makeinclude
+
+install -d %{buildroot}%{_datadir}
+install -d %{buildroot}%{_datadir}/ace
+install -d %{buildroot}%{_datadir}/ace/MPC
+install -d %{buildroot}%{_datadir}/ace/TAO
+cp -a ${ACE_ROOT}/MPC %{buildroot}%{_datadir}/ace/
+
+install -d %{buildroot}%{_datadir}/ace/bin
+cp -a ${ACE_ROOT}/bin/DependencyGenerator %{buildroot}%{_datadir}/ace/bin
+cp -a ${ACE_ROOT}/bin/MakeProjectCreator %{buildroot}%{_datadir}/ace/bin
+install -d %{buildroot}%{_datadir}/ace/bin/PerlACE
+install ${ACE_ROOT}/bin/PerlACE/{ConfigList,Process,Process_Unix}.pm %{buildroot}%{_datadir}/ace/bin/PerlACE
+install ${ACE_ROOT}/bin/mpc.pl %{buildroot}%{_datadir}/ace/bin
+install ${ACE_ROOT}/bin/mwc.pl %{buildroot}%{_datadir}/ace/bin
+install ${ACE_ROOT}/bin/g++dep %{buildroot}%{_datadir}/ace/bin
+install ${ACE_ROOT}/bin/depgen.pl %{buildroot}%{_datadir}/ace/bin
+install ${ACE_ROOT}/bin/generate_export_file.pl %{buildroot}%{_datadir}/ace/bin
+install ${ACE_ROOT}/bin/{ACEutils,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
+
+cp -a {TAO_ROOT}/MPC %{buildroot}%{_datadir}/ace/TAO
 rm -rf %{buildroot}%{_sysconfdir}/profile.d
+
+# convenience symlinks
+ln -sfn %{_datadir}/ace/bin/mpc.pl %{buildroot}%{_bindir}/mpc-ace
+ln -sfn %{_datadir}/ace/bin/mwc.pl %{buildroot}%{_bindir}/mwc-ace
+
 
 # ================================================================
 # Manuals
@@ -1481,9 +1478,9 @@ exit 0
 %post -n ace-devel
 
 %if %{defined suse_version}
-%install_info --info-dir=%_infodir %_infodir/ace_gperf.info.gz
+%install_info --info-dir=%_infodir %_infodir/ace_gperf.info%{_extension}
 %else
-/sbin/install-info %{_infodir}/ace_gperf.info.gz %{_infodir}/dir
+/sbin/install-info %{_infodir}/ace_gperf.info%{_extension} %{_infodir}/dir
 %endif
 
 # ---------------- ace-xml ----------------
@@ -1626,7 +1623,7 @@ exit 0
 %preun -n ace-devel
 
 if [ $1 = 0 ]; then
-    /sbin/install-info --delete %{_infodir}/ace_gperf.info.gz %{_infodir}/dir
+    /sbin/install-info --delete %{_infodir}/ace_gperf.info%{_extension} %{_infodir}/dir
 fi
 
 # ---------------- tao-cosnaming ----------------
@@ -1903,8 +1900,8 @@ fi
 %{_libdir}/libACE_RMCast.so
 %{_libdir}/libACE_SSL.so
 %{_libdir}/libACE_TMCast.so
-%attr(0644,root,root) %{_mandir}/man1/ace_gperf.1.gz
-%attr(0644,root,root) %{_infodir}/ace_gperf.info.gz
+%attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
+%attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
 %if %{?_with_fox:1}%{!?_with_fox:0}
 %exclude %{_includedir}/ace/FoxReactor/FoxReactor.h
@@ -2142,6 +2139,15 @@ fi
 
 %endif
 
+# ---------------- ace-mpc ----------------
+
+%files -n ace-mpc
+%defattr(-,root,root,-)
+%{_includedir}/makeinclude
+%{_datadir}/ace
+%{_bindir}/mpc-ace
+%{_bindir}/mwc-ace
+
 # ---------------- tao ----------------
 
 # NOTE - Some of the TAO service modules need to be found by dlopen at
@@ -2195,7 +2201,8 @@ fi
 %{_bindir}/tao_nsadd
 %{_bindir}/tao_nsdel
 %{_bindir}/tao_nslist
-%attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1.gz
+%{_datadir}/ace/TAO/MPC
+%attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}
 
 # These get missed by the automatic list generator because they
 # contain no immediate files.
