@@ -1339,7 +1339,7 @@ install ${ACE_ROOT}/bin/depgen.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/generate_export_file.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/{ACEutils,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
 
-cp -a {TAO_ROOT}/MPC %{buildroot}%{_datadir}/ace/TAO
+cp -a ${TAO_ROOT}/MPC %{buildroot}%{_datadir}/ace/TAO
 rm -rf %{buildroot}%{_sysconfdir}/profile.d
 
 # convenience symlinks
