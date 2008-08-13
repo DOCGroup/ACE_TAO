@@ -115,7 +115,7 @@ BuildRequires:  tk
 %if %{?_with_qt:1}%{!?_with_qt:0}
 
 # qt3 has a name change in F9
-%if 0%{?fedora} > 8
+%if 0%{?fedora_version} > 8
 %define qtpacname qt3
 %else
 %define qtpacname qt
@@ -824,13 +824,13 @@ gcc_template_instantiation_visibility = 1
 EOF
 %endif
 
-%if 0%{?fedora} > 5
+%if 0%{?fedora_version} >= 8
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 gcc_template_instantiation_visibility = 1
 EOF
 %endif
 
-%if 0%{?rhel_version} > 5
+%if 0%{?rhel_version} >= 500
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 gcc_template_instantiation_visibility = 1
 EOF
