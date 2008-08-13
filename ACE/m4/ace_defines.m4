@@ -20,7 +20,7 @@ AS_VAR_POPDEF([ac_var])dnl
 #-----------------------------------------------------------------------------
 AC_DEFUN([ACE_CHECK_HAS_DEFINES],
 [AC_FOREACH([ACE_Def], [$1],
-  [AH_TEMPLATE([AS_TR_CPP(ACE_HAS_[]ACE_Def)],
+  [AH_TEMPLATE(AS_TR_CPP(ACE_HAS_[]ACE_Def),
                [Define to 1 if platform has ]ACE_Def[().])])dnl
 for ace_def in $1
 do
@@ -36,7 +36,7 @@ done
 #-----------------------------------------------------------------------------
 AC_DEFUN([ACE_CHECK_LACKS_DEFINES],
 [AC_FOREACH([ACE_Def], [$1],
-  [AH_TEMPLATE([AS_TR_CPP(ACE_LACKS_[]ACE_Def)],
+  [AH_TEMPLATE(AS_TR_CPP(ACE_LACKS_[]ACE_Def),
                [Define to 1 if platform lacks ]ACE_Def[().])])dnl
 for ace_def in $1
 do
