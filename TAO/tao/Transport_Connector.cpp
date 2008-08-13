@@ -352,27 +352,25 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
                                    ACE_Time_Value *timeout,
                                    bool force_wait)
 {
-  if (transport->connection_handler ()->is_timeout ())
+  bool is_timeout = transport->connection_handler ()->is_timeout ();
+  if (is_timeout || transport->connection_handler()->is_closed ())
     {
       if (TAO_debug_level > 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT("transport [%d], Connection Timed out.\n"),
-            transport->id () ));
-        }
-
-      return false;
-    }
-  else if (transport->connection_handler()->is_closed ())
-    {
-      if (TAO_debug_level > 2)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT("transport [%d], Connection failed. (%d)\n"),
-            transport->id (),
-            errno));
+          if (is_timeout)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+                ACE_TEXT ("transport [%d], Connection Timed out.\n"),
+                          transport->id ()));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+                ACE_TEXT ("transport [%d], Connection failed. (%d)\n"),
+                          transport->id (), errno));
+            }
         }
 
       // purge from the connection cache.  If we are not in the

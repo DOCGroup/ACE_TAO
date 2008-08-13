@@ -1,3 +1,10 @@
+Wed Aug 13 16:21:34 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport_Connector.cpp (wait_for_transport):
+
+          Combined the if/else branches for is_timeout and is_closed since both
+          cases need to remove the Transport from the cache.
+
 Tue Aug 12 21:54:43 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport_Connector.cpp (wait_for_transport):
