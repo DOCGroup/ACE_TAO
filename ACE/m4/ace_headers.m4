@@ -5,7 +5,7 @@
 #-----------------------------------------------------------------------------
 AC_DEFUN([ACE_CHECK_HAS_HEADERS],
 [AC_FOREACH([ACE_Header], [$1],
-  [AH_TEMPLATE(AS_TR_CPP(ACE_HAS_[]ACE_Header),
+  [AH_TEMPLATE([AS_TR_CPP(ACE_HAS_[]ACE_Header)],
                [Define to 1 if platform has the <]ACE_Header[> header file.])])dnl
 for ace_header in $1
 do
@@ -23,7 +23,7 @@ done
 #-----------------------------------------------------------------------------
 AC_DEFUN([ACE_CHECK_LACKS_HEADERS],
 [AC_FOREACH([ACE_Header], [$1],
-  [AH_TEMPLATE(AS_TR_CPP(ACE_LACKS_[]ACE_Header),
+  [AH_TEMPLATE([AS_TR_CPP(ACE_LACKS_[]ACE_Header)],
                [Define to 1 if platform lacks the <]ACE_Header[> header file.])])dnl
 for ace_header in $1
 do
