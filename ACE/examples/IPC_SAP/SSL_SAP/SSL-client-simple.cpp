@@ -62,7 +62,7 @@ Options::init (void)
   // Copy the length into the beginning of the message.
   ACE_UINT32 length =
     ntohl (ACE_Utils::truncate_cast<u_long> (this->message_len_));
-    
+
   ACE_OS::memcpy ((void *) this->message_buf_,
                   (void *) &length,
                   sizeof length);
@@ -89,8 +89,6 @@ Options::message_buf (void) const
 ssize_t
 Options::read (void *buf, size_t len, size_t &iteration)
 {
-  ACE_UNUSED_ARG (len);
-
   if (this->io_source_ == ACE_STDIN)
     return ACE_OS::read (ACE_STDIN, buf, len);
   else if (iteration >= this->iterations_)
@@ -100,8 +98,8 @@ Options::read (void *buf, size_t len, size_t &iteration)
       ACE_OS::memcpy (buf,
                       this->message_buf (),
                       len);
-      iteration++;
-      return ACE_Utils::truncate:cast<ssize_t> (len);
+      ++iteration;
+      return ACE_Utils::truncate_cast<ssize_t> (len);
     }
 }
 
