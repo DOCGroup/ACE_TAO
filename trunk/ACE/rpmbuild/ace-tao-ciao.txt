@@ -765,6 +765,8 @@ cat ${ACE_ROOT}/rpmbuild/ace-tao-orbsvcs-daemon.patch | patch -p 1
 
 # don't use patch8 until we verify wether needed
 
+%if %{?_with_autoconf:0}%{!?_with_autoconf:1}
+
 # config.h
 ( cd $ACE_ROOT/ace
 rm -f config.h
@@ -937,6 +939,7 @@ EOF
 (cd $ACE_ROOT && $ACE_ROOT/bin/mwc.pl -type gnuace TAO/TAO_ACE.mwc)
 
 %endif
+%endif
 
 # ================================================================
 # build
@@ -950,6 +953,43 @@ export LD_LIBRARY_PATH=$ACE_ROOT/lib
 
 %if %skip_make
 cd .. && rm -rf ACE_wrappers && ln -s ACE_wrappers-BUILT ACE_wrappers
+%else
+%if %{?_with_autoconf:1}%{!?_with_autoconf:0}
+autoreconf -fi
+mkdir ../build
+cd ../build
+%if %{?_with_opt:0}%{!?_with_opt:1}
+%define my_optflags %{optflags} -O0
+%else
+%define my_optflags %{optflags}
+%endif
+
+export CXXFLAGS="%{my_optflags}"
+
+../ACE_wrappers/configure --prefix=/usr \
+%if %{?_with_ipv6:1}%{!?_with_ipv6:0}
+        --enable-ipv4-ipv6 \
+        --enable-ipv6     \
+%endif
+%if %{?_with_rnq:1}%{!?_with_rnq:0}
+        --enable-ace-reactor-notification-queue \
+%endif
+%if %{?_with_qt:1}%{!?_with_qt:0}
+        --enable-qt-reactor \
+%endif
+%if %{?_with_tk:1}%{!?_with_tk:0}
+        --enable-tk-reactor \
+%endif
+%if %{?_with_xt:1}%{!?_with_xt:0}
+        --enable-xt-reactor \
+%endif
+%if %{?_with_fl:1}%{!?_with_fl:0}
+        --enable-fl-reactor \
+%endif
+        --mandir=%{_mandir} \
+        --libdir=%{_libdir}
+
+make %{?jobs:-j%jobs}
 %else
 
 MAKECMD="make %{?_smp_mflags}"
@@ -999,6 +1039,7 @@ done
 
 $MAKECMD -C $TAO_ROOT/utils
 
+%endif
 %endif
 
 # ================================================================
