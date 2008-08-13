@@ -1,3 +1,8 @@
+Wed Aug 13 11:55:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Truncate.h:
+          Added missing specializations for Borland C++.
+
 Wed Aug 13 11:44:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao-ciao.txt:
