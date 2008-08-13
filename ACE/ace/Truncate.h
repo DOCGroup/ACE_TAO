@@ -705,6 +705,15 @@ namespace ACE_Utils
   };
 
   template<>
+  struct Truncator<unsigned int, wchar_t>
+  {
+    wchar_t operator() (unsigned int val)
+    {
+      return static_cast<wchar_t> (val);
+    }
+  };
+
+  template<>
   struct Truncator<signed int, unsigned int>
   {
     unsigned int operator() (signed int val)
