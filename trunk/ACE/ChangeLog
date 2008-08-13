@@ -5,7 +5,8 @@ Wed Aug 13 13:22:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * m4/ace_headers.m4:
           Updated these files to work with autoconf 2.62. Thanks to
           Philipp Thomas <pth at suse dot de> for these patches. These
-          are needed to use autoconf on OpenSuSE Factory (11.1 beta)
+          are needed to use autoconf on OpenSuSE Factory (11.1 beta).
+          This fixes bugzilla 3396.
 
 Wed Aug 13 11:55:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
