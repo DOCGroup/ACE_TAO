@@ -135,11 +135,7 @@ BuildRequires:  tk
 %endif
 
 %if 0%{?suse_version}
-%if 0%{?suse_version} <= 1030
 %define qtpacname qt3
-%else
-%define qtpacname libqt4
-%endif
 %endif
 
 BuildRequires:  %{qtpacname}-devel
@@ -830,7 +826,7 @@ gcc_template_instantiation_visibility = 1
 EOF
 %endif
 
-%if %{?_with_tk:1}%{!?_with_tk:0}
+%if %{?_with_xt:1}%{!?_with_xt:0}
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 xt = 1
 ace_xtreactor = 1
