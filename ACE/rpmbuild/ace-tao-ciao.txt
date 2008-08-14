@@ -134,7 +134,7 @@ BuildRequires:  tk
 %define qtpacname qt
 %endif
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %if 0%{?suse_version} <= 1030
 %define qtpacname qt3
 %else
