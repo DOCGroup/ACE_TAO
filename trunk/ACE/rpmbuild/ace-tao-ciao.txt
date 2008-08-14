@@ -485,7 +485,6 @@ Summary:        The ACE ORB (TAO)
 Version:        %{TAOVER}
 Group:          Development/Libraries/C and C++
 Requires:       ace = %{ACEVER}
-Requires:       ace-xml = %{ACEVER}
 
 %description -n tao
 
@@ -504,7 +503,6 @@ Version:        %{TAOVER}
 Group:          Development/Libraries/C and C++
 Requires:       tao = %{TAOVER}
 Requires:       ace-devel = %{ACEVER}
-Requires:       ace-xml-devel = %{ACEVER}
 
 %description -n tao-devel
 
