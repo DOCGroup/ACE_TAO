@@ -1,3 +1,8 @@
+Fri Aug 15 11:07:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * make/makeinclude/platform_aix_ibm.GNU:
+          Added missing AIX compiler version 0800.
+
 Wed Aug 13 14:40:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h:
