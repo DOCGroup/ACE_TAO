@@ -4,6 +4,10 @@
 %define CIAOVER 0.6.5
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
+# TODO
+# Add ace_gperf as package
+# Test whether a TAO app with MPC can be build against MPC installed version
+
 # Conditional build
 # Default values are
 #                    --with rnq        (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
@@ -461,12 +465,12 @@ using the ACE_XtReactor.
 
 # ---------------- MPC ----------------
 
-%package -n   ace-mpc
+%package -n   mpc
 Summary:      Make Project Creator
 Version:      %{ACEVER}
 Group:        Development/Tools/Building
 
-%description -n ace-mpc
+%description -n mpc
 
 The Makefile, Project and Workspace Creator.
 Designed by Justin Michel (michel_j@ociweb.com) and Chad Elliott.
@@ -1268,16 +1272,16 @@ install ${ACE_ROOT}/bin/nslist %{buildroot}%{_bindir}/tao_nslist
 # ================================================================
 
 install -d %{buildroot}%{_sysconfdir}
-tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.bz2 \
+tar -jxvf ${ACE_ROOT}/rpmbuild/ace-tao-etc.tar.bz2 \
         -C %{buildroot}%{_sysconfdir}
 
 %if %{defined suse_version}
-tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-init-suse.tar.bz2 \
+tar -jxvf ${ACE_ROOT}/rpmbuild/ace-tao-init-suse.tar.bz2 \
         -C %{buildroot}%{_sysconfdir}
 mkdir -p %{buildroot}%{_localstatedir}/adm
 mv %{buildroot}%{_sysconfdir}/fillup-templates %{buildroot}%{_localstatedir}/adm/
 %else
-tar -xvf ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora.tar.bz2 \
+tar -jxvf ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora.tar.bz2 \
         -C %{buildroot}%{_sysconfdir}
 %endif
 
@@ -1301,6 +1305,7 @@ for mk_macros in \
     macros.GNU \
     platform_g++_common.GNU \
     platform_linux.GNU \
+    platform_linux_common.GNU \
     platform_macros.GNU \
     rules.bin.GNU \
     rules.common.GNU \
@@ -1317,9 +1322,10 @@ install ${TAO_ROOT}/rules.tao.GNU %{buildroot}%{_includedir}/makeinclude
 
 install -d %{buildroot}%{_datadir}
 install -d %{buildroot}%{_datadir}/ace
-install -d %{buildroot}%{_datadir}/ace/MPC
-install -d %{buildroot}%{_datadir}/ace/TAO
-cp -a ${ACE_ROOT}/MPC %{buildroot}%{_datadir}/ace/
+install -d %{buildroot}%{_datadir}/mpc
+install -d %{buildroot}%{_datadir}/tao
+install -d %{buildroot}%{_datadir}/tao/mpc
+cp -a ${ACE_ROOT}/MPC %{buildroot}%{_datadir}/mpc
 
 install -d %{buildroot}%{_datadir}/ace/bin
 cp -a ${ACE_ROOT}/bin/DependencyGenerator %{buildroot}%{_datadir}/ace/bin
@@ -1333,8 +1339,17 @@ install ${ACE_ROOT}/bin/depgen.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/generate_export_file.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/{ACEutils,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
 
-cp -a ${TAO_ROOT}/MPC %{buildroot}%{_datadir}/ace/TAO
-rm -rf %{buildroot}%{_sysconfdir}/profile.d
+cp -a ${TAO_ROOT}/MPC %{buildroot}%{_datadir}/tao/MPC
+
+install -d %{buildroot}%{_sysconfdir}/profile.d
+cat > %{buildroot}%{_sysconfdir}/profile.d/mpc.sh <<EOF
+MPC_ROOT=/usr/share/mpc
+export MPC_ROOT
+EOF
+cat > %{buildroot}%{_sysconfdir}/profile.d/ace-devel.sh <<EOF
+EOF
+cat > %{buildroot}%{_sysconfdir}/profile.d/tao-devel.sh <<EOF
+EOF
 
 # convenience symlinks
 ln -sfn %{_datadir}/ace/bin/mpc.pl %{buildroot}%{_bindir}/mpc-ace
@@ -1465,7 +1480,8 @@ exit 0
 
 # ---------------- ace ----------------
 
-%post -n ace -p /sbin/ldconfig
+%post -n ace
+/sbin/ldconfig
 
 # ---------------- ace-devel ----------------
 
@@ -1479,51 +1495,60 @@ exit 0
 
 # ---------------- ace-xml ----------------
 
-%post -n ace-xml -p /sbin/ldconfig
+%post -n ace-xml
+/sbin/ldconfig
 
 # ---------------- ace-kokyu ----------------
 
-%post -n ace-kokyu -p /sbin/ldconfig
+%post -n ace-kokyu
+/sbin/ldconfig
 
 # ---------------- ace-foxreactor ----------------
 
 %if %{?_with_fox:1}%{!?_with_fox:0}
 %if %{undefined suse_version} || 0%{?suse_version} = 1020
-%post -n ace-foxreactor -p /sbin/ldconfig
+%post -n ace-foxreactor
+/sbin/ldconfig
 %endif
 %endif
 
 # ---------------- ace-flreactor ----------------
 
 %if %{?_with_fl:1}%{!?_with_fl:0}
-%post -n ace-flreactor -p /sbin/ldconfig
+%post -n ace-flreactor
+/sbin/ldconfig
 %endif
 
 # ---------------- ace-qtreactor ----------------
 
 %if %{?_with_qt:1}%{!?_with_qt:0}
-%post -n ace-qtreactor -p /sbin/ldconfig
+%post -n ace-qtreactor
+/sbin/ldconfig
 %endif
 
 # ---------------- ace-tkreactor ----------------
 
 %if %{?_with_tk:1}%{!?_with_tk:0}
-%post -n ace-tkreactor -p /sbin/ldconfig
+%post -n ace-tkreactor
+/sbin/ldconfig
 %endif
 
 # ---------------- ace-xtreactor ----------------
 
 %if %{?_with_xt:1}%{!?_with_xt:0}
-%post -n ace-xtreactor -p /sbin/ldconfig
+%post -n ace-xtreactor
+/sbin/ldconfig
 %endif
 
 # ---------------- tao ----------------
 
-%post -n tao -p /sbin/ldconfig
+%post -n tao
+/sbin/ldconfig
 
 # ---------------- tao-devel ----------------
 
-%post -n tao-devel -p /sbin/ldconfig
+%post -n tao-devel
+/sbin/ldconfig
 
 # ---------------- tao-cosnaming ----------------
 
@@ -1587,25 +1612,29 @@ exit 0
 # ---------------- tao-flresource ----------------
 
 %if %{?_with_fl:1}%{!?_with_fl:0}
-%post -n tao-flresource -p /sbin/ldconfig
+%post -n tao-flresource
+/sbin/ldconfig
 %endif
 
 # ---------------- tao-qtresource ----------------
 
 %if %{?_with_qt:1}%{!?_with_qt:0}
-%post -n tao-qtresource -p /sbin/ldconfig
+%post -n tao-qtresource
+/sbin/ldconfig
 %endif
 
 # ---------------- tao-tkresource ----------------
 
 %if %{?_with_tk:1}%{!?_with_tk:0}
-%post -n tao-tkresource -p /sbin/ldconfig
+%post -n tao-tkresource
+/sbin/ldconfig
 %endif
 
 # ---------------- tao-xtresource ----------------
 
 %if %{?_with_xt:1}%{!?_with_xt:0}
-%post -n tao-xtresource -p /sbin/ldconfig
+%post -n tao-xtresource
+/sbin/ldconfig
 %endif
 
 # ================================================================
@@ -1703,55 +1732,65 @@ fi
 
 # ---------------- ace ----------------
 
-%postun -n ace -p /sbin/ldconfig
+%postun -n ace
+/sbin/ldconfig
 
 # ---------------- ace-xml ----------------
 
-%postun -n ace-xml -p /sbin/ldconfig
+%postun -n ace-xml
+/sbin/ldconfig
 
 # ---------------- ace-kokyu ----------------
 
-%postun -n ace-kokyu -p /sbin/ldconfig
+%postun -n ace-kokyu
+/sbin/ldconfig
 
 # ---------------- ace-foxreactor ----------------
 
 %if %{?_with_fox:1}%{!?_with_fox:0}
 %if 0%{?have_fox} == 1
-%postun -n ace-foxreactor -p /sbin/ldconfig
+%postun -n ace-foxreactor
+/sbin/ldconfig
 %endif
 %endif
 
 # ---------------- ace-flreactor ----------------
 
 %if %{?_with_fl:1}%{!?_with_fl:0}
-%postun -n ace-flreactor -p /sbin/ldconfig
+%postun -n ace-flreactor
+/sbin/ldconfig
 %endif
 
 # ---------------- ace-qtreactor ----------------
 
 %if %{?_with_qt:1}%{!?_with_qt:0}
-%postun -n ace-qtreactor -p /sbin/ldconfig
+%postun -n ace-qtreactor
+/sbin/ldconfig
 %endif
 
 # ---------------- ace-tkreactor ----------------
 
 %if %{?_with_tk:1}%{!?_with_tk:0}
-%postun -n ace-tkreactor -p /sbin/ldconfig
+%postun -n ace-tkreactor
+/sbin/ldconfig
 %endif
 
 # ---------------- ace-xtreactor ----------------
 
 %if %{?_with_xt:1}%{!?_with_xt:0}
-%postun -n ace-xtreactor -p /sbin/ldconfig
+%postun -n ace-xtreactor
+/sbin/ldconfig
 %endif
 
 # ---------------- tao ----------------
 
-%postun -n tao -p /sbin/ldconfig
+%postun -n tao
+/sbin/ldconfig
 
 # ---------------- tao-devel ----------------
 
-%postun -n tao-devel -p /sbin/ldconfig
+%postun -n tao-devel
+/sbin/ldconfig
 
 # ---------------- tao-cosnaming ----------------
 
@@ -1834,25 +1873,29 @@ fi
 # ---------------- tao-flresource ----------------
 
 %if %{?_with_fl:1}%{!?_with_fl:0}
-%postun -n tao-flresource -p /sbin/ldconfig
+%postun -n tao-flresource
+/sbin/ldconfig
 %endif
 
 # ---------------- tao-qtresource ----------------
 
 %if %{?_with_qt:1}%{!?_with_qt:0}
-%postun -n tao-qtresource -p /sbin/ldconfig
+%postun -n tao-qtresource
+/sbin/ldconfig
 %endif
 
 # ---------------- tao-tkresource ----------------
 
 %if %{?_with_tk:1}%{!?_with_tk:0}
-%postun -n tao-tkresource -p /sbin/ldconfig
+%postun -n tao-tkresource
+/sbin/ldconfig
 %endif
 
 # ---------------- tao-xtresource ----------------
 
 %if %{?_with_xt:1}%{!?_with_xt:0}
-%postun -n tao-xtresource -p /sbin/ldconfig
+%postun -n tao-xtresource
+/sbin/ldconfig
 %endif
 
 # ================================================================
@@ -1894,6 +1937,11 @@ fi
 %{_libdir}/libACE_RMCast.so
 %{_libdir}/libACE_SSL.so
 %{_libdir}/libACE_TMCast.so
+%{_includedir}/makeinclude
+%{_datadir}/ace/bin
+%{_bindir}/mpc-ace
+%{_bindir}/mwc-ace
+%config %{_sysconfdir}/profile.d/ace-devel.sh
 %attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
 %attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
@@ -2133,14 +2181,12 @@ fi
 
 %endif
 
-# ---------------- ace-mpc ----------------
+# ---------------- mpc ----------------
 
-%files -n ace-mpc
+%files -n mpc
 %defattr(-,root,root,-)
-%{_includedir}/makeinclude
-%{_datadir}/ace
-%{_bindir}/mpc-ace
-%{_bindir}/mwc-ace
+%{_datadir}/mpc
+%config %{_sysconfdir}/profile.d/mpc.sh
 
 # ---------------- tao ----------------
 
@@ -2150,6 +2196,7 @@ fi
 
 %files -n tao -f tao-svc-so.list
 %defattr(-,root,root,-)
+%{_datadir}/tao
 
 %{_libdir}/libTAO*.so.%{TAOVERSO}
 
@@ -2185,6 +2232,7 @@ fi
 
 %files -n tao-devel -f tao-devel-files.list
 %defattr(-,root,root,-)
+%config %{_sysconfdir}/profile.d/tao-devel.sh
 
 %{_libdir}/libTAO_IDL_BE.so.%{ACEVERSO}
 
@@ -2195,7 +2243,7 @@ fi
 %{_bindir}/tao_nsadd
 %{_bindir}/tao_nsdel
 %{_bindir}/tao_nslist
-%{_datadir}/ace/TAO/MPC
+%{_datadir}/tao/MPC
 %attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}
 
 # These get missed by the automatic list generator because they
@@ -2546,4 +2594,3 @@ fi
   one BuildRequires for all.
 * Thu Jul 31 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.6-2
 - Removed ace-tao-unusedarg.patch (related to bug #3270).
-
