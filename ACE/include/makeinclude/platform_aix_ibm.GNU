@@ -109,7 +109,7 @@ else
       CCFLAGS     += -qeh=v6
     endif
   else
-    ifeq ($(XLCVERSION),0x0900)
+    ifeq ($(XLCVERSION),0x0800)
       CCFLAGS += -qflag=w:w
       ifeq ($(templates),manual)
         CCFLAGS += -qnotempinc -qnotemplateregistry
@@ -122,8 +122,23 @@ else
       ifeq ($(exceptions),1)
         CCFLAGS     += -qeh=v6
       endif
-     else
-       CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
+    else
+      ifeq ($(XLCVERSION),0x0900)
+        CCFLAGS += -qflag=w:w
+        ifeq ($(templates),manual)
+          CCFLAGS += -qnotempinc -qnotemplateregistry
+        else
+          CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE)
+        endif
+        # According to documentation, default is -qeh, which is equivalent
+        # to -qeh=v5.  Apparently 6.0 fixed some problems with nested
+        # try-catch blocks.
+        ifeq ($(exceptions),1)
+          CCFLAGS     += -qeh=v6
+        endif
+      else
+        CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
+      endif
     endif
   endif
 endif
