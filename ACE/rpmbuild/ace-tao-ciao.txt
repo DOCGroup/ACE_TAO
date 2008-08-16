@@ -5,7 +5,6 @@
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # TODO
-# Add ace_gperf as package
 # Test whether a TAO app with MPC can be build against MPC installed version
 
 # Conditional build
@@ -66,7 +65,7 @@ Release:      1%{?OPTTAG}%{?dist}
 Group:        Development/Libraries/C and C++
 URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
-Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead13082008.tar.bz2
+Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead15082008.tar.bz2
 Source1:      ace-tao-rpmlintrc
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
@@ -235,6 +234,18 @@ ACE XML Parser interfaces and SAX is that we added an reference of
 ACEXML_Env to every SAX method to accommodate platforms/compilers that
 don't support C++ exceptions.  SAX is defined by David Megginson
 <david@megginson.com>
+
+# ---------------- ace-gperf ----------------
+
+%package -n     ace-gperf
+Summary:        ACE gperf
+Version:        %{ACEVER}
+Group:          Development/Libraries/C and C++
+Requires:       ace = %{ACEVER}
+
+%description -n ace-gperf
+
+ACE gperf utility
 
 # ---------------- ace-xml-devel ----------------
 
@@ -507,11 +518,31 @@ Version:        %{TAOVER}
 Group:          Development/Libraries/C and C++
 Requires:       tao = %{TAOVER}
 Requires:       ace-devel = %{ACEVER}
+Requires:       ace-gperf = %{ACEVER}
 
 %description -n tao-devel
 
 This package contains the components needed for developing programs
 using TAO.
+
+# ---------------- tao-utils ----------------
+
+%package -n     tao-utils
+Summary:        TAO naming service and IOR utilities
+Version:        %{TAOVER}
+Group:          Development/Libraries/C and C++
+Requires:       tao = %{TAOVER}
+
+%description -n tao-utils
+
+This package includes programs to query or control a CORBA naming service,
+and to dump an IOR.
+
+The following programs are included:
+* tao-nslist, to list naming context and object bindings
+* tao-nsadd, to create bindings
+* tao-nsdel, to remove bindings
+* tao-catior, to dump the content of an Interoperable Object Reference
 
 # ---------------- tao-cosnaming ----------------
 
@@ -613,7 +644,7 @@ Requires:       logrotate
 
 %description -n tao-cosconcurrency
 
-The CORBA Concurrency Service.
+The CORBA Concurrency Service. One of the standard CORBA services.
 
 # ---------------- tao-flresource ----------------
 
@@ -1325,7 +1356,7 @@ install -d %{buildroot}%{_datadir}/ace
 install -d %{buildroot}%{_datadir}/mpc
 install -d %{buildroot}%{_datadir}/tao
 install -d %{buildroot}%{_datadir}/tao/mpc
-cp -a ${ACE_ROOT}/MPC %{buildroot}%{_datadir}/mpc
+cp -a ${ACE_ROOT}/MPC/* %{buildroot}%{_datadir}/mpc
 
 install -d %{buildroot}%{_datadir}/ace/bin
 cp -a ${ACE_ROOT}/bin/DependencyGenerator %{buildroot}%{_datadir}/ace/bin
@@ -1339,7 +1370,7 @@ install ${ACE_ROOT}/bin/depgen.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/generate_export_file.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/{ACEutils,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
 
-cp -a ${TAO_ROOT}/MPC %{buildroot}%{_datadir}/tao/MPC
+cp -a ${TAO_ROOT}/MPC/* %{buildroot}%{_datadir}/tao/MPC
 
 install -d %{buildroot}%{_sysconfdir}/profile.d
 cat > %{buildroot}%{_sysconfdir}/profile.d/mpc.sh <<EOF
@@ -1347,8 +1378,12 @@ MPC_ROOT=/usr/share/mpc
 export MPC_ROOT
 EOF
 cat > %{buildroot}%{_sysconfdir}/profile.d/ace-devel.sh <<EOF
+ACE_ROOT=/usr/include
+export ACE_ROOT
 EOF
 cat > %{buildroot}%{_sysconfdir}/profile.d/tao-devel.sh <<EOF
+TAO_ROOT=/usr/include
+export TAO_ROOT
 EOF
 
 # convenience symlinks
@@ -1486,17 +1521,22 @@ exit 0
 # ---------------- ace-devel ----------------
 
 %post -n ace-devel
+/sbin/ldconfig
+
+# ---------------- ace-xml ----------------
+
+%post -n ace-xml
+/sbin/ldconfig
+
+# ---------------- ace-gperf ----------------
+
+%post -n ace-gperf
 
 %if %{defined suse_version}
 %install_info --info-dir=%_infodir %_infodir/ace_gperf.info%{_extension}
 %else
 /sbin/install-info %{_infodir}/ace_gperf.info%{_extension} %{_infodir}/dir
 %endif
-
-# ---------------- ace-xml ----------------
-
-%post -n ace-xml
-/sbin/ldconfig
 
 # ---------------- ace-kokyu ----------------
 
@@ -1548,6 +1588,11 @@ exit 0
 # ---------------- tao-devel ----------------
 
 %post -n tao-devel
+/sbin/ldconfig
+
+# ---------------- tao-utils ----------------
+
+%post -n tao-utils
 /sbin/ldconfig
 
 # ---------------- tao-cosnaming ----------------
@@ -1641,9 +1686,9 @@ exit 0
 # pre uninstall
 # ================================================================
 
-# ---------------- ace-devel ----------------
+# ---------------- ace-gperf ----------------
 
-%preun -n ace-devel
+%preun -n ace-gperf
 
 if [ $1 = 0 ]; then
     /sbin/install-info --delete %{_infodir}/ace_gperf.info%{_extension} %{_infodir}/dir
@@ -1792,6 +1837,11 @@ fi
 %postun -n tao-devel
 /sbin/ldconfig
 
+# ---------------- tao-utils ----------------
+
+%postun -n tao-utils
+/sbin/ldconfig
+
 # ---------------- tao-cosnaming ----------------
 
 %postun -n tao-cosnaming
@@ -1912,8 +1962,8 @@ fi
 %{_libdir}/libACE_HTBP.so.%{ACEVERSO}
 %{_libdir}/libACE_Monitor_Control.so.%{ACEVERSO}
 %{_libdir}/libACE_RMCast.so.%{ACEVERSO}
-%{_libdir}/libACE_SSL.so.%{ACEVERSO}
 %{_libdir}/libACE_TMCast.so.%{ACEVERSO}
+%{_libdir}/libACE_SSL.so.%{ACEVERSO}
 
 %doc ACE-INSTALL.html
 %doc AUTHORS
@@ -1928,22 +1978,19 @@ fi
 
 %files -n ace-devel -f ace-headers.list
 %defattr(-,root,root,-)
-%{_bindir}/ace_gperf
 %{_libdir}/libACE.so
 %{_libdir}/libACE_ETCL_Parser.so
 %{_libdir}/libACE_ETCL.so
 %{_libdir}/libACE_HTBP.so
 %{_libdir}/libACE_Monitor_Control.so
 %{_libdir}/libACE_RMCast.so
-%{_libdir}/libACE_SSL.so
 %{_libdir}/libACE_TMCast.so
+%{_libdir}/libACE_SSL.so
 %{_includedir}/makeinclude
 %{_datadir}/ace/bin
 %{_bindir}/mpc-ace
 %{_bindir}/mwc-ace
 %config %{_sysconfdir}/profile.d/ace-devel.sh
-%attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
-%attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
 %if %{?_with_fox:1}%{!?_with_fox:0}
 %exclude %{_includedir}/ace/FoxReactor/FoxReactor.h
@@ -1977,6 +2024,20 @@ fi
 %files -n ace-xml
 %defattr(-,root,root,-)
 %{_libdir}/libACEXML*.so.%{ACEVERSO}
+
+%doc AUTHORS
+%doc COPYING
+%doc PROBLEM-REPORT-FORM
+%doc README
+%doc VERSION
+
+# ---------------- ace-gperf ----------------
+
+%files -n ace-gperf
+%defattr(-,root,root,-)
+%{_bindir}/ace_gperf
+%attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
+%attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 
 %doc AUTHORS
 %doc COPYING
@@ -2236,13 +2297,8 @@ fi
 
 %{_libdir}/libTAO_IDL_BE.so.%{ACEVERSO}
 
-%{_bindir}/tao_idl
 %{_bindir}/tao_imr
 %{_bindir}/tao_ifr
-%{_bindir}/tao_catior
-%{_bindir}/tao_nsadd
-%{_bindir}/tao_nsdel
-%{_bindir}/tao_nslist
 %{_datadir}/tao/MPC
 %attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}
 
@@ -2274,6 +2330,22 @@ fi
 %exclude %{_includedir}/tao/XtResource/TAO_XtResource_Export.h
 %exclude %{_libdir}/libTAO_XtResource.so
 %endif
+
+%doc TAO/COPYING
+%doc TAO/PROBLEM-REPORT-FORM
+%doc TAO/VERSION
+%doc TAO/README
+
+# ---------------- tao-utils ----------------
+
+%files -n tao-utils
+%defattr(-,root,root,-)
+
+%{_bindir}/tao_idl
+%{_bindir}/tao_catior
+%{_bindir}/tao_nsadd
+%{_bindir}/tao_nsdel
+%{_bindir}/tao_nslist
 
 %doc TAO/COPYING
 %doc TAO/PROBLEM-REPORT-FORM
@@ -2594,3 +2666,4 @@ fi
   one BuildRequires for all.
 * Thu Jul 31 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.6-2
 - Removed ace-tao-unusedarg.patch (related to bug #3270).
+
