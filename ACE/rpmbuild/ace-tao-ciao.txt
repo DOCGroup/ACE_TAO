@@ -1368,6 +1368,7 @@ install ${ACE_ROOT}/bin/mwc.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/g++dep %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/depgen.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/generate_export_file.pl %{buildroot}%{_datadir}/ace/bin
+install ${ACE_ROOT}/bin/add_rel_link.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/{ACEutils,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
 
 cp -a ${TAO_ROOT}/MPC/* %{buildroot}%{_datadir}/tao/MPC
@@ -1384,6 +1385,13 @@ EOF
 cat > %{buildroot}%{_sysconfdir}/profile.d/tao-devel.sh <<EOF
 TAO_ROOT=/usr/include
 export TAO_ROOT
+EOF
+
+# Create MPC.cfg to pickup dynamic types
+cat > %{buildroot}%{_datadir}/mpc/config/MPC.cfg <<EOF
+includes = %{buildroot}%{_datadir}/ciao/MPC/config %{buildroot}%{_datadir}/tao/MPC/config %{buildroot}%{_datadir}/ace/MPC/config %{buildroot}%{_datadir}/opendds/MPC/config
+dynamic_types = %{buildroot}%{_datadir}/ace/bin/MakeProjectCreator
+main_functions = cplusplus:ACE_TMAIN
 EOF
 
 # convenience symlinks
