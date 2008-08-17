@@ -1,3 +1,11 @@
+Sun Aug 17 07:30:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/mwc.pl:
+        * bin/mpc.pl:
+          Use RealBin to get the location of this script, that gives the
+          real location also in case we use a symbolic link to these
+          scripts. Thanks to Adam Mitz for pointing me to RealBin
+
 Fri Aug 15 11:07:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * make/makeinclude/platform_aix_ibm.GNU:
