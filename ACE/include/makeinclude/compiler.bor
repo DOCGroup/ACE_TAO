@@ -33,12 +33,9 @@
 #
 
 # Check for BCBVER
-!if $(BCBVER) == 8
-!else
-!if $(BCBVER) == 6
+!if $(BCBVER) == 6 || $(BCBVER) == 8 || $(BCBVER) == 10 || $(BCBVER) == 11 || $(BCBVER) == 12
 !else
 !error BCBVER must be explicitly set as environment variable or is set to a not supported value.
-!endif
 !endif
 
 OBJ_EXT = obj
