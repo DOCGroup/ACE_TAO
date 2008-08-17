@@ -1,3 +1,9 @@
+Sun Aug 17 18:04:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html
+        * include/makeinclude/compiler.bor:
+          Added BCBVER 10/11/12
+
 Sun Aug 17 07:30:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/mwc.pl:
