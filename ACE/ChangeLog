@@ -1,6 +1,11 @@
+Mon Aug 18 10:17:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Improved BCB instructions
+
 Sun Aug 17 18:04:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ACE-INSTALL.html
+        * ACE-INSTALL.html:
         * include/makeinclude/compiler.bor:
           Added BCBVER 10/11/12
 
