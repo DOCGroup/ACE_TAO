@@ -1,3 +1,8 @@
+Mon Aug 18 11:30:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          CodeGear C++ Builder 2009 doesn't support inline assembly
+
 Mon Aug 18 10:17:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
