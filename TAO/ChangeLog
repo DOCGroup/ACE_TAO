@@ -1,3 +1,8 @@
+Mon Aug 18 14:03:23 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+          Increase timeout. Test fails on slower HPUX & Solaris machines.
+
 Wed Aug 13 16:21:34 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport_Connector.cpp (wait_for_transport):
