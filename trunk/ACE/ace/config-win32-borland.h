@@ -83,8 +83,6 @@
 
 #define ACE_LACKS_STRRECVFD
 #define ACE_USES_EXPLICIT_STD_NAMESPACE
-#define ACE_LACKS_STRTOULL
-#define ACE_LACKS_WCSTOULL
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // must have _MT defined to include multithreading
@@ -106,8 +104,10 @@
 #if (__BORLANDC__ < 0x610)
 # define ACE_HAS_NONCONST_TEMPNAM
 #endif
+# define ACE_LACKS_STRTOULL
+# define ACE_LACKS_WCSTOULL
 
-#if (__BORLANDC__ <= 0x593)
+#if (__BORLANDC__ <= 0x610)
 // Older Borland compilers can't handle assembly in inline methods or
 // templates (E2211). When we build for pentium optimized and we are inlining
 // then we disable inline assembly
