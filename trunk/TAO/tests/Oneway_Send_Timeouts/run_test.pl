@@ -57,7 +57,7 @@ if ($test != 0) {
     exit 1;
 }
 
-$test = $TV->WaitKill (10);
+$test = $TV->WaitKill (20);
 
 if ($test != 0) {
     print STDERR "ERROR 2: test returned $test\n";
