@@ -65,7 +65,7 @@ Release:      1%{?OPTTAG}%{?dist}
 Group:        Development/Libraries/C and C++
 URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
-Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead15082008.tar.bz2
+Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead18082008.tar.bz2
 Source1:      ace-tao-rpmlintrc
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
@@ -1328,7 +1328,13 @@ popd
 # Makefiles
 # ================================================================
 
-install -d %{buildroot}%{_includedir}/makeinclude
+install -d %{buildroot}%{_datadir}
+install -d %{buildroot}%{_datadir}/ace
+install -d %{buildroot}%{_datadir}/ace/include
+install -d %{buildroot}%{_datadir}/ace/include/makeinclude
+install -d %{buildroot}%{_datadir}/mpc
+install -d %{buildroot}%{_datadir}/tao
+install -d %{buildroot}%{_datadir}/tao/mpc
 
 for mk_macros in \
     all_in_one.GNU \
@@ -1346,16 +1352,11 @@ for mk_macros in \
     rules.nolocal.GNU \
     rules.nonested.GNU \
     wrapper_macros.GNU; do (
-	install ${ACE_ROOT}/include/makeinclude/$mk_macros %{buildroot}%{_includedir}/makeinclude)
+        install ${ACE_ROOT}/include/makeinclude/$mk_macros %{buildroot}%{_datadir}/ace/include/makeinclude)
 done
 
-install ${TAO_ROOT}/rules.tao.GNU %{buildroot}%{_includedir}/makeinclude
+install ${TAO_ROOT}/rules.tao.GNU %{buildroot}%{_datadir}/tao
 
-install -d %{buildroot}%{_datadir}
-install -d %{buildroot}%{_datadir}/ace
-install -d %{buildroot}%{_datadir}/mpc
-install -d %{buildroot}%{_datadir}/tao
-install -d %{buildroot}%{_datadir}/tao/mpc
 cp -a ${ACE_ROOT}/MPC/* %{buildroot}%{_datadir}/mpc
 
 install -d %{buildroot}%{_datadir}/ace/bin
@@ -1368,7 +1369,7 @@ install ${ACE_ROOT}/bin/mwc.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/g++dep %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/depgen.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/generate_export_file.pl %{buildroot}%{_datadir}/ace/bin
-install ${ACE_ROOT}/bin/add_rel_link.pl %{buildroot}%{_datadir}/ace/bin
+install ${ACE_ROOT}/bin/add_rel_link.sh %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/{ACEutils,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
 
 cp -a ${TAO_ROOT}/MPC/* %{buildroot}%{_datadir}/tao/MPC
@@ -1379,25 +1380,17 @@ MPC_ROOT=/usr/share/mpc
 export MPC_ROOT
 EOF
 cat > %{buildroot}%{_sysconfdir}/profile.d/ace-devel.sh <<EOF
-ACE_ROOT=/usr/include
+ACE_ROOT=/usr/share/ace
 export ACE_ROOT
 EOF
 cat > %{buildroot}%{_sysconfdir}/profile.d/tao-devel.sh <<EOF
-TAO_ROOT=/usr/include
+TAO_ROOT=/usr/share/tao
 export TAO_ROOT
-EOF
-
-# Create MPC.cfg to pickup dynamic types
-cat > %{buildroot}%{_datadir}/mpc/config/MPC.cfg <<EOF
-includes = %{buildroot}%{_datadir}/ciao/MPC/config %{buildroot}%{_datadir}/tao/MPC/config %{buildroot}%{_datadir}/ace/MPC/config %{buildroot}%{_datadir}/opendds/MPC/config
-dynamic_types = %{buildroot}%{_datadir}/ace/bin/MakeProjectCreator
-main_functions = cplusplus:ACE_TMAIN
 EOF
 
 # convenience symlinks
 ln -sfn %{_datadir}/ace/bin/mpc.pl %{buildroot}%{_bindir}/mpc-ace
 ln -sfn %{_datadir}/ace/bin/mwc.pl %{buildroot}%{_bindir}/mwc-ace
-
 
 # ================================================================
 # Manuals
@@ -1994,7 +1987,8 @@ fi
 %{_libdir}/libACE_RMCast.so
 %{_libdir}/libACE_TMCast.so
 %{_libdir}/libACE_SSL.so
-%{_includedir}/makeinclude
+%{_datadir}/ace/include
+%{_datadir}/ace/include/makeinclude
 %{_datadir}/ace/bin
 %{_bindir}/mpc-ace
 %{_bindir}/mwc-ace
