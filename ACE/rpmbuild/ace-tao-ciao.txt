@@ -2263,11 +2263,6 @@ fi
 
 %{_libdir}/libTAO*.so.%{TAOVERSO}
 
-# The libTAO_IFR_BE needs the IDL front-end
-%{_libdir}/libTAO_IDL_FE.so.%{ACEVERSO}
-
-%exclude %{_libdir}/libTAO_IDL_BE*
-
 %if %{?_with_fl:1}%{!?_with_fl:0}
 %exclude %{_libdir}/libTAO_FlResource.so*
 %endif
@@ -2297,11 +2292,13 @@ fi
 %defattr(-,root,root,-)
 %config %{_sysconfdir}/profile.d/tao-devel.sh
 
+%{_libdir}/libTAO_IDL_FE.so.%{ACEVERSO}
 %{_libdir}/libTAO_IDL_BE.so.%{ACEVERSO}
 
 %{_bindir}/tao_imr
 %{_bindir}/tao_ifr
 %{_datadir}/tao/MPC
+%{_bindir}/tao_idl
 %attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}
 
 # These get missed by the automatic list generator because they
@@ -2343,7 +2340,6 @@ fi
 %files -n tao-utils
 %defattr(-,root,root,-)
 
-%{_bindir}/tao_idl
 %{_bindir}/tao_catior
 %{_bindir}/tao_nsadd
 %{_bindir}/tao_nsdel
