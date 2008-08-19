@@ -103,9 +103,9 @@
 
 #if (__BORLANDC__ < 0x610)
 # define ACE_HAS_NONCONST_TEMPNAM
-#endif
 # define ACE_LACKS_STRTOULL
 # define ACE_LACKS_WCSTOULL
+#endif
 
 #if (__BORLANDC__ <= 0x610)
 // Older Borland compilers can't handle assembly in inline methods or
