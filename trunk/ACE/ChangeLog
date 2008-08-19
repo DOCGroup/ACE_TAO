@@ -1,3 +1,12 @@
+Tue Aug 19 19:06:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Don't use cmd to send commands through telnet. The disadvantage
+          of the cmd method is that it only returns when the prompt
+          appears again. When this doesn't happen we don't get the output
+          of the last command into our build log or on the telnet client
+
 Tue Aug 19 14:01:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
