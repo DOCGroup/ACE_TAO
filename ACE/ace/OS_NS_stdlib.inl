@@ -498,8 +498,8 @@ ACE_OS::strtoull (const char *s, char **ptr, int base)
 {
 #if defined (ACE_LACKS_STRTOULL)
   return ACE_OS::strtoull_emulation (s, ptr, base);
-#elif defined (ACE_WIN32) && !defined (__MINGW32__)
-  return ::_strtoui64 (s, ptr, base);
+#elif defined (ACE_STRTOULL_EQUIVALENT)
+  return ACE_STRTOULL_EQUIVALENT (s, ptr, base);
 #else
   return ::strtoull (s, ptr, base);
 #endif /* ACE_LACKS_STRTOULL */
@@ -509,8 +509,8 @@ ACE_OS::strtoull (const char *s, char **ptr, int base)
 ACE_INLINE ACE_UINT64
 ACE_OS::strtoull (const wchar_t *s, wchar_t **ptr, int base)
 {
-#if defined (ACE_WIN32) && !defined (__MINGW32__)
-  return ::_wcstoui64 (s, ptr, base);
+#if defined (ACE_WCSTOOULL_EQUIVALENT)
+  return ACE_WCSTOOULL_EQUIVALENT (s, ptr, base);
 #else
   return ACE_WCHAR_STD_NAMESPACE::wcstoull (s, ptr, base);
 #endif /* ACE_WIN32 */
