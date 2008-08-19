@@ -206,7 +206,7 @@ sub Spawn ()
         @cmds[$cmdnr++] = 'cmd';
         if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $self->{SET_VX_DEFGW}) {
             @cmds[$cmdnr++] = "C mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
-            $self->{SET_VX_DEFGW} = 0;
+            $PerlACE::ProcessVX::VxDefGw = 0;
         }
 
         @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
@@ -226,11 +226,11 @@ sub Spawn ()
 
         $cmdline = $program . $PerlACE::ProcessVX::ExeExt . ' ' . $self->{ARGUMENTS};
         @cmds[$cmdnr++] = $cmdline;
-        $prompt = '/\[vxWorks \*]# $/';
+        $prompt = '\[vxWorks \*\]\#';
     } else {
-        if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $self->{SET_VX_DEFGW}) {
+        if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $PerlACE::ProcessVX::VxDefGw) {
             @cmds[$cmdnr++] = "mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
-            $self->{SET_VX_DEFGW} = 0;
+            $PerlACE::ProcessVX::VxDefGw = 0;
         }
 
         my(@load_commands);
@@ -273,7 +273,7 @@ sub Spawn ()
         @cmds[$cmdnr++] = 'unld "'. $program . $PerlACE::ProcessVX::ExeExt . '"';
         push @cmds, @unload_commands;
         $cmdnr += scalar @unload_commands;
-        $prompt = '/-> $/';
+        $prompt = '->';
     }
 
     FORK:
@@ -316,15 +316,25 @@ sub Spawn ()
             my $ok;
             $ok = $t->waitfor('/-> $/');
             if ($ok) {
-              $t->prompt ($prompt);
               my $i = 0;
               my @lines;
               while($i < $cmdnr) {
                 if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                   print @cmds[$i]."\n";
                 }
-                @lines = $t->cmd (@cmds[$i++]);
-                print @lines;
+                if ($t->print (@cmds[$i++])) {
+                  my $blk;
+                  my $buf;
+                  while ($blk = $t->get) {
+                    printf $blk;
+                    $buf .= $blk;
+                    if ($buf =~ /$prompt/) {
+                      last;
+                    }
+                  }
+                } else {
+                  print $t->errmsg;
+                }
               }
             }
             else {
