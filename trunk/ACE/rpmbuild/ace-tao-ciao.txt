@@ -1086,7 +1086,7 @@ export TAO_ROOT=$ACE_ROOT/TAO
 
 %if ! %skip_make
 # cat %{SOURCE2} | patch -p 1
-cat ${ACE_ROOT}/rpmbuild/ace-tao-macros.patch | patch -p 1
+# cat ${ACE_ROOT}/rpmbuild/ace-tao-macros.patch | patch -p 1
 %endif
 
 rm -rf %{buildroot}
@@ -1334,7 +1334,7 @@ install -d %{buildroot}%{_datadir}/ace/include
 install -d %{buildroot}%{_datadir}/ace/include/makeinclude
 install -d %{buildroot}%{_datadir}/mpc
 install -d %{buildroot}%{_datadir}/tao
-install -d %{buildroot}%{_datadir}/tao/mpc
+install -d %{buildroot}%{_datadir}/tao/MPC
 
 for mk_macros in \
     all_in_one.GNU \
@@ -1371,6 +1371,9 @@ install ${ACE_ROOT}/bin/depgen.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/generate_export_file.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/add_rel_link.sh %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/{ACEutils,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
+
+ln -sfn %{_includedir}/ace %{buildroot}%{_datadir}/ace
+ln -sfn %{_includedir}/tao %{buildroot}%{_datadir}/tao/TAO
 
 cp -a ${TAO_ROOT}/MPC/* %{buildroot}%{_datadir}/tao/MPC
 
@@ -1993,6 +1996,7 @@ fi
 %{_bindir}/mpc-ace
 %{_bindir}/mwc-ace
 %config %{_sysconfdir}/profile.d/ace-devel.sh
+%{_datadir}/ace/ace
 
 %if %{?_with_fox:1}%{!?_with_fox:0}
 %exclude %{_includedir}/ace/FoxReactor/FoxReactor.h
@@ -2300,6 +2304,7 @@ fi
 %{_datadir}/tao/MPC
 %{_bindir}/tao_idl
 %attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}
+%{_datadir}/tao/TAO
 
 # These get missed by the automatic list generator because they
 # contain no immediate files.
