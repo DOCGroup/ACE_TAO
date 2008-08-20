@@ -1,3 +1,14 @@
+Wed Aug 20 09:38:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+        * bin/MMakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+          Fixed bugzilla 3403. Migrated parts of the bmake type to this
+          generator, fixes issues when we need to go a directory up
+          in the workspace. As side effect the resulting Makefile.bor
+          is smaller in size which reduces the full size of the
+          distribution. In the near future I want to remove the borland
+          MPC generator and only use bmake.
+
 Wed Aug 20 09:08:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
