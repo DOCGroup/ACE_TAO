@@ -28,6 +28,10 @@ sub dollar_special {
   return 1;
 }
 
+sub get_and_symbol {
+  #my $self = shift;
+  return '&$(__TRICK_BORLAND_MAKE__)&';
+}
 
 sub fill_value {
   my($self)  = shift;
