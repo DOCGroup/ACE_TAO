@@ -11,20 +11,22 @@ package BorlandWorkspaceCreator;
 # ************************************************************
 
 use strict;
-use File::Basename;
 
 use BorlandProjectCreator;
+use MakeWorkspaceBase;
+use WinWorkspaceBase;
 use WorkspaceCreator;
 
 use vars qw(@ISA);
-@ISA = qw(WorkspaceCreator);
+@ISA = qw(MakeWorkspaceBase WinWorkspaceBase WorkspaceCreator);
 
 # ************************************************************
 # Data Section
 # ************************************************************
 
-my($max_line_length) = 32767; ## Borland Make's maximum line length
-my(@targets) = ('clean', 'realclean', 'install');
+## Borland Make's maximum line length
+my $max_line_length = 32767;
+my $targets = 'clean realclean install';
 
 # ************************************************************
 # Subroutine Section
@@ -35,12 +37,10 @@ sub workspace_file_name {
   return $self->get_modified_workspace_name('Makefile', '.bor');
 }
 
-
 sub workspace_per_project {
   #my($self) = shift;
   return 1;
 }
-
 
 sub pre_workspace {
   my($self) = shift;
@@ -61,104 +61,46 @@ sub pre_workspace {
             $crlf;
 }
 
-
 sub write_project_targets {
-  my($self)   = shift;
-  my($fh)     = shift;
-  my($target) = shift;
-  my($list)   = shift;
+  my($self, $fh, $crlf, $target, $list, $and) = @_;
+
   my($crlf)   = $self->crlf();
+  my $cwd = $self->getcwd();
 
+  ## Print out a make command for each project
   foreach my $project (@$list) {
-    my($dir)    = $self->mpc_dirname($project);
-    my($chdir)  = 0;
-    my($back)   = '';
-    my($cwd)    = $self->getcwd();
+    my $dir = $self->mpc_dirname($project);
+    $dir =~ s/\//\\/g;
+    my $chdir = ($dir ne '.');
 
-    ## If the directory isn't '.' then we need
-    ## to figure out how to get back to our starting point
-    if ($dir ne '.') {
-      $chdir = 1;
-      my($count) = ($dir =~ tr/\///) + 1;
-      if ($dir =~ /^\.\.\//) {
-        ## Find out how many directories we went down
-        my($rel) = $dir;
-        while($rel =~ s/^\.\.\///) {
-        }
-        my($down) = ($rel =~ tr/\///) + 1;
-
-        ## Get $count - $down parts of the base of the current directory
-        $rel = $cwd;
-        my($index) = length($rel);
-        for(my $i = $down; $i < $count; $i++) {
-          $index = rindex($rel, '/', $index - 1);
-        }
-        if ($index > -1) {
-          $rel = substr($rel, $index + 1);
-        }
-        $back = ('../' x $down) . $rel;
-      }
-      else {
-        $back = ('../' x $count);
-      }
-    }
-
-    print $fh ($chdir ? "\t\@cd $dir$crlf" : '') .
-              "\t\$(MAKE) -\$(MAKEFLAGS) \$(MAKE_FLAGS) -f " . basename($project) . " $target$crlf" .
-              ($chdir ? "\t\@cd $back$crlf" : '');
+    print $fh "\t", ($chdir ? "\$(COMSPEC) /c \"cd $dir $and " : ''),
+              "\$(MAKE) -\$(MAKEFLAGS) \$(MAKE_FLAGS) -f ",
+              $self->mpc_basename($project), " $target",
+              ($chdir ? '"' : ''), $crlf;
   }
 }
 
 
 sub write_comps {
-  my($self)     = shift;
-  my($fh)       = shift;
-  my($projects) = $self->get_projects();
-  my($pjs)      = $self->get_project_info();
-  my(%targnum)  = ();
-  my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum, 0);
-  my($crlf)     = $self->crlf();
-  my(@ltargets) = @targets;
+  my($self, $fh, $creator) = @_;
+  my %targnum;
+  my $pjs  = $self->get_project_info();
+  my @list = $self->number_target_deps($self->get_projects(), $pjs,
+                                       \%targnum, 0);
+  my $crlf = $self->crlf();
 
   print $fh "!include <\$(ACE_ROOT)\\include\\makeinclude\\make_flags.bor>$crlf";
 
-  ## Construct the "all" target
-  my($all) = $crlf . 'all:';
+  ## Translate each project name
+  my %trans;
   foreach my $project (@list) {
-    $all .= " $$pjs{$project}->[0]";
-  }
-  if (length($all) < $max_line_length) {
-    print $fh $all, $crlf;
-  }
-  else {
-    unshift(@ltargets, 'all');
+    $trans{$project} = $$pjs{$project}->[0];
   }
 
-  ## Print out all other targets here
-  foreach my $target (@ltargets) {
-    print $fh $crlf .
-              "$target\:$crlf";
-    $self->write_project_targets($fh, $target, \@list);
-  }
-
-  ## Print out each target separately
-  foreach my $project (@list) {
-    print $fh $crlf . $$pjs{$project}->[0] . ':';
-    if (defined $targnum{$project}) {
-      foreach my $number (@{$targnum{$project}}) {
-        print $fh " $$pjs{$list[$number]}->[0]";
-      }
-    }
-
-    print $fh $crlf;
-    $self->write_project_targets($fh, 'all', [ $project ]);
-  }
-
-  ## Print out the project_name_list target
-  print $fh $crlf . "project_name_list:$crlf";
-  foreach my $project (sort @list) {
-    print $fh "\t\@echo $$pjs{$project}->[0]$crlf";
-  }
+  ## Send all the information to our base class method
+  $self->write_named_targets($fh, $crlf, \%targnum, \@list,
+                             $targets, '', '', \%trans, undef,
+                             $creator->get_and_symbol(), $max_line_length);
 }
 
 
