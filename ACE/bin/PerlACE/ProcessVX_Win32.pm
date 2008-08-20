@@ -207,11 +207,11 @@ sub Spawn ()
         @cmds[$cmdnr++] = 'C putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
 
         if (defined $ENV{'ACE_RUN_ACE_DEBUG'}) {
-            @cmds[$cmdnr++] = 'putenv("ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"} . '")';
+            @cmds[$cmdnr++] = 'C putenv("ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"} . '")';
         }
 
         if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
-            @cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
+            @cmds[$cmdnr++] = 'C putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
         }
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
