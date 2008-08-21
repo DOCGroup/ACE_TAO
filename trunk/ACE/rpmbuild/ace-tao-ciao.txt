@@ -65,7 +65,7 @@ Release:      1%{?OPTTAG}%{?dist}
 Group:        Development/Libraries/C and C++
 URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
-Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead18082008.tar.bz2
+Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead21082008.tar.bz2
 Source1:      ace-tao-rpmlintrc
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
@@ -805,7 +805,6 @@ cat ${ACE_ROOT}/rpmbuild/ace-tao-orbsvcs-daemon.patch | patch -p 1
 %if %{?_with_autoconf:0}%{!?_with_autoconf:1}
 
 cat > $ACE_ROOT/ace/config.h << EOF
-#define TAO_IDL_INCLUDE_DIR "/usr/include/tao"
 EOF
 
 # If ipv6 support is indicated insert some lines into the config.h file
@@ -1336,6 +1335,12 @@ install -d %{buildroot}%{_datadir}/mpc
 install -d %{buildroot}%{_datadir}/tao
 install -d %{buildroot}%{_datadir}/tao/MPC
 
+# Set TAO_IDL setting for the user
+cat >> ${ACE_ROOT}/include/makeinclude/platform_macros.GNU <<EOF
+TAO_IDL = %{_bindir}/tao_idl
+TAO_IDL_EXT = %{_bindir}/tao_idl$(EXEEXT)
+EOF
+
 for mk_macros in \
     all_in_one.GNU \
     component_check.GNU \
@@ -1373,7 +1378,7 @@ install ${ACE_ROOT}/bin/add_rel_link.sh %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/{ACEutils,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
 
 ln -sfn %{_includedir}/ace %{buildroot}%{_datadir}/ace
-ln -sfn %{_includedir}/tao %{buildroot}%{_datadir}/tao/TAO
+ln -sfn %{_includedir}/tao %{buildroot}%{_datadir}/tao/tao
 
 cp -a ${TAO_ROOT}/MPC/* %{buildroot}%{_datadir}/tao/MPC
 
@@ -1441,6 +1446,7 @@ grep libTAO nonsvc-so.list > tao-nonsvc-so.list
 
 # Concatenate file lists as neccessary
 cat tao-headers.list tao-nonsvc-so.list > tao-devel-files.list
+cat ace-headers.list ace-nonsvc-so.list > ace-devel-files.list
 
 # ================================================================
 # clean
@@ -1980,7 +1986,7 @@ fi
 
 # ---------------- ace-devel ----------------
 
-%files -n ace-devel -f ace-headers.list
+%files -n ace-devel -f ace-devel-files.list
 %defattr(-,root,root,-)
 %{_libdir}/libACE.so
 %{_libdir}/libACE_ETCL_Parser.so
@@ -2304,7 +2310,7 @@ fi
 %{_datadir}/tao/MPC
 %{_bindir}/tao_idl
 %attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}
-%{_datadir}/tao/TAO
+%{_datadir}/tao/tao
 
 # These get missed by the automatic list generator because they
 # contain no immediate files.
