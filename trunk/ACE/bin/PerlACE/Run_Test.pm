@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 # $Id$
 
 # This module contains a few miscellanous functions and some

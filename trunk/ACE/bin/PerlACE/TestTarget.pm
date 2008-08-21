@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 # $Id$
 #
 # The TestTarget class is for operations that are per-target while testing.

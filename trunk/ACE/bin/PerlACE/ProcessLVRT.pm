@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 # $Id$
 #
 # ProcessLVRT - how to run ACE+TAO tests on a LabVIEW RT target.
@@ -99,7 +100,7 @@ sub Executable
     }
     $executable = $dirname.$subdir.$basename.".DLL";
     $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
-    
+
     return $executable;
 }
 
