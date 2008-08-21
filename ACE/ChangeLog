@@ -1,3 +1,10 @@
+Thu Aug 21 09:38:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Added OpenSuSE build services as new rpm download location.
+          Removed ACE-install.sh reference, it is not part of the
+          archive anymore
+
 Thu Aug 21 06:54:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
