@@ -1,3 +1,28 @@
+Thu Aug 21 06:54:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Also check /usr/lib64 for the libs
+
+        * bin/depgen.pl:
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+        * bin/PerlACE/ConfigList.pm:
+        * bin/PerlACE/MSProject.pm:
+        * bin/PerlACE/Process.pm:
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_VMS.pm:
+        * bin/PerlACE/Process_Win32.pm:
+        * bin/PerlACE/ProcessLVRT.pm:
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/Run_Test.pm:
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_LVRT.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+        * bin/Uniqueid.pm:
+          Added missing shebang lines to fix rpm packaging warnings
+
 Wed Aug 20 09:38:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:

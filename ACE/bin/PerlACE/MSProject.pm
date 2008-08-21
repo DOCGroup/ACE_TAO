@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 # $Id$
 
 package PerlACE::MSProject;
@@ -9,17 +10,17 @@ use FileHandle;
 
 # Constructor
 
-sub new  
+sub new
 {
     my $proto = shift;
     my $class = ref ($proto) || $proto;
     my $self = {};
-    
+
     $self->{FILENAME} = shift;
     $self->{VERSION} = undef;
     $self->{NAME} = undef;
     %{$self->{CONFIGS}} = ();
-    
+
     bless ($self, $class);
     return $self;
 }
@@ -35,7 +36,7 @@ sub Filename
     if (@_ != 0) {
         $self->{FILENAME} = shift;
     }
-	
+
     return $self->{FILENAME};
 }
 
@@ -61,20 +62,20 @@ sub DepOutputFile ($)
 {
     my $self = shift;
     my $config = shift;
-    
+
     if (!defined $config) {
         print STDERR "Error: No configuration specified\n";
         return;
     }
 
     my $name = $self->OutputFile ($config);
-           
+
     if ($name =~ m/\.dll$/) {
-        $name = $self->LibraryFile ($config);             
+        $name = $self->LibraryFile ($config);
     }
 
     $name =~ s/.*\\//; # / <- For devenv
-    $name =~ s/.*\///; 
+    $name =~ s/.*\///;
 
     return $name;
 }
@@ -83,19 +84,19 @@ sub OutputFile ($)
 {
     my $self = shift;
     my $config = shift;
-    
+
     if (!defined $config) {
         print STDERR "Error: No configuration specified\n";
         return;
     }
-    
+
     if (%{$self->{CONFIGS}}->{$config}->{LINK} =~ m/out\:\"([^\"]*)\"/) {
         return $1;
     }
     elsif (defined $self->Name ()) {
         my $filename = $self->Filename;
         my $ext = "";
-        
+
         if (%{$self->{CONFIGS}}->{$config}->{LINK} =~ m/\/dll/) {
             $ext = ".dll";
         }
@@ -105,7 +106,7 @@ sub OutputFile ($)
         else {
             $ext = ".lib";
         }
-        
+
         $filename =~ s/\.[^\.]*$/$ext/;
         return $filename;
     }
@@ -117,16 +118,16 @@ sub LibraryFile ($)
     my $self = shift;
     my $config = shift;
     my $dll = undef;
-    
+
     if (!defined $config) {
         print STDERR "Error: No configuration specified\n";
         return;
     }
-    
+
     if ($self->OutputFile ($config) =~ m/([^\/\\]*)\.dll$/i) {
         $dll = $1;
     }
-    
+
     if (defined $dll) {
         if (%{$self->{CONFIGS}}->{$config}->{LINK} =~ m/implib\:\"([^\"]*)\"/i) {
             return $1;
@@ -142,59 +143,59 @@ sub OutputDir ($)
 {
     my $self = shift;
     my $config = shift;
-    
+
     if (!defined $config) {
         print STDERR "Error: No configuration specified\n";
         return;
     }
-    
-    return %{$self->{CONFIGS}}->{$config}->{OUTPUTDIR}; 
+
+    return %{$self->{CONFIGS}}->{$config}->{OUTPUTDIR};
 }
 
 sub IntermidiateDir ($)
 {
     my $self = shift;
     my $config = shift;
-    
+
     if (!defined $config) {
         print STDERR "Error: No configuration specified\n";
         return;
     }
-    
-    return %{$self->{CONFIGS}}->{$config}->{INTERMEDIATEDIR}; 
+
+    return %{$self->{CONFIGS}}->{$config}->{INTERMEDIATEDIR};
 }
 
 sub TargetDir ($)
 {
     my $self = shift;
     my $config = shift;
-    
+
     if (!defined $config) {
         print STDERR "Error: No configuration specified\n";
         return;
     }
-    
-    return %{$self->{CONFIGS}}->{$config}->{TARGETDIR}; 
+
+    return %{$self->{CONFIGS}}->{$config}->{TARGETDIR};
 }
 
 sub CPPOptions ($)
 {
     my $self = shift;
     my $config = shift;
-    
+
     if (!defined $config) {
         print STDERR "Error: No configuration specified\n";
         return;
     }
-    
-    return %{$self->{CONFIGS}}->{$config}->{CPP}; 
+
+    return %{$self->{CONFIGS}}->{$config}->{CPP};
 }
 
 sub LINKOptions ($)
 {
     my $self = shift;
     my $config = shift;
-    
+
     if (!defined $config) {
         print STDERR "Error: No configuration specified\n";
         return;
