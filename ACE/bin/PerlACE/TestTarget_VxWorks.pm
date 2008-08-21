@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 package PerlACE::TestTarget_VxWorks;
 
 # ******************************************************************

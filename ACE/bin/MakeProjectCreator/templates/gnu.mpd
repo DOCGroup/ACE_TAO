@@ -212,7 +212,7 @@ else
   ifeq ($(findstring k, $(MAKEFLAGS)),k)
     LIBCHECK = 1
   else
-    LIBCHECK ?= $(filter-out $(foreach lib,<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>,$(findstring $(lib),$(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%><%libpath%>/<%targetoutdir%> <%endif%><%libpath%> <%endfor%>/usr/lib $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>)
+    LIBCHECK ?= $(filter-out $(foreach lib,<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>,$(findstring $(lib),$(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%><%libpath%>/<%targetoutdir%> <%endif%><%libpath%> <%endfor%>/usr/lib /usr/lib64 $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>)
     ifeq ($(LIBCHECK),)
       LIBCHECK = 1
     endif
