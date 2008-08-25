@@ -1335,12 +1335,6 @@ install -d %{buildroot}%{_datadir}/mpc
 install -d %{buildroot}%{_datadir}/tao
 install -d %{buildroot}%{_datadir}/tao/MPC
 
-# Set TAO_IDL setting for the user
-cat >> ${ACE_ROOT}/include/makeinclude/platform_macros.GNU <<EOF
-TAO_IDL = %{_bindir}/tao_idl
-TAO_IDL_EXT = %{_bindir}/tao_idl$(EXEEXT)
-EOF
-
 for mk_macros in \
     all_in_one.GNU \
     component_check.GNU \
@@ -1368,7 +1362,7 @@ install -d %{buildroot}%{_datadir}/ace/bin
 cp -a ${ACE_ROOT}/bin/DependencyGenerator %{buildroot}%{_datadir}/ace/bin
 cp -a ${ACE_ROOT}/bin/MakeProjectCreator %{buildroot}%{_datadir}/ace/bin
 install -d %{buildroot}%{_datadir}/ace/bin/PerlACE
-install ${ACE_ROOT}/bin/PerlACE/{ConfigList,Process,Process_Unix}.pm %{buildroot}%{_datadir}/ace/bin/PerlACE
+cp -a ${ACE_ROOT}/bin/PerlACE/* %{buildroot}%{_datadir}/ace/bin/PerlACE
 install ${ACE_ROOT}/bin/mpc.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/mwc.pl %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/g++dep %{buildroot}%{_datadir}/ace/bin
@@ -1378,9 +1372,19 @@ install ${ACE_ROOT}/bin/add_rel_link.sh %{buildroot}%{_datadir}/ace/bin
 install ${ACE_ROOT}/bin/{ACEutils,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
 
 ln -sfn %{_includedir}/ace %{buildroot}%{_datadir}/ace
-ln -sfn %{_includedir}/tao %{buildroot}%{_datadir}/tao/tao
+ln -sfn %{_includedir}/tao %{buildroot}%{_datadir}/tao
+ln -sfn %{_libdir} %{buildroot}%{_datadir}/ace/lib
 
 cp -a ${TAO_ROOT}/MPC/* %{buildroot}%{_datadir}/tao/MPC
+
+# Set TAO_IDL setting for the user
+cat > %{buildroot}%{_datadir}/ace/include/makeinclude/platform_macros.GNU.tmp <<EOF
+TAO_IDL = %{_bindir}/tao_idl
+TAO_IDL_DEP = %{_bindir}/tao_idl
+EOF
+cat %{buildroot}%{_datadir}/ace/include/makeinclude/platform_macros.GNU >> %{buildroot}%{_datadir}/ace/include/makeinclude/platform_macros.GNU.tmp
+mv %{buildroot}%{_datadir}/ace/include/makeinclude/platform_macros.GNU.tmp %{buildroot}%{_datadir}/ace/include/makeinclude/platform_macros.GNU
+
 
 install -d %{buildroot}%{_sysconfdir}/profile.d
 cat > %{buildroot}%{_sysconfdir}/profile.d/mpc.sh <<EOF
@@ -1397,8 +1401,8 @@ export TAO_ROOT
 EOF
 
 # convenience symlinks
-ln -sfn %{_datadir}/ace/bin/mpc.pl %{buildroot}%{_bindir}/mpc-ace
-ln -sfn %{_datadir}/ace/bin/mwc.pl %{buildroot}%{_bindir}/mwc-ace
+ln -sfn %{_datadir}/ace/bin/mpc.pl %{buildroot}%{_bindir}/mpc.pl
+ln -sfn %{_datadir}/ace/bin/mwc.pl %{buildroot}%{_bindir}/mwc.pl
 
 # ================================================================
 # Manuals
@@ -1999,10 +2003,9 @@ fi
 %{_datadir}/ace/include
 %{_datadir}/ace/include/makeinclude
 %{_datadir}/ace/bin
-%{_bindir}/mpc-ace
-%{_bindir}/mwc-ace
-%config %{_sysconfdir}/profile.d/ace-devel.sh
 %{_datadir}/ace/ace
+%{_datadir}/ace/lib
+%config %{_sysconfdir}/profile.d/ace-devel.sh
 
 %if %{?_with_fox:1}%{!?_with_fox:0}
 %exclude %{_includedir}/ace/FoxReactor/FoxReactor.h
@@ -2260,6 +2263,8 @@ fi
 %defattr(-,root,root,-)
 %{_datadir}/mpc
 %config %{_sysconfdir}/profile.d/mpc.sh
+%{_bindir}/mpc.pl
+%{_bindir}/mwc.pl
 
 # ---------------- tao ----------------
 
@@ -2668,11 +2673,6 @@ fi
 # ================================================================
 
 %changelog
-* Mon Aug 11 2008 Philipp Thomas <philipp@thogro.org> - 5.6.6-2
-- Package files in /var/adm/fillup-templates
-- Use Requires(post) etc. only for non-suse builds.
-- Only define base package name for each distribution and then have
-  one BuildRequires for all.
-* Thu Jul 31 2008 Johnny Willemsen  <jwillemsen@remedy.nl> - 5.6.6-2
-- Removed ace-tao-unusedarg.patch (related to bug #3270).
-
+* Fri Aug 22 2008 Johnny Willemsen <jwillemsen@remedy.nl> - 5.6.5-1
+- Initial version. Be aware that this is a subversion snapshot, almost
+  5.6.6
