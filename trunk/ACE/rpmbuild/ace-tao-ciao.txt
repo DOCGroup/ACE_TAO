@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.6.5
-%define TAOVER  1.6.5
-%define CIAOVER 0.6.5
+%define ACEVER  5.6.6
+%define TAOVER  1.6.6
+%define CIAOVER 0.6.6
 # Set is_major_ver if the version is X.Y instead X.Y.Z
 
 # TODO
@@ -65,7 +65,7 @@ Release:      1%{?OPTTAG}%{?dist}
 Group:        Development/Libraries/C and C++
 URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
-Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACEhead21082008.tar.bz2
+Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.bz2
 Source1:      ace-tao-rpmlintrc
 ## Source1: ace-tao-etc.tar.gz
 ## Source2: ace-tao-macros.patch
