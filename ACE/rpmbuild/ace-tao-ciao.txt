@@ -1333,6 +1333,7 @@ install -d %{buildroot}%{_datadir}/ace/include
 install -d %{buildroot}%{_datadir}/ace/include/makeinclude
 install -d %{buildroot}%{_datadir}/mpc
 install -d %{buildroot}%{_datadir}/tao
+install -d %{buildroot}%{_datadir}/tao/orbsvcs
 install -d %{buildroot}%{_datadir}/tao/MPC
 
 for mk_macros in \
@@ -1373,6 +1374,7 @@ install ${ACE_ROOT}/bin/{ACEutils,Uniqueid}.pm %{buildroot}%{_datadir}/ace/bin
 
 ln -sfn %{_includedir}/ace %{buildroot}%{_datadir}/ace
 ln -sfn %{_includedir}/tao %{buildroot}%{_datadir}/tao
+ln -sfn %{_includedir}/orbsvcs %{buildroot}%{_datadir}/tao/orbsvcs
 ln -sfn %{_libdir} %{buildroot}%{_datadir}/ace/lib
 
 cp -a ${TAO_ROOT}/MPC/* %{buildroot}%{_datadir}/tao/MPC
@@ -2316,6 +2318,7 @@ fi
 %{_bindir}/tao_idl
 %attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}
 %{_datadir}/tao/tao
+%{_datadir}/tao/orbsvcs
 
 # These get missed by the automatic list generator because they
 # contain no immediate files.
