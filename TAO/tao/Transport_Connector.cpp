@@ -815,6 +815,7 @@ TAO_Connector::wait_for_connection_completion (
             }
           else
             {
+	      transport->purge_entry ();
               // The wait failed for some other reason.
               // Report that making the connection failed, don't print errno
               // because we touched the reactor and errno could be changed

@@ -49,7 +49,7 @@ public:
   virtual int bind (TAO_LF_Follower *follower);
 
   /// Unbind the follower from all the collected events.
-  virtual int unbind (void);
+  virtual int unbind (TAO_LF_Follower *follower);
 
   /// Adds a handler to the collection
   void add_event (TAO_Connection_Handler *ch);

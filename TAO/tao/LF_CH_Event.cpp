@@ -1,4 +1,5 @@
 #include "tao/LF_CH_Event.h"
+#include "tao/LF_Follower.h"
 
 ACE_RCSID(tao,
           LF_Invocation_Event,
@@ -17,13 +18,38 @@ TAO_LF_CH_Event::~TAO_LF_CH_Event (void)
 {
 }
 
+int
+TAO_LF_CH_Event::bind (TAO_LF_Follower *follower)
+{
+  return this->followers_.bind (follower, 0);
+}
+
+int
+TAO_LF_CH_Event::unbind (TAO_LF_Follower *follower)
+{
+  return this->followers_.unbind (follower);
+}
+
 void
 TAO_LF_CH_Event::state_changed_i (int new_state)
 {
-  if (this->state_ == new_state)
-    return;
+  if (this->state_ != new_state)
+    {
+      this->validate_state_change (new_state);
+    }
 
-    // Validate the state change
+  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->followers_.mutex ()));
+
+  HASH_MAP::iterator end_it = this->followers_.end ();
+  for (HASH_MAP::iterator it = this->followers_.begin (); it != end_it ; ++it)
+    {
+      it->ext_id_->signal ();
+    }
+}
+
+void
+TAO_LF_CH_Event::validate_state_change (int new_state)
+{
   if (this->state_ == TAO_LF_Event::LFS_IDLE)
     {
       // From the LFS_IDLE state we can only become active.

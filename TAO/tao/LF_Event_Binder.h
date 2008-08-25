@@ -43,6 +43,7 @@ public:
 private:
   /// Keep a reference to the leader follower
   TAO_LF_Event * const event_;
+  TAO_LF_Follower * const follower_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

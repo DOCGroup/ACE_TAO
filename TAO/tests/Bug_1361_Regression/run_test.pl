@@ -14,10 +14,12 @@ $iorfile = PerlACE::LocalFile ("$iorfilebase");
 unlink $iorfile;
 
 $debug_opts = '';
+$srv_debug = '';
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_opts = '-ORBDebugLevel 10 -ORBVerboseLogging 1 '
                     . '-ORBLogFile client';
+        $srv_debug  = '-ORBDebugLevel 10 -ORBVerboseLogging 1';
     } 
 }
 
@@ -25,7 +27,7 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");
+    $SV = new PerlACE::Process ("server", "-o $iorfile $srv_debug");
 }
 $threads = int (rand() * 6) + 1;
 $CL = new PerlACE::Process ("client", "-k file://$iorfile -t $threads $debug_opts");
