@@ -1,3 +1,37 @@
+Mon Aug 25 22:28:04 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/LF_Event.h:
+        * tao/LF_Event.inl:
+
+          Allow for multiple followers per event (if derived classes implement
+          this behavior).  Specifically, added a "follower" argument to
+          unbind() to match bind().
+
+        * tao/LF_Multi_Event.h:
+        * tao/LF_Multi_Event.cpp:
+
+          Modified for the new unbind() signature.
+ 
+        * tao/LF_CH_Event.h:
+        * tao/LF_CH_Event.cpp:
+
+          Implement multiple followers using an ACE_Hash_Map_Manager_Ex.  This
+          allows multiple threads to wait for a Connection Handler event.
+
+        * tao/LF_Event_Binder.h:
+        * tao/LF_Event_Binder.inl:
+        * tao/LF_Event_Binder.cpp:
+
+          Store the follower pointer so that it can be passed to unbind().
+
+        * tao/Transport_Connector.cpp (wait_for_connection_completion):
+
+          Purge the entry from the cache if the connection fails.
+
+        * tests/Bug_1361_Regression/run_test.pl:
+
+          Add server logging output if -debug is passed.
+
 Mon Aug 18 14:03:23 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Send_Timeouts/run_test.pl:

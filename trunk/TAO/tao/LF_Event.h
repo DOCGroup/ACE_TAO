@@ -73,7 +73,7 @@ public:
   virtual int bind (TAO_LF_Follower *follower);
 
   /// Unbind the follower
-  virtual int unbind (void);
+  virtual int unbind (TAO_LF_Follower *follower);
 
   //@{
   /** @name State management

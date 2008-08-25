@@ -16,6 +16,10 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/LF_Event.h"
+#include "tao/orbconf.h"
+#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -108,10 +112,21 @@ private:
   /// Set the state irrespective of anything.
   virtual void set_state (int new_state);
 
+  virtual int bind (TAO_LF_Follower *follower);
+  virtual int unbind (TAO_LF_Follower *follower);
+
 private:
 
   /// The previous state that the LF_CH_Event was in
   int prev_state_;
+
+  void validate_state_change (int new_state);
+
+  typedef ACE_Hash_Map_Manager_Ex <TAO_LF_Follower *, int,
+                                   ACE_Hash<void *>,
+                                   ACE_Equal_To<TAO_LF_Follower *>,
+                                   TAO_SYNCH_MUTEX>                  HASH_MAP;
+  HASH_MAP followers_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
