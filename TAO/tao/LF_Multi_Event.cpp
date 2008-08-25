@@ -43,15 +43,15 @@ TAO_LF_Multi_Event::bind (TAO_LF_Follower *follower)
 }
 
 int
-TAO_LF_Multi_Event::unbind (void)
+TAO_LF_Multi_Event::unbind (TAO_LF_Follower *follower)
 {
-  if (this->TAO_LF_Event::unbind() == -1)
+  if (this->TAO_LF_Event::unbind (follower) == -1)
     {
       return -1;
     }
 
   for (Event_Node *n = this->events_; n != 0; n = n->next_)
-    if (n->ptr_->unbind() == -1)
+    if (n->ptr_->unbind (follower) == -1)
       {
         return -1;
       }

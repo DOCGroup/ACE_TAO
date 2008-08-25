@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_Event_Binder::~TAO_LF_Event_Binder (void)
 {
-  this->event_->unbind ();
+  this->event_->unbind (follower_);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
