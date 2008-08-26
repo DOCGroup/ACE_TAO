@@ -560,9 +560,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                   if (TAO_debug_level > 2)
                     {
                       ACE_ERROR ((LM_ERROR,
-                                  "TAO (%P|%t) - Transport_Connector::connect, "
-                                  "wait for completion failed [%d]\n",
-                                  base_transport->id ()));
+                                  "TAO (%P|%t) - Transport_Connector::connect,"
+                                  " wait for completion failed\n"));
                     }
                   return 0;
                 }
@@ -699,137 +698,128 @@ TAO_Connector::wait_for_connection_completion (
     ACE_Time_Value *timeout)
 {
   int result = -1;
-  if (!r->blocked_connect ())
+  if (transport->connection_handler ()->is_open ())
     {
-      if (transport->connection_handler ()->is_open ())
+      result = 0;
+    }
+  else if (transport->connection_handler ()->is_timeout ())
+    {
+      if (TAO_debug_level > 2)
         {
-          result = 0;
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport_Connector::"
+                      "wait_for_connection_completion, "
+                      "transport [%d], Connection timed out.\n",
+                      transport->id ()));
         }
-      else if (transport->connection_handler ()->is_timeout ())
+      result = -1;
+      errno = ETIME;
+    }
+  else if (transport->connection_handler ()->is_closed ())
+    {
+      if (TAO_debug_level > 2)
         {
-          if (TAO_debug_level > 2)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - Transport_Connector::"
-                          "wait_for_connection_completion, "
-                          "transport [%d], Connection timed out.\n",
-                          transport->id ()));
-            }
-          result = -1;
-          errno = ETIME;
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport_Connector::"
+                      "wait_for_connection_completion, "
+                      "transport [%d], Connection failed. (%d) %p\n",
+                      transport->id (), errno, ""));
         }
-      else if (transport->connection_handler ()->is_closed ())
-        {
-          if (TAO_debug_level > 2)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-              "TAO (%P|%t) - Transport_Connector::"
-              "wait_for_connection_completion, "
-              "transport [%d], Connection failed. (%d) %p\n",
-              transport->id (), errno, ""));
-            }
-          result = -1;
-        }
-      else
-        {
-          if (TAO_debug_level > 2)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - Transport_Connector::"
-                          "wait_for_connection_completion, "
-                          "transport [%d], Connection not complete.\n",
-                          transport->id ()));
-            }
-          TAO::Transport_Cache_Manager &tcm =
-            this->orb_core ()->lane_resources ().transport_cache ();
-          tcm.cache_transport (&desc, transport, TAO::ENTRY_CONNECTING);
-
-          transport->connection_handler ()->
-            reset_state (TAO_LF_Event::LFS_CONNECTION_WAIT);
-          result = 0;
-        }
+      result = -1;
     }
   else
     {
-      if (TAO_debug_level > 4)
+      if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Transport_Connector::"
                       "wait_for_connection_completion, "
-                      "caching before wait, hash %d = [%d]\n",
-                      desc.hash(),
+                      "transport [%d], Connection not complete.\n",
                       transport->id ()));
         }
+
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
       tcm.cache_transport (&desc, transport, TAO::ENTRY_CONNECTING);
-      if (TAO_debug_level > 2)
+
+      if (r->blocked_connect ())
         {
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Transport_Connector::"
-                        "wait_for_connection_completion, "
-                        "going to wait for connection completion on transport"
-                        "[%d]\n",
-                        transport->id ()));
-        }
-
-      result = this->active_connect_strategy_->wait (transport, timeout);
-
-      if (TAO_debug_level > 2)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport_Connector::"
-                      "wait_for_connection_completion, "
-                      "transport [%d], wait done result = %d\n",
-                      transport->id (), result));
-        }
-
-      // There are three possibilities when wait() returns: (a)
-      // connection succeeded; (b) connection failed; (c) wait()
-      // failed because of some other error.  It is easy to deal with
-      // (a) and (b).  (c) is tricky since the connection is still
-      // pending and may get completed by some other thread.  The
-      // following code deals with (c).
-
-      if (result == -1)
-        {
-          if (errno == ETIME)
+          if (TAO_debug_level > 2)
             {
-              if (timeout == 0)
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Transport_Connector::"
+                          "wait_for_connection_completion, "
+                          "going to wait for connection completion on "
+                          "transport[%d]\n",
+                          transport->id ()));
+            }
+
+          result = this->active_connect_strategy_->wait (transport, timeout);
+
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Transport_Connector::"
+                          "wait_for_connection_completion, "
+                          "transport [%d], wait done result = %d\n",
+                          transport->id (), result));
+            }
+
+
+          // There are three possibilities when wait() returns: (a)
+          // connection succeeded; (b) connection failed; (c) wait()
+          // failed because of some other error.  It is easy to deal with
+          // (a) and (b).  (c) is tricky since the connection is still
+          // pending and may get completed by some other thread.  The
+          // following code deals with (c).
+
+          if (result == -1)
+            {
+              if (errno == ETIME)
                 {
-                  // There was an error during connecting and the errno was
-                  // ETIME.  We didn't pass in a timeout, so there's
-                  // something wrong with this transport.  So, it must be
-                  // purged.
+                  if (timeout == 0)
+                    {
+                      // There was an error during connecting and the errno was
+                      // ETIME.  We didn't pass in a timeout, so there's
+                      // something wrong with this transport.  So, it must be
+                      // purged.
+                      transport->purge_entry ();
+                    }
+
+                  if (TAO_debug_level > 2)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "TAO (%P|%t) - Transport_Connector::"
+                                  "wait_for_connection_completion, "
+                                  "transport [%d], Connection timed out.\n",
+                                  transport->id ()));
+                    }
+                }
+              else
+                {
+                  // The wait failed for some other reason.
+                  // Report that making the connection failed
+                  if (TAO_debug_level > 2)
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  "TAO (%P|%t) - Transport_Connector::"
+                                  "wait_for_connection_completion, "
+                                  "transport [%d], wait for completion failed"
+                                  " (%d) %p\n",
+                                  transport->id (), errno, ""));
+                    }
+                  TAO_Connection_Handler *con =
+                    transport->connection_handler ();
+                  result = this->check_connection_closure (con);
                   transport->purge_entry ();
                 }
-
-              if (TAO_debug_level > 2)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "TAO (%P|%t) - Transport_Connector::"
-                              "wait_for_connection_completion, "
-                              "transport [%d], Connection timed out.\n",
-                              transport->id ()));
-                }
             }
-          else
-            {
-	      transport->purge_entry ();
-              // The wait failed for some other reason.
-              // Report that making the connection failed, don't print errno
-              // because we touched the reactor and errno could be changed
-              if (TAO_debug_level > 2)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "TAO (%P|%t) - Transport_Connector::"
-                              "wait_for_connection_completion, "
-                    "transport [%d], wait for completion failed (%d) %p\n",
-                    transport->id (), errno, ""));
-                }
-              TAO_Connection_Handler *con = transport->connection_handler ();
-              result = this->check_connection_closure (con);
-            }
+        }
+      else //non-blocked connect (based on invocation, not connect strategy)
+        {
+          transport->connection_handler ()->
+            reset_state (TAO_LF_Event::LFS_CONNECTION_WAIT);
+          result = 0;
         }
     }
 
