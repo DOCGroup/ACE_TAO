@@ -1,3 +1,15 @@
+Tue Aug 26 22:18:38 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.cpp (purge_entry):
+
+          Use the handler_lock_ when changing state (cache_map_entry_).
+
+        * tao/Transport_Connector.cpp (wait_for_connection_completion):
+
+          Combine the blocked and non-blocked cases for the part where it
+          checks if the transport has already been connected, closed, or
+          timed-out.  Previously the blocked connect didn't check these.
+
 Mon Aug 25 22:28:04 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/LF_Event.h:
@@ -11,7 +23,7 @@ Mon Aug 25 22:28:04 UTC 2008  Adam Mitz  <mitza@ociweb.com>
         * tao/LF_Multi_Event.cpp:
 
           Modified for the new unbind() signature.
- 
+
         * tao/LF_CH_Event.h:
         * tao/LF_CH_Event.cpp:
 
