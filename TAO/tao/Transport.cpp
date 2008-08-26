@@ -488,9 +488,12 @@ TAO_Transport::purge_entry (void)
   // If there is only one reference count on us, we will end up causing
   // our own destruction.  And we can not be holding a cache map entry if
   // that happens.
-  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY* entry = this->cache_map_entry_;
-  this->cache_map_entry_ = 0;
-
+  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY* entry = 0;
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+    entry = this->cache_map_entry_;
+    this->cache_map_entry_ = 0;
+  }
   return this->transport_cache_manager ().purge_entry (entry);
 }
 
