@@ -1,6 +1,8 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
+
 #include "test_i.h"
 
 ACE_RCSID(Failure, client, "$Id$")
@@ -156,7 +158,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       else if (do_suicide)
         {
           (void) server->test_method (1, 0, callback.in ());
-          ACE_DEBUG ((LM_DEBUG, "ERROR: client should have aborted\n"));
+          // The shutdown callback could arrive after this twoway invocation
+          // returned. Wait for it shutdown callback and abort,
+          // otherwise it will timeout (in run_test.pl).
+          ACE_OS::sleep (120);
         }
       else if (do_self_shutdown)
         {
