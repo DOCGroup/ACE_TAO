@@ -150,7 +150,7 @@ sub Spawn ()
 
         $cmdline = $program . $PerlACE::ProcessVX::ExeExt . ' ' . $self->{ARGUMENTS};
         @cmds[$cmdnr++] = $cmdline;
-        $prompt = '\[vxWorks \*\]\#';
+        $prompt = '\[vxWorks \*\]\# $';
     } else {
         if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $PerlACE::ProcessVX::VxDefGw) {
             @cmds[$cmdnr++] = "mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
@@ -198,7 +198,7 @@ sub Spawn ()
         @cmds[$cmdnr++] = 'unld "'. $program . $PerlACE::ProcessVX::ExeExt . '"';
         push @cmds, @unload_commands;
         $cmdnr += scalar @unload_commands;
-        $prompt = '->';
+        $prompt = '-> $';
     }
 
     print $oh "require Net::Telnet;\n";
