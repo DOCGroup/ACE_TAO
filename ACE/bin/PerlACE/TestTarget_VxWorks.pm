@@ -34,4 +34,21 @@ sub CreateProcess {
   return new PerlACE::ProcessVX(@_);
 }
 
+# Need a reboot when this target is destroyed.
+sub NeedReboot ($)
+{
+    my $self = shift;
+    $self->{REBOOT_NEEDED} = 1;
+}
+
+# Reboot target
+sub RebootNow ($)
+{
+    my $self = shift;
+    $self->{REBOOT_NEEDED} = undef;
+    print STDERR "Attempting to reboot target...\n";
+    reboot ();
+}
+
+
 1;
