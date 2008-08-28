@@ -19,7 +19,7 @@ foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_opts = '-ORBDebugLevel 10 -ORBVerboseLogging 1 '
                     . '-ORBLogFile client';
-        $srv_debug  = '-ORBDebugLevel 10 -ORBVerboseLogging 1';
+        $srv_debug  = '-ORBDebugLevel 5';
     } 
 }
 
@@ -64,7 +64,7 @@ while (($elapsed < $max_running_time) )
     ++$client_idx;
   }
 
-  $CL->WaitKill(60) unless $client < 0;
+  $CL->WaitKill(90) unless $client < 0;
 
   print STDERR "checking server alive\n";
 

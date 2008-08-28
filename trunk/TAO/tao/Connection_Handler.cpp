@@ -27,7 +27,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core),
     transport_ (0),
-    connection_pending_ (false)
+    connection_pending_ (false),
+    is_closed_ (false)
 {
   // @todo: We need to have a distinct option/ method in the resource
   // factory for this and TAO_Transport.
@@ -295,6 +296,9 @@ TAO_Connection_Handler::handle_input_internal (
 int
 TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 {
+
+  this->is_closed_ = true;
+
   // Save the ID for debugging messages
   ACE_HANDLE handle = eh->get_handle ();
 
@@ -429,6 +433,7 @@ TAO_Connection_Handler::pos_io_hook (int &)
 int
 TAO_Connection_Handler::close_handler (u_long flags)
 {
+  this->is_closed_ = true;
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
                        this->orb_core_->leader_follower ());
 

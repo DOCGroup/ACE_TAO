@@ -353,7 +353,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
                                    bool force_wait)
 {
   bool is_timeout = transport->connection_handler ()->is_timeout ();
-  if (is_timeout || transport->connection_handler()->is_closed ())
+  if (is_timeout || transport->connection_handler ()->is_closed ())
     {
       if (TAO_debug_level > 2)
         {
