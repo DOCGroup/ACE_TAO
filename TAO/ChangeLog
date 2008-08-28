@@ -1,3 +1,12 @@
+Thu Aug 28 20:27:37 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/Faults/run_test.pl:
+ 
+          Increased timeout to avoid the pong timeout error on windows.
+          When server dies, the client tries to make new connection. The  
+          time spent on trying new connection varies on different platform. 
+          On windows, it takes much longer than on Linux.
+
 Wed Aug 27 21:24:33 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * tests/Faults/client.cpp:
