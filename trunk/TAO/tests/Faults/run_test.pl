@@ -183,7 +183,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     exit 1;
 }
 
-if ($PO->SpawnWaitKill (60) == -1) {
+if ($PO->SpawnWaitKill (100) == -1) {
     $status = 1;
 }
 
@@ -351,7 +351,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     exit 1;
 }
 
-if ($PO->SpawnWaitKill (60) == -1) {
+if ($PO->SpawnWaitKill (100) == -1) {
     $status = 1;
 }
 
