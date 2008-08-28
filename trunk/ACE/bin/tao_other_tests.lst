@@ -110,7 +110,7 @@ TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: !MINIMUM !CORBA_E_COMPACT !C
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl -servers 5 -objects 5: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
-TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_EXCEPTIONS !ACE_FOR_TAO !VxWorks !VxWorks_RTP
+TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ST !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/examples/CosEC/TypedSimple/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !VxWorks !VxWorks_RTP
 TAO/orbsvcs/tests/CosEvent/Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !NO_MESSAGING !ACE_FOR_TAO !VxWorks !VxWorks_RTP
