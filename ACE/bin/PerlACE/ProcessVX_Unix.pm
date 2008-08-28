@@ -76,84 +76,6 @@ sub DESTROY
 
 ###############################################################################
 
-### Some Accessors
-
-sub Normalize_Executable_Name
-{
-    my $self = shift;
-    my $executable = shift;
-
-    my $basename = basename ($executable);
-    my $dirname = dirname ($executable). '/';
-
-    $executable = $dirname.$PerlACE::ProcessVX::ExeSubDir.$basename.$PerlACE::ProcessVX::ExeExt;
-
-    ## Installed executables do not conform to the ExeSubDir
-    if (! -e $executable && -e $dirname.$basename.$PerlACE::ProcessVX::ExeExt) {
-      $executable = $dirname.$basename.$PerlACE::ProcessVX::ExeExt;
-    }
-
-    return $executable;
-}
-
-
-sub Executable
-{
-    my $self = shift;
-
-    if (@_ != 0) {
-        $self->{EXECUTABLE} = shift;
-    }
-
-    my $executable = $self->{EXECUTABLE};
-
-    if ($self->{IGNOREEXESUBDIR} == 0) {
-      $executable = $self->Normalize_Executable_Name ($executable);
-    }
-    else {
-      $executable = $executable.$PerlACE::ProcessVX::ExeExt;
-    }
-
-    return $executable;
-}
-
-sub Arguments
-{
-    my $self = shift;
-
-    if (@_ != 0) {
-        $self->{ARGUMENTS} = shift;
-    }
-
-    return $self->{ARGUMENTS};
-}
-
-sub CommandLine ()
-{
-    my $self = shift;
-
-    my $commandline = $self->Executable ();
-
-    if (defined $self->{ARGUMENTS}) {
-        $commandline .= ' '.$self->{ARGUMENTS};
-    }
-
-    return $commandline;
-}
-
-sub IgnoreExeSubDir
-{
-    my $self = shift;
-
-    if (@_ != 0) {
-        $self->{IGNOREEXESUBDIR} = shift;
-    }
-
-    return $self->{IGNOREEXESUBDIR};
-}
-
-###############################################################################
-
 # Spawn the process and continue.
 
 sub Spawn ()
@@ -202,6 +124,13 @@ sub Spawn ()
     my $arguments = "";
     my $prompt = '';
     my $exesubdir = defined $ENV{"ACE_RUN_VX_EXE_SUBDIR"} ? $ENV{"ACE_RUN_VX_EXE_SUBDIR"} : "";
+
+    if (defined $ENV{"ACE_RUN_VX_STARTUP_SCRIPT"}) {
+      if (defined $ENV{"ACE_RUN_VX_STARTUP_SCRIPT_ROOT"}) {
+        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_STARTUP_SCRIPT_ROOT'} . '"';
+      }
+      @cmds[$cmdnr++] = '< ' . $ENV{"ACE_RUN_VX_STARTUP_SCRIPT"};
+    }
 
     if ($PerlACE::VxWorks_RTP_Test) {
         @cmds[$cmdnr++] = 'cmd';
@@ -359,40 +288,27 @@ sub Spawn ()
     return 0;
 }
 
-# Wait for the process to exit or kill after a time period
 
-sub WaitKill ($)
+sub TimedWait ($)
 {
     my $self = shift;
     my $timeout = shift;
 
-    my $status = $self->TimedWait ($timeout);
-
-    if ($status == -1) {
-        print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
-        $self->Kill ();
-
-        $PerlACE::ProcessVX::DoVxInit = 1; # force reboot on next run
+    if ($PerlACE::Process::WAIT_DELAY_FACTOR > 0) {
+      $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
     }
 
-    $self->{RUNNING} = 0;
-
-    return $status;
-}
-
-
-# Do a Spawn and immediately WaitKill
-
-sub SpawnWaitKill ($)
-{
-    my $self = shift;
-    my $timeout = shift;
-
-    if ($self->Spawn () == -1) {
-        return -1;
+    while ($timeout-- != 0) {
+        my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
+        if ($pid != 0 && $? != -1) {
+            return $self->check_return_value ($?);
+        }
+        sleep 1;
     }
 
-    return $self->WaitKill ($timeout);
+    $PerlACE::ProcessVX::DoVxInit = 1; # force reboot on next run
+
+    return -1;
 }
 
 
@@ -489,31 +405,5 @@ sub Wait ($)
     }
 
 }
-
-sub TimedWait ($)
-{
-    my $self = shift;
-    my $timeout = shift;
-
-    if ($PerlACE::Process::WAIT_DELAY_FACTOR > 0) {
-      $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
-    }
-
-    while ($timeout-- != 0) {
-        my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
-        if ($pid != 0 && $? != -1) {
-            return $self->check_return_value ($?);
-        }
-        sleep 1;
-    }
-
-    $PerlACE::ProcessVX::DoVxInit = 1; # force reboot on next run
-
-    return -1;
-}
-
-
-
-
 
 1;
