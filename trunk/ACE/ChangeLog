@@ -1,3 +1,18 @@
+Thu Aug 28 13:04:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          The error when we can't chdir to a directory was confusing
+
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Reduced duplicate code and added support for ACE_RUN_VX_STARTUP_SCRIPT
+          and ACE_RUN_VX_STARTUP_SCRIPT_ROOT with which we can specify a
+          startup script that is executed before the real application is started
+
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+          A VxWorks target has to be rebooted between tests
+
 Mon Aug 25 11:15:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:

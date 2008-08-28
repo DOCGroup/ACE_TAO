@@ -14,6 +14,123 @@ $PerlACE::ProcessVX::RebootTime = (defined $ENV{"ACE_RUN_VX_REBOOT_TIME"}) ? $EN
 $PerlACE::ProcessVX::ExeExt = ($PerlACE::VxWorks_RTP_Test) ? '.vxe' : '.out';
 $PerlACE::ProcessVX::RebootCmd = $ENV{"ACE_RUN_VX_REBOOT_CMD"};
 
+# Wait for the process to exit or kill after a time period
+
+sub WaitKill ($)
+{
+    my $self = shift;
+    my $timeout = shift;
+
+    my $status = $self->TimedWait ($timeout);
+
+    if ($status == -1) {
+        print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
+        $self->Kill ();
+        # Don't need to Wait since we are on Win32
+
+        $PerlACE::ProcessVX::DoVxInit = 1; # force reboot on next run
+    }
+
+    $self->{RUNNING} = 0;
+
+    return $status;
+}
+
+
+# Do a Spawn and immediately WaitKill
+
+sub SpawnWaitKill ($)
+{
+    my $self = shift;
+    my $timeout = shift;
+
+    if ($self->Spawn () == -1) {
+        return -1;
+    }
+
+    return $self->WaitKill ($timeout);
+}
+
+
+###############################################################################
+
+### Some Accessors
+
+sub Normalize_Executable_Name
+{
+    my $self = shift;
+    my $executable = shift;
+
+    my $basename = basename ($executable);
+    my $dirname = dirname ($executable). '/';
+
+    $executable = $dirname.$PerlACE::ProcessVX::ExeSubDir.$basename.$PerlACE::ProcessVX::ExeExt;
+
+    ## Installed executables do not conform to the ExeSubDir
+    if (! -e $executable && -e $dirname.$basename.$PerlACE::ProcessVX::ExeExt) {
+      $executable = $dirname.$basename.$PerlACE::ProcessVX::ExeExt;
+    }
+
+    return $executable;
+}
+
+
+sub Executable
+{
+    my $self = shift;
+
+    if (@_ != 0) {
+        $self->{EXECUTABLE} = shift;
+    }
+
+    my $executable = $self->{EXECUTABLE};
+
+    if ($self->{IGNOREEXESUBDIR} == 0) {
+      $executable = $self->Normalize_Executable_Name ($executable);
+    }
+    else {
+      $executable = $executable.$PerlACE::ProcessVX::ExeExt;
+    }
+
+    return $executable;
+}
+
+sub Arguments
+{
+    my $self = shift;
+
+    if (@_ != 0) {
+        $self->{ARGUMENTS} = shift;
+    }
+
+    return $self->{ARGUMENTS};
+}
+
+sub CommandLine ()
+{
+    my $self = shift;
+
+    my $commandline = $self->Executable ();
+
+    if (defined $self->{ARGUMENTS}) {
+        $commandline .= ' '.$self->{ARGUMENTS};
+    }
+
+    return $commandline;
+}
+
+sub IgnoreExeSubDir
+{
+    my $self = shift;
+
+    if (@_ != 0) {
+        $self->{IGNOREEXESUBDIR} = shift;
+    }
+
+    return $self->{IGNOREEXESUBDIR};
+}
+
+
 sub delay_factor {
   my($lps)    = 128;
   my($factor) = 1;
