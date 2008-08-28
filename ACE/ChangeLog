@@ -1,3 +1,10 @@
+Thu Aug 28 21:18:11 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+
+          Removed "Exceptions" and "NO_EXCEPTIONS" as -Config options.
+
 Thu Aug 28 18:33:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:

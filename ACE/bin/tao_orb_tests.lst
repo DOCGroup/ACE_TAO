@@ -316,8 +316,8 @@ TAO/tests/TransportCurrent/Framework/run_test.pl -dynamic: !DISABLE_TRANSPORT_CU
 TAO/tests/TransportCurrent/Framework/run_test.pl -static: !DISABLE_TRANSPORT_CURRENT STATIC !DISABLE_INTERCEPTORS !MINIMUM !LabVIEW_RT
 TAO/tests/TransportCurrent/IIOP/run_test.pl -dynamic: !DISABLE_TRANSPORT_CURRENT !STATIC !DISABLE_INTERCEPTORS !MINIMUM !LabVIEW_RT
 TAO/tests/TransportCurrent/IIOP/run_test.pl -static: !DISABLE_TRANSPORT_CURRENT STATIC !DISABLE_INTERCEPTORS !MINIMUM !LabVIEW_RT
-TAO/tests/UNKNOWN_Exception/run_test.pl: Exceptions !LabVIEW_RT
-TAO/tests/Native_Exceptions/run_test.pl: Exceptions !LabVIEW_RT
+TAO/tests/UNKNOWN_Exception/run_test.pl: !LabVIEW_RT
+TAO/tests/Native_Exceptions/run_test.pl: !LabVIEW_RT
 TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !LabVIEW_RT
 TAO/tests/Sequence_Unit_Tests/run_test.pl -noboost: !LabVIEW_RT
 TAO/tests/Sequence_Unit_Tests/run_test.pl -boost: BOOST !LabVIEW_RT
