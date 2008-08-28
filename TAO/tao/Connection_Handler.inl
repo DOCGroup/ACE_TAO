@@ -22,7 +22,7 @@ ACE_INLINE bool
 TAO_Connection_Handler::is_closed (void) const
 {
   return (this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED ||
-          this->state_ == TAO_LF_Event::LFS_TIMEOUT);
+          this->state_ == TAO_LF_Event::LFS_TIMEOUT || this->is_closed_);
 }
 
 ACE_INLINE bool

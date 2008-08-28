@@ -1,10 +1,29 @@
+Thu Aug 28 21:47:42 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.inl:
+        * tao/Connection_Handler.cpp:
+
+          Added a bool is_closed_ to track the "closed" state.  This is used
+          in addition to the Leader-Follower state so that it cannot be re-set
+          to another state after it's been closed.
+
+        * tao/Transport_Connector.cpp:
+
+          Fixed whitespace.
+
+        * tests/Bug_1361_Regression/run_test.pl:
+
+          Increased client timeout (we're just testing the server's response).
+          Reduced the server debug level when "-debug" is specificed.
+
 Thu Aug 28 20:27:37 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * tests/Faults/run_test.pl:
- 
+
           Increased timeout to avoid the pong timeout error on windows.
-          When server dies, the client tries to make new connection. The  
-          time spent on trying new connection varies on different platform. 
+          When server dies, the client tries to make new connection. The
+          time spent on trying new connection varies on different platform.
           On windows, it takes much longer than on Linux.
 
 Wed Aug 27 21:24:33 UTC 2008  Yan Dai  <dai_y@ociweb.com>
