@@ -47,9 +47,9 @@ while($elapsed < $max_running_time) {
 
   # ... wait for the clients to die unless they did not startup,
   # ignore errors because they intentionally crash themselves!
-  $CL3->WaitKill(45) unless $client3 < 0;
-  $CL2->WaitKill(45) unless $client2 < 0;
-  $CL1->WaitKill(45) unless $client1 < 0;
+  $CL3->WaitKill(60) unless $client3 < 0;
+  $CL2->WaitKill(60) unless $client2 < 0;
+  $CL1->WaitKill(60) unless $client1 < 0;
 
   $elapsed = time() - $start_time;
 }
