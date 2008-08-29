@@ -1,10 +1,16 @@
+Fri Aug 29 19:12:49 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport_Connector.cpp (wait_for_connection_completion):
+
+          If the connection is already complete, add it to the cache here.
+
 Fri Aug 29 03:39:39 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * tests/Bug_1269_Regression/run_test.pl:
 
-          Increased client timeout to 60 seconds from 45 seconds to fix 
+          Increased client timeout to 60 seconds from 45 seconds to fix
           timeout error. The client receives 100th request and sleep for
-          15 seconds before abort. If server block for 15 seconds for 
+          15 seconds before abort. If server block for 15 seconds for
           each client, then 45 seconds would not be enough.
 
 Thu Aug 28 21:47:42 UTC 2008  Adam Mitz  <mitza@ociweb.com>
