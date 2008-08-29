@@ -700,6 +700,9 @@ TAO_Connector::wait_for_connection_completion (
   int result = -1;
   if (transport->connection_handler ()->is_open ())
     {
+      TAO::Transport_Cache_Manager &tcm =
+        this->orb_core ()->lane_resources ().transport_cache ();
+      tcm.cache_transport (&desc, transport);
       result = 0;
     }
   else if (transport->connection_handler ()->is_timeout ())
