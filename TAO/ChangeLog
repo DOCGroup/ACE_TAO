@@ -1,3 +1,12 @@
+Fri Aug 29 03:39:39 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/Bug_1269_Regression/run_test.pl:
+
+          Increased client timeout to 60 seconds from 45 seconds to fix 
+          timeout error. The client receives 100th request and sleep for
+          15 seconds before abort. If server block for 15 seconds for 
+          each client, then 45 seconds would not be enough.
+
 Thu Aug 28 21:47:42 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Connection_Handler.h:
