@@ -289,29 +289,6 @@ sub Spawn ()
 }
 
 
-sub TimedWait ($)
-{
-    my $self = shift;
-    my $timeout = shift;
-
-    if ($PerlACE::Process::WAIT_DELAY_FACTOR > 0) {
-      $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
-    }
-
-    while ($timeout-- != 0) {
-        my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
-        if ($pid != 0 && $? != -1) {
-            return $self->check_return_value ($?);
-        }
-        sleep 1;
-    }
-
-    $PerlACE::ProcessVX::DoVxInit = 1; # force reboot on next run
-
-    return -1;
-}
-
-
 # Terminate the process and wait for it to finish
 
 sub TerminateWaitKill ($)
@@ -405,5 +382,28 @@ sub Wait ($)
     }
 
 }
+
+sub TimedWait ($)
+{
+    my $self = shift;
+    my $timeout = shift;
+
+    if ($PerlACE::Process::WAIT_DELAY_FACTOR > 0) {
+      $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
+    }
+
+    while ($timeout-- != 0) {
+        my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
+        if ($pid != 0 && $? != -1) {
+            return $self->check_return_value ($?);
+        }
+        sleep 1;
+    }
+
+    $PerlACE::ProcessVX::DoVxInit = 1; # force reboot on next run
+
+    return -1;
+}
+
 
 1;
