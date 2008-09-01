@@ -124,6 +124,9 @@ namespace TAO
         throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
       }
 
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *transport->output_cdr_lock ()
+                      , TAO_INVOKE_FAILURE);
+
     transport->messaging_object ()->out_stream ().reset_byte_order (
         request_->_tao_byte_order ());
 
@@ -133,11 +136,12 @@ namespace TAO
                                this->exception_list_,
                                this->request_);
 
+    ace_mon.release();
 
     Invocation_Status status = synch.remote_invocation (max_wait_time);
 
-    if (status == TAO_INVOKE_RESTART &&                                                                                                                    
-        (synch.reply_status () == GIOP::LOCATION_FORWARD ||                                                                                              
+    if (status == TAO_INVOKE_RESTART &&
+        (synch.reply_status () == GIOP::LOCATION_FORWARD ||
          synch.reply_status () == GIOP::LOCATION_FORWARD_PERM))
       {
         CORBA::Boolean const permanent_forward =
