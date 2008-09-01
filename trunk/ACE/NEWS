@@ -3,6 +3,8 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . RPM packaging as part of the release process by the doc_group (Remedy and user community)
 
+. Remove BCB6, BCB2006, and the borland MPC template after the release of x.6.6
+
 USER VISIBLE CHANGES BETWEEN ACE-5.6.5 and ACE-5.6.6
 ====================================================
 
