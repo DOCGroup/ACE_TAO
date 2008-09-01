@@ -65,6 +65,9 @@ namespace TAO
             throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
           }
 
+        ACE_GUARD_RETURN (ACE_Lock, ace_mon, *transport->output_cdr_lock ()
+                          , TAO_INVOKE_FAILURE);
+
         TAO_OutputCDR & cdr =
           this->resolver_.transport ()->messaging_object ()->out_stream ();
 
@@ -110,6 +113,8 @@ namespace TAO
         s = this->send_message (cdr,
                                 TAO_Transport::TAO_ONEWAY_REQUEST,
                                 max_wait_time);
+
+        ace_mon.release();
 
 #if TAO_HAS_INTERCEPTORS == 1
         // NOTE: We don't need to do the auto_ptr <> trick. We got here

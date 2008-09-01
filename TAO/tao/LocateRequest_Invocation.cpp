@@ -59,15 +59,20 @@ namespace TAO
 
     TAO_Transport *transport = this->resolver_.transport ();
 
-    TAO_OutputCDR &cdr = transport->out_stream ();
+    Invocation_Status s = TAO_INVOKE_FAILURE;
+    {
+      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *transport->output_cdr_lock ()
+                        , TAO_INVOKE_FAILURE);
+      TAO_OutputCDR &cdr = transport->out_stream ();
 
-    if (transport->generate_locate_request (tspec, this->details_, cdr) == -1)
-      return TAO_INVOKE_FAILURE;
+      if (transport->generate_locate_request (tspec, this->details_, cdr) == -1)
+        return TAO_INVOKE_FAILURE;
 
-    countdown.update ();
+      countdown.update ();
 
-    Invocation_Status s =
-      this->send_message (cdr, TAO_Transport::TAO_TWOWAY_REQUEST, max_wait_time);
+      s = this->send_message (cdr, TAO_Transport::TAO_TWOWAY_REQUEST
+                              , max_wait_time);
+    }
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;

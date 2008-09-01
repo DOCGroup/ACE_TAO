@@ -553,6 +553,9 @@ public:
   /// Accessor for the output CDR stream
   TAO_OutputCDR &out_stream (void);
 
+  /// Accessor for synchronizing Transport OutputCDR access
+  ACE_Lock* output_cdr_lock (void);
+
   /// Set the flush in post open flag
   void set_flush_in_post_open (void);
 
@@ -1085,6 +1088,10 @@ private:
 
   /// Indicate that flushing needs to be done in post_open()
   bool flush_in_post_open_;
+
+  /// lock for synchronizing Transport OutputCDR access
+  mutable ACE_Lock *output_cdr_lock_;
+  mutable TAO_SYNCH_MUTEX output_cdr_mutex_;
 
   /*
    * specialization hook to add class members from concrete
