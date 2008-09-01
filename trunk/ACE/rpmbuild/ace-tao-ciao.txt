@@ -212,6 +212,9 @@ Version:        %{ACEVER}
 Group:          Development/Libraries/C and C++
 Requires:       ace = %{ACEVER}
 Requires:       openssl-devel
+%if !0%{?suse_version}
+Provides:       perl(PerlACE::Run_Test) perl(Process) perl(VmsProcess) perl(Win32::Process)
+%endif
 
 %description -n ace-devel
 
