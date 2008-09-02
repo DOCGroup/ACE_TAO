@@ -535,9 +535,6 @@ TAO_Transport::handle_output (ACE_Time_Value *max_wait_time)
                   this->id ()));
     }
 
-  // drain_queue ultimates touches the OutputCDR and hance needs to be synchronized.
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->output_cdr_lock_, -1);
-
   // The flushing strategy (potentially via the Reactor) wants to send
   // more data, first check if there is a current message that needs
   // more sending...
