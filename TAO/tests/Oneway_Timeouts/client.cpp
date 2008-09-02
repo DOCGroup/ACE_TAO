@@ -42,6 +42,7 @@ namespace
   bool use_twoway = false;
   bool retry_transients = false;
   bool retry_timeouts = false;
+  bool make_request_queued = false;
 
   void print_usage (const ACE_TCHAR *argv0)
   {
@@ -62,7 +63,8 @@ namespace
                 "[-buffer_count n=0]"
                 "[-buffer_bytes n=0] "
                 "[-buffer_timeout ms=0] "
-                "[-sync delayed|none]\n",
+                "[-sync delayed|none] "
+                "[-make_request_queued]\n",
                 argv0));
   }
 
@@ -167,26 +169,31 @@ namespace
             args.consume_arg ();
           }
         else if (args.cur_arg_strncasecmp ("-sync") == 0)
+        {
+          args.consume_arg ();
+          if (args.cur_arg_strncasecmp ("delayed") == 0)
           {
-            args.consume_arg ();
-            if (args.cur_arg_strncasecmp ("delayed") == 0)
-              {
-                sync_scope = TAO::SYNC_DELAYED_BUFFERING;
-                use_sync_scope = true;
-              }
-        else if (args.cur_arg_strncasecmp ("none") == 0)
+            sync_scope = TAO::SYNC_DELAYED_BUFFERING;
+            use_sync_scope = true;
+          }
+          else if (args.cur_arg_strncasecmp ("none") == 0)
           {
             sync_scope = Messaging::SYNC_NONE;
             use_sync_scope = true;
           }
-        else
+          else
           {
             print_usage (av[0]);
             return false;
           }
 
-        args.consume_arg ();
-          }
+          args.consume_arg ();
+        }
+        else if (args.cur_arg_strncasecmp ("-make_request_queued") == 0)
+        {
+          make_request_queued = true;
+          args.consume_arg ();
+        }
         else
           {
             ACE_ERROR ((LM_ERROR, "Error: Unknown argument \"%s\"\n",
@@ -245,7 +252,10 @@ namespace
     if (use_sync_scope)
       {
         Any a;
-        a <<= sync_scope;
+        if (make_request_queued) 
+          a <<= Messaging::SYNC_NONE;
+        else
+          a <<= sync_scope;
         pols[0] = orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE, a);
         policy_current->set_policy_overrides (pols, ADD_OVERRIDE);
         pols[0]->destroy ();
@@ -284,8 +294,24 @@ namespace
 
   }
 
+
+
+void reset_buffering (ORB_ptr orb)
+{
+  Object_var obj = orb->resolve_initial_references ("PolicyCurrent");
+  PolicyCurrent_var policy_current = PolicyCurrent::_narrow (obj.in ());
+  PolicyList pols (1);
+  pols.length (1);
+
+  Any a;
+  a <<= sync_scope;
+  pols[0] = orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE, a);
+  policy_current->set_policy_overrides (pols, ADD_OVERRIDE);
+  pols[0]->destroy ();
 }
 
+
+}
 
 int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 {
@@ -331,6 +357,24 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       ACE_ASSERT (! is_nil (tester.in ()));
 
       Long i = 0;
+
+      // Using make_request_queued option to work around test failure due to 
+      // different connection establishment behavior between OS.  Some system 
+      // can connect immediately and some may take longer time. With the flag on, 
+      // the test sets the SYNC_NONE scope and sends a request so the transport
+      // queue is not empty for some SYNC_DELAYED_BUFFERING test case and hence 
+      // the requests are all queued and will be received by server continueously 
+      // during a short period.
+      if (make_request_queued) 
+      {
+        //Send this message while using SYNC_NONE.
+        //This would leave the request in transport queue.
+        tester->test (-3);
+        //Set to SYNC_DELAYED_BUFFERING.
+        //The requests will be queued since queue is not 
+        //empty.
+        reset_buffering (orb.in ());
+      }
 
       for (; i < num_requests; ++i)
         {

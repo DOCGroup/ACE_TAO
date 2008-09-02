@@ -154,7 +154,7 @@ sub test_buffering
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
-    $CLI->Arguments("-sync delayed -max_request_time 30 -use_sleep -run_orb_time 500");
+    $CLI->Arguments("-sync delayed -max_request_time 30 -use_sleep -run_orb_time 500 -make_request_queued");
     if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
@@ -302,7 +302,7 @@ sub test_buffer_timeout
     }
     # Must use run_orb_time so that the timer will fire, and to prevent sending the
     # test_done twoway request which would flush the queue.
-    $CLI->Arguments("-sync delayed -buffer_timeout 1000 -max_request_time 30 -run_orb_time 1500");
+    $CLI->Arguments("-sync delayed -buffer_timeout 1000 -max_request_time 30 -run_orb_time 1500 -make_request_queued");
     if ($CLI->SpawnWaitKill(15) != 0) {
         print STDERR "Error: Client failed.\n";
         return 1;
