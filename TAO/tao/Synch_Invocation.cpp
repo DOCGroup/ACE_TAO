@@ -83,7 +83,7 @@ namespace TAO
             throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
           }
 
-	ACE_GUARD_RETURN (ACE_Lock, ace_mon, *transport->output_cdr_lock ()
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *transport->output_cdr_lock ()
                           , TAO_INVOKE_FAILURE);
 
         TAO_OutputCDR &cdr = transport->out_stream ();
@@ -99,7 +99,7 @@ namespace TAO
         this->marshal_data (cdr);
 
 
-	// Register a reply dispatcher for this invocation. Use the
+  // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
         TAO_Bind_Dispatcher_Guard dispatch_guard (
           this->details_.request_id (),
@@ -121,7 +121,7 @@ namespace TAO
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time);
 
-	ace_mon.release();
+  ace_mon.release();
 
 #if TAO_HAS_INTERCEPTORS == 1
         // @@NOTE: Too much code repetition.
@@ -658,42 +658,42 @@ namespace TAO
             throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
           }
 
-	{
-	  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *transport->output_cdr_lock ()
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *transport->output_cdr_lock ()
                             , TAO_INVOKE_FAILURE);
 
-	  TAO_OutputCDR &cdr = transport->out_stream ();
+    TAO_OutputCDR &cdr = transport->out_stream ();
 
-	  cdr.message_attributes (this->details_.request_id (),
-				  this->resolver_.stub (),
-				  TAO_Transport::TAO_ONEWAY_REQUEST,
-				  max_wait_time,
-				  false);
+    cdr.message_attributes (this->details_.request_id (),
+          this->resolver_.stub (),
+          TAO_Transport::TAO_ONEWAY_REQUEST,
+          max_wait_time,
+          false);
 
-	  this->write_header (cdr);
+    this->write_header (cdr);
 
-	  this->marshal_data (cdr);
+    this->marshal_data (cdr);
 
-	  countdown.update ();
+    countdown.update ();
 
-	  if (transport->is_connected ())
-	    {
-	      // We have a connected transport so we can send the message
-	      s = this->send_message (cdr,
-				      TAO_Transport::TAO_ONEWAY_REQUEST,
-				      max_wait_time);
-	    }
-	  else
-	    {
-	      if (TAO_debug_level > 4)
-		ACE_DEBUG ((LM_DEBUG,
-			    "TAO (%P|%t) - Synch_Oneway_Invocation::"
-			    "remote_oneway, queueing message\n"));
+    if (transport->is_connected ())
+      {
+        // We have a connected transport so we can send the message
+        s = this->send_message (cdr,
+              TAO_Transport::TAO_ONEWAY_REQUEST,
+              max_wait_time);
+      }
+    else
+      {
+        if (TAO_debug_level > 4)
+    ACE_DEBUG ((LM_DEBUG,
+          "TAO (%P|%t) - Synch_Oneway_Invocation::"
+          "remote_oneway, queueing message\n"));
 
-	      if (transport->format_queue_message (cdr, max_wait_time) != 0)
-		s = TAO_INVOKE_FAILURE;
-	    }
-	}
+        if (transport->format_queue_message (cdr, max_wait_time) != 0)
+    s = TAO_INVOKE_FAILURE;
+      }
+  }
 
 #if TAO_HAS_INTERCEPTORS == 1
         s = this->receive_other_interception ();
