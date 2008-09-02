@@ -9,7 +9,7 @@ project: ipv6, vc_warnings, build_files, test_files {
   // Support the alternative Borland Make project type
   specific(bmake) {
     unicode_flags += -DACE_USES_WCHAR
-    macros += ACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\\"$(LIBMODIFIER)\\")
+    macros += ACE_LD_DECORATOR_STR=ACE_TEXT(\\"$(LIBMODIFIER)\\")
     debug_macros += ACE_NO_INLINE=1
   }
 
