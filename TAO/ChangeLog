@@ -1,3 +1,8 @@
+Tue Sep  2 12:50:38 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tao/Transport.cpp:
+          remove unrequired locking.
+
 Tue Sep 02 09:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tao/Synch_Invocation.cpp:
