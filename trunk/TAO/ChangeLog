@@ -1,3 +1,10 @@
+Tue Sep 02 09:00:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tao/Synch_Invocation.cpp:
+        * tao/Transport.cpp:
+
+          Un-tabify these to correct fuzz errors.
+
 Mon Sep  1 20:18:51 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
