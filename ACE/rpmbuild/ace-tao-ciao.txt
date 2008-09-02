@@ -479,12 +479,12 @@ using the ACE_XtReactor.
 
 # ---------------- MPC ----------------
 
-%package -n   ace_mpc
+%package -n   mpc
 Summary:      Make Project Creator
 Version:      %{ACEVER}
 Group:        Development/Tools/Building
 
-%description -n ace_mpc
+%description -n mpc
 
 The Makefile, Project and Workspace Creator.
 Designed by Justin Michel (michel_j@ociweb.com) and Chad Elliott.
@@ -1392,7 +1392,7 @@ mv %{buildroot}%{_datadir}/ace/include/makeinclude/platform_macros.GNU.tmp %{bui
 
 
 install -d %{buildroot}%{_sysconfdir}/profile.d
-cat > %{buildroot}%{_sysconfdir}/profile.d/ace_mpc.sh <<EOF
+cat > %{buildroot}%{_sysconfdir}/profile.d/mpc.sh <<EOF
 MPC_ROOT=/usr/share/mpc
 export MPC_ROOT
 EOF
@@ -2262,12 +2262,12 @@ fi
 
 %endif
 
-# ---------------- ace_mpc ----------------
+# ---------------- mpc ----------------
 
-%files -n ace_mpc
+%files -n mpc
 %defattr(-,root,root,-)
 %{_datadir}/mpc
-%config %{_sysconfdir}/profile.d/ace_mpc.sh
+%config %{_sysconfdir}/profile.d/mpc.sh
 %{_bindir}/mpc.pl
 %{_bindir}/mwc.pl
 
