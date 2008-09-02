@@ -44,6 +44,11 @@ public:
 
   virtual void test (CORBA::Long id)
   {
+    // Ignore the extra message that were used for making messages
+    // queued for SYNC_DELAYED_BUFFERING test cases.
+    if (id == -3)
+      return;
+
     testShared (id);
   }
 
@@ -100,6 +105,8 @@ public:
         this->orb_->orb_core ()->reactor ()->schedule_timer (this, 0, timeout);
         return id;
       }
+
+
     this->last_ = now;
     if (id == 0)
       {
