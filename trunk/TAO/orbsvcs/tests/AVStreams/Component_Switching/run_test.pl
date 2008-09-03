@@ -27,7 +27,7 @@ unlink $testfile, $input;
 $input = PerlACE::generate_test_file("test_input", 102400);
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-ORBDottedDecimalAddresses 1 -o $nsior");
-$SV1  = new PerlACE::Process ("sender", "-ORBDottedDecimalAddresses 1 ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30 -f $input");
+$SV1  = new PerlACE::Process ("sender", "-ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30 -f $input");
 $SV2  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30 -f $input");
 $SV3  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s sender -r 30 -f $input");
 $RE1 = new PerlACE::Process ("receiver", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc$PerlACE::svcconf_ext -ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
