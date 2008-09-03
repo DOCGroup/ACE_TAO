@@ -1,3 +1,9 @@
+Wed Sep  3 20:02:42 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+
+          Added missing "-" for ORBSvcConf option.
+
 Wed Sep 03 10:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tests/TransportCurrent/IIOP/IIOP.mpc:
