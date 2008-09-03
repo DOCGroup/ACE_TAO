@@ -2,7 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, tc_iiop, pi_server {
-  after += Curren_Test_Lib_Client Current_Test_Lib_Server
+  after += Current_Test_Lib_Client Current_Test_Lib_Server
   libs  += Current_Test_Lib_Client Current_Test_Lib_Server
 
   specific (automake) {
