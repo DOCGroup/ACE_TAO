@@ -193,7 +193,11 @@ sub Spawn ()
             ($arguments = $self->{ARGUMENTS})=~ s/\'/\\\'/g;
             $arguments = ",\"" . $arguments . "\"";
         }
-        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
+        if (defined $ENV{'ACE_RUN_VX_TGTSRV_WORKINGDIR'}) {
+            @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSRV_WORKINGDIR'} . '"';
+        } else {
+            @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
+        }
         @cmds[$cmdnr++] = 'ace_vx_rc = vx_execae(ace_main' . $arguments . ')';
         @cmds[$cmdnr++] = 'unld "'. $program . $PerlACE::ProcessVX::ExeExt . '"';
         push @cmds, @unload_commands;

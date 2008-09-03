@@ -1,4 +1,12 @@
-Wed Sep  3 09:10:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Sep  3 07:31:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Added support for ACE_RUN_VX_TGTSRV_WORKINGDIR. Before starting
+          the executable we will do a chdir to this directory when it
+          is specified
+
+Wed Sep  3 07:10:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bound_Ptr_Test.cpp:
           Don't use ACE_ASSERT, it is disabled in release mode and this test
