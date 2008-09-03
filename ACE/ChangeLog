@@ -1,3 +1,8 @@
+Wed Sep  3 10:23:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Don't run OBV Typed events with micro and compact configurations
+
 Wed Sep  3 07:31:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
