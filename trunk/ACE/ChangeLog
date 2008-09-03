@@ -1,3 +1,10 @@
+Wed Sep  3 09:10:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bound_Ptr_Test.cpp:
+          Don't use ACE_ASSERT, it is disabled in release mode and this test
+          had some real functionality placed within an ACE_ASSERT. This fixes
+          bugzilla 3415
+
 Tue Sep  2 14:11:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:

@@ -379,14 +379,27 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("(%t) Parent instance count is %d, expecting 0\n"),
               Parent::instance_count_));
   if (Parent::instance_count_ != 0)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) parent instance count not 0...\n")),
+                         -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Child instance count is %d, expecting 0\n"),
               Child::instance_count_));
   if (Child::instance_count_ != 0)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) child instance count not 0...\n")),
+                         -1);
+    }
   // Weak pointer should now be set to null.
-  ACE_ASSERT (p8.null ());
+  if(!p8.null ())
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) p8 not nill...\n")),
+                         -1);
+    }
 
   Printer *printer1 = 0;
   ACE_NEW_RETURN (printer1,
@@ -409,9 +422,19 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
               Printer::instance_count_));
-  ACE_ASSERT (Printer::instance_count_ == 0);
+  if (Printer::instance_count_ != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) Printer instance count not 0...\n")),
+                         -1);
+    }
   // Weak pointer should now be set to null.
-  ACE_ASSERT (r9.null ());
+  if (!r9.null ())
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) r9 not nill...\n")),
+                         -1);
+    }
 
 #if defined (ACE_HAS_THREADS)
 
@@ -431,7 +454,12 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Strong_Bound_Ptr<Scheduler, ACE_Null_Mutex> scheduler(scheduler_ptr);
 
-  ACE_ASSERT (scheduler->open () != -1);
+  if (scheduler->open () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) Scheduler open failed...\n")),
+                         -1);
+    }
 
   {
     Printer *printer2 = 0;
