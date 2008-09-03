@@ -1,3 +1,9 @@
+Wed Sep 03 10:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+
+          Typo corrected in client name for after += of server.
+
 Tue Sep  2 22:57:39 UTC 2008  Yan Dai  <dai_y@ociweb.com>
  
         * tests/Oneway_Timeouts/client.cpp:
