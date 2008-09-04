@@ -1,3 +1,9 @@
+Thu Sep  4 14:39:33 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          '-P' isn't a valid option on Ubantu linux (Bug 15051). Replacing
+          with Perl alternate.
+
 Wed Sep  3 10:23:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
