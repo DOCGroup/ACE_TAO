@@ -38,9 +38,12 @@ Client_Task::svc (void)
       // this poorly implemented test used to take
       while (this->receiver_impl_->no_calls_ < 10)
         ACE_OS::sleep (1);
-      this->sender_->shutdown ();
 
       this->us_->shutdown ();
+      // give the processes an additional second to finish up any
+      // lagging invocations, cleanups etc.
+      ACE_OS::sleep (1);
+      this->sender_->shutdown ();
     }
   catch (const CORBA::Exception& ex)
     {
