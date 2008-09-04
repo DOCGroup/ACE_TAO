@@ -1,3 +1,9 @@
+Thu Sep  4 18:36:23 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneways_Invoking_Twoways/Client_Task.cpp:
+          Give remote side an additional second to cleanup before invoking
+          shutdown.
+
 Wed Sep  3 20:02:42 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
@@ -11,24 +17,24 @@ Wed Sep 03 10:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
           Typo corrected in client name for after += of server.
 
 Tue Sep  2 22:57:39 UTC 2008  Yan Dai  <dai_y@ociweb.com>
- 
+
         * tests/Oneway_Timeouts/client.cpp:
         * tests/Oneway_Timeouts/server.cpp:
 
-          Added make_request_queued option to work around test failure due to 
-          different connection establishment behavior between OS.  Some system 
-          can connect immediately and some may take longer time. With the option, 
+          Added make_request_queued option to work around test failure due to
+          different connection establishment behavior between OS.  Some system
+          can connect immediately and some may take longer time. With the option,
           the test sets the SYNC_NONE scope and sends a request so the transport
-          queue is not empty for some SYNC_DELAYED_BUFFERING test cases and hence 
-          the requests are all queued and will be received by server continueously 
-          during a short period. (Bugzilla #3384) 
+          queue is not empty for some SYNC_DELAYED_BUFFERING test cases and hence
+          the requests are all queued and will be received by server continueously
+          during a short period. (Bugzilla #3384)
 
         * tests/Oneway_Timeouts/run_test.pl:
 
           Added -make_request_queued option for the two failed test cases.
            - test_buffering -- case 4 of 6
            - test_buffer_timeout -- case 2 of 3
-          
+
 Tue Sep  2 12:50:38 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tao/Transport.cpp:
