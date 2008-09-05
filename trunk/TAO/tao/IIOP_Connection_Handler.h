@@ -61,6 +61,11 @@ class TAO_Export TAO_IIOP_Connection_Handler : public TAO_IIOP_SVC_HANDLER,
 
 public:
 
+#ifdef TAO_LOG_CH_REF_COUNTS
+  Reference_Count add_reference (void);
+  Reference_Count remove_reference (void);
+#endif
+
   TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = 0);
 
   /// Constructor.

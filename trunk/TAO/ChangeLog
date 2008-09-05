@@ -1,3 +1,22 @@
+Fri Sep  5 21:33:11 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport_Connector.cpp (wait_for_transport):
+
+          In the timeout case (before waiting), purge from cache but don't
+          close.  This is effectively a partial revert of the change from
+          Wed Aug 13 16:21:34 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+          Also added logging in both wait_for_transport() and
+          wait_for_connection_completion() when the LF state is reset.
+
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/LF_CH_Event.cpp:
+
+          Added logging for connection handler (transport) reference counting
+          and LF state changes.  The log messages are only output at level 10.
+          Logging every add_reference() and remove_reference() call is only
+          compiled-in when the macro TAO_LOG_CH_REF_COUNTS is defined.
+
 Fri Sep  5 19:55:17 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Big_Request_Muxing/Client_Task.cpp:

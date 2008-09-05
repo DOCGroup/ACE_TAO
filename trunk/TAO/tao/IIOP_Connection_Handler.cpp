@@ -21,6 +21,36 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+
+#ifdef TAO_LOG_CH_REF_COUNTS
+ACE_Event_Handler::Reference_Count
+TAO_IIOP_Connection_Handler::add_reference (void)
+{
+  Reference_Count rc = TAO_IIOP_SVC_HANDLER::add_reference ();
+  if (TAO_debug_level > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - IIOP_Connection_Handler[%d]::"
+                  "add_reference, up to %d\n", this->transport (), rc));
+    }
+  return rc;
+
+}
+
+ACE_Event_Handler::Reference_Count
+TAO_IIOP_Connection_Handler::remove_reference (void)
+{
+  TAO_Transport *tport = this->transport ();
+  Reference_Count rc = TAO_IIOP_SVC_HANDLER::remove_reference ();
+  if (TAO_debug_level > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - IIOP_Connection_Handler[%d]::"
+                  "remove_reference, down to %d\n", tport, rc));
+    }
+  return rc;
+}
+#endif /*TAO_LOG_CH_REF_COUNTS*/
+
+
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
@@ -44,6 +74,13 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
            TAO_IIOP_Transport (this, orb_core));
+
+  if (TAO_debug_level > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - IIOP_Connection_Handler[%d] ctor, "
+                  "this = %d\n",
+                  static_cast<TAO_Transport *> (specific_transport), this));
+    }
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
@@ -330,7 +367,12 @@ TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 
   int const ret = this->close ();
   this->reset_state (TAO_LF_Event::LFS_TIMEOUT);
-
+  if (TAO_debug_level > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_IIOP_Connection_Handler[%d]::"
+                  "handle_timeout reset state to LFS_TIMEOUT\n",
+                  this->transport ()-> id()));
+    }
   return ret;
 }
 
