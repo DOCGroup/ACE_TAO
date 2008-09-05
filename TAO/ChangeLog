@@ -1,8 +1,20 @@
+Fri Sep  5 19:55:17 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+        * tests/Big_Request_Muxing/Payload_Receiver.h:
+        * tests/Big_Request_Muxing/Payload_Receiver.cpp:
+        * tests/Big_Request_Muxing/Test.idl:
+          validate_connection() uses a twoway invocation instead of a
+          oneway. This simplifies the test.
+
+        * tests/Oneway_Buffering/client.cpp:
+          Error messages were being pushed into the debug stream.
+
 Fri Sep  5 18:38:55 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * tests/Portable_Interceptors/ForwardRequest/server.cpp:
 
-          Added AnyTypeCode_Adapter_Impl.h include so that the static 
+          Added AnyTypeCode_Adapter_Impl.h include so that the static
           initializers to run in a static build
 
 Thu Sep  4 18:36:23 UTC 2008  Ciju John  <johnc at ociweb dot com>

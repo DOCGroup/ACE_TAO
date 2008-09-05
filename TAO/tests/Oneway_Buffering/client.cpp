@@ -653,8 +653,8 @@ run_timeout (CORBA::ORB_ptr orb,
               if (elapsed.msec () < TIMEOUT_MILLISECONDS)
                 {
                   test_failed = 1;
-                  ACE_DEBUG ((LM_DEBUG,
-                              "DEBUG: Iteration %d flush before "
+                  ACE_ERROR ((LM_ERROR,
+                              "ERROR: Iteration %d flush before "
                               "timeout expired. "
                               "Elapsed = %d, Timeout = %d msecs\n",
                               i,
@@ -667,8 +667,8 @@ run_timeout (CORBA::ORB_ptr orb,
           if (elapsed.msec () > 3 * TIMEOUT_MILLISECONDS)
             {
               test_failed = 1;
-              ACE_DEBUG ((LM_DEBUG,
-                          "DEBUG: Iteration %d no flush past "
+              ACE_ERROR ((LM_ERROR,
+                          "ERROR: Iteration %d no flush past "
                           "timeout threshold. "
                           "Elapsed = %d, Timeout = %d msecs\n",
                           i,
