@@ -1,5 +1,8 @@
 #include "tao/LF_CH_Event.h"
 #include "tao/LF_Follower.h"
+#include "tao/debug.h"
+#include "tao/Connection_Handler.h"
+#include "tao/Transport.h"
 
 ACE_RCSID(tao,
           LF_Invocation_Event,
@@ -36,6 +39,20 @@ TAO_LF_CH_Event::state_changed_i (int new_state)
   if (this->state_ != new_state)
     {
       this->validate_state_change (new_state);
+
+      if (TAO_debug_level > 9)
+        {
+          size_t id = 0;
+          TAO_Connection_Handler *ch = 0;
+          if ((ch = dynamic_cast<TAO_Connection_Handler *> (this))
+              && ch->transport ())
+            {
+              id = ch->transport ()->id ();
+            }
+          ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%d]::"
+                      "state_changed_i state %d prev %d\n",
+                      id, state_, prev_state_));
+        }
     }
 
   ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->followers_.mutex ()));
@@ -119,6 +136,18 @@ TAO_LF_CH_Event::set_state (int new_state)
       && new_state == TAO_LF_Event::LFS_TIMEOUT)
     {
       this->state_ = new_state;
+      if (TAO_debug_level > 9)
+        {
+          size_t id = 0;
+          TAO_Connection_Handler *ch = 0;
+          if ((ch = dynamic_cast<TAO_Connection_Handler *> (this)) &&
+              ch->transport ())
+            {
+              id = ch->transport ()->id ();
+            }
+          ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%d]::set_state "
+                      "state_ is LFS_TIMEOUT\n", id));
+        }
     }
 }
 
