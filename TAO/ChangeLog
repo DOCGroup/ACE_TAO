@@ -1,3 +1,10 @@
+Fri Sep  5 18:38:55 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/Portable_Interceptors/ForwardRequest/server.cpp:
+
+          Added AnyTypeCode_Adapter_Impl.h include so that the static 
+          initializers to run in a static build
+
 Thu Sep  4 18:36:23 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneways_Invoking_Twoways/Client_Task.cpp:
