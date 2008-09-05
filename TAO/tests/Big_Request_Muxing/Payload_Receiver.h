@@ -22,6 +22,8 @@ public:
   virtual void more_data (const Test::Payload &payload,
                           CORBA::Boolean maybe_lost);
 
+  virtual void ping (void);
+
   int count (bool maybe_lost = false) const;
 
 private:

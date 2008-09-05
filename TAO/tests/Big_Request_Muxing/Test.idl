@@ -10,5 +10,7 @@ module Test
   {
     /// Send the data using a oneway operation.
     oneway void more_data (in Payload the_payload, in boolean maybe_lost);
+
+    void ping ();
   };
 };

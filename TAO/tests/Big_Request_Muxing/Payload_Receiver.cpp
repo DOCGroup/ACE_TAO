@@ -29,6 +29,11 @@ Payload_Receiver::more_data (
     }
 }
 
+void
+Payload_Receiver::ping (void)
+{
+}
+
 int
 Payload_Receiver::count (bool maybe_lost) const
 {
