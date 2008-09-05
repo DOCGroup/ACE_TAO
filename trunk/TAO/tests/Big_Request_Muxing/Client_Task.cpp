@@ -153,9 +153,7 @@ Client_Task::validate_connection (void)
         {
           try
             {
-              this->payload_receiver_->more_data (
-                payload,
-                this->sync_scope_ != Messaging::SYNC_WITH_TARGET);
+              this->payload_receiver_->ping();
               transient_count= 0;
             }
           catch (const CORBA::TRANSIENT &)
