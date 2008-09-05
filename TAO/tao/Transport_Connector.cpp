@@ -352,25 +352,26 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
                                    ACE_Time_Value *timeout,
                                    bool force_wait)
 {
-  bool is_timeout = transport->connection_handler ()->is_timeout ();
-  if (is_timeout || transport->connection_handler ()->is_closed ())
+  if (transport->connection_handler ()->is_timeout ())
     {
       if (TAO_debug_level > 2)
         {
-          if (is_timeout)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-                ACE_TEXT ("transport [%d], Connection Timed out.\n"),
-                          transport->id ()));
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-                ACE_TEXT ("transport [%d], Connection failed. (%d)\n"),
-                          transport->id (), errno));
-            }
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+            ACE_TEXT ("transport [%d], Connection Timed out.\n"),
+                      transport->id ()));
+        }
+      transport->purge_entry ();
+      return false;
+    }
+  else if (transport->connection_handler ()->is_closed ())
+    {
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+            ACE_TEXT ("transport [%d], Connection failed. (%d)\n"),
+                      transport->id (), errno));
         }
 
       // purge from the connection cache.  If we are not in the
@@ -467,9 +468,9 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT(" Connection not complete [%d]\n"),
-            transport->id () ));
+            ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
+            ACE_TEXT ("Connection not complete [%d] reset state to ")
+            ACE_TEXT ("LFS_CONNECTION_WAIT\n"), transport->id ()));
         }
       transport->connection_handler ()->reset_state (
         TAO_LF_Event::LFS_CONNECTION_WAIT);
@@ -822,6 +823,12 @@ TAO_Connector::wait_for_connection_completion (
         {
           transport->connection_handler ()->
             reset_state (TAO_LF_Event::LFS_CONNECTION_WAIT);
+          if (TAO_debug_level > 9)
+            {
+              ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_Connector[%d]::"
+                          "wait_for_connection_completion reset_state to "
+                          "LFS_CONNECTION_WAIT\n", transport->id ()));
+            }
           result = 0;
         }
     }
