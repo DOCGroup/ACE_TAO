@@ -4427,7 +4427,7 @@ TAO_FlowConsumer::connect_to_peer (AVStreams::QoS & the_qos,
 // TAO_Tokenizer
 //------------------------------------------------------------
 TAO_Tokenizer::TAO_Tokenizer (const char *string, char delimiter)
-  :token_array_ (10),
+  :token_array_ (10, (char*)0, 0),
    count_ (0)
 {
   this->parse (string, delimiter);
