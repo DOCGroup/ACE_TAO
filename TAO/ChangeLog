@@ -1,9 +1,15 @@
+Tue Sep  9 22:25:46 UTC 2008  Ciju John  <johnc at ociweb dot com>
+
+        * tests/AMI_Buffering/client.cpp:
+          Increased over all test tolerance by 100 msecs. The test seems
+          to throttle ocassionally in system heavy load scenarios.
+
 Tue Sep  9 21:55:12 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-        
+
           Made token_array_ all elements initialized to be 0.
-          
+
         * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
 
           Made all pointer data memebers in TAO_AV_Child_Process to be
