@@ -1,3 +1,8 @@
+Tue Sep  9 13:39:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/diff-builds.pl
+          typo vi / non-vi edit
+
 Tue Sep  9 13:35:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/diff-builds.pl

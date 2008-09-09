@@ -188,7 +188,7 @@ sub find_builds ($$$$$)
 
         if ($begin) {
            %{$revision_hash}->{$columns[$selectcolumn_name]} = $columns[$selectcolumn_revision];
-           push (@{$rbuilds}, $columns[$selectcolumni_name]);
+           push (@{$rbuilds}, $columns[$selectcolumn_name]);
         }
     }
     close (CLEANS);
