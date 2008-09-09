@@ -1,3 +1,8 @@
+Tue Sep  9 06:43:11 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/COIOP/run_test.pl:
+          Added support for -debug which runs the server with ORBDebugLevel 10
+
 Fri Sep  5 21:33:11 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Transport_Connector.cpp (wait_for_transport):
