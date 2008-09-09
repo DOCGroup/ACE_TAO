@@ -64,7 +64,6 @@ sub find_closest_earlier  {
     return $temp2[0];
 }
 
-
 sub select_builds ($$$)
 {
     my ($rdates, $rbuilds, $rfiles) = @_;
@@ -88,7 +87,6 @@ sub select_builds ($$$)
 
     return 0;
 }
-
 
 sub load_failed_tests_list ($$)
 {
@@ -134,9 +132,9 @@ sub load_failed_tests_list ($$)
     return $tmpfile;
 }
 
-sub differentiate ($$)
+sub differentiate ($$$)
 {
-    my ($rfiles, $rdates) = @_;
+    my ($rfiles, $rdates, $revision) = @_;
 
     print "Difference for dates " . join (', ', @$rdates) . "\n" unless !$debugging;
 
@@ -149,12 +147,16 @@ sub differentiate ($$)
     while (<DIFF>) {
         
         # Don't filter out the build details when printing the new errors only
-        if (/^---/) { 
+        if (/^---i|^\+\+\+/) { 
             print;
         }
         elsif (/^[^\+]/) {
             print unless ($new_errors_only == 1);
-        } 
+        }
+        elsif ($revision) {
+            chomp;
+            print "$_ ($revision)\n";
+        }
         else {
             print;
         }
@@ -164,10 +166,9 @@ sub differentiate ($$)
     print "\n";
 }
 
-
-sub find_builds ($$$)
+sub find_builds ($$$$$)
 {
-    my ($rbuilds, $buildscoreurl, $selectcolumn) = @_;
+    my ($rbuilds, $buildscoreurl, $selectcolumn_name, $revision_hash, $selectcolumn_revision) = @_;
 
     print "Reading from $buildscoreurl\n" unless !$debugging;
 
@@ -185,8 +186,10 @@ sub find_builds ($$$)
             next;
         }
 
-        push (@{$rbuilds}, $columns[$selectcolumn]) unless !$begin;
-
+        if ($begin) {
+           %{$revision_hash}->{$columns[$selectcolumn_name]} = $columns[$selectcolumn_revision];
+           push (@{$rbuilds}, $columns[$selectcolumni_name]);
+        }
     }
     close (CLEANS);
     sort @{$rbuilds};
@@ -195,9 +198,8 @@ sub find_builds ($$$)
 }
 
 my @dates = ();
-my @builds = (); 
+my @builds = ();
 my @files = ();
-
 
 while ($arg = shift(@ARGV)) {
 
@@ -244,15 +246,16 @@ while ($arg = shift(@ARGV)) {
     }
 }
 
-
 # Diff the todays clean builds with the ones from a specific date
 if ($#builds == -1 && $#dates >= 0)
 {
+    my %revisions = {};
+
     if ($clean_builds_only) {
-        find_builds (\@builds, $cleanbuildsurl, 7);
+        find_builds (\@builds, $cleanbuildsurl, 8, \%revisions, 7);
     }
     else {
-        find_builds (\@builds, $allbuildsurl, 3);
+        find_builds (\@builds, $allbuildsurl, 4, \%revisions, 3);
     }
         
     # only the start date given - implies we should 
@@ -263,7 +266,7 @@ if ($#builds == -1 && $#dates >= 0)
 
     foreach $build (sort @builds) {
         $files[0] = $files[1] = $build;
-        differentiate (\@files, \@dates);
+        differentiate (\@files, \@dates, $revisions{$build} );
     }
 }
 else
@@ -279,7 +282,7 @@ else
         unless !$debugging;
     
     select_builds (\@dates, \@builds, \@files);
-    differentiate (\@files, \@dates);
+    differentiate (\@files, \@dates, 0);
 }
 __END__
 
@@ -288,7 +291,6 @@ __END__
 =item DESCRIPTION
 Prints a diff for the list of test failures, for two builds on a certain date. 
 Or, for two dates and a certain build.
-
 
 =item EXAMPLE
 
