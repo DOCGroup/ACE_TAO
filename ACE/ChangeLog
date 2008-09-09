@@ -1,3 +1,8 @@
+Tue Sep  9 13:35:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/diff-builds.pl
+          Adjust for revision numbers.
+
 Tue Sep  9 11:36:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_time.cpp (strptime_emulation):
