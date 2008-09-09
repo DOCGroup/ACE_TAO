@@ -238,7 +238,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   ACE_OS_GUARD
 
   ACE_UNUSED_ARG (res);
-  struct tm * res_ptr;
+  struct tm * res_ptr = 0;
   ACE_OSCALL (::localtime (t), struct tm *, 0, res_ptr);
   if (res_ptr == 0)
     return 0;
@@ -360,22 +360,25 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
 {
   int bi = 0;
   int fi = 0;
-  int percent = 0;
+  bool percent = false;
 
   if (!buf || !format)
     return 0;
+
+  ACE_OS::memset (tm, 0, sizeof (struct tm));
 
   while (format[fi] != '\0')
     {
       if (percent)
         {
-          percent = 0;
+          percent = false;
           switch (format[fi])
             {
             case '%':                        // an escaped %
               if (buf[bi] == '%')
                 {
-                  fi++; bi++;
+                  ++fi;
+                  ++bi;
                 }
               else
                 return const_cast<char*> (buf + bi);
@@ -422,22 +425,22 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
                      (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12))
                 return const_cast<char*> (buf + bi);
 
-              fi--;
+              --fi;
               tm->tm_mon--;
 
               if (buf[bi] != '/')
                 return const_cast<char*> (buf + bi);
 
-              bi++;
+              ++bi;
 
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31))
                 return const_cast<char*> (buf + bi);
 
-              fi--;
+              --fi;
               if (buf[bi] != '/')
                 return const_cast<char*> (buf + bi);
-              bi++;
+              ++bi;
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_year, &bi, &fi, 0, 99))
                 return const_cast<char*> (buf + bi);
@@ -498,10 +501,10 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
                      (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
                 return const_cast<char*> (buf + bi);
 
-              fi--;
+              --fi;
               if (buf[bi] != ':')
                 return const_cast<char*> (buf + bi);
-              bi++;
+              ++bi;
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
                 return const_cast<char*> (buf + bi);
@@ -519,18 +522,18 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
                      (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
                 return const_cast<char*> (buf + bi);
 
-              fi--;
+              --fi;
               if (buf[bi] != ':')
                 return const_cast<char*> (buf + bi);
-              bi++;
+              ++bi;
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
                 return const_cast<char*> (buf + bi);
 
-              fi--;
+              --fi;
               if (buf[bi] != ':')
                 return const_cast<char*> (buf + bi);
-              bi++;
+              ++bi;
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61))
                 return const_cast<char*> (buf + bi);
@@ -580,15 +583,15 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
         { /* if (percent) */
           if (format[fi] == '%')
             {
-              percent = 1;
-              fi++;
+              percent = true;
+              ++fi;
             }
           else
             {
               if (format[fi] == buf[bi])
                 {
-                  fi++;
-                  bi++;
+                  ++fi;
+                  ++bi;
                 }
               else
                 return const_cast<char*> (buf + bi);
@@ -614,7 +617,7 @@ ACE_OS::strptime_getnum (const char *buf,
       tmp = (tmp * 10) + (buf[i] - '0');
       if (max && (tmp > max))
         return 0;
-      i++;
+      ++i;
     }
 
   if (tmp < min)
