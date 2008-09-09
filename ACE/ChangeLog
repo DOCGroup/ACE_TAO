@@ -1,3 +1,9 @@
+Tue Sep  9 11:36:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_time.cpp (strptime_emulation):
+          Clear the struct tm before filling it. Without we get a random
+          value back if the user doesn't use a full date.
+
 Tue Sep  9 11:31:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/VXTestProjectCreator.pm:
