@@ -508,8 +508,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
       if (found == TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
         {
+          TAO_Connection_Handler *ch = base_transport->connection_handler ();
           // one last check before using the cached connection
-          if (base_transport->connection_handler()->error_detected ())
+          if (ch->error_detected ())
             {
               if (TAO_debug_level > 0)
                 {
@@ -518,6 +519,17 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                     ACE_TEXT(" error in transport from cache\n")));
                 }
               (void) base_transport->close_connection ();
+              (void) base_transport->purge_entry ();
+              base_transport->remove_reference ();
+            }
+          else if (ch->is_closed ())
+            {
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("TAO (%P|%t) Transport_Connector::connect")
+                    ACE_TEXT(" closed transport from cache\n")));
+                }
               (void) base_transport->purge_entry ();
               base_transport->remove_reference ();
             }
@@ -651,7 +663,13 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               base_transport = this->make_connection (r, *desc, timeout);
               if (base_transport == 0)
                 {
-                  return base_transport;
+                  if (TAO_debug_level > 4)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - Transport_Connector::")
+                        ACE_TEXT ("connect, make_connection failed\n")));
+                    }
+                  return 0;
                 }
 
               if (TAO_debug_level > 4)
@@ -678,7 +696,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               // The new transport is in the cache.  We'll pick it up from the
               // next time thru this loop (using it from here causes more
               // problems than it fixes due to the changes that allow a new
-              // connectionto be re-used by a nested upcall before we get back
+              // connection to be re-used by a nested upcall before we get back
               // here.)
               base_transport->remove_reference ();
             }
