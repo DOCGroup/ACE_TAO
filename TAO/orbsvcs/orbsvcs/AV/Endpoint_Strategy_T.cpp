@@ -340,7 +340,10 @@ TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
 template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process ()
   : stream_endpoint_name_ (0),
-    pid_ (-1)
+    pid_ (-1),
+    stream_endpoint_(0),
+    vdev_ (0),
+    media_ctrl_ (0) 
 {
   this->pid_ = ACE_OS::getpid ();
   if (this->pid_ == 0)
