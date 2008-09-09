@@ -1,4 +1,4 @@
-# VxWorks script for loading libraries used by: <%exename%>
+# VxWorks script for loading libraries used by: <%if(exename)%><%exename%><%endif%><%if(sharedname)%><%sharedname%><%else%><%if(staticname)%><%staticname%><%endif%><%endif%>
 <%foreach(reverse(libs))%>
 lib<%lib%>.so
 <%endfor%>

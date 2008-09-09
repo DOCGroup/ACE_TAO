@@ -1,3 +1,9 @@
+Tue Sep  9 11:31:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/VXTestProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/vxtest.mpd:
+          Also generate a vxtest file for libraries
+
 Thu Sep  4 14:39:33 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
