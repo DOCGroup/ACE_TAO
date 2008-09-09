@@ -69,6 +69,8 @@ ACE_INLINE void
 TAO_Transport::cache_map_entry (
     TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *entry)
 {
+  // Sync with TAO_Transport::purge_entry()
+  ACE_GUARD (ACE_Lock, ace_mon, *this->handler_lock_);
   this->cache_map_entry_ = entry;
 }
 
