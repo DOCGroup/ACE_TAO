@@ -1,3 +1,8 @@
+Tue Sep  9 14:05:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh
+          Change the sort to cater from revision numbers.
+
 Tue Sep  9 13:39:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/diff-builds.pl
