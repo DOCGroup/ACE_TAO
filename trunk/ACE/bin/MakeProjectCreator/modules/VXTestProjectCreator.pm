@@ -30,6 +30,12 @@ sub project_file_name {
   }
 
   my($value) = $self->get_assignment('exename');
+  if (!defined $value) {
+    $value = $self->get_assignment('staticname');
+  }
+  if (!defined $value) {
+    $value = $self->get_assignment('sharedname');
+  }
   return $self->get_modified_project_file_name($value, '.vxtest');
 }
 
@@ -47,8 +53,8 @@ sub need_to_write_project {
   ## need_to_write_project().
   if (!$self->get_assignment('custom_only') &&
       $self->SUPER::need_to_write_project() == 1) {
-    ## We only want to return 1 if this is an executable project
-    return 1 if ($self->exe_target());
+    ## We only want to return 1 if this is an executable or library project
+    return 1 if ($self->exe_target() || $self->lib_target());
   }
 
   return 0;
