@@ -1,3 +1,10 @@
+Thu Sep 11 14:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * bin/diff-builds.pl
+        * bin/diff-builds-and-group-fixed-tests-only.sh
+
+          Make revision number appending to new test failures optional.
+
 Tue Sep  9 18:46:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/mwc.pl:

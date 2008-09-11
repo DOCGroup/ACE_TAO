@@ -13,6 +13,7 @@ my $debugging = 0; # Print additional info
 my $verbose = '-q'; # WGET verbosity
 my $new_errors_only = 0; # Show new errors only
 my $clean_builds_only = 1; # Only diff todays clean builds
+my $append_revision_to_new_test_fails = 0;  # Default to not doing this.
 
 # The root of the test statistics
 my $teststaturl = "http://download.theaceorb.nl/teststat/builds/";
@@ -36,8 +37,8 @@ sub find_timestamps ($$)  {
 
     # Select only those of the "href=..." that match our file and date
     my $rx = quotemeta ( $file . '_' . $date);
-    my @temp = map { (/${rx}_([0-9][0-9]_[0-9][0-9])/) ? $1 : "" } @suffixes; 
-    return grep /^[0-9]/, @temp; 
+    my @temp = map { (/${rx}_([0-9][0-9]_[0-9][0-9])/) ? $1 : "" } @suffixes;
+    return grep /^[0-9]/, @temp;
 }
 
 # Determine the timestamp by scanning the index
@@ -77,9 +78,9 @@ sub select_builds ($$$)
     elsif ($#builds eq 1) {
         $rfiles->[0] = $rbuilds->[0];
         $rfiles->[1] = $rbuilds->[1];
-        
+
         $rdates->[1] = $rdates->[0];
-        
+
     }
     else {
         die "Dates: $#dates, Builds: $#builds\n";
@@ -91,13 +92,13 @@ sub select_builds ($$$)
 sub load_failed_tests_list ($$)
 {
     my ($file, $original_date) = @_;
-    
+
     my $date = $original_date;
     my $last_tried_date = $original_date;
     my @timestamps = ();
 
     while ($#timestamps < 0) {
-     
+
         @timestamps = find_timestamps ($file, $date);
 
         if ($#timestamps == -1) {
@@ -107,28 +108,28 @@ sub load_failed_tests_list ($$)
                 return File::Spec->devnull();
             }
 
-            print "***No builds for $file on $last_tried_date. The closest earlier is " 
+            print "***No builds for $file on $last_tried_date. The closest earlier is "
                 . $date . "\n";
 
             $last_tried_date = $date;
             next;
         }
 
-        print "Build times for $file on $date are " 
+        print "Build times for $file on $date are "
             . join (', ', @timestamps) . "\n" unless !$debugging;
     }
-    
+
     my $tmpdir = File::Spec->tmpdir();
     my $fullfile = $file .'_' . $date . '_' . $timestamps[0];
     my ($fh, $tmpfile) = tempfile ($fullfile . ".XXXXXX", UNLINK => 1, DIR => $tmpdir);
 
-    print "wget " . $verbose . " \'" .$teststaturl 
+    print "wget " . $verbose . " \'" .$teststaturl
             . $fullfile . ".txt\' -O - | sort >\'" . $tmpfile . '\'' . "\n" unless !$debugging;
 
-    system ("wget " . $verbose . " \'" .$teststaturl 
+    system ("wget " . $verbose . " \'" .$teststaturl
             . $fullfile . ".txt\' -O - | sort >\'" . $tmpfile . '\'');
     close ($fh);
-    
+
     return $tmpfile;
 }
 
@@ -145,15 +146,27 @@ sub differentiate ($$$)
         || die "***Failed to diff \'" . $first_file . "\' \'" . $second_file . "\'\n";
 
     while (<DIFF>) {
-        
+
         # Don't filter out the build details when printing the new errors only
-        if (/^---i|^\+\+\+/) { 
+        if (/^---/) {
+            # Previous Build Date
             print;
         }
+        elsif (/^\+\+\+/) {
+            # Current Build date
+            if ($revision) {
+                chomp;
+                print "$_ ($revision)\n";
+            }
+            else {
+               print;
+            }
+        }
         elsif (/^[^\+]/) {
+            # Anything except a new error
             print unless ($new_errors_only == 1);
         }
-        elsif ($revision) {
+        elsif ($append_revision_to_new_test_fails && $revision) {
             chomp;
             print "$_ ($revision)\n";
         }
@@ -212,7 +225,8 @@ while ($arg = shift(@ARGV)) {
       print "  -h          -- Prints this information\n";
       print "  -D date     -- Specify a date. Either YYYY_MM_DD or YYYY-MM-DD works\n";
       print "                 Use two date parameters to specify an interval\n";
-      print "  -A          -- Use all builds, not just the clean (successful) ones\n"; 
+      print "  -A          -- Use all builds, not just the clean (successful) ones\n";
+      print "  -r          -- Append SVN revision numbers to NEW test names\n";
       print "  build       -- Specify the build name. As it appears on the scoreboard\n";
       print "                 Works with two builds and one date to show the differences\n";
       print "                 between them. One build and two dates works, too.\n";
@@ -239,6 +253,9 @@ while ($arg = shift(@ARGV)) {
     elsif ($arg eq '-A') {
         $clean_builds_only = 0;
     }
+    elsif ($arg eq '-r') {
+        $append_revision_to_new_test_fails = 1;
+    }
     else {
         push (@builds, $arg);
         print "Build=$arg\n"
@@ -257,10 +274,10 @@ if ($#builds == -1 && $#dates >= 0)
     else {
         find_builds (\@builds, $allbuildsurl, 4, \%revisions, 3);
     }
-        
-    # only the start date given - implies we should 
+
+    # only the start date given - implies we should
     # use the today's date
-    if ($#dates == 0) { 
+    if ($#dates == 0) {
         $dates[1] = strftime ("%Y_%m_%d", gmtime);
     }
 
@@ -271,25 +288,24 @@ if ($#builds == -1 && $#dates >= 0)
 }
 else
 {
-
-    die "More than one date or build name are required" 
+    die "More than one date or build name are required"
         unless ($#dates + $#builds ge 1);
-    
+
     print "dates=@dates ($#dates)\n"
         unless !$debugging;
-    
+
     print "builds=@builds ($#builds)\n"
         unless !$debugging;
-    
+
     select_builds (\@dates, \@builds, \@files);
     differentiate (\@files, \@dates, 0);
 }
 __END__
 
-=head1 diff-builds.pl Diff the lists of failing tests 
+=head1 diff-builds.pl Diff the lists of failing tests
 
 =item DESCRIPTION
-Prints a diff for the list of test failures, for two builds on a certain date. 
+Prints a diff for the list of test failures, for two builds on a certain date.
 Or, for two dates and a certain build.
 
 =item EXAMPLE
