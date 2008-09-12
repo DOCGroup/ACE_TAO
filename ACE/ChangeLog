@@ -1,3 +1,9 @@
+Fri Sep 12 21:13:04 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+
+          Changed how DDS_ROOT is referenced (for OpenDDS support).
+
 Fri Sep 12 12:56:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted change below, brakes VMS support
