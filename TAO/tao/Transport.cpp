@@ -167,11 +167,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , stats_ (0)
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
   , flush_in_post_open_ (0)
-  , output_cdr_lock_ (0)
 {
-  ACE_NEW (this->output_cdr_lock_,
-     ACE_Lock_Adapter <TAO_SYNCH_MUTEX> (this->output_cdr_mutex_));
-
   ACE_NEW (this->messaging_object_,
             TAO_GIOP_Message_Base (orb_core,
                                    this,
@@ -2638,10 +2634,10 @@ TAO_Transport::out_stream (void)
   return this->messaging_object ()->out_stream ();
 }
 
-ACE_Lock*
+TAO_SYNCH_MUTEX &
 TAO_Transport::output_cdr_lock (void)
 {
-  return this->output_cdr_lock_;
+  return this->output_cdr_mutex_;
 }
 
 void

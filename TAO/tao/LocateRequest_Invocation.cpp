@@ -61,8 +61,8 @@ namespace TAO
 
     Invocation_Status s = TAO_INVOKE_FAILURE;
     {
-      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *transport->output_cdr_lock ()
-                        , TAO_INVOKE_FAILURE);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon,
+                        transport->output_cdr_lock (), TAO_INVOKE_FAILURE);
       TAO_OutputCDR &cdr = transport->out_stream ();
 
       if (transport->generate_locate_request (tspec, this->details_, cdr) == -1)
