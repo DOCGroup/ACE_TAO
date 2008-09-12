@@ -1,3 +1,19 @@
+Fri Sep 12 19:21:07 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+
+          Removed the ACE_Lock object that wrapped output_cdr_mutex_, we'll
+          just use the mutex object directly (TAO_SYNCH_MUTEX).
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Synch_Invocation.cpp:
+
+          Fixed-up all uses of TAO::Transport output_cdr_lock() for the new
+          return type.
+
 Tue Sep  9 22:25:46 UTC 2008  Ciju John  <johnc at ociweb dot com>
 
         * tests/AMI_Buffering/client.cpp:
