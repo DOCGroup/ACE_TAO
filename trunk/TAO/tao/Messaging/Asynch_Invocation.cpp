@@ -65,8 +65,8 @@ namespace TAO
             throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
           }
 
-        ACE_GUARD_RETURN (ACE_Lock, ace_mon, *transport->output_cdr_lock ()
-                          , TAO_INVOKE_FAILURE);
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon,
+                          transport->output_cdr_lock (), TAO_INVOKE_FAILURE);
 
         TAO_OutputCDR & cdr =
           this->resolver_.transport ()->messaging_object ()->out_stream ();
