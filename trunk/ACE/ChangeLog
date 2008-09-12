@@ -1,3 +1,14 @@
+Fri Sep 12 12:56:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted change below, brakes VMS support
+
+        Tue Sep  9 18:46:15 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * bin/mwc.pl:
+        * bin/mpc.pl:
+          Use FindBin::RealScript to get the real script name, that also
+          works when we have a symbolic link with a different name to
+          one of these scripts. This fixes bugzilla 3407
+
 Thu Sep 11 14:55:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * bin/diff-builds.pl
