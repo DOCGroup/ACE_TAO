@@ -1,6 +1,14 @@
-Mon Sep 15 06:08:04 CDT 2008  Simon Massey  <sma@prismtech.com>
+Mon Sep 15 16:34:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
-	* ACE version 5.6.6 released.
+        * NEWS:
+        * docs/Download.html:
+        * etc/index.html:
+
+          Updated for x.6.6
+
+Mon Sep 15 11:08:04 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * ACE version 5.6.6 released.
 
 Fri Sep 12 21:13:04 UTC 2008  Adam Mitz  <mitza@ociweb.com>
 
