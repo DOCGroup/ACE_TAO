@@ -1,0 +1,22 @@
+// $Id$
+
+interface A
+{
+  string method1 ();
+};
+
+interface intB : A
+{
+  string method2 ();
+};
+
+interface C : A
+{
+  string method3 ();
+};
+
+interface D : intB, C
+{
+  string method4 ();
+};
+

@@ -1,0 +1,7 @@
+// $Id$
+#ifndef TESTAPPXCEPTION_IDL
+#define TESTAPPXCEPTION_IDL
+
+exception TestAppException {};
+
+#endif

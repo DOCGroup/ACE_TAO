@@ -1,0 +1,42 @@
+// -*- MPC -*-
+// $Id$
+
+project(Security) : orbsvcslib, orbsvcs_output, corba_messaging, install, portableserver, pi, interceptors, valuetype, tao_versioning_idl_defaults {
+  sharedname   = TAO_Security
+  idlflags    += -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h
+  dynamicflags = TAO_SECURITY_BUILD_DLL
+  tagchecks   += Security
+
+  IDL_Files {
+    CSI.idl
+    CSIIOP.idl
+    GSSUP.idl
+    Security.idl
+    SecurityLevel1.idl
+    SecurityLevel2.idl
+    SecurityLevel3.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    Security {
+      CSIC.cpp
+      CSIIOPC.cpp
+      GSSUPC.cpp
+      SecurityC.cpp
+      SecurityS.cpp
+      SecurityLevel1C.cpp
+      SecurityLevel1S.cpp
+      SecurityLevel2C.cpp
+      SecurityLevel2S.cpp
+      SecurityLevel3C.cpp
+      Security
+    }
+  }
+
+  Header_Files {
+    Security/security_export.h
+  }
+
+  Template_Files {
+  }
+}

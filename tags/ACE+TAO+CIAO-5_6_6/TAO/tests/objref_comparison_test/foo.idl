@@ -1,0 +1,12 @@
+// $Id$
+
+#ifndef FOO_IDL
+#define FOO_IDL
+
+interface foo 
+{
+  boolean match_references ();
+};
+
+#endif /* FOO_IDL */
+

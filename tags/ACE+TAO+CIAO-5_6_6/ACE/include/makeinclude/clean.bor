@@ -1,0 +1,72 @@
+#
+# $Id$
+#
+# Rules for cleaning up intermediate files
+#
+
+clean: clean_bcb
+realclean: realclean_bcb
+
+clean_bcb:
+	@copy &&!
+@del $(OBJFILES:.obj=.obj ^
+@del ) $(IDLFILES:.idl=C.cpp ^
+@del ) $(IDLFILES:.idl=C.h ^
+@del ) $(IDLFILES:.idl=C.inl ^
+@del ) $(IDLFILES:.idl=S.cpp ^
+@del ) $(IDLFILES:.idl=S.h ^
+@del ) $(IDLFILES:.idl=S.inl ^
+@del ) $(IDLFILES:.idl=S_T.cpp ^
+@del ) $(IDLFILES:.idl=S_T.h ^
+@del ) $(IDLFILES:.idl=S_T.inl ^
+@del ) $(IDLFILES:.idl=Cli.cpp ^
+@del ) $(IDLFILES:.idl=Cli.h ^
+@del ) $(IDLFILES:.idl=Cli.inl ^
+@del ) $(IDLFILES:.idl=Ser.cpp ^
+@del ) $(IDLFILES:.idl=Ser.h ^
+@del ) $(IDLFILES:.idl=Ser.inl ^
+@del ) $(IDLFILES:.idl=Ser_T.cpp ^
+@del ) $(IDLFILES:.idl=Ser_T.h ^
+@del ) $(IDLFILES:.idl=Ser_T.inl ^
+@del ) $(RESOURCE)
+! clean_$(NAME)~.bat 1> NUL
+	-@clean_$(NAME)~.bat 2> NUL
+	@del clean_$(NAME)~.bat
+
+realclean_bcb:
+	@copy &&!
+@del $(OBJFILES:.obj=.obj ^
+@del ) $(IDLFILES:.idl=C.cpp ^
+@del ) $(IDLFILES:.idl=C.h ^
+@del ) $(IDLFILES:.idl=C.inl ^
+@del ) $(IDLFILES:.idl=S.cpp ^
+@del ) $(IDLFILES:.idl=S.h ^
+@del ) $(IDLFILES:.idl=S.inl ^
+@del ) $(IDLFILES:.idl=S_T.cpp ^
+@del ) $(IDLFILES:.idl=S_T.h ^
+@del ) $(IDLFILES:.idl=S_T.inl ^
+@del ) $(IDLFILES:.idl=Cli.cpp ^
+@del ) $(IDLFILES:.idl=Cli.h ^
+@del ) $(IDLFILES:.idl=Cli.inl ^
+@del ) $(IDLFILES:.idl=Ser.cpp ^
+@del ) $(IDLFILES:.idl=Ser.h ^
+@del ) $(IDLFILES:.idl=Ser.inl ^
+@del ) $(IDLFILES:.idl=Ser_T.cpp ^
+@del ) $(IDLFILES:.idl=Ser_T.h ^
+@del ) $(IDLFILES:.idl=Ser_T.inl ^
+@del ) $(RESOURCE)
+! realclean_$(NAME)~.bat 1> NUL
+	-@realclean_$(NAME)~.bat 2> NUL
+	@del realclean_$(NAME)~.bat
+	-@del $(TARGET) 2>NUL
+	-@del $(TARGET:.exe=.tds) 2>NUL
+	-@del $(TARGET:.dll=.tds) 2>NUL
+	-@del $(TARGET:.dll=.lib) 2>NUL
+	-@del $(OBJDIR)\$(NAME).csm 2>NUL
+	-@del $(OBJDIR)\$(NAME).\#* 2>NUL
+!ifdef CORE_TARGET
+	-@del $(CORE_TARGET) 2>NUL
+	-@del $(CORE_TARGET:.exe=.tds) 2>NUL
+	-@del $(CORE_TARGET:.dll=.tds) 2>NUL
+!endif
+

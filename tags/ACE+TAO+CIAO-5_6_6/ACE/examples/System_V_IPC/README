@@ -1,0 +1,13 @@
+This directory contains a number of examples that illustrate how to
+use the following ACE library components:
+
+	. SV_Message_Queues
+		Illustrates the ACE wrappers for System V Message
+		Queues.
+
+	. SV_Semaphores
+		Illustrates the ACE wrappers for System V Semaphores.
+
+	. SV_Shared_Memory
+		Illustrates the ACE wrappers for System V Shared Memory.
+

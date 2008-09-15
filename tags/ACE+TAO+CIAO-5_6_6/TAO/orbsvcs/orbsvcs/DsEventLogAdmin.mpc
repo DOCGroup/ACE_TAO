@@ -1,0 +1,105 @@
+// -*- MPC -*-
+// $Id$
+
+project(DsEventLogAdmin_IDL) : orbsvcslib, orbsvcs_output, install, dslogadmin, event, tao_versioning_idl_defaults {
+  custom_only = 1
+  idlflags   += -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h
+
+  IDL_Files {
+    DsEventLogAdmin.idl
+  }
+}
+
+project(DsEventLogAdmin) : orbsvcslib, orbsvcs_output, install, dslogadmin, event {
+  sharedname   = TAO_DsEventLogAdmin
+  dynamicflags = TAO_EVENTLOG_BUILD_DLL
+  tagchecks   += EventLog
+  after       += DsEventLogAdmin_IDL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    DsEventLogAdminC.cpp
+  }
+
+  Header_Files {
+    DsEventLogAdminC.h
+    Log/eventlog_export.h
+  }
+
+  Inline_Files {
+    DsEventLogAdminC.inl
+  }
+
+  Template_Files {
+  }
+
+  // explicit Resource_Files to avoid including _Skel & _Serv rc files.
+  Resource_Files {
+    DsEventLogAdmin.rc
+  }
+
+  Pkgconfig_Files {
+    TAO_DsEventLogAdmin.pc.in
+  }
+}
+
+project(DsEventLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dseventlogadmin, dslogadmin_skel, event_skel, portableserver {
+  sharedname   = TAO_DsEventLogAdmin_Skel
+  dynamicflags = TAO_EVENTLOG_SKEL_BUILD_DLL
+  tagchecks   += EventLog
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    DsEventLogAdminS.cpp
+  }
+
+  Header_Files {
+    DsEventLogAdminS.h
+    Log/eventlog_skel_export.h
+  }
+
+  Inline_Files {
+    DsEventLogAdminS.inl
+  }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_DsEventLogAdmin_Skel.pc.in
+  }
+}
+
+project(DsEventLogAdmin_Serv) : orbsvcslib, orbsvcs_output, install, dseventlogadmin_skel, dslogadmin_serv, event_serv {
+  sharedname   = TAO_DsEventLogAdmin_Serv
+  dynamicflags = TAO_EVENTLOG_SERV_BUILD_DLL
+  tagchecks   += EventLog
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Log/EventLogConsumer.cpp
+    Log/EventLogFactory_i.cpp
+    Log/EventLogNotification.cpp
+    Log/EventLog_i.cpp
+  }
+
+  Header_Files {
+    Log/eventlog_serv_export.h
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_DsEventLogAdmin_Serv.pc.in
+  }
+}

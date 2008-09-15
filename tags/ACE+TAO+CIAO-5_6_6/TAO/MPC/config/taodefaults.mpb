@@ -1,0 +1,26 @@
+// -*- MPC -*-
+// $Id$
+
+project : exceptions, tao_vc8warnings {
+  staticflags += TAO_AS_STATIC_LIBS
+  includes    += $(TAO_ROOT)
+  libpaths    += $(ACE_ROOT)/lib
+
+  specific(automake) {
+    am_version = @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+    includes += $(TAO_BUILDDIR)
+    libpaths -= $(ACE_ROOT)/lib
+  }
+}
+
+// If the corba_messaging feature is disabled, then we need
+// to add the TAO_HAS_CORBA_MESSAGING=0 macro onto the command line.
+feature(!corba_messaging) {
+  macros += TAO_HAS_CORBA_MESSAGING=0
+}
+
+// If the transport current feature is disabled, then we need
+// to add the TAO_HAS_CORBA_MESSAGING=0 macro onto the command line.
+feature(!transport_current) {
+  macros += TAO_HAS_TRANSPORT_CURRENT=0
+}
