@@ -1,3 +1,7 @@
+Mon Sep 15 06:08:04 CDT 2008  Simon Massey  <sma@prismtech.com>
+
+	* CIAO version 0.6.6 released.
+
 Tue Aug  5 15:13:53 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Benchmark/RoundTrip/client.cpp:
