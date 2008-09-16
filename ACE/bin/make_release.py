@@ -729,7 +729,7 @@ def generate_workspaces (stage_dir):
     ex (mpc_command + " -type vc71 " + mpc_option + vc71_option + redirect_option)
 
     print "\tGenerating Borland makefiles"
-    ex (mpc_command + " -type borland " + mpc_option + exclude_option + redirect_option)
+    ex (mpc_command + " -type bmake " + mpc_option + exclude_option + redirect_option)
 
     print "\tGenerating VC71 Static solutions"
     ex (mpc_command + " -type vc71 " + static_vc71_option + redirect_option)
@@ -744,7 +744,7 @@ def generate_workspaces (stage_dir):
     ex ("bin/bootstrap " + redirect_option)
 
     print "\tCorrecting permissions for all generated files..."
-    ex ("find ./ -name '*.vc[p,w]' -or -name '*.bor' -or -name '*.vcproj' -or -name '*.sln' -or -name 'GNUmake*' | xargs chmod 0644")
+    ex ("find ./ -name '*.vc[p,w]' -or -name '*.bmak' -or -name '*.vcproj' -or -name '*.sln' -or -name 'GNUmake*' | xargs chmod 0644")
 
 def create_kit ():
     """ Creates kits """

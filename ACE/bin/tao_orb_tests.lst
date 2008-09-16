@@ -91,6 +91,7 @@ TAO/tests/Bug_2429_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_2494_Regression/run_test.pl: !ST !LabVIEW_RT
 TAO/tests/Bug_2503_Regression/run_test.pl: !NO_MESSAGING !ST !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_2542_Regression/run_test.pl: !CORBA_E_MICRO !LabVIEW_RT
+TAO/tests/Bug_2543_Regression/run_test.pl: !LabVIEW_RT !FIXED_BUGS_ONLY
 TAO/tests/Bug_2560_Regression/run_test.pl: !ST !CORBA_E_MICRO !LabVIEW_RT
 TAO/tests/Bug_2593_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO !LabVIEW_RT
 TAO/tests/Bug_2595_Regression/run_test.pl: !LabVIEW_RT
