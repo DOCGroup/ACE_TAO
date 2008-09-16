@@ -153,7 +153,7 @@ document</a>.</p><p>
   <tr>
     <th>Remedy IT</th>
     <td>Maintains ACE on many platforms required for their ACE and
-        TAO service offerings. We support AIX, Borland C++ Builder 6/2006, 
+        TAO service offerings. We support AIX,  
         CodeGear C++ Builder 2007/2009, CodeGear RAD Studio 2007, 
         CBuilderX 1.0, MinGW, Microsoft Visual C++ 7.1/8/9, GCC,
         Cygwin, VxWorks 5.5.x - 6.x (kernel and rtp), OpenVMS 8.2-1 & 8.3 on Alpha and IA64,
@@ -194,7 +194,7 @@ document</a>.</p><p>
         of the commercial support organisations. The platforms include:
         Chorus; DG/UX; HP-UX 9, 10 and 11.00; pSOS;
         SunOS 4.x and Solaris with SunC++ 4.x; VxWorks 5.4 and earlier;
-        Microsoft Visual C++ 5, 6, and 7.0; Borland C++ Builder 4 and 5.
+        Microsoft Visual C++ 5, 6, and 7.0; Borland C++ Builder 4, 5, 6, and 2006.
         For up-to-date listings on platform that are deprecated and pending
         removal from ACE, please see the <a href="NEWS">NEWS file</a>.
     </td>
@@ -230,7 +230,7 @@ supported by the DOC group, Riverace, OCI or Remedy IT. </p><p>
 <p>
 ACE (as well as TAO and CIAO) use MPC (MakeProjectCreator) to generate
 files used by all supported build tools (such as GNUmakefiles for UNIX based
-platforms, sln and vcproj files for VC71/VC8 and Borland makefiles) on various
+platforms, sln and vcproj files for VC71/VC8 and CodeGear makefiles) on various
 platforms. To help new users to bootstrap quickly the release bundles
 of ACE (as well as TAO and CIAO) include all needed files to use the build
 instructions in this document.
@@ -535,7 +535,7 @@ one will not clean up any old files, and trying to use the environment's
 
 <ul>
 <li><a href="#msvc">Microsoft Visual Studio</a></li>
-<li><a href="#borland">Borland C++Builder</a></li>
+<li><a href="#codegear">CodeGear C++Builder</a></li>
 <li><a href="#mingw">MinGW</a></li>
 <li><a href="#cygwin">Cygwin</a></li>
 </ul>
@@ -766,8 +766,7 @@ include or library directories are specified using backslashes instead of forwar
 slashes.  If this occurs, the easiest way to fix it is to recreate it.</a></p>
 
 <hr align="left" width="50%"><p>&nbsp;</p>
-<h3><a name="borland">Building and Installing ACE on Windows with Borland
-C++</a></h3>
+<h3><a name="codegear">Building and Installing ACE on Windows with CodeGear C++</a></h3>
 
 If you are building for a machine without a network card, you may want
 to check <a href="#win32nonic">here</a> first. <p>
@@ -796,28 +795,17 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
       <code>set PATH=C:\ACE_wrappers\lib;C:\ACE_wrappers\bin;%PATH%</code><br>
       <br>
-  </li><li>Set the BCBVER environment varoable to the main version of your Borland C++ compiler.
-      6 is the value for Borland C++ Builder 6, 8 or 10 the value for Borland C++ Builder 2006,
-      11 is for CodeGear C++ Builder 2007, and 12 is for CodeGear C++ Builder
-      2009.
-<br>
-      <br>
-      <code>set BCBVER=6</code><br>
-      <br>
   </li><li>Change to the ACE_ROOT\ace directory.<br>
       <br>
   </li><li>Build release DLLs for ACE by going:<br>
       <br>
-      <code>make -f Makefile.bor all</code><br>
+      <code>make -f Makefile.bmak all</code><br>
       <br>
   </li><li>You can build several different versions of ACE by setting environment
       variables before you run make:<br>
       <br>
       Set the environment variable below to build a debug version of ACE<br>
       <code>set DEBUG=1</code><br>
-      <br>
-      Set the environment variable below to build a static version of ACE<br>
-      <code>set STATIC=1</code><br>
       <br>
       Set the environment variable below to build a unicode version of ACE<br>
       <code>set UNICODE=1</code><br>
@@ -828,51 +816,35 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
       Set the environment variable below to build a version of ACE optimized
       for a certain CPU. For this there are special compiler flags
-      (-3/-4/-5/-6), see the Borland help for more info.<br>
+      (-3/-4/-5/-6), see the CodeGear help for more info.<br>
       <code>set CPU_FLAG=-6</code><br>
       <br>
-      Set the environment variable below to build a version of ACE using the
-      C++BuilderX preview compiler. This compiler isn't supported at this moment
-      but by setting this environment variable the new compiler is used and
-      you can expirement with this compiler.<br>
-      <code>set CBX=1</code><br>
-      <br>
       You can then start the build with the command
-      <br><code>make -f Makefile.bor all</code><br>
+      <br><code>make -f Makefile.bmak all</code><br>
       <br>
       You may also enable the options by passing them as command line options to make, for example:<br>
-      <code>make -f Makefile.bor -DDEBUG all</code><br>
-      <br>
-  </li><li>Optionally install the ACE header files, libraries and executables
-for use
-      in your applications. Here we are installing them into C:\ACETAO: <br>
-      <br>
-      <code>make -f Makefile.bor -DINSTALL_DIR=C:\ACETAO install</code><br>
+      <code>make -f Makefile.bmak -DDEBUG all</code><br>
       <br>
 </li></ol>
 
-These instructions do not cover all possible build configurations. Please
-see <a href="http://www.tenermerx.com/programming/corba/tao_bcb/index.html">
-http://www.tenermerx.com/programming/corba/tao_bcb/index.html</a>
-for more detailed information on building and using ACE+TAO with Borland C++
-Builder. <p>
+<p>
 
-Note that when you run <code>make</code> in a sub directory you give <code>make -f Makefile.bor all</code>. The <code>all</code> is needed to make sure the complete project is build.<p>
+Note that when you run <code>make</code> in a sub directory you give <code>make -f Makefile.bmak all</code>. The <code>all</code> is needed to make sure the complete project is build.<p>
 
-The Borland C++ Builder 4.0/5.0/6.0/2006 port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
+The Borland/CodeGear C++ Builder 4.0/5.0/6.0/2006/2007/2009 port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
 
 <b>ACE TESTS</b></p><p>
 
 Before you can build the tests you need to build the protocols directory.
 Change the directory to ACE_ROOT\protocols and start the build with: </p><p>
 </p><blockquote><code>
-make -f Makefile.bor all
+make -f Makefile.bmak all
 </code></blockquote><p>
 
 The tests are located in ACE_ROOT\tests, change to this directory.
 You build then the tests with the following command:</p><p>
 </p><blockquote><code>
-make -f Makefile.bor all
+make -f Makefile.bmak all
 </code></blockquote><p>
 
 Once you build all the tests, you can run the automated test script using:</p><p>
@@ -1839,9 +1811,9 @@ below.</p>
       the <code>config.h</code> file has been created, build the
       <code>ACE_SSL</code> project.</li>
 </ol>
-<h2>Borland C++</h2>
+<h2>CodeGear C++</h2>
 <p>Support for building ACE's ACE_SSL library and TAO's SSLIOP
-   pluggable protocol with Borland C++ does exist.
+   pluggable protocol with CodeGear C++ does exist.
 <ol>
   <li>Set the <code>SSL_ROOT</code> environment variable to the location
       of the directory containing the OpenSSL <code>inc32</code> and
@@ -1849,7 +1821,7 @@ below.</p>
   <li>Add <code>ssl=1</code> to your MPC
       <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
       or <code>$ACE_ROOT/local.features</code> file, and re-run MPC to add
-      support for building the ACE_SSL library to your Borland C++ makefiles.
+      support for building the ACE_SSL library to your CodeGear C++ makefiles.
   <li>Build ACE and TAO.
 </ol>
 </p>
@@ -2591,10 +2563,10 @@ Toshio Hori &lt;toshi@etl.go.jp&gt; provided these tips for reducing
 disk space usage:</p><p>
 
 To save space on a Unix machine, I usually run
-    'find . -name \*.sln -o -name \*.vcproj -o -name \*.bor | xargs rm -f'
+    'find . -name \*.sln -o -name \*.vcproj -o -name \*.bmak | xargs rm -f'
 in $ACE_ROOT at first after I untar the distribution.  They are
 meaningless in my environment (Files named '*.sln' and '*.vcproj' are
-used for MSVC++ and files named '*.bor' are for Borland C++
+used for MSVC++ and files named '*.bmak' are for CodeGear C++
 Builder.)</p><p>
 
 Finally, to save space, may want to run 'make clean' after 'make'.  It
