@@ -122,11 +122,7 @@ ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
-#if defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetCurrentDirectoryA (path),
-                                          ace_result_),
-                        int, -1);
-#elif defined (ACE_LACKS_CHDIR)
+#if defined (ACE_LACKS_CHDIR)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_NONCONST_CHDIR)
@@ -140,10 +136,9 @@ ACE_OS::chdir (const char *path)
 ACE_INLINE int
 ACE_OS::chdir (const wchar_t *path)
 {
-#if defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetCurrentDirectoryW (path),
-                                          ace_result_),
-                        int, -1);
+#if defined (ACE_LACKS_CHDIR)
+  ACE_UNUSED_ARG (path);
+  ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
 #else /* ACE_WIN32 */
