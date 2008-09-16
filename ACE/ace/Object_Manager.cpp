@@ -30,6 +30,11 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && \
+    defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) \
+    && (_MSC_VER >= 1400) // VC++ 8.0 and above.
+  #include "ace/OS_NS_stdlib.h"
+#endif // ACE_DISABLE_WIN32_ERROR_WINDOWS && ACE_WIN32 && !ACE_HAS_WINCE && (_MSC_VER >= 1400)
 
 ACE_RCSID(ace, Object_Manager, "$Id$")
 
@@ -50,6 +55,18 @@ ACE_RCSID(ace, Object_Manager, "$Id$")
 #endif /* ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Note the following fix was derived from that proposed by Jochen Kalmbach
+// http://blog.kalmbachnet.de/?postid=75
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && \
+    defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && \
+    (_MSC_VER >= 1400) && defined (_M_IX86)
+LPTOP_LEVEL_EXCEPTION_FILTER WINAPI ACEdisableSetUnhandledExceptionFilter (
+  LPTOP_LEVEL_EXCEPTION_FILTER lpTopLevelExceptionFilter)
+{
+  return 0;
+}
+#endif // ACE_DISABLE_WIN32_ERROR_WINDOWS && ACE_WIN32 && !ACE_HAS_WINCE && (_MSC_VER >= 1400) && _M_IX86
 
 // Singleton pointer.
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
@@ -257,6 +274,53 @@ ACE_Object_Manager::init (void)
 
           // And this will catch all unhandled exceptions.
           SetUnhandledExceptionFilter (&ACE_UnhandledExceptionFilter);
+
+#  if (_MSC_VER >= 1400) // VC++ 8.0 and above.
+          // And this will stop the abort system call from being treated as a crash
+          _set_abort_behavior( 0,  _CALL_REPORTFAULT);
+
+  // Note the following fix was derived from that proposed by Jochen Kalmbach
+  // http://blog.kalmbachnet.de/?postid=75
+  // See also:
+  // http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=101337
+  //
+  // Starting with VC8 (VS2005), Microsoft changed the behaviour of the CRT in some
+  // security related and special situations. The are many situations in which our
+  // ACE_UnhandledExceptionFilter will never be called. This is a major change to
+  // the previous versions of the CRT and is not very well documented.
+  // The CRT simply forces the call to the default-debugger without informing the
+  // registered unhandled exception filter. Jochen's solution is to stop the CRT
+  // from calling SetUnhandledExceptionFilter() after we have done so above.
+  // NOTE this only works for intel based windows builds.
+
+#    ifdef _M_IX86
+          HMODULE hKernel32 = LoadLibrary (ACE_TEXT ("kernel32.dll"));
+          if (hKernel32)
+            {
+              void *pOrgEntry =
+                GetProcAddress (hKernel32, "SetUnhandledExceptionFilter");
+              if (pOrgEntry)
+                {
+                  unsigned char newJump[ 100 ];
+                  DWORD dwOrgEntryAddr = reinterpret_cast<DWORD> (pOrgEntry);
+                  dwOrgEntryAddr += 5; // add 5 for 5 op-codes for jmp far
+                  void *pNewFunc = &ACEdisableSetUnhandledExceptionFilter;
+                  DWORD dwNewEntryAddr = reinterpret_cast<DWORD> (pNewFunc);
+                  DWORD dwRelativeAddr = dwNewEntryAddr - dwOrgEntryAddr;
+
+                  newJump[ 0 ] = 0xE9;  // JMP absolute
+                  ACE_OS::memcpy (&newJump[ 1 ], &dwRelativeAddr, sizeof (pNewFunc));
+                  SIZE_T bytesWritten;
+                  WriteProcessMemory (
+                    GetCurrentProcess (),
+                    pOrgEntry,
+                    newJump,
+                    sizeof (pNewFunc) + 1,
+                    &bytesWritten);
+                }
+            }
+#    endif // _M_IX86
+#  endif // (_MSC_VER >= 1400) // VC++ 8.0 and above.
 #endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS && ACE_WIN32 && !ACE_HAS_WINCE */
 
 
