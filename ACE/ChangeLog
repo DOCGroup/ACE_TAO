@@ -1,7 +1,12 @@
+Tue Sep 16 12:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+          Reverted some wince changes which shouldn't have been committed
+
 Tue Sep 16 12:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.inl:
-          Reverted some wince changes
+          Reverted some wince changes which shouldn't have been committed
 
 Tue Sep 16 12:48:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
