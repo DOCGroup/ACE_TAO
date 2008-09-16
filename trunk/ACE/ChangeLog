@@ -1,3 +1,33 @@
+Tue Sep 16 08:27:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * ace/Object_Manager.cpp
+
+          The following fixes stop our automated scoreboard from locking up during
+          automated window VC8 builds and test runs. The enhance the original
+          ACE_DISABLE_WIN32_ERROR_WINDOWS builds but only on VC8 and above INTEL
+          machines.
+
+          Starting with VC8 (VS2005), it is necessary to add the call to
+          _set_abort_behavior( 0,  _CALL_REPORTFAULT); to ensure that calls to
+          abort() do not bypass any declared unhandled exception handler and directly
+          call the default debugger or "report this problem to microsoft" dialogue.
+          This does NOT stop the standard message from being logged to the error stream.
+
+          Also starting with VC8 (VS2005), Microsoft changed the behaviour of the CRT
+          in some security related and special situations. The are many situations in
+          which our ACE_UnhandledExceptionFilter will never be called. This is a major
+          change to the previous versions of the CRT and is not very well documented.
+          See: 
+          http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=101337
+
+          Basically the CRT simply uninstalls the registered unhandled exception filter
+          and then forces a call to the default-debugger. Jochen's solution is to stop
+          the CRT from calling SetUnhandledExceptionFilter() after we have setup our own
+          handler. NOTE this fix only works for intel based windows builds.
+
+          This fix was derived from that proposed by Jochen Kalmbach here:
+          http://blog.kalmbachnet.de/?postid=75
+
 Tue Sep 16 08:12:00 UTC 2008  Simon Massey  <sma@prismtech.com>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh
