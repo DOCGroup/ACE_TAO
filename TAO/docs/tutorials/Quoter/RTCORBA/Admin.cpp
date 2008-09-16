@@ -35,9 +35,9 @@ static bool use_naming = false;
 // Parse the command-line arguments and set the global options.
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:r:bsc");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:r:bsc"));
   int c;
 
   while ((c = get_opts ()) != -1)
