@@ -82,8 +82,8 @@ int
 ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
                           ACE_MEM_Addr *remote_sap,
                           ACE_Time_Value *timeout,
-                          int restart,
-                          int reset_new_handle)
+                          bool restart,
+                          bool reset_new_handle)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::accept");
 
@@ -225,7 +225,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 int
 ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
                                         int in_blocking_mode,
-                                        int reset_new_handle) const
+                                        bool reset_new_handle) const
 {
   ACE_TRACE ("ACE_MEM_Acceptor::shared_accept_finish ()");
 

@@ -20,7 +20,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_FoxReactor)
 // Must be called with lock held
 ACE_FoxReactor::ACE_FoxReactor (FXApp* a,
                                 size_t size,
-                                int restart,
+                                bool restart,
                                 ACE_Sig_Handler *h)
   : ACE_Select_Reactor (size, restart, h), fxapp(a)
 {

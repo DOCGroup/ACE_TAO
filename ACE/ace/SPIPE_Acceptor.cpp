@@ -248,8 +248,8 @@ int
 ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
                             ACE_SPIPE_Addr *remote_addr,
                             ACE_Time_Value *timeout,
-                            int restart,
-                            int reset_new_handle)
+                            bool restart,
+                            bool reset_new_handle)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::accept");
   ACE_UNUSED_ARG (reset_new_handle);

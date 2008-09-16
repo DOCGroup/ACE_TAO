@@ -95,7 +95,7 @@ public:
                int pipe_mode = PIPE_READMODE_MESSAGE | PIPE_WAIT);
 
   /// Resets any event associations on this handle
-  int reset_new_handle (ACE_HANDLE handle);
+  bool reset_new_handle (ACE_HANDLE handle);
 
   // = Meta-type info
   typedef ACE_SPIPE_Addr PEER_ADDR;

@@ -52,8 +52,8 @@ public:
   ACE_Guard (ACE_LOCK &l, bool block);
 
   /// Initialise the guard without implicitly acquiring the lock. The
-  /// <become_owner> parameter indicates whether the guard should release
-  /// the lock implicitly on destruction. The <block> parameter is
+  /// @a become_owner parameter indicates whether the guard should release
+  /// the lock implicitly on destruction. The @a block parameter is
   /// ignored and is used here to disambiguate with the preceding
   /// constructor.
   ACE_Guard (ACE_LOCK &l, bool block, int become_owner);
@@ -77,9 +77,9 @@ public:
   void disown (void);
 
   // = Utility methods.
-  /// 1 if locked, 0 if couldn't acquire the lock
+  /// true if locked, false if couldn't acquire the lock
   /// (errno will contain the reason for this).
-  int locked (void) const;
+  bool locked (void) const;
 
   /// Explicitly remove the lock.
   int remove (void);

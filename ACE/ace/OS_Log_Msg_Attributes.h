@@ -59,7 +59,7 @@ protected:
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.
-  int restart_;
+  bool restart_;
 
   /// Depth of the nesting for printing traces.
   int trace_depth_;

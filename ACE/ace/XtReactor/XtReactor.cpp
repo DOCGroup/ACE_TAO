@@ -14,7 +14,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_XtReactor)
 // Must be called with lock held
 ACE_XtReactor::ACE_XtReactor (XtAppContext context,
                               size_t size,
-                              int restart,
+                              bool restart,
                               ACE_Sig_Handler *h)
   : ACE_Select_Reactor (size, restart, h),
     context_ (context),

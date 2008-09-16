@@ -30,7 +30,7 @@ ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (void)
 
 int
 ACE_SOCK_SEQPACK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
-                                        int restart,
+                                        bool restart,
                                         int &in_blocking_mode) const
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::shared_accept_start");
@@ -63,7 +63,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
 int
 ACE_SOCK_SEQPACK_Acceptor::shared_accept_finish (ACE_SOCK_SEQPACK_Association new_association,
                                          int in_blocking_mode,
-                                         int reset_new_handle) const
+                                         bool reset_new_handle) const
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::shared_accept_finish ()");
 
@@ -102,8 +102,8 @@ int
 ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association,
                            ACE_Addr *remote_addr,
                            ACE_Time_Value *timeout,
-                           int restart,
-                           int reset_new_handle) const
+                           bool restart,
+                           bool reset_new_handle) const
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::accept");
 

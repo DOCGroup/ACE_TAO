@@ -11,7 +11,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_TkReactor)
 
 // Must be called with lock held
 ACE_TkReactor::ACE_TkReactor (size_t size,
-                              int restart,
+                              bool restart,
                               ACE_Sig_Handler *h)
   : ACE_Select_Reactor (size, restart, h),
     ids_ (0),

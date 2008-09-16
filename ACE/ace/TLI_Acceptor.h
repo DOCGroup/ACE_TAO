@@ -80,8 +80,8 @@ public:
   int accept (ACE_TLI_Stream &new_tli_sap,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
-              int restart = 1,
-              int reset_new_handle = 0,
+              bool restart = true,
+              bool reset_new_handle = false,
               int rwflag = 1,
               netbuf *udata = 0,
               netbuf *opt = 0);
@@ -107,7 +107,7 @@ private:
   int rwflag_;
 
   /// Handle TLI accept insanity...
-  int handle_async_event (int restart, int rwflag);
+  int handle_async_event (bool restart, int rwflag);
 
   /// Used for queueing up pending requests.
   ACE_TLI_Request_Queue *queue_;

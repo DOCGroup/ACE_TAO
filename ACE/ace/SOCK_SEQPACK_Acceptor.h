@@ -133,8 +133,8 @@ public:
   int accept (ACE_SOCK_SEQPACK_Association &new_association,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
-              int restart = 1,
-              int reset_new_handle = 0) const;
+              bool restart = true,
+              bool reset_new_handle = false) const;
 
   // = Meta-type info
   typedef ACE_Multihomed_INET_Addr PEER_ADDR;
@@ -150,14 +150,14 @@ protected:
   /// Perform operations that must occur before <ACE_OS::accept> is
   /// called.
   int shared_accept_start (ACE_Time_Value *timeout,
-                           int restart,
+                           bool restart,
                            int &in_blocking_mode) const;
 
   /// Perform operations that must occur after <ACE_OS::accept> is
   /// called.
   int shared_accept_finish (ACE_SOCK_SEQPACK_Association new_association,
                             int in_blocking_mode,
-                            int reset_new_handle) const;
+                            bool reset_new_handle) const;
 
   /**
    * This method factors out the common <open> code and is called by

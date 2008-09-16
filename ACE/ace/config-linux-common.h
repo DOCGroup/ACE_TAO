@@ -396,6 +396,8 @@
 
 #define ACE_HAS_VOIDPTR_MMAP
 
+#define ACE_HAS_ICMP_SUPPORT 1
+
 #if defined (ACE_LACKS_NETWORKING)
 # include "ace/config-posix-nonetworking.h"
 #else

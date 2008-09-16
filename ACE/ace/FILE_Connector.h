@@ -90,7 +90,7 @@ public:
                int perms = ACE_DEFAULT_FILE_PERMS);
 
   /// Resets any event associations on this handle
-  int reset_new_handle (ACE_HANDLE handle);
+  bool reset_new_handle (ACE_HANDLE handle);
 
   /// Dump the state of an object.
   void dump (void) const;

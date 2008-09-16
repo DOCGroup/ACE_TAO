@@ -41,13 +41,13 @@ ACE_Log_Msg::op_status (void) const
 
 ACE_INLINE
 void
-ACE_Log_Msg::restart (int r)
+ACE_Log_Msg::restart (bool r)
 {
   this->restart_ = r;
 }
 
 ACE_INLINE
-int
+bool
 ACE_Log_Msg::restart (void) const
 {
   return this->restart_;

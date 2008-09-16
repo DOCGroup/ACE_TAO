@@ -89,7 +89,7 @@ public:
                int perms = 0);
 
   /// Resets any event associations on this handle
-  int reset_new_handle (ACE_HANDLE handle);
+  bool reset_new_handle (ACE_HANDLE handle);
 
   // = Meta-type info
   typedef ACE_UPIPE_Addr PEER_ADDR;

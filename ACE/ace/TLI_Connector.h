@@ -106,7 +106,7 @@ public:
                 ACE_Time_Value *tv);
 
   /// Resets any event associations on this handle
-  int reset_new_handle (ACE_HANDLE handle);
+  bool reset_new_handle (ACE_HANDLE handle);
 
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;

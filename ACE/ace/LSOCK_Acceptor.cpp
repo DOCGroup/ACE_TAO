@@ -84,8 +84,8 @@ int
 ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
                             ACE_Addr *remote_addr,
                             ACE_Time_Value *timeout,
-                            int restart,
-                            int reset_new_handle) const
+                            bool restart,
+                            bool reset_new_handle) const
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::accept");
 
