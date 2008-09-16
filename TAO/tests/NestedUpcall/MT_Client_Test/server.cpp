@@ -31,7 +31,7 @@ MT_Object_Server::MT_Object_Server (void)
 int
 MT_Object_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "do:m");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("do:m"));
   int c;
 
   while ((c = get_opts ()) != -1)

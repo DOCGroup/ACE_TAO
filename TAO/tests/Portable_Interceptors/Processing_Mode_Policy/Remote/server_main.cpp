@@ -15,7 +15,7 @@ ACE_TString proc_mode_str;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:o:"));
   int c;
 
   proc_mode_str.set (ACE_TEXT ("LOCAL_AND_REMOTE"));

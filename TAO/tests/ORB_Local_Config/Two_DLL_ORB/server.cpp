@@ -37,7 +37,7 @@ Server_Worker::~Server_Worker (void)
 int
 Server_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:",0);
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"),0);
 
   for( int c = 0; ((c = get_opts ()) != -1); )
     switch (c)

@@ -14,9 +14,9 @@ int test_user_exception = 0;
 int test_system_exception = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xusk:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xusk:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)

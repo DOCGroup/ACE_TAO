@@ -37,7 +37,7 @@ static const ACE_TCHAR *bands_file = ACE_TEXT ("empty_file");
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:d:i:k:p:t:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:d:i:k:p:t:x"));
   int c;
 
   while ((c = get_opts ()) != -1)

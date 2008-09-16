@@ -104,7 +104,7 @@ static CORBA::Boolean allow_borrowing = 0;
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:c:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -20,7 +20,7 @@ class ClientApp : public TestAppBase
 
   private:
 
-    int parse_args(int argc, char* argv[]);
+    int parse_args(int argc, ACE_TCHAR* argv[]);
 
     ACE_CString ior_;
 };

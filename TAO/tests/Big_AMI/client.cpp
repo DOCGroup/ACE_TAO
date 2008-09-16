@@ -29,9 +29,9 @@ int debug = 1;
 CORBA::ULong payload_size  = 128000;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "db:k:i:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("db:k:i:x"));
   int c;
 
   while ((c = get_opts ()) != -1)

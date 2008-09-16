@@ -87,7 +87,7 @@ MT_Server::read_ior (char *filename)
 int
 MT_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "d:f:g:h:i:n:s:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("d:f:g:h:i:n:s:"));
   int c;
 
   while ((c = get_opts ()) != -1)

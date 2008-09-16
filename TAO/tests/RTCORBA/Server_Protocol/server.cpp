@@ -48,9 +48,9 @@ CORBA::ULong protocol_type = 0;
 
 // Parse command-line arguments.
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:"));
   int c, result;
 
   while ((c = get_opts ()) != -1)

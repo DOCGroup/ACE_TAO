@@ -18,7 +18,7 @@ static int timed_method = 0;
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:k:i:T:otx");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:k:i:T:otx"));
   int c;
 
   while ((c = get_opts ()) != -1)

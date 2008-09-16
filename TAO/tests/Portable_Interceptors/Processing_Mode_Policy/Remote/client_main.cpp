@@ -13,9 +13,9 @@ const char *input = "file://test.ior";
 ACE_CString proc_mode_str;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:k:"));
   int c;
 
   proc_mode_str.set ("LOCAL_AND_REMOTE");

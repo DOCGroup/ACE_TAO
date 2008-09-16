@@ -18,9 +18,9 @@ ACE_CString server_orb;
 ACE_CString client_orb;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:c:k:o");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:k:o"));
   int c;
 
   server_proc_mode_str.set ("LOCAL_AND_REMOTE");

@@ -23,7 +23,7 @@ test_select which_test = TEST_ALL;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:dsoe");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:dsoe"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -48,7 +48,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                                             "-k <iorfile>",
+                           "-k <iorfile>",
                            argv [0]),
                           -1);
       }
@@ -58,8 +58,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-dump_node (BaseNode* bn,
-           int indent)
+dump_node (BaseNode* bn, int indent)
 {
   if (bn == 0)
     {

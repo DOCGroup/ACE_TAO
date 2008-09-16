@@ -55,7 +55,7 @@ static int shutdown_server = 0;
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "ek:i:d:t:w:z:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ek:i:d:t:w:z:x"));
   int c;
 
   while ((c = get_opts ()) != -1)

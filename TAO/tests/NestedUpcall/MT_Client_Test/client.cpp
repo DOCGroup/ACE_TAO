@@ -87,7 +87,7 @@ MT_Client::read_ior (char *filename)
 int
 MT_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:g:h:i:n:s:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:g:h:i:n:s:"));
   int c;
   int result;
 
@@ -269,7 +269,7 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
-  
+
   try
     {
       TAO_ORB_Manager orb_manager;

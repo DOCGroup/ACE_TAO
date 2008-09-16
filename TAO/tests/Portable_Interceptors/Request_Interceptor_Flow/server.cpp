@@ -14,14 +14,14 @@ ACE_RCSID (Request_Interceptor_Flow,
 const char *ior_file = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 3)  // foo -o IOR
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Wrong number of arguments.\n"),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)

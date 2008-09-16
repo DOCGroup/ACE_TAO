@@ -11,7 +11,7 @@ int bad_ior = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:b");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:b"));
   int c;
 
   while ((c = get_opts ()) != -1)
