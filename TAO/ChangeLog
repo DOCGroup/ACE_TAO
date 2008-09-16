@@ -1,7 +1,97 @@
+Tue Sep 16 11:06:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/AMH_Servant.cpp
+        * examples/AMH/Sink_Server/AMH_Servant.h
+        * examples/AMH/Sink_Server/Base_Server.cpp
+        * examples/AMH/Sink_Server/Base_Server.h
+        * examples/AMH/Sink_Server/Client_Task.cpp
+        * examples/AMH/Sink_Server/Client_Task.h
+        * examples/AMH/Sink_Server/MT_AMH_Server.cpp
+        * examples/AMH/Sink_Server/MT_AMH_Server.h
+        * examples/AMI/FL_Callback/peer.cpp
+        * examples/AMI/FL_Callback/progress.cpp
+        * examples/Buffered_AMI/client.cpp
+        * examples/Buffered_AMI/server.cpp
+        * examples/Buffered_Oneways/client.cpp
+        * examples/Buffered_Oneways/server.cpp
+        * examples/Callback_Quoter/Consumer_Handler.cpp
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp
+        * examples/Callback_Quoter/Supplier_i.cpp
+        * examples/CSD_Strategy/ThreadPool2/ClientApp.cpp
+        * examples/CSD_Strategy/ThreadPool2/ClientApp.h
+        * examples/CSD_Strategy/ThreadPool2/ServerApp.cpp
+        * examples/CSD_Strategy/ThreadPool2/ServerApp.h
+        * examples/CSD_Strategy/ThreadPool3/ClientApp.cpp
+        * examples/CSD_Strategy/ThreadPool3/ClientApp.h
+        * examples/CSD_Strategy/ThreadPool3/ServerApp.cpp
+        * examples/CSD_Strategy/ThreadPool3/ServerApp.h
+        * examples/CSD_Strategy/ThreadPool4/ServerApp.cpp
+        * examples/CSD_Strategy/ThreadPool4/ServerApp.h
+        * examples/CSD_Strategy/ThreadPool5/ClientApp.cpp
+        * examples/CSD_Strategy/ThreadPool5/ClientApp.h
+        * examples/CSD_Strategy/ThreadPool5/ServerApp.cpp
+        * examples/CSD_Strategy/ThreadPool5/ServerApp.h
+        * examples/CSD_Strategy/ThreadPool6/ClientApp.cpp
+        * examples/CSD_Strategy/ThreadPool6/ClientApp.h
+        * examples/CSD_Strategy/ThreadPool6/ServerApp.cpp
+        * examples/CSD_Strategy/ThreadPool6/ServerApp.h
+        * examples/CSD_Strategy/ThreadPool/ClientApp.cpp
+        * examples/CSD_Strategy/ThreadPool/ClientApp.h
+        * examples/CSD_Strategy/ThreadPool/ServerApp.cpp
+        * examples/CSD_Strategy/ThreadPool/ServerApp.h
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp
+        * examples/Load_Balancing/Identity_Client.cpp
+        * examples/Load_Balancing/Identity_Client.h
+        * examples/Load_Balancing/Identity_Server.cpp
+        * examples/Load_Balancing/Identity_Server.h
+        * examples/Load_Balancing/Load_Balancing_Service.cpp
+        * examples/Load_Balancing/Load_Balancing_Service.h
+        * examples/Load_Balancing_persistent/Identity_Client.cpp
+        * examples/Load_Balancing_persistent/Identity_Client.h
+        * examples/Load_Balancing_persistent/Identity_Server.cpp
+        * examples/Load_Balancing_persistent/Identity_Server.h
+        * examples/Load_Balancing_persistent/Load_Balancing_Service.cpp
+        * examples/Load_Balancing_persistent/Load_Balancing_Service.h
+        * examples/Logging/Logging_Service_i.cpp
+        * examples/Logging/Logging_Test_i.cpp
+        * examples/OBV/Simple_util.cpp
+        * examples/OBV/Simple_util.h
+        * examples/Persistent_Grid/Grid_Client_i.cpp
+        * examples/Persistent_Grid/Grid_Client_i.h
+        * examples/Persistent_Grid/Persistent_Client.h
+        * examples/Persistent_Grid/Persistent_Client_i.cpp
+        * examples/Persistent_Grid/Simple_util.cpp
+        * examples/PluggableUDP/tests/Performance/client.cpp
+        * examples/PluggableUDP/tests/Performance/server.cpp
+        * examples/Quoter/client.cpp
+        * examples/Quoter/client.h
+        * examples/Quoter/Factory_Finder.cpp
+        * examples/Quoter/Generic_Factory.cpp
+        * examples/Quoter/server.cpp
+        * examples/Simple/chat/Client_i.cpp
+        * examples/Simple/chat/Client_i.h
+        * examples/Simple/chat/Server_i.cpp
+        * examples/Simple/chat/Server_i.h
+        * examples/Simple/grid/Grid_Client_i.cpp
+        * examples/Simple/grid/Grid_Client_i.h
+        * examples/Simple/Simple_util.cpp
+        * examples/Simple/time-date/Time_Date.cpp
+        * examples/Simple/time-date/Time_Date.h
+        * examples/Simple/time-date/Time_Date_Client_i.h
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp
+        * examples/Simulator/Event_Supplier/Event_Con.cpp
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp
+          ACE_TCHAR changes
+
 Mon Sep 15 16:34:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * NEWS:
-
           Updated for x.6.6
 
 Mon Sep 15 11:08:04 UTC 2008  Simon Massey  <sma@prismtech.com>

@@ -18,9 +18,9 @@ const CORBA::Short max_importance = 100;
 int enable_yield = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:ds");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:ds"));
   int c;
 
   while ((c = get_opts ()) != -1)

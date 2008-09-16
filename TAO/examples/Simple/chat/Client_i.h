@@ -60,7 +60,7 @@ public:
   // Handle the user input.
 
  private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command line arguments.
   // Returns 0 on success, -1 on error.
 

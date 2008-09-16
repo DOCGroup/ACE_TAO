@@ -31,7 +31,7 @@ Server<Servant>::~Server (void)
 template <class Servant> int
 Server<Servant>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:m:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:m:"));
   int c = 0;
 
   while ((c = get_opts ()) != -1)
@@ -195,7 +195,7 @@ Client<InterfaceObj, Var>::read_ior (char *filename)
 template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:k:x");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:k:x"));
   int c = 0;
   int result = 0;
 

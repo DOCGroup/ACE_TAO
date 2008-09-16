@@ -48,7 +48,7 @@ public:
   int run (void);
   // Execute client example code.
 
-  int init (int argc, char **argv);
+  int init (int argc, ACE_TCHAR **argv);
   // Initialize the client communication endpoint with server.
 
 private:
@@ -104,14 +104,14 @@ class Quoter_Task : public ACE_Task<ACE_SYNCH>
   // = DESCRIPTION
   //    Task that creates a Quoter_Client and uses it
 public:
-  Quoter_Task (int argc, char **argv);
+  Quoter_Task (int argc, ACE_TCHAR **argv);
 
   virtual int svc (void);
 
 private:
   Quoter_Client quoter_client;
   int argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
 
 };
 

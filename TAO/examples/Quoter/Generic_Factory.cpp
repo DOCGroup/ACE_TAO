@@ -218,7 +218,7 @@ Quoter_Generic_Factory_Server::run (void)
 u_int
 Quoter_Generic_Factory_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opt (this->argc_, this->argv_, "l?d:");
+  ACE_Get_Opt get_opt (this->argc_, this->argv_, ACE_TEXT("l?d:"));
   int opt;
   int exit_code = 0;
 

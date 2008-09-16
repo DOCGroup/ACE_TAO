@@ -13,7 +13,7 @@
 # include "Base_Server.inl"
 #endif /* __ACE_INLINE__ */
 
-Base_Server::Base_Server (int& argc, char **argv)
+Base_Server::Base_Server (int &argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
   , ior_output_file_ ("test.ior")
@@ -40,7 +40,7 @@ Base_Server::parse_args (void)
 {
   // *** To get correct behaviour, set ** POSIXLY_CORECT=1 ** on Linux
   // systems!!! ***
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "o:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("o:"));
   int c;
   int count_argv = 0;
 

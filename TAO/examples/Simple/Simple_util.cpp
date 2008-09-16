@@ -34,7 +34,7 @@ Server<Servant>::~Server (void)
 template <class Servant> int
 Server<Servant>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ni:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:ni:"));
   int c = 0;
 
   while ((c = get_opts ()) != -1)
@@ -300,7 +300,7 @@ Client<INTERFACE_OBJECT, Var>::read_ior (char *filename)
 template <class INTERFACE_OBJECT, class Var> int
 Client<INTERFACE_OBJECT, Var>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:nk:x");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:nk:x"));
   int c = 0;
   int result = 0;
 

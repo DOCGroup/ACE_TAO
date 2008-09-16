@@ -29,9 +29,9 @@ Identity_Client::Identity_Client (void)
 }
 
 int
-Identity_Client::parse_args (int argc, char *argv[])
+Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "di:n:k:r");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("di:n:k:r"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -72,15 +72,13 @@ Identity_Client::parse_args (int argc, char *argv[])
 }
 
 int
-Identity_Client::init (int argc,
-                       char* argv[])
+Identity_Client::init (int argc, ACE_TCHAR* argv[])
 {
   int result;
 
   try
     {
-      result = this->orb_manager_.init (argc,
-                                        argv);
+      result = this->orb_manager_.init (argc, argv);
       if (result == -1)
         return result;
 

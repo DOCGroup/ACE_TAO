@@ -8,12 +8,12 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 
-MT_AMH_Server::MT_AMH_Server (int& argc, char **argv)
-  : Base_Server (argc, argv) 
+MT_AMH_Server::MT_AMH_Server (int &argc, ACE_TCHAR **argv)
+  : Base_Server (argc, argv)
 {
 }
 
-MT_AMH_Server::~MT_AMH_Server (void) 
+MT_AMH_Server::~MT_AMH_Server (void)
 {
 }
 
@@ -34,7 +34,7 @@ MT_AMH_Server::usage (const char *message)
 }
 
 
-int 
+int
 MT_AMH_Server::parse_args (void)
 {
 
@@ -45,7 +45,7 @@ MT_AMH_Server::parse_args (void)
       ACE_OS::exit (1);
     }
 
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "n:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("n:"));
   int c;
   int count_argv = 0;
 
@@ -79,7 +79,7 @@ MT_AMH_Server::parse_args (void)
   return 0;
 }
 
-void 
+void
 MT_AMH_Server::start_threads (void)
 {
   // Each of this thread runs the event loop
@@ -87,7 +87,7 @@ MT_AMH_Server::start_threads (void)
   this->thr_mgr ()->wait ();
 }
 
-int 
+int
 MT_AMH_Server::svc (void)
 {
   run_event_loop ();

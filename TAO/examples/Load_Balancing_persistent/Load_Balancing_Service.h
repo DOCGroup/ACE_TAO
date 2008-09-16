@@ -40,7 +40,7 @@ public:
   ~Load_Balancing_Service (void);
   // Destructor.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the <Load_Balancing_Service>: initializes the ORB, parses
   // arguments, creates a servant ...
 
@@ -48,7 +48,7 @@ public:
   // Run the server.
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parses the commandline arguments.
 
   TAO_ORB_Manager orb_manager_;

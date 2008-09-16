@@ -22,7 +22,7 @@ ClientApp::~ClientApp()
 
 
 int
-ClientApp::run (int argc, char* argv[])
+ClientApp::run (int argc, ACE_TCHAR* argv[])
 {
   CORBA::ORB_var orb
     = CORBA::ORB_init (argc, argv);
@@ -170,11 +170,11 @@ ClientApp::run (int argc, char* argv[])
 
 
 int
-ClientApp::parse_args(int argc, char* argv[])
+ClientApp::parse_args(int argc, ACE_TCHAR* argv[])
 {
   this->exe_name_ = argv[0];
 
-  ACE_Get_Opt get_opts(argc, argv, "i:");
+  ACE_Get_Opt get_opts(argc, argv, ACE_TEXT("i:"));
 
   int c;
 
