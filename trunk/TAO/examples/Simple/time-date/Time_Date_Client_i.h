@@ -42,7 +42,7 @@ public:
   virtual int run (const char *, int, char *[]);
   // Execute the methods.
 
-  virtual int parse_args (int argc, char *argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parses the command line arguments.
 
 private:

@@ -30,7 +30,7 @@ class Client_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Client_Task (int &argc, char ** argv);
+  Client_Task (int &argc, ACE_TCHAR **argv);
 
   int parse_args (void);
 
@@ -58,7 +58,7 @@ private:
   ACE_Basic_Stats latency_;
 
   int &argc_;
-  char **argv_;
+  ACE_TCHAR **argv_;
   const char *ior_;
   int iterations_;
 };

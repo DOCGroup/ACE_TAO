@@ -11,7 +11,7 @@
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
 
-Client_Task::Client_Task (int &argc, char **argv)
+Client_Task::Client_Task (int &argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
   , ior_ ("file://test.ior")
@@ -22,7 +22,7 @@ Client_Task::Client_Task (int &argc, char **argv)
 int
 Client_Task::parse_args (void)
 {
-    ACE_Get_Opt get_opts (this->argc_, this->argv_, "k:n:");
+    ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("k:n:"));
     int c;
 
     while ((c = get_opts ()) != -1)

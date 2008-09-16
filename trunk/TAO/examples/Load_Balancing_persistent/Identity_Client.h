@@ -51,14 +51,14 @@ public:
   ~Identity_Client (void);
   // Destructor.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initializes <orb_manager_>, and parses commandline arguments.
 
   int run (void);
   // See TITLE.
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parses the commandline arguments.
 
   TAO_ORB_Manager orb_manager_;

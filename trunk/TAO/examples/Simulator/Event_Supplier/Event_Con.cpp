@@ -227,7 +227,7 @@ Demo_Consumer::shutdown (void)
 static unsigned int
 get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "Oc:djm:s:t:?");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("Oc:djm:s:t:?"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

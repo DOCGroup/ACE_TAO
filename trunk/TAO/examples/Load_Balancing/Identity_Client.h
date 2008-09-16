@@ -58,7 +58,7 @@ public:
   // See TITLE.
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parses the commandline arguments.
 
   TAO_ORB_Manager orb_manager_;

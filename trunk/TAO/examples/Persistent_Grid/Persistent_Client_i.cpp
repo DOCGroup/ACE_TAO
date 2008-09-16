@@ -24,7 +24,7 @@ Persistent_Client_i::parse_args (int argc,
                                  char *argv[])
 {
   // Parses some of the options that are specific to this example
-  ACE_Get_Opt get_opts (argc, argv, "dk:f:xw:h:r");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:f:xw:h:r"));
 
   int c = 0;
   while ((c = get_opts ()) != -1)

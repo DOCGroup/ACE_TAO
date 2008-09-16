@@ -416,7 +416,7 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
 unsigned int
 Logging_Supplier::get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:d:s");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:m:d:s"));
   int opt;
   int temp;
 

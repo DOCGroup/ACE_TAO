@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //   Balachandran Natarajan <bala@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #ifndef PERSISTENT_CLIENT_I_H
@@ -42,7 +42,7 @@ public:
   virtual int run (const char *, int, char *[]);
   // Execute the methods.
 
-  virtual int parse_args (int argc, char *argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parses the command line arguments.
 
 private:
@@ -54,7 +54,7 @@ private:
 
   CORBA::Short width_;
   // Width of the grid.
-  
+
   CORBA::Short remove_;
   // Flag for the deletion of memory
 };

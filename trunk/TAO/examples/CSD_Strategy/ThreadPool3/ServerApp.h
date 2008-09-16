@@ -14,12 +14,12 @@ class ServerApp
     ServerApp();
     ~ServerApp();
 
-    int run(int argc, char* argv[]);
+    int run(int argc, ACE_TCHAR* argv[]);
 
 
   private:
 
-    int parse_args(int argc, char* argv[]);
+    int parse_args(int argc, ACE_TCHAR* argv[]);
     void usage_statement();
 
     ACE_CString exe_name_;

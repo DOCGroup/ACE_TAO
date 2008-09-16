@@ -24,9 +24,9 @@ Load_Balancing_Service::Load_Balancing_Service (void)
 }
 
 int
-Load_Balancing_Service::parse_args (int argc, char *argv[])
+Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -60,16 +60,14 @@ Load_Balancing_Service::parse_args (int argc, char *argv[])
 }
 
 int
-Load_Balancing_Service::init (int argc,
-                    char* argv[])
+Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
 {
   int result;
   CORBA::String_var ior;
 
   try
     {
-      result = this->orb_manager_.init (argc,
-                                        argv);
+      result = this->orb_manager_.init (argc, argv);
       if (result == -1)
         return result;
 

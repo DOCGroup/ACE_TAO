@@ -170,7 +170,7 @@ Quoter_Factory_Finder_Server::run (void)
 u_int
 Quoter_Factory_Finder_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opt (this->argc_, this->argv_, "?d:");
+  ACE_Get_Opt get_opt (this->argc_, this->argv_, ACE_TEXT("?d:"));
   int opt;
   int exit_code = 0;
 

@@ -94,7 +94,7 @@ Consumer_Handler::read_ior (char *filename)
 int
 Consumer_Handler::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "a:t:d:f:xk:xs");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("a:t:d:f:xk:xs"));
   int c;
   int result;
 

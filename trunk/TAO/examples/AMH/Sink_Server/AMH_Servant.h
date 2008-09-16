@@ -30,7 +30,7 @@ public:
   virtual ~AMH_Servant (void);
 
   /// parse arguments from command line for sleep time
-  virtual int parse_args (int& argc, char **argv);
+  virtual int parse_args (int &argc, ACE_TCHAR **argv);
 
   // = The skeleton methods
   virtual void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);

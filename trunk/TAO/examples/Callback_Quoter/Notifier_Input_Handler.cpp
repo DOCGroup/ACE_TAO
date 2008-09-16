@@ -93,7 +93,7 @@ Notifier_Input_Handler::init_naming_service (void)
 int
 Notifier_Input_Handler::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "df:s ");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:s "));
   int c;
 
   while ((c = get_opts ()) != -1)
