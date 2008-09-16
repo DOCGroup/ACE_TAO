@@ -2148,24 +2148,24 @@ ACE_Dev_Poll_Reactor::owner (ACE_thread_t * /* owner */)
   return 0;
 }
 
-int
+bool
 ACE_Dev_Poll_Reactor::restart (void)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::restart");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, false));
 
   return this->restart_;
 }
 
-int
-ACE_Dev_Poll_Reactor::restart (int r)
+bool
+ACE_Dev_Poll_Reactor::restart (bool r)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::restart");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, false));
 
-  int current_value = this->restart_;
+  bool current_value = this->restart_;
   this->restart_ = r;
   return current_value;
 }
