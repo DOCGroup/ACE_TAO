@@ -35,7 +35,7 @@ class AMH_Servant;
 class Base_Server
 {
 public:
-  Base_Server (int &argc, char **argv);
+  Base_Server (int &argc, ACE_TCHAR **argv);
 
   //    Is there any reason to make the destructor virtual?  Will you
   //    ever be destroying a derived class through a pointer to
@@ -69,7 +69,7 @@ public:
   // @@ Mayur, please put inlined methods in a separate `.inl' file,
   //    as detailed in the ACE/TAO coding/style guidelines, and as per
   //    our conventions.
-  // Mayur: A seperate file for just one method? AAAGH. OK.  
+  // Mayur: A seperate file for just one method? AAAGH. OK.
 
   /// Accesor method (for servants) to the initialised ORB
   CORBA::ORB_ptr orb (void);

@@ -379,7 +379,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
 unsigned int
 Event_Supplier::get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:m:"));
   int opt;
   int temp;
 

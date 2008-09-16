@@ -26,13 +26,7 @@ class MT_AMH_Server
   , public ACE_Task_Base
 {
 public:
-  // @@ Mayur, have you considered passing in argc by reference
-  //    instead of as a pointer?  It would save you the indirection
-  //    code in below, and make the code cleaner.  This is what
-  //    ORB_init() does.  Not a big deal in any case.
-  //
-  // Mayur: Nice point. Done.
-  MT_AMH_Server (int& argc, char **argv);
+  MT_AMH_Server (int &argc, ACE_TCHAR **argv);
 
   ~MT_AMH_Server (void);
 

@@ -14,7 +14,7 @@ Logger_Server::Logger_Server (void)
 int
 Logger_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:"));
   int c;
 
   while ((c = get_opts ()) != -1)

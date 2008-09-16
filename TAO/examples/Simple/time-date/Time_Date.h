@@ -78,7 +78,7 @@ public:
   virtual int init (int argc, char *argv[]);
 
   /// Parse the "command-line" arguments.
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
 

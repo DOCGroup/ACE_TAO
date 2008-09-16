@@ -33,7 +33,7 @@ Server<Servant>::~Server (void)
 template <class Servant> int
 Server<Servant>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ni:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:ni:"));
   int c = 0;
 
   while ((c = get_opts ()) != -1)
@@ -69,7 +69,7 @@ Server<Servant>::parse_args (void)
 template <class Servant> int
 Server<Servant>::init (const char *servant_name,
                        int argc,
-                       char *argv[])
+                       ACE_TCHAR *argv[])
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
@@ -189,7 +189,7 @@ Client<InterfaceObj, Var>::read_ior (char *filename)
 template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:nk:x");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:nk:x"));
   int c = 0;
   int result = 0;
 

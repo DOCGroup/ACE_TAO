@@ -25,7 +25,7 @@ ServerApp::~ServerApp()
 
 
 int
-ServerApp::run (int argc, char* argv[])
+ServerApp::run (int argc, ACE_TCHAR* argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
@@ -187,11 +187,11 @@ ServerApp::run (int argc, char* argv[])
 
 
 int
-ServerApp::parse_args(int argc, char* argv[])
+ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
 {
   this->exe_name_ = argv[0];
 
-  ACE_Get_Opt get_opts(argc, argv, "o:n:t:");
+  ACE_Get_Opt get_opts(argc, argv, ACE_TEXT("o:n:t:"));
 
   int c;
   int tmp;

@@ -29,9 +29,9 @@ Identity_Client::Identity_Client (void)
 }
 
 int
-Identity_Client::parse_args (int argc, char *argv[])
+Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "di:n:r");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("di:n:r"));
   int c;
 
   while ((c = get_opts ()) != -1)

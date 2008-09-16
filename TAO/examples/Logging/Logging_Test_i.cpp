@@ -270,7 +270,7 @@ Logger_Client::run (void)
 int
 Logger_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "d");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("d"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -17,9 +17,9 @@ int n_iterations = 1000;
 int n_peers = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:p:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)

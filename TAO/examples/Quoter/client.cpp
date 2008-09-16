@@ -10,7 +10,7 @@ ACE_RCSID (Quoter,
            client,
            "$Id$")
 
-Quoter_Task::Quoter_Task (int argc, char **argv)
+Quoter_Task::Quoter_Task (int argc, ACE_TCHAR **argv)
   : argc_ (argc), argv_ (argv)
 {
   // Nothing
@@ -42,7 +42,7 @@ Quoter_Client::Quoter_Client (void)
 int
 Quoter_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "n:d:lx");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("n:d:lx"));
   int opt;
   int exit_code = 0;
 
@@ -279,13 +279,13 @@ Quoter_Client::init_naming_service (void)
 }
 
 int
-Quoter_Client::init (int argc, char **argv)
+Quoter_Client::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   int i;
 
   // Make a copy of argv since ORB_init will change it.
-  this->argv_ = new char *[argc];
+  this->argv_ = new ACE_TCHAR *[argc];
 
   for (i = 0; i < argc; i++)
     this->argv_[i] = argv[i];

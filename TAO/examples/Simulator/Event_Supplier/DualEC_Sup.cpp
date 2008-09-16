@@ -892,7 +892,7 @@ DualEC_Supplier::load_schedule_data ()
 unsigned int
 DualEC_Supplier::get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:b:n:w:dsrp");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:m:b:n:w:dsrp"));
   int opt;
   int temp;
 
