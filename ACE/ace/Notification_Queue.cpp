@@ -99,9 +99,9 @@ ACE_Notification_Queue::allocate_more_buffers()
 }
 
 int
-ACE_Notification_Queue::
-purge_pending_notifications(ACE_Event_Handler * eh,
-                            ACE_Reactor_Mask mask)
+ACE_Notification_Queue::purge_pending_notifications(
+  ACE_Event_Handler * eh,
+  ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Notification_Queue::purge_pending_notifications");
 
@@ -153,7 +153,8 @@ purge_pending_notifications(ACE_Event_Handler * eh,
   return number_purged;
 }
 
-int ACE_Notification_Queue::push_new_notification(
+int
+ACE_Notification_Queue::push_new_notification(
   ACE_Notification_Buffer const & buffer)
 {
   ACE_TRACE ("ACE_Notification_Queue::push_new_notification");
