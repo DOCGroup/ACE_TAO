@@ -640,7 +640,7 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
 }
 
 ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
-                                            int rs,
+                                            bool rs,
                                             ACE_Sig_Handler *sh,
                                             ACE_Timer_Queue *tq,
                                             int disable_notify_pipe,
