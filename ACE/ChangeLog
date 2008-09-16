@@ -1,7 +1,24 @@
+Tue Sep 16 21:58:59 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/ETCL/ETCL_Constraint.cpp:
+
+          Changed ETCL_Literal_Constraint::copy(), so that the string
+          associated with a constraint object of type ACE_ETCL_STRING is
+          freed before the constraint is overwritten by the new value.
+          This avoids a memory leak.
+
+        * ace/ETCL/ETCL_Constraint.cpp:
+        * ace/ETCL/ETCL_Constraint.inl:
+
+          Implement ETCL_Literal_Constraint::operator!=, operator<=, and
+          operator>= in terms of operator==, operator>, and operator< and
+          make them inline. Removes a lot of boilerplate code and reduces
+          static footprint.
+
 Tue Sep 16 21:12:21 UTC 2008  Phil Mesnier  <phil@ociweb.com>
 
         * bin/MakeProjectCreator/config/crosscompile.mpb:
-        
+
           Add a new flag to support crosscompiliation on Win32 platforms.
           This is initially needed to improve support for WinCE targets
           built using Visual Studio. See companion changes in the MPC

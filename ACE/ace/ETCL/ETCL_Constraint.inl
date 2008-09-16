@@ -372,3 +372,20 @@ ETCL_Preference::subexpr (void) const
   return this->subexpr_;
 }
 
+ACE_INLINE bool
+ETCL_Literal_Constraint::operator!= (const ETCL_Literal_Constraint & rhs)
+{
+  return !(*this == rhs);
+}
+
+ACE_INLINE bool
+ETCL_Literal_Constraint::operator<= (const ETCL_Literal_Constraint & rhs)
+{
+  return !(*this > rhs);
+}
+
+ACE_INLINE bool
+ETCL_Literal_Constraint::operator>= (const ETCL_Literal_Constraint & rhs)
+{
+  return !(*this < rhs);
+}
