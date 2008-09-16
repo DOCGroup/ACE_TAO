@@ -348,10 +348,6 @@ endif
 INSINC          ?= $(ACE_ROOT)/ace
 INSLIB          ?= $(ACE_ROOT)/lib
 INSMAN          ?= $(ACE_ROOT)/man
-
-ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
-  LDFLAGS         += -L$(ACE_ROOT)/ace -L./
-endif
 ifeq (,$(findstring -L$(INSLIB),$(LDFLAGS)))
   LDFLAGS         += -L$(INSLIB)
 endif
