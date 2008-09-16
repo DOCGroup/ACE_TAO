@@ -111,7 +111,6 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
       inline = 0
     else # ! 5.1
       inline ?= 1
-      exceptions ?= 1
     endif # 5.2 or greater
   endif #! 5.0
 
@@ -175,23 +174,6 @@ CCFLAGS         += $(TEMPLATES_FLAG)
 #### XXX: Shouldn't this go into a compiler version specific guard ???
 CPPFLAGS       += -DSUN_CC_HAS_PVFC_BUG
 
-#### Exception handling breaks on MP machines prior to Sun C++ 4.2
-#### with jumbo patch 104631-02, see ace/config-sunos5.5.h.
-#### If you are using a version of Sun C++ prior to 4,2, or haven't
-#### applied that jumbo patch to your 4.2, or don't want to pay the
-#### performance penalty of exception handling, then use the default
-#### of no exceptions.  If you want to enable exception handling,
-#### add "exceptions=1" to your "make" invocation.
-ifeq (0,$(exceptions))
-  CCFLAGS += -noex
-  ifeq (C++ 5.6,$(findstring C++ 5.6,$(CC_VERSION)))
-    override stlport = 1
-  else
-    ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
-      override stlport = 1
-    endif
-  endif
-endif # ! exceptions
 
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
@@ -220,6 +202,13 @@ endif
 include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU
 
 LIBS            += -lsocket -lrt -laio -ldl -lnsl -lgen -lposix4 -ladm
+
+# Sun Studio will not create a default dependency on libCrun and
+# libCstd when building a shared library with the -G option.
+stlport ?= 0
+ifeq ($(stlport),0)
+  LIBS          += -lCrun -lCstd
+endif
 
 LDFLAGS         += -xildoff
 
