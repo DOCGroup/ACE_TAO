@@ -1,3 +1,9 @@
+Tue Sep 16 12:46:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+          Added missing include, thanks to Mark Hebbel
+          <Mark dot Hebbel at baslerweb dot com> for reporting this
+
 Tue Sep 16 12:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp
