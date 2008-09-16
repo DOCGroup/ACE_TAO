@@ -87,11 +87,11 @@ run_thread (void *vp)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0], ACE_Log_Msg::STDERR); // | ACE_Log_Msg::VERBOSE);
 
-  ACE_Get_Opt get_opt (argc, argv, "un:dp:h:", 1);
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("un:dp:h:"), 1);
 
   for (int c; (c = get_opt ()) != -1; )
     {

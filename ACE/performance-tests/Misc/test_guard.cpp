@@ -55,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_Profile_Timer timer;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Get_Opt getopt (argc, argv, "gtn:");
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("gtn:"));
   //FUZZ: enable check_for_lack_ACE_OS
 
   int iterations = DEFAULT_ITERATIONS;

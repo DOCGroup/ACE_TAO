@@ -140,13 +140,13 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
 }
 
 void
-JAWS_Server::parse_args (int argc, char *argv[])
+JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
   int c;
   int t = 0;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Get_Opt getopt (argc, argv, "t" "p:c:d:n:m:f:r:");
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("t" "p:c:d:n:m:f:r:"));
   while ((c = getopt ()) != -1)
   //FUZZ: enable check_for_lack_ACE_OS
     switch (c)

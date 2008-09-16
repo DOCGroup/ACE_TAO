@@ -167,11 +167,11 @@ run_writer (void *vp)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt get_opt (argc, argv, "iuh:rp:n:", 1);
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("iuh:rp:n:"), 1);
 
   for (int c; (c = get_opt ()) != -1; )
     {
