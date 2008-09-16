@@ -45,7 +45,7 @@ public:
 
   /// Initialize ACE_Priority_Reactor with size @a size.
   ACE_Priority_Reactor (size_t size,
-                        int restart = 0,
+                        bool restart = false,
                         ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0);
 
@@ -75,7 +75,7 @@ private:
   void init_bucket (void);
 
   /// Build the bucket from the given dispatch_mask.  Return -1 on
-  /// failure, 0 otherwise. 
+  /// failure, 0 otherwise.
   int build_bucket (ACE_Handle_Set& dispatch_mask,
                      int &min_priority,
                      int &max_priority);

@@ -24,11 +24,11 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
                 ACE_TEXT ("ACE_UPIPE_Connector")));
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_UPIPE_Connector::reset_new_handle (ACE_HANDLE /* handle */)
 {
   // Nothing to do here since the handle is not a socket
-  return 0;
+  return false;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

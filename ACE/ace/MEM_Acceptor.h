@@ -83,14 +83,14 @@ public:
   int accept (ACE_MEM_Stream &new_ipc_sap,
               ACE_MEM_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
-              int restart = 1,
-              int reset_new_handle = 0);
+              bool restart = true,
+              bool reset_new_handle = false);
 
   /// Perform operations that must occur after <ACE_OS::accept> is
   /// called.
   int shared_accept_finish (ACE_MEM_Stream new_stream,
                             int in_blocking_mode,
-                            int reset_new_handle) const;
+                            bool reset_new_handle) const;
 
   /**
    * Accessor/mutator of mmap filename prefix.  By default, the
@@ -155,16 +155,16 @@ protected:
   int accept (ACE_SOCK_Stream &new_stream,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
-              int restart = 1,
-              int reset_new_handle = 0) const;
+              bool restart = true,
+              bool reset_new_handle = false) const;
 
 #if !defined (ACE_HAS_WINCE)
   int accept (ACE_SOCK_Stream &new_stream,
               ACE_Accept_QoS_Params qos_params,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
-              int restart = 1,
-              int reset_new_handle = 0) const;
+              bool restart = true,
+              bool reset_new_handle = false) const;
 #endif  // ACE_HAS_WINCE
 
 private:

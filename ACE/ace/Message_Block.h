@@ -138,7 +138,7 @@ public:
    * responsibility to take care of the memory allocated for the
    * data_block
    */
-  ACE_Message_Block (ACE_Data_Block *,
+  ACE_Message_Block (ACE_Data_Block *data_block,
                      Message_Flags flags = 0,
                      ACE_Allocator *message_block_allocator = 0);
 

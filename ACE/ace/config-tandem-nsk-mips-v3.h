@@ -49,9 +49,6 @@
                                 // note: on nsk TNS/R there is room in
                                 // sigset_t for 128 signals but those
                                 // above 31 are not valid.
-typedef long    fd_mask;        // should be in select.h but no such file
-#define NBBY 8                  // must be consistent with value in sys/types.h
-#define NFDBITS         (sizeof (fd_mask) * NBBY)       /* bits per mask */
 #define MAXNAMLEN  248          // missing from dirent.h
 #define ERRMAX 4218             // from errno.h
 
@@ -261,6 +258,8 @@ typedef enum CMA_T_SCHED_POLICY {
 // Platform lacks alphasort()
 #define ACE_LACKS_ALPHASORT
 
+#define ACE_LACKS_FD_MASK
+#define ACE_LACKS_NFDBITS
 
 //=========================================================================
 // Threads specific parts

@@ -23,12 +23,11 @@ ACE_DEV_Connector::ACE_DEV_Connector (ACE_DEV_IO &new_io,
                     remote_sap.get_path_name (), ACE_TEXT ("ACE_DEV_IO")));
 }
 
-ACE_INLINE int
-ACE_DEV_Connector::reset_new_handle (ACE_HANDLE handle)
+ACE_INLINE bool
+ACE_DEV_Connector::reset_new_handle (ACE_HANDLE)
 {
-  ACE_UNUSED_ARG (handle);
   // Nothing to do here since the handle is not a socket
-  return 0;
+  return false;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -125,10 +125,10 @@ public:
 
   /**
    * Set underlying ACE_HANDLE.  Note that this method assumes
-   * ownership of the <handle> and will close it down in <remove>.  If
-   * you want the <handle> to stay open when <remove> is called make
-   * sure to call <dup> on the <handle> before closing it. You are
-   * responsible for the closing the existing <handle> before
+   * ownership of the @a handle and will close it down in <remove>.  If
+   * you want the @a handle to stay open when <remove> is called make
+   * sure to call <dup> on the @a handle before closing it. You are
+   * responsible for the closing the existing @a handle before
    * overwriting it.
    */
   void set_handle (ACE_HANDLE);

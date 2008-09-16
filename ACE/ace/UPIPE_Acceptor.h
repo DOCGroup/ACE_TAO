@@ -69,8 +69,8 @@ public:
   int accept (ACE_UPIPE_Stream &server_stream,
               ACE_UPIPE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
-              int restart = 1,
-              int reset_new_handle = 0);
+              bool restart = true,
+              bool reset_new_handle = false);
 
   /// Dump the state of an object.
   void dump (void) const;

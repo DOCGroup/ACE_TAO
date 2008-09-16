@@ -45,7 +45,7 @@ public:
   // = Initialization and termination methods.
   ACE_FoxReactor (FXApp* a=0,
                  size_t size = DEFAULT_SIZE,
-                 int restart = 0,
+                 bool restart = false,
                  ACE_Sig_Handler * = 0);
   virtual ~ACE_FoxReactor (void);
 

@@ -23,10 +23,6 @@
 #include "ace/os_include/sys/os_select.h"
 #include "ace/os_include/os_limits.h"
 
-#if defined (__QNX__)
-   typedef long fd_mask;
-#endif /* __QNX__ */
-
 // Default size of the ACE Reactor.
 #if defined (FD_SETSIZE)
    int const ACE_FD_SETSIZE = FD_SETSIZE;

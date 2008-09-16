@@ -63,8 +63,8 @@ public:
   int accept (ACE_LSOCK_Stream &new_ipc_sap,
               ACE_Addr * = 0,
               ACE_Time_Value *timeout = 0,
-              int restart = 1,
-              int reset_new_handle = 0) const;
+              bool restart = true,
+              bool reset_new_handle = false) const;
 
   /// Close down the ACE_LSOCK and remove the rendezvous point from the
   /// file system.

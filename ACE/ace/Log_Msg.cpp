@@ -2273,20 +2273,20 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
 }
 
 void
-ACE_Log_Msg::set (const char *filename,
+ACE_Log_Msg::set (const char *file,
                   int line,
-                  int status,
-                  int err,
-                  int rs,
+                  int op_status,
+                  int errnum,
+                  bool restart,
                   ACE_OSTREAM_TYPE *os,
                   ACE_Log_Msg_Callback *c)
 {
   ACE_TRACE ("ACE_Log_Msg::set");
-  this->file (filename);
+  this->file (file);
   this->linenum (line);
-  this->op_status (status);
-  this->errnum (err);
-  this->restart (rs);
+  this->op_status (op_status);
+  this->errnum (errnum);
+  this->restart (restart);
   this->msg_ostream (os);
   this->msg_callback (c);
 }

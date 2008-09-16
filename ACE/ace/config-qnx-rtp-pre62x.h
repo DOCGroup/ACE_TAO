@@ -105,6 +105,8 @@
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_U_LONGLONG_T
+#define ACE_LACKS_FD_MASK
+#define ACE_LACKS_NFDBITS
 
 #define ACE_LACKS_RLIMIT         // QNX rlimit syscalls don't work properly with ACE.
 

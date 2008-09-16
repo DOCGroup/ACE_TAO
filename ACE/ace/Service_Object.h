@@ -53,10 +53,10 @@ public:
   /// Destructor.
   virtual ~ACE_Service_Object (void);
 
-    /// Temporarily disable a service without removing it completely.
+  /// Temporarily disable a service without removing it completely.
   virtual int suspend (void);
 
-    /// Re-enable a previously suspended service.
+  /// Re-enable a previously suspended service.
   virtual int resume (void);
 };
 
@@ -162,7 +162,7 @@ private:
  *
  * This class is similar to the Standard C++ Library class
  * <auto_ptr>.  It is used in conjunction with statically linked
- * <ACE_Service_Objects>, as shown in the
+ * ACE_Service_Objects, as shown in the
  * ./netsvcs/server/main.cpp example.
  */
 class ACE_Export ACE_Service_Object_Ptr

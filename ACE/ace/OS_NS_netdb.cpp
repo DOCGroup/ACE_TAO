@@ -276,7 +276,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 # else
 #   if defined (ACE_HAS_PHARLAP_RT)
       DEVHANDLE ip_dev = (DEVHANDLE)0;
-      EK_TCPIPCFG *devp;
+      EK_TCPIPCFG *devp = 0;
       size_t i;
       ACE_TCHAR dev_name[16];
 

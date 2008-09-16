@@ -554,7 +554,7 @@ protected:
 
   /// Restart the <handle_events> event-loop method automatically when
   /// <select> is interrupted via <EINTR>.
-  int restart_;
+  bool restart_;
 
   /**
    * Position that the main ACE_Select_Reactor thread is requeued in

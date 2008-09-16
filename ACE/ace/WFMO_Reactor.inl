@@ -865,12 +865,12 @@ ACE_WFMO_Reactor::resume_handlers (void)
   return error ? -1 : 0;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_WFMO_Reactor::uses_event_associations (void)
 {
   // Since the WFMO_Reactor does use event associations, this function
   // always return 1.
-  return 1;
+  return true;
 }
 
 ACE_INLINE int
@@ -1104,16 +1104,16 @@ ACE_WFMO_Reactor::requeue_position (void)
   ACE_NOTSUP_RETURN (-1);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_WFMO_Reactor::restart (void)
 {
-  return 0;
+  return false;
 }
 
-ACE_INLINE int
-ACE_WFMO_Reactor::restart (int)
+ACE_INLINE bool
+ACE_WFMO_Reactor::restart (bool)
 {
-  return 0;
+  return false;
 }
 
 ACE_INLINE int

@@ -593,7 +593,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::initialize_svc_handler
 {
   // Try to find out if the reactor uses event associations for the
   // handles it waits on. If so we need to reset it.
-  int reset_new_handle =
+  bool reset_new_handle =
     this->reactor ()->uses_event_associations ();
 
   if (reset_new_handle)

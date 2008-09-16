@@ -133,7 +133,7 @@ public:
 
   /// Initialization.
   virtual int open (size_t size,
-                    int restart = 0,
+                    bool restart = false,
                     ACE_Sig_Handler * = 0,
                     ACE_Timer_Queue * = 0,
                     int disable_notify_pipe = 0,
@@ -295,7 +295,7 @@ public:
                               ACE_Reactor_Mask mask) = 0;
 
   /**
-   * Removes <handle>.  If @a mask == ACE_Event_Handler::DONT_CALL
+   * Removes @a handle.  If @a mask == ACE_Event_Handler::DONT_CALL
    * then the <handle_close> method of the associated <event_handler>
    * is not invoked.
    */
@@ -330,7 +330,7 @@ public:
   /// <ACE_Event_Handler::get_handle> to get the handle.
   virtual int suspend_handler (ACE_Event_Handler *event_handler) = 0;
 
-  /// Suspend <handle> temporarily.
+  /// Suspend @a handle temporarily.
   virtual int suspend_handler (ACE_HANDLE handle) = 0;
 
   /// Suspend all <handles> in handle set temporarily.
@@ -343,7 +343,7 @@ public:
   /// get the handle.
   virtual int resume_handler (ACE_Event_Handler *event_handler) = 0;
 
-  /// Resume <handle>.
+  /// Resume @a handle.
   virtual int resume_handler (ACE_HANDLE handle) = 0;
 
   /// Resume all <handles> in handle set.
@@ -357,9 +357,9 @@ public:
   /// the application
   virtual int resumable_handler (void) = 0;
 
-  /// Return 1 if we any event associations were made by the reactor
-  /// for the handles that it waits on, 0 otherwise.
-  virtual int uses_event_associations (void) = 0;
+  /// Return true if we any event associations were made by the reactor
+  /// for the handles that it waits on, false otherwise.
+  virtual bool uses_event_associations (void) = 0;
 
   // If we need to reset handles returned from accept/connect.
 
@@ -422,8 +422,8 @@ public:
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added) = 0;
 
-  /// Add @a masks_to_be_added to the <handle>'s entry.  <event_handler>
-  /// associated with <handle> must already have been registered.
+  /// Add @a masks_to_be_added to the @a handle's entry.  <event_handler>
+  /// associated with @a handle must already have been registered.
   virtual int schedule_wakeup (ACE_HANDLE handle,
                                ACE_Reactor_Mask masks_to_be_added) = 0;
 
@@ -431,7 +431,7 @@ public:
   virtual int cancel_wakeup (ACE_Event_Handler *event_handler,
                              ACE_Reactor_Mask masks_to_be_cleared) = 0;
 
-  /// Clear @a masks_to_be_cleared from the <handle>'s entry.
+  /// Clear @a masks_to_be_cleared from the @a handle's entry.
   virtual int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_cleared) = 0;
 
@@ -476,13 +476,13 @@ public:
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) = 0;
 
   /**
-   * Return the Event_Handler associated with <handle>.  Return 0 if
-   * <handle> is not registered.
+   * Return the Event_Handler associated with @a handle.  Return 0 if
+   * @a handle is not registered.
    */
   virtual ACE_Event_Handler *find_handler (ACE_HANDLE handle) = 0;
 
   /**
-   * Check to see if <handle> is associated with a valid Event_Handler
+   * Check to see if @a handle is associated with a valid Event_Handler
    * bound to @a mask.  Return the @a event_handler associated with this
    * handler if @a event_handler != 0.
    */
@@ -519,10 +519,10 @@ public:
   virtual int owner (ACE_thread_t *owner) = 0;
 
   /// Get the existing restart value.
-  virtual int restart (void) = 0;
+  virtual bool restart (void) = 0;
 
   /// Set a new value for restart and return the original value.
-  virtual int restart (int r) = 0;
+  virtual bool restart (bool r) = 0;
 
   /// Set position of the owner thread.
   virtual void requeue_position (int) = 0;
@@ -538,7 +538,7 @@ public:
                         ACE_Reactor_Mask mask,
                         int ops) = 0;
 
-  /// GET/SET/ADD/CLR the dispatch MASK "bit" bound with the <handle>
+  /// GET/SET/ADD/CLR the dispatch MASK "bit" bound with the @a handle
   /// and @a mask.
   virtual int mask_ops (ACE_HANDLE handle,
                         ACE_Reactor_Mask mask,
@@ -551,7 +551,7 @@ public:
                          ACE_Reactor_Mask mask,
                          int ops) = 0;
 
-  /// GET/SET/ADD/CLR the ready "bit" bound with the <handle> and @a mask.
+  /// GET/SET/ADD/CLR the ready "bit" bound with the @a handle and @a mask.
   virtual int ready_ops (ACE_HANDLE handle,
                          ACE_Reactor_Mask,
                          int ops) = 0;

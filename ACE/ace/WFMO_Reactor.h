@@ -337,7 +337,7 @@ public:
 
   // = Sanity checking.
 
-  // Check the <handle> to make sure it's a valid ACE_HANDLE
+  // Check the @a handle to make sure it's a valid ACE_HANDLE
   int invalid_handle (ACE_HANDLE handle) const;
 
   // = Accessors.
@@ -412,13 +412,13 @@ public:
                                     ACE_Reactor_Mask to_be_removed_masks);
 
   /**
-   * Return the Event_Handler associated with <handle>.  Return 0 if
-   * <handle> is not registered.
+   * Return the Event_Handler associated with @a handle.  Return 0 if
+   * @a handle is not registered.
    */
   ACE_Event_Handler *find_handler (ACE_HANDLE handle);
 
   /**
-   * Check to see if <handle> is associated with a valid Event_Handler
+   * Check to see if @a handle is associated with a valid Event_Handler
    * bound to @a mask.  Return the <event_handler> associated with this
    * @a handler if <event_handler> != 0.
    */
@@ -427,7 +427,7 @@ public:
                ACE_Event_Handler **event_handler = 0);
 
   /**
-   * Check to see if <handle> is associated with a valid
+   * Check to see if @a handle is associated with a valid
    * Event_Handler. Return Event_Handler and associated masks.
    */
   ACE_Event_Handler *handler (ACE_HANDLE handle,
@@ -540,7 +540,7 @@ public:
   /// Verify whether the buffer has dispatchable info or not.
   virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
 
-  /// Read one of the notify call on the <handle> into the
+  /// Read one of the notify call on the @a handle into the
   /// <buffer>. This could be because of a thread trying to unblock
   /// the <Reactor_Impl>
   virtual int read_notify_pipe (ACE_HANDLE handle,
@@ -570,7 +570,7 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * ACE_Event_Handler object. If <eh> == 0, all notifications for all
+   * ACE_Event_Handler object. If @a eh == 0, all notifications for all
    * handlers are removed (but not any notifications posted just to wake up
    * the reactor itself). Returns the number of notifications purged.
    * Returns -1 on error.
@@ -697,7 +697,7 @@ public:
    *              used for internal management purposes.
    */
   virtual int open (size_t size = ACE_WFMO_Reactor::DEFAULT_SIZE,
-                    int restart = 0,
+                    bool restart = false,
                     ACE_Sig_Handler * = 0,
                     ACE_Timer_Queue * = 0,
                     int disable_notify_pipe = 0,
@@ -790,9 +790,9 @@ public:
   /**
    * Register an ACE_Event_Handler <event_handler>.  Since no Event
    * Mask is passed through this interface, it is assumed that the
-   * <handle> being passed in is an event handle and when the event
+   * @a handle being passed in is an event handle and when the event
    * becomes signaled, <WFMO_Reactor> will call handle_signal on
-   * <event_handler>.  If <handle> == <ACE_INVALID_HANDLE> the
+   * <event_handler>.  If @a handle == <ACE_INVALID_HANDLE> the
    * <ACE_WFMO_Reactor> will call the <get_handle> method of
    * <event_handler> to extract the underlying event handle.
    */
@@ -861,20 +861,20 @@ public:
    * the <ACE_WFMO_Reactor> will call the <get_handle> method of
    * <event_handler> to extract the underlying handle.  If @a mask ==
    * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
-   * the <event_handler> is not invoked. Note that the <handle> can
+   * the <event_handler> is not invoked. Note that the @a handle can
    * either be the <event_handle> or the <io_handle>
    */
   virtual int remove_handler (ACE_Event_Handler *event_handler,
                               ACE_Reactor_Mask mask);
 
   /**
-   * Removes <handle> from the <ACE_WFMO_Reactor>.  If @a mask ==
+   * Removes @a handle from the <ACE_WFMO_Reactor>.  If @a mask ==
    * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
-   * the <event_handler> is not invoked. Note that the <handle> can
+   * the <event_handler> is not invoked. Note that the @a handle can
    * either be the <event_handle> or the <io_handle>
    *
    * For the case of I/O entries, this removes the @a mask binding of
-   * <Event_Handler> whose handle is <handle> from <WFMO_Reactor>.  If
+   * <Event_Handler> whose handle is @a handle from <WFMO_Reactor>.  If
    * there are no more bindings for this <event_handler> then it is
    * removed from the WFMO_Reactor.  For simple event entries, mask is
    * mostly ignored and the <Event_Handler> is always removed from
@@ -912,7 +912,7 @@ public:
   /// <ACE_Event_Handler::get_handle> to get the handle.
   virtual int suspend_handler (ACE_Event_Handler *event_handler);
 
-  /// Suspend <handle> temporarily.
+  /// Suspend @a handle temporarily.
   virtual int suspend_handler (ACE_HANDLE handle);
 
   /// Suspend all <handles> in handle set temporarily.
@@ -925,7 +925,7 @@ public:
   /// get the handle.
   virtual int resume_handler (ACE_Event_Handler *event_handler);
 
-  /// Resume <handle>.
+  /// Resume @a handle.
   virtual int resume_handler (ACE_HANDLE handle);
 
   /// Resume all <handles> in handle set.
@@ -941,12 +941,12 @@ public:
   virtual int resumable_handler (void);
 
   /**
-   * Return 1 if we any event associations were made by the reactor
-   * for the handles that it waits on, 0 otherwise. Since the
+   * Return true if we any event associations were made by the reactor
+   * for the handles that it waits on, false otherwise. Since the
    * WFMO_Reactor does use event associations, this function always
-   * return 1.
+   * return true.
    */
-  virtual int uses_event_associations (void);
+  virtual bool uses_event_associations (void);
 
   // Timer management.
 
@@ -1012,7 +1012,7 @@ public:
 
   /**
    * Add @a masks_to_be_added to the @a handle's entry in WFMO_Reactor.
-   * The Event_Handler associated with <handle> must already have been
+   * The Event_Handler associated with @a handle must already have been
    * registered with WFMO_Reactor.
    */
   virtual int schedule_wakeup (ACE_HANDLE handle,
@@ -1129,10 +1129,10 @@ public:
   virtual int owner (ACE_thread_t *owner);
 
   /// Get the existing restart value.
-  virtual int restart (void);
+  virtual bool restart (void);
 
   /// Set a new value for restart and return the original value.
-  virtual int restart (int r);
+  virtual bool restart (bool r);
 
   /// Not implemented
   virtual void requeue_position (int);

@@ -118,7 +118,7 @@ public:
     */
     ACE_QtReactor (size_t size,
         QApplication *qapp = 0,
-        int restart = 0,
+        bool restart = false,
         ACE_Sig_Handler * = 0,
         ACE_Timer_Queue * = 0,
         int disable_notify_pipe = 0,

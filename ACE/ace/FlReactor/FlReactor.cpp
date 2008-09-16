@@ -12,7 +12,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_FlReactor)
 
 // Must be called with lock held
 ACE_FlReactor::ACE_FlReactor (size_t size,
-                              int restart,
+                              bool restart,
                               ACE_Sig_Handler *h)
   : ACE_Select_Reactor (size, restart, h)
 {

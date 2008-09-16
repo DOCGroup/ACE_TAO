@@ -471,7 +471,7 @@ public:
    *       access violations.
    */
   ACE_Dev_Poll_Reactor (size_t size,
-                        int restart = 0,
+                        bool restart = false,
                         ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
@@ -484,7 +484,7 @@ public:
 
   /// Initialization.
   virtual int open (size_t size,
-                    int restart = 0,
+                    bool restart = false,
                     ACE_Sig_Handler * = 0,
                     ACE_Timer_Queue * = 0,
                     int disable_notify_pipe = 0,
@@ -701,9 +701,9 @@ public:
   /// the application.
   virtual int resumable_handler (void);
 
-  /// Return 1 if we any event associations were made by the reactor
-  /// for the handles that it waits on, 0 otherwise.
-  virtual int uses_event_associations (void);
+  /// Return true if we any event associations were made by the reactor
+  /// for the handles that it waits on, false otherwise.
+  virtual bool uses_event_associations (void);
 
   // = Timer management.
 
@@ -875,7 +875,7 @@ public:
   virtual int owner (ACE_thread_t *owner);
 
   /// Get the existing restart value.
-  virtual int restart (void);
+  virtual bool restart (void);
 
   /// Set a new value for restart and return the original value.
   /**
@@ -885,7 +885,7 @@ public:
    *
    * @return Returns the previous "restart" value.
    */
-  virtual int restart (int r);
+  virtual bool restart (int r);
 
   /// Set position of the owner thread.
   /**
@@ -1132,7 +1132,7 @@ protected:
   /// Restart the handle_events event loop method automatically when
   /// polling function in use (ioctl() in this case) is interrupted
   /// via an EINTR signal.
-  int restart_;
+  bool restart_;
 
 protected:
 

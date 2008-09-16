@@ -195,7 +195,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     }
 
     // ACE_Token implementation uses semaphores on Windows and VxWorks.
-    conditional(vc6,vc71,vc8,vc9,nmake,bmake,borland) {
+    conditional(vc6,vc71,vc8,vc9,nmake,bmake) {
       NT_Service.cpp // Required by ace_for_tao sponsors
       Semaphore.cpp
       Process_Mutex.cpp

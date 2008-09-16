@@ -196,7 +196,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
       return 0;
     }
 
-  ACE_TCHAR *result;
+  ACE_TCHAR *result = 0;
 #     if defined (ACE_USES_WCHAR)
   ACE_OSCALL (::_wctime (t), wchar_t *, 0, result);
 #     else /* ACE_USES_WCHAR */
@@ -262,7 +262,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 # endif /* ! ACE_LACKS_LONGLONG_T */
 
 #if defined (__amd64__) || defined (__x86_64__)
-  // Read the high res tick counter into 32 bit int variables "eax" and 
+  // Read the high res tick counter into 32 bit int variables "eax" and
   // "edx", and then combine them into 64 bit int "now"
   ACE_UINT32 eax, edx;
   asm volatile ("rdtsc" : "=a" (eax), "=d" (edx) : : "memory");
@@ -453,7 +453,7 @@ ACE_OS::strptime (const char *buf, const char *format, struct tm *tm)
   return ACE_OS::strptime_emulation (buf, format, tm);
 #  endif /* ACE_REFUSE_STRPTIME_EMULATION */
 #else
-  return ::strptime (buf, format, tm);
+  return ACE_STD_NAMESPACE::strptime (buf, format, tm);
 #endif /* ACE_LACKS_STRPTIME */
 }
 
@@ -461,14 +461,14 @@ ACE_INLINE time_t
 ACE_OS::time (time_t *tloc)
 {
   ACE_OS_TRACE ("ACE_OS::time");
-#if !defined (ACE_HAS_WINCE)
-  ACE_OSCALL_RETURN (::time (tloc), time_t, (time_t) -1);
-#else
+#if !defined (ACE_LACKS_TIME)
   time_t retv = ACE_OS::gettimeofday ().sec ();
   if (tloc)
     *tloc = retv;
   return retv;
-#endif /* ACE_HAS_WINCE */
+#else
+  ACE_OSCALL_RETURN (::time (tloc), time_t, (time_t) -1);
+#endif /* ACE_LACKS_TIME */
 }
 
 // Linux won't compile unless we explicitly use a namespace here.
@@ -491,7 +491,7 @@ ACE_OS::timezone (void)
 ACE_INLINE void
 ACE_OS::tzset (void)
 {
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_VXWORKS) && !defined(ACE_HAS_RTEMS) && !defined (ACE_HAS_DINKUM_STL)
+#if !defined (ACE_LACKS_TZSET) && !defined (ACE_HAS_DINKUM_STL)
 #   if defined (ACE_WIN32)
   ::_tzset ();  // For Win32.
 #   else
@@ -499,7 +499,7 @@ ACE_OS::tzset (void)
 #   endif /* ACE_WIN32 */
 # else
   errno = ENOTSUP;
-# endif /* ACE_HAS_WINCE && !VXWORKS && !ACE_HAS_RTEMS && !ACE_HAS_DINKUM_STL */
+# endif /* !ACE_LACKS_TZSET */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

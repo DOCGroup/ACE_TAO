@@ -127,7 +127,7 @@ namespace ACE_OS {
              ACE_OVERLAPPED_COMPLETION_FUNC func);
 
 #if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
-  /// QoS-enabled <ioctl> when the I/O control code is either
+  /// QoS-enabled @c ioctl when the I/O control code is either
   /// SIO_SET_QOS or SIO_GET_QOS.
   extern ACE_Export
   int ioctl (ACE_HANDLE socket,

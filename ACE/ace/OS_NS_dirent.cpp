@@ -41,11 +41,11 @@ ACE_DIR *
 ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
 {
 #if defined (ACE_WIN32)
-#  if defined (ACE_HAS_WINCE) && !defined (INVALID_FILE_ATTRIBUTES)
+#  if !defined (INVALID_FILE_ATTRIBUTES)
 #    define INVALID_FILE_ATTRIBUTES 0xFFFFFFFF
 #  endif
 
-  ACE_DIR *dir;
+  ACE_DIR *dir = 0;
   ACE_TCHAR extra[3] = {0,0,0};
 
    // Check if filename is a directory.
@@ -72,7 +72,7 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
   Phil Mesnier
 */
 
-  size_t lastchar = ACE_OS::strlen (filename);
+  size_t const lastchar = ACE_OS::strlen (filename);
   if (lastchar > 0)
     {
       if (filename[lastchar-1] != '*')

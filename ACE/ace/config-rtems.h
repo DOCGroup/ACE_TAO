@@ -59,6 +59,7 @@
 #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
 #define ACE_LACKS_REALPATH
 #define ACE_LACKS_TEMPNAM
+#define ACE_LACKS_TZSET
 
 // Temporarily, enabling this results in compile errors with
 // rtems 4.6.6.
