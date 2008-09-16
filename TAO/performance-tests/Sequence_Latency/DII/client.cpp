@@ -29,9 +29,9 @@ int sz = 512;
 const char *data_type = "octet";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "t:s:hxk:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:s:hxk:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)

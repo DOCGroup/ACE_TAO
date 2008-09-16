@@ -216,7 +216,7 @@ Cubit_Client::read_ior (const char *filename)
 int
 Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "b:t:z:ovdn:f:k:xsq");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("b:t:z:ovdn:f:k:xsq"));
   int c = 0;
   int result = 0;
   u_int test_mask = 0;

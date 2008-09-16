@@ -80,7 +80,7 @@ static u_long iterations = 1000;
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:r");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:r"));
   int c;
 
   while ((c = get_opts ()) != -1)

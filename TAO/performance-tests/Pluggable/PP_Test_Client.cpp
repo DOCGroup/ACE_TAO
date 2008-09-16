@@ -109,7 +109,7 @@ PP_Test_Client::read_ior (char *filename)
 int
 PP_Test_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "ovdn:f:k:x");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("ovdn:f:k:x"));
   int c;
   int result;
 

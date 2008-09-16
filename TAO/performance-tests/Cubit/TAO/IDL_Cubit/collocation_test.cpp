@@ -71,7 +71,7 @@ svr_worker (void *arg)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:c:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:"));
   int c = -1;
   const char *client_cmd = 0;
 

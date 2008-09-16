@@ -20,7 +20,7 @@ TestAppBase::name() const
 
 
 int
-TestAppBase::run(int argc, char* argv[])
+TestAppBase::run(int argc, ACE_TCHAR* argv[])
 {
   int rc = this->run_i(argc, argv);
 

@@ -269,9 +269,9 @@ oneway_payload_test (Test_ptr server)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "ps:k:i:t:l:m:w:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ps:k:i:t:l:m:w:x"));
   int error = 0;
   int c;
 

@@ -46,7 +46,7 @@ int
 Demux_Stats::parse_args (int argc_, char * argv_ [])
 {
 
-  ACE_Get_Opt get_opts (argc_, argv_, "i:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("i:"));
   int c;
 
   iterations = 0;
