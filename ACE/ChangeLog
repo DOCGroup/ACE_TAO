@@ -1,3 +1,14 @@
+Tue Sep 16 13:10:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Bounded_Packet_Relay/bpr_thread.cpp:
+          Removed msvc6 workaround and initialise some pointers with 0
+
+        * examples/Reactor/Multicast/server.cpp:
+          Corrected error message
+
+        * examples/Web_Crawler/Web_Crawler.mpc:
+          Removed borland
+
 Tue Sep 16 12:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.inl:

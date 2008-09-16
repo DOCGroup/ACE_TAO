@@ -23,16 +23,6 @@
 //
 // ============================================================================
 
-// The following #pragma is needed to disable a warning that occurs
-// in MSVC 6 due to the overly long debugging symbols generated for
-// the std::auto_ptr<Timer_Queue_Test_Driver<...> > template
-// instance used by some of the methods in this file.
-#ifdef _MSC_VER
-#  pragma warning(disable: 4786)  /* identifier was truncated to '255'
-                                     characters in the browser
-                                     information */
-#endif  /* _MSC_VER */
-
 #include "ace/Auto_Ptr.h"
 #include "Thread_Bounded_Packet_Relay.h"
 
@@ -74,7 +64,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Construct a new output device wrapper.  Auto ptr ensures memory
   // is freed when we exit this scope.
-  Text_Output_Device_Wrapper *output_device;
+  Text_Output_Device_Wrapper *output_device = 0;
   ACE_NEW_RETURN (output_device,
                   Text_Output_Device_Wrapper,
                   -1);
@@ -82,7 +72,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Construct a new bounded packet relay.  Auto ptr ensures memory is
   // freed when we exit this scope.
-  Bounded_Packet_Relay *packet_relay;
+  Bounded_Packet_Relay *packet_relay = 0;
   ACE_NEW_RETURN (packet_relay,
                   Bounded_Packet_Relay (input_task_mgr,
                                         input_device,
@@ -93,7 +83,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Construct a receive input callback command for the relay, and register
   // it with the input device.  Auto ptr ensures memory is freed when we exit
   // this scope.
-  INPUT_CALLBACK *input_callback;
+  INPUT_CALLBACK *input_callback = 0;
   ACE_NEW_RETURN (input_callback,
                   INPUT_CALLBACK (*packet_relay,
                                   &Bounded_Packet_Relay::receive_input),
@@ -108,7 +98,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Construct a new bounded packet relay driver.  Auto ptr ensures
   // memory is freed when we exit this scope.
-  THREAD_BOUNDED_PACKET_RELAY_DRIVER *tbprd;
+  THREAD_BOUNDED_PACKET_RELAY_DRIVER *tbprd = 0;
 
   ACE_NEW_RETURN (tbprd,
                   Thread_Bounded_Packet_Relay_Driver (packet_relay),
