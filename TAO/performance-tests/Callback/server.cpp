@@ -14,7 +14,7 @@ ACE_RCSID(Callback, server, "$Id$")
 const char *ior_file_name = "test.ior";
 
 /// Parse the arguments.
-static int parse_args (int argc, char *argv[]);
+static int parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -123,9 +123,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -15,7 +15,7 @@ class CSD_PT_TestInf_Export TestAppBase
     virtual ~TestAppBase();
 
     // Returns 0 for success, and -1 for failure.
-    int run(int argc, char* argv[]);
+    int run(int argc, ACE_TCHAR* argv[]);
 
     const char* name() const;
 

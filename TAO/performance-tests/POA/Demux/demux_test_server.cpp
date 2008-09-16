@@ -332,7 +332,7 @@ int
 Demux_Test_Server::parse_args (void)
 {
 
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "df:o:p:ut");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:o:p:ut"));
   int c;
 
   while ((c = get_opts ()) != -1)

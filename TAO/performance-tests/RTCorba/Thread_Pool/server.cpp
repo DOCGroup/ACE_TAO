@@ -79,7 +79,7 @@ static const char *bands_file = "empty-file";
 static const char *lanes_file = "empty-file";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv,
                         "b:f:hl:n:o:s:" // server options

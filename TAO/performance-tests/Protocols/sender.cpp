@@ -47,7 +47,7 @@ static Test_Type test_type = PACED;
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:b:c:d:e:i:k:m:p:r:s:t:x:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:d:e:i:k:m:p:r:s:t:x:"));
   int c;
 
   while ((c = get_opts ()) != -1)

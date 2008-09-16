@@ -19,7 +19,7 @@ static ACE_UINT32 gsf = 0;
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:f:m:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:f:m:"));
   int c;
 
   while ((c = get_opts ()) != -1)
