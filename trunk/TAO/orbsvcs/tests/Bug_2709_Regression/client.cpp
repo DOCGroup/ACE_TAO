@@ -19,9 +19,9 @@ ACE_CString server_ior_file("server.ior");
 //////////////////////////////////////////////////////////////////////////
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)

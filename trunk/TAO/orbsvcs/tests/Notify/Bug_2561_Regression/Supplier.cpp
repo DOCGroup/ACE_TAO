@@ -78,12 +78,12 @@ private:
 class Supplier_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
 };
 
 
 int
-Supplier_Client::parse_args (int argc, char *argv[])
+Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter argcon (argc, argv);
   ACE_Get_Opt get_opts (argcon.get_argc (),

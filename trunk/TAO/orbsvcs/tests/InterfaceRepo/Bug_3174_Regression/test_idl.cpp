@@ -14,7 +14,7 @@ namespace
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:s:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:s:"));
   const unsigned char full_success = 0x01;
   unsigned char success = 0;
 

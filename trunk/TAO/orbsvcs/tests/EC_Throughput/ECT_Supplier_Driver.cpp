@@ -51,7 +51,7 @@ ECT_Supplier_Driver::shutdown_consumer (void*)
 }
 
 int
-ECT_Supplier_Driver::run (int argc, char* argv[])
+ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -277,7 +277,7 @@ ECT_Supplier_Driver::dump_results (void)
 int
 ECT_Supplier_Driver::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "ds:u:n:t:b:h:p:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("ds:u:n:t:b:h:p:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

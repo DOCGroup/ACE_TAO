@@ -23,7 +23,7 @@ int milliseconds = 30000;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:g:s:r:t:p:d");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:g:s:r:t:p:d"));
   int c;
 
   while ((c = get_opts ()) != -1)

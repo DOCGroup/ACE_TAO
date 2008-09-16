@@ -32,7 +32,7 @@ public:
   Consumer (void);
 
   /// Run the test
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
 
   // = The RtecEventComm::PushConsumer methods
 
@@ -41,7 +41,7 @@ public:
   virtual void disconnect_push_consumer (void);
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count_;

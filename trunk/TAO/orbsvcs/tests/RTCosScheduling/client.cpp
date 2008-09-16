@@ -68,11 +68,11 @@ ACE_RCSID(
  *  than those specified above.
  */
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   /// We set the '-' flag for getopts because we have to do this
   /// parsing before the ORB does it's parsing, and we'd confuse it to reorder
-  ACE_Get_Opt get_opts (argc, argv, "-B:R:A:X:N:C:F:T:?:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-B:R:A:X:N:C:F:T:?:"));
   int c;
   while ((c = get_opts ()) != -1)
     {

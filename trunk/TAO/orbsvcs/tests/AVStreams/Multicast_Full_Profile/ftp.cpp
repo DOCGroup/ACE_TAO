@@ -101,7 +101,7 @@ FTP_Client_Producer::get_callback (const char *,
 int
 Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "f:a:p:sd");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:a:p:sd"));
 
   this->use_sfp_ = 0;
   int c;

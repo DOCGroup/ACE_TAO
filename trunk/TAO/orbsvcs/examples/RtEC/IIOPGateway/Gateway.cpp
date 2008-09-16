@@ -31,7 +31,7 @@ Gateway::Gateway (void)
 }
 
 int
-Gateway::run (int argc, char* argv[])
+Gateway::run (int argc, ACE_TCHAR* argv[])
 {
   TAO_EC_Gateway_IIOP_Factory::init_svcs ();
 
@@ -134,7 +134,7 @@ Gateway::run (int argc, char* argv[])
 }
 
 int
-Gateway::parse_args (int argc, char *argv[])
+Gateway::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

@@ -97,9 +97,9 @@ secure_invocation_test (CORBA::Object_ptr object)
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "nk:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("nk:"));
   int c;
 
   while ((c = get_opts ()) != -1)

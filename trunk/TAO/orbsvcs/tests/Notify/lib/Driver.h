@@ -117,7 +117,7 @@ public:
 
 protected:
   /// Parse command line parameters.
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The command builder
   TAO_Notify_Tests_Command_Builder* cmd_builder_;

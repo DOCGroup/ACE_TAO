@@ -36,7 +36,7 @@ Nestea_Server_i::~Nestea_Server_i (void)
 int
 Nestea_Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -18,7 +18,7 @@ parse_args (int argc, char *argv[],
             CORBA::Boolean& verbose)
 {
   int opt;
-  ACE_Get_Opt get_opt (argc, argv, "fq");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("fq"));
 
   verbose = 1;
   while ((opt = get_opt ()) != EOF)

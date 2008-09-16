@@ -19,9 +19,9 @@ static const char *ior_output_file = "test.ior";
 static const char *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/224.1.239.2:1234";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)

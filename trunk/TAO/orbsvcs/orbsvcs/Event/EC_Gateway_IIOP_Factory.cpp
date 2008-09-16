@@ -52,7 +52,7 @@ TAO_EC_Gateway_IIOP_Factory::fini (void)
 }
 
 int
-TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
+TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   int result = 0;
 

@@ -51,9 +51,9 @@ Server_i::~Server_i()
 }
 
 int
-Server_i::parse_args (int argc, char* argv[])
+Server_i::parse_args (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:c:h");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:c:h"));
   int c;
 
   while ((c = get_opts ()) != -1)

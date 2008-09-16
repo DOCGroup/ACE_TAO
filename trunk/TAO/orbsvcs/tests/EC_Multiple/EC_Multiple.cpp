@@ -129,7 +129,7 @@ print_priority_info (const char *const name)
 }
 
 int
-Test_ECG::run (int argc, char* argv[])
+Test_ECG::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -1027,7 +1027,7 @@ Test_ECG::local_source (RtecEventComm::EventSourceID id) const
 int
 Test_ECG::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "l:r:s:i:xh:w:p:d:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("l:r:s:i:xh:w:p:d:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

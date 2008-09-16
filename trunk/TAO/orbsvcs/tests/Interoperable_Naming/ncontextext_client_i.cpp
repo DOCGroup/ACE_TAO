@@ -44,7 +44,7 @@ int
 NContextExt_Client_i::parse_args (void)
 {
 
-  ACE_Get_Opt get_opts (argc_, argv_, "dvs");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dvs"));
   int c;
 
   this->view_ = 1;

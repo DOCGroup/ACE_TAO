@@ -44,7 +44,7 @@ Event_Logging_Service::init_ORB (int& argc, char *argv [])
 }
 
 int
-Event_Logging_Service::parse_args (int argc, char *argv[])
+Event_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t:x"));
   int opt;

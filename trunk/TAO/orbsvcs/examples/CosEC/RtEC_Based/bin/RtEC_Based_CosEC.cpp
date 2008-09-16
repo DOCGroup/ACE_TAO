@@ -37,7 +37,7 @@ RtEC_Based_CosEC::init_ORB  (int& argc, char *argv [])
 int
 RtEC_Based_CosEC::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "t:n:e:o:p:r");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("t:n:e:o:p:r"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

@@ -160,7 +160,7 @@ const char * FT_TestReplica_i::repository_id()
 }
 
 int
-FT_TestReplica_i::parse_args (int argc, char *argv[])
+FT_TestReplica_i::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

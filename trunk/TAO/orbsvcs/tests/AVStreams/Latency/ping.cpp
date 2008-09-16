@@ -28,7 +28,7 @@ ACE_Throughput_Stats recv_latency;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xo:s:r:t:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xo:s:r:t:"));
   int c;
 
   while ((c = get_opts ()) != -1)

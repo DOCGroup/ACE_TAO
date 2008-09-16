@@ -22,7 +22,7 @@ Airplane_Client_i::Airplane_Client_i (void)
 int
 Airplane_Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:k:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)

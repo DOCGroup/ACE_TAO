@@ -30,7 +30,7 @@ public:
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "fe:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("fe:"));
   int x;
 
   while ((x = get_opts ()) != -1)

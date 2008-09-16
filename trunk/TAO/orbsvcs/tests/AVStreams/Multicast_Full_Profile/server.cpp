@@ -187,7 +187,7 @@ Server::run (void)
 int
 Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "f:p:");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:p:"));
 
   int c;
   while ((c = opts ()) != -1)

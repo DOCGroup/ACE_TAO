@@ -29,7 +29,7 @@ CORBA::Object_var object_secondary = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:k:b:l:g:h:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:k:b:l:g:h:"));
   int c;
 
   while ((c = get_opts ()) != -1)

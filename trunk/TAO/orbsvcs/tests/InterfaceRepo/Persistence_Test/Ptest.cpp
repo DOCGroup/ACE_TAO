@@ -88,7 +88,7 @@ int
 Ptest::parse_args (int argc,
                    ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "dq");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("dq"));
   int c;
 
   while ((c = opts ()) != -1)

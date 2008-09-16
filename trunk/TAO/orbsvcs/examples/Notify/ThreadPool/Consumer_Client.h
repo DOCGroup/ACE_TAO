@@ -45,7 +45,7 @@ public:
   void run (void);
 
   /// Parse Args
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The thread entry point.
   virtual int svc (void);

@@ -127,7 +127,7 @@ int TAO::FT_FaultDetectorFactory_i::write_ior()
 
 int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:l:o:qr");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:l:o:qr"));
   int c;
 
   while ((c = get_opts ()) != -1)

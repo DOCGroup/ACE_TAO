@@ -13,7 +13,7 @@ Consumer::Consumer ()
 int
 Consumer::parse_args (int argc, char *argv [])
 {
- ACE_Get_Opt get_opt (argc, argv, "n:c:");
+ ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:c:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

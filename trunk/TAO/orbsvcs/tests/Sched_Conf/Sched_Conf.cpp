@@ -26,7 +26,7 @@ const char* format_string = " {%-12s, %d, %d, %d, %d, %8d, "
 int
 parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

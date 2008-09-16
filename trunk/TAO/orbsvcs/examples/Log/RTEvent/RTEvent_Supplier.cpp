@@ -31,7 +31,7 @@ Supplier::Supplier (void)
 }
 
 int
-Supplier::run (int argc, char* argv[])
+Supplier::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {

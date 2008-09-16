@@ -13,7 +13,7 @@ int verbose = 0;
 bool as_server = true;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   for (int c = 1; c < argc; c++) {
     if (ACE_OS::strcasecmp(argv[c],"-o") == 0)

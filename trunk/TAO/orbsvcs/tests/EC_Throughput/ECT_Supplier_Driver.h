@@ -42,11 +42,11 @@ public:
     // Maximum number of suppliers.
   };
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Execute the test.
 
 private:
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line args
 
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,

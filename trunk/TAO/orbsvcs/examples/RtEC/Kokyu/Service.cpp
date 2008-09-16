@@ -35,7 +35,7 @@ inline RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
   return static_cast<RtecScheduler::Period_t> (tv.sec () * 1000000 + tv.usec ())*10;
 }
 
-int parse_args (int argc, char *argv[]);
+int parse_args (int argc, ACE_TCHAR *argv[]);
 
 typedef TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_RMS_SCHED_TYPE;
 
@@ -439,9 +439,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-int parse_args (int argc, char *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "cs:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("cs:"));
   int c;
 
   while ((c = get_opts ()) != -1)

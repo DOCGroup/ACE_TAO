@@ -62,7 +62,7 @@ Client::parse_args (int argc,
                     ACE_TCHAR *argv[])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:l:a:p:r:sd");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:l:a:p:r:sd"));
 
   this->use_sfp_ = 0;
 

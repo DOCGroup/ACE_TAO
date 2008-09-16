@@ -33,41 +33,41 @@ public:
     , started_(false)
   {
   }
-   
+
   void go (void)
   {
     started_ = true;
   }
-   
+
   void done (void)
   {
     started_ = false;
   }
-   
+
   void wait_for_startup()
   {
     while (! started_) {
       ACE_Time_Value tv(0, 100 * 1000); // 100ms
       orb_->run(tv);
     }
-  }  
-     
+  }
+
 private:
   CORBA::ORB_ptr orb_;
-  bool started_;      
+  bool started_;
 };
 
 
 class Supplier_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
 };
 
 int
-Supplier_Client::parse_args (int argc, char *argv[])
+Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -171,14 +171,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
           sig_i* sig_impl;
           ACE_NEW_RETURN (sig_impl, sig_i (orb), 1);
-          PortableServer::ServantBase_var owner_transfer(sig_impl); 
+          PortableServer::ServantBase_var owner_transfer(sig_impl);
 
           CORBA::Object_var object =
             orb->resolve_initial_references ("RootPOA");
           PortableServer::POA_var root_poa =
             PortableServer::POA::_narrow (object.in ());
 
-          PortableServer::ObjectId_var id =  
+          PortableServer::ObjectId_var id =
             root_poa->activate_object (sig_impl);
 
           object = root_poa->id_to_reference (id.in ());
@@ -213,7 +213,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
               ACE_DEBUG ((LM_DEBUG,
                           "\nSupplier sent %d events.\n", max_events));
 
-              ACE_OS::unlink (ior_output_file);                  
+              ACE_OS::unlink (ior_output_file);
               supplier_1->disconnect ();
 
               ec->destroy ();

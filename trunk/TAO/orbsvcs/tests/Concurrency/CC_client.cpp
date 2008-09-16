@@ -90,7 +90,7 @@ CC_Client::read_ior (char *filename)
 int
 CC_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dc:sf:k:xbhe:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dc:sf:k:xbhe:"));
   int c;
   int result;
 

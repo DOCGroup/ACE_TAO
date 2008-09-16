@@ -26,9 +26,9 @@ test_sleep (int microsec)
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "u:c:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("u:c:"));
   const unsigned char full_success = 0x03;
   unsigned char success = 0;
 

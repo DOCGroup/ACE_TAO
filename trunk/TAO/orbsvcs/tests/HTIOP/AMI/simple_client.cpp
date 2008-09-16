@@ -34,9 +34,9 @@ int shutdown_flag = 0;
 int debug = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dk:i:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:i:x"));
   int c;
 
   while ((c = get_opts ()) != -1)

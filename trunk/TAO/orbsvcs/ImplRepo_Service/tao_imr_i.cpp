@@ -280,7 +280,7 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
     }
 
   // Skip both the program name and the "activate" command
-  ACE_Get_Opt get_opts (argc, argv, "h");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
 
   this->server_name_ = argv[1];
   int c;
@@ -313,7 +313,7 @@ int
 TAO_IMR_Op_Autostart::parse (int argc, ACE_TCHAR **argv)
 {
   // Skip the "autostart" command
-  ACE_Get_Opt get_opts (argc, argv, "h");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
 
   int c;
 
@@ -359,7 +359,7 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
     }
 
   // Skip both the program name and the "ior" command
-  ACE_Get_Opt get_opts (argc, argv, "hf:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hf:"));
 
   this->server_name_ = argv[1];
   if (this->server_name_.length() == 0 || this->server_name_[0] == '-')
@@ -416,7 +416,7 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "list" command
-  ACE_Get_Opt get_opts (argc, argv, "vh", server_flag);
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vh"), server_flag);
 
   int c;
 
@@ -461,7 +461,7 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
     }
 
   // Skip both the program name and the "remove" command
-  ACE_Get_Opt get_opts (argc, argv, "h");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
 
   this->server_name_ = argv[1];
   int c;
@@ -504,7 +504,7 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
     }
 
   // Skip both the program name and the "shutdown" command
-  ACE_Get_Opt get_opts (argc, argv, "h");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
 
   this->server_name_ = argv[1];
   int c;
@@ -552,7 +552,7 @@ TAO_IMR_Op_ShutdownRepo::parse (int argc, ACE_TCHAR **argv)
     }
 
   // Skip both the program name and the "shutdown-repo" command
-  ACE_Get_Opt get_opts (argc, argv, "ha");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ha"));
 
   int c;
 
@@ -622,7 +622,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
     }
 
   // Skip both the program name and the "update" command
-  ACE_Get_Opt get_opts (argc, argv, "hc:w:a:e:r:R:l:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hc:w:a:e:r:R:l:"));
 
   this->server_name_ = argv[1];
   int c;
