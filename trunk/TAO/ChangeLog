@@ -1,3 +1,9 @@
+Tue Sep 16 12:40:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.mpc:
+          Renamed to tao_catior to prevent clash with similar utility
+          from different orbs. Resolves bugzilla 3398
+
 Tue Sep 16 12:38:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/nslist/nslist.cpp:
