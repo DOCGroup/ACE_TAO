@@ -76,7 +76,7 @@ static int
 parse_args (int argc,
             ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "q:f:t:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("q:f:t:"));
   int c;
 
   while ((c = get_opts ()) != -1)

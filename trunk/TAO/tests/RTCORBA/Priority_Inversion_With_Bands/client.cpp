@@ -15,9 +15,9 @@ static CORBA::ULong work = 2;
 static int make_banded_invocations = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:k:i:w:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:k:i:w:"));
   int c;
 
   while ((c = get_opts ()) != -1)

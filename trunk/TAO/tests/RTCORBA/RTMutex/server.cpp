@@ -21,9 +21,9 @@ static int test_try_lock_flag =
 // Parse command-line arguments.
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "t");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t"));
   int c;
 
   while ((c = get_opts ()) != -1)

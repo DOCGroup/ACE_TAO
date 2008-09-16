@@ -19,7 +19,7 @@ ACE_CString client_orb;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:o");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o"));
   int c;
 
   while ((c = get_opts ()) != -1)

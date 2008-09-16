@@ -31,7 +31,7 @@ Object_A_Server::Object_A_Server (void)
 int
 Object_A_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "do:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("do:"));
   int c;
 
   while ((c = get_opts ()) != -1)

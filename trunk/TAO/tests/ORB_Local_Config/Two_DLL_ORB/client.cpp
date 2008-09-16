@@ -29,7 +29,7 @@ Client_Worker::~Client_Worker (void)
 int
 Client_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:",0);
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"),0);
 
   for( int c = 0; ((c = get_opts ()) != -1); )
     switch (c)

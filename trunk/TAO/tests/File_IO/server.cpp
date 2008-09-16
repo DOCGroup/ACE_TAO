@@ -40,7 +40,7 @@ private:
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:d");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
   int c;
 
   while ((c = get_opts ()) != -1)

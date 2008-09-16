@@ -20,9 +20,9 @@ const CORBA::ULong passes_before_forward = 6;
 bool direct_collocation = false;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "d");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d"));
   int c;
 
   while ((c = get_opts ()) != -1)

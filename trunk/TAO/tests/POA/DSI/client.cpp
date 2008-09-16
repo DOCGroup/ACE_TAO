@@ -31,7 +31,7 @@ static int shutdown_server = 0;
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "xk:f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:f:"));
   int c;
 
   while ((c = get_opts ()) != -1)

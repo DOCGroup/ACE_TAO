@@ -29,7 +29,7 @@ static const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:d");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
   int c;
 
   while ((c = get_opts ()) != -1)

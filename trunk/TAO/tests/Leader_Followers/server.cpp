@@ -13,9 +13,9 @@ const char *ior_output_file = "ior";
 int number_of_event_loop_threads = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "e:o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("e:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)

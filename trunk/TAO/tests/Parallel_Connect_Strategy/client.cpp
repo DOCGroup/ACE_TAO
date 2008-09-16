@@ -22,9 +22,9 @@ void hook (TAO_ORB_Core *,
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:xt");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:xt"));
   int c;
 
   while ((c = get_opts ()) != -1)

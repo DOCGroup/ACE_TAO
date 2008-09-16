@@ -13,7 +13,7 @@ const ACE_TCHAR *proxy_ior = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c:p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:p:"));
   int c;
 
   while ((c = get_opts ()) != -1)

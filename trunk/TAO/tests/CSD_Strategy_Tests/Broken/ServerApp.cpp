@@ -208,11 +208,11 @@ ServerApp::cleanup()
 
 
 int
-ServerApp::parse_args(int argc, char* argv[])
+ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
 {
   this->exe_name_ = argv[0];
 
-  ACE_Get_Opt get_opts(argc, argv, "p:s:n:t:r:c:k:");
+  ACE_Get_Opt get_opts(argc, argv, ACE_TEXT("p:s:n:t:r:c:k:"));
 
   int c;
 

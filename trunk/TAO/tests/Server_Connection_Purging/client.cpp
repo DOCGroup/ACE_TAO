@@ -11,9 +11,9 @@ const int iter = 55;
 int purged_handles = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "h:p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h:p:"));
   int c;
 
   while ((c = get_opts ()) != -1)

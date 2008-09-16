@@ -11,9 +11,9 @@ ACE_RCSID(MProfile_Connection_Timeout,
 const char *ior_output_file = 0;
 int orb_run = 0;
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:r");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:r"));
   int c;
 
   while ((c = get_opts ()) != -1)

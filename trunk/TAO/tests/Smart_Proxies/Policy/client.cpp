@@ -28,9 +28,9 @@ const char *ior2 = "file://test2.ior";
 int one_shot_factory = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:j:f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:j:f:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -16,9 +16,9 @@ Client_Task::ClientSyncModeEnum syncMode = Client_Task::MODE_NONE;
 ACE_CString server_orb;
 ACE_CString client_orb;
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:o:n:m:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:n:m:"));
   int c;
 
   while ((c = get_opts ()) != -1)

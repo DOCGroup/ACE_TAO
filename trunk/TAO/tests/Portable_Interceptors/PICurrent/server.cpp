@@ -20,7 +20,7 @@ const char *ior_output_file = "test.ior";
 extern PortableInterceptor::SlotId slot_id;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   bool error = false;
   for(int i = 1; i < argc; i++)

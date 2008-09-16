@@ -57,7 +57,7 @@ parse_args (int argc,
             ACE_TCHAR* argv [])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:"));
 
   int c;
   while ((c= opts ()) != -1)

@@ -12,9 +12,9 @@ const char *ior1 = "file://test1.ior";
 const char *ior2 = "file://test2.ior";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "n:o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -78,9 +78,9 @@ CORBA::Short object_priority = -1;
 
 // Parse command-line arguments.
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:o:a:b:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:o:a:b:"));
   int c, result;
 
   while ((c = get_opts ()) != -1)

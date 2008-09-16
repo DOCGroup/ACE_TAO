@@ -72,9 +72,9 @@ int port = 0;
 char const * target_host = "localhost";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:h:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:h:"));
   int c;
 
   while ((c = get_opts ()) != -1)

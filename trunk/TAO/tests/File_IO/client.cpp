@@ -36,7 +36,7 @@ static CORBA::ORB_var orb;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "t:dk:f:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:dk:f:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)

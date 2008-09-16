@@ -25,7 +25,7 @@ Server_i::~Server_i (void)
 int
 Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ni:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:ni:"));
   int c = 0;
 
   while ((c = get_opts ()) != -1)

@@ -9,9 +9,9 @@ const char *ior = "file://test.ior";
 int do_shutdown = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x"));
   int c;
 
   while ((c = get_opts ()) != -1)

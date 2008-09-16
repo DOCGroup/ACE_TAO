@@ -10,9 +10,9 @@ const char *proxy_ior = 0;
 const char *control_ior = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:c:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:c:"));
   int c;
 
   while ((c = get_opts ()) != -1)

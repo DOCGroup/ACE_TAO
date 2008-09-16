@@ -16,7 +16,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // is calibrated (if necessary on this platform) at the beginning of
   // the test.  While the timer would otherwise be calibrated on first
   // use, this introduces delay in the middle of the test's execution.
-  // This leads to failures due to timing assumptions (timeouts, etc.) 
+  // This leads to failures due to timing assumptions (timeouts, etc.)
   // within the test itself.
   (void) ACE_High_Res_Timer::global_scale_factor();
 
@@ -50,7 +50,7 @@ const char *ior_output_file = "test.ior";
 void
 parse_args(int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)

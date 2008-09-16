@@ -56,9 +56,9 @@ CORBA::ULong protocol1 = 1413566210;
 CORBA::ULong protocol2 = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:a:b:e:f:n:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:a:b:e:f:n:"));
   int c, result;
 
   while ((c = get_opts ()) != -1)

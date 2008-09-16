@@ -130,7 +130,7 @@ bool
 Server::parse_args (int , ACE_TCHAR* [])
 {
   /*
-    ACE_Get_Opt get_opts (argc, argv, "");
+    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT(""));
     int c;
 
     while ((c = get_opts ()) != -1) {

@@ -30,7 +30,7 @@ static int iterations = 3;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:i:k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:i:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -12,9 +12,9 @@ int do_shutdown = 0;
 const char *ior_output_file = "gateway.ior";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xk:i:o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -8,9 +8,9 @@ ACE_RCSID(Hello, client, "client.cpp,v 1.5 2002/01/29 20:21:07 okellogg Exp")
 const char *ior = "file://test.ior";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)

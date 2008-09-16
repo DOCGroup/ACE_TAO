@@ -18,7 +18,7 @@ ACE_RANDR_TYPE seed;
 int payload_size = 4;
 
 int
-parse_args (int argc, char *argv[]);
+parse_args (int argc, ACE_TCHAR *argv[]);
 
 class Sleeper : public ACE_Event_Handler
 {
@@ -140,9 +140,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:s:b:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:b:"));
   int c;
 
   while ((c = get_opts ()) != -1)

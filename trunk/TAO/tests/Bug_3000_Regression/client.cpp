@@ -12,9 +12,9 @@ const char *ior = "file://test.ior";
 bool shutdown_server = false;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:s");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:s"));
   int c;
 
   while ((c = get_opts ()) != -1)

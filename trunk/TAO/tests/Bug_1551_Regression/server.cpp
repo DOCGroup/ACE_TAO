@@ -15,9 +15,9 @@ bool simulate_crashes = true;
 int nthreads = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xn:o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xn:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -57,7 +57,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // is calibrated (if necessary on this platform) at the beginning of
   // the test.  While the timer would otherwise be calibrated on first
   // use, this introduces delay in the middle of the test's execution.
-  // This leads to failures due to timing assumptions (timeouts, etc.) 
+  // This leads to failures due to timing assumptions (timeouts, etc.)
   // within the test itself.
   (void) ACE_High_Res_Timer::global_scale_factor();
 

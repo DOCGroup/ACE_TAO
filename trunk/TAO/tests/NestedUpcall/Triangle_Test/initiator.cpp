@@ -76,7 +76,7 @@ Initiator_Server::read_ior (char *filename, unsigned int A_B)
 int
 Initiator_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:g:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:g:"));
   int c, result;
 
   while ((c = get_opts ()) != -1)

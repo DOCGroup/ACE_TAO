@@ -39,9 +39,9 @@ const ACE_Time_Value TRANSIENT_HOLDOFF (0, 500); // 0.5ms delay
 const int TRANSIENT_LIMIT = 10;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:a:i:ctbr");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:a:i:ctbr"));
   int c;
 
   while ((c = get_opts ()) != -1)

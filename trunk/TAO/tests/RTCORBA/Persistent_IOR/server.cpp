@@ -72,7 +72,7 @@ static CORBA::ULong max_request_buffer_size = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:p:t:d:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:p:t:d:"));
   int c;
 
   while ((c = get_opts ()) != -1)

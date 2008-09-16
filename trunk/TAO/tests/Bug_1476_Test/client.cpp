@@ -25,9 +25,9 @@ bool synch_none = false;
 bool synch_delayed = false;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:l:s:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:l:s:"));
   int c;
   level_obj = true; //default
   synch_none = true; //default
