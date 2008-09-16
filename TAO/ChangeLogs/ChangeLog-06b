@@ -12032,7 +12032,7 @@ Wed Apr 19 07:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         _tao_encode/_tao_decode when generated in a header file to help
         doxygen.
 
-        * TAO_Objref_Out_T.{h,inl}:
+        * tao/Objref_Out_T.{h,inl}:
         Assinging _var to _out is not allowed according to the spec
 
         * tao/Messaging/*:
