@@ -256,13 +256,13 @@ Options::~Options (void)
 // option_word_.
 
 int
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Get_Opt getopt (argc, argv, "abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:"));
   //FUZZ: enable check_for_lack_ACE_OS
 
   int option_char;

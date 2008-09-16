@@ -20,7 +20,7 @@ public:
   int open (JAWS_Pipeline_Handler *ph, JAWS_Dispatch_Policy *dp = 0);
 
 private:
-  void parse_args (int argc, char *argv[]);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse arguments
 
 private:
