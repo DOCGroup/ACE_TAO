@@ -1,3 +1,19 @@
+Tue Sep 16 10:52:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/*.bor:
+        * bin/MakeProjectCreator/templates/bor.mpd
+        * bin/MakeProjectCreator/templates/bordll.mpt
+        * bin/MakeProjectCreator/templates/borexe.mpt
+        * bin/MakeProjectCreator/config/borland.features
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm
+          Removed, use the bmake mpc template from now
+
+        * bin/MakeProjectCreator/config/ipv6.mpb:
+        * bin/MakeProjectCreator/config/vcl.mpb:
+        * bin/MakeProjectCreator/README:
+          Removed borland usage
+
 Tue Sep 16 09:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Acceptor.{h,cpp}:
