@@ -365,7 +365,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       ::remCurIdGet (user, 0);
       return user;
     }
-#elif defined (__QNXNTO__) || defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
+#elif defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (user);
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
@@ -593,8 +593,7 @@ ACE_INLINE FILE *
 ACE_OS::fopen (const char *filename, const char *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
-  ACE_OSCALL_RETURN
-    (::fopen (filename, mode), FILE *, 0);
+  ACE_OSCALL_RETURN (::fopen (filename, mode), FILE *, 0);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -604,17 +603,16 @@ ACE_OS::fopen (const char *filename, const wchar_t *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
   ACE_Wide_To_Ascii n_mode (mode);
-  ACE_OSCALL_RETURN
-    (::fopen (filename, n_mode.char_rep ()), FILE *, 0);
+  ACE_OSCALL_RETURN (::fopen (filename, n_mode.char_rep ()), FILE *, 0);
 }
+
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *
 ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
 #if defined (ACE_HAS_WINCE)
-  ACE_OSCALL_RETURN
-    (::_wfopen (filename, mode), FILE *, 0);
+  ACE_OSCALL_RETURN (::_wfopen (filename, mode), FILE *, 0);
 #else
   // Non-Windows doesn't use wchar_t file systems.
   ACE_Wide_To_Ascii n_filename (filename);
@@ -690,7 +688,7 @@ ACE_INLINE FILE *
 ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
 {
   ACE_OS_TRACE ("ACE_OS::freopen");
-#if defined (ACE_WIN32) && (defined(ACE_USES_WCHAR) || defined(ACE_HAS_WINCE))
+#if defined (ACE_WIN32) && defined(ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wfreopen (ACE_TEXT_ALWAYS_WCHAR (filename),
                                   ACE_TEXT_ALWAYS_WCHAR (mode),
                                   stream),
@@ -1012,8 +1010,7 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
       defined (ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
       defined (ACE_HAS_VSWPRINTF) || defined (ACE_WIN32_VC9) || \
-     (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE) && \
-      _MSC_FULL_VER > 140050000)
+      (defined (ACE_WIN32_VC8) && _MSC_FULL_VER > 140050000)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in

@@ -315,11 +315,11 @@ public:
 
   /// Set the field that indicates whether interrupted calls should be
   /// restarted.
-  void restart (int);
+  void restart (bool r);
 
   /// Get the field that indicates whether interrupted calls should be
   /// restarted.
-  int restart (void) const;
+  bool restart (void) const;
 
   // = Notice that the following two function is equivalent to
   //   "void msg_ostream (HANDLE)" and "HANDLE msg_ostream (void)"
@@ -469,7 +469,7 @@ public:
             int line,
             int op_status = -1,
             int errnum = 0,
-            int restart = 1,
+            bool restart = true,
             ACE_OSTREAM_TYPE *os = 0,
             ACE_Log_Msg_Callback *c = 0);
 
@@ -602,7 +602,7 @@ private:
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.
-  int restart_;
+  bool restart_;
 
   /// The ostream where logging messages can be written.
   ACE_OSTREAM_TYPE *ostream_;

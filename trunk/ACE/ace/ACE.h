@@ -354,7 +354,7 @@ namespace ACE
    */
   extern ACE_Export int handle_timed_accept (ACE_HANDLE listener,
                                              ACE_Time_Value *timeout,
-                                             int restart);
+                                             bool restart);
 
   /**
    * Wait up to @a timeout amount of time to complete an actively

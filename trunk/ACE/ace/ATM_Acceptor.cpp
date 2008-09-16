@@ -236,8 +236,8 @@ int
 ACE_ATM_Acceptor::accept (ACE_ATM_Stream &new_sap,
                           ACE_Addr *remote_addr,
                           ACE_Time_Value *timeout,
-                          int restart,
-                          int reset_new_handle,
+                          bool restart,
+                          bool reset_new_handle,
                           ACE_ATM_Params params,
                           ACE_ATM_QoS qos)
 {

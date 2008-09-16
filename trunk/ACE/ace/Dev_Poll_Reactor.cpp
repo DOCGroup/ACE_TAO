@@ -693,7 +693,7 @@ ACE_Dev_Poll_Reactor::~ACE_Dev_Poll_Reactor (void)
 
 int
 ACE_Dev_Poll_Reactor::open (size_t size,
-                            int restart,
+                            bool restart,
                             ACE_Sig_Handler *sh,
                             ACE_Timer_Queue *tq,
                             int disable_notify_pipe,
@@ -1879,12 +1879,12 @@ ACE_Dev_Poll_Reactor::resumable_handler (void)
   return 0;
 }
 
-int
+bool
 ACE_Dev_Poll_Reactor::uses_event_associations (void)
 {
   // Since the Dev_Poll_Reactor does not do any event associations,
-  // this method always return zero.
-  return 0;
+  // this method always return false.
+  return false;
 }
 
 long

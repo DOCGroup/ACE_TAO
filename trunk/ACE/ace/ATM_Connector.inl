@@ -114,7 +114,7 @@ ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
 }
 
 ACE_INLINE
-int
+bool
 ACE_ATM_Connector::reset_new_handle (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -124,7 +124,7 @@ ACE_ATM_Connector::reset_new_handle (ACE_HANDLE handle)
                            0);
 #else /* !defined ACE_HAS_WINSOCK2 */
   ACE_UNUSED_ARG (handle);
-  return 0;
+  return false;
 #endif /* ACE_WIN32 */
 }
 

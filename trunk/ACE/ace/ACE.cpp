@@ -2681,7 +2681,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 int
 ACE::handle_timed_accept (ACE_HANDLE listener,
                           ACE_Time_Value *timeout,
-                          int restart)
+                          bool restart)
 {
   ACE_TRACE ("ACE::handle_timed_accept");
   // Make sure we don't bomb out on erroneous values.

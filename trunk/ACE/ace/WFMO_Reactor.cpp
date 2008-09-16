@@ -1137,15 +1137,12 @@ ACE_WFMO_Reactor::current_info (ACE_HANDLE, size_t &)
 
 int
 ACE_WFMO_Reactor::open (size_t size,
-                        int unused,
+                        bool,
                         ACE_Sig_Handler *sh,
                         ACE_Timer_Queue *tq,
-                        int disable_notify_pipe,
+                        int,
                         ACE_Reactor_Notify *notify)
 {
-  ACE_UNUSED_ARG (unused);
-  ACE_UNUSED_ARG (disable_notify_pipe);
-
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 

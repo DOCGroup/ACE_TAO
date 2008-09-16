@@ -511,13 +511,13 @@ public:
 
   /// Initialize the @c peer_acceptor_ with @a local_addr.
   ACE_Accept_Strategy (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                       int restart = 0,
+                       bool restart = false,
                        ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Initialize the <peer_acceptor_> with @a local_addr, indicating
   /// whether to @a reuse_addr if it's already in use.
   virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                    int reuse_addr = 0);
+                    bool reuse_addr = false);
 
   /// Return the underlying ACE_HANDLE of the <peer_acceptor_>.
   virtual ACE_HANDLE get_handle (void) const;
@@ -546,7 +546,7 @@ protected:
   ACE_Reactor *reactor_;
 
   /// Needed to reopen the socket if <accept> fails.
-  int reuse_addr_;
+  bool reuse_addr_;
 
   /// Needed to reopen the socket if <accept> fails.
   ACE_PEER_ACCEPTOR_ADDR peer_acceptor_addr_;
@@ -588,7 +588,7 @@ public:
                                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
                                    const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                   int reuse_addr,
+                                   bool reuse_addr,
                                    int flags,
                                    int perms);
 
@@ -602,7 +602,7 @@ public:
                                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
                                    const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                   int reuse_addr,
+                                   bool reuse_addr,
                                    int flags,
                                    int perms);
 
@@ -905,7 +905,7 @@ public:
                                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
                                    const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                   int reuse_addr,
+                                   bool reuse_addr,
                                    int flags,
                                    int perms);
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
@@ -913,7 +913,7 @@ public:
                                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
                                    const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                   int reuse_addr,
+                                   bool reuse_addr,
                                    int flags,
                                    int perms);
 
@@ -965,7 +965,7 @@ protected:
                               const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                               ACE_Time_Value *timeout,
                               const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                              int reuse_addr,
+                              bool reuse_addr,
                               int flags,
                               int perms);
 
@@ -995,7 +995,7 @@ protected:
                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                     ACE_Time_Value *timeout,
                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                    int reuse_addr,
+                    bool reuse_addr,
                     int flags,
                     int perms,
                     CONNECTION_MAP_ENTRY *&entry,
@@ -1005,7 +1005,7 @@ protected:
                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                     ACE_Time_Value *timeout,
                                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                    int reuse_addr,
+                                    bool reuse_addr,
                                     int flags,
                                     int perms,
                                     CONNECTION_MAP_ENTRY *&entry,
@@ -1016,7 +1016,7 @@ protected:
     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
     ACE_Time_Value *timeout,
     const ACE_PEER_CONNECTOR_ADDR &local_addr,
-    int reuse_addr,
+    bool reuse_addr,
     int flags,
     int perms,
     int &found);

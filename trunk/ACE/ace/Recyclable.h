@@ -63,8 +63,6 @@ protected:
   /// Constructor.
   ACE_Recyclable (ACE_Recyclable_State initial_state);
 
-protected:
-
   /// Our state.
   ACE_Recyclable_State recycle_state_;
 };

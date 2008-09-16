@@ -223,7 +223,7 @@ public:
 
   /// Allows us to check for NULL on all ACE_Strong_Bound_Ptr
   /// objects.
-  int null (void) const;
+  bool null (void) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -359,7 +359,7 @@ public:
   long remove_ref (void);
 
   /// Allows us to check for NULL on all ACE_Weak_Bound_Ptr objects.
-  int null (void) const;
+  bool null (void) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

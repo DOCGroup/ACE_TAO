@@ -26,7 +26,7 @@ ACE_QtReactor::ACE_QtReactor (QApplication *qapp ,
 // Must be called with lock held
 ACE_QtReactor::ACE_QtReactor (size_t size,
     QApplication *qapp,
-    int restart,
+    bool restart,
     ACE_Sig_Handler *sh,
     ACE_Timer_Queue *tq,
     int disable_notify_pipe,

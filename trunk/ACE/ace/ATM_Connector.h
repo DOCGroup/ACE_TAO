@@ -136,7 +136,7 @@ public:
                 ACE_ATM_QoS &qos);
 
   /// Resets any event associations on this handle
-  int reset_new_handle (ACE_HANDLE handle);
+  bool reset_new_handle (ACE_HANDLE handle);
 
   // = Meta-type info
   typedef ACE_ATM_Addr PEER_ADDR;

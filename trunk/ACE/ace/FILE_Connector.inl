@@ -25,12 +25,11 @@ ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
                 ACE_TEXT ("ACE_FILE_IO")));
 }
 
-ACE_INLINE int
-ACE_FILE_Connector::reset_new_handle (ACE_HANDLE handle)
+ACE_INLINE bool
+ACE_FILE_Connector::reset_new_handle (ACE_HANDLE)
 {
-  ACE_UNUSED_ARG (handle);
   // Nothing to do here since the handle is not a socket
-  return 0;
+  return false;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

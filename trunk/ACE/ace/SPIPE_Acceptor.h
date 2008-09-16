@@ -121,8 +121,8 @@ public:
   int accept (ACE_SPIPE_Stream &ipc_sap_spipe,
               ACE_SPIPE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
-              int restart = 1,
-              int reset_new_handle = 0);
+              bool restart = true,
+              bool reset_new_handle = false);
 
   // = Meta-type info
   typedef ACE_SPIPE_Addr PEER_ADDR;

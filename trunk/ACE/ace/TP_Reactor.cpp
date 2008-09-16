@@ -109,7 +109,7 @@ ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
 }
 
 ACE_TP_Reactor::ACE_TP_Reactor (size_t max_number_of_handles,
-                                int restart,
+                                bool restart,
                                 ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
                                 bool mask_signals,

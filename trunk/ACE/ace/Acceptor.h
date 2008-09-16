@@ -568,8 +568,8 @@ public:
   virtual int accept (SVC_HANDLER * = 0,
                       ACE_PEER_ACCEPTOR_ADDR *remote_addr = 0,
                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
-                      int restart = 1,
-                      int reset_new_handle = 0);
+                      bool restart = true,
+                      bool reset_new_handle = false);
 
   /// Cancel a oneshot acceptor that was started asynchronously.
   virtual int cancel (void);
@@ -605,8 +605,8 @@ protected:
   int shared_accept (SVC_HANDLER *svc_handler,
                      ACE_PEER_ACCEPTOR_ADDR *remote_addr,
                      ACE_Time_Value *timeout,
-                     int restart,
-                     int reset_new_handle);
+                     bool restart,
+                     bool reset_new_handle);
 
   // = Demultiplexing hooks.
   /// Returns the listening acceptor's {ACE_HANDLE}.
@@ -654,13 +654,13 @@ private:
    */
   int register_handler (SVC_HANDLER *svc_handler,
                         const ACE_Synch_Options &options,
-                        int restart);
+                        bool restart);
 
   /// Hold the svc_handler_ across asynchrony boundaries.
   SVC_HANDLER *svc_handler_;
 
   /// Hold the restart flag across asynchrony boundaries.
-  int restart_;
+  bool restart_;
 
   /// Factory that establishes connections passively.
   ACE_PEER_ACCEPTOR peer_acceptor_;

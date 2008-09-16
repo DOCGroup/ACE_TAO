@@ -154,7 +154,6 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
                          this->allocator_->free,
                          ACE_Node,
                          <T>);
-  this->head_ = 0;
 }
 
 template <class T> int

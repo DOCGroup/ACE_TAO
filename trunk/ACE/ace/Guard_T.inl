@@ -65,7 +65,7 @@ ACE_Guard<ACE_LOCK>::~ACE_Guard (void)
   this->release ();
 }
 
-template <class ACE_LOCK> ACE_INLINE int
+template <class ACE_LOCK> ACE_INLINE bool
 ACE_Guard<ACE_LOCK>::locked (void) const
 {
   return this->owner_ != -1;

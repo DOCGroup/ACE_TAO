@@ -72,8 +72,8 @@ int
 ACE_UPIPE_Acceptor::accept (ACE_UPIPE_Stream &new_stream,
                             ACE_UPIPE_Addr *remote_addr,
                             ACE_Time_Value *timeout,
-                            int restart,
-                            int reset_new_handle)
+                            bool restart,
+                            bool reset_new_handle)
 {
   ACE_TRACE ("ACE_UPIPE_Acceptor::accept");
   ACE_UNUSED_ARG (reset_new_handle);

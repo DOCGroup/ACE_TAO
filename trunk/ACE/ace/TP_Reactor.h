@@ -192,7 +192,7 @@ public:
    * timer queue, respectively.
    */
   ACE_TP_Reactor (size_t max_number_of_handles,
-                  int restart = 0,
+                  bool restart = false,
                   ACE_Sig_Handler *sh = 0,
                   ACE_Timer_Queue *tq = 0,
                   bool mask_signals = true,

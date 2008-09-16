@@ -88,8 +88,8 @@ public:
   int accept (ACE_ATM_Stream &new_sap,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
-              int restart = 1,
-              int reset_new_handle = 0,
+              bool restart = true,
+              bool reset_new_handle = false,
               ACE_ATM_Params params = ACE_ATM_Params(),
               ACE_ATM_QoS qos = ACE_ATM_QoS());
 
