@@ -94,7 +94,7 @@ Server_Events::Server_Events (u_short port,
   else if (this->mcast_dgram_.join (this->mcast_addr_) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
-                "subscribe"));
+                "join"));
   else
     {
       // Point to NULL so that we block in the beginning.
