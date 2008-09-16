@@ -1,3 +1,18 @@
+Tue Sep 16 11:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Release:
+          Ship bmak files
+
+        * tao.rules.GNU:
+          No need to check for TAO_ROOT in the ldflags
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+          Fixed bug in this file, fixes bugzilla 3397
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+          Removed borland support
+
 Tue Sep 16 11:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Abstract_Interface/client.cpp

@@ -283,7 +283,7 @@ project(CosNotification_MC_Ext): notification_serv, orbsvcs_output, notification
   // The using in the TAO_MC_Default_Factory class is apparently ignored by
   // the Borland compiler.  I am disabling the virtual function hiding
   // warning for this project only.
-  specific(borland, bmake) {
+  specific(bmake) {
     compile_flags += -w-hid
   }
 
