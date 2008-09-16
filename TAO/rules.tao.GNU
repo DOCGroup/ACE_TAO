@@ -13,13 +13,6 @@
 ####
 TAO_ROOT ?= $(ACE_ROOT)/TAO
 
-ifeq (,$(findstring -L$(TAO_ROOT)/tao,$(LDFLAGS)))
-  LDFLAGS += -L$(TAO_ROOT)/tao
-endif
-ifeq (,$(findstring -I$(TAO_ROOT),$(INCLDIRS)))
-  INCLDIRS += -I$(TAO_ROOT)
-endif
-
 ifeq ($(exceptions),0)
   default:
 	echo "ERROR: Emulated exceptions are not safe to use anymore, see the NEWS file"

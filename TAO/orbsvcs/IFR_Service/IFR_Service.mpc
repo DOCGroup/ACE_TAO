@@ -49,7 +49,7 @@ project(TAO_IFR_EXE) : aceexe, install, ifr_client, crosscompile, avoids_minimum
   includes       += $(TAO_ROOT)/orbsvcs/IFR_Service \
                     $(TAO_ROOT)/TAO_IDL/include \
                     $(TAO_ROOT)/TAO_IDL/fe \
-                    $TAO_ROOT
+                    $(TAO_ROOT)
   install         = $(ACE_ROOT)/bin
 
   specific(automake) {
