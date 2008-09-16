@@ -75,7 +75,7 @@ static const ACE_TCHAR *lanes_file = ACE_TEXT ("lanes");
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:d:l:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:d:l:"));
   int c;
 
   while ((c = get_opts ()) != -1)

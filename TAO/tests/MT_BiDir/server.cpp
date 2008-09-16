@@ -21,9 +21,9 @@ static int no_iterations = 10;
 static int no_clients = 2;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:i:c:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:i:c:"));
   int c;
 
   while ((c = get_opts ()) != -1)

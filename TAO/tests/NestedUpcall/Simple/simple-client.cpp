@@ -67,7 +67,7 @@ Client_Task::svc (void)
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "qxn:k:t:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("qxn:k:t:"));
   int c;
 
   while ((c = get_opts ()) != -1)

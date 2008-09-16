@@ -16,9 +16,9 @@ int do_abort = 0;
 int do_crash = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "acszxk:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("acszxk:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)

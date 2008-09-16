@@ -129,9 +129,9 @@ ServerApp::run_i(int argc, char* argv[])
 
 
 int
-ServerApp::parse_args(int argc, char* argv[])
+ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, "o:n:");
+  ACE_Get_Opt get_opts(argc, argv, ACE_TEXT("o:n:"));
 
   int c;
 

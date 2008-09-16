@@ -11,9 +11,9 @@ const char *ior = "file://test.ior";
 static int iterations = 1000;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)

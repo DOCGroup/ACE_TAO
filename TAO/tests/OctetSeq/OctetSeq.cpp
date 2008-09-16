@@ -174,7 +174,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int quiet = 0;
 
-      ACE_Get_Opt get_opt (argc, argv, "qn:l:h:s:");
+      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("qn:l:h:s:"));
       int opt;
 
       while ((opt = get_opt ()) != EOF)

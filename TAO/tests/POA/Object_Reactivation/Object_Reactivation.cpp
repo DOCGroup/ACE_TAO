@@ -29,7 +29,7 @@ static int debug = 1;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:"));
   int c;
 
   while ((c = get_opts ()) != -1)

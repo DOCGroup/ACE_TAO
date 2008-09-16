@@ -147,7 +147,7 @@ Client::init (int argc, ACE_TCHAR* argv[])
 bool
 Client::parse_args (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:k:1::f:", 0);
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:k:1::f:"), 0);
   int c;
   std::string test_ior;
   std::string back_ior;

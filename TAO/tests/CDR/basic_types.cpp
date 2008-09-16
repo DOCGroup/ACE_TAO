@@ -218,7 +218,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      ACE_Get_Opt get_opt (argc, argv, "dn:l:");
+      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:l:"));
       int opt;
 
       while ((opt = get_opt ()) != EOF)

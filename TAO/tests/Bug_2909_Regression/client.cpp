@@ -32,9 +32,9 @@ ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> number_of_replies = 0;
 int invalid_exception = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dk:n:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:n:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)

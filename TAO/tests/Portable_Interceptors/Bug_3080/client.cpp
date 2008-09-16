@@ -13,14 +13,14 @@ ACE_RCSID (Redirection,
 const char *ior1 = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 3)  // foo -p IOR_1 -s IOR_2
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Wrong number of arguments.\n"),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, "p:s:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:s:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -30,7 +30,7 @@ static char *ior_input_file = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:f:"));
   int c;
 
   while ((c = get_opts ()) != -1)

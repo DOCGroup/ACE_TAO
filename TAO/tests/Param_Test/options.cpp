@@ -48,7 +48,7 @@ Options::~Options (void)
 int
 Options::parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "xdn:f:i:t:k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xdn:f:i:t:k:"));
   int c;
   int result;
 

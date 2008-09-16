@@ -15,7 +15,7 @@ static RTCORBA::Priority default_thread_priority;
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:x"));
   int c;
 
   while ((c = get_opts ()) != -1)

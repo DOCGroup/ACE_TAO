@@ -13,9 +13,9 @@ int kill_on = 30;
 const char* ior = "file://ping.ior";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:p:k:t:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:p:k:t:"));
   int c;
 
   while ((c = get_opts ()) != -1)

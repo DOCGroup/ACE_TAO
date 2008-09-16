@@ -80,7 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int quiet = 0;
   ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (ACE_OS::time(0));
 
-  ACE_Get_Opt get_opt (argc, argv, "tn:f:m:s:a:b:r:q");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("tn:f:m:s:a:b:r:q"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

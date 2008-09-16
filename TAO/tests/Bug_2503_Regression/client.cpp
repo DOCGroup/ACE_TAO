@@ -39,9 +39,9 @@ const char *ior_argument = "file://test.ior";
 int niterations = 100;
 
 void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)

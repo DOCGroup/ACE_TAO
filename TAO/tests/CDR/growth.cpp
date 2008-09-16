@@ -71,7 +71,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int s = 4;
   int quiet = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, "dn:l:h:s:q");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:l:h:s:q"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

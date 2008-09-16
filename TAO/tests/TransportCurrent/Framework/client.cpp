@@ -35,7 +35,7 @@ int use_dii = 1;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "yt:n:k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("yt:n:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)

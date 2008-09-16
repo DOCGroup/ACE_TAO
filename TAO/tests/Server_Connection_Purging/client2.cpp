@@ -10,7 +10,7 @@ static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:d:x");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:d:x"));
   int c;
 
   while ((c = get_opts ()) != -1)

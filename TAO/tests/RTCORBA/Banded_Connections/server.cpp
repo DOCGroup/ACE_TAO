@@ -119,9 +119,9 @@ const char *ior_output_file2 = "test2.ior";
 
 // Parse command-line arguments.
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:o:n:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:o:n:"));
   int c;
 
   while ((c = get_opts ()) != -1)

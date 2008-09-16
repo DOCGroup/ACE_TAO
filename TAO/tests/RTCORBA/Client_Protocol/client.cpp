@@ -14,9 +14,9 @@ const char *ior2 = "file://test2.ior";
 CORBA::ULong protocol_type = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:c:p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:p:"));
   int c, result;
 
   while ((c = get_opts ()) != -1)
