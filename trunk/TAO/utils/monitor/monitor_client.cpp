@@ -17,7 +17,7 @@ const ACE_TCHAR * filter = ACE_TEXT ("");
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:p:ci:s:f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:p:ci:s:f:"));
   int c;
 
   while ((c = get_opts ()) != -1)

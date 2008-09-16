@@ -55,7 +55,7 @@ Task_State::Task_State (void)
 int
 Task_State::parse_args (int argc,char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "mu:n:t:d:rxof:g:1cl");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("mu:n:t:d:rxof:g:1cl"));
   int c;
 
   while ((c = opts ()) != -1)

@@ -22,7 +22,7 @@ int do_dump_history = 0;
 const char *ior = "file://server.ior";
 
 /// Parse the arguments.
-static int parse_args (int argc, char *argv[]);
+static int parse_args (int argc, ACE_TCHAR *argv[]);
 
 /// Send events in another thread
 class Task : public ACE_Task_Base
@@ -190,9 +190,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hi:k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hi:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)

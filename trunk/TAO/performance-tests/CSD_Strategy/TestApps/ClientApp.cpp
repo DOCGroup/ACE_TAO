@@ -78,11 +78,11 @@ ClientApp::cleanup()
 
 
 int
-ClientApp::parse_args(int argc, char* argv[])
+ClientApp::parse_args(int argc, ACE_TCHAR* argv[])
 {
   this->exe_name_ = argv[0];
 
-  ACE_Get_Opt get_opts(argc, argv, "i:n:l:");
+  ACE_Get_Opt get_opts(argc, argv, ACE_TEXT("i:n:l:"));
 
   int c;
 

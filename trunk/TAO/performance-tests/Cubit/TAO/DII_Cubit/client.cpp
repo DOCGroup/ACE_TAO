@@ -252,7 +252,7 @@ DII_Cubit_Client::init (int argc, ACE_TCHAR **argv)
 int
 DII_Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt opts (argc_, argv_, "dn:i:f:x");
+  ACE_Get_Opt opts (argc_, argv_, ACE_TEXT("dn:i:f:x"));
   int c;
   int result;
 

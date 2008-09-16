@@ -63,7 +63,7 @@ struct Synchronizers
 };
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv,
                         "c:e:g:hi:k:m:p:q:r:t:u:v:w:x:y:z:" //client options

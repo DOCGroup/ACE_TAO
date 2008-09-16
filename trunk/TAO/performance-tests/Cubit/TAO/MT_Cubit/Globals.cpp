@@ -24,9 +24,9 @@ Globals::Globals (void)
 }
 
 int
-Globals::parse_args (int argc, char *argv[])
+Globals::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "e:t:f:rm");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("e:t:f:rm"));
   int c;
 
   while ((c = opts ()) != -1)

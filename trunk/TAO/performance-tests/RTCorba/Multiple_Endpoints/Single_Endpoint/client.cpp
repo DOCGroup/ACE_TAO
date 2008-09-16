@@ -74,9 +74,9 @@ Client client[MAX_THREADS];
 int priorities[MAX_THREADS];
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:t:n:p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:t:n:p:"));
   int c;
 
   while ((c = get_opts ()) != -1)
