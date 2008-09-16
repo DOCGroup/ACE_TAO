@@ -26,9 +26,9 @@ else {
   $NS = new PerlACE::Process ("../../orbsvcs/Naming_Service/Naming_Service");
 }
 my $CL = new PerlACE::Process ("../../orbsvcs/tests/Simple_Naming/client");
-my $LS = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/nslist");
-my $AD = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/nsadd");
-my $DL = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/nsdel");
+my $LS = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_nslist");
+my $AD = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_nsadd");
+my $DL = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_nsdel");
 my $status = 0;
 
 # We want the nslist and nsadd executables to be found exactly in the path
@@ -37,6 +37,7 @@ my $status = 0;
 
 $LS->IgnoreExeSubDir (1);
 $AD->IgnoreExeSubDir (1);
+$DL->IgnoreExeSubDir (1);
 
 print STDOUT "Executable for nslist is " . $LS->Executable () . "\n";
 
