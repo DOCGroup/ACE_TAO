@@ -1,6 +1,6 @@
 // $Id$
 
 project : namingexe, rtcorba, install, messaging, ziop {
-  exename   = catior
+  exename   = tao_catior
   install   = $(ACE_ROOT)/bin
 }
