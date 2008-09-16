@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_NS_string.h"
 #include "tao/Basic_Types.h"
 #include "tao/String_Traits_Base_T.h"
 
@@ -133,6 +134,18 @@ private:
   typedef TAO::String_Manager_T<CORBA::Char> String_Manager;
   typedef TAO::String_Manager_T<CORBA::WChar> WString_Manager;
 }
+
+TAO_Export
+inline bool operator< (const TAO::String_Manager &lhs, const TAO::String_Manager &rhs)
+{
+  return ACE_OS::strcmp (lhs.in(), rhs.in ()) < 0;
+};
+
+TAO_Export
+inline bool operator< (const TAO::WString_Manager &lhs, const TAO::WString_Manager &rhs)
+{
+  return ACE_OS::strcmp (lhs.in(), rhs.in ()) < 0;
+};
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
