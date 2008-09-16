@@ -33,9 +33,9 @@ static std::string stock_name = "IBM";
 bool use_naming = false;
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:p:n:c");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:n:c"));
   int c;
 
   while ((c = get_opts ()) != -1)

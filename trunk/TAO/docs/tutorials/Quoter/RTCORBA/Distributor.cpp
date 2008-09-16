@@ -27,9 +27,9 @@ u_int update_freq = 1;
 bool use_naming = false;
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:r:u:c");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:r:u:c"));
   int c;
 
   while ((c = get_opts ()) != -1)
