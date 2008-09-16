@@ -11,7 +11,7 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (void)
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_SSL_SOCK_Connector::reset_new_handle (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::reset_new_handle");
