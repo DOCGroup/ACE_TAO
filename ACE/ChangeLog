@@ -1,3 +1,138 @@
+Tue Sep 16 09:09:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.{h,cpp}:
+        * ace/ACE.{h,cpp}:
+        * ace/ATM_Acceptor.{h,inl}:
+        * ace/Connector.cpp:
+        * ace/DEV_Connector.{h,inl}:
+        * ace/FILE_Connector.{h,inl}:
+        * ace/FlReactor/FlReactor.{h,cpp}:
+        * ace/FoxReactor/FoxReactor.{h,cpp}:
+        * ace/LOCK_SOCK_Acceptor.{h,cpp}:
+        * ace/LSOCK_Acceptor.{h,cpp}:
+        * ace/MEM_Acceptor.{h,cpp}:
+        * ace/Priority_Reactor.{h,cpp}:
+        * ace/QtReactor/QtReactor.{h,cpp}:
+        * ace/Reactor.{h,inl}:
+        * ace/Reactor_Impl.h:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_T.{h,cpp,inl}:
+        * ace/Service_Manager.cpp:
+        * ace/SOCK_Acceptor.cpp
+        * ace/SOCK_Acceptor.h
+        * ace/SOCK_Connector.h
+        * ace/SOCK_Connector.inl
+        * ace/SOCK_SEQPACK_Acceptor.cpp
+        * ace/SOCK_SEQPACK_Acceptor.h
+        * ace/SOCK_SEQPACK_Connector.h
+        * ace/SOCK_SEQPACK_Connector.inl
+        * ace/SPIPE_Acceptor.cpp
+        * ace/SPIPE_Acceptor.h
+        * ace/SPIPE_Connector.h
+        * ace/SPIPE_Connector.inl
+        * ace/SSL/SSL_SOCK_Acceptor.cpp
+        * ace/SSL/SSL_SOCK_Acceptor.h
+        * ace/SSL/SSL_SOCK_Connector.h
+        * ace/Strategies_T.cpp
+        * ace/Strategies_T.h
+        * ace/TkReactor/TkReactor.cpp
+        * ace/TkReactor/TkReactor.h
+        * ace/TLI_Acceptor.cpp
+        * ace/TLI_Acceptor.h
+        * ace/TLI_Connector.h
+        * ace/TLI_Connector.inl
+        * ace/TP_Reactor.cpp
+        * ace/TP_Reactor.h
+        * ace/UPIPE_Acceptor.cpp
+        * ace/UPIPE_Acceptor.h
+        * ace/UPIPE_Connector.h
+        * ace/UPIPE_Connector.inl
+        * ace/WFMO_Reactor.cpp
+        * ace/WFMO_Reactor.h
+        * ace/WFMO_Reactor.inl
+        * ace/XtReactor/XtReactor.cpp
+        * ace/XtReactor/XtReactor.h
+          Changed restart and reset_new_handles from int to bool
+
+        * ace/ace_for_tao.mpc:
+        * ace/QoS/qos.mpc:
+          Zap borland as project type
+
+        * ace/ace_qt3reactor.mpc:
+          Removed empty line
+
+        * ace/Bound_Ptr.{h,inl}:
+          Let the null methods return bool
+
+        * ace/config-borland-common.h:
+          Borland has strptime
+
+        * ace/config-linux-common.h:
+          Enable icmp support by default on linux
+
+        * ace/config-mvs.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+          Removed fd_mask as define and added ACE_LACKS_FD_MASK
+
+        * ace/config-rtems.h:
+          Added ACE_LACKS_TZSTE
+
+        * ace/config-WinCE.h:
+          Updated some defines
+
+        * ace/Dev_Poll_Reactor.{h,cpp}:
+          Use more bool
+
+        * ace/File_Lock.h:
+        * ace/Message_Block.h:
+          Doxygen changes
+
+        * ace/Guard_T.{h,inl}:
+        * ace/Service_Object.h:
+          Bool changes and doxygen changes
+
+        * ace/Handle_Set.h:
+          Removed QNX workaround
+
+        * ace/Log_Msg.{h,cpp,inl}:
+          Bool changes, doxygen changes
+
+        * ace/Message_Queue.h:
+          Removed not needed includes
+
+        * ace/Message_Queue_NT.h:
+          Doxygen changes
+
+        * ace/Notification_Queue.cpp:
+          Layout changes
+
+        * ace/os_include/sys/os_select.h:
+          Added ACE_LACKS_FD_MASK
+
+        * ace/OS_Log_Msg_Attributes.h:
+          Use bool
+
+        * ace/OS_NS_dirent.cpp:
+          Const changes
+
+        * ace/OS_NS_netdb.cpp:
+          Initialise pointers with 0
+
+        * ace/OS_NS_stdio.inl:
+          WinCE changes
+
+        * ace/OS_NS_stropts.h:
+          Doxygen changes
+
+        * ace/OS_NS_time.inl:
+          Use more defines
+
+        * ace/OS_NS_unistd.{h,inl}:
+          Always have chdir available as method
+
 Tue Sep 16 08:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OS_Test.cpp:
@@ -9,7 +144,6 @@ Tue Sep 16 08:47:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Test_Output.cpp:
           Initialise pointer with 0
-
 
 Tue Sep 16 08:45:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
