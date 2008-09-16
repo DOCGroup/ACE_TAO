@@ -17,9 +17,9 @@ int rate = 2;
 int turn_on = 1;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:r:of");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:r:of"));
   int c;
 
   while ((c = get_opts ()) != -1)

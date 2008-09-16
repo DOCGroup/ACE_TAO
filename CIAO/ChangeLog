@@ -1,7 +1,31 @@
+Tue Sep 16 12:15:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ExecutionManager/Execution_Manager.cpp
+        * DAnCE/NodeManager/Node_Manager.cpp
+        * DAnCE/RepositoryManager/RepositoryManager.cpp
+        * DAnCE/TargetManager/CmpClient.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+        * docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.cpp
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.cpp
+        * examples/BasicSP/EC/controller.cpp
+        * examples/Display/RateGen/controller.cpp
+        * examples/Hello/Sender/starter.cpp
+        * examples/Swapping/Sender/starter.cpp
+        * performance-tests/Benchmark/RoundTrip/client.cpp
+        * performance-tests/Protocols/Controller/Controller.cpp
+        * tests/Bug_2130_Regression/SEC_CheckPoint/controller.cpp
+        * tools/Config_Handlers/CIAO_Events/test.cpp
+        * tools/Config_Handlers/Package_Handlers/test.cpp
+        * tools/Config_Handlers/RT-CCM/test.cpp
+        * tools/Config_Handlers/test.cpp
+          ACE_TCHAR changes
+
 Mon Sep 15 16:34:00 UTC 2008  Simon Massey <sma at prismtech dot com>
 
         * NEWS:
-
           Updated for x.6.6
 
 Mon Sep 15 11:08:04 UTC 2008  Simon Massey  <sma@prismtech.com>
@@ -11,14 +35,14 @@ Mon Sep 15 11:08:04 UTC 2008  Simon Massey  <sma@prismtech.com>
 Tue Aug  5 15:13:53 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Benchmark/RoundTrip/client.cpp:
-        
+
           Replace a char type local variable with an int. On some
           platforms, chars are unsigned - in such cases, checks for
           < 0 or > 0 cause warnings because theya re always true or
           always false.
-          
+
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
-        
+
           Added dance_utils.mpb as a base project to get the Dance_Utils
           lib in the link list. The plan launcher executable doesn't
           need it directly, but some versions of gcc are problematic,
@@ -29,8 +53,8 @@ Thu Jul 31 17:17:06 UTC 2008  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/XSCRT/Elements.hpp:
 
-          Stab at fixing a problem on Rawhide. 
-        
+          Stab at fixing a problem on Rawhide.
+
 Fri Jul 25 21:37:24 UTC 2008  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * CIDLC/Literals.cpp:

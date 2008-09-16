@@ -8,9 +8,9 @@ const char * ior = 0;
 const char * message = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:m:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:m:"));
   int c = 0;
 
   while ((c = get_opts ()) != -1)

@@ -24,9 +24,9 @@ bool is_multi_threaded = false;
 ACE_CString nodeapp_options_;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:c:ms:d:na:p:z:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:c:ms:d:na:p:z:"));
   int c;
 
   while ((c = get_opts ()) != -1)
