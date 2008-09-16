@@ -1,3 +1,11 @@
+Tue Sep 16 14:53:16 UTC 2008  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          When using the Sun std library (not stlport), explicitly link -lCrun
+          and -lCstd.  The linker will not include these when building shared
+          libraries.  Also removed code that was only used for exceptions=0.
+
 Tue Sep 16 13:10:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Bounded_Packet_Relay/bpr_thread.cpp:
