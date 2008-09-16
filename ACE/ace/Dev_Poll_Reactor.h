@@ -885,7 +885,7 @@ public:
    *
    * @return Returns the previous "restart" value.
    */
-  virtual bool restart (int r);
+  virtual bool restart (bool r);
 
   /// Set position of the owner thread.
   /**
