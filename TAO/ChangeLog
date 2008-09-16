@@ -1,3 +1,38 @@
+Tue Sep 16 22:15:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/ETCL/TAO_ETCL_Constraint.cpp:
+
+          Changed TAO_ETCL_Literal_Constraint::copy() so that the any
+          associated with a constraint object of type ACE_ETCL_COMPONENT
+          has it's reference count decremented before the constraint is
+          overwritten by the new value.  Previously this was only done if
+          the new value was also of type ACE_ETCL_COMPONENT.  This avoids
+          a memory leak.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+
+          Changed TAO_Literal_Constraint::copy(), so that the string
+          associated with a constraint object of type TAO_STRING is
+          freed before the constraint is overwritten by the new value.
+          This avoids a memory leak.
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Regenerated.
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+
+          Add Constraint_Nodes.inl to Inline_Files section.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.inl:
+
+          Implement operator!=, operator<=, and operator>= for
+          TAO_Literal_Constraint operands in terms of operator==,
+          operator>, and operator< and make them inline. Removes a lot of
+          boilerplate code and reduces static footprint.
+
 Tue Sep 16 13:12:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:

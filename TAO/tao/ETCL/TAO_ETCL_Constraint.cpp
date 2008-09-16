@@ -442,26 +442,23 @@ TAO_ETCL_Literal_Constraint::widest_type (
 void
 TAO_ETCL_Literal_Constraint::copy (const TAO_ETCL_Literal_Constraint &lit)
 {
-  // Save the older type_ before assignment.
-  unsigned long prev_type = this->type_;
+  if (this->type_ == ACE_ETCL_COMPONENT && this->any_ != 0)
+    {
+      this->any_->_remove_ref ();
+      this->any_ = 0;
+    }
 
-  this->type_ = lit.type_;
-
-  switch (this->type_)
-  {
-  case ACE_ETCL_COMPONENT:
-    if (prev_type == ACE_ETCL_COMPONENT && this->any_ != 0)
-      {
-        this->any_->_remove_ref ();
-      }
-      
-    this->any_ = lit.any_;
-    this->any_->_add_ref ();
-    break;
-  default:
-    this->ETCL_Literal_Constraint::copy (lit);
-    break;
-  }
+  switch (lit.type_)
+    {
+    case ACE_ETCL_COMPONENT:
+      this->type_ = ACE_ETCL_COMPONENT;
+      this->any_ = lit.any_;
+      this->any_->_add_ref ();
+      break;
+    default:
+      this->ETCL_Literal_Constraint::copy (lit);
+      break;
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

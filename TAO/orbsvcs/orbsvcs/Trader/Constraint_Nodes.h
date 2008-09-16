@@ -346,6 +346,10 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#if defined (__ACE_INLINE__)
+#include "Constraint_Nodes.inl"
+#endif /* __ACE_INLINE */
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
