@@ -32,9 +32,9 @@ namespace CIAO
     static bool is_using_active_object = false;
 
     bool
-    parse_args (int argc, char *argv[])
+    parse_args (int argc, ACE_TCHAR *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "o:i:abnrp:");
+      ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:i:abnrp:"));
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)

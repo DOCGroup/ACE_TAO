@@ -49,7 +49,7 @@ namespace CIAO
 }
 
 // Forward declaration
-bool parse_args (int argc, char *argv[]);
+bool parse_args (int argc, ACE_TCHAR *argv[]);
 
 /**
  * @class Worker
@@ -213,9 +213,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 ///Code to parse the arguments
 
     bool
-    parse_args (int argc, char *argv[])
+    parse_args (int argc, ACE_TCHAR *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "ov:s:n:");
+      ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ov:s:n:"));
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)

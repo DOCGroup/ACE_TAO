@@ -27,10 +27,10 @@ int niterations = 100;
 int do_dump_history = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Parse arguments.
-  ACE_Get_Opt get_opts (argc, argv, "hxk:i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hxk:i:"));
   int c;
   
   while ((c = get_opts ()) != -1)

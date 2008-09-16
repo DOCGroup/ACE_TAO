@@ -16,9 +16,9 @@ const char *ior = "file://test.ior";
 int comp_number = 4;
 int counter = 0;
 
-int parse_args (int argc, char *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:"));
   int c;
 
   while ((c = get_opts ()) != -1)
