@@ -1,6 +1,14 @@
+Tue Sep 16 08:32:00 UTC 2008  Simon Massey  <sma@prismtech.com>
+
+        * ace/config-lynxos.h:
+        * ace/os_include/os_signal.h:
+        * include/makeinclude/platform_lynxos.GNU:
+        
+          Updated for LynxOS 5.0.
+
 Tue Sep 16 08:27:00 UTC 2008  Simon Massey  <sma@prismtech.com>
 
-        * ace/Object_Manager.cpp
+        * ace/Object_Manager.cpp:
 
           The following fixes stop our automated scoreboard from locking up during
           automated window VC8 builds and test runs. The enhance the original
@@ -30,7 +38,7 @@ Tue Sep 16 08:27:00 UTC 2008  Simon Massey  <sma@prismtech.com>
 
 Tue Sep 16 08:12:00 UTC 2008  Simon Massey  <sma@prismtech.com>
 
-        * bin/diff-builds-and-group-fixed-tests-only.sh
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
         
           Change default date to last release date.
 

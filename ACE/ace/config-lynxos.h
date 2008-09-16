@@ -51,7 +51,6 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_ICMP_SUPPORT 1
 #define ACE_HAS_IP_MULTICAST
-#define ACE_HAS_LYNXOS_SIGNALS
 #define ACE_HAS_MSG
 #define ACE_HAS_NONCONST_CLOCK_SETTIME
 #define ACE_HAS_NONCONST_MSGSND
@@ -63,13 +62,11 @@
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_SCANDIR
-#define ACE_HAS_SEMUN
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGTIMEDWAIT
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SSIZE_T
-#define ACE_HAS_STRBUF_T
 #define ACE_HAS_STREAMS
 #define ACE_HAS_STRERROR
 #define ACE_HAS_SYSV_IPC
@@ -96,7 +93,6 @@
 #define ACE_LACKS_SWAB_PROTOTYPE
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
-#define ACE_LACKS_USECONDS_T
 #define ACE_LACKS_VSNPRINTF
 #define ACE_LACKS_WCHAR_H
 #define ACE_MALLOC_ALIGN 8
@@ -152,6 +148,28 @@
 // LynxOS 4.2 additons
 # define ACE_HAS_POSIX_SEM_TIMEOUT
 # define ACE_HAS_MUTEX_TIMEOUTS
+#endif
+
+#if (ACE_LYNXOS_MAJOR >=5)
+// LynxOS 5.0 Additons
+#  define ACE_HAS_LYNXOS50_SIGNALS
+#  define ACE_LACKS_SYS_SEM_H
+#  define ACE_LACKS_STROPTS_H
+#  define ACE_LACKS_SEMBUF_T
+#  define ACE_LACKS_INET_ATON_PROTOTYPE
+#  define ACE_LACKS_STRRECVFD
+#  define ACE_LACKS_MKSTEMP
+#  define ACE_LACKS_RLIMIT
+#  define __NO_INCLUDE_WARN__
+#  define _sys_siglist __sys_siglist
+#  define ACE_HAS_NONCONST_GETBY
+#else
+// LynxOS 5.0 Removals
+#  define ACE_HAS_LYNXOS_SIGNALS
+#  define ACE_HAS_SEMUN
+#  define ACE_HAS_STRBUF_T
+#  define ACE_HAS_SYSV_IPC
+#  define ACE_LACKS_USECONDS_T
 #endif
 
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)

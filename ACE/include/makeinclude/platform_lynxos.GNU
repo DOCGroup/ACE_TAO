@@ -108,6 +108,10 @@ else
   LIBS     += -lnetinet -lnsl
 endif
 
+ifeq (5.0.0,$(VERSION))
+  LIBS    += -lbsd
+endif
+
 CC              = gcc
 CXX             = g++
 PIC             = -fPIC
