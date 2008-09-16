@@ -65,11 +65,11 @@ run_test (void *)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt get_opt (argc, argv, "t:uh:p:n:", 1);
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("t:uh:p:n:"), 1);
 
   for (int c; (c = get_opt ()) != -1; )
     {

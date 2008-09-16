@@ -103,7 +103,7 @@ public:
   Options (void);
   ~Options (void);
   int operator[] (Option_Type option);
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   void operator= (enum Option_Type);
   bool operator!= (enum Option_Type);
   static void print_options (void);

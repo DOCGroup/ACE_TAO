@@ -1,3 +1,25 @@
+Tue Sep 16 12:19:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/Gateway/Gateway/Event_Channel.h
+        * apps/gperf/src/Options.cpp
+        * apps/gperf/src/Options.h
+        * apps/JAWS2/JAWS/Server.cpp
+        * apps/JAWS2/JAWS/Server.h
+        * apps/JAWS3/bench/mkfiles.cpp
+        * apps/JAWS3/bench/rqfiles.cpp
+        * apps/JAWS3/http/HTTP_Service_Handler.cpp
+        * apps/JAWS3/small/SS_Service_Handler.cpp
+        * apps/JAWS/stress_testing/benchd.cpp
+        * netsvcs/clients/Tokens/collection/collection.cpp
+        * netsvcs/clients/Tokens/collection/rw_locks.cpp
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp
+        * netsvcs/clients/Tokens/manual/manual.cpp
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp
+        * netsvcs/clients/Tokens/rw_lock/rw_locks.cpp
+        * performance-tests/Misc/test_guard.cpp
+        * performance-tests/RPC/client.cpp
+          ACE_TCHAR changes
+
 Tue Sep 16 10:52:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/*.bor:

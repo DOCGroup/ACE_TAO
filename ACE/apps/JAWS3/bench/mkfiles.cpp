@@ -10,7 +10,7 @@ static float poidev (float xm);
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt options (argc, argv, "m:s:x:n:");
+  ACE_Get_Opt options (argc, argv, ACE_TEXT("m:s:x:n:"));
   // m -- median file size in kB
   // x -- maximum file size in kB
   // n -- number of files

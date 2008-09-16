@@ -14,7 +14,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   int c;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Get_Opt getopt (argc, argv, "h:i:");
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("h:i:"));
 
   while ((c = getopt ()) != -1)
     {

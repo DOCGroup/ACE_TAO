@@ -43,7 +43,7 @@ public:
   STDIN_Token (void);
   // Construction.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse command-line arguments.
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -101,11 +101,11 @@ STDIN_Token::STDIN_Token (void)
 }
 
 int
-STDIN_Token::parse_args (int argc, char *argv[])
+STDIN_Token::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0], ACE_Log_Msg::STDERR);
 
-  ACE_Get_Opt get_opt (argc, argv, "h:p:diu", 1);
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("h:p:diu"), 1);
 
   for (int c; (c = get_opt ()) != -1; )
     {
