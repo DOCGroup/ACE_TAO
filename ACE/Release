@@ -48,7 +48,6 @@
 
 CONTROLLED_FILES = \
         ACE-INSTALL.html \
-        ACE-install.sh \
         ASNMP \
         AUTHORS \
         COPYING \
@@ -67,6 +66,7 @@ CONTROLLED_FILES = \
         apps \
         bin \
 	configure.ac \
+        debianbuild \
         lib \
 	MPC \
         docs \
@@ -85,10 +85,9 @@ CONTROLLED_FILES = \
 
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
-        ACE_wrappers/ACE-INSTALL \
         ACE_wrappers/GNUmake* \
         ACE_wrappers/*.sln \
-        ACE_wrappers/*.bor \
+        ACE_wrappers/*.bmak \
         ACE_wrappers/*.vcw \
 	ACE_wrappers/Makefile.in \
 	ACE_wrappers/configure \
@@ -209,5 +208,3 @@ show_release_lib_files:
 show_release_tag_files:
 	@echo $(RELEASE_TAG_FILES)
 
-ACE-INSTALL: ACE-INSTALL.html
-	@lynx -dump $< > $@

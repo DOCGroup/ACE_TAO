@@ -1,3 +1,11 @@
+Tue Sep 16 08:42:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated Borland/CodeGear support
+
+        * Release:
+          Package debianbuild, no generatin of ACE-INSTALL, use bmak files
+
 Tue Sep 16 08:38:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debianbuild:
