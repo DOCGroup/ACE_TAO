@@ -52,7 +52,7 @@ parse_args
   ACE_TCHAR* argv[]
 )
 {
-  ACE_Get_Opt get_opts( argc, argv, "i:k:l:t:" );
+  ACE_Get_Opt get_opts( argc, argv, ACE_TEXT("i:k:l:t:") );
   int c;
 
   while( ( c = get_opts() ) != -1 )

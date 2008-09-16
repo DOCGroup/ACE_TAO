@@ -16,7 +16,7 @@ static const ACE_TCHAR *input_file = ACE_TEXT ("BasicSP.cdp");
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:"));
 
   int c;
 

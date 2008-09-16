@@ -44,7 +44,7 @@ namespace TM_Tester
     /// parses the arguments and extracts the params
   bool parse_args (int argc, ACE_TCHAR *argv[])
   {
-    ACE_Get_Opt get_opts (argc, argv, "t:u:d");
+    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:u:d"));
     int c;
     while ((c = get_opts ()) != -1)
       switch (c)
@@ -136,7 +136,7 @@ namespace TM_Tester
       CORBA::Long d = 20;
       resource_seq[0].property[0].value <<= d;
 
-      ::Deployment::ResourceCommitmentManager_ptr manager = 
+      ::Deployment::ResourceCommitmentManager_ptr manager =
         ::Deployment::ResourceCommitmentManager::_nil ();
 
       try
