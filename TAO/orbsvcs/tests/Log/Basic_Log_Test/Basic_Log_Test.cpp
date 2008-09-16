@@ -509,9 +509,9 @@ BasicLog_Test::test_query(CORBA::ULong numberOfRecordsToWrite)
 
 
 int
-BasicLog_Test::parse_args (int argc, char *argv[])
+BasicLog_Test::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "di");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("di"));
   int c;
 
   while ((c = get_opts ()) != -1)

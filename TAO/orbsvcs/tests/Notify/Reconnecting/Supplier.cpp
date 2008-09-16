@@ -205,7 +205,7 @@ Supplier_Main::~Supplier_Main ()
 }
 
 int
-Supplier_Main::parse_args (int argc, char *argv[])
+Supplier_Main::parse_args (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   int narg = 1;

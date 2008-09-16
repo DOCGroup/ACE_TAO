@@ -38,7 +38,7 @@ ECM_Driver::ECM_Driver (void)
 }
 
 int
-ECM_Driver::run (int argc, char* argv[])
+ECM_Driver::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -311,7 +311,7 @@ ECM_Driver::dump_results (void)
 int
 ECM_Driver::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "l:p:c:n:t:f:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("l:p:c:n:t:f:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

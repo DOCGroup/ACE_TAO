@@ -117,7 +117,7 @@ TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char **path)
 
 
 int
-TAO::SSLIOP::Protocol_Factory::init (int argc, char* argv[])
+TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   char *certificate_path = 0;
   char *private_key_path = 0;

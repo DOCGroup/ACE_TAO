@@ -46,7 +46,7 @@ ECT_Consumer_Driver::~ECT_Consumer_Driver (void)
 }
 
 int
-ECT_Consumer_Driver::run (int argc, char* argv[])
+ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -271,7 +271,7 @@ ECT_Consumer_Driver::disconnect_consumers (void)
 int
 ECT_Consumer_Driver::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "xdc:s:h:p:o:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("xdc:s:h:p:o:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

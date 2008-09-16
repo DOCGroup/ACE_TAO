@@ -26,7 +26,7 @@ public:
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:e:d:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:e:d:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -60,7 +60,7 @@ public:
   int run (int argc, char *argv[]);
 
 private:
-  void parse_args (int argc, char *argv[]);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
   void print_usage_and_die (void);
 
 private:
@@ -115,9 +115,9 @@ Options::print_usage_and_die (void)
 }
 
 void
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:rskt:d");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:rskt:d"));
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -175,7 +175,7 @@ ACE_NT_SERVICE_DEFINE (service,
                        "TAO NT Notify Service");
 
 int
-Options::run (int argc, char* argv[])
+Options::run (int argc, ACE_TCHAR* argv[])
 {
   SERVICE::instance ()->name ("TAO_NT_Notify_Service",
                               "TAO NT Notify Service");

@@ -25,7 +25,7 @@ TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:b:c:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:"));
   int c;
 
   while ((c = get_opts ()) != -1)

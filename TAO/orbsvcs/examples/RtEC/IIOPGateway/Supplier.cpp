@@ -33,7 +33,7 @@ Supplier::Supplier (void)
 }
 
 int
-Supplier::run (int argc, char* argv[])
+Supplier::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -148,7 +148,7 @@ Supplier::disconnect_push_supplier (void)
 }
 
 int
-Supplier::parse_args (int argc, char *argv[])
+Supplier::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

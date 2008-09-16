@@ -13,9 +13,9 @@ ACE_CString client_orb;
 CORBA::Boolean result = false;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "sk:o:n");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("sk:o:n"));
   int c;
 
   while ((c = get_opts ()) != -1)

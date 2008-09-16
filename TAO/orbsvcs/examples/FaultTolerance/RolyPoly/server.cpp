@@ -13,9 +13,9 @@
 const char *ior_file = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:c:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:c:"));
   int c;
 
   while ((c = get_opts ()) != -1)

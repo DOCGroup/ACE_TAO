@@ -15,9 +15,9 @@ TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 CORBA::ULong number_of_servers = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -13,9 +13,9 @@ const char* merged_iorstr = 0;
 const char *key = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:k:f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:k:f:"));
   int c;
 
   while ((c = get_opts ()) != -1)

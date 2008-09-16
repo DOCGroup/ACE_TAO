@@ -92,7 +92,7 @@ public:
   AdminProperties (void);
   ~AdminProperties (void);
 
-  int parse_args (int argc, char *argv[]) ;
+  int parse_args (int argc, ACE_TCHAR *argv[]) ;
 
   // Initialization.
 

@@ -34,7 +34,7 @@ private:
 
   /// Helpers.
   //@{
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   int check_for_nil (CORBA::Object_ptr obj, const char *message);
   void write_ior_file (CORBA::ORB_ptr orb,
                        RtecEventChannelAdmin::EventChannel_ptr ec);

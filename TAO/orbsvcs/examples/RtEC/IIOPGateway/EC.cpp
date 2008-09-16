@@ -30,7 +30,7 @@ EC::EC (void)
 }
 
 int
-EC::run (int argc, char* argv[])
+EC::run (int argc, ACE_TCHAR* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -118,7 +118,7 @@ EC::run (int argc, char* argv[])
 }
 
 int
-EC::parse_args (int argc, char *argv[])
+EC::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

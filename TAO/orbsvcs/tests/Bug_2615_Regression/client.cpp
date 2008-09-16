@@ -13,9 +13,9 @@ const char *ior = "file://ior.ior";
 const char *iogr = "file://iogr.ior";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:l:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:l:"));
   int c;
 
   while ((c = get_opts ()) != -1)

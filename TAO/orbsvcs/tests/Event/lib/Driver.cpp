@@ -59,7 +59,7 @@ EC_Driver::~EC_Driver (void)
 }
 
 int
-EC_Driver::run (int argc, char* argv[])
+EC_Driver::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {

@@ -22,14 +22,14 @@ static Notify_Structured_Push_Consumer* consumer_1 = 0;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
 };
 
 
 int
-Consumer_Client::parse_args (int argc, char *argv[])
+Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)

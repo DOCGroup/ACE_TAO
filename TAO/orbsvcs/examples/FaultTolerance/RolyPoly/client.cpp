@@ -19,9 +19,9 @@ typedef ACE_Unbounded_Queue<ACE_SString> IOR_QUEUE;
 IOR_QUEUE ior_strs;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -40,7 +40,7 @@ EC_Master::~EC_Master (void)
 }
 
 int
-EC_Master::run (int argc, char* argv[])
+EC_Master::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -238,7 +238,7 @@ EC_Observer::initialize_orb_and_poa (int&, char*[])
 }
 
 int
-EC_Observer::parse_args (int& argc, char* argv[])
+EC_Observer::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   return this->EC_Driver::parse_args (argc, argv);
 }

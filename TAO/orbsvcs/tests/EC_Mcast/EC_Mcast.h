@@ -401,7 +401,7 @@ public:
     // Maximum number of federations in the simulation
   };
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the test, read all the configuration files, etc.
 
   void federation_has_shutdown (ECM_Local_Federation *federation);
@@ -436,7 +436,7 @@ private:
   int shutdown (void);
   // Called when the main thread.
 
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line arguments
 
   int parse_config_file (void);

@@ -39,11 +39,11 @@ FTAPP::FT_Creator::~FT_Creator ()
 }
 
 int
-FTAPP::FT_Creator::parse_args (int argc, char *argv[])
+FTAPP::FT_Creator::parse_args (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, "r:ignf:u:p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("r:ignf:u:p:"));
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)

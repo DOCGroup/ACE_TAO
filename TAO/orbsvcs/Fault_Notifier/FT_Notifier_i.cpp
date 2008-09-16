@@ -147,7 +147,7 @@ int TAO::FT_FaultNotifier_i::write_ior()
 
 int TAO::FT_FaultNotifier_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:rq");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:rq"));
   int c;
 
   while ((c = get_opts ()) != -1)

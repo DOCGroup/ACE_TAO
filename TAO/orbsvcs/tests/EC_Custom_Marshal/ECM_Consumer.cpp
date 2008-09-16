@@ -44,7 +44,7 @@ Driver::Driver (void)
 // ****************************************************************
 
 int
-Driver::run (int argc, char* argv[])
+Driver::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -290,7 +290,7 @@ Driver::disconnect_consumers (void)
 int
 Driver::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dc:n:h:p:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dc:n:h:p:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

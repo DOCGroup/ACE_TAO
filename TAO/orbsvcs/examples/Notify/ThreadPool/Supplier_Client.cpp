@@ -28,7 +28,7 @@ TAO_Notify_ThreadPool_Supplier_Client::~TAO_Notify_ThreadPool_Supplier_Client ()
 }
 
 int
-TAO_Notify_ThreadPool_Supplier_Client::parse_args (int argc, char *argv[])
+TAO_Notify_ThreadPool_Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

@@ -330,7 +330,7 @@ int
 IDL3_Client::parse_args (int argc,
                          char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "d");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("d"));
   int c;
 
   while ((c = opts ()) != -1)

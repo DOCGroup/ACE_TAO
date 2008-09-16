@@ -38,10 +38,10 @@ public:
   virtual ~EC_Master (void);
 
   /// Execute the test.
-  virtual int run (int argc, char* argv[]);
+  virtual int run (int argc, ACE_TCHAR* argv[]);
 
   /// Obtain the orb and the poa pointers
-  virtual void initialize_orb_and_poa (int& argc, char* argv[]);
+  virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
 
   /// Accessors
   int channel_count (void) const;
@@ -86,8 +86,8 @@ public:
 
   // = The EC_Driver methods
   /// add some command line args to enable/disable observerions
-  virtual void initialize_orb_and_poa (int& argc, char* argv[]);
-  virtual int parse_args (int& argc, char* argv[]);
+  virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
+  virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
   virtual void print_args (void) const;
   virtual void print_usage (void);
 

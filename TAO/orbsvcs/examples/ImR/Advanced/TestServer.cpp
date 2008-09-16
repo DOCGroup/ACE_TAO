@@ -50,7 +50,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
   char buffer[PATH_MAX + 2];
 
   string::size_type i = 0;
- 
+
   for (; ACE_OS::ace_isspace (dir[i]); i++)
     {
       // No action.
@@ -197,7 +197,7 @@ TestServer::~TestServer()
 //
 int TestServer::parseCommands (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:"));
   int c;
   while ((c = get_opts ()) != -1)
   {

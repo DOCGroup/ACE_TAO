@@ -24,9 +24,9 @@ CORBA::Float dampening = 0;
 const char * strategy = "Random";
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:s:r:c:d:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:r:c:d:"));
   int c;
 
   while ((c = get_opts ()) != -1)

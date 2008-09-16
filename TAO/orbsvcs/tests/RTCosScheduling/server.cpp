@@ -42,7 +42,7 @@ ORB_Thread(CORBA::ORB_var orb) : orb_(orb)
 }
 
 int
-svc(void) 
+svc(void)
 {
 
   try
@@ -66,12 +66,12 @@ private:
 
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   // We set the '-' flag for getopts because we have to do
   //  this parsing before the ORB does it's
   //parsing, and we'd confuse it to reorder
-  ACE_Get_Opt get_opts (argc, argv, "-:N:F:S:T:A:X:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-:N:F:S:T:A:X:"));
   int c;
 
   while ((c = get_opts ()) != -1)
