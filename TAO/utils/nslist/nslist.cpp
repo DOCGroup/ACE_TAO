@@ -22,6 +22,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/Strategies/advanced_resource.h"
 #include "tao/PolicyC.h"
 #include "ace/Time_Value.h"
 #include "ace/Log_Msg.h"
@@ -115,10 +116,12 @@ namespace
       tag_string = "UIOP";
     else if (tag == TAO_TAG_SHMEM_PROFILE)
       tag_string = "SHMEM";
-#ifdef TAO_TAG_DIOP_PROFILE
     else if (tag == TAO_TAG_DIOP_PROFILE)
       tag_string = "DIOP";
-#endif /* TAO_TAG_DIOP_PROFILE */
+    else if (tag == TAO_TAG_COIOP_PROFILE)
+      tag_string = "COIOP";
+    else if (tag == TAO_TAG_SCIOP_PROFILE)
+      tag_string = "SCIOP";
     else
       {
         char buffer[32]= {'\0'};
@@ -302,7 +305,7 @@ namespace
   {
     CosNaming::BindingIterator_var it;
     CosNaming::BindingList_var bl;
-    const CORBA::ULong CHUNK = 100;
+    CORBA::ULong const CHUNK = 100;
 
     NestedNamingContexts::add (nc);
     nc->list (CHUNK, bl, it);
