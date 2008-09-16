@@ -2855,6 +2855,7 @@ libTAO_CosTrading_Serv_la_LIBADD = \
 nobase_include_HEADERS += \
   Trader/Constraint_Interpreter.h \
   Trader/Constraint_Nodes.h \
+  Trader/Constraint_Nodes.inl \
   Trader/Constraint_Visitors.h \
   Trader/Interpreter.h \
   Trader/Interpreter_Utils.h \

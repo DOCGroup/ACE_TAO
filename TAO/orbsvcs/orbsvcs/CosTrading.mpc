@@ -110,9 +110,11 @@ project(CosTrading_Serv) : orbsvcslib, orbsvcs_output, install, trading_skel, dy
   }
 
   Inline_Files {
+    Trader
   }
 
   Template_Files {
+    Trader
   }
 
   Pkgconfig_Files {
