@@ -1,3 +1,10 @@
+Tue Sep 16 18:51:13 UTC 2008  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/String_Manager_T.h:
+
+          Added global operator< definition for TAO::String_Manager.
+          This is required by OpenDDS to support string type DCPS_DATA_KEY.
+
 Tue Sep 16 22:15:32 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/ETCL/TAO_ETCL_Constraint.cpp:
