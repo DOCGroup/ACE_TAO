@@ -137,6 +137,7 @@ testFailedServiceInit (int, ACE_TCHAR *[])
   int error_count = 0;
   if ((error_count = ACE_Service_Config::process_directive (refuse_svc)) != 1)
     {
+      ++error;
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Failed init test should have returned 1; ")
                   ACE_TEXT ("returned %d instead\n"),
@@ -148,6 +149,7 @@ testFailedServiceInit (int, ACE_TCHAR *[])
   if (-1 != ACE_Service_Repository::instance ()->find (ACE_TEXT ("Refuses_Svc"),
                                                        &svcp))
     {
+      ++error;
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Found service repo entry for Refuses_Svc\n")));
       ACE_Service_Type_Impl const *svc_impl = svcp->type ();
@@ -197,14 +199,17 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   // Process the Service Configurator directives in this test's Making
   // sure we have more than one option with an argument, to capture
   // any errors caused by "reshuffling" of the options.
-  ACE_ASSERT (new_argv.add (argv) != -1
-              && new_argv.add (ACE_TEXT ("-d")) != -1
-              && new_argv.add (ACE_TEXT ("-k")) != -1
-              && new_argv.add (ACE_TEXT ("xxx")) != -1
-              && new_argv.add (ACE_TEXT ("-p")) != -1
-              && new_argv.add (ACE_TEXT ("Service_Config_Test.pid")) != -1
-              && new_argv.add (ACE_TEXT ("-f")) != -1
-              && new_argv.add (svc_conf) != -1);
+  if (new_argv.add (argv) == -1
+              || new_argv.add (ACE_TEXT ("-d")) == -1
+              || new_argv.add (ACE_TEXT ("-k")) == -1
+              || new_argv.add (ACE_TEXT ("xxx")) == -1
+              || new_argv.add (ACE_TEXT ("-p")) == -1
+              || new_argv.add (ACE_TEXT ("Service_Config_Test.pid")) == -1
+              || new_argv.add (ACE_TEXT ("-f")) == -1
+              || new_argv.add (svc_conf) == -1)
+    {
+      ++error;
+    }
 
   // We need this scope to make sure that the destructor for the
   // <ACE_Service_Config> gets called.
@@ -212,14 +217,20 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
 
   if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1 &&
       errno != ENOENT)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l %p\n"), ACE_TEXT ("daemon.open")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l %p\n"), ACE_TEXT ("daemon.open")));
+      ++error;
+    }
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
 
   if (ACE_Reactor::instance()->run_reactor_event_loop (tv) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("line %l %p\n"),
-                ACE_TEXT ("run_reactor_event_loop")));
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("run_reactor_event_loop")));
+    }
 
   // Wait for all threads to complete.
   ACE_Thread_Manager::instance ()->wait ();
@@ -259,9 +270,12 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 #endif  /* ACE_USES_WCHAR */
 
   // Process the Service Configurator directives in this test's
-  ACE_ASSERT (new_argv.add (argv) != -1
-              && new_argv.add (ACE_TEXT ("-f")) != -1
-              && new_argv.add (svc_conf) != -1);
+  if (new_argv.add (argv) == -1
+              || new_argv.add (ACE_TEXT ("-f")) == -1
+              || new_argv.add (svc_conf) == -1)
+    {
+      ++error;
+    }
 
   // We need this scope to make sure that the destructor for the
   // <ACE_Service_Config> gets called.
@@ -269,14 +283,20 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 
   if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1 &&
       errno != ENOENT)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l %p\n"), ACE_TEXT ("daemon.open")));
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %l %p\n"), ACE_TEXT ("daemon.open")));
+    }
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
 
   if (ACE_Reactor::instance()->run_reactor_event_loop (tv) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("line %l %p\n"),
-                ACE_TEXT ("run_reactor_event_loop")));
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("line %l %p\n"),
+                  ACE_TEXT ("run_reactor_event_loop")));
+    }
 
   // Wait for all threads to complete.
   ACE_Thread_Manager::instance ()->wait ();
@@ -370,5 +390,5 @@ run_main (int argc, ACE_TCHAR *argv[])
   testLimits (argc, argv);
 
   ACE_END_TEST;
-  return error == 0 ? 0 : 1;
+  return error;
 }
