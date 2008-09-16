@@ -64,7 +64,7 @@ public:
   static int init_svcs (void);
 
   // = The Service_Object entry points
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
   virtual int fini (void);
 
   virtual int queue_full_action (TAO_EC_Dispatching_Task *task,

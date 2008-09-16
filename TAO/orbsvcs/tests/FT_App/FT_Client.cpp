@@ -21,7 +21,7 @@ public:
 
   /////////////////
   // initialization
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   ////////////
   // execution
@@ -163,7 +163,7 @@ void FTClientMain::commandUsage(FILE* out)
 }
 
 int
-FTClientMain::parse_args (int argc, char *argv[])
+FTClientMain::parse_args (int argc, ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -171,7 +171,7 @@ FTClientMain::parse_args (int argc, char *argv[])
 
   // note: dfnkx are simple_util options
   // include them here so we can detect bad args
-  ACE_Get_Opt get_opts (argc, argv, "c:f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:f:"));
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)

@@ -60,7 +60,7 @@ protected:
   int init_ORB (int& argc, char *argv []);
   // initialize the ORB.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parses the command line arguments.
 
   void resolve_naming_service (void);

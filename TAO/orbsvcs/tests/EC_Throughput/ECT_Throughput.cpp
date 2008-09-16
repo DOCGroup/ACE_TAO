@@ -61,7 +61,7 @@ ECT_Throughput::~ECT_Throughput (void)
 }
 
 int
-ECT_Throughput::run (int argc, char* argv[])
+ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -439,7 +439,7 @@ ECT_Throughput::dump_results (void)
 int
 ECT_Throughput::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dc:s:u:n:t:b:h:l:p:w:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dc:s:u:n:t:b:h:l:p:w:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

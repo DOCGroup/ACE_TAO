@@ -13,7 +13,7 @@ namespace {
   ACE_CString id, kind, output;
 }
 
-int parse_args(int argc, char* argv[])
+int parse_args(int argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:k:o:"));
   int opt;

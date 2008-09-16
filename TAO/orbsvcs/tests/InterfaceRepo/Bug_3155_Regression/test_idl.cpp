@@ -13,7 +13,7 @@ namespace
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:s:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:s:"));
   const unsigned char full_success = 0x03;
   unsigned char success = 0;
 
@@ -66,7 +66,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-  // get IFR   
+  // get IFR
   CORBA::Object_var objref =
     the_orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ifr_ior_file));
   if (objref.in () == 0)
@@ -97,7 +97,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         -1);
     }
 
-  // get value type definition    
+  // get value type definition
   CORBA::ExtValueDef_var value_def =
     CORBA::ExtValueDef::_narrow (current_contained.in ());
   CORBA::ExtValueDef::ExtFullValueDescription * value_descr;

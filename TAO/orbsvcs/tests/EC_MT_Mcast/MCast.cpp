@@ -59,7 +59,7 @@ run_orb_within_thread (void *)
   return 0;
 }
 
-int parse_args (int argc, char *argv[]);
+int parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -353,9 +353,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-int parse_args (int argc, char *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "m:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("m:"));
   int c;
 
   while ((c = get_opts ()) != -1)

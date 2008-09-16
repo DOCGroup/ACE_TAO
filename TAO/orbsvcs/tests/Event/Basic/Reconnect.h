@@ -43,7 +43,7 @@ public:
 
   // = The EC_Driver methods
   /// add some command line args to enable/disable reconnections
-  virtual int parse_args (int& argc, char* argv[]);
+  virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
   virtual void print_args (void) const;
   virtual void print_usage (void);
 

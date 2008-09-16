@@ -115,7 +115,7 @@ int
 Distributer::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "s:r:a:");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("s:r:a:"));
 
   int c;
   while ((c= opts ()) != -1)

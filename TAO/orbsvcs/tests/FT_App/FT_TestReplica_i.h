@@ -47,7 +47,7 @@ public:
    * @param argv classic C argv
    * @return 0 if ok, otherwise process exit code.
    */
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /**
    * provide information to appear in a "usage" display.

@@ -22,7 +22,7 @@ Nestea_Client_i::Nestea_Client_i (void)
 int
 Nestea_Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dsn:k:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dsn:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)

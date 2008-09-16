@@ -66,7 +66,7 @@ TAO::PG_FactoryRegistry::~PG_FactoryRegistry (void)
 
 int TAO::PG_FactoryRegistry::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:q");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:q"));
   int c;
 
   while ((c = get_opts ()) != -1)

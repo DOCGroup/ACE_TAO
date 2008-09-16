@@ -103,7 +103,7 @@ int
 Client::parse_args (int argc,
                     ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "f:l:a:p:s");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:l:a:p:s"));
 
   this->use_sfp_ = 0;
   int c;

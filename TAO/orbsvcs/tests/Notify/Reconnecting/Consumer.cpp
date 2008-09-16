@@ -761,7 +761,7 @@ Consumer_Main::~Consumer_Main ()
 }
 
 int
-Consumer_Main::parse_args (int argc, char *argv[])
+Consumer_Main::parse_args (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   int narg = 1;

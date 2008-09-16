@@ -15,9 +15,9 @@ const int MAX_RETRIES = 10;
 const CosLoadBalancing::LoadId LOAD_ID = CosLoadBalancing::LoadAverage;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "l:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("l:"));
 
   int c;
 

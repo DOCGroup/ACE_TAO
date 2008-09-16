@@ -64,7 +64,7 @@ namespace TAO
 
       // = Service Configurator hooks.
       /// Dynamic linking hook
-      virtual int init (int argc, char* argv[]);
+      virtual int init (int argc, ACE_TCHAR* argv[]);
 
       /// Verify prefix is a match
       virtual int match_prefix (const ACE_CString & prefix);
@@ -91,11 +91,11 @@ namespace TAO
       /// if the prefix can not be recognized. The *path will point
       /// to the part of the original buffer, after the initial ':',
       /// or will contain 0, if no path was specified.
-      /// 
+      ///
       /// Beware: This function modifies the buffer pointed to by arg!
-      /// 
+      ///
       static int parse_x509_file (char *arg, char **path);
-      
+
       /// Create and register the SSLIOP ORB initializer.
       int register_orb_initializer (
         CSIIOP::AssociationOptions csiv2_target_supports,

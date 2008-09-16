@@ -38,7 +38,7 @@ public:
   virtual ~RTEvent_Logging_Service (void);
   // Destructor.
 
-  int init (int argc, char* argv[]);
+  int init (int argc, ACE_TCHAR* argv[]);
   // Initializes the Telecom Log Service.
 
   int run (void);
@@ -53,7 +53,7 @@ protected:
   void init_ORB (int& argc, char *argv []);
   // initializes the ORB.
 
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line args
 
   void resolve_naming_service (void);

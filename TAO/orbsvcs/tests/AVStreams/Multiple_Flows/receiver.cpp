@@ -143,7 +143,7 @@ Receiver::parse_args (int argc,
                       ACE_TCHAR *argv[])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:r:d");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:r:d"));
 
   int c;
   while ((c= opts ()) != -1)

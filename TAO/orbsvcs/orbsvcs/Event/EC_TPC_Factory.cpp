@@ -36,7 +36,7 @@ TAO_EC_TPC_Factory::init_svcs (void)
 }
 
 int
-TAO_EC_TPC_Factory::init (int argc, char* argv[])
+TAO_EC_TPC_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -86,7 +86,7 @@ TAO_EC_TPC_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
   TAO_EC_Queue_Full_Service_Object* so =
     this->find_service_object (this->queue_full_service_object_name_.fast_rep(),
                                TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME);
- 
+
   return new TAO_EC_TPC_Dispatching (this->dispatching_threads_,
                                      this->dispatching_threads_flags_,
                                      this->dispatching_threads_priority_,

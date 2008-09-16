@@ -43,7 +43,7 @@ RTEvent_Logging_Service::init_ORB (int& argc, char *argv[])
 
 
 int
-RTEvent_Logging_Service::parse_args (int argc, char *argv[])
+RTEvent_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t:x"));
   int opt;
@@ -91,7 +91,7 @@ RTEvent_Logging_Service::parse_args (int argc, char *argv[])
 }
 
 int
-RTEvent_Logging_Service::init (int argc, char* argv[])
+RTEvent_Logging_Service::init (int argc, ACE_TCHAR* argv[])
 {
   // initialize the ORB.
   this->init_ORB (argc, argv);

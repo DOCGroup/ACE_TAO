@@ -33,7 +33,7 @@ EC_Connect::execute_test (void)
 }
 
 int
-EC_Connect::parse_args (int& argc, char* argv[])
+EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;

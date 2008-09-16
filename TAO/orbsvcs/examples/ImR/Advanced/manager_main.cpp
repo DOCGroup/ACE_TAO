@@ -11,7 +11,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     long retryCount = 0;
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-    ACE_Get_Opt get_opts (argc, argv, "r:");
+    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("r:"));
     int c;
     while ((c = get_opts ()) != -1)
     {

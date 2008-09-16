@@ -66,7 +66,7 @@ Sender::parse_args (int argc,
                     ACE_TCHAR *argv[])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:p:r:dl:a:s:b:");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:p:r:dl:a:s:b:"));
 
   int c;
   while ((c= opts ()) != -1)

@@ -145,7 +145,7 @@ Server_i::enable_multicast (const char *ior)
 int
 Server_i::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:"));
   int c;
 
   while ((c = get_opts ()) != -1)

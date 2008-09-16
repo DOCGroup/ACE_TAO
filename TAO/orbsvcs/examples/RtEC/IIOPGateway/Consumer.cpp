@@ -33,7 +33,7 @@ Consumer::Consumer (void)
 }
 
 int
-Consumer::run (int argc, char* argv[])
+Consumer::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -157,7 +157,7 @@ Consumer::disconnect_push_consumer (void)
 }
 
 int
-Consumer::parse_args (int argc, char *argv[])
+Consumer::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

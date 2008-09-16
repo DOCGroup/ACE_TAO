@@ -95,7 +95,7 @@ TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
 //public
 int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "n:o:f:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:o:f:"));
   int c;
 
   while ( (c = get_opts ()) != -1)

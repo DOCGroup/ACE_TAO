@@ -150,7 +150,7 @@ int
 Latency_Query_Client::parse_args (int argc,
                                   char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "dhi:");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("dhi:"));
   int c;
   int result = 0;
 

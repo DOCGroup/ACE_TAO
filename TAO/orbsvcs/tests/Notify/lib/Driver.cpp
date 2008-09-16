@@ -178,7 +178,7 @@ TAO_Notify_Tests_Driver::~TAO_Notify_Tests_Driver ()
 }
 
 int
-TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
+TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

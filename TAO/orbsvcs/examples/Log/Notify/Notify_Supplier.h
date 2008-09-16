@@ -44,7 +44,7 @@ public:
   ~Supplier ();
   // Destructor.
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
 private:

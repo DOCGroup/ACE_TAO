@@ -86,7 +86,7 @@ CosNaming_Client::CosNaming_Client (void)
 int
 CosNaming_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "p:dstieym:c:");
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("p:dstieym:c:"));
   int c;
 
   while ((c = get_opts ()) != -1)

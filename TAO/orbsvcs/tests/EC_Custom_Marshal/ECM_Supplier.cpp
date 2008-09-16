@@ -32,7 +32,7 @@ ECMS_Driver::ECMS_Driver (void)
 // ****************************************************************
 
 int
-ECMS_Driver::run (int argc, char* argv[])
+ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
@@ -309,7 +309,7 @@ ECMS_Driver::disconnect_suppliers (void)
 int
 ECMS_Driver::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "ds:n:t:h:p:b:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("ds:n:t:h:p:b:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)

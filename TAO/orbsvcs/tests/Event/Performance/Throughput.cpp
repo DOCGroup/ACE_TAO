@@ -24,7 +24,7 @@ EC_Throughput::EC_Throughput (void)
 }
 
 int
-EC_Throughput::parse_args (int& argc, char* argv[])
+EC_Throughput::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;

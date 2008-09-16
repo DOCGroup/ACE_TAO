@@ -32,7 +32,7 @@ public:
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:e:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:e:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -92,12 +92,12 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
-  
+
   try
     {
       Consumer_Client client;
       status = client.init (argc, argv);
-      
+
       if (status != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -139,14 +139,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "\nConsumer waiting for events...\n"));
 
       FILE* ready_file = ACE_OS::fopen (ready, "w");
-      
+
       if (ready_file == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open ready file for writing\n"),
                             1);
         }
-        
+
       ACE_OS::fprintf (ready_file, "ready\n");
       ACE_OS::fclose (ready_file);
 

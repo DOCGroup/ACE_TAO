@@ -47,7 +47,7 @@ public:
   // Constructor
 
   // = The EC_Driver methods
-  virtual int parse_args (int& argc, char* argv[]);
+  virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
   virtual void print_usage (void);
   virtual void print_args (void) const;
 

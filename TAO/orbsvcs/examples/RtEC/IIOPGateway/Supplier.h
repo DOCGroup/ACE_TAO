@@ -31,7 +31,7 @@ public:
   Supplier (void);
 
   /// Run the test
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
 
   // = The RtecEventComm::PushSupplier methods
 
@@ -39,7 +39,7 @@ public:
   virtual void disconnect_push_supplier (void);
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
 #endif /* SUPPLIER_H */

@@ -31,7 +31,7 @@ TestClient::~TestClient()
 
 int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "s:t:i:r:x:e:z:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:t:i:r:x:e:z:"));
   int c;
   while ((c = get_opts()) != -1)
   {
@@ -126,7 +126,7 @@ void TestClient::run()
   {
     ACE_ERROR((LM_ERROR, "%p\n", "activate failed"));
   }
-  
+
   this->wait();
 
   ACE_DEBUG((LM_DEBUG, "* Client ended.\n"));

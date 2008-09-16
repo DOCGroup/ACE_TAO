@@ -137,7 +137,7 @@ Admin_Client::run (void)
 int
 Admin_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "di:t:");
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("di:t:"));
   int c;
   int result = 0;
   CORBA::ULong i = 0;

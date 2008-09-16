@@ -22,7 +22,7 @@ ACE_RCSID (EC_Examples,
 const char *udp_mcast_address =
     ACE_DEFAULT_MULTICAST_ADDR ":10001";
 
-int parse_args (int argc, char *argv[]);
+int parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -315,9 +315,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-int parse_args (int argc, char *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "m:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("m:"));
   int c;
 
   while ((c = get_opts ()) != -1)

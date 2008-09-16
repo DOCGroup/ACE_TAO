@@ -18,9 +18,9 @@ const char *ior_output_file = "";
 CORBA::ULong my_id_number = 0;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:"));
   int c;
   ACE_CString ior_file ("n");
   while ((c = get_opts ()) != -1)
