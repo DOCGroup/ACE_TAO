@@ -1,3 +1,16 @@
+Wed Sep 17 18:59:57 UTC 2008  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sunsoft.cpp (print):
+        
+          Changed signed long long case to be similar to unsigned
+          long long, using ACE macros that expand to the correct
+          thing whether native 64-bit integers are defined or not.
+          This change enables code generation for signed long long
+          literals (as the rhs of 'const long long' declarations)
+          to be correct on all platforms. Thanks to Ittehad Shaikh
+          <ishaikh@verivue.com> for reporting the Linux warning
+          that uncovered this bug. Fixes [BUGID:3423].
+
 Wed Sep 17 18:48:41 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/AMH/Sink_Server/Client_Task.h:
