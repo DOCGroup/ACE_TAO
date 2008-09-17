@@ -1,3 +1,8 @@
+Wed Sep 17 18:47:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cached_Connect_Strategy_T.{h,cpp}:
+          reuse_addr is a bool
+
 Wed Sep 17 18:11:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/checked_iterator.h:
