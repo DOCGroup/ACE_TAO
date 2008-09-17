@@ -1,3 +1,10 @@
+Wed Sep 17 12:19:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread_Manager.cpp:
+          Found that the revert for bugzilla 3391 was not perfect. Thanks to
+          Yauheni Akhotnikau <eao197 at intervale dot ru> for reporting
+          this.
+
 Wed Sep 17 09:15:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/tests.mpc:

@@ -1410,7 +1410,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
   ACE_TRACE ("ACE_Thread_Manager::join");
 
   bool found = false;
-  ACE_Thread_Descriptor tdb;
+  ACE_Thread_Descriptor_Base tdb;
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
