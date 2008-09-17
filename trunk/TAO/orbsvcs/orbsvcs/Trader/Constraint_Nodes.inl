@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
 operator!= (const TAO_Literal_Constraint& left,
@@ -20,3 +24,5 @@ operator>= (const TAO_Literal_Constraint& left,
 {
   return !(left < right);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
