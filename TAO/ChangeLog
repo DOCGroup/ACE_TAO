@@ -1,3 +1,14 @@
+Wed Sep 17 13:13:38 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.inl:
+
+          Wrap contents with versioned namespace macros.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+
+          #include "orbsvcs/Trader/Constraint_Nodes.inl" when
+          __ACE_INLINE__ is not defined.
+
 Wed Sep 17 11:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * tao/String_Manager_T.h:
