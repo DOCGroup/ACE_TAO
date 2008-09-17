@@ -139,13 +139,13 @@ TAO_Export
 inline bool operator< (const TAO::String_Manager &lhs, const TAO::String_Manager &rhs)
 {
   return ACE_OS::strcmp (lhs.in(), rhs.in ()) < 0;
-};
+}
 
 TAO_Export
 inline bool operator< (const TAO::WString_Manager &lhs, const TAO::WString_Manager &rhs)
 {
   return ACE_OS::strcmp (lhs.in(), rhs.in ()) < 0;
-};
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
