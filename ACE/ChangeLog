@@ -1,3 +1,14 @@
+Wed Sep 17 06:48:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          VxWorks doens't have tzset
+
+        * ace/OS_NS_time.inl:
+          Simplified tzset
+
 Tue Sep 16 21:58:59 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/ETCL/ETCL_Constraint.cpp:

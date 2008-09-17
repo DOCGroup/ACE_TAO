@@ -491,15 +491,13 @@ ACE_OS::timezone (void)
 ACE_INLINE void
 ACE_OS::tzset (void)
 {
-#if !defined (ACE_LACKS_TZSET) && !defined (ACE_HAS_DINKUM_STL)
-#   if defined (ACE_WIN32)
-  ::_tzset ();  // For Win32.
-#   else
-  ::tzset ();   // For UNIX platforms.
-#   endif /* ACE_WIN32 */
-# else
+#if defined (ACE_LACKS_TZSET)
   errno = ENOTSUP;
-# endif /* !ACE_LACKS_TZSET */
+#elif defined (ACE_WIN32)
+  ::_tzset ();  // For Win32.
+#else
+  ::tzset ();   // For UNIX platforms.
+#endif /* ACE_LACKS_TZSET */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
