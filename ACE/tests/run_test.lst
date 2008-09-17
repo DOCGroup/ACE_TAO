@@ -103,7 +103,7 @@ Message_Queue_Test_Ex: !ACE_FOR_TAO
 Multicast_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT
 Multihomed_INET_Addr_Test: !ACE_FOR_TAO
 Naming_Test: !NO_OTHER !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
-Network_Adapters_Test: !LynxOS
+Network_Adapters_Test: !LynxOS !ACE_FOR_TAO
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
 Notification_Queue_Unit_Test
@@ -155,7 +155,7 @@ SOCK_Send_Recv_Test: !NO_NETWORK
 SOCK_Test: !NO_NETWORK
 SPIPE_Test: !nsk !ACE_FOR_TAO
 SString_Test: !ACE_FOR_TAO
-Stack_Trace_Test: 
+Stack_Trace_Test:
 SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
 Semaphore_Test: !ACE_FOR_TAO
 Service_Config_Test: !STATIC
