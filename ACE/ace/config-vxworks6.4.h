@@ -223,6 +223,7 @@
   #if !defined (IOV_MAX) || (IOV_MAX == 0)
     #define ACE_IOV_MAX 16
   #endif
+  #define ACE_HAS_TIMEZONE
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
@@ -274,7 +275,6 @@
   #  define ACE_MAIN ace_main
   #endif /* ! ACE_MAIN */
   #define ACE_LACKS_TZSET
-  #define ACE_HAS_TIMEZONE
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
