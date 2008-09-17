@@ -31,7 +31,8 @@ ETCL_Constraint::accept (ETCL_Constraint_Visitor * /* visitor */)
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
     const ETCL_Literal_Constraint & lit
   )
-  : type_ (ACE_ETCL_UNKNOWN)
+  : ETCL_Constraint(),
+    type_ (ACE_ETCL_UNKNOWN)
 {
   this->copy (lit);
 }
