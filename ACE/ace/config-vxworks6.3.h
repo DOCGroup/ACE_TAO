@@ -247,6 +247,7 @@
   #  define ACE_MAIN ace_main
   #endif /* ! ACE_MAIN */
   #define ACE_LACKS_TZSET
+  #define ACE_HAS_TIMEZONE
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
