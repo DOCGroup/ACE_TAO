@@ -81,7 +81,7 @@ TAO_AMH_Response_Handler::init(TAO_ServerRequest &server_request,
   TAO_GIOP_Message_Version v;
   server_request.outgoing()->get_version(v);
   this->_tao_out.set_version(v.major, v.minor);
-
+  this->transport_->assign_translators (0, &this->_tao_out);
   this->transport_->add_reference ();
 }
 

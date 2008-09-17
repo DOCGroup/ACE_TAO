@@ -2104,7 +2104,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
 
   ACE_Service_Config_Guard use_orbs (this->configuration());
 
-  if (TAO_debug_level > 2)
+  if (TAO_debug_level > 10)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
@@ -2155,7 +2155,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
       // strategy
       r->owner (ACE_Thread::self ());
 
-      if (TAO_debug_level > 2)
+      if (TAO_debug_level > 10)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
@@ -2164,7 +2164,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
 
       result = r->handle_events (tv);
 
-      if (TAO_debug_level > 2)
+      if (TAO_debug_level > 10)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
@@ -2201,7 +2201,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
     this->tm_.wait ();
   }
 
-  if (TAO_debug_level > 2)
+  if (TAO_debug_level > 10)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
