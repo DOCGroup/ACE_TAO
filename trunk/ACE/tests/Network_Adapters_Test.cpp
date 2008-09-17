@@ -880,9 +880,9 @@ static int wait_echo_reply_timer = 500; // 500 ms to wait is the default
 static int repeats_seconds_timer = 60; // 60 seconds between repeats
 
 static int
-is_ip_address_local (char const * const ip_to_bind)
+is_ip_address_local (ACE_TCHAR const * const ip_to_bind)
 {
-  ACE_INET_Addr *the_addr_array;
+  ACE_INET_Addr *the_addr_array = 0;
   size_t how_many = 0;
   int rc = ACE::get_ip_interfaces (how_many, the_addr_array);
 
