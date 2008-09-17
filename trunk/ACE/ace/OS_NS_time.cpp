@@ -365,8 +365,6 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
   if (!buf || !format)
     return 0;
 
-  ACE_OS::memset (tm, 0, sizeof (struct tm));
-
   while (format[fi] != '\0')
     {
       if (percent)

@@ -644,6 +644,7 @@ strptime_test (void)
   int error_count = 0;
   const char* original_time = "2008-06-21 23:45";
   tm lTime;
+  ACE_OS::memset (&lTime, 0, sizeof (struct tm));
   ACE_OS::strptime(original_time, "%Y-%m-%d %H:%M", &lTime);
   lTime.tm_isdst = 0; // do not change due to daylight saving time
   time_t lNewTime = ACE_OS::mktime(&lTime);
