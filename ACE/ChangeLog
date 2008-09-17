@@ -1,3 +1,9 @@
+Wed Sep 17 08:45:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Improved error handling when we can't connect with telnet
+
 Wed Sep 17 06:48:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:
