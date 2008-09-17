@@ -155,7 +155,6 @@
 #define ACE_LACKS_STRPTIME
 #define ACE_LACKS_MKTEMP
 #define ACE_LACKS_TEMPNAM
-#define ACE_LACKS_TZSET
 #define ACE_PAGE_SIZE 4096
 #define ACE_THR_PRI_FIFO_DEF 101
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
@@ -274,6 +273,7 @@
   #if !defined (ACE_MAIN)
   #  define ACE_MAIN ace_main
   #endif /* ! ACE_MAIN */
+  #define ACE_LACKS_TZSET
 #endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
