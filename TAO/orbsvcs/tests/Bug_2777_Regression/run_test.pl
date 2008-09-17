@@ -17,11 +17,11 @@ if ($^O eq "MSWin32") {
   $exec_extn=".exe";
 }
 
-$nslist = "../../../../bin/nslist";
+$nslist = "../../../../bin/tao_nslist";
 if (! -e $nslist . $exec_extn ) {
-    $nslist = "../../../../TAO/utils/nslist/nslist";
+    $nslist = "../../../../TAO/utils/nslist/tao_nslist";
     if (! -e $nslist . $exec_extn ) {
-        print STDERR "ERROR: nslist utility not found.\n";
+        print STDERR "ERROR: tao_nslist utility not found.\n";
         exit 1;
     }
 }
@@ -49,7 +49,7 @@ $list_result = $NSLIST->SpawnWaitKill (300);
 # Check return
 if ($list_result != 0)
 {
-   print STDERR "ERROR: Regression - nslist returned $listresult\n";
+   print STDERR "ERROR: Regression - tao_nslist returned $listresult\n";
    $status = 1;
 }
 
