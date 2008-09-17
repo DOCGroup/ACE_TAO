@@ -1,3 +1,11 @@
+Wed Sep 17 14:13:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_time.cpp (strptime_emulation):
+          Don't set struct tm to zero
+
+        * ace/OS_Test.cpp:
+          Set struct tm to zero before calling strptime
+
 Wed Sep 17 13:23:56 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/ETCL/ETCL_Constraint.cpp:
