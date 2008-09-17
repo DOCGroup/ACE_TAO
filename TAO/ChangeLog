@@ -1,3 +1,9 @@
+Wed Sep 17 11:45:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
+
+        * tao/String_Manager_T.h:
+
+          Removed extranioius ;
+
 Tue Sep 16 18:51:13 UTC 2008  Yan Dai  <dai_y@ociweb.com>
 
         * tao/String_Manager_T.h:
