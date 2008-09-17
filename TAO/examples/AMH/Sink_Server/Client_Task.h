@@ -36,7 +36,7 @@ public:
 
   void try_RT_scheduling (void);
 
-  int narrow_servant (void);
+  int narrow_servant (CORBA::ORB_ptr orb);
 
   int run_test (void);
 

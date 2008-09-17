@@ -22,7 +22,7 @@ Client_Task::Client_Task (int &argc, ACE_TCHAR **argv)
 int
 Client_Task::parse_args (void)
 {
-    ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("k:n:"));
+    ACE_Get_Opt get_opts (this->argc_, this->argv_, "k:n:O:");
     int c;
 
     while ((c = get_opts ()) != -1)
@@ -42,7 +42,6 @@ Client_Task::parse_args (void)
               break;
             }
           case '?':
-          default:
             ACE_ERROR_RETURN ((LM_ERROR,
                                "usage:  %s "
                                "-k <file that contains IOR> "
@@ -50,6 +49,8 @@ Client_Task::parse_args (void)
                                "\n",
                                this->argv_ [0]),
                               -1);
+          default:
+            break;
           }
       }
     // Indicates sucessful parsing of the command line
@@ -83,13 +84,10 @@ Client_Task::try_RT_scheduling (void)
 }
 
 int
-Client_Task::narrow_servant (void)
+Client_Task::narrow_servant (CORBA::ORB_ptr orb)
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (this->argc_, this->argv_);
-
       CORBA::Object_var object =
         orb->string_to_object (this->ior_);
 
