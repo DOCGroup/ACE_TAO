@@ -1,3 +1,9 @@
+Wed Sep 17 09:15:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+          Network_Adapters_Test shouldn't build/run with ace_for_tao
+
 Wed Sep 17 08:45:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
