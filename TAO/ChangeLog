@@ -82,7 +82,7 @@ Tue Sep 16 11:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
         * Release:
           Ship bmak files
 
-        * tao.rules.GNU:
+        * rules.tao.GNU:
           No need to check for TAO_ROOT in the ldflags
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
@@ -94,205 +94,7 @@ Tue Sep 16 11:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Sep 16 11:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/Abstract_Interface/client.cpp
-        * tests/Abstract_Interface/server.cpp
-        * tests/AMH_Oneway/client.cpp
-        * tests/AMH_Oneway/server.cpp
-        * tests/AMI/client.cpp
-        * tests/AMI/server.cpp
-        * tests/AMI/simple_client.cpp
-        * tests/AMI_Buffering/admin.cpp
-        * tests/AMI_Buffering/client.cpp
-        * tests/AMI_Buffering/server.cpp
-        * tests/AMI_Timeouts/client.cpp
-        * tests/AMI_Timeouts/server.cpp
-        * tests/Any/Recursive/client.cpp
-        * tests/Any/Recursive/server.cpp
-        * tests/BiDirectional/client.cpp
-        * tests/BiDirectional/server.cpp
-        * tests/BiDirectional_DelayedUpcall/client.cpp
-        * tests/BiDirectional_DelayedUpcall/server.cpp
-        * tests/BiDirectional_NestedUpcall/client.cpp
-        * tests/BiDirectional_NestedUpcall/server.cpp
-        * tests/Big_AMI/client.cpp
-        * tests/Big_AMI/server.cpp
-        * tests/Big_Oneways/client.cpp
-        * tests/Big_Oneways/server.cpp
-        * tests/Big_Reply/client.cpp
-        * tests/Big_Reply/server.cpp
-        * tests/Big_Request_Muxing/client.cpp
-        * tests/Big_Request_Muxing/server.cpp
-        * tests/Big_Twoways/client.cpp
-        * tests/Big_Twoways/server.cpp
-        * tests/Blocking_Sync_None/client.cpp
-        * tests/Blocking_Sync_None/server.cpp
-        * tests/Bug_1020_Basic_Regression/client.cpp
-        * tests/Bug_1020_Basic_Regression/server.cpp
-        * tests/Bug_1020_Regression/client.cpp
-        * tests/Bug_1020_Regression/server.cpp
-        * tests/Bug_1254_Regression/client.cpp
-        * tests/Bug_1254_Regression/server.cpp
-        * tests/Bug_1269_Regression/client.cpp
-        * tests/Bug_1269_Regression/server.cpp
-        * tests/Bug_1269_Regression/shutdown.cpp
-        * tests/Bug_1270_Regression/client.cpp
-        * tests/Bug_1270_Regression/server.cpp
-        * tests/Bug_1270_Regression/shutdown.cpp
-        * tests/Bug_1330_Regression/client.cpp
-        * tests/Bug_1330_Regression/server.cpp
-        * tests/Bug_1361_Regression/client.cpp
-        * tests/Bug_1361_Regression/server.cpp
-        * tests/Bug_1361_Regression/shutdown.cpp
-        * tests/Bug_1476_Regression/client.cpp
-        * tests/Bug_1476_Regression/server.cpp
-        * tests/Bug_1476_Test/client.cpp
-        * tests/Bug_1482_Regression/client.cpp
-        * tests/Bug_1482_Regression/server.cpp
-        * tests/Bug_1495_Regression/Threaded_Client.cpp
-        * tests/Bug_1495_Regression/Threaded_Server.cpp
-        * tests/Bug_1551_Regression/client.cpp
-        * tests/Bug_1551_Regression/server.cpp
-        * tests/Bug_1568_Regression/client.cpp
-        * tests/Bug_1568_Regression/server.cpp
-        * tests/Bug_1627_Regression/client.cpp
-        * tests/Bug_1627_Regression/server.cpp
-        * tests/Bug_1670_Regression/client.cpp
-        * tests/Bug_1670_Regression/server.cpp
-        * tests/Bug_1676_Regression/client.cpp
-        * tests/Bug_1676_Regression/server.cpp
-        * tests/Bug_2084_Regression/Collocated_Test.cpp
-        * tests/Bug_2174_Regression/client.cpp
-        * tests/Bug_2174_Regression/server.cpp
-        * tests/Bug_2183_Regression/client.cpp
-        * tests/Bug_2183_Regression/server.cpp
-        * tests/Bug_2186_Regression/client.cpp
-        * tests/Bug_2186_Regression/server.cpp
-        * tests/Bug_2188_Regression/client.cpp
-        * tests/Bug_2188_Regression/server.cpp
-        * tests/Bug_2289_Regression/client.cpp
-        * tests/Bug_2289_Regression/server.cpp
-        * tests/Bug_2319_Regression/server.cpp
-        * tests/Bug_2328_Regression/client.cpp
-        * tests/Bug_2328_Regression/server.cpp
-        * tests/Bug_2356_Regression/client.cpp
-        * tests/Bug_2356_Regression/server.cpp
-        * tests/Bug_2429_Regression/server.cpp
-        * tests/Bug_2494_Regression/client.cpp
-        * tests/Bug_2494_Regression/server.cpp
-        * tests/Bug_2503_Regression/client.cpp
-        * tests/Bug_2503_Regression/server.cpp
-        * tests/Bug_2560_Regression/server.cpp
-        * tests/Bug_2593_Regression/client.cpp
-        * tests/Bug_2593_Regression/server.cpp
-        * tests/Bug_2595_Regression/client.cpp
-        * tests/Bug_2595_Regression/server.cpp
-        * tests/Bug_2654_Regression/client.cpp
-        * tests/Bug_2654_Regression/server.cpp
-        * tests/Bug_2669_Regression/client.cpp
-        * tests/Bug_2678_Regression/client.cpp
-        * tests/Bug_2683_Regression/client.cpp
-        * tests/Bug_2702_Regression/client.cpp
-        * tests/Bug_2734_Regression/client.cpp
-        * tests/Bug_2734_Regression/server.cpp
-        * tests/Bug_2768_Regression/client.cpp
-        * tests/Bug_2804_Regression/client.cpp
-        * tests/Bug_2804_Regression/server.cpp
-        * tests/Bug_2805_Regression/client.cpp
-        * tests/Bug_2844_Regression/client.cpp
-        * tests/Bug_2844_Regression/server.cpp
-        * tests/Bug_2909_Regression/client.cpp
-        * tests/Bug_2918_Regression/client.cpp
-        * tests/Bug_2918_Regression/server.cpp
-        * tests/Bug_2966_Regression/client.cpp
-        * tests/Bug_2966_Regression/server.cpp
-        * tests/Bug_3000_Regression/client.cpp
-        * tests/Bug_3000_Regression/server.cpp
-        * tests/Bug_3108_Regression/server.cpp
-        * tests/Bug_3163_Regression/client.cpp
-        * tests/Bug_3163_Regression/server.cpp
-        * tests/Bug_3171_Regression/server.cpp
-        * tests/Bug_3198_Regression/bug_3198_regression.cpp
-        * tests/Bug_3276_Regression/client.cpp
-        * tests/Bug_3276_Regression/Manager.cpp
-        * tests/Bug_3299_Regression/client.cpp
-        * tests/Bug_3299_Regression/server.cpp
-        * tests/Cache_Growth_Test/client.cpp
-        * tests/Cache_Growth_Test/server.cpp
-        * tests/CallbackTest/client.cpp
-        * tests/CallbackTest/server.cpp
-        * tests/CDR/allocator.cpp
-        * tests/CDR/basic_types.cpp
-        * tests/CDR/growth.cpp
-        * tests/Client_Leaks/client.cpp
-        * tests/Client_Leaks/server.cpp
-        * tests/COIOP/COIOP_Test.cpp
-        * tests/Collocated_Forwarding/server.cpp
-        * tests/Collocation_Exception_Test/Collocated_Test.cpp
-        * tests/Collocation_Oneway_Tests/Collocated_Test.cpp
-        * tests/Collocation_Tests/Collocated_Test.cpp
-        * tests/Connect_Strategy_Test/client.cpp
-        * tests/Connect_Strategy_Test/server.cpp
-        * tests/Connection_Purging/client.cpp
-        * tests/Connection_Purging/server.cpp
-        * tests/Connection_Timeout/client.cpp
-        * tests/Crash_On_Write/client.cpp
-        * tests/Crash_On_Write/server.cpp
-        * tests/Crashed_Callback/client.cpp
-        * tests/Crashed_Callback/server.cpp
-        * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp
-        * tests/CSD_Strategy_Tests/Broken/ClientApp.h
-        * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp
-        * tests/CSD_Strategy_Tests/Broken/ServerApp.h
-        * tests/CSD_Strategy_Tests/TP_Test_1/ClientApp.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_1/ClientApp.h
-        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.h
-        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.h
-        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.h
-        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.h
-        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.h
-        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.h
-        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.h
-        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/client.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/server.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.cpp
-        * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.h
-        * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.cpp
-        * tests/DiffServ/client.cpp
-        * tests/DII_AMI_Forward/client.cpp
-        * tests/DII_AMI_Forward/server.cpp
-        * tests/DII_Collocation_Tests/oneway/Collocated_Test.cpp
-        * tests/DII_Collocation_Tests/twoway/Collocated_Test.cpp
-        * tests/DIOP/client.cpp
-        * tests/DIOP/server.cpp
-        * tests/DLL_ORB/Test_Client_Module.cpp
-        * tests/DLL_ORB/Test_Server_Module.cpp
-        * tests/DSI_AMH/client.cpp
-        * tests/DSI_AMH/server.cpp
-        * tests/DSI_AMI_Gateway/client.cpp
-        * tests/DSI_AMI_Gateway/gateway.cpp
-        * tests/DSI_AMI_Gateway/server.cpp
-        * tests/DSI_Gateway/client.cpp
-        * tests/DSI_Gateway/gateway.cpp
-        * tests/DSI_Gateway/server.cpp
-        * tests/DynAny_Test/driver.cpp
-        * tests/Explicit_Event_Loop/server.cpp
-        * tests/Faults/client.cpp
-        * tests/Faults/middle.cpp
-        * tests/Faults/ping.cpp
-        * tests/Faults/pong.cpp
-        * tests/Faults/server.cpp
-        * tests/File_IO/client.cpp
-        * tests/File_IO/server.cpp
-        * tests/FL_Cube/client.cpp
-        * tests/FL_Cube/server.cpp
-svcs/tests/EC_Throughput/ECT_Throughput.h
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.h
         * orbsvcs/tests/Event/Basic/BCast.cpp
         * orbsvcs/tests/Event/Basic/BCast.h
         * orbsvcs/tests/Event/Basic/Observer.cpp
@@ -378,10 +180,10 @@ svcs/tests/EC_Throughput/ECT_Throughput.h
         * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp
         * orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp
         * orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp
-        * orbsvcs/tests/Notify/performance-        * orbsvcs/tests/Filter/Sequence_Consumer.cpp
-        * orbsvcs/tests/Notify/performance-        * orbsvcs/tests/Filter/Sequence_Supplier.cpp
-        * orbsvcs/tests/Notify/performance-        * orbsvcs/tests/Filter/Structured_Consumer.cpp
-        * orbsvcs/tests/Notify/performance-        * orbsvcs/tests/Filter/Structured_Supplier.cpp
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.cpp
         * orbsvcs/tests/Notify/Persistent_POA/Structured_Supplier.cpp
         * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp
         * orbsvcs/tests/Notify/Reconnecting/Consumer.h
@@ -421,21 +223,6 @@ svcs/tests/EC_Throughput/ECT_Throughput.h
         * orbsvcs/tests/Time/Client_i.cpp
         * orbsvcs/tests/Trading/colocated_test.cpp
           ACE_TCHAR changes
-
-Tue Sep 16 11:59:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * Release:
-          Ship bmak files
-
-        * tao.rules.GNU:
-          No need to check for TAO_ROOT in the ldflags
-
-        * orbsvcs/IFR_Service/IFR_Service.mpc:
-          Fixed bug in this file, fixes bugzilla 3397
-
-        * orbsvcs/orbsvcs/CosNotification.mpc:
-        * orbsvcs/orbsvcs/RT_Notification.mpc:
-          Removed borland support
 
 Tue Sep 16 11:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
