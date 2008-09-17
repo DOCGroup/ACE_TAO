@@ -1,3 +1,10 @@
+Wed Sep 17 13:23:56 UTC 2008  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/ETCL/ETCL_Constraint.cpp:
+
+          Explicitly initialize base class in ETCL_Literal_Constraint copy
+          constructor.
+
 Wed Sep 17 12:24:59 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Network_Adapters_Test.cpp:
