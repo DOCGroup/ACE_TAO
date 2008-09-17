@@ -187,11 +187,9 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::TAO_Accept_Strategy (TAO_
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                                                             int restart)
+                                                             bool restart)
 {
-
-  return ACCEPT_STRATEGY_BASE::open (local_addr,
-                                     restart);
+  return ACCEPT_STRATEGY_BASE::open (local_addr, restart);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int

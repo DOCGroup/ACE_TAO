@@ -89,7 +89,7 @@ public:
   /// Initialize the <peer_acceptor_> with <local_addr>.  If the
   /// process runs out of handles, purge some "old" connections.
   int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-            int restart = 0);
+            bool restart = false);
 
   /// Delegates to the <accept> method of the PEER_ACCEPTOR. If the
   /// process runs out of handles, purge some "old" connections.
