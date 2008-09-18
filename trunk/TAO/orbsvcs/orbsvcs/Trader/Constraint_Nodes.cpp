@@ -301,7 +301,8 @@ TAO_Literal_Constraint::TAO_Literal_Constraint (void)
 
 TAO_Literal_Constraint::
 TAO_Literal_Constraint (const TAO_Literal_Constraint& lit)
-  : type_ (TAO_UNKNOWN) 
+  : TAO_Constraint(),
+    type_ (TAO_UNKNOWN) 
 {
   this->copy (lit);
 }
